@@ -1,3 +1,4 @@
+import { PlusMinusState } from '../Redux/ActionsReducers/Interface/IState';
 import { IPlusMinusStrategy } from './Interface/IPlusMinusStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
@@ -13,4 +14,5 @@ export declare class PlusMinusStrategy extends AdaptableStrategyBase implements 
     private ShowErrorPreventMessage;
     private ShowWarningMessages;
     ApplyPlusMinus(keyEventString: string, successfulValues: ICellInfo[]): void;
+    protected GetPlusMinusState(): PlusMinusState;
 }

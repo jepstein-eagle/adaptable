@@ -6,20 +6,20 @@ export declare const CALCULATEDCOLUMN_EDIT = "CALCULATEDCOLUMN_EDIT";
 export declare const CALCULATEDCOLUMN_DELETE = "CALCULATEDCOLUMN_DELETE";
 export declare const CALCULATEDCOLUMN_IS_EXPRESSION_VALID = "CALCULATEDCOLUMN_IS_EXPRESSION_VALID";
 export interface CalculatedColumnAddAction extends Redux.Action {
-    CalculatedColumn: ICalculatedColumn;
+    calculatedColumn: ICalculatedColumn;
 }
 export interface CalculatedColumnEditAction extends Redux.Action {
-    Index: number;
-    CalculatedColumn: ICalculatedColumn;
+    index: number;
+    calculatedColumn: ICalculatedColumn;
 }
 export interface CalculatedColumnDeleteAction extends Redux.Action {
-    Index: number;
+    index: number;
 }
 export interface CalculatedColumnIsExpressionValidAction extends Redux.Action {
-    Expression: string;
+    expression: string;
 }
-export declare const CalculatedColumnAdd: (CalculatedColumn: ICalculatedColumn) => CalculatedColumnAddAction;
-export declare const CalculatedColumnEdit: (Index: number, CalculatedColumn: ICalculatedColumn) => CalculatedColumnEditAction;
-export declare const CalculatedColumnDelete: (Index: number) => CalculatedColumnDeleteAction;
-export declare const CalculatedColumnIsExpressionValid: (Expression: string) => CalculatedColumnIsExpressionValidAction;
+export declare const CalculatedColumnAdd: (calculatedColumn: ICalculatedColumn) => CalculatedColumnAddAction;
+export declare const CalculatedColumnEdit: (index: number, calculatedColumn: ICalculatedColumn) => CalculatedColumnEditAction;
+export declare const CalculatedColumnDelete: (index: number) => CalculatedColumnDeleteAction;
+export declare const CalculatedColumnIsExpressionValid: (expression: string) => CalculatedColumnIsExpressionValidAction;
 export declare const CalculatedColumnReducer: Redux.Reducer<CalculatedColumnState>;

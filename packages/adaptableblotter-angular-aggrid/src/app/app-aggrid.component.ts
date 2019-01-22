@@ -10,7 +10,8 @@ import { IAdaptableBlotterOptions } from 'adaptableblotter-angular-aggrid';
    <div id="adaptableblotter-aggrid-angular-demo-app">
     <adaptable-blotter-aggrid
       [adaptableBlotterOptions]="blotterOptions"
-      [gridOptions]="gridOptions">
+      [gridOptions]="gridOptions"
+      agTheme= "blue">
     </adaptable-blotter-aggrid>
   </div>
   `

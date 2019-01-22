@@ -17,6 +17,7 @@ const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm
 const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class SmartEditPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -68,15 +69,9 @@ class SmartEditPopupComponent extends React.Component {
         this.props.onApplySmartEdit();
     }
     onConfirmWarningCellValidation() {
-        let confirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: SmartEditRedux.SmartEditApply(false),
-            ConfirmAction: SmartEditRedux.SmartEditApply(true),
-            ShowCommentBox: true
-        };
+        let confirmAction = SmartEditRedux.SmartEditApply(true);
+        let cancelAction = SmartEditRedux.SmartEditApply(false);
+        let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
         this.props.onConfirmWarningCellValidation(confirmation);
     }
     getButtonStyle() {

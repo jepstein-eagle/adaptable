@@ -26,7 +26,7 @@ exports.ChartDefinitionSelect = (CurrentChartDefinition) => ({
 const initialChartState = {
     ChartDefinitions: [],
     CurrentChartDefinition: "",
-    ShowModal: true,
+    ShowModal: false,
     RefreshRate: 1
 };
 exports.ChartReducer = (state = initialChartState, action) => {

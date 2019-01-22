@@ -164,8 +164,8 @@ class FilterFormComponent extends React.Component {
     onSaveFilter() {
         let existingColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let prompt = {
-            PromptTitle: "Enter name for User Filter",
-            PromptMsg: "Please enter a user filter name",
+            Header: "Enter name for User Filter",
+            Msg: "Please enter a user filter name",
             ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(existingColumnFilter, "")
         };
         this.props.onShowPrompt(prompt);
@@ -199,7 +199,7 @@ function mapDispatchToProps(dispatch) {
         onClearColumnFilter: (columnId) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
         onAddEditColumnFilter: (columnFilter) => dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
         onShowPrompt: (prompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-        onHideFilterForm: () => dispatch(HomeRedux.HideFilterForm()),
+        onHideFilterForm: () => dispatch(HomeRedux.FilterFormHide()),
     };
 }
 exports.FilterForm = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);

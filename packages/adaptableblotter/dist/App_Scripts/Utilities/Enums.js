@@ -227,10 +227,12 @@ var StatusColour;
     StatusColour["Red"] = "Red";
     StatusColour["Amber"] = "Amber";
     StatusColour["Green"] = "Green";
+    StatusColour["Blue"] = "Blue";
 })(StatusColour = exports.StatusColour || (exports.StatusColour = {}));
 var MessageType;
 (function (MessageType) {
     MessageType["Info"] = "Info";
+    MessageType["Success"] = "Success";
     MessageType["Warning"] = "Warning";
     MessageType["Error"] = "Error";
 })(MessageType = exports.MessageType || (exports.MessageType = {}));

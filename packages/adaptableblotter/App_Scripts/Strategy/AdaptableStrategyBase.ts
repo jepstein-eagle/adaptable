@@ -135,10 +135,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         // check for duplicates here
         let existingMenuItems = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.map(m => m.StrategyId)
         if (!ArrayExtensions.ContainsItem(existingMenuItems, menuItem.StrategyId)) {
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-                MenuRedux.AddItemColumnContextMenu(
-                    menuItem
-                ))
+            this.blotter.api.internalApi.ColumnContextMenuAddItem(menuItem);
         }
     }
 

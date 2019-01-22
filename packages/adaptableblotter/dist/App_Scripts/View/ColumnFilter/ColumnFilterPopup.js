@@ -41,8 +41,8 @@ class ColumnFilterPopupComponent extends React.Component {
     }
     onSaveColumnFilterasUserFilter(columnFilter) {
         let prompt = {
-            PromptTitle: "Enter name for User Filter",
-            PromptMsg: "Please enter a user filter name",
+            Header: "Enter name for User Filter",
+            Msg: "Please enter a user filter name",
             ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(columnFilter, "")
         };
         this.props.onShowPrompt(prompt);

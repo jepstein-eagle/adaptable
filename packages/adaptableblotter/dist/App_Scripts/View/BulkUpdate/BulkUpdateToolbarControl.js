@@ -19,6 +19,7 @@ const PreviewResultsPanel_1 = require("../Components/PreviewResultsPanel");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const UIHelper_1 = require("../UIHelper");
 const ColumnValueSelector_1 = require("../Components/Selectors/ColumnValueSelector");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class BulkUpdateToolbarControlComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -99,15 +100,9 @@ class BulkUpdateToolbarControlComponent extends React.Component {
             this.onApplyBulkUpdate();
     }
     onConfirmWarningCellValidation() {
-        let confirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: BulkUpdateRedux.BulkUpdateApply(false),
-            ConfirmAction: BulkUpdateRedux.BulkUpdateApply(true),
-            ShowCommentBox: true
-        };
+        let confirmAction = BulkUpdateRedux.BulkUpdateApply(true);
+        let cancelAction = BulkUpdateRedux.BulkUpdateApply(false);
+        let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
         this.props.onConfirmWarningCellValidation(confirmation);
     }
     onApplyBulkUpdate() {

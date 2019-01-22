@@ -189,8 +189,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 break;
             case ExportDestination.iPushPull:
                 iPushPullHelper.LoadPage(folder, page).then(() => {
-                    this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-                        SystemRedux.ReportStartLive(ReportName, page, ExportDestination.iPushPull));
+                    this.blotter.api.internalApi.ReportStartLive(ReportName, page, ExportDestination.iPushPull);
                     setTimeout(() => { this.throttledRecomputeAndSendLiveExcelEvent() }, 500)
 
                 })

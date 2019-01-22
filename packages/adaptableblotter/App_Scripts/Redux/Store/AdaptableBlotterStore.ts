@@ -408,11 +408,11 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
 
         case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
           let actionTyped = <AdvancedSearchRedux.AdvancedSearchSelectAction>action
-          let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == actionTyped.SelectedSearchName);
+          let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == actionTyped.selectedSearchName);
 
           adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AdvancedSearchStrategyId,
             action.type,
-            StringExtensions.IsNullOrEmpty(actionTyped.SelectedSearchName) ? "[No Advanced Search selected]" : actionTyped.SelectedSearchName,
+            StringExtensions.IsNullOrEmpty(actionTyped.selectedSearchName) ? "[No Advanced Search selected]" : actionTyped.selectedSearchName,
             advancedSearch)
 
           return next(action);
@@ -420,11 +420,11 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
         case AdvancedSearchRedux.ADVANCED_SEARCH_ADD_UPDATE: {
           let actionTyped = <AdvancedSearchRedux.AdvancedSearchAddUpdateAction>action
           let currentAdvancedSearch = state.AdvancedSearch.CurrentAdvancedSearch; // problem here if they have changed the name potentially...
-          if (actionTyped.AdvancedSearch.Name == currentAdvancedSearch) {
+          if (actionTyped.advancedSearch.Name == currentAdvancedSearch) {
             adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AdvancedSearchStrategyId,
               action.type,
-              actionTyped.AdvancedSearch.Name,
-              actionTyped.AdvancedSearch)
+              actionTyped.advancedSearch.Name,
+              actionTyped.advancedSearch)
           }
           return next(action);
         }
@@ -511,7 +511,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
          * Action: If it is valid, then clear any error; otherwise set one
          */
         case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
-          let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).Expression)
+          let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).expression)
           if (!returnObj.IsValid) {
             middlewareAPI.dispatch(SystemRedux.CalculatedColumnSetErrorMessage(returnObj.ErrorMsg))
           }
@@ -527,7 +527,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         */
         case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
           let returnAction = next(action);
-          let calculatedColumn: ICalculatedColumn = (<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn
+          let calculatedColumn: ICalculatedColumn = (<CalculatedColumnRedux.CalculatedColumnAddAction>action).calculatedColumn
           blotter.addCalculatedColumnToGrid(calculatedColumn)
           return returnAction;
         }
@@ -542,8 +542,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
           let actionTyped = <CalculatedColumnRedux.CalculatedColumnDeleteAction>action
           let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
-          let deletedCalculatedColumnIndex = middlewareAPI.getState().Grid.Columns.findIndex(x => x.ColumnId == calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
-          blotter.removeCalculatedColumnFromGrid(calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
+          let deletedCalculatedColumnIndex = middlewareAPI.getState().Grid.Columns.findIndex(x => x.ColumnId == calculatedColumnState.CalculatedColumns[actionTyped.index].ColumnId)
+          blotter.removeCalculatedColumnFromGrid(calculatedColumnState.CalculatedColumns[actionTyped.index].ColumnId)
           if (deletedCalculatedColumnIndex > -1) {
             columnsLocalLayout.splice(deletedCalculatedColumnIndex, 1)
           }
@@ -565,15 +565,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
           let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action
           let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
-          let index = actionTyped.Index;
-          let isNameChanged: boolean = columnsLocalLayout.find(c => c.ColumnId == actionTyped.CalculatedColumn.ColumnId) == null
+          let index = actionTyped.index;
+          let isNameChanged: boolean = columnsLocalLayout.find(c => c.ColumnId == actionTyped.calculatedColumn.ColumnId) == null
           if (isNameChanged) { // name has changed so we are going to delete and then add to ensure all col names are correct
             blotter.removeCalculatedColumnFromGrid(calculatedColumnState.CalculatedColumns[index].ColumnId)
-            blotter.addCalculatedColumnToGrid(actionTyped.CalculatedColumn)
+            blotter.addCalculatedColumnToGrid(actionTyped.calculatedColumn)
             blotter.setColumnIntoStore();
             columnsLocalLayout = middlewareAPI.getState().Grid.Columns // need to get again
           } else {  // it exists so just edit
-            blotter.editCalculatedColumnInGrid(actionTyped.CalculatedColumn)
+            blotter.editCalculatedColumnInGrid(actionTyped.calculatedColumn)
           }
           middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
           let returnAction = next(action);

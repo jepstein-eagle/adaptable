@@ -18,6 +18,7 @@ const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const ButtonShowChart_1 = require("../Components/Buttons/ButtonShowChart");
 const ChartEnums_1 = require("../../Utilities/ChartEnums");
+const ButtonDelete_1 = require("../Components/Buttons/ButtonDelete");
 class ChartToolbarControlComponent extends React.Component {
     render() {
         const selectChartString = "Select a Chart";
@@ -37,7 +38,8 @@ class ChartToolbarControlComponent extends React.Component {
             React.createElement("span", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(ButtonShowChart_1.ButtonShowChart, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.onShowChart(), size: "small", overrideTooltip: "Show Chart", overrideDisableButton: currentChartDefinitionName == selectChartString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
                 React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewChartDefinition(), size: "small", overrideTooltip: "Create New Chart Definition", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
-                React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onEditChartDefinition(), size: "small", overrideTooltip: "Edit Chart Definition", overrideDisableButton: currentChartDefinitionName == selectChartString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel })));
+                React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onEditChartDefinition(), size: "small", overrideTooltip: "Edit Chart Definition", overrideDisableButton: currentChartDefinitionName == selectChartString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Chart", overrideDisableButton: currentChartDefinitionName == selectChartString, DisplayMode: "Glyph", ConfirmAction: ChartRedux.ChartDefinitionDelete(this.props.CurrentChartDefinition), ConfirmationMsg: "Are you sure you want to delete '" + !this.props.CurrentChartDefinition ? "" : currentChartDefinitionName + "'?", ConfirmationTitle: "Delete Chart", AccessLevel: this.props.AccessLevel })));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.ChartStrategyName, glyphicon: StrategyConstants.ChartGlyph, onClose: () => this.props.onClose(StrategyConstants.ChartStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectedChartDefinitionChanged(chartDefinitionName) {

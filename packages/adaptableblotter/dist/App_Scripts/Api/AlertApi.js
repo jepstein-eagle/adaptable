@@ -30,8 +30,11 @@ class AlertApi extends ApiBase_1.ApiBase {
         }
         LoggingHelper_1.LoggingHelper.LogAlert(alertHeader + ": " + alertMessage, MessageTypeEnum);
     }
-    ShowMessage(alertHeader, alertMessage, showAsPopup) {
+    ShowInfo(alertHeader, alertMessage, showAsPopup) {
         this.Show(alertHeader, alertMessage, Enums_1.MessageType.Info, showAsPopup);
+    }
+    ShowSuccess(alertHeader, alertMessage, showAsPopup) {
+        this.Show(alertHeader, alertMessage, Enums_1.MessageType.Success, showAsPopup);
     }
     ShowWarning(alertHeader, alertMessage, showAsPopup) {
         this.Show(alertHeader, alertMessage, Enums_1.MessageType.Warning, showAsPopup);

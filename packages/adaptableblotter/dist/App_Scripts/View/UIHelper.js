@@ -119,6 +119,8 @@ var UIHelper;
             case Enums_1.StatusColour.Amber:
                 return Enums_1.MessageType.Warning;
             case Enums_1.StatusColour.Green:
+                return Enums_1.MessageType.Success;
+            case Enums_1.StatusColour.Blue:
                 return Enums_1.MessageType.Info;
         }
     }
@@ -131,6 +133,8 @@ var UIHelper;
                 return StyleConstants_1.WARNING_BSSTYLE;
             case Enums_1.StatusColour.Green:
                 return StyleConstants_1.SUCCESS_BSSTYLE;
+            case Enums_1.StatusColour.Blue:
+                return StyleConstants_1.INFO_BSSTYLE;
         }
     }
     UIHelper.getStyleNameByStatusColour = getStyleNameByStatusColour;
@@ -138,6 +142,8 @@ var UIHelper;
         switch (messageType) {
             case Enums_1.MessageType.Info:
                 return "info-sign";
+            case Enums_1.MessageType.Success:
+                return "ok-sign";
             case Enums_1.MessageType.Warning:
                 return "warning-sign";
             case Enums_1.MessageType.Error:
@@ -151,9 +157,37 @@ var UIHelper;
                 return StyleConstants_1.DANGER_BSSTYLE;
             case Enums_1.MessageType.Warning:
                 return StyleConstants_1.WARNING_BSSTYLE;
+            case Enums_1.MessageType.Success:
+                return StyleConstants_1.SUCCESS_BSSTYLE;
             case Enums_1.MessageType.Info:
                 return StyleConstants_1.INFO_BSSTYLE;
         }
     }
     UIHelper.getStyleNameByMessageType = getStyleNameByMessageType;
+    function getStyleForSystemStatusButton(statusColour) {
+        switch (statusColour) {
+            case Enums_1.StatusColour.Blue:
+                return StyleConstants_1.INFO_BSSTYLE;
+            case Enums_1.StatusColour.Green:
+                return StyleConstants_1.SUCCESS_BSSTYLE;
+            case Enums_1.StatusColour.Amber:
+                return StyleConstants_1.WARNING_BSSTYLE;
+            case Enums_1.StatusColour.Red:
+                return StyleConstants_1.DANGER_BSSTYLE;
+        }
+    }
+    UIHelper.getStyleForSystemStatusButton = getStyleForSystemStatusButton;
+    function getGlyphForSystemStatusButton(statusColour) {
+        switch (statusColour) {
+            case Enums_1.StatusColour.Blue:
+                return "ok-circle";
+            case Enums_1.StatusColour.Green:
+                return "ok-circle"; // one of these is wrong
+            case Enums_1.StatusColour.Amber:
+                return "ban-circle";
+            case Enums_1.StatusColour.Red:
+                return "remove-circle";
+        }
+    }
+    UIHelper.getGlyphForSystemStatusButton = getGlyphForSystemStatusButton;
 })(UIHelper = exports.UIHelper || (exports.UIHelper = {}));

@@ -21,12 +21,23 @@ class PercentBarStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     InitState() {
-        if (this.PercentBarState != this.blotter.AdaptableBlotterStore.TheStore.getState().PercentBar) {
-            this.PercentBarState = this.blotter.AdaptableBlotterStore.TheStore.getState().PercentBar;
+        if (this.PercentBarState != this.GetPercentBarState()) {
             if (this.blotter.isInitialised) {
-                this.publishStateChanged(Enums_1.StateChangedTrigger.PercentBar, this.PercentBarState);
+                // if we have made any changes then first delete them all
+                this.PercentBarState.PercentBars.forEach(pb => {
+                    this.blotter.removePercentBar(pb);
+                });
+                this.GetPercentBarState().PercentBars.forEach(pb => {
+                    this.blotter.editPercentBar(pb);
+                });
+                this.blotter.redraw();
             }
+            this.PercentBarState = this.GetPercentBarState();
+            this.publishStateChanged(Enums_1.StateChangedTrigger.PercentBar, this.PercentBarState);
         }
+    }
+    GetPercentBarState() {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().PercentBar;
     }
 }
 exports.PercentBarStrategy = PercentBarStrategy;

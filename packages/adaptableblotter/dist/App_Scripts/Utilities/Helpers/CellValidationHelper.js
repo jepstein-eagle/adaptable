@@ -31,4 +31,17 @@ var CellValidationHelper;
         return valueDescription;
     }
     CellValidationHelper.createCellValidationDescription = createCellValidationDescription;
+    function createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage = "Do you want to continue?") {
+        return {
+            CancelButtonText: "Cancel Edit",
+            Header: "Cell Validation Failed",
+            Msg: warningMessage,
+            ConfirmButtonText: "Bypass Rule",
+            CancelAction: cancelAction,
+            ConfirmAction: confirmAction,
+            ShowCommentBox: true,
+            MessageType: Enums_1.MessageType.Warning
+        };
+    }
+    CellValidationHelper.createCellValidationUIConfirmation = createCellValidationUIConfirmation;
 })(CellValidationHelper = exports.CellValidationHelper || (exports.CellValidationHelper = {}));

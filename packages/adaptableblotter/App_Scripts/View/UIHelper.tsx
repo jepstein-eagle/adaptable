@@ -128,6 +128,8 @@ export module UIHelper {
             case StatusColour.Amber:
                 return MessageType.Warning;
             case StatusColour.Green:
+                return MessageType.Success;
+            case StatusColour.Blue:
                 return MessageType.Info;
         }
     }
@@ -140,6 +142,8 @@ export module UIHelper {
                 return WARNING_BSSTYLE;
             case StatusColour.Green:
                 return SUCCESS_BSSTYLE;
+            case StatusColour.Blue:
+                return INFO_BSSTYLE;
         }
     }
 
@@ -147,6 +151,8 @@ export module UIHelper {
         switch (messageType) {
             case MessageType.Info:
                 return "info-sign"
+            case MessageType.Success:
+                return "ok-sign"
             case MessageType.Warning:
                 return "warning-sign";
             case MessageType.Error:
@@ -160,8 +166,36 @@ export module UIHelper {
                 return DANGER_BSSTYLE;
             case MessageType.Warning:
                 return WARNING_BSSTYLE;
+            case MessageType.Success:
+                return SUCCESS_BSSTYLE;
             case MessageType.Info:
                 return INFO_BSSTYLE;
+        }
+    }
+
+  export function  getStyleForSystemStatusButton(statusColour: StatusColour): string {
+        switch (statusColour) {
+            case StatusColour.Blue:
+                return INFO_BSSTYLE
+            case StatusColour.Green:
+                return SUCCESS_BSSTYLE
+            case StatusColour.Amber:
+                return WARNING_BSSTYLE
+            case StatusColour.Red:
+                return DANGER_BSSTYLE
+        }
+    }
+
+  export function  getGlyphForSystemStatusButton(statusColour: StatusColour): string {
+        switch (statusColour) {
+            case StatusColour.Blue:
+                return "ok-circle"
+            case StatusColour.Green:
+                return "ok-circle" // one of these is wrong
+            case StatusColour.Amber:
+                return "ban-circle"
+            case StatusColour.Red:
+                return "remove-circle"
         }
     }
 

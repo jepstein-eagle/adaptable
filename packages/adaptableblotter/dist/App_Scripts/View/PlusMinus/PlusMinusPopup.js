@@ -19,6 +19,7 @@ const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const Enums_1 = require("../../Utilities/Enums");
 class PlusMinusPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -107,13 +108,14 @@ class PlusMinusPopupComponent extends React.Component {
     }
     onConfirmWarningCellValidation(index, plusMinus) {
         let confirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Existing Default Column Nudge Value for: " + plusMinus.ColumnId,
-            ConfirmationMsg: "Do you want to override it with new value: ?",
-            ConfirmationText: "Bypass Rule",
+            CancelButtonText: "Cancel",
+            Header: "Existing Default Column Nudge Value for: " + plusMinus.ColumnId,
+            Msg: "Do you want to override it with new value: ?",
+            ConfirmButtonText: "Confirm",
             CancelAction: null,
             ConfirmAction: PlusMinusRedux.PlusMinusEditCondition(index, { ColumnId: plusMinus.ColumnId, DefaultNudge: plusMinus.NudgeValue }),
-            ShowCommentBox: false
+            ShowCommentBox: false,
+            MessageType: Enums_1.MessageType.Warning
         };
         this.props.onConfirmWarningCellValidation(confirmation);
     }

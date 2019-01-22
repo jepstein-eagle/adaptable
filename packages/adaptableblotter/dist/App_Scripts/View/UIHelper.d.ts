@@ -18,4 +18,6 @@ export declare module UIHelper {
     function getStyleNameByStatusColour(statusColour: StatusColour): string;
     function getGlyphByMessageType(messageType: MessageType): string;
     function getStyleNameByMessageType(messageType: MessageType): string;
+    function getStyleForSystemStatusButton(statusColour: StatusColour): string;
+    function getGlyphForSystemStatusButton(statusColour: StatusColour): string;
 }

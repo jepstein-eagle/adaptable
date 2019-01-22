@@ -43,6 +43,7 @@ exports.INFO_BUTTON = "__btn-info";
 exports.DASHBOARD_BUTTON = "__btn-dashboard";
 exports.APPLY_BUTTON = "__btn-apply";
 exports.CANCEL_BUTTON = "__btn-cancel";
+exports.CONFIRM_BUTTON = "__btn-confirm";
 exports.CLEAR_BUTTON = "__btn-clear";
 exports.CLOSE_BUTTON = "__btn-close";
 exports.CONFIGURE_BUTTON = "__btn-configure";

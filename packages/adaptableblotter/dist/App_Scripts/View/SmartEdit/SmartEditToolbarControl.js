@@ -19,6 +19,7 @@ const PreviewResultsPanel_1 = require("../Components/PreviewResultsPanel");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
 const UIHelper_1 = require("../UIHelper");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class SmartEditToolbarControlComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -95,15 +96,9 @@ class SmartEditToolbarControlComponent extends React.Component {
             this.onApplySmartEdit();
     }
     onConfirmWarningCellValidation() {
-        let confirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: SmartEditRedux.SmartEditApply(false),
-            ConfirmAction: SmartEditRedux.SmartEditApply(true),
-            ShowCommentBox: true
-        };
+        let confirmAction = SmartEditRedux.SmartEditApply(true);
+        let cancelAction = SmartEditRedux.SmartEditApply(false);
+        let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
         this.props.onConfirmWarningCellValidation(confirmation);
     }
     onApplySmartEdit() {

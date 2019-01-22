@@ -29,7 +29,7 @@ import { DashboardStrategy } from '../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
 import { IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
 import { EventDispatcher } from '../Utilities/EventDispatcher'
-import { DataType, DistinctCriteriaPairValue, SortOrder, MessageType } from '../Utilities/Enums'
+import { DataType, DistinctCriteriaPairValue, SortOrder } from '../Utilities/Enums'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'

@@ -9,4 +9,5 @@ export declare class PercentBarStrategy extends AdaptableStrategyBase implements
     protected addPopupMenuItem(): void;
     addContextMenuItem(column: IColumn): void;
     protected InitState(): void;
+    protected GetPercentBarState(): PercentBarState;
 }

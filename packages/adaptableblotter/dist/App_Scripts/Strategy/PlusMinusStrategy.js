@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const PlusMinusRedux = require("../Redux/ActionsReducers/PlusMinusRedux");
-const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
 const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
 const Enums_1 = require("../Utilities/Enums");
@@ -11,14 +10,15 @@ const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
 const ExpressionHelper_1 = require("../Utilities/Helpers/ExpressionHelper");
 const ObjectFactory_1 = require("../Utilities/ObjectFactory");
+const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
 class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.PlusMinusStrategyId, blotter);
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent));
     }
     InitState() {
-        if (this.PlusMinusState != this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus) {
-            this.PlusMinusState = this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
+        if (this.PlusMinusState != this.GetPlusMinusState()) {
+            this.PlusMinusState = this.GetPlusMinusState();
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.PlusMinus, this.PlusMinusState);
             }
@@ -138,22 +138,19 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             });
             let warningMessage = failedRules.length + " Nudge(s) failed rule:\n" + warningMessages.toString();
             ;
-            let confirmation = {
-                CancelText: "Cancel Edit",
-                ConfirmationTitle: "Cell Validation Failed",
-                ConfirmationMsg: warningMessage,
-                ConfirmationText: "Bypass Rule",
-                CancelAction: PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString),
-                ConfirmAction: PlusMinusRedux.PlusMinusApply(allValues, keyEventString),
-                ShowCommentBox: true
-            };
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowConfirmation(confirmation));
+            let confirmAction = PlusMinusRedux.PlusMinusApply(allValues, keyEventString);
+            let cancelAction = PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString);
+            let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
+            this.blotter.api.internalApi.PopupShowConfirmation(confirmation);
         }
     }
     ApplyPlusMinus(keyEventString, successfulValues) {
         if (successfulValues.length > 0) {
             this.blotter.setValueBatch(successfulValues);
         }
+    }
+    GetPlusMinusState() {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
     }
 }
 exports.PlusMinusStrategy = PlusMinusStrategy;

@@ -27,6 +27,7 @@ const ColorPicker_1 = require("../ColorPicker");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 const ButtonGeneral_1 = require("../Components/Buttons/ButtonGeneral");
 const DefaultChartProperties_1 = require("../../Utilities/Defaults/DefaultChartProperties");
+const PanelWithTwoButtons_1 = require("../Components/Panels/PanelWithTwoButtons");
 class ChartDisplayPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -168,11 +169,7 @@ class ChartDisplayPopupComponent extends React.Component {
                             chartData),
                         this.state.IsChartSettingsVisible &&
                             React.createElement(react_bootstrap_1.Col, { xs: legendColumnSize },
-                                React.createElement(PanelWithButton_1.PanelWithButton, { bsSize: "xs", bsStyle: StyleConstants_1.INFO_BSSTYLE, headerText: "Chart Settings", cssClassName: cssClassName, button: closeChartSettingsButton },
-                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
-                                        React.createElement(react_bootstrap_1.Row, null,
-                                            React.createElement(react_bootstrap_1.Col, { xs: 12 },
-                                                React.createElement("div", { className: "pull-right" }, setDefaultsButton)))),
+                                React.createElement(PanelWithTwoButtons_1.PanelWithTwoButtons, { bsSize: "xs", bsStyle: StyleConstants_1.INFO_BSSTYLE, headerText: "Chart Settings", cssClassName: cssClassName, firstButton: closeChartSettingsButton, secondButton: setDefaultsButton },
                                     React.createElement(PanelWithButton_1.PanelWithButton, { bsSize: "xs", headerText: "General", cssClassName: cssClassName, button: showGeneralPropertiesButton, style: { marginTop: '10px' } }, this.state.IsGeneralMinimised == false &&
                                         React.createElement("div", null,
                                             React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },

@@ -8,7 +8,7 @@ interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlot
 }
 export declare class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAboutProps, {}> {
     render(): JSX.Element;
-    CreateAboutInfo(colItems: IColItem[]): IColItem[][];
+    private CreateAboutInfo;
     createColItem(colItems: IColItem[], item1: any, item2: any): IColItem[];
 }
 export {};

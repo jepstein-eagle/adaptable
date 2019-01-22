@@ -52,7 +52,7 @@ function getPKForGrid() {
 
 function getBlotterIdforGrid() {
   if (showTrade) {
-    return "demo trades";
+    return "nomura demmo";
   } else {
     return "demo ftse"
   }
@@ -100,14 +100,14 @@ function InitTradeBlotter() {
       userName: "demo user", // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
 
-      predefinedConfig: "nomurademoconfig.json",
+    //  predefinedConfig: "demoConfig.json",
 
       auditOptions: {
         //     auditCellEdits: true,
-     //   auditFunctionEvents: true,
+      //  auditFunctionEvents: true,
         //     auditUserStateChanges: true,
         //     auditInternalStateChanges: true,
-      //       pingInterval: 120
+     //        pingInterval: 120
       },
       configServerOptions: {
         enableConfigServer: false,

@@ -1,37 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
-//we use that syntax to import the default export from the module.... Took me a while to find the syntax
-const react_bootstrap_sweetalert_1 = require("react-bootstrap-sweetalert");
 const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
-const Enums_1 = require("../../../Utilities/Enums");
+const react_bootstrap_1 = require("react-bootstrap");
+const PanelWithImage_1 = require("../Panels/PanelWithImage");
+const UIHelper_1 = require("../../UIHelper");
 class AdaptableBlotterPopupAlert extends React.Component {
     render() {
-        let style;
-        let isInfo = false;
-        let isWarning = false;
-        let isError = false;
-        switch (this.props.MessageType) {
-            case Enums_1.MessageType.Info:
-                style = StyleConstants.INFO_BSSTYLE;
-                isInfo = true;
-                break;
-            case Enums_1.MessageType.Warning:
-                style = StyleConstants.WARNING_BSSTYLE;
-                isWarning = true;
-                break;
-            case Enums_1.MessageType.Error:
-                style = StyleConstants.DANGER_BSSTYLE;
-                isError = true;
-                break;
-        }
-        return this.props.ShowPopup && React.createElement("div", { className: StyleConstants.POPUP_ALERT },
-            React.createElement(react_bootstrap_sweetalert_1.default, { danger: isError, warning: isWarning, success: isInfo, confirmBtnBsStyle: style, title: this.props.Header, onConfirm: () => this.props.onClose() },
-                React.createElement("p", null, this.props.Msg.split("\n").map(function (item, index) {
-                    return (React.createElement("span", { key: index },
-                        item,
-                        React.createElement("br", null)));
-                }))));
+        let style = UIHelper_1.UIHelper.getStyleNameByMessageType(this.props.MessageType);
+        let header = this.props.MessageType.toUpperCase();
+        let glyph = UIHelper_1.UIHelper.getGlyphByMessageType(this.props.MessageType);
+        let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+        let cssClassName = StyleConstants.POPUP_ALERT;
+        return this.props.ShowPopup &&
+            React.createElement("div", { className: StyleConstants.POPUP_ALERT },
+                React.createElement(react_bootstrap_1.Modal, { show: this.props.ShowPopup, onHide: this.props.onClose, className: cssClassName, container: modalContainer, bsSize: "small" },
+                    React.createElement("div", { className: cssClassName + StyleConstants.MODAL_BASE },
+                        React.createElement(react_bootstrap_1.Modal.Body, { className: cssClassName + StyleConstants.MODAL_BODY },
+                            React.createElement("div", { className: cssClassName },
+                                React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: header, bsStyle: style, glyphicon: glyph, bsSize: "small" },
+                                    React.createElement("div", null,
+                                        React.createElement("div", { style: { display: "flex", alignItems: "center" } },
+                                            React.createElement(react_bootstrap_1.ControlLabel, null, this.props.Header)),
+                                        React.createElement("div", { style: { display: "flex", alignItems: "center" } }, this.props.Msg.split("\n").map(function (item, index) {
+                                            return (React.createElement("span", { key: index },
+                                                item,
+                                                React.createElement("br", null)));
+                                        })),
+                                        React.createElement("div", { style: { marginTop: '20px' } },
+                                            React.createElement(react_bootstrap_1.Row, null,
+                                                React.createElement(react_bootstrap_1.Col, { xs: 4 }),
+                                                React.createElement(react_bootstrap_1.Col, { xs: 7 },
+                                                    React.createElement(react_bootstrap_1.Button, { bsStyle: style, className: cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON, onClick: () => this.props.onClose() }, "OK")))))))))));
     }
 }
 exports.AdaptableBlotterPopupAlert = AdaptableBlotterPopupAlert;

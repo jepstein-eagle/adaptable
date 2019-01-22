@@ -27,7 +27,7 @@ class PanelWithImage extends React.Component {
                                 " ",
                                 React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "", bodyText: this.props.infoBody, MessageType: Enums_1.MessageType.Info })))),
                 React.createElement(react_bootstrap_1.Col, { xs: 3 }, this.props.button && React.cloneElement(this.props.button, { style: { float: 'right' } }))));
-        return React.createElement(react_bootstrap_1.Panel, { header: headerRow, className: cssClassName, style: this.props.style, bsStyle: this.props.bsStyle }, this.props.children);
+        return React.createElement(react_bootstrap_1.Panel, { header: headerRow, className: cssClassName, style: this.props.style, bsStyle: this.props.bsStyle, bsSize: this.props.bsSize }, this.props.children);
     }
 }
 exports.PanelWithImage = PanelWithImage;

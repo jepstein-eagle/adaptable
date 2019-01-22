@@ -32,6 +32,7 @@ export declare const INFO_BUTTON: string;
 export declare const DASHBOARD_BUTTON: string;
 export declare const APPLY_BUTTON: string;
 export declare const CANCEL_BUTTON: string;
+export declare const CONFIRM_BUTTON: string;
 export declare const CLEAR_BUTTON: string;
 export declare const CLOSE_BUTTON: string;
 export declare const CONFIGURE_BUTTON: string;

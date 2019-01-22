@@ -22,6 +22,7 @@ import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { ISystemStatus } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { IMenuItem } from "../../Utilities/Interface/IMenu";
 import { IAlert } from "../../Utilities/Interface/IMessage";
+import { UIHelper } from "../UIHelper";
 
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
@@ -89,7 +90,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         // status button
         let statusButton = <OverlayTrigger key={"systemstatus"} overlay={<Tooltip id="tooltipButton" > {"System Status"}</Tooltip >}>
-            <ButtonDashboard glyph={this.getGlyphForSystemStatusButton()} cssClassName={cssClassName} bsStyle={this.getStyleForSystemStatusButton()} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={"Status: " + this.props.SystemStatus.StatusColour} overrideDisableButton={false} onClick={() => this.onClickStatus()} AccessLevel={AccessLevel.Full} />
+            <ButtonDashboard glyph={UIHelper.getGlyphForSystemStatusButton(this.props.SystemStatus.StatusColour as StatusColour)} cssClassName={cssClassName} bsStyle={UIHelper.getStyleForSystemStatusButton(this.props.SystemStatus.StatusColour as StatusColour)} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={"Status: " + this.props.SystemStatus.StatusColour} overrideDisableButton={false} onClick={() => this.onClickStatus()} AccessLevel={AccessLevel.Full} />
         </OverlayTrigger >
 
         // about button
@@ -243,29 +244,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         this.props.onSetToolbarVisibility(visibleToolbars)
     }
 
-    getStyleForSystemStatusButton(): string {
-        let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour
-        switch (statusColor) {
-            case StatusColour.Green:
-                return SUCCESS_BSSTYLE
-            case StatusColour.Amber:
-                return WARNING_BSSTYLE
-            case StatusColour.Red:
-                return DANGER_BSSTYLE
-        }
-    }
-
-    getGlyphForSystemStatusButton(): string {
-        let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour
-        switch (statusColor) {
-            case StatusColour.Green:
-                return "ok-circle"
-            case StatusColour.Amber:
-                return "ban-circle"
-            case StatusColour.Red:
-                return "remove-circle"
-        }
-    }
+  
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

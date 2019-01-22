@@ -59,7 +59,7 @@ export interface IAlertDefinition extends IAdaptableBlotterObject {
     ColumnId: string;
     Range: IRange;
     Expression: Expression;
-    MessageType: 'Info' | 'Warning' | 'Error';
+    MessageType: 'Success' | 'Info' | 'Warning' | 'Error';
     ShowAsPopup: boolean;
 }
 export interface IChartDefinition extends IAdaptableBlotterObject {
@@ -234,7 +234,7 @@ export interface IEntitlement {
 }
 export interface ISystemStatus {
     StatusMessage: string;
-    StatusColour: "Red" | "Amber" | "Green";
+    StatusColour: "Red" | "Amber" | "Green" | "Blue";
 }
 export interface IPermittedColumnValues {
     ColumnId: string;

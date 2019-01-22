@@ -86,7 +86,7 @@ class AuditLogService {
     }
     AddAdaptableBlotterFunctionLog(functionName, action, info, data) {
         if (this.IsAuditFunctionEventsEnabled) {
-            this.auditLogQueue.push({
+            let auditLogEntry = {
                 adaptableblotter_auditlog_trigger: Enums_1.AuditLogTrigger.AdaptableBlotterFunction,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotterOptions.userName,
@@ -99,7 +99,9 @@ class AuditLogService {
                     //same as adaptableblotter_state_change we log the obj as a string
                     data: data ? this.convertToText(data) : null
                 }
-            });
+            };
+            console.log(auditLogEntry);
+            this.auditLogQueue.push(auditLogEntry);
         }
     }
     ping() {

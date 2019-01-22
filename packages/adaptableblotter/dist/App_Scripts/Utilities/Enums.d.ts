@@ -189,10 +189,12 @@ export declare enum ContextMenuTab {
 export declare enum StatusColour {
     Red = "Red",
     Amber = "Amber",
-    Green = "Green"
+    Green = "Green",
+    Blue = "Blue"
 }
 export declare enum MessageType {
     Info = "Info",
+    Success = "Success",
     Warning = "Warning",
     Error = "Error"
 }

@@ -13,9 +13,9 @@ const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const ButtonDashboard_1 = require("../Components/Buttons/ButtonDashboard");
 const Enums_1 = require("../../Utilities/Enums");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
-const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
 const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const UIHelper_1 = require("../UIHelper");
 class HomeToolbarControlComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -75,7 +75,7 @@ class HomeToolbarControlComponent extends React.Component {
         let statusButton = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "systemstatus", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                 " ",
                 "System Status") },
-            React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: this.getGlyphForSystemStatusButton(), cssClassName: cssClassName, bsStyle: this.getStyleForSystemStatusButton(), DisplayMode: "Glyph", bsSize: "small", ToolTipAndText: "Status: " + this.props.SystemStatus.StatusColour, overrideDisableButton: false, onClick: () => this.onClickStatus(), AccessLevel: Enums_1.AccessLevel.Full }));
+            React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: UIHelper_1.UIHelper.getGlyphForSystemStatusButton(this.props.SystemStatus.StatusColour), cssClassName: cssClassName, bsStyle: UIHelper_1.UIHelper.getStyleForSystemStatusButton(this.props.SystemStatus.StatusColour), DisplayMode: "Glyph", bsSize: "small", ToolTipAndText: "Status: " + this.props.SystemStatus.StatusColour, overrideDisableButton: false, onClick: () => this.onClickStatus(), AccessLevel: Enums_1.AccessLevel.Full }));
         // about button
         let aboutButton = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "about", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                 " ",
@@ -181,28 +181,6 @@ class HomeToolbarControlComponent extends React.Component {
             visibleToolbars.splice(index, 1);
         }
         this.props.onSetToolbarVisibility(visibleToolbars);
-    }
-    getStyleForSystemStatusButton() {
-        let statusColor = this.props.SystemStatus.StatusColour;
-        switch (statusColor) {
-            case Enums_1.StatusColour.Green:
-                return StyleConstants_1.SUCCESS_BSSTYLE;
-            case Enums_1.StatusColour.Amber:
-                return StyleConstants_1.WARNING_BSSTYLE;
-            case Enums_1.StatusColour.Red:
-                return StyleConstants_1.DANGER_BSSTYLE;
-        }
-    }
-    getGlyphForSystemStatusButton() {
-        let statusColor = this.props.SystemStatus.StatusColour;
-        switch (statusColor) {
-            case Enums_1.StatusColour.Green:
-                return "ok-circle";
-            case Enums_1.StatusColour.Amber:
-                return "ban-circle";
-            case Enums_1.StatusColour.Red:
-                return "remove-circle";
-        }
     }
 }
 function mapStateToProps(state, ownProps) {

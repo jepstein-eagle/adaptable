@@ -59,6 +59,7 @@ const QuickSearchStrategy_1 = require("../Strategy/QuickSearchStrategy");
 const ConditionalStyleStrategyHypergrid_1 = require("./Strategy/ConditionalStyleStrategyHypergrid");
 const FlashingCellsStrategyHypergrid_1 = require("./Strategy/FlashingCellsStrategyHypergrid");
 const FormatColumnStrategyHypergrid_1 = require("./Strategy/FormatColumnStrategyHypergrid");
+const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -1009,15 +1010,9 @@ class AdaptableBlotter {
                         ColumnId: dataChangedEvent.ColumnId,
                         Value: dataChangedEvent.NewValue
                     };
-                    let confirmation = {
-                        CancelText: "Cancel Edit",
-                        ConfirmationTitle: "Cell Validation Failed",
-                        ConfirmationMsg: warningMessage,
-                        ConfirmationText: "Bypass Rule",
-                        CancelAction: null,
-                        ConfirmAction: GridRedux.GridSetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId]),
-                        ShowCommentBox: true
-                    };
+                    let confirmAction = GridRedux.GridSetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId]);
+                    let cancelAction = null;
+                    let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
                     this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowConfirmation(confirmation));
                     //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
                     event.preventDefault();

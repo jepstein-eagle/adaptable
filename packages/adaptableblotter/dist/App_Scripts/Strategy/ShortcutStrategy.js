@@ -4,12 +4,12 @@ const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
 const ShortcutRedux = require("../Redux/ActionsReducers/ShortcutRedux");
-const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
 const Enums_1 = require("../Utilities/Enums");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
 const Helper_1 = require("../Utilities/Helpers/Helper");
 const ObjectFactory_1 = require("../Utilities/ObjectFactory");
+const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
 class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.ShortcutStrategyId, blotter);
@@ -128,17 +128,10 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         failedRules.forEach(f => {
             warningMessage = warningMessage + ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(f, this.blotter) + "\n";
         });
-        let confirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: warningMessage,
-            ConfirmationText: "Bypass Rule",
-            //We cancel the edit before applying the shortcut so if cancel then there is nothing to do
-            CancelAction: null,
-            ConfirmAction: ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue),
-            ShowCommentBox: true
-        };
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowConfirmation(confirmation));
+        let confirmAction = ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue);
+        let cancelAction = null;
+        let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
+        this.blotter.api.internalApi.PopupShowConfirmation(confirmation);
     }
 }
 exports.ShortcutStrategy = ShortcutStrategy;

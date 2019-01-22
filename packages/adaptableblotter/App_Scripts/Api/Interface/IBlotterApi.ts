@@ -24,6 +24,7 @@ import { ISystemStatusApi } from "./ISystemStatusApi";
 import { IThemeApi } from "./IThemeApi";
 import { IUserInterfaceApi } from "./IUserInterfaceApi";
 import { ICustomSortApi } from "./ICustomSortApi";
+import { IInternalApi } from "./IInternalApi";
 
 
 /**
@@ -58,4 +59,7 @@ export interface IBlotterApi {
   systemStatusApi: ISystemStatusApi;
   themeApi: IThemeApi;
   userInterfaceApi: IUserInterfaceApi;
+
+  // internal use
+  internalApi: IInternalApi
 }

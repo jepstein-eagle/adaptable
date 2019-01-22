@@ -52,6 +52,8 @@ import { SystemFilterApi } from "./SystemFilterApi";
 import { SystemStatusApi } from "./SystemStatusApi";
 import { ThemeApi } from "./ThemeApi";
 import { UserInterfaceApi } from "./UserInterfaceApi";
+import { IInternalApi } from "./Interface/IInternalApi";
+import { InternalApi } from "./InternalApi";
 
 
 
@@ -74,6 +76,7 @@ export class BlotterApi implements IBlotterApi {
   public formatColumnApi: IFormatColumnApi;
   public freeTextColumnApi: IFreeTextColumnApi;
   public gridApi: IGridApi
+  public internalApi: IInternalApi
   public layoutApi: ILayoutApi;
   public percentBarApi: IPercentBarApi;
   public quickSearchApi: IQuickSearchApi;
@@ -103,6 +106,7 @@ export class BlotterApi implements IBlotterApi {
     this.formatColumnApi = new FormatColumnApi(blotter);
     this.freeTextColumnApi = new FreeTextColumnApi(blotter);
     this.gridApi = new GridApi(blotter);
+    this.internalApi = new InternalApi(blotter);
     this.layoutApi = new LayoutApi(blotter);
     this.percentBarApi = new PercentBarApi(blotter);
     this.quickSearchApi = new QuickSearchApi(blotter);

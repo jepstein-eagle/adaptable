@@ -52,7 +52,7 @@ import { FilterWrapperFactory } from './FilterWrapper'
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 // import other items
 import { EventDispatcher } from '../Utilities/EventDispatcher'
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, MessageType } from '../Utilities/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../Utilities/Enums'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
@@ -1837,10 +1837,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // if user layout and a percent bar sometimes the first few cells are pre-rendered so we frig it like this
         if (this.getState().Layout.CurrentLayout != DEFAULT_LAYOUT && ArrayExtensions.IsNotNullOrEmpty(this.getState().PercentBar.PercentBars)) {
-            this.dispatchAction(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT));
+            this.api.layoutApi.Set(DEFAULT_LAYOUT);
         }
         // at the end so load the current layout, refresh the toolbar and turn off the loading message
-        this.dispatchAction(LayoutRedux.LayoutSelect(currentlayout));
+        this.api.layoutApi.Set(currentlayout);
     }
 
 

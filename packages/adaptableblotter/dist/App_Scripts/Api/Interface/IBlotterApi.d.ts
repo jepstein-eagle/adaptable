@@ -24,6 +24,7 @@ import { ISystemStatusApi } from "./ISystemStatusApi";
 import { IThemeApi } from "./IThemeApi";
 import { IUserInterfaceApi } from "./IUserInterfaceApi";
 import { ICustomSortApi } from "./ICustomSortApi";
+import { IInternalApi } from "./IInternalApi";
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
  * Contains all the functionality provided by the Adaptable Blotter UI in function form
@@ -56,4 +57,5 @@ export interface IBlotterApi {
     systemStatusApi: ISystemStatusApi;
     themeApi: IThemeApi;
     userInterfaceApi: IUserInterfaceApi;
+    internalApi: IInternalApi;
 }

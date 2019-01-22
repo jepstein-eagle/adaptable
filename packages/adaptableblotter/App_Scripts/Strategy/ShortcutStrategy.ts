@@ -147,10 +147,10 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this.blotter) + "\n";
         })
 
-        let confirmAction: Redux.Action =  ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue)
-        let cancelAction: Redux.Action =null;
+        let confirmAction: Redux.Action = ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue)
+        let cancelAction: Redux.Action = null;
         let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+        this.blotter.api.internalApi.PopupShowConfirmation(confirmation)
     }
 
 }

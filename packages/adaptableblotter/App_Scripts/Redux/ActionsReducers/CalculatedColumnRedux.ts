@@ -8,42 +8,42 @@ export const CALCULATEDCOLUMN_DELETE = 'CALCULATEDCOLUMN_DELETE';
 export const CALCULATEDCOLUMN_IS_EXPRESSION_VALID = 'CALCULATEDCOLUMN_IS_EXPRESSION_VALID';
 
 export interface CalculatedColumnAddAction extends Redux.Action {
-    CalculatedColumn: ICalculatedColumn
+    calculatedColumn: ICalculatedColumn
 }
 
 export interface CalculatedColumnEditAction extends Redux.Action {
-    Index: number,
-    CalculatedColumn: ICalculatedColumn
+    index: number,
+    calculatedColumn: ICalculatedColumn
 }
 
 export interface CalculatedColumnDeleteAction extends Redux.Action {
-    Index: number
+    index: number
 }
 
 export interface CalculatedColumnIsExpressionValidAction extends Redux.Action {
-    Expression: string
+    expression: string
 }
 
 
-export const CalculatedColumnAdd = (CalculatedColumn: ICalculatedColumn): CalculatedColumnAddAction => ({
+export const CalculatedColumnAdd = (calculatedColumn: ICalculatedColumn): CalculatedColumnAddAction => ({
     type: CALCULATEDCOLUMN_ADD,
-    CalculatedColumn
+    calculatedColumn
 })
 
-export const CalculatedColumnEdit = (Index: number, CalculatedColumn: ICalculatedColumn): CalculatedColumnEditAction => ({
+export const CalculatedColumnEdit = (index: number, calculatedColumn: ICalculatedColumn): CalculatedColumnEditAction => ({
     type: CALCULATEDCOLUMN_EDIT,
-    Index,
-    CalculatedColumn
+    index,
+    calculatedColumn
 })
 
-export const CalculatedColumnDelete = (Index: number): CalculatedColumnDeleteAction => ({
+export const CalculatedColumnDelete = (index: number): CalculatedColumnDeleteAction => ({
     type: CALCULATEDCOLUMN_DELETE,
-    Index
+    index
 })
 
-export const CalculatedColumnIsExpressionValid = (Expression: string): CalculatedColumnIsExpressionValidAction => ({
+export const CalculatedColumnIsExpressionValid = (expression: string): CalculatedColumnIsExpressionValidAction => ({
     type: CALCULATEDCOLUMN_IS_EXPRESSION_VALID,
-    Expression
+    expression
 })
 
 
@@ -57,15 +57,15 @@ export const CalculatedColumnReducer: Redux.Reducer<CalculatedColumnState> = (st
          case CALCULATEDCOLUMN_ADD: {
             let items: Array<ICalculatedColumn> = [].concat(state.CalculatedColumns);
 
-            items.push((<CalculatedColumnAddAction>action).CalculatedColumn);
+            items.push((<CalculatedColumnAddAction>action).calculatedColumn);
             return Object.assign({}, state, {
                 CalculatedColumns: items
             });
         }
         case CALCULATEDCOLUMN_EDIT: {
             let items: Array<ICalculatedColumn> = [].concat(state.CalculatedColumns);
-            let index = (<CalculatedColumnEditAction>action).Index
-            items[index] = (<CalculatedColumnEditAction>action).CalculatedColumn;
+            let index = (<CalculatedColumnEditAction>action).index
+            items[index] = (<CalculatedColumnEditAction>action).calculatedColumn;
 
             return Object.assign({}, state, {
                 CalculatedColumns: items
@@ -73,7 +73,7 @@ export const CalculatedColumnReducer: Redux.Reducer<CalculatedColumnState> = (st
         }
         case CALCULATEDCOLUMN_DELETE:
             var items: Array<ICalculatedColumn> = [].concat(state.CalculatedColumns);
-            let index = (<CalculatedColumnDeleteAction>action).Index
+            let index = (<CalculatedColumnDeleteAction>action).index
             items.splice(index, 1);
 
             return Object.assign({}, state, {

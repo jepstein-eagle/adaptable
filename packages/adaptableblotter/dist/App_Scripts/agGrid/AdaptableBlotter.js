@@ -10,7 +10,6 @@ const StyleConstants = require("../Utilities/Constants/StyleConstants");
 const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
 const AdaptableBlotterStore_1 = require("../Redux/Store/AdaptableBlotterStore");
 const MenuRedux = require("../Redux/ActionsReducers/MenuRedux");
-const LayoutRedux = require("../Redux/ActionsReducers/LayoutRedux");
 const GridRedux = require("../Redux/ActionsReducers/GridRedux");
 const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
 const AuditLogService_1 = require("../Utilities/Services/AuditLogService");
@@ -77,6 +76,7 @@ const CustomSortStrategyagGrid_1 = require("./Strategy/CustomSortStrategyagGrid"
 const FlashingCellsStrategyagGrid_1 = require("./Strategy/FlashingCellsStrategyagGrid");
 const FormatColumnStrategyagGrid_1 = require("./Strategy/FormatColumnStrategyagGrid");
 const QuickSearchStrategyagGrid_1 = require("./Strategy/QuickSearchStrategyagGrid");
+const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this._calculatedColumnPathMap = new Map();
@@ -1095,15 +1095,9 @@ class AdaptableBlotter {
                             ColumnId: dataChangedInfo.ColumnId,
                             Value: dataChangedInfo.NewValue
                         };
-                        let confirmation = {
-                            CancelText: "Cancel Edit",
-                            ConfirmationTitle: "Cell Validation Failed",
-                            ConfirmationMsg: warningMessage,
-                            ConfirmationText: "Bypass Rule",
-                            CancelAction: null,
-                            ConfirmAction: GridRedux.GridSetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node)),
-                            ShowCommentBox: true
-                        };
+                        let confirmAction = GridRedux.GridSetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node));
+                        let cancelAction = null;
+                        let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
                         this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowConfirmation(confirmation));
                         //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
                         return true;
@@ -1593,10 +1587,10 @@ class AdaptableBlotter {
         }
         // if user layout and a percent bar sometimes the first few cells are pre-rendered so we frig it like this
         if (this.getState().Layout.CurrentLayout != GeneralConstants_1.DEFAULT_LAYOUT && ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.getState().PercentBar.PercentBars)) {
-            this.dispatchAction(LayoutRedux.LayoutSelect(GeneralConstants_1.DEFAULT_LAYOUT));
+            this.api.layoutApi.Set(GeneralConstants_1.DEFAULT_LAYOUT);
         }
         // at the end so load the current layout, refresh the toolbar and turn off the loading message
-        this.dispatchAction(LayoutRedux.LayoutSelect(currentlayout));
+        this.api.layoutApi.Set(currentlayout);
     }
     // A couple of state management functions
     getState() {

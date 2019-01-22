@@ -26,6 +26,7 @@ const SystemFilterApi_1 = require("./SystemFilterApi");
 const SystemStatusApi_1 = require("./SystemStatusApi");
 const ThemeApi_1 = require("./ThemeApi");
 const UserInterfaceApi_1 = require("./UserInterfaceApi");
+const InternalApi_1 = require("./InternalApi");
 class BlotterApi {
     constructor(blotter) {
         this.blotter = blotter;
@@ -46,6 +47,7 @@ class BlotterApi {
         this.formatColumnApi = new FormatColumnApi_1.FormatColumnApi(blotter);
         this.freeTextColumnApi = new FreeTextColumnApi_1.FreeTextColumnApi(blotter);
         this.gridApi = new GridApi_1.GridApi(blotter);
+        this.internalApi = new InternalApi_1.InternalApi(blotter);
         this.layoutApi = new LayoutApi_1.LayoutApi(blotter);
         this.percentBarApi = new PercentBarApi_1.PercentBarApi(blotter);
         this.quickSearchApi = new QuickSearchApi_1.QuickSearchApi(blotter);

@@ -6,7 +6,7 @@ import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
-import { DataType, StateChangedTrigger, MessageType } from '../Utilities/Enums'
+import { DataType, StateChangedTrigger } from '../Utilities/Enums'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
@@ -171,10 +171,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             let confirmAction: Redux.Action =  PlusMinusRedux.PlusMinusApply(allValues, keyEventString)
             let cancelAction: Redux.Action =PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString);
-            let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
-           
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
-        }
+            let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage); 
+            this.blotter.api.internalApi.PopupShowConfirmation(confirmation) }
     }
 
     public ApplyPlusMinus(keyEventString: string, successfulValues: ICellInfo[]): void {

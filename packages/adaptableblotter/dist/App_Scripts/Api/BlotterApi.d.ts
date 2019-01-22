@@ -26,6 +26,7 @@ import { ISystemStatusApi } from "./Interface/ISystemStatusApi";
 import { IThemeApi } from "./Interface/IThemeApi";
 import { IUserInterfaceApi } from "./Interface/IUserInterfaceApi";
 import { IAdaptableBlotter } from "../Utilities/Interface/IAdaptableBlotter";
+import { IInternalApi } from "./Interface/IInternalApi";
 export declare class BlotterApi implements IBlotterApi {
     protected blotter: IAdaptableBlotter;
     advancedSearchApi: IAdvancedSearchApi;
@@ -45,6 +46,7 @@ export declare class BlotterApi implements IBlotterApi {
     formatColumnApi: IFormatColumnApi;
     freeTextColumnApi: IFreeTextColumnApi;
     gridApi: IGridApi;
+    internalApi: IInternalApi;
     layoutApi: ILayoutApi;
     percentBarApi: IPercentBarApi;
     quickSearchApi: IQuickSearchApi;

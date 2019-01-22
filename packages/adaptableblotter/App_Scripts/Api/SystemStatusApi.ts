@@ -7,7 +7,7 @@ import { ISystemStatus } from '../Utilities/Interface/IAdaptableBlotterObjects';
 export class SystemStatusApi extends ApiBase implements ISystemStatusApi {
 
       // System Status api Methods
-  public  Set(statusMessage: string, statusColour: "Red" | "Amber" | "Green"): void {
+  public  Set(statusMessage: string, statusColour: "Blue"| "Red" | "Amber" | "Green"): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: statusColour }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
@@ -21,6 +21,10 @@ export class SystemStatusApi extends ApiBase implements ISystemStatusApi {
   }
   public  SetGreen(statusMessage: string): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Green }
+    this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
+  }
+  public  SeBlue(statusMessage: string): void {
+    let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Blue }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
 

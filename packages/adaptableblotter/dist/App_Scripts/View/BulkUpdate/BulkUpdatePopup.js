@@ -18,6 +18,7 @@ const ColumnValueSelector_1 = require("../Components/Selectors/ColumnValueSelect
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class BulkUpdatePopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -112,15 +113,9 @@ class BulkUpdatePopupComponent extends React.Component {
         this.props.onApplyBulkUpdate();
     }
     onConfirmWarningCellValidation() {
-        let confirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: BulkUpdateRedux.BulkUpdateApply(false),
-            ConfirmAction: BulkUpdateRedux.BulkUpdateApply(true),
-            ShowCommentBox: true
-        };
+        let confirmAction = BulkUpdateRedux.BulkUpdateApply(true);
+        let cancelAction = BulkUpdateRedux.BulkUpdateApply(false);
+        let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
         this.props.onConfirmWarningCellValidation(confirmation);
     }
     getButtonStyle() {

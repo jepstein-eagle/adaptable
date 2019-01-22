@@ -166,7 +166,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 break;
             case Enums_1.ExportDestination.iPushPull:
                 iPushPullHelper_1.iPushPullHelper.LoadPage(folder, page).then(() => {
-                    this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStartLive(ReportName, page, Enums_1.ExportDestination.iPushPull));
+                    this.blotter.api.internalApi.ReportStartLive(ReportName, page, Enums_1.ExportDestination.iPushPull);
                     setTimeout(() => { this.throttledRecomputeAndSendLiveExcelEvent(); }, 500);
                 });
                 break;

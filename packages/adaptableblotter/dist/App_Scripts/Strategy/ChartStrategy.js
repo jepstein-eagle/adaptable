@@ -69,8 +69,10 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     setChartData() {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let currentChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition);
-        let chartData = this.blotter.ChartService.BuildChartData(currentChartDefinition, columns);
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
+        if (currentChartDefinition) {
+            let chartData = this.blotter.ChartService.BuildChartData(currentChartDefinition, columns);
+            this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
+        }
     }
     clearChartData() {
         if (this.GetSystemState().ChartData != null) {
