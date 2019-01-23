@@ -12,8 +12,10 @@ export enum ChartType {
     Line = 'Line',
     Point = 'Point',
     Spline = 'Spline',
+    SplineArea = 'SplineArea',
     StepArea = 'StepArea',
-    StepLine = 'StepLine'
+    StepLine = 'StepLine',
+    Waterfall = 'Waterfall'
 }
 
 export enum ChartCrosshairsMode {

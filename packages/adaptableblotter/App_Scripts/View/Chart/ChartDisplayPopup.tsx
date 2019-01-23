@@ -858,12 +858,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onShowGeneralProperties() {
-
-        if (this.props.ShowModal) {
-            this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
-        } else {
-            this.setState({ IsGeneralMinimised: false, } as ChartDisplayPopupWizardState)
-        }
+       this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
     }
 
     onHideGeneralProperties() {
@@ -871,11 +866,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onShowYAxisProperties() {
-        if (this.props.ShowModal) {
-            this.setState({ IsYAxisMinimised: false, IsGeneralMinimised: true, IsXAxisMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
-        } else {
-            this.setState({ IsYAxisMinimised: false, } as ChartDisplayPopupWizardState)
-        }
+        this.setState({ IsYAxisMinimised: false, IsGeneralMinimised: true, IsXAxisMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState);
     }
 
     onHideYAxisProperties() {
@@ -883,11 +874,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onShowXAxisProperties() {
-        if (this.props.ShowModal) {
-            this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: false, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
-        } else {
-            this.setState({ IsXAxisMinimised: false, } as ChartDisplayPopupWizardState)
-        }
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: false, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
     }
 
     onHideXAxisProperties() {
@@ -895,11 +882,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onShowMiscProperties() {
-        if (this.props.ShowModal) {
-            this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsMiscMinimised: false } as ChartDisplayPopupWizardState)
-        } else {
-            this.setState({ IsMiscMinimised: false, } as ChartDisplayPopupWizardState)
-        }
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsMiscMinimised: false } as ChartDisplayPopupWizardState)
     }
 
     onHideMiscProperties() {

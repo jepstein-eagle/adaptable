@@ -3,7 +3,7 @@ var adaptableblotter
 var quickSearchText
 var trades
 var gridOptions
-var showTrade = true;
+var showTrade = false;
 
 function runQuickSearchViaAPI() {
   let element = document.getElementById("txtQuickSearchText")
@@ -30,7 +30,7 @@ function getRowsForGrid(dataGen) {
   if (showTrade) {
     return dataGen.getTrades(500);
   } else {
-    return dataGen.getFtseData(100)
+    return dataGen.getFtseData(200)
   }
 }
 

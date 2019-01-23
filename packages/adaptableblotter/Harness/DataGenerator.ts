@@ -52,7 +52,7 @@ export class DataGenerator {
     getFtseData(count: number): IFtse[] {
         let ftseRows: IFtse[] = [];
         let todayDate: Date = new Date();
-        let startDate: Date = addDays(todayDate, ((-count)))
+        let startDate: Date = addDays(todayDate, 40);
         let start: number = this.roundTo2Dp(325 + this.generateRandomDouble());
         let end: number = this.roundTo2Dp(start + (this.generateRandomInt(-15, 10) + this.generateRandomDouble()));
         ftseRows.push(this.createIFtse(startDate, 0, start, end));
@@ -159,7 +159,7 @@ export class DataGenerator {
     }
 
     createIFtse(date: Date, index: number, start: number, end: number): IFtse {
-        let newDate: Date = addDays(date, index)
+        let newDate: Date = addDays(date, -index)
         let low: number = (start > end) ?
             this.roundTo2Dp(end - this.generateRandomInt(0, 10) + this.generateRandomDouble()) :
             this.roundTo2Dp(start - this.generateRandomInt(0, 10) + this.generateRandomDouble());
