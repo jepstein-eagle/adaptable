@@ -656,6 +656,7 @@ class AdaptableBlotter {
         this.gridOptions.api.setSortModel(sortModel);
     }
     getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) {
+        console.log("fetching for : " + columnId);
         let returnMap = new Map();
         // check if there are permitted column values for that column
         let permittedValues = this.getState().UserInterface.PermittedColumnValues;

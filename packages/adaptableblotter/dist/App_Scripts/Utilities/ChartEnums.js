@@ -14,8 +14,10 @@ var ChartType;
     ChartType["Line"] = "Line";
     ChartType["Point"] = "Point";
     ChartType["Spline"] = "Spline";
+    ChartType["SplineArea"] = "SplineArea";
     ChartType["StepArea"] = "StepArea";
     ChartType["StepLine"] = "StepLine";
+    ChartType["Waterfall"] = "Waterfall";
 })(ChartType = exports.ChartType || (exports.ChartType = {}));
 var ChartCrosshairsMode;
 (function (ChartCrosshairsMode) {

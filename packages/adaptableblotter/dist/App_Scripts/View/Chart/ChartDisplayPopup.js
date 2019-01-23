@@ -379,45 +379,25 @@ class ChartDisplayPopupComponent extends React.Component {
         this.updateChartProperties(chartProperties);
     }
     onShowGeneralProperties() {
-        if (this.props.ShowModal) {
-            this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsMiscMinimised: true });
-        }
-        else {
-            this.setState({ IsGeneralMinimised: false, });
-        }
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsMiscMinimised: true });
     }
     onHideGeneralProperties() {
         this.setState({ IsGeneralMinimised: true, });
     }
     onShowYAxisProperties() {
-        if (this.props.ShowModal) {
-            this.setState({ IsYAxisMinimised: false, IsGeneralMinimised: true, IsXAxisMinimised: true, IsMiscMinimised: true });
-        }
-        else {
-            this.setState({ IsYAxisMinimised: false, });
-        }
+        this.setState({ IsYAxisMinimised: false, IsGeneralMinimised: true, IsXAxisMinimised: true, IsMiscMinimised: true });
     }
     onHideYAxisProperties() {
         this.setState({ IsYAxisMinimised: true, });
     }
     onShowXAxisProperties() {
-        if (this.props.ShowModal) {
-            this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: false, IsMiscMinimised: true });
-        }
-        else {
-            this.setState({ IsXAxisMinimised: false, });
-        }
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: false, IsMiscMinimised: true });
     }
     onHideXAxisProperties() {
         this.setState({ IsXAxisMinimised: true, });
     }
     onShowMiscProperties() {
-        if (this.props.ShowModal) {
-            this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsMiscMinimised: false });
-        }
-        else {
-            this.setState({ IsMiscMinimised: false, });
-        }
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsMiscMinimised: false });
     }
     onHideMiscProperties() {
         this.setState({ IsMiscMinimised: true, });
