@@ -23,9 +23,13 @@ exports.DefaultChartProperties = {
     XAxisTitle: "",
     XAxisTitleColor: "",
     XAxisGap: 0.5,
+    XAxisAngle: ChartEnums_1.AxisAngle.Diagonal,
     // Misc
     EnableTransitions: false,
     TransitionInDuration: undefined,
     TitleAlignment: ChartEnums_1.HorizontalAlignment.Center,
     SubTitleAlignment: ChartEnums_1.HorizontalAlignment.Center,
+    EnableSeriesHighlighting: false,
+    EnableCategoryHighlighting: false,
+    EnableItemHighlighting: false
 };

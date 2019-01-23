@@ -8,6 +8,7 @@ const Enums_1 = require("../../../Utilities/Enums");
 const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 const ChartEnums_1 = require("../../../Utilities/ChartEnums");
+const AdaptablePopover_1 = require("../../AdaptablePopover");
 class ChartYAxisWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -36,7 +37,7 @@ class ChartYAxisWizard extends React.Component {
             return this.createRow(columnNumber, labelText, cssClassName, colId, index, availableNumericCols);
         });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(react_bootstrap_1.Panel, { header: "Chart Colum Y Axis", bsStyle: "primary" },
+            React.createElement(react_bootstrap_1.Panel, { header: "Chart: Y (Vertical) Axis Column(s)", bsStyle: "primary" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "yAxisColumn" },
                         React.createElement(react_bootstrap_1.Row, null,
@@ -45,13 +46,19 @@ class ChartYAxisWizard extends React.Component {
                                 React.createElement(react_bootstrap_1.Well, null,
                                     "Select numeric column(s) for the Y Axis. ",
                                     React.createElement("br", null),
-                                    "This will show grouped totals according to values in the X Axis.")),
+                                    "You can choose as many columns as required.",
+                                    React.createElement("br", null),
+                                    "Check the 'Display Total' to specify how this column is grouped.")),
                             React.createElement(react_bootstrap_1.Col, { xs: 1 })),
                         React.createElement(react_bootstrap_1.Row, null,
                             React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, "Display Total:"),
                             React.createElement(react_bootstrap_1.Col, { xs: 7 },
                                 React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Sum", checked: this.state.YAxisTotal == ChartEnums_1.AxisTotal.Sum, onChange: (e) => this.onYAisTotalChanged(e) }, "Sum"),
-                                React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Average", checked: this.state.YAxisTotal == ChartEnums_1.AxisTotal.Average, onChange: (e) => this.onYAisTotalChanged(e) }, "Average"))),
+                                React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Average", checked: this.state.YAxisTotal == ChartEnums_1.AxisTotal.Average, onChange: (e) => this.onYAisTotalChanged(e) }, "Average"),
+                                ' ',
+                                " ",
+                                ' ',
+                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Chart Y Axis: Display Total", bodyText: ["Choose whether the X Axis is grouped according to the sum of it values (by X Axis) or their average."], MessageType: Enums_1.MessageType.Info }))),
                         existingColumnRows,
                         newRow))));
     }

@@ -21,7 +21,7 @@ class ChartXAxisWizard extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "-settings";
         return React.createElement("div", { className: cssClassName },
-            React.createElement(react_bootstrap_1.Panel, { header: "Chart Colum X Axis", bsStyle: "primary" },
+            React.createElement(react_bootstrap_1.Panel, { header: "Chart: X (Horizontal) Axis Column", bsStyle: "primary" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "xAxisColumn" },
                         React.createElement(react_bootstrap_1.Row, null,

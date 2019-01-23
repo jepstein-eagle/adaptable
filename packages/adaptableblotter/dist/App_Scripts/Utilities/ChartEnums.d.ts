@@ -56,3 +56,8 @@ export declare enum ToolTipType {
     Category = "Category",
     None = "None"
 }
+export declare enum AxisAngle {
+    Horizontal = "Horizontal",
+    Diagonal = "Diagonal",
+    Vertical = "Vertical"
+}

@@ -21,7 +21,7 @@ class AdaptableBlotterPopupConfirmation extends React.Component {
         let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
         let cssClassName = StyleConstants.POPUP_PROMPT;
         return this.props.ShowPopup && React.createElement("div", { className: StyleConstants.POPUP_PROMPT },
-            React.createElement(react_bootstrap_1.Modal, { show: this.props.ShowPopup, onHide: this.props.onCancel, className: cssClassName, container: modalContainer, bsSize: "medium" },
+            React.createElement(react_bootstrap_1.Modal, { show: this.props.ShowPopup, onHide: this.props.onCancel, className: cssClassName, container: modalContainer, bsSize: "small" },
                 React.createElement("div", { className: cssClassName + StyleConstants.MODAL_BASE },
                     React.createElement(react_bootstrap_1.Modal.Body, { className: cssClassName + StyleConstants.MODAL_BODY },
                         React.createElement("div", { className: cssClassName },
@@ -39,10 +39,10 @@ class AdaptableBlotterPopupConfirmation extends React.Component {
                                             React.createElement(react_bootstrap_1.FormControl, { style: { marginTop: '20px' }, value: this.state.PromptText, type: "string", placeholder: "Enter text", onChange: (e) => this.changeContent(e) })),
                                     React.createElement("div", { style: { marginTop: '20px' } },
                                         React.createElement(react_bootstrap_1.Row, null,
-                                            React.createElement(react_bootstrap_1.Col, { xs: 4 },
+                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
                                                 React.createElement(react_bootstrap_1.Button, { bsStyle: StyleConstants.PRIMARY_BSSTYLE, className: cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CONFIRM_BUTTON, disabled: !this.canConfirm(), onClick: () => this.onConfirmmForm() }, this.props.ConfirmButtonText)),
-                                            React.createElement(react_bootstrap_1.Col, { xs: 5 }),
-                                            React.createElement(react_bootstrap_1.Col, { xs: 3 },
+                                            React.createElement(react_bootstrap_1.Col, { xs: 2 }),
+                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
                                                 React.createElement(react_bootstrap_1.Button, { bsStyle: StyleConstants.DEFAULT_BSSTYLE, className: cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CANCEL_BUTTON, onClick: () => this.onCancelForm() }, this.props.CancelButtonText)))))))))));
     }
     onCancelForm() {

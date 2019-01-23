@@ -2,7 +2,7 @@ import { LeafExpressionOperator } from '../Enums';
 import { Expression } from '../Expression';
 import { IVendorGridInfo } from "./IVendorGridInfo";
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
-import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize, ToolTipType } from '../ChartEnums';
+import { ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize, ToolTipType, AxisAngle } from '../ChartEnums';
 /**
  * The base empty Adaptable Blotter Object interface
  */
@@ -92,10 +92,14 @@ export interface IChartProperties {
     XAxisTitle?: string;
     XAxisTitleColor?: string;
     XAxisGap?: number;
+    XAxisAngle?: AxisAngle;
     EnableTransitions?: boolean;
     TransitionInDuration?: number;
     TitleAlignment?: HorizontalAlignment;
     SubTitleAlignment?: HorizontalAlignment;
+    EnableSeriesHighlighting?: boolean;
+    EnableCategoryHighlighting?: boolean;
+    EnableItemHighlighting?: boolean;
 }
 export interface IAdvancedSearch extends IAdaptableBlotterObject {
     Name: string;

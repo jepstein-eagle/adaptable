@@ -14,6 +14,7 @@ export interface ChartDisplayPopupWizardState {
     SetXAxisLabelColor: boolean;
     SetXAxisTitleColor: boolean;
     UseDefaultXAxisTitle: boolean;
+    IsHighlightsMinimised: boolean;
     IsMiscMinimised: boolean;
     TitleMargin: number;
     SubTitleMargin: number;

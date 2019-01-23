@@ -519,6 +519,18 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartEnums_1.ChartVisibility.Hidden));
                     return returnAction;
                 }
+                /**
+                * Use Case: User clears the currrent chart
+                * Action:  Set chart visibility to hidden
+                */
+                case ChartRedux.CHART_DEFINITION_SELECT: {
+                    let actionTyped = action;
+                    if (StringExtensions_1.StringExtensions.IsNullOrEmpty(actionTyped.CurrentChartDefinition)) {
+                        middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartEnums_1.ChartVisibility.Hidden));
+                    }
+                    let returnAction = next(action);
+                    return returnAction;
+                }
                 /*******************
                 * LAYOUT ACTIONS
                 *******************/

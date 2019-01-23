@@ -68,3 +68,9 @@ var ToolTipType;
     ToolTipType["Category"] = "Category";
     ToolTipType["None"] = "None";
 })(ToolTipType = exports.ToolTipType || (exports.ToolTipType = {}));
+var AxisAngle;
+(function (AxisAngle) {
+    AxisAngle["Horizontal"] = "Horizontal";
+    AxisAngle["Diagonal"] = "Diagonal";
+    AxisAngle["Vertical"] = "Vertical";
+})(AxisAngle = exports.AxisAngle || (exports.AxisAngle = {}));

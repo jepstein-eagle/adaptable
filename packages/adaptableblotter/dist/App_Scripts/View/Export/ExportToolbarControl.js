@@ -57,6 +57,10 @@ class ExportToolbarControlComponent extends React.Component {
                 " ",
                 "Start Sync with iPushPull");
         }
+        let deleteMessage = "Are you sure you want to delete '";
+        if (savedReport != null) {
+            deleteMessage = deleteMessage + savedReport.Name + "?";
+        }
         const exportGlyph = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "exportOverlay", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                 " ",
                 "Export") },
@@ -77,7 +81,7 @@ class ExportToolbarControlComponent extends React.Component {
                     iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem),
                 React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, onClick: () => this.props.onEditReport(), cssClassName: cssClassName, size: "small", overrideTooltip: "Edit Report", overrideDisableButton: savedReport == null || ReportHelper_1.ReportHelper.IsSystemReport(savedReport), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
                 React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewReport(), size: "small", overrideTooltip: "Create New Report", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
-                React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Report", overrideDisableButton: savedReport == null || ReportHelper_1.ReportHelper.IsSystemReport(savedReport), DisplayMode: "Glyph", ConfirmAction: ExportRedux.ReportDelete(savedReportIndex), ConfirmationMsg: "Are you sure you want to delete '" + !savedReport ? "" : savedReport.Name + "'?", ConfirmationTitle: "Delete Report", AccessLevel: this.props.AccessLevel })));
+                React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Report", overrideDisableButton: savedReport == null || ReportHelper_1.ReportHelper.IsSystemReport(savedReport), DisplayMode: "Glyph", ConfirmAction: ExportRedux.ReportDelete(savedReportIndex), ConfirmationMsg: deleteMessage, ConfirmationTitle: "Delete Report", AccessLevel: this.props.AccessLevel })));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.ExportStrategyName, glyphicon: StrategyConstants.ExportGlyph, onClose: () => this.props.onClose(StrategyConstants.ExportStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectedReportChanged(reportName) {
