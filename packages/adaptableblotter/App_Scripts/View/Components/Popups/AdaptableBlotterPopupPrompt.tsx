@@ -1,9 +1,6 @@
 import * as React from "react";
-//we use that syntax to import the default export from the module.... Took me a while to find the syntax
-import SweetAlert from 'react-bootstrap-sweetalert'
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { Modal, ControlLabel, Row, Col, Button, FormControl } from "react-bootstrap";
-import { PanelWithImage } from "../Panels/PanelWithImage";
 import { UIHelper } from "../../UIHelper";
 import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";

@@ -47,7 +47,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         let cssClassName: string = this.props.cssClassName + "__export";
         let savedReport: IReport = this.props.Reports.find(s => s.Name == this.props.CurrentReport);
         let savedReportIndex = this.props.Reports.findIndex(s => s.Name == this.props.CurrentReport);
-     
+
         let currentReportId = StringExtensions.IsNullOrEmpty(this.props.CurrentReport) ?
             selectReportString : this.props.CurrentReport
 
@@ -73,6 +73,11 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             iPushPullExcelMenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Sync with iPushPull"}</MenuItem>
         }
 
+        let deleteMessage: string = "Are you sure you want to delete '";
+        if(savedReport!=null){
+            deleteMessage = deleteMessage + savedReport.Name + "?";
+        }
+      
         const exportGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Export"}</Tooltip >}>
             <Glyphicon glyph={StrategyConstants.ExportGlyph} />
         </OverlayTrigger>
@@ -154,7 +159,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     overrideDisableButton={savedReport == null || ReportHelper.IsSystemReport(savedReport)}
                     DisplayMode="Glyph"
                     ConfirmAction={ExportRedux.ReportDelete(savedReportIndex)}
-                    ConfirmationMsg={"Are you sure you want to delete '" + !savedReport ? "" : savedReport.Name + "'?"}
+                    ConfirmationMsg={deleteMessage}
                     ConfirmationTitle={"Delete Report"}
                     AccessLevel={this.props.AccessLevel}
                 />

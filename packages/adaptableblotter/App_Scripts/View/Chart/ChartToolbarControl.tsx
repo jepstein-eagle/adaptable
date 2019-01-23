@@ -47,6 +47,8 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
         let availablechartDefinitions: any[] = sortedChartDefinitions.filter(s => s.Title != currentChartDefinitionName).map((chartDefinition, index) => {
             return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedChartDefinitionChanged(chartDefinition.Title)} >{chartDefinition.Title}</MenuItem>
         })
+
+
         let content = <span>
 
             <InputGroup>
@@ -107,7 +109,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                     overrideDisableButton={currentChartDefinitionName == selectChartString}
                     DisplayMode="Glyph"
                     ConfirmAction={ChartRedux.ChartDefinitionDelete(this.props.CurrentChartDefinition)}
-                    ConfirmationMsg={"Are you sure you want to delete '" + !this.props.CurrentChartDefinition ? "" : currentChartDefinitionName + "'?"}
+                    ConfirmationMsg={"Are you sure you want to delete '" + currentChartDefinitionName + "'?"}
                     ConfirmationTitle={"Delete Chart"}
                     AccessLevel={this.props.AccessLevel}
                 />

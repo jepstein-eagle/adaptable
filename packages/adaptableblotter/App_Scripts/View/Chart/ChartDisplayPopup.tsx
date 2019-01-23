@@ -23,7 +23,7 @@ import { Helper } from "../../Utilities/Helpers/Helper";
 import { ButtonEdit } from "../Components/Buttons/ButtonEdit";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { PanelWithImageThreeButtons } from "../Components/Panels/PanelWithIImageThreeButtons";
-import { ChartSize, ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ToolTipType, ChartVisibility } from "../../Utilities/ChartEnums";
+import { ChartSize, ChartType, ChartCrosshairsMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ToolTipType, ChartVisibility, AxisAngle } from "../../Utilities/ChartEnums";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ColorPicker } from "../ColorPicker";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
@@ -31,6 +31,17 @@ import { ButtonGeneral } from "../Components/Buttons/ButtonGeneral";
 import { DefaultChartProperties } from "../../Utilities/Defaults/DefaultChartProperties";
 import { PanelWithTwoButtons } from "../Components/Panels/PanelWithTwoButtons";
 
+/*
+Set the reference value for y axis
+overlap for x axis (within a group - set to negative vlue)
+
+closing chart BUG  didnt close in toolbar
+XAxisInterval - let users choose (default is Auto) // add help
+
+transitions 
+and dont reset the data
+
+*/
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
     ChartDefinitions: IChartDefinition[];
@@ -67,6 +78,9 @@ export interface ChartDisplayPopupWizardState {
     SetXAxisTitleColor: boolean;
     UseDefaultXAxisTitle: boolean;
 
+    // Highlights
+    IsHighlightsMinimised: boolean;
+
     // Misc
     IsMiscMinimised: boolean;
     TitleMargin: number;
@@ -98,6 +112,9 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             SetXAxisLabelColor: StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisLabelColor),
             SetXAxisTitleColor: StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisTitleColor),
             UseDefaultXAxisTitle: this.isDefaultXAxisTitle(), // StringExtensions.IsNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisTitle),
+
+            // Highlights
+            IsHighlightsMinimised: true,
 
             // Misc
             IsMiscMinimised: true,
@@ -240,6 +257,28 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                     overrideTooltip={"Hide XAxis Properties"}
                 />
 
+        let showHighlightsPropertiesButton =
+            this.state.IsHighlightsMinimised ?
+                <ButtonMaximise
+                    cssClassName={cssClassName}
+                    onClick={() => this.onShowHighlightsProperties()}
+                    bsStyle={DEFAULT_BSSTYLE}
+                    size={"xs"}
+                    DisplayMode="Glyph"
+                    hideToolTip={false}
+                    overrideTooltip={"Show Highlights Properties"}
+                />
+                :
+                <ButtonMinimise
+                    cssClassName={cssClassName}
+                    onClick={() => this.onHideHighlightsProperties()}
+                    bsStyle={DEFAULT_BSSTYLE}
+                    size={"xs"}
+                    DisplayMode="Glyph"
+                    hideToolTip={false}
+                    overrideTooltip={"Hide Highlights Properties"}
+                />
+
         let showMiscPropertiesButton =
             this.state.IsMiscMinimised ?
                 <ButtonMaximise
@@ -346,6 +385,12 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 finalValueAnnotationsVisible={this.state.ChartProperties.EnableFinalValueAnnotations}
 
 
+                // hightlights
+                isSeriesHighlightingEnabled={this.state.ChartProperties.EnableSeriesHighlighting}
+                isCategoryHighlightingEnabled={this.state.ChartProperties.EnableCategoryHighlighting}
+                isItemHighlightingEnabled={this.state.ChartProperties.EnableItemHighlighting}
+                //transitionDuration
+
                 // playing
 
                 xAxisTickStroke="yellow"
@@ -354,17 +399,18 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
 
 
-            //  subtitleRightMargin={this.state.TitleMargin}
-            //subtitleTopMargin = {this.state.TitleMargin}
+                //  subtitleRightMargin={this.state.TitleMargin}
+                //subtitleTopMargin = {this.state.TitleMargin}
 
-            // callouts - not doing yet as not sure how we can with dynamic data...
-            // calloutsVisible={true}
-            // calloutsXMemberPath="index"
-            // calloutsYMemberPath="yValue"
-            // calloutsLabelMemberPath="content"
-            // calloutsContentMemberPath="yValue"
+                // callouts - not doing yet as not sure how we can with dynamic data...
+                calloutsVisible={true}
+                // calloutsXMemberPath="index"
+                // calloutsYMemberPath="yValue"
+                // calloutsLabelMemberPath="content"
+                // calloutsContentMemberPath="yValue"
 
-
+                //xAxisInterval={1}
+                xAxisLabelAngle={this.getAngleFromEnum(this.state.ChartProperties.XAxisAngle)}
             // properties used in ig example
             //    xAxisFormatLabel={this.formatDateLabel}
 
@@ -396,6 +442,10 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
         let optionAligments = EnumExtensions.getNames(HorizontalAlignment).map((enumName) => {
             return <option key={enumName} value={enumName}>{enumName as HorizontalAlignment}</option>
+        })
+
+        let optionAxisAngles = EnumExtensions.getNames(AxisAngle).map((enumName) => {
+            return <option key={enumName} value={enumName}>{enumName as AxisAngle}</option>
         })
 
         return <div className={cssClassName}>
@@ -443,7 +493,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                 <ControlLabel>Type</ControlLabel>
                                                             </Col>
                                                             <Col xs={7}>
-                                                                <FormControl componentClass="select" placeholder="select" value={this.state.ChartProperties.ChartType} onChange={(x) => this.onChartTypeChange(x)} >
+                                                                <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.ChartType} onChange={(x) => this.onChartTypeChange(x)} >
                                                                     {optionChartTypes}
                                                                 </FormControl>
                                                             </Col>
@@ -456,7 +506,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                     <ControlLabel>Size</ControlLabel>
                                                                 </Col>
                                                                 <Col xs={7}>
-                                                                    <FormControl componentClass="select" placeholder="select" value={this.state.ChartProperties.ChartSize} onChange={(x) => this.onChartSizeChange(x)} >
+                                                                    <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.ChartSize} onChange={(x) => this.onChartSizeChange(x)} >
                                                                         {optionChartSizes}
                                                                     </FormControl>
                                                                 </Col>
@@ -481,7 +531,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                         <ControlLabel>Tooltip</ControlLabel>
                                                                     </Col>
                                                                     <Col xs={7}>
-                                                                        <FormControl componentClass="select" placeholder="select" value={this.state.ChartProperties.ToolTipType} onChange={(x) => this.onToolTipTypeChange(x)} >
+                                                                        <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.ToolTipType} onChange={(x) => this.onToolTipTypeChange(x)} >
                                                                             {optionToolTipTypes}
                                                                         </FormControl>
                                                                     </Col>
@@ -493,7 +543,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                         <ControlLabel>Crosshairs</ControlLabel>
                                                                     </Col>
                                                                     <Col xs={7}>
-                                                                        <FormControl componentClass="select" placeholder="select" value={this.state.ChartProperties.ChartCrosshairsMode} onChange={(x) => this.onCrosshairsModeChange(x)} >
+                                                                        <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.ChartCrosshairsMode} onChange={(x) => this.onCrosshairsModeChange(x)} >
                                                                             {optionCrossHairModeTypes}
                                                                         </FormControl>
                                                                     </Col>
@@ -541,6 +591,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                     <Col xs={5}>
                                                                         {this.state.SetYAxisMinimumValue &&
                                                                             <FormControl
+                                                                                bsSize={"small"}
                                                                                 placeholder={"Enter number"}
                                                                                 type="number"
                                                                                 onChange={this.onYAxisMinValueChanged}
@@ -580,6 +631,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                                 </Col>
                                                                                 <Col xs={7}>
                                                                                     <FormControl
+                                                                                        bsSize={"small"}
                                                                                         placeholder={"Enter Label"}
                                                                                         type="text"
                                                                                         onChange={(e) => this.onYAxisTitleChanged(e)}
@@ -669,6 +721,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                                 </Col>
                                                                                 <Col xs={7}>
                                                                                     <FormControl
+                                                                                        bsSize={"small"}
                                                                                         placeholder={"Enter Label"}
                                                                                         type="text"
                                                                                         onChange={(e) => this.onXAxisTitleChanged(e)}
@@ -711,11 +764,24 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                     <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
                                                                         <Row>
                                                                             <Col xs={5}>
+                                                                                <ControlLabel>Angle</ControlLabel>
+                                                                            </Col>
+                                                                            <Col xs={7}>
+                                                                                <FormControl bsSize="small" componentClass="select" placeholder="select" value={this.state.ChartProperties.XAxisAngle} onChange={(x) => this.onXAxisAngleChanged(x)} >
+                                                                                    {optionAxisAngles}
+                                                                                </FormControl>
+                                                                            </Col>
+                                                                        </Row>
+                                                                    </AdaptableBlotterForm>
+                                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                        <Row>
+                                                                            <Col xs={5}>
                                                                                 <ControlLabel>Axis Gap</ControlLabel>
                                                                             </Col>
                                                                             <Col xs={7}>
                                                                                 <FormControl
                                                                                     value={this.state.ChartProperties.XAxisGap}
+                                                                                    bsSize={"small"}
                                                                                     type="number"
                                                                                     min="0" step="0.1" max="1"
                                                                                     placeholder="Enter Number"
@@ -731,6 +797,43 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                     }
                                                 </PanelWithButton>
 
+                                                <PanelWithButton bsSize={"xs"} headerText={"Highlights"} cssClassName={cssClassName} button={showHighlightsPropertiesButton}>
+                                                    {this.state.IsHighlightsMinimised == false &&
+                                                        <div>
+                                                            <AdaptableBlotterForm horizontal >
+                                                                <Row>
+                                                                    <Col xs={5}>
+                                                                        <ControlLabel>Series</ControlLabel>
+                                                                    </Col>
+                                                                    <Col xs={6}>
+                                                                        <Checkbox onChange={(e) => this.onEnableSeriesHighlightingOptionChanged(e)} checked={this.state.ChartProperties.EnableSeriesHighlighting} />
+                                                                    </Col>
+                                                                </Row>
+                                                            </AdaptableBlotterForm>
+                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                <Row>
+                                                                    <Col xs={5}>
+                                                                        <ControlLabel>Category</ControlLabel>
+                                                                    </Col>
+                                                                    <Col xs={6}>
+                                                                        <Checkbox onChange={(e) => this.onEnableCategoryHighlightingOptionChanged(e)} checked={this.state.ChartProperties.EnableCategoryHighlighting} />
+                                                                    </Col>
+                                                                </Row>
+                                                            </AdaptableBlotterForm>
+                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                <Row>
+                                                                    <Col xs={5}>
+                                                                        <ControlLabel>Item</ControlLabel>
+                                                                    </Col>
+                                                                    <Col xs={6}>
+                                                                        <Checkbox onChange={(e) => this.onEnableItemHighlightingOptionChanged(e)} checked={this.state.ChartProperties.EnableItemHighlighting} />
+                                                                    </Col>
+                                                                </Row>
+                                                            </AdaptableBlotterForm>
+
+                                                        </div>
+                                                    }
+                                                </PanelWithButton>
                                                 <PanelWithButton bsSize={"xs"} headerText={"Misc"} cssClassName={cssClassName} button={showMiscPropertiesButton}>
                                                     {this.state.IsMiscMinimised == false &&
                                                         <div>
@@ -740,7 +843,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                         <ControlLabel>Title</ControlLabel>
                                                                     </Col>
                                                                     <Col xs={7}>
-                                                                        <FormControl componentClass="select" placeholder="select" value={this.state.ChartProperties.TitleAlignment} onChange={(x) => this.onTitleAlignmentChange(x)} >
+                                                                        <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.TitleAlignment} onChange={(x) => this.onTitleAlignmentChange(x)} >
                                                                             {optionAligments}
                                                                         </FormControl>
                                                                     </Col>
@@ -752,7 +855,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                         <ControlLabel>Subtitle</ControlLabel>
                                                                     </Col>
                                                                     <Col xs={7}>
-                                                                        <FormControl componentClass="select" placeholder="select" value={this.state.ChartProperties.SubTitleAlignment} onChange={(x) => this.onSubTitleAlignmentChange(x)} >
+                                                                        <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.SubTitleAlignment} onChange={(x) => this.onSubTitleAlignmentChange(x)} >
                                                                             {optionAligments}
                                                                         </FormControl>
                                                                     </Col>
@@ -776,6 +879,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                         </Col>
                                                                         <Col xs={7}>
                                                                             <FormControl
+                                                                                bsSize={"small"}
                                                                                 placeholder={"Length (ms)"}
                                                                                 type="number"
                                                                                 onChange={this.onTransitionDurationChanged}
@@ -858,7 +962,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onShowGeneralProperties() {
-       this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
     }
 
     onHideGeneralProperties() {
@@ -866,7 +970,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onShowYAxisProperties() {
-        this.setState({ IsYAxisMinimised: false, IsGeneralMinimised: true, IsXAxisMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState);
+        this.setState({ IsYAxisMinimised: false, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState);
     }
 
     onHideYAxisProperties() {
@@ -874,15 +978,23 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onShowXAxisProperties() {
-        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: false, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: false, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
     }
 
     onHideXAxisProperties() {
         this.setState({ IsXAxisMinimised: true, } as ChartDisplayPopupWizardState)
     }
 
+    onShowHighlightsProperties() {
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: false, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
+    }
+
+    onHideHighlightsProperties() {
+        this.setState({ IsHighlightsMinimised: true, } as ChartDisplayPopupWizardState)
+    }
+
     onShowMiscProperties() {
-        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsMiscMinimised: false } as ChartDisplayPopupWizardState)
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: false } as ChartDisplayPopupWizardState)
     }
 
     onHideMiscProperties() {
@@ -978,6 +1090,27 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let e = event.target as HTMLInputElement;
         let chartProperties: IChartProperties = this.state.ChartProperties;
         chartProperties.EnableFinalValueAnnotations = e.checked;
+        this.updateChartProperties(chartProperties);
+    }
+
+    private onEnableSeriesHighlightingOptionChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let chartProperties: IChartProperties = this.state.ChartProperties;
+        chartProperties.EnableSeriesHighlighting = e.checked;
+        this.updateChartProperties(chartProperties);
+    }
+
+    private onEnableCategoryHighlightingOptionChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let chartProperties: IChartProperties = this.state.ChartProperties;
+        chartProperties.EnableCategoryHighlighting = e.checked;
+        this.updateChartProperties(chartProperties);
+    }
+
+    private onEnableItemHighlightingOptionChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let chartProperties: IChartProperties = this.state.ChartProperties;
+        chartProperties.EnableItemHighlighting = e.checked;
         this.updateChartProperties(chartProperties);
     }
 
@@ -1133,6 +1266,13 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         this.updateChartProperties(chartProperties);
     }
 
+    private onXAxisAngleChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let chartProperties: IChartProperties = this.state.ChartProperties;
+        chartProperties.XAxisAngle = e.value as AxisAngle;
+        this.updateChartProperties(chartProperties);
+    }
+
     private onUseDefaultYAxisTitleOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) { // if its not checked then we need to clear the title
@@ -1285,6 +1425,17 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             case ChartSize.Large:
             case ChartSize.XLarge:
                 return 3;
+        }
+    }
+
+    getAngleFromEnum(axisAngle: AxisAngle): number {
+        switch (axisAngle) {
+            case AxisAngle.Horizontal:
+                return 0;
+            case AxisAngle.Diagonal:
+                return 45;
+            case AxisAngle.Vertical:
+                return 90;
         }
     }
 

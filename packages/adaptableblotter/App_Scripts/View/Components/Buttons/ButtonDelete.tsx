@@ -35,6 +35,7 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
 
     onClick() {
         if (this.props.ConfirmAction) {
+            alert(this.props.ConfirmationMsg)
             let confirmation: IUIConfirmation = {
                 CancelButtonText: "Cancel",
                 Header: this.props.ConfirmationTitle,

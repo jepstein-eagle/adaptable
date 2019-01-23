@@ -3,7 +3,7 @@ var adaptableblotter
 var quickSearchText
 var trades
 var gridOptions
-var showTrade = false;
+var showTrade = true;
 
 function runQuickSearchViaAPI() {
   let element = document.getElementById("txtQuickSearchText")
@@ -30,7 +30,7 @@ function getRowsForGrid(dataGen) {
   if (showTrade) {
     return dataGen.getTrades(500);
   } else {
-    return dataGen.getFtseData(200)
+    return dataGen.getFtseData(10)
   }
 }
 
@@ -100,7 +100,7 @@ function InitTradeBlotter() {
       userName: "demo user", // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
 
-    //  predefinedConfig: "demoConfig.json",
+    //  predefinedConfig: "infraconfig.json",
 
       auditOptions: {
         //     auditCellEdits: true,

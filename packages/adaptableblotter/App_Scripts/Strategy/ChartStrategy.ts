@@ -70,11 +70,11 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     debouncedSetChartData = _.debounce(() => this.setChartData(), this.getRefreshrate());
 
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
-        if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && this.ChartState.CurrentChartDefinition != null) {
+        if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty( this.ChartState.CurrentChartDefinition)) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId: string = dataChangedEvent.ColumnId;
             let currentChartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
-            if (ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
+            if ( ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
                 currentChartDefinition.XAxisColumnId == columnChangedId ||
                 currentChartDefinition.AdditionalColumnId == columnChangedId) {
                 this.debouncedSetChartData();

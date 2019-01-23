@@ -634,6 +634,19 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return returnAction;
         }
 
+        /**
+        * Use Case: User clears the currrent chart
+        * Action:  Set chart visibility to hidden
+        */
+        case ChartRedux.CHART_DEFINITION_SELECT: {
+          let actionTyped = <ChartRedux.ChartDefinitionSelectAction>action
+          if (StringExtensions.IsNullOrEmpty(actionTyped.CurrentChartDefinition)) {
+            middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden))
+          }
+          let returnAction = next(action);
+          return returnAction;
+        }
+
 
         /*******************
         * LAYOUT ACTIONS

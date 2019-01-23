@@ -20,7 +20,6 @@ module.exports = {
                 'prop-types',
                 'react',
                 'react-bootstrap',
-                'react-bootstrap-sweetalert',
                 'react-bootstrap-typeahead',
                 'react-dom',
                 'react-redux',

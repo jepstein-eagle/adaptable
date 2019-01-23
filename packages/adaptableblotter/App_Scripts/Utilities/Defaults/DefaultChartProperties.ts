@@ -1,5 +1,5 @@
 import { IChartProperties } from '../Interface/IAdaptableBlotterObjects';
-import { ChartType, ChartSize, ChartCrosshairsMode, ToolTipType, AxisLabelsLocation, LabelVisibility, HorizontalAlignment } from '../ChartEnums';
+import { ChartType, ChartSize, ChartCrosshairsMode, ToolTipType, AxisLabelsLocation, LabelVisibility, HorizontalAlignment, AxisAngle } from '../ChartEnums';
 
 export const DefaultChartProperties: IChartProperties = {
     // General
@@ -23,10 +23,15 @@ export const DefaultChartProperties: IChartProperties = {
     XAxisTitle: "",
     XAxisTitleColor: "",
     XAxisGap: 0.5,
+    XAxisAngle: AxisAngle.Diagonal,
     // Misc
     EnableTransitions: false,
     TransitionInDuration: undefined,
     TitleAlignment: HorizontalAlignment.Center,
     SubTitleAlignment: HorizontalAlignment.Center,
+    EnableSeriesHighlighting: false,
+    EnableCategoryHighlighting: false,
+    EnableItemHighlighting: false
+
 }
 

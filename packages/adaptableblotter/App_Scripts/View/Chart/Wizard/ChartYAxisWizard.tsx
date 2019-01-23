@@ -4,11 +4,12 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IChartDefinition } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
-import { SelectionMode } from "../../../Utilities/Enums";
+import { SelectionMode, MessageType } from "../../../Utilities/Enums";
 import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { AxisTotal } from "../../../Utilities/ChartEnums";
+import { AdaptablePopover } from "../../AdaptablePopover";
 
 export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
@@ -50,7 +51,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
 
 
         return <div className={cssClassName}>
-            <Panel header="Chart Colum Y Axis" bsStyle="primary">
+            <Panel header="Chart: Y (Vertical) Axis Column(s)" bsStyle="primary">
 
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="yAxisColumn">
@@ -58,7 +59,8 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
                             <Col xs={1} />
                             <Col xs={10}>
                                 <Well>Select numeric column(s) for the Y Axis. <br />
-                                    This will show grouped totals according to values in the X Axis.</Well>
+                                    You can choose as many columns as required.<br />
+                                    Check the 'Display Total' to specify how this column is grouped.</Well>
                             </Col>
                             <Col xs={1} />
                         </Row>
@@ -67,6 +69,8 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
                             <Col xs={7} >
                                 <Radio inline value="Sum" checked={this.state.YAxisTotal == AxisTotal.Sum} onChange={(e) => this.onYAisTotalChanged(e)}>Sum</Radio>
                                 <Radio inline value="Average" checked={this.state.YAxisTotal == AxisTotal.Average} onChange={(e) => this.onYAisTotalChanged(e)}>Average</Radio>
+                                {' '} {' '}
+                                <AdaptablePopover cssClassName={cssClassName} headerText={"Chart Y Axis: Display Total"} bodyText={["Choose whether the X Axis is grouped according to the sum of it values (by X Axis) or their average."]} MessageType={MessageType.Info} />
                             </Col>
                         </Row>
 
@@ -128,7 +132,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
                 if (ArrayExtensions.NotContainsItem(this.state.YAxisColumnIds, c.ColumnId)) {
                     cols.push(c);
                 }
-             }
+            }
         });
         return cols;
     }

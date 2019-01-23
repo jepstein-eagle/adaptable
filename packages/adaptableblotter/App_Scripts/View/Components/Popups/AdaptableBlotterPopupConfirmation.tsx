@@ -47,7 +47,7 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
                 onHide={this.props.onCancel}
                 className={cssClassName}
                 container={modalContainer}
-                bsSize={"medium"}>
+                bsSize={"small"}>
                 <div className={cssClassName + StyleConstants.MODAL_BASE} >
                     <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
 
@@ -83,14 +83,14 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
                                 }
                                 <div style={{ marginTop: '20px' }}>
                                     <Row >
-                                        <Col xs={4} >
+                                        <Col xs={5} >
                                             <Button
                                                 bsStyle={StyleConstants.PRIMARY_BSSTYLE} className={cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CONFIRM_BUTTON}
                                                 disabled={!this.canConfirm()}
                                                 onClick={() => this.onConfirmmForm()}>{this.props.ConfirmButtonText}</Button>
                                         </Col>
-                                        <Col xs={5}></Col>
-                                        <Col xs={3} >
+                                        <Col xs={2}></Col>
+                                        <Col xs={5} >
                                             <Button
                                                 bsStyle={StyleConstants.DEFAULT_BSSTYLE} className={cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CANCEL_BUTTON}
                                                 onClick={() => this.onCancelForm()}>{this.props.CancelButtonText}</Button>

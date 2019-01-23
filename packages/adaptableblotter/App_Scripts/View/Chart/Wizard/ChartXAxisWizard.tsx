@@ -38,7 +38,7 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
         let cssClassName: string = this.props.cssClassName + "-settings"
 
         return <div className={cssClassName}>
-            <Panel header="Chart Colum X Axis" bsStyle="primary">
+            <Panel header="Chart: X (Horizontal) Axis Column" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
 
                     <FormGroup controlId="xAxisColumn">
