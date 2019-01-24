@@ -1,6 +1,7 @@
 import * as Redux from 'redux';
 import { PercentBarState } from './Interface/IState'
 import { IPercentBar } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const PERCENT_BAR_ADD = 'PERCENT_BAR_ADD';
 export const PERCENT_BAR_EDIT = 'PERCENT_BAR_EDIT';
@@ -85,7 +86,7 @@ export const PercentBarChangeNegativeColor = (PercentBar: IPercentBar, NegativeC
 })
 
 const initialPercentBarState: PercentBarState = {
-    PercentBars: []
+    PercentBars: EMPTY_ARRAY
 }
 
 export const PercentBarReducer: Redux.Reducer<PercentBarState> = (state: PercentBarState = initialPercentBarState, action: Redux.Action): PercentBarState => {

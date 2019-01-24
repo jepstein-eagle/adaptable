@@ -14,6 +14,7 @@ import { IColItem } from "../UIInterfaces";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IFlashingCell } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { FlashingCellState } from "../../Redux/ActionsReducers/Interface/IState";
 
 export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingCellSummaryComponent> {
     FlashingCells: IFlashingCell[]
@@ -40,8 +41,9 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
     onFlashingSelectedChanged(flashingCell: IFlashingCell) {
         let existingfc = this.props.FlashingCells.find(e => e.ColumnId == this.props.SummarisedColumn.ColumnId)
         if (!existingfc) {
+            let flashingCellState: FlashingCellState = this.props.Blotter.api.configApi.configGetFlashingCellState(false);
             let col: IColumn = ColumnHelper.getColumnFromId(this.props.SummarisedColumn.ColumnId, this.props.Columns);
-            existingfc = ObjectFactory.CreateDefaultFlashingCell(col);
+            existingfc = ObjectFactory.CreateDefaultFlashingCell(col, flashingCellState.DefaultUpColor, flashingCellState.DefautDownColor, flashingCellState.DefaultDuration);
             this.props.onSelectFlashingCell(existingfc)
         }
         this.props.onSelectFlashingCell(existingfc)

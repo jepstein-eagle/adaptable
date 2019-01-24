@@ -1,6 +1,7 @@
 import { AdvancedSearchState } from './Interface/IState';
 import * as Redux from 'redux'
 import { IAdvancedSearch } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const ADVANCED_SEARCH_ADD_UPDATE = 'ADVANCED_SEARCH_ADD_UPDATE';
 export const ADVANCED_SEARCH_DELETE = 'ADVANCED_SEARCH_DELETE';
@@ -36,8 +37,8 @@ export const AdvancedSearchSelect = (selectedSearchName: string): AdvancedSearch
 })
 
 const initialAdvancedSearchState: AdvancedSearchState = {
-    AdvancedSearches: [],
-    CurrentAdvancedSearch: ""
+    AdvancedSearches: EMPTY_ARRAY,
+    CurrentAdvancedSearch: EMPTY_STRING
 }
 
 export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (state: AdvancedSearchState = initialAdvancedSearchState, action: Redux.Action): AdvancedSearchState => {
@@ -60,7 +61,7 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (state:
             advancedSearches = [].concat(state.AdvancedSearches)
             index = advancedSearches.findIndex(a => a.Name == actionTypedDelete.advancedSearch.Name)
             advancedSearches.splice(index, 1);
-            return Object.assign({}, state, { AdvancedSearches: advancedSearches, CurrentAdvancedSearch: "" })
+            return Object.assign({}, state, { AdvancedSearches: advancedSearches, CurrentAdvancedSearch: EMPTY_STRING })
 
         case ADVANCED_SEARCH_SELECT:
             return Object.assign({}, state, { CurrentAdvancedSearch: (<AdvancedSearchSelectAction>action).selectedSearchName })

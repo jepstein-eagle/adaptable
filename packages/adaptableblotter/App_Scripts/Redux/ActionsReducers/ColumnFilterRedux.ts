@@ -1,6 +1,7 @@
 import { ColumnFilterState } from './Interface/IState';
 import * as Redux from 'redux'
 import { IColumnFilter } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 
 
@@ -40,7 +41,7 @@ export const ColumnFilterClear = (columnId: string): ColumnFilterClearAction => 
 
 const initialFilterState:
     ColumnFilterState = {
-    ColumnFilters: [],
+    ColumnFilters: EMPTY_ARRAY
 }
 
 export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (state: ColumnFilterState = initialFilterState, action: Redux.Action): ColumnFilterState => {

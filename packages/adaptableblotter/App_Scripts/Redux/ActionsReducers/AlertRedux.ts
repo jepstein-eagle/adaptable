@@ -2,6 +2,7 @@ import { AlertState } from './Interface/IState';
 import * as Redux from 'redux'
 import { IAlertDefinition } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { MessageType } from '../../Utilities/Enums';
+import { EMPTY_ARRAY, EMPTY_STRING, ALERT_DEFAULT_MAX_ALERTS_IN_STORE } from '../../Utilities/Constants/GeneralConstants';
 
 export const ALERT_DEFIINITION_ADD_UPDATE = 'ALERT_DEFIINITION_ADD_UPDATE';
 export const ALERT_DEFIINITION_DELETE = 'ALERT_DEFIINITION_DELETE';
@@ -43,9 +44,9 @@ export const AlertDefinitionChangeMessageType = (index: number, messageType: Mes
 
 
 const initialAlertState: AlertState = {
-    AlertDefinitions: [],
-    MaxAlertsInStore: 5,
-    AlertPopupDiv : ""
+    AlertDefinitions: EMPTY_ARRAY,
+    MaxAlertsInStore: ALERT_DEFAULT_MAX_ALERTS_IN_STORE,
+    AlertPopupDiv : EMPTY_STRING
 }
 
 export const AlertReducer: Redux.Reducer<AlertState> = (state: AlertState = initialAlertState, action: Redux.Action): AlertState => {

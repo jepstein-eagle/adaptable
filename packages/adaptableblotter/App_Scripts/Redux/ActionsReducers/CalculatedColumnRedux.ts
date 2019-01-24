@@ -1,6 +1,7 @@
 import { CalculatedColumnState } from './Interface/IState';
 import * as Redux from 'redux'
 import { ICalculatedColumn } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const CALCULATEDCOLUMN_ADD = 'CALCULATEDCOLUMN_ADD';
 export const CALCULATEDCOLUMN_EDIT = 'CALCULATEDCOLUMN_EDIT';
@@ -49,7 +50,7 @@ export const CalculatedColumnIsExpressionValid = (expression: string): Calculate
 
 
 const initialCalculatedColumnState: CalculatedColumnState = {
-    CalculatedColumns: [],
+    CalculatedColumns: EMPTY_ARRAY,
  }
 
 export const CalculatedColumnReducer: Redux.Reducer<CalculatedColumnState> = (state: CalculatedColumnState = initialCalculatedColumnState, action: Redux.Action): CalculatedColumnState => {

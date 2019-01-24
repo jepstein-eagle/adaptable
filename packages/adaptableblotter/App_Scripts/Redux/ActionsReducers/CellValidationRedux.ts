@@ -2,6 +2,7 @@ import * as Redux from 'redux';
 import { CellValidationState } from './Interface/IState'
 import { ICellValidationRule } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { ActionMode } from '../../Utilities/Enums';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const CELL_VALIDATION_ADD_UPDATE = 'CELL_VALIDATION_ADD_UPDATE';
 export const CELL_VALIDATION_DELETE = 'CELL_VALIDATION_DELETE';
@@ -39,7 +40,7 @@ export const CellValidationChangeMode = (index: number, ActionMode: ActionMode):
 })
 
 const initialCellValidationState: CellValidationState = {
-    CellValidations: []
+    CellValidations: EMPTY_ARRAY
 }
 
 export const CellValidationReducer: Redux.Reducer<CellValidationState> = (state: CellValidationState = initialCellValidationState, action: Redux.Action): CellValidationState => {

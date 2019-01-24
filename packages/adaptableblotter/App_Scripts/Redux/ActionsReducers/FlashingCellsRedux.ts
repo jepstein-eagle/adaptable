@@ -1,6 +1,8 @@
 import { FlashingCellState } from './Interface/IState';
 import * as Redux from 'redux'
 import { IFlashingCell } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { join } from 'path';
+import { FLASHING_CELLS_DEFAULT_UP_COLOR, FLASHING_CELLS_DEFAULT_DOWN_COLOR, FLASHING_CELLS_DEFAULT_DURATION, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const FLASHING_CELL_SELECT = 'FLASHING_CELL_SELECT';
 export const FLASHING_CELL_CHANGE_DURATION = 'FLASHING_CELL_CHANGE_DURATION';
@@ -63,7 +65,10 @@ export const FlashingCellChangeDownColor = (FlashingCell: IFlashingCell, DownCol
 })
 
 const initialShortcutState: FlashingCellState = {
-    FlashingCells: []
+    FlashingCells: EMPTY_ARRAY,
+    DefaultUpColor: FLASHING_CELLS_DEFAULT_UP_COLOR,
+    DefautDownColor:FLASHING_CELLS_DEFAULT_DOWN_COLOR,
+    DefaultDuration:  FLASHING_CELLS_DEFAULT_DURATION
 }
 
 export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (state: FlashingCellState = initialShortcutState, action: Redux.Action): FlashingCellState => {

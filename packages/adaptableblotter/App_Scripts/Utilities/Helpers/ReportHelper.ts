@@ -7,6 +7,7 @@ import { IColumn } from '../Interface/IColumn';
 import { ReportColumnScope, MessageType, ReportRowScope } from '../Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { Helper } from './Helper';
+import { EMPTY_ARRAY } from '../Constants/GeneralConstants';
 
 
 export module ReportHelper {
@@ -160,7 +161,7 @@ export module ReportHelper {
             Name: ALL_DATA_REPORT,
             ReportColumnScope: ReportColumnScope.AllColumns,
             ReportRowScope: ReportRowScope.AllRows,
-            ColumnIds: [],
+            ColumnIds: EMPTY_ARRAY,
             Expression: ExpressionHelper.CreateEmptyExpression()
         });
 
@@ -168,7 +169,7 @@ export module ReportHelper {
             Name: VISIBLE_DATA_REPORT,
             ReportColumnScope: ReportColumnScope.VisibleColumns,
             ReportRowScope: ReportRowScope.VisibleRows,
-            ColumnIds: [],
+            ColumnIds: EMPTY_ARRAY,
             Expression: ExpressionHelper.CreateEmptyExpression()
         });
 
@@ -176,7 +177,7 @@ export module ReportHelper {
             Name: SELECTED_CELLS_REPORT,
             ReportColumnScope: ReportColumnScope.SelectedColumns,
             ReportRowScope: ReportRowScope.SelectedRows,
-            ColumnIds: [],
+            ColumnIds: EMPTY_ARRAY,
             Expression: ExpressionHelper.CreateEmptyExpression()
         });
         return _systemReports;

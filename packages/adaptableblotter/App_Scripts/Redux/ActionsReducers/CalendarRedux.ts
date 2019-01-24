@@ -1,5 +1,6 @@
 import { CalendarState } from './Interface/IState';
 import * as Redux from 'redux'
+import { CALENDAR_DEFAULT_CURRENT_CALENDER } from '../../Utilities/Constants/GeneralConstants';
 
 export const CALENDAR_SELECT = 'CALENDAR_SELECT';
 
@@ -13,8 +14,7 @@ export const CalendarSelect = (selectedCalendarName: string): CalendarSelectActi
 })
 
 const initialCalendarState: CalendarState = {
-    CurrentCalendar: "United States",
-    
+    CurrentCalendar: CALENDAR_DEFAULT_CURRENT_CALENDER    
 }
 
 

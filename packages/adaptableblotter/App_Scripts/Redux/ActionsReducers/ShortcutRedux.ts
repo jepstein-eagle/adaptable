@@ -3,6 +3,7 @@ import { MathOperation } from '../../Utilities/Enums';
 import * as Redux from 'redux'
 import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
 import { IShortcut } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';
 export const SHORTCUT_ADD = 'SHORTCUT_ADD';
@@ -79,7 +80,7 @@ export const ShortcutDelete = (Shortcut: IShortcut): ShortcutDeleteAction => ({
 })
 
 const initialShortcutState: ShortcutState = {
-    Shortcuts: []
+    Shortcuts: EMPTY_ARRAY
 }
 
 export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutState = initialShortcutState, action: Redux.Action): ShortcutState => {

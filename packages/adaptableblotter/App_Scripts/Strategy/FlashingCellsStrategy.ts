@@ -41,7 +41,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
                     }
                     else {
                         if (!flashingCell) {
-                            flashingCell = ObjectFactory.CreateDefaultFlashingCell(column)
+                            flashingCell = ObjectFactory.CreateDefaultFlashingCell(column,this.FlashingCellState.DefaultUpColor, this.FlashingCellState.DefautDownColor, this.FlashingCellState.DefaultDuration)
                         }
                         this.createContextMenuItemReduxAction(
                             "Turn Flashing Cell On",

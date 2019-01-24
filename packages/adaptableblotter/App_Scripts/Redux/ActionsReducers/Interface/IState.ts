@@ -179,6 +179,9 @@ export interface ExportState extends IUserState {
 
 export interface FlashingCellState extends IUserState {
     FlashingCells: IFlashingCell[];
+    DefaultUpColor?: string;
+    DefautDownColor?: string;
+    DefaultDuration?: 250 | 500| 750|1000 ;
 }
 
 export interface FormatColumnState extends IUserState {

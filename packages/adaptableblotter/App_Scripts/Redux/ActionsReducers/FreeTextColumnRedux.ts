@@ -2,6 +2,7 @@ import { FreeTextColumnState } from './Interface/IState';
 import * as Redux from 'redux'
 import { IFreeTextColumn } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const FREE_TEXT_COLUMN_ADD = 'FREE_TEXT_COLUMN_ADD';
 export const FREE_TEXT_COLUMN_EDIT = 'FREE_TEXT_COLUMN_EDIT';
@@ -49,7 +50,7 @@ export const FreeTextColumnAddEditStoredValue = (FreeTextColumn: IFreeTextColumn
 })
 
 const initialFreeTextColumnState: FreeTextColumnState = {
-    FreeTextColumns: []
+    FreeTextColumns: EMPTY_ARRAY
 }
 
 export const FreeTextColumnReducer: Redux.Reducer<FreeTextColumnState> = (state: FreeTextColumnState = initialFreeTextColumnState, action: Redux.Action): FreeTextColumnState => {

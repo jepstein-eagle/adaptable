@@ -155,7 +155,7 @@ export class DataGenerator {
                 trade.setDataValue("bloombergBid", this.roundTo4Dp(bid - 0.01))
 
             });
-        }, 2000)
+        }, 300)
     }
 
     createIFtse(date: Date, index: number, start: number, end: number): IFtse {

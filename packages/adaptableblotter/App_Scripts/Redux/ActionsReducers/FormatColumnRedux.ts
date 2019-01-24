@@ -1,6 +1,7 @@
 import { FormatColumnState } from './Interface/IState';
 import * as Redux from 'redux'
 import { IFormatColumn } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const FORMAT_COLUMN_ADD = 'FORMAT_COLUMN_ADD';
 export const FORMAT_COLUMN_EDIT = 'FORMAT_COLUMN_EDIT';
@@ -33,7 +34,7 @@ export const FormatColumnDelete = (FormatColumn: IFormatColumn): FormatColumnDel
 })
 
 const initialFormatColumnState: FormatColumnState = {
-    FormatColumns: []
+    FormatColumns: EMPTY_ARRAY
 }
 
 export const FormatColumnReducer: Redux.Reducer<FormatColumnState> = (state: FormatColumnState = initialFormatColumnState, action: Redux.Action): FormatColumnState => {

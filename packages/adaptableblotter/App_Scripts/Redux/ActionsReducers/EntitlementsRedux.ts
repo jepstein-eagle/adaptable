@@ -1,6 +1,7 @@
 import { EntitlementsState } from './Interface/IState';
 import * as Redux from 'redux'
 import { IEntitlement } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const ENTITLEMENT_ADD = 'ENTITLEMENT_ADD';
 export const ENTITLEMENT_UPDATE = 'ENTITLEMENT_UPDATE';
@@ -35,7 +36,7 @@ export const EntitlementDelete = (FunctionName: string): EntitlementDeleteAction
 })
 
 const initialEntitlementsState: EntitlementsState = {
-    FunctionEntitlements: []
+    FunctionEntitlements: EMPTY_ARRAY
 }
 
 export const EntitlementsReducer: Redux.Reducer<EntitlementsState> = (state: EntitlementsState = initialEntitlementsState, action: Redux.Action): EntitlementsState => {

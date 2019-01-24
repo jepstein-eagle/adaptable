@@ -1,6 +1,7 @@
 import { ColumnCategoryState } from './Interface/IState';
 import * as Redux from 'redux'
 import { IColumnCategory } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const COLUMN_CATEGORY_ADD = 'COLUMN_CATEGORY_ADD';
 export const COLUMN_CATEGORY_EDIT = 'COLUMN_CATEGORY_EDIT';
@@ -38,7 +39,7 @@ export const ColumnCategoryDelete = (ColumnCategory: IColumnCategory): ColumnCat
 
 
 const initialColumnCategoryState: ColumnCategoryState = {
-    ColumnCategories: []
+    ColumnCategories: EMPTY_ARRAY
 }
 
 export const ColumnCategoryReducer: Redux.Reducer<ColumnCategoryState> = (state: ColumnCategoryState = initialColumnCategoryState, action: Redux.Action): ColumnCategoryState => {

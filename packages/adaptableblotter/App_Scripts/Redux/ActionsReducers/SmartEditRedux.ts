@@ -1,6 +1,7 @@
 import { SmartEditState } from './Interface/IState';
 import { MathOperation } from '../../Utilities/Enums';
 import * as Redux from 'redux'
+import { SMART_EDIT_DEFAULT_OPERATION, SMART_EDIT_DEFAULT_VALUE } from '../../Utilities/Constants/GeneralConstants';
 
 export const SMARTEDIT_APPLY = 'SMARTEDIT_APPLY';
 export const SMARTEDIT_CHANGE_VALUE = 'SMARTEDIT_CHANGE_VALUE';
@@ -36,8 +37,8 @@ export const SmartEditChangeOperation = (MathOperation: MathOperation): SmartEdi
 
 
 const initialSmartEditState: SmartEditState = {
-    SmartEditValue: 1,
-    MathOperation: MathOperation.Add,
+    SmartEditValue: SMART_EDIT_DEFAULT_VALUE,
+    MathOperation: SMART_EDIT_DEFAULT_OPERATION,
 }
 
 export const SmartEditReducer: Redux.Reducer<SmartEditState> = (state: SmartEditState = initialSmartEditState, action: Redux.Action): SmartEditState => {

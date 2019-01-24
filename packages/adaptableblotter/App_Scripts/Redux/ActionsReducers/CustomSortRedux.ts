@@ -1,6 +1,7 @@
 import { CustomSortState } from './Interface/IState';
 import * as Redux from 'redux'
 import { ICustomSort } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const CUSTOMSORT_ADD = 'CUSTOMSORT_ADD';
 export const CUSTOMSORT_EDIT = 'CUSTOMSORT_EDIT';
@@ -33,7 +34,7 @@ export const CustomSortDelete = (CustomSort: ICustomSort): CustomSortDeleteActio
 })
 
 const initialCustomSortState: CustomSortState = {
-    CustomSorts: []
+    CustomSorts: EMPTY_ARRAY
 }
 
 export const CustomSortReducer: Redux.Reducer<CustomSortState> = (state: CustomSortState = initialCustomSortState, action: Redux.Action): CustomSortState => {

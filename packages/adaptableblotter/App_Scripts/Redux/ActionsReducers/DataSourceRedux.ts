@@ -1,5 +1,6 @@
 import { DataSourceState } from './Interface/IState';
 import * as Redux from 'redux'
+import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 export const DATA_SOURCE_SELECT = 'DATA_SOURCE_SELECT';
 
@@ -16,8 +17,8 @@ export const DataSourceSelect = (SelectedDataSource: string): DataSourceSelectAc
 })
 
 const initialDataSourceState: DataSourceState = {
-    DataSources: [],
-    CurrentDataSource: ""
+    DataSources: EMPTY_ARRAY,
+    CurrentDataSource: EMPTY_STRING
 }
 
 export const DataSourceReducer: Redux.Reducer<DataSourceState> = (state: DataSourceState = initialDataSourceState, action: Redux.Action): DataSourceState => {

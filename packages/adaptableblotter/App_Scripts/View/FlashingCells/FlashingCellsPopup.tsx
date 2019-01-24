@@ -17,6 +17,7 @@ import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IFlashingCell, ICalculatedColumn } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { FlashingCellState } from "../../Redux/ActionsReducers/Interface/IState";
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingCells: IFlashingCell[],
@@ -53,10 +54,11 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
 
         let allPotentialFlashingCells: IFlashingCell[] = [];
+        let flashingCellState: FlashingCellState = this.props.Blotter.api.configApi.configGetFlashingCellState(false);
         numericNonCalcColumns.forEach(nc => {
             let existingfc = this.props.FlashingCells.find(e => e.ColumnId == nc.ColumnId)
             if (!existingfc) {
-                allPotentialFlashingCells.push(ObjectFactory.CreateDefaultFlashingCell(nc))
+                allPotentialFlashingCells.push(ObjectFactory.CreateDefaultFlashingCell(nc, flashingCellState.DefaultUpColor, flashingCellState.DefautDownColor, flashingCellState.DefaultDuration))
             }
             else {
                 allPotentialFlashingCells.push(existingfc);

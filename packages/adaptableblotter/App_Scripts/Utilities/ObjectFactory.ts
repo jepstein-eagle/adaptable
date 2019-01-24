@@ -10,34 +10,34 @@ import { IVendorGridInfo } from "./Interface/IVendorGridInfo";
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
 import { DefaultChartProperties } from '../Utilities/Defaults/DefaultChartProperties';
 import { AxisTotal } from './ChartEnums';
+import { EMPTY_STRING } from './Constants/GeneralConstants';
 
 
 export module ObjectFactory {
 
     export function CreateEmptyCustomSort(): ICustomSort {
-        return { ColumnId: "", SortedValues: [] }
+        return { ColumnId: EMPTY_STRING, SortedValues: [] }
     }
 
     export function CreateEmptyChartDefinition(): IChartDefinition {
         return {
-            Title: "",
-            SubTitle: "",
+            Title: EMPTY_STRING,
+            SubTitle: EMPTY_STRING,
             YAxisColumnIds: [],
             YAxisTotal: AxisTotal.Sum,
-            XAxisColumnId: "",
+            XAxisColumnId: EMPTY_STRING,
             XAxisExpression: ExpressionHelper.CreateEmptyExpression(),
             ChartProperties: DefaultChartProperties
-
         }
     }
 
     export function CreateEmptyCalculatedColumn(): ICalculatedColumn {
-        return { ColumnId: "", ColumnExpression: "" }
+        return { ColumnId: EMPTY_STRING, ColumnExpression: EMPTY_STRING }
     }
 
     export function CreateEmptyPlusMinusRule(): IPlusMinusRule {
         return {
-            ColumnId: "",
+            ColumnId: EMPTY_STRING,
             IsDefaultNudge: false,
             NudgeValue: 1,
             Expression: ExpressionHelper.CreateEmptyExpression()
@@ -46,11 +46,11 @@ export module ObjectFactory {
 
     export function CreateEmptyAlertDefinition(): IAlertDefinition {
         return {
-            ColumnId: "",
+            ColumnId: EMPTY_STRING,
             Range: {
                 Operator: LeafExpressionOperator.None,
-                Operand1: "",
-                Operand2: "",
+                Operand1: EMPTY_STRING,
+                Operand2: EMPTY_STRING,
                 Operand1Type: RangeOperandType.Column,
                 Operand2Type: RangeOperandType.Column,
             },
@@ -62,14 +62,14 @@ export module ObjectFactory {
 
     export function CreateEmptyAdvancedSearch(): IAdvancedSearch {
         return {
-            Name: "",
+            Name: EMPTY_STRING,
             Expression: ExpressionHelper.CreateEmptyExpression()
         }
     }
 
     export function CreateEmptyColumnCategory(): IColumnCategory {
         return {
-            ColumnCategoryId: "",
+            ColumnCategoryId: EMPTY_STRING,
             ColumnIds: []
         }
     }
@@ -77,8 +77,8 @@ export module ObjectFactory {
     export function CreateEmptyRange(): IRange {
         return {
             Operator: LeafExpressionOperator.Unknown,
-            Operand1: "",
-            Operand2: "",
+            Operand1: EMPTY_STRING,
+            Operand2: EMPTY_STRING,
             Operand1Type: RangeOperandType.Value,
             Operand2Type: RangeOperandType.Value
         }
@@ -86,7 +86,7 @@ export module ObjectFactory {
 
     export function CreateEmptyGridSort(): IGridSort {
         return {
-            Column: "",
+            Column: EMPTY_STRING,
             SortOrder: SortOrder.Unknown
         }
     }
@@ -94,11 +94,11 @@ export module ObjectFactory {
     export function CreateEmptyCellValidation(): ICellValidationRule {
         return {
             ActionMode: 'Stop Edit',
-            ColumnId: "",
+            ColumnId: EMPTY_STRING,
             Range: {
                 Operator: LeafExpressionOperator.None,
-                Operand1: "",
-                Operand2: "",
+                Operand1: EMPTY_STRING,
+                Operand2: EMPTY_STRING,
                 Operand1Type: RangeOperandType.Column,
                 Operand2Type: RangeOperandType.Column,
             },
@@ -108,7 +108,7 @@ export module ObjectFactory {
 
     export function CreateEmptyPercentBar(): IPercentBar {
         return {
-            ColumnId: "",
+            ColumnId: EMPTY_STRING,
             MaxValue: 100,
             MinValue: 0,
             PositiveColor: '#008000',
@@ -121,15 +121,15 @@ export module ObjectFactory {
 
     export function CreateEmptyUserFilter(): IUserFilter {
         return {
-            Name: "",
+            Name: EMPTY_STRING,
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            ColumnId: ""
+            ColumnId: EMPTY_STRING
         };
     }
 
     export function CreateEmptyReport(): IReport {
         return {
-            Name: "",
+            Name: EMPTY_STRING,
             Expression: ExpressionHelper.CreateEmptyExpression(),
             ColumnIds: [],
             ReportColumnScope: ReportColumnScope.AllColumns,
@@ -137,13 +137,13 @@ export module ObjectFactory {
         };
     }
 
-    export function CreateDefaultFlashingCell(column: IColumn): IFlashingCell {
+    export function CreateDefaultFlashingCell(column: IColumn, upColor: string, downColor: string, duration: number): IFlashingCell {
         return {
             IsLive: false,
             ColumnId: column.ColumnId,
-            FlashingCellDuration: 500,
-            UpColor: '#008000',
-            DownColor: '#FF0000'
+            FlashingCellDuration: duration,
+            UpColor: upColor,
+            DownColor: downColor
         };
     }
 
@@ -163,7 +163,7 @@ export module ObjectFactory {
         let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns)
         let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
             " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns) :
-            "";
+            EMPTY_STRING;
         return (columnFriendlyName + ": " + CellValidationHelper.createCellValidationDescription(CellValidation, columns) + expressionDescription);
     }
 
@@ -179,15 +179,15 @@ export module ObjectFactory {
 
     export function CreateEmptyFormatColumn(): IFormatColumn {
         return {
-            ColumnId: "",
+            ColumnId: EMPTY_STRING,
             Style: CreateEmptyStyle()
         }
     }
 
     export function CreateEmptyFreeTextColumn(): IFreeTextColumn {
         return {
-            ColumnId: "",
-            DefaultValue: "",
+            ColumnId: EMPTY_STRING,
+            DefaultValue: EMPTY_STRING,
             FreeTextStoredValues: []
         }
     }
@@ -259,7 +259,7 @@ export module ObjectFactory {
             FontWeight: FontWeight.Normal,
             FontStyle: FontStyle.Normal,
             FontSize: null,
-            ClassName: ""
+            ClassName: EMPTY_STRING
         }
     }
 
