@@ -36,7 +36,7 @@ function getSchema(data) {
 
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
-    trades = dataGen.getTrades(1000);
+    trades = dataGen.getTrades(5000);
     var gridOptions = { data: trades, schema: getSchema(trades) };
     var vendorGrid = new fin.Hypergrid('#grid', gridOptions);
      dataGen.startTickingDataHypergrid(vendorGrid)

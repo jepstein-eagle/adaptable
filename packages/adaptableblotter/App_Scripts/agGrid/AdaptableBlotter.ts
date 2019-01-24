@@ -803,7 +803,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
-   console.log("fetching for : " + columnId)
+   
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
 
         // check if there are permitted column values for that column

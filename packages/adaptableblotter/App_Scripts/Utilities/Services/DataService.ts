@@ -32,6 +32,7 @@ export class DataService implements IDataService {
         let columnValueList: Map<any, number> = this.getCellValuesForColumn(columnId);
 
         let oldValue: number = columnValueList.get(identifierValue);
+     
         // this horrible code is for dealing with ag-Grid because it comes in twice for Flashing Cell and we only want to return (and save!) a value if its the correct direction
         if (oldValue) {
             switch (changeDirection) {
@@ -50,8 +51,16 @@ export class DataService implements IDataService {
                     break;
             }
         }
+        if (oldValue == newValue) {
+            return null;
+        }
+     
         columnValueList.set(identifierValue, newValue);
-        return (oldValue) ? oldValue : newValue;
+        if (oldValue!=null) {
+            return oldValue;
+        } else {
+            return newValue;
+        }
     }
 
     private getCellValuesForColumn(columnId: string): Map<any, number> {

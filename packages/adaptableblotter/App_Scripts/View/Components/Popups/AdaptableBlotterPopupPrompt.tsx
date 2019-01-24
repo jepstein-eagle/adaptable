@@ -48,21 +48,23 @@ export class AdaptableBlotterPopupPrompt extends React.Component<AdaptableBlotte
                                         {this.props.Header}
                                     </ControlLabel>
                                 </div>
-                                <div style={{ display: "flex", alignItems: "center" }}>
-                                    {this.props.Msg.split("\n").map(function (item, index) {
-                                        return (
-                                            <span key={index}>
-                                                {item}
-                                                <br />
-                                            </span>
-                                        )
-                                    })}
-                                </div>
+                                {StringExtensions.IsNotNullOrEmpty(this.props.Msg) &&
+                                    <div style={{ display: "flex", alignItems: "center" }}>
+                                        {this.props.Msg.split("\n").map(function (item, index) {
+                                            return (
+                                                <span key={index}>
+                                                    {item}
+                                                    <br />
+                                                </span>
+                                            )
+                                        })}
+                                    </div>
+                                }
                                 <div style={{ marginTop: '20px' }}>
                                     <FormControl
                                         value={this.state.PromptText}
                                         type="string"
-                                        placeholder="Enter comment"
+                                        placeholder="Enter text"
                                         onChange={(e) => this.changeContent(e)} />
                                 </div>
                                 <div style={{ marginTop: '20px' }}>

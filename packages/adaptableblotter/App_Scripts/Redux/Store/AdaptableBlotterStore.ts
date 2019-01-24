@@ -1100,7 +1100,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
               ConfirmButtonText: "Import",
               CancelAction: null,
               ConfirmAction: importAction,
-              ShowCommentBox: false,
+              ShowInputBox: false,
               MessageType: MessageType.Warning
             }
             middlewareAPI.dispatch(PopupRedux.PopupShowConfirmation(confirmation))

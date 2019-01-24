@@ -43,7 +43,7 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
                 ConfirmButtonText: "Delete",
                 CancelAction: null,
                 ConfirmAction: this.props.ConfirmAction,
-                ShowCommentBox: false,
+                ShowInputBox: false,
                 MessageType: MessageType.Warning
             }
             this.props.onConfirmWarning(confirmation)

@@ -50,7 +50,7 @@ export module CellValidationHelper {
             ConfirmButtonText: "Bypass Rule",
             CancelAction: cancelAction,
             ConfirmAction: confirmAction,
-            ShowCommentBox: true,
+            ShowInputBox: true,
             MessageType: MessageType.Warning
         }
     }

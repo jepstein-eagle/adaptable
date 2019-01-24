@@ -185,7 +185,7 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             ConfirmButtonText: "Confirm",
             CancelAction: null,
             ConfirmAction: PlusMinusRedux.PlusMinusEditCondition(index, { ColumnId: plusMinus.ColumnId, DefaultNudge: plusMinus.NudgeValue }),
-            ShowCommentBox: false,
+            ShowInputBox: false,
             MessageType: MessageType.Warning
         }
         this.props.onConfirmWarningCellValidation(confirmation)

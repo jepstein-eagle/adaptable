@@ -16,7 +16,7 @@ export class FlashingCellsStrategyHypergrid extends FlashingCellsStrategy implem
 
     protected FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: IFlashingCell): void {
         let theBlotter = this.blotter as AdaptableBlotter
-        if (dataChangedInfo.OldValue == null) {  // currently always
+        if (dataChangedInfo.OldValue == null) {  // currently should never happen
             dataChangedInfo.OldValue = this.blotter.DataService.GetPreviousColumnValue(dataChangedInfo.ColumnId, dataChangedInfo.IdentifierValue, dataChangedInfo.NewValue, ChangeDirection.Ignore);
         }
         if (dataChangedInfo.OldValue != dataChangedInfo.NewValue) {

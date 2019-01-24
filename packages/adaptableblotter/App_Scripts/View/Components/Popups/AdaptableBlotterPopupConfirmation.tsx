@@ -6,7 +6,10 @@ import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions
 import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 import { PanelWithImage } from "../Panels/PanelWithImage";
 import { MessageType } from "../../../Utilities/Enums";
-//import PropTypes from 'prop-types';
+
+/**
+ * Used when giving the user 2 choices with the option of adding text also 
+ */
 
 export interface AdaptableBlotterPopupConfirmationProps extends React.ClassAttributes<AdaptableBlotterPopupConfirmation> {
     ShowPopup: boolean
@@ -16,7 +19,7 @@ export interface AdaptableBlotterPopupConfirmationProps extends React.ClassAttri
     Msg: string
     ConfirmButtonText: string
     CancelButtonText: string
-    ShowCommentBox: boolean
+    ShowInputBox: boolean
     MessageType: MessageType
     AdaptableBlotter: IAdaptableBlotter;
 }
@@ -47,7 +50,7 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
                 onHide={this.props.onCancel}
                 className={cssClassName}
                 container={modalContainer}
-                bsSize={"small"}>
+                bsSize={"medium"}>
                 <div className={cssClassName + StyleConstants.MODAL_BASE} >
                     <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
 
@@ -70,7 +73,7 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
                                         )
                                     })}
                                 </div>
-                                {this.props.ShowCommentBox &&
+                                {this.props.ShowInputBox &&
                                     <div style={{ marginTop: '20px' }}>
                                        <span>Please enter a comment to confirm</span>
                                        <br/>
@@ -127,7 +130,7 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
     }
 
     canConfirm(): boolean {
-        if (this.props.ShowCommentBox) {
+        if (this.props.ShowInputBox) {
             return StringExtensions.IsNotNullOrEmpty(this.state.PromptText)
         }
         return true;

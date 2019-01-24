@@ -72,7 +72,7 @@ import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTex
 import { FreeTextColumnService } from '../Utilities/Services/FreeTextColumnService';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
-import { IDataService } from '../Utilities/Services/Interface/IDataService';
+import { IDataService, ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import { DataService } from '../Utilities/Services/DataService';
 import { BlotterApi } from '../Api/BlotterApi';
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy';
@@ -85,6 +85,7 @@ import { IMenuItem } from '../Utilities/Interface/IMenu';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
+import { ChartStrategy } from '../Strategy/ChartStrategy';
 
 
 //icon to indicate toggle state
@@ -161,31 +162,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
+        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
-        this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
+        this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
         this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleStrategyHypergrid(this))
         this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy(this))
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(this))
+        this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy(this))
         this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(this))
         this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(this))
-        this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
-        this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy(this))
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
-        this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
-        this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsStrategyHypergrid(this))
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyHypergrid(this))
+        this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(this))
         //   this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
-        this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
+        this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy(this))
+        this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
 
         this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
         if (this.abContainerElement == null) {
@@ -1184,10 +1185,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         Value: dataChangedEvent.NewValue
                     };
 
-                    let confirmAction: Redux.Action =  GridRedux.GridSetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId]);
-                    let cancelAction: Redux.Action =null;
+                    let confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId]);
+                    let cancelAction: Redux.Action = null;
                     let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
-                     this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
                     //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
                     event.preventDefault();
                 }
@@ -1245,20 +1246,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let row = config.dataRow;
                     let columnId = config.name;
                     if (columnId && row) {
+
                         //check that it doesn't impact perf monitor
                         let rowIdentifierValue: any = this.getPrimaryKeyValueFromRecord(row);
                         let column = this.getHypergridColumn(columnId);
                         let newValue: any = this.valOrFunc(row, column);
 
-                        let dataChangedInfo: IDataChangedInfo = {
-                            OldValue: null, // dont get old value as not sure we need it
-                            NewValue: newValue,
-                            ColumnId: columnId,
-                            IdentifierValue: rowIdentifierValue,
-                            Record: null
-                        }
+                        // really really dont like this as its doing it every single time!
+                        let olddValue = this.DataService.GetPreviousColumnValue(columnId, rowIdentifierValue, newValue, ChangeDirection.Ignore);
 
-                        this.DataService.CreateDataChangedEvent(dataChangedInfo);
+                        if (olddValue != null && olddValue != newValue) {
+                            let dataChangedInfo: IDataChangedInfo = {
+                                OldValue: olddValue,
+                                NewValue: newValue,
+                                ColumnId: columnId,
+                                IdentifierValue: rowIdentifierValue,
+                                Record: null
+                            }
+
+                            this.DataService.CreateDataChangedEvent(dataChangedInfo);
+                        }
                     }
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row);
                     let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey);

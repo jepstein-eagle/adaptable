@@ -1,7 +1,7 @@
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import * as React from "react";
 import { Modal, Button } from 'react-bootstrap';
-import { DistinctCriteriaPairValue, AccessLevel } from '../../../Utilities/Enums'
+import {  AccessLevel } from '../../../Utilities/Enums'
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps'
@@ -10,6 +10,11 @@ import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants'
 import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
 import { BlotterHelper } from '../../../Utilities/Helpers/BlotterHelper';
+
+/**
+ * This is the main popup that we use - so all function popups will appear here.
+ */
+
 
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;

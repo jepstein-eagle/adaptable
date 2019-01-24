@@ -6,6 +6,9 @@ import { PanelWithImage } from "../Panels/PanelWithImage";
 import { UIHelper } from "../../UIHelper";
 import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 
+/**
+ * The most simple of the alert type popups - just shows a message with a close button.  No user action required.
+ */
 export interface AdaptableBlotterPopupAlertProps extends React.ClassAttributes<AdaptableBlotterPopupAlert> {
     ShowPopup: boolean
     onClose: Function

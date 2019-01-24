@@ -312,7 +312,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
         let prompt: IUIPrompt = {
             Header: "Enter name for User Filter",
-            Msg: "Please enter a user filter name",
+            Msg: "",
             ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(existingColumnFilter, "")
         }
         this.props.onShowPrompt(prompt)
