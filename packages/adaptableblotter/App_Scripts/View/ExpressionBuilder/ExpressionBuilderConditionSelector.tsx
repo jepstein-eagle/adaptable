@@ -91,7 +91,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 let selectedColumnFilterExpressions: Array<string>
                 let selectedColumnRanges: Array<IRange>
 
-                // get selectedcolumn values
+                // get selected column values
                 let keyValuePair = theProps.Expression.ColumnValueExpressions.find(x => x.ColumnId == theProps.SelectedColumnId)
                 if (keyValuePair) {
                     selectedColumnDisplayValues = keyValuePair.ColumnDisplayValues
@@ -187,11 +187,12 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         let selectedColumnFriendlyName: string = (selectedColumn) ? selectedColumn.FriendlyName : ""
 
         // get filter names
-        // first system ones
+        // first system filters
         let availableFilterNames: string[] = []
         FilterHelper.GetSystemFiltersForColumn(selectedColumn, this.props.SystemFilters).forEach((sf: string) => {
             availableFilterNames.push(sf)
         })
+        // then user filters
         FilterHelper.GetUserFiltersForColumn(selectedColumn, this.props.UserFilters).forEach((uf: IUserFilter) => {
             availableFilterNames.push(uf.Name)
         })
@@ -199,10 +200,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
         // get the help descriptions
         let firstTimeText: string = "Start creating the query by selecting a column below."
         let secondTimeText: string = "Select another column for the query."
-
-        if (this.props.ExpressionMode == ExpressionMode.SingleColumn) {
-            //
-        }
 
         let panelHeader: string = (this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn) ? "Select a Column" : "Column: " + selectedColumnFriendlyName;
 
@@ -235,7 +232,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                     {this.state.ShowWaitingMessage ?
                         <Waiting WaitingMessage="Retrieving Column Values..." />
                         :
-                        <ColumnSelector cssClassName={cssClassName} SelectedColumnIds={[this.props.SelectedColumnId]}
+                        <ColumnSelector cssClassName={cssClassName}
+                            SelectedColumnIds={[this.props.SelectedColumnId]}
                             ColumnList={this.props.ColumnsList}
                             onColumnChange={columns => this.onColumnSelectChange(columns)}
                             SelectionMode={SelectionMode.Single} />
@@ -269,7 +267,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                         </Nav>
                                         <Tab.Content animation>
                                             <Tab.Pane eventKey={QueryTab.ColumnValue} >
-                                                {selectedColumn.DataType != DataType.Boolean &&
+                                                {selectedColumn.DataType != DataType.Boolean && this.state.SelectedTab == QueryTab.ColumnValue &&
                                                     <div>
                                                         {this.state.ShowWaitingMessage ?
                                                             <Waiting WaitingMessage="Retrieving Column Values..." />
@@ -286,21 +284,25 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                                 }
                                             </Tab.Pane>
                                             <Tab.Pane eventKey={QueryTab.Filter} >
-                                                <ExpressionBuilderUserFilter
-                                                    cssClassName={cssClassName}
-                                                    AvailableFilterNames={availableFilterNames}
-                                                    SelectedFilterNames={this.state.SelectedFilterExpressions}
-                                                    onFilterNameChange={(selectedValues) => this.onSelectedFiltersChanged(selectedValues)} >
-                                                </ExpressionBuilderUserFilter>
+                                                {this.state.SelectedTab == QueryTab.Filter &&
+                                                    <ExpressionBuilderUserFilter
+                                                        cssClassName={cssClassName}
+                                                        AvailableFilterNames={availableFilterNames}
+                                                        SelectedFilterNames={this.state.SelectedFilterExpressions}
+                                                        onFilterNameChange={(selectedValues) => this.onSelectedFiltersChanged(selectedValues)} >
+                                                    </ExpressionBuilderUserFilter>
+                                                }
                                             </Tab.Pane>
                                             <Tab.Pane eventKey={QueryTab.Range}  >
-                                                <ExpressionBuilderRanges
-                                                    cssClassName={cssClassName}
-                                                    SelectedColumn={selectedColumn}
-                                                    Ranges={this.state.SelectedColumnRanges}
-                                                    Columns={this.props.ColumnsList}
-                                                    onRangesChange={(ranges) => this.onSelectedColumnRangesChange(ranges)} >
-                                                </ExpressionBuilderRanges>
+                                                {this.state.SelectedTab == QueryTab.Range &&
+                                                    <ExpressionBuilderRanges
+                                                        cssClassName={cssClassName}
+                                                        SelectedColumn={selectedColumn}
+                                                        Ranges={this.state.SelectedColumnRanges}
+                                                        Columns={this.props.ColumnsList}
+                                                        onRangesChange={(ranges) => this.onSelectedColumnRangesChange(ranges)} >
+                                                    </ExpressionBuilderRanges>
+                                                }
                                             </Tab.Pane>
                                         </Tab.Content>
                                     </div>

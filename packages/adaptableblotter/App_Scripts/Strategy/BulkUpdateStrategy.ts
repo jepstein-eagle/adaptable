@@ -67,7 +67,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             return {
                 Alert: {
                     Header: "Bulk Update Error",
-                    Msg: "Bulk Update is not allowed on readonly columns.\nPlease adjust the cell selection.",
+                    Msg: "Bulk Update is not permitted on readonly columns.\nPlease adjust the cell selection.",
                     MessageType: MessageType.Error
                 }
             }

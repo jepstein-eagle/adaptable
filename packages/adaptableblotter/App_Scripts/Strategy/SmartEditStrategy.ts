@@ -74,7 +74,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             return {
                 Alert: {
                     Header: "Smart Edit Error",
-                    Msg: "Smart Edit is not allowed on readonly columns.\nPlease adjust the cell selection.",
+                    Msg: "Smart Edit is not permitted on readonly columns.\nPlease adjust the cell selection.",
                     MessageType: MessageType.Error
                 }
             }

@@ -22,12 +22,11 @@ export class AdaptableBlotterPopupAlert extends React.Component<AdaptableBlotter
 
     render() {
 
+        let headerContainsMessage: boolean = this.props.Header.indexOf(this.props.MessageType) != -1;
 
         let style: string = UIHelper.getStyleNameByMessageType(this.props.MessageType);
-        let header: string = this.props.MessageType.toUpperCase();
+        let header: string = (headerContainsMessage) ? this.props.Header : this.props.MessageType.toUpperCase();
         let glyph: string = UIHelper.getGlyphByMessageType(this.props.MessageType);
-
-
 
         let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
         let cssClassName: string = StyleConstants.POPUP_ALERT
@@ -51,20 +50,15 @@ export class AdaptableBlotterPopupAlert extends React.Component<AdaptableBlotter
                                     bsSize={"small"}
                                 >
                                     <div>
+                                        {headerContainsMessage==false &&
+                                            <div style={{ display: "flex", alignItems: "center" }}>
+                                                <ControlLabel>
+                                                    {this.props.Header}
+                                                </ControlLabel>
+                                            </div>
+                                        }
                                         <div style={{ display: "flex", alignItems: "center" }}>
-                                            <ControlLabel>
-                                                {this.props.Header}
-                                            </ControlLabel>
-                                        </div>
-                                        <div style={{ display: "flex", alignItems: "center" }}>
-                                            {this.props.Msg.split("\n").map(function (item, index) {
-                                                return (
-                                                    <span key={index}>
-                                                        {item}
-                                                        <br />
-                                                    </span>
-                                                )
-                                            })}
+                                            {this.props.Msg}
                                         </div>
                                         <div style={{ marginTop: '20px' }}>
                                             <Row >
