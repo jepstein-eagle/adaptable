@@ -2,6 +2,7 @@ import * as Redux from 'redux';
 import { UserInterfaceState } from './Interface/IState'
 import { IPermittedColumnValues } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { UIHelper } from '../../View/UIHelper';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 
 export const COLOR_PALETTE_SET = 'COLOR_PALETTE_SET';
@@ -63,8 +64,8 @@ export const PermittedColumnValuesDelete = (Column: string): PermittedColumnValu
 
 const initialUserInterfaceState: UserInterfaceState = {
     ColorPalette: UIHelper.getDefaultColors(),
-    StyleClassNames: [],
-    PermittedColumnValues: []
+    StyleClassNames: EMPTY_ARRAY,
+    PermittedColumnValues: EMPTY_ARRAY
 }
 
 export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (state: UserInterfaceState = initialUserInterfaceState, action: Redux.Action): UserInterfaceState => {

@@ -52,7 +52,7 @@ import { FilterWrapperFactory } from './FilterWrapper'
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 // import other items
 import { EventDispatcher } from '../Utilities/EventDispatcher'
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue } from '../Utilities/Enums'
+import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, FilterOnDataChangeOptions } from '../Utilities/Enums'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
@@ -61,7 +61,7 @@ import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar, IRange, IRangeExpression, IPermittedColumnValues } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../Utilities/Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
 import { ISelectedCell, ISelectedCellInfo } from '../Strategy/Interface/ISelectedCellsStrategy';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
@@ -89,7 +89,7 @@ import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { BlotterApi } from '../Api/BlotterApi';
 import { Action } from 'redux';
-import { DEFAULT_LAYOUT } from '../Utilities/Constants/GeneralConstants';
+import { DEFAULT_LAYOUT, HALF_SECOND } from '../Utilities/Constants/GeneralConstants';
 import { AlertToolbarControl } from '../View/Alert/AlertToolbarControl';
 import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy';
 import { CalendarStrategy } from '../Strategy/CalendarStrategy';
@@ -138,6 +138,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private gridOptions: GridOptions
     public EmbedColumnMenu: boolean;
     public isInitialised: boolean
+    private throttleApplyGridFilteringUser: (() => void) & _.Cancelable;
+    private throttleApplyGridFilteringExternal: (() => void) & _.Cancelable;
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
@@ -199,7 +201,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
 
-      iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
+        iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
 
 
         this.AdaptableBlotterStore.Load
@@ -233,10 +235,33 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
             }
         }
-
+        // create debounce methods that take a time based on user settings
+        this.throttleApplyGridFilteringUser = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
+        this.throttleApplyGridFilteringExternal = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
     }
 
 
+    // debounced methods
+    debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), HALF_SECOND);
+    debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), HALF_SECOND);
+    debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), HALF_SECOND);
+    debouncedFilterGrid = _.debounce(() => this.applyGridFiltering(), HALF_SECOND);
+
+    private filterOnUserDataChange(): void {
+        if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
+            this.applyGridFiltering();
+        } else if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
+            this.throttleApplyGridFilteringUser();
+        }
+    }
+
+    private filterOnExternalDataChange(): void {
+        if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
+            this.applyGridFiltering();
+        } else if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
+            this.throttleApplyGridFilteringExternal();
+        }
+    }
 
     private createFilterWrapper(col: Column) {
         this.gridOptions.api.destroyFilter(col)
@@ -273,7 +298,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
     public StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>();
-
     public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
 
 
@@ -331,7 +355,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.setColumnIntoStore();
     }
 
-    debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), 500);
+
     public setColumnIntoStore() {
         let allColumns: IColumn[] = []
         let existingColumns: IColumn[] = this.getState().Grid.Columns;
@@ -465,14 +489,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
-    debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), 500);
     public saveGridLayout() {
         if (this.BlotterOptions.layoutOptions != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts) {
             LayoutHelper.autoSaveLayout(this);
         }
     }
 
-    debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public setSelectedCells(): void {
         let selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
@@ -642,7 +664,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.DataService.CreateDataChangedEvent(dataChangedEvent);
             }
         })
-        this.applyGridFiltering();
+        this.filterOnUserDataChange();
         this.gridOptions.api.clearRangeSelection();
     }
 
@@ -706,7 +728,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents)
         dataChangedEvents.forEach(dc => this.DataService.CreateDataChangedEvent(dc));
 
-        this.applyGridFiltering();
+        this.filterOnUserDataChange();
         this.gridOptions.api.clearRangeSelection();
         nodesToRefresh.forEach(node => {
             this.refreshCells(node, refreshColumnList)
@@ -803,7 +825,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
-   
+
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
 
         // check if there are permitted column values for that column
@@ -1222,8 +1244,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (popupState.ShowScreenPopup && (popupState.ComponentName == ScreenPopups.ColumnChooserPopup || ScreenPopups.CalculatedColumnPopup)) {
                     // ignore
                 } else {
+                    // set the column into the store  
                     this.debouncedSetColumnIntoStore() // was: this.setColumnIntoStore();
+
                 }
+                // refilter the grid if required
+                this.debouncedFilterGrid();
             }
         });
         // dealing with scenario where the data is poured into the blotter after grid has been setup
@@ -1285,11 +1311,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             Value: dataChangedInfo.NewValue
                         };
 
-                        let confirmAction: Redux.Action =  GridRedux.GridSetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node));
-                        let cancelAction: Redux.Action =null;
+                        let confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node));
+                        let cancelAction: Redux.Action = null;
                         let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
-                   
-                       this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+
+                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
                         //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
                         return true;
                     }
@@ -1316,7 +1342,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._currentEditor = null;
             //We refresh the filter so we get live search/filter when editing.
             //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
-            this.applyGridFiltering();
+
+            // if they have set to run filter after edit then lets do it
+            this.filterOnUserDataChange();
             this.debouncedSetSelectedCells();
 
         });
@@ -1385,6 +1413,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                 })
             })
+
+            // this is new  - giving users ability to filter on external data changes
+            this.filterOnExternalDataChange();
+
             // only if visible...
             this.refreshCells(params.node, refreshColumnList);
         });

@@ -6,6 +6,7 @@ import { IFlashingCell } from '../../Utilities/Interface/IAdaptableBlotterObject
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
+import { RowNode, GridOptions } from 'ag-grid-community';
 
 export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements IFlashingCellsStrategy {
     constructor(blotter: AdaptableBlotter) {
@@ -38,6 +39,11 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
                 if (fc) {
                     cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
+                        let rowNode: RowNode = params.node;
+                        let test: GridOptions = theBlotter.BlotterOptions.vendorGrid as GridOptions;
+                     //   test.api.disp
+                     // need to find way of seeing if row is visilbe
+                 //    test.api.row
                         let key = primaryKey + col.ColumnId + "up";
                         let currentFlashTimer = currentFlashing.get(key)
                         if (currentFlashTimer) {
@@ -46,6 +52,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
 
                         let oldValue = theBlotter.DataService.GetPreviousColumnValue(col.ColumnId, primaryKey, params.value, ChangeDirection.Up);
                         if (oldValue && params.value > oldValue) {
+                    //        console.log("tick up for " + primaryKey)
                             if (currentFlashTimer) {
                                 window.clearTimeout(currentFlashTimer)
                             }
@@ -70,6 +77,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
                         }
                         let oldValue = theBlotter.DataService.GetPreviousColumnValue(col.ColumnId, primaryKey, params.value, ChangeDirection.Down);
                         if (oldValue && params.value < oldValue) {
+                      //      console.log("tick down for primarykey: " + primaryKey)
                             if (currentFlashTimer) {
                                 window.clearTimeout(currentFlashTimer)
                             }

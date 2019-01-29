@@ -55,7 +55,7 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
     onSetChartVisibility: (chartVisibility: ChartVisibility) => SystemRedux.ChartSetChartVisibiityAction
 }
 
-export interface ChartDisplayPopupWizardState {
+export interface ChartDisplayPopupState {
     // Global
     //  IsChartMinimised: boolean;
     IsChartSettingsVisible: boolean;
@@ -87,7 +87,7 @@ export interface ChartDisplayPopupWizardState {
     SubTitleMargin: number;
 }
 
-class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps, ChartDisplayPopupWizardState> {
+class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps, ChartDisplayPopupState> {
 
     constructor(props: ChartDisplayPopupProps) {
         super(props);
@@ -952,7 +952,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             TitleMargin: 0,
             SubTitleMargin: 0,
             UseDefaultXAxisTitle: true
-        } as ChartDisplayPopupWizardState)
+        } as ChartDisplayPopupState)
         // then update the properties
         let chartProperties: IChartProperties = Helper.cloneObject(DefaultChartProperties);
         // do the titles 
@@ -962,51 +962,51 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onShowGeneralProperties() {
-        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupState)
     }
 
     onHideGeneralProperties() {
-        this.setState({ IsGeneralMinimised: true, } as ChartDisplayPopupWizardState)
+        this.setState({ IsGeneralMinimised: true, } as ChartDisplayPopupState)
     }
 
     onShowYAxisProperties() {
-        this.setState({ IsYAxisMinimised: false, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState);
+        this.setState({ IsYAxisMinimised: false, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupState);
     }
 
     onHideYAxisProperties() {
-        this.setState({ IsYAxisMinimised: true, } as ChartDisplayPopupWizardState)
+        this.setState({ IsYAxisMinimised: true, } as ChartDisplayPopupState)
     }
 
     onShowXAxisProperties() {
-        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: false, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: false, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupState)
     }
 
     onHideXAxisProperties() {
-        this.setState({ IsXAxisMinimised: true, } as ChartDisplayPopupWizardState)
+        this.setState({ IsXAxisMinimised: true, } as ChartDisplayPopupState)
     }
 
     onShowHighlightsProperties() {
-        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: false, IsMiscMinimised: true } as ChartDisplayPopupWizardState)
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: false, IsMiscMinimised: true } as ChartDisplayPopupState)
     }
 
     onHideHighlightsProperties() {
-        this.setState({ IsHighlightsMinimised: true, } as ChartDisplayPopupWizardState)
+        this.setState({ IsHighlightsMinimised: true, } as ChartDisplayPopupState)
     }
 
     onShowMiscProperties() {
-        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: false } as ChartDisplayPopupWizardState)
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: false } as ChartDisplayPopupState)
     }
 
     onHideMiscProperties() {
-        this.setState({ IsMiscMinimised: true, } as ChartDisplayPopupWizardState)
+        this.setState({ IsMiscMinimised: true, } as ChartDisplayPopupState)
     }
 
     onShowChartSettings() {
-        this.setState({ IsChartSettingsVisible: true, } as ChartDisplayPopupWizardState)
+        this.setState({ IsChartSettingsVisible: true, } as ChartDisplayPopupState)
     }
 
     onHideChartSettings() {
-        this.setState({ IsChartSettingsVisible: false, } as ChartDisplayPopupWizardState)
+        this.setState({ IsChartSettingsVisible: false, } as ChartDisplayPopupState)
     }
 
     onChartTypeChange(event: React.FormEvent<any>) {
@@ -1127,9 +1127,9 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     private onSetYAxisMinValueOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.setState({ SetYAxisMinimumValue: true } as ChartDisplayPopupWizardState)
+            this.setState({ SetYAxisMinimumValue: true } as ChartDisplayPopupState)
         } else { // set YAxisMinValue to undefined
-            this.setState({ SetYAxisMinimumValue: e.checked } as ChartDisplayPopupWizardState)
+            this.setState({ SetYAxisMinimumValue: e.checked } as ChartDisplayPopupState)
             let chartProperties: IChartProperties = this.state.ChartProperties;
             chartProperties.YAxisMinimumValue = undefined;
             this.updateChartProperties(chartProperties);
@@ -1140,9 +1140,9 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     private onSetYAxisLabelColorOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.setState({ SetYAxisLabelColor: true } as ChartDisplayPopupWizardState)
+            this.setState({ SetYAxisLabelColor: true } as ChartDisplayPopupState)
         } else { // set YAxisMinValue to undefined
-            this.setState({ SetYAxisLabelColor: e.checked } as ChartDisplayPopupWizardState)
+            this.setState({ SetYAxisLabelColor: e.checked } as ChartDisplayPopupState)
             let chartProperties: IChartProperties = this.state.ChartProperties;
             chartProperties.YAxisLabelColor = "";
             this.updateChartProperties(chartProperties);
@@ -1153,9 +1153,9 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     private onSetXAxisLabelColorOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.setState({ SetXAxisLabelColor: true } as ChartDisplayPopupWizardState)
+            this.setState({ SetXAxisLabelColor: true } as ChartDisplayPopupState)
         } else { // set YAxisMinValue to undefined
-            this.setState({ SetXAxisLabelColor: e.checked } as ChartDisplayPopupWizardState)
+            this.setState({ SetXAxisLabelColor: e.checked } as ChartDisplayPopupState)
             let chartProperties: IChartProperties = this.state.ChartProperties;
             chartProperties.XAxisLabelColor = "";
             this.updateChartProperties(chartProperties);
@@ -1166,9 +1166,9 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     private onSetYAxisTitleColorOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.setState({ SetYAxisTitleColor: true } as ChartDisplayPopupWizardState)
+            this.setState({ SetYAxisTitleColor: true } as ChartDisplayPopupState)
         } else { // set YAxisMinValue to undefined
-            this.setState({ SetYAxisTitleColor: e.checked } as ChartDisplayPopupWizardState)
+            this.setState({ SetYAxisTitleColor: e.checked } as ChartDisplayPopupState)
             let chartProperties: IChartProperties = this.state.ChartProperties;
             chartProperties.YAxisTitleColor = "";
             this.updateChartProperties(chartProperties);
@@ -1178,9 +1178,9 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     private onSetXAxisTitleColorOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.setState({ SetXAxisTitleColor: true } as ChartDisplayPopupWizardState)
+            this.setState({ SetXAxisTitleColor: true } as ChartDisplayPopupState)
         } else { // set YAxisMinValue to undefined
-            this.setState({ SetXAxisTitleColor: e.checked } as ChartDisplayPopupWizardState)
+            this.setState({ SetXAxisTitleColor: e.checked } as ChartDisplayPopupState)
             let chartProperties: IChartProperties = this.state.ChartProperties;
             chartProperties.XAxisTitleColor = "";
             this.updateChartProperties(chartProperties);
@@ -1194,7 +1194,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         chartProperties.TitleAlignment = e.value as HorizontalAlignment;
         this.updateChartProperties(chartProperties);
         let titleMargin: number = (e.value == HorizontalAlignment.Right) ? 5 : 0
-        this.setState({ TitleMargin: titleMargin, } as ChartDisplayPopupWizardState)
+        this.setState({ TitleMargin: titleMargin, } as ChartDisplayPopupState)
     }
 
     onSubTitleAlignmentChange(event: React.FormEvent<any>) {
@@ -1203,7 +1203,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         chartProperties.SubTitleAlignment = e.value as HorizontalAlignment;
         this.updateChartProperties(chartProperties);
         let subtitleMargin: number = (e.value == HorizontalAlignment.Right) ? 5 : 0
-        this.setState({ SubTitleMargin: subtitleMargin, } as ChartDisplayPopupWizardState)
+        this.setState({ SubTitleMargin: subtitleMargin, } as ChartDisplayPopupState)
     }
 
     private onYAxisMinValueChanged = (e: any) => {
@@ -1219,7 +1219,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     private updateChartProperties(chartProperties: IChartProperties): void {
-        this.setState({ ChartProperties: chartProperties, } as ChartDisplayPopupWizardState)
+        this.setState({ ChartProperties: chartProperties, } as ChartDisplayPopupState)
         this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Title, chartProperties)
     }
 
@@ -1281,7 +1281,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             this.updateChartProperties(chartProperties);
         }
 
-        this.setState({ UseDefaultYAxisTitle: e.checked, } as ChartDisplayPopupWizardState)
+        this.setState({ UseDefaultYAxisTitle: e.checked, } as ChartDisplayPopupState)
     }
 
     private onUseDefaultXAxisTitleOptionChanged(event: React.FormEvent<any>) {
@@ -1292,7 +1292,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             this.updateChartProperties(chartProperties);
         }
 
-        this.setState({ UseDefaultXAxisTitle: e.checked, } as ChartDisplayPopupWizardState)
+        this.setState({ UseDefaultXAxisTitle: e.checked, } as ChartDisplayPopupState)
     }
 
     private getYAxisTitle(useDefault: boolean): string {

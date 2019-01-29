@@ -8,7 +8,7 @@ import { EventDispatcher } from '../EventDispatcher';
 import { ICalculatedColumn, IGridSort, ILayout, IFreeTextColumn, IPercentBar } from './IAdaptableBlotterObjects';
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from './IStateEvents';
-import { IAdaptableBlotterOptions } from './IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from './BlotterOptions/IAdaptableBlotterOptions';
 import { ICalendarService } from '../Services/Interface/ICalendarService';
 import { IDataService } from '../Services/Interface/IDataService';
 import { IValidationService } from '../Services/Interface/IValidationService';

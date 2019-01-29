@@ -2,6 +2,7 @@ import { UserFilterState } from './Interface/IState';
 import * as Redux from 'redux'
 import { IUserFilter, IColumnFilter } from '../../Utilities/Interface/IAdaptableBlotterObjects';
 import { InputAction } from '../../Utilities/Interface/IMessage';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';
 export const USER_FILTER_DELETE = 'USER_FILTER_DELETE';
@@ -9,7 +10,7 @@ export const USER_FILTER_CREATE_FROM_COLUMN_FILTER = 'USER_FILTER_CREATE_FROM_CO
 
 export interface UserFilterAddUpdateAction extends Redux.Action {
     Index: number
-   UserFilter: IUserFilter
+    UserFilter: IUserFilter
 }
 
 export interface UserFilterDeleteAction extends Redux.Action {
@@ -17,10 +18,10 @@ export interface UserFilterDeleteAction extends Redux.Action {
 }
 
 export interface CreateUserFilterFromColumnFilterAction extends InputAction {
-   ColumnFilter: IColumnFilter
+    ColumnFilter: IColumnFilter
 }
 
-export const UserFilterAddUpdate = (Index: number,UserFilter: IUserFilter): UserFilterAddUpdateAction => ({
+export const UserFilterAddUpdate = (Index: number, UserFilter: IUserFilter): UserFilterAddUpdateAction => ({
     type: USER_FILTER_ADD_UPDATE,
     Index,
     UserFilter
@@ -31,21 +32,20 @@ export const UserFilterDelete = (UserFilter: IUserFilter): UserFilterDeleteActio
     UserFilter
 })
 
-export const CreateUserFilterFromColumnFilter = (ColumnFilter: IColumnFilter,  InputText: string): CreateUserFilterFromColumnFilterAction => ({
+export const CreateUserFilterFromColumnFilter = (ColumnFilter: IColumnFilter, InputText: string): CreateUserFilterFromColumnFilterAction => ({
     type: USER_FILTER_CREATE_FROM_COLUMN_FILTER,
     ColumnFilter,
     InputText
 })
 
-const initialFilterState:
-    UserFilterState = {
-        UserFilters: [],
-      }
+const initialFilterState: UserFilterState = {
+    UserFilters: EMPTY_ARRAY,
+}
 
 export const UserFilterReducer: Redux.Reducer<UserFilterState> = (state: UserFilterState = initialFilterState, action: Redux.Action): UserFilterState => {
     let index: number;
-     let userFilters: IUserFilter[]
-    
+    let userFilters: IUserFilter[]
+
     switch (action.type) {
 
         case USER_FILTER_ADD_UPDATE: {
@@ -66,8 +66,8 @@ export const UserFilterReducer: Redux.Reducer<UserFilterState> = (state: UserFil
             userFilters.splice(index, 1);
             return Object.assign({}, state, { UserFilters: userFilters })
         }
-       
-     
+
+
         default:
             return state
     }

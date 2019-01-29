@@ -52,7 +52,7 @@ function getPKForGrid() {
 
 function getBlotterIdforGrid() {
   if (showTrade) {
-    return "nomura demmo";
+    return "trade demo hello";
   } else {
     return "demo ftse"
   }
@@ -88,7 +88,7 @@ function InitTradeBlotter() {
   let gridcontainer = document.getElementById('grid');
   gridcontainer.innerHTML = ""
   let grid = new agGrid.Grid(gridcontainer, gridOptions);
-  dataGen.startTickingDataagGrid(gridOptions);
+  //dataGen.startTickingDataagGrid(gridOptions);
 
   let s = 2;
 
@@ -192,7 +192,7 @@ function listenToSearchChange(searchChangedArgs) {
 
 function getValuesForColumn(columnName) {
   let vals;
-  if (columnName == "notional") {
+  if (columnName == "notionalhhh") {
     vals = [1000000, 5000000, 10000000];
   } else if (columnName == "settlementDate") {
     vals = [
@@ -503,7 +503,7 @@ function apiTester(state, gridOptions) {
       adaptableblotter.api.LayoutApi.layoutSave()
     } else if (quickSearchText == "#setlayout") {
       adaptableblotter.api.LayoutApi.layoutSet("miguel")
-    } else if (quickSearchText == "#notional") {
+    } else if (quickSearchText == "#notionalkkkk") {
       gridOptions.api.forEachNode((rowNode, index) => {
         if (index == 4) {
           rowNode.setDataValue("notional", 345)

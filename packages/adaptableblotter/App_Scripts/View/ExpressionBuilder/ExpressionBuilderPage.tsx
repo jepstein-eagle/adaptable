@@ -13,7 +13,7 @@ import { ObjectFactory } from "../../Utilities/ObjectFactory";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { IUserFilter } from "../../Utilities/Interface/IAdaptableBlotterObjects";
 import { Expression } from "../../Utilities/Expression";
-import { IAdaptableBlotterOptions } from "../../Utilities/Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptions } from "../../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions";
 import { IBlotterApi } from "../../Api/Interface/IBlotterApi";
 import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 

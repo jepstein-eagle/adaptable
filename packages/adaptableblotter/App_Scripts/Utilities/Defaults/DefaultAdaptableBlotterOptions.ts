@@ -1,5 +1,5 @@
 import * as GeneralConstants from '../Constants/GeneralConstants'
-import { IAdaptableBlotterOptions } from '../Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../Interface/BlotterOptions/IAdaptableBlotterOptions';
 
 export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     vendorGrid: null,
@@ -33,6 +33,14 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
         indicateFilteredColumns: true,
         useAdaptableBlotterFilterForm: true,
         useAdaptableBlotterFloatingFilter: true,
+        filterActionOnUserDataChange: {
+            RunFilter: 'Always',
+            ThrottleDelay: 0
+        },
+        filterActionOnExternalDataChange: {
+            RunFilter: 'Throttle',
+            ThrottleDelay: 5000
+        },
     },
     queryOptions: {
         maxColumnValueItemsDisplayed: 5000,

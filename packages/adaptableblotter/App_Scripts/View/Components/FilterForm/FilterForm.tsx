@@ -4,7 +4,6 @@ import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux'
 import * as UserFilterRedux from '../../../Redux/ActionsReducers/UserFilterRedux'
-import * as SystemFilterRedux from '../../../Redux/ActionsReducers/SystemFilterRedux'
 import * as HomeRedux from '../../../Redux/ActionsReducers/HomeRedux'
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IColumn } from '../../../Utilities/Interface/IColumn';
@@ -22,10 +21,8 @@ import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { Expression } from "../../../Utilities/Expression";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import { ButtonClear } from "../Buttons/ButtonClear";
-import { IAdaptableBlotterOptions, IServerColumnValues } from "../../../Utilities/Interface/IAdaptableBlotterOptions";
 import { Waiting } from "./Waiting";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { IBlotterApi } from "../../../Api/Interface/IBlotterApi";
 import { ListBoxMenu } from "./ListBoxMenu";
 import {  Well } from 'react-bootstrap';
 import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
@@ -99,7 +96,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                             // set the UIPermittedValues for this column to what has been sent
                             this.props.Blotter.api.userInterfaceApi.SetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems)
                         }
-                    }, function (error) {
+                    }, function () {
                         //    this.setState({ name: error });
                     });
             }
@@ -119,7 +116,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         // get user filter expressions appropriate for this column
         let appropriateFilters: string[] = FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn, this.props.UserFilters).map(uf => uf.Name).concat(FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf => sf))
             ;//.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
-        let appropriateFilterItems: IRawValueDisplayValuePair[] = appropriateFilters.map((uf, index) => { return { RawValue: uf, DisplayValue: uf } })
+        let appropriateFilterItems: IRawValueDisplayValuePair[] = appropriateFilters.map((uf) => { return { RawValue: uf, DisplayValue: uf } })
 
         let existingColumnFilter: IColumnFilter = this.props.CurrentColumn.DataType != DataType.Boolean && this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 

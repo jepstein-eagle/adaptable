@@ -1,4 +1,5 @@
-import { DisplayAction, SelectedCellOperation, MathOperation } from "../Enums";
+import { DisplayAction, SelectedCellOperation, MathOperation, StatusColour, LeafExpressionOperator } from "../Enums";
+import { ChartVisibility, AxisTotal } from "../ChartEnums";
 
 export const MISSING_COLUMN: string = " [MISSING]";
 export const DEFAULT_LAYOUT: string = "Ab_Default_Layout";
@@ -11,8 +12,10 @@ export const MENU_PREFIX: string = "ab_"
 export const READ_ONLY_STYLE: string = "ab_readonly"
 
 export const ALL_COLUMN_VALUES: string = 'ALL_COLUMN_VALUES';
-export const EMPTY_STRING: string = 'ALL_COLUMN_VALUES';
+export const EMPTY_STRING: string = '';
 export const EMPTY_ARRAY: any[] = [];
+
+export const HALF_SECOND: number = 500;
 
 /*
 Redux / State Defaults
@@ -39,6 +42,20 @@ export const SMART_EDIT_DEFAULT_VALUE: number = 1;
 export const SMART_EDIT_DEFAULT_OPERATION: 'Add' | 'Subtract' | 'Multiply' | 'Divide' = MathOperation.Multiply
 // Selected Cells
 export const SELECTED_CELLS_DEFAULT_OPERATION: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only' = SelectedCellOperation.Sum;
+// system
+export const SYSTEM_DEFAULT_CHART_VISIBILITY: ChartVisibility = ChartVisibility.Hidden;
+export const SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR: "Red" | "Amber" | "Green" | "Blue" = StatusColour.Green;
+// theme
+export const THEME_DEFAULT_CURRENT_THEME: string = LIGHT_THEME
 
 
+/**
+ * Object Factory
+ */
+export const CHART_DEFAULT_YAXIS_TOTAL: AxisTotal = AxisTotal.Sum;
+export const PLUS_MINUS_DEFAULT_NUDGE_VALUE: number = 1;
+export const ALERT_DEFAULT_OPERATOR: LeafExpressionOperator = LeafExpressionOperator.None;
+export const ALERT_DEFAULT_RANGE_OPERAND_TYPE:  'Value' | 'Column' = 'Column';
+export const ALERT_DEFAULT_MESSAGE_TYPE:  'Success'|'Info'|'Warning'|'Error' = 'Error';
+export const ALERT_DEFAULT_SHOW_AS_POPUP:  boolean = true;
 

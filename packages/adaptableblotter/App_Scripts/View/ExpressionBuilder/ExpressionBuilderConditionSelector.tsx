@@ -17,9 +17,6 @@ import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { Helper } from "../../Utilities/Helpers/Helper";
 import { Waiting } from "../Components/FilterForm/Waiting";
 import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
-import { raw } from "body-parser";
-import { IKeyValuePair } from "../../Utilities/Interface/IKeyValuePair";
-
 
 export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>

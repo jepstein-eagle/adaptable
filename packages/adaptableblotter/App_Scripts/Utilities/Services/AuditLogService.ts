@@ -1,4 +1,4 @@
-import { IAdaptableBlotterOptions } from "../Interface/IAdaptableBlotterOptions";
+import { IAdaptableBlotterOptions } from "../Interface/BlotterOptions/IAdaptableBlotterOptions";
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import { AuditLogTrigger } from "../Enums";
 import { LoggingHelper } from "../Helpers/LoggingHelper";

@@ -4,7 +4,7 @@ import { IColumn } from '../Interface/IColumn';
 import { DataType } from '../Enums';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IAdaptableBlotterOptions } from '../Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { IColumnCategory } from '../Interface/IAdaptableBlotterObjects';
 
 export module ColumnHelper {

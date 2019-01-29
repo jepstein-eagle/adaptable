@@ -7,6 +7,7 @@ import { ISystemStatus } from '../../Utilities/Interface/IAdaptableBlotterObject
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IAlert } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../Utilities/ChartEnums';
+import { EMPTY_ARRAY, SYSTEM_DEFAULT_CHART_VISIBILITY, EMPTY_STRING, SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR } from '../../Utilities/Constants/GeneralConstants';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -217,19 +218,19 @@ export const ReportSetErrorMessage = (ErrorMessage: string): ReportSetErrorMessa
 })
 
 const initialSystemState: SystemState = {
-    SystemStatus: { StatusMessage: "", StatusColour: "Green" },
-    Alerts: [],
+    SystemStatus: { StatusMessage: EMPTY_STRING, StatusColour: SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR },
+    Alerts: EMPTY_ARRAY,
     AvailableCalendars: CalendarHelper.getSystemCalendars(),
-    CurrentLiveReports: [],
+    CurrentLiveReports: EMPTY_ARRAY,
     IsValidSmartEditSelection: false,
     SmartEditPreviewInfo: null,
     IsValidBulkUpdateSelection: false,
     BulkUpdatePreviewInfo: null,
     ChartData: null,
-    ChartVisibility: ChartVisibility.Hidden,
-    CalculatedColumnErrorMessage: "",
-    IPPDomainsPages: [],
-    ReportErrorMessage: ""
+    ChartVisibility: SYSTEM_DEFAULT_CHART_VISIBILITY,
+    CalculatedColumnErrorMessage: EMPTY_STRING,
+    IPPDomainsPages: EMPTY_ARRAY,
+    ReportErrorMessage: EMPTY_STRING
 }
 
 export const SystemReducer: Redux.Reducer<SystemState> = (state: SystemState = initialSystemState, action: Redux.Action): SystemState => {

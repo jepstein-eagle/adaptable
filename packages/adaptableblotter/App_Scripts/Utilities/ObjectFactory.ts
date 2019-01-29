@@ -10,21 +10,21 @@ import { IVendorGridInfo } from "./Interface/IVendorGridInfo";
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
 import { DefaultChartProperties } from '../Utilities/Defaults/DefaultChartProperties';
 import { AxisTotal } from './ChartEnums';
-import { EMPTY_STRING } from './Constants/GeneralConstants';
+import { EMPTY_STRING, EMPTY_ARRAY, CHART_DEFAULT_YAXIS_TOTAL, PLUS_MINUS_DEFAULT_NUDGE_VALUE, ALERT_DEFAULT_OPERATOR, ALERT_DEFAULT_RANGE_OPERAND_TYPE, ALERT_DEFAULT_MESSAGE_TYPE, ALERT_DEFAULT_SHOW_AS_POPUP } from './Constants/GeneralConstants';
 
 
 export module ObjectFactory {
 
     export function CreateEmptyCustomSort(): ICustomSort {
-        return { ColumnId: EMPTY_STRING, SortedValues: [] }
+        return { ColumnId: EMPTY_STRING, SortedValues: EMPTY_ARRAY}
     }
 
     export function CreateEmptyChartDefinition(): IChartDefinition {
         return {
             Title: EMPTY_STRING,
             SubTitle: EMPTY_STRING,
-            YAxisColumnIds: [],
-            YAxisTotal: AxisTotal.Sum,
+            YAxisColumnIds: EMPTY_ARRAY,
+            YAxisTotal: CHART_DEFAULT_YAXIS_TOTAL,
             XAxisColumnId: EMPTY_STRING,
             XAxisExpression: ExpressionHelper.CreateEmptyExpression(),
             ChartProperties: DefaultChartProperties
@@ -39,7 +39,7 @@ export module ObjectFactory {
         return {
             ColumnId: EMPTY_STRING,
             IsDefaultNudge: false,
-            NudgeValue: 1,
+            NudgeValue: PLUS_MINUS_DEFAULT_NUDGE_VALUE,
             Expression: ExpressionHelper.CreateEmptyExpression()
         }
     }
@@ -48,15 +48,15 @@ export module ObjectFactory {
         return {
             ColumnId: EMPTY_STRING,
             Range: {
-                Operator: LeafExpressionOperator.None,
+                Operator: ALERT_DEFAULT_OPERATOR,
                 Operand1: EMPTY_STRING,
                 Operand2: EMPTY_STRING,
-                Operand1Type: RangeOperandType.Column,
-                Operand2Type: RangeOperandType.Column,
+                Operand1Type: ALERT_DEFAULT_RANGE_OPERAND_TYPE,
+                Operand2Type: ALERT_DEFAULT_RANGE_OPERAND_TYPE,
             },
             Expression: ExpressionHelper.CreateEmptyExpression(),
-            MessageType: MessageType.Error,
-            ShowAsPopup: true
+            MessageType: ALERT_DEFAULT_MESSAGE_TYPE,
+            ShowAsPopup: ALERT_DEFAULT_SHOW_AS_POPUP
         }
     }
 
