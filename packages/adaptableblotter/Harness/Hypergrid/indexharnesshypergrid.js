@@ -108,7 +108,7 @@ function InitBlotter() {
         userName: "demo user", // name of current user
         blotterId: "demo blotter 2.5", // id for blotter
 
-        // predefinedConfig: categoryJson,
+         predefinedConfig: categoryJson,
 
         auditLogOptions: {
             auditCellEdits: true,
@@ -275,19 +275,23 @@ function apiTester(state, gridOptions) {
 }
 
 let categoryJson = {
-    "ColumnCategory": {
-        "ColumnCategories": [
+    "Entitlements": {
+        "FunctionEntitlements": [
             {
-                "ColumnCategoryId": "Pricing",
-                "ColumnIds": ["bid", "ask", "price", "bidOfferSpread", "notional", "bloombergAsk", "bloombergBid",]
+                "FunctionName": "CustomSort",
+                "AccessLevel": "ReadOnly"
             },
             {
-                "ColumnCategoryId": "Strings",
-                "ColumnIds": ["country", "currency", "deskId", "counterparty", "status", "moodysRating", "sandpRating",]
+                "FunctionName": "QuickSearch",
+                "AccessLevel": "ReadOnly"
             },
             {
-                "ColumnCategoryId": "Others",
-                "ColumnIds": ["tradeId", "lastUpdatedBy", "lastUpdated", "changeOnYear"]
+                "FunctionName": "PlusMinus",
+                "AccessLevel": "Hidden"
+            },
+            {
+                "FunctionName": "SmartEdit",
+                "AccessLevel": "Hidden"
             }
         ]
     }

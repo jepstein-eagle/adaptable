@@ -61,8 +61,10 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             <Glyphicon glyph={"align-justify"} />
         </OverlayTrigger>
 
+        let visibleMenuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible);
+
         // function menu items
-        let menuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible).map((menuItem: IMenuItem) => {
+        let menuItems = visibleMenuItems.map((menuItem: IMenuItem) => {
             return <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
                 <Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}
             </MenuItem>
@@ -79,14 +81,20 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         // toolbar items
         let toolbarItems: any = []
-        toolbarItems.push(<div key="toolbarTitle">{' '}{' '}&nbsp;&nbsp;<b>{"Toolbars"}</b></div>);
+        let visibleMenuNames: string[] = visibleMenuItems.map(vm => {
+            return vm.StrategyId;
+        })
+         toolbarItems.push(<div key="toolbarTitle">{' '}{' '}&nbsp;&nbsp;<b>{"Toolbars"}</b></div>);
         this.props.DashboardState.AvailableToolbars.forEach((toolbar: string, index) => {
-            let isVisible: boolean = ArrayExtensions.ContainsItem(this.props.DashboardState.VisibleToolbars, toolbar);
-            let functionName = StrategyConstants.getNameForStrategyId(toolbar);
-            toolbarItems.push(<div className="ab_home_toolbar_column_list" key={index}>
-                <Checkbox value={toolbar} key={toolbar} checked={isVisible} onChange={(e) => this.onSetToolbarVisibility(e)} > {functionName}</Checkbox>
-            </div>)
+            if (ArrayExtensions.ContainsItem(visibleMenuNames, toolbar)) {
+                let isVisible: boolean = ArrayExtensions.ContainsItem(this.props.DashboardState.VisibleToolbars, toolbar);
+                let functionName = StrategyConstants.getNameForStrategyId(toolbar);
+                toolbarItems.push(<div className="ab_home_toolbar_column_list" key={index}>
+                    <Checkbox value={toolbar} key={toolbar} checked={isVisible} onChange={(e) => this.onSetToolbarVisibility(e)} > {functionName}</Checkbox>
+                </div>)
+            }
         });
+
 
         // status button
         let statusButton = <OverlayTrigger key={"systemstatus"} overlay={<Tooltip id="tooltipButton" > {"System Status"}</Tooltip >}>
@@ -244,7 +252,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         this.props.onSetToolbarVisibility(visibleToolbars)
     }
 
-  
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
