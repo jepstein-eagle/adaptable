@@ -215,6 +215,7 @@ const initialDashboardState: DashboardState = {
         StrategyConstants.LayoutStrategyId,
         StrategyConstants.ExportStrategyId,
         StrategyConstants.ColumnFilterStrategyId,
+      //  StrategyConstants.SmartEditStrategyId,
         // StrategyConstants.ChartStrategyId,
         //   StrategyConstants.AlertStrategyId,
         // StrategyConstants.SelectedCellsStrategyId,

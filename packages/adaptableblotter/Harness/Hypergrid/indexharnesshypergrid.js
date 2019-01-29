@@ -291,7 +291,7 @@ let categoryJson = {
             },
             {
                 "FunctionName": "SmartEdit",
-                "AccessLevel": "Hidden"
+                "AccessLevel": "Readonly"
             }
         ]
     }
