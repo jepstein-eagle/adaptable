@@ -1,6 +1,9 @@
 import { FilterHelper } from './FilterHelper'
 import { LeafExpressionOperator, DataType, DistinctCriteriaPairValue, RangeOperandType } from '../Enums';
-import { IRange, IColumnValueExpression, IRangeExpression, IUserFilter } from '../Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from "../Interface/BlotterObjects/IUserFilter";
+import { IRange } from "../Interface/Expression/IRange";
+import { IRangeExpression } from "../Interface/Expression/IRangeExpression";
+import { IColumnValueExpression } from "../Interface/Expression/IColumnValueExpression";
 import { Expression } from '../Expression';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';

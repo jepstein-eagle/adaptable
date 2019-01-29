@@ -40,8 +40,16 @@ class DataService {
                     break;
             }
         }
+        if (oldValue == newValue) {
+            return null;
+        }
         columnValueList.set(identifierValue, newValue);
-        return (oldValue) ? oldValue : newValue;
+        if (oldValue != null) {
+            return oldValue;
+        }
+        else {
+            return newValue;
+        }
     }
     getCellValuesForColumn(columnId) {
         // first check the list exists; if not, then create it

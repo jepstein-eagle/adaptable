@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.COLUMN_CATEGORY_ADD = 'COLUMN_CATEGORY_ADD';
 exports.COLUMN_CATEGORY_EDIT = 'COLUMN_CATEGORY_EDIT';
 exports.COLUMN_CATEGORY_DELETE = 'COLUMN_CATEGORY_DELETE';
@@ -17,7 +18,7 @@ exports.ColumnCategoryDelete = (ColumnCategory) => ({
     ColumnCategory
 });
 const initialColumnCategoryState = {
-    ColumnCategories: []
+    ColumnCategories: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.ColumnCategoryReducer = (state = initialColumnCategoryState, action) => {
     let columnCategories;

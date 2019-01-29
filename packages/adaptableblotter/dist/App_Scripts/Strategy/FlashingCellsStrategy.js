@@ -26,7 +26,7 @@ class FlashingCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
                     }
                     else {
                         if (!flashingCell) {
-                            flashingCell = ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(column);
+                            flashingCell = ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(column, this.FlashingCellState.DefaultUpColor, this.FlashingCellState.DefautDownColor, this.FlashingCellState.DefaultDuration);
                         }
                         this.createContextMenuItemReduxAction("Turn Flashing Cell On", StrategyConstants.FlashingCellGlyph, FlashingCellsRedux.FlashingCellSelect(flashingCell));
                     }

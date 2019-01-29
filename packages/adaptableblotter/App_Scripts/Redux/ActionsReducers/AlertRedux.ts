@@ -1,6 +1,6 @@
 import { AlertState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IAlertDefinition } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IAlertDefinition } from "../../Utilities/Interface/BlotterObjects/IAlertDefinition";
 import { MessageType } from '../../Utilities/Enums';
 import { EMPTY_ARRAY, EMPTY_STRING, ALERT_DEFAULT_MAX_ALERTS_IN_STORE } from '../../Utilities/Constants/GeneralConstants';
 

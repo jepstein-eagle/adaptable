@@ -1,6 +1,9 @@
 import * as React from "react";
 import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 import { MessageType } from "../../../Utilities/Enums";
+/**
+ * Used when giving the user 2 choices with the option of adding text also
+ */
 export interface AdaptableBlotterPopupConfirmationProps extends React.ClassAttributes<AdaptableBlotterPopupConfirmation> {
     ShowPopup: boolean;
     onConfirm: (comment: string) => void;
@@ -9,7 +12,7 @@ export interface AdaptableBlotterPopupConfirmationProps extends React.ClassAttri
     Msg: string;
     ConfirmButtonText: string;
     CancelButtonText: string;
-    ShowCommentBox: boolean;
+    ShowInputBox: boolean;
     MessageType: MessageType;
     AdaptableBlotter: IAdaptableBlotter;
 }

@@ -1,6 +1,7 @@
 import { UserFilterState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IUserFilter, IColumnFilter } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
 import { InputAction } from '../../Utilities/Interface/IMessage';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 

@@ -1,7 +1,7 @@
 import * as UserInterfaceRedux from '../Redux/ActionsReducers/UserInterfaceRedux'
 import { ApiBase } from "./ApiBase";
 import { IUserInterfaceApi } from './Interface/IUserInterfaceApi';
-import { IPermittedColumnValues } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IPermittedColumnValues } from "../Utilities/Interface/IPermittedColumnValues";
 
 export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
 

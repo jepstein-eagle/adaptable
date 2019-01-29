@@ -2,7 +2,7 @@ import { ShortcutState } from './Interface/IState';
 import { MathOperation } from '../../Utilities/Enums';
 import * as Redux from 'redux'
 import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
-import { IShortcut } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IShortcut } from "../../Utilities/Interface/BlotterObjects/IShortcut";
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';

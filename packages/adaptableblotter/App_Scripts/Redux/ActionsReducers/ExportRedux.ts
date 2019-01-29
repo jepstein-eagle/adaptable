@@ -2,7 +2,7 @@ import { ExportState } from './Interface/IState';
 import { ExportDestination } from '../../Utilities/Enums';
 import * as Redux from 'redux'
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
-import { IReport } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 export const EXPORT_APPLY = 'EXPORT_APPLY';

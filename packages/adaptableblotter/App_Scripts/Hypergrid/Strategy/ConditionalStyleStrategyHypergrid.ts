@@ -4,7 +4,8 @@ import { ConditionalStyleScope } from '../../Utilities/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableBlotter } from '../AdaptableBlotter'
-import { IConditionalStyle, IColumnCategory } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
+import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 
 export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy implements IConditionalStyleStrategy {

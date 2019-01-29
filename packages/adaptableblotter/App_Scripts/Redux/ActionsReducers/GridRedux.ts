@@ -2,8 +2,9 @@ import * as Redux from 'redux';
 import { GridState } from './Interface/IState'
 import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { IGridSort } from '../../Utilities/Interface/IAdaptableBlotterObjects';
-import { ISelectedCellInfo, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { IGridSort } from "../../Utilities/Interface/IGridSort";
+import { ISelectedCellInfo } from "../../Utilities/Interface/SelectedCell/ISelectedCellInfo";
+import { ISelectedCellSummmary } from "../../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';

@@ -4,12 +4,12 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { ExportDestination } from '../../Utilities/Enums';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
-import { ILiveReport } from '../../Strategy/Interface/IExportStrategy';
+import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IReport } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {

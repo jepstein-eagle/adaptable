@@ -2,7 +2,8 @@ import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StyleComponent } from '../../Components/StyleComponent';
 import { UIHelper } from "../../UIHelper";
-import { IConditionalStyle, IStyle } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IStyle } from "../../../Utilities/Interface/IStyle";
+import { IConditionalStyle } from "../../../Utilities/Interface/BlotterObjects/IConditionalStyle";
 
 
 export interface ConditionalStyleStyleWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {

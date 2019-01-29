@@ -3,7 +3,8 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
-import { IExportStrategy, ILiveReport } from './Interface/IExportStrategy'
+import { IExportStrategy } from './Interface/IExportStrategy'
+import { ILiveReport } from "../Utilities/Interface/Reports/ILiveReport";
 import { ExportDestination, MessageType, StateChangedTrigger } from '../Utilities/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { Helper } from '../Utilities/Helpers/Helper';
@@ -12,7 +13,7 @@ import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash'
 import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
-import { IReport } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IReport } from "../Utilities/Interface/BlotterObjects/IReport";
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 

@@ -16,7 +16,8 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ICustomSort, IAdaptableBlotterObject } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { ICustomSort } from "../../Utilities/Interface/BlotterObjects/ICustomSort";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {

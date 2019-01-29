@@ -1,4 +1,4 @@
-import { IAdaptableBlotterOptions } from '../Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { IColumn } from '../Interface/IColumn';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 export declare module BlotterHelper {

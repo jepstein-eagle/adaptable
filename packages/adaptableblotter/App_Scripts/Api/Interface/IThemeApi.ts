@@ -1,4 +1,4 @@
-import { IUserTheme } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IUserTheme } from "../../Utilities/Interface/BlotterObjects/IUserTheme";
 
 export interface IThemeApi {
   SetCurrent(theme: string): void;

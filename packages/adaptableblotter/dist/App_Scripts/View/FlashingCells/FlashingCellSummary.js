@@ -25,8 +25,9 @@ class FlashingCellSummaryComponent extends React.Component {
     onFlashingSelectedChanged(flashingCell) {
         let existingfc = this.props.FlashingCells.find(e => e.ColumnId == this.props.SummarisedColumn.ColumnId);
         if (!existingfc) {
+            let flashingCellState = this.props.Blotter.api.configApi.configGetFlashingCellState(false);
             let col = ColumnHelper_1.ColumnHelper.getColumnFromId(this.props.SummarisedColumn.ColumnId, this.props.Columns);
-            existingfc = ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(col);
+            existingfc = ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(col, flashingCellState.DefaultUpColor, flashingCellState.DefautDownColor, flashingCellState.DefaultDuration);
             this.props.onSelectFlashingCell(existingfc);
         }
         this.props.onSelectFlashingCell(existingfc);

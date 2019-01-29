@@ -1,5 +1,5 @@
 import { IMenuItem } from "../../Utilities/Interface/IMenu";
-import { IEntitlement } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IEntitlement } from "../../Utilities/Interface/IEntitlement";
 import { IColumn } from "../../Utilities/Interface/IColumn";
 
 export interface IStrategy {

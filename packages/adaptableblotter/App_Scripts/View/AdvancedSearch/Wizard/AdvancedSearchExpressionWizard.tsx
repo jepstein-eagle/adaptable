@@ -1,6 +1,6 @@
 import { AdaptableWizardStep, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
-import { IAdvancedSearch } from '../../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IAdvancedSearch } from "../../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
 import { UIHelper } from "../../UIHelper";
 
 

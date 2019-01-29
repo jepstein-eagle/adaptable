@@ -14,7 +14,9 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { AdaptablePopover } from '../AdaptablePopover';
 import { MessageType, AccessLevel } from '../../Utilities/Enums';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { IUserFilter, IColumnFilter, IEntitlement } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IEntitlement } from "../../Utilities/Interface/IEntitlement";
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
 import { FormControl } from "react-bootstrap";
 import { ColumnFilterHelper } from "../../Utilities/Helpers/ColumnFilterHelper";
 import { IKeyValuePair } from "../../Utilities/Interface/IKeyValuePair";

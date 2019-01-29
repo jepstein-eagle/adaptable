@@ -1,4 +1,4 @@
-import { IFreeTextColumn } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IFreeTextColumn } from "../../Utilities/Interface/BlotterObjects/IFreeTextColumn";
 export interface IFreeTextColumnApi {
   GetAll(): IFreeTextColumn[];
   Add(freeTextColumn: IFreeTextColumn): void;

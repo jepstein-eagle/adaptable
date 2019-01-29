@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.SHORTCUT_APPLY = 'SHORTCUT_APPLY';
 exports.SHORTCUT_ADD = 'SHORTCUT_ADD';
 exports.SHORTCUT_DELETE = 'SHORTCUT_DELETE';
@@ -37,7 +38,7 @@ exports.ShortcutDelete = (Shortcut) => ({
     Shortcut
 });
 const initialShortcutState = {
-    Shortcuts: []
+    Shortcuts: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.ShortcutReducer = (state = initialShortcutState, action) => {
     let shortcuts;

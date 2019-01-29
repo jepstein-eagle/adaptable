@@ -8,7 +8,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IUserTheme } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IUserTheme } from "../../Utilities/Interface/BlotterObjects/IUserTheme";
 
 interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
     SystemThemes: Array<string>;

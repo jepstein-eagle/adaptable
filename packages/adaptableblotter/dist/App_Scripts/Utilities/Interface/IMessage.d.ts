@@ -12,7 +12,7 @@ export interface IUIConfirmation {
     CancelButtonText: string;
     ConfirmAction: Redux.Action;
     CancelAction: Redux.Action;
-    ShowCommentBox: boolean;
+    ShowInputBox: boolean;
     MessageType: MessageType;
 }
 export interface InputAction extends Redux.Action {
@@ -52,7 +52,7 @@ export interface IConfirmationPopup {
     CancelButtonText: string;
     ConfirmAction: Redux.Action;
     CancelAction: Redux.Action;
-    ShowCommentBox: boolean;
+    ShowInputBox: boolean;
     ConfirmationComment: string;
     MessageType: MessageType;
 }

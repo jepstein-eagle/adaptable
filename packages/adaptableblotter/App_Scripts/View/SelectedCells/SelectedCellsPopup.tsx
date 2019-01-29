@@ -11,7 +11,7 @@ import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableSto
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { PanelWithRow } from "../Components/Panels/PanelWithRow";
-import { ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";
+import { ISelectedCellSummmary } from "../../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
 import { Helper } from "../../Utilities/Helpers/Helper";
 import { AdaptableObjectRow } from "../Components/AdaptableObjectRow";
 import { SelectedCellOperation } from "../../Utilities/Enums";

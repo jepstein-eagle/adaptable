@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.CONDITIONAL_STYLE_ADD_UPDATE = 'CONDITIONAL_STYLE_ADD_UPDATE';
 exports.CONDITIONAL_STYLE_DELETE = 'CONDITIONAL_STYLE_DELETE';
 exports.ConditionalStyleAddUpdate = (Index, conditionalStyle) => ({
@@ -13,7 +14,7 @@ exports.ConditionalStyleDelete = (Index, conditionalStyle) => ({
     conditionalStyle
 });
 const initialConditionalStyleState = {
-    ConditionalStyles: []
+    ConditionalStyles: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.ConditionalStyleReducer = (state = initialConditionalStyleState, action) => {
     let conditions;

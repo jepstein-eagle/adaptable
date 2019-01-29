@@ -1,5 +1,5 @@
 import * as ReactDOM from "react-dom";
-import { IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilterContext } from "../Utilities/Interface/IColumnFilterContext";
 import { AdaptableBlotter, } from './AdaptableBlotter'
 import { IFloatingFilterComp, IFloatingFilterParams } from "ag-grid-community/dist/lib/filter/floatingFilter";
 import { FloatingFilterFormReact } from "../View/Components/FilterForm/FloatingFilterForm";

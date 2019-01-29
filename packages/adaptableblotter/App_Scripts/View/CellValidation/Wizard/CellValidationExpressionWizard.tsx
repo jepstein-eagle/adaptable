@@ -1,6 +1,6 @@
 import { AdaptableWizardStep, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
-import { ICellValidationRule } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../../Utilities/Interface/BlotterObjects/ICellValidationRule";
 import { UIHelper } from '../../UIHelper';
 
 

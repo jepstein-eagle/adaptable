@@ -1,6 +1,6 @@
 import { FlashingCellState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IFlashingCell } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IFlashingCell } from "../../Utilities/Interface/BlotterObjects/IFlashingCell";
 import { join } from 'path';
 import { FLASHING_CELLS_DEFAULT_UP_COLOR, FLASHING_CELLS_DEFAULT_DOWN_COLOR, FLASHING_CELLS_DEFAULT_DURATION, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 

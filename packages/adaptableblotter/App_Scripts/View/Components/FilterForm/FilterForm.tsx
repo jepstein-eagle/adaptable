@@ -7,11 +7,13 @@ import * as UserFilterRedux from '../../../Redux/ActionsReducers/UserFilterRedux
 import * as HomeRedux from '../../../Redux/ActionsReducers/HomeRedux'
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilterContext } from "../../../Utilities/Interface/IColumnFilterContext";
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { FilterHelper } from '../../../Utilities/Helpers/FilterHelper';
 import { DataType, SortOrder, DistinctCriteriaPairValue, LeafExpressionOperator, ContextMenuTab, AccessLevel } from '../../../Utilities/Enums';
-import { IUserFilter, IColumnFilter, IRange } from '../../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IColumnFilter } from "../../../Utilities/Interface/BlotterObjects/IColumnFilter";
+import { IRange } from "../../../Utilities/Interface/Expression/IRange";
 import { Helper } from '../../../Utilities/Helpers/Helper'
 import { ListBoxFilterForm } from './ListBoxFilterForm'
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";

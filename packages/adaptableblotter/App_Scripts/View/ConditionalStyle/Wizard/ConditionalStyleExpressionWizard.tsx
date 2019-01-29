@@ -1,6 +1,6 @@
 import { AdaptableWizardStep, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
-import { IConditionalStyle } from '../../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IConditionalStyle } from "../../../Utilities/Interface/BlotterObjects/IConditionalStyle";
 import { UIHelper } from '../../UIHelper';
 
 export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {

@@ -19,7 +19,7 @@ import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { DANGER_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
-import { ISystemStatus } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { ISystemStatus } from "../../Utilities/Interface/ISystemStatus";
 import { IMenuItem } from "../../Utilities/Interface/IMenu";
 import { IAlert } from "../../Utilities/Interface/IMessage";
 import { UIHelper } from "../UIHelper";

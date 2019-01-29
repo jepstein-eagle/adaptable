@@ -12,7 +12,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from "../../Utilities/Interface/IColumn";
 import { IColItem } from "../UIInterfaces";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IFlashingCell } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IFlashingCell } from "../../Utilities/Interface/BlotterObjects/IFlashingCell";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { FlashingCellState } from "../../Redux/ActionsReducers/Interface/IState";
 

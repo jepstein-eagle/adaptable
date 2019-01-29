@@ -8,7 +8,7 @@ import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { DataType, StateChangedTrigger } from '../Utilities/Enums';
-import { IFlashingCell } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IFlashingCell } from "../Utilities/Interface/BlotterObjects/IFlashingCell";
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {

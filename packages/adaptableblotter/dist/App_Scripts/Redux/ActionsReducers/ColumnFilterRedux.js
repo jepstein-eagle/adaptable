@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.COLUMN_FILTER_ADD_UPDATE = 'COLUMN_FILTER_ADD_UPDATE';
 exports.COLUMN_FILTER_CLEAR_ALL = 'COLUMN_FILTER_CLEAR_ALL';
 exports.COLUMN_FILTER_CLEAR = 'COLUMN_FILTER_CLEAR';
@@ -15,7 +16,7 @@ exports.ColumnFilterClear = (columnId) => ({
     columnId
 });
 const initialFilterState = {
-    ColumnFilters: [],
+    ColumnFilters: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.ColumnFilterReducer = (state = initialFilterState, action) => {
     let index;

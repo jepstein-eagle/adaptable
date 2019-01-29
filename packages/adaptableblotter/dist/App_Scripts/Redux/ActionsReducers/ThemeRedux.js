@@ -18,9 +18,9 @@ exports.ThemeSelect = (Theme) => ({
     Theme
 });
 const initialThemeState = {
-    CurrentTheme: GeneralConstants_1.LIGHT_THEME,
+    CurrentTheme: GeneralConstants_1.THEME_DEFAULT_CURRENT_THEME,
     SystemThemes: themes_1.StaticThemes,
-    UserThemes: []
+    UserThemes: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.ThemeReducer = (state = initialThemeState, action) => {
     switch (action.type) {

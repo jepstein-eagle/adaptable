@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 exports.GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';
 exports.GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
@@ -46,8 +47,8 @@ exports.GridSetSelectedCellSummary = (SelectedCellSummary) => ({
     SelectedCellSummary
 });
 const initialGridState = {
-    Columns: [],
-    GridSorts: [],
+    Columns: GeneralConstants_1.EMPTY_ARRAY,
+    GridSorts: GeneralConstants_1.EMPTY_ARRAY,
     SelectedCellInfo: null,
     SelectedCellSummary: null
 };

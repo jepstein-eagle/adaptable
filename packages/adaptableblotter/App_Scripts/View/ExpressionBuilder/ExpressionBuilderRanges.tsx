@@ -10,7 +10,7 @@ import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { ObjectFactory } from '../../Utilities/ObjectFactory'
-import { IRange } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IRange } from "../../Utilities/Interface/Expression/IRange";
 
 export interface ExpressionBuilderRangesPropsExpressionBuilderRanges extends React.ClassAttributes<ExpressionBuilderRanges> {
     SelectedColumn: IColumn

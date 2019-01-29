@@ -51,6 +51,7 @@ const CalculatedColumnExpressionService_1 = require("../Utilities/Services/Calcu
 const FreeTextColumnStrategy_1 = require("../Strategy/FreeTextColumnStrategy");
 const FreeTextColumnService_1 = require("../Utilities/Services/FreeTextColumnService");
 const BlotterHelper_1 = require("../Utilities/Helpers/BlotterHelper");
+const IDataService_1 = require("../Utilities/Services/Interface/IDataService");
 const DataService_1 = require("../Utilities/Services/DataService");
 const BlotterApi_1 = require("../Api/BlotterApi");
 const AdvancedSearchStrategy_1 = require("../Strategy/AdvancedSearchStrategy");
@@ -60,6 +61,7 @@ const ConditionalStyleStrategyHypergrid_1 = require("./Strategy/ConditionalStyle
 const FlashingCellsStrategyHypergrid_1 = require("./Strategy/FlashingCellsStrategyHypergrid");
 const FormatColumnStrategyHypergrid_1 = require("./Strategy/FormatColumnStrategyHypergrid");
 const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
+const ChartStrategy_1 = require("../Strategy/ChartStrategy");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -113,31 +115,31 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(this));
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
+        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy_1.ChartStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy_1.ColumnCategoryStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
-        this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
+        this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(this));
         this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleStrategyHypergrid_1.ConditionalStyleStrategyHypergrid(this));
         this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy_1.CustomSortStrategy(this));
         this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(this));
+        this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
         this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy_1.DataSourceStrategy(this));
         this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy_1.ExportStrategy(this));
-        this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
-        this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy_1.ColumnCategoryStrategy(this));
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
-        this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy_1.FreeTextColumnStrategy(this));
-        this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsStrategyHypergrid_1.FlashingCellsStrategyHypergrid(this));
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyHypergrid_1.FormatColumnStrategyHypergrid(this));
+        this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy_1.FreeTextColumnStrategy(this));
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
         //   this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy_1.SelectedCellsStrategy(this));
-        this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
+        this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
         this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy_1.ThemeStrategy(this));
-        this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(this));
+        this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
         if (this.abContainerElement == null) {
             LoggingHelper_1.LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
@@ -1071,14 +1073,18 @@ class AdaptableBlotter {
                         let rowIdentifierValue = this.getPrimaryKeyValueFromRecord(row);
                         let column = this.getHypergridColumn(columnId);
                         let newValue = this.valOrFunc(row, column);
-                        let dataChangedInfo = {
-                            OldValue: null,
-                            NewValue: newValue,
-                            ColumnId: columnId,
-                            IdentifierValue: rowIdentifierValue,
-                            Record: null
-                        };
-                        this.DataService.CreateDataChangedEvent(dataChangedInfo);
+                        // really really dont like this as its doing it every single time!
+                        let olddValue = this.DataService.GetPreviousColumnValue(columnId, rowIdentifierValue, newValue, IDataService_1.ChangeDirection.Ignore);
+                        if (olddValue != null && olddValue != newValue) {
+                            let dataChangedInfo = {
+                                OldValue: olddValue,
+                                NewValue: newValue,
+                                ColumnId: columnId,
+                                IdentifierValue: rowIdentifierValue,
+                                Record: null
+                            };
+                            this.DataService.CreateDataChangedEvent(dataChangedInfo);
+                        }
                     }
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row);
                     let cellStyleHypergridColumns = this.cellStyleHypergridMap.get(primaryKey);

@@ -1,4 +1,4 @@
-import { IEntitlement } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IEntitlement } from "../../Utilities/Interface/IEntitlement";
 
 export interface IEntitlementApi {
 

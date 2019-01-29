@@ -1,4 +1,4 @@
-import { IPercentBar } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IPercentBar } from "../../Utilities/Interface/BlotterObjects/IPercentBar";
 export interface IPercentBarApi {
   GetAll(): IPercentBar[];
   GetByColumn(columnId: string): IPercentBar;

@@ -80,6 +80,11 @@ const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelpe
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this._calculatedColumnPathMap = new Map();
+        // debounced methods
+        this.debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), GeneralConstants_1.HALF_SECOND);
+        this.debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), GeneralConstants_1.HALF_SECOND);
+        this.debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), GeneralConstants_1.HALF_SECOND);
+        this.debouncedFilterGrid = _.debounce(() => this.applyGridFiltering(), GeneralConstants_1.HALF_SECOND);
         this._onKeyDown = new EventDispatcher_1.EventDispatcher();
         this._onGridDataBound = new EventDispatcher_1.EventDispatcher();
         this._onSelectedCellsChanged = new EventDispatcher_1.EventDispatcher();
@@ -87,9 +92,6 @@ class AdaptableBlotter {
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
         this.StateChanged = new EventDispatcher_1.EventDispatcher();
         this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
-        this.debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), 500);
-        this.debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), 500);
-        this.debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = BlotterHelper_1.BlotterHelper.AssignBlotterOptions(blotterOptions);
         this.gridOptions = this.BlotterOptions.vendorGrid;
@@ -172,6 +174,25 @@ class AdaptableBlotter {
                 this.abContainerElement.innerHTML = "";
                 ReactDOM.render(AdaptableBlotterView_1.AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
             }
+        }
+        // create debounce methods that take a time based on user settings
+        this.throttleApplyGridFilteringUser = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
+        this.throttleApplyGridFilteringExternal = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
+    }
+    filterOnUserDataChange() {
+        if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Always) {
+            this.applyGridFiltering();
+        }
+        else if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Throttle) {
+            this.throttleApplyGridFilteringUser();
+        }
+    }
+    filterOnExternalDataChange() {
+        if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Always) {
+            this.applyGridFiltering();
+        }
+        else if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Throttle) {
+            this.throttleApplyGridFilteringExternal();
         }
     }
     createFilterWrapper(col) {
@@ -520,7 +541,7 @@ class AdaptableBlotter {
                 this.DataService.CreateDataChangedEvent(dataChangedEvent);
             }
         });
-        this.applyGridFiltering();
+        this.filterOnUserDataChange();
         this.gridOptions.api.clearRangeSelection();
     }
     setValueBatch(batchValues) {
@@ -573,7 +594,7 @@ class AdaptableBlotter {
         }
         this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents);
         dataChangedEvents.forEach(dc => this.DataService.CreateDataChangedEvent(dc));
-        this.applyGridFiltering();
+        this.filterOnUserDataChange();
         this.gridOptions.api.clearRangeSelection();
         nodesToRefresh.forEach(node => {
             this.refreshCells(node, refreshColumnList);
@@ -656,7 +677,6 @@ class AdaptableBlotter {
         this.gridOptions.api.setSortModel(sortModel);
     }
     getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) {
-        console.log("fetching for : " + columnId);
         let returnMap = new Map();
         // check if there are permitted column values for that column
         let permittedValues = this.getState().UserInterface.PermittedColumnValues;
@@ -1038,8 +1058,11 @@ class AdaptableBlotter {
                     // ignore
                 }
                 else {
+                    // set the column into the store  
                     this.debouncedSetColumnIntoStore(); // was: this.setColumnIntoStore();
                 }
+                // refilter the grid if required
+                this.debouncedFilterGrid();
             }
         });
         // dealing with scenario where the data is poured into the blotter after grid has been setup
@@ -1123,7 +1146,8 @@ class AdaptableBlotter {
             this._currentEditor = null;
             //We refresh the filter so we get live search/filter when editing.
             //Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
-            this.applyGridFiltering();
+            // if they have set to run filter after edit then lets do it
+            this.filterOnUserDataChange();
             this.debouncedSetSelectedCells();
         });
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_SELECTION_CHANGED, () => {
@@ -1188,6 +1212,8 @@ class AdaptableBlotter {
                     }
                 });
             });
+            // this is new  - giving users ability to filter on external data changes
+            this.filterOnExternalDataChange();
             // only if visible...
             this.refreshCells(params.node, refreshColumnList);
         });

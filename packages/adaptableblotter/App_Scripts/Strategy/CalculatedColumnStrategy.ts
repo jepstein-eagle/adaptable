@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ICalculatedColumnStrategy } from "./Interface/ICalculatedColumnStrategy";
-import { ICalculatedColumn } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { CalculatedColumnState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../Utilities/Interface/IColumn';

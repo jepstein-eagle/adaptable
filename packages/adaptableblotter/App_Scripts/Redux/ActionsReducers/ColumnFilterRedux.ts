@@ -1,6 +1,6 @@
 import { ColumnFilterState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IColumnFilter } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.CHART_DEFINITION_ADD_UPDATE = 'CHART_DEFINITION_ADD_UPDATE';
 exports.CHART_PROPERTIES_UPDATE = 'CHART_PROPERTIES_UPDATE';
 exports.CHART_DEFINITION_EDIT = 'CHART_DEFINITION_EDIT';
@@ -24,10 +25,10 @@ exports.ChartDefinitionSelect = (CurrentChartDefinition) => ({
     CurrentChartDefinition
 });
 const initialChartState = {
-    ChartDefinitions: [],
-    CurrentChartDefinition: "",
-    ShowModal: false,
-    RefreshRate: 1
+    ChartDefinitions: GeneralConstants_1.EMPTY_ARRAY,
+    CurrentChartDefinition: GeneralConstants_1.EMPTY_STRING,
+    ShowModal: GeneralConstants_1.CHART_DEFAULT_SHOW_MODAL,
+    RefreshRate: GeneralConstants_1.CHART_DEFAULT_REFRESH_RATE
 };
 exports.ChartReducer = (state = initialChartState, action) => {
     let chartDefinitions;

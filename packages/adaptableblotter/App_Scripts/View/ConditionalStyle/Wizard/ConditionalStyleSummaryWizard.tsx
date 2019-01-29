@@ -6,7 +6,8 @@ import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { ConditionalStyleScope } from "../../../Utilities/Enums";
-import { IConditionalStyle, IUserFilter } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IConditionalStyle } from "../../../Utilities/Interface/BlotterObjects/IConditionalStyle";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 

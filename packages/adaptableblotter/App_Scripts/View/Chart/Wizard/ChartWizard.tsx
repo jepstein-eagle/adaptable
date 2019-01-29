@@ -4,7 +4,7 @@ import { ChartYAxisWizard } from './ChartYAxisWizard'
 import { ChartSummaryWizard } from './ChartSummaryWizard'
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IChartDefinition } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ChartXAxisWizard } from "./ChartXAxisWizard";
 import { ChartSettingsWizard } from "./ChartSettingsWizard";
 import { ChartAdditionalColumnWizard } from "./ChartAdditionalColumnWizard";

@@ -18,7 +18,8 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IFreeTextColumn, IAdaptableBlotterObject } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IFreeTextColumn } from "../../Utilities/Interface/BlotterObjects/IFreeTextColumn";
 
 
 interface FreeTextColumnPopupProps extends StrategyViewPopupProps<FreeTextColumnPopupComponent> {

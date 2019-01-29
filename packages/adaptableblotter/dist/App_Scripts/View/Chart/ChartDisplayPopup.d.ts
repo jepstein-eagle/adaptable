@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IChartDefinition, IChartProperties } from "../../Utilities/Interface/IAdaptableBlotterObjects";
-export interface ChartDisplayPopupWizardState {
+export interface ChartDisplayPopupState {
     IsChartSettingsVisible: boolean;
     EditedChartDefinition: IChartDefinition;
     ChartProperties: IChartProperties;

@@ -96,7 +96,7 @@ const initialPopupState = {
         CancelButtonText: "",
         CancelAction: null,
         ConfirmAction: null,
-        ShowCommentBox: false,
+        ShowInputBox: false,
         ConfirmationComment: null,
         MessageType: Enums_1.MessageType.Info
     },
@@ -147,7 +147,7 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
                 CancelButtonText: actionTyped.Confirmation.CancelButtonText,
                 ConfirmAction: actionTyped.Confirmation.ConfirmAction,
                 CancelAction: actionTyped.Confirmation.CancelAction,
-                ShowCommentBox: actionTyped.Confirmation.ShowCommentBox,
+                ShowInputBox: actionTyped.Confirmation.ShowInputBox,
                 ConfirmationComment: null,
                 MessageType: actionTyped.Confirmation.MessageType
             };
@@ -164,7 +164,7 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
                 CancelButtonText: "",
                 ConfirmAction: null,
                 CancelAction: null,
-                ShowCommentBox: false,
+                ShowInputBox: false,
                 ConfirmationComment: actionTyped.comment,
                 MessageType: null // ???
             };
@@ -180,7 +180,7 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
                 CancelButtonText: "",
                 ConfirmAction: null,
                 CancelAction: null,
-                ShowCommentBox: false,
+                ShowInputBox: false,
                 ConfirmationComment: null,
                 MessageType: null
             };

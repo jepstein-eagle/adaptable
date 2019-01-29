@@ -1,4 +1,4 @@
-import { IFreeTextColumn } from "../Utilities/Interface/IAdaptableBlotterObjects";
+import { IFreeTextColumn } from "../Utilities/Interface/BlotterObjects/IFreeTextColumn";
 import * as FreeTextColumnRedux from '../Redux/ActionsReducers/FreeTextColumnRedux'
 import { ApiBase } from "./ApiBase";
 import { IFreeTextColumnApi } from "./Interface/IFreeTextColumnApi";

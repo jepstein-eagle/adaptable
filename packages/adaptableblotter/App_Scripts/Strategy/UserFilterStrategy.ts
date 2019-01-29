@@ -4,7 +4,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { IUserFilter } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from "../Utilities/Interface/BlotterObjects/IUserFilter";
 import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
 

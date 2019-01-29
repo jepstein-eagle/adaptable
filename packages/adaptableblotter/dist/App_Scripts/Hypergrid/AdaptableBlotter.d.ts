@@ -11,7 +11,7 @@ import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ICalculatedColumn, IStyle, IFreeTextColumn, IPercentBar } from '../Utilities/Interface/IAdaptableBlotterObjects';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../Utilities/Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
 import * as _ from 'lodash';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';

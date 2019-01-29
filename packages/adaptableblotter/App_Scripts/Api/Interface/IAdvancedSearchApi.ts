@@ -1,5 +1,5 @@
 
-import { IAdvancedSearch } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAdvancedSearch } from "../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
 
 export interface IAdvancedSearchApi {
 

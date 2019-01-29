@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.ALERT_DEFIINITION_ADD_UPDATE = 'ALERT_DEFIINITION_ADD_UPDATE';
 exports.ALERT_DEFIINITION_DELETE = 'ALERT_DEFIINITION_DELETE';
 exports.ALERT_DEFIINITION_SELECT = 'ALERT_DEFIINITION_SELECT';
@@ -19,9 +20,9 @@ exports.AlertDefinitionChangeMessageType = (index, messageType) => ({
     messageType
 });
 const initialAlertState = {
-    AlertDefinitions: [],
-    MaxAlertsInStore: 5,
-    AlertPopupDiv: ""
+    AlertDefinitions: GeneralConstants_1.EMPTY_ARRAY,
+    MaxAlertsInStore: GeneralConstants_1.ALERT_DEFAULT_MAX_ALERTS_IN_STORE,
+    AlertPopupDiv: GeneralConstants_1.EMPTY_STRING
 };
 exports.AlertReducer = (state = initialAlertState, action) => {
     let alertDefinitions;

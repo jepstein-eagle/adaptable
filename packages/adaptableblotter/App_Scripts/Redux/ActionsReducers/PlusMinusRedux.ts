@@ -1,7 +1,7 @@
 import { PlusMinusState } from './Interface/IState';
 import * as Redux from 'redux'
 import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
-import { IPlusMinusRule } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IPlusMinusRule } from "../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const PLUSMINUS_APPLY = 'PLUSMINUS_APPLY';

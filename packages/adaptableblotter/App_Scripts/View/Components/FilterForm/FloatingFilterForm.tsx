@@ -5,11 +5,13 @@ import * as _ from 'lodash'
 import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux'
 import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
-import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilterContext } from "../../../Utilities/Interface/IColumnFilterContext";
 import { StrategyViewPopupProps } from "../SharedProps/StrategyViewPopupProps";
 import { FormControl } from "react-bootstrap";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
-import { IColumnFilter, IUserFilter, IRange } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IColumnFilter } from "../../../Utilities/Interface/BlotterObjects/IColumnFilter";
+import { IRange } from "../../../Utilities/Interface/Expression/IRange";
 import { Expression } from "../../../Utilities/Expression";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { IColumn } from "../../../Utilities/Interface/IColumn";

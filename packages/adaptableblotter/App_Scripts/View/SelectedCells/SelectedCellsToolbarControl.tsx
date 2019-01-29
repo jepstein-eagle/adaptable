@@ -11,7 +11,8 @@ import { ToolbarStrategyViewPopupProps } from "../Components/SharedProps/Toolbar
 import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 import { PanelDashboard } from "../Components/Panels/PanelDashboard";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
-import { ISelectedCellInfo, ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";
+import { ISelectedCellInfo } from "../../Utilities/Interface/SelectedCell/ISelectedCellInfo";
+import { ISelectedCellSummmary } from "../../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
 import { SelectedCellOperation, AccessLevel } from "../../Utilities/Enums";
 import { DropdownButton, MenuItem, InputGroup, ControlLabel } from "react-bootstrap";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";

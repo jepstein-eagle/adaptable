@@ -4,7 +4,8 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IColumn } from "../../../Utilities/Interface/IColumn";
-import { IUserFilter, IPlusMinusRule } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IPlusMinusRule } from "../../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.ADVANCED_SEARCH_ADD_UPDATE = 'ADVANCED_SEARCH_ADD_UPDATE';
 exports.ADVANCED_SEARCH_DELETE = 'ADVANCED_SEARCH_DELETE';
 exports.ADVANCED_SEARCH_SELECT = 'ADVANCED_SEARCH_SELECT';
@@ -17,8 +18,8 @@ exports.AdvancedSearchSelect = (selectedSearchName) => ({
     selectedSearchName
 });
 const initialAdvancedSearchState = {
-    AdvancedSearches: [],
-    CurrentAdvancedSearch: ""
+    AdvancedSearches: GeneralConstants_1.EMPTY_ARRAY,
+    CurrentAdvancedSearch: GeneralConstants_1.EMPTY_STRING
 };
 exports.AdvancedSearchReducer = (state = initialAdvancedSearchState, action) => {
     let index;
@@ -39,7 +40,7 @@ exports.AdvancedSearchReducer = (state = initialAdvancedSearchState, action) => 
             advancedSearches = [].concat(state.AdvancedSearches);
             index = advancedSearches.findIndex(a => a.Name == actionTypedDelete.advancedSearch.Name);
             advancedSearches.splice(index, 1);
-            return Object.assign({}, state, { AdvancedSearches: advancedSearches, CurrentAdvancedSearch: "" });
+            return Object.assign({}, state, { AdvancedSearches: advancedSearches, CurrentAdvancedSearch: GeneralConstants_1.EMPTY_STRING });
         case exports.ADVANCED_SEARCH_SELECT:
             return Object.assign({}, state, { CurrentAdvancedSearch: action.selectedSearchName });
         default:

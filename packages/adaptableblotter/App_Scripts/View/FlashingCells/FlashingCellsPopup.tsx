@@ -15,7 +15,8 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IFlashingCell, ICalculatedColumn } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IFlashingCell } from "../../Utilities/Interface/BlotterObjects/IFlashingCell";
+import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { FlashingCellState } from "../../Redux/ActionsReducers/Interface/IState";
 

@@ -2,7 +2,10 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { ISelectedCellsStrategy, ISelectedCellInfo, ISelectedCellSummmary, ISelectedCell } from "./Interface/ISelectedCellsStrategy";
+import { ISelectedCellsStrategy } from "./Interface/ISelectedCellsStrategy";
+import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
+import { ISelectedCellSummmary } from "../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
+import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
 import { DataType, StateChangedTrigger } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { SelectedCellsState } from '../Redux/ActionsReducers/Interface/IState';

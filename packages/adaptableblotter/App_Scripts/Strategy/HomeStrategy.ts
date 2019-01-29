@@ -5,7 +5,7 @@ import * as HomeRedux from '../Redux/ActionsReducers/HomeRedux'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { IHomeStrategy } from './Interface/IHomeStrategy'
 import { GridState } from '../Redux/ActionsReducers/Interface/IState';
-import { IGridSort } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IGridSort } from "../Utilities/Interface/IGridSort";
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { SearchChangedTrigger } from '../Utilities/Enums';
 import { LayoutHelper } from '../Utilities/Helpers/LayoutHelper';

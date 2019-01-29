@@ -39,7 +39,7 @@ var CellValidationHelper;
             ConfirmButtonText: "Bypass Rule",
             CancelAction: cancelAction,
             ConfirmAction: confirmAction,
-            ShowCommentBox: true,
+            ShowInputBox: true,
             MessageType: Enums_1.MessageType.Warning
         };
     }

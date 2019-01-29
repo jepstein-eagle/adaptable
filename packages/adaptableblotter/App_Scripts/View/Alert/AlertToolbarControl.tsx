@@ -11,7 +11,7 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
-import { IAlertDefinition } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAlertDefinition } from "../../Utilities/Interface/BlotterObjects/IAlertDefinition";
 import { AdaptablePopover } from "../AdaptablePopover";
 import { MessageType, AccessLevel } from "../../Utilities/Enums";
 import { AlertsPanel } from "../Components/AlertsPanel";

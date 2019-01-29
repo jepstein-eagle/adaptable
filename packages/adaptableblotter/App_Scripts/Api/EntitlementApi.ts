@@ -1,7 +1,7 @@
 import * as EntitlementsRedux from '../Redux/ActionsReducers/EntitlementsRedux'
 import { ApiBase } from "./ApiBase";
 import { IEntitlementApi } from './Interface/IEntitlementApi';
-import { IEntitlement } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IEntitlement } from "../Utilities/Interface/IEntitlement";
 
 
 export class EntitlementApi extends ApiBase implements IEntitlementApi {

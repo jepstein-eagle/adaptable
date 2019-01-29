@@ -5,7 +5,7 @@ import { PlusMinusColumnWizard } from './PlusMinusColumnWizard'
 import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard'
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard'
 import { PlusMinusSummaryWizard } from './PlusMinusSummaryWizard'
-import { IUserFilter } from '../../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { DataType } from "../../../Utilities/Enums";

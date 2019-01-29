@@ -2,7 +2,7 @@ import * as React from "react";
 import { ControlLabel, FormGroup, Col, Panel, Well, Row, Radio } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IChartDefinition } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { SelectionMode, MessageType } from "../../../Utilities/Enums";
 import { IColumn } from "../../../Utilities/Interface/IColumn";

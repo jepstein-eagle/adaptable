@@ -18,7 +18,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ObjectFactory } from "../../Utilities/ObjectFactory";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
-import { ILayout } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { ILayout } from "../../Utilities/Interface/BlotterObjects/ILayout";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { AccessLevel } from "../../Utilities/Enums";
 

@@ -1,5 +1,4 @@
 import {  IStrategy } from './IStrategy';
-import { DataType ,MathOperation } from '../../Utilities/Enums';
 import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
 
 

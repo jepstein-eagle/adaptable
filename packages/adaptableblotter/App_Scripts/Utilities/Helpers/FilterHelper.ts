@@ -1,4 +1,4 @@
-import { IUserFilter } from "../Interface/IAdaptableBlotterObjects";
+import { IUserFilter } from "../Interface/BlotterObjects/IUserFilter";
 import { IColumn } from "../Interface/IColumn";
 import { DataType } from "../Enums";
 import { Helper } from "./Helper";

@@ -5,7 +5,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode } from '../../../Utilities/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
-import { IAlertDefinition } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAlertDefinition } from "../../../Utilities/Interface/BlotterObjects/IAlertDefinition";
 import { PRIMARY_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
 
 

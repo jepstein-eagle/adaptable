@@ -13,7 +13,9 @@ import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { PanelWithImage } from "../Components/Panels/PanelWithImage";
-import { IColumnFilter, IAdaptableBlotterObject, IUserFilter } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
 import { IUIPrompt } from "../../Utilities/Interface/IMessage";
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {

@@ -33,6 +33,14 @@ exports.DefaultAdaptableBlotterOptions = {
         indicateFilteredColumns: true,
         useAdaptableBlotterFilterForm: true,
         useAdaptableBlotterFloatingFilter: true,
+        filterActionOnUserDataChange: {
+            RunFilter: 'Always',
+            ThrottleDelay: 0
+        },
+        filterActionOnExternalDataChange: {
+            RunFilter: 'Throttle',
+            ThrottleDelay: 5000
+        },
     },
     queryOptions: {
         maxColumnValueItemsDisplayed: 5000,

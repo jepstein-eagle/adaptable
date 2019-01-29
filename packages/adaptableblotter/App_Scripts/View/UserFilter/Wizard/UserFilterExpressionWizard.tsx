@@ -1,6 +1,6 @@
 import { AdaptableWizardStep, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
-import { IUserFilter } from '../../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
 import { UIHelper } from '../../UIHelper';
 
 

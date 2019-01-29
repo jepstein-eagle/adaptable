@@ -5,64 +5,64 @@ const Enums_1 = require("./Enums");
 const ColumnHelper_1 = require("./Helpers/ColumnHelper");
 const CellValidationHelper_1 = require("./Helpers/CellValidationHelper");
 const DefaultChartProperties_1 = require("../Utilities/Defaults/DefaultChartProperties");
-const ChartEnums_1 = require("./ChartEnums");
+const GeneralConstants_1 = require("./Constants/GeneralConstants");
 var ObjectFactory;
 (function (ObjectFactory) {
     function CreateEmptyCustomSort() {
-        return { ColumnId: "", SortedValues: [] };
+        return { ColumnId: GeneralConstants_1.EMPTY_STRING, SortedValues: GeneralConstants_1.EMPTY_ARRAY };
     }
     ObjectFactory.CreateEmptyCustomSort = CreateEmptyCustomSort;
     function CreateEmptyChartDefinition() {
         return {
-            Title: "",
-            SubTitle: "",
-            YAxisColumnIds: [],
-            YAxisTotal: ChartEnums_1.AxisTotal.Sum,
-            XAxisColumnId: "",
+            Title: GeneralConstants_1.EMPTY_STRING,
+            SubTitle: GeneralConstants_1.EMPTY_STRING,
+            YAxisColumnIds: GeneralConstants_1.EMPTY_ARRAY,
+            YAxisTotal: GeneralConstants_1.CHART_DEFAULT_YAXIS_TOTAL,
+            XAxisColumnId: GeneralConstants_1.EMPTY_STRING,
             XAxisExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
             ChartProperties: DefaultChartProperties_1.DefaultChartProperties
         };
     }
     ObjectFactory.CreateEmptyChartDefinition = CreateEmptyChartDefinition;
     function CreateEmptyCalculatedColumn() {
-        return { ColumnId: "", ColumnExpression: "" };
+        return { ColumnId: GeneralConstants_1.EMPTY_STRING, ColumnExpression: GeneralConstants_1.EMPTY_STRING };
     }
     ObjectFactory.CreateEmptyCalculatedColumn = CreateEmptyCalculatedColumn;
     function CreateEmptyPlusMinusRule() {
         return {
-            ColumnId: "",
+            ColumnId: GeneralConstants_1.EMPTY_STRING,
             IsDefaultNudge: false,
-            NudgeValue: 1,
+            NudgeValue: GeneralConstants_1.PLUS_MINUS_DEFAULT_NUDGE_VALUE,
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
         };
     }
     ObjectFactory.CreateEmptyPlusMinusRule = CreateEmptyPlusMinusRule;
     function CreateEmptyAlertDefinition() {
         return {
-            ColumnId: "",
+            ColumnId: GeneralConstants_1.EMPTY_STRING,
             Range: {
-                Operator: Enums_1.LeafExpressionOperator.None,
-                Operand1: "",
-                Operand2: "",
-                Operand1Type: Enums_1.RangeOperandType.Column,
-                Operand2Type: Enums_1.RangeOperandType.Column,
+                Operator: GeneralConstants_1.ALERT_DEFAULT_OPERATOR,
+                Operand1: GeneralConstants_1.EMPTY_STRING,
+                Operand2: GeneralConstants_1.EMPTY_STRING,
+                Operand1Type: GeneralConstants_1.ALERT_DEFAULT_RANGE_OPERAND_TYPE,
+                Operand2Type: GeneralConstants_1.ALERT_DEFAULT_RANGE_OPERAND_TYPE,
             },
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
-            MessageType: Enums_1.MessageType.Error,
-            ShowAsPopup: true
+            MessageType: GeneralConstants_1.ALERT_DEFAULT_MESSAGE_TYPE,
+            ShowAsPopup: GeneralConstants_1.ALERT_DEFAULT_SHOW_AS_POPUP
         };
     }
     ObjectFactory.CreateEmptyAlertDefinition = CreateEmptyAlertDefinition;
     function CreateEmptyAdvancedSearch() {
         return {
-            Name: "",
+            Name: GeneralConstants_1.EMPTY_STRING,
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
         };
     }
     ObjectFactory.CreateEmptyAdvancedSearch = CreateEmptyAdvancedSearch;
     function CreateEmptyColumnCategory() {
         return {
-            ColumnCategoryId: "",
+            ColumnCategoryId: GeneralConstants_1.EMPTY_STRING,
             ColumnIds: []
         };
     }
@@ -70,8 +70,8 @@ var ObjectFactory;
     function CreateEmptyRange() {
         return {
             Operator: Enums_1.LeafExpressionOperator.Unknown,
-            Operand1: "",
-            Operand2: "",
+            Operand1: GeneralConstants_1.EMPTY_STRING,
+            Operand2: GeneralConstants_1.EMPTY_STRING,
             Operand1Type: Enums_1.RangeOperandType.Value,
             Operand2Type: Enums_1.RangeOperandType.Value
         };
@@ -79,7 +79,7 @@ var ObjectFactory;
     ObjectFactory.CreateEmptyRange = CreateEmptyRange;
     function CreateEmptyGridSort() {
         return {
-            Column: "",
+            Column: GeneralConstants_1.EMPTY_STRING,
             SortOrder: Enums_1.SortOrder.Unknown
         };
     }
@@ -87,11 +87,11 @@ var ObjectFactory;
     function CreateEmptyCellValidation() {
         return {
             ActionMode: 'Stop Edit',
-            ColumnId: "",
+            ColumnId: GeneralConstants_1.EMPTY_STRING,
             Range: {
                 Operator: Enums_1.LeafExpressionOperator.None,
-                Operand1: "",
-                Operand2: "",
+                Operand1: GeneralConstants_1.EMPTY_STRING,
+                Operand2: GeneralConstants_1.EMPTY_STRING,
                 Operand1Type: Enums_1.RangeOperandType.Column,
                 Operand2Type: Enums_1.RangeOperandType.Column,
             },
@@ -101,7 +101,7 @@ var ObjectFactory;
     ObjectFactory.CreateEmptyCellValidation = CreateEmptyCellValidation;
     function CreateEmptyPercentBar() {
         return {
-            ColumnId: "",
+            ColumnId: GeneralConstants_1.EMPTY_STRING,
             MaxValue: 100,
             MinValue: 0,
             PositiveColor: '#008000',
@@ -114,15 +114,15 @@ var ObjectFactory;
     ObjectFactory.CreateEmptyPercentBar = CreateEmptyPercentBar;
     function CreateEmptyUserFilter() {
         return {
-            Name: "",
+            Name: GeneralConstants_1.EMPTY_STRING,
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
-            ColumnId: ""
+            ColumnId: GeneralConstants_1.EMPTY_STRING
         };
     }
     ObjectFactory.CreateEmptyUserFilter = CreateEmptyUserFilter;
     function CreateEmptyReport() {
         return {
-            Name: "",
+            Name: GeneralConstants_1.EMPTY_STRING,
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
             ColumnIds: [],
             ReportColumnScope: Enums_1.ReportColumnScope.AllColumns,
@@ -130,13 +130,13 @@ var ObjectFactory;
         };
     }
     ObjectFactory.CreateEmptyReport = CreateEmptyReport;
-    function CreateDefaultFlashingCell(column) {
+    function CreateDefaultFlashingCell(column, upColor, downColor, duration) {
         return {
             IsLive: false,
             ColumnId: column.ColumnId,
-            FlashingCellDuration: 500,
-            UpColor: '#008000',
-            DownColor: '#FF0000'
+            FlashingCellDuration: duration,
+            UpColor: upColor,
+            DownColor: downColor
         };
     }
     ObjectFactory.CreateDefaultFlashingCell = CreateDefaultFlashingCell;
@@ -155,7 +155,7 @@ var ObjectFactory;
         let columnFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns);
         let expressionDescription = (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
             " when " + ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns) :
-            "";
+            GeneralConstants_1.EMPTY_STRING;
         return (columnFriendlyName + ": " + CellValidationHelper_1.CellValidationHelper.createCellValidationDescription(CellValidation, columns) + expressionDescription);
     }
     ObjectFactory.CreateCellValidationMessage = CreateCellValidationMessage;
@@ -171,15 +171,15 @@ var ObjectFactory;
     ObjectFactory.CreateEmptyConditionalStyle = CreateEmptyConditionalStyle;
     function CreateEmptyFormatColumn() {
         return {
-            ColumnId: "",
+            ColumnId: GeneralConstants_1.EMPTY_STRING,
             Style: CreateEmptyStyle()
         };
     }
     ObjectFactory.CreateEmptyFormatColumn = CreateEmptyFormatColumn;
     function CreateEmptyFreeTextColumn() {
         return {
-            ColumnId: "",
-            DefaultValue: "",
+            ColumnId: GeneralConstants_1.EMPTY_STRING,
+            DefaultValue: GeneralConstants_1.EMPTY_STRING,
             FreeTextStoredValues: []
         };
     }
@@ -252,7 +252,7 @@ var ObjectFactory;
             FontWeight: Enums_1.FontWeight.Normal,
             FontStyle: Enums_1.FontStyle.Normal,
             FontSize: null,
-            ClassName: ""
+            ClassName: GeneralConstants_1.EMPTY_STRING
         };
     }
     ObjectFactory.CreateEmptyStyle = CreateEmptyStyle;

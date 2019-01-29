@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.FLASHING_CELL_SELECT = 'FLASHING_CELL_SELECT';
 exports.FLASHING_CELL_CHANGE_DURATION = 'FLASHING_CELL_CHANGE_DURATION';
 exports.FLASHING_CELL_SELECT_ALL = 'FLASHING_CELL_SELECT_ALL';
@@ -30,7 +31,10 @@ exports.FlashingCellChangeDownColor = (FlashingCell, DownColor) => ({
     DownColor
 });
 const initialShortcutState = {
-    FlashingCells: []
+    FlashingCells: GeneralConstants_1.EMPTY_ARRAY,
+    DefaultUpColor: GeneralConstants_1.FLASHING_CELLS_DEFAULT_UP_COLOR,
+    DefautDownColor: GeneralConstants_1.FLASHING_CELLS_DEFAULT_DOWN_COLOR,
+    DefaultDuration: GeneralConstants_1.FLASHING_CELLS_DEFAULT_DURATION
 };
 exports.FlashingCellReducer = (state = initialShortcutState, action) => {
     switch (action.type) {

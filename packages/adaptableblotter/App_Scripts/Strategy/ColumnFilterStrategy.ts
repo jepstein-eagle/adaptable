@@ -4,7 +4,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { IColumnFilter } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IColumnFilter } from "../Utilities/Interface/BlotterObjects/IColumnFilter";
 import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';

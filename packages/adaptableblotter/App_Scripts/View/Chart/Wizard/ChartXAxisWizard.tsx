@@ -3,7 +3,7 @@ import { ControlLabel, FormGroup, Col, Panel, Row, Well, Radio } from 'react-boo
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IChartDefinition } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { SelectionMode } from "../../../Utilities/Enums";
 import { IColumn } from "../../../Utilities/Interface/IColumn";

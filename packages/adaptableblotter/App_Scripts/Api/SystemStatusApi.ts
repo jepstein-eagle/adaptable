@@ -2,7 +2,7 @@ import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import { ApiBase } from "./ApiBase";
 import { StatusColour } from "../Utilities/Enums";
 import { ISystemStatusApi } from './Interface/ISystemStatusApi';
-import { ISystemStatus } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { ISystemStatus } from "../Utilities/Interface/ISystemStatus";
 
 export class SystemStatusApi extends ApiBase implements ISystemStatusApi {
 

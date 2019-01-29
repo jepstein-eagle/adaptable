@@ -213,3 +213,8 @@ export declare enum PinnedColumnDirection {
     Left = "Leftt",
     Right = "Right"
 }
+export declare enum FilterOnDataChangeOptions {
+    Always = "Always",
+    Never = "Never",
+    Throttle = "Throttle"
+}

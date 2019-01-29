@@ -1,4 +1,4 @@
-import { ICellValidationRule } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../../Utilities/Interface/BlotterObjects/ICellValidationRule";
 import * as React from "react";
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
@@ -8,7 +8,7 @@ import { CellValidationExpressionWizard } from './CellValidationExpressionWizard
 import { CellValidationRulesWizard } from './CellValidationRulesWizard'
 import { CellValidationSummaryWizard } from './CellValidationSummaryWizard'
 import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard'
-import { IUserFilter } from '../../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 

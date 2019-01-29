@@ -959,7 +959,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                             ConfirmButtonText: "Import",
                             CancelAction: null,
                             ConfirmAction: importAction,
-                            ShowCommentBox: false,
+                            ShowInputBox: false,
                             MessageType: Enums_1.MessageType.Warning
                         };
                         middlewareAPI.dispatch(PopupRedux.PopupShowConfirmation(confirmation));

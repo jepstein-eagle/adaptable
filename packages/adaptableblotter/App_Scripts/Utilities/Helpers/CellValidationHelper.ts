@@ -1,5 +1,5 @@
 import { ExpressionHelper } from './ExpressionHelper'
-import { ICellValidationRule } from '../Interface/IAdaptableBlotterObjects';
+import { ICellValidationRule } from "../Interface/BlotterObjects/ICellValidationRule";
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IColumn } from '../Interface/IColumn';

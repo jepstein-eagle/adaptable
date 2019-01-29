@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.BULK_UPDATE_APPLY = 'BULK_UPDATE_APPLY';
 exports.BULK_UPDATE_CHANGE_VALUE = 'BULK_UPDATE_CHANGE_VALUE';
 exports.BulkUpdateApply = (bypassCellValidationWarnings) => ({
@@ -11,7 +12,7 @@ exports.BulkUpdateChangeValue = (value) => ({
     value
 });
 const initialBulkUpdateState = {
-    BulkUpdateValue: "",
+    BulkUpdateValue: GeneralConstants_1.EMPTY_STRING,
 };
 exports.BulkUpdateReducer = (state = initialBulkUpdateState, action) => {
     switch (action.type) {

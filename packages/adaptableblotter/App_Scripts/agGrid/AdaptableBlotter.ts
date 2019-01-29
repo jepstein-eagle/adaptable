@@ -55,15 +55,25 @@ import { EventDispatcher } from '../Utilities/EventDispatcher'
 import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, FilterOnDataChangeOptions } from '../Utilities/Enums'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
-import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
+import { IPPStyle } from "../Utilities/Interface/Reports/IPPStyle";
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { ICalculatedColumn, ICellValidationRule, IColumnFilter, IGridSort, ICustomSort, IFreeTextColumn, IPercentBar, IRange, IRangeExpression, IPermittedColumnValues } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IGridSort } from "../Utilities/Interface/IGridSort";
+import { IPermittedColumnValues } from "../Utilities/Interface/IPermittedColumnValues";
+import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
+import { IFreeTextColumn } from "../Utilities/Interface/BlotterObjects/IFreeTextColumn";
+import { ICustomSort } from "../Utilities/Interface/BlotterObjects/ICustomSort";
+import { IColumnFilter } from "../Utilities/Interface/BlotterObjects/IColumnFilter";
+import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalculatedColumn";
+import { IRange } from "../Utilities/Interface/Expression/IRange";
+import { IRangeExpression } from "../Utilities/Interface/Expression/IRangeExpression";
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
-import { ISelectedCell, ISelectedCellInfo } from '../Strategy/Interface/ISelectedCellsStrategy';
+import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
+import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';

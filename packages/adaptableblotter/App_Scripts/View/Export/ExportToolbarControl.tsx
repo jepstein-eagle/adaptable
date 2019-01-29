@@ -22,9 +22,9 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { ExportDestination, SortOrder, AccessLevel } from '../../Utilities/Enums';
 import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
-import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
+import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { IReport } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import { ReportHelper } from "../../Utilities/Helpers/ReportHelper";
 
 

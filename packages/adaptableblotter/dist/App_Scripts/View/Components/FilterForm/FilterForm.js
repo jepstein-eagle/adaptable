@@ -59,7 +59,7 @@ class FilterFormComponent extends React.Component {
                         // set the UIPermittedValues for this column to what has been sent
                         this.props.Blotter.api.userInterfaceApi.SetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems);
                     }
-                }, function (error) {
+                }, function () {
                     //    this.setState({ name: error });
                 });
             }
@@ -75,7 +75,7 @@ class FilterFormComponent extends React.Component {
         let isFilterable = this.isFilterable();
         // get user filter expressions appropriate for this column
         let appropriateFilters = FilterHelper_1.FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn, this.props.UserFilters).map(uf => uf.Name).concat(FilterHelper_1.FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf => sf)); //.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
-        let appropriateFilterItems = appropriateFilters.map((uf, index) => { return { RawValue: uf, DisplayValue: uf }; });
+        let appropriateFilterItems = appropriateFilters.map((uf) => { return { RawValue: uf, DisplayValue: uf }; });
         let existingColumnFilter = this.props.CurrentColumn.DataType != Enums_1.DataType.Boolean && this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
             existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues : [];
@@ -165,7 +165,7 @@ class FilterFormComponent extends React.Component {
         let existingColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let prompt = {
             Header: "Enter name for User Filter",
-            Msg: "Please enter a user filter name",
+            Msg: "",
             ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(existingColumnFilter, "")
         };
         this.props.onShowPrompt(prompt);

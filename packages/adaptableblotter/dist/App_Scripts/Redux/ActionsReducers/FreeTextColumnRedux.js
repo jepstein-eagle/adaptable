@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.FREE_TEXT_COLUMN_ADD = 'FREE_TEXT_COLUMN_ADD';
 exports.FREE_TEXT_COLUMN_EDIT = 'FREE_TEXT_COLUMN_EDIT';
 exports.FREE_TEXT_COLUMN_DELETE = 'FREE_TEXT_COLUMN_DELETE';
@@ -23,7 +24,7 @@ exports.FreeTextColumnAddEditStoredValue = (FreeTextColumn, FreeTextStoredValue)
     FreeTextStoredValue
 });
 const initialFreeTextColumnState = {
-    FreeTextColumns: []
+    FreeTextColumns: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.FreeTextColumnReducer = (state = initialFreeTextColumnState, action) => {
     let freeTextColumns;

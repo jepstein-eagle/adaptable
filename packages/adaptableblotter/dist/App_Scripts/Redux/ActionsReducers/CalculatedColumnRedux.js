@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.CALCULATEDCOLUMN_ADD = 'CALCULATEDCOLUMN_ADD';
 exports.CALCULATEDCOLUMN_EDIT = 'CALCULATEDCOLUMN_EDIT';
 exports.CALCULATEDCOLUMN_DELETE = 'CALCULATEDCOLUMN_DELETE';
@@ -22,7 +23,7 @@ exports.CalculatedColumnIsExpressionValid = (expression) => ({
     expression
 });
 const initialCalculatedColumnState = {
-    CalculatedColumns: [],
+    CalculatedColumns: GeneralConstants_1.EMPTY_ARRAY,
 };
 exports.CalculatedColumnReducer = (state = initialCalculatedColumnState, action) => {
     switch (action.type) {

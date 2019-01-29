@@ -2,8 +2,9 @@ import * as Redux from 'redux';
 import { SystemState } from './Interface/IState'
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { ExportDestination } from '../../Utilities/Enums';
-import { ILiveReport, IPPDomain } from '../../Strategy/Interface/IExportStrategy';
-import { ISystemStatus } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IPPDomain } from "../../Utilities/Interface/Reports/IPPDomain";
+import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
+import { ISystemStatus } from "../../Utilities/Interface/ISystemStatus";
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IAlert } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../Utilities/ChartEnums';

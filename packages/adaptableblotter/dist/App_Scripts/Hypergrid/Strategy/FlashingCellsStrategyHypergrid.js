@@ -11,7 +11,7 @@ class FlashingCellsStrategyHypergrid extends FlashingCellsStrategy_1.FlashingCel
     }
     FlashCell(dataChangedInfo, flashingCell) {
         let theBlotter = this.blotter;
-        if (dataChangedInfo.OldValue == null) { // currently always
+        if (dataChangedInfo.OldValue == null) { // currently should never happen
             dataChangedInfo.OldValue = this.blotter.DataService.GetPreviousColumnValue(dataChangedInfo.ColumnId, dataChangedInfo.IdentifierValue, dataChangedInfo.NewValue, IDataService_1.ChangeDirection.Ignore);
         }
         if (dataChangedInfo.OldValue != dataChangedInfo.NewValue) {

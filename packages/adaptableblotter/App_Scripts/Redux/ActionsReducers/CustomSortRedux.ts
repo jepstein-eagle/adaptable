@@ -1,6 +1,6 @@
 import { CustomSortState } from './Interface/IState';
 import * as Redux from 'redux'
-import { ICustomSort } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { ICustomSort } from "../../Utilities/Interface/BlotterObjects/ICustomSort";
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const CUSTOMSORT_ADD = 'CUSTOMSORT_ADD';

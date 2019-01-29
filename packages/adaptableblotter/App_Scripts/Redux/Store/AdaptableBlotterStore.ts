@@ -50,21 +50,36 @@ import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
 import { IBulkUpdateStrategy } from '../../Strategy/Interface/IBulkUpdateStrategy'
 import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy'
-import { IExportStrategy, IPPDomain } from '../../Strategy/Interface/IExportStrategy'
+import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy'
+import { IPPDomain } from "../../Utilities/Interface/Reports/IPPDomain";
 import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
-import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
+import { ISharedEntity } from "../../Utilities/Interface/ISharedEntity";
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants'
 import { IState, GridState, LayoutState } from '../ActionsReducers/Interface/IState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { IUserFilter, IColumnFilter, ICellValidationRule, ICalculatedColumn, IConditionalStyle, ICustomSort, IFormatColumn, IPlusMinusRule, IShortcut, IAdvancedSearch, ILayout, IReport, IFreeTextColumn, IPercentBar } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IFormatColumn } from "../../Utilities/Interface/BlotterObjects/IFormatColumn";
+import { ILayout } from "../../Utilities/Interface/BlotterObjects/ILayout";
+import { IPlusMinusRule } from "../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
+import { IShortcut } from "../../Utilities/Interface/BlotterObjects/IShortcut";
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IPercentBar } from "../../Utilities/Interface/BlotterObjects/IPercentBar";
+import { IFreeTextColumn } from "../../Utilities/Interface/BlotterObjects/IFreeTextColumn";
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
+import { ICustomSort } from "../../Utilities/Interface/BlotterObjects/ICustomSort";
+import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
+import { ICellValidationRule } from "../../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
+import { IAdvancedSearch } from "../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';
-import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { ISelectedCellsStrategy } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { ISelectedCellSummmary } from "../../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';

@@ -3,7 +3,9 @@ import { DataSourceIndexed } from './DataSourceIndexed'
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions'
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { LeafExpressionOperator, DisplayAction } from '../Utilities/Enums'
-import { IAdvancedSearch, IColumnFilter, IRange } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IColumnFilter } from "../Utilities/Interface/BlotterObjects/IColumnFilter";
+import { IAdvancedSearch } from "../Utilities/Interface/BlotterObjects/IAdvancedSearch";
+import { IRange } from "../Utilities/Interface/Expression/IRange";
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { Expression } from '../Utilities/Expression';

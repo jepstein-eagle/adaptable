@@ -1,4 +1,4 @@
-import { IStyle } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IStyle } from "../../Utilities/Interface/IStyle";
 export interface IQuickSearchApi {
     /**
    * Runs QuickSearch on the supplied text

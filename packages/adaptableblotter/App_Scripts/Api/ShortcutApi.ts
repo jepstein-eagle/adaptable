@@ -1,6 +1,6 @@
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import { ApiBase } from "./ApiBase";
-import { IShortcut } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IShortcut } from "../Utilities/Interface/BlotterObjects/IShortcut";
 import { IShortcutApi } from './Interface/IShortcutApi';
 
 export class ShortcutApi extends ApiBase implements IShortcutApi {

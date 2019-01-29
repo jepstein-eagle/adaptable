@@ -8,7 +8,7 @@ import { SelectionMode, SortOrder, AccessLevel } from "../../Utilities/Enums";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { IGridSort } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IGridSort } from "../../Utilities/Interface/IGridSort";
 
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {
     GridSort: IGridSort

@@ -1,2 +1,2 @@
-import { IAdaptableBlotterOptions } from '../Interface/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../Interface/BlotterOptions/IAdaptableBlotterOptions';
 export declare const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions;

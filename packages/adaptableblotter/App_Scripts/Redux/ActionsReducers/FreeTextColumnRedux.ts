@@ -1,6 +1,6 @@
 import { FreeTextColumnState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IFreeTextColumn } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IFreeTextColumn } from "../../Utilities/Interface/BlotterObjects/IFreeTextColumn";
 import { FreeTextStoredValue } from '../../View/UIInterfaces';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 

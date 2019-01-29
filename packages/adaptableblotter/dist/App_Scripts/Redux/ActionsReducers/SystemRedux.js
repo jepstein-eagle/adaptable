@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const CalendarHelper_1 = require("../../Utilities/Helpers/CalendarHelper");
-const ChartEnums_1 = require("../../Utilities/ChartEnums");
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
 This allows us to keep the other reducers pure in terms of everything persists
@@ -106,19 +106,19 @@ exports.ReportSetErrorMessage = (ErrorMessage) => ({
     ErrorMessage
 });
 const initialSystemState = {
-    SystemStatus: { StatusMessage: "", StatusColour: "Green" },
-    Alerts: [],
+    SystemStatus: { StatusMessage: GeneralConstants_1.EMPTY_STRING, StatusColour: GeneralConstants_1.SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR },
+    Alerts: GeneralConstants_1.EMPTY_ARRAY,
     AvailableCalendars: CalendarHelper_1.CalendarHelper.getSystemCalendars(),
-    CurrentLiveReports: [],
+    CurrentLiveReports: GeneralConstants_1.EMPTY_ARRAY,
     IsValidSmartEditSelection: false,
     SmartEditPreviewInfo: null,
     IsValidBulkUpdateSelection: false,
     BulkUpdatePreviewInfo: null,
     ChartData: null,
-    ChartVisibility: ChartEnums_1.ChartVisibility.Hidden,
-    CalculatedColumnErrorMessage: "",
-    IPPDomainsPages: [],
-    ReportErrorMessage: ""
+    ChartVisibility: GeneralConstants_1.SYSTEM_DEFAULT_CHART_VISIBILITY,
+    CalculatedColumnErrorMessage: GeneralConstants_1.EMPTY_STRING,
+    IPPDomainsPages: GeneralConstants_1.EMPTY_ARRAY,
+    ReportErrorMessage: GeneralConstants_1.EMPTY_STRING
 };
 exports.SystemReducer = (state = initialSystemState, action) => {
     let alerts;

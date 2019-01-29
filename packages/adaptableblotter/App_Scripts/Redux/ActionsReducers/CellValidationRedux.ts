@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { CellValidationState } from './Interface/IState'
-import { ICellValidationRule } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { ICellValidationRule } from "../../Utilities/Interface/BlotterObjects/ICellValidationRule";
 import { ActionMode } from '../../Utilities/Enums';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 

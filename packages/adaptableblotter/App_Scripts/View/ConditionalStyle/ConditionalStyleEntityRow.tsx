@@ -8,7 +8,7 @@ import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { AdaptableObjectRow, } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IConditionalStyle } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpressionRowProps<ConditionalStyleEntityRow>, {}> {

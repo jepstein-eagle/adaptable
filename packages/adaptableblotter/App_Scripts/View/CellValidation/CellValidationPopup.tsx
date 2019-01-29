@@ -21,7 +21,8 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
-import { ICellValidationRule, IAdaptableBlotterObject } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { ICellValidationRule } from "../../Utilities/Interface/BlotterObjects/ICellValidationRule";
 import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 

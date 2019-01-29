@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ExpressionHelper_1 = require("./ExpressionHelper");
 const Enums_1 = require("../Enums");
+const GeneralConstants_1 = require("../Constants/GeneralConstants");
 var ReportHelper;
 (function (ReportHelper) {
     ReportHelper.ALL_DATA_REPORT = 'All Data';
@@ -140,21 +141,21 @@ var ReportHelper;
             Name: ReportHelper.ALL_DATA_REPORT,
             ReportColumnScope: Enums_1.ReportColumnScope.AllColumns,
             ReportRowScope: Enums_1.ReportRowScope.AllRows,
-            ColumnIds: [],
+            ColumnIds: GeneralConstants_1.EMPTY_ARRAY,
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
         });
         _systemReports.push({
             Name: ReportHelper.VISIBLE_DATA_REPORT,
             ReportColumnScope: Enums_1.ReportColumnScope.VisibleColumns,
             ReportRowScope: Enums_1.ReportRowScope.VisibleRows,
-            ColumnIds: [],
+            ColumnIds: GeneralConstants_1.EMPTY_ARRAY,
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
         });
         _systemReports.push({
             Name: ReportHelper.SELECTED_CELLS_REPORT,
             ReportColumnScope: Enums_1.ReportColumnScope.SelectedColumns,
             ReportRowScope: Enums_1.ReportRowScope.SelectedRows,
-            ColumnIds: [],
+            ColumnIds: GeneralConstants_1.EMPTY_ARRAY,
             Expression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression()
         });
         return _systemReports;

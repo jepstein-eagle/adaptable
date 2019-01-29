@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.CELL_VALIDATION_ADD_UPDATE = 'CELL_VALIDATION_ADD_UPDATE';
 exports.CELL_VALIDATION_DELETE = 'CELL_VALIDATION_DELETE';
 exports.CELL_VALIDATION_CHANGE_MODE = 'CELL_VALIDATION_CHANGE_MODE';
@@ -18,7 +19,7 @@ exports.CellValidationChangeMode = (index, ActionMode) => ({
     ActionMode
 });
 const initialCellValidationState = {
-    CellValidations: []
+    CellValidations: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.CellValidationReducer = (state = initialCellValidationState, action) => {
     let cellValidations;

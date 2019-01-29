@@ -7,7 +7,7 @@ import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWi
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard'
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumnCategory } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IColumnCategory } from "../../../Utilities/Interface/BlotterObjects/IColumnCategory";
 
 export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
     ColorPalette: string[],

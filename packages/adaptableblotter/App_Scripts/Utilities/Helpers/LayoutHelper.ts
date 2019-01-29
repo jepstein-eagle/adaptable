@@ -1,5 +1,6 @@
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { ILayout, IGridSort } from '../Interface/IAdaptableBlotterObjects';
+import { IGridSort } from "../Interface/IGridSort";
+import { ILayout } from "../Interface/BlotterObjects/ILayout";
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { SortOrder } from '../Enums';

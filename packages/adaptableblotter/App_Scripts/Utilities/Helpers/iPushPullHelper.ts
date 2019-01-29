@@ -1,4 +1,5 @@
-import { IPPDomain, IPPStyle } from "../../Strategy/Interface/IExportStrategy";
+import { IPPDomain } from "../Interface/Reports/IPPDomain";
+import { IPPStyle } from "../Interface/Reports/IPPStyle";
 import { LoggingHelper } from "./LoggingHelper";
 import * as ipushpull from 'ipushpull-js'
 

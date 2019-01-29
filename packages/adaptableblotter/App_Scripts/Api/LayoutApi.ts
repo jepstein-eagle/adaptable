@@ -1,6 +1,7 @@
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
-import { ILayout, IGridSort } from "../Utilities/Interface/IAdaptableBlotterObjects";
+import { IGridSort } from "../Utilities/Interface/IGridSort";
+import { ILayout } from "../Utilities/Interface/BlotterObjects/ILayout";
 import { ApiBase } from "./ApiBase";
 import { DEFAULT_LAYOUT } from "../Utilities/Constants/GeneralConstants";
 import { IColumn } from "../Utilities/Interface/IColumn";

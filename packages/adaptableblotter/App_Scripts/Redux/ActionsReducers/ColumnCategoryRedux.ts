@@ -1,6 +1,6 @@
 import { ColumnCategoryState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IColumnCategory } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const COLUMN_CATEGORY_ADD = 'COLUMN_CATEGORY_ADD';

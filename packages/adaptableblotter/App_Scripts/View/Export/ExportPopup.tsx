@@ -23,8 +23,9 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
-import { IReport, IAdaptableBlotterObject } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {

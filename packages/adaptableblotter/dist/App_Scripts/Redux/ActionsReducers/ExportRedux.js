@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ReportHelper_1 = require("../../Utilities/Helpers/ReportHelper");
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.EXPORT_APPLY = 'EXPORT_APPLY';
 exports.IPP_LOGIN = 'IPP_LOGIN';
 exports.REPORT_SELECT = 'REPORT_SELECT';
@@ -33,7 +34,7 @@ exports.IPPLogin = (Login, Password) => ({
 });
 const initialExportState = {
     Reports: ReportHelper_1.ReportHelper.CreateSystemReports(),
-    CurrentReport: "",
+    CurrentReport: GeneralConstants_1.EMPTY_STRING,
 };
 exports.ExportReducer = (state = initialExportState, action) => {
     switch (action.type) {

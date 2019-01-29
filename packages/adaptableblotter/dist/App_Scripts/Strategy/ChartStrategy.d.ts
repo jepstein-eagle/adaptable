@@ -10,7 +10,7 @@ export declare class ChartStrategy extends AdaptableStrategyBase implements ICha
     protected addPopupMenuItem(): void;
     protected InitState(): void;
     debouncedSetChartData: (() => void) & _.Cancelable;
-    protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void;
+    protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo): void;
     private getRefreshrate;
     private setChartData;
     private clearChartData;

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.TEAMSHARING_SHARE = 'TEAMSHARING_SHARE';
 exports.TEAMSHARING_SET = 'TEAMSHARING_SET';
 exports.TEAMSHARING_IMPORT_ITEM = 'TEAMSHARING_IMPORT_ITEM';
@@ -23,7 +24,7 @@ exports.TeamSharingGet = () => ({
 });
 const initialTeamSharingState = {
     Activated: false,
-    SharedEntities: []
+    SharedEntities: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.TeamSharingReducer = (state = initialTeamSharingState, action) => {
     switch (action.type) {

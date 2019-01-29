@@ -27,29 +27,35 @@ import { LayoutStrategy } from '../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
-import { IColumnFilterContext } from '../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilterContext } from "../Utilities/Interface/IColumnFilterContext";
 import { EventDispatcher } from '../Utilities/EventDispatcher'
 import { DataType, DistinctCriteriaPairValue, SortOrder } from '../Utilities/Enums'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
-import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
+import { IPPStyle } from "../Utilities/Interface/Reports/IPPStyle";
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
-//import { ContextMenuReact } from '../View/Components/ContextMenu/ContextMenu';
-import { ICalculatedColumn, IGridSort, ICellValidationRule, IStyle, IFreeTextColumn, IPercentBar, IPermittedColumnValues } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IGridSort } from "../Utilities/Interface/IGridSort";
+import { IStyle } from "../Utilities/Interface/IStyle";
+import { IPermittedColumnValues } from "../Utilities/Interface/IPermittedColumnValues";
+import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
+import { IFreeTextColumn } from "../Utilities/Interface/BlotterObjects/IFreeTextColumn";
+import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import * as _ from 'lodash'
 import { SelectedCellsStrategy } from '../Strategy/SelectedCellsStrategy';
-import { ISelectedCell, ISelectedCellInfo } from '../Strategy/Interface/ISelectedCellsStrategy';
+import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
+import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
 import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';

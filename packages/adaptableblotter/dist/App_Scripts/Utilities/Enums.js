@@ -253,3 +253,9 @@ var PinnedColumnDirection;
     PinnedColumnDirection["Left"] = "Leftt";
     PinnedColumnDirection["Right"] = "Right";
 })(PinnedColumnDirection = exports.PinnedColumnDirection || (exports.PinnedColumnDirection = {}));
+var FilterOnDataChangeOptions;
+(function (FilterOnDataChangeOptions) {
+    FilterOnDataChangeOptions["Always"] = "Always";
+    FilterOnDataChangeOptions["Never"] = "Never";
+    FilterOnDataChangeOptions["Throttle"] = "Throttle";
+})(FilterOnDataChangeOptions = exports.FilterOnDataChangeOptions || (exports.FilterOnDataChangeOptions = {}));

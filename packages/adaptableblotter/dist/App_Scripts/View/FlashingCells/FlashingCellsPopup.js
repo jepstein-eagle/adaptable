@@ -30,10 +30,11 @@ class FlashingCellsPopupComponent extends React.Component {
         let numericNonCalcColumns = numericColumns.filter(c => ArrayExtensions_1.ArrayExtensions.NotContainsItem(calculatedColumns, c.ColumnId));
         numericNonCalcColumns = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, numericNonCalcColumns, "FriendlyName");
         let allPotentialFlashingCells = [];
+        let flashingCellState = this.props.Blotter.api.configApi.configGetFlashingCellState(false);
         numericNonCalcColumns.forEach(nc => {
             let existingfc = this.props.FlashingCells.find(e => e.ColumnId == nc.ColumnId);
             if (!existingfc) {
-                allPotentialFlashingCells.push(ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(nc));
+                allPotentialFlashingCells.push(ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(nc, flashingCellState.DefaultUpColor, flashingCellState.DefautDownColor, flashingCellState.DefaultDuration));
             }
             else {
                 allPotentialFlashingCells.push(existingfc);

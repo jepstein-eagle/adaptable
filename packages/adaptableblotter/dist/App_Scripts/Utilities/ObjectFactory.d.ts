@@ -20,7 +20,7 @@ export declare module ObjectFactory {
     function CreateEmptyPercentBar(): IPercentBar;
     function CreateEmptyUserFilter(): IUserFilter;
     function CreateEmptyReport(): IReport;
-    function CreateDefaultFlashingCell(column: IColumn): IFlashingCell;
+    function CreateDefaultFlashingCell(column: IColumn, upColor: string, downColor: string, duration: number): IFlashingCell;
     function CreateEmptyShortcut(): IShortcut;
     function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter): string;
     function CreateEmptyConditionalStyle(): IConditionalStyle;

@@ -1,6 +1,6 @@
 import * as StrategyConstants from '../Constants/StrategyConstants'
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { IEntitlement } from '../Interface/IAdaptableBlotterObjects';
+import { IEntitlement } from "../Interface/IEntitlement";
 import { AccessLevel } from '../Enums';
 
 export module StrategyHelper {

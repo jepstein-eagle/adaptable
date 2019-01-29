@@ -24,13 +24,14 @@ class AdaptableBlotterPopupPrompt extends React.Component {
                             React.createElement("div", null,
                                 React.createElement("div", { style: { display: "flex", alignItems: "center" } },
                                     React.createElement(react_bootstrap_1.ControlLabel, null, this.props.Header)),
-                                React.createElement("div", { style: { display: "flex", alignItems: "center" } }, this.props.Msg.split("\n").map(function (item, index) {
-                                    return (React.createElement("span", { key: index },
-                                        item,
-                                        React.createElement("br", null)));
-                                })),
+                                StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.Msg) &&
+                                    React.createElement("div", { style: { display: "flex", alignItems: "center" } }, this.props.Msg.split("\n").map(function (item, index) {
+                                        return (React.createElement("span", { key: index },
+                                            item,
+                                            React.createElement("br", null)));
+                                    })),
                                 React.createElement("div", { style: { marginTop: '20px' } },
-                                    React.createElement(react_bootstrap_1.FormControl, { value: this.state.PromptText, type: "string", placeholder: "Enter comment", onChange: (e) => this.changeContent(e) })),
+                                    React.createElement(react_bootstrap_1.FormControl, { value: this.state.PromptText, type: "string", placeholder: "Enter text", onChange: (e) => this.changeContent(e) })),
                                 React.createElement("div", { style: { marginTop: '20px' } },
                                     React.createElement(react_bootstrap_1.Row, null,
                                         React.createElement(react_bootstrap_1.Col, { xs: 4 },

@@ -8,7 +8,7 @@ import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
-import { IColumnCategory } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {

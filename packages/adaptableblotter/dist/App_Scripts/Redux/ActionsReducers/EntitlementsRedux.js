@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.ENTITLEMENT_ADD = 'ENTITLEMENT_ADD';
 exports.ENTITLEMENT_UPDATE = 'ENTITLEMENT_UPDATE';
 exports.ENTITLEMENT_DELETE = 'ENTITLEMENT_DELETE';
@@ -16,7 +17,7 @@ exports.EntitlementDelete = (FunctionName) => ({
     FunctionName
 });
 const initialEntitlementsState = {
-    FunctionEntitlements: []
+    FunctionEntitlements: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.EntitlementsReducer = (state = initialEntitlementsState, action) => {
     let index;

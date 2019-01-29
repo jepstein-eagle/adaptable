@@ -51,10 +51,11 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             }
         }
     }
-    handleDataSourceChanged(dataChangedEvent) {
+    handleDataSourceChanged(dataChangedInfo) {
+        //     console.log(dataChangedInfo.ColumnId)
         if (this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartDefinition)) {
             // need to make sure that this is up to date always - not sure that it currently is
-            let columnChangedId = dataChangedEvent.ColumnId;
+            let columnChangedId = dataChangedInfo.ColumnId;
             let currentChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition);
             if (ArrayExtensions_1.ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
                 currentChartDefinition.XAxisColumnId == columnChangedId ||

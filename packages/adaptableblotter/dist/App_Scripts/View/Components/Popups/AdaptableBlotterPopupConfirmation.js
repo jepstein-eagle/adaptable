@@ -21,7 +21,7 @@ class AdaptableBlotterPopupConfirmation extends React.Component {
         let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
         let cssClassName = StyleConstants.POPUP_PROMPT;
         return this.props.ShowPopup && React.createElement("div", { className: StyleConstants.POPUP_PROMPT },
-            React.createElement(react_bootstrap_1.Modal, { show: this.props.ShowPopup, onHide: this.props.onCancel, className: cssClassName, container: modalContainer, bsSize: "small" },
+            React.createElement(react_bootstrap_1.Modal, { show: this.props.ShowPopup, onHide: this.props.onCancel, className: cssClassName, container: modalContainer, bsSize: "medium" },
                 React.createElement("div", { className: cssClassName + StyleConstants.MODAL_BASE },
                     React.createElement(react_bootstrap_1.Modal.Body, { className: cssClassName + StyleConstants.MODAL_BODY },
                         React.createElement("div", { className: cssClassName },
@@ -32,7 +32,7 @@ class AdaptableBlotterPopupConfirmation extends React.Component {
                                             item,
                                             React.createElement("br", null)));
                                     })),
-                                    this.props.ShowCommentBox &&
+                                    this.props.ShowInputBox &&
                                         React.createElement("div", { style: { marginTop: '20px' } },
                                             React.createElement("span", null, "Please enter a comment to confirm"),
                                             React.createElement("br", null),
@@ -55,7 +55,7 @@ class AdaptableBlotterPopupConfirmation extends React.Component {
         this.props.onConfirm(promptText);
     }
     canConfirm() {
-        if (this.props.ShowCommentBox) {
+        if (this.props.ShowInputBox) {
             return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.PromptText);
         }
         return true;

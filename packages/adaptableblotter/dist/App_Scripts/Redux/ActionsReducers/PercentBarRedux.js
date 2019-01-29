@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.PERCENT_BAR_ADD = 'PERCENT_BAR_ADD';
 exports.PERCENT_BAR_EDIT = 'PERCENT_BAR_EDIT';
 exports.PERCENT_BAR_DELETE = 'PERCENT_BAR_DELETE';
@@ -41,7 +42,7 @@ exports.PercentBarChangeNegativeColor = (PercentBar, NegativeColor) => ({
     NegativeColor
 });
 const initialPercentBarState = {
-    PercentBars: []
+    PercentBars: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.PercentBarReducer = (state = initialPercentBarState, action) => {
     let PercentBars;

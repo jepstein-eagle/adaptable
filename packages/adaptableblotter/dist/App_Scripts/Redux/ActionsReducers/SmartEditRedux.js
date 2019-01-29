@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Enums_1 = require("../../Utilities/Enums");
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.SMARTEDIT_APPLY = 'SMARTEDIT_APPLY';
 exports.SMARTEDIT_CHANGE_VALUE = 'SMARTEDIT_CHANGE_VALUE';
 exports.SMARTEDIT_CHANGE_OPERATION = 'SMARTEDIT_CHANGE_OPERATION';
@@ -17,8 +17,8 @@ exports.SmartEditChangeOperation = (MathOperation) => ({
     MathOperation
 });
 const initialSmartEditState = {
-    SmartEditValue: 1,
-    MathOperation: Enums_1.MathOperation.Add,
+    SmartEditValue: GeneralConstants_1.SMART_EDIT_DEFAULT_VALUE,
+    MathOperation: GeneralConstants_1.SMART_EDIT_DEFAULT_OPERATION,
 };
 exports.SmartEditReducer = (state = initialSmartEditState, action) => {
     switch (action.type) {

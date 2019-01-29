@@ -7,7 +7,8 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IAlertDefinition, IRange } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAlertDefinition } from "../../../Utilities/Interface/BlotterObjects/IAlertDefinition";
+import { IRange } from "../../../Utilities/Interface/Expression/IRange";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface AlertRulesWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {

@@ -1,8 +1,10 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { IReport, IUserFilter } from '../Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from "../Interface/BlotterObjects/IUserFilter";
+import { IReport } from "../Interface/BlotterObjects/IReport";
 import { ExpressionHelper } from './ExpressionHelper';
 import { Expression } from '../../Utilities/Expression';
-import { ISelectedCellInfo, ISelectedCell } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { ISelectedCellInfo } from "../Interface/SelectedCell/ISelectedCellInfo";
+import { ISelectedCell } from "../Interface/SelectedCell/ISelectedCell";
 import { IColumn } from '../Interface/IColumn';
 import { ReportColumnScope, MessageType, ReportRowScope } from '../Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
