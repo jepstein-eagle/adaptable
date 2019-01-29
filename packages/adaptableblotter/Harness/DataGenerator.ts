@@ -117,7 +117,7 @@ export class DataGenerator {
             //pick a random colum in the numeric col
             let columnName = "price";// this.getRandomItem(this._numericCols);
             let initialNewValue = trade[columnName];
-            let newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
+            let newValue = this.roundTo4Dp(initialNewValue + numberToAdd + 500);
             trade[columnName] = newValue;
 
             trade["ask"] = this.roundTo4Dp(trade["price"] - trade["bidOfferSpread"] / 2);

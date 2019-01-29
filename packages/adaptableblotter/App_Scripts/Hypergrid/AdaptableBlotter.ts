@@ -29,7 +29,7 @@ import { DashboardStrategy } from '../Strategy/DashboardStrategy'
 import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
 import { IColumnFilterContext } from "../Utilities/Interface/IColumnFilterContext";
 import { EventDispatcher } from '../Utilities/EventDispatcher'
-import { DataType, DistinctCriteriaPairValue, SortOrder } from '../Utilities/Enums'
+import { DataType, DistinctCriteriaPairValue, SortOrder, FilterOnDataChangeOptions } from '../Utilities/Enums'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
@@ -92,6 +92,7 @@ import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { ChartStrategy } from '../Strategy/ChartStrategy';
+import { HALF_SECOND } from '../Utilities/Constants/GeneralConstants';
 
 
 //icon to indicate toggle state
@@ -138,6 +139,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private filterContainer: HTMLDivElement
 
     public isInitialised: boolean
+
+    private throttleApplyGridFilteringUser: (() => void) & _.Cancelable;
+    private throttleApplyGridFilteringExternal: (() => void) & _.Cancelable;
 
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
@@ -241,6 +245,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 ReactDOM.render(AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
             }
         }
+
+        // create debounce methods that take a time based on user settings
+        this.throttleApplyGridFilteringUser = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
+        this.throttleApplyGridFilteringExternal = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
+
     }
 
     private getState(): AdaptableBlotterState {
@@ -301,6 +310,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
+
+        this.debouncedFilterGrid();
     }
 
     public hideFilterForm() {
@@ -390,7 +401,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return null
     }
 
-    debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
+    debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), HALF_SECOND);
+    debouncedFilterGrid = _.debounce(() => this.applyGridFiltering(), HALF_SECOND);
+
+    private filterOnUserDataChange(): void {
+        if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
+            this.applyGridFiltering();
+        } else if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
+            this.throttleApplyGridFilteringUser();
+        }
+    }
+
+    private filterOnExternalDataChange(): void {
+        if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
+            this.applyGridFiltering();
+        } else if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
+            this.throttleApplyGridFilteringExternal();
+        }
+    }
 
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     public setSelectedCells(): void {
@@ -539,7 +567,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
 
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
-        this.ReindexAndRepaint()
+        this.filterOnUserDataChange();
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
@@ -561,7 +589,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             dataChangedEvents.push(dataChangedEvent);
         }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
-        this.ReindexAndRepaint()
+        this.filterOnUserDataChange();
+
         if (this.AuditLogService.IsAuditCellEditsEnabled) {
             this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents)
         }
@@ -1207,7 +1236,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
         //We call Reindex so functions like CustomSort, Search and Filter are reapplied
         this.hyperGrid.addEventListener("fin-after-cell-edit", () => {
-            this.hyperGrid.behavior.reindex();
+            this.filterOnUserDataChange();
         });
         this.hyperGrid.addEventListener('fin-selection-changed', () => {
             this.debouncedSetSelectedCells()
@@ -1271,6 +1300,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             }
 
                             this.DataService.CreateDataChangedEvent(dataChangedInfo);
+                            // this is new  - giving users ability to filter on external data changes
+                            this.filterOnExternalDataChange();
                         }
                     }
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row);

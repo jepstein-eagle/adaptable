@@ -66,7 +66,7 @@ export const FlashingCellChangeDownColor = (FlashingCell: IFlashingCell, DownCol
 
 const initialShortcutState: FlashingCellState = {
     FlashingCells: EMPTY_ARRAY,
-    DefaultUpColor: FLASHING_CELLS_DEFAULT_UP_COLOR,
+    DefaultUpColor:  FLASHING_CELLS_DEFAULT_UP_COLOR,
     DefautDownColor:FLASHING_CELLS_DEFAULT_DOWN_COLOR,
     DefaultDuration:  FLASHING_CELLS_DEFAULT_DURATION
 }

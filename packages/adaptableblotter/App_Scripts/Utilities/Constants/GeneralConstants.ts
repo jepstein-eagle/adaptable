@@ -12,6 +12,8 @@ export const MENU_PREFIX: string = "ab_"
 export const READ_ONLY_STYLE: string = "ab_readonly"
 
 export const ALL_COLUMN_VALUES: string = 'ALL_COLUMN_VALUES';
+export const FILTER_ALWAYS: 'Always' | 'Never'| 'Throttle' = 'Always';
+export const FILTER_NEVER: 'Always' | 'Never'| 'Throttle' = 'Never';
 export const EMPTY_STRING: string = '';
 export const EMPTY_ARRAY: any[] = [];
 
