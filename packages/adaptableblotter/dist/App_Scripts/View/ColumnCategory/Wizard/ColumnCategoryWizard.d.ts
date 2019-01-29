@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../Wizard/Interface/IAdaptableWizard";
-import { IColumnCategory } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IColumnCategory } from "../../../Utilities/Interface/BlotterObjects/IColumnCategory";
 export interface ColumnCategoryWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ColumnCategoryWizard> {
     ColumnCategorys: IColumnCategory[];
 }

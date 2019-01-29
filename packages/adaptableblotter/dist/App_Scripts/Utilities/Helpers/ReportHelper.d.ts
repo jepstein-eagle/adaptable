@@ -1,5 +1,6 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { IReport, IUserFilter } from '../Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from "../Interface/BlotterObjects/IUserFilter";
+import { IReport } from "../Interface/BlotterObjects/IReport";
 import { IColumn } from '../Interface/IColumn';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 export declare module ReportHelper {

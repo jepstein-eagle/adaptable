@@ -3,7 +3,9 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
-import { IColumnFilter, IAdaptableBlotterObject, IEntitlement } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IEntitlement } from "../../Utilities/Interface/IEntitlement";
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
     ColumnFilters: IColumnFilter[];
     onClearFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;

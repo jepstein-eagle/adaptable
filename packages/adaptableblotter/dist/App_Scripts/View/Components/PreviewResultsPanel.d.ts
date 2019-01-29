@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IColumn } from "../../Utilities/Interface/IColumn";
-import { IUserFilter } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
 import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
     UpdateValue: string;

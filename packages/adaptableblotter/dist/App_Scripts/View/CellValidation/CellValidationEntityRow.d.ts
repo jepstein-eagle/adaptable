@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { ICellValidationRule } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../Utilities/Interface/BlotterObjects/ICellValidationRule";
 import { ActionMode } from "../../Utilities/Enums";
 export interface CellValidationEntityRowProps extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
     Column: IColumn;

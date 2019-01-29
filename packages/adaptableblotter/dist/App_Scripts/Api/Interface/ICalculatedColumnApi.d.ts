@@ -1,4 +1,4 @@
-import { ICalculatedColumn } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 export interface ICalculatedColumnApi {
     GetAll(): ICalculatedColumn[];
     Add(calculatedColumn: ICalculatedColumn): void;

@@ -1,4 +1,4 @@
-import { ICustomSort } from "../Utilities/Interface/IAdaptableBlotterObjects";
+import { ICustomSort } from "../Utilities/Interface/BlotterObjects/ICustomSort";
 import { ApiBase } from "./ApiBase";
 import { ICustomSortApi } from './Interface/ICustomSortApi';
 export declare class CustomSortApi extends ApiBase implements ICustomSortApi {

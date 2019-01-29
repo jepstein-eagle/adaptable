@@ -1,5 +1,5 @@
 import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
-import { IFreeTextColumn } from '../Interface/IAdaptableBlotterObjects';
+import { IFreeTextColumn } from "../Interface/BlotterObjects/IFreeTextColumn";
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 export declare class FreeTextColumnService implements IFreeTextColumnService {

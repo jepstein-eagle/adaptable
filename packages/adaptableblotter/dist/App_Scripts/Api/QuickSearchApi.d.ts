@@ -1,4 +1,4 @@
-import { IStyle } from "../Utilities/Interface/IAdaptableBlotterObjects";
+import { IStyle } from "../Utilities/Interface/IStyle";
 import { ApiBase } from "./ApiBase";
 import { IQuickSearchApi } from "./Interface/IQuickSearchApi";
 export declare class QuickSearchApi extends ApiBase implements IQuickSearchApi {

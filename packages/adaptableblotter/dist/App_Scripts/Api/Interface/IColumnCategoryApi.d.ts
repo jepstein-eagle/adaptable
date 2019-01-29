@@ -1,4 +1,4 @@
-import { IColumnCategory } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
 export interface IColumnCategoryApi {
     GetAll(): IColumnCategory[];
     Add(columnCategory: IColumnCategory): void;

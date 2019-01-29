@@ -3,7 +3,8 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import { IAdaptableBlotterObject, IFormatColumn } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IFormatColumn } from "../../Utilities/Interface/BlotterObjects/IFormatColumn";
 export interface FormatColumnSummaryProps extends StrategySummaryProps<FormatColumnSummaryComponent> {
     FormatColumns: IFormatColumn[];
     ColorPalette: string[];

@@ -18,9 +18,12 @@
 11 silly rimrafDir C:\Users\jonny\Documents\code\lerna\adaptableblotter\packages\adaptableblotter-react\node_modules
 12 info clean removing C:\Users\jonny\Documents\code\lerna\adaptableblotter\packages\adaptableblotter-test\node_modules
 13 silly rimrafDir C:\Users\jonny\Documents\code\lerna\adaptableblotter\packages\adaptableblotter-test\node_modules
-14 info clean removing C:\Users\jonny\Documents\code\lerna\adaptableblotter\packages\adaptableblotter\node_modules
-15 silly rimrafDir C:\Users\jonny\Documents\code\lerna\adaptableblotter\packages\adaptableblotter\node_modules
-16 error Error: Command failed: C:\Program Files\nodejs\node.exe C:\Users\jonny\AppData\Roaming\npm\node_modules\lerna\node_modules\rimraf\bin.js --no-glob C:\Users\jonny\Documents\code\lerna\adaptableblotter\packages\adaptableblotter\node_modules\
-16 error     at makeError (C:\Users\jonny\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:174:9)
-16 error     at Promise.all.then.arr (C:\Users\jonny\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:278:16)
-16 error     at <anonymous>
+14 verbose rimrafDir removed C:\Users\jonny\Documents\code\lerna\adaptableblotter\packages\adaptableblotter-react-test\node_modules
+15 info clean removing C:\Users\jonny\Documents\code\lerna\adaptableblotter\packages\adaptableblotter\node_modules
+16 silly rimrafDir C:\Users\jonny\Documents\code\lerna\adaptableblotter\packages\adaptableblotter\node_modules
+17 verbose rimrafDir removed C:\Users\jonny\Documents\code\lerna\adaptableblotter\packages\adaptableblotter-react\node_modules
+18 verbose rimrafDir removed C:\Users\jonny\Documents\code\lerna\adaptableblotter\packages\adaptableblotter-test\node_modules
+19 error Error: Command failed: C:\Program Files\nodejs\node.exe C:\Users\jonny\AppData\Roaming\npm\node_modules\lerna\node_modules\rimraf\bin.js --no-glob C:\Users\jonny\Documents\code\lerna\adaptableblotter\packages\adaptableblotter\node_modules\
+19 error     at makeError (C:\Users\jonny\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:174:9)
+19 error     at Promise.all.then.arr (C:\Users\jonny\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:278:16)
+19 error     at <anonymous>

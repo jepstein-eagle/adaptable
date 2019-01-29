@@ -1,5 +1,5 @@
 import { ApiBase } from "./ApiBase";
-import { IPercentBar } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
 import { IPercentBarApi } from './Interface/IPercentBarApi';
 export declare class PercentBarApi extends ApiBase implements IPercentBarApi {
     GetAll(): IPercentBar[];

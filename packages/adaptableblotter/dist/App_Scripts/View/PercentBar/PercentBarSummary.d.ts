@@ -3,7 +3,8 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as PercentBarRedux from '../../Redux/ActionsReducers/PercentBarRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import { IAdaptableBlotterObject, IPercentBar } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IPercentBar } from "../../Utilities/Interface/BlotterObjects/IPercentBar";
 export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarSummaryComponent> {
     PercentBars: IPercentBar[];
     ColorPalette: string[];

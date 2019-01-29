@@ -1,4 +1,4 @@
-import { IAdvancedSearch } from "../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAdvancedSearch } from "../Utilities/Interface/BlotterObjects/IAdvancedSearch";
 import { ApiBase } from "./ApiBase";
 import { IAdvancedSearchApi } from './Interface/IAdvancedSearchApi';
 export declare class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IAdvancedSearch } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IAdvancedSearch } from "../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow> extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {
     IsCurrentAdvancedSearch: boolean;
     onSelect: (advancedSearch: IAdvancedSearch) => void;

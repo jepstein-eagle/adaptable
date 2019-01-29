@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { ICustomSort } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { ICustomSort } from "../../../Utilities/Interface/BlotterObjects/ICustomSort";
 export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     Columns: IColumn[];
 }

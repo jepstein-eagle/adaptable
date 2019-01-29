@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
+import { IColumnFilterContext } from "../../../Utilities/Interface/IColumnFilterContext";
 import { Expression } from "../../../Utilities/Expression";
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 export interface FloatingFilterFormState {

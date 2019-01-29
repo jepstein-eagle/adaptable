@@ -1,4 +1,4 @@
-import { IReport } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IReport } from "../../../Utilities/Interface/BlotterObjects/IReport";
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ReportRowScope } from '../../../Utilities/Enums';

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { ILayout } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { ILayout } from "../../../Utilities/Interface/BlotterObjects/ILayout";
 export interface LayoutSettingsWizardProps extends AdaptableWizardStepProps<ILayout> {
     Layouts: ILayout[];
 }

@@ -1,4 +1,5 @@
-import { IFormatColumn, IStyle } from "../Utilities/Interface/IAdaptableBlotterObjects";
+import { IStyle } from "../Utilities/Interface/IStyle";
+import { IFormatColumn } from "../Utilities/Interface/BlotterObjects/IFormatColumn";
 import { ApiBase } from "./ApiBase";
 import { IFormatColumnApi } from './Interface/IFormatColumnApi';
 export declare class FormatColumnApi extends ApiBase implements IFormatColumnApi {

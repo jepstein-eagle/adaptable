@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IChartDefinition } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { AxisTotal } from "../../../Utilities/ChartEnums";
 export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {

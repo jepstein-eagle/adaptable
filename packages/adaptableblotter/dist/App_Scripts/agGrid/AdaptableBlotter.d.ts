@@ -12,11 +12,14 @@ import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTex
 import { IAdaptableStrategyCollection } from '../Strategy/Interface/IStrategy';
 import { EventDispatcher } from '../Utilities/EventDispatcher';
 import { DistinctCriteriaPairValue } from '../Utilities/Enums';
-import { IPPStyle } from '../Strategy/Interface/IExportStrategy';
+import { IPPStyle } from "../Utilities/Interface/Reports/IPPStyle";
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { ICalculatedColumn, IGridSort, IFreeTextColumn, IPercentBar } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IGridSort } from "../Utilities/Interface/IGridSort";
+import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
+import { IFreeTextColumn } from "../Utilities/Interface/BlotterObjects/IFreeTextColumn";
+import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';

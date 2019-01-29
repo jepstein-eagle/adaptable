@@ -1,6 +1,6 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { ICustomSort } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { ICustomSort } from "../Utilities/Interface/BlotterObjects/ICustomSort";
 import { IColumn } from '../Utilities/Interface/IColumn';
 export declare class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts;

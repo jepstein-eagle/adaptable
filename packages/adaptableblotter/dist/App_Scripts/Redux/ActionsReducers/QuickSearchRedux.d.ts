@@ -1,7 +1,7 @@
 import { QuickSearchState } from './Interface/IState';
 import { DisplayAction } from '../../Utilities/Enums';
 import * as Redux from 'redux';
-import { IStyle } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IStyle } from "../../Utilities/Interface/IStyle";
 export declare const QUICK_SEARCH_APPLY = "QUICK_SEARCH_APPLY";
 export declare const QUICK_SEARCH_SET_DISPLAY = "QUICK_SEARCH_SET_DISPLAY";
 export declare const QUICK_SEARCH_SET_STYLE = "QUICK_SEARCH_SET_STYLE";

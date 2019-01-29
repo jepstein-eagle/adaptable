@@ -1,4 +1,4 @@
-import { ILayout } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { ILayout } from "../../Utilities/Interface/BlotterObjects/ILayout";
 export interface ILayoutApi {
     /**
      * Selects the layout

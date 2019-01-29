@@ -1,5 +1,5 @@
 import { ApiBase } from "./ApiBase";
-import { IUserFilter } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from "../Utilities/Interface/BlotterObjects/IUserFilter";
 import { ISystemFilterApi } from './Interface/ISystemFilterApi';
 export declare class SystemFilterApi extends ApiBase implements ISystemFilterApi {
     userFilterSet(userFilters: IUserFilter[]): void;

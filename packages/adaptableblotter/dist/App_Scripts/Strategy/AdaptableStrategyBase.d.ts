@@ -2,7 +2,7 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IStrategy } from './Interface/IStrategy';
 import { Action } from 'redux';
 import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
-import { IEntitlement } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IEntitlement } from "../Utilities/Interface/IEntitlement";
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
 import { IMenuItem } from '../Utilities/Interface/IMenu';

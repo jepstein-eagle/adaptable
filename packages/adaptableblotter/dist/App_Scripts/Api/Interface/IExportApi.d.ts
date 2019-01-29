@@ -1,5 +1,5 @@
-import { IReport } from '../../Utilities/Interface/IAdaptableBlotterObjects';
-import { ILiveReport } from '../../Strategy/Interface/IExportStrategy';
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
+import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
 import { ExportDestination } from "../../Utilities/Enums";
 export interface IExportApi {
     GetCurrent(): string;

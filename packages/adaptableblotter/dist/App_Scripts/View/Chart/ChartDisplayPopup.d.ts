@@ -1,5 +1,6 @@
 import * as React from "react";
-import { IChartDefinition, IChartProperties } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IChartProperties } from "../../Utilities/Interface/IChartProperties";
+import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 export interface ChartDisplayPopupState {
     IsChartSettingsVisible: boolean;
     EditedChartDefinition: IChartDefinition;

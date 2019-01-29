@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IStyle } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IStyle } from "../../Utilities/Interface/IStyle";
 export interface StyleComponentProps extends React.ClassAttributes<StyleComponent> {
     ColorPalette: string[];
     StyleClassNames: string[];

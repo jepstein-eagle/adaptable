@@ -1,4 +1,5 @@
-import { IPPDomain, IPPStyle } from "../../Strategy/Interface/IExportStrategy";
+import { IPPDomain } from "../Interface/Reports/IPPDomain";
+import { IPPStyle } from "../Interface/Reports/IPPStyle";
 export declare module iPushPullHelper {
     enum ServiceStatus {
         Unknown = "Unknown",

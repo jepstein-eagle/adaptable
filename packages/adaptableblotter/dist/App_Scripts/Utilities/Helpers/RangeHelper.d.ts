@@ -1,6 +1,6 @@
 import { IKeyValuePair } from "../Interface/IKeyValuePair";
 import { LeafExpressionOperator } from '../Enums';
-import { IRange } from '../Interface/IAdaptableBlotterObjects';
+import { IRange } from "../Interface/Expression/IRange";
 import { IColumn } from '../Interface/IColumn';
 export declare module RangeHelper {
     function CreateValueRange(operator: LeafExpressionOperator, operand1: any, operand2: any): IRange;

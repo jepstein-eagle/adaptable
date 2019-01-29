@@ -1,2 +1,2 @@
-import { IChartProperties } from '../Interface/IAdaptableBlotterObjects';
+import { IChartProperties } from "../Interface/IChartProperties";
 export declare const DefaultChartProperties: IChartProperties;

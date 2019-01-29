@@ -1,4 +1,4 @@
-import { IColumnFilter } from '../Interface/IAdaptableBlotterObjects';
+import { IColumnFilter } from "../Interface/BlotterObjects/IColumnFilter";
 import { IColumn } from '../Interface/IColumn';
 import { IKeyValuePair } from "../Interface/IKeyValuePair";
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';

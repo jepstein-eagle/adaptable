@@ -2,7 +2,8 @@ import * as React from "react";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
-import { IConditionalStyle, IColumnCategory } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
+import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
 export interface ConditionalStyleSummaryProps extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
     ConditionalStyles: IConditionalStyle[];
     ColorPalette: string[];

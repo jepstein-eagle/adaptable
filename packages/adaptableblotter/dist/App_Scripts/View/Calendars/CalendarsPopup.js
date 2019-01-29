@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const CalendarsRedux = require("../../Redux/ActionsReducers/CalendarRedux");
 const react_bootstrap_1 = require("react-bootstrap");
 const react_bootstrap_2 = require("react-bootstrap");
@@ -9,7 +10,6 @@ const CalendarsEntryRow_1 = require("./CalendarsEntryRow");
 const CalendarEntryItem_1 = require("./CalendarEntryItem");
 const PanelWithRow_1 = require("../Components/Panels/PanelWithRow");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
-const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 class CalendarsPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -39,15 +39,15 @@ class CalendarsPopupComponent extends React.Component {
             React.createElement(PanelWithRow_1.PanelWithRow, { cssClassName: cssClassName, colItems: allCalenderColItems, bsStyle: "info", className: "ab_preview_panel" }),
             React.createElement(react_bootstrap_1.ListGroup, null, allCalendars),
             this.state.DisplayedCalendar &&
-                React.createElement(react_bootstrap_2.Modal, { show: this.state.DisplayedCalendar != null, onHide: () => this.closeInformationModal(), className: cssClassName },
-                    React.createElement(react_bootstrap_2.Modal.Header, { closeButton: true },
-                        React.createElement(react_bootstrap_2.Modal.Title, null,
+                React.createElement(react_bootstrap_1.Modal, { show: this.state.DisplayedCalendar != null, onHide: () => this.closeInformationModal(), className: cssClassName },
+                    React.createElement(react_bootstrap_1.Modal.Header, { closeButton: true },
+                        React.createElement(react_bootstrap_1.Modal.Title, null,
                             "Calendar Details: ",
                             this.state.DisplayedCalendar.Name)),
-                    React.createElement(react_bootstrap_2.Modal.Body, null,
+                    React.createElement(react_bootstrap_1.Modal.Body, null,
                         React.createElement(PanelWithRow_1.PanelWithRow, { cssClassName: cssClassName, colItems: calenderEntryColItems, bsStyle: "info" }),
                         displayedCalendarModalBody),
-                    React.createElement(react_bootstrap_2.Modal.Footer, null,
+                    React.createElement(react_bootstrap_1.Modal.Footer, null,
                         React.createElement(react_bootstrap_2.Button, { className: "ab_right_modal_button", onClick: () => this.closeInformationModal() }, "Close"))));
     }
     closeInformationModal() {

@@ -1,6 +1,6 @@
 import { ApiBase } from "./ApiBase";
 import { IColumnCategoryApi } from './Interface/IColumnCategoryApi';
-import { IColumnCategory } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IColumnCategory } from "../Utilities/Interface/BlotterObjects/IColumnCategory";
 export declare class ColumnCategoryApi extends ApiBase implements IColumnCategoryApi {
     GetAll(): IColumnCategory[];
     Add(columnCategory: IColumnCategory): void;

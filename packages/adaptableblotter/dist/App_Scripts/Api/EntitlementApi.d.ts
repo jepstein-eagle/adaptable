@@ -1,6 +1,6 @@
 import { ApiBase } from "./ApiBase";
 import { IEntitlementApi } from './Interface/IEntitlementApi';
-import { IEntitlement } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IEntitlement } from "../Utilities/Interface/IEntitlement";
 export declare class EntitlementApi extends ApiBase implements IEntitlementApi {
     GetAll(): IEntitlement[];
     GetByFunction(functionName: string): IEntitlement;

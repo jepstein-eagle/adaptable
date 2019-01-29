@@ -1,5 +1,6 @@
 import { LeafExpressionOperator, DataType } from '../Enums';
-import { IRange, IUserFilter } from '../Interface/IAdaptableBlotterObjects';
+import { IUserFilter } from "../Interface/BlotterObjects/IUserFilter";
+import { IRange } from "../Interface/Expression/IRange";
 import { Expression } from '../Expression';
 import { IColumn } from '../Interface/IColumn';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';

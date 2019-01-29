@@ -1,8 +1,8 @@
 import * as Redux from 'redux';
 import { SystemState } from './Interface/IState';
 import { ExportDestination } from '../../Utilities/Enums';
-import { IPPDomain } from '../../Strategy/Interface/IExportStrategy';
-import { ISystemStatus } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IPPDomain } from "../../Utilities/Interface/Reports/IPPDomain";
+import { ISystemStatus } from "../../Utilities/Interface/ISystemStatus";
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IAlert } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../Utilities/ChartEnums';

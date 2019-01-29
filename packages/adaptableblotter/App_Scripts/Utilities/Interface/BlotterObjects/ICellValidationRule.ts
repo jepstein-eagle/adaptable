@@ -7,3 +7,4 @@ export interface ICellValidationRule extends IAdaptableBlotterObject {
   ActionMode: 'Warn User' | 'Stop Edit';
   Expression: Expression;
 }
+

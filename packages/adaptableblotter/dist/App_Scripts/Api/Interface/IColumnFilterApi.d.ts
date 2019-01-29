@@ -1,4 +1,4 @@
-import { IColumnFilter } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
 export interface IColumnFilterApi {
     Set(columnFilters: IColumnFilter[]): void;
     SetFromUserFilter(userFilter: string): void;

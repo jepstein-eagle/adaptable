@@ -1,4 +1,5 @@
-import { ILayout, IGridSort } from '../Interface/IAdaptableBlotterObjects';
+import { IGridSort } from "../Interface/IGridSort";
+import { ILayout } from "../Interface/BlotterObjects/ILayout";
 import { IColumn } from '../Interface/IColumn';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 export declare module LayoutHelper {

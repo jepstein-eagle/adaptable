@@ -2,7 +2,7 @@ import * as React from "react";
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard';
 import { ExpressionMode, QueryBuildStatus, QueryTab } from '../../Utilities/Enums';
-import { IUserFilter } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
 import { Expression } from "../../Utilities/Expression";
 import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {

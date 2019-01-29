@@ -1,5 +1,5 @@
 import { ApiBase } from "./ApiBase";
-import { ICellValidationRule } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
 import { ICellValidationApi } from './Interface/ICellValidationApi';
 export declare class CellValidationApi extends ApiBase implements ICellValidationApi {
     GetAll(): ICellValidationRule[];

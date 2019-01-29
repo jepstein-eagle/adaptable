@@ -1,4 +1,4 @@
-import { ILayout } from "../Utilities/Interface/IAdaptableBlotterObjects";
+import { ILayout } from "../Utilities/Interface/BlotterObjects/ILayout";
 import { ApiBase } from "./ApiBase";
 import { ILayoutApi } from './Interface/ILayoutApi';
 export declare class LayoutApi extends ApiBase implements ILayoutApi {

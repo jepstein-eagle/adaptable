@@ -5,7 +5,10 @@ import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableSt
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
-import { ICalculatedColumn, IGridSort, IFreeTextColumn, IPercentBar } from './IAdaptableBlotterObjects';
+import { IGridSort } from "./IGridSort";
+import { IPercentBar } from "./BlotterObjects/IPercentBar";
+import { IFreeTextColumn } from "./BlotterObjects/IFreeTextColumn";
+import { ICalculatedColumn } from "./BlotterObjects/ICalculatedColumn";
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from './IStateEvents';
 import { IAdaptableBlotterOptions } from './BlotterOptions/IAdaptableBlotterOptions';
@@ -15,7 +18,7 @@ import { IValidationService } from '../Services/Interface/IValidationService';
 import { AuditLogService } from '../Services/AuditLogService';
 import { ICalculatedColumnExpressionService } from '../Services/Interface/ICalculatedColumnExpressionService';
 import { IChartService } from '../Services/Interface/IChartService';
-import { IPPStyle } from '../../Strategy/Interface/IExportStrategy';
+import { IPPStyle } from "./Reports/IPPStyle";
 import { IEvent } from './IEvent';
 import { IAdaptableStrategyCollection } from '../../Strategy/Interface/IStrategy';
 export interface IAdaptableBlotter {

@@ -1,4 +1,4 @@
-import { ICustomSort } from "../../Utilities/Interface/IAdaptableBlotterObjects";
+import { ICustomSort } from "../../Utilities/Interface/BlotterObjects/ICustomSort";
 export interface ICustomSortApi {
     GetAll(): ICustomSort[];
     GetByColumn(column: string): ICustomSort;

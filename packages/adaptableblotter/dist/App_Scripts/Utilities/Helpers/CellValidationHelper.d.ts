@@ -1,4 +1,4 @@
-import { ICellValidationRule } from '../Interface/IAdaptableBlotterObjects';
+import { ICellValidationRule } from "../Interface/BlotterObjects/ICellValidationRule";
 import { IColumn } from '../Interface/IColumn';
 import { IUIConfirmation } from '../Interface/IMessage';
 import * as Redux from 'redux';

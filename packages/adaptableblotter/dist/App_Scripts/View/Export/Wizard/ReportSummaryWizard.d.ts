@@ -1,4 +1,5 @@
-import { IReport, IUserFilter } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IReport } from "../../../Utilities/Interface/BlotterObjects/IReport";
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IColumn } from '../../../Utilities/Interface/IColumn';

@@ -1,6 +1,6 @@
 import { EntitlementsState } from './Interface/IState';
 import * as Redux from 'redux';
-import { IEntitlement } from '../../Utilities/Interface/IAdaptableBlotterObjects';
+import { IEntitlement } from "../../Utilities/Interface/IEntitlement";
 export declare const ENTITLEMENT_ADD = "ENTITLEMENT_ADD";
 export declare const ENTITLEMENT_UPDATE = "ENTITLEMENT_UPDATE";
 export declare const ENTITLEMENT_DELETE = "ENTITLEMENT_DELETE";

@@ -1,5 +1,5 @@
 import { ApiBase } from "./ApiBase";
-import { IUserTheme } from '../Utilities/Interface/IAdaptableBlotterObjects';
+import { IUserTheme } from "../Utilities/Interface/BlotterObjects/IUserTheme";
 import { IThemeApi } from './Interface/IThemeApi';
 export declare class ThemeApi extends ApiBase implements IThemeApi {
     SetCurrent(theme: string): void;

@@ -1,5 +1,8 @@
 import { IUserState } from "../../Redux/ActionsReducers/Interface/IState";
-import { IAdvancedSearch, IColumnFilter, IGridSort, ICustomSort } from "./IAdaptableBlotterObjects";
+import { IGridSort } from "./IGridSort";
+import { ICustomSort } from "./BlotterObjects/ICustomSort";
+import { IColumnFilter } from "./BlotterObjects/IColumnFilter";
+import { IAdvancedSearch } from "./BlotterObjects/IAdvancedSearch";
 export interface IFDC3Schema {
     object: string;
     definition: string;

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IColumn } from "../../../Utilities/Interface/IColumn";
-import { IFormatColumn } from "../../../Utilities/Interface/IAdaptableBlotterObjects";
+import { IFormatColumn } from "../../../Utilities/Interface/BlotterObjects/IFormatColumn";
 export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
     Columns: IColumn[];
 }
