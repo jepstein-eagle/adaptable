@@ -1,7 +1,6 @@
 
 export interface ICalendarApi {
-    
-  SetCurrent(calendar: string): void
-  GetCurrent(): string
+  SetCurrent(calendar: string): void;
+  GetCurrent(): string;
 }
 

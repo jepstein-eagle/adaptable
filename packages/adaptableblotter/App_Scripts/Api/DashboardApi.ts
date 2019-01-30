@@ -4,10 +4,9 @@ import { Visibility } from '../Utilities/Enums';
 import { IDashboardApi } from './Interface/IDashboardApi';
 
 
-
 export class DashboardApi extends ApiBase implements IDashboardApi {
 
-  public SetAvailableToolbars(availableToolbars: string[]): void {
+    public SetAvailableToolbars(availableToolbars: string[]): void {
         this.dispatchAction(DashboardRedux.DashboardSetAvailableToolbars(availableToolbars))
     }
 
