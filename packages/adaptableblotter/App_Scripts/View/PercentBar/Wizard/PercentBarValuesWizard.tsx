@@ -57,7 +57,7 @@ export class PercentBarValuesWizard extends React.Component<PercentBarValuesWiza
                                 <Radio inline value="column" checked={this.state.UseMinColumn == true} onChange={(e) => this.onUseMinColumnSelectChanged(e)}>Another Column Value</Radio>
                                 <span style={{ marginLeft: '10px' }} >
                                     <AdaptablePopover cssClassName={cssClassName} headerText={"Percent Bar: Minimum Value"}
-                                        bodyText={["The minimum value of the column (can be minus).  If positive numbers only use the default of 0."]} MessageType={MessageType.Info} />
+                                        bodyText={["The minimum value of the column (can be minus).  Defaults to the currenty smallest value in the column.  If the column only contains positive numbers use 0.  Additionally, you can set the value to be that in another column."]} MessageType={MessageType.Info} />
                                 </span>
                             </Col>
                         </Row>
@@ -117,7 +117,7 @@ export class PercentBarValuesWizard extends React.Component<PercentBarValuesWiza
                                 <Radio inline value="column" checked={this.state.UseMaxColumn == true} onChange={(e) => this.onUseMaxColumnSelectChanged(e)}>Another Column Value</Radio>
                                 <span style={{ marginLeft: '10px' }} >
                                     <AdaptablePopover cssClassName={cssClassName} headerText={"Percent Bar: Maximum Value"}
-                                        bodyText={["The maximum value of the bar.  Can be a numeric value (default is 100) or another column"]} MessageType={MessageType.Info} />
+                                        bodyText={["The maximum value of the bar.  Defaults to the currently largest value in the column.  Additionally, you can set the value to be that in another column."]} MessageType={MessageType.Info} />
                                 </span>
                             </Col>
                         </Row>
