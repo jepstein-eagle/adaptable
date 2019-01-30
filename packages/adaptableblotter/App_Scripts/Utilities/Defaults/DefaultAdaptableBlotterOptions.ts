@@ -51,6 +51,7 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     generalOptions: {
         useDefaultVendorGridThemes: true,
         showMissingPrimaryKeyWarning: true,
+        preventDuplicatePrimaryKeyValues: true,
         serverSearchOption: 'None',
     }
 }

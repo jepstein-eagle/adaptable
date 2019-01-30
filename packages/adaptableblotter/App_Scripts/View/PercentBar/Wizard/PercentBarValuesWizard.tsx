@@ -39,8 +39,7 @@ export class PercentBarValuesWizard extends React.Component<PercentBarValuesWiza
     render(): any {
 
         let cssClassName: string = this.props.cssClassName + "-s"
-        let friendlyColumnName: string = ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns);
-
+      
         return <div className={cssClassName}>
             <Panel header={"Minimum Value"} bsStyle="primary">
 

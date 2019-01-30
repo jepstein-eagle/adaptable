@@ -73,8 +73,8 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
         ]
 
         let blotterOptionsColItems: IColItem[] = [
-            { Content: "Property", Size: 5 },
-            { Content: "Value", Size: 5 },
+            { Content: "Property", Size: 6 },
+            { Content: "Value", Size: 4 },
             { Content: "", Size: 2 },
         ]
 
@@ -408,6 +408,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
             returnRows.push(this.createColItem(colItems, "serverSearchOption", (options.generalOptions.serverSearchOption) , "Which searching and filtering options, if any, are taking place on the server."))
             returnRows.push(this.createColItem(colItems, "useDefaultVendorGridThemes", (options.generalOptions.useDefaultVendorGridThemes == true) ? "Yes" : "No", "Whether the default theme(s) for the vendor grid are being used)."))
             returnRows.push(this.createColItem(colItems, "showMissingPrimaryKeyWarning", (options.generalOptions.showMissingPrimaryKeyWarning == true) ? "Yes" : "No", "Whether a warning is shown if the primary key column does not actually exist."))
+            returnRows.push(this.createColItem(colItems, "preventDuplicatePrimaryKeyValues", (options.generalOptions.preventDuplicatePrimaryKeyValues == true) ? "Yes" : "No", "Whether a duplicate value can be entered into the primary key column."))
         }
         return returnRows;
     }

@@ -11,7 +11,7 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { DistinctCriteriaPairValue, LeafExpressionOperator, RangeOperandType, ActionMode, DisplayAction } from '../Enums';
 import { IColumn } from '../Interface/IColumn';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
-import {  IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
 
 export class ValidationService implements IValidationService {
 
@@ -23,12 +23,16 @@ export class ValidationService implements IValidationService {
         let failedWarningRules: ICellValidationRule[] = [];
         // first check that if primary key change, the new value is unique
         if (dataChangedEvent.ColumnId == this.blotter.BlotterOptions.primaryKey) {
-            let displayValuePair: IRawValueDisplayValuePair[] = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, DistinctCriteriaPairValue.DisplayValue)
-            let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);
-            if (existingItem) {
-                let range = ObjectFactory.CreateRange(LeafExpressionOperator.PrimaryKeyDuplicate, dataChangedEvent.ColumnId, null, RangeOperandType.Column, null)
-                let cellValidationRule: ICellValidationRule = ObjectFactory.CreateCellValidationRule(dataChangedEvent.ColumnId, range, ActionMode.StopEdit, ExpressionHelper.CreateEmptyExpression());
-                failedWarningRules.push(cellValidationRule);
+            if (this.blotter.BlotterOptions.generalOptions.preventDuplicatePrimaryKeyValues) {
+                if (dataChangedEvent.OldValue != dataChangedEvent.NewValue) {
+                    let displayValuePair: IRawValueDisplayValuePair[] = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, DistinctCriteriaPairValue.DisplayValue)
+                    let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);
+                    if (existingItem) {
+                        let range = ObjectFactory.CreateRange(LeafExpressionOperator.PrimaryKeyDuplicate, dataChangedEvent.ColumnId, null, RangeOperandType.Column, null)
+                        let cellValidationRule: ICellValidationRule = ObjectFactory.CreateCellValidationRule(dataChangedEvent.ColumnId, range, ActionMode.StopEdit, ExpressionHelper.CreateEmptyExpression());
+                        failedWarningRules.push(cellValidationRule);
+                    }
+                }
             }
         }
 
