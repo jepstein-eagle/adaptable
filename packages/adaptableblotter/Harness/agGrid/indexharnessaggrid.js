@@ -96,18 +96,18 @@ function InitTradeBlotter() {
     // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
     let adaptableBlotterOptions = {
       vendorGrid: gridOptions, // the ag-Grid grid options object - MANDATORY
-       primaryKey: getPKForGrid(), // pk for blotter - required
+      primaryKey: getPKForGrid(), // pk for blotter - required
       userName: "demo user", // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
 
-  //  predefinedConfig: "infraconfig.json",
+      //  predefinedConfig: "infraconfig.json",
 
       auditOptions: {
         //     auditCellEdits: true,
-      //  auditFunctionEvents: true,
+        //  auditFunctionEvents: true,
         //     auditUserStateChanges: true,
         //     auditInternalStateChanges: true,
-     //        pingInterval: 120
+        //        pingInterval: 120
       },
       configServerOptions: {
         enableConfigServer: false,
@@ -467,12 +467,11 @@ function apiTester(state, gridOptions) {
     } else if (quickSearchText == "#send") {
       adaptableblotter.api.ExportApi.exportSendReport('All Data', 'CSV')
     } else if (quickSearchText == "#info") {
-      adaptableblotter.api.alertApi.Show("Hello",
-        "Your data is fine actually its very good and I want to check that this wraps", "Info",
-        true)
+      adaptableblotter.api.alertApi.Show("Nice one", "Your data is fine actually its very good and I want to check that this wraps", "Info", true)
+    } else if (quickSearchText == "#success") {
+      adaptableblotter.api.alertApi.Show("Success Message", "You have won the lottery", "Success", true)
     } else if (quickSearchText == "#warning") {
-      adaptableblotter.api.alertApi.Show("End of Day", "Dont forget to send the report", "Warning",
-        true)
+      adaptableblotter.api.alertApi.Show("End of Day", "Dont forget to send the report", "Warning", true)
     } else if (quickSearchText == "#error") {
       adaptableblotter.api.alertApi.Show("Limits Breached", "Pleae adjust your PnL", "Error", true)
     } else if (quickSearchText == "#green") {
