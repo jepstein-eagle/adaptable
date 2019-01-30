@@ -30,7 +30,7 @@ import { IVendorGridInfo } from "./Interface/IVendorGridInfo";
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
 import { DefaultChartProperties } from '../Utilities/Defaults/DefaultChartProperties';
 import { AxisTotal } from './ChartEnums';
-import { EMPTY_STRING, EMPTY_ARRAY, CHART_DEFAULT_YAXIS_TOTAL, PLUS_MINUS_DEFAULT_NUDGE_VALUE, ALERT_DEFAULT_OPERATOR, ALERT_DEFAULT_RANGE_OPERAND_TYPE, ALERT_DEFAULT_MESSAGE_TYPE, ALERT_DEFAULT_SHOW_AS_POPUP } from './Constants/GeneralConstants';
+import { EMPTY_STRING, EMPTY_ARRAY, CHART_DEFAULT_YAXIS_TOTAL, PLUS_MINUS_DEFAULT_NUDGE_VALUE, ALERT_DEFAULT_OPERATOR, ALERT_DEFAULT_RANGE_OPERAND_TYPE, ALERT_DEFAULT_MESSAGE_TYPE, ALERT_DEFAULT_SHOW_AS_POPUP, DEFAULT_DARK_GREEN_COLOR, DEFAULT_DARK_RED_COLOR } from './Constants/GeneralConstants';
 
 
 export module ObjectFactory {
@@ -131,8 +131,8 @@ export module ObjectFactory {
             ColumnId: EMPTY_STRING,
             MaxValue: 100,
             MinValue: 0,
-            PositiveColor: '#008000',
-            NegativeColor: '#FF0000',
+            PositiveColor: DEFAULT_DARK_GREEN_COLOR,
+            NegativeColor: DEFAULT_DARK_RED_COLOR,
             ShowValue: false,
             MaxValueColumnId: null,
             MinValueColumnId: null

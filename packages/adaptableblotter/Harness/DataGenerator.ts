@@ -473,7 +473,8 @@ export class DataGenerator {
             0.8,
             0.85,
             0.9,
-            0.95
+            0.95,
+            1.0
         ];
         return bidOfferSpreads;
     }

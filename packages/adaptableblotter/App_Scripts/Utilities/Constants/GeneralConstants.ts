@@ -19,6 +19,9 @@ export const EMPTY_ARRAY: any[] = [];
 
 export const HALF_SECOND: number = 500;
 
+export const DEFAULT_DARK_GREEN_COLOR: string = '#008000';
+export const DEFAULT_DARK_RED_COLOR: string = '#FF0000';
+
 /*
 Redux / State Defaults
 Try to put all our Redux / State defaults here and ONLY reference from here - avoid magic numbers / strings.  
@@ -36,8 +39,6 @@ export const QUICK_SEARCH_DEFAULT_DISPLAY_ACTION: DisplayAction = DisplayAction.
 export const QUICK_SEARCH_DEFAULT_BACK_COLOR: string = '#FFFFCC';
 export const QUICK_SEARCH_DEFAULT_FORE_COLOR: string = '#000000';
 // Flashing Cells
-export const FLASHING_CELLS_DEFAULT_UP_COLOR: string = '#008000';
-export const FLASHING_CELLS_DEFAULT_DOWN_COLOR: string = '#FF0000';
 export const FLASHING_CELLS_DEFAULT_DURATION: 250 | 500 | 750 | 1000 = 500;
 // Selected Cells
 export const SMART_EDIT_DEFAULT_VALUE: number = 1;

@@ -21,6 +21,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
 import { IPercentBar } from "../../Utilities/Interface/BlotterObjects/IPercentBar";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { DistinctCriteriaPairValue } from "../../Utilities/Enums";
 
 interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {
     PercentBars: IPercentBar[];
@@ -44,8 +45,14 @@ class PercentBarPopupComponent extends React.Component<PercentBarPopupProps, Edi
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
             let arrayParams = this.props.PopupParams.split("|")
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
+                let columnId: string = arrayParams[1];
+                let distinctColumnsValues: number[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columnId, DistinctCriteriaPairValue.RawValue).map(pair => {
+                    return pair.RawValue
+                });
                 let newPercentRender: IPercentBar = ObjectFactory.CreateEmptyPercentBar()
-                newPercentRender.ColumnId = arrayParams[1]
+                newPercentRender.ColumnId = columnId;
+                newPercentRender.MinValue = Math.min(...distinctColumnsValues);
+                newPercentRender.MaxValue = Math.max(...distinctColumnsValues);
                 this.onEdit(-1, newPercentRender)
             }
             if (arrayParams.length == 2 && arrayParams[0] == "Edit") {
@@ -62,7 +69,7 @@ class PercentBarPopupComponent extends React.Component<PercentBarPopupProps, Edi
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__percentBar";
 
         let infoBody: any[] = ["Use Percent Bars to render numeric columns with a coloured bar, the length of which is dependent on the column value", <br />, <br />,
-        "For each Percent Bar you can select the colours and range boundaries."]
+            "For each Percent Bar you can select the colours and range boundaries."]
 
         let colItems: IColItem[] = [
             { Content: "Column", Size: 2 },
@@ -165,7 +172,7 @@ class PercentBarPopupComponent extends React.Component<PercentBarPopupProps, Edi
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 
-    canFinishWizard():boolean {
+    canFinishWizard(): boolean {
         let percentBar = this.state.EditedAdaptableBlotterObject as IPercentBar
         if (StringExtensions.IsNullOrEmpty(percentBar.ColumnId) ||
             StringExtensions.IsNullOrEmpty(percentBar.PositiveColor) ||

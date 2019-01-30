@@ -285,7 +285,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
             let columns: IColumn[] = state.Grid.Columns
             let columnFilterDescription: string = ColumnFilterHelper.getColumnFiltersDescription(state.ColumnFilter.ColumnFilters, columns, this.props.AdaptableBlotter)
             let sorts = state.Grid.GridSorts.map(gs => {
-                return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ": " + gs.SortOrder
+                return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ": " + gs.SortOrder   
             })
             returnRows.push(this.createColItem(colItems, "Vendor Grid", this.props.AdaptableBlotter.VendorGridName));
             returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "3.2"));
