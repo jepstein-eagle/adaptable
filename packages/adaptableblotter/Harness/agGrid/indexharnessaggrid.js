@@ -52,7 +52,7 @@ function getPKForGrid() {
 
 function getBlotterIdforGrid() {
   if (showTrade) {
-    return "trade demo hello";
+    return "trade demo";
   } else {
     return "demo ftse"
   }
@@ -100,7 +100,7 @@ function InitTradeBlotter() {
       userName: "demo user", // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
 
-      //  predefinedConfig: "infraconfig.json",
+      //  predefinedConfig: "citiConfig.json",
 
       auditOptions: {
         //     auditCellEdits: true,

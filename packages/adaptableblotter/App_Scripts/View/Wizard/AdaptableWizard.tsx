@@ -6,19 +6,23 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ButtonCancel } from "../Components/Buttons/ButtonCancel";
 import { ButtonWizardAction } from "../Components/Buttons/ButtonWizardAction";
 import { AccessLevel } from "../../Utilities/Enums";
+import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
+import { IColumn } from "../../Utilities/Interface/IColumn";
 
 
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
-    Steps: JSX.Element[]
-    Data: any
+    Steps: JSX.Element[];
+    Data: any;
     onHide: Function;
     onFinish?: Function;
-    StepStartIndex?: number
-    StepNames?: string[] // feels wrong, wrong, wrong
-    FriendlyName?: string
-    ModalContainer: HTMLElement
-    cssClassName: string
-    canFinishWizard: Function
+    StepStartIndex?: number;
+    StepNames?: string[]; // feels wrong, wrong, wrong
+    FriendlyName?: string;
+    ModalContainer: HTMLElement;
+    cssClassName: string;
+    canFinishWizard: Function;
+    Blotter: IAdaptableBlotter;
+    Columns: Array<IColumn>
 }
 
 export interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
@@ -64,6 +68,12 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         let BodyElement: JSX.Element = this.props.Steps[indexStart];
         let newElement = this.cloneWizardStep(BodyElement)
         this.state = { ActiveState: newElement, IndexState: indexStart }
+
+        //  this.props.Data.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
+    }
+
+    private handleKeyDown(keyEvent: KeyboardEvent | any) {
+        alert("hello world")
     }
 
     render() {
@@ -97,7 +107,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         let stepIndex: number = this.props.StepNames.findIndex(s => s == stepName);
         let BodyElement: any = this.props.Steps[stepIndex];
         let newElement = this.cloneWizardStep(BodyElement)
-            this.setState({ ActiveState: newElement, IndexState: stepIndex })
+        this.setState({ ActiveState: newElement, IndexState: stepIndex })
     }
 
     ForceUpdateGoBackState() {
@@ -118,7 +128,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         return this.state.IndexState == 0;
     }
 
-      canFinishWizard(): boolean {
+    canFinishWizard(): boolean {
         return this.ActiveStep.canNext() && this.props.canFinishWizard();
     }
 
@@ -160,7 +170,10 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         return React.cloneElement(step, {
             ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); },
             Data: this.props.Data,
-            UpdateGoBackState: () => this.ForceUpdateGoBackState()
+            UpdateGoBackState: () => this.ForceUpdateGoBackState(),
+            Blotter: this.props.Blotter,
+            cssClassName: this.props.cssClassName,
+            Columns: this.props.Columns
         })
     }
 }

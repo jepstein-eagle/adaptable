@@ -17,15 +17,16 @@ export interface AdaptableWizardStepProps<T> {
     Data?: T
     UpdateGoBackState?(): void
     StepName?: string
-    cssClassName: string
+    cssClassName?: string
+    Blotter?:IAdaptableBlotter
+    Columns?: IColumn[]
 }
 
 // props for an Expression Wizard Page
 export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
-    Columns: Array<IColumn>
     UserFilters: IUserFilter[],
     SystemFilters: string[],
-    Blotter: IAdaptableBlotter
+ //   Blotter: IAdaptableBlotter
 }
 
 // props for a wizard that wraps a config entity that contans an Expression

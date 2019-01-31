@@ -10,7 +10,6 @@ import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 
 
 export interface UserFilterSelectColumnWizardProps extends AdaptableWizardStepProps<IUserFilter> {
-    Columns: Array<IColumn>
 }
 export interface UserFilterSelectColumnWizardState {
     ColumnId: string

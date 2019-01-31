@@ -9,7 +9,6 @@ import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 
 export interface ColumnCategorySummaryWizardProps extends AdaptableWizardStepProps<IColumnCategory> {
-    Columns: IColumn[]
 }
 
 export class ColumnCategorySummaryWizard extends React.Component<ColumnCategorySummaryWizardProps, {}> implements AdaptableWizardStep {

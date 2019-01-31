@@ -9,7 +9,7 @@ import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { ICustomSort } from "../../../Utilities/Interface/BlotterObjects/ICustomSort";
 
 export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {
-    Columns: IColumn[]
+    SortedColumns: IColumn[]
 }
 
 export interface CustomSortColumnWizardState {
@@ -26,7 +26,7 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
         return <div className={cssClassName}>
              <Panel header="Select a Column" bsStyle="primary">
                 <ColumnSelector  cssClassName={cssClassName} SelectedColumnIds={[this.state.SelectedColumnId]}
-                    ColumnList={this.props.Columns}
+                    ColumnList={this.props.SortedColumns}
                     onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                     SelectionMode={SelectionMode.Single} />
             </Panel>

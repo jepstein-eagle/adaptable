@@ -12,7 +12,7 @@ import { IRange } from "../../../Utilities/Interface/Expression/IRange";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface CellValidationRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
-    Columns: Array<IColumn>
+   
 }
 export interface CellValidationSettingsWizardState {
     Operator: LeafExpressionOperator;

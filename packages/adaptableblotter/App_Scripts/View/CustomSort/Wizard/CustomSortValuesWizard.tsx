@@ -9,9 +9,7 @@ import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotte
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
-    Columns: Array<IColumn>
-   Blotter: IAdaptableBlotter
-}
+  }
 export interface CustomSortValuesWizardState {
     ColumnValues: any[],
     SelectedValues: Array<string>

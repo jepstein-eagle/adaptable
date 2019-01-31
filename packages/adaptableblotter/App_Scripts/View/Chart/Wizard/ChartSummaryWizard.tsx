@@ -12,8 +12,7 @@ import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 
 export interface ChartSummaryWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
-    Columns: IColumn[]
-}
+   }
 
 export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps, {}> implements AdaptableWizardStep {
     constructor(props: ChartSummaryWizardProps) {

@@ -8,9 +8,7 @@ import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { IColumnCategory } from "../../../Utilities/Interface/BlotterObjects/IColumnCategory";
 
 export interface ColumnCategoryColumnsWizardProps extends AdaptableWizardStepProps<IColumnCategory> {
-    Columns: Array<IColumn>
-    ColumnCategorys: IColumnCategory[]
-
+     ColumnCategorys: IColumnCategory[]
 }
 export interface ColumnCategoryColumnsWizardState {
     AvailableColumns: string[],

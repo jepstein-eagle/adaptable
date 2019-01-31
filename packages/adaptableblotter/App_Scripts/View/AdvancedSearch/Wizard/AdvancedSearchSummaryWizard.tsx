@@ -10,8 +10,7 @@ import { IAdvancedSearch } from "../../../Utilities/Interface/BlotterObjects/IAd
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 export interface AdvancedSearchSummaryWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
-    Columns: IColumn[]
-    UserFilters: IUserFilter[]
+     UserFilters: IUserFilter[]
 }
 
 

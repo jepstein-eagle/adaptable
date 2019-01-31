@@ -10,7 +10,7 @@ import { PRIMARY_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
 
 
 export interface CalculatedColumnSettingsWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {
-    Columns: IColumn[]
+    
 }
 export interface CalculatedColumnSettingsWizardState {
     ColumnId: string,

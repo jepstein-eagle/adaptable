@@ -9,7 +9,7 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 export interface CellValidationSelectQueryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
-    Columns: Array<IColumn>
+   
 }
 export interface CellValidationSelectQueryWizardState {
     HasExpression: boolean;

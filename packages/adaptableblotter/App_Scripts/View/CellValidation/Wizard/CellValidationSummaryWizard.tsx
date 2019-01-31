@@ -12,7 +12,6 @@ import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 
 export interface CellValidationSummaryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
-    Columns: IColumn[]
     UserFilters: IUserFilter[]
 }
 

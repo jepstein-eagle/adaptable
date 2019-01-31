@@ -9,7 +9,7 @@ import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 
 export interface CustomSortSummaryWizardProps extends AdaptableWizardStepProps<ICustomSort> {
-    Columns: IColumn[]
+   
 }
 
 export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWizardProps, {}> implements AdaptableWizardStep {

@@ -10,8 +10,7 @@ import { ILayout } from "../../../Utilities/Interface/BlotterObjects/ILayout";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface LayoutColumnWizardProps extends AdaptableWizardStepProps<ILayout> {
-    Columns: Array<IColumn>
-}
+  }
 export interface LayoutColumnWizardState {
     SelectedColumns: Array<string>
 }

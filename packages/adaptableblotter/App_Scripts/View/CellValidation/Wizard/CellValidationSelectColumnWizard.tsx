@@ -9,7 +9,7 @@ import { ICellValidationRule } from "../../../Utilities/Interface/BlotterObjects
 
 
 export interface CellValidationSelectColumnWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
-    Columns: Array<IColumn>
+   
 }
 export interface CellValidationSelectColumnWizardState {
     ColumnId: string

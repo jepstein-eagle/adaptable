@@ -9,7 +9,7 @@ import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 
 
 export interface FreeTextColumnSettingsWizardProps extends AdaptableWizardStepProps<IFreeTextColumn> {
-    Columns: IColumn[]
+   
 }
 export interface FreeTextColumnSettingsWizardState {
     ColumnId: string,

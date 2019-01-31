@@ -12,7 +12,6 @@ import { IConditionalStyle } from "../../../Utilities/Interface/BlotterObjects/I
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 
 export interface ConditionalStyleScopeWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
-    Columns: Array<IColumn>
     ColumnCategories: Array<IColumnCategory>
 }
 

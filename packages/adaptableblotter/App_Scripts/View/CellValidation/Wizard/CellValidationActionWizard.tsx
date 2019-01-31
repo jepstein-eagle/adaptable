@@ -8,7 +8,7 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { ICellValidationRule } from "../../../Utilities/Interface/BlotterObjects/ICellValidationRule";
 
 export interface CellValidationActionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
-    Columns: Array<IColumn>
+   
 }
 export interface CellValidationSettingsWizardState {
     ActionMode: ActionMode;

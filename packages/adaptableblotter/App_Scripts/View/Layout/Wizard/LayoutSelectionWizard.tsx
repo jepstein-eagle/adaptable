@@ -14,8 +14,7 @@ import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<ILayout> {
     Layouts: Array<ILayout>
     GridSorts: IGridSort[]
-    Columns: Array<IColumn>
-}
+ }
 
 export interface LayoutSelectionWizardState {
     LayoutSource: LayoutSource

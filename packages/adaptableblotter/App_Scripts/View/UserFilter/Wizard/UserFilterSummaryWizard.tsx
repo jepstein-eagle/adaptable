@@ -9,7 +9,6 @@ import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 export interface UserFilterSummaryWizardProps extends AdaptableWizardStepProps<IUserFilter> {
-    Columns: IColumn[]
     UserFilters: IUserFilter[]
 }
 

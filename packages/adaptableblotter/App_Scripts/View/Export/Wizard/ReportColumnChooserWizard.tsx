@@ -10,7 +10,7 @@ import { DualListBoxEditor } from '../../Components/ListBox/DualListBoxEditor';
 import { IReport } from "../../../Utilities/Interface/BlotterObjects/IReport";
 
 export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<IReport> {
-    Columns: Array<IColumn>
+   
 }
 export interface ReportColumnsWizardState {
     AllColumnValues: string[];

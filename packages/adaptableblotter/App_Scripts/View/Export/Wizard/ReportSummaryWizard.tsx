@@ -9,8 +9,7 @@ import { ReportHelper } from '../../../Utilities/Helpers/ReportHelper';
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 export interface ReportSummaryWizardProps extends AdaptableWizardStepProps<IReport> {
-    Columns: IColumn[]
-    UserFilters: IUserFilter[]
+     UserFilters: IUserFilter[]
 }
 
 export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProps, {}> implements AdaptableWizardStep {

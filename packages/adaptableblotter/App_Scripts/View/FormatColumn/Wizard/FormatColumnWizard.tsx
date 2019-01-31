@@ -15,18 +15,20 @@ export interface FormatColumnWizardProps extends IAdaptableBlotterObjectExpressi
 export class FormatColumnWizard extends React.Component<FormatColumnWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Select Column", "Create Style", "Summary"]
+        let stepNames: string[] = ["Column", "Style", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.FormatColumnStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
+                Blotter={this.props.Blotter}
+                Columns={this.props.Columns}
                 Steps={
                     [
-                        <FormatColumnScopeWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
-                        <FormatColumnStyleWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
-                        < FormatColumnSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns} />
+                        <FormatColumnScopeWizard StepName={stepNames[0]} />,
+                        <FormatColumnStyleWizard StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
+                        < FormatColumnSummaryWizard StepName={stepNames[2]} />
                     ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}

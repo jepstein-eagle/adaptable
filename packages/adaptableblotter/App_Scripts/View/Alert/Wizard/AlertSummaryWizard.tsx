@@ -12,7 +12,6 @@ import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 
 export interface AlertSummaryWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
-    Columns: IColumn[]
     UserFilters: IUserFilter[]
 }
 

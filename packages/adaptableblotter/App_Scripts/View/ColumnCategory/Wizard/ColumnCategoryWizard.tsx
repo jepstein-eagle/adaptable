@@ -21,10 +21,12 @@ export class ColumnCategoryWizard extends React.Component<ColumnCategoryWizardPr
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
+                Blotter={this.props.Blotter}
+                Columns={this.props.Columns}
                 Steps={[
-                    <ColumnCategorySettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} ColumnCategorys={this.props.ColumnCategorys} />,
-                    <ColumnCategoryColumnsWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} ColumnCategorys={this.props.ColumnCategorys} Columns={this.props.Columns} />,
-                    <ColumnCategorySummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns} />
+                    <ColumnCategorySettingsWizard StepName={stepNames[0]} ColumnCategorys={this.props.ColumnCategorys} />,
+                    <ColumnCategoryColumnsWizard StepName={stepNames[1]} ColumnCategorys={this.props.ColumnCategorys} />,
+                    <ColumnCategorySummaryWizard StepName={stepNames[2]} />
 
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}

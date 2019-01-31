@@ -10,7 +10,7 @@ import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 
 export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
-    Columns: IColumn[]
+   
 }
 export class FormatColumnSummaryWizard extends React.Component<FormatColumnSummaryWizardProps, {}> implements AdaptableWizardStep {
 

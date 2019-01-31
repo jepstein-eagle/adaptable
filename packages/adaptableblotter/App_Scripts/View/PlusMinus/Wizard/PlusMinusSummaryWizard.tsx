@@ -10,7 +10,6 @@ import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
-    Columns: IColumn[]
     UserFilters: IUserFilter[]
 }
 

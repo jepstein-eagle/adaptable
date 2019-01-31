@@ -12,7 +12,6 @@ import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 export interface ConditionalStyleSummaryWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
-    Columns: IColumn[]
     UserFilters: IUserFilter[]
 }
 

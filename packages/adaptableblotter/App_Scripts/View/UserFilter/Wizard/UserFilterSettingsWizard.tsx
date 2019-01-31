@@ -10,7 +10,6 @@ import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {
     UserFilters: IUserFilter[]
-    Columns: Array<IColumn>
 }
 export interface UserFilterSettingsWizardState {
     FilterName: string,

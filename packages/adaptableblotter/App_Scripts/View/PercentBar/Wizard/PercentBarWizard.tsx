@@ -23,11 +23,13 @@ export class PercentBarWizard extends React.Component<PercentBarWizardProps, {}>
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
+                Blotter={this.props.Blotter}
+                Columns={this.props.Columns}
                 Steps={[
-                    <PercentBarSelectColumnWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
-                    <PercentBarValuesWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns} />,
-                    <PercentBarSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} ColorPalette={this.props.ColorPalette} />,
-                    <PercentBarSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} Columns={this.props.Columns} />
+                     <PercentBarSelectColumnWizard StepName={stepNames[0]} />,
+                    <PercentBarValuesWizard StepName={stepNames[1]} />,
+                    <PercentBarSettingsWizard StepName={stepNames[2]} ColorPalette={this.props.ColorPalette} />,
+                    <PercentBarSummaryWizard StepName={stepNames[3]} />
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}

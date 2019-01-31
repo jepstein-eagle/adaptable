@@ -18,22 +18,23 @@ export interface PlusMinusWizardProps extends IAdaptableBlotterObjectExpressionA
 export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Select Column", "Settings", "Build Query", "Summary"]
+        let stepNames: string[] = ["Column", "Settings", "Query", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.PlusMinusStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
+                Blotter={this.props.Blotter}
+                Columns={this.props.Columns}
                 Steps={
-                    [<PlusMinusColumnWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns.filter(x => x.DataType == DataType.Number)} />,
-                    <PlusMinusSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} />,
-                    <PlusMinusExpressionWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns}
+                    [<PlusMinusColumnWizard StepName={stepNames[0]} NumericColumns={this.props.Columns.filter(x => x.DataType == DataType.Number)} />,
+                    <PlusMinusSettingsWizard StepName={stepNames[1]} />,
+                    <PlusMinusExpressionWizard StepName={stepNames[2]} 
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
-                        Blotter={this.props.Blotter}
                         />,
-                    < PlusMinusSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} Columns={this.props.Columns} UserFilters={this.props.UserFilters} />
+                    < PlusMinusSummaryWizard StepName={stepNames[3]} UserFilters={this.props.UserFilters} />
 
                     ]}
                 Data={this.props.EditedAdaptableBlotterObject}

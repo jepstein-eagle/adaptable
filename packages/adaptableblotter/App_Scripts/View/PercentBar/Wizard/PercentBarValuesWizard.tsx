@@ -11,8 +11,7 @@ import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 
 export interface PercentBarValuesWizardProps extends AdaptableWizardStepProps<IPercentBar> {
-    Columns: Array<IColumn>;
-}
+   }
 
 export interface PercentBarValuesWizardState {
     MinValue: number;

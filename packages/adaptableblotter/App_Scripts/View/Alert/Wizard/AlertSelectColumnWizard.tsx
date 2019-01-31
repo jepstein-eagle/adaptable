@@ -10,8 +10,7 @@ import { PRIMARY_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
 
 
 export interface AlertSelectColumnWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
-    Columns: Array<IColumn>
-}
+ }
 export interface AlertSelectColumnWizardState {
     ColumnId: string
 }

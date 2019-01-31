@@ -27,12 +27,14 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
-                Steps={[
-                    <LayoutSelectionWizard   cssClassName={this.props.cssClassName} StepName={stepNames[0]} Layouts={layouts} Columns={this.props.Columns} GridSorts={this.props.GridSorts}  />,
-                    <LayoutColumnWizard  cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns} />,
-                    <LayoutGridSortWizard  cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns}  />,
-                    <LayoutSettingsWizard  cssClassName={this.props.cssClassName} StepName={stepNames[3]} Layouts={layouts} />,
-                    < LayoutSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[4]} Columns={this.props.Columns} />
+                Blotter={this.props.Blotter}
+                Columns={this.props.Columns}
+                    Steps={[
+                    <LayoutSelectionWizard   StepName={stepNames[0]} Layouts={layouts} GridSorts={this.props.GridSorts}  />,
+                    <LayoutColumnWizard  StepName={stepNames[1]} />,
+                    <LayoutGridSortWizard  StepName={stepNames[2]}  />,
+                    <LayoutSettingsWizard  StepName={stepNames[3]} Layouts={layouts} />,
+                    < LayoutSummaryWizard StepName={stepNames[4]} />
            
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}

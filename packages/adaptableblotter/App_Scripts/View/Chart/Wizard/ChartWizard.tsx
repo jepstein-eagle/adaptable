@@ -17,7 +17,7 @@ export interface ChartWizardProps extends IAdaptableBlotterObjectExpressionAdapt
 export class ChartWizard extends React.Component<ChartWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Y Axis", "X Axis", "X Axis Values", "Segemented", "Settings", "Summary"]
+        let stepNames: string[] = ["Y Axis", "X Axis", "Segemented", "Settings", "Summary"]
         let Charts: IChartDefinition[] = this.props.ConfigEntities as IChartDefinition[]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
@@ -25,20 +25,21 @@ export class ChartWizard extends React.Component<ChartWizardProps, {}> {
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
+                Blotter={this.props.Blotter}
+                Columns={this.props.Columns}
                 Steps={[
-                    <ChartYAxisWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} ChartDefinitions={Charts} Columns={this.props.Columns} />,
-                    <ChartXAxisWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} ChartDefinitions={Charts} Columns={this.props.Columns} Blotter={this.props.Blotter} />,
+                    <ChartYAxisWizard StepName={stepNames[0]} ChartDefinitions={Charts} />,
+                    <ChartXAxisWizard StepName={stepNames[1]} ChartDefinitions={Charts} />,
                     <ChartExpressionWizard
-                        cssClassName={this.props.cssClassName} StepName={stepNames[2]}
+                        StepName={stepNames[1]}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
-                        Blotter={this.props.Blotter}
                         ExpressionMode={ExpressionMode.SingleColumn}
                     />,
-                    <ChartAdditionalColumnWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} ChartDefinitions={Charts} Columns={this.props.Columns} Blotter={this.props.Blotter} />,
-                    <ChartSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[4]} ChartDefinitions={Charts} />,
-                    <ChartSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[5]} Columns={this.props.Columns} />
+                    <ChartAdditionalColumnWizard StepName={stepNames[2]} ChartDefinitions={Charts} />,
+                    <ChartSettingsWizard StepName={stepNames[3]} ChartDefinitions={Charts} />,
+                    <ChartSummaryWizard StepName={stepNames[4]} />
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}

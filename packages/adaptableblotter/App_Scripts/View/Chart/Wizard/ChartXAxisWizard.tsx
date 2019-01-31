@@ -14,9 +14,7 @@ import { Expression } from "../../../Utilities/Expression";
 
 export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
-    Columns: IColumn[]
-    Blotter: IAdaptableBlotter
-}
+   }
 
 export interface ChartXAxisWizardState {
     XAxisColumnId: string,

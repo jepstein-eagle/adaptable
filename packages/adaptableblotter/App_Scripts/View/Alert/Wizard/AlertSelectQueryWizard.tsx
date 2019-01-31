@@ -9,7 +9,7 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 export interface AlertSelectQueryWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
-    Columns: Array<IColumn>
+    
 }
 export interface AlertSelectQueryWizardState {
     HasExpression: boolean;

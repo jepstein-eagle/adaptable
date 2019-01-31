@@ -10,8 +10,7 @@ import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 
 export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepProps<IPercentBar> {
-    Columns: Array<IColumn>
-}
+   }
 export interface PercentBarSelectColumnWizardState {
     ColumnId: string
 }

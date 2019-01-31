@@ -17,8 +17,7 @@ import { ILayout } from "../../../Utilities/Interface/BlotterObjects/ILayout";
 
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<ILayout> {
-    Columns: Array<IColumn>
-}
+    }
 
 export interface LayoutGridSortWizardState {
     GridSorts: IGridSort[]

@@ -19,14 +19,15 @@ import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
-    Columns: Array<IColumn>
     UserFilters: Array<IUserFilter>
     SystemFilters: Array<string>
     ExpressionMode?: ExpressionMode
+    // these all need to be ptional because of wizard compatibility - todo: fix...
     UpdateGoBackState?(finish?: boolean): void
     StepName?: string
-    cssClassName: string
-    Blotter:IAdaptableBlotter
+    cssClassName?: string
+    Columns?: Array<IColumn>
+    Blotter?: IAdaptableBlotter
 }
 
 export interface ExpressionBuilderPageState {
@@ -42,7 +43,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
         let queryBuildStatus: QueryBuildStatus = this.getQueryBuildStatus();
 
         let newButton = <ButtonCondition cssClassName={cssClassName} onClick={() => this.onSelectedColumnChanged()}
-            overrideDisableButton={this.props.ExpressionMode==ExpressionMode.SingleColumn|| queryBuildStatus == QueryBuildStatus.SelectFirstColumn || queryBuildStatus == QueryBuildStatus.SelectFurtherColumn || queryBuildStatus == QueryBuildStatus.SingleConditionsAdded}
+            overrideDisableButton={this.props.ExpressionMode == ExpressionMode.SingleColumn || queryBuildStatus == QueryBuildStatus.SelectFirstColumn || queryBuildStatus == QueryBuildStatus.SelectFurtherColumn || queryBuildStatus == QueryBuildStatus.SingleConditionsAdded}
             overrideTooltip="Add Condition"
             style={{ width: "230px" }}
             DisplayMode="Glyph+Text"
@@ -55,7 +56,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
             <PanelWithButton cssClassName={cssClassName} headerText="Query Builder"
                 button={newButton}
                 bsStyle="primary" style={{ height: '520px' }}>
-                
+
                 <Row>
                     <Col xs={6}>
                         <ExpressionBuilderConditionSelector ColumnsList={this.props.Columns}
@@ -70,7 +71,7 @@ export class ExpressionBuilderPage extends React.Component<ExpressionBuilderPage
                             SelectedColumnId={this.state.SelectedColumnId}
                             SelectedTab={this.state.SelectedTab}
                             Blotter={this.props.Blotter}
-                           >
+                        >
                         </ExpressionBuilderConditionSelector>
                     </Col>
                     <Col xs={6}>

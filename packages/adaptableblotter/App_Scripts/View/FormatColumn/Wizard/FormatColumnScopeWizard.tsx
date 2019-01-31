@@ -8,7 +8,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { IFormatColumn } from "../../../Utilities/Interface/BlotterObjects/IFormatColumn";
 
 export interface FormatColumnScopeWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
-    Columns: Array<IColumn>
+ 
 }
 
 export interface FormatColumnScopeWizardState {

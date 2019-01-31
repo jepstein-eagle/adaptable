@@ -16,9 +16,7 @@ import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 export interface ChartAdditionalColumnWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
-    Columns: IColumn[]
-    Blotter: IAdaptableBlotter
-}
+  }
 
 export interface ChartAdditionalColumnWizardState {
     AdditionalColumn: string,

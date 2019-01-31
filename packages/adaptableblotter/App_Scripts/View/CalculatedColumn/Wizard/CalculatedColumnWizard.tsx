@@ -15,7 +15,7 @@ export interface CalculatedColumnWizardProps extends IAdaptableBlotterObjectExpr
 export class CalculatedColumnWizard extends React.Component<CalculatedColumnWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Create Column", "Write Expression", "Summary"]
+        let stepNames: string[] = ["Column", "Expression", "Summary"]
         
         return <div className={this.props.cssClassName}>
         <AdaptableWizard
@@ -23,12 +23,14 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
+                Blotter={this.props.Blotter}
+                Columns={this.props.Columns}
                 Steps={[
-                    <CalculatedColumnSettingsWizard  cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
-                    <CalculatedColumnExpressionWizard  cssClassName={this.props.cssClassName} StepName={stepNames[1]}
+                    <CalculatedColumnSettingsWizard  StepName={stepNames[0]} />,
+                    <CalculatedColumnExpressionWizard  StepName={stepNames[1]}
                         GetErrorMessage={this.props.GetErrorMessage}
                         IsExpressionValid={this.props.IsExpressionValid} />,
-                        < CalculatedColumnSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]}/>
+                        < CalculatedColumnSummaryWizard StepName={stepNames[2]}/>
 
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}

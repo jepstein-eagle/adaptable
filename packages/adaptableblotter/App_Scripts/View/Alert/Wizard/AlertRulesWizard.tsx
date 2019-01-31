@@ -12,7 +12,7 @@ import { IRange } from "../../../Utilities/Interface/Expression/IRange";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface AlertRulesWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
-    Columns: Array<IColumn>
+    
 }
 export interface AlertSettingsWizardState {
     Operator: LeafExpressionOperator;

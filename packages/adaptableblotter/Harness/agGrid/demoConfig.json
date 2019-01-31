@@ -1,6 +1,6 @@
 {
 	"Layout": {
-		"CurrentLayout": "Help",
+		"CurrentLayout": "Citi Price",
 		"Layouts": [
 			{
 				"Columns": [
@@ -8,8 +8,7 @@
 					"bid"
 				],
 				"GridSorts": [],
-				"Name": "Help",
-				"IsReadOnly": false
+				"Name": "Citi Price"
 			}
 		]
 	},

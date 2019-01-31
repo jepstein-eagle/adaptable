@@ -10,7 +10,7 @@ import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 
 export interface FreeTextColumnSummaryWizardProps extends AdaptableWizardStepProps<IFreeTextColumn> {
-    Columns: IColumn[]
+   
 }
 export class FreeTextColumnSummaryWizard extends React.Component<FreeTextColumnSummaryWizardProps, {}> implements AdaptableWizardStep {
 

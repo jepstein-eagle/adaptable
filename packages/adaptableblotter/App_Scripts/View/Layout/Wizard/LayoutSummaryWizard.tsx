@@ -9,7 +9,6 @@ import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 export interface LayoutSummaryWizardProps extends AdaptableWizardStepProps<ILayout> {
-    Columns: IColumn[]
 }
 
 export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProps, {}> implements AdaptableWizardStep {

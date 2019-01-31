@@ -18,24 +18,24 @@ export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpr
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Scope", "Create Style", "Build Query", "Summary"]
+        let stepNames: string[] = ["Scope", "Style", "Query", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.ConditionalStyleStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
+                Blotter={this.props.Blotter}
+                Columns={this.props.Columns}
                 Steps={[
-                    <ConditionalStyleScopeWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} ColumnCategories={this.props.ColumnCategories} />,
-                    <ConditionalStyleStyleWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
+                    <ConditionalStyleScopeWizard StepName={stepNames[0]} ColumnCategories={this.props.ColumnCategories} />,
+                    <ConditionalStyleStyleWizard StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
                     <ConditionalStyleExpressionWizard
-                        cssClassName={this.props.cssClassName} StepName={stepNames[2]}
-                        Columns={this.props.Columns}
+                        StepName={stepNames[2]}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
-                        Blotter={this.props.Blotter}
                         />,
-                    < ConditionalStyleSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[3]} Columns={this.props.Columns} UserFilters={this.props.UserFilters} />
+                    < ConditionalStyleSummaryWizard StepName={stepNames[3]} UserFilters={this.props.UserFilters} />
 
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}

@@ -12,8 +12,7 @@ import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 
 export interface PercentBarSummaryWizardProps extends AdaptableWizardStepProps<IPercentBar> {
-    Columns: IColumn[]
-}
+   }
 
 export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWizardProps, {}> implements AdaptableWizardStep {
     constructor(props: PercentBarSummaryWizardProps) {

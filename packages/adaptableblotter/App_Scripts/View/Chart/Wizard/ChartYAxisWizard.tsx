@@ -13,8 +13,7 @@ import { AdaptablePopover } from "../../AdaptablePopover";
 
 export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
-    Columns: IColumn[]
-}
+   }
 
 export interface ChartYAxisWizardState {
     YAxisColumnIds: string[],

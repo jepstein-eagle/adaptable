@@ -19,10 +19,12 @@ export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardPr
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
+                Blotter={this.props.Blotter}
+                Columns={this.props.Columns}
                 Steps={
                     [
-                        <FreeTextColumnSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns} />,
-                        <FreeTextColumnSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns} />
+                        <FreeTextColumnSettingsWizard StepName={stepNames[0]} />,
+                        <FreeTextColumnSummaryWizard StepName={stepNames[1]} />
                     ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
