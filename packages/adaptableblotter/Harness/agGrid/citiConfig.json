@@ -9,7 +9,7 @@
 					"bidOfferSpread"
 				],
 				"GridSorts": [],
-				"Name": "Citi Price"
+				"Name": "Citi Price"	
 			}
 		]
 	},
@@ -41,7 +41,7 @@
 			"BulkUpdate"
 		],
 		"Zoom": "0.9",
-		"DashboardVisibility": "Minimised",
+		"DashboardVisibility": "Hidden",
 		"ShowSystemStatusButton": false
 	}
 }
