@@ -1,7 +1,7 @@
 import { ApiBase } from "./ApiBase";
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { ISearchChangedEventArgs, IStateChangedEventArgs, IColumnStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
+import { ISearchChangedEventArgs, IStateChangedEventArgs, IColumnStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { IEventApi } from "./Interface/IEventApi";
 
 export class EventApi extends ApiBase implements IEventApi {

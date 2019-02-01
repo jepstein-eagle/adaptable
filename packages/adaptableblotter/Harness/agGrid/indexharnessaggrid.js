@@ -184,7 +184,7 @@ function listenToColumnStateChange(columnChangedArgs) {
 
 function listenToStateChange(stateChangedArgs) {
   //  console.log("state event received")
-     console.log(stateChangedArgs)
+ //    console.log(stateChangedArgs)
 }
 
 function listenToSearchChange(searchChangedArgs) {
@@ -193,8 +193,8 @@ function listenToSearchChange(searchChangedArgs) {
 }
 
 function listenToAlertFired(alertFiredArgs) {
-  //  console.log("search changed event received")
-  //   console.log(searchChangedArgs)
+ console.log("from Harness");
+ console.log(alertFiredArgs.alert);
 }
 
 function getValuesForColumn(columnName) {
@@ -322,7 +322,7 @@ function getTradeSchema() {
   schema.push({
     headerName: "Country",
     field: "country",
-    //  editable: true,
+      editable: true,
     enableRowGroup: true
   });
   schema.push({

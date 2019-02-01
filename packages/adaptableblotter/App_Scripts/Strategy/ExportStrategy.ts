@@ -31,14 +31,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
 
         OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
-            LoggingHelper.LogMessage("Excel closed stopping all Live Excel");
+            LoggingHelper.LogInfo("Excel closed stopping all Live Excel");
             this.CurrentLiveReports.forEach(cle => {
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                     SystemRedux.ReportStopLive(cle.Report, ExportDestination.OpenfinExcel));
             })
         })
         OpenfinHelper.OnWorkbookDisconnected().Subscribe((sender, workbook) => {
-            LoggingHelper.LogMessage("Workbook closed:" + workbook.name + ", Stopping Openfin Live Excel");
+            LoggingHelper.LogInfo("Workbook closed:" + workbook.name + ", Stopping Openfin Live Excel");
             let liveReport = this.CurrentLiveReports.find(x => x.WorkbookName == workbook.name)
             if (liveReport) {
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
@@ -46,7 +46,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             }
         })
         OpenfinHelper.OnWorkbookSaved().Subscribe((sender, workbookSavedEvent) => {
-            LoggingHelper.LogMessage("Workbook Saved", workbookSavedEvent);
+            LoggingHelper.LogInfo("Workbook Saved", workbookSavedEvent);
             let liveReport = this.CurrentLiveReports.find(x => x.WorkbookName == workbookSavedEvent.OldName)
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                 SystemRedux.ReportStopLive(liveReport.Report, ExportDestination.OpenfinExcel));
@@ -163,7 +163,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 }
             })
             Promise.all(promises).then(() => {
-                LoggingHelper.LogMessage("All live report data sent")
+                LoggingHelper.LogSuccess("All live report data sent")
                 this.isSendingData = false
             }).catch(() => {
                 LoggingHelper.LogWarning("One live Excel failed to send data")

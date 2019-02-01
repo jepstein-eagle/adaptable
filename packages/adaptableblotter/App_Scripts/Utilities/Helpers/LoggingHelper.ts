@@ -7,7 +7,10 @@ export module LoggingHelper {
      export function LogAlert(message: string, messageType: MessageType, ...optionalParams: any[]): void {
         switch (messageType) {
             case MessageType.Info:
-                LogMessage(message, optionalParams);
+            LogInfo(message, optionalParams);
+                break;
+            case MessageType.Success:
+            LogSuccess(message, optionalParams);
                 break;
             case MessageType.Warning:
                 LogWarning(message, optionalParams);
@@ -17,11 +20,18 @@ export module LoggingHelper {
                 break;
         }
     }
-    export function LogMessage(message: string, ...optionalParams: any[]): void {
+    export function LogInfo(message: string, ...optionalParams: any[]): void {
         if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
             console.log("Adaptable Blotter Info: " + message, optionalParams)
         } else {
             console.log("Adaptable Blotter Info: " + message)
+        }
+    }
+    export function LogSuccess(message: string, ...optionalParams: any[]): void {
+        if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
+            console.log("Adaptable Blotter Success: " + message, optionalParams)
+        } else {
+            console.log("Adaptable Blotter Success: " + message)
         }
     }
     export function LogWarning(message: string, ...optionalParams: any[]): void {

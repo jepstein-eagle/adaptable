@@ -131,8 +131,8 @@ export class AuditLogService {
             adaptableblotter_number_of_missed_ping: this.numberOfMissedPing
         }
         let xhr = new XMLHttpRequest();
-        xhr.onerror = (ev: any) => { LoggingHelper.LogMessage("error sending ping: " + ev.message); this.SetCanSendLog(false); }
-        xhr.ontimeout = (ev: ProgressEvent) => { LoggingHelper.LogMessage("timeout sending ping"); this.SetCanSendLog(false); }
+        xhr.onerror = (ev: any) => { LoggingHelper.LogError("error sending ping: " + ev.message); this.SetCanSendLog(false); }
+        xhr.ontimeout = (ev: ProgressEvent) => { LoggingHelper.LogError("timeout sending ping"); this.SetCanSendLog(false); }
         xhr.onload = (ev: ProgressEvent) => {
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {
@@ -171,8 +171,8 @@ export class AuditLogService {
         // while (obj && this.sockJS.readyState == SockJS.OPEN) {
         while (obj) {
             let xhr = new XMLHttpRequest();
-            xhr.onerror = (ev: any) => LoggingHelper.LogMessage("error sending AuditLog: " + ev.message)
-            xhr.ontimeout = (pe: ProgressEvent) => LoggingHelper.LogMessage("timeout sending AuditLog")
+            xhr.onerror = (ev: any) => LoggingHelper.LogError("error sending AuditLog: " + ev.message)
+            xhr.ontimeout = (pe: ProgressEvent) => LoggingHelper.LogError("timeout sending AuditLog")
             xhr.onload = (pe: ProgressEvent) => {
                 if (xhr.readyState == 4) {
                     if (xhr.status != 200) {

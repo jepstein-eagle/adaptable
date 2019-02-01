@@ -72,7 +72,7 @@ export module iPushPullHelper {
               let page = new iPushPullApp.page(pageIPP, folderIPP)
 
             page.on(page.EVENT_NEW_CONTENT, function (data: any) {
-                LoggingHelper.LogMessage("Page Ready : " + pageIPP)
+                LoggingHelper.LogInfo("Page Ready : " + pageIPP)
                 pages.set(pageIPP, page)
                 resolve(page);
                 //we return true so it removes the listener for new content.
@@ -87,7 +87,7 @@ export module iPushPullHelper {
         if (pageIPP) {
             pageIPP.destroy()
             pages.delete(page)
-            LoggingHelper.LogMessage("Page Unloaded : " + page)
+            LoggingHelper.LogInfo("Page Unloaded : " + page)
         }
     }
 
@@ -155,10 +155,10 @@ export module iPushPullHelper {
             pageIPP.Content.canDoDelta = false;
             pageIPP.Content.update(newData, true);
             pageIPP.push().then(function () {
-                LoggingHelper.LogMessage('Data pushed for iPushPull page : ' + page);
+                LoggingHelper.LogSuccess('Data pushed for iPushPull page : ' + page);
                 resolve()
             }, (err: any) => {
-                LoggingHelper.LogMessage('Error pushing data for iPushPull page : ' + page);
+                LoggingHelper.LogInfo('Error pushing data for iPushPull page : ' + page);
                 reject();
             });
         })

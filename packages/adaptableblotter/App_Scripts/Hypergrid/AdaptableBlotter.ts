@@ -459,7 +459,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnDataType(column: any): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            LoggingHelper.LogMessage('columnId is undefined returning String for Type')
+            LoggingHelper.LogWarning('columnId is undefined returning String for Type')
             return DataType.String;
         }
 
@@ -511,7 +511,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                                     break;
                             }
                         }
-                        LoggingHelper.LogMessage('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType)
+                        LoggingHelper.LogWarning('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType)
                     }
                     /* falls through */
                     default:
