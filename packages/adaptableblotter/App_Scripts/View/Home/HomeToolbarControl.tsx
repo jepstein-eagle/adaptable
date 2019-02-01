@@ -194,11 +194,19 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour
         switch (statusColor) {
             case StatusColour.Green:
-                let info: IAlert = {
+                let success: IAlert = {
                     Header: "System Status",
                     Msg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
                         this.props.SystemStatus.StatusMessage :
                         "No issues",
+                    MessageType: MessageType.Success
+                }
+                this.props.onShowStatusMessage(success)
+                return;
+            case StatusColour.Blue:
+                let info: IAlert = {
+                    Header: "System Status",
+                    Msg: this.props.SystemStatus.StatusMessage,
                     MessageType: MessageType.Info
                 }
                 this.props.onShowStatusMessage(info)

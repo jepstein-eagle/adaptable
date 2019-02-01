@@ -483,6 +483,8 @@ function apiTester(state, gridOptions) {
       adaptableblotter.api.alertApi.Show("Limits Breached", "Pleae adjust your PnL", "Error", true)
     } else if (quickSearchText == "#green") {
       adaptableblotter.api.systemStatusApi.SetGreen("The server is fine")
+    } else if (quickSearchText == "#blue") {
+      adaptableblotter.api.systemStatusApi.setBlue("nothing to worry aobut")
     } else if (quickSearchText == "#amber") {
       adaptableblotter.api.systemStatusApi.SetAmber("The server is running slowly")
     } else if (quickSearchText == "#red") {

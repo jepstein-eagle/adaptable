@@ -173,7 +173,7 @@ export module UIHelper {
         }
     }
 
-  export function  getStyleForSystemStatusButton(statusColour: StatusColour): string {
+    export function getStyleForSystemStatusButton(statusColour: StatusColour): string {
         switch (statusColour) {
             case StatusColour.Blue:
                 return INFO_BSSTYLE
@@ -186,20 +186,20 @@ export module UIHelper {
         }
     }
 
-  export function  getGlyphForSystemStatusButton(statusColour: StatusColour): string {
+    export function getGlyphForSystemStatusButton(statusColour: StatusColour): string {
         switch (statusColour) {
             case StatusColour.Blue:
-                return "ok-circle"
+                return "info-sign"
             case StatusColour.Green:
-                return "ok-circle" // one of these is wrong
+                return "ok-sign"
             case StatusColour.Amber:
-                return "ban-circle"
+                return "warning-sign";
             case StatusColour.Red:
-                return "remove-circle"
+                return "exclamation-sign";
         }
     }
 
- 
+
 
 
 

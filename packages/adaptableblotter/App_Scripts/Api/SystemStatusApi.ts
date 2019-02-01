@@ -23,7 +23,7 @@ export class SystemStatusApi extends ApiBase implements ISystemStatusApi {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Green }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
-  public  SeBlue(statusMessage: string): void {
+  public  SetBlue(statusMessage: string): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Blue }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
