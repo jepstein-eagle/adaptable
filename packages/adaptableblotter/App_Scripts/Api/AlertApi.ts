@@ -9,7 +9,7 @@ import { IAlertApi } from './Interface/IAlertApi';
 
 export class AlertApi extends ApiBase implements IAlertApi {
 
-   public Show(alertHeader: string, alertMessage: string, MessageType: "Success"| "Info" | "Warning" | "Error", showAsPopup: boolean): void {
+  public Show(alertHeader: string, alertMessage: string, MessageType: "Success" | "Info" | "Warning" | "Error", showAsPopup: boolean): void {
     let maxAlerts: number = this.getState().Alert.MaxAlertsInStore;
     let MessageTypeEnum = MessageType as MessageType;
     let alertToShow: IAlert = {
@@ -29,13 +29,14 @@ export class AlertApi extends ApiBase implements IAlertApi {
         this.dispatchAction(PopupRedux.PopupShowAlert(alertToShow))
       }
     }
+    this.blotter.AlertFired.Dispatch(this.blotter, { alert: alertToShow });
     LoggingHelper.LogAlert(alertHeader + ": " + alertMessage, MessageTypeEnum)
   }
 
   public ShowInfo(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
     this.Show(alertHeader, alertMessage, MessageType.Info, showAsPopup)
   }
-  
+
   public ShowSuccess(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
     this.Show(alertHeader, alertMessage, MessageType.Success, showAsPopup)
   }

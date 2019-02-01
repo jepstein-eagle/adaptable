@@ -18,4 +18,8 @@ export class EventApi extends ApiBase implements IEventApi {
     return this.blotter.ColumnStateChanged;
   }
 
+  public onAlertFired(): IEvent<IAdaptableBlotter, IAlertFiredEventArgs> {
+    return this.blotter.AlertFired;
+  }
+
 }

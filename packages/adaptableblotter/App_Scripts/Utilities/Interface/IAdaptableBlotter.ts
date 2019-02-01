@@ -11,7 +11,7 @@ import { IPercentBar } from "./BlotterObjects/IPercentBar";
 import { IFreeTextColumn } from "./BlotterObjects/IFreeTextColumn";
 import { ICalculatedColumn } from "./BlotterObjects/ICalculatedColumn";
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from './IStateEvents';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from './IStateEvents';
 import { IAdaptableBlotterOptions } from './BlotterOptions/IAdaptableBlotterOptions';
 import { ICalendarService } from '../Services/Interface/ICalendarService';
 import { IDataService } from '../Services/Interface/IDataService';
@@ -55,7 +55,9 @@ export interface IAdaptableBlotter {
     // not sure if this is right but putting the event here
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>
-    ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>
+    ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
+    AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
+    
 
     // General
     createMenu(): void

@@ -50,7 +50,7 @@ import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICell
 import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import * as _ from 'lodash'
 import { SelectedCellsStrategy } from '../Strategy/SelectedCellsStrategy';
@@ -357,8 +357,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
     public StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>();
-
     public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
+    public AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs> = new EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>();
 
 
     public createMenu() {

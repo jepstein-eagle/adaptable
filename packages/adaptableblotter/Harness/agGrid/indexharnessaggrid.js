@@ -153,6 +153,8 @@ function InitTradeBlotter() {
     });
     adaptableblotter.api.eventApi.onColumnStateChanged().Subscribe((sender, columnChangedArgs) =>
       listenToColumnStateChange(columnChangedArgs))
+    adaptableblotter.api.eventApi.onAlertFired().Subscribe((sender, alertFiredArgs) =>
+      listenToAlertFired(alertFiredArgs))
     adaptableblotter.api.eventApi.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(
       stateChangedArgs))
     adaptableblotter.api.eventApi.onSearchedChanged().Subscribe((sender, searchChangedArgs) =>
@@ -182,10 +184,15 @@ function listenToColumnStateChange(columnChangedArgs) {
 
 function listenToStateChange(stateChangedArgs) {
   //  console.log("state event received")
-  //   console.log(stateChangedArgs)
+     console.log(stateChangedArgs)
 }
 
 function listenToSearchChange(searchChangedArgs) {
+  //  console.log("search changed event received")
+  //   console.log(searchChangedArgs)
+}
+
+function listenToAlertFired(alertFiredArgs) {
   //  console.log("search changed event received")
   //   console.log(searchChangedArgs)
 }
