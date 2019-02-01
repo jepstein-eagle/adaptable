@@ -36,8 +36,9 @@ class HomeToolbarControlComponent extends React.Component {
                 " ",
                 "Toolbars") },
             React.createElement(react_bootstrap_1.Glyphicon, { glyph: "align-justify" }));
+        let visibleMenuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible);
         // function menu items
-        let menuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible).map((menuItem) => {
+        let menuItems = visibleMenuItems.map((menuItem) => {
             return React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, key: menuItem.Label, onClick: () => this.onClick(menuItem) },
                 React.createElement(react_bootstrap_1.Glyphicon, { glyph: menuItem.GlyphIcon }),
                 " ",
@@ -58,18 +59,23 @@ class HomeToolbarControlComponent extends React.Component {
         });
         // toolbar items
         let toolbarItems = [];
+        let visibleMenuNames = visibleMenuItems.map(vm => {
+            return vm.StrategyId;
+        });
         toolbarItems.push(React.createElement("div", { key: "toolbarTitle" },
             ' ',
             ' ',
             "\u00A0\u00A0",
             React.createElement("b", null, "Toolbars")));
         this.props.DashboardState.AvailableToolbars.forEach((toolbar, index) => {
-            let isVisible = ArrayExtensions_1.ArrayExtensions.ContainsItem(this.props.DashboardState.VisibleToolbars, toolbar);
-            let functionName = StrategyConstants.getNameForStrategyId(toolbar);
-            toolbarItems.push(React.createElement("div", { className: "ab_home_toolbar_column_list", key: index },
-                React.createElement(react_bootstrap_1.Checkbox, { value: toolbar, key: toolbar, checked: isVisible, onChange: (e) => this.onSetToolbarVisibility(e) },
-                    " ",
-                    functionName)));
+            if (ArrayExtensions_1.ArrayExtensions.ContainsItem(visibleMenuNames, toolbar)) {
+                let isVisible = ArrayExtensions_1.ArrayExtensions.ContainsItem(this.props.DashboardState.VisibleToolbars, toolbar);
+                let functionName = StrategyConstants.getNameForStrategyId(toolbar);
+                toolbarItems.push(React.createElement("div", { className: "ab_home_toolbar_column_list", key: index },
+                    React.createElement(react_bootstrap_1.Checkbox, { value: toolbar, key: toolbar, checked: isVisible, onChange: (e) => this.onSetToolbarVisibility(e) },
+                        " ",
+                        functionName)));
+            }
         });
         // status button
         let statusButton = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "systemstatus", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },

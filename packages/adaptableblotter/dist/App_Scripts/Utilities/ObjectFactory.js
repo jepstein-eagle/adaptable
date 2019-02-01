@@ -104,8 +104,8 @@ var ObjectFactory;
             ColumnId: GeneralConstants_1.EMPTY_STRING,
             MaxValue: 100,
             MinValue: 0,
-            PositiveColor: '#008000',
-            NegativeColor: '#FF0000',
+            PositiveColor: GeneralConstants_1.DEFAULT_DARK_GREEN_COLOR,
+            NegativeColor: GeneralConstants_1.DEFAULT_DARK_RED_COLOR,
             ShowValue: false,
             MaxValueColumnId: null,
             MinValueColumnId: null

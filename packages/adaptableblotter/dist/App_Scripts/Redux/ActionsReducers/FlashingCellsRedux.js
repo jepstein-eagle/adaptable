@@ -32,8 +32,8 @@ exports.FlashingCellChangeDownColor = (FlashingCell, DownColor) => ({
 });
 const initialShortcutState = {
     FlashingCells: GeneralConstants_1.EMPTY_ARRAY,
-    DefaultUpColor: GeneralConstants_1.FLASHING_CELLS_DEFAULT_UP_COLOR,
-    DefautDownColor: GeneralConstants_1.FLASHING_CELLS_DEFAULT_DOWN_COLOR,
+    DefaultUpColor: GeneralConstants_1.DEFAULT_DARK_GREEN_COLOR,
+    DefautDownColor: GeneralConstants_1.DEFAULT_DARK_RED_COLOR,
     DefaultDuration: GeneralConstants_1.FLASHING_CELLS_DEFAULT_DURATION
 };
 exports.FlashingCellReducer = (state = initialShortcutState, action) => {

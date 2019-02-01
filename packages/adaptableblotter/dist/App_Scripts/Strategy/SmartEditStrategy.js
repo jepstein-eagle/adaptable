@@ -56,7 +56,7 @@ class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             return {
                 Alert: {
                     Header: "Smart Edit Error",
-                    Msg: "Smart Edit is not allowed on readonly columns.\nPlease adjust the cell selection.",
+                    Msg: "Smart Edit is not permitted on readonly columns.\nPlease adjust the cell selection.",
                     MessageType: Enums_1.MessageType.Error
                 }
             };

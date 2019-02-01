@@ -11,9 +11,13 @@ exports.BLOTTER_ID = "adaptable_blotter_id";
 exports.MENU_PREFIX = "ab_";
 exports.READ_ONLY_STYLE = "ab_readonly";
 exports.ALL_COLUMN_VALUES = 'ALL_COLUMN_VALUES';
+exports.FILTER_ALWAYS = 'Always';
+exports.FILTER_NEVER = 'Never';
 exports.EMPTY_STRING = '';
 exports.EMPTY_ARRAY = [];
 exports.HALF_SECOND = 500;
+exports.DEFAULT_DARK_GREEN_COLOR = '#008000';
+exports.DEFAULT_DARK_RED_COLOR = '#FF0000';
 /*
 Redux / State Defaults
 Try to put all our Redux / State defaults here and ONLY reference from here - avoid magic numbers / strings.
@@ -31,8 +35,6 @@ exports.QUICK_SEARCH_DEFAULT_DISPLAY_ACTION = Enums_1.DisplayAction.HighlightCel
 exports.QUICK_SEARCH_DEFAULT_BACK_COLOR = '#FFFFCC';
 exports.QUICK_SEARCH_DEFAULT_FORE_COLOR = '#000000';
 // Flashing Cells
-exports.FLASHING_CELLS_DEFAULT_UP_COLOR = '#008000';
-exports.FLASHING_CELLS_DEFAULT_DOWN_COLOR = '#FF0000';
 exports.FLASHING_CELLS_DEFAULT_DURATION = 500;
 // Selected Cells
 exports.SMART_EDIT_DEFAULT_VALUE = 1;

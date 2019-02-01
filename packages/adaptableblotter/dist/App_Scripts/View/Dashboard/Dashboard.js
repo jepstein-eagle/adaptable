@@ -22,25 +22,25 @@ class DashboardComponent extends React.Component {
         let hiddenEntitlements = this.props.EntitlementsState.FunctionEntitlements.filter(e => e.AccessLevel == "Hidden");
         let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(vt => ArrayExtensions_1.ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)); //.filter(dc => dc.IsVisible);
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
-            //here we use the strategy id but if we start to have multiple dashboard control per strategy (which I doubt)
-            //we'll need to use the name or something else
-            let dashboardControl = AdaptableViewFactory_1.AdaptableDashboardViewFactory.get(control);
-            if (dashboardControl) {
-                let accessLevel = StrategyHelper_1.StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
-                let dashboardElememt = React.createElement(dashboardControl, {
-                    Blotter: this.props.Blotter,
-                    Columns: this.props.Columns,
-                    UserFilters: this.props.UserFilters,
-                    SystemFilters: this.props.SystemFilters,
-                    ColorPalette: this.props.ColorPalette,
-                    GridSorts: this.props.GridSorts,
-                    cssClassName: cssClassName,
-                    AccessLevel: accessLevel
-                });
-                return React.createElement(react_bootstrap_1.Nav, { key: control, style: { marginRight: "5px", marginTop: "3px", marginBottom: "3px" } }, dashboardElememt);
-            }
-            else {
-                LoggingHelper_1.LoggingHelper.LogError("Cannot find Dashboard Control for " + control);
+            let accessLevel = StrategyHelper_1.StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
+            if (accessLevel != Enums_1.AccessLevel.Hidden) {
+                let dashboardControl = AdaptableViewFactory_1.AdaptableDashboardViewFactory.get(control);
+                if (dashboardControl) {
+                    let dashboardElememt = React.createElement(dashboardControl, {
+                        Blotter: this.props.Blotter,
+                        Columns: this.props.Columns,
+                        UserFilters: this.props.UserFilters,
+                        SystemFilters: this.props.SystemFilters,
+                        ColorPalette: this.props.ColorPalette,
+                        GridSorts: this.props.GridSorts,
+                        cssClassName: cssClassName,
+                        AccessLevel: accessLevel
+                    });
+                    return React.createElement(react_bootstrap_1.Nav, { key: control, style: { marginRight: "5px", marginTop: "3px", marginBottom: "3px" } }, dashboardElememt);
+                }
+                else {
+                    LoggingHelper_1.LoggingHelper.LogError("Cannot find Dashboard Control for " + control);
+                }
             }
         });
         let homeToolbar = AdaptableViewFactory_1.AdaptableDashboardPermanentToolbarFactory.get(StrategyConstants.HomeStrategyId);

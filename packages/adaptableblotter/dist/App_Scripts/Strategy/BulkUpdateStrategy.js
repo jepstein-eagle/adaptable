@@ -48,7 +48,7 @@ class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             return {
                 Alert: {
                     Header: "Bulk Update Error",
-                    Msg: "Bulk Update is not allowed on readonly columns.\nPlease adjust the cell selection.",
+                    Msg: "Bulk Update is not permitted on readonly columns.\nPlease adjust the cell selection.",
                     MessageType: Enums_1.MessageType.Error
                 }
             };

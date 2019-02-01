@@ -3,7 +3,7 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { IPlusMinusRule } from "../../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
 export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
-    Columns: Array<IColumn>;
+    NumericColumns: Array<IColumn>;
 }
 export interface PlusMinusColumnWizardState {
     SelectedColumnId: string;

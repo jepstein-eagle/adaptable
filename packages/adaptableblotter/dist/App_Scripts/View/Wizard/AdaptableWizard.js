@@ -42,6 +42,10 @@ class AdaptableWizard extends React.Component {
         let BodyElement = this.props.Steps[indexStart];
         let newElement = this.cloneWizardStep(BodyElement);
         this.state = { ActiveState: newElement, IndexState: indexStart };
+        //  this.props.Data.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
+    }
+    handleKeyDown(keyEvent) {
+        alert("hello world");
     }
     render() {
         let cssClassName = StyleConstants.AB_STYLE;
@@ -116,7 +120,10 @@ class AdaptableWizard extends React.Component {
         return React.cloneElement(step, {
             ref: (Element) => { this.ActiveStep = Element; this.forceUpdate(); },
             Data: this.props.Data,
-            UpdateGoBackState: () => this.ForceUpdateGoBackState()
+            UpdateGoBackState: () => this.ForceUpdateGoBackState(),
+            Blotter: this.props.Blotter,
+            cssClassName: this.props.cssClassName,
+            Columns: this.props.Columns
         });
     }
 }

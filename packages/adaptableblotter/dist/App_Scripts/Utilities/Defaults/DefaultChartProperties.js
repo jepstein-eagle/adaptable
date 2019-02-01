@@ -23,7 +23,7 @@ exports.DefaultChartProperties = {
     XAxisTitle: "",
     XAxisTitleColor: "",
     XAxisGap: 0.5,
-    XAxisAngle: ChartEnums_1.AxisAngle.Diagonal,
+    XAxisAngle: ChartEnums_1.AxisAngle.Horizontal,
     // Misc
     EnableTransitions: false,
     TransitionInDuration: undefined,

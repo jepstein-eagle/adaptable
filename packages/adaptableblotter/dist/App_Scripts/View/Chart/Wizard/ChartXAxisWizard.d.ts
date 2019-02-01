@@ -1,13 +1,9 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
-import { IColumn } from "../../../Utilities/Interface/IColumn";
-import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 import { Expression } from "../../../Utilities/Expression";
 export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[];
-    Columns: IColumn[];
-    Blotter: IAdaptableBlotter;
 }
 export interface ChartXAxisWizardState {
     XAxisColumnId: string;

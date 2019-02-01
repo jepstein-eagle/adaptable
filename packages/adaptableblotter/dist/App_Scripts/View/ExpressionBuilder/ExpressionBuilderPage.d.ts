@@ -6,14 +6,14 @@ import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilte
 import { Expression } from "../../Utilities/Expression";
 import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
-    Columns: Array<IColumn>;
     UserFilters: Array<IUserFilter>;
     SystemFilters: Array<string>;
     ExpressionMode?: ExpressionMode;
     UpdateGoBackState?(finish?: boolean): void;
     StepName?: string;
-    cssClassName: string;
-    Blotter: IAdaptableBlotter;
+    cssClassName?: string;
+    Columns?: Array<IColumn>;
+    Blotter?: IAdaptableBlotter;
 }
 export interface ExpressionBuilderPageState {
     Expression: Expression;

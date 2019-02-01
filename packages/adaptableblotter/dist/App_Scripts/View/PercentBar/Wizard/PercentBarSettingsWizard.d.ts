@@ -1,31 +1,17 @@
 import * as React from "react";
-import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IPercentBar } from "../../../Utilities/Interface/BlotterObjects/IPercentBar";
-export interface PercentBarsWizardProps extends AdaptableWizardStepProps<IPercentBar> {
-    Columns: Array<IColumn>;
+export interface PercentBarSettingsWizardProps extends AdaptableWizardStepProps<IPercentBar> {
     ColorPalette: Array<string>;
 }
 export interface PercentBarSettingsWizardState {
-    MinValue: number;
-    MaxValue: number;
-    MinValueColumnId: string;
-    MaxValueColumnId: string;
     PositiveColor: string;
     NegativeColor: string;
     ShowValue: boolean;
-    UseMinColumn: boolean;
-    UseMaxColumn: boolean;
 }
-export declare class PercentBarSettingsWizard extends React.Component<PercentBarsWizardProps, PercentBarSettingsWizardState> implements AdaptableWizardStep {
-    constructor(props: PercentBarsWizardProps);
+export declare class PercentBarSettingsWizard extends React.Component<PercentBarSettingsWizardProps, PercentBarSettingsWizardState> implements AdaptableWizardStep {
+    constructor(props: PercentBarSettingsWizardProps);
     render(): any;
-    private onUseMinColumnSelectChanged;
-    private onMinValueChanged;
-    private onColumnMinValueSelectedChanged;
-    private onUseMaxColumnSelectChanged;
-    private onMaxValueChanged;
-    private onColumnMaxValueSelectedChanged;
     private onPositiveColorSelectChanged;
     private onNegativeColorSelectChanged;
     private onShowValueChanged;

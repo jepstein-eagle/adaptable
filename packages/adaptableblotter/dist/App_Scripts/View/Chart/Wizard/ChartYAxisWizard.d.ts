@@ -5,7 +5,6 @@ import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { AxisTotal } from "../../../Utilities/ChartEnums";
 export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[];
-    Columns: IColumn[];
 }
 export interface ChartYAxisWizardState {
     YAxisColumnIds: string[];

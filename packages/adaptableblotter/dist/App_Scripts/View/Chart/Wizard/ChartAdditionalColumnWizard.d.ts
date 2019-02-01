@@ -3,11 +3,8 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 export interface ChartAdditionalColumnWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[];
-    Columns: IColumn[];
-    Blotter: IAdaptableBlotter;
 }
 export interface ChartAdditionalColumnWizardState {
     AdditionalColumn: string;

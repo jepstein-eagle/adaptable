@@ -15,7 +15,7 @@ class PlusMinusColumnWizard extends React.Component {
         let cssClassName = this.props.cssClassName + "-column";
         return React.createElement("div", { className: cssClassName },
             React.createElement(react_bootstrap_1.Panel, { header: "Select a Column", bsStyle: "primary" },
-                React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.SelectedColumnId], ColumnList: this.props.Columns, onColumnChange: columns => this.onColumnSelectedChanged(columns), SelectionMode: Enums_1.SelectionMode.Single })));
+                React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.SelectedColumnId], ColumnList: this.props.NumericColumns, onColumnChange: columns => this.onColumnSelectedChanged(columns), SelectionMode: Enums_1.SelectionMode.Single })));
     }
     onColumnSelectedChanged(columns) {
         this.setState({ SelectedColumnId: columns.length > 0 ? columns[0].ColumnId : "" }, () => this.props.UpdateGoBackState());

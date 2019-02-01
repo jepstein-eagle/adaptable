@@ -1,10 +1,8 @@
 import * as React from "react";
-import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
 import { IConditionalStyle } from "../../../Utilities/Interface/BlotterObjects/IConditionalStyle";
 export interface ConditionalStyleSummaryWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
-    Columns: IColumn[];
     UserFilters: IUserFilter[];
 }
 export declare class ConditionalStyleSummaryWizard extends React.Component<ConditionalStyleSummaryWizardProps, {}> implements AdaptableWizardStep {

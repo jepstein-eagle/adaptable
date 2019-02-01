@@ -10,7 +10,7 @@ import { IPercentBar } from "./BlotterObjects/IPercentBar";
 import { IFreeTextColumn } from "./BlotterObjects/IFreeTextColumn";
 import { ICalculatedColumn } from "./BlotterObjects/ICalculatedColumn";
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from './IStateEvents';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from './IStateEvents';
 import { IAdaptableBlotterOptions } from './BlotterOptions/IAdaptableBlotterOptions';
 import { ICalendarService } from '../Services/Interface/ICalendarService';
 import { IDataService } from '../Services/Interface/IDataService';
@@ -45,6 +45,7 @@ export interface IAdaptableBlotter {
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
+    AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
     createMenu(): void;
     getPrimaryKeyValueFromRecord(record: any): any;
     getActiveCell(): ICellInfo;

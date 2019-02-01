@@ -92,6 +92,7 @@ class AdaptableBlotter {
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
         this.StateChanged = new EventDispatcher_1.EventDispatcher();
         this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
+        this.AlertFired = new EventDispatcher_1.EventDispatcher();
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = BlotterHelper_1.BlotterHelper.AssignBlotterOptions(blotterOptions);
         this.gridOptions = this.BlotterOptions.vendorGrid;
@@ -431,7 +432,7 @@ class AdaptableBlotter {
     getColumnDataType(column) {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            LoggingHelper_1.LoggingHelper.LogMessage('column is undefined returning String for Type');
+            LoggingHelper_1.LoggingHelper.LogWarning('column is undefined returning String for Type');
             return Enums_1.DataType.String;
         }
         // get the column type if already in store (and not unknown)
@@ -500,7 +501,7 @@ class AdaptableBlotter {
                     break;
             }
         }
-        LoggingHelper_1.LoggingHelper.LogMessage("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType);
+        LoggingHelper_1.LoggingHelper.LogWarning("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType);
         return dataType;
     }
     getabColDefValue(colType) {

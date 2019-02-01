@@ -12,7 +12,6 @@ class ButtonDeleteComponent extends React.Component {
     }
     onClick() {
         if (this.props.ConfirmAction) {
-            alert(this.props.ConfirmationMsg);
             let confirmation = {
                 CancelButtonText: "Cancel",
                 Header: this.props.ConfirmationTitle,

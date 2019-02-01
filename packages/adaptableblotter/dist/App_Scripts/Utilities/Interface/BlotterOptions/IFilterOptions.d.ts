@@ -17,11 +17,21 @@ export interface IFilterOptions {
     */
     useAdaptableBlotterFloatingFilter?: boolean;
     /**
-     * not sure...
+     * Whether to re-filter the grid when the user edits data
+     * The choice is 'Always' (the default), 'Never' or 'Throttle'
+     * If 'Throttle' is chosen a 'ThrottleDelay' needs to be provided
      */
     filterActionOnUserDataChange?: IFilterActionOnDataChange;
+    /**
+   * Whether to re-filter the grid when data changes in the background (ie. not result of user action)
+   * The choice is 'Always', 'Never' (the default) or 'Throttle'
+   * If 'Throttle' is chosen a 'ThrottleDelay' needs to be provided
+   */
     filterActionOnExternalDataChange?: IFilterActionOnDataChange;
 }
+/**
+ * Manages if / when to filter
+ */
 export interface IFilterActionOnDataChange {
     RunFilter: 'Always' | 'Never' | 'Throttle';
     ThrottleDelay: number;

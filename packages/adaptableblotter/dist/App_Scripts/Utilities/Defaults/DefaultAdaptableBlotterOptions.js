@@ -34,12 +34,12 @@ exports.DefaultAdaptableBlotterOptions = {
         useAdaptableBlotterFilterForm: true,
         useAdaptableBlotterFloatingFilter: true,
         filterActionOnUserDataChange: {
-            RunFilter: 'Always',
+            RunFilter: GeneralConstants.FILTER_ALWAYS,
             ThrottleDelay: 0
         },
         filterActionOnExternalDataChange: {
-            RunFilter: 'Throttle',
-            ThrottleDelay: 5000
+            RunFilter: GeneralConstants.FILTER_NEVER,
+            ThrottleDelay: 0
         },
     },
     queryOptions: {
@@ -51,6 +51,7 @@ exports.DefaultAdaptableBlotterOptions = {
     generalOptions: {
         useDefaultVendorGridThemes: true,
         showMissingPrimaryKeyWarning: true,
+        preventDuplicatePrimaryKeyValues: true,
         serverSearchOption: 'None',
     }
 };

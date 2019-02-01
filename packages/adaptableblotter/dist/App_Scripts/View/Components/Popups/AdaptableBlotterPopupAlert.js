@@ -7,8 +7,9 @@ const PanelWithImage_1 = require("../Panels/PanelWithImage");
 const UIHelper_1 = require("../../UIHelper");
 class AdaptableBlotterPopupAlert extends React.Component {
     render() {
+        let headerContainsMessage = this.props.Header.indexOf(this.props.MessageType) != -1;
         let style = UIHelper_1.UIHelper.getStyleNameByMessageType(this.props.MessageType);
-        let header = this.props.MessageType.toUpperCase();
+        let header = (headerContainsMessage) ? this.props.Header : this.props.MessageType.toUpperCase();
         let glyph = UIHelper_1.UIHelper.getGlyphByMessageType(this.props.MessageType);
         let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
         let cssClassName = StyleConstants.POPUP_ALERT;
@@ -20,13 +21,10 @@ class AdaptableBlotterPopupAlert extends React.Component {
                             React.createElement("div", { className: cssClassName },
                                 React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: header, bsStyle: style, glyphicon: glyph, bsSize: "small" },
                                     React.createElement("div", null,
-                                        React.createElement("div", { style: { display: "flex", alignItems: "center" } },
-                                            React.createElement(react_bootstrap_1.ControlLabel, null, this.props.Header)),
-                                        React.createElement("div", { style: { display: "flex", alignItems: "center" } }, this.props.Msg.split("\n").map(function (item, index) {
-                                            return (React.createElement("span", { key: index },
-                                                item,
-                                                React.createElement("br", null)));
-                                        })),
+                                        headerContainsMessage == false &&
+                                            React.createElement("div", { style: { display: "flex", alignItems: "center" } },
+                                                React.createElement(react_bootstrap_1.ControlLabel, null, this.props.Header)),
+                                        React.createElement("div", { style: { display: "flex", alignItems: "center" } }, this.props.Msg),
                                         React.createElement("div", { style: { marginTop: '20px' } },
                                             React.createElement(react_bootstrap_1.Row, null,
                                                 React.createElement(react_bootstrap_1.Col, { xs: 4 }),

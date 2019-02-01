@@ -15,4 +15,9 @@ export interface IGeneralOptions {
     * Recommended to set to true (default) as a wrongly applied primary key can affect many functions
     */
     showMissingPrimaryKeyWarning?: boolean;
+    /**
+    * Whether to prevent a duplicate value being entered into the Primary Key column.
+    * Recommended to set to true (default) to ensure that each cell can in the grid can be uniquely identified and referred to.
+    */
+    preventDuplicatePrimaryKeyValues?: boolean;
 }

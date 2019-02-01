@@ -61,40 +61,42 @@ const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const BlotterHelper_1 = require("../../Utilities/Helpers/BlotterHelper");
 const ChartEnums_1 = require("../../Utilities/ChartEnums");
 const rootReducer = Redux.combineReducers({
+    // System
     Popup: PopupRedux.ShowPopupReducer,
     Menu: MenuRedux.MenuReducer,
-    Alert: AlertRedux.AlertReducer,
-    Chart: ChartRedux.ChartReducer,
-    SmartEdit: SmartEditRedux.SmartEditReducer,
-    BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
-    CustomSort: CustomSortRedux.CustomSortReducer,
-    Shortcut: ShortcutRedux.ShortcutReducer,
-    Grid: GridRedux.GridReducer,
     System: SystemRedux.SystemReducer,
-    PlusMinus: PlusMinusRedux.PlusMinusReducer,
+    Grid: GridRedux.GridReducer,
+    // User
+    AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
+    Alert: AlertRedux.AlertReducer,
+    BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
+    CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
+    Calendar: CalendarRedux.CalendarReducer,
+    CellValidation: CellValidationRedux.CellValidationReducer,
+    Chart: ChartRedux.ChartReducer,
+    ColumnCategory: ColumnCategoryRedux.ColumnCategoryReducer,
+    ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
+    ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
+    CustomSort: CustomSortRedux.CustomSortReducer,
+    Dashboard: DashboardRedux.DashboardReducer,
+    DataSource: DataSourceRedux.DataSourceReducer,
+    Entitlements: EntitlementsRedux.EntitlementsReducer,
     Export: ExportRedux.ExportReducer,
     FlashingCell: FlashingCellsRedux.FlashingCellReducer,
-    Calendar: CalendarRedux.CalendarReducer,
-    ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
-    QuickSearch: QuickSearchRedux.QuickSearchReducer,
-    AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
-    DataSource: DataSourceRedux.DataSourceReducer,
-    ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
-    UserFilter: UserFilterRedux.UserFilterReducer,
-    SystemFilter: SystemFilterRedux.SystemFilterReducer,
-    Theme: ThemeRedux.ThemeReducer,
-    PercentBar: PercentBarRedux.PercentBarReducer,
-    CellValidation: CellValidationRedux.CellValidationReducer,
-    Layout: LayoutRedux.LayoutReducer,
-    ColumnCategory: ColumnCategoryRedux.ColumnCategoryReducer,
-    Dashboard: DashboardRedux.DashboardReducer,
-    Entitlements: EntitlementsRedux.EntitlementsReducer,
-    CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
-    UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
-    SelectedCells: SelectedCellsRedux.SelectedCellsReducer,
-    TeamSharing: TeamSharingRedux.TeamSharingReducer,
     FormatColumn: FormatColumnRedux.FormatColumnReducer,
-    FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer
+    FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
+    Layout: LayoutRedux.LayoutReducer,
+    PercentBar: PercentBarRedux.PercentBarReducer,
+    PlusMinus: PlusMinusRedux.PlusMinusReducer,
+    QuickSearch: QuickSearchRedux.QuickSearchReducer,
+    SelectedCells: SelectedCellsRedux.SelectedCellsReducer,
+    Shortcut: ShortcutRedux.ShortcutReducer,
+    SmartEdit: SmartEditRedux.SmartEditReducer,
+    SystemFilter: SystemFilterRedux.SystemFilterReducer,
+    TeamSharing: TeamSharingRedux.TeamSharingReducer,
+    Theme: ThemeRedux.ThemeReducer,
+    UserFilter: UserFilterRedux.UserFilterReducer,
+    UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
 });
 const RESET_STATE = 'RESET_STATE';
 const INIT_STATE = 'INIT_STATE';
@@ -247,7 +249,8 @@ var diffStateAuditMiddleware = (adaptableBlotter) => function (middlewareAPI) {
                 case INIT_STATE: {
                     return next(action);
                 }
-                // for system state functions we audit state changes only if audit is set to log internal state
+                // for system, grid, menu and popup state functions
+                // we audit state changes only if audit is set to log internal state
                 case SystemRedux.SYSTEM_SET_HEALTH_STATUS:
                 case SystemRedux.SYSTEM_CLEAR_HEALTH_STATUS:
                 case SystemRedux.SYSTEM_ALERT_ADD:
@@ -306,7 +309,7 @@ var diffStateAuditMiddleware = (adaptableBlotter) => function (middlewareAPI) {
                     else {
                         return next(action);
                     }
-                // for all other functions we audit state changes  if audit is set to log user state
+                // for all other functions we audit state changes if audit is set to log user state
                 default: {
                     if (adaptableBlotter.AuditLogService.IsAuditUserStateChangesEnabled) {
                         let oldState = middlewareAPI.getState();

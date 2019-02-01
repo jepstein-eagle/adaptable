@@ -67,7 +67,7 @@ var iPushPullHelper;
         return new Promise((resolve, reject) => {
             let page = new iPushPullApp.page(pageIPP, folderIPP);
             page.on(page.EVENT_NEW_CONTENT, function (data) {
-                LoggingHelper_1.LoggingHelper.LogMessage("Page Ready : " + pageIPP);
+                LoggingHelper_1.LoggingHelper.LogInfo("Page Ready : " + pageIPP);
                 pages.set(pageIPP, page);
                 resolve(page);
                 //we return true so it removes the listener for new content.
@@ -82,7 +82,7 @@ var iPushPullHelper;
         if (pageIPP) {
             pageIPP.destroy();
             pages.delete(page);
-            LoggingHelper_1.LoggingHelper.LogMessage("Page Unloaded : " + page);
+            LoggingHelper_1.LoggingHelper.LogInfo("Page Unloaded : " + page);
         }
     }
     iPushPullHelper.UnloadPage = UnloadPage;
@@ -149,10 +149,10 @@ var iPushPullHelper;
             pageIPP.Content.canDoDelta = false;
             pageIPP.Content.update(newData, true);
             pageIPP.push().then(function () {
-                LoggingHelper_1.LoggingHelper.LogMessage('Data pushed for iPushPull page : ' + page);
+                LoggingHelper_1.LoggingHelper.LogSuccess('Data pushed for iPushPull page : ' + page);
                 resolve();
             }, (err) => {
-                LoggingHelper_1.LoggingHelper.LogMessage('Error pushing data for iPushPull page : ' + page);
+                LoggingHelper_1.LoggingHelper.LogInfo('Error pushing data for iPushPull page : ' + page);
                 reject();
             });
         });

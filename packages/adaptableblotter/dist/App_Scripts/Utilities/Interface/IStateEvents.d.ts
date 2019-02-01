@@ -3,6 +3,7 @@ import { IGridSort } from "./IGridSort";
 import { ICustomSort } from "./BlotterObjects/ICustomSort";
 import { IColumnFilter } from "./BlotterObjects/IColumnFilter";
 import { IAdvancedSearch } from "./BlotterObjects/IAdvancedSearch";
+import { IAlert } from "./IMessage";
 export interface IFDC3Schema {
     object: string;
     definition: string;
@@ -10,6 +11,9 @@ export interface IFDC3Schema {
 }
 export interface IColumnStateChangedEventArgs {
     currentLayout: string;
+}
+export interface IAlertFiredEventArgs {
+    alert: IAlert;
 }
 export interface IStateChangedEventArgs extends IFDC3Schema {
     data: IStateEventData[];

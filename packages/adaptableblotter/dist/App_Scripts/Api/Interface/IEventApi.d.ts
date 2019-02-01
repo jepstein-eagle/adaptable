@@ -1,5 +1,5 @@
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
-import { ISearchChangedEventArgs, IStateChangedEventArgs, IColumnStateChangedEventArgs } from '../../Utilities/Interface/IStateEvents';
+import { ISearchChangedEventArgs, IStateChangedEventArgs, IColumnStateChangedEventArgs, IAlertFiredEventArgs } from '../../Utilities/Interface/IStateEvents';
 import { IEvent } from '../../Utilities/Interface/IEvent';
 export interface IEventApi {
     /**
@@ -20,4 +20,10 @@ export interface IEventApi {
     * @returns IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>
     */
     onColumnStateChanged(): IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>;
+    /**
+    * Event fired whenever an Alert is raised.
+    * Contains the full Alert itself.
+    * @returns IEvent<IAdaptableBlotter, IAlertFiredEventArgs>
+    */
+    onAlertFired(): IEvent<IAdaptableBlotter, IAlertFiredEventArgs>;
 }

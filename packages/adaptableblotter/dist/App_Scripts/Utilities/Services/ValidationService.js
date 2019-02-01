@@ -15,12 +15,16 @@ class ValidationService {
         let failedWarningRules = [];
         // first check that if primary key change, the new value is unique
         if (dataChangedEvent.ColumnId == this.blotter.BlotterOptions.primaryKey) {
-            let displayValuePair = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
-            let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);
-            if (existingItem) {
-                let range = ObjectFactory_1.ObjectFactory.CreateRange(Enums_1.LeafExpressionOperator.PrimaryKeyDuplicate, dataChangedEvent.ColumnId, null, Enums_1.RangeOperandType.Column, null);
-                let cellValidationRule = ObjectFactory_1.ObjectFactory.CreateCellValidationRule(dataChangedEvent.ColumnId, range, Enums_1.ActionMode.StopEdit, ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression());
-                failedWarningRules.push(cellValidationRule);
+            if (this.blotter.BlotterOptions.generalOptions.preventDuplicatePrimaryKeyValues) {
+                if (dataChangedEvent.OldValue != dataChangedEvent.NewValue) {
+                    let displayValuePair = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+                    let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);
+                    if (existingItem) {
+                        let range = ObjectFactory_1.ObjectFactory.CreateRange(Enums_1.LeafExpressionOperator.PrimaryKeyDuplicate, dataChangedEvent.ColumnId, null, Enums_1.RangeOperandType.Column, null);
+                        let cellValidationRule = ObjectFactory_1.ObjectFactory.CreateCellValidationRule(dataChangedEvent.ColumnId, range, Enums_1.ActionMode.StopEdit, ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression());
+                        failedWarningRules.push(cellValidationRule);
+                    }
+                }
             }
         }
         let editingRules = this.GetCellValidationState().CellValidations.filter(v => v.ColumnId == dataChangedEvent.ColumnId);

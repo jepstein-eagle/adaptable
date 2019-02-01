@@ -22,7 +22,7 @@ import { IFreeTextColumn } from "../Utilities/Interface/BlotterObjects/IFreeText
 import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { RowNode } from "ag-grid-community";
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
@@ -69,6 +69,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
+    AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
     applyGridFiltering(): void;
     clearGridFiltering(): void;
     clearColumnFiltering(columnIds: string[]): void;

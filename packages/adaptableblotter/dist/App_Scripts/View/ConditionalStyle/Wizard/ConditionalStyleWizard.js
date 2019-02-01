@@ -9,13 +9,13 @@ const ConditionalStyleSummaryWizard_1 = require("./ConditionalStyleSummaryWizard
 const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class ConditionalStyleWizard extends React.Component {
     render() {
-        let stepNames = ["Scope", "Create Style", "Build Query", "Summary"];
+        let stepNames = ["Scope", "Style", "Query", "Summary"];
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.ConditionalStyleStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
-                    React.createElement(ConditionalStyleScopeWizard_1.ConditionalStyleScopeWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0], Columns: this.props.Columns, ColumnCategories: this.props.ColumnCategories }),
-                    React.createElement(ConditionalStyleStyleWizard_1.ConditionalStyleStyleWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[1], ColorPalette: this.props.ColorPalette, StyleClassNames: this.props.StyleClassNames }),
-                    React.createElement(ConditionalStyleExpressionWizard_1.ConditionalStyleExpressionWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[2], Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter }),
-                    React.createElement(ConditionalStyleSummaryWizard_1.ConditionalStyleSummaryWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[3], Columns: this.props.Columns, UserFilters: this.props.UserFilters })
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.ConditionalStyleStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
+                    React.createElement(ConditionalStyleScopeWizard_1.ConditionalStyleScopeWizard, { StepName: stepNames[0], ColumnCategories: this.props.ColumnCategories }),
+                    React.createElement(ConditionalStyleStyleWizard_1.ConditionalStyleStyleWizard, { StepName: stepNames[1], ColorPalette: this.props.ColorPalette, StyleClassNames: this.props.StyleClassNames }),
+                    React.createElement(ConditionalStyleExpressionWizard_1.ConditionalStyleExpressionWizard, { StepName: stepNames[2], UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters }),
+                    React.createElement(ConditionalStyleSummaryWizard_1.ConditionalStyleSummaryWizard, { StepName: stepNames[3], UserFilters: this.props.UserFilters })
                 ], Data: this.props.EditedAdaptableBlotterObject, StepStartIndex: this.props.WizardStartIndex, onHide: () => this.props.onCloseWizard(), onFinish: () => this.props.onFinishWizard(), canFinishWizard: () => this.props.canFinishWizard() }));
     }
 }

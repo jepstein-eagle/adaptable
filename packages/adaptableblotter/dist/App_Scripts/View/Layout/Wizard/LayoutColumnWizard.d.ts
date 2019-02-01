@@ -1,9 +1,7 @@
 import * as React from "react";
-import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ILayout } from "../../../Utilities/Interface/BlotterObjects/ILayout";
 export interface LayoutColumnWizardProps extends AdaptableWizardStepProps<ILayout> {
-    Columns: Array<IColumn>;
 }
 export interface LayoutColumnWizardState {
     SelectedColumns: Array<string>;

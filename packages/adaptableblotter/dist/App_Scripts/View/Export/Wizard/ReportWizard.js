@@ -13,13 +13,13 @@ class ReportWizard extends React.Component {
     render() {
         let stepNames = ["Columns", "Rows", "Settings", "Summary"];
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.ExportStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Steps: [
-                    React.createElement(ReportColumnTypeWizard_1.ReportColumnTypeWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0] }),
-                    React.createElement(ReportColumnChooserWizard_1.ReportColumnChooserWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[0], Columns: this.props.Columns }),
-                    React.createElement(ReportRowTypeWizard_1.ReportRowTypeWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[1] }),
-                    React.createElement(ReportExpressionWizard_1.ReportExpressionWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[1], Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter }),
-                    React.createElement(ReportSettingsWizard_1.ReportSettingsWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[2], Reports: this.props.ConfigEntities }),
-                    React.createElement(ReportSummaryWizard_1.ReportSummaryWizard, { cssClassName: this.props.cssClassName, StepName: stepNames[3], Columns: this.props.Columns, UserFilters: this.props.UserFilters })
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.ExportStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
+                    React.createElement(ReportColumnTypeWizard_1.ReportColumnTypeWizard, { StepName: stepNames[0] }),
+                    React.createElement(ReportColumnChooserWizard_1.ReportColumnChooserWizard, { StepName: stepNames[0] }),
+                    React.createElement(ReportRowTypeWizard_1.ReportRowTypeWizard, { StepName: stepNames[1] }),
+                    React.createElement(ReportExpressionWizard_1.ReportExpressionWizard, { StepName: stepNames[1], UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters }),
+                    React.createElement(ReportSettingsWizard_1.ReportSettingsWizard, { StepName: stepNames[2], Reports: this.props.ConfigEntities }),
+                    React.createElement(ReportSummaryWizard_1.ReportSummaryWizard, { StepName: stepNames[3], UserFilters: this.props.UserFilters })
                 ], Data: this.props.EditedAdaptableBlotterObject, StepStartIndex: this.props.WizardStartIndex, onHide: () => this.props.onCloseWizard(), onFinish: () => this.props.onFinishWizard(), canFinishWizard: () => this.props.canFinishWizard() }));
     }
 }

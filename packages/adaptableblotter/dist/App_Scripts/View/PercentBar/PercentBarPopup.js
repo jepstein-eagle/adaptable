@@ -16,6 +16,7 @@ const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollec
 const PercentBarEntityRow_1 = require("./PercentBarEntityRow");
 const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const Enums_1 = require("../../Utilities/Enums");
 class PercentBarPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -25,8 +26,14 @@ class PercentBarPopupComponent extends React.Component {
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
             let arrayParams = this.props.PopupParams.split("|");
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
+                let columnId = arrayParams[1];
+                let distinctColumnsValues = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columnId, Enums_1.DistinctCriteriaPairValue.RawValue).map(pair => {
+                    return pair.RawValue;
+                });
                 let newPercentRender = ObjectFactory_1.ObjectFactory.CreateEmptyPercentBar();
-                newPercentRender.ColumnId = arrayParams[1];
+                newPercentRender.ColumnId = columnId;
+                newPercentRender.MinValue = Math.min(...distinctColumnsValues);
+                newPercentRender.MaxValue = Math.max(...distinctColumnsValues);
                 this.onEdit(-1, newPercentRender);
             }
             if (arrayParams.length == 2 && arrayParams[0] == "Edit") {

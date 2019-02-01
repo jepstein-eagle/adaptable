@@ -15,7 +15,7 @@ import { IFreeTextColumn } from "../Utilities/Interface/BlotterObjects/IFreeText
 import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import * as _ from 'lodash';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
@@ -45,6 +45,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private hyperGrid;
     private filterContainer;
     isInitialised: boolean;
+    private throttleApplyGridFilteringUser;
+    private throttleApplyGridFilteringExternal;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
     private getState;
     private buildFontCSSShorthand;
@@ -63,12 +65,16 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
+    AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
     createMenu(): void;
     getPrimaryKeyValueFromRecord(record: any): any;
     gridHasCurrentEditValue(): boolean;
     getCurrentCellEditValue(): any;
     getActiveCell(): ICellInfo;
     debouncedSetSelectedCells: (() => void) & _.Cancelable;
+    debouncedFilterGrid: (() => void) & _.Cancelable;
+    private filterOnUserDataChange;
+    private filterOnExternalDataChange;
     setSelectedCells(): void;
     getColumnDataType(column: any): DataType;
     setValue(cellInfo: ICellInfo): void;

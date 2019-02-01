@@ -16,13 +16,13 @@ export interface AdaptableWizardStepProps<T> {
     Data?: T;
     UpdateGoBackState?(): void;
     StepName?: string;
-    cssClassName: string;
+    cssClassName?: string;
+    Blotter?: IAdaptableBlotter;
+    Columns?: IColumn[];
 }
 export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
-    Columns: Array<IColumn>;
     UserFilters: IUserFilter[];
     SystemFilters: string[];
-    Blotter: IAdaptableBlotter;
 }
 export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View> extends IAdaptableBlotterObjectAdaptableWizardProps<View> {
     Columns: Array<IColumn>;

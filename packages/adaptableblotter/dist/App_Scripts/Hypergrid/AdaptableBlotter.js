@@ -62,6 +62,7 @@ const FlashingCellsStrategyHypergrid_1 = require("./Strategy/FlashingCellsStrate
 const FormatColumnStrategyHypergrid_1 = require("./Strategy/FormatColumnStrategyHypergrid");
 const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
 const ChartStrategy_1 = require("../Strategy/ChartStrategy");
+const GeneralConstants_1 = require("../Utilities/Constants/GeneralConstants");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -91,7 +92,9 @@ class AdaptableBlotter {
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
         this.StateChanged = new EventDispatcher_1.EventDispatcher();
         this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
-        this.debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 500);
+        this.AlertFired = new EventDispatcher_1.EventDispatcher();
+        this.debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), GeneralConstants_1.HALF_SECOND);
+        this.debouncedFilterGrid = _.debounce(() => this.applyGridFiltering(), GeneralConstants_1.HALF_SECOND);
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = BlotterHelper_1.BlotterHelper.AssignBlotterOptions(blotterOptions);
         this.hyperGrid = this.BlotterOptions.vendorGrid;
@@ -179,6 +182,9 @@ class AdaptableBlotter {
                 ReactDOM.render(AdaptableBlotterView_1.AdaptableBlotterApp({ AdaptableBlotter: this }), this.abContainerElement);
             }
         }
+        // create debounce methods that take a time based on user settings
+        this.throttleApplyGridFilteringUser = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
+        this.throttleApplyGridFilteringExternal = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
     }
     getState() {
         return this.AdaptableBlotterStore.TheStore.getState();
@@ -235,6 +241,7 @@ class AdaptableBlotter {
             };
         });
         this.AdaptableBlotterStore.TheStore.dispatch(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
+        this.debouncedFilterGrid();
     }
     hideFilterForm() {
         ReactDOM.unmountComponentAtNode(this.filterContainer);
@@ -300,6 +307,22 @@ class AdaptableBlotter {
         }
         return null;
     }
+    filterOnUserDataChange() {
+        if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Always) {
+            this.applyGridFiltering();
+        }
+        else if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Throttle) {
+            this.throttleApplyGridFilteringUser();
+        }
+    }
+    filterOnExternalDataChange() {
+        if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Always) {
+            this.applyGridFiltering();
+        }
+        else if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Throttle) {
+            this.throttleApplyGridFilteringExternal();
+        }
+    }
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
     setSelectedCells() {
         let selectionMap = new Map();
@@ -335,7 +358,7 @@ class AdaptableBlotter {
     getColumnDataType(column) {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            LoggingHelper_1.LoggingHelper.LogMessage('columnId is undefined returning String for Type');
+            LoggingHelper_1.LoggingHelper.LogWarning('columnId is undefined returning String for Type');
             return Enums_1.DataType.String;
         }
         if (column) {
@@ -385,7 +408,7 @@ class AdaptableBlotter {
                                     break;
                             }
                         }
-                        LoggingHelper_1.LoggingHelper.LogMessage('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType);
+                        LoggingHelper_1.LoggingHelper.LogWarning('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType);
                     }
                     /* falls through */
                     default:
@@ -434,7 +457,7 @@ class AdaptableBlotter {
         // it might be a free text column so we need to update the values
         this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
-        this.ReindexAndRepaint();
+        this.filterOnUserDataChange();
     }
     setValueBatch(batchValues) {
         //no need to have a batch mode so far.... we'll see in the future performance
@@ -453,7 +476,7 @@ class AdaptableBlotter {
             dataChangedEvents.push(dataChangedEvent);
         }
         //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
-        this.ReindexAndRepaint();
+        this.filterOnUserDataChange();
         if (this.AuditLogService.IsAuditCellEditsEnabled) {
             this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
         }
@@ -592,10 +615,12 @@ class AdaptableBlotter {
                     returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
                 }
                 if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
+                    console.log("returning...");
                     return Array.from(returnMap.values());
                 }
             }
         }
+        console.log("returning...");
         return Array.from(returnMap.values());
     }
     getDisplayValue(id, columnId) {
@@ -1027,7 +1052,7 @@ class AdaptableBlotter {
         });
         //We call Reindex so functions like CustomSort, Search and Filter are reapplied
         this.hyperGrid.addEventListener("fin-after-cell-edit", () => {
-            this.hyperGrid.behavior.reindex();
+            this.filterOnUserDataChange();
         });
         this.hyperGrid.addEventListener('fin-selection-changed', () => {
             this.debouncedSetSelectedCells();
@@ -1084,6 +1109,8 @@ class AdaptableBlotter {
                                 Record: null
                             };
                             this.DataService.CreateDataChangedEvent(dataChangedInfo);
+                            // this is new  - giving users ability to filter on external data changes
+                            this.filterOnExternalDataChange();
                         }
                     }
                     let primaryKey = this.getPrimaryKeyValueFromRecord(row);

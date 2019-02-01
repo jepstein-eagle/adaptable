@@ -1,11 +1,9 @@
 import * as React from "react";
-import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ConditionalStyleScope } from '../../../Utilities/Enums';
 import { IColumnCategory } from "../../../Utilities/Interface/BlotterObjects/IColumnCategory";
 import { IConditionalStyle } from "../../../Utilities/Interface/BlotterObjects/IConditionalStyle";
 export interface ConditionalStyleScopeWizardProps extends AdaptableWizardStepProps<IConditionalStyle> {
-    Columns: Array<IColumn>;
     ColumnCategories: Array<IColumnCategory>;
 }
 export interface ConditionalStyleScopeWizardState {

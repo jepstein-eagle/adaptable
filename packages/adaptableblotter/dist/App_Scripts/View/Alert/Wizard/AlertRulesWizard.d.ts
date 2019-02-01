@@ -1,10 +1,8 @@
 import * as React from "react";
-import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { LeafExpressionOperator } from '../../../Utilities/Enums';
 import { IAlertDefinition } from "../../../Utilities/Interface/BlotterObjects/IAlertDefinition";
 export interface AlertRulesWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
-    Columns: Array<IColumn>;
 }
 export interface AlertSettingsWizardState {
     Operator: LeafExpressionOperator;

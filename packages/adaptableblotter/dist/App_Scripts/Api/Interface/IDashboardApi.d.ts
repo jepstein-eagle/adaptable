@@ -1,8 +1,4 @@
 export interface IDashboardApi {
-    /**
-     *
-     * @param availableToolbars
-     */
     SetAvailableToolbars(availableToolbars: string[]): void;
     SetVisibleToolbars(visibleToolbars: string[]): void;
     ShowToolbar(visibleToolbar: string): void;

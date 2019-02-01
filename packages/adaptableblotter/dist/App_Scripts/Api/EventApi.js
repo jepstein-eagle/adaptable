@@ -11,5 +11,8 @@ class EventApi extends ApiBase_1.ApiBase {
     onColumnStateChanged() {
         return this.blotter.ColumnStateChanged;
     }
+    onAlertFired() {
+        return this.blotter.AlertFired;
+    }
 }
 exports.EventApi = EventApi;
