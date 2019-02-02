@@ -21,7 +21,7 @@ class SystemStatusApi extends ApiBase_1.ApiBase {
         let systemStatus = { StatusMessage: statusMessage, StatusColour: Enums_1.StatusColour.Green };
         this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
     }
-    SeBlue(statusMessage) {
+    SetBlue(statusMessage) {
         let systemStatus = { StatusMessage: statusMessage, StatusColour: Enums_1.StatusColour.Blue };
         this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
     }

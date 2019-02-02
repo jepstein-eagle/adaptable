@@ -39,9 +39,10 @@ class SelectedCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
                     let value = selectedCell.value;
                     allValues.push(value);
                     if (numericColumns.indexOf(i) != -1) {
+                        let valueAsNumber = Number(value);
                         // possible that its not a number despite it being a numeric column
-                        if (!isNaN(Number(value))) {
-                            numericValues.push(value);
+                        if (!isNaN(Number(valueAsNumber))) {
+                            numericValues.push(valueAsNumber);
                         }
                     }
                 }

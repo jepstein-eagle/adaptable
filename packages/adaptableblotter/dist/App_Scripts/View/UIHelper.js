@@ -180,13 +180,13 @@ var UIHelper;
     function getGlyphForSystemStatusButton(statusColour) {
         switch (statusColour) {
             case Enums_1.StatusColour.Blue:
-                return "ok-circle";
+                return "info-sign";
             case Enums_1.StatusColour.Green:
-                return "ok-circle"; // one of these is wrong
+                return "ok-sign";
             case Enums_1.StatusColour.Amber:
-                return "ban-circle";
+                return "warning-sign";
             case Enums_1.StatusColour.Red:
-                return "remove-circle";
+                return "exclamation-sign";
         }
     }
     UIHelper.getGlyphForSystemStatusButton = getGlyphForSystemStatusButton;

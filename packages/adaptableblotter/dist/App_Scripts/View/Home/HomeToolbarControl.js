@@ -36,9 +36,12 @@ class HomeToolbarControlComponent extends React.Component {
                 " ",
                 "Toolbars") },
             React.createElement(react_bootstrap_1.Glyphicon, { glyph: "align-justify" }));
-        let visibleMenuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible);
+        // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
+        let strategyKeys = [...this.props.Blotter.Strategies.keys()];
+        let allowedMenuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible &&
+            ArrayExtensions_1.ArrayExtensions.NotContainsItem(strategyKeys, x));
         // function menu items
-        let menuItems = visibleMenuItems.map((menuItem) => {
+        let menuItems = allowedMenuItems.map((menuItem) => {
             return React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, key: menuItem.Label, onClick: () => this.onClick(menuItem) },
                 React.createElement(react_bootstrap_1.Glyphicon, { glyph: menuItem.GlyphIcon }),
                 " ",
@@ -59,7 +62,7 @@ class HomeToolbarControlComponent extends React.Component {
         });
         // toolbar items
         let toolbarItems = [];
-        let visibleMenuNames = visibleMenuItems.map(vm => {
+        let allowedMenuNames = allowedMenuItems.map(vm => {
             return vm.StrategyId;
         });
         toolbarItems.push(React.createElement("div", { key: "toolbarTitle" },
@@ -68,7 +71,7 @@ class HomeToolbarControlComponent extends React.Component {
             "\u00A0\u00A0",
             React.createElement("b", null, "Toolbars")));
         this.props.DashboardState.AvailableToolbars.forEach((toolbar, index) => {
-            if (ArrayExtensions_1.ArrayExtensions.ContainsItem(visibleMenuNames, toolbar)) {
+            if (ArrayExtensions_1.ArrayExtensions.ContainsItem(allowedMenuNames, toolbar)) {
                 let isVisible = ArrayExtensions_1.ArrayExtensions.ContainsItem(this.props.DashboardState.VisibleToolbars, toolbar);
                 let functionName = StrategyConstants.getNameForStrategyId(toolbar);
                 toolbarItems.push(React.createElement("div", { className: "ab_home_toolbar_column_list", key: index },
@@ -134,11 +137,19 @@ class HomeToolbarControlComponent extends React.Component {
         let statusColor = this.props.SystemStatus.StatusColour;
         switch (statusColor) {
             case Enums_1.StatusColour.Green:
-                let info = {
+                let success = {
                     Header: "System Status",
                     Msg: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
                         this.props.SystemStatus.StatusMessage :
                         "No issues",
+                    MessageType: Enums_1.MessageType.Success
+                };
+                this.props.onShowStatusMessage(success);
+                return;
+            case Enums_1.StatusColour.Blue:
+                let info = {
+                    Header: "System Status",
+                    Msg: this.props.SystemStatus.StatusMessage,
                     MessageType: Enums_1.MessageType.Info
                 };
                 this.props.onShowStatusMessage(info);

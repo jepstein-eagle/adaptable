@@ -5,6 +5,6 @@ export declare class SystemStatusApi extends ApiBase implements ISystemStatusApi
     SetRed(statusMessage: string): void;
     SetAmber(statusMessage: string): void;
     SetGreen(statusMessage: string): void;
-    SeBlue(statusMessage: string): void;
+    SetBlue(statusMessage: string): void;
     Clear(): void;
 }
