@@ -4,7 +4,7 @@ import * as Redux from "redux";
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
-import { Glyphicon, MenuItem, OverlayTrigger, Tooltip, Checkbox, DropdownButton, NavbarCollapse } from 'react-bootstrap';
+import { Glyphicon, MenuItem, OverlayTrigger, Tooltip, Checkbox, DropdownButton } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
@@ -16,7 +16,6 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
 import { Visibility, StatusColour, MessageType, AccessLevel } from "../../Utilities/Enums";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { DANGER_BSSTYLE, SUCCESS_BSSTYLE, WARNING_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { ISystemStatus } from "../../Utilities/Interface/ISystemStatus";
@@ -61,10 +60,17 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             <Glyphicon glyph={"align-justify"} />
         </OverlayTrigger>
 
-        let visibleMenuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible);
+        // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
+        let strategyKeys: string[] = [...this.props.Blotter.Strategies.keys()];
+        let allowedMenuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible && 
+            ArrayExtensions.NotContainsItem(strategyKeys, x)
+        );
+
+        console.log(strategyKeys);
+        console.log(allowedMenuItems);
 
         // function menu items
-        let menuItems = visibleMenuItems.map((menuItem: IMenuItem) => {
+        let menuItems = allowedMenuItems.map((menuItem: IMenuItem) => {
             return <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
                 <Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}
             </MenuItem>
@@ -81,12 +87,12 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
         // toolbar items
         let toolbarItems: any = []
-        let visibleMenuNames: string[] = visibleMenuItems.map(vm => {
+        let allowedMenuNames: string[] = allowedMenuItems.map(vm => {
             return vm.StrategyId;
         })
-         toolbarItems.push(<div key="toolbarTitle">{' '}{' '}&nbsp;&nbsp;<b>{"Toolbars"}</b></div>);
+        toolbarItems.push(<div key="toolbarTitle">{' '}{' '}&nbsp;&nbsp;<b>{"Toolbars"}</b></div>);
         this.props.DashboardState.AvailableToolbars.forEach((toolbar: string, index) => {
-            if (ArrayExtensions.ContainsItem(visibleMenuNames, toolbar)) {
+            if (ArrayExtensions.ContainsItem(allowedMenuNames, toolbar)) {
                 let isVisible: boolean = ArrayExtensions.ContainsItem(this.props.DashboardState.VisibleToolbars, toolbar);
                 let functionName = StrategyConstants.getNameForStrategyId(toolbar);
                 toolbarItems.push(<div className="ab_home_toolbar_column_list" key={index}>
