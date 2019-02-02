@@ -1,9 +1,9 @@
 {
   "name": "adaptableblotter-react-test",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "private": true,
   "dependencies": {
-    "adaptableblotter-react": "^3.1.5",
+    "adaptableblotter-react": "^3.1.6",
     "ag-grid-community": "^19.1.4",
     "ag-grid-enterprise": "^19.1.4",
     "ag-grid-react": "^19.1.2",
