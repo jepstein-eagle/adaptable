@@ -73,6 +73,8 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         let headerText = StrategyConstants.ColumnInfoStrategyName;
 
         let summaries: any[] = [];
+        
+        if(this.state.SelectedColumn ){
         if (ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategory)) {
             summaries.push(
 
@@ -184,8 +186,6 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
                     />
                 </div>)
         }
-        if (this.state.SelectedColumn) {
-
             if (this.isStrategyVisible(StrategyConstants.PlusMinusStrategyId) && this.state.SelectedColumn.DataType == DataType.Number) {
                 summaries.push(
                     <div key={StrategyConstants.PlusMinusStrategyId} className={this.isStrategyReadOnly(StrategyConstants.PlusMinusStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>

@@ -8,5 +8,6 @@
   "scripts": {
     "cleanup": "lerna clean --yes",
     "publish": "lerna publish"
-  }
+  },
+  "dependencies": {}
 }

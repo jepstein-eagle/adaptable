@@ -66,9 +66,6 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             ArrayExtensions.NotContainsItem(strategyKeys, x)
         );
 
-        console.log(strategyKeys);
-        console.log(allowedMenuItems);
-
         // function menu items
         let menuItems = allowedMenuItems.map((menuItem: IMenuItem) => {
             return <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
