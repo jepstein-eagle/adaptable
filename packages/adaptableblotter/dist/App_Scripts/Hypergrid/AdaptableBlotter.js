@@ -615,12 +615,10 @@ class AdaptableBlotter {
                     returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
                 }
                 if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
-                    console.log("returning...");
                     return Array.from(returnMap.values());
                 }
             }
         }
-        console.log("returning...");
         return Array.from(returnMap.values());
     }
     getDisplayValue(id, columnId) {

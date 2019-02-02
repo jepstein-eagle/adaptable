@@ -44,9 +44,9 @@ class AdaptableWizard extends React.Component {
         this.state = { ActiveState: newElement, IndexState: indexStart };
         //  this.props.Data.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
-    handleKeyDown(keyEvent) {
-        alert("hello world");
-    }
+    //   private handleKeyDown(keyEvent: KeyboardEvent | any) {
+    //   alert("hello world")
+    //   }
     render() {
         let cssClassName = StyleConstants.AB_STYLE;
         return (React.createElement(react_bootstrap_1.Modal, { show: true, onHide: this.props.onHide, className: cssClassName + StyleConstants.BASE, container: this.props.ModalContainer },

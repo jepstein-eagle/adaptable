@@ -49,7 +49,7 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
             if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                 // Get the actual Advanced Search object and check it exists
                 let currentSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
-                if (currentSearch) {
+                if (currentSearch && currentSearch.Expression) {
                     // See if our record passes the Advanced Search Expression - using Expression Helper; if not then return false
                     if (!ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, rowObject, columns, blotter)) {
                         return false;
@@ -64,9 +64,11 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
             let columnFilters = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
             if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(columnFilters)) {
                 for (let columnFilter of columnFilters) {
-                    // See if our record passes the Filter Expression - using Expression Helper; if not then return false
-                    if (!ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, rowObject, columns, blotter)) {
-                        return false;
+                    if (columnFilter.Filter) {
+                        // See if our record passes the Filter Expression - using Expression Helper; if not then return false
+                        if (!ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, rowObject, columns, blotter)) {
+                            return false;
+                        }
                     }
                 }
             }

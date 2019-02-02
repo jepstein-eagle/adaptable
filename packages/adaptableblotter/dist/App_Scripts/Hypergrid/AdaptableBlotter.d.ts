@@ -85,7 +85,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     forAllVisibleRecordsDo(func: (record: any) => any): void;
     getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
     getRecordIsSatisfiedFunctionFromRecord(record: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
-    getColumnIndex(columnId: string): number;
+    private getColumnIndex;
     private isColumnReadonly;
     private isColumnSortable;
     setCustomSort(columnId: string): void;

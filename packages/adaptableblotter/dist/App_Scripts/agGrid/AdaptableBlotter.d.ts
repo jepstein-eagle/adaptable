@@ -95,7 +95,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     cancelEdit(): void;
     getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
     getRecordIsSatisfiedFunctionFromRecord(record: RowNode, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
-    getColumnIndex(columnId: string): number;
     private isColumnReadonly;
     private isColumnSortable;
     private isColumnFilterable;
@@ -107,7 +106,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     getDisplayValueFromRecord(row: RowNode, columnId: string): string;
     getDisplayValueFromRawValue(columnId: string, rawValue: any): any;
     private getRenderedValue;
-    private cleanValue;
     getRawValueFromRecord(row: RowNode, columnId: string): any;
     setCellClassRules(cellClassRules: any, columnId: string, type: "ConditionalStyle" | "QuickSearch" | "FlashingCell" | "FormatColumn"): void;
     forAllRecordsDo(func: (record: any) => any): void;

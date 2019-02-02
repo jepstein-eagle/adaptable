@@ -48,9 +48,9 @@ export interface IAdaptableBlotter {
     AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
     createMenu(): void;
     getPrimaryKeyValueFromRecord(record: any): any;
+    setGridData(dataSource: any): void;
     getActiveCell(): ICellInfo;
     selectColumn(columnId: string): void;
-    getColumnIndex(columnId: string): number;
     setColumnIntoStore(): void;
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
     getDisplayValue(id: any, columnId: string): string;
@@ -99,5 +99,4 @@ export interface IAdaptableBlotter {
     applyLightTheme(): void;
     applyDarkTheme(): void;
     redraw(): void;
-    setGridData(dataSource: any): void;
 }
