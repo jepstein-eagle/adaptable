@@ -650,7 +650,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
 
-    public getColumnIndex(columnId: string): number {
+    private getColumnIndex(columnId: string): number {
         //this returns the index of the column in the collection which is as well the index y of the cell in the grid
         // it doesnt return the index from the schema
         let hgindex: any = this.hyperGrid.behavior.getActiveColumns().findIndex((x: any) => x.name == columnId);

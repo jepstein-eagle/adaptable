@@ -52,23 +52,22 @@ export interface IAdaptableBlotter {
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
 
-    // not sure if this is right but putting the event here
+    // not sure if this is right but putting the events here
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
     AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
-    
 
     // General
     createMenu(): void
     getPrimaryKeyValueFromRecord(record: any): any
+    setGridData(dataSource: any): void
 
     // cell / column selection
     getActiveCell(): ICellInfo
     selectColumn(columnId: string): void
 
     // column related
-    getColumnIndex(columnId: string): number
     setColumnIntoStore(): void
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
     getDisplayValue(id: any, columnId: string): string
@@ -142,7 +141,5 @@ export interface IAdaptableBlotter {
     applyDarkTheme(): void
 
     redraw(): void
-
-     setGridData(dataSource: any) : void
 
 }

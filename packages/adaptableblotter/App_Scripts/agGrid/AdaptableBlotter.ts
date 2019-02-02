@@ -124,6 +124,7 @@ import { IMenuItem } from '../Utilities/Interface/IMenu';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
+import { agGridHelper } from './agGridHelper';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -186,7 +187,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(this))
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
-        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+      //  this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
@@ -419,9 +420,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private getQuickSearchClassName(): string {
-        let blotter = this
-        let quickSearchClassName: string = StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName) ?
-            blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.Style.ClassName :
+        let quickSearchClassName: string = StringExtensions.IsNotNullOrEmpty(this.getState().QuickSearch.Style.ClassName) ?
+            this.getState().QuickSearch.Style.ClassName :
             StyleHelper.CreateStyleName(StrategyConstants.QuickSearchStrategyId, this)
         return quickSearchClassName;
     }
@@ -431,8 +431,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let cellClassRules: any = {};
         cellClassRules[quickSearchClassName] = function (params: any) {
             let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
-            let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
-            if (StringExtensions.IsNotNullOrEmpty(blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText)
+            let quickSearchState = blotter.getState().QuickSearch;
+            if (StringExtensions.IsNotNullOrEmpty(blotter.getState().QuickSearch.QuickSearchText)
                 && (quickSearchState.DisplayAction == DisplayAction.HighlightCell
                     || quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)) {
 
@@ -511,7 +511,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public setSelectedCells(): void {
         let selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
 
-        let test: RowNode[] = this.gridOptions.api.getSelectedNodes();
         let selected = this.gridOptions.api.getRangeSelections();
         let columns: IColumn[] = []
         if (selected) {
@@ -777,9 +776,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
 
-    public getColumnIndex(columnId: string): number {
-        return null
-    }
 
     private isColumnReadonly(columnId: string): boolean {
         //same as hypergrid. we do not support the fact that some rows are editable and some are not
@@ -850,7 +846,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         } else { // get the distinct values for the column from the grid
             //we use forEachNode as we want to get all data even the one filtered out...
             let useRawValue: boolean = this.useRawValueForColumn(columnId);
-            let data = this.gridOptions.api.forEachNode(rowNode => {
+            this.gridOptions.api.forEachNode(rowNode => {
                 //we do not return the values of the aggregates when in grouping mode
                 //otherwise they wxould appear in the filter dropdown etc....
                 if (!rowNode.group) {
@@ -928,30 +924,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return this.getRenderedValue(colDef, rawValue);
         }
         else {
-            return this.cleanValue(rawValue);
+            return agGridHelper.cleanValue(rawValue);
         }
     }
 
     private getRenderedValue(colDef: ColDef, valueToRender: any): string {
-        let isRenderedColumn = ArrayExtensions.ContainsItem(this.getState().PercentBar.PercentBars, colDef.field);
-        if (isRenderedColumn) {
-            return valueToRender;
-        }
-        let render: any = colDef.cellRenderer
-        if (typeof render == "string") {
-            return this.cleanValue(valueToRender)
-        }
-        return render({ value: valueToRender }) || "";
-    }
-
-    private cleanValue(value: string): string {
-        if (value == null || value == 'null') {
-            return null;
-        } else if (value == undefined || value == 'undefined') {
-            return undefined;
-        } else {
-            return String(value) || "";
-        }
+        return agGridHelper.getRenderedValue(this.getState().PercentBar.PercentBars, colDef, valueToRender);
     }
 
 
@@ -1003,10 +981,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         else {
-            if (type == "FlashingCell") {
-                //       alert("here ")
-            }
-            this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
+             this.gridOptions.columnApi.getColumn(columnId).getColDef().cellClassRules = cellClassRules;
         }
     }
 
@@ -1141,7 +1116,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             Sortable: this.isSortable(),
             Filterable: true, // why not?  need to test...
         }
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridAddColumnAction>(GridRedux.GridAddColumn(specialColumn));
+        this.dispatchAction(GridRedux.GridAddColumn(specialColumn));
 
         let quickSearchClassName = this.getQuickSearchClassName();
         this.addQuickSearchStyleToColumn(specialColumn, quickSearchClassName);
@@ -1327,7 +1302,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         let cancelAction: Redux.Action = null;
                         let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
 
-                        this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+                        this.dispatchAction(PopupRedux.PopupShowConfirmation(confirmation));
                         //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
                         return true;
                     }
@@ -1516,10 +1491,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
             //couldnt find a way to listen for menu close. There is a Menu Item Select
             //but you can also clsoe the menu from filter and clicking outside the menu....
-            //    this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.HideColumnContextMenu());
             let colId: string = params.column.getColId()
 
-            this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ClearColumnContextMenu());
+            this.dispatchAction(MenuRedux.ClearColumnContextMenu());
             let column: IColumn = ColumnHelper.getColumnFromId(colId, this.getState().Grid.Columns);
             if (column != null) {
                 this.Strategies.forEach(s => {
@@ -1543,7 +1517,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 glyph.className = "glyphicon glyphicon-" + x.GlyphIcon;
                 colMenuItems.push({
                     name: x.Label,
-                    action: () => this.AdaptableBlotterStore.TheStore.dispatch(x.Action),
+                    action: () => this.dispatchAction(x.Action),
                     icon: glyph
                 });
             });
@@ -1562,77 +1536,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public addPercentBar(pcr: IPercentBar): void {
         let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns);
         if (renderedColumn) {
-            let showNegatives: boolean = pcr.MinValue < 0;
-            let showPositives: boolean = pcr.MaxValue > 0;
-
-            let cellRendererFunc: ICellRendererFunc = (params: ICellRendererParams) => {
-                let isNegativeValue: boolean = params.value < 0;
-                let value = params.value;
-
-                let maxValue = StringExtensions.IsNotNullOrEmpty(pcr.MaxValueColumnId) ?
-                    this.getRawValueFromRecord(params.node, pcr.MaxValueColumnId) :
-                    pcr.MaxValue;
-                let minValue = StringExtensions.IsNotNullOrEmpty(pcr.MinValueColumnId) ?
-                    this.getRawValueFromRecord(params.node, pcr.MinValueColumnId) :
-                    pcr.MinValue;
-
-                if (isNegativeValue) {
-                    value = value * -1;
-                }
-                let percentagePositiveValue = ((100 / maxValue) * value);
-                let percentageNegativeValue = ((100 / (minValue * -1)) * value);
-
-                if (showNegatives && showPositives) { // if need both then half the space
-                    percentagePositiveValue = percentagePositiveValue / 2;
-                    percentageNegativeValue = percentageNegativeValue / 2;
-                }
-
-                let eOuterDiv = document.createElement('div');
-                eOuterDiv.className = 'ab_div-colour-render-div';
-                if (pcr.ShowValue) {
-                    let showValueBar = document.createElement('div');
-                    showValueBar.className = 'ab_div-colour-render-text';
-                    if (showNegatives && showPositives) {
-                        showValueBar.style.paddingLeft = (isNegativeValue) ? '50%' : '20%'
-                    } else {
-                        showValueBar.style.paddingLeft = '5px'
-                    }
-                    showValueBar.innerHTML = params.value;
-                    eOuterDiv.appendChild(showValueBar);
-                }
-
-                if (showNegatives) {
-                    let fullWidth = (showPositives) ? 50 : 100
-
-                    let negativeDivBlankBar = document.createElement('div');
-                    negativeDivBlankBar.className = 'ab_div-colour-render-bar';
-                    negativeDivBlankBar.style.width = (fullWidth - percentageNegativeValue) + '%';
-                    eOuterDiv.appendChild(negativeDivBlankBar);
-
-                    let negativeDivPercentBar = document.createElement('div');
-                    negativeDivPercentBar.className = 'ab_div-colour-render-bar';
-                    negativeDivPercentBar.style.width = percentageNegativeValue + '%';
-                    if (isNegativeValue) {
-                        negativeDivPercentBar.style.backgroundColor = pcr.NegativeColor;
-                    }
-                    eOuterDiv.appendChild(negativeDivPercentBar);
-                }
-
-                if (showPositives) {
-                    let positivePercentBarDiv = document.createElement('div');
-                    positivePercentBarDiv.className = 'ab_div-colour-render-bar';
-                    positivePercentBarDiv.style.width = percentagePositiveValue + '%';
-                    if (!isNegativeValue) {
-                        positivePercentBarDiv.style.backgroundColor = pcr.PositiveColor;
-                    }
-                    eOuterDiv.appendChild(positivePercentBarDiv);
-                }
-                return eOuterDiv;
-            }
+            let cellRendererFunc: ICellRendererFunc = agGridHelper.createCellRendererFunc(pcr);
             let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
             vendorGridColumn.getColDef().cellRenderer = cellRendererFunc;
         }
     }
+
     public removePercentBar(pcr: IPercentBar): void {
         let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns)
         if (renderedColumn) {
@@ -1677,7 +1586,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 })
             }
         }
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(gridSorts));
+        this.dispatchAction(GridRedux.GridSetSort(gridSorts));
     }
 
     public getRowCount(): number {
@@ -1743,8 +1652,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         if (this.BlotterOptions.layoutOptions != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts) {
             let groupedState: any = null
-            let test = this.gridOptions.columnApi.getAllDisplayedColumns();
-            let groupedCol = test.find(c => ColumnHelper.isSpecialColumn(c.getColId()));
+            let displayedColumns: Column[] = this.gridOptions.columnApi.getAllDisplayedColumns();
+            let groupedCol = displayedColumns.find(c => ColumnHelper.isSpecialColumn(c.getColId()));
             if (groupedCol) {
                 groupedState = groupedCol.getActualWidth();
             }
@@ -1862,7 +1771,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private applyFinalRendering(): void {
-        let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
+        let currentlayout = this.getState().Layout.CurrentLayout
 
         // Check that we have a primary key
         BlotterHelper.CheckPrimaryKeyExists(this, this.getState().Grid.Columns);

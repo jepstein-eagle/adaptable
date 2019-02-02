@@ -233,7 +233,6 @@ export module Helper {
 
 
     export function StringifyValue(value: any): string {
-
         if (!isNaN(Number(value))) {
             return Number(value).toString()
         }
