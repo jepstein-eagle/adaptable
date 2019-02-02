@@ -7,6 +7,7 @@ import { AdaptableBlotter } from '../AdaptableBlotter'
 import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
 import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
 import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
+import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
     constructor(blotter: AdaptableBlotter) {
@@ -15,46 +16,51 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy 
 
     // Called when a single piece of data changes, ie. usually the result of an inline edit
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
-        let theBlotter = this.blotter as AdaptableBlotter
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        //here we don't call Repaint as we consider that we already are in the repaint loop
-        for (let column of columns) {
-            theBlotter.removeCellStyleHypergrid(dataChangedEvent.IdentifierValue, column.ColumnId, 'csColumn')
-            theBlotter.removeCellStyleHypergrid(dataChangedEvent.IdentifierValue, column.ColumnId, 'csRow')
+        if (ArrayExtensions.IsNotEmpty(this.ConditionalStyleState.ConditionalStyles)) {
+
+            let theBlotter = this.blotter as AdaptableBlotter
+            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+             //here we don't call Repaint as we consider that we already are in the repaint loop
+            for (let column of columns) {
+                theBlotter.removeCellStyleHypergrid(dataChangedEvent.IdentifierValue, column.ColumnId, 'csColumn')
+                theBlotter.removeCellStyleHypergrid(dataChangedEvent.IdentifierValue, column.ColumnId, 'csRow')
+            }
+
+            this.ConditionalStyleState.ConditionalStyles.forEach((c, index) => {
+                if (c.Expression) {
+                    if (dataChangedEvent.Record) {
+                        if (ExpressionHelper.checkForExpressionFromRecord(c.Expression, dataChangedEvent.Record, columns, this.blotter)) {
+                            if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
+                                theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
+                            } else if (c.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
+                                let columnCategory: IColumnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId)
+                                columnCategory.ColumnIds.forEach(cc => {
+                                    theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style })
+                                })
+                            } else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
+                                theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style })
+                            }
+                        }
+                    }
+                    else {
+                        if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
+                            if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
+                                theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
+                            } else if (c.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
+                                let columnCategory: IColumnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId)
+                                columnCategory.ColumnIds.forEach(cc => {
+                                    theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style })
+                                })
+                            } else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
+                                theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style })
+                            }
+                        }
+                    }
+                }
+            })
         }
-
-        this.ConditionalStyleState.ConditionalStyles.forEach((c, index) => {
-
-            if (dataChangedEvent.Record) {
-                if (ExpressionHelper.checkForExpressionFromRecord(c.Expression, dataChangedEvent.Record, columns, this.blotter)) {
-                    if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                        theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
-                    } else if (c.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                        let columnCategory: IColumnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId)
-                        columnCategory.ColumnIds.forEach(cc => {
-                            theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style })
-                        })
-                    } else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                        theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style })
-                    }
-                }
-            }
-            else {
-                if (ExpressionHelper.checkForExpression(c.Expression, dataChangedEvent.IdentifierValue, columns, this.blotter)) {
-                    if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                        theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
-                    } else if (c.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                        let columnCategory: IColumnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId)
-                        columnCategory.ColumnIds.forEach(cc => {
-                            theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style })
-                        })
-                    } else if (c.ConditionalStyleScope == ConditionalStyleScope.Column) {
-                        theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, c.ColumnId, { conditionalStyleColumn: c.Style })
-                    }
-                }
-            }
-        })
     }
+
 
     public InitStyles(): void {
         let theBlotter = this.blotter as AdaptableBlotter

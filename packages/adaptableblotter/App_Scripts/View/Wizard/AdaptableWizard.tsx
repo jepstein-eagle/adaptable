@@ -72,9 +72,9 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         //  this.props.Data.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
 
-    private handleKeyDown(keyEvent: KeyboardEvent | any) {
-        alert("hello world")
-    }
+ //   private handleKeyDown(keyEvent: KeyboardEvent | any) {
+     //   alert("hello world")
+ //   }
 
     render() {
         let cssClassName: string = StyleConstants.AB_STYLE

@@ -2,7 +2,7 @@ import { AdaptableBlotter } from './AdaptableBlotter'
 import { DataSourceIndexed } from './DataSourceIndexed'
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions'
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { LeafExpressionOperator, DisplayAction } from '../Utilities/Enums'
+import { DisplayAction } from '../Utilities/Enums'
 import { IColumnFilter } from "../Utilities/Interface/BlotterObjects/IColumnFilter";
 import { IAdvancedSearch } from "../Utilities/Interface/BlotterObjects/IAdvancedSearch";
 import { IRange } from "../Utilities/Interface/Expression/IRange";
@@ -57,7 +57,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
             if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                 // Get the actual Advanced Search object and check it exists
                 let currentSearch: IAdvancedSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
-                if (currentSearch) {
+                if (currentSearch && currentSearch.Expression) {
                     // See if our record passes the Advanced Search Expression - using Expression Helper; if not then return false
                     if (!ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, rowObject, columns, blotter)) {
                         return false;
@@ -73,9 +73,11 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
             let columnFilters: IColumnFilter[] = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
             if (ArrayExtensions.IsNotNullOrEmpty(columnFilters)) {
                 for (let columnFilter of columnFilters) {
-                    // See if our record passes the Filter Expression - using Expression Helper; if not then return false
-                    if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, rowObject, columns, blotter)) {
-                        return false
+                    if (columnFilter.Filter) {
+                        // See if our record passes the Filter Expression - using Expression Helper; if not then return false
+                        if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, rowObject, columns, blotter)) {
+                            return false
+                        }
                     }
                 }
             }
@@ -85,8 +87,8 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
             // check that we have quick search running
             let range: IRange = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
 
-            if  (range != null) {
-                 // with quick search because we need to colour and might not need to filter we dont return true/false but instead set a return value
+            if (range != null) {
+                // with quick search because we need to colour and might not need to filter we dont return true/false but instead set a return value
                 let recordReturnValue: boolean = false
 
                 let rowId = blotter.getPrimaryKeyValueFromRecord(rowObject)
@@ -101,7 +103,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) => DataSource
                             isMatch = true;
                         }
                     }
-                   
+
                     if (isMatch) {
                         //if we need to display ONLY the rows that matched the quicksearch and dont need to colour them then we can return true
                         if (quickSearchState.DisplayAction == DisplayAction.ShowRow) {

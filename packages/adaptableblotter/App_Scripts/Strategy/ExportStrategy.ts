@@ -80,7 +80,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             return
         }
         if (ArrayExtensions.IsNotNullOrEmpty( this.CurrentLiveReports)) {
-            this.isSendingData = true
+             this.isSendingData = true
             let ippStyle = this.blotter.getIPPStyle()
             let promises: Promise<any>[] = []
             this.CurrentLiveReports.forEach(cle => {
