@@ -51,6 +51,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         this.placeholder.classList.add("list-group-item")
         this.placeholder.type = "button"
         let availableValues = new Array<any>();
+
         this.props.AvailableValues.forEach(x => {
             if (this.props.ValueMember) {
                 if (this.props.SelectedValues.findIndex(y => y == x[this.props.ValueMember]) < 0) {
@@ -70,10 +71,11 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             UiSelectedAvailableValues: [],
             FilterValue: "",
             SortOrder: SortOrder.Ascending,
-            AllValues: this.props.SelectedValues.concat(this.props.AvailableValues),
+            AllValues: this.props.AvailableValues,
             MasterValues: this.buildMasterValues(this.props.MasterChildren)
         };
     }
+
     componentWillReceiveProps(nextProps: DualListBoxEditorProps, nextContext: any) {
         let availableValues = new Array<any>();
         nextProps.AvailableValues.forEach(x => {
@@ -294,7 +296,8 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     createAvailableValuesList(availableValues: any[], sortOrder: SortOrder, sortMember: string): any[] {
         // if there are no master / children then sort the values
         if (ArrayExtensions.IsNullOrEmpty(this.props.MasterChildren)) {
-            return Helper.sortArrayWithProperty(sortOrder, availableValues, sortMember);
+            let valstoReturn: any[] = Helper.sortArrayWithProperty(sortOrder, availableValues, sortMember);
+            return valstoReturn;
         }
 
         // we do have master / children
@@ -526,6 +529,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             AvailableValues: newAvailableValues
         } as DualListBoxEditorState, () => this.raiseOnChange());
     }
+
     Remove() {
         let newSelectedValues = [...this.state.SelectedValues];
         let newAvailableValues = [...this.state.AvailableValues];
