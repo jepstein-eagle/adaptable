@@ -443,7 +443,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
         rowColItems[0].Content = item1
         rowColItems[1].Content = item2
         if (item3) {
-            let infoButton = <AdaptablePopover cssClassName={this.state.cssClassName} headerText={null} bodyText={[item3]} MessageType={MessageType.Info} />
+            let infoButton = <AdaptablePopover cssClassName={this.state.cssClassName} headerText={null} bodyText={[item3]} />
             rowColItems[2].Content = infoButton
         }
         return rowColItems;

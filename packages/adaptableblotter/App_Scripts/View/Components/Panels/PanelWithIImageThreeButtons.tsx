@@ -46,7 +46,7 @@ export class PanelWithImageThreeButtons extends React.Component<PanelWithImageTh
                     {this.props.infoBody != null &&
                         <span>
                             <label>{' '}</label>
-                            <span>  {' '} <AdaptablePopover cssClassName={cssClassName} headerText="" bodyText={this.props.infoBody} MessageType={MessageType.Info} /></span>
+                            <span>  {' '} <AdaptablePopover cssClassName={cssClassName} headerText="" bodyText={this.props.infoBody} /></span>
                         </span>
                     }
                 </Col>

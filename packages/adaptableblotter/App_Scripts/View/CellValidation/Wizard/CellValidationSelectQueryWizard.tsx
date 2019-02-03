@@ -35,7 +35,7 @@ export class CellValidationSelectQueryWizard extends React.Component<CellValidat
                     </Col>
                     <Col xs={12}>
                         <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Use Validation Query</Checkbox>
-                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Rule: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Rule."]} MessageType={MessageType.Info} />
+                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Validation Rule: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Rule."]} />
                     </Col>
                 </AdaptableBlotterForm>
 

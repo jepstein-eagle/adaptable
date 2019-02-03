@@ -52,11 +52,11 @@ export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, Ale
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Show Alert for ALL changes</Radio>
-                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Alert: All Changes"} bodyText={["An alert will fire for any change."]} MessageType={MessageType.Info} />
+                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Alert: All Changes"} bodyText={["An alert will fire for any change."]} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Show Alert when new cell value matches rule:</Radio>
-                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Alert: Custom"} bodyText={["Only show alerts that match the rule defined in the dropdown below."]} MessageType={MessageType.Info} />
+                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Alert: Custom"} bodyText={["Only show alerts that match the rule defined in the dropdown below."]} />
                     </Col>
                 </AdaptableBlotterForm>
 

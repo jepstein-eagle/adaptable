@@ -29,19 +29,19 @@ export class ReportRowTypeWizard extends React.Component<ReportRowTypeWizardProp
                 <Col xs={12} className="ab_large_margin">
                     <AdaptableBlotterForm inline>
                         <Radio value="All" checked={this.state.ReportRowScope == ReportRowScope.AllRows} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '}{' '}All Rows in the Data Source</Radio>
-                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: All Rows"} bodyText={["All rows in the datasource will be included in the report, whether visible or not at time of export."]} MessageType={MessageType.Info} />
+                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: All Rows"} bodyText={["All rows in the datasource will be included in the report, whether visible or not at time of export."]} />
                     </AdaptableBlotterForm>
                 </Col>
                 <Col xs={12} className="ab_large_margin">
                     <AdaptableBlotterForm inline>
                         <Radio value="Visible" checked={this.state.ReportRowScope == ReportRowScope.VisibleRows} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '} {' '}Visible Rows Only (at time that report is run)</Radio>
-                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: Visible Rows"} bodyText={["Only rows that are visible at the time the Report is exported will be included in the Export."]} MessageType={MessageType.Info} />
+                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: Visible Rows"} bodyText={["Only rows that are visible at the time the Report is exported will be included in the Export."]} />
                     </AdaptableBlotterForm>
                 </Col>
                 <Col xs={12} className="ab_large_margin">
                     <AdaptableBlotterForm inline>
                         <Radio value="Expression" checked={this.state.ReportRowScope == ReportRowScope.ExpressionRows} onChange={(e) => this.onScopeSelectChanged(e)}> {' '}{' '}{' '}By Query - built by you in next step</Radio>
-                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: Bespoke Rows"} bodyText={["Only the rows which match the query will be exported (visible or not)."]} MessageType={MessageType.Info} />
+                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: Bespoke Rows"} bodyText={["Only the rows which match the query will be exported (visible or not)."]} />
                     </AdaptableBlotterForm>
                 </Col>
             </Panel>

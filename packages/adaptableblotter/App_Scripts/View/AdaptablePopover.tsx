@@ -20,7 +20,7 @@ Very basic - for now! - info box that allows us to show Error where required.
 export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
     headerText: string
     bodyText: any[],
-    MessageType: MessageType
+    MessageType?: MessageType
     cssClassName: string,
     triggerAction?: string
     useButton?: boolean
@@ -32,6 +32,8 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
 export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}> {
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.INFO_BUTTON
+
+        let messageType : MessageType = (this.props.MessageType!= null) ? this.props.MessageType : MessageType.Info;
 
         let triggerAction = (this.props.triggerAction != null) ? this.props.triggerAction : ['click'];
 
@@ -48,14 +50,14 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
                     <ButtonInfo cssClassName={cssClassName}
                         onClick={() => null}
                         size={"small"}
-                        glyph={UIHelper.getGlyphByMessageType(this.props.MessageType)}
-                        bsStyle={UIHelper.getStyleNameByMessageType(this.props.MessageType)}
+                        glyph={UIHelper.getGlyphByMessageType(messageType)}
+                        bsStyle={UIHelper.getStyleNameByMessageType(messageType)}
                         DisplayMode="Glyph"
                         tooltipText={this.props.tooltipText}
                     />
                     :
-                    <Label bsSize="large" bsStyle={UIHelper.getStyleNameByMessageType(this.props.MessageType)} className="ab_medium_padding">
-                        <Glyphicon glyph={UIHelper.getGlyphByMessageType(this.props.MessageType)} />
+                    <Label bsSize="large" bsStyle={UIHelper.getStyleNameByMessageType(messageType)} className="ab_medium_padding">
+                        <Glyphicon glyph={UIHelper.getGlyphByMessageType(messageType)} />
                     </Label>
                 }
             </OverlayTrigger>

@@ -69,7 +69,7 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
                                 <Radio inline value="Sum" checked={this.state.YAxisTotal == AxisTotal.Sum} onChange={(e) => this.onYAisTotalChanged(e)}>Sum</Radio>
                                 <Radio inline value="Average" checked={this.state.YAxisTotal == AxisTotal.Average} onChange={(e) => this.onYAisTotalChanged(e)}>Average</Radio>
                                 {' '} {' '}
-                                <AdaptablePopover cssClassName={cssClassName} headerText={"Chart Y Axis: Display Total"} bodyText={["Choose whether the X Axis is grouped according to the sum of it values (by X Axis) or their average."]} MessageType={MessageType.Info} />
+                                <AdaptablePopover cssClassName={cssClassName} headerText={"Chart Y Axis: Display Total"} bodyText={["Choose whether the X Axis is grouped according to the sum of it values (by X Axis) or their average."]} />
                             </Col>
                         </Row>
 

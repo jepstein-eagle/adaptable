@@ -138,7 +138,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                             <Col xs={1}>
                                 <AdaptablePopover cssClassName={cssClassName} headerText={"Quick Search: Behaviour"}
                                     bodyText={[<b>Highlight Cells Only:</b>, " Changes back colour of cells matching search text", <br />, <br />, <b>Show Matching Rows Only:</b>, " Only shows rows containing cells matching search text", <br />, <br />, <b>Highlight Cells and Show Matching Rows:</b>, " Only shows rows containing cells (which are also coloured) matching search text"]}
-                                    MessageType={MessageType.Info} />
+                                    />
                             </Col>
                         </FormGroup>
 

@@ -48,7 +48,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                     {this.props.infoBody != null &&
                         <span>
                             <label>{' '}</label>
-                            <span>  {' '} <AdaptablePopover cssClassName={this.props.cssClassName} headerText="" bodyText={this.props.infoBody} MessageType={MessageType.Info} /></span>
+                            <span>  {' '} <AdaptablePopover cssClassName={this.props.cssClassName} headerText="" bodyText={this.props.infoBody} /></span>
                         </span>
                     }
 

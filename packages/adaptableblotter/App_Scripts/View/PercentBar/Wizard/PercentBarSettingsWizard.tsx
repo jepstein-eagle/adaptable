@@ -76,7 +76,7 @@ export class PercentBarSettingsWizard extends React.Component<PercentBarSettings
                                 <Checkbox style={{ margin: '0px' }} onChange={(e) => this.onShowValueChanged(e)} checked={this.state.ShowValue}></Checkbox>
                             </Col>
                             <Col xs={1}>
-                                <AdaptablePopover cssClassName={cssClassName} headerText={"Percent Bar: Show Value"} bodyText={["Whether to show additionally the value of the cell in the bar."]} MessageType={MessageType.Info} />
+                                <AdaptablePopover cssClassName={cssClassName} headerText={"Percent Bar: Show Value"} bodyText={["Whether to show additionally the value of the cell in the bar."]} />
                             </Col>
                         </Row>
                     </FormGroup>

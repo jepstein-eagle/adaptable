@@ -52,11 +52,11 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow ALL edits</Radio>
-                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} MessageType={MessageType.Info} />
+                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Validation Rule: No Edits Allowed"} bodyText={["Any edit is invalid - effectively makes the column read-only."]} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Disallow edits where the new cell value matches rule:</Radio>
-                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Validation Rule: Custom"} bodyText={["Disallow edits that match the rule defined in the dropdown below."]} MessageType={MessageType.Info} />
+                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Validation Rule: Custom"} bodyText={["Disallow edits that match the rule defined in the dropdown below."]} />
                     </Col>
                 </AdaptableBlotterForm>
 

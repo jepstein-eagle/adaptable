@@ -35,7 +35,7 @@ export class AlertSelectQueryWizard extends React.Component<AlertSelectQueryWiza
                     </Col>
                     <Col xs={12}>
                         <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Use Query</Checkbox>
-                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Alert: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Alert to be triggered."]} MessageType={MessageType.Info} />
+                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Alert: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Alert to be triggered."]} />
                     </Col>
                 </AdaptableBlotterForm>
 

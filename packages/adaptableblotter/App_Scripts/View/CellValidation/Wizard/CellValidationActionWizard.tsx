@@ -41,11 +41,11 @@ export class CellValidationActionWizard extends React.Component<CellValidationAc
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value={ActionMode.StopEdit} checked={this.state.ActionMode == ActionMode.StopEdit} onChange={(e) => this.onActionModeChanged(e)}>Prevent the cell edit</Radio>
                         {' '}{' '}
-                        <AdaptablePopover  cssClassName={cssClassName} headerText={"Cell Validation Action: Prevent"} bodyText={["Disallows all cell edits that break the validation rule with no override available."]} MessageType={MessageType.Info} />
+                        <AdaptablePopover  cssClassName={cssClassName} headerText={"Cell Validation Action: Prevent"} bodyText={["Disallows all cell edits that break the validation rule with no override available."]} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value={ActionMode.WarnUser} checked={this.state.ActionMode == ActionMode.WarnUser} onChange={(e) => this.onActionModeChanged(e)}>Show a warning</Radio>
-                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Cell Validation Action: Warning"} bodyText={["Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed."]} MessageType={MessageType.Info} />
+                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Cell Validation Action: Warning"} bodyText={["Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed."]} />
                     </Col>
                 </AdaptableBlotterForm>
 

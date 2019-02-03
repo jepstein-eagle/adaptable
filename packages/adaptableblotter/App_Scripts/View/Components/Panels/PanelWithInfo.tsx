@@ -23,7 +23,7 @@ export class PanelWithInfo extends React.Component<PanelWithInfoProps, {}> {
                     {this.props.header}
                     <span>
                         {' '}
-                        <AdaptablePopover  cssClassName={this.props.cssClassName} headerText="" bodyText={this.props.infoBody} MessageType={MessageType.Info} />
+                        <AdaptablePopover  cssClassName={this.props.cssClassName} headerText="" bodyText={this.props.infoBody} />
                     </span>
 
                 </Col>

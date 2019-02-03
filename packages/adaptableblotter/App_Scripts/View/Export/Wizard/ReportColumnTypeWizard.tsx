@@ -28,19 +28,19 @@ export class ReportColumnTypeWizard extends React.Component<ReportColumnTypeWiza
                 <Col xs={12} className="ab_large_margin">
                     <AdaptableBlotterForm inline>
                         <Radio value="All" checked={this.state.ReportColumnScope == ReportColumnScope.AllColumns} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '}{' '}All Columns in the Data Source</Radio>
-                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: All Columns"} bodyText={["All columns in the datasource will be included in the report, whether visible or not at time of export."]} MessageType={MessageType.Info} />
+                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: All Columns"} bodyText={["All columns in the datasource will be included in the report, whether visible or not at time of export."]}  />
                     </AdaptableBlotterForm>
                 </Col>
                 <Col xs={12} className="ab_large_margin">
                     <AdaptableBlotterForm inline>
                         <Radio value="Visible" checked={this.state.ReportColumnScope == ReportColumnScope.VisibleColumns} onChange={(e) => this.onScopeSelectChanged(e)}>{' '}{' '} {' '}Visible Columns Only (at time that report is run)</Radio>
-                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: Visible Columns"} bodyText={["Only columns that are visible at the time the Report is exported will be included in the Export."]} MessageType={MessageType.Info} />
+                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: Visible Columns"} bodyText={["Only columns that are visible at the time the Report is exported will be included in the Export."]}  />
                     </AdaptableBlotterForm>
                 </Col>
                 <Col xs={12} className="ab_large_margin">
                     <AdaptableBlotterForm inline>
                         <Radio value="Bespoke" checked={this.state.ReportColumnScope == ReportColumnScope.BespokeColumns} onChange={(e) => this.onScopeSelectChanged(e)}> {' '}{' '}{' '}Bespoke Columns - selected by you in next step</Radio>
-                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: Bespoke Columns"} bodyText={["Only the columns chosen in next step will be exported (visible or not)."]} MessageType={MessageType.Info} />
+                        {' '} <AdaptablePopover  cssClassName={cssClassName} headerText={"Report: Bespoke Columns"} bodyText={["Only the columns chosen in next step will be exported (visible or not)."]} />
                     </AdaptableBlotterForm>
                 </Col>
             </Panel>

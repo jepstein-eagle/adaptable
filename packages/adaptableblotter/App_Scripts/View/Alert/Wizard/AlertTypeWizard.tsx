@@ -33,17 +33,22 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
                     <Col xs={12} className="ab_large_margin">
                         <Radio className={cssClassName + "__radiobutton"} inline value="Info" checked={this.state.MessageType == MessageType.Info} onChange={(e) => this.onMessageTypeSelectChanged(e)}>Info</Radio>
                         {' '} {' '}
-                        <AdaptablePopover cssClassName={cssClassName} headerText={"Alert Type: Info"} bodyText={["Sends the alert as a message."]} MessageType={MessageType.Info} />
+                        <AdaptablePopover cssClassName={cssClassName} headerText={"Alert Type: Info"} bodyText={["Sends the alert as a message."]} />
+                    </Col>
+                    <Col xs={12} className="ab_large_margin">
+                        <Radio className={cssClassName + "__radiobutton"} inline value="Success" checked={this.state.MessageType == MessageType.Success} onChange={(e) => this.onMessageTypeSelectChanged(e)}>Success</Radio>
+                        {' '} {' '}
+                        <AdaptablePopover cssClassName={cssClassName} headerText={"Alert Type: Success"} bodyText={["Sends the alert as a sucess message."]} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio className={cssClassName + "__radiobutton"} inline value="Warning" checked={this.state.MessageType == MessageType.Warning} onChange={(e) => this.onMessageTypeSelectChanged(e)}>Warning</Radio>
                         {' '} {' '}
-                        <AdaptablePopover cssClassName={cssClassName} headerText={"Alert Type: Warning"} bodyText={["Sends the alert as a warning."]} MessageType={MessageType.Info} />
+                        <AdaptablePopover cssClassName={cssClassName} headerText={"Alert Type: Warning"} bodyText={["Sends the alert as a warning."]} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio className={cssClassName + "__radiobutton"} inline value="Error" checked={this.state.MessageType == MessageType.Error} onChange={(e) => this.onMessageTypeSelectChanged(e)}>Error</Radio>
                         {' '} {' '}
-                        <AdaptablePopover cssClassName={cssClassName} headerText={"Alert Type: Error"} bodyText={["Sends the alert as an error."]} MessageType={MessageType.Info} />
+                        <AdaptablePopover cssClassName={cssClassName} headerText={"Alert Type: Error"} bodyText={["Sends the alert as an error."]} />
                     </Col>
 
                 </AdaptableBlotterForm>
@@ -54,7 +59,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
                     <Col xs={12} className="ab_large_margin">
                         <Checkbox className={cssClassName + "__checkbox"} inline checked={this.state.ShowAsPopup == true} onChange={(e) => this.onShowAsPopupChanged(e)}>Show as Popup</Checkbox>
                         {' '} {' '}
-                        <AdaptablePopover cssClassName={cssClassName} headerText={"Alert Details"} bodyText={["Shows a popup in centre of screen when Alert is triggered."]} MessageType={MessageType.Info} />
+                        <AdaptablePopover cssClassName={cssClassName} headerText={"Alert Details"} bodyText={["A popup is displayed when the Alert is triggered."]} />
                     </Col>
 
                 </AdaptableBlotterForm>
@@ -68,6 +73,8 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
         let e = event.target as HTMLInputElement;
         if (e.value == "Info") {
             this.setState({ MessageType: MessageType.Info } as AlertTypeWizardState, () => this.props.UpdateGoBackState())
+        } else if (e.value == 'Success') {
+            this.setState({ MessageType: MessageType.Success } as AlertTypeWizardState, () => this.props.UpdateGoBackState())
         } else if (e.value == 'Warning') {
             this.setState({ MessageType: MessageType.Warning } as AlertTypeWizardState, () => this.props.UpdateGoBackState())
         } else if (e.value == 'Error') {

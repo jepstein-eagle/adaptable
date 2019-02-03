@@ -130,7 +130,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                                                         </FormControl>
                                                         {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Conditional Style: Font Size"}
                                                             bodyText={["Select the size of the font for the Conditional Style.  The default is 'Medium'."]}
-                                                            MessageType={MessageType.Info} />
+                                                            />
                                                     </AdaptableBlotterForm  >
                                                 }
                                             </Col>

@@ -1,7 +1,6 @@
 import * as React from "react";
-import { PanelProps, Panel, Row, Col, Button, Glyphicon, Radio } from 'react-bootstrap';
-import { AdaptablePopover } from '../../AdaptablePopover';
-import { MessageType, ContextMenuTab } from '../../../Utilities/Enums';
+import { PanelProps, Panel, Row, Col, Radio } from 'react-bootstrap';
+import { ContextMenuTab } from '../../../Utilities/Enums';
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
@@ -48,13 +47,13 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
                         <Row>
                             <Col xs={3} />
                             <Col xs={9}>
-                                <Radio inline value="Menu" checked={this.props.ContextMenuTab == ContextMenuTab.Menu} onChange={(e) => this.onSelectMenu(e)}>Menu</Radio>
+                                <Radio inline value="Menu" checked={this.props.ContextMenuTab == ContextMenuTab.Menu} onChange={(e) => this.onSelectMenu()}>Menu</Radio>
                             </Col>
                         </Row>
                         <Row>
                             <Col xs={3} />
                             <Col xs={9}>
-                                <Radio inline value="Filter" checked={this.props.ContextMenuTab == ContextMenuTab.Filter} onChange={(e) => this.onSelectFilter(e)}>Filter</Radio>
+                                <Radio inline value="Filter" checked={this.props.ContextMenuTab == ContextMenuTab.Filter} onChange={(e) => this.onSelectFilter()}>Filter</Radio>
                             </Col>
                         </Row>
                     </Col>
@@ -80,11 +79,11 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
         </div>;
     }
 
-    onSelectMenu(tab: any): any {
+    onSelectMenu(): any {
         this.props.ContextMenuChanged(ContextMenuTab.Menu);
     }
 
-    onSelectFilter(tab: any): any {
+    onSelectFilter(): any {
         this.props.ContextMenuChanged(ContextMenuTab.Filter);
     }
 }
