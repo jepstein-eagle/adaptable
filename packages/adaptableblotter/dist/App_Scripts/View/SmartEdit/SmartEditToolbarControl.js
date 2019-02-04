@@ -7,18 +7,19 @@ const SmartEditRedux = require("../../Redux/ActionsReducers/SmartEditRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const ButtonApply_1 = require("../Components/Buttons/ButtonApply");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
-const GeneralConstants = require("../../Core/Constants/GeneralConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
+const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const AdaptablePopover_1 = require("../AdaptablePopover");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const PreviewResultsPanel_1 = require("../Components/PreviewResultsPanel");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
-const EnumExtensions_1 = require("../../Core/Extensions/EnumExtensions");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
 const UIHelper_1 = require("../UIHelper");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class SmartEditToolbarControlComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -42,8 +43,8 @@ class SmartEditToolbarControlComponent extends React.Component {
     render() {
         let statusColour = this.getStatusColour();
         let cssClassName = this.props.cssClassName + "__SmartEdit";
-        let selctedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns);
-        let previewPanel = React.createElement(PreviewResultsPanel_1.PreviewResultsPanel, { cssClassName: cssClassName, UpdateValue: this.props.SmartEditValue, PreviewInfo: this.props.PreviewInfo, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SelectedColumn: selctedColumn, ShowPanel: true, ShowHeader: false });
+        let selectedColumn = (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)) ? ColumnHelper_1.ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns) : null;
+        let previewPanel = React.createElement(PreviewResultsPanel_1.PreviewResultsPanel, { cssClassName: cssClassName, UpdateValue: this.props.SmartEditValue, PreviewInfo: this.props.PreviewInfo, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SelectedColumn: selectedColumn, ShowPanel: true, ShowHeader: false });
         let operationMenuItems = EnumExtensions_1.EnumExtensions.getNames(Enums_1.MathOperation).filter(e => e != Enums_1.MathOperation.Replace).map((mathOperation, index) => {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: "index", onClick: () => this.props.onSmartEditOperationChange(mathOperation) }, mathOperation);
         });
@@ -95,15 +96,9 @@ class SmartEditToolbarControlComponent extends React.Component {
             this.onApplySmartEdit();
     }
     onConfirmWarningCellValidation() {
-        let confirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: SmartEditRedux.SmartEditApply(false),
-            ConfirmAction: SmartEditRedux.SmartEditApply(true),
-            ShowCommentBox: true
-        };
+        let confirmAction = SmartEditRedux.SmartEditApply(true);
+        let cancelAction = SmartEditRedux.SmartEditApply(false);
+        let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
         this.props.onConfirmWarningCellValidation(confirmation);
     }
     onApplySmartEdit() {

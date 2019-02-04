@@ -1,9 +1,9 @@
 import * as React from "react";
 import { PanelProps, Panel, Row, Col } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { MessageType } from '../../../Core/Enums';
+import { MessageType } from '../../../Utilities/Enums';
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export interface PanelWithInfoProps extends PanelProps {
     infoBody: any[]
@@ -23,7 +23,7 @@ export class PanelWithInfo extends React.Component<PanelWithInfoProps, {}> {
                     {this.props.header}
                     <span>
                         {' '}
-                        <AdaptablePopover  cssClassName={this.props.cssClassName} headerText="" bodyText={this.props.infoBody} MessageType={MessageType.Info} />
+                        <AdaptablePopover  cssClassName={this.props.cssClassName} headerText="" bodyText={this.props.infoBody} />
                     </span>
 
                 </Col>

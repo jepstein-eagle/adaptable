@@ -3,10 +3,10 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { CustomSortSummary } from '../CustomSort/CustomSortSummary'
 import { ConditionalStyleSummary } from '../ConditionalStyle/ConditionalStyleSummary'
 import { CellValidationSummary } from '../CellValidation/CellValidationSummary'
@@ -16,24 +16,28 @@ import { PlusMinusSummary } from '../PlusMinus/PlusMinusSummary'
 import { FormatColumnSummary } from '../FormatColumn/FormatColumnSummary'
 import { FlashingCellSummary } from '../FlashingCells/FlashingCellSummary'
 import { CalculatedColumnSummary } from '../CalculatedColumn/CalculatedColumnSummary'
-import { DataType, SelectionMode, AccessLevel } from '../../Core/Enums'
+import { DataType, SelectionMode, AccessLevel } from '../../Utilities/Enums'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
-import { IEntitlement, IColumnCategory } from "../../Core/Interface/Interfaces";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { ICalculatedColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnChooserSummary } from "../ColumnChooser/ColumnChooserSummary";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
+import { IEntitlement } from "../../Utilities/Interface/IEntitlement";
+import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
+import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { ColumnCategorySummary } from "../ColumnCategory/ColumnCategorySummary";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { PercentBarSummary } from "../PercentBar/PercentBarSummary";
+import { FreeTextColumnSummary } from "../FreeTextColumn/FreeTextColumnSummary";
+import { StrategyHelper } from "../../Utilities/Helpers/StrategyHelper";
 
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
     CalculatedColumns: Array<ICalculatedColumn>
     FunctionEntitlements: IEntitlement[]
-    ColumnCategories: IColumnCategory[]
+    ColumnCategory: IColumnCategory[]
 }
 
 export interface ColumnInfoState {
@@ -49,7 +53,8 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     }
     componentWillMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-            this.setState({ SelectedColumn: this.props.Columns.find(c => c.ColumnId == this.props.PopupParams), ShowSelector: false })
+            let column = ColumnHelper.getColumnFromId(this.props.PopupParams, this.props.Columns);
+            this.setState({ SelectedColumn: column, ShowSelector: false })
         }
     }
 
@@ -68,11 +73,13 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         let headerText = StrategyConstants.ColumnInfoStrategyName;
 
         let summaries: any[] = [];
-        if (ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories)) {
+        
+        if(this.state.SelectedColumn ){
+        if (ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategory)) {
             summaries.push(
 
-                <div key={StrategyConstants.ColumnChooserStrategyId} className={this.isStrategyReadOnly(StrategyConstants.ColumnChooserStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
-                    <ColumnChooserSummary
+                <div key={StrategyConstants.ColumnCategoryStrategyId} className={this.isStrategyReadOnly(StrategyConstants.ColumnCategoryStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
+                    <ColumnCategorySummary
                         key={StrategyConstants.ColumnChooserStrategyId}
                         SummarisedColumn={this.state.SelectedColumn}
                         TeamSharingActivated={this.props.TeamSharingActivated}
@@ -88,6 +95,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
                         key={StrategyConstants.CustomSortStrategyId}
                         SummarisedColumn={this.state.SelectedColumn}
                         TeamSharingActivated={this.props.TeamSharingActivated}
+                        Blotter ={this.props.Blotter}
                         getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList}
                         AccessLevel={this.getAccessLevel(StrategyConstants.CustomSortStrategyId)}
                     />
@@ -155,8 +163,30 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
                     />
                 </div>)
         }
-        if (this.state.SelectedColumn) {
-
+        if (this.isStrategyVisible(StrategyConstants.FreeTextColumnStrategyId)) {
+            summaries.push(
+                <div key={StrategyConstants.FreeTextColumnStrategyId} className={this.isStrategyReadOnly(StrategyConstants.FreeTextColumnStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
+                    <FreeTextColumnSummary
+                        key={StrategyConstants.FormatColumnStrategyId}
+                        SummarisedColumn={this.state.SelectedColumn}
+                        TeamSharingActivated={this.props.TeamSharingActivated}
+                        getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList}
+                        AccessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
+                    />
+                </div>)
+        }
+        if (this.isStrategyVisible(StrategyConstants.PercentBarStrategyId) && this.state.SelectedColumn.DataType == DataType.Number) {
+            summaries.push(
+                <div key={StrategyConstants.PercentBarStrategyId} className={this.isStrategyReadOnly(StrategyConstants.PercentBarStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
+                    <PercentBarSummary
+                        key={StrategyConstants.FormatColumnStrategyId}
+                        SummarisedColumn={this.state.SelectedColumn}
+                        TeamSharingActivated={this.props.TeamSharingActivated}
+                        getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList}
+                        AccessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
+                    />
+                </div>)
+        }
             if (this.isStrategyVisible(StrategyConstants.PlusMinusStrategyId) && this.state.SelectedColumn.DataType == DataType.Number) {
                 summaries.push(
                     <div key={StrategyConstants.PlusMinusStrategyId} className={this.isStrategyReadOnly(StrategyConstants.PlusMinusStrategyId) ? GeneralConstants.READ_ONLY_STYLE : ""}>
@@ -237,7 +267,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     }
 
     private getAccessLevel(strategyId: string): AccessLevel {
-        return EntitlementHelper.getEntitlementAccessLevelForStrategy(this.props.FunctionEntitlements, strategyId)
+        return StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.FunctionEntitlements, strategyId)
     }
 
 }
@@ -245,7 +275,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-        ColumnCategories: state.UserInterface.ColumnCategories,
+        ColumnCategory: state.ColumnCategory.ColumnCategories,
         FunctionEntitlements: state.Entitlements.FunctionEntitlements
     };
 }

@@ -1,25 +1,11 @@
-import * as React from "react";
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
-import { IColumn } from "../../../Core/Interface/IColumn";
-import { IUserFilter, IGridSort, IColumnFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
-import { AccessLevel } from "../../../Core/Enums";
+import { BaseProps } from "./BaseProps";
+import { IGridSort } from "../../../Utilities/Interface/IGridSort";
 
 //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
-export interface StrategyViewPopupProps<View> extends React.ClassAttributes<View> {
+export interface StrategyViewPopupProps<View> extends BaseProps<View> {
     PopupParams: string,
     onClearPopupParams: () => PopupRedux.PopupClearParamAction,
-    TeamSharingActivated: boolean
-
-    cssClassName: string
-    AccessLevel: AccessLevel,
-                  
-    Columns: IColumn[],
-    UserFilters: IUserFilter[],
-    SystemFilters: string[],
-    ColumnFilters: IColumnFilter[],
-    ModalContainer: HTMLElement,
-    ColorPalette: string[],
+    TeamSharingActivated: boolean,
     GridSorts: IGridSort[],
-    Blotter: IAdaptableBlotter
 }

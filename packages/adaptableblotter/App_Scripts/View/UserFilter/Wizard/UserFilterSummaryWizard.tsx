@@ -1,18 +1,14 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Well } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IUserFilter } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
-import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
-import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { KeyValuePair } from "../../UIInterfaces";
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 export interface UserFilterSummaryWizardProps extends AdaptableWizardStepProps<IUserFilter> {
-    Columns: IColumn[]
     UserFilters: IUserFilter[]
 }
 
@@ -26,7 +22,7 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
     render() {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
             { Key: "Query", Value: ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) }

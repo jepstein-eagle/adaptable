@@ -3,8 +3,8 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { ICalculatedColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 
 
 export class CalculatedColumnEntityRow extends React.Component<SharedEntityRowProps<CalculatedColumnEntityRow>, {}> {

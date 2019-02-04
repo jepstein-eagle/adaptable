@@ -1,22 +1,24 @@
 import { IShortcutStrategy } from './Interface/IShortcutStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
+import * as Redux from 'redux'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import { IAlert, IUIConfirmation } from '../Core/Interface/IMessage';
-import { Helper } from '../Core/Helpers/Helper';
-import { DataType, ActionMode, MessageType, StateChangedTrigger } from '../Core/Enums'
-import { MathOperation } from '../Core/Enums'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ObjectFactory } from '../Core/ObjectFactory';
-import { ICellInfo } from '../Core/Interface/Interfaces';
-import { IColumn } from '../Core/Interface/IColumn';
-import { IShortcut, ICellValidationRule } from '../Core/Api/Interface/IAdaptableBlotterObjects';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
 import { ShortcutState } from '../Redux/ActionsReducers/Interface/IState';
-
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { StateChangedTrigger, DataType, MathOperation, ActionMode, MessageType } from '../Utilities/Enums';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { ICellInfo } from "../Utilities/Interface/ICellInfo";
+import { IColumn } from '../Utilities/Interface/IColumn';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
+import { Helper } from '../Utilities/Helpers/Helper';
+import { IShortcut } from "../Utilities/Interface/BlotterObjects/IShortcut";
+import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { ObjectFactory } from '../Utilities/ObjectFactory';
+import { IUIConfirmation } from '../Utilities/Interface/IMessage';
+import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
 
@@ -34,7 +36,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     protected InitState() {
         if (this.ShortcutState != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut) {
             this.ShortcutState = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut;
-       
+
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Shortcut, this.ShortcutState)
             }
@@ -45,7 +47,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         if (this.ShortcutState.Shortcuts && ArrayExtensions.IsEmpty(this.ShortcutState.Shortcuts)) { return; }
         let activeCell: ICellInfo = this.blotter.getActiveCell();
         if (!activeCell) { return; }
-        let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == activeCell.ColumnId);
+        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
         if (activeCell && !selectedColumn.ReadOnly) {
             let columnDataType: DataType = selectedColumn.DataType;
             let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
@@ -82,12 +84,11 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             }
 
             if (activeShortcut) {
-                let dataChangedEvent: IDataChangedEvent = {
+                let dataChangedEvent: IDataChangedInfo = {
                     OldValue: activeCell.Value,
                     NewValue: valueToReplace,
                     ColumnId: activeCell.ColumnId,
                     IdentifierValue: activeCell.Id,
-                    Timestamp: Date.now(),
                     Record: null
                 }
 
@@ -138,7 +139,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     private ShowErrorPreventMessage(failedRule: ICellValidationRule): void {
-        this.blotter.api.alertShowError("Shortcut Failed", ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true)
+        this.blotter.api.alertApi.ShowError("Shortcut Failed", ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true)
     }
 
     private ShowWarningMessages(failedRules: ICellValidationRule[], shortcut: IShortcut, activeCell: ICellInfo, keyEventString: string, newValue: any, oldValue: any): void {
@@ -146,19 +147,11 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         failedRules.forEach(f => {
             warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this.blotter) + "\n";
         })
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: warningMessage,
-            ConfirmationText: "Bypass Rule",
-            //We cancel the edit before applying the shortcut so if cancel then there is nothing to do
-            CancelAction: null, //ShortcutRedux.ApplyShortcut(shortcut, activeCell, keyEventString, oldValue),
-            ConfirmAction: ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue),
-            ShowCommentBox: true
-        }
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+
+        let confirmAction: Redux.Action = ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue)
+        let cancelAction: Redux.Action = null;
+        let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
+        this.blotter.api.internalApi.PopupShowConfirmation(confirmation)
     }
 
 }
-
-

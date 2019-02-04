@@ -1,10 +1,8 @@
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { LeafExpressionOperator } from '../../../Core/Enums';
-import { ICellValidationRule } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { LeafExpressionOperator } from '../../../Utilities/Enums';
+import { ICellValidationRule } from "../../../Utilities/Interface/BlotterObjects/ICellValidationRule";
 export interface CellValidationRulesWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
-    Columns: Array<IColumn>;
 }
 export interface CellValidationSettingsWizardState {
     Operator: LeafExpressionOperator;
@@ -18,12 +16,9 @@ export declare class CellValidationRulesWizard extends React.Component<CellValid
     private onOperand1ValueChanged;
     private onOperand2ValueChanged;
     private onDisallowEditChanged;
-    private getColumnDataTypeFromState;
     private checkOperator;
     private isBetweenOperator;
     private getAvailableOperators;
-    createCellValidationDescription(CellValidation: ICellValidationRule): string;
-    private operatorRequiresValue;
     canNext(): boolean;
     canBack(): boolean;
     Next(): void;

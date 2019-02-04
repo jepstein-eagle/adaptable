@@ -3,23 +3,22 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { AlertWizard } from './Wizard/AlertWizard'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IAdaptableBlotterObject, IAlertDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { AlertHelper } from "../../Core/Helpers/AlertHelper";
-import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IAlertDefinition } from "../../Utilities/Interface/BlotterObjects/IAlertDefinition";
+import { AlertHelper } from "../../Utilities/Helpers/AlertHelper";
 
 export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComponent> {
     Alerts: IAlertDefinition[]
@@ -31,7 +30,7 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
 
     constructor(props: AlertSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render(): any {

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyConstants = require("../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../Core/Constants/ScreenPopups");
-const Enums_1 = require("../Core/Enums");
-const PreviewHelper_1 = require("../Core/Helpers/PreviewHelper");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
+const Enums_1 = require("../Utilities/Enums");
+const PreviewHelper_1 = require("../Utilities/Helpers/PreviewHelper");
 class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.BulkUpdateStrategyId, blotter);
@@ -48,7 +48,7 @@ class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             return {
                 Alert: {
                     Header: "Bulk Update Error",
-                    Msg: "Bulk Update is not allowed on readonly columns.\nPlease adjust the cell selection.",
+                    Msg: "Bulk Update is not permitted on readonly columns.\nPlease adjust the cell selection.",
                     MessageType: Enums_1.MessageType.Error
                 }
             };
@@ -80,7 +80,6 @@ class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                         NewValue: typedBulkUpdateValue,
                         ColumnId: selectedCell.columnId,
                         IdentifierValue: pair[0],
-                        Timestamp: Date.now(),
                         Record: null
                     };
                     let validationRules = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);

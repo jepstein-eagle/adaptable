@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 /// <reference path="../../typings/.d.ts" />
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const StyleVisualItem_1 = require("../Components/StyleVisualItem");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class FormatColumnEntityRow extends React.Component {
     render() {
         let formatColumn = this.props.AdaptableBlotterObject;

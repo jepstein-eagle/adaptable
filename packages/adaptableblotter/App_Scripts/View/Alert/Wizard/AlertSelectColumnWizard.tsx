@@ -1,16 +1,16 @@
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { SelectionMode } from '../../../Core/Enums';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import { SelectionMode } from '../../../Utilities/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
-import { IAlertDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAlertDefinition } from "../../../Utilities/Interface/BlotterObjects/IAlertDefinition";
+import { PRIMARY_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
 
 
 export interface AlertSelectColumnWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
-    Columns: Array<IColumn>
-}
+ }
 export interface AlertSelectColumnWizardState {
     ColumnId: string
 }
@@ -27,7 +27,7 @@ export class AlertSelectColumnWizard extends React.Component<AlertSelectColumnWi
         let cssClassName: string = this.props.cssClassName + "-selectcolumn"
        
         return <div className={cssClassName}>
-        <Panel header="Select a Column" bsStyle="primary">
+        <Panel header="Select a Column" bsStyle={PRIMARY_BSSTYLE}>
             <ColumnSelector  cssClassName={cssClassName} SelectedColumnIds={[this.state.ColumnId]}
                 ColumnList={this.props.Columns}
                 onColumnChange={columns => this.onColumnSelectedChanged(columns)}

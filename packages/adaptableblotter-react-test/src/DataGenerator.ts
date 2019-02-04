@@ -78,31 +78,6 @@ export class DataGenerator {
 
   private _numericCols: string[] = ["price", "bid", "ask"];
 
-  //Can't be bothered to create a ts file for kendo....
-  startTickingDataKendo(grid: any) {
-    setInterval(() => {
-      let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
-      //pick a random trade in the first ten
-      let trade = this.getRandomItem(grid.dataSource.data(), 10);
-      //pick a random colum in the numeric col
-      let columnName = this.getRandomItem(this._numericCols);
-      let initialNewValue = trade[columnName];
-      let newValue = initialNewValue + numberToAdd;
-      //for now I decide to use dataItem.set but we'll need to see how people are
-      //managing ticking data since the grid doesn't allow partial refresh... so if we keep calling sync on
-      //every tick the grid becomes unusable since we loose editing, cell selection etc......
-      //also if people call sync then we don't have the "change" event
-
-      // JW. Im still not sure that the crude cell.html isnt the easiest after all so long as we make sure it covers all bases
-      // as that way at least we dont refresh anything etc and it has no impact.
-      //   trade.set(columnName, newValue);
-
-      //trade[columnName] = newValue;
-      //trade.dirty = true;
-      //grid.dataSource.sync();
-    }, 5000);
-  }
-
   startTickingDataHypergrid(grid: any) {
     setInterval(() => {
       let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
@@ -291,21 +266,7 @@ export class DataGenerator {
     return trade;
   }
 
-  //jo: just a poor attempt to create GUID in JS.... what a stupid language
-  protected generateUuid(): string {
-    let d = new Date().getTime();
-    if (window.performance && typeof window.performance.now === "function") {
-      d += performance.now(); //use high-precision timer if available
-    }
-    let uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
-      let r = (d + Math.random() * 16) % 16 | 0;
-      d = Math.floor(d / 16);
-      return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-    });
-    return uuid;
-  }
-
-  // If minValue is 1 and maxValue is 2, then Math.random()*(maxValue-minValue+1)
+ // If minValue is 1 and maxValue is 2, then Math.random()*(maxValue-minValue+1)
   // generates a value between 0 and 2 =[0, 2), adding 1 makes this
   // [1, 3) and Math.floor gives 1 or 2.
   public generateRandomInt(minValue: number, maxValue: number): number {

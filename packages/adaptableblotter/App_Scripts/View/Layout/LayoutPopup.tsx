@@ -8,23 +8,22 @@ import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { LayoutWizard } from './Wizard/LayoutWizard'
 import { LayoutEntityRow } from './LayoutEntityRow'
-import { Helper } from '../../Core/Helpers/Helper';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { Helper } from '../../Utilities/Helpers/Helper';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IColumn } from "../../Core/Interface/IColumn";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
-import { SortOrder, AccessLevel } from "../../Core/Enums";
-import { ILayout, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
+import { SortOrder, AccessLevel } from "../../Utilities/Enums";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { ILayout } from "../../Utilities/Interface/BlotterObjects/ILayout";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
     Layouts: ILayout[];
@@ -37,7 +36,7 @@ interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> 
 class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableConfigEntityState> {
     constructor(props: LayoutPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     componentDidMount() {

@@ -1,12 +1,11 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumn } from '../../../Core/Interface/IColumn';
-import { LayoutSource } from '../../../Core/Enums';
-import { ILayout, IGridSort } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { LayoutSource } from '../../../Utilities/Enums';
+import { IGridSort } from "../../../Utilities/Interface/IGridSort";
+import { ILayout } from "../../../Utilities/Interface/BlotterObjects/ILayout";
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<ILayout> {
     Layouts: Array<ILayout>;
     GridSorts: IGridSort[];
-    Columns: Array<IColumn>;
 }
 export interface LayoutSelectionWizardState {
     LayoutSource: LayoutSource;

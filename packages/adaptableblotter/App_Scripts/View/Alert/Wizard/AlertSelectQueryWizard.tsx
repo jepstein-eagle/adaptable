@@ -1,15 +1,15 @@
 import * as React from "react";
 import { Col, Panel, Checkbox, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IAlertDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { MessageType } from '../../../Core/Enums';
+import { IAlertDefinition } from "../../../Utilities/Interface/BlotterObjects/IAlertDefinition";
+import { MessageType } from '../../../Utilities/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
+import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 export interface AlertSelectQueryWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
-    Columns: Array<IColumn>
+    
 }
 export interface AlertSelectQueryWizardState {
     HasExpression: boolean;
@@ -35,7 +35,7 @@ export class AlertSelectQueryWizard extends React.Component<AlertSelectQueryWiza
                     </Col>
                     <Col xs={12}>
                         <Checkbox inline onChange={(e) => this.onOtherExpressionOptionChanged(e)} checked={this.state.HasExpression}>Use Query</Checkbox>
-                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Alert: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Alert to be triggered."]} MessageType={MessageType.Info} />
+                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Alert: Query"} bodyText={["Create a query (in next step) which will stipulate other cell values required for the Alert to be triggered."]} />
                     </Col>
                 </AdaptableBlotterForm>
 

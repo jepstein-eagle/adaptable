@@ -2,32 +2,30 @@
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { DropdownButton, MenuItem, SplitButton, OverlayTrigger, Tooltip, Glyphicon, InputGroup } from 'react-bootstrap';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 //import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { ExportDestination, SortOrder, AccessLevel } from '../../Core/Enums';
-import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';
-import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
-import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IReport } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ReportHelper } from "../../Core/Helpers/ReportHelper";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
+import { ExportDestination, SortOrder, AccessLevel } from '../../Utilities/Enums';
+import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
+import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
+import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
+import { ReportHelper } from "../../Utilities/Helpers/ReportHelper";
 
 
 interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
@@ -49,7 +47,6 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         let cssClassName: string = this.props.cssClassName + "__export";
         let savedReport: IReport = this.props.Reports.find(s => s.Name == this.props.CurrentReport);
         let savedReportIndex = this.props.Reports.findIndex(s => s.Name == this.props.CurrentReport);
-        let sortedReports: IReport[] = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.Reports, "Name")
 
         let currentReportId = StringExtensions.IsNullOrEmpty(this.props.CurrentReport) ?
             selectReportString : this.props.CurrentReport
@@ -76,6 +73,11 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             iPushPullExcelMenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Sync with iPushPull"}</MenuItem>
         }
 
+        let deleteMessage: string = "Are you sure you want to delete '";
+        if(savedReport!=null){
+            deleteMessage = deleteMessage + savedReport.Name + "?";
+        }
+      
         const exportGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Export"}</Tooltip >}>
             <Glyphicon glyph={StrategyConstants.ExportGlyph} />
         </OverlayTrigger>
@@ -157,7 +159,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     overrideDisableButton={savedReport == null || ReportHelper.IsSystemReport(savedReport)}
                     DisplayMode="Glyph"
                     ConfirmAction={ExportRedux.ReportDelete(savedReportIndex)}
-                    ConfirmationMsg={"Are you sure you want to delete '" + !savedReport ? "" : savedReport.Name + "'?"}
+                    ConfirmationMsg={deleteMessage}
                     ConfirmationTitle={"Delete Report"}
                     AccessLevel={this.props.AccessLevel}
                 />

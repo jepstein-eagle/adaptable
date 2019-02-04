@@ -1,6 +1,6 @@
 import * as React from "react";
-import { IColumnFilterContext } from '../../../Strategy/Interface/IColumnFilterStrategy';
-import { DistinctCriteriaPairValue, ContextMenuTab } from '../../../Core/Enums';
+import { IColumnFilterContext } from "../../../Utilities/Interface/IColumnFilterContext";
+import { DistinctCriteriaPairValue, ContextMenuTab } from '../../../Utilities/Enums';
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 export interface FilterFormState {
     ColumnValuePairs: Array<IRawValueDisplayValuePair>;

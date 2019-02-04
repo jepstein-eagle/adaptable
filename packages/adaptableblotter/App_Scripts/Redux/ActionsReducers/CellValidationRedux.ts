@@ -1,75 +1,76 @@
 import * as Redux from 'redux';
 import { CellValidationState } from './Interface/IState'
-import { ICellValidationRule } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
-import { ActionMode } from '../../Core/Enums';
+import { ICellValidationRule } from "../../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { ActionMode } from '../../Utilities/Enums';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const CELL_VALIDATION_ADD_UPDATE = 'CELL_VALIDATION_ADD_UPDATE';
 export const CELL_VALIDATION_DELETE = 'CELL_VALIDATION_DELETE';
 export const CELL_VALIDATION_CHANGE_MODE = 'CELL_VALIDATION_CHANGE_MODE';
 
 export interface CellValidationAddUpdateAction extends Redux.Action {
-    Index: number,
-    CellValidationRule: ICellValidationRule
+    index: number,
+    cellValidationRule: ICellValidationRule
 }
 
 export interface CellValidationDeleteAction extends Redux.Action {
-    Index: number,
+    index: number,
 }
 
 export interface CellValidationChangeModeAction extends Redux.Action {
-    Index: number,
+    index: number,
     ActionMode: ActionMode;
 }
 
-export const CellValidationAddUpdate = (Index: number, CellValidationRule: ICellValidationRule): CellValidationAddUpdateAction => ({
+export const CellValidationAddUpdate = (index: number, cellValidationRule: ICellValidationRule): CellValidationAddUpdateAction => ({
     type: CELL_VALIDATION_ADD_UPDATE,
-    Index,
-    CellValidationRule
+    index,
+    cellValidationRule
 })
 
-export const CellValidationDelete = (Index: number): CellValidationDeleteAction => ({
+export const CellValidationDelete = (index: number): CellValidationDeleteAction => ({
     type: CELL_VALIDATION_DELETE,
-    Index,
+    index,
 })
 
-export const CellValidationChangeMode = (Index: number, ActionMode: ActionMode): CellValidationChangeModeAction => ({
+export const CellValidationChangeMode = (index: number, ActionMode: ActionMode): CellValidationChangeModeAction => ({
     type: CELL_VALIDATION_CHANGE_MODE,
-    Index,
+    index,
     ActionMode
 })
 
 const initialCellValidationState: CellValidationState = {
-    CellValidations: []
+    CellValidations: EMPTY_ARRAY
 }
 
 export const CellValidationReducer: Redux.Reducer<CellValidationState> = (state: CellValidationState = initialCellValidationState, action: Redux.Action): CellValidationState => {
-    let CellValidations: ICellValidationRule[]
+    let cellValidations: ICellValidationRule[]
 
     switch (action.type) {
 
         case CELL_VALIDATION_ADD_UPDATE: {
             let actionTyped = (<CellValidationAddUpdateAction>action)
-            CellValidations = [].concat(state.CellValidations)
-            if (actionTyped.Index == -1) {
-                CellValidations.push(actionTyped.CellValidationRule)
+            cellValidations = [].concat(state.CellValidations)
+            if (actionTyped.index == -1) {
+                cellValidations.push(actionTyped.cellValidationRule)
             } else {
-                CellValidations[actionTyped.Index] = actionTyped.CellValidationRule
+                cellValidations[actionTyped.index] = actionTyped.cellValidationRule
             }
-            return Object.assign({}, state, { CellValidations: CellValidations })
+            return Object.assign({}, state, { CellValidations: cellValidations })
         }
 
         case CELL_VALIDATION_DELETE: {
-            CellValidations = [].concat(state.CellValidations)
-            CellValidations.splice((<CellValidationDeleteAction>action).Index, 1)
-            return Object.assign({}, state, { CellValidations: CellValidations })
+            cellValidations = [].concat(state.CellValidations)
+            cellValidations.splice((<CellValidationDeleteAction>action).index, 1)
+            return Object.assign({}, state, { CellValidations: cellValidations })
         }
 
         case CELL_VALIDATION_CHANGE_MODE: {
             let actionTyped = (<CellValidationChangeModeAction>action)
-            CellValidations = [].concat(state.CellValidations)
-            let cellValidation = CellValidations[actionTyped.Index]
-            CellValidations[actionTyped.Index] = Object.assign({}, cellValidation, { ActionMode: actionTyped.ActionMode })
-            return Object.assign({}, state, { CellValidations: CellValidations })
+            cellValidations = [].concat(state.CellValidations)
+            let cellValidation = cellValidations[actionTyped.index]
+            cellValidations[actionTyped.index] = Object.assign({}, cellValidation, { ActionMode: actionTyped.ActionMode })
+            return Object.assign({}, state, { CellValidations: cellValidations })
         }
 
         default:

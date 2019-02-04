@@ -1,18 +1,14 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { IColumn } from "../../../Core/Interface/IColumn";
-import { LayoutHelper } from "../../../Core/Helpers/LayoutHelper";
-import { ILayout } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
+import { IColumn } from "../../../Utilities/Interface/IColumn";
+import { LayoutHelper } from "../../../Utilities/Helpers/LayoutHelper";
+import { ILayout } from "../../../Utilities/Interface/BlotterObjects/ILayout";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 export interface LayoutSummaryWizardProps extends AdaptableWizardStepProps<ILayout> {
-    Columns: IColumn[]
 }
 
 export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProps, {}> implements AdaptableWizardStep {
@@ -22,7 +18,7 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Columns", Value: this.getColumnNames()},
             { Key: "Grid Sorts", Value: LayoutHelper.getGridSort(this.props.Data.GridSorts, this.props.Columns) },

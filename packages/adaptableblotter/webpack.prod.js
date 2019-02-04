@@ -6,9 +6,8 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-        'adaptableblotterkendo': ["./App_Scripts/Vendors/Kendo/AdaptableBlotter.ts"],
-        'adaptableblotterhypergrid': ["./App_Scripts/Vendors/Hypergrid/AdaptableBlotter.ts"],
-        'adaptableblotteraggrid': ["./App_Scripts/Vendors/agGrid/AdaptableBlotter.ts"],
+        'adaptableblotterhypergrid': ["./App_Scripts/Hypergrid/AdaptableBlotter.ts"],
+        'adaptableblotteraggrid': ["./App_Scripts/agGrid/AdaptableBlotter.ts"],
     },
     output: {
         path: __dirname + '/dist',
@@ -16,13 +15,19 @@ module.exports = {
         library: "[name]",
         libraryTarget: 'umd'
     },
-    devtool: 'source-map',
     externals: {
-        "ag-grid": "ag-grid",
-        "ag-grid/main": "ag-grid",
-        "ag-grid/dist/lib/entities/colDef": "ag-grid",
-        "ag-grid/dist/lib/entities/gridOptions": "ag-grid",
-        "ag-grid/dist/lib/gridApi": "ag-grid",
+        // old version - Samed: please check that the change is correct!
+     //   "ag-grid": "ag-grid",
+     //   "ag-grid/main": "ag-grid",
+     //   "ag-grid/dist/lib/entities/colDef": "ag-grid",
+     //   "ag-grid/dist/lib/entities/gridOptions": "ag-grid",
+     //   "ag-grid/dist/lib/gridApi": "ag-grid",
+
+        "ag-grid-community": "ag-grid",
+        "ag-grid-community/main": "ag-grid",
+        "ag-grid-community/dist/lib/entities/colDef": "ag-grid",
+        "ag-grid-community/dist/lib/entities/gridOptions": "ag-grid",
+        "ag-grid-community/dist/lib/gridApi": "ag-grid",
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
@@ -35,14 +40,13 @@ module.exports = {
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
         new webpack.ProvidePlugin({
-            Promise: 'es6-promise-promise', // works as expected 
+            Promise: 'es6-promise-promise', // works as expected
         }),
         new CopyWebpackPlugin([{
             from: 'App_Scripts/Styles',
             to: 'App_Scripts/Styles',
             ignore: [ '*.ts' ],
         }]),
-        
       ],
     module: {
         loaders: [
@@ -59,9 +63,9 @@ module.exports = {
                     path.resolve(__dirname, "node_modules/igniteui-react-charts")
                 ],
             },
-            // handle main stylesheets required 
+            // handle main stylesheets required
             { test: /\.css$/, exclude: /themes/, loader: 'style-loader!css-loader' },
-            // handle main stylesheets required 
+            // handle main stylesheets required
             { test: /\.css$/, exclude: /stylesheets/, loader: 'css-to-string-loader!css-loader' },
             { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
         ]

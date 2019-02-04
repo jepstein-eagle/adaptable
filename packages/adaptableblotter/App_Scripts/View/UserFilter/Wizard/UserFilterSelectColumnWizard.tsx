@@ -1,16 +1,15 @@
 import * as React from "react";
 import { Panel, Well, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IUserFilter } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { SelectionMode } from '../../../Core/Enums';
-import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import { SelectionMode } from '../../../Utilities/Enums';
+import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 
 
 export interface UserFilterSelectColumnWizardProps extends AdaptableWizardStepProps<IUserFilter> {
-    Columns: Array<IColumn>
 }
 export interface UserFilterSelectColumnWizardState {
     ColumnId: string

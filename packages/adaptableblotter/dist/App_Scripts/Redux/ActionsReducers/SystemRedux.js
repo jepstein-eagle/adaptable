@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const CalendarHelper_1 = require("../../Core/Helpers/CalendarHelper");
+const CalendarHelper_1 = require("../../Utilities/Helpers/CalendarHelper");
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
 This allows us to keep the other reducers pure in terms of everything persists
@@ -16,6 +17,8 @@ exports.SYSTEM_ALERT_DELETE_ALL = 'SYSTEM_ALERT_DELETE_ALL';
 // Live Reports
 exports.REPORT_START_LIVE = 'REPORT_START_LIVE';
 exports.REPORT_STOP_LIVE = 'REPORT_STOP_LIVE';
+exports.SET_IPP_DOMAIN_PAGES = 'SET_IPP_DOMAIN_PAGES';
+exports.REPORT_SET_ERROR_MESSAGE = 'REPORT_SET_ERROR_MESSAGE';
 // Smart Edit
 exports.SMARTEDIT_CHECK_CELL_SELECTION = 'SMARTEDIT_CHECK_CELL_SELECTION';
 exports.SMARTEDIT_FETCH_PREVIEW = 'SMARTEDIT_FETCH_PREVIEW';
@@ -25,6 +28,11 @@ exports.SMARTEDIT_SET_PREVIEW = 'SMARTEDIT_SET_PREVIEW';
 exports.BULK_UPDATE_CHECK_CELL_SELECTION = 'BULK_UPDATE_CHECK_CELL_SELECTION';
 exports.BULK_UPDATE_SET_VALID_SELECTION = 'BULK_UPDATE_SET_VALID_SELECTION';
 exports.BULK_UPDATE_SET_PREVIEW = 'BULK_UPDATE_SET_PREVIEW';
+// Chart Managemet 
+exports.CHART_SET_CHART_DATA = 'CHART_SET_CHART_DATA';
+exports.CHART_SET_CHART_VISIBILITY = 'CHART_SET_CHART_VISIBILITY';
+// Error Messages
+exports.CALCULATEDCOLUMN_SET_ERROR_MESSAGE = 'CALCULATEDCOLUMN_SET_ERROR_MESSAGE';
 exports.SystemSetHealthStatus = (SystemStatus) => ({
     type: exports.SYSTEM_SET_HEALTH_STATUS,
     SystemStatus
@@ -77,15 +85,40 @@ exports.BulkUpdateSetPreview = (BulkUpdatePreviewInfo) => ({
     type: exports.BULK_UPDATE_SET_PREVIEW,
     BulkUpdatePreviewInfo
 });
+exports.ChartSetChartData = (chartData) => ({
+    type: exports.CHART_SET_CHART_DATA,
+    chartData
+});
+exports.ChartSetChartVisibility = (ChartVisibility) => ({
+    type: exports.CHART_SET_CHART_VISIBILITY,
+    ChartVisibility
+});
+exports.CalculatedColumnSetErrorMessage = (ErrorMsg) => ({
+    type: exports.CALCULATEDCOLUMN_SET_ERROR_MESSAGE,
+    ErrorMsg
+});
+exports.SetIPPDomainPages = (IPPDomainsPages) => ({
+    type: exports.SET_IPP_DOMAIN_PAGES,
+    IPPDomainsPages
+});
+exports.ReportSetErrorMessage = (ErrorMessage) => ({
+    type: exports.REPORT_SET_ERROR_MESSAGE,
+    ErrorMessage
+});
 const initialSystemState = {
-    SystemStatus: { StatusMessage: "", StatusColour: "Green" },
-    Alerts: [],
+    SystemStatus: { StatusMessage: GeneralConstants_1.EMPTY_STRING, StatusColour: GeneralConstants_1.SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR },
+    Alerts: GeneralConstants_1.EMPTY_ARRAY,
     AvailableCalendars: CalendarHelper_1.CalendarHelper.getSystemCalendars(),
-    CurrentLiveReports: [],
+    CurrentLiveReports: GeneralConstants_1.EMPTY_ARRAY,
     IsValidSmartEditSelection: false,
     SmartEditPreviewInfo: null,
     IsValidBulkUpdateSelection: false,
-    BulkUpdatePreviewInfo: null
+    BulkUpdatePreviewInfo: null,
+    ChartData: null,
+    ChartVisibility: GeneralConstants_1.SYSTEM_DEFAULT_CHART_VISIBILITY,
+    CalculatedColumnErrorMessage: GeneralConstants_1.EMPTY_STRING,
+    IPPDomainsPages: GeneralConstants_1.EMPTY_ARRAY,
+    ReportErrorMessage: GeneralConstants_1.EMPTY_STRING
 };
 exports.SystemReducer = (state = initialSystemState, action) => {
     let alerts;
@@ -137,6 +170,20 @@ exports.SystemReducer = (state = initialSystemState, action) => {
             return Object.assign({}, state, { IsValidBulkUpdateSelection: action.IsValidBulkUpdateSelection });
         case exports.BULK_UPDATE_SET_PREVIEW:
             return Object.assign({}, state, { BulkUpdatePreviewInfo: action.BulkUpdatePreviewInfo });
+        // Chart Actions
+        case exports.CHART_SET_CHART_DATA:
+            return Object.assign({}, state, { ChartData: action.chartData });
+        case exports.CHART_SET_CHART_VISIBILITY:
+            return Object.assign({}, state, { ChartVisibility: action.ChartVisibility });
+        case exports.CALCULATEDCOLUMN_SET_ERROR_MESSAGE: {
+            return Object.assign({}, state, { CalculatedColumnErrorMessage: action.ErrorMsg });
+        }
+        case exports.SET_IPP_DOMAIN_PAGES: {
+            return Object.assign({}, state, { IPPDomainsPages: action.IPPDomainsPages });
+        }
+        case exports.REPORT_SET_ERROR_MESSAGE: {
+            return Object.assign({}, state, { ReportErrorMessage: action.ErrorMessage });
+        }
         default:
             return state;
     }

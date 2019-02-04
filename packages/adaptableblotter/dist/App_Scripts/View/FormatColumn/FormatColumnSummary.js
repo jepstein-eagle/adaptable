@@ -2,23 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const FormatColumnWizard_1 = require("./Wizard/FormatColumnWizard");
 const FormatColumnRedux = require("../../Redux/ActionsReducers/FormatColumnRedux");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
 const StrategyProfile_1 = require("../Components/StrategyProfile");
 const StyleVisualItem_1 = require("../Components/StyleVisualItem");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 class FormatColumnSummaryComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__formatcolumn";

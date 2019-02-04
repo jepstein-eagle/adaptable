@@ -2,24 +2,25 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const AdaptableViewFactory_1 = require("../../AdaptableViewFactory");
 const UIHelper_1 = require("../../UIHelper");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
-const GeneralConstants = require("../../../Core/Constants/GeneralConstants");
-const EntitlementHelper_1 = require("../../../Core/Helpers/EntitlementHelper");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
+const GeneralConstants = require("../../../Utilities/Constants/GeneralConstants");
+const StrategyHelper_1 = require("../../../Utilities/Helpers/StrategyHelper");
+const BlotterHelper_1 = require("../../../Utilities/Helpers/BlotterHelper");
 class AdaptableBlotterPopup extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE;
         let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.Blotter.BlotterOptions, document);
-        let accessLevel = EntitlementHelper_1.EntitlementHelper.getEntitlementAccessLevelForStrategy(this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, this.props.ComponentStrategy);
+        let accessLevel = StrategyHelper_1.StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, this.props.ComponentStrategy);
         if (this.props.ComponentName) {
             let bodyElement = AdaptableViewFactory_1.AdaptableViewFactory[this.props.ComponentName];
             //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
             let commonProps = {
                 PopupParams: this.props.PopupParams,
                 onClearPopupParams: () => this.props.onClearPopupParams(),
-                TeamSharingActivated: this.props.Blotter.BlotterOptions.enableRemoteConfigServer,
+                TeamSharingActivated: BlotterHelper_1.BlotterHelper.IsConfigServerEnabled(this.props.Blotter.BlotterOptions),
                 Columns: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
                 UserFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
                 SystemFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,

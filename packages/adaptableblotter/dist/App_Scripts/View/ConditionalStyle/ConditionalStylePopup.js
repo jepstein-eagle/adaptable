@@ -4,24 +4,24 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const ConditionalStyleRedux = require("../../Redux/ActionsReducers/ConditionalStyleRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const ConditionalStyleEntityRow_1 = require("./ConditionalStyleEntityRow");
 const ConditionalStyleWizard_1 = require("./Wizard/ConditionalStyleWizard");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 class ConditionalStylePopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
@@ -50,13 +50,13 @@ class ConditionalStylePopupComponent extends React.Component {
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Conditional Style", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.ConditionalStyleStrategyName, button: newButton, bsStyle: "primary", cssClassName: cssClassName, glyphicon: StrategyConstants.ConditionalStyleGlyph, infoBody: infoBody },
+            React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.ConditionalStyleStrategyName, button: newButton, bsStyle: StyleConstants.PRIMARY_BSSTYLE, cssClassName: cssClassName, glyphicon: StrategyConstants.ConditionalStyleGlyph, infoBody: infoBody },
                 this.props.ConditionalStyles.length == 0 &&
                     React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Click 'New' to create a new conditional style to be applied at row or column level."),
                 conditionalStyles.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: conditionalStyles }),
                 this.state.EditedAdaptableBlotterObject != null &&
-                    React.createElement(ConditionalStyleWizard_1.ConditionalStyleWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: null, ModalContainer: this.props.ModalContainer, ColorPalette: this.props.ColorPalette, StyleClassNames: this.props.StyleClassNames, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
+                    React.createElement(ConditionalStyleWizard_1.ConditionalStyleWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: null, ModalContainer: this.props.ModalContainer, ColorPalette: this.props.ColorPalette, ColumnCategories: this.props.ColumnCategories, StyleClassNames: this.props.StyleClassNames, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }
     onNew() {
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory_1.ObjectFactory.CreateEmptyConditionalStyle(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
@@ -76,15 +76,20 @@ class ConditionalStylePopupComponent extends React.Component {
     }
     canFinishWizard() {
         let conditionalStyle = this.state.EditedAdaptableBlotterObject;
-        return (conditionalStyle.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Row || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
-            ExpressionHelper_1.ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) &&
-            UIHelper_1.UIHelper.IsNotEmptyStyle(conditionalStyle.Style);
+        if (conditionalStyle.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column && StringExtensions_1.StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnId)) {
+            return false;
+        }
+        if (conditionalStyle.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory && StringExtensions_1.StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnCategoryId)) {
+            return false;
+        }
+        return ExpressionHelper_1.ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) && UIHelper_1.UIHelper.IsNotEmptyStyle(conditionalStyle.Style);
     }
 }
 function mapStateToProps(state, ownProps) {
     return {
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
-        StyleClassNames: state.UserInterface.StyleClassNames
+        StyleClassNames: state.UserInterface.StyleClassNames,
+        ColumnCategories: state.ColumnCategory.ColumnCategories
     };
 }
 function mapDispatchToProps(dispatch) {

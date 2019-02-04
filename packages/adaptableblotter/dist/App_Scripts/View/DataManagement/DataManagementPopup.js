@@ -3,15 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const UIHelper_1 = require("../UIHelper");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 class DataManagementPopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     render() {
         let cssClassName = this.props.cssClassName + "__userDataManagement";
@@ -27,7 +27,7 @@ class DataManagementPopupComponent extends React.Component {
                 clearButton));
     }
     onClear() {
-        this.props.Blotter.api.configDeleteLocalStorage();
+        this.props.Blotter.api.configApi.configDeleteLocalStorage();
     }
 }
 function mapStateToProps(state, ownProps) {

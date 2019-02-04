@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 class ReportColumnTypeWizard extends React.Component {
     constructor(props) {
@@ -26,7 +26,7 @@ class ReportColumnTypeWizard extends React.Component {
                             "All Columns in the Data Source"),
                         ' ',
                         " ",
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: All Columns", bodyText: ["All columns in the datasource will be included in the report, whether visible or not at time of export."], MessageType: Enums_1.MessageType.Info }))),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: All Columns", bodyText: ["All columns in the datasource will be included in the report, whether visible or not at time of export."] }))),
                 React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                         React.createElement(react_bootstrap_1.Radio, { value: "Visible", checked: this.state.ReportColumnScope == Enums_1.ReportColumnScope.VisibleColumns, onChange: (e) => this.onScopeSelectChanged(e) },
@@ -37,7 +37,7 @@ class ReportColumnTypeWizard extends React.Component {
                             "Visible Columns Only (at time that report is run)"),
                         ' ',
                         " ",
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: Visible Columns", bodyText: ["Only columns that are visible at the time the Report is exported will be included in the Export."], MessageType: Enums_1.MessageType.Info }))),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: Visible Columns", bodyText: ["Only columns that are visible at the time the Report is exported will be included in the Export."] }))),
                 React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                         React.createElement(react_bootstrap_1.Radio, { value: "Bespoke", checked: this.state.ReportColumnScope == Enums_1.ReportColumnScope.BespokeColumns, onChange: (e) => this.onScopeSelectChanged(e) },
@@ -48,7 +48,7 @@ class ReportColumnTypeWizard extends React.Component {
                             "Bespoke Columns - selected by you in next step"),
                         ' ',
                         " ",
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: Bespoke Columns", bodyText: ["Only the columns chosen below will be exported (visible or not)."], MessageType: Enums_1.MessageType.Info })))));
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: Bespoke Columns", bodyText: ["Only the columns chosen in next step will be exported (visible or not)."] })))));
     }
     onScopeSelectChanged(event) {
         let e = event.target;
@@ -70,6 +70,9 @@ class ReportColumnTypeWizard extends React.Component {
     canBack() { return true; }
     Next() {
         this.props.Data.ReportColumnScope = this.state.ReportColumnScope;
+        if (this.state.ReportColumnScope != Enums_1.ReportColumnScope.BespokeColumns) {
+            this.props.Data.ColumnIds = [];
+        }
     }
     Back() {
         //todo

@@ -8,19 +8,20 @@ const AdvancedSearchRedux = require("../../Redux/ActionsReducers/AdvancedSearchR
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const AdvancedSearchWizard_1 = require("./Wizard/AdvancedSearchWizard");
 const AdvancedSearchEntityRow_1 = require("./AdvancedSearchEntityRow");
-const Helper_1 = require("../../Core/Helpers/Helper");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
 class AdvancedSearchPopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (this.props.PopupParams == "New") {
@@ -52,7 +53,7 @@ class AdvancedSearchPopupComponent extends React.Component {
         });
         let newSearchButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create New Advanced Search", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, bsStyle: "primary", headerText: StrategyConstants.AdvancedSearchStrategyName, infoBody: infoBody, button: newSearchButton, glyphicon: StrategyConstants.AdvancedSearchGlyph, className: "ab_main_popup" },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, bsStyle: StyleConstants_1.PRIMARY_BSSTYLE, headerText: StrategyConstants.AdvancedSearchStrategyName, infoBody: infoBody, button: newSearchButton, glyphicon: StrategyConstants.AdvancedSearchGlyph, className: "ab_main_popup" },
                 advancedSearchRows.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: advancedSearchRows }),
                 advancedSearchRows.length == 0 &&

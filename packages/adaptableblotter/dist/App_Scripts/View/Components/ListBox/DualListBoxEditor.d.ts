@@ -1,5 +1,11 @@
 import * as React from "react";
-import { SortOrder } from '../../../Core/Enums';
+import { SortOrder } from '../../../Utilities/Enums';
+import { IMasterChildren } from "../../../Utilities/Interface/IMasterChildren";
+export interface IMasterValue {
+    value: string;
+    isOpen: boolean;
+    isAvailable: boolean;
+}
 export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
     SelectedValues: Array<any>;
     AvailableValues: Array<any>;
@@ -10,6 +16,7 @@ export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBo
     ValueMember?: string;
     SortMember?: string;
     ReducedDisplay?: boolean;
+    MasterChildren?: IMasterChildren[];
     cssClassName: string;
 }
 export interface DualListBoxEditorState extends React.ClassAttributes<DualListBoxEditor> {
@@ -20,12 +27,17 @@ export interface DualListBoxEditorState extends React.ClassAttributes<DualListBo
     FilterValue: string;
     SortOrder: SortOrder;
     AllValues: Array<any>;
+    MasterValues: Array<IMasterValue>;
 }
 export declare class DualListBoxEditor extends React.Component<DualListBoxEditorProps, DualListBoxEditorState> {
     private placeholder;
     constructor(props: DualListBoxEditorProps);
     componentWillReceiveProps(nextProps: DualListBoxEditorProps, nextContext: any): void;
     render(): JSX.Element;
+    buildMasterValues(masterChildren: IMasterChildren[]): IMasterValue[];
+    onMasterValueCheckChanged(event: React.FormEvent<any>, item: any): void;
+    createAvailableValuesList(availableValues: any[], sortOrder: SortOrder, sortMember: string): any[];
+    isValueFilteredOut(item: string): boolean;
     canGoTopOrUp(): boolean;
     canGoDownOrBottom(): boolean;
     ensureFirstSelectedItemVisible(top: boolean): void;
@@ -35,6 +47,7 @@ export declare class DualListBoxEditor extends React.Component<DualListBoxEditor
     Down(): void;
     Add(): void;
     AddAll(): void;
+    getValuesToAdd(addedValues: any[]): any[];
     RemoveAll(): void;
     Remove(): void;
     private draggedHTMLElement;

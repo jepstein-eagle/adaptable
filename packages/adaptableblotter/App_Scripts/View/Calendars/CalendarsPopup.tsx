@@ -1,21 +1,18 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalendarsRedux from '../../Redux/ActionsReducers/CalendarRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColItem } from "../UIInterfaces";
-import { ListGroup } from 'react-bootstrap';
-import { Button, Row, Modal, Collapse, Glyphicon } from 'react-bootstrap';
+import { ListGroup, Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { CalendarsEntryRow } from './CalendarsEntryRow'
 import { CalendarEntryItem } from './CalendarEntryItem'
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { Helper } from '../../Core/Helpers/Helper';
-import { SortOrder } from '../../Core/Enums';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { ICalendar, ICalendarEntry } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICalendar, ICalendarEntry } from "../../Utilities/Interface/BlotterObjects/ICalendar";
+import { PanelWithImage } from "../Components/Panels/PanelWithImage";
 
 interface CalendarsPopupProps extends StrategyViewPopupProps<CalendarsPopupComponent> {
     CurrentCalendar: string

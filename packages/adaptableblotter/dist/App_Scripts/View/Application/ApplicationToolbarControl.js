@@ -5,9 +5,9 @@ const react_redux_1 = require("react-redux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 class ApplicationToolbarControlComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__Application";

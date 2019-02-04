@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 exports.POPUP_SHOW_SCREEN = 'POPUP_SHOW_SCREEN';
 exports.POPUP_HIDE_SCREEN = 'POPUP_HIDE_SCREEN';
-exports.POPUP_SHOW_CHART = 'POPUP_SHOW_CHART';
-exports.POPUP_HIDE_CHART = 'POPUP_HIDE_CHART';
 exports.POPUP_SHOW_LOADING = 'POPUP_SHOW_LOADING';
 exports.POPUP_HIDE_LOADING = 'POPUP_HIDE_LOADING';
+exports.POPUP_SHOW_ABOUT = 'POPUP_SHOW_ABOUT';
+exports.POPUP_HIDE_ABOUT = 'POPUP_HIDE_ABOUT';
 exports.POPUP_SHOW_ALERT = 'POPUP_SHOW_ALERT';
 exports.POPUP_HIDE_ALERT = 'POPUP_HIDE_ALERT';
 exports.POPUP_SHOW_PROMPT = 'POPUP_SHOW_PROMPT';
@@ -32,17 +32,17 @@ exports.PopupShowAlert = (Alert) => ({
 exports.PopupHideAlert = () => ({
     type: exports.POPUP_HIDE_ALERT
 });
-exports.PopupShowChart = () => ({
-    type: exports.POPUP_SHOW_CHART,
-});
-exports.PopupHideChart = () => ({
-    type: exports.POPUP_HIDE_CHART
-});
 exports.PopupShowLoading = () => ({
     type: exports.POPUP_SHOW_LOADING,
 });
 exports.PopupHideLoading = () => ({
     type: exports.POPUP_HIDE_LOADING
+});
+exports.PopupShowAbout = () => ({
+    type: exports.POPUP_SHOW_ABOUT,
+});
+exports.PopupHideAbout = () => ({
+    type: exports.POPUP_HIDE_ABOUT
 });
 exports.PopupShowPrompt = (Prompt) => ({
     type: exports.POPUP_SHOW_PROMPT,
@@ -76,11 +76,11 @@ const initialPopupState = {
         ComponentName: "",
         Params: null
     },
-    ChartPopup: {
-        ShowChartPopup: false,
-    },
     LoadingPopup: {
         ShowLoadingPopup: true,
+    },
+    AboutPopup: {
+        ShowAboutPopup: false,
     },
     AlertPopup: {
         ShowAlertPopup: false,
@@ -90,19 +90,20 @@ const initialPopupState = {
     },
     ConfirmationPopup: {
         ShowConfirmationPopup: false,
-        ConfirmationMsg: "",
-        ConfirmationTitle: "",
-        ConfirmationText: "",
-        CancelText: "",
+        Msg: "",
+        Header: "",
+        ConfirmButtonText: "",
+        CancelButtonText: "",
         CancelAction: null,
         ConfirmAction: null,
-        ShowCommentBox: false,
-        ConfirmationComment: null
+        ShowInputBox: false,
+        ConfirmationComment: null,
+        MessageType: Enums_1.MessageType.Info
     },
     PromptPopup: {
         ShowPromptPopup: false,
-        PromptTitle: "",
-        PromptMsg: "",
+        Header: "",
+        Msg: "",
         ConfirmAction: null
     },
 };
@@ -121,33 +122,34 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
             let actionTyped = action;
             let newPromptPopup = {
                 ShowPromptPopup: true,
-                PromptTitle: actionTyped.Prompt.PromptTitle,
-                PromptMsg: actionTyped.Prompt.PromptMsg,
+                Header: actionTyped.Prompt.Header,
+                Msg: actionTyped.Prompt.Msg,
                 ConfirmAction: actionTyped.Prompt.ConfirmAction
             };
             return Object.assign({}, state, { PromptPopup: newPromptPopup });
         }
         case exports.POPUP_HIDE_PROMPT: {
-            let newPromptPopup = { ShowPromptPopup: false, PromptTitle: "", PromptMsg: "", ConfirmAction: null };
+            let newPromptPopup = { ShowPromptPopup: false, Header: "", Msg: "", ConfirmAction: null };
             return Object.assign({}, state, { PromptPopup: newPromptPopup });
         }
         case exports.POPUP_CONFIRM_PROMPT: {
             //we dispatch the Action of ConfirmAction in the middelware in order to keep the reducer pure
-            let newPromptPopup = { ShowPromptPopup: false, PromptTitle: "", PromptMsg: "", ConfirmAction: null };
+            let newPromptPopup = { ShowPromptPopup: false, Header: "", Msg: "", ConfirmAction: null };
             return Object.assign({}, state, { PromptPopup: newPromptPopup });
         }
         case exports.POPUP_SHOW_CONFIRMATION: {
             let actionTyped = action;
             let newConfirmationPopup = {
                 ShowConfirmationPopup: true,
-                ConfirmationMsg: actionTyped.Confirmation.ConfirmationMsg,
-                ConfirmationTitle: actionTyped.Confirmation.ConfirmationTitle,
-                ConfirmationText: actionTyped.Confirmation.ConfirmationText,
-                CancelText: actionTyped.Confirmation.CancelText,
+                Msg: actionTyped.Confirmation.Msg,
+                Header: actionTyped.Confirmation.Header,
+                ConfirmButtonText: actionTyped.Confirmation.ConfirmButtonText,
+                CancelButtonText: actionTyped.Confirmation.CancelButtonText,
                 ConfirmAction: actionTyped.Confirmation.ConfirmAction,
                 CancelAction: actionTyped.Confirmation.CancelAction,
-                ShowCommentBox: actionTyped.Confirmation.ShowCommentBox,
-                ConfirmationComment: null
+                ShowInputBox: actionTyped.Confirmation.ShowInputBox,
+                ConfirmationComment: null,
+                MessageType: actionTyped.Confirmation.MessageType
             };
             return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup });
         }
@@ -156,14 +158,15 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
             //we dispatch the Action of ConfirmAction in the middelware in order to keep the reducer pure
             let newConfirmationPopup = {
                 ShowConfirmationPopup: false,
-                ConfirmationMsg: "",
-                ConfirmationTitle: "",
-                ConfirmationText: "",
-                CancelText: "",
+                Msg: "",
+                Header: "",
+                ConfirmButtonText: "",
+                CancelButtonText: "",
                 ConfirmAction: null,
                 CancelAction: null,
-                ShowCommentBox: false,
-                ConfirmationComment: actionTyped.comment
+                ShowInputBox: false,
+                ConfirmationComment: actionTyped.comment,
+                MessageType: null // ???
             };
             return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup });
         }
@@ -171,14 +174,15 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
             //we dispatch the Action of CancelAction in the middelware in order to keep the reducer pure
             let newConfirmationPopup = {
                 ShowConfirmationPopup: false,
-                ConfirmationMsg: "",
-                ConfirmationTitle: "",
-                ConfirmationText: "",
-                CancelText: "",
+                Msg: "",
+                Header: "",
+                ConfirmButtonText: "",
+                CancelButtonText: "",
                 ConfirmAction: null,
                 CancelAction: null,
-                ShowCommentBox: false,
-                ConfirmationComment: null
+                ShowInputBox: false,
+                ConfirmationComment: null,
+                MessageType: null
             };
             return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup });
         }
@@ -191,14 +195,6 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
             let newAlertPopup = { ShowAlertPopup: false, Header: "", Msg: "", MessageType: Enums_1.MessageType.Info };
             return Object.assign({}, state, { AlertPopup: newAlertPopup });
         }
-        case exports.POPUP_SHOW_CHART: {
-            let newChartPopup = { ShowChartPopup: true };
-            return Object.assign({}, state, { ChartPopup: newChartPopup });
-        }
-        case exports.POPUP_HIDE_CHART: {
-            let newChartPopup = { ShowChartPopup: false };
-            return Object.assign({}, state, { ChartPopup: newChartPopup });
-        }
         case exports.POPUP_SHOW_LOADING: {
             let newLoadingPopup = { ShowLoadingPopup: true };
             return Object.assign({}, state, { LoadingPopup: newLoadingPopup });
@@ -206,6 +202,14 @@ exports.ShowPopupReducer = (state = initialPopupState, action) => {
         case exports.POPUP_HIDE_LOADING: {
             let newLoadingPopup = { ShowLoadingPopup: false };
             return Object.assign({}, state, { LoadingPopup: newLoadingPopup });
+        }
+        case exports.POPUP_SHOW_ABOUT: {
+            let newAboutPopup = { ShowAboutPopup: true };
+            return Object.assign({}, state, { AboutPopup: newAboutPopup });
+        }
+        case exports.POPUP_HIDE_ABOUT: {
+            let newAboutPopup = { ShowAboutPopup: false };
+            return Object.assign({}, state, { AboutPopup: newAboutPopup });
         }
         case exports.POPUP_CLEAR_PARAM: {
             let newScreenPopup = { ShowScreenPopup: state.ScreenPopup.ShowScreenPopup, ComponentStrategy: state.ScreenPopup.ComponentStrategy, ComponentName: state.ScreenPopup.ComponentName, Params: null };

@@ -3,7 +3,7 @@ import * as React from "react";
 import { ButtonNew } from '../Buttons/ButtonNew';
 import { SummaryRowItem } from './SummaryRowItem';
 import { StrategyProfile } from '../StrategyProfile'
-import { AccessLevel } from "../../../Core/Enums";
+import { AccessLevel } from "../../../Utilities/Enums";
 
 export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeader> {
     key: string
@@ -24,7 +24,7 @@ export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
             null :
             <ButtonNew
                 cssClassName={this.props.cssClassName}
-                size={"small"}
+                size={"xsmall"}
                 onClick={() => this.props.onNew()}
                 overrideTooltip={"Create " + this.props.NewButtonTooltip}
                 DisplayMode="Glyph"

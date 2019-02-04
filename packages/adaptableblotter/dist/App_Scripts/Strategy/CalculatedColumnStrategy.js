@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyConstants = require("../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../Core/Constants/ScreenPopups");
-const Enums_1 = require("../Core/Enums");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
+const Enums_1 = require("../Utilities/Enums");
 class CalculatedColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.CalculatedColumnStrategyId, blotter);
@@ -19,10 +19,10 @@ class CalculatedColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
     addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyConstants.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyConstants.CalculatedColumnGlyph);
     }
-    addContextMenuItem(columnId) {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            if (this.CalculatedColumnState.CalculatedColumns.find(cc => cc.ColumnId == columnId)) {
-                this.createContextMenuItemShowPopup("Edit " + StrategyConstants.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyConstants.CalculatedColumnGlyph, "Edit|" + columnId);
+    addContextMenuItem(column) {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
+            if (this.CalculatedColumnState.CalculatedColumns.find(cc => cc.ColumnId == column.ColumnId)) {
+                this.createContextMenuItemShowPopup("Edit " + StrategyConstants.CalculatedColumnStrategyName, ScreenPopups.CalculatedColumnPopup, StrategyConstants.CalculatedColumnGlyph, "Edit|" + column.ColumnId);
             }
         }
     }

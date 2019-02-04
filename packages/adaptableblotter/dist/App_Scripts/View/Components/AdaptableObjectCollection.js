@@ -4,7 +4,7 @@ const React = require("react");
 /// <reference path="../../typings/.d.ts" />
 const PanelWithRow_1 = require("./Panels/PanelWithRow");
 const react_bootstrap_1 = require("react-bootstrap");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 class AdaptableObjectCollection extends React.Component {
     render() {
         let allowOverflow = this.props.allowOverflow ? "visible" : "auto";

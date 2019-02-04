@@ -1,8 +1,8 @@
 import { IApplicationStrategy } from './Interface/IApplicationStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 
 
 export class ApplicationStrategy extends AdaptableStrategyBase implements IApplicationStrategy {
@@ -15,5 +15,4 @@ export class ApplicationStrategy extends AdaptableStrategyBase implements IAppli
         this.createMenuItemShowPopup(StrategyConstants.ApplicationStrategyName, ScreenPopups.ApplicationPopup, StrategyConstants.ApplicationGlyph);
     }
 
-    
 }

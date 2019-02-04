@@ -1,28 +1,13 @@
 import { SystemFilterState } from './Interface/IState';
-import { FilterHelper } from '../../Core/Helpers/FilterHelper';
+import { FilterHelper } from '../../Utilities/Helpers/FilterHelper';
 import * as Redux from 'redux'
 
-
-export const HIDE_FILTER_FORM = 'HIDE_FILTER_FORM';
-
 export const SYSTEM_FILTER_SET = 'SYSTEM_FILTER_SET';
-
-
-
-export interface HideFilterFormAction extends Redux.Action {
-}
 
 
 export interface SystemFilterSetAction extends Redux.Action {
     SystemFilters: string[]
 }
-
-
-
-export const HideFilterForm = (): HideFilterFormAction => ({
-    type: HIDE_FILTER_FORM,
-})
-
 
 
 export const SystemFilterSet = (SystemFilters: string[]): SystemFilterSetAction => ({

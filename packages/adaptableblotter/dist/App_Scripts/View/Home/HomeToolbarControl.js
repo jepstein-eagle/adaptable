@@ -7,12 +7,15 @@ const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const ColumnChooserRedux = require("../../Redux/ActionsReducers/ColumnChooserRedux");
 const react_bootstrap_1 = require("react-bootstrap");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
-const GeneralConstants = require("../../Core/Constants/GeneralConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
+const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const ButtonDashboard_1 = require("../Components/Buttons/ButtonDashboard");
-const Enums_1 = require("../../Core/Enums");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const Enums_1 = require("../../Utilities/Enums");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const UIHelper_1 = require("../UIHelper");
 class HomeToolbarControlComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -21,25 +24,78 @@ class HomeToolbarControlComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__home";
         let cssDropdownClassName = this.props.cssClassName + "__home__dropdown";
-        // dropdown menu items
-        let menuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible && x.StrategyId != StrategyConstants.AboutStrategyId).map((menuItem) => {
+        const functionsGlyph = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "functionsOverlay", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "functionsTooltipButton" },
+                " ",
+                "Functions") },
+            React.createElement(react_bootstrap_1.Glyphicon, { glyph: "home" }));
+        const colsGlyph = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "colsOverlay", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "colsTooltipButton" },
+                " ",
+                "Columns") },
+            React.createElement(react_bootstrap_1.Glyphicon, { glyph: "list" }));
+        const toolbarsGlyph = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "toolbarsOverlay", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "toolbarsTooltipButton" },
+                " ",
+                "Toolbars") },
+            React.createElement(react_bootstrap_1.Glyphicon, { glyph: "align-justify" }));
+        // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
+        let strategyKeys = [...this.props.Blotter.Strategies.keys()];
+        let allowedMenuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible &&
+            ArrayExtensions_1.ArrayExtensions.NotContainsItem(strategyKeys, x));
+        // function menu items
+        let menuItems = allowedMenuItems.map((menuItem) => {
             return React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, key: menuItem.Label, onClick: () => this.onClick(menuItem) },
                 React.createElement(react_bootstrap_1.Glyphicon, { glyph: menuItem.GlyphIcon }),
                 " ",
                 menuItem.Label);
         });
-        // columns
-        let colItems = this.props.Columns.map((col, index) => {
-            return React.createElement("div", { className: "ab_home_toolbar_column_list", key: index },
+        // column items
+        let colItems = [];
+        colItems.push(React.createElement("div", { key: "colTitle" },
+            ' ',
+            ' ',
+            "\u00A0\u00A0",
+            React.createElement("b", null, "Columns")));
+        this.props.Columns.forEach((col, index) => {
+            colItems.push(React.createElement("div", { className: "ab_home_toolbar_column_list", key: index },
                 React.createElement(react_bootstrap_1.Checkbox, { value: col.ColumnId, key: col.ColumnId, checked: col.Visible, onChange: (e) => this.onSetColumnVisibility(e) },
                     " ",
-                    col.FriendlyName));
+                    col.FriendlyName)));
+        });
+        // toolbar items
+        let toolbarItems = [];
+        let allowedMenuNames = allowedMenuItems.map(vm => {
+            return vm.StrategyId;
+        });
+        toolbarItems.push(React.createElement("div", { key: "toolbarTitle" },
+            ' ',
+            ' ',
+            "\u00A0\u00A0",
+            React.createElement("b", null, "Toolbars")));
+        this.props.DashboardState.AvailableToolbars.forEach((toolbar, index) => {
+            if (ArrayExtensions_1.ArrayExtensions.ContainsItem(allowedMenuNames, toolbar)) {
+                let isVisible = ArrayExtensions_1.ArrayExtensions.ContainsItem(this.props.DashboardState.VisibleToolbars, toolbar);
+                let functionName = StrategyConstants.getNameForStrategyId(toolbar);
+                toolbarItems.push(React.createElement("div", { className: "ab_home_toolbar_column_list", key: index },
+                    React.createElement(react_bootstrap_1.Checkbox, { value: toolbar, key: toolbar, checked: isVisible, onChange: (e) => this.onSetToolbarVisibility(e) },
+                        " ",
+                        functionName)));
+            }
         });
         // status button
         let statusButton = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "systemstatus", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                 " ",
                 "System Status") },
-            React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: this.getGlyphForSystemStatusButton(), cssClassName: cssClassName, bsStyle: this.getStyleForSystemStatusButton(), DisplayMode: "Glyph", bsSize: "small", ToolTipAndText: "Status: " + this.props.SystemStatus.StatusColour, overrideDisableButton: false, onClick: () => this.onClickStatus(), AccessLevel: Enums_1.AccessLevel.Full }));
+            React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: UIHelper_1.UIHelper.getGlyphForSystemStatusButton(this.props.SystemStatus.StatusColour), cssClassName: cssClassName, bsStyle: UIHelper_1.UIHelper.getStyleForSystemStatusButton(this.props.SystemStatus.StatusColour), DisplayMode: "Glyph", bsSize: "small", ToolTipAndText: "Status: " + this.props.SystemStatus.StatusColour, overrideDisableButton: false, onClick: () => this.onClickStatus(), AccessLevel: Enums_1.AccessLevel.Full }));
+        // about button
+        let aboutButton = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "about", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
+                " ",
+                "About") },
+            React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: "info-sign", cssClassName: cssClassName, bsStyle: "default", DisplayMode: "Glyph", bsSize: "small", ToolTipAndText: "About", overrideDisableButton: false, onClick: () => this.onClickAbout(), AccessLevel: Enums_1.AccessLevel.Full }));
+        // functions dropdown
+        let functionsDropdown = React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: "small", title: functionsGlyph, key: "dropdown-functions", id: "dropdown-functions" }, menuItems);
+        // columns dropdown
+        let columnsDropDown = React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: "small", title: colsGlyph, key: "dropdown-cols", id: "dropdown-cols" }, colItems);
+        // toolbars dropdown
+        let toolbarsDropDown = React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: "small", title: toolbarsGlyph, key: "dropdown-toolbars", id: "dropdown-toolbars" }, toolbarItems);
         // shortcuts
         let shortcutsArray = this.props.DashboardState.VisibleButtons;
         let shortcuts;
@@ -61,22 +117,18 @@ class HomeToolbarControlComponent extends React.Component {
                 toolbarTitle = "Blotter ";
             }
         }
-        const functionsGlyph = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "functionsOverlay", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "functionsTooltipButton" },
-                " ",
-                "Functions") },
-            React.createElement(react_bootstrap_1.Glyphicon, { glyph: "home" }));
-        const colsGlyph = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "colsOverlay", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "colsTooltipButton" },
-                " ",
-                "Columns") },
-            React.createElement(react_bootstrap_1.Glyphicon, { glyph: "list" }));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, showCloseButton: false, showMinimiseButton: true, onMinimise: () => this.props.onSetDashboardVisibility(Enums_1.Visibility.Minimised), headerText: toolbarTitle, glyphicon: "home", showGlyphIcon: false, onClose: () => this.props.onClose(StrategyConstants.HomeStrategyId), onConfigure: () => this.props.onConfigure() },
             this.props.DashboardState.ShowFunctionsDropdown &&
-                React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: "small", title: functionsGlyph, key: "dropdown-functions", id: "dropdown-functions" }, menuItems),
+                functionsDropdown,
             this.props.DashboardState.ShowSystemStatusButton &&
                 statusButton,
+            this.props.DashboardState.ShowAboutButton &&
+                aboutButton,
             shortcuts,
             this.props.DashboardState.ShowColumnsDropdown &&
-                React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: "small", title: colsGlyph, key: "dropdown-cols", id: "dropdown-cols" }, colItems));
+                columnsDropDown,
+            this.props.DashboardState.ShowToolbarsDropdown &&
+                toolbarsDropDown);
     }
     onClick(menuItem) {
         this.props.onClick(menuItem.Action);
@@ -85,11 +137,19 @@ class HomeToolbarControlComponent extends React.Component {
         let statusColor = this.props.SystemStatus.StatusColour;
         switch (statusColor) {
             case Enums_1.StatusColour.Green:
-                let info = {
+                let success = {
                     Header: "System Status",
                     Msg: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
                         this.props.SystemStatus.StatusMessage :
                         "No issues",
+                    MessageType: Enums_1.MessageType.Success
+                };
+                this.props.onShowStatusMessage(success);
+                return;
+            case Enums_1.StatusColour.Blue:
+                let info = {
+                    Header: "System Status",
+                    Msg: this.props.SystemStatus.StatusMessage,
                     MessageType: Enums_1.MessageType.Info
                 };
                 this.props.onShowStatusMessage(info);
@@ -112,9 +172,12 @@ class HomeToolbarControlComponent extends React.Component {
                 return;
         }
     }
+    onClickAbout() {
+        this.props.onShowAbout();
+    }
     onSetColumnVisibility(event) {
         let e = event.target;
-        let changedColumnn = this.props.Columns.find(c => c.ColumnId == e.value);
+        let changedColumnn = ColumnHelper_1.ColumnHelper.getColumnFromId(e.value, this.props.Columns);
         let columns = [].concat(this.props.Columns);
         changedColumnn = Object.assign({}, changedColumnn, {
             Visible: !changedColumnn.Visible
@@ -123,27 +186,18 @@ class HomeToolbarControlComponent extends React.Component {
         columns[index] = changedColumnn;
         this.props.onNewColumnListOrder(columns.filter(c => c.Visible));
     }
-    getStyleForSystemStatusButton() {
-        let statusColor = this.props.SystemStatus.StatusColour;
-        switch (statusColor) {
-            case Enums_1.StatusColour.Green:
-                return "success";
-            case Enums_1.StatusColour.Amber:
-                return "warning";
-            case Enums_1.StatusColour.Red:
-                return "danger";
+    onSetToolbarVisibility(event) {
+        let e = event.target;
+        let strategy = this.props.DashboardState.AvailableToolbars.find(at => at == e.value);
+        let visibleToolbars = [].concat(this.props.DashboardState.VisibleToolbars);
+        if (e.checked) {
+            visibleToolbars.push(strategy);
         }
-    }
-    getGlyphForSystemStatusButton() {
-        let statusColor = this.props.SystemStatus.StatusColour;
-        switch (statusColor) {
-            case Enums_1.StatusColour.Green:
-                return "ok-circle";
-            case Enums_1.StatusColour.Amber:
-                return "ban-circle";
-            case Enums_1.StatusColour.Red:
-                return "remove-circle";
+        else {
+            let index = visibleToolbars.findIndex(vt => vt == strategy);
+            visibleToolbars.splice(index, 1);
         }
+        this.props.onSetToolbarVisibility(visibleToolbars);
     }
 }
 function mapStateToProps(state, ownProps) {
@@ -161,7 +215,9 @@ function mapDispatchToProps(dispatch) {
         onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.HomeStrategyId, ScreenPopups.HomeButtonsPopup)),
         onNewColumnListOrder: (VisibleColumnList) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
+        onSetToolbarVisibility: (strategyIds) => dispatch(DashboardRedux.DashboardSetToolbars(strategyIds)),
         onShowStatusMessage: (alert) => dispatch(PopupRedux.PopupShowAlert(alert)),
+        onShowAbout: () => dispatch(PopupRedux.PopupShowAbout()),
     };
 }
 exports.HomeToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(HomeToolbarControlComponent);

@@ -1,22 +1,24 @@
 import { PlusMinusState } from '../Redux/ActionsReducers/Interface/IState';
 import { IPlusMinusStrategy } from './Interface/IPlusMinusStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
+import * as Redux from 'redux'
 import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IUIConfirmation } from '../Core/Interface/IMessage';
-import { DataType, StateChangedTrigger } from '../Core/Enums'
-import { ExpressionHelper } from '../Core/Helpers/ExpressionHelper'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { Helper } from '../Core/Helpers/Helper';
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { ObjectFactory } from '../Core/ObjectFactory';
-import { ICellInfo } from '../Core/Interface/Interfaces';
-import { IColumn } from '../Core/Interface/IColumn';
-import { ICellValidationRule } from '../Core/Api/Interface/IAdaptableBlotterObjects';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import { DataType, StateChangedTrigger } from '../Utilities/Enums'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IColumn } from '../Utilities/Interface/IColumn';
+import { Helper } from '../Utilities/Helpers/Helper';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { ICellInfo } from "../Utilities/Interface/ICellInfo";
+import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
+import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { ObjectFactory } from '../Utilities/ObjectFactory';
+import { IUIConfirmation } from '../Utilities/Interface/IMessage';
+import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState
@@ -26,8 +28,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     }
 
     protected InitState() {
-        if (this.PlusMinusState != this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus) {
-            this.PlusMinusState = this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
+        if (this.PlusMinusState != this.GetPlusMinusState()) {
+            this.PlusMinusState = this.GetPlusMinusState();
        
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.PlusMinus, this.PlusMinusState)
@@ -39,16 +41,14 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         this.createMenuItemShowPopup(StrategyConstants.PlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyConstants.PlusMinusGlyph)
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
-
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
             if (column && column.DataType == DataType.Number) {
                 this.createContextMenuItemShowPopup(
                     "Create Plus/Minus Rule",
                     ScreenPopups.PlusMinusPopup,
                     StrategyConstants.PlusMinusGlyph,
-                    "New|" + columnId)
+                    "New|" + column.ColumnId)
             }
         }
     }
@@ -72,7 +72,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             for (var keyValuePair of selectedCellInfo.Selection) {
                 for (var selectedCell of keyValuePair[1]) {
-                    let selectedColumn: IColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == selectedCell.columnId);
+                    let selectedColumn: IColumn = ColumnHelper.getColumnFromId(selectedCell.columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
                     if (selectedColumn.DataType == DataType.Number && !selectedColumn.ReadOnly) {
                         //for aggrid as we are getting strings sometimes 
                         if (typeof selectedCell.value != "number") {
@@ -102,12 +102,11 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                         //avoid the 0.0000000000x  
                         newValue.Value = parseFloat(newValue.Value.toFixed(12))
 
-                        let dataChangedEvent: IDataChangedEvent = {
+                        let dataChangedEvent: IDataChangedInfo = {
                             OldValue: Number(selectedCell.value),
                             NewValue: newValue.Value,
                             ColumnId: selectedCell.columnId,
                             IdentifierValue: keyValuePair[0],
-                            Timestamp: Date.now(),
                             Record: null
                         }
 
@@ -142,18 +141,17 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         }
     }
 
-
     private ShowErrorPreventMessage(failedRules: ICellValidationRule[]): void {
         if (failedRules.length > 0) {
             let failedMessages: string[] = []
             failedRules.forEach(fr => {
-                let failedMessage: string = ObjectFactory.CreateCellValidationMessage(fr, this.blotter, false) + "\n";
+                let failedMessage: string = ObjectFactory.CreateCellValidationMessage(fr, this.blotter) + "\n";
                 let existingMessage = failedMessages.find(f => f == failedMessage);
                 if (existingMessage == null) {
                     failedMessages.push(failedMessage)
                 }
             })
-            this.blotter.api.alertShowError("Nudge(s) failed rule", failedMessages.toString(), true)
+            this.blotter.api.alertApi.ShowError("Nudge(s) failed rule", failedMessages.toString(), true)
         }
     }
 
@@ -163,7 +161,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             let warningMessages: string[] = []
             failedRules.forEach(fr => {
-                let warningMessage: string = ObjectFactory.CreateCellValidationMessage(fr, this.blotter, false) + "\n";
+                let warningMessage: string = ObjectFactory.CreateCellValidationMessage(fr, this.blotter) + "\n";
                 let existingMessage = warningMessages.find(w => w == warningMessage);
                 if (existingMessage == null) {
                     warningMessages.push(warningMessage)
@@ -171,17 +169,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
             })
             let warningMessage: string = failedRules.length + " Nudge(s) failed rule:\n" + warningMessages.toString();;
 
-            let confirmation: IUIConfirmation = {
-                CancelText: "Cancel Edit",
-                ConfirmationTitle: "Cell Validation Failed",
-                ConfirmationMsg: warningMessage,
-                ConfirmationText: "Bypass Rule",
-                CancelAction: PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString),
-                ConfirmAction: PlusMinusRedux.PlusMinusApply(allValues, keyEventString),
-                ShowCommentBox: true
-            }
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
-        }
+            let confirmAction: Redux.Action =  PlusMinusRedux.PlusMinusApply(allValues, keyEventString)
+            let cancelAction: Redux.Action =PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString);
+            let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage); 
+            this.blotter.api.internalApi.PopupShowConfirmation(confirmation) }
     }
 
     public ApplyPlusMinus(keyEventString: string, successfulValues: ICellInfo[]): void {
@@ -191,7 +182,9 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         }
     }
 
-
+    protected GetPlusMinusState(): PlusMinusState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
+    }
 
 }
 

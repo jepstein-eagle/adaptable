@@ -1,41 +1,37 @@
-import { MenuItemDoReduxAction } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { ObjectFactory } from '../Core/ObjectFactory'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import { ObjectFactory } from '../Utilities/ObjectFactory'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy'
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
-import { DataType, StateChangedTrigger } from '../Core/Enums';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux'
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { IFlashingCell } from '../Core/Api/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../Core/Interface/IColumn';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
-
+import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
+import { IColumn } from '../Utilities/Interface/IColumn';
+import { DataType, StateChangedTrigger } from '../Utilities/Enums';
+import { IFlashingCell } from "../Utilities/Interface/BlotterObjects/IFlashingCell";
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     protected FlashingCellState: FlashingCellState
 
-
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.FlashingCellsStrategyId, blotter)
-        this.blotter.AuditService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+        if (this.shouldHandleDataSourceChanged()) {
+            this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+        }
     }
 
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyConstants.FlashingCellsStrategyName, ScreenPopups.FlashingCellsPopup, StrategyConstants.FlashingCellGlyph);
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
 
             if (column.DataType == DataType.Number) {
-                if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == columnId) == null) {
+                if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == column.ColumnId) == null) {
 
-                    let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == columnId)
+                    let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == column.ColumnId)
                     if (flashingCell && flashingCell.IsLive) {
                         this.createContextMenuItemReduxAction(
                             "Turn Flashing Cell Off",
@@ -45,8 +41,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
                     }
                     else {
                         if (!flashingCell) {
-                            let column = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(x => x.ColumnId == columnId)
-                            flashingCell = ObjectFactory.CreateDefaultFlashingCell(column)
+                            flashingCell = ObjectFactory.CreateDefaultFlashingCell(column,this.FlashingCellState.DefaultUpColor, this.FlashingCellState.DefautDownColor, this.FlashingCellState.DefaultDuration)
                         }
                         this.createContextMenuItemReduxAction(
                             "Turn Flashing Cell On",
@@ -69,14 +64,16 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
         }
     }
 
-    protected handleDataSourceChanged(DataChangedEvent: IDataChangedEvent) {
-        let flashingCell: IFlashingCell = this.FlashingCellState.FlashingCells.find(f => f.ColumnId == DataChangedEvent.ColumnId);
-        let flashingCellIndex = this.FlashingCellState.FlashingCells.indexOf(flashingCell)
-        if (flashingCell != null && flashingCell.IsLive) {
-            this.FlashCell(DataChangedEvent, flashingCell, flashingCellIndex);
+    protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo) {
+        let flashingCell: IFlashingCell = this.FlashingCellState.FlashingCells.find(f => f.ColumnId == dataChangedInfo.ColumnId);
+        if (flashingCell && flashingCell.IsLive) {
+            this.FlashCell(dataChangedInfo, flashingCell);
+
         }
     }
 
-    protected abstract FlashCell(dataChangedEvent: IDataChangedEvent, flashingCell: IFlashingCell, index: number): void;
+    protected abstract shouldHandleDataSourceChanged(): boolean;
+
+    protected abstract FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: IFlashingCell): void;
 
 }

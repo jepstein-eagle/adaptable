@@ -5,16 +5,16 @@ import {  ControlLabel } from 'react-bootstrap';
 import { StrategyViewPopupProps } from "../Components/SharedProps/StrategyViewPopupProps";
 import { EditableConfigEntityState } from "../Components/SharedProps/EditableConfigEntityState";
 import { IColItem } from "../UIInterfaces";
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { PanelWithRow } from "../Components/Panels/PanelWithRow";
-import { ISelectedCellSummmary } from "../../Strategy/Interface/ISelectedCellsStrategy";
-import { Helper } from "../../Core/Helpers/Helper";
+import { ISelectedCellSummmary } from "../../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
+import { Helper } from "../../Utilities/Helpers/Helper";
 import { AdaptableObjectRow } from "../Components/AdaptableObjectRow";
-import { SelectedCellOperation } from "../../Core/Enums";
+import { SelectedCellOperation } from "../../Utilities/Enums";
 
 
 interface SelectedCellsPopupProps extends StrategyViewPopupProps<SelectedCellsPopupComponent> {

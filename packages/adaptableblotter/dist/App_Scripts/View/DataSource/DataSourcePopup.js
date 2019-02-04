@@ -5,9 +5,9 @@ const react_redux_1 = require("react-redux");
 const DataSourceRedux = require("../../Redux/ActionsReducers/DataSourceRedux");
 const react_bootstrap_1 = require("react-bootstrap");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 class DataSourcePopupComponent extends React.Component {
     render() {

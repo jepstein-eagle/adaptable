@@ -1,16 +1,16 @@
 import * as React from "react";
 import { DropdownButton, MenuItem, Col, Glyphicon, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import { ExportDestination } from '../../Core/Enums';
-import { ReportHelper } from '../../Core/Helpers/ReportHelper';
-import { OpenfinHelper } from '../../Core/Helpers/OpenfinHelper';
-import { ILiveReport } from '../../Strategy/Interface/IExportStrategy';
-import { iPushPullHelper } from '../../Core/Helpers/iPushPullHelper';
+import { ExportDestination } from '../../Utilities/Enums';
+import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
+import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
+import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
+import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IReport } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
     IsLast: boolean
@@ -35,6 +35,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
 
         let exportGlyph: any = <Glyphicon glyph={StrategyConstants.ExportGlyph} />
         // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
+        let isSystemReport: boolean = ReportHelper.IsSystemReport(report)
 
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -59,9 +60,12 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
         colItems[3].Content = exportButton
 
         let buttons: any = <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
-         ConfirmDeleteAction={this.props.onDeleteConfirm}
+            cssClassName={this.props.cssClassName}
+            ConfirmDeleteAction={this.props.onDeleteConfirm}
             editClick={() => this.props.onEdit(this.props.Index, report)}
+            overrideDisableEdit={isSystemReport}
+            overrideDisableDelete={isSystemReport}
+            overrideDisableShare={isSystemReport}
             showShare={this.props.TeamSharingActivated}
             shareClick={() => this.props.onShare()}
             EntityName="Report" />

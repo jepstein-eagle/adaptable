@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore'
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { ButtonBase, ButtonProps } from './ButtonBase'
-import { IUIConfirmation } from '../../../Core/Interface/IMessage';
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import { IUIConfirmation } from "../../../Utilities/Interface/IMessage";
+import { MessageType } from "../../../Utilities/Enums";
 
 export interface DeleteButtonProps extends ButtonProps {
     onConfirmWarning?: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction
@@ -19,7 +20,7 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
     render() {
 
         return <ButtonBase ToolTipAndText="Delete"
-            bsStyle='danger'
+            bsStyle={StyleConstants.DANGER_BSSTYLE}
             bsSize={this.props.size}
             glyph="trash"
             onClick={() => this.onClick()}
@@ -29,19 +30,20 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.DELETE_BUTTON}
-            />;
+        />;
     }
 
     onClick() {
         if (this.props.ConfirmAction) {
             let confirmation: IUIConfirmation = {
-                CancelText: "Cancel",
-                ConfirmationTitle: this.props.ConfirmationTitle,
-                ConfirmationMsg: this.props.ConfirmationMsg,
-                ConfirmationText: "Delete",
+                CancelButtonText: "Cancel",
+                Header: this.props.ConfirmationTitle,
+                Msg: this.props.ConfirmationMsg,
+                ConfirmButtonText: "Delete",
                 CancelAction: null,
                 ConfirmAction: this.props.ConfirmAction,
-                ShowCommentBox: false
+                ShowInputBox: false,
+                MessageType: MessageType.Warning
             }
             this.props.onConfirmWarning(confirmation)
 

@@ -1,15 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Enums_1 = require("../Core/Enums");
-const StringExtensions_1 = require("../Core/Extensions/StringExtensions");
+const Enums_1 = require("../Utilities/Enums");
+const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
+const StyleConstants_1 = require("../Utilities/Constants/StyleConstants");
+const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
 var UIHelper;
 (function (UIHelper) {
-    function EmptyConfigState() {
+    function getDefaultColors() {
+        return [
+            "#000000",
+            "#ffffff",
+            "#C0C0C0",
+            "#808080",
+            "#800000",
+            "#808000",
+            "#008000",
+            "#00FF00",
+            "#FFFF00",
+            "#FFFFCC",
+            "#000080",
+            "#0000FF",
+            "#008080",
+            "#00FFFF",
+            "#FF00FF",
+            "#800080",
+            "#8B0000",
+            "#FF0000",
+            "#FF6961",
+            "#FFA500",
+        ];
+    }
+    UIHelper.getDefaultColors = getDefaultColors;
+    function getEmptyConfigState() {
         return {
             EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1,
         };
     }
-    UIHelper.EmptyConfigState = EmptyConfigState;
+    UIHelper.getEmptyConfigState = getEmptyConfigState;
     function getExpressionBuilderState(expression) {
         return {
             Expression: expression, SelectedColumnId: "", SelectedTab: null
@@ -46,8 +73,8 @@ var UIHelper;
     UIHelper.getPlaceHolderforDataType = getPlaceHolderforDataType;
     function getModalContainer(blotterOptions, document) {
         let modalContainer;
-        if (blotterOptions.modalContainer) { // this has been set, so we use the property
-            modalContainer = document.getElementById(blotterOptions.modalContainer);
+        if (blotterOptions.containerOptions.modalContainer) { // this has been set, so we use the property
+            modalContainer = document.getElementById(blotterOptions.containerOptions.modalContainer);
             if (modalContainer) {
                 const modalContainerClassName = " modal-container";
                 if (!modalContainer.className.includes(modalContainerClassName)) {
@@ -61,6 +88,26 @@ var UIHelper;
         return modalContainer;
     }
     UIHelper.getModalContainer = getModalContainer;
+    function getChartContainer(blotterOptions, document, showModal) {
+        let chartContainer;
+        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(blotterOptions.containerOptions.chartContainer)) { // they have provided one so get that
+            chartContainer = document.getElementById(blotterOptions.containerOptions.chartContainer);
+            if (chartContainer) {
+                const chartContainerClassName = " chart-container";
+                if (!chartContainer.className.includes(chartContainerClassName)) {
+                    chartContainer.className += chartContainerClassName;
+                }
+            }
+            else {
+                LoggingHelper_1.LoggingHelper.LogError("Chart div name cannot be found: " + blotterOptions.containerOptions.chartContainer);
+            }
+        }
+        else { // not provided one so return whole document if modal, or 'chart' if not
+            chartContainer = (showModal) ? document.body : document.getElementById("ad");
+        }
+        return chartContainer;
+    }
+    UIHelper.getChartContainer = getChartContainer;
     function IsNotEmptyStyle(style) {
         return style.BackColor != null || style.ForeColor != null || style.FontWeight != Enums_1.FontWeight.Normal || style.FontStyle != Enums_1.FontStyle.Normal || style.FontSize != null || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(style.ClassName);
     }
@@ -72,6 +119,8 @@ var UIHelper;
             case Enums_1.StatusColour.Amber:
                 return Enums_1.MessageType.Warning;
             case Enums_1.StatusColour.Green:
+                return Enums_1.MessageType.Success;
+            case Enums_1.StatusColour.Blue:
                 return Enums_1.MessageType.Info;
         }
     }
@@ -79,11 +128,13 @@ var UIHelper;
     function getStyleNameByStatusColour(statusColour) {
         switch (statusColour) {
             case Enums_1.StatusColour.Red:
-                return "danger";
+                return StyleConstants_1.DANGER_BSSTYLE;
             case Enums_1.StatusColour.Amber:
-                return "warning";
+                return StyleConstants_1.WARNING_BSSTYLE;
             case Enums_1.StatusColour.Green:
-                return "success";
+                return StyleConstants_1.SUCCESS_BSSTYLE;
+            case Enums_1.StatusColour.Blue:
+                return StyleConstants_1.INFO_BSSTYLE;
         }
     }
     UIHelper.getStyleNameByStatusColour = getStyleNameByStatusColour;
@@ -91,6 +142,8 @@ var UIHelper;
         switch (messageType) {
             case Enums_1.MessageType.Info:
                 return "info-sign";
+            case Enums_1.MessageType.Success:
+                return "ok-sign";
             case Enums_1.MessageType.Warning:
                 return "warning-sign";
             case Enums_1.MessageType.Error:
@@ -101,12 +154,40 @@ var UIHelper;
     function getStyleNameByMessageType(messageType) {
         switch (messageType) {
             case Enums_1.MessageType.Error:
-                return "danger";
+                return StyleConstants_1.DANGER_BSSTYLE;
             case Enums_1.MessageType.Warning:
-                return "warning";
+                return StyleConstants_1.WARNING_BSSTYLE;
+            case Enums_1.MessageType.Success:
+                return StyleConstants_1.SUCCESS_BSSTYLE;
             case Enums_1.MessageType.Info:
-                return "info";
+                return StyleConstants_1.INFO_BSSTYLE;
         }
     }
     UIHelper.getStyleNameByMessageType = getStyleNameByMessageType;
+    function getStyleForSystemStatusButton(statusColour) {
+        switch (statusColour) {
+            case Enums_1.StatusColour.Blue:
+                return StyleConstants_1.INFO_BSSTYLE;
+            case Enums_1.StatusColour.Green:
+                return StyleConstants_1.SUCCESS_BSSTYLE;
+            case Enums_1.StatusColour.Amber:
+                return StyleConstants_1.WARNING_BSSTYLE;
+            case Enums_1.StatusColour.Red:
+                return StyleConstants_1.DANGER_BSSTYLE;
+        }
+    }
+    UIHelper.getStyleForSystemStatusButton = getStyleForSystemStatusButton;
+    function getGlyphForSystemStatusButton(statusColour) {
+        switch (statusColour) {
+            case Enums_1.StatusColour.Blue:
+                return "info-sign";
+            case Enums_1.StatusColour.Green:
+                return "ok-sign";
+            case Enums_1.StatusColour.Amber:
+                return "warning-sign";
+            case Enums_1.StatusColour.Red:
+                return "exclamation-sign";
+        }
+    }
+    UIHelper.getGlyphForSystemStatusButton = getGlyphForSystemStatusButton;
 })(UIHelper = exports.UIHelper || (exports.UIHelper = {}));

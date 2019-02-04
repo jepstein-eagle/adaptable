@@ -1,19 +1,15 @@
 import * as React from "react";
-import { Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IColumn } from '../../../Core/Interface/IColumn';
-import { SelectionMode } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { KeyValuePair } from "../../UIInterfaces";
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { ICustomSort } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
+import { ICustomSort } from "../../../Utilities/Interface/BlotterObjects/ICustomSort";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 
 export interface CustomSortSummaryWizardProps extends AdaptableWizardStepProps<ICustomSort> {
-    Columns: IColumn[]
+   
 }
 
 export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWizardProps, {}> implements AdaptableWizardStep {
@@ -22,7 +18,7 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
     }
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
             { Key: "Values", Value: this.props.Data.SortedValues.join(', ') }
         ]
@@ -35,8 +31,12 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
 
     public canNext(): boolean { return true }
     public canBack(): boolean { return true; }
-    public Next(): void { }
-    public Back(): void { }
+    public Next():  void { 
+       // todo
+    }
+    public Back():  void { 
+        //todo
+    }
     public GetIndexStepIncrement() {
         return 1;
     }

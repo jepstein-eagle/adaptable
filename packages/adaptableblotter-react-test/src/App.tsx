@@ -1,11 +1,11 @@
 import * as React from "react";
-import { GridOptions } from "ag-grid";
+import { GridOptions } from "ag-grid-community";
 import { DataGenerator } from "./DataGenerator";
 import { AdaptableBlotter, IAdaptableBlotterOptions } from "adaptableblotter-react";
 import { AgGridReact } from "ag-grid-react";
-import "ag-grid/dist/styles/ag-grid.css";
-import "ag-grid/dist/styles/ag-theme-balham.css";
-import "ag-grid/dist/styles/ag-theme-balham-dark.css";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-balham.css";
+import "ag-grid-community/dist/styles/ag-theme-balham-dark.css";
 
 import { ReactHarnessHelper } from "./ReactHarnessHelper";
 import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
@@ -32,10 +32,9 @@ export default class App extends React.Component<{}, AppState> {
         primaryKey: "tradeId",
         vendorGrid: gridOptions,
         userName: "Blotter Wrapper user",
-        blotterId: "Adaptable Blotter Wrapper",
-        useDefaultVendorGridThemes: true
+        blotterId: "Adaptable Blotter Wrapper"
       },
-      rowData:  new DataGenerator().getTrades(15000),
+      rowData: new DataGenerator().getTrades(15000),
       columnDefs: new ReactHarnessHelper().getTradeSchema()
     };
   }

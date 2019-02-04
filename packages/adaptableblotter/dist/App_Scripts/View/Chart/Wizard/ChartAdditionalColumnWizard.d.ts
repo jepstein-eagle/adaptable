@@ -1,13 +1,10 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IChartDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
 export interface ChartAdditionalColumnWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[];
-    Columns: IColumn[];
-    Blotter: IAdaptableBlotter;
 }
 export interface ChartAdditionalColumnWizardState {
     AdditionalColumn: string;
@@ -26,6 +23,6 @@ export declare class ChartAdditionalColumnWizard extends React.Component<ChartAd
     Next(): void;
     Back(): void;
     GetIndexStepIncrement(): number;
-    GetIndexStepDecrement(): number;
+    GetIndexStepDecrement(): 1 | 2;
     StepName: string;
 }

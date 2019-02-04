@@ -3,23 +3,22 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { CustomSortWizard } from './Wizard/CustomSortWizard'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
-import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import { StrategyProfile } from '../Components/StrategyProfile'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { ICustomSort, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { ICustomSort } from "../../Utilities/Interface/BlotterObjects/ICustomSort";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {
     CustomSorts: ICustomSort[]
@@ -31,7 +30,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
 
     constructor(props: CustomSortSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__customsort";
@@ -67,7 +66,8 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
             customSortRow = <StrategyDetail
                 cssClassName={this.props.cssClassName}
                 key={StrategyConstants.CustomSortStrategyName}
-                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyConstants.CustomSortStrategyId} />}
+                Item1={<StrategyProfile cssClassName={this.props.cssClassName} 
+                StrategyId={StrategyConstants.CustomSortStrategyId} />}
                 Item2={customSort.SortedValues.join(', ')}
                 ConfigEnity={customSort}
                 EntityName={StrategyConstants.CustomSortStrategyName}

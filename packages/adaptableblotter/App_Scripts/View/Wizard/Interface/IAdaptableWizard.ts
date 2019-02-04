@@ -1,11 +1,7 @@
-import { IColumn } from '../../../Core/Interface/IColumn';
-import { DistinctCriteriaPairValue } from '../../../Core/Enums'
-import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
-import { IAdaptableBlotterOptions } from '../../../Core/Api/Interface/IAdaptableBlotterOptions';
-import { BlotterApi } from '../../../Vendors/agGrid/BlotterApi';
-import { IBlotterApi } from '../../../Core/Api/Interface/IBlotterApi';
-import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { IAdaptableBlotterObject } from '../../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 
 export interface AdaptableWizardStep {
     StepName: string
@@ -21,15 +17,16 @@ export interface AdaptableWizardStepProps<T> {
     Data?: T
     UpdateGoBackState?(): void
     StepName?: string
-    cssClassName: string
+    cssClassName?: string
+    Blotter?:IAdaptableBlotter
+    Columns?: IColumn[]
 }
 
 // props for an Expression Wizard Page
 export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
-    Columns: Array<IColumn>
     UserFilters: IUserFilter[],
     SystemFilters: string[],
-    Blotter: IAdaptableBlotter
+ //   Blotter: IAdaptableBlotter
 }
 
 // props for a wizard that wraps a config entity that contans an Expression
@@ -37,7 +34,7 @@ export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View> ext
     Columns: Array<IColumn>
     UserFilters: IUserFilter[]
     SystemFilters: string[]
-   Blotter: IAdaptableBlotter
+    Blotter: IAdaptableBlotter
 }
 
 // props for a basic wizard

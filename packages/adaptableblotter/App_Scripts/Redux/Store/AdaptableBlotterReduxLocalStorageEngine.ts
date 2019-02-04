@@ -1,9 +1,9 @@
 import * as ReduxStorage from 'redux-storage'
 import * as fetch from 'isomorphic-fetch';
 import { MergeState } from './AdaptableBlotterReduxMerger'
-import { Helper } from '../../Core/Helpers/Helper'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
+import { Helper } from '../../Utilities/Helpers/Helper'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
+import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 
 const checkStatus = (response: Response) => {
   const error = new Error(response.statusText);
@@ -32,12 +32,12 @@ class AdaptableBlotterReduxLocalStorageEngine implements IAdaptableBlotterReduxL
         .then(response => response.json())
         //     .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
         .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
-        .catch(err => AdaptableBlotterLogger.LogError(err));
+        .catch(err => LoggingHelper.LogError(err));
     } else if (this.predefinedConfig != null) {
       return new Promise((resolve) => resolve(this.predefinedConfig))
         //      .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
         .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
-        .catch(err => AdaptableBlotterLogger.LogError(err));
+        .catch(err => LoggingHelper.LogError(err));
     }
     else {
       return new Promise((resolve) => {

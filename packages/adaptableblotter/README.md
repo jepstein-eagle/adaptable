@@ -20,7 +20,7 @@ There are additional React and Angular wrappers - please see the relevant packag
 ## Installation
 To install Adaptable Blotter via npm, run:
 ```javascript
-install adaptableblotter
+npm install adaptableblotter
 ```
   
 ## Licences

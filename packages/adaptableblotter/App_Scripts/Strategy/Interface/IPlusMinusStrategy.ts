@@ -1,5 +1,5 @@
 import {  IStrategy } from './IStrategy';
-import { ICellInfo } from '../../Core/Interface/Interfaces';
+import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
 
 export interface IPlusMinusStrategy extends IStrategy {
     ApplyPlusMinus(keyEventString: string, newValues: ICellInfo[]): void

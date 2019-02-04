@@ -1,8 +1,8 @@
 import { AlertState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IAlertDefinition } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
-import { MessageType } from '../../Core/Enums';
-import { IAlert } from '../../Core/Interface/IMessage';
+import { IAlertDefinition } from "../../Utilities/Interface/BlotterObjects/IAlertDefinition";
+import { MessageType } from '../../Utilities/Enums';
+import { EMPTY_ARRAY, EMPTY_STRING, ALERT_DEFAULT_MAX_ALERTS_IN_STORE } from '../../Utilities/Constants/GeneralConstants';
 
 export const ALERT_DEFIINITION_ADD_UPDATE = 'ALERT_DEFIINITION_ADD_UPDATE';
 export const ALERT_DEFIINITION_DELETE = 'ALERT_DEFIINITION_DELETE';
@@ -11,43 +11,42 @@ export const ALERT_DEFIINITION_CHANGE_ALERT_TYPE = 'ALERT_DEFIINITION_CHANGE_ALE
 
 
 export interface AlertDefinitionAddUpdateAction extends Redux.Action {
-    Index: number
-    AlertDefinition: IAlertDefinition
+    index: number
+    alertDefinition: IAlertDefinition
 }
 
 export interface AlertDefinitionDeleteAction extends Redux.Action {
-    Index: number
+    index: number
 }
 
 export interface AlertDefinitionChangeMessageTypeAction extends Redux.Action {
-    Index: number,
-    MessageType: MessageType;
+    index: number,
+    messageType: MessageType;
 }
 
 
 
-export const AlertDefinitionAddUpdate = (Index: number, AlertDefinition: IAlertDefinition): AlertDefinitionAddUpdateAction => ({
+export const AlertDefinitionAddUpdate = (index: number, alertDefinition: IAlertDefinition): AlertDefinitionAddUpdateAction => ({
     type: ALERT_DEFIINITION_ADD_UPDATE,
-    Index,
-    AlertDefinition
+    index,
+    alertDefinition
 })
 
-export const AlertDefinitionDelete = (Index: number): AlertDefinitionDeleteAction => ({
+export const AlertDefinitionDelete = (index: number): AlertDefinitionDeleteAction => ({
     type: ALERT_DEFIINITION_DELETE,
-    Index,
+    index,
 })
 
-export const AlertDefinitionChangeMessageType = (Index: number, MessageType: MessageType): AlertDefinitionChangeMessageTypeAction => ({
+export const AlertDefinitionChangeMessageType = (index: number, messageType: MessageType): AlertDefinitionChangeMessageTypeAction => ({
     type: ALERT_DEFIINITION_CHANGE_ALERT_TYPE,
-    Index,
-    MessageType
-})
+    index,
+    messageType})
 
 
 const initialAlertState: AlertState = {
-    AlertDefinitions: [],
-    MaxAlertsInStore: 5,
-    AlertPopupDiv : ""
+    AlertDefinitions: EMPTY_ARRAY,
+    MaxAlertsInStore: ALERT_DEFAULT_MAX_ALERTS_IN_STORE,
+    AlertPopupDiv : EMPTY_STRING
 }
 
 export const AlertReducer: Redux.Reducer<AlertState> = (state: AlertState = initialAlertState, action: Redux.Action): AlertState => {
@@ -57,24 +56,24 @@ export const AlertReducer: Redux.Reducer<AlertState> = (state: AlertState = init
         case ALERT_DEFIINITION_ADD_UPDATE: {
             let actionTypedAddUpdate = (<AlertDefinitionAddUpdateAction>action)
             alertDefinitions = [].concat(state.AlertDefinitions)
-            if (actionTypedAddUpdate.Index != -1) {  // it exists
-                alertDefinitions[actionTypedAddUpdate.Index] = actionTypedAddUpdate.AlertDefinition
+            if (actionTypedAddUpdate.index != -1) {  // it exists
+                alertDefinitions[actionTypedAddUpdate.index] = actionTypedAddUpdate.alertDefinition
             } else {
-                alertDefinitions.push(actionTypedAddUpdate.AlertDefinition)
+                alertDefinitions.push(actionTypedAddUpdate.alertDefinition)
             }
             return Object.assign({}, state, { AlertDefinitions: alertDefinitions })
         }
         case ALERT_DEFIINITION_DELETE: {
             let actionTypedDelete = (<AlertDefinitionDeleteAction>action)
             alertDefinitions = [].concat(state.AlertDefinitions)
-            alertDefinitions.splice(actionTypedDelete.Index, 1);
+            alertDefinitions.splice(actionTypedDelete.index, 1);
             return Object.assign({}, state, { AlertDefinitions: alertDefinitions })
         }
         case ALERT_DEFIINITION_CHANGE_ALERT_TYPE: {
             let actionTyped = (<AlertDefinitionChangeMessageTypeAction>action)
             alertDefinitions = [].concat(state.AlertDefinitions)
-            let alert = alertDefinitions[actionTyped.Index]
-            alertDefinitions[actionTyped.Index] = Object.assign({}, alert, { MessageType: actionTyped.MessageType })
+            let alert = alertDefinitions[actionTyped.index]
+            alertDefinitions[actionTyped.index] = Object.assign({}, alert, { MessageType: actionTyped.messageType })
             return Object.assign({}, state, { AlertDefinitions: alertDefinitions })
         }
 

@@ -4,24 +4,24 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const ColumnFilterRedux = require("../../../Redux/ActionsReducers/ColumnFilterRedux");
 const UserFilterRedux = require("../../../Redux/ActionsReducers/UserFilterRedux");
-const SystemFilterRedux = require("../../../Redux/ActionsReducers/SystemFilterRedux");
+const HomeRedux = require("../../../Redux/ActionsReducers/HomeRedux");
 const PopupRedux = require("../../../Redux/ActionsReducers/PopupRedux");
-const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
-const FilterHelper_1 = require("../../../Core/Helpers/FilterHelper");
-const Enums_1 = require("../../../Core/Enums");
-const Helper_1 = require("../../../Core/Helpers/Helper");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
+const FilterHelper_1 = require("../../../Utilities/Helpers/FilterHelper");
+const Enums_1 = require("../../../Utilities/Enums");
+const Helper_1 = require("../../../Utilities/Helpers/Helper");
 const ListBoxFilterForm_1 = require("./ListBoxFilterForm");
 const ButtonClose_1 = require("../Buttons/ButtonClose");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const ButtonClear_1 = require("../Buttons/ButtonClear");
 const Waiting_1 = require("./Waiting");
-const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 const ListBoxMenu_1 = require("./ListBoxMenu");
 const react_bootstrap_1 = require("react-bootstrap");
 const FilterFormPanel_1 = require("../Panels/FilterFormPanel");
 const ButtonSave_1 = require("../Buttons/ButtonSave");
-const ObjectFactory_1 = require("../../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../../Utilities/ObjectFactory");
 class FilterFormComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -35,9 +35,9 @@ class FilterFormComponent extends React.Component {
     componentWillMount() {
         if (this.props.CurrentColumn.DataType != Enums_1.DataType.Boolean) {
             let columnValuePairs = [];
-            if (this.props.Blotter.BlotterOptions.getColumnValues != null) {
+            if (this.props.Blotter.BlotterOptions.queryOptions.getColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
-                this.props.Blotter.BlotterOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
+                this.props.Blotter.BlotterOptions.queryOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
                     if (result == null) { // if nothing returned then default to normal
                         columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
@@ -45,19 +45,21 @@ class FilterFormComponent extends React.Component {
                         this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: Enums_1.DistinctCriteriaPairValue.DisplayValue });
                     }
                     else { // get the distinct items and make sure within max items that can be displayed
-                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
+                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
                         distinctItems.forEach(distinctItem => {
                             let displayValue = (result.DistinctCriteriaPairValue == Enums_1.DistinctCriteriaPairValue.DisplayValue) ?
                                 this.props.Blotter.getDisplayValueFromRawValue(this.props.CurrentColumn.ColumnId, distinctItem) :
                                 distinctItem;
                             columnValuePairs.push({ RawValue: distinctItem, DisplayValue: displayValue });
                         });
-                        let distinctCriteriaPairValue = result.DistinctCriteriaPairValue == 'RawValue' ? Enums_1.DistinctCriteriaPairValue.RawValue : Enums_1.DistinctCriteriaPairValue.DisplayValue;
+                        let distinctCriteriaPairValue = (result.DistinctCriteriaPairValue == Enums_1.DistinctCriteriaPairValue.RawValue) ?
+                            Enums_1.DistinctCriteriaPairValue.RawValue :
+                            Enums_1.DistinctCriteriaPairValue.DisplayValue;
                         this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: distinctCriteriaPairValue });
                         // set the UIPermittedValues for this column to what has been sent
-                        this.props.Blotter.api.uiSetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems);
+                        this.props.Blotter.api.userInterfaceApi.SetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems);
                     }
-                }, function (error) {
+                }, function () {
                     //    this.setState({ name: error });
                 });
             }
@@ -73,7 +75,7 @@ class FilterFormComponent extends React.Component {
         let isFilterable = this.isFilterable();
         // get user filter expressions appropriate for this column
         let appropriateFilters = FilterHelper_1.FilterHelper.GetUserFiltersForColumn(this.props.CurrentColumn, this.props.UserFilters).map(uf => uf.Name).concat(FilterHelper_1.FilterHelper.GetSystemFiltersForColumn(this.props.CurrentColumn, this.props.SystemFilters).map(sf => sf)); //.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
-        let appropriateFilterItems = appropriateFilters.map((uf, index) => { return { RawValue: uf, DisplayValue: uf }; });
+        let appropriateFilterItems = appropriateFilters.map((uf) => { return { RawValue: uf, DisplayValue: uf }; });
         let existingColumnFilter = this.props.CurrentColumn.DataType != Enums_1.DataType.Boolean && this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let uiSelectedColumnValues = existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0 ?
             existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues : [];
@@ -96,12 +98,9 @@ class FilterFormComponent extends React.Component {
                         :
                             React.createElement(ListBoxFilterForm_1.ListBoxFilterForm, { cssClassName: cssClassName, CurrentColumn: this.props.CurrentColumn, Columns: this.props.Columns, ColumnValuePairs: this.state.ColumnValuePairs, DataType: this.props.CurrentColumn.DataType, DistinctCriteriaPairValue: this.state.DistinctCriteriaPairValue, UiSelectedColumnValues: uiSelectedColumnValues, UiSelectedUserFilters: uiSelectedUserFilters, UiSelectedRange: uiSelectedRangeExpression, UserFilters: appropriateFilterItems, onColumnValueSelectedChange: (list) => this.onClickColumValue(list), onUserFilterSelectedChange: (list) => this.onClickUserFilter(list), Operators: leafExpressionOperators, onCustomRangeExpressionChange: (range) => this.onSetCustomExpression(range) })))
             :
-                React.createElement(react_bootstrap_1.Well, { bsSize: "medium" }, isFilterable));
+                React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, isFilterable));
     }
     isFilterable() {
-        if (!this.props.Blotter.isFilterable()) {
-            return "Grid is not filterable";
-        }
         if (!this.props.CurrentColumn.Filterable) {
             return "Column is not filterable";
         }
@@ -119,7 +118,7 @@ class FilterFormComponent extends React.Component {
         columnValues.forEach(columnValue => {
             let columnValuePair = (this.state.DistinctCriteriaPairValue == Enums_1.DistinctCriteriaPairValue.DisplayValue) ?
                 this.state.ColumnValuePairs.find(cvp => cvp.DisplayValue == columnValue) :
-                this.state.ColumnValuePairs.find(cvp => cvp.DisplayValue == columnValue);
+                this.state.ColumnValuePairs.find(cvp => cvp.RawValue == columnValue);
             displayValues.push(columnValuePair.DisplayValue);
             rawValues.push(columnValuePair.RawValue);
         });
@@ -165,8 +164,8 @@ class FilterFormComponent extends React.Component {
     onSaveFilter() {
         let existingColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let prompt = {
-            PromptTitle: "Enter name for User Filter",
-            PromptMsg: "Please enter a user filter name",
+            Header: "Enter name for User Filter",
+            Msg: "",
             ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(existingColumnFilter, "")
         };
         this.props.onShowPrompt(prompt);
@@ -200,7 +199,7 @@ function mapDispatchToProps(dispatch) {
         onClearColumnFilter: (columnId) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
         onAddEditColumnFilter: (columnFilter) => dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
         onShowPrompt: (prompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-        onHideFilterForm: () => dispatch(SystemFilterRedux.HideFilterForm()),
+        onHideFilterForm: () => dispatch(HomeRedux.FilterFormHide()),
     };
 }
 exports.FilterForm = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);

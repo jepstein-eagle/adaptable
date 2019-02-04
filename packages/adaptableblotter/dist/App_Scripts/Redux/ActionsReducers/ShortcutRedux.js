@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.SHORTCUT_APPLY = 'SHORTCUT_APPLY';
 exports.SHORTCUT_ADD = 'SHORTCUT_ADD';
 exports.SHORTCUT_DELETE = 'SHORTCUT_DELETE';
@@ -37,7 +38,7 @@ exports.ShortcutDelete = (Shortcut) => ({
     Shortcut
 });
 const initialShortcutState = {
-    Shortcuts: []
+    Shortcuts: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.ShortcutReducer = (state = initialShortcutState, action) => {
     let shortcuts;
@@ -51,9 +52,7 @@ exports.ShortcutReducer = (state = initialShortcutState, action) => {
             shortcuts = [].concat(state.Shortcuts);
             let index = shortcuts.indexOf(shortcut);
             shortcuts[index] = Object.assign({}, shortcut, { ShortcutKey: actionTyped.NewShortcutKey });
-            return Object.assign({}, state, {
-                Shortcuts: shortcuts
-            });
+            return Object.assign({}, state, { Shortcuts: shortcuts });
         }
         case exports.SHORTCUT_CHANGE_OPERATION: {
             let actionTyped = action;
@@ -61,9 +60,7 @@ exports.ShortcutReducer = (state = initialShortcutState, action) => {
             shortcuts = [].concat(state.Shortcuts);
             let index = shortcuts.indexOf(shortcut);
             shortcuts[index] = Object.assign({}, shortcut, { ShortcutOperation: actionTyped.NewShortcutOperation });
-            return Object.assign({}, state, {
-                Shortcuts: shortcuts
-            });
+            return Object.assign({}, state, { Shortcuts: shortcuts });
         }
         case exports.SHORTCUT_CHANGE_RESULT: {
             let actionTyped = action;
@@ -71,26 +68,20 @@ exports.ShortcutReducer = (state = initialShortcutState, action) => {
             shortcuts = [].concat(state.Shortcuts);
             let index = shortcuts.indexOf(shortcut);
             shortcuts[index] = Object.assign({}, shortcut, { ShortcutResult: actionTyped.NewShortcutResult });
-            return Object.assign({}, state, {
-                Shortcuts: shortcuts
-            });
+            return Object.assign({}, state, { Shortcuts: shortcuts });
         }
         case exports.SHORTCUT_ADD: {
             let newShortcut = action.Shortcut;
             shortcuts = [].concat(state.Shortcuts);
             shortcuts.push(newShortcut);
-            return Object.assign({}, state, {
-                Shortcuts: shortcuts
-            });
+            return Object.assign({}, state, { Shortcuts: shortcuts });
         }
         case exports.SHORTCUT_DELETE: {
             let deletedShortcut = action.Shortcut;
             shortcuts = [].concat(state.Shortcuts);
             let index = shortcuts.findIndex(x => x.ShortcutKey == deletedShortcut.ShortcutKey);
             shortcuts.splice(index, 1);
-            return Object.assign({}, state, {
-                Shortcuts: shortcuts
-            });
+            return Object.assign({}, state, { Shortcuts: shortcuts });
         }
         default:
             return state;

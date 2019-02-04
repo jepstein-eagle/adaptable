@@ -2,14 +2,14 @@ import * as React from "react";
 import { FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { Helper } from '../../Core/Helpers/Helper';
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { Helper } from '../../Utilities/Helpers/Helper';
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColItem } from "../UIInterfaces";
-import { IPlusMinusRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { IPlusMinusRule } from "../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 export interface PlusMinusEntityRowProps extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
     Column: IColumn

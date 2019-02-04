@@ -7,8 +7,9 @@ const react_bootstrap_2 = require("react-bootstrap");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 class IPushPullLoginComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -42,13 +43,13 @@ class IPushPullLoginComponent extends React.Component {
 }
 function mapStateToProps(state, ownProps) {
     return {
-        ErrorMsg: state.Export.ErrorMsg
+        ErrorMsg: state.System.ReportErrorMessage
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onLogin: (login, password) => dispatch(ExportRedux.IPPLogin(login, password)),
-        onCancel: () => { dispatch(PopupRedux.PopupHideScreen()); dispatch(ExportRedux.ReportSetErrorMsg("")); }
+        onCancel: () => { dispatch(PopupRedux.PopupHideScreen()); dispatch(SystemRedux.ReportSetErrorMessage("")); }
     };
 }
 exports.IPushPullLogin = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(IPushPullLoginComponent);

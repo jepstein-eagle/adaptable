@@ -1,15 +1,15 @@
 import * as React from "react";
 import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IFreeTextColumn } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { IFreeTextColumn } from "../../../Utilities/Interface/BlotterObjects/IFreeTextColumn";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 
 
 export interface FreeTextColumnSettingsWizardProps extends AdaptableWizardStepProps<IFreeTextColumn> {
-    Columns: IColumn[]
+   
 }
 export interface FreeTextColumnSettingsWizardState {
     ColumnId: string,
@@ -49,7 +49,7 @@ export class FreeTextColumnSettingsWizard extends React.Component<FreeTextColumn
                         </Col>
                         <Col xs={8}>
                         <FormGroup controlId="formInlineName" validationState={null}>
-                        <FormControl value={this.state.DefaultValue} type="text" placeholder="Default Value" onChange={(e) => this.handleDefaultValueChange(e)} />
+                        <FormControl value={this.state.DefaultValue} type="text" placeholder="Default Column Value (not required)" onChange={(e) => this.handleDefaultValueChange(e)} />
                           <FormControl.Feedback />
                                 <HelpBlock>{""}</HelpBlock>
                             </FormGroup>

@@ -1,13 +1,10 @@
-import { MenuItemDoReduxAction } from '../Core/MenuItem'
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy'
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
-import { IColumn } from '../Core/Interface/IColumn';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+import { IColumn } from '../Utilities/Interface/IColumn';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
     constructor(blotter: IAdaptableBlotter) {
@@ -18,12 +15,12 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
         this.createMenuItemShowPopup(StrategyConstants.ColumnChooserStrategyName, ScreenPopups.ColumnChooserPopup, StrategyConstants.ColumnChooserGlyph);
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
             this.createContextMenuItemReduxAction(
                 "Hide Column",
                 StrategyConstants.ColumnChooserGlyph,
-                GridRedux.GridHideColumn(columnId))
+                GridRedux.GridHideColumn(column.ColumnId))
         }
     }
 }

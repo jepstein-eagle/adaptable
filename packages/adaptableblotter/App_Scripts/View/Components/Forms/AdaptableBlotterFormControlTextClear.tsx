@@ -1,8 +1,8 @@
 import * as React from "react";
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions'
 import { FormControl, FormControlProps, ButtonGroup, Glyphicon, Sizes, InputGroup, DropdownButton } from 'react-bootstrap';
 import { ButtonClear } from "../Buttons/ButtonClear";
-import * as StyleConstants from '../../../Core/Constants/StyleConstants'
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants'
 
 
 export interface AdaptableBlotterFormControlTextClearProps extends FormControlProps {
@@ -13,7 +13,7 @@ export interface AdaptableBlotterFormControlTextClearProps extends FormControlPr
 
 export class AdaptableBlotterFormControlTextClear extends React.Component<AdaptableBlotterFormControlTextClearProps, {}> {
     render() {
-        let size: any = (this.props.bsSize) ? this.props.bsSize : 'small'
+        let size: any = (this.props.bsSize) ? this.props.bsSize : 'sm'
         let cssClassName: string = this.props.cssClassName + StyleConstants.TEXT_ENTRY_FORM;
 
         return <span>

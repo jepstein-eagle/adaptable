@@ -1,20 +1,20 @@
 import * as React from "react";
 import { Panel, Radio, Col, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IColumn } from '../../../Core/Interface/IColumn';
-import { SelectionMode, LayoutSource, MessageType } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { SelectionMode, LayoutSource, MessageType } from '../../../Utilities/Enums';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ILayout, IGridSort } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { IGridSort } from "../../../Utilities/Interface/IGridSort";
+import { ILayout } from "../../../Utilities/Interface/BlotterObjects/ILayout";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<ILayout> {
     Layouts: Array<ILayout>
     GridSorts: IGridSort[]
-    Columns: Array<IColumn>
-}
+ }
 
 export interface LayoutSelectionWizardState {
     LayoutSource: LayoutSource
@@ -42,11 +42,11 @@ export class LayoutSelectionWizard extends React.Component<LayoutSelectionWizard
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="Existing" checked={this.state.LayoutSource == LayoutSource.Existing} onChange={(e) => this.onScopeSelectChanged(e)}>Copy current Grid setup</Radio>
-                        {' '} {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Layout:  Current Grid"} bodyText={["The new layout will contain the current column order and sort order in the grid."]} MessageType={MessageType.Info} />
+                        {' '} {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Layout:  Current Grid"} bodyText={["The new layout will contain the current column order and sort order in the grid."]} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="New" checked={this.state.LayoutSource == LayoutSource.New} onChange={(e) => this.onScopeSelectChanged(e)}>Create a new Layout</Radio>
-                        {' '} {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Layout: New"} bodyText={["Build the layout yourself by selecting columns and sort order (in following steps)."]} MessageType={MessageType.Info} />
+                        {' '} {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Layout: New"} bodyText={["Build the layout yourself by selecting columns and sort order (in following steps)."]} />
                     </Col>
                 </AdaptableBlotterForm>
             </Panel>

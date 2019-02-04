@@ -6,23 +6,23 @@ const react_bootstrap_1 = require("react-bootstrap");
 const CustomSortRedux = require("../../Redux/ActionsReducers/CustomSortRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const Helper_1 = require("../../Core/Helpers/Helper");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const CustomSortEntityRow_1 = require("./CustomSortEntityRow");
 const CustomSortWizard_1 = require("./Wizard/CustomSortWizard");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class CustomSortPopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {

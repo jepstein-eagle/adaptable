@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 /// <reference path="../../typings/.d.ts" />
 const react_bootstrap_1 = require("react-bootstrap");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 class StrategyProfile extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.STRATEGY_PROFILE;

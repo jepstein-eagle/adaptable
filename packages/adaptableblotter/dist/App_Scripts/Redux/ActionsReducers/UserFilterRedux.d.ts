@@ -1,10 +1,11 @@
 import { UserFilterState } from './Interface/IState';
 import * as Redux from 'redux';
-import { IUserFilter, IColumnFilter } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
-import { InputAction } from '../../Core/Interface/IMessage';
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
+import { InputAction } from '../../Utilities/Interface/IMessage';
 export declare const USER_FILTER_ADD_UPDATE = "USER_FILTER_ADD_UPDATE";
 export declare const USER_FILTER_DELETE = "USER_FILTER_DELETE";
-export declare const CREATE_USER_FILTER_FROM_COLUMN_FILTER = "CREATE_USER_FILTER_FROM_COLUMN_FILTER";
+export declare const USER_FILTER_CREATE_FROM_COLUMN_FILTER = "USER_FILTER_CREATE_FROM_COLUMN_FILTER";
 export interface UserFilterAddUpdateAction extends Redux.Action {
     Index: number;
     UserFilter: IUserFilter;

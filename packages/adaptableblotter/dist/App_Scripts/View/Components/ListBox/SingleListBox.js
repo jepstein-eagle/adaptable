@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
-const Helper_1 = require("../../../Core/Helpers/Helper");
-const Enums_1 = require("../../../Core/Enums");
+const Helper_1 = require("../../../Utilities/Helpers/Helper");
+const Enums_1 = require("../../../Utilities/Enums");
 const ListBoxFilterSortComponent_1 = require("./ListBoxFilterSortComponent");
 const react_bootstrap_1 = require("react-bootstrap");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 class SingleListBox extends React.Component {
     constructor(props) {
         super(props);
@@ -44,7 +44,7 @@ class SingleListBox extends React.Component {
                 return React.createElement(react_bootstrap_1.ListGroupItem, { key: value, style: listGroupItemStyle, onClick: () => this.onClickItem(x), active: isActive, value: value }, display);
             }
         });
-        let header = React.createElement(ListBoxFilterSortComponent_1.ListBoxFilterSortComponent, { FilterValue: this.state.FilterValue, sortColumnValues: () => this.sortColumnValues(), SortOrder: this.state.SortOrder, handleChangeFilterValue: (e) => this.handleChangeFilterValue(e) });
+        let header = React.createElement(ListBoxFilterSortComponent_1.ListBoxFilterSortComponent, { FilterValue: this.state.FilterValue, sortColumnValues: () => this.sortColumnValues(), SortOrder: this.state.SortOrder, handleChangeFilterValue: (e) => this.handleChangeFilterValue(e), DisableSort: false });
         return React.createElement("div", { className: cssClassName },
             header,
             React.createElement(react_bootstrap_1.ListGroup, { style: this.props.style }, itemsElements));

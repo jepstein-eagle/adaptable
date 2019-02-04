@@ -2,27 +2,26 @@
 import { connect } from 'react-redux';
 import * as Redux from "redux";
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as MenuRedux from '../../Redux/ActionsReducers/MenuRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
-import { Dropdown, Glyphicon, MenuItem, Button, OverlayTrigger, Tooltip, Checkbox, DropdownButton, SplitButton, ButtonToolbar } from 'react-bootstrap';
+import { Glyphicon, MenuItem, OverlayTrigger, Tooltip, Checkbox, DropdownButton } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { MenuState, EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
+import { MenuState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { IMenuItem } from '../../Core/Interface/IMenu'
-import { IColumn } from '../../Core/Interface/IColumn';
-import { Helper } from '../../Core/Helpers/Helper'
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
+import { IColumn } from '../../Utilities/Interface/IColumn';
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ButtonDashboard } from "../Components/Buttons/ButtonDashboard";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IAdaptableBlotterOptions } from "../../Core/Api/Interface/IAdaptableBlotterOptions";
-import { Visibility, StatusColour, MessageType, AccessLevel } from "../../Core/Enums";
-import { ISystemStatus, IEntitlement } from "../../Core/Interface/Interfaces";
-import { IAlert, } from "../../Core/Interface/IMessage";
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
+import { Visibility, StatusColour, MessageType, AccessLevel } from "../../Utilities/Enums";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { ISystemStatus } from "../../Utilities/Interface/ISystemStatus";
+import { IMenuItem } from "../../Utilities/Interface/IMenu";
+import { IAlert } from "../../Utilities/Interface/IMessage";
+import { UIHelper } from "../UIHelper";
 
 
 interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
@@ -33,8 +32,9 @@ interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeTo
     HeaderText: string,
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
     onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction
+    onSetToolbarVisibility: (strategyIds: string[]) => DashboardRedux.DashboardSetToolbarsAction
     onShowStatusMessage: (alert: IAlert) => PopupRedux.PopupShowAlertAction
-
+    onShowAbout: () => PopupRedux.PopupShowAboutAction
 }
 
 class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentProps, {}> {
@@ -49,36 +49,105 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         let cssClassName: string = this.props.cssClassName + "__home";
         let cssDropdownClassName: string = this.props.cssClassName + "__home__dropdown";
 
-        // dropdown menu items
-        let menuItems = this.props.MenuState.MenuItems.filter(x =>
-            x.IsVisible && x.StrategyId != StrategyConstants.AboutStrategyId
-        ).map((menuItem: IMenuItem) => {
-            return <MenuItem disabled={this.props.AccessLevel==AccessLevel.ReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
+
+        const functionsGlyph: any = <OverlayTrigger key={"functionsOverlay"} overlay={<Tooltip id="functionsTooltipButton" > {"Functions"}</Tooltip >}>
+            <Glyphicon glyph={"home"} />
+        </OverlayTrigger>
+        const colsGlyph: any = <OverlayTrigger key={"colsOverlay"} overlay={<Tooltip id="colsTooltipButton" > {"Columns"}</Tooltip >}>
+            <Glyphicon glyph={"list"} />
+        </OverlayTrigger>
+        const toolbarsGlyph: any = <OverlayTrigger key={"toolbarsOverlay"} overlay={<Tooltip id="toolbarsTooltipButton" > {"Toolbars"}</Tooltip >}>
+            <Glyphicon glyph={"align-justify"} />
+        </OverlayTrigger>
+
+        // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
+        let strategyKeys: string[] = [...this.props.Blotter.Strategies.keys()];
+        let allowedMenuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible && 
+            ArrayExtensions.NotContainsItem(strategyKeys, x)
+        );
+
+        // function menu items
+        let menuItems = allowedMenuItems.map((menuItem: IMenuItem) => {
+            return <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
                 <Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}
             </MenuItem>
         });
 
-        // columns
-        let colItems = this.props.Columns.map((col: IColumn, index) => {
-            return <div className="ab_home_toolbar_column_list" key={index}>
+        // column items
+        let colItems: any = []
+        colItems.push(<div key="colTitle">{' '}{' '}&nbsp;&nbsp;<b>{"Columns"}</b></div>);
+        this.props.Columns.forEach((col: IColumn, index) => {
+            colItems.push(<div className="ab_home_toolbar_column_list" key={index}>
                 <Checkbox value={col.ColumnId} key={col.ColumnId} checked={col.Visible} onChange={(e) => this.onSetColumnVisibility(e)} > {col.FriendlyName}</Checkbox>
-            </div>
+            </div>)
         });
+
+        // toolbar items
+        let toolbarItems: any = []
+        let allowedMenuNames: string[] = allowedMenuItems.map(vm => {
+            return vm.StrategyId;
+        })
+        toolbarItems.push(<div key="toolbarTitle">{' '}{' '}&nbsp;&nbsp;<b>{"Toolbars"}</b></div>);
+        this.props.DashboardState.AvailableToolbars.forEach((toolbar: string, index) => {
+            if (ArrayExtensions.ContainsItem(allowedMenuNames, toolbar)) {
+                let isVisible: boolean = ArrayExtensions.ContainsItem(this.props.DashboardState.VisibleToolbars, toolbar);
+                let functionName = StrategyConstants.getNameForStrategyId(toolbar);
+                toolbarItems.push(<div className="ab_home_toolbar_column_list" key={index}>
+                    <Checkbox value={toolbar} key={toolbar} checked={isVisible} onChange={(e) => this.onSetToolbarVisibility(e)} > {functionName}</Checkbox>
+                </div>)
+            }
+        });
+
 
         // status button
         let statusButton = <OverlayTrigger key={"systemstatus"} overlay={<Tooltip id="tooltipButton" > {"System Status"}</Tooltip >}>
-            <ButtonDashboard glyph={this.getGlyphForSystemStatusButton()} cssClassName={cssClassName} bsStyle={this.getStyleForSystemStatusButton()} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={"Status: " + this.props.SystemStatus.StatusColour} overrideDisableButton={false} onClick={() => this.onClickStatus()}  AccessLevel={AccessLevel.Full}/>
+            <ButtonDashboard glyph={UIHelper.getGlyphForSystemStatusButton(this.props.SystemStatus.StatusColour as StatusColour)} cssClassName={cssClassName} bsStyle={UIHelper.getStyleForSystemStatusButton(this.props.SystemStatus.StatusColour as StatusColour)} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={"Status: " + this.props.SystemStatus.StatusColour} overrideDisableButton={false} onClick={() => this.onClickStatus()} AccessLevel={AccessLevel.Full} />
         </OverlayTrigger >
+
+        // about button
+        let aboutButton = <OverlayTrigger key={"about"} overlay={<Tooltip id="tooltipButton" > {"About"}</Tooltip >}>
+            <ButtonDashboard glyph={"info-sign"} cssClassName={cssClassName} bsStyle={"default"} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={"About"} overrideDisableButton={false} onClick={() => this.onClickAbout()} AccessLevel={AccessLevel.Full} />
+        </OverlayTrigger >
+
+        // functions dropdown
+        let functionsDropdown = <DropdownButton bsStyle={"default"}
+            className={cssDropdownClassName}
+            bsSize={"small"}
+            title={functionsGlyph}
+            key={"dropdown-functions"}
+            id={"dropdown-functions"}>
+            {menuItems}
+        </DropdownButton>
+
+        // columns dropdown
+        let columnsDropDown = <DropdownButton bsStyle={"default"}
+            className={cssDropdownClassName}
+            bsSize={"small"}
+            title={colsGlyph}
+            key={"dropdown-cols"}
+            id={"dropdown-cols"}>
+            {colItems}
+        </DropdownButton>
+
+        // toolbars dropdown
+        let toolbarsDropDown = <DropdownButton bsStyle={"default"}
+            className={cssDropdownClassName}
+            bsSize={"small"}
+            title={toolbarsGlyph}
+            key={"dropdown-toolbars"}
+            id={"dropdown-toolbars"}>
+            {toolbarItems}
+        </DropdownButton>
 
         // shortcuts
         let shortcutsArray: string[] = this.props.DashboardState.VisibleButtons
         let shortcuts: any
         if (shortcutsArray) {
             shortcuts = shortcutsArray.map(x => {
-                let menuItem = this.props.MenuState.MenuItems.find(y => y.IsVisible &&  y.StrategyId == x)
+                let menuItem = this.props.MenuState.MenuItems.find(y => y.IsVisible && y.StrategyId == x)
                 if (menuItem) {
                     return <OverlayTrigger key={x} overlay={<Tooltip id="tooltipButton" > {menuItem.Label}</Tooltip >}>
-                        <ButtonDashboard glyph={menuItem.GlyphIcon} cssClassName={cssClassName} bsStyle={"default"} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={menuItem.Label} overrideDisableButton={this.props.AccessLevel==AccessLevel.ReadOnly} onClick={() => this.onClick(menuItem)} AccessLevel={AccessLevel.Full} />
+                        <ButtonDashboard glyph={menuItem.GlyphIcon} cssClassName={cssClassName} bsStyle={"default"} DisplayMode={"Glyph"} bsSize={"small"} ToolTipAndText={menuItem.Label} overrideDisableButton={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.onClick(menuItem)} AccessLevel={AccessLevel.Full} />
                     </OverlayTrigger >
                 }
             })
@@ -92,42 +161,29 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
             }
         }
 
-        const functionsGlyph: any = <OverlayTrigger key={"functionsOverlay"} overlay={<Tooltip id="functionsTooltipButton" > {"Functions"}</Tooltip >}>
-            <Glyphicon glyph={"home"} />
-        </OverlayTrigger>
-        const colsGlyph: any = <OverlayTrigger key={"colsOverlay"} overlay={<Tooltip id="colsTooltipButton" > {"Columns"}</Tooltip >}>
-            <Glyphicon glyph={"list"} />
-        </OverlayTrigger>
 
         return <PanelDashboard cssClassName={cssClassName} showCloseButton={false} showMinimiseButton={true} onMinimise={() => this.props.onSetDashboardVisibility(Visibility.Minimised)}
             headerText={toolbarTitle} glyphicon={"home"} showGlyphIcon={false}
             onClose={() => this.props.onClose(StrategyConstants.HomeStrategyId)} onConfigure={() => this.props.onConfigure()}>
 
             {this.props.DashboardState.ShowFunctionsDropdown &&
-                <DropdownButton bsStyle={"default"}
-                    className={cssDropdownClassName}
-                    bsSize={"small"}
-                    title={functionsGlyph}
-                    key={"dropdown-functions"}
-                    id={"dropdown-functions"}>
-                    {menuItems}
-                </DropdownButton>
+                functionsDropdown
             }
             {this.props.DashboardState.ShowSystemStatusButton &&
                 statusButton
+            }
+            {this.props.DashboardState.ShowAboutButton &&
+                aboutButton
             }
 
             {shortcuts}
 
             {this.props.DashboardState.ShowColumnsDropdown &&
-                <DropdownButton bsStyle={"default"}
-                    className={cssDropdownClassName}
-                    bsSize={"small"}
-                    title={colsGlyph}
-                    key={"dropdown-cols"}
-                    id={"dropdown-cols"}>
-                    {colItems}
-                </DropdownButton>
+                columnsDropDown
+            }
+
+            {this.props.DashboardState.ShowToolbarsDropdown &&
+                toolbarsDropDown
             }
 
         </PanelDashboard>
@@ -141,11 +197,19 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour
         switch (statusColor) {
             case StatusColour.Green:
-                let info: IAlert = {
+                let success: IAlert = {
                     Header: "System Status",
                     Msg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
                         this.props.SystemStatus.StatusMessage :
                         "No issues",
+                    MessageType: MessageType.Success
+                }
+                this.props.onShowStatusMessage(success)
+                return;
+            case StatusColour.Blue:
+                let info: IAlert = {
+                    Header: "System Status",
+                    Msg: this.props.SystemStatus.StatusMessage,
                     MessageType: MessageType.Info
                 }
                 this.props.onShowStatusMessage(info)
@@ -169,10 +233,13 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         }
 
     }
+    onClickAbout() {
+        this.props.onShowAbout()
+    }
 
     onSetColumnVisibility(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let changedColumnn: IColumn = this.props.Columns.find(c => c.ColumnId == e.value);
+        let changedColumnn: IColumn = ColumnHelper.getColumnFromId(e.value, this.props.Columns);
 
         let columns: IColumn[] = [].concat(this.props.Columns);
         changedColumnn = Object.assign({}, changedColumnn, {
@@ -183,29 +250,20 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         this.props.onNewColumnListOrder(columns.filter(c => c.Visible))
     }
 
-    getStyleForSystemStatusButton(): string {
-        let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour
-        switch (statusColor) {
-            case StatusColour.Green:
-                return "success"
-            case StatusColour.Amber:
-                return "warning"
-            case StatusColour.Red:
-                return "danger"
+    onSetToolbarVisibility(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let strategy: string = this.props.DashboardState.AvailableToolbars.find(at => at == e.value);
+        let visibleToolbars: string[] = [].concat(this.props.DashboardState.VisibleToolbars);
+        if (e.checked) {
+            visibleToolbars.push(strategy);
+        } else {
+            let index: number = visibleToolbars.findIndex(vt => vt == strategy)
+            visibleToolbars.splice(index, 1);
         }
+        this.props.onSetToolbarVisibility(visibleToolbars)
     }
 
-    getGlyphForSystemStatusButton(): string {
-        let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour
-        switch (statusColor) {
-            case StatusColour.Green:
-                return "ok-circle"
-            case StatusColour.Amber:
-                return "ban-circle"
-            case StatusColour.Red:
-                return "remove-circle"
-        }
-    }
+
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -214,7 +272,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         DashboardState: state.Dashboard,
         Columns: state.Grid.Columns,
         SystemStatus: state.System.SystemStatus,
-     };
+    };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
@@ -224,7 +282,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.HomeStrategyId, ScreenPopups.HomeButtonsPopup)),
         onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility: Visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
+        onSetToolbarVisibility: (strategyIds: string[]) => dispatch(DashboardRedux.DashboardSetToolbars(strategyIds)),
         onShowStatusMessage: (alert: IAlert) => dispatch(PopupRedux.PopupShowAlert(alert)),
+        onShowAbout: () => dispatch(PopupRedux.PopupShowAbout()),
     };
 }
 

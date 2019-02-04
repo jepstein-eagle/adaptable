@@ -5,18 +5,18 @@ const react_redux_1 = require("react-redux");
 const AdvancedSearchRedux = require("../../Redux/ActionsReducers/AdvancedSearchRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
 const ButtonDelete_1 = require("../Components/Buttons/ButtonDelete");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
-const Enums_1 = require("../../Core/Enums");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
+const Enums_1 = require("../../Utilities/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
-const GeneralConstants = require("../../Core/Constants/GeneralConstants");
+const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 class AdvancedSearchToolbarControlComponent extends React.Component {
     render() {
         const selectSearchString = "Select a Search";

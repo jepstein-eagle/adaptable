@@ -1,24 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.ADVANCED_SEARCH_ADD_UPDATE = 'ADVANCED_SEARCH_ADD_UPDATE';
 exports.ADVANCED_SEARCH_DELETE = 'ADVANCED_SEARCH_DELETE';
 exports.ADVANCED_SEARCH_SELECT = 'ADVANCED_SEARCH_SELECT';
-exports.AdvancedSearchAddUpdate = (Index, AdvancedSearch) => ({
+exports.AdvancedSearchAddUpdate = (index, advancedSearch) => ({
     type: exports.ADVANCED_SEARCH_ADD_UPDATE,
-    Index,
-    AdvancedSearch
+    index,
+    advancedSearch
 });
-exports.AdvancedSearchDelete = (AdvancedSearch) => ({
+exports.AdvancedSearchDelete = (advancedSearch) => ({
     type: exports.ADVANCED_SEARCH_DELETE,
-    AdvancedSearch
+    advancedSearch
 });
-exports.AdvancedSearchSelect = (SelectedSearchName) => ({
+exports.AdvancedSearchSelect = (selectedSearchName) => ({
     type: exports.ADVANCED_SEARCH_SELECT,
-    SelectedSearchName
+    selectedSearchName
 });
 const initialAdvancedSearchState = {
-    AdvancedSearches: [],
-    CurrentAdvancedSearch: ""
+    AdvancedSearches: GeneralConstants_1.EMPTY_ARRAY,
+    CurrentAdvancedSearch: GeneralConstants_1.EMPTY_STRING
 };
 exports.AdvancedSearchReducer = (state = initialAdvancedSearchState, action) => {
     let index;
@@ -27,21 +28,21 @@ exports.AdvancedSearchReducer = (state = initialAdvancedSearchState, action) => 
         case exports.ADVANCED_SEARCH_ADD_UPDATE:
             let actionTypedAddUpdate = action;
             advancedSearches = [].concat(state.AdvancedSearches);
-            if (actionTypedAddUpdate.Index != -1) { // it exists
-                advancedSearches[actionTypedAddUpdate.Index] = actionTypedAddUpdate.AdvancedSearch;
+            if (actionTypedAddUpdate.index != -1) { // it exists
+                advancedSearches[actionTypedAddUpdate.index] = actionTypedAddUpdate.advancedSearch;
             }
             else {
-                advancedSearches.push(actionTypedAddUpdate.AdvancedSearch);
+                advancedSearches.push(actionTypedAddUpdate.advancedSearch);
             }
             return Object.assign({}, state, { AdvancedSearches: advancedSearches }); //, CurrentAdvancedSearch: currentSearchName })
         case exports.ADVANCED_SEARCH_DELETE:
             let actionTypedDelete = action;
             advancedSearches = [].concat(state.AdvancedSearches);
-            index = advancedSearches.findIndex(a => a.Name == actionTypedDelete.AdvancedSearch.Name);
+            index = advancedSearches.findIndex(a => a.Name == actionTypedDelete.advancedSearch.Name);
             advancedSearches.splice(index, 1);
-            return Object.assign({}, state, { AdvancedSearches: advancedSearches, CurrentAdvancedSearch: "" });
+            return Object.assign({}, state, { AdvancedSearches: advancedSearches, CurrentAdvancedSearch: GeneralConstants_1.EMPTY_STRING });
         case exports.ADVANCED_SEARCH_SELECT:
-            return Object.assign({}, state, { CurrentAdvancedSearch: action.SelectedSearchName });
+            return Object.assign({}, state, { CurrentAdvancedSearch: action.selectedSearchName });
         default:
             return state;
     }

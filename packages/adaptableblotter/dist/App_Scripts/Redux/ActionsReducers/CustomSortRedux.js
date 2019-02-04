@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.CUSTOMSORT_ADD = 'CUSTOMSORT_ADD';
 exports.CUSTOMSORT_EDIT = 'CUSTOMSORT_EDIT';
 exports.CUSTOMSORT_DELETE = 'CUSTOMSORT_DELETE';
@@ -16,7 +17,7 @@ exports.CustomSortDelete = (CustomSort) => ({
     CustomSort
 });
 const initialCustomSortState = {
-    CustomSorts: []
+    CustomSorts: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.CustomSortReducer = (state = initialCustomSortState, action) => {
     let customSorts;

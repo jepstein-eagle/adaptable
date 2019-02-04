@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Radio, Col, Panel,  HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { MessageType, ActionMode } from '../../../Core/Enums';
+import { MessageType, ActionMode } from '../../../Utilities/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ICellValidationRule } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../../Utilities/Interface/BlotterObjects/ICellValidationRule";
 
 export interface CellValidationActionWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
-    Columns: Array<IColumn>
+   
 }
 export interface CellValidationSettingsWizardState {
     ActionMode: ActionMode;
@@ -41,11 +41,11 @@ export class CellValidationActionWizard extends React.Component<CellValidationAc
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value={ActionMode.StopEdit} checked={this.state.ActionMode == ActionMode.StopEdit} onChange={(e) => this.onActionModeChanged(e)}>Prevent the cell edit</Radio>
                         {' '}{' '}
-                        <AdaptablePopover  cssClassName={cssClassName} headerText={"Cell Validation Action: Prevent"} bodyText={["Disallows all cell edits that break the validation rule with no override available."]} MessageType={MessageType.Info} />
+                        <AdaptablePopover  cssClassName={cssClassName} headerText={"Cell Validation Action: Prevent"} bodyText={["Disallows all cell edits that break the validation rule with no override available."]} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value={ActionMode.WarnUser} checked={this.state.ActionMode == ActionMode.WarnUser} onChange={(e) => this.onActionModeChanged(e)}>Show a warning</Radio>
-                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Cell Validation Action: Warning"} bodyText={["Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed."]} MessageType={MessageType.Info} />
+                        {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Cell Validation Action: Warning"} bodyText={["Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed."]} />
                     </Col>
                 </AdaptableBlotterForm>
 

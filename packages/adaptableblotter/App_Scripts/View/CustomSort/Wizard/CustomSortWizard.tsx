@@ -3,9 +3,9 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { CustomSortColumnWizard } from './CustomSortColumnWizard'
 import { CustomSortValuesWizard } from './CustomSortValuesWizard'
 import { CustomSortSummaryWizard } from './CustomSortSummaryWizard'
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { ICustomSort } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICustomSort } from "../../../Utilities/Interface/BlotterObjects/ICustomSort";
 
 export interface CustomSortWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CustomSortWizard> {
 }
@@ -13,7 +13,7 @@ export interface CustomSortWizardProps extends IAdaptableBlotterObjectExpression
 export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Select Column", "Create Sort Order", "Summary"]
+        let stepNames: string[] = ["Column", "Sort Order", "Summary"]
         let customSorts: ICustomSort[] = this.props.ConfigEntities as ICustomSort[]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
@@ -21,10 +21,12 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
+                Blotter={this.props.Blotter}
+                Columns={this.props.Columns}
                 Steps={[
-                    <CustomSortColumnWizard cssClassName={this.props.cssClassName} StepName={stepNames[0]} Columns={this.props.Columns.filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId))} />,
-                    <CustomSortValuesWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns} Blotter ={this.props.Blotter} />,
-                    < CustomSortSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns}/>
+                    <CustomSortColumnWizard StepName={stepNames[0]} SortedColumns={this.props.Columns.filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId))} />,
+                    <CustomSortValuesWizard StepName={stepNames[1]}  />,
+                    < CustomSortSummaryWizard StepName={stepNames[2]} />
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}

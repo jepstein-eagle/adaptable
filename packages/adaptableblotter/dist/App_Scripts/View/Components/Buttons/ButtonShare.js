@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const ButtonBase_1 = require("./ButtonBase");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 class ButtonShare extends React.Component {
     render() {
         return React.createElement(ButtonBase_1.ButtonBase, { ToolTipAndText: "Share", bsStyle: 'warning', bsSize: this.props.size, 

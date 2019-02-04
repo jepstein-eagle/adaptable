@@ -1,16 +1,15 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Well } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IUserFilter } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
-import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions'
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {
     UserFilters: IUserFilter[]
-    Columns: Array<IColumn>
 }
 export interface UserFilterSettingsWizardState {
     FilterName: string,

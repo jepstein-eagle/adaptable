@@ -2,22 +2,79 @@ var themeName = ""
 var adaptableblotter
 var quickSearchText
 var trades
+var gridOptions
+var showTrade = true;
+
+function runQuickSearchViaAPI() {
+  let element = document.getElementById("txtQuickSearchText")
+  adaptableblotter.api.quickSearchApi.Apply(element.value)
+}
+
+function clearQuickSearchViaAPI() {
+  let element = document.getElementById("txtQuickSearchText")
+  element.value = ""
+  adaptableblotter.api.quickSearchApi.Clear()
+}
+
+function getColumns() {
+  this.gridOptions.api.setColumnDefs(getTradeSchema())
+}
+
+function getData() {
+  let dataGen = new harness.DataGenerator();
+  let data = dataGen.getTrades(10);
+  gridOptions.api.setRowData(data)
+}
+
+function getRowsForGrid(dataGen) {
+  if (showTrade) {
+    return dataGen.getTrades(500);
+  } else {
+    return dataGen.getFtseData(10)
+  }
+}
+
+function getColumnsForGrid() {
+  if (showTrade) {
+    return getTradeSchema();
+  } else {
+    return getFTSESchema()
+  }
+}
+
+function getPKForGrid() {
+  if (showTrade) {
+    return "tradeId";
+  } else {
+    return "date"
+  }
+}
+
+function getBlotterIdforGrid() {
+  if (showTrade) {
+    return "trade demo";
+  } else {
+    return "demo ftse"
+  }
+}
 
 function InitTradeBlotter() {
   let dataGen = new harness.DataGenerator();
-  trades = dataGen.getTrades(100);
+  trades = getRowsForGrid(dataGen);
 
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
-  let gridOptions = {
-    columnDefs: getTradeSchema(), // returns a list of agGrid column definitions
+  gridOptions = {
+    // columnDefs: [],
+    columnDefs: getColumnsForGrid(), // returns a list of agGrid column definitions
     rowData: trades, // the dummy data we are using
     enableSorting: true,
     enableRangeSelection: true,
     enableFilter: true,
-    //  floatingFilter: true,
+    floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
+    sideBar: true, // this puts in filters and columns by default
     columnTypes: { // not required but helpful for column data type identification
       "abColDefNumber": {},
       "abColDefString": {},
@@ -33,54 +90,85 @@ function InitTradeBlotter() {
   let grid = new agGrid.Grid(gridcontainer, gridOptions);
   dataGen.startTickingDataagGrid(gridOptions);
 
-  // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
-  let adaptableBlotterOptions = {
-    primaryKey: "tradeId", // pk for blotter - required
-    userName: "demo user", // name of current user
-    blotterId: "demo blotter", // id for blotter
-    enableAuditLog: false, // not running audit log
-    enableRemoteConfigServer: false, // not running remote config
-    // remoteConfigServerUrl: 'http://localhost:8080/adaptableblotter-config',
-    // predefinedConfig: "demoConfig.json", // passing in predefined config with a file
-    serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
-    iPushPullConfig: {
-      api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
-      api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
-    },
-    includeVendorStateInLayouts: true, // whether layouts should include things like column size
-    autoSaveLayouts: true, // layouts will save automatically
-    vendorGrid: gridOptions, // the ag-Grid grid options object - MANDATORY
-    ignoreCaseInQueries: true,
-    useDefaultVendorGridThemes: true,
-    useAdaptableBlotterFilterForm: false,
-    // useAdaptableBlotterQuickFilter: false
-    getColumnValues: retrieveValues,
-    //  maxColumnValueItemsDisplayed: 5
+  let s = 2;
+
+  if (s == 2) {
+    // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
+    let adaptableBlotterOptions = {
+      vendorGrid: gridOptions, // the ag-Grid grid options object - MANDATORY
+      primaryKey: getPKForGrid(), // pk for blotter - required
+      userName: "demo user", // name of current user
+      blotterId: getBlotterIdforGrid(), // id for blotter
+
+      //  predefinedConfig: "citiConfig.json",
+
+      auditOptions: {
+        //     auditCellEdits: true,
+        //  auditFunctionEvents: true,
+        //     auditUserStateChanges: true,
+        //     auditInternalStateChanges: true,
+        //        pingInterval: 120
+      },
+      configServerOptions: {
+        enableConfigServer: false,
+        //  configServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
+      },
+      layoutOptions: {
+        includeVendorStateInLayouts: true,
+        autoSaveLayouts: true,
+      },
+      queryOptions: {
+        //  ignoreCaseInQueries: false,
+        // maxColumnValueItemsDisplayed: 5,
+        //  columnValuesOnlyInQueries: true,
+        // getColumnValues: retrieveValues,
+      },
+      filterOptions: {
+        //useAdaptableBlotterFilterForm: false,
+        // useAdaptableBlotterQuickFilter: false
+      },
+      generalOptions: {
+        //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
+      },
+      iPushPullConfig: {
+        api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
+        api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
+        api_url: "https://www.ipushpull.com/api/1.0",
+        hsts: false,
+      },
+
+    }
+
+    // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
+
+    adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
+    window.adaptableblotter = adaptableblotter;
+
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => {
+      dataChangeHack(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions);
+    });
+
+    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => {
+      apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions);
+    });
+    adaptableblotter.api.eventApi.onColumnStateChanged().Subscribe((sender, columnChangedArgs) =>
+      listenToColumnStateChange(columnChangedArgs))
+    adaptableblotter.api.eventApi.onAlertFired().Subscribe((sender, alertFiredArgs) =>
+      listenToAlertFired(alertFiredArgs))
+    adaptableblotter.api.eventApi.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(
+      stateChangedArgs))
+    adaptableblotter.api.eventApi.onSearchedChanged().Subscribe((sender, searchChangedArgs) =>
+      listenToSearchChange(searchChangedArgs))
+    setTimeout(() => {
+      if (adaptableblotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout ==
+        "Ab_Default_Layout") {
+        gridOptions.columnApi.autoSizeAllColumns(), 2;
+      }
+    })
+    gridOptions.api.closeToolPanel();
+
   }
 
-  // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
-  adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
-  window.adaptableblotter = adaptableblotter;
-
-  adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => {
-    dataChangeHack(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions);
-  });
-
-  adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => {
-    apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions);
-  });
-  adaptableblotter.api.onColumnStateChanged().Subscribe((sender, columnChangedArgs) =>
-    listenToColumnStateChange(columnChangedArgs))
-  adaptableblotter.api.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(
-    stateChangedArgs))
-  adaptableblotter.api.onSearchedChanged().Subscribe((sender, searchChangedArgs) =>
-    listenToSearchChange(searchChangedArgs))
-  setTimeout(() => {
-    if (adaptableblotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout ==
-      "Ab_Default_Layout") {
-      gridOptions.columnApi.autoSizeAllColumns(), 2;
-    }
-  })
 }
 
 function retrieveValues(columnName) {
@@ -90,23 +178,28 @@ function retrieveValues(columnName) {
 }
 
 function listenToColumnStateChange(columnChangedArgs) {
-  //  console.log("column event received")
-  //   console.log(columnChangedArgs)
+  //    console.log("column event received")
+  //     console.log(columnChangedArgs)
 }
 
 function listenToStateChange(stateChangedArgs) {
-  //   console.log("state event received")
-  //   console.log(stateChangedArgs)
+  //  console.log("state event received")
+ //    console.log(stateChangedArgs)
 }
 
 function listenToSearchChange(searchChangedArgs) {
-  //   console.log("search changed event received")
+  //  console.log("search changed event received")
   //   console.log(searchChangedArgs)
+}
+
+function listenToAlertFired(alertFiredArgs) {
+ console.log("from Harness");
+ console.log(alertFiredArgs.alert);
 }
 
 function getValuesForColumn(columnName) {
   let vals;
-  if (columnName == "notional") {
+  if (columnName == "notionalhhh") {
     vals = [1000000, 5000000, 10000000];
   } else if (columnName == "settlementDate") {
     vals = [
@@ -125,29 +218,63 @@ function getValuesForColumn(columnName) {
   }
 }
 
+function getFTSESchema() {
+  var schema = []
+  schema.push({
+    headerName: "Date",
+    field: "date",
+    editable: false,
+    cellEditorParams: {
+      useFormatter: true
+    },
+    valueParser: dateParseragGrid,
+    valueFormatter: shortDateFormatteragGrid
+  });
+
+  schema.push({
+    headerName: "Start",
+    field: "start",
+    editable: true,
+    cellClass: 'number-cell'
+  });
+  schema.push({
+    headerName: "End",
+    field: "end",
+    editable: true,
+    cellClass: 'number-cell'
+  });
+  schema.push({
+    headerName: "Low",
+    field: "low",
+    editable: true,
+    cellClass: 'number-cell'
+  });
+  schema.push({
+    headerName: "High",
+    field: "high",
+    editable: true,
+    cellClass: 'number-cell'
+  });
+
+  return schema;
+}
+
 function getTradeSchema() {
   var schema = []
   schema.push({
     headerName: "Trade Id",
     field: "tradeId",
     editable: true,
-    type: "abColDefNumber",
-    suppressSorting: true
+    type: "abColDefNumber"
   });
   schema.push({
     headerName: "Notional",
     field: "notional",
+    enableValue: true,
     editable: true,
-    valueFormatter: notionalFormatter,
+    // valueFormatter: notionalFormatter,
+    suppressSorting: true,
     cellClass: 'number-cell'
-  });
-  schema.push({
-    headerName: "Desk No.",
-    field: "deskId",
-    editable: true,
-    enableRowGroup: true,
-    suppressSorting: false,
-    suppressFilter: true
   });
   schema.push({
     headerName: "Counterparty",
@@ -155,31 +282,18 @@ function getTradeSchema() {
     editable: true,
     enableRowGroup: true
   });
-  schema.push({
-    headerName: "Country",
-    field: "country",
-    editable: true,
-    enableRowGroup: true
-  });
-  schema.push({
-    headerName: "Currency",
-    field: "currency",
-    editable: false,
-    enableRowGroup: true,
-    filter: 'agTextColumnFilter'
-  });
+
   schema.push({
     headerName: "Change On Year",
     field: "changeOnYear",
     editable: true
   });
-
   schema.push({
-    headerName: "B/O Spread",
-    field: "bidOfferSpread",
-    columnGroupShow: 'open',
-    editable: true,
-    cellClass: 'number-cell'
+    headerName: "Currency",
+    field: "currency",
+    //   editable: false,
+    enableRowGroup: true,
+    filter: 'agTextColumnFilter'
   });
   schema.push({
     headerName: "Status",
@@ -188,13 +302,28 @@ function getTradeSchema() {
     enableRowGroup: true
   });
   schema.push({
+    headerName: "B/O Spread",
+    field: "bidOfferSpread",
+    columnGroupShow: 'open',
+    enableValue: true,
+    editable: true,
+    cellClass: 'number-cell'
+  });
+  schema.push({
     headerName: "Price",
     field: "price",
     columnGroupShow: 'open',
     editable: true,
+    enableValue: true,
     cellClass: 'number-cell',
     enableRowGroup: true,
     filter: 'agNumberColumnFilter'
+  });
+  schema.push({
+    headerName: "Country",
+    field: "country",
+      editable: true,
+    enableRowGroup: true
   });
   schema.push({
     headerName: "Ask",
@@ -208,6 +337,7 @@ function getTradeSchema() {
     columnGroupShow: 'closed',
     cellClass: 'number-cell'
   });
+
   schema.push({
     headerName: "Bbg Ask",
     field: "bloombergAsk",
@@ -227,12 +357,6 @@ function getTradeSchema() {
     filter: 'text'
   });
   schema.push({
-    headerName: "SandP",
-    field: "sandpRating",
-    editable: true,
-    filter: 'text'
-  });
-  schema.push({
     headerName: "Trade Date",
     field: "tradeDate",
     editable: true,
@@ -244,6 +368,12 @@ function getTradeSchema() {
     filter: 'agDateColumnFilter'
   });
   schema.push({
+    headerName: "SandP",
+    field: "sandpRating",
+    editable: true,
+    filter: 'text'
+  });
+  schema.push({
     headerName: "Settlement Date",
     field: "settlementDate",
     editable: true,
@@ -252,11 +382,6 @@ function getTradeSchema() {
     },
     valueParser: dateParseragGrid,
     valueFormatter: shortDateFormatteragGrid
-  });
-  schema.push({
-    headerName: "Pct Change",
-    field: "percentChange",
-    filter: 'text'
   });
   schema.push({
     headerName: "Last Updated By",
@@ -273,6 +398,23 @@ function getTradeSchema() {
     valueParser: dateParseragGrid,
     valueFormatter: shortDateFormatteragGrid
   });
+  schema.push({
+    headerName: "Pct Change",
+    field: "percentChange",
+    editable: true,
+    filter: 'text',
+    suppressFilter: false,
+    //  type: "numericColumn"
+  });
+  schema.push({
+    headerName: "Desk No.",
+    field: "deskId",
+    editable: true,
+    // cellRenderer: percentCellRenderer,
+    enableRowGroup: true,
+    suppressSorting: false,
+    suppressFilter: true
+  });
   return schema;
 }
 
@@ -286,29 +428,34 @@ function dataChangeHack(state, gridOptions) {
   }
 }
 
+
 function apiTester(state, gridOptions) {
   if (state.QuickSearch.QuickSearchText != quickSearchText) {
     quickSearchText = state.QuickSearch.QuickSearchText
     if (quickSearchText == "#advanced") {
-      let test = adaptableblotter.api.configGetUserStateByFunction('AdvancedSearch')
+      let test = adaptableblotter.api.ConfigApi.configGetUserStateByFunction('AdvancedSearch')
       console.log("object");
       console.log(test);
-      let test2 = adaptableblotter.api.configGetUserStateByFunction('AdvancedSearch', true)
+      let test2 = adaptableblotter.api.ConfigApi.configGetUserStateByFunction('AdvancedSearch', true)
       console.log("string version");
       console.log(test2);
-      let test3 = adaptableblotter.api.configGetAllUserState()
+      let test3 = adaptableblotter.api.ConfigApi.configGetAllUserState()
       console.log("all version");
       console.log(test3);
-      let test4 = adaptableblotter.api.configGetAdvancedSearchState()
+      let test4 = adaptableblotter.api.ConfigApi.configGetAdvancedSearchState()
       console.log("advanced search");
       console.log(test4);
-      let test5 = adaptableblotter.api.configGetAdvancedSearchState(true)
+      let test5 = adaptableblotter.api.ConfigApi.configGetAdvancedSearchState(true)
       console.log("advanced search string");
       console.log(test5);
+    } else if (quickSearchText == "#hideabout") {
+      adaptableblotter.api.DashboardApi.dashboardHideAboutButton()
+    } else if (quickSearchText == "#showabout") {
+      adaptableblotter.api.DashboardApi.dashboardShowAboutButton()
     } else if (quickSearchText == "#permies") {
-      adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
+      adaptableblotter.api.UserInterfaceApi.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
     } else if (quickSearchText == "#systemfilters") {
-      adaptableblotter.api.filterClearSystemFilters()
+      adaptableblotter.api.SystemFilterApi.systemFilterClear()
     } else if (quickSearchText == "#reset") {
       //     adaptableblotter.api.configDeleteLocalStorage()
     } else if (quickSearchText == "#loadUserState") {
@@ -325,50 +472,49 @@ function apiTester(state, gridOptions) {
     } else if (quickSearchText == "#clear") {
       adaptableblotter.api.uiClearColumnPermittedValues('counterparty')
     } else if (quickSearchText == "#send") {
-      adaptableblotter.api.exportSendReport('All Data', 'CSV')
+      adaptableblotter.api.ExportApi.exportSendReport('All Data', 'CSV')
     } else if (quickSearchText == "#info") {
-      adaptableblotter.api.alertShow("Hello",
-        "Your data is fine actually its very good and I want to check that this wraps", "Info",
-        true)
+      adaptableblotter.api.alertApi.Show("Nice one", "Your data is fine actually its very good and I want to check that this wraps", "Info", true)
+    } else if (quickSearchText == "#success") {
+      adaptableblotter.api.alertApi.Show("Success Message", "You have won the lottery", "Success", true)
     } else if (quickSearchText == "#warning") {
-      adaptableblotter.api.alertShow("End of Day", "Dont forget to send the report", "Warning",
-        true)
+      adaptableblotter.api.alertApi.Show("End of Day", "Dont forget to send the report", "Warning", true)
     } else if (quickSearchText == "#error") {
-      adaptableblotter.api.alertShow("Limits Breached", "Pleae adjust your PnL", "Error", true)
+      adaptableblotter.api.alertApi.Show("Limits Breached", "Pleae adjust your PnL", "Error", true)
     } else if (quickSearchText == "#green") {
-      adaptableblotter.api.systemStatusSetGreen("The server is fine")
+      adaptableblotter.api.systemStatusApi.SetGreen("The server is fine")
+    } else if (quickSearchText == "#blue") {
+      adaptableblotter.api.systemStatusApi.setBlue("nothing to worry aobut")
     } else if (quickSearchText == "#amber") {
-      adaptableblotter.api.systemStatusSetAmber("The server is running slowly")
+      adaptableblotter.api.systemStatusApi.SetAmber("The server is running slowly")
     } else if (quickSearchText == "#red") {
-      adaptableblotter.api.systemStatusSetRed("The server has stopped ")
+      adaptableblotter.api.systemStatusApi.SetRed("The server has stopped ")
     } else if (quickSearchText == "#sbutton") {
-      adaptableblotter.api.dashboardShowSystemStatusButton()
+      adaptableblotter.api.DashboardApi.dashboardShowSystemStatusButton()
     } else if (quickSearchText == "#hbutton") {
-      adaptableblotter.api.dashboardHideSystemStatusButton()
+      adaptableblotter.api.DashboardApi.dashboardHideSystemStatusButton()
     } else if (quickSearchText == "#sfunc") {
-      adaptableblotter.api.dashboardShowFunctionsDropdown()
+      adaptableblotter.api.dashboardApi.ShowFunctionsDropdown()
     } else if (quickSearchText == "#hfunc") {
-      adaptableblotter.api.dashboardHideFunctionsDropdown()
+      adaptableblotter.api.dashboardApi.HideFunctionsDropdown()
     } else if (quickSearchText == "#scols") {
-      adaptableblotter.api.dashboardShowColumnsDropdown()
+      adaptableblotter.api.DashboardApi.dashboardShowColumnsDropdown()
     } else if (quickSearchText == "#hcols") {
-      adaptableblotter.api.dashboardHideColumnsDropdown()
+      adaptableblotter.api.DashboardApi.dashboardHideColumnsDropdown()
     } else if (quickSearchText == "#title") {
-      adaptableblotter.api.dashboardSetHomeToolbarTitle("hello world")
+      adaptableblotter.api.DashboardApi.dashboardSetHomeToolbarTitle("hello world")
     } else if (quickSearchText == "#filterclear") {
-      adaptableblotter.api.filterClearColumnFilters()
+      adaptableblotter.api.ColumnFilterApi.columnFilterClearAll()
     } else if (quickSearchText == "#userfilter") {
-      adaptableblotter.api.columnFilterSetUserFilter("Big Desk Id")
+      adaptableblotter.api.ColumnFilterApi.columnFilterSetUserFilter("Big Desk Id")
     } else if (quickSearchText == "#savelayout") {
-      adaptableblotter.api.layoutSave()
+      adaptableblotter.api.LayoutApi.layoutSave()
     } else if (quickSearchText == "#setlayout") {
-      adaptableblotter.api.layoutSet("miguel")
-    } else if (quickSearchText == "#toolbarTitle") {
-      adaptableblotter.api.dashboardSetApplicationToolbarTitle("my app")
-    } else if (quickSearchText == "#notional") {
+      adaptableblotter.api.LayoutApi.layoutSet("miguel")
+    } else if (quickSearchText == "#notionalkkkk") {
       gridOptions.api.forEachNode((rowNode, index) => {
         if (index == 4) {
-          rowNode.setDataValue("bidOfferSpread", 20)
+          rowNode.setDataValue("notional", 345)
         }
       });
     }
@@ -538,128 +684,4 @@ function currencyRendereragGrid(params) {
 }
 
 
-let layoutdemojson = {
-  "Layout": {
-    "IncludeVendorState": false,
-    "CurrentLayout": "Hidden",
-    "Layouts": [{
-      "Columns": ["tradeId", "notional", "deskId", "counterparty"],
-      "GridSorts": [],
-      "Name": "Hidden",
-      "VendorGridInfo": null,
-      "IsReadOnly": false
-    }]
-  }
-}
 
-let tradeJson = {
-  "Filter": {
-    "SystemFilters": ["Zero", "Positive", "Negative"]
-  }
-}
-
-let oldjson = {
-  "Layout": {
-    "IncludeVendorState": false,
-    "CurrentLayout": "Hidden",
-    "Layouts": [{
-      "Columns": ["tradeId", "notional", "deskId", "counterparty"],
-      "GridSorts": [],
-      "Name": "Hidden",
-      "VendorGridInfo": null,
-      "IsReadOnly": false
-    }]
-  },
-  "QuickSearch": {
-    "Style": {
-      "ClassName": "styleBackGreen"
-    },
-
-  },
-  "Filter": {
-    "ColumnFilters": [],
-    "UserFilters": [{
-      "Name": "April 2018",
-      "Expression": {
-        "ColumnValueExpressions": [],
-        "FilterExpressions": [],
-        "RangeExpressions": [{
-          "ColumnId": "tradeDate",
-          "Ranges": [{
-            "Operator": "Between",
-            "Operand1": "2018-04-01",
-            "Operand2": "2018-04-30",
-            "Operand1Type": "Value",
-            "Operand2Type": "Value"
-          }]
-        }]
-      },
-      "ColumnId": "tradeDate",
-      "IsReadOnly": false
-    }],
-    "SystemFilters": [
-      "Blanks",
-      "Non Blanks",
-      "Today",
-      "In Past",
-      "True",
-      "False"
-    ]
-  },
-  "UserInterface": {
-    "StyleClassNames": [
-      "styleBackBrown",
-      "styleForeYellow"
-    ],
-    "PermittedColumnValues": [{
-      "ColumnId": "country",
-      "PermittedValues": [
-        "France",
-        "Russia",
-        "Israel"
-      ]
-    },
-    {
-      "ColumnId": "currency",
-      "PermittedValues": [
-        "EUR",
-        "USD",
-        "NIS"
-      ]
-    },
-    ]
-  },
-  "Theme": {
-    "CurrentTheme": "Default",
-  },
-  "FormatColumn": {
-    "FormatColumns": [{
-      "ColumnId": "notional",
-      "Style": {
-        "BackColor": "#ff0000",
-        "ForeColor": null,
-        "FontWeight": "Normal",
-        "FontStyle": "Normal",
-        "FontSize": null
-      },
-    }],
-
-  },
-  "Dashboard": {
-    "VisibleToolbars": [
-      "SmartEdit",
-      "Layout",
-      "BulkUpdate"
-    ],
-    "VisibleButtons": [
-      "About",
-      "Dashboard",
-      "SmartEdit",
-      "ColumnChooser",
-      "BulkUpdate"
-    ],
-    "Zoom": "0.5",
-    "DashboardVisibility": "Minimised",
-    "ShowSystemStatusButton": true
-  }
-}

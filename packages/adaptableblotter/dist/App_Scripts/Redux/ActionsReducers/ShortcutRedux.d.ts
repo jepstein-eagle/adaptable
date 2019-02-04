@@ -1,8 +1,8 @@
 import { ShortcutState } from './Interface/IState';
-import { MathOperation } from '../../Core/Enums';
+import { MathOperation } from '../../Utilities/Enums';
 import * as Redux from 'redux';
-import { ICellInfo } from '../../Core/Interface/Interfaces';
-import { IShortcut } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
+import { IShortcut } from "../../Utilities/Interface/BlotterObjects/IShortcut";
 export declare const SHORTCUT_APPLY = "SHORTCUT_APPLY";
 export declare const SHORTCUT_ADD = "SHORTCUT_ADD";
 export declare const SHORTCUT_DELETE = "SHORTCUT_DELETE";

@@ -6,15 +6,15 @@ const FormatColumnRedux = require("../../Redux/ActionsReducers/FormatColumnRedux
 const react_bootstrap_1 = require("react-bootstrap");
 const FormatColumnEntityRow_1 = require("./FormatColumnEntityRow");
 const FormatColumnWizard_1 = require("./Wizard/FormatColumnWizard");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const UIHelper_1 = require("../UIHelper");
 class FormatColumnPopupComponent extends React.Component {
     constructor(props) {
@@ -45,7 +45,7 @@ class FormatColumnPopupComponent extends React.Component {
             { Content: "", Size: 3 },
         ];
         let FormatColumns = this.props.FormatColumns.map((formatColumn, index) => {
-            return React.createElement(FormatColumnEntityRow_1.FormatColumnEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: formatColumn, Columns: this.props.Columns, UserFilters: null, Index: index, onEdit: (index, x) => this.onEdit(formatColumn), onShare: () => this.props.onShare(formatColumn), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: FormatColumnRedux.FormatColumnDelete(formatColumn) });
+            return React.createElement(FormatColumnEntityRow_1.FormatColumnEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: formatColumn, Columns: this.props.Columns, UserFilters: null, Index: index, onEdit: () => this.onEdit(formatColumn), onShare: () => this.props.onShare(formatColumn), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: FormatColumnRedux.FormatColumnDelete(formatColumn) });
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Format Column", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },

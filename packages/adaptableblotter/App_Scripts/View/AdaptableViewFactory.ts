@@ -21,18 +21,18 @@ import { FormatColumnPopup } from './FormatColumn/FormatColumnPopup'
 import { ThemePopup } from './Theme/ThemePopup'
 import { CellValidationPopup } from './CellValidation/CellValidationPopup'
 import { LayoutPopup } from './Layout/LayoutPopup'
+import { ColumnCategoryPopup } from './ColumnCategory/ColumnCategoryPopup'
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl'
 import { ExportToolbarControl } from './Export/ExportToolbarControl'
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup'
 import { IPushPullLogin } from './Export/IPushPullLogin'
 import { HomeToolbarControl } from './Home/HomeToolbarControl'
 import { HomeButtonsPopup } from './Home/HomeButtonsPopup'
-import { AboutPopup } from './About/AboutPopup'
 import { ApplicationPopup } from './Application/ApplicationPopup'
 import { DashboardPopup } from './Dashboard/DashboardPopup'
 import { DataManagementPopup } from './DataManagement/DataManagementPopup'
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup'
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as React from "react";
 import { CalculatedColumnPopup } from "./CalculatedColumn/CalculatedColumnPopup";
 import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelector';
@@ -47,15 +47,16 @@ import { ChartPopup } from './Chart/ChartPopup';
 import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 import { ChartToolbarControl } from './Chart/ChartToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
+import { PercentBarPopup } from './PercentBar/PercentBarPopup';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
-  AboutPopup: AboutPopup,
   AdvancedSearchPopup: AdvancedSearchPopup,
   AlertPopup: AlertPopup,
   ApplicationPopup: ApplicationPopup,
   BulkUpdatePopup: BulkUpdatePopup,
   CalculatedColumnPopup: CalculatedColumnPopup,
   CalendarsPopup: CalendarsPopup,
+  PercentBarPopup: PercentBarPopup,
   CellValidationPopup: CellValidationPopup,
   ChartPopup: ChartPopup,
   ColumnChooserPopup: ColumnChooserPopup,
@@ -74,6 +75,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   IPushPullLogin: IPushPullLogin,
   IPushPullDomainPageSelector: IPushPullDomainPageSelector,
   LayoutPopup: LayoutPopup,
+  ColumnCategoryPopup: ColumnCategoryPopup,
   PlusMinusPopup: PlusMinusPopup,
   QuickSearchPopup: QuickSearchPopup,
   SelectedCellsPopup: SelectedCellsPopup,

@@ -2,22 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const UserFilterWizard_1 = require("./Wizard/UserFilterWizard");
 const UserFilterRedux = require("../../Redux/ActionsReducers/UserFilterRedux");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 class UserFilterSummaryComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__userfilter";
@@ -38,31 +38,19 @@ class UserFilterSummaryComponent extends React.Component {
                 React.createElement(UserFilterWizard_1.UserFilterWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: null, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, SelectedColumnId: this.props.SummarisedColumn.ColumnId, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() }));
     }
     getSummary() {
-        if (!this.isGridFilterable()) {
-            return "Grid is not filterable";
-        }
         if (!this.isColumnFilterable()) {
             return "Column is not filterable";
         }
         return Helper_1.Helper.ReturnItemCount(this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId), StrategyConstants.UserFilterStrategyName);
     }
     getDescription(userFilter) {
-        if (!this.isGridFilterable()) {
-            return "Grid is not filterable";
-        }
         if (!this.isColumnFilterable()) {
             return "Column is not filterable";
         }
         return ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Columns);
     }
     isFilterable() {
-        if (!this.isGridFilterable() || !this.isColumnFilterable()) {
-            return false;
-        }
-        return true;
-    }
-    isGridFilterable() {
-        if (this.props.Blotter && !this.props.Blotter.isFilterable()) {
+        if (!this.isColumnFilterable()) {
             return false;
         }
         return true;

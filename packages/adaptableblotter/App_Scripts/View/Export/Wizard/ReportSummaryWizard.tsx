@@ -1,20 +1,15 @@
-import { IReport, IUserFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IReport } from "../../../Utilities/Interface/BlotterObjects/IReport";
 import * as React from "react";
-import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { ReportColumnScope, ReportRowScope } from '../../../Core/Enums';
-import { IColumn } from '../../../Core/Interface/IColumn';
-import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper';
-import { ReportHelper } from '../../../Core/Helpers/ReportHelper';
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
+import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { ReportHelper } from '../../../Utilities/Helpers/ReportHelper';
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 export interface ReportSummaryWizardProps extends AdaptableWizardStepProps<IReport> {
-    Columns: IColumn[]
-    UserFilters: IUserFilter[]
+     UserFilters: IUserFilter[]
 }
 
 export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProps, {}> implements AdaptableWizardStep {
@@ -24,7 +19,7 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Columns", Value: ReportHelper.GetReportColumnsDescription(this.props.Data, this.props.Columns) },
             { Key: "Rows", Value: ReportHelper.GetReportExpressionDescription(this.props.Data, this.props.Columns, this.props.UserFilters) }

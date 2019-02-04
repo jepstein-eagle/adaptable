@@ -4,16 +4,17 @@ const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const EnumExtensions_1 = require("../../Core/Extensions/EnumExtensions");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const Enums_1 = require("../../Core/Enums");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const Enums_1 = require("../../Utilities/Enums");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class CellValidationEntityRow extends React.Component {
     render() {
         let cellValidation = this.props.AdaptableBlotterObject;
         let ActionModeTypes = EnumExtensions_1.EnumExtensions.getNames(Enums_1.ActionMode).map((validationMode) => {
-            return React.createElement("option", { style: { fontSize: "5px" }, key: validationMode, value: validationMode }, validationMode);
+            return React.createElement("option", { key: validationMode, value: validationMode }, validationMode);
         });
         let colItems = [].concat(this.props.colItems);
         colItems[0].Content = this.getColumnandRule(cellValidation);
@@ -30,7 +31,7 @@ class CellValidationEntityRow extends React.Component {
     }
     getColumnandRule(cellValidation) {
         let columnInfo = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumn(cellValidation.ColumnId, this.props.Column);
-        columnInfo += ": " + cellValidation.Description;
+        columnInfo += ": " + CellValidationHelper_1.CellValidationHelper.createCellValidationDescription(cellValidation, this.props.Columns);
         return columnInfo;
     }
     onActionModeChanged(index, event) {

@@ -3,29 +3,27 @@ import * as Redux from "redux";
 import * as _ from 'lodash'
 import { connect } from 'react-redux';
 import { FormControl, ControlLabel, Panel, FormGroup, Col, Checkbox } from 'react-bootstrap';
-import { LeafExpressionOperator, DisplayAction, MessageType } from '../../Core/Enums'
+import { LeafExpressionOperator, DisplayAction, MessageType } from '../../Utilities/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux'
-import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
+import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { QUICK_SEARCH_DEFAULT_BACK_COLOR, QUICK_SEARCH_DEFAULT_FORE_COLOR } from "../../Core/Constants/GeneralConstants";
+import { IStyle } from "../../Utilities/Interface/IStyle";
+import { QUICK_SEARCH_DEFAULT_BACK_COLOR, QUICK_SEARCH_DEFAULT_FORE_COLOR } from "../../Utilities/Constants/GeneralConstants";
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
     QuickSearchText: string;
-    Operator: LeafExpressionOperator;
     DisplayAction: DisplayAction;
     QuickSearchStyle: IStyle,
 
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction,
-    onSetSearchOperator: (leafExpressionOperator: LeafExpressionOperator) => QuickSearchRedux.QuickSearchSetSearchOperatorAction
     onSetSearchDisplayType: (DisplayAction: DisplayAction) => QuickSearchRedux.QuickSearchSetSearchDisplayAction
     onSetStyle: (style: IStyle) => QuickSearchRedux.QuickSearchSetStyleAction
 }
@@ -51,11 +49,6 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
     handleQuickSearchTextChange(text: string) {
         this.setState({ EditedQuickSearchText: text });
         this.debouncedRunQuickSearch();
-    }
-
-    onStringOperatorChange(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.props.onSetSearchOperator(e.value as LeafExpressionOperator);
     }
 
     onDisplayTypeChange(event: React.FormEvent<any>) {
@@ -123,7 +116,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                     <Panel header={"Search For"} bsStyle="info" >
                         <AdaptableBlotterFormControlTextClear
                             cssClassName={cssClassName}
-                             type="text"
+                            type="text"
                             placeholder="Quick Search Text"
                             value={this.state.EditedQuickSearchText}
                             OnTextChange={(x) => this.handleQuickSearchTextChange(x)} />
@@ -133,27 +126,11 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                 <AdaptableBlotterForm horizontal>
                     <Panel header="Quick Search Options" eventKey="1" bsStyle="info"  >
 
-                        <FormGroup controlId="formInlineSearchOperator">
-                            <Col xs={3}>
-                                <ControlLabel>Operator:</ControlLabel>
-                            </Col>
-                            <Col xs={4}>
-                                <FormControl componentClass="select" placeholder="select" value={this.props.Operator.toString()} onChange={(x) => this.onStringOperatorChange(x)} >
-                                    {optionOperators}
-                                </FormControl>
-                            </Col>
-                            <Col xs={1}>
-                                <AdaptablePopover cssClassName={cssClassName} headerText={"Quick Search: Operator"}
-                                    bodyText={[<b>Starts With:</b>, " Returns cells whose contents begin with the search text", <br />, <br />, <b>Contains:</b>, " Returns cells whose contents contain the search text anywhere."]} MessageType={MessageType.Info} />
-
-                            </Col>
-                        </FormGroup>
-
                         <FormGroup controlId="formInlineSearchDisplay">
                             <Col xs={3}>
                                 <ControlLabel>Behaviour:</ControlLabel>
                             </Col>
-                            <Col xs={4}>
+                            <Col xs={7}>
                                 <FormControl componentClass="select" placeholder="select" value={this.props.DisplayAction.toString()} onChange={(x) => this.onDisplayTypeChange(x)} >
                                     {DisplayActions}
                                 </FormControl>
@@ -161,7 +138,7 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
                             <Col xs={1}>
                                 <AdaptablePopover cssClassName={cssClassName} headerText={"Quick Search: Behaviour"}
                                     bodyText={[<b>Highlight Cells Only:</b>, " Changes back colour of cells matching search text", <br />, <br />, <b>Show Matching Rows Only:</b>, " Only shows rows containing cells matching search text", <br />, <br />, <b>Highlight Cells and Show Matching Rows:</b>, " Only shows rows containing cells (which are also coloured) matching search text"]}
-                                    MessageType={MessageType.Info} />
+                                    />
                             </Col>
                         </FormGroup>
 
@@ -216,7 +193,6 @@ class QuickSearchPopupComponent extends React.Component<QuickSearchPopupProps, Q
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         QuickSearchText: state.QuickSearch.QuickSearchText,
-        Operator: state.QuickSearch.Operator,
         DisplayAction: state.QuickSearch.DisplayAction,
         QuickSearchStyle: state.QuickSearch.Style,
     };
@@ -225,7 +201,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onRunQuickSearch: (quickSearchText: string) => dispatch(QuickSearchRedux.QuickSearchApply(quickSearchText)),
-        onSetSearchOperator: (searchOperator: LeafExpressionOperator) => dispatch(QuickSearchRedux.QuickSearchSetOperator(searchOperator)),
         onSetSearchDisplayType: (searchDisplayType: DisplayAction) => dispatch(QuickSearchRedux.QuickSearchSetDisplay(searchDisplayType)),
         onSetStyle: (style: IStyle) => dispatch(QuickSearchRedux.QuickSearchSetStyle(style)),
     };

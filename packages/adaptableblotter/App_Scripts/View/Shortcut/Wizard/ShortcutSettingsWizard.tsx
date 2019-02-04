@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Radio, Panel, ControlLabel, FormControl, Col, FormGroup } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { DataType, MessageType, MathOperation } from '../../../Core/Enums';
-import { EnumExtensions } from '../../../Core/Extensions/EnumExtensions';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { DataType, MessageType, MathOperation } from '../../../Utilities/Enums';
+import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import * as CalendarConstants from '../../../Core/Constants/CalendarConstants';
+import * as CalendarConstants from '../../../Utilities/Constants/CalendarConstants';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IShortcut } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IShortcut } from "../../../Utilities/Interface/BlotterObjects/IShortcut";
 
 
 export interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut> {
@@ -77,7 +77,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                 {optionKeys}
                             </FormControl>
                         </Col>
-                        <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Key"} bodyText={["The keyboard key that, when pressed, triggers the shortcut."]} MessageType={MessageType.Info} />
+                        <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Key"} bodyText={["The keyboard key that, when pressed, triggers the shortcut."]} />
                         </Col>
                     </FormGroup>
 
@@ -93,7 +93,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                     </FormControl>
                                 </Col>
                                 <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Operation"}
-                                    bodyText={["The mathematical operation that is peformed on the cell's current value - using the shortcut's 'value' - in order to calculate the new total for the cell."]} MessageType={MessageType.Info} />
+                                    bodyText={["The mathematical operation that is peformed on the cell's current value - using the shortcut's 'value' - in order to calculate the new total for the cell."]} />
                                 </Col>
                             </FormGroup>
 
@@ -110,7 +110,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                     />
                                 </Col>
                                 <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Value"}
-                                    bodyText={["The number that is used - together with the shortcut's mathmetical 'operation' and the current cell value - in order to calculate the new total for the cell."]} MessageType={MessageType.Info} />
+                                    bodyText={["The number that is used - together with the shortcut's mathmetical 'operation' and the current cell value - in order to calculate the new total for the cell."]} />
                                 </Col>
                             </FormGroup>
                         </span>
@@ -125,7 +125,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                     <Radio inline value="custom" checked={this.state.IsDynamic == false} onChange={(e) => this.onDynamicSelectChanged(e)}>Custom</Radio>
                                     <Radio inline value="dynamic" checked={this.state.IsDynamic == true} onChange={(e) => this.onDynamicSelectChanged(e)}>Dynamic</Radio>
                                 </Col>
-                                <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Date Type"} bodyText={[<b>Custom dates</b>, " are 'real' dates chosen by the user.", <br />, <br />, <b>Dynamic dates</b>, " are predefined dates that come with the Blotter and are re-evaluated each day (e.g. 'Today').", <br />, <br />, "Dynamic dates that use working days are based on the current holiday calendar."]} MessageType={MessageType.Info} />
+                                <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Date Type"} bodyText={[<b>Custom dates</b>, " are 'real' dates chosen by the user.", <br />, <br />, <b>Dynamic dates</b>, " are predefined dates that come with the Blotter and are re-evaluated each day (e.g. 'Today').", <br />, <br />, "Dynamic dates that use working days are based on the current holiday calendar."]} />
                                 </Col>
                             </FormGroup>
 
@@ -144,7 +144,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                             <option value={CalendarConstants.NEXT_WORK_DAY} key={CalendarConstants.NEXT_WORK_DAY}>Next Work Day</option>
                                         </FormControl>
                                     </Col>
-                                    <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Dynamic Date"} bodyText={["The dynamic date that becomes the cell's new value when the shortcut is triggered."]} MessageType={MessageType.Info} />
+                                    <Col xs={1}><AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Dynamic Date"} bodyText={["The dynamic date that becomes the cell's new value when the shortcut is triggered."]} />
                                     </Col>
                                 </FormGroup>
                                 :
@@ -161,7 +161,7 @@ export class ShortcutSettingsWizard extends React.Component<ShortcutSettingsWiza
                                         />
                                     </Col>
                                     <Col xs={1}>
-                                        <AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Custom Date"} bodyText={["The date that becomes the cell's new value when the shortcut is triggered."]} MessageType={MessageType.Info} />
+                                        <AdaptablePopover  cssClassName={cssClassName} headerText={"Shortcut: Custom Date"} bodyText={["The date that becomes the cell's new value when the shortcut is triggered."]} />
                                     </Col>
                                 </FormGroup>
                             }

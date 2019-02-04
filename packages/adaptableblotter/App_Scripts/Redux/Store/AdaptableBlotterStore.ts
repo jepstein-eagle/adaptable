@@ -1,4 +1,4 @@
-import { ExportDestination, MathOperation, MessageType } from '../../Core/Enums';
+import { ExportDestination, MathOperation, MessageType } from '../../Utilities/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
@@ -20,6 +20,7 @@ import * as CalculatedColumnRedux from '../ActionsReducers/CalculatedColumnRedux
 import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux'
 import * as GridRedux from '../ActionsReducers/GridRedux'
 import * as SystemRedux from '../ActionsReducers/SystemRedux'
+import * as HomeRedux from '../ActionsReducers/HomeRedux'
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
 import * as ColumnChooserRedux from '../ActionsReducers/ColumnChooserRedux'
 import * as ExportRedux from '../ActionsReducers/ExportRedux'
@@ -36,69 +37,96 @@ import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux'
 import * as FreeTextColumnRedux from '../ActionsReducers/FreeTextColumnRedux'
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux'
+import * as ColumnCategoryRedux from '../ActionsReducers/ColumnCategoryRedux'
 import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
+import * as PercentBarRedux from '../ActionsReducers/PercentBarRedux'
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux'
 import * as SelectedCellsRedux from '../ActionsReducers/SelectedCellsRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { IAdaptableBlotter } from '../../Core/Interface/IAdaptableBlotter'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
 import { IBulkUpdateStrategy } from '../../Strategy/Interface/IBulkUpdateStrategy'
 import { IShortcutStrategy } from '../../Strategy/Interface/IShortcutStrategy'
-import { IExportStrategy, IPPDomain } from '../../Strategy/Interface/IExportStrategy'
+import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy'
+import { IPPDomain } from "../../Utilities/Interface/Reports/IPPDomain";
 import { IPlusMinusStrategy } from '../../Strategy/Interface/IPlusMinusStrategy'
-import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy'
+import { ISharedEntity } from "../../Utilities/Interface/ISharedEntity";
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore'
-import { IUIConfirmation, InputAction } from '../../Core/Interface/IMessage';
-import { iPushPullHelper } from "../../Core/Helpers/iPushPullHelper";
-import { GridState, LayoutState, IState } from '../ActionsReducers/Interface/IState';
-import { DEFAULT_LAYOUT } from "../../Core/Constants/GeneralConstants";
-import { ObjectFactory } from '../../Core/ObjectFactory';
-import { PreviewHelper } from '../../Core/Helpers/PreviewHelper';
-import { IAdvancedSearch, ICalculatedColumn, IShortcut, IPlusMinusRule, IUserFilter, ILayout, IReport, IConditionalStyle, ICustomSort, IFormatColumn, ICellValidationRule, IColumnFilter } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
-import { Helper } from '../../Core/Helpers/Helper';
-import { IColumn } from '../../Core/Interface/IColumn';
-import { AdaptableBlotterLogger } from '../../Core/Helpers/AdaptableBlotterLogger';
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import * as ConfigConstants from '../../Core/Constants/ConfigConstants'
-import { ISelectedCellsStrategy, ISelectedCellSummmary } from '../../Strategy/Interface/ISelectedCellsStrategy';
-
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
+import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants'
+import { IState, GridState, LayoutState } from '../ActionsReducers/Interface/IState';
+import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
+import { IFormatColumn } from "../../Utilities/Interface/BlotterObjects/IFormatColumn";
+import { ILayout } from "../../Utilities/Interface/BlotterObjects/ILayout";
+import { IPlusMinusRule } from "../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
+import { IShortcut } from "../../Utilities/Interface/BlotterObjects/IShortcut";
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IPercentBar } from "../../Utilities/Interface/BlotterObjects/IPercentBar";
+import { IFreeTextColumn } from "../../Utilities/Interface/BlotterObjects/IFreeTextColumn";
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
+import { ICustomSort } from "../../Utilities/Interface/BlotterObjects/ICustomSort";
+import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
+import { ICellValidationRule } from "../../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
+import { IAdvancedSearch } from "../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
+import { IColumn } from '../../Utilities/Interface/IColumn';
+import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
+import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
+import { Helper } from '../../Utilities/Helpers/Helper';
+import { ISelectedCellsStrategy } from '../../Strategy/Interface/ISelectedCellsStrategy';
+import { ISelectedCellSummmary } from "../../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
+import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
+import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
+import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
+import { IUIConfirmation, InputAction } from '../../Utilities/Interface/IMessage';
+import { ChartVisibility } from '../../Utilities/ChartEnums';
+import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
+  // System
   Popup: PopupRedux.ShowPopupReducer,
   Menu: MenuRedux.MenuReducer,
-  Alert: AlertRedux.AlertReducer,
-  Chart: ChartRedux.ChartReducer,
-  SmartEdit: SmartEditRedux.SmartEditReducer,
-  BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
-  CustomSort: CustomSortRedux.CustomSortReducer,
-  Shortcut: ShortcutRedux.ShortcutReducer,
-  Grid: GridRedux.GridReducer,
   System: SystemRedux.SystemReducer,
-  PlusMinus: PlusMinusRedux.PlusMinusReducer,
+  Grid: GridRedux.GridReducer,
+
+  // User
+  AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
+  Alert: AlertRedux.AlertReducer,
+  BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
+  CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
+  Calendar: CalendarRedux.CalendarReducer,
+  CellValidation: CellValidationRedux.CellValidationReducer,
+  Chart: ChartRedux.ChartReducer,
+  ColumnCategory: ColumnCategoryRedux.ColumnCategoryReducer,
+  ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
+  ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
+  CustomSort: CustomSortRedux.CustomSortReducer,
+  Dashboard: DashboardRedux.DashboardReducer,
+  DataSource: DataSourceRedux.DataSourceReducer,
+  Entitlements: EntitlementsRedux.EntitlementsReducer,
   Export: ExportRedux.ExportReducer,
   FlashingCell: FlashingCellsRedux.FlashingCellReducer,
-  Calendar: CalendarRedux.CalendarReducer,
-  ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
-  QuickSearch: QuickSearchRedux.QuickSearchReducer,
-  AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
-  DataSource: DataSourceRedux.DataSourceReducer,
-  ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
-  UserFilter: UserFilterRedux.UserFilterReducer,
-  SystemFilter: SystemFilterRedux.SystemFilterReducer,
-  Theme: ThemeRedux.ThemeReducer,
-  CellValidation: CellValidationRedux.CellValidationReducer,
-  Layout: LayoutRedux.LayoutReducer,
-  Dashboard: DashboardRedux.DashboardReducer,
-  Entitlements: EntitlementsRedux.EntitlementsReducer,
-  CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
-  UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
-  SelectedCells: SelectedCellsRedux.SelectedCellsReducer,
-  TeamSharing: TeamSharingRedux.TeamSharingReducer,
   FormatColumn: FormatColumnRedux.FormatColumnReducer,
-  FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer
+  FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
+  Layout: LayoutRedux.LayoutReducer,
+  PercentBar: PercentBarRedux.PercentBarReducer,
+  PlusMinus: PlusMinusRedux.PlusMinusReducer,
+  QuickSearch: QuickSearchRedux.QuickSearchReducer,
+  SelectedCells: SelectedCellsRedux.SelectedCellsReducer,
+  Shortcut: ShortcutRedux.ShortcutReducer,
+  SmartEdit: SmartEditRedux.SmartEditReducer,
+  SystemFilter: SystemFilterRedux.SystemFilterReducer,
+  TeamSharing: TeamSharingRedux.TeamSharingReducer,
+  Theme: ThemeRedux.ThemeReducer,
+  UserFilter: UserFilterRedux.UserFilterReducer,
+  UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
 });
 
 const RESET_STATE = 'RESET_STATE';
@@ -125,7 +153,6 @@ export const LoadState = (State: { [s: string]: IState }): LoadStateAction => ({
 const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Redux.Action) => {
   switch (action.type) {
     case RESET_STATE:
-      alert("in top")
       //This trigger the persist of the state with nothing
       state.AdvancedSearch = undefined
       state.Alert = undefined
@@ -166,7 +193,7 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
       //  state = undefined
       break;
     case LOAD_STATE:
-      const {State} = <LoadStateAction>action;
+      const { State } = <LoadStateAction>action;
       Object.keys(State).forEach(key => {
         state[key] = State[key];
       });
@@ -190,8 +217,8 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     let engineWithMigrate: ReduxStorage.StorageEngine
     let engineReduxStorage: ReduxStorage.StorageEngine
 
-    if (blotter.BlotterOptions.enableRemoteConfigServer) {
-      engineReduxStorage = createEngineRemote(blotter.BlotterOptions.remoteConfigServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
+    if (BlotterHelper.IsConfigServerEnabled(blotter.BlotterOptions) && StringExtensions.IsNotNullOrEmpty(blotter.BlotterOptions.configServerOptions.configServerUrl)) {
+      engineReduxStorage = createEngineRemote(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
     }
     else {
       engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig);
@@ -206,7 +233,8 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       ConfigConstants.GRID,
       ConfigConstants.MENU,
       ConfigConstants.POPUP,
-      ConfigConstants.TEAMSHARING,
+      ConfigConstants.TEAM_SHARING,
+      ConfigConstants.CHART_INTERNAL,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
       ConfigConstants.USER_INTERFACE,
       ConfigConstants.ENTITLEMENTS,
@@ -222,7 +250,6 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       PopupRedux.POPUP_SHOW_SCREEN, PopupRedux.POPUP_HIDE_SCREEN,
       PopupRedux.POPUP_SHOW_PROMPT, PopupRedux.POPUP_HIDE_PROMPT,
       PopupRedux.POPUP_SHOW_ALERT, PopupRedux.POPUP_HIDE_ALERT,
-      PopupRedux.POPUP_SHOW_CHART, PopupRedux.POPUP_HIDE_CHART,
       PopupRedux.POPUP_SHOW_LOADING, PopupRedux.POPUP_HIDE_LOADING
       ]);
 
@@ -258,27 +285,121 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
         .then(
           () => this.TheStore.dispatch(InitState()),
           (e) => {
-            AdaptableBlotterLogger.LogError('Failed to load previous adaptable blotter state : ', e);
+            LoggingHelper.LogError('Failed to load previous adaptable blotter state : ', e);
             //for now i'm still initializing the AB even if loading state has failed....
             //we may revisit that later
             this.TheStore.dispatch(InitState())
-            this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configurtion", Msg: "Error loading your configuration:" + e, MessageType: MessageType.Error }))
+            this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configuration", Msg: "Error loading your configuration:" + e, MessageType: MessageType.Error }))
           })
   }
 }
 
+
+// this function checks for any differences in the state and sends it to audit logger
+// we now allow users to differentiate between user and internal state so we check for both
 var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
   return function (next: Redux.Dispatch<AdaptableBlotterState>) {
     return function (action: Redux.Action) {
-      let oldState = middlewareAPI.getState()
 
-      let ret = next(action);
-      if (action.type != ReduxStorage.SAVE) {
-        let newState = middlewareAPI.getState()
-        let diff = DeepDiff.diff(oldState, newState)
-        adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff, action.type)
+      // if audit state is turned off, then get out asap
+      if (!adaptableBlotter.AuditLogService.IsAuditStateChangesEnabled) {
+        return next(action);
       }
-      return ret;
+
+      // we have audit so look at the action to decide what to do
+      switch (action.type) {
+
+        // for some octions we never audit even if its turned on
+        case ReduxStorage.SAVE:
+        case RESET_STATE:
+        case INIT_STATE: {
+          return next(action);
+        }
+
+        // for system, grid, menu and popup state functions
+        // we audit state changes only if audit is set to log internal state
+        case SystemRedux.SYSTEM_SET_HEALTH_STATUS:
+        case SystemRedux.SYSTEM_CLEAR_HEALTH_STATUS:
+        case SystemRedux.SYSTEM_ALERT_ADD:
+        case SystemRedux.SYSTEM_ALERT_DELETE:
+        case SystemRedux.SYSTEM_ALERT_DELETE_ALL:
+
+        case SystemRedux.REPORT_START_LIVE:
+        case SystemRedux.REPORT_STOP_LIVE:
+        case SystemRedux.SET_IPP_DOMAIN_PAGES:
+        case SystemRedux.REPORT_SET_ERROR_MESSAGE:
+
+        case SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION:
+        case SystemRedux.SMARTEDIT_FETCH_PREVIEW:
+        case SystemRedux.SMARTEDIT_SET_VALID_SELECTION:
+        case SystemRedux.SMARTEDIT_SET_PREVIEW:
+
+        case SystemRedux.BULK_UPDATE_CHECK_CELL_SELECTION:
+        case SystemRedux.BULK_UPDATE_SET_VALID_SELECTION:
+        case SystemRedux.BULK_UPDATE_SET_PREVIEW:
+
+        case GridRedux.GRID_SET_COLUMNS:
+        case GridRedux.GRID_ADD_COLUMN:
+        case GridRedux.GRID_HIDE_COLUMN:
+        case GridRedux.GRID_SET_VALUE_LIKE_EDIT:
+        case GridRedux.GRID_SELECT_COLUMN:
+        case GridRedux.GRID_SET_SORT:
+        case GridRedux.GRID_SET_SELECTED_CELLS:
+        case GridRedux.GRID_CREATE_SELECTED_CELLS_SUMMARY:
+        case GridRedux.GRID_SET_SELECTED_CELLS_SUMMARY:
+
+        case MenuRedux.SET_MENUITEMS:
+        case MenuRedux.BUILD_COLUMN_CONTEXT_MENU:
+        case MenuRedux.ADD_ITEM_COLUMN_CONTEXT_MENU:
+        case MenuRedux.CLEAR_COLUMN_CONTEXT_MENU:
+
+        case PopupRedux.POPUP_SHOW_SCREEN:
+        case PopupRedux.POPUP_HIDE_SCREEN:
+        case PopupRedux.POPUP_SHOW_LOADING:
+        case PopupRedux.POPUP_HIDE_LOADING:
+        case PopupRedux.POPUP_SHOW_ABOUT:
+        case PopupRedux.POPUP_HIDE_ABOUT:
+        case PopupRedux.POPUP_SHOW_ALERT:
+        case PopupRedux.POPUP_HIDE_ALERT:
+        case PopupRedux.POPUP_SHOW_PROMPT:
+        case PopupRedux.POPUP_HIDE_PROMPT:
+        case PopupRedux.POPUP_CONFIRM_PROMPT:
+        case PopupRedux.POPUP_SHOW_CONFIRMATION:
+        case PopupRedux.POPUP_CONFIRM_CONFIRMATION:
+        case PopupRedux.POPUP_CANCEL_CONFIRMATION:
+        case PopupRedux.POPUP_CLEAR_PARAM:
+
+        // do team sharing actions??
+
+        case SystemRedux.CHART_SET_CHART_DATA:
+        case SystemRedux.CHART_SET_CHART_VISIBILITY:
+          if (adaptableBlotter.AuditLogService.IsAuditInternalStateChangesEnabled) {
+            let oldState = middlewareAPI.getState()
+            let ret = next(action);
+            let newState = middlewareAPI.getState()
+            let diff = DeepDiff.diff(oldState, newState)
+            adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff, action.type)
+            return ret
+          } else {
+            return next(action);
+          }
+
+
+
+        // for all other functions we audit state changes if audit is set to log user state
+        default: {
+          if (adaptableBlotter.AuditLogService.IsAuditUserStateChangesEnabled) {
+            let oldState = middlewareAPI.getState()
+            let ret = next(action);
+            let newState = middlewareAPI.getState()
+            let diff = DeepDiff.diff(oldState, newState)
+            adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff, action.type)
+            return ret
+          } else {
+            return next(action);
+          }
+        }
+      }
     }
   }
 }
@@ -291,34 +412,38 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
 var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
   return function (next: Redux.Dispatch<AdaptableBlotterState>) {
     return function (action: Redux.Action) {
+
+      if (!adaptableBlotter.AuditLogService.IsAuditFunctionEventsEnabled) {
+        // not logging functions so leave...
+        return next(action);
+      }
+
       let state = middlewareAPI.getState()
 
       // Note: not done custom sort, and many others
       // also not done bulk update, smart edit as each has different issues...
+      // need to add lots more here as its very patchy at the moment...
       switch (action.type) {
 
         case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
           let actionTyped = <AdvancedSearchRedux.AdvancedSearchSelectAction>action
-          let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == actionTyped.SelectedSearchName);
+          let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == actionTyped.selectedSearchName);
 
           adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AdvancedSearchStrategyId,
-            "apply advanced search",
-            actionTyped.SelectedSearchName,
+            action.type,
+            StringExtensions.IsNullOrEmpty(actionTyped.selectedSearchName) ? "[No Advanced Search selected]" : actionTyped.selectedSearchName,
             advancedSearch)
-
 
           return next(action);
         }
         case AdvancedSearchRedux.ADVANCED_SEARCH_ADD_UPDATE: {
           let actionTyped = <AdvancedSearchRedux.AdvancedSearchAddUpdateAction>action
           let currentAdvancedSearch = state.AdvancedSearch.CurrentAdvancedSearch; // problem here if they have changed the name potentially...
-          if (actionTyped.AdvancedSearch.Name == currentAdvancedSearch) {
-
+          if (actionTyped.advancedSearch.Name == currentAdvancedSearch) {
             adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.AdvancedSearchStrategyId,
-              "apply advanced search",
-              actionTyped.AdvancedSearch.Name,
-              actionTyped.AdvancedSearch)
-
+              action.type,
+              actionTyped.advancedSearch.Name,
+              actionTyped.advancedSearch)
           }
           return next(action);
         }
@@ -326,8 +451,8 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
           let actionTyped = <QuickSearchRedux.QuickSearchApplyAction>action
 
           adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.QuickSearchStrategyId,
-            "apply quick search",
-            actionTyped.quickSearchText,
+            action.type,
+            StringExtensions.IsNullOrEmpty(actionTyped.quickSearchText) ? "[No Quick Search]" : actionTyped.quickSearchText,
             actionTyped.quickSearchText)
 
           return next(action);
@@ -336,7 +461,7 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
           let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action
 
           adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.PlusMinusStrategyId,
-            "apply plus minus",
+            action.type,
             "KeyPressed:" + actionTyped.KeyEventString,
             actionTyped.CellInfos)
           return next(action);
@@ -345,31 +470,466 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
           let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
 
           adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.ShortcutStrategyId,
-            "apply shortcut",
+            action.type,
             "KeyPressed:" + actionTyped.KeyEventString,
             { Shortcut: actionTyped.Shortcut, PrimaryKey: actionTyped.CellInfo.Id, ColumnId: actionTyped.CellInfo.ColumnId })
           return next(action);
         }
         case ColumnFilterRedux.COLUMN_FILTER_ADD_UPDATE: {
-
+          let actionTyped = <ColumnFilterRedux.ColumnFilterAddUpdateAction>action
           adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.ColumnFilterStrategyId,
-            "apply column filters",
-            "filters applied",
-            state.ColumnFilter.ColumnFilters)
+            action.type,
+            "Column Filter Applied",
+            { Column: actionTyped.columnFilter.ColumnId, ColumnFilter: ExpressionHelper.ConvertExpressionToString(actionTyped.columnFilter.Filter, middlewareAPI.getState().Grid.Columns) })
+          return next(action);
+        }
 
+        case ColumnFilterRedux.COLUMN_FILTER_CLEAR: {
+          let actionTyped = <ColumnFilterRedux.ColumnFilterClearAction>action
+          adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.ColumnFilterStrategyId,
+            action.type,
+            "Column Filter Cleared",
+            { Column: actionTyped.columnId })
           return next(action);
         }
         case UserFilterRedux.USER_FILTER_ADD_UPDATE: {
           let actionTyped = <UserFilterRedux.UserFilterAddUpdateAction>action
 
           adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.UserFilterStrategyId,
-            "user filters changed",
+            action.type,
             "filters applied",
             state.UserFilter.UserFilters)
 
           return next(action);
         }
-        case UserFilterRedux.CREATE_USER_FILTER_FROM_COLUMN_FILTER: {
+
+        default: { // not one of the functions we log so nothing to do
+          return next(action);
+        }
+      }
+    }
+  }
+}
+
+
+// this is the main function for dealing with events that we CANNOT deal with in strategies
+// only use this function where it makes sense to  - try to use the strategy to deal with appropriate state where possible
+// please document each use case where we have to use the Store
+var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
+  return function (next: Redux.Dispatch<AdaptableBlotterState>) {
+    return function (action: Redux.Action) {
+      switch (action.type) {
+
+
+        /*******************
+        * CALCULATED COLUMN ACTIONS
+        *******************/
+
+        /**
+         * Use Case: User is creating a calculated column and want to check if its valid
+         * Action: If it is valid, then clear any error; otherwise set one
+         */
+        case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
+          let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).expression)
+          if (!returnObj.IsValid) {
+            middlewareAPI.dispatch(SystemRedux.CalculatedColumnSetErrorMessage(returnObj.ErrorMsg))
+          }
+          else {
+            middlewareAPI.dispatch(SystemRedux.CalculatedColumnSetErrorMessage(null))
+          }
+          return next(action);
+        }
+
+        /**
+        * Use Case: User has created a calculated column 
+        * Action:  Tell the blotter so it can do what it needs
+        */
+        case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
+          let returnAction = next(action);
+          let calculatedColumn: ICalculatedColumn = (<CalculatedColumnRedux.CalculatedColumnAddAction>action).calculatedColumn
+          blotter.addCalculatedColumnToGrid(calculatedColumn)
+          return returnAction;
+        }
+
+        /**
+         * Use Case: User has deleted a calculated column 
+         * Action (1):  Tell the blotter so it can do what it needs
+         * Action (2):  Set a new column list order so we can remove it
+         * N.B. This will NOT update any layouts that reference the column
+         */
+        case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
+          let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
+          let actionTyped = <CalculatedColumnRedux.CalculatedColumnDeleteAction>action
+          let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
+          let deletedCalculatedColumnIndex = middlewareAPI.getState().Grid.Columns.findIndex(x => x.ColumnId == calculatedColumnState.CalculatedColumns[actionTyped.index].ColumnId)
+          blotter.removeCalculatedColumnFromGrid(calculatedColumnState.CalculatedColumns[actionTyped.index].ColumnId)
+          if (deletedCalculatedColumnIndex > -1) {
+            columnsLocalLayout.splice(deletedCalculatedColumnIndex, 1)
+          }
+          middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
+          let returnAction = next(action);
+          return returnAction;
+        }
+
+        /**
+         * Use Case: User has edited an existing calculated column 
+         * If the name has changed in the Calculated Column (rare but possible):
+         * Action (1):  Tell the blotter to delete the calculated column
+         * Action (2):  Tell the blotter to add a new calculated column
+         * Action (3):  Set a new column list order so it appears as a new column
+         * If the name has not changed:
+         * Action:  Tell the blotter so it can do what it needs
+         */
+        case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
+          let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
+          let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action
+          let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
+          let index = actionTyped.index;
+          let isNameChanged: boolean = columnsLocalLayout.find(c => c.ColumnId == actionTyped.calculatedColumn.ColumnId) == null
+          if (isNameChanged) { // name has changed so we are going to delete and then add to ensure all col names are correct
+            blotter.removeCalculatedColumnFromGrid(calculatedColumnState.CalculatedColumns[index].ColumnId)
+            blotter.addCalculatedColumnToGrid(actionTyped.calculatedColumn)
+            blotter.setColumnIntoStore();
+            columnsLocalLayout = middlewareAPI.getState().Grid.Columns // need to get again
+          } else {  // it exists so just edit
+            blotter.editCalculatedColumnInGrid(actionTyped.calculatedColumn)
+          }
+          middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
+          let returnAction = next(action);
+          return returnAction;
+        }
+
+        /*******************
+        * FREE TEXT COLUMN ACTIONS
+        *******************/
+        case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD: {
+          let returnAction = next(action);
+          let freeTextColumn: IFreeTextColumn = (<FreeTextColumnRedux.FreeTextColumnAddAction>action).FreeTextColumn
+          blotter.addFreeTextColumnToGrid(freeTextColumn)
+          return returnAction;
+        }
+
+        case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
+          // not too sure what I need to do - perhaps just refresh everything?
+          let returnAction = next(action);
+          return returnAction;
+        }
+        // TODO:  Need to do Delete for free text column? 
+
+        /*******************
+        * COLUMN CATEGORY ACTIONS
+        *******************/
+
+        /**
+         * Use Case: User deletes a Column Category (and there might be conditional styles that reference it)
+         * Action (1):  Get all condiitonal styles from state
+         * Action (2):  Delete any (without currently showing a warning) that reference this Column Category
+         */
+        case ColumnCategoryRedux.COLUMN_CATEGORY_DELETE: {
+          let returnAction = next(action);
+          let actionTyped = <ColumnCategoryRedux.ColumnCategoryDeleteAction>action
+          let conditionalStyleState = middlewareAPI.getState().ConditionalStyle;
+          conditionalStyleState.ConditionalStyles.forEach((cs: IConditionalStyle, index: number) => {
+            if (cs.ColumnCategoryId == actionTyped.ColumnCategory.ColumnCategoryId) {
+              // some warning?
+              middlewareAPI.dispatch(ConditionalStyleRedux.ConditionalStyleDelete(index, cs))
+            }
+          })
+          return returnAction;
+        }
+
+        /*******************
+        * CHART ACTIONS
+        *******************/
+
+        /**
+        * Use Case: User deletes a chart (which might be currently showing)
+        * Action:  Set ALL chart visibility to hidden (even if its not current chart)?
+        * Note:  No need to worry about using a popup as cannot delete a chart while in popup (other than through api)
+        */
+        case ChartRedux.CHART_DEFINITION_DELETE: {
+          let returnAction = next(action);
+          middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden))
+          return returnAction;
+        }
+
+        /**
+        * Use Case: User clears the currrent chart
+        * Action:  Set chart visibility to hidden
+        */
+        case ChartRedux.CHART_DEFINITION_SELECT: {
+          let actionTyped = <ChartRedux.ChartDefinitionSelectAction>action
+          if (StringExtensions.IsNullOrEmpty(actionTyped.CurrentChartDefinition)) {
+            middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden))
+          }
+          let returnAction = next(action);
+          return returnAction;
+        }
+
+
+        /*******************
+        * LAYOUT ACTIONS
+        *******************/
+        case LayoutRedux.LAYOUT_SELECT: {
+          let returnAction = next(action);
+          let layoutState = middlewareAPI.getState().Layout;
+          let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
+          if (currentLayout) {
+            let gridState: GridState = middlewareAPI.getState().Grid;
+            // set columns
+            let blotterColumns: IColumn[] = []
+            currentLayout.Columns.forEach(c => {
+              let column = ColumnHelper.getColumnFromId(c, gridState.Columns);
+              if (column) {
+                blotterColumns.push(column);
+              } else {
+                LoggingHelper.LogWarning("Column '" + c + "' not found while selecting layout: " + currentLayout)
+              }
+            })
+            middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(blotterColumns))
+            // set sort
+            middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts))
+            blotter.setGridSort(currentLayout.GridSorts);
+            // set vendor specific info
+            blotter.setVendorGridState(currentLayout.VendorGridInfo)
+          }
+          return returnAction;
+        }
+        case LayoutRedux.LAYOUT_DELETE: {
+          let returnAction = next(action);
+          let layoutState = middlewareAPI.getState().Layout;
+          let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
+          if (!currentLayout) { // we have deleted the current layout (allowed) so lets make the layout default
+            middlewareAPI.dispatch(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT))
+          }
+          return returnAction;
+        }
+        case LayoutRedux.LAYOUT_PRESAVE: {
+          let returnAction = next(action);
+          let actionTyped = <LayoutRedux.LayoutPreSaveAction>action
+          let layout: ILayout = Helper.cloneObject(actionTyped.Layout);
+          let forceFetch = layout.Name == DEFAULT_LAYOUT;
+          layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns, forceFetch);
+          middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout))
+          return returnAction;
+        }
+
+
+        /*******************
+         * SMART EDIT ACTIONS
+         *******************/
+
+        /**
+         * Use Case: User wants to perform Smart Edit and we need to check if the cell selection is valid
+         * Action (1):  Get the result from the SmartEdit strategy
+         * If the return is an Alert:
+         * Action (2): If there is a popup open, close it and show the Alert; otherwise just set false valid selection
+         * If the return is valid:
+         * Action (2): Set the valid selection to true
+         * Action (3): Build the Preview Values (via Smart Edit strategy)
+         * Action (4): Set the Preview Values (this will populate the preview screen)
+         */
+        case SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
+          let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
+          let state = middlewareAPI.getState();
+          let returnAction = next(action);
+          let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
+
+          if (apiReturn.Alert) {
+            // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
+            let popup = state.Popup.ScreenPopup;
+            if (popup.ComponentName == ScreenPopups.SmartEditPopup) {
+              // We are in SmartEditPopup so let's close it
+              middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+              // and now show the alert Popup
+              middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
+            }
+            middlewareAPI.dispatch(SystemRedux.SmartEditSetValidSelection(false));
+          } else {
+            middlewareAPI.dispatch(SystemRedux.SmartEditSetValidSelection(true));
+            let apiPreviewReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation as MathOperation);
+            middlewareAPI.dispatch(SystemRedux.SmartEditSetPreview(apiPreviewReturn));
+          }
+          return returnAction;
+        }
+
+        /**
+         * Use Case: User has changed a Smmart Edit property or requested a preview
+         * Action (1):  Get the new preview set from the Smart Edit Strategy
+         * Action (2):  Set the Preview Values (this will populate the preview screen)
+         */
+        case SmartEditRedux.SMARTEDIT_CHANGE_OPERATION:
+        case SmartEditRedux.SMARTEDIT_CHANGE_VALUE:
+        case SystemRedux.SMARTEDIT_FETCH_PREVIEW: {
+          //all our logic needs to be executed AFTER the main reducers
+          //so our state is up to date which allow us not to care about the data within each different action
+          let returnAction = next(action);
+
+          let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
+          let state = middlewareAPI.getState();
+          let apiReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation as MathOperation);
+          middlewareAPI.dispatch(SystemRedux.SmartEditSetPreview(apiReturn));
+          return returnAction;
+        }
+
+        /**
+        * Use Case: User has clicked 'Apply' in Smart Edit popup or toolbar
+        * Action (1):  Gets the values that need to be applied from the Preview Info and passes to Preview Helper (incl. whether to bypass validation)
+        * Action (2):  Sends these new values to the Smart Edit Strategy (which will, in turn, apply them to the Blotter)
+        */
+        case SmartEditRedux.SMARTEDIT_APPLY: {
+          let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
+          let actionTyped = <SmartEditRedux.SmartEditApplyAction>action;
+          let thePreview = middlewareAPI.getState().System.SmartEditPreviewInfo
+          let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
+          SmartEditStrategy.ApplySmartEdit(newValues);
+          middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+          return next(action);
+        }
+
+
+        /*******************
+        * BULK UPDATE ACTIONS
+        *******************/
+        case SystemRedux.BULK_UPDATE_CHECK_CELL_SELECTION: {
+          let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
+          let state = middlewareAPI.getState();
+          let returnAction = next(action);
+          let apiReturn = BulkUpdateStrategy.CheckCorrectCellSelection();
+
+          if (apiReturn.Alert) {
+            // check if BulkUpdate is showing as popup
+            let popup = state.Popup.ScreenPopup;
+            if (popup.ComponentName == ScreenPopups.BulkUpdatePopup) {
+              //We close the BulkUpdatePopup
+              middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+              //We show the Error Popup -- assume that will alwasy be an Error
+              middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
+            }
+            middlewareAPI.dispatch(SystemRedux.BulkUpdateSetValidSelection(false));
+          } else {
+            middlewareAPI.dispatch(SystemRedux.BulkUpdateSetValidSelection(true));
+            let apiPreviewReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
+            middlewareAPI.dispatch(SystemRedux.BulkUpdateSetPreview(apiPreviewReturn));
+          }
+          return returnAction;
+        }
+
+        // Here we have all actions that triggers a refresh of the BulkUpdatePreview
+        case BulkUpdateRedux.BULK_UPDATE_CHANGE_VALUE: {
+          //all our logic needs to be executed AFTER the main reducers
+          //so our state is up to date which allow us not to care about the data within each different action
+          let returnAction = next(action);
+
+          let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
+          let state = middlewareAPI.getState();
+
+          let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
+          middlewareAPI.dispatch(SystemRedux.BulkUpdateSetPreview(apiReturn));
+          return returnAction;
+        }
+
+        case BulkUpdateRedux.BULK_UPDATE_APPLY: {
+          let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
+          let actionTyped = <BulkUpdateRedux.BulkUpdateApplyAction>action;
+          let thePreview = middlewareAPI.getState().System.BulkUpdatePreviewInfo
+          let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
+          BulkUpdateStrategy.ApplyBulkUpdate(newValues);
+          middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+          return next(action);
+        }
+
+        /*******************
+       * PLUS MINUS ACTIONS
+       *******************/
+
+        case PlusMinusRedux.PLUSMINUS_APPLY: {
+          let plusMinusStrategy = <IPlusMinusStrategy>(blotter.Strategies.get(StrategyConstants.PlusMinusStrategyId));
+          let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action
+          plusMinusStrategy.ApplyPlusMinus(actionTyped.KeyEventString, actionTyped.CellInfos);
+          middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+          return next(action);
+        }
+
+        /*******************
+        * SHORTCUT ACTIONS
+        *******************/
+
+        /**
+         * Use Case: User applies a shortcut via the keyboard
+         * Action: Tell the Shortcut Strategy to apply the shortcut
+         */
+
+        case ShortcutRedux.SHORTCUT_APPLY: {
+          let shortcutStrategy = <IShortcutStrategy>(blotter.Strategies.get(StrategyConstants.ShortcutStrategyId));
+          let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
+          shortcutStrategy.ApplyShortcut(actionTyped.CellInfo, actionTyped.NewValue);
+          return next(action);
+        }
+
+        /*******************
+        * EXPORT ACTIONS
+        *******************/
+
+        case ExportRedux.EXPORT_APPLY: {
+          let exportStrategy = <IExportStrategy>(blotter.Strategies.get(StrategyConstants.ExportStrategyId));
+          let actionTyped = <ExportRedux.ExportApplyAction>action;
+          if (actionTyped.ExportDestination == ExportDestination.iPushPull && iPushPullHelper.IPPStatus != iPushPullHelper.ServiceStatus.Connected) {
+            middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullLogin", actionTyped.Report))
+          }
+          else if (actionTyped.ExportDestination == ExportDestination.iPushPull && !actionTyped.Folder) {
+            iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
+              middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages))
+              middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""))
+            }).catch((err: any) => {
+              middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(err))
+            })
+            middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", actionTyped.Report))
+          }
+          else if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
+            exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination, actionTyped.Folder, actionTyped.Page);
+            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+          }
+          else {
+            exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination);
+            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+          }
+          return next(action);
+        }
+
+        case ExportRedux.IPP_LOGIN: {
+          let actionTyped = <ExportRedux.IPPLoginAction>action;
+          iPushPullHelper.Login(actionTyped.Login, actionTyped.Password).then(() => {
+            let report = middlewareAPI.getState().Popup.ScreenPopup.Params
+            middlewareAPI.dispatch(PopupRedux.PopupHideScreen())
+            middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""))
+            iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
+              middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages))
+              middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""))
+            }).catch((error: any) => {
+              middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error))
+            })
+            middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", report))
+          }).catch((error: string) => {
+            LoggingHelper.LogError("Login failed", error);
+            middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error))
+          })
+          return next(action);
+        }
+        case SystemRedux.REPORT_STOP_LIVE: {
+          let actionTyped = (<SystemRedux.ReportStopLiveAction>action)
+          if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
+            let currentLiveReports = middlewareAPI.getState().System.CurrentLiveReports
+            let lre = currentLiveReports.find(x => x.Report == actionTyped.Report && x.ExportDestination == actionTyped.ExportDestination)
+            iPushPullHelper.UnloadPage(lre.WorkbookName)
+          }
+          return next(action);
+        }
+
+        /*******************
+         * USER FILTER ACTIONS
+         *******************/
+        case UserFilterRedux.USER_FILTER_CREATE_FROM_COLUMN_FILTER: {
           let actionTyped = <UserFilterRedux.CreateUserFilterFromColumnFilterAction>action
           // first create a new user filter based on the column filter and input name
           let userFilter: IUserFilter = ObjectFactory.CreateUserFilterFromColumnFilter(actionTyped.ColumnFilter, actionTyped.InputText)
@@ -382,30 +942,30 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
           return next(action);
         }
 
-
-        default:
+        /*******************
+        * COLUMN CHOOSER ACTIONS
+        *******************/
+        case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
+          let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action
+          blotter.setNewColumnListOrder(actionTyped.VisibleColumnList)
           return next(action);
-      }
-    }
-  }
-}
 
 
+        /*******************
+         * TEAM SHARING ACTIONS
+         *******************/
 
-var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
-  return function (next: Redux.Dispatch<AdaptableBlotterState>) {
-    return function (action: Redux.Action) {
-      switch (action.type) {
+        // Use case - an item needs to be shared between teams
         case TeamSharingRedux.TEAMSHARING_SHARE: {
           let actionTyped = <TeamSharingRedux.TeamSharingShareAction>action
           let returnAction = next(action);
           let xhr = new XMLHttpRequest();
-          xhr.onerror = (ev: any) => AdaptableBlotterLogger.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity)
-          xhr.ontimeout = () => AdaptableBlotterLogger.LogWarning("TeamSharing share timeout", actionTyped.Entity)
+          xhr.onerror = (ev: any) => LoggingHelper.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity)
+          xhr.ontimeout = () => LoggingHelper.LogWarning("TeamSharing share timeout", actionTyped.Entity)
           xhr.onload = () => {
             if (xhr.readyState == 4) {
               if (xhr.status != 200) {
-                AdaptableBlotterLogger.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
+                LoggingHelper.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
                 middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: MessageType.Error }));
               }
               else {
@@ -429,12 +989,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         case TeamSharingRedux.TEAMSHARING_GET: {
           let returnAction = next(action);
           let xhr = new XMLHttpRequest();
-          xhr.onerror = (ev: any) => AdaptableBlotterLogger.LogError("TeamSharing get error :" + ev.message)
-          xhr.ontimeout = () => AdaptableBlotterLogger.LogWarning("TeamSharing get timeout")
+          xhr.onerror = (ev: any) => LoggingHelper.LogError("TeamSharing get error :" + ev.message)
+          xhr.ontimeout = () => LoggingHelper.LogWarning("TeamSharing get timeout")
           xhr.onload = () => {
             if (xhr.readyState == 4) {
               if (xhr.status != 200) {
-                AdaptableBlotterLogger.LogError("TeamSharing get error : " + xhr.statusText);
+                LoggingHelper.LogError("TeamSharing get error : " + xhr.statusText);
               }
               else {
                 middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(JSON.parse(xhr.responseText, (key, value) => {
@@ -553,13 +1113,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           }
           if (overwriteConfirmation) {
             let confirmation: IUIConfirmation = {
-              CancelText: "Cancel Import",
-              ConfirmationTitle: "Overwrite Config",
-              ConfirmationMsg: "This item will overwrite one of your config. Do you want to continue?",
-              ConfirmationText: "Import",
+              CancelButtonText: "Cancel Import",
+              Header: "Overwrite Config",
+              Msg: "This item will overwrite one of your config. Do you want to continue?",
+              ConfirmButtonText: "Import",
               CancelAction: null,
               ConfirmAction: importAction,
-              ShowCommentBox: false
+              ShowInputBox: false,
+              MessageType: MessageType.Warning
             }
             middlewareAPI.dispatch(PopupRedux.PopupShowConfirmation(confirmation))
           }
@@ -568,109 +1129,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
             middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", MessageType: MessageType.Info }))
           }
           else {
-            AdaptableBlotterLogger.LogError("Unknown item type", actionTyped.Entity)
+            LoggingHelper.LogError("Unknown item type", actionTyped.Entity)
             middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import", MessageType: MessageType.Error }))
           }
           return returnAction;
         }
-        case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
-          let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).Expression)
-          if (!returnObj.IsValid) {
-            middlewareAPI.dispatch(CalculatedColumnRedux.CalculatedColumnSetErrorMessage(returnObj.ErrorMsg))
-          }
-          else {
-            middlewareAPI.dispatch(CalculatedColumnRedux.CalculatedColumnSetErrorMessage(null))
-          }
-          return next(action);
-        }
-        case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
-          let returnAction = next(action);
-          let calculatedColumn: ICalculatedColumn = (<CalculatedColumnRedux.CalculatedColumnAddAction>action).CalculatedColumn
-          let columnsLocalLayout = middlewareAPI.getState().Grid.Columns.filter(c => c.Visible)
 
-          blotter.addCalculatedColumnToGrid(calculatedColumn)
-          middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
-          return returnAction;
-        }
-        case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
-          let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
-          let actionTyped = <CalculatedColumnRedux.CalculatedColumnDeleteAction>action
-          let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
-          let deletedCalculatedColumnIndex = middlewareAPI.getState().Grid.Columns.findIndex(x => x.ColumnId == calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
-          blotter.removeCalculatedColumnFromGrid(calculatedColumnState.CalculatedColumns[actionTyped.Index].ColumnId)
-          if (deletedCalculatedColumnIndex > -1) {
-            columnsLocalLayout.splice(deletedCalculatedColumnIndex, 1)
-          }
-          middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
-          let returnAction = next(action);
-          return returnAction;
-        }
-        case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
-          let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
-          let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action
-          let columnsLocalLayout = middlewareAPI.getState().Grid.Columns
-          let index = actionTyped.Index;
-          let isNameChanged: boolean = columnsLocalLayout.find(c => c.ColumnId == actionTyped.CalculatedColumn.ColumnId) == null
-          if (isNameChanged) { // name has changed so we are going to delete and then add to ensure all col names are correct
-            blotter.removeCalculatedColumnFromGrid(calculatedColumnState.CalculatedColumns[index].ColumnId)
-            blotter.addCalculatedColumnToGrid(actionTyped.CalculatedColumn)
-            blotter.setColumnIntoStore();
-            columnsLocalLayout = middlewareAPI.getState().Grid.Columns // need to get again
-          } else {  // it exists so just edit
-            blotter.editCalculatedColumnInGrid(actionTyped.CalculatedColumn)
-          }
-          middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
-          let returnAction = next(action);
-          return returnAction;
-        }
-        case SystemFilterRedux.HIDE_FILTER_FORM: {
-          blotter.hideFilterForm()
-          return next(action);
-        }
-        case LayoutRedux.LAYOUT_SELECT: {
-          let returnAction = next(action);
-          let layoutState = middlewareAPI.getState().Layout;
-          let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
-          if (currentLayout) {
-            let gridState: GridState = middlewareAPI.getState().Grid;
-            // set columns
-            let blotterColumns: IColumn[] = []
-            currentLayout.Columns.forEach(c => {
-              let column: IColumn = gridState.Columns.find(x => x.ColumnId == c)
-              if (column) {
-                blotterColumns.push(column);
-              } else {
-                AdaptableBlotterLogger.LogWarning("Column '" + c + "' not found")
-              }
-            })
-
-            middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(blotterColumns))
-            // set sort
-            middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts))
-            blotter.setGridSort(currentLayout.GridSorts);
-            // set vendor specific info
-            blotter.setVendorGridState(currentLayout.VendorGridInfo)
-          }
-          return returnAction;
-        }
-        case LayoutRedux.LAYOUT_DELETE: {
-          let returnAction = next(action);
-          let layoutState = middlewareAPI.getState().Layout;
-          let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
-          if (!currentLayout) { // we have deleted the current layout (allowed) so lets make the layout default
-            middlewareAPI.dispatch(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT))
-          }
-          return returnAction;
-        }
-        case LayoutRedux.LAYOUT_PRESAVE: {
-          let returnAction = next(action);
-          let actionTyped = <LayoutRedux.LayoutPreSaveAction>action
-          let layout: ILayout = Helper.cloneObject(actionTyped.Layout);
-          let forceFetch = layout.Name == DEFAULT_LAYOUT;
-          layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns, forceFetch);
-          middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout))
-          return returnAction;
-        }
+        /*******************
+        * GRID (INTERNAL) ACTIONS
+        *******************/
         case GridRedux.GRID_SET_VALUE_LIKE_EDIT: {
           let actionTyped = <GridRedux.GridSetValueLikeEditAction>action
           blotter.setValue(actionTyped.CellInfo)
@@ -689,6 +1156,18 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           blotter.selectColumn(actionTyped.ColumnId)
           return next(action);
         }
+        case GridRedux.GRID_CREATE_SELECTED_CELLS_SUMMARY: {
+          let SelectedCellsStrategy = <ISelectedCellsStrategy>(blotter.Strategies.get(StrategyConstants.SelectedCellsStrategyId));
+          let returnAction = next(action);
+          let selectedCellInfo = middlewareAPI.getState().Grid.SelectedCellInfo
+          let apiSummaryReturn: ISelectedCellSummmary = SelectedCellsStrategy.CreateSelectedCellSummary(selectedCellInfo);
+          middlewareAPI.dispatch(GridRedux.GridSetSelectedCellSummary(apiSummaryReturn));
+          return returnAction;
+        }
+
+        /*******************
+        * POPUP (INTERNAL) ACTIONS
+        *******************/
         case PopupRedux.POPUP_CONFIRM_PROMPT: {
           let promptConfirmationAction = middlewareAPI.getState().Popup.PromptPopup.ConfirmAction;
           if (promptConfirmationAction) {
@@ -712,188 +1191,30 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           }
           return next(action);
         }
-        case GridRedux.GRID_CREATE_SELECTED_CELLS_SUMMARY: {
-          let SelectedCellsStrategy = <ISelectedCellsStrategy>(blotter.Strategies.get(StrategyConstants.SelectedCellsStrategyId));
-          let returnAction = next(action);
-          let selectedCellInfo = middlewareAPI.getState().Grid.SelectedCellInfo
-          let apiSummaryReturn: ISelectedCellSummmary = SelectedCellsStrategy.CreateSelectedCellSummary(selectedCellInfo);
-          middlewareAPI.dispatch(GridRedux.GridSetSelectedCellSummary(apiSummaryReturn));
-          return returnAction;
+
+
+        /*******************
+        * HOME (INTERNAL) ACTIONS (Filter Bar)
+        *******************/
+        case HomeRedux.FLOATING_FILTER_BAR_SHOW: {
+          blotter.showFloatingFilter();
+          return next(action);
         }
 
-        /*  *********
-        SMART EDIT ACTIONS
-        ************ */
-        case SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
-          let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
-          let state = middlewareAPI.getState();
-          let returnAction = next(action);
-          let apiReturn = SmartEditStrategy.CheckCorrectCellSelection();
-
-          if (apiReturn.Alert) {
-            // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
-            let popup = state.Popup.ScreenPopup;
-            if (popup.ComponentName == ScreenPopups.SmartEditPopup) {  //We close the SmartEditPopup
-              middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-              //We show the alert Popup
-              middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
-            }
-            middlewareAPI.dispatch(SystemRedux.SmartEditSetValidSelection(false));
-          } else {
-            middlewareAPI.dispatch(SystemRedux.SmartEditSetValidSelection(true));
-            let apiPreviewReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation as MathOperation);
-            middlewareAPI.dispatch(SystemRedux.SmartEditSetPreview(apiPreviewReturn));
-          }
-          return returnAction;
+        case HomeRedux.FLOATING_FILTER_BAR_HIDE: {
+          blotter.hideFloatingFilter();
+          return next(action);
         }
 
-        // Here we have all actions that triggers a refresh of the SmartEditPreview
-        case SmartEditRedux.SMARTEDIT_CHANGE_OPERATION:
-        case SmartEditRedux.SMARTEDIT_CHANGE_VALUE:
-        case SystemRedux.SMARTEDIT_FETCH_PREVIEW: {
-          //all our logic needs to be executed AFTER the main reducers
-          //so our state is up to date which allow us not to care about the data within each different action
-          let returnAction = next(action);
-
-          let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
-          let state = middlewareAPI.getState();
-
-          let apiReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation as MathOperation);
-          middlewareAPI.dispatch(SystemRedux.SmartEditSetPreview(apiReturn));
-          return returnAction;
-        }
-
-        case SmartEditRedux.SMARTEDIT_APPLY: {
-          let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
-          let actionTyped = <SmartEditRedux.SmartEditApplyAction>action;
-          let thePreview = middlewareAPI.getState().System.SmartEditPreviewInfo
-          let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
-          SmartEditStrategy.ApplySmartEdit(newValues);
-          middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+        case HomeRedux.FILTER_FORM_HIDE: {
+          blotter.hideFilterForm()
           return next(action);
         }
 
 
-        /*  *********
-        BULK UPDATE ACTIONS
-        ************ */
-        case SystemRedux.BULK_UPDATE_CHECK_CELL_SELECTION: {
-          let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
-          let state = middlewareAPI.getState();
-          let returnAction = next(action);
-          let apiReturn = BulkUpdateStrategy.CheckCorrectCellSelection();
-
-          if (apiReturn.Alert) {
-            // check if BulkUpdate is showing as popup
-            let popup = state.Popup.ScreenPopup;
-            if (popup.ComponentName == ScreenPopups.BulkUpdatePopup) {
-              //We close the BulkUpdatePopup
-              middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-              //We show the Error Popup -- assume that will alwasy be an Error
-              middlewareAPI.dispatch(PopupRedux.PopupShowAlert(apiReturn.Alert));
-            }
-            middlewareAPI.dispatch(SystemRedux.BulkUpdateSetValidSelection(false));
-          } else {
-            middlewareAPI.dispatch(SystemRedux.BulkUpdateSetValidSelection(true));
-            let apiPreviewReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
-            middlewareAPI.dispatch(SystemRedux.BulkUpdateSetPreview(apiPreviewReturn));
-          }
-          return returnAction;
-        }
-
-        // Here we have all actions that triggers a refresh of the BulkUpdatePreview
-        case BulkUpdateRedux.BULK_UPDATE_CHANGE_VALUE: {
-          //all our logic needs to be executed AFTER the main reducers
-          //so our state is up to date which allow us not to care about the data within each different action
-          let returnAction = next(action);
-
-          let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
-          let state = middlewareAPI.getState();
-
-          let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
-          middlewareAPI.dispatch(SystemRedux.BulkUpdateSetPreview(apiReturn));
-          return returnAction;
-        }
-
-        case BulkUpdateRedux.BULK_UPDATE_APPLY: {
-          let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
-          let actionTyped = <BulkUpdateRedux.BulkUpdateApplyAction>action;
-          let thePreview = middlewareAPI.getState().System.BulkUpdatePreviewInfo
-          let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
-          BulkUpdateStrategy.ApplyBulkUpdate(newValues);
-          middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-          return next(action);
-        }
-
-        case PlusMinusRedux.PLUSMINUS_APPLY: {
-          let plusMinusStrategy = <IPlusMinusStrategy>(blotter.Strategies.get(StrategyConstants.PlusMinusStrategyId));
-          let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action
-          plusMinusStrategy.ApplyPlusMinus(actionTyped.KeyEventString, actionTyped.CellInfos);
-          middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-          return next(action);
-        }
-        case ShortcutRedux.SHORTCUT_APPLY: {
-          let shortcutStrategy = <IShortcutStrategy>(blotter.Strategies.get(StrategyConstants.ShortcutStrategyId));
-          let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
-          shortcutStrategy.ApplyShortcut(actionTyped.CellInfo, actionTyped.NewValue);
-          return next(action);
-        }
-
-        case ExportRedux.EXPORT_APPLY: {
-          let exportStrategy = <IExportStrategy>(blotter.Strategies.get(StrategyConstants.ExportStrategyId));
-          let actionTyped = <ExportRedux.ExportApplyAction>action;
-          if (actionTyped.ExportDestination == ExportDestination.iPushPull && iPushPullHelper.IPPStatus != iPushPullHelper.ServiceStatus.Connected) {
-            middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullLogin", actionTyped.Report))
-          }
-          else if (actionTyped.ExportDestination == ExportDestination.iPushPull && !actionTyped.Folder) {
-            iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
-              middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
-              middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
-            }).catch((err: any) => {
-              middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(err))
-            })
-            middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", actionTyped.Report))
-          }
-          else if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
-            exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination, actionTyped.Folder, actionTyped.Page);
-            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-          }
-          else {
-            exportStrategy.Export(actionTyped.Report, actionTyped.ExportDestination);
-            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-          }
-          return next(action);
-        }
-
-        case ExportRedux.IPP_LOGIN: {
-          let actionTyped = <ExportRedux.IPPLoginAction>action;
-          iPushPullHelper.Login(actionTyped.Login, actionTyped.Password).then(() => {
-            let report = middlewareAPI.getState().Popup.ScreenPopup.Params
-            middlewareAPI.dispatch(PopupRedux.PopupHideScreen())
-            middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
-            iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
-              middlewareAPI.dispatch(ExportRedux.SetDomainPages(domainpages))
-              middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(""))
-            }).catch((error: any) => {
-              middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error))
-            })
-            middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", report))
-          }).catch((error: string) => {
-            AdaptableBlotterLogger.LogError("Login failed", error);
-            middlewareAPI.dispatch(ExportRedux.ReportSetErrorMsg(error))
-          })
-          return next(action);
-        }
-        case SystemRedux.REPORT_STOP_LIVE: {
-          let actionTyped = (<SystemRedux.ReportStopLiveAction>action)
-          if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
-            let currentLiveReports = middlewareAPI.getState().System.CurrentLiveReports
-            let lre = currentLiveReports.find(x => x.Report == actionTyped.Report && x.ExportDestination == actionTyped.ExportDestination)
-            iPushPullHelper.UnloadPage(lre.WorkbookName)
-          }
-          return next(action);
-        }
-
+        /*******************
+        * MANAGING STATE ACTIONS
+        *******************/
         //We rebuild the menu from scratch
         //the difference between the two is that RESET_STATE is handled before and set the state to undefined
         case INIT_STATE:
@@ -917,25 +1238,26 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           }
 
           //Create all calculated columns before we load the layout
-          middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(x => {
-            blotter.addCalculatedColumnToGrid(x)
+          middlewareAPI.getState().CalculatedColumn.CalculatedColumns.forEach(cc => {
+            blotter.addCalculatedColumnToGrid(cc)
+          })
+
+          //Create all free text columns before we load the layout
+          middlewareAPI.getState().FreeTextColumn.FreeTextColumns.forEach(ftc => {
+            blotter.addFreeTextColumnToGrid(ftc)
           })
 
           //load the default layout if its current
           if (currentLayout == DEFAULT_LAYOUT) {
             middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
           }
+
+          // create the menu
           blotter.createMenu();
 
-          blotter.InitAuditService()
           return returnAction;
         }
-        case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
-          let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action
-          //not sure what is best still..... make the strategy generic enough so they work for all combos and put some of the logic in the AB class or do the opposite....
-          //Time will tell I guess
-          blotter.setNewColumnListOrder(actionTyped.VisibleColumnList)
-          return next(action);
+
         default:
           return next(action);
       }

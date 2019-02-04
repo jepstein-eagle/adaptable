@@ -1,7 +1,8 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { IColumn } from '../../../Core/Interface/IColumn';
-import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { IAdaptableBlotterObject } from '../../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
 import { IColItem } from "../../UIInterfaces";
 export interface BaseRowProps<View> extends React.ClassAttributes<View> {
     colItems: IColItem[];

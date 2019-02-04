@@ -10,7 +10,7 @@ class StrategyDetail extends React.Component {
             summaryItems.push(React.createElement("b", null, this.props.Item1)) :
             summaryItems.push(React.createElement("i", null, this.props.Item1));
         summaryItems.push(React.createElement("i", null, this.props.Item2));
-        summaryItems.push(React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDelete, showEdit: this.props.showEdit, editClick: () => this.props.onEdit(), shareClick: () => this.props.onShare(), showShare: this.props.showShare, EntityName: this.props.EntityName }));
+        summaryItems.push(React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDelete, showEdit: this.props.showEdit, editClick: () => this.props.onEdit(), shareClick: () => this.props.onShare(), showShare: this.props.showShare, EntityName: this.props.EntityName, editSize: 'xs', deleteSize: 'xs', shareSize: 'xs' }));
         return React.createElement(SummaryRowItem_1.SummaryRowItem, { cssClassName: this.props.cssClassName, SummaryItems: summaryItems });
     }
 }

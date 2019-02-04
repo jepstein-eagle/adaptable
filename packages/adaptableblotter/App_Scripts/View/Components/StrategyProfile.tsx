@@ -1,8 +1,8 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import { Glyphicon } from 'react-bootstrap';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 
 // Simple compnent which just shows the Icon and Name for any strategy
 

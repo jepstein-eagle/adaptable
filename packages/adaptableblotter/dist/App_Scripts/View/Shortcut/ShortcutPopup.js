@@ -5,22 +5,22 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const ShortcutRedux = require("../../Redux/ActionsReducers/ShortcutRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const Enums_1 = require("../../Core/Enums");
-const Enums_2 = require("../../Core/Enums");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const Enums_1 = require("../../Utilities/Enums");
+const Enums_2 = require("../../Utilities/Enums");
 const ShortcutEntityRow_1 = require("./ShortcutEntityRow");
 const ShortcutWizard_1 = require("./Wizard/ShortcutWizard");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 class ShortcutPopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     render() {
         let cssClassName = this.props.cssClassName + "__shortcut";

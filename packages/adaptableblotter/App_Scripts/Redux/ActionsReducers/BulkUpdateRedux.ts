@@ -1,6 +1,6 @@
 import { BulkUpdateState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IPreviewInfo } from '../../Core/Interface/IPreviewResult';
+import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 export const BULK_UPDATE_APPLY = 'BULK_UPDATE_APPLY';
 export const BULK_UPDATE_CHANGE_VALUE = 'BULK_UPDATE_CHANGE_VALUE';
@@ -28,7 +28,7 @@ export const BulkUpdateChangeValue = (value: string): BulkUpdateChangeValueActio
 
 
 const initialBulkUpdateState: BulkUpdateState = {
-    BulkUpdateValue: "",
+    BulkUpdateValue: EMPTY_STRING,
  }
 
 export const BulkUpdateReducer: Redux.Reducer<BulkUpdateState> = (state: BulkUpdateState = initialBulkUpdateState, action: Redux.Action): BulkUpdateState => {

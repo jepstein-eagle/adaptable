@@ -1,20 +1,17 @@
 import * as React from "react";
-import { Radio, Col, Panel, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { MessageType } from '../../../Core/Enums';
-import { AdaptablePopover } from '../../AdaptablePopover';
-import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
-import { ICellValidationRule, IUserFilter } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
+import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { ICellValidationRule } from "../../../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
+import { CellValidationHelper } from "../../../Utilities/Helpers/CellValidationHelper";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 
 export interface CellValidationSummaryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
-    Columns: IColumn[]
     UserFilters: IUserFilter[]
 }
 
@@ -27,10 +24,10 @@ export class CellValidationSummaryWizard extends React.Component<CellValidationS
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
             { Key: "Mode", Value: this.props.Data.ActionMode },
-            { Key: "Rule", Value: this.props.Data.Description },
+            { Key: "Rule", Value: CellValidationHelper.createCellValidationDescription( this.props.Data, this.props.Columns) },
             {
                 Key: "Query", Value: ExpressionHelper.IsNotEmptyExpression( this.props.Data.Expression) ?
                     ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) :

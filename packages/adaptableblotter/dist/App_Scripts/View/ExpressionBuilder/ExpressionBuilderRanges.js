@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
-const Enums_1 = require("../../Core/Enums");
-const Enums_2 = require("../../Core/Enums");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const Enums_1 = require("../../Utilities/Enums");
+const Enums_2 = require("../../Utilities/Enums");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const react_bootstrap_1 = require("react-bootstrap");
 const UIHelper_1 = require("../UIHelper");
 const ColumnSelector_1 = require("../Components/Selectors/ColumnSelector");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
-const EnumExtensions_1 = require("../../Core/Extensions/EnumExtensions");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 class ExpressionBuilderRanges extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__queryranges";

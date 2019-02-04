@@ -1,10 +1,10 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy';
 import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState';
-import { IPreviewInfo } from '../Core/Interface/IPreviewResult';
-import { ICellInfo } from '../Core/Interface/Interfaces';
+import { ICellInfo } from "../Utilities/Interface/ICellInfo";
+import { IPreviewInfo } from '../Utilities/Interface/IPreview';
 export declare class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
     protected BulkUpdateState: BulkUpdateState;
     constructor(blotter: IAdaptableBlotter);

@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const AdaptableBlotterForm_1 = require("../Forms/AdaptableBlotterForm");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 
 //need to transfer props individually as a consequence
 //let { buttonContent, ...other } = this.props
@@ -26,11 +26,11 @@ class FilterFormPanel extends React.Component {
                             React.createElement(react_bootstrap_1.Row, null,
                                 React.createElement(react_bootstrap_1.Col, { xs: 3 }),
                                 React.createElement(react_bootstrap_1.Col, { xs: 9 },
-                                    React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Menu", checked: this.props.ContextMenuTab == Enums_1.ContextMenuTab.Menu, onChange: (e) => this.onSelectMenu(e) }, "Menu"))),
+                                    React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Menu", checked: this.props.ContextMenuTab == Enums_1.ContextMenuTab.Menu, onChange: (e) => this.onSelectMenu() }, "Menu"))),
                             React.createElement(react_bootstrap_1.Row, null,
                                 React.createElement(react_bootstrap_1.Col, { xs: 3 }),
                                 React.createElement(react_bootstrap_1.Col, { xs: 9 },
-                                    React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Filter", checked: this.props.ContextMenuTab == Enums_1.ContextMenuTab.Filter, onChange: (e) => this.onSelectFilter(e) }, "Filter")))),
+                                    React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Filter", checked: this.props.ContextMenuTab == Enums_1.ContextMenuTab.Filter, onChange: (e) => this.onSelectFilter() }, "Filter")))),
                 React.createElement(react_bootstrap_1.Col, { xs: 2 }, this.props.clearFilterButton && this.props.ContextMenuTab == Enums_1.ContextMenuTab.Filter && React.cloneElement(this.props.clearFilterButton, { style: { float: 'right' } })),
                 React.createElement(react_bootstrap_1.Col, { xs: 2 }, this.props.saveButton && this.props.ContextMenuTab == Enums_1.ContextMenuTab.Filter && React.cloneElement(this.props.saveButton, { style: { float: 'right' } })),
                 this.props.showCloseButton &&
@@ -38,10 +38,10 @@ class FilterFormPanel extends React.Component {
         return React.createElement("div", { className: cssClassName },
             React.createElement(react_bootstrap_1.Panel, { header: header, className: className, style: this.props.style, bsStyle: this.props.bsStyle }, this.props.children));
     }
-    onSelectMenu(tab) {
+    onSelectMenu() {
         this.props.ContextMenuChanged(Enums_1.ContextMenuTab.Menu);
     }
-    onSelectFilter(tab) {
+    onSelectFilter() {
         this.props.ContextMenuChanged(Enums_1.ContextMenuTab.Filter);
     }
 }

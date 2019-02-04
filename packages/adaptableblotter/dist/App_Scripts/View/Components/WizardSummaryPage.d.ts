@@ -1,7 +1,7 @@
 import * as React from "react";
-import { KeyValuePair } from "../UIInterfaces";
+import { IKeyValuePair } from "../../Utilities/Interface/IKeyValuePair";
 export interface WizardSummaryPageProps extends React.ClassAttributes<WizardSummaryPage> {
-    KeyValuePairs: KeyValuePair[];
+    KeyValuePairs: IKeyValuePair[];
     cssClassName: string;
     header: string;
 }

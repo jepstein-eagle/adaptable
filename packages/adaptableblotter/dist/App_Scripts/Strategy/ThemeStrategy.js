@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyConstants = require("../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../Core/Constants/ScreenPopups");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
 const themes_1 = require("../Styles/themes");
-const GeneralConstants = require("../Core/Constants/GeneralConstants");
-const Enums_1 = require("../Core/Enums");
+const GeneralConstants = require("../Utilities/Constants/GeneralConstants");
+const Enums_1 = require("../Utilities/Enums");
 class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.ThemeStrategyId, blotter);
         // Create the <style> tag for shipped themes
         this.style = document.createElement("style");
-        this.style.id = `${blotter.BlotterOptions.adaptableBlotterContainer}-theme`;
+        this.style.id = `${blotter.BlotterOptions.containerOptions.adaptableBlotterContainer}-theme`;
         this.style.appendChild(document.createTextNode("")); // WebKit hack :(
         document.head.appendChild(this.style); // Adds the <style> element to the page
         // Create the theme link for predefined themes

@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyConstants = require("../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../Core/Constants/ScreenPopups");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
+const BlotterHelper_1 = require("../Utilities/Helpers/BlotterHelper");
 class TeamSharingStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.TeamSharingStrategyId, blotter);
@@ -11,7 +12,7 @@ class TeamSharingStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase 
         this.createMenuItemShowPopup(StrategyConstants.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyConstants.TeamSharingGlyph);
     }
     hasPopupMenu() {
-        return this.blotter.BlotterOptions.enableRemoteConfigServer;
+        return BlotterHelper_1.BlotterHelper.IsConfigServerEnabled(this.blotter.BlotterOptions);
     }
     InitState() {
         //nothing 

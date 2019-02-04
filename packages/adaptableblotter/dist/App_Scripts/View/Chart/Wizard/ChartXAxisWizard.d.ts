@@ -1,31 +1,25 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IChartDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { IColumn } from "../../../Core/Interface/IColumn";
-import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
+import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { Expression } from "../../../Utilities/Expression";
 export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[];
-    Columns: IColumn[];
-    Blotter: IAdaptableBlotter;
 }
 export interface ChartXAxisWizardState {
-    XAxisColumn: string;
-    XAxisColumnValues: string[];
+    XAxisColumnId: string;
     UseAllXAsisColumnValues: boolean;
-    AvailableXAxisColumnValues: IRawValueDisplayValuePair[];
+    XAxisExpression: Expression;
 }
 export declare class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, ChartXAxisWizardState> implements AdaptableWizardStep {
     constructor(props: ChartXAxisWizardProps);
     render(): any;
     private onUseAllColumnValuesChanged;
     private onXAxisColumnChanged;
-    private onColumnValuesChange;
     canNext(): boolean;
     canBack(): boolean;
     Next(): void;
     Back(): void;
-    GetIndexStepIncrement(): number;
+    GetIndexStepIncrement(): 1 | 2;
     GetIndexStepDecrement(): number;
     StepName: string;
 }

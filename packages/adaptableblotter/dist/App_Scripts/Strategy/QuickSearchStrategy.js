@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyConstants = require("../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../Core/Constants/ScreenPopups");
-const Enums_1 = require("../Core/Enums");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
+const Enums_1 = require("../Utilities/Enums");
 class QuickSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.QuickSearchStrategyId, blotter);
@@ -16,7 +16,7 @@ class QuickSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase 
             this.quickSearchState = this.GetQuickSearchState();
             this.blotter.applyGridFiltering();
             this.postSearch();
-            if (this.blotter.BlotterOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
+            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
                 this.publishSearchChanged(Enums_1.SearchChangedTrigger.QuickSearch);
             }
             if (this.blotter.isInitialised) {

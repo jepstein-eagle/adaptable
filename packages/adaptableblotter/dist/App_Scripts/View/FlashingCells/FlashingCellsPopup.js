@@ -4,15 +4,15 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const FlashingCellsRedux = require("../../Redux/ActionsReducers/FlashingCellsRedux");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const FlashingCellEntityRow_1 = require("./FlashingCellEntityRow");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
-const Helper_1 = require("../../Core/Helpers/Helper");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class FlashingCellsPopupComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__flashingcells";
@@ -30,10 +30,11 @@ class FlashingCellsPopupComponent extends React.Component {
         let numericNonCalcColumns = numericColumns.filter(c => ArrayExtensions_1.ArrayExtensions.NotContainsItem(calculatedColumns, c.ColumnId));
         numericNonCalcColumns = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, numericNonCalcColumns, "FriendlyName");
         let allPotentialFlashingCells = [];
+        let flashingCellState = this.props.Blotter.api.configApi.configGetFlashingCellState(false);
         numericNonCalcColumns.forEach(nc => {
             let existingfc = this.props.FlashingCells.find(e => e.ColumnId == nc.ColumnId);
             if (!existingfc) {
-                allPotentialFlashingCells.push(ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(nc));
+                allPotentialFlashingCells.push(ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(nc, flashingCellState.DefaultUpColor, flashingCellState.DefautDownColor, flashingCellState.DefaultDuration));
             }
             else {
                 allPotentialFlashingCells.push(existingfc);

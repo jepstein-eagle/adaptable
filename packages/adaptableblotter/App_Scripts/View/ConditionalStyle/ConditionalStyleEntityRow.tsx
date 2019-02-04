@@ -1,32 +1,26 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
-import { ConditionalStyleScope } from '../../Core/Enums';
-import { Helper } from '../../Core/Helpers/Helper';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { ConditionalStyleScope } from '../../Utilities/Enums';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { AdaptableObjectRow, } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
-import { IConditionalStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpressionRowProps<ConditionalStyleEntityRow>, {}> {
 
     render(): any {
         let conditionalStyle: IConditionalStyle = this.props.AdaptableBlotterObject as IConditionalStyle;
 
-        let column = this.props.Columns.find(x => x.ColumnId == conditionalStyle.ColumnId)
-
+        let column = ColumnHelper.getColumnFromId(conditionalStyle.ColumnId, this.props.Columns);
+         
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content =
-            conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column ?
-                ColumnHelper.getFriendlyNameFromColumnId(conditionalStyle.ColumnId, this.props.Columns) :
-                "Whole Row"
-
+        colItems[0].Content =this.getScope(conditionalStyle);
         colItems[1].Content = <StyleVisualItem Style={conditionalStyle.Style} />
         colItems[2].Content = ExpressionHelper.ConvertExpressionToString(conditionalStyle.Expression, this.props.Columns)
         let buttons: any = <EntityListActionButtons
@@ -40,5 +34,17 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
         colItems[3].Content = buttons;
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
+    }
+
+    private getScope(conditionalStyle: IConditionalStyle): string {
+        switch (conditionalStyle.ConditionalStyleScope) {
+            case ConditionalStyleScope.Row:
+                return "Row";
+            case ConditionalStyleScope.Column:
+                return ColumnHelper.getFriendlyNameFromColumnId(conditionalStyle.ColumnId, this.props.Columns);
+            case ConditionalStyleScope.ColumnCategory:
+                return "Category: " + conditionalStyle.ColumnCategoryId
+
+        }
     }
 }

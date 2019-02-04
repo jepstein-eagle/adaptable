@@ -2,18 +2,19 @@ import * as React from "react";
 import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { connect } from 'react-redux';
-import { Helper } from '../../Core/Helpers/Helper';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import { Helper } from '../../Utilities/Helpers/Helper';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { UIHelper } from '../UIHelper';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
-import { ICalculatedColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
+import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 
 export interface CalculatedColumnSummaryProps extends StrategySummaryProps<CalculatedColumnSummaryComponent> {
     CalculatedColumns: ICalculatedColumn[]
@@ -27,7 +28,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
 
     constructor(props: CalculatedColumnSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render(): any {
@@ -100,7 +101,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-        CalculatedColumnErrorMessage: state.CalculatedColumn.CalculatedColumnErrorMessage
+        CalculatedColumnErrorMessage: state.System.CalculatedColumnErrorMessage
     };
 }
 

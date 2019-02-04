@@ -6,15 +6,15 @@ const FreeTextColumnRedux = require("../../Redux/ActionsReducers/FreeTextColumnR
 const react_bootstrap_1 = require("react-bootstrap");
 const FreeTextColumnEntityRow_1 = require("./FreeTextColumnEntityRow");
 const FreeTextColumnWizard_1 = require("./Wizard/FreeTextColumnWizard");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 class FreeTextColumnPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -33,7 +33,7 @@ class FreeTextColumnPopupComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__FreeTextcolumn";
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__FreeTextcolumn";
-        let infoBody = ["FreeText a column so it styles with the colours and font properties that you provide.", React.createElement("br", null), React.createElement("br", null), "Unlike Conditional Styles the column is ", React.createElement("b", null, "always"), " FreeTextted as set and is not dependent on a rule being met."];
+        let infoBody = ["A FreeText Column is one where you can insert any values you wish (e.g.comments).", React.createElement("br", null), React.createElement("br", null), "These values are stored with your settings and not with the rest of the data in the grid."];
         let colItems = [
             { Content: "Column", Size: 3 },
             { Content: "Default Value", Size: 3 },
@@ -54,7 +54,7 @@ class FreeTextColumnPopupComponent extends React.Component {
                     React.createElement(FreeTextColumnWizard_1.FreeTextColumnWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ModalContainer: this.props.ModalContainer, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Columns: this.props.Columns, Blotter: this.props.Blotter, ConfigEntities: this.props.FreeTextColumns, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }
     onNew() {
-        this.setState({ EditedAdaptableBlotterObject: ObjectFactory_1.ObjectFactory.CreateEmptyFreeTextColumn(), WizardStartIndex: 0 });
+        this.setState({ EditedAdaptableBlotterObject: ObjectFactory_1.ObjectFactory.CreateEmptyFreeTextColumn(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
     }
     onEdit(index, FreeTextColumn) {
         let clonedObject = Helper_1.Helper.cloneObject(FreeTextColumn);
@@ -65,18 +65,18 @@ class FreeTextColumnPopupComponent extends React.Component {
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
     }
     onFinishWizard() {
-        let FreeTextColumn = this.state.EditedAdaptableBlotterObject;
+        let freeTextColumn = this.state.EditedAdaptableBlotterObject;
         if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-            this.props.onEditFreeTextColumn(this.state.EditedAdaptableBlotterObjectIndex, FreeTextColumn);
+            this.props.onEditFreeTextColumn(this.state.EditedAdaptableBlotterObjectIndex, freeTextColumn);
         }
         else {
-            this.props.onAddFreeTextColumn(FreeTextColumn);
+            this.props.onAddFreeTextColumn(freeTextColumn);
         }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
     }
     canFinishWizard() {
-        let FreeTextColumn = this.state.EditedAdaptableBlotterObject;
-        return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(FreeTextColumn.ColumnId);
+        let freeTextColumn = this.state.EditedAdaptableBlotterObject;
+        return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(freeTextColumn.ColumnId);
     }
 }
 function mapStateToProps(state, ownProps) {

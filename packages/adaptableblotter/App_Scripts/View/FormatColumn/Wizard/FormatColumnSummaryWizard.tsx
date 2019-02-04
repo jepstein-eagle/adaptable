@@ -1,19 +1,16 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { FontWeight, FontStyle, FontSize } from '../../../Core/Enums';
-import { StyleComponent } from '../../Components/StyleComponent';
-import { StringExtensions } from "../../../Core/Extensions/StringExtensions";
 import { StyleVisualItem } from '../../Components/StyleVisualItem'
-import { KeyValuePair } from "../../UIInterfaces";
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { IColumn } from "../../../Core/Interface/IColumn";
-import { IFormatColumn } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
+import { IColumn } from "../../../Utilities/Interface/IColumn";
+import { IFormatColumn } from "../../../Utilities/Interface/BlotterObjects/IFormatColumn";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 
 export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
-    Columns: IColumn[]
+   
 }
 export class FormatColumnSummaryWizard extends React.Component<FormatColumnSummaryWizardProps, {}> implements AdaptableWizardStep {
 
@@ -26,7 +23,7 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
 
         let cssClassName: string = this.props.cssClassName + "-summary"
        
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Scope", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId,  this.props.Columns)},
             { Key: "Style", Value: <StyleVisualItem Style={this.props.Data.Style} /> },
          ]

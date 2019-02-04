@@ -5,21 +5,33 @@ import { Button, Col, Panel, ListGroup, Row, Well, Glyphicon, OverlayTrigger, To
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
-import { Helper } from '../../Core/Helpers/Helper';
+import { IColumn } from '../../Utilities/Interface/IColumn';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { EnumExtensions } from '../../Core/Extensions/EnumExtensions'
-import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions'
+import { ISharedEntity } from "../../Utilities/Interface/ISharedEntity";
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyProfile } from '../Components/StrategyProfile';
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants';
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IColItem } from "../UIInterfaces";
 import { StyleVisualItem } from '../Components/StyleVisualItem'
-import { IAdvancedSearch, ICalculatedColumn, IAdaptableBlotterObject, ICustomSort, IConditionalStyle, IPlusMinusRule, IShortcut, IUserFilter, IFormatColumn, ILayout, IReport, ICellValidationRule } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
-import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { ConditionalStyleScope } from "../../Core/Enums";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
+import { IFormatColumn } from "../../Utilities/Interface/BlotterObjects/IFormatColumn";
+import { ILayout } from "../../Utilities/Interface/BlotterObjects/ILayout";
+import { IPlusMinusRule } from "../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
+import { IShortcut } from "../../Utilities/Interface/BlotterObjects/IShortcut";
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
+import { ICustomSort } from "../../Utilities/Interface/BlotterObjects/ICustomSort";
+import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
+import { ICellValidationRule } from "../../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
+import { IAdvancedSearch } from "../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
+import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
+import { ConditionalStyleScope } from "../../Utilities/Enums";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
@@ -110,7 +122,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     <Col xs={4}>{ColumnHelper.getFriendlyNameFromColumnId(cellVal.ColumnId, this.props.Columns)}
                     </Col>
                     <Col xs={4}>
-                        {cellVal.Description}
+                        {CellValidationHelper.createCellValidationDescription( cellVal, this.props.Columns)}
                     </Col>
                     <Col xs={4}>
                         {(ExpressionHelper.IsNotEmptyExpression (cellVal.Expression) )?

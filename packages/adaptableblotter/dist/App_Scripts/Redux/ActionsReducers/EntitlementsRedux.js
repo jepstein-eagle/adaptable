@@ -1,10 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ENTITLEMENT_ADD_UPDATE = 'ENTITLEMENT_ADD_UPDATE';
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
+exports.ENTITLEMENT_ADD = 'ENTITLEMENT_ADD';
+exports.ENTITLEMENT_UPDATE = 'ENTITLEMENT_UPDATE';
 exports.ENTITLEMENT_DELETE = 'ENTITLEMENT_DELETE';
-exports.EntitlementAddUpdate = (Index, Entitlement) => ({
-    type: exports.ENTITLEMENT_ADD_UPDATE,
-    Index,
+exports.EntitlementAdd = (Entitlement) => ({
+    type: exports.ENTITLEMENT_ADD,
+    Entitlement
+});
+exports.EntitlementUpdate = (Entitlement) => ({
+    type: exports.ENTITLEMENT_UPDATE,
     Entitlement
 });
 exports.EntitlementDelete = (FunctionName) => ({
@@ -12,21 +17,22 @@ exports.EntitlementDelete = (FunctionName) => ({
     FunctionName
 });
 const initialEntitlementsState = {
-    FunctionEntitlements: []
+    FunctionEntitlements: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.EntitlementsReducer = (state = initialEntitlementsState, action) => {
     let index;
     let functionEntitlements;
     switch (action.type) {
-        case exports.ENTITLEMENT_ADD_UPDATE:
-            let actionTypedAddUpdate = action;
+        case exports.ENTITLEMENT_ADD:
+            let actionTypedAdd = action;
             functionEntitlements = [].concat(state.FunctionEntitlements);
-            if (actionTypedAddUpdate.Index != -1) { // it exists
-                functionEntitlements[actionTypedAddUpdate.Index] = actionTypedAddUpdate.Entitlement;
-            }
-            else {
-                functionEntitlements.push(actionTypedAddUpdate.Entitlement);
-            }
+            functionEntitlements.push(actionTypedAdd.Entitlement);
+            return Object.assign({}, state, { FunctionEntitlements: functionEntitlements });
+        case exports.ENTITLEMENT_UPDATE:
+            let actionTypedUpdate = action;
+            functionEntitlements = [].concat(state.FunctionEntitlements);
+            index = functionEntitlements.findIndex(fe => fe.FunctionName == actionTypedUpdate.Entitlement.FunctionName);
+            functionEntitlements[index] = actionTypedUpdate.Entitlement;
             return Object.assign({}, state, { FunctionEntitlements: functionEntitlements });
         case exports.ENTITLEMENT_DELETE:
             let actionTypedDelete = action;

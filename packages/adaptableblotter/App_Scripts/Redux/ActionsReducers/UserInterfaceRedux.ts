@@ -1,12 +1,13 @@
 import * as Redux from 'redux';
 import { UserInterfaceState } from './Interface/IState'
-import { IPermittedColumnValues } from '../../Core/Interface/Interfaces';
+import { IPermittedColumnValues } from "../../Utilities/Interface/IPermittedColumnValues";
+import { UIHelper } from '../../View/UIHelper';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 
 export const COLOR_PALETTE_SET = 'COLOR_PALETTE_SET';
 export const COLOR_PALETTE_ADD = 'COLOR_PALETTE_ADD';
 export const STYLE_CLASSNAMES_ADD = 'STYLE_CLASSNAMES_ADD';
-//export const PERMITTED_COLUMNVALUES_ADD = 'PERMITTED_COLUMNVALUES_ADD';
 export const PERMITTED_COLUMNVALUES_SET = 'PERMITTED_COLUMNVALUES_SET';
 export const PERMITTED_COLUMNVALUES_DELETE = 'PERMITTED_COLUMNVALUES_DELETE';
 
@@ -29,7 +30,6 @@ export interface PermittedColumnValuesSetAction extends Redux.Action {
 export interface PermittedColumnValuesDeleteAction extends Redux.Action {
    Column: string
 }
-
 
 
 export const ColorPaletteSet = (ColorPalette: string[]): ColorPaletteSetAction => ({
@@ -63,34 +63,9 @@ export const PermittedColumnValuesDelete = (Column: string): PermittedColumnValu
 //})
 
 const initialUserInterfaceState: UserInterfaceState = {
-    ColorPalette: [
-        "#000000", //  {/* black */}
-        "#ffffff", //  {/* white */}
-        "#C0C0C0", //  {/* light gray */}
-        "#808080", //  {/* dark gray */}
-        "#800000", //  {/* brown */}
-
-        "#808000", //  {/* olive */}
-        "#008000", //  {/* dark green */}
-        "#00FF00", //  {/* light green */}
-        "#FFFF00", //  {/* yellow */}
-        "#FFFFCC", //  {/* pale yellow (quick search default) */}
-
-        "#000080", //  {/* dark blue */}
-        "#0000FF", //  {/* blue */}
-        "#008080", //  {/* cyan */}
-        "#00FFFF", //  {/* light blue */}
-        "#FF00FF", //  {/* pink */}
-
-        "#800080", //  {/* purple */}
-        "#8B0000", //  {/* dark red */}
-        "#FF0000", //  {/* red */}
-        "#FF6961", //  {/* pastel red */}
-        "#FFA500", //  {/* orange */}
-    ],
-    StyleClassNames: [],
-    PermittedColumnValues: [],
-    ColumnCategories: []
+    ColorPalette: UIHelper.getDefaultColors(),
+    StyleClassNames: EMPTY_ARRAY,
+    PermittedColumnValues: EMPTY_ARRAY
 }
 
 export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (state: UserInterfaceState = initialUserInterfaceState, action: Redux.Action): UserInterfaceState => {

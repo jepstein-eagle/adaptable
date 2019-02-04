@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Label, OverlayTrigger, Glyphicon, Popover, Button } from 'react-bootstrap';
-import { StringExtensions } from '../Core/Extensions/StringExtensions';
-import {  MessageType } from '../Core/Enums';
-import * as StyleConstants from '../Core/Constants/StyleConstants';
+import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
+import {  MessageType } from '../Utilities/Enums';
+import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import { ButtonApply } from "./Components/Buttons/ButtonApply";
 import { ButtonInfo } from "./Components/Buttons/ButtonInfo";
 import { UIHelper } from "./UIHelper";
@@ -20,7 +20,7 @@ Very basic - for now! - info box that allows us to show Error where required.
 export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
     headerText: string
     bodyText: any[],
-    MessageType: MessageType
+    MessageType?: MessageType
     cssClassName: string,
     triggerAction?: string
     useButton?: boolean
@@ -33,7 +33,9 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.INFO_BUTTON
 
-        let triggerAction = (this.props.triggerAction != null) ? this.props.triggerAction : ['hover', 'focus'];
+        let messageType : MessageType = (this.props.MessageType!= null) ? this.props.MessageType : MessageType.Info;
+
+        let triggerAction = (this.props.triggerAction != null) ? this.props.triggerAction : ['click'];
 
         let useButton = (this.props.useButton != null) ? this.props.useButton : false
 
@@ -48,14 +50,14 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
                     <ButtonInfo cssClassName={cssClassName}
                         onClick={() => null}
                         size={"small"}
-                        glyph={UIHelper.getGlyphByMessageType(this.props.MessageType)}
-                        bsStyle={UIHelper.getStyleNameByMessageType(this.props.MessageType)}
+                        glyph={UIHelper.getGlyphByMessageType(messageType)}
+                        bsStyle={UIHelper.getStyleNameByMessageType(messageType)}
                         DisplayMode="Glyph"
                         tooltipText={this.props.tooltipText}
                     />
                     :
-                    <Label bsSize="large" bsStyle={UIHelper.getStyleNameByMessageType(this.props.MessageType)} className="ab_medium_padding">
-                        <Glyphicon glyph={UIHelper.getGlyphByMessageType(this.props.MessageType)} />
+                    <Label bsSize="large" bsStyle={UIHelper.getStyleNameByMessageType(messageType)} className="ab_medium_padding">
+                        <Glyphicon glyph={UIHelper.getGlyphByMessageType(messageType)} />
                     </Label>
                 }
             </OverlayTrigger>

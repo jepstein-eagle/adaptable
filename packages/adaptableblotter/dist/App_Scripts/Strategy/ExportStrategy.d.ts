@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IExportStrategy } from './Interface/IExportStrategy';
-import { ExportDestination } from '../Core/Enums';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { ExportDestination } from '../Utilities/Enums';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 export declare class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
     private ExportState;
     private CurrentLiveReports;

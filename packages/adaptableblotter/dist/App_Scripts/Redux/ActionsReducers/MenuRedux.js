@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.SET_MENUITEMS = 'SET_MENUITEMS';
 exports.BUILD_COLUMN_CONTEXT_MENU = 'BUILD_COLUMN_CONTEXT_MENU';
 exports.ADD_ITEM_COLUMN_CONTEXT_MENU = 'ADD_ITEM_COLUMN_CONTEXT_MENU';
@@ -24,10 +25,10 @@ exports.ClearColumnContextMenu = () => ({
     type: exports.CLEAR_COLUMN_CONTEXT_MENU
 });
 const initialMenuState = {
-    MenuItems: [],
+    MenuItems: GeneralConstants_1.EMPTY_ARRAY,
     ContextMenu: {
         ColumnId: null,
-        Items: []
+        Items: GeneralConstants_1.EMPTY_ARRAY
     }
 };
 exports.MenuReducer = (state = initialMenuState, action) => {

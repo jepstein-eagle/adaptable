@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const DualListBoxEditor_1 = require("../../Components/ListBox/DualListBoxEditor");
 class ReportColumnChooserWizard extends React.Component {
     constructor(props) {
@@ -10,7 +10,7 @@ class ReportColumnChooserWizard extends React.Component {
         this.StepName = this.props.StepName;
         this.state = {
             AllColumnValues: this.props.Columns.map(c => c.FriendlyName),
-            SelectedColumnValues: this.props.Data.Columns.map(c => this.props.Columns.find(col => col.ColumnId == c).FriendlyName),
+            SelectedColumnValues: this.props.Data.ColumnIds.map(c => this.props.Columns.find(col => col.ColumnId == c).FriendlyName),
         };
     }
     render() {
@@ -27,7 +27,7 @@ class ReportColumnChooserWizard extends React.Component {
     }
     canBack() { return true; }
     Next() {
-        this.props.Data.Columns = this.state.SelectedColumnValues.map(c => this.props.Columns.find(col => col.FriendlyName == c).ColumnId);
+        this.props.Data.ColumnIds = this.state.SelectedColumnValues.map(c => this.props.Columns.find(col => col.FriendlyName == c).ColumnId);
     }
     Back() {
         //todo

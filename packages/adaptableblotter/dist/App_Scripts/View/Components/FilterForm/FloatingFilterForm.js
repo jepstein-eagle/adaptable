@@ -5,34 +5,20 @@ const React = require("react");
 const ColumnFilterRedux = require("../../../Redux/ActionsReducers/ColumnFilterRedux");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
-const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
-const Enums_1 = require("../../../Core/Enums");
-const ObjectFactory_1 = require("../../../Core/ObjectFactory");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
+const Enums_1 = require("../../../Utilities/Enums");
+const ObjectFactory_1 = require("../../../Utilities/ObjectFactory");
+const RangeHelper_1 = require("../../../Utilities/Helpers/RangeHelper");
 class FloatingFilterFormComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             floatingFilterFormText: "",
             filterExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
-            numberOperatorPairs: [
-                { Key: "<>", Value: Enums_1.LeafExpressionOperator.NotEquals },
-                { Key: ">=", Value: Enums_1.LeafExpressionOperator.GreaterThanOrEqual },
-                { Key: "<=", Value: Enums_1.LeafExpressionOperator.LessThanOrEqual },
-                { Key: ">", Value: Enums_1.LeafExpressionOperator.GreaterThan },
-                { Key: "<", Value: Enums_1.LeafExpressionOperator.LessThan },
-                { Key: "=", Value: Enums_1.LeafExpressionOperator.Equals },
-                { Key: ":", Value: Enums_1.LeafExpressionOperator.Between },
-            ],
-            stringOperatorPairs: [
-                { Key: "%", Value: Enums_1.LeafExpressionOperator.StartsWith },
-                { Key: "*", Value: Enums_1.LeafExpressionOperator.Contains },
-                { Key: "!", Value: Enums_1.LeafExpressionOperator.NotContains },
-                { Key: "=", Value: Enums_1.LeafExpressionOperator.Equals },
-            ],
-            dateOperatorPairs: [
-            //   { Key: "=", Value: LeafExpressionOperator.Equals },
-            ],
+            numberOperatorPairs: RangeHelper_1.RangeHelper.GetNumberOperatorPairs(),
+            stringOperatorPairs: RangeHelper_1.RangeHelper.GetStringOperatorPairs(),
+            dateOperatorPairs: RangeHelper_1.RangeHelper.GetDateOperatorPairs(),
             placeholder: ""
         };
     }
@@ -72,10 +58,12 @@ class FloatingFilterFormComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__floatingFilterForm";
         let controlType = (this.props.CurrentColumn.DataType == Enums_1.DataType.Date) ? "date" : "text";
-        return React.createElement("span", null, this.props.Blotter.isFilterable() && this.props.CurrentColumn.Filterable
+        return React.createElement("span", null, this.props.CurrentColumn.Filterable
             && (this.props.CurrentColumn.DataType != Enums_1.DataType.Boolean) &&
             React.createElement(react_bootstrap_1.FormControl, { style: { padding: '1px', marginTop: '5px', minHeight: '20px', maxHeight: '20px', fontSize: "x-small", fontWeight: "lighter" }, className: cssClassName, autoFocus: false, bsSize: "small", type: controlType, placeholder: this.state.placeholder, value: this.state.floatingFilterFormText, onChange: (x) => this.OnTextChange(x.target.value) }));
     }
+    // debouncedRunQuickSearch = _.debounce((searchText: string) => this.runTextchanged(searchText), 250);
+    // debouncedSetFilter = _.debounce((columnFilter: IColumnFilter) => this.props.onAddEditColumnFilter(columnFilter), 1000);
     OnTextChange(searchText) {
         // as soon as anything changes clear existing column filter
         if (searchText.trim() != this.state.floatingFilterFormText.trim()) {
@@ -117,13 +105,7 @@ class FloatingFilterFormComponent extends React.Component {
                 operand1 = values[0];
                 operand2 = values[1];
             }
-            let range = {
-                Operator: operatorKVP.Value,
-                Operand1: operand1 == null ? null : operand1.trim(),
-                Operand2: operand2 == null ? null : operand2.trim(),
-                Operand1Type: "Value",
-                Operand2Type: "Value"
-            };
+            let range = RangeHelper_1.RangeHelper.CreateValueRange(operatorKVP.Value, operand1, operand2);
             let expression = ExpressionHelper_1.ExpressionHelper.CreateSingleColumnExpression(this.props.CurrentColumn.ColumnId, [], [], [], [range]);
             this.createColumnFilter(expression, searchText);
         }
@@ -160,7 +142,7 @@ class FloatingFilterFormComponent extends React.Component {
             }
             else {
                 // if just a single, non-operator, value then do an "Equals" range
-                let equalOperatorPair = this.state.numberOperatorPairs.find(op => op.Value == Enums_1.LeafExpressionOperator.Equals);
+                let equalOperatorPair = this.state.numberOperatorPairs.find(op => op.Value == Enums_1.LeafExpressionOperator.Contains);
                 this.createRangeExpression(equalOperatorPair, searchText);
             }
         }

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { ExportDestination } from '../../Core/Enums';
-import { ILiveReport } from '../../Strategy/Interface/IExportStrategy';
+import { ExportDestination } from '../../Utilities/Enums';
+import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
     IsLast: boolean;

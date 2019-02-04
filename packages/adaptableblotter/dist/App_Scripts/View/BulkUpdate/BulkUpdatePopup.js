@@ -6,16 +6,19 @@ const react_bootstrap_1 = require("react-bootstrap");
 const BulkUpdateRedux = require("../../Redux/ActionsReducers/BulkUpdateRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const Enums_1 = require("../../Core/Enums");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const Enums_1 = require("../../Utilities/Enums");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const AdaptablePopover_1 = require("../AdaptablePopover");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const UIHelper_1 = require("../UIHelper");
 const PreviewResultsPanel_1 = require("../Components/PreviewResultsPanel");
-const PreviewHelper_1 = require("../../Core/Helpers/PreviewHelper");
+const PreviewHelper_1 = require("../../Utilities/Helpers/PreviewHelper");
 const ColumnValueSelector_1 = require("../Components/Selectors/ColumnValueSelector");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
+const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class BulkUpdatePopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -33,7 +36,7 @@ class BulkUpdatePopupComponent extends React.Component {
             "Edits that break Cell Validation Rules will be flagged and prevented."];
         let col;
         if (this.props.PreviewInfo) {
-            col = this.props.Columns.find(c => c.ColumnId == this.props.PreviewInfo.ColumnId);
+            col = ColumnHelper_1.ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns);
         }
         let hasDataTypeError = false;
         let dataTypeErrorMessage = "";
@@ -110,24 +113,18 @@ class BulkUpdatePopupComponent extends React.Component {
         this.props.onApplyBulkUpdate();
     }
     onConfirmWarningCellValidation() {
-        let confirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: BulkUpdateRedux.BulkUpdateApply(false),
-            ConfirmAction: BulkUpdateRedux.BulkUpdateApply(true),
-            ShowCommentBox: true
-        };
+        let confirmAction = BulkUpdateRedux.BulkUpdateApply(true);
+        let cancelAction = BulkUpdateRedux.BulkUpdateApply(false);
+        let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
         this.props.onConfirmWarningCellValidation(confirmation);
     }
     getButtonStyle() {
         if (this.props.PreviewInfo) {
             if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
-                return "default";
+                return StyleConstants_1.DEFAULT_BSSTYLE;
             }
             if (this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning || this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) {
-                return "warning";
+                return StyleConstants_1.WARNING_BSSTYLE;
             }
         }
         return "success";

@@ -1,14 +1,18 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as GlyphConstants from '../Utilities/Constants/GlyphConstants'
+import * as HomeRedux from '../Redux/ActionsReducers/HomeRedux'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { IHomeStrategy } from './Interface/IHomeStrategy'
 import { GridState } from '../Redux/ActionsReducers/Interface/IState';
-import { IGridSort } from '../Core/Api/Interface/IAdaptableBlotterObjects';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
-import { SearchChangedTrigger } from '../Core/Enums';
-import { LayoutHelper } from '../Core/Helpers/LayoutHelper';
+import { IGridSort } from "../Utilities/Interface/IGridSort";
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { SearchChangedTrigger } from '../Utilities/Enums';
+import { LayoutHelper } from '../Utilities/Helpers/LayoutHelper';
+import { IColumn } from '../Utilities/Interface/IColumn';
 
 // This is a special strategy that the user can never remove but which is useful to us 
+// We use it to manage internal state changes and menu items that are not directly strategy related
 export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy {
     private GridSorts: IGridSort[]
     private GridState: GridState
@@ -17,12 +21,22 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
         super(StrategyConstants.HomeStrategyId, blotter)
     }
 
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter, "floatingfilter")) {
+            let isFilterActive: boolean = this.blotter.isFloatingFilterActive();
+            this.createContextMenuItemReduxAction(
+                isFilterActive ? "Hide Floating Filter Bar" : "Show Floating Filter Bar",
+                isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH,
+                isFilterActive ? HomeRedux.FilterFormHide() : HomeRedux.FloatingilterBarShow())
+        }
+    }
+
 
     protected InitState() {
         if (!ArrayExtensions.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {
             this.GridSorts = this.GetGridState().GridSorts
 
-            if (this.blotter.BlotterOptions.serverSearchOption == "AllSearchandSort") {
+            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == "AllSearchandSort") {
                 this.publishSearchChanged(SearchChangedTrigger.Sort)
             }
         }
@@ -43,6 +57,5 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
     private GetGridState(): GridState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid;
     }
-
 
 }

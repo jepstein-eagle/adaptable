@@ -1,12 +1,12 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { ICustomSort } from '../Core/Api/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../Core/Interface/IColumn';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
-import { StateChangedTrigger } from '../Core/Enums';
+import { ICustomSort } from "../Utilities/Interface/BlotterObjects/ICustomSort";
+import { IColumn } from '../Utilities/Interface/IColumn';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
+import { StateChangedTrigger } from '../Utilities/Enums';
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
     private CustomSorts: ICustomSort[]
@@ -30,16 +30,16 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyConstants.CustomSortStrategyName, ScreenPopups.CustomSortPopup, StrategyConstants.CustomSortGlyph);
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter, "sort")) {
-            let customSort = this.CustomSorts.find(x => x.ColumnId == columnId);
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter, "sort")) {
+            let customSort = this.CustomSorts.find(x => x.ColumnId == column.ColumnId);
                 let label = (customSort) ? "Edit " : "Create "
                 let popupParam = (customSort) ? "Edit|" : "New|"
                 this.createContextMenuItemShowPopup(
                     label + StrategyConstants.CustomSortStrategyName,
                     ScreenPopups.CustomSortPopup,
                     StrategyConstants.CustomSortGlyph,
-                    popupParam + columnId)
+                    popupParam + column.ColumnId)
                  }
     }
 
@@ -57,7 +57,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
         });
     }
 
-    protected getComparerFunction(customSort: ICustomSort, blotter: IAdaptableBlotter): Function {
+    public getComparerFunction(customSort: ICustomSort, blotter: IAdaptableBlotter): Function {
         return function compareItemsOfCustomSort(firstElement: any, secondElement: any): number {
             let firstElementValueString = blotter.getDisplayValue(blotter.getPrimaryKeyValueFromRecord(firstElement), customSort.ColumnId) //firstElement[customSort.ColumnId];
             let secondElementValueString = blotter.getDisplayValue(blotter.getPrimaryKeyValueFromRecord(secondElement), customSort.ColumnId)//secondElement[customSort.ColumnId];

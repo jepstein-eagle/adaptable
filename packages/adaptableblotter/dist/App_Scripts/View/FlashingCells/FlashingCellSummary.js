@@ -3,11 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const react_redux_1 = require("react-redux");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const FlashingCellRedux = require("../../Redux/ActionsReducers/FlashingCellsRedux");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class FlashingCellSummaryComponent extends React.Component {
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__flashingcells";
@@ -24,8 +25,9 @@ class FlashingCellSummaryComponent extends React.Component {
     onFlashingSelectedChanged(flashingCell) {
         let existingfc = this.props.FlashingCells.find(e => e.ColumnId == this.props.SummarisedColumn.ColumnId);
         if (!existingfc) {
-            let col = this.props.Columns.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId);
-            existingfc = ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(col);
+            let flashingCellState = this.props.Blotter.api.configApi.configGetFlashingCellState(false);
+            let col = ColumnHelper_1.ColumnHelper.getColumnFromId(this.props.SummarisedColumn.ColumnId, this.props.Columns);
+            existingfc = ObjectFactory_1.ObjectFactory.CreateDefaultFlashingCell(col, flashingCellState.DefaultUpColor, flashingCellState.DefautDownColor, flashingCellState.DefaultDuration);
             this.props.onSelectFlashingCell(existingfc);
         }
         this.props.onSelectFlashingCell(existingfc);

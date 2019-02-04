@@ -6,16 +6,15 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import { AdaptableDashboardViewFactory, AdaptableDashboardPermanentToolbarFactory } from '../AdaptableViewFactory'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
-import { DistinctCriteriaPairValue, Visibility, AccessLevel } from "../../Core/Enums";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { AdaptableBlotterLogger } from "../../Core/Helpers/AdaptableBlotterLogger";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { Visibility, AccessLevel } from "../../Utilities/Enums";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { LoggingHelper } from "../../Utilities/Helpers/LoggingHelper";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { StrategyHelper } from "../../Utilities/Helpers/StrategyHelper";
+import { IEntitlement } from "../../Utilities/Interface/IEntitlement";
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
     DashboardState: DashboardState
@@ -26,7 +25,7 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
 
 class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     render() {
-         let cssClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD
+        let cssClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD
         let cssBaseClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD_BASE
 
         let optionsBlotterName: string = this.props.Blotter.BlotterOptions.blotterId;
@@ -35,27 +34,27 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         let hiddenEntitlements: IEntitlement[] = this.props.EntitlementsState.FunctionEntitlements.filter(e => e.AccessLevel == "Hidden");
         let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(vt => ArrayExtensions.NotContainsItem(hiddenEntitlements, vt));//.filter(dc => dc.IsVisible);
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
-            //here we use the strategy id but if we start to have multiple dashboard control per strategy (which I doubt)
-            //we'll need to use the name or something else
-            let dashboardControl = AdaptableDashboardViewFactory.get(control);
-            if (dashboardControl) {
-                let accessLevel: AccessLevel = EntitlementHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
-                let dashboardElememt = React.createElement(dashboardControl, {
-                    Blotter: this.props.Blotter,
-                    Columns: this.props.Columns,
-                    UserFilters: this.props.UserFilters,
-                    SystemFilters: this.props.SystemFilters,
-                    ColorPalette: this.props.ColorPalette,
-                    GridSorts: this.props.GridSorts,
-                    cssClassName: cssClassName,
-                    AccessLevel: accessLevel
-                });
-                return <Nav key={control} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
-                    {dashboardElememt}
-                </Nav>
-            }
-            else {
-                AdaptableBlotterLogger.LogError("Cannot find Dashboard Control for " + control)
+            let accessLevel: AccessLevel = StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
+            if (accessLevel != AccessLevel.Hidden) {
+                let dashboardControl = AdaptableDashboardViewFactory.get(control);
+                if (dashboardControl) {
+                    let dashboardElememt = React.createElement(dashboardControl, {
+                        Blotter: this.props.Blotter,
+                        Columns: this.props.Columns,
+                        UserFilters: this.props.UserFilters,
+                        SystemFilters: this.props.SystemFilters,
+                        ColorPalette: this.props.ColorPalette,
+                        GridSorts: this.props.GridSorts,
+                        cssClassName: cssClassName,
+                        AccessLevel: accessLevel
+                    });
+                    return <Nav key={control} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
+                        {dashboardElememt}
+                    </Nav>
+                }
+                else {
+                    LoggingHelper.LogError("Cannot find Dashboard Control for " + control)
+                }
             }
         })
 

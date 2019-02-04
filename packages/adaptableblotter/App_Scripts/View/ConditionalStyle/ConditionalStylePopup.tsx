@@ -4,30 +4,32 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { Well } from 'react-bootstrap';
-import { ConditionalStyleScope, AccessLevel } from '../../Core/Enums'
+import { ConditionalStyleScope, AccessLevel } from '../../Utilities/Enums'
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow'
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject, IConditionalStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
+import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
 
 interface ConditionalStylePopupProps extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
     ConditionalStyles: IConditionalStyle[]
     StyleClassNames: string[]
+    ColumnCategories: IColumnCategory[]
     onAddUpdateConditionalStyle: (index: number, condiditionalStyleCondition: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
 }
@@ -37,7 +39,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
 
     constructor(props: ConditionalStylePopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     componentDidMount() {
@@ -55,7 +57,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
     render() {
         let cssClassName: string = this.props.cssClassName + "__conditionalstyle";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__conditionalstyle";
-    
+
         let infoBody: any[] = ["Conditional Styles enable columns and rows to be given distinct styles according to user rules.", <br />, <br />,
             "Styles include selection of fore and back colours, and font properties."]
 
@@ -83,12 +85,12 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create Conditional Style"
             DisplayMode="Glyph+Text"
-            size={"small"} 
+            size={"small"}
             AccessLevel={this.props.AccessLevel}
-            />
+        />
 
         return <div className={cssClassName}>
-            <PanelWithButton headerText={StrategyConstants.ConditionalStyleStrategyName} button={newButton} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyConstants.ConditionalStyleGlyph} infoBody={infoBody}>
+            <PanelWithButton headerText={StrategyConstants.ConditionalStyleStrategyName} button={newButton} bsStyle={StyleConstants.PRIMARY_BSSTYLE} cssClassName={cssClassName} glyphicon={StrategyConstants.ConditionalStyleGlyph} infoBody={infoBody}>
 
                 {this.props.ConditionalStyles.length == 0 &&
                     <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>
@@ -105,6 +107,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
                         ColorPalette={this.props.ColorPalette}
+                        ColumnCategories={this.props.ColumnCategories}
                         StyleClassNames={this.props.StyleClassNames}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
@@ -142,16 +145,21 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
 
     canFinishWizard() {
         let conditionalStyle = this.state.EditedAdaptableBlotterObject as IConditionalStyle
-        return (conditionalStyle.ConditionalStyleScope== ConditionalStyleScope.Row ||  StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
-            ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) &&
-            UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
+        if (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column && StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnId)) {
+            return false;
+        }
+        if (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory && StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnCategoryId)) {
+            return false;
+        }
+        return ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) && UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
     }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
-        StyleClassNames: state.UserInterface.StyleClassNames
+        StyleClassNames: state.UserInterface.StyleClassNames,
+        ColumnCategories: state.ColumnCategory.ColumnCategories
     };
 }
 

@@ -1,8 +1,7 @@
 import * as Redux from 'redux';
 import { LayoutState } from './Interface/IState'
-import { InputAction } from '../../Core/Interface/IMessage';
-import { ILayout } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
-import { DEFAULT_LAYOUT } from '../../Core/Constants/GeneralConstants';
+import { ILayout } from "../../Utilities/Interface/BlotterObjects/ILayout";
+import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 export const LAYOUT_SELECT = 'LAYOUT_SELECT';
 export const LAYOUT_ADD_UPDATE = 'LAYOUT_ADD_UPDATE';
@@ -58,8 +57,8 @@ export const LayoutDelete = (LayoutName: string): LayoutDeleteAction => ({
 
 
 const initialLayoutState: LayoutState = {
-     CurrentLayout: "",
-    Layouts: []
+     CurrentLayout: EMPTY_STRING,
+    Layouts: EMPTY_ARRAY
 }
 
 export const LayoutReducer: Redux.Reducer<LayoutState> = (state: LayoutState = initialLayoutState, action: Redux.Action): LayoutState => {

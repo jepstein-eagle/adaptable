@@ -6,24 +6,24 @@ const react_bootstrap_1 = require("react-bootstrap");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ReportEntityRow_1 = require("./ReportEntityRow");
 const ReportWizard_1 = require("./Wizard/ReportWizard");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class ExportPopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (this.props.PopupParams == "New") {
@@ -70,9 +70,16 @@ class ExportPopupComponent extends React.Component {
     }
     canFinishWizard() {
         let report = this.state.EditedAdaptableBlotterObject;
-        return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(report.Name) &&
-            ExpressionHelper_1.ExpressionHelper.IsNotEmptyOrInvalidExpression(report.Expression) &&
-            (report.ReportColumnScope != Enums_1.ReportColumnScope.BespokeColumns || ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(report.Columns));
+        if (StringExtensions_1.StringExtensions.IsNullOrEmpty(report.Name)) {
+            return false;
+        }
+        if (report.ReportRowScope == Enums_1.ReportRowScope.ExpressionRows && ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(report.Expression)) {
+            return false;
+        }
+        if (report.ReportColumnScope == Enums_1.ReportColumnScope.BespokeColumns && ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(report.ColumnIds)) {
+            return false;
+        }
+        return true;
     }
     onNew() {
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory_1.ObjectFactory.CreateEmptyReport(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });

@@ -1,20 +1,20 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IChartDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
-import { EnumExtensions } from "../../../Core/Extensions/EnumExtensions";
-import { ChartType } from "../../../Core/Enums";
+import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
+import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
+import { ChartType } from "../../../Utilities/ChartEnums";
 
 export interface ChartSettingsWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartDefinitions: IChartDefinition[]
 }
 
 export interface ChartSettingsWizardState {
-    ChartName: string,
-    ChartType: 'Bar Chart' | 'Line Chart',
+    Title: string,
+    SubTitle: string,
     ErrorMessage: string
 }
 
@@ -22,8 +22,8 @@ export class ChartSettingsWizard extends React.Component<ChartSettingsWizardProp
     constructor(props: ChartSettingsWizardProps) {
         super(props)
         this.state = {
-            ChartName: props.Data.Name,
-            ChartType: props.Data.Type,
+            Title: props.Data.Title,
+            SubTitle: props.Data.SubTitle,
             ErrorMessage: null
         }
     }
@@ -38,56 +38,58 @@ export class ChartSettingsWizard extends React.Component<ChartSettingsWizardProp
         return <div className={cssClassName}>
             <Panel header="Chart Definition Settings" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
-                    <FormGroup controlId="chartName">
-                        <Col xs={3} componentClass={ControlLabel}>Name:</Col>
+                    <FormGroup controlId="chartTitle">
+                        <Col xs={3} componentClass={ControlLabel}>Title:</Col>
                         <Col xs={7}>
-                            <FormGroup controlId="formInlineName" validationState={validationState}>
-                                <FormControl value={this.state.ChartName} type="string" placeholder="Enter chart name"
-                                    onChange={(e) => this.onChartNameChange(e)} />
+                            <FormGroup controlId="formInlineTitle" validationState={validationState}>
+                                <FormControl value={this.state.Title} type="string" placeholder="Enter chart title"
+                                    onChange={(e) => this.onChartTitleChange(e)} />
                                 <FormControl.Feedback />
                                 <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
                             </FormGroup>
                         </Col>
-                     </FormGroup>
-                    <FormGroup controlId="chartType">
-                        <Col xs={3} componentClass={ControlLabel}>Type:</Col>
+                    </FormGroup>
+                    <FormGroup controlId="chartName">
+                        <Col xs={3} componentClass={ControlLabel}>Sub title:</Col>
                         <Col xs={7}>
-                            <FormGroup controlId="formInlineName" >
-                                <FormControl componentClass="select" placeholder="select" value={this.state.ChartType} onChange={(x) => this.onChartTypeChange(x)} >
-                                    {optionChartTypes}
-                                </FormControl>
+                            <FormGroup controlId="formInlineName" validationState={validationState}>
+                                <FormControl value={this.state.SubTitle} type="string" placeholder="Enter chart subtitle (optional)"
+                                    onChange={(e) => this.onChartSubTitleChange(e)} />
                             </FormGroup>
                         </Col>
-                      </FormGroup>
+                    </FormGroup>
+
 
                 </AdaptableBlotterForm>
             </Panel>
         </div>
     }
 
-    onChartNameChange(event: React.FormEvent<any>) {
+    onChartTitleChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({
-            ChartName: e.value,
-            ErrorMessage: ArrayExtensions.ContainsItem(this.props.ChartDefinitions.map(s => s.Name), e.value) ? "A Chart Definition already exists with that name" : null
+            Title: e.value,
+            ErrorMessage: ArrayExtensions.ContainsItem(this.props.ChartDefinitions.map(s => s.Title), e.value) ? "A Chart Definition already exists with that title" : null
         } as ChartSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    onChartTypeChange(event: React.FormEvent<any>) {
+    onChartSubTitleChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ ChartType: e.value as ChartType, } as ChartSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ SubTitle: e.value, } as ChartSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
 
+
+
     public canNext(): boolean {
-        return StringExtensions.IsNotEmpty(this.state.ChartName) && StringExtensions.IsNullOrEmpty(this.state.ErrorMessage);
+        return StringExtensions.IsNotEmpty(this.state.Title) && StringExtensions.IsNullOrEmpty(this.state.ErrorMessage);
     }
 
     public canBack(): boolean { return true; }
 
     public Next(): void {
-        this.props.Data.Name = this.state.ChartName
-        this.props.Data.Type = this.state.ChartType
+        this.props.Data.Title = this.state.Title
+        this.props.Data.SubTitle = this.state.SubTitle
     }
     public Back(): void {
         // todo

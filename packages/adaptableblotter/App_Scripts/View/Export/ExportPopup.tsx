@@ -6,28 +6,27 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
-import { ExportDestination, ReportColumnScope, AccessLevel } from '../../Core/Enums'
+import { ExportDestination, ReportColumnScope, AccessLevel, ReportRowScope } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { ReportEntityRow } from './ReportEntityRow'
 import { ReportWizard } from './Wizard/ReportWizard'
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { encode } from "punycode";
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
-import { ILiveReport } from "../../Strategy/Interface/IExportStrategy";
-import { IReport, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
+import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],
@@ -43,7 +42,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
     constructor(props: ExportPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     componentDidMount() {
@@ -60,7 +59,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     render() {
         let cssClassName: string = this.props.cssClassName + "__export";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__export";
-     
+
         let infoBody: any[] = ["Create a 'Report' (or use a predefined one) and then export it to specified location.", <br />, <br />]
 
         let colItems: IColItem[] = [
@@ -94,9 +93,9 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create Report"
             DisplayMode="Glyph+Text"
-            size={"small"} 
+            size={"small"}
             AccessLevel={this.props.AccessLevel}
-            />
+        />
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ExportStrategyName} bsStyle="primary" glyphicon={StrategyConstants.ExportGlyph} infoBody={infoBody} button={newButton} >
@@ -113,7 +112,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                     <ReportWizard
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IReport}
-                         ModalContainer={this.props.ModalContainer}
+                        ModalContainer={this.props.ModalContainer}
                         ConfigEntities={this.props.Reports}
                         Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
@@ -142,9 +141,16 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
     canFinishWizard() {
         let report = this.state.EditedAdaptableBlotterObject as IReport
-        return StringExtensions.IsNotNullOrEmpty(report.Name) &&
-            ExpressionHelper.IsNotEmptyOrInvalidExpression(report.Expression) &&
-            (report.ReportColumnScope != ReportColumnScope.BespokeColumns || ArrayExtensions.IsNotNullOrEmpty(report.Columns))
+        if (StringExtensions.IsNullOrEmpty(report.Name)) {
+            return false;
+        }
+        if (report.ReportRowScope == ReportRowScope.ExpressionRows && ExpressionHelper.IsEmptyExpression(report.Expression)) {
+            return false;
+        }
+        if (report.ReportColumnScope == ReportColumnScope.BespokeColumns && ArrayExtensions.IsNullOrEmpty(report.ColumnIds)) {
+            return false;
+        }
+        return true;
     }
 
     onNew() {

@@ -7,18 +7,16 @@ import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedu
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
 import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { PanelWithImage } from "../Components/Panels/PanelWithImage";
-import { IColumnFilter, IAdaptableBlotterObject, IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { FilterHelper } from "../../Core/Helpers/FilterHelper";
-import { IUIPrompt } from "../../Core/Interface/IMessage";
-import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
+import { IUIPrompt } from "../../Utilities/Interface/IMessage";
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
     ColumnFilters: IColumnFilter[]
@@ -57,7 +55,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
                 Index={index}
                 onEdit={null}
                 onDeleteConfirm={null}
-                onClear={() => this.props.onClearColumnFilter(columnFilter.ColumnId)}
+                onClear={() => this.onClearColumnFilter(columnFilter.ColumnId)}
                 onSaveColumnFilterasUserFilter={() => this.onSaveColumnFilterasUserFilter(columnFilter)}
                 AccessLevel={this.props.AccessLevel}
             />
@@ -80,10 +78,15 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
         </div>
     }
 
+    private onClearColumnFilter(columnId: string){
+        this.props.onClearColumnFilter(columnId)
+        this.props.Blotter.clearColumnFiltering([columnId])
+    }
+
     private onSaveColumnFilterasUserFilter(columnFilter: IColumnFilter): void {
         let prompt: IUIPrompt = {
-            PromptTitle: "Enter name for User Filter",
-            PromptMsg: "Please enter a user filter name",
+            Header: "Enter name for User Filter",
+            Msg: "",
             ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(columnFilter, "")
         }
         this.props.onShowPrompt(prompt)

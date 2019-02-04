@@ -6,13 +6,13 @@ const ExpressionBuilderColumnValues_1 = require("./ExpressionBuilderColumnValues
 const ExpressionBuilderUserFilter_1 = require("./ExpressionBuilderUserFilter");
 const ExpressionBuilderRanges_1 = require("./ExpressionBuilderRanges");
 const react_bootstrap_1 = require("react-bootstrap");
-const FilterHelper_1 = require("../../Core/Helpers/FilterHelper");
-const Enums_1 = require("../../Core/Enums");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const FilterHelper_1 = require("../../Utilities/Helpers/FilterHelper");
+const Enums_1 = require("../../Utilities/Enums");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const ColumnSelector_1 = require("../Components/Selectors/ColumnSelector");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const Waiting_1 = require("../Components/FilterForm/Waiting");
 class ExpressionBuilderConditionSelector extends React.Component {
     constructor(props) {
@@ -55,7 +55,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                 let selectedColumnDisplayValues;
                 let selectedColumnFilterExpressions;
                 let selectedColumnRanges;
-                // get selectedcolumn values
+                // get selected column values
                 let keyValuePair = theProps.Expression.ColumnValueExpressions.find(x => x.ColumnId == theProps.SelectedColumnId);
                 if (keyValuePair) {
                     selectedColumnDisplayValues = keyValuePair.ColumnDisplayValues;
@@ -108,9 +108,9 @@ class ExpressionBuilderConditionSelector extends React.Component {
         }
         if (shouldGetColumnValues) {
             let columnValuePairs = [];
-            if (this.props.Blotter.BlotterOptions.getColumnValues != null) {
+            if (this.props.Blotter.BlotterOptions.queryOptions.getColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
-                this.props.Blotter.BlotterOptions.getColumnValues(this.props.SelectedColumnId).
+                this.props.Blotter.BlotterOptions.queryOptions.getColumnValues(this.props.SelectedColumnId).
                     then(result => {
                     if (result == null) { // if nothing returned then default to normal
                         columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
@@ -118,14 +118,14 @@ class ExpressionBuilderConditionSelector extends React.Component {
                         this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                     }
                     else { // get the distinct items and make sure within max items that can be displayed
-                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.maxColumnValueItemsDisplayed);
+                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
                         distinctItems.forEach(di => {
                             let displayValue = this.props.Blotter.getDisplayValueFromRawValue(this.props.SelectedColumnId, di);
                             columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
                         });
                         this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                         // set the UIPermittedValues for this column to what has been sent
-                        this.props.Blotter.api.uiSetColumnPermittedValues(this.props.SelectedColumnId, distinctItems);
+                        this.props.Blotter.api.userInterfaceApi.SetColumnPermittedValues(this.props.SelectedColumnId, distinctItems);
                     }
                 }, function () {
                     //    this.setState({ name: error });
@@ -144,20 +144,18 @@ class ExpressionBuilderConditionSelector extends React.Component {
         let selectedColumn = column;
         let selectedColumnFriendlyName = (selectedColumn) ? selectedColumn.FriendlyName : "";
         // get filter names
-        // first system ones
+        // first system filters
         let availableFilterNames = [];
         FilterHelper_1.FilterHelper.GetSystemFiltersForColumn(selectedColumn, this.props.SystemFilters).forEach((sf) => {
             availableFilterNames.push(sf);
         });
+        // then user filters
         FilterHelper_1.FilterHelper.GetUserFiltersForColumn(selectedColumn, this.props.UserFilters).forEach((uf) => {
             availableFilterNames.push(uf.Name);
         });
         // get the help descriptions
         let firstTimeText = "Start creating the query by selecting a column below.";
         let secondTimeText = "Select another column for the query.";
-        if (this.props.ExpressionMode == Enums_1.ExpressionMode.SingleColumn) {
-            //
-        }
         let panelHeader = (this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn) ? "Select a Column" : "Column: " + selectedColumnFriendlyName;
         let clearButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onSelectedColumnChanged(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: this.props.ExpressionMode == Enums_1.ExpressionMode.SingleColumn || this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFurtherColumn, overrideText: "Clear", overrideTooltip: "Clear", DisplayMode: "Text" });
         return React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: panelHeader, bsStyle: "info", style: { height: '447px' }, button: clearButton }, this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFurtherColumn ?
@@ -174,7 +172,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                         React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.props.SelectedColumnId], ColumnList: this.props.ColumnsList, onColumnChange: columns => this.onColumnSelectChange(columns), SelectionMode: Enums_1.SelectionMode.Single }))
             :
                 React.createElement("div", null, selectedColumn &&
-                    React.createElement("div", null, this.props.Blotter.BlotterOptions.columnValuesOnlyInQueries ?
+                    React.createElement("div", null, this.props.Blotter.BlotterOptions.queryOptions.columnValuesOnlyInQueries ?
                         React.createElement("div", null, this.state.ShowWaitingMessage ?
                             React.createElement(Waiting_1.Waiting, { WaitingMessage: "Retrieving Column Values..." })
                             :
@@ -187,14 +185,14 @@ class ExpressionBuilderConditionSelector extends React.Component {
                                         React.createElement(react_bootstrap_1.NavItem, { eventKey: Enums_1.QueryTab.Filter, onSelect: () => this.onTabChanged(Enums_1.QueryTab.Filter) }, "Filters"),
                                         React.createElement(react_bootstrap_1.NavItem, { eventKey: Enums_1.QueryTab.Range, onClick: () => this.onTabChanged(Enums_1.QueryTab.Range) }, "Ranges")),
                                     React.createElement(react_bootstrap_1.Tab.Content, { animation: true },
-                                        React.createElement(react_bootstrap_1.Tab.Pane, { eventKey: Enums_1.QueryTab.ColumnValue }, selectedColumn.DataType != Enums_1.DataType.Boolean &&
+                                        React.createElement(react_bootstrap_1.Tab.Pane, { eventKey: Enums_1.QueryTab.ColumnValue }, selectedColumn.DataType != Enums_1.DataType.Boolean && this.state.SelectedTab == Enums_1.QueryTab.ColumnValue &&
                                             React.createElement("div", null, this.state.ShowWaitingMessage ?
                                                 React.createElement(Waiting_1.Waiting, { WaitingMessage: "Retrieving Column Values..." })
                                                 :
                                                     React.createElement(ExpressionBuilderColumnValues_1.ExpressionBuilderColumnValues, { cssClassName: cssClassName, ColumnValues: this.state.ColumnRawValueDisplayValuePairs, SelectedValues: this.state.SelectedColumnDisplayValues, onColumnValuesChange: (selectedValues) => this.onSelectedColumnValuesChange(selectedValues) }))),
-                                        React.createElement(react_bootstrap_1.Tab.Pane, { eventKey: Enums_1.QueryTab.Filter },
+                                        React.createElement(react_bootstrap_1.Tab.Pane, { eventKey: Enums_1.QueryTab.Filter }, this.state.SelectedTab == Enums_1.QueryTab.Filter &&
                                             React.createElement(ExpressionBuilderUserFilter_1.ExpressionBuilderUserFilter, { cssClassName: cssClassName, AvailableFilterNames: availableFilterNames, SelectedFilterNames: this.state.SelectedFilterExpressions, onFilterNameChange: (selectedValues) => this.onSelectedFiltersChanged(selectedValues) })),
-                                        React.createElement(react_bootstrap_1.Tab.Pane, { eventKey: Enums_1.QueryTab.Range },
+                                        React.createElement(react_bootstrap_1.Tab.Pane, { eventKey: Enums_1.QueryTab.Range }, this.state.SelectedTab == Enums_1.QueryTab.Range &&
                                             React.createElement(ExpressionBuilderRanges_1.ExpressionBuilderRanges, { cssClassName: cssClassName, SelectedColumn: selectedColumn, Ranges: this.state.SelectedColumnRanges, Columns: this.props.ColumnsList, onRangesChange: (ranges) => this.onSelectedColumnRangesChange(ranges) }))))))));
     }
     onSelectTab() {
@@ -270,8 +268,10 @@ class ExpressionBuilderConditionSelector extends React.Component {
     getRawValuesForDisplayValues(selectedColumnDisplayValues) {
         let columnRawValues = [];
         selectedColumnDisplayValues.forEach(scv => {
-            let rawValue = this.state.ColumnRawValueDisplayValuePairs.find(rvdv => rvdv.DisplayValue == scv).RawValue;
-            columnRawValues.push(rawValue);
+            let rawValueDisplayValuePair = this.state.ColumnRawValueDisplayValuePairs.find(rvdv => rvdv.DisplayValue == scv);
+            if (rawValueDisplayValuePair) {
+                columnRawValues.push(rawValueDisplayValuePair.RawValue);
+            }
         });
         return columnRawValues;
     }

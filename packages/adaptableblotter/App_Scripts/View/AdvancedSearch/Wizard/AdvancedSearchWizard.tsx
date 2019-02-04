@@ -4,29 +4,30 @@ import { AdvancedSearchSettingsWizard } from './AdvancedSearchSettingsWizard'
 import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard'
 import { AdvancedSearchSummaryWizard } from './AdvancedSearchSummaryWizard'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { IAdvancedSearch } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
+import { IAdvancedSearch } from "../../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
 
 export class AdvancedSearchWizard extends React.Component<IAdaptableBlotterObjectExpressionAdaptableWizardProps<AdvancedSearchWizard>, {}> {
 
     render() {
-        let stepNames: string[] = ["Build Query", "Create Name", "Summary"]
+        let stepNames: string[] = ["Query", "Name", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.AdvancedSearchStrategyName}
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
+                Blotter={this.props.Blotter}
+                Columns={this.props.Columns}
                 Steps={[
                     <AdvancedSearchExpressionWizard
-                        Columns={this.props.Columns}
-                        cssClassName={this.props.cssClassName} StepName={stepNames[0]}
+                        StepName={stepNames[0]}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
-                        Blotter={this.props.Blotter}
+                        cssClassName={this.props.cssClassName} 
                         />,
-                    <AdvancedSearchSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} AdvancedSearches={this.props.ConfigEntities as IAdvancedSearch[]} />,
-                    < AdvancedSearchSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns} UserFilters={this.props.UserFilters} />
+                    <AdvancedSearchSettingsWizard StepName={stepNames[1]} AdvancedSearches={this.props.ConfigEntities as IAdvancedSearch[]} />,
+                    < AdvancedSearchSummaryWizard StepName={stepNames[2]} UserFilters={this.props.UserFilters} />
 
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject as IAdvancedSearch}

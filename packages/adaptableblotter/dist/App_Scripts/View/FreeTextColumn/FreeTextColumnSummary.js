@@ -2,34 +2,32 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const FreeTextColumnWizard_1 = require("./Wizard/FreeTextColumnWizard");
 const FreeTextColumnRedux = require("../../Redux/ActionsReducers/FreeTextColumnRedux");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const StrategyHeader_1 = require("../Components/StrategySummary/StrategyHeader");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const StrategyDetail_1 = require("../Components/StrategySummary/StrategyDetail");
 const StrategyProfile_1 = require("../Components/StrategyProfile");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class FreeTextColumnSummaryComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__FreeTextcolumn";
         let freeTextColumn = this.props.FreeTextColumns.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId);
         let noFreeTextColumn = freeTextColumn == null;
         let FreeTextColumnRow;
-        if (noFreeTextColumn) {
-            FreeTextColumnRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyConstants.FreeTextColumnStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.FreeTextColumnStrategyId, StrategySummary: "No FreeText Column Set", onNew: () => this.onNew(), NewButtonTooltip: StrategyConstants.FreeTextColumnStrategyName, AccessLevel: this.props.AccessLevel });
-        }
-        else {
+        if (!noFreeTextColumn) {
+            let description = (ArrayExtensions_1.ArrayExtensions.IsNotEmpty(freeTextColumn.FreeTextStoredValues)) ? " Stored values: " + freeTextColumn.FreeTextStoredValues.length : "No stored values";
             let index = this.props.FreeTextColumns.findIndex(ftc => ftc.ColumnId == this.props.SummarisedColumn.ColumnId);
-            FreeTextColumnRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: StrategyConstants.FreeTextColumnStrategyName, cssClassName: this.props.cssClassName, Item1: React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.FreeTextColumnStrategyId }), Item2: freeTextColumn.ColumnId, ConfigEnity: freeTextColumn, showShare: this.props.TeamSharingActivated, EntityName: StrategyConstants.FreeTextColumnStrategyName, onEdit: () => this.onEdit(index, freeTextColumn), onShare: () => this.props.onShare(freeTextColumn), onDelete: FreeTextColumnRedux.FreeTextColumnDelete(freeTextColumn), showBold: true });
+            FreeTextColumnRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: StrategyConstants.FreeTextColumnStrategyName, cssClassName: this.props.cssClassName, Item1: React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.FreeTextColumnStrategyId }), Item2: description, ConfigEnity: freeTextColumn, showShare: this.props.TeamSharingActivated, EntityName: StrategyConstants.FreeTextColumnStrategyName, onEdit: () => this.onEdit(index, freeTextColumn), onShare: () => this.props.onShare(freeTextColumn), onDelete: FreeTextColumnRedux.FreeTextColumnDelete(freeTextColumn), showBold: true });
         }
         return React.createElement("div", null,
             FreeTextColumnRow,

@@ -1,12 +1,14 @@
 import * as React from "react";
-import { MessageType } from '../../Core/Enums';
+import { MessageType } from '../../Utilities/Enums';
 import { AdaptablePopover } from "../AdaptablePopover";
-import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
 import { Glyphicon, Panel, Table } from "react-bootstrap";
-import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { IColumn } from "../../Core/Interface/IColumn";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IUserFilter, ICellValidationRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
+import { IColumn } from "../../Utilities/Interface/IColumn";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { ICellValidationRule } from "../../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
+import { IPreviewInfo, IPreviewResult } from "../../Utilities/Interface/IPreview";
 
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
@@ -26,18 +28,18 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
         let previewHeader: string = this.props.ShowHeader && this.props.PreviewInfo != null ? "Preview Results: " + (this.props.SelectedColumn ? this.props.SelectedColumn.FriendlyName : "") : "";
 
 
-        var previewItems = this.props.PreviewInfo.PreviewResults.map((previewResult: IPreviewResult) => {
+        var previewItems = this.props.PreviewInfo.PreviewResults.map((previewResult: IPreviewResult, index: number) => {
 
-            return <tr key={previewResult.Id} >
+            return <tr key={index} >
                 <td>{previewResult.InitialValue}</td>
                 <td>{previewResult.ComputedValue}</td>
                 {previewResult.ValidationRules.length > 0 ?
                     <td>
                         {this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent == true &&
-                            <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} MessageType={MessageType.Error} />
+                            <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules, this.props.Columns)]} MessageType={MessageType.Error} />
                         }
                         {this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning == true &&
-                            <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]} MessageType={MessageType.Warning} />
+                            <AdaptablePopover cssClassName={cssClassName} headerText={"Validation Error"} bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules, this.props.Columns)]} MessageType={MessageType.Warning} />
                         }
                     </td>
                     :
@@ -69,13 +71,13 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
         </div>
     }
 
-    private getValidationErrorMessage(CellValidations: ICellValidationRule[]): string {
+    private getValidationErrorMessage(CellValidations: ICellValidationRule[], columns: IColumn[]): string {
         let returnString: string[] = []
         for (let CellValidation of CellValidations) {
             let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression( CellValidation.Expression)) ?
                 " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns) :
                 "";
-            returnString.push(CellValidation.Description + expressionDescription)
+            returnString.push(CellValidationHelper.createCellValidationDescription(CellValidation, columns) + expressionDescription)
         }
         return returnString.join("\n");
     }

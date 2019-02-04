@@ -3,12 +3,12 @@ import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { Well } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../../Utilities/Enums";
 
 interface DataManagementPopupProps extends StrategyViewPopupProps<DataManagementPopupComponent> {
 }
@@ -18,7 +18,7 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
 
     constructor(props: DataManagementPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render() {
@@ -47,7 +47,7 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
     }
 
     onClear() {
-        this.props.Blotter.api.configDeleteLocalStorage();
+        this.props.Blotter.api.configApi.configDeleteLocalStorage();
     }
 
 

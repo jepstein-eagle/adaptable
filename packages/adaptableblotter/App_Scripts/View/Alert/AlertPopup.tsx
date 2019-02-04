@@ -4,25 +4,26 @@ import { connect } from 'react-redux';
 import { Well, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AlertWizard } from './Wizard/AlertWizard'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { AlertEntityRow } from './AlertEntityRow';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { IAlertDefinition, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { MessageType, AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IAlertDefinition } from "../../Utilities/Interface/BlotterObjects/IAlertDefinition";
+import { MessageType, AccessLevel } from "../../Utilities/Enums";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
@@ -36,7 +37,7 @@ interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
 class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfigEntityState> {
     constructor(props: AlertPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
@@ -63,7 +64,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
         ]
 
         let AlertItems = this.props.AlertDefinitions.map((x, index) => {
-            let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId)
+            let column = ColumnHelper.getColumnFromId(x.ColumnId, this.props.Columns);
             return <AlertEntityRow
                 key={index}
                 cssClassName={cssClassName}

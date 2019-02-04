@@ -3,10 +3,10 @@ import { Radio } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
-import { IAdvancedSearch } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAdvancedSearch } from "../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow> extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {
     IsCurrentAdvancedSearch: boolean;

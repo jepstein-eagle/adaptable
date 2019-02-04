@@ -1,6 +1,6 @@
 import * as React from "react";
-import { SelectionMode } from "../../../Core/Enums";
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { SelectionMode } from "../../../Utilities/Enums";
+import { IColumn } from "../../../Utilities/Interface/IColumn";
 export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     ColumnList: IColumn[];
     SelectedColumnIds: string[];

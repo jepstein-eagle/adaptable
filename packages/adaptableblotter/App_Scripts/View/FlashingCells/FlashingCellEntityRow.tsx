@@ -4,7 +4,8 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ColorPicker } from '../ColorPicker';
 import { IColItem } from "../UIInterfaces";
-import { IFlashingCell } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IFlashingCell } from "../../Utilities/Interface/BlotterObjects/IFlashingCell";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 
 export interface FlashingCellEntityRowProps extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {
@@ -31,7 +32,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
         }
 
         let isDisabled = false; // TODO:  need to get from Entitlements !  flashingCell.IsReadOnly
-        let column = this.props.Columns.find(f => f.ColumnId == flashingCell.ColumnId)
+        let column = ColumnHelper.getColumnFromId(flashingCell.ColumnId, this.props.Columns);
         if (!column) {
             return null
         }

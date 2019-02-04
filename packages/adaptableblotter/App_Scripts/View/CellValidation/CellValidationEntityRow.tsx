@@ -2,15 +2,16 @@ import * as React from "react";
 import { FormControl } from 'react-bootstrap';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Core/Interface/IColumn';
-import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import { IColumn } from '../../Utilities/Interface/IColumn';
+import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { ICellValidationRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ActionMode } from "../../Core/Enums";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { ICellValidationRule } from "../../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { ActionMode } from "../../Utilities/Enums";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 
 export interface CellValidationEntityRowProps extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
@@ -23,7 +24,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
         let cellValidation: ICellValidationRule = this.props.AdaptableBlotterObject as ICellValidationRule;
 
         let ActionModeTypes = EnumExtensions.getNames(ActionMode).map((validationMode) => {
-            return <option style={{ fontSize: "5px" }} key={validationMode} value={validationMode}>{validationMode}</option>
+            return <option  key={validationMode} value={validationMode}>{validationMode}</option>
         })
 
         let colItems: IColItem[] = [].concat(this.props.colItems);
@@ -57,7 +58,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
 
     private getColumnandRule(cellValidation: ICellValidationRule): string {
         let columnInfo: string = ColumnHelper.getFriendlyNameFromColumn(cellValidation.ColumnId, this.props.Column)
-        columnInfo += ": " + cellValidation.Description
+        columnInfo += ": " + CellValidationHelper.createCellValidationDescription( cellValidation, this.props.Columns)
         return columnInfo
     }
 

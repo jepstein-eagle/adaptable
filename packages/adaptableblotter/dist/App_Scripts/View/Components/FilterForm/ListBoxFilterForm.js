@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
-const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
 const AdaptableBlotterFormControlTextClear_1 = require("../Forms/AdaptableBlotterFormControlTextClear");
 const AdaptableBlotterForm_1 = require("../Forms/AdaptableBlotterForm");
 const UIHelper_1 = require("../../UIHelper");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class ListBoxFilterForm extends React.Component {
     constructor(props) {
         super(props);
@@ -56,16 +56,16 @@ class ListBoxFilterForm extends React.Component {
                 return null;
             }
             else {
-                return React.createElement(react_bootstrap_1.ListGroupItem, { key: "columnValue" + y, style: columnVItemStyle, onClick: () => this.onClickItemColumnValue(x), active: isActive, value: columnValue }, columnValue);
+                return React.createElement(react_bootstrap_1.ListGroupItem, { key: "columnValue" + y, style: columnValueItemStyle, onClick: () => this.onClickItemColumnValue(x), active: isActive, value: columnValue }, columnValue);
             }
         });
         let textClear = React.createElement(AdaptableBlotterFormControlTextClear_1.AdaptableBlotterFormControlTextClear, { cssClassName: this.props.cssClassName, autoFocus: true, style: searchFilterStyle, type: "text", placeholder: "Search Filters", value: this.state.FilterValue, bsSize: "small", OnTextChange: (x) => this.onUpdateFilterSearch(x) });
         let rangeOperandOptions = ["Value", "Column"];
         let rangeMenuItemsOperand1 = rangeOperandOptions.map((rangeOperand, index) => {
-            return React.createElement(react_bootstrap_1.MenuItem, { key: index + rangeOperand, eventKey: index + rangeOperand, onClick: () => this.onRangeTypeChangedOperand1(index, rangeOperand) }, rangeOperand);
+            return React.createElement(react_bootstrap_1.MenuItem, { key: index + rangeOperand, eventKey: index + rangeOperand, onClick: () => this.onRangeTypeChangedOperand1(rangeOperand) }, rangeOperand);
         });
         let rangeMenuItemsOperand2 = rangeOperandOptions.map((rangeOperand, index) => {
-            return React.createElement(react_bootstrap_1.MenuItem, { key: index + rangeOperand, eventKey: index + rangeOperand, onClick: () => this.onRangeTypeChangedOperand2(index, rangeOperand) }, rangeOperand);
+            return React.createElement(react_bootstrap_1.MenuItem, { key: index + rangeOperand, eventKey: index + rangeOperand, onClick: () => this.onRangeTypeChangedOperand2(rangeOperand) }, rangeOperand);
         });
         let rangeForm = React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
             React.createElement(react_bootstrap_1.FormGroup, { controlId: "advancedForm" },
@@ -94,11 +94,11 @@ class ListBoxFilterForm extends React.Component {
         let editedRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: e.value, Operand1: this.state.UiSelectedRange.Operand1, Operand2: this.state.UiSelectedRange.Operand2 };
         this.setState({ UiSelectedRange: editedRange }, () => this.raiseOnChangeCustomExpression());
     }
-    onRangeTypeChangedOperand1(index, rangeOperandType) {
+    onRangeTypeChangedOperand1(rangeOperandType) {
         let editedRange = { Operand1Type: rangeOperandType, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: "", Operand2: this.state.UiSelectedRange.Operand2 };
         this.setState({ UiSelectedRange: editedRange }, () => this.raiseOnChangeCustomExpression());
     }
-    onRangeTypeChangedOperand2(index, rangeOperandType) {
+    onRangeTypeChangedOperand2(rangeOperandType) {
         let editedRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: rangeOperandType, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: "" };
         this.setState({ UiSelectedRange: editedRange }, () => this.raiseOnChangeCustomExpression());
     }
@@ -107,7 +107,7 @@ class ListBoxFilterForm extends React.Component {
             let operand1 = (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.UiSelectedRange.Operand1)) ?
                 ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.state.UiSelectedRange.Operand1, this.props.Columns) :
                 "Select a column";
-            let availableColumns = this.props.Columns.filter(x => this.props.CurrentColumn).map((column, index) => {
+            let availableColumns = this.props.Columns.filter(() => this.props.CurrentColumn).map((column, index) => {
                 return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onColumnOperand1SelectedChanged(column) }, column.FriendlyName);
             });
             return React.createElement(react_bootstrap_1.DropdownButton, { disabled: availableColumns.length == 0, style: { minWidth: "150px" }, className: this.props.cssClassName, bsSize: "small", bsStyle: "default", title: operand1, id: "operand1" }, availableColumns);
@@ -121,7 +121,7 @@ class ListBoxFilterForm extends React.Component {
             let operand2 = (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.UiSelectedRange.Operand2)) ?
                 ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.state.UiSelectedRange.Operand2, this.props.Columns) :
                 "Select a column";
-            let availableColumns = this.props.Columns.filter(x => this.props.CurrentColumn).map((column, index) => {
+            let availableColumns = this.props.Columns.filter(() => this.props.CurrentColumn).map((column, index) => {
                 return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onColumnOperand2SelectedChanged(column) }, column.FriendlyName);
             });
             return React.createElement(react_bootstrap_1.DropdownButton, { disabled: availableColumns.length == 0, style: { minWidth: "150px" }, className: this.props.cssClassName, bsSize: "small", bsStyle: "default", title: operand2, id: "operand2" }, availableColumns);
@@ -145,7 +145,7 @@ class ListBoxFilterForm extends React.Component {
         this.setState({ UiSelectedRange: editedRange }, () => this.raiseOnChangeCustomExpression());
     }
     onColumnOperand2SelectedChanged(column) {
-        let editedRange = { Operand1Type: this.state.UiSelectedRange.Operand2Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: column.ColumnId };
+        let editedRange = { Operand1Type: this.state.UiSelectedRange.Operand1Type, Operand2Type: this.state.UiSelectedRange.Operand2Type, Operator: this.state.UiSelectedRange.Operator, Operand1: this.state.UiSelectedRange.Operand1, Operand2: column.ColumnId };
         this.setState({ UiSelectedRange: editedRange }, () => this.raiseOnChangeCustomExpression());
     }
     // Methods for getting column values or filters
@@ -216,24 +216,15 @@ let listGroupStyle = {
 let userFilterItemStyle = {
     //'width': '87%',export 
     'fontStyle': 'italic',
-    'fontSize': 'small',
-    'padding': '5px',
+    'fontSize': 'xsmall',
+    'padding': '3px',
     'margin': 0
 };
-let columnVItemStyle = {
+let columnValueItemStyle = {
     //'width': '87%',
-    'fontSize': 'small',
-    'padding': '5px',
+    'fontSize': 'xsmall',
+    'padding': '3px',
     'margin': 0
-};
-let dropDownNumbDateStyle = {
-    'width': '92px'
-};
-let radioButtonStyle = {
-    //'width': '87%',export 
-    'fontSize': 'small',
-    'padding': '0px',
-    'marginLeft': '2px'
 };
 let rangeOperatorStyle = {
     'marginTop': '0px',
@@ -244,11 +235,6 @@ let rangeOperandStyle = {
     'marginTop': '0px',
     'marginLeft': '0px',
     'width': '150px'
-};
-let rangeSelectorStyle = {
-    'marginTop': '0px',
-    'marginLeft': '0px',
-    'width': '120px'
 };
 let rangeTypeStyle = {
     'marginTop': '0px',
@@ -261,8 +247,8 @@ let searchFilterStyle = {
     'width': '222px'
 };
 let separatorStyle = {
-    'marginTop': '10px',
+    'marginTop': '5px',
     'marginBottom': '0px',
-    'marginLeft': '15px',
+    'marginLeft': '50px',
     'width': '222px',
 };

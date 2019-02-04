@@ -1,16 +1,17 @@
 import * as React from "react";
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ExpressionEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { IColItem } from '../UIInterfaces';
-import { IColumnFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { ButtonSave } from "../Components/Buttons/ButtonSave";
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
-import { AccessLevel } from "../../Core/Enums";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { AccessLevel } from "../../Utilities/Enums";
+import { DANGER_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 
 export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow> extends ExpressionEntityRowProps<AdvancedSearchEntityRow> {
     onClear: (columnFilter: IColumnFilter) => void;
@@ -36,7 +37,7 @@ export class ColumnFilterEntityRow extends React.Component<ColumnFilterEntityRow
                 />
             {' '}
             <ButtonClear cssClassName={this.props.cssClassName} onClick={() => this.props.onClear(this.props.ColumnFilter)} overrideTooltip="Clear Column Filter"
-                bsStyle={"danger"}
+                bsStyle={DANGER_BSSTYLE}
                 DisplayMode="Glyph"
                 size={"small"}
                 overrideDisableButton={this.props.ColumnFilter == null} 

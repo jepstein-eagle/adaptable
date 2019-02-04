@@ -8,21 +8,21 @@ import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearch
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { AdvancedSearchWizard } from './Wizard/AdvancedSearchWizard'
 import { AdvancedSearchEntityRow } from './AdvancedSearchEntityRow'
-import { Helper } from '../../Core/Helpers/Helper';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { Helper } from '../../Utilities/Helpers/Helper';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
-import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { IAdvancedSearch, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
+import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IAdvancedSearch } from "../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
+import { PRIMARY_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
@@ -36,7 +36,7 @@ interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearch
 class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupProps, EditableConfigEntityState> {
     constructor(props: AdvancedSearchPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     componentDidMount() {
@@ -96,7 +96,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
             />
 
         return <div className={cssClassName}>
-            <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyConstants.AdvancedSearchStrategyName} infoBody={infoBody}
+            <PanelWithButton cssClassName={cssClassName} bsStyle={PRIMARY_BSSTYLE} headerText={StrategyConstants.AdvancedSearchStrategyName} infoBody={infoBody}
                 button={newSearchButton} glyphicon={StrategyConstants.AdvancedSearchGlyph} className="ab_main_popup" >
 
                 {advancedSearchRows.length > 0 &&

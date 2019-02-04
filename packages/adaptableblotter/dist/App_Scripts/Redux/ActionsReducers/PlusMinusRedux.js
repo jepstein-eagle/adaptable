@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.PLUSMINUS_APPLY = 'PLUSMINUS_APPLY';
 exports.PLUSMINUS_ADD_UPDATE_CONDITION = 'PLUSMINUS_ADD_UPDATE_CONDITION';
 exports.PLUSMINUS_EDIT_CONDITION = 'PLUSMINUS_EDIT_CONDITION';
@@ -24,7 +25,7 @@ exports.PlusMinusDeleteCondition = (Index) => ({
     Index
 });
 const initialPlusMinusState = {
-    PlusMinusRules: []
+    PlusMinusRules: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.PlusMinusReducer = (state = initialPlusMinusState, action) => {
     switch (action.type) {

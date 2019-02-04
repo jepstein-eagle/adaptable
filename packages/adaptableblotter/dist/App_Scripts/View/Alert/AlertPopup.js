@@ -3,24 +3,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const AlertRedux = require("../../Redux/ActionsReducers/AlertRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const AlertWizard_1 = require("./Wizard/AlertWizard");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const AlertEntityRow_1 = require("./AlertEntityRow");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class AlertPopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
@@ -44,7 +45,7 @@ class AlertPopupComponent extends React.Component {
             { Content: "", Size: 2 },
         ];
         let AlertItems = this.props.AlertDefinitions.map((x, index) => {
-            let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId);
+            let column = ColumnHelper_1.ColumnHelper.getColumnFromId(x.ColumnId, this.props.Columns);
             return React.createElement(AlertEntityRow_1.AlertEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: x, Column: column, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: (index, x) => this.onEdit(index, x), onShare: () => this.props.onShare(x), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: AlertRedux.AlertDefinitionDelete(index), onChangeMessageType: (index, x) => this.onMessageTypeChanged(index, x) });
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createAlert(), overrideTooltip: "Create Alert", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });

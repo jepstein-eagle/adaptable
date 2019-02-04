@@ -1,8 +1,9 @@
 import { ITeamSharingStrategy } from './Interface/ITeamSharingStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 
 export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamSharingStrategy {
     constructor(blotter: IAdaptableBlotter) {
@@ -11,11 +12,11 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
     }
 
     protected addPopupMenuItem() {
-            this.createMenuItemShowPopup(StrategyConstants.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyConstants.TeamSharingGlyph);
-     }
+        this.createMenuItemShowPopup(StrategyConstants.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyConstants.TeamSharingGlyph);
+    }
 
-    protected hasPopupMenu(): boolean{
-        return  this.blotter.BlotterOptions.enableRemoteConfigServer;
+    protected hasPopupMenu(): boolean {
+        return BlotterHelper.IsConfigServerEnabled(this.blotter.BlotterOptions)
     }
 
     protected InitState() {

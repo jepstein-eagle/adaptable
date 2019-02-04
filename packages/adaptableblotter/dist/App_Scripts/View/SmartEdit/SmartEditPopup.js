@@ -6,16 +6,18 @@ const react_bootstrap_1 = require("react-bootstrap");
 const SmartEditRedux = require("../../Redux/ActionsReducers/SmartEditRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const Enums_1 = require("../../Core/Enums");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const Enums_1 = require("../../Utilities/Enums");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
 const AdaptablePopover_1 = require("../AdaptablePopover");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const EnumExtensions_1 = require("../../Core/Extensions/EnumExtensions");
+const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
 const PreviewResultsPanel_1 = require("../Components/PreviewResultsPanel");
-const PreviewHelper_1 = require("../../Core/Helpers/PreviewHelper");
+const PreviewHelper_1 = require("../../Utilities/Helpers/PreviewHelper");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
+const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class SmartEditPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -33,7 +35,7 @@ class SmartEditPopupComponent extends React.Component {
             "Smart Edits that break Cell Validation Rules will be flagged and prevented."];
         let col;
         if (this.props.PreviewInfo) {
-            col = this.props.Columns.find(c => c.ColumnId == this.props.PreviewInfo.ColumnId);
+            col = ColumnHelper_1.ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns);
         }
         let globalValidationMessage = PreviewHelper_1.PreviewHelper.GetValidationMessage(this.props.PreviewInfo, this.props.SmartEditValue);
         let showPanel = this.props.PreviewInfo && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.SmartEditValue);
@@ -63,38 +65,22 @@ class SmartEditPopupComponent extends React.Component {
         const e = event.target;
         this.props.onSmartEditValueChange(Number(e.value));
     }
-    getValidationErrorMessage(CellValidations) {
-        let returnString = [];
-        for (let CellValidation of CellValidations) {
-            let expressionDescription = (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
-                " when " + ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns) :
-                "";
-            returnString.push(CellValidation.Description + expressionDescription);
-        }
-        return returnString.join("\n");
-    }
     onApplySmartEdit() {
         this.props.onApplySmartEdit();
     }
     onConfirmWarningCellValidation() {
-        let confirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: SmartEditRedux.SmartEditApply(false),
-            ConfirmAction: SmartEditRedux.SmartEditApply(true),
-            ShowCommentBox: true
-        };
+        let confirmAction = SmartEditRedux.SmartEditApply(true);
+        let cancelAction = SmartEditRedux.SmartEditApply(false);
+        let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
         this.props.onConfirmWarningCellValidation(confirmation);
     }
     getButtonStyle() {
         if (this.props.PreviewInfo) {
             if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
-                return "default";
+                return StyleConstants_1.DEFAULT_BSSTYLE;
             }
             if (this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning || this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) {
-                return "warning";
+                return StyleConstants_1.WARNING_BSSTYLE;
             }
         }
         return "success";

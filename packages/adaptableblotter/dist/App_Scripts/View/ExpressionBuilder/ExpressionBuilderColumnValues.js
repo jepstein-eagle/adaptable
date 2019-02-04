@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const SingleListBox_1 = require("../Components/ListBox/SingleListBox");
 const react_bootstrap_1 = require("react-bootstrap");
 class ExpressionBuilderColumnValues extends React.Component {

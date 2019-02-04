@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 class AlertTypeWizard extends React.Component {
@@ -24,19 +24,25 @@ class AlertTypeWizard extends React.Component {
                         ' ',
                         " ",
                         ' ',
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert Type: Info", bodyText: ["Sends the alert as a message."], MessageType: Enums_1.MessageType.Info })),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert Type: Info", bodyText: ["Sends the alert as a message."] })),
+                    React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
+                        React.createElement(react_bootstrap_1.Radio, { className: cssClassName + "__radiobutton", inline: true, value: "Success", checked: this.state.MessageType == Enums_1.MessageType.Success, onChange: (e) => this.onMessageTypeSelectChanged(e) }, "Success"),
+                        ' ',
+                        " ",
+                        ' ',
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert Type: Success", bodyText: ["Sends the alert as a sucess message."] })),
                     React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
                         React.createElement(react_bootstrap_1.Radio, { className: cssClassName + "__radiobutton", inline: true, value: "Warning", checked: this.state.MessageType == Enums_1.MessageType.Warning, onChange: (e) => this.onMessageTypeSelectChanged(e) }, "Warning"),
                         ' ',
                         " ",
                         ' ',
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert Type: Warning", bodyText: ["Sends the alert as a warning."], MessageType: Enums_1.MessageType.Info })),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert Type: Warning", bodyText: ["Sends the alert as a warning."] })),
                     React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
                         React.createElement(react_bootstrap_1.Radio, { className: cssClassName + "__radiobutton", inline: true, value: "Error", checked: this.state.MessageType == Enums_1.MessageType.Error, onChange: (e) => this.onMessageTypeSelectChanged(e) }, "Error"),
                         ' ',
                         " ",
                         ' ',
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert Type: Error", bodyText: ["Sends the alert as an error."], MessageType: Enums_1.MessageType.Info })))),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert Type: Error", bodyText: ["Sends the alert as an error."] })))),
             React.createElement(react_bootstrap_1.Panel, { header: "Alert Details", bsStyle: "primary" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                     React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
@@ -44,17 +50,20 @@ class AlertTypeWizard extends React.Component {
                         ' ',
                         " ",
                         ' ',
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert Details", bodyText: ["Shows a popup in centre of screen when Alert is triggered."], MessageType: Enums_1.MessageType.Info })))));
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert Details", bodyText: ["A popup is displayed when the Alert is triggered."] })))));
     }
     onMessageTypeSelectChanged(event) {
         let e = event.target;
         if (e.value == "Info") {
             this.setState({ MessageType: Enums_1.MessageType.Info }, () => this.props.UpdateGoBackState());
         }
-        else if (e.value == "Warning") {
+        else if (e.value == 'Success') {
+            this.setState({ MessageType: Enums_1.MessageType.Success }, () => this.props.UpdateGoBackState());
+        }
+        else if (e.value == 'Warning') {
             this.setState({ MessageType: Enums_1.MessageType.Warning }, () => this.props.UpdateGoBackState());
         }
-        else {
+        else if (e.value == 'Error') {
             this.setState({ MessageType: Enums_1.MessageType.Error }, () => this.props.UpdateGoBackState());
         }
     }

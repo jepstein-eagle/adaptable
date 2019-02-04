@@ -1,14 +1,14 @@
 import * as Redux from 'redux';
 import { PopupState } from './Interface/IState';
-import { IAlertPopup, IConfirmationPopup, IScreenPopup, IPromptPopup, IUIConfirmation, IUIPrompt, InputAction, IAlert, IChartPopup, ILoadingPopup } from '../../Core/Interface/IMessage';
-import { MessageType } from '../../Core/Enums';
+import { MessageType } from '../../Utilities/Enums';
+import { IAlert, InputAction, IUIPrompt, IUIConfirmation, IScreenPopup, IPromptPopup, IConfirmationPopup, IAlertPopup, ILoadingPopup, IAboutPopup } from '../../Utilities/Interface/IMessage';
 
 export const POPUP_SHOW_SCREEN = 'POPUP_SHOW_SCREEN';
 export const POPUP_HIDE_SCREEN = 'POPUP_HIDE_SCREEN';
-export const POPUP_SHOW_CHART = 'POPUP_SHOW_CHART';
-export const POPUP_HIDE_CHART = 'POPUP_HIDE_CHART';
 export const POPUP_SHOW_LOADING = 'POPUP_SHOW_LOADING';
 export const POPUP_HIDE_LOADING = 'POPUP_HIDE_LOADING';
+export const POPUP_SHOW_ABOUT = 'POPUP_SHOW_ABOUT';
+export const POPUP_HIDE_ABOUT = 'POPUP_HIDE_ABOUT';
 export const POPUP_SHOW_ALERT = 'POPUP_SHOW_ALERT';
 export const POPUP_HIDE_ALERT = 'POPUP_HIDE_ALERT';
 export const POPUP_SHOW_PROMPT = 'POPUP_SHOW_PROMPT';
@@ -27,13 +27,13 @@ export interface PopupShowScreenAction extends Redux.Action {
 
 export interface PopupHideScreenAction extends Redux.Action { }
 
-export interface PopupShowChartAction extends Redux.Action { }
-
-export interface PopupHideChartAction extends Redux.Action { }
-
 export interface PopupShowLoadingAction extends Redux.Action { }
 
 export interface PopupHideLoadingAction extends Redux.Action { }
+
+export interface PopupShowAboutAction extends Redux.Action { }
+
+export interface PopupHideAboutAction extends Redux.Action { }
 
 export interface PopupShowAlertAction extends Redux.Action { Alert: IAlert }
 
@@ -78,20 +78,20 @@ export const PopupHideAlert = (): PopupHideAlertAction => ({
   type: POPUP_HIDE_ALERT
 })
 
-export const PopupShowChart = (): PopupShowChartAction => ({
-  type: POPUP_SHOW_CHART,
-})
-
-export const PopupHideChart = (): PopupHideChartAction => ({
-  type: POPUP_HIDE_CHART
-})
-
 export const PopupShowLoading = (): PopupShowLoadingAction => ({
   type: POPUP_SHOW_LOADING,
 })
 
 export const PopupHideLoading = (): PopupHideLoadingAction => ({
   type: POPUP_HIDE_LOADING
+})
+
+export const PopupShowAbout = (): PopupShowAboutAction => ({
+  type: POPUP_SHOW_ABOUT,
+})
+
+export const PopupHideAbout = (): PopupHideAboutAction => ({
+  type: POPUP_HIDE_ABOUT
 })
 
 export const PopupShowPrompt = (Prompt: IUIPrompt): PopupShowPromptAction => ({
@@ -133,11 +133,12 @@ const initialPopupState: PopupState = {
     ComponentName: "",
     Params: null
   },
-  ChartPopup: {
-    ShowChartPopup: false,
-  },
+
   LoadingPopup: {
     ShowLoadingPopup: true,
+  },
+  AboutPopup: {
+    ShowAboutPopup: false,
   },
   AlertPopup: {
     ShowAlertPopup: false,
@@ -147,19 +148,20 @@ const initialPopupState: PopupState = {
   },
   ConfirmationPopup: {
     ShowConfirmationPopup: false,
-    ConfirmationMsg: "",
-    ConfirmationTitle: "",
-    ConfirmationText: "",
-    CancelText: "",
+    Msg: "",
+    Header: "",
+    ConfirmButtonText: "",
+    CancelButtonText: "",
     CancelAction: null,
     ConfirmAction: null,
-    ShowCommentBox: false,
-    ConfirmationComment: null
+    ShowInputBox: false,
+    ConfirmationComment: null,
+    MessageType: MessageType.Info
   },
   PromptPopup: {
     ShowPromptPopup: false,
-    PromptTitle: "",
-    PromptMsg: "",
+    Header: "",
+    Msg: "",
     ConfirmAction: null
   },
 
@@ -180,33 +182,34 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
       let actionTyped = (<PopupShowPromptAction>action)
       let newPromptPopup: IPromptPopup = {
         ShowPromptPopup: true,
-        PromptTitle: actionTyped.Prompt.PromptTitle,
-        PromptMsg: actionTyped.Prompt.PromptMsg,
+        Header: actionTyped.Prompt.Header,
+        Msg: actionTyped.Prompt.Msg,
         ConfirmAction: actionTyped.Prompt.ConfirmAction
       }
       return Object.assign({}, state, { PromptPopup: newPromptPopup })
     }
     case POPUP_HIDE_PROMPT: {
-      let newPromptPopup: IPromptPopup = { ShowPromptPopup: false, PromptTitle: "", PromptMsg: "", ConfirmAction: null }
+      let newPromptPopup: IPromptPopup = { ShowPromptPopup: false, Header: "", Msg: "", ConfirmAction: null }
       return Object.assign({}, state, { PromptPopup: newPromptPopup })
     }
     case POPUP_CONFIRM_PROMPT: {
       //we dispatch the Action of ConfirmAction in the middelware in order to keep the reducer pure
-      let newPromptPopup: IPromptPopup = { ShowPromptPopup: false, PromptTitle: "", PromptMsg: "", ConfirmAction: null }
+      let newPromptPopup: IPromptPopup = { ShowPromptPopup: false, Header: "", Msg: "", ConfirmAction: null }
       return Object.assign({}, state, { PromptPopup: newPromptPopup })
     }
     case POPUP_SHOW_CONFIRMATION: {
       let actionTyped = (<PopupShowConfirmationAction>action)
       let newConfirmationPopup: IConfirmationPopup = {
         ShowConfirmationPopup: true,
-        ConfirmationMsg: actionTyped.Confirmation.ConfirmationMsg,
-        ConfirmationTitle: actionTyped.Confirmation.ConfirmationTitle,
-        ConfirmationText: actionTyped.Confirmation.ConfirmationText,
-        CancelText: actionTyped.Confirmation.CancelText,
+        Msg: actionTyped.Confirmation.Msg,
+        Header: actionTyped.Confirmation.Header,
+        ConfirmButtonText: actionTyped.Confirmation.ConfirmButtonText,
+        CancelButtonText: actionTyped.Confirmation.CancelButtonText,
         ConfirmAction: actionTyped.Confirmation.ConfirmAction,
         CancelAction: actionTyped.Confirmation.CancelAction,
-        ShowCommentBox: actionTyped.Confirmation.ShowCommentBox,
-        ConfirmationComment: null
+        ShowInputBox: actionTyped.Confirmation.ShowInputBox,
+        ConfirmationComment: null,
+        MessageType: actionTyped.Confirmation.MessageType
       }
       return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup })
     }
@@ -215,14 +218,15 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
       //we dispatch the Action of ConfirmAction in the middelware in order to keep the reducer pure
       let newConfirmationPopup: IConfirmationPopup = {
         ShowConfirmationPopup: false,
-        ConfirmationMsg: "",
-        ConfirmationTitle: "",
-        ConfirmationText: "",
-        CancelText: "",
+        Msg: "",
+        Header: "",
+        ConfirmButtonText: "",
+        CancelButtonText: "",
         ConfirmAction: null,
         CancelAction: null,
-        ShowCommentBox: false,
-        ConfirmationComment: actionTyped.comment
+        ShowInputBox: false,
+        ConfirmationComment: actionTyped.comment,
+        MessageType: null // ???
       }
       return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup })
     }
@@ -230,14 +234,15 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
       //we dispatch the Action of CancelAction in the middelware in order to keep the reducer pure
       let newConfirmationPopup: IConfirmationPopup = {
         ShowConfirmationPopup: false,
-        ConfirmationMsg: "",
-        ConfirmationTitle: "",
-        ConfirmationText: "",
-        CancelText: "",
+        Msg: "",
+        Header: "",
+        ConfirmButtonText: "",
+        CancelButtonText: "",
         ConfirmAction: null,
         CancelAction: null,
-        ShowCommentBox: false,
-        ConfirmationComment: null
+        ShowInputBox: false,
+        ConfirmationComment: null,
+        MessageType: null
       }
       return Object.assign({}, state, { ConfirmationPopup: newConfirmationPopup })
     }
@@ -250,14 +255,6 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
       let newAlertPopup: IAlertPopup = { ShowAlertPopup: false, Header: "", Msg: "", MessageType: MessageType.Info }
       return Object.assign({}, state, { AlertPopup: newAlertPopup })
     }
-    case POPUP_SHOW_CHART: {
-      let newChartPopup: IChartPopup = { ShowChartPopup: true }
-      return Object.assign({}, state, { ChartPopup: newChartPopup })
-    }
-    case POPUP_HIDE_CHART: {
-      let newChartPopup: IChartPopup = { ShowChartPopup: false }
-      return Object.assign({}, state, { ChartPopup: newChartPopup })
-    }
     case POPUP_SHOW_LOADING: {
       let newLoadingPopup: ILoadingPopup = { ShowLoadingPopup: true }
       return Object.assign({}, state, { LoadingPopup: newLoadingPopup })
@@ -265,6 +262,14 @@ export const ShowPopupReducer: Redux.Reducer<PopupState> = (state: PopupState = 
     case POPUP_HIDE_LOADING: {
       let newLoadingPopup: ILoadingPopup = { ShowLoadingPopup: false }
       return Object.assign({}, state, { LoadingPopup: newLoadingPopup })
+    }
+    case POPUP_SHOW_ABOUT: {
+      let newAboutPopup: IAboutPopup = { ShowAboutPopup: true }
+      return Object.assign({}, state, { AboutPopup: newAboutPopup })
+    }
+    case POPUP_HIDE_ABOUT: {
+      let newAboutPopup: IAboutPopup = { ShowAboutPopup: false }
+      return Object.assign({}, state, { AboutPopup: newAboutPopup })
     }
     case POPUP_CLEAR_PARAM: {
       let newScreenPopup: IScreenPopup = { ShowScreenPopup: state.ScreenPopup.ShowScreenPopup, ComponentStrategy: state.ScreenPopup.ComponentStrategy, ComponentName: state.ScreenPopup.ComponentName, Params: null }

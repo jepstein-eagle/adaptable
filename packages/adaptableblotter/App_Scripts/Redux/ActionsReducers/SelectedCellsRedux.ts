@@ -1,6 +1,7 @@
 import { SelectedCellsState } from './Interface/IState';
-import { SelectedCellOperation } from '../../Core/Enums';
+import { SelectedCellOperation } from '../../Utilities/Enums';
 import * as Redux from 'redux'
+import { SELECTED_CELLS_DEFAULT_OPERATION } from '../../Utilities/Constants/GeneralConstants';
 
 export const SELECTED_CELLS_CHANGE_OPERATION = 'SELECTED_CELLS_CHANGE_OPERATION';
 
@@ -14,8 +15,8 @@ export const SelectedCellsChangeOperation = (SelectedCellOperation: SelectedCell
 })
 
 const initialSelectedCellsState: SelectedCellsState = {
-    SelectedCellOperation: SelectedCellOperation.Sum,
-    
+    SelectedCellOperation: SELECTED_CELLS_DEFAULT_OPERATION
+
 }
 
 export const SelectedCellsReducer: Redux.Reducer<SelectedCellsState> = (state: SelectedCellsState = initialSelectedCellsState, action: Redux.Action): SelectedCellsState => {

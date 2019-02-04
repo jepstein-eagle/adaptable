@@ -1,5 +1,13 @@
 ﻿/// <reference path="trade.d.ts" />
 
+export interface IFtse {
+    date: Date;
+    start: number;
+    end: number;
+    low: number;
+    high: number;
+}
+
 export interface IBond {
     tradeId: number;
     buySell: string;
@@ -33,7 +41,28 @@ export interface IFX {
 
 }
 
+function addDays(date: Date, days: number): Date {
+    let newDate = new Date(date.getFullYear(), date.getMonth(), date.getDay());
+    newDate.setDate(newDate.getDate() + days);
+    return newDate
+}
+
 export class DataGenerator {
+
+    getFtseData(count: number): IFtse[] {
+        let ftseRows: IFtse[] = [];
+        let todayDate: Date = new Date();
+        let startDate: Date = addDays(todayDate, 20);
+        let start: number = this.roundTo2Dp(325 + this.generateRandomDouble());
+        let end: number = this.roundTo2Dp(start + (this.generateRandomInt(-15, 10) + this.generateRandomDouble()));
+        ftseRows.push(this.createIFtse(startDate, 0, start, end));
+        for (let i = 1; i <= count; i++) {
+            let newStart: number = end;
+            end = this.roundTo2Dp(newStart + this.generateRandomInt(-15, 10) + this.generateRandomDouble());
+            ftseRows.push(this.createIFtse(startDate, i, newStart, end));
+        }
+        return ftseRows;
+    }
 
     getTrades(count: number): ITrade[] {
         let trades: ITrade[] = [];
@@ -88,7 +117,7 @@ export class DataGenerator {
             //pick a random colum in the numeric col
             let columnName = "price";// this.getRandomItem(this._numericCols);
             let initialNewValue = trade[columnName];
-            let newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
+            let newValue = this.roundTo4Dp(initialNewValue + numberToAdd + 500);
             trade[columnName] = newValue;
 
             trade["ask"] = this.roundTo4Dp(trade["price"] - trade["bidOfferSpread"] / 2);
@@ -98,36 +127,54 @@ export class DataGenerator {
             trade["bloombergBid"] = this.roundTo4Dp(trade["bid"] - 0.01);
             //grid.behavior.reindex();
             grid.repaint()
-        }, 100)
+        }, 500)
     }
 
     startTickingDataagGrid(gridOptions: any) {
         setInterval(() => {
-            let tradeId = this.generateRandomInt(0, 29);
+            let tradeId = this.generateRandomInt(0,30);
             gridOptions.api.forEachNode((rowNode: any, index: number) => {
                 if (rowNode.group) {
                     return;
                 }
                 let rowTradeId = gridOptions.api.getValue("tradeId", rowNode);
-                // only do first 30
                 if (rowTradeId != tradeId) { return; }
 
                 let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
                 let trade = rowNode;
                 let columnName = "price";
-                let initialNewValue = gridOptions.api.getValue(columnName, trade);
-                let newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
-                trade.setDataValue(columnName, newValue)
-                let ask = this.roundTo4Dp(gridOptions.api.getValue("price", trade) - gridOptions.api.getValue("bidOfferSpread", trade) / 2);
+                let initialPrice = gridOptions.api.getValue(columnName, trade);
+                let newPrice = (this.roundTo4Dp(initialPrice + numberToAdd) + 500);
+                trade.setDataValue(columnName, newPrice);
+                let bidOfferSpread = gridOptions.api.getValue("bidOfferSpread", trade);
+                let ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
                 trade.setDataValue("ask", ask)
-                let bid = this.roundTo4Dp(gridOptions.api.getValue("price", trade) + gridOptions.api.getValue("bidOfferSpread", trade) / 2);
+                let bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
                 trade.setDataValue("bid", bid)
-
                 trade.setDataValue("bloombergAsk", this.roundTo4Dp(ask + 0.01))
                 trade.setDataValue("bloombergBid", this.roundTo4Dp(bid - 0.01))
 
             });
-        }, 1000)
+        }, 500)
+    }
+
+    createIFtse(date: Date, index: number, start: number, end: number): IFtse {
+        let newDate: Date = addDays(date, -index)
+        let low: number = (start > end) ?
+            this.roundTo2Dp(end - this.generateRandomInt(0, 10) + this.generateRandomDouble()) :
+            this.roundTo2Dp(start - this.generateRandomInt(0, 10) + this.generateRandomDouble());
+        let high = (start > end) ?
+            this.roundTo2Dp(start + this.generateRandomInt(0, 10) + this.generateRandomDouble()) :
+            this.roundTo2Dp(end + this.generateRandomInt(0, 10) + this.generateRandomDouble());
+        let ftse =
+        {
+            "date": newDate,
+            "start": start,
+            "end": end,
+            "low": low,
+            "high": high
+        };
+        return ftse;
     }
 
     createBond(i: number): IBond {
@@ -194,12 +241,12 @@ export class DataGenerator {
         let trade =
         {
             "tradeId": i,
-            "notional": this.getRandomItem(this.getNotionals()),
-            "deskId": this.generateRandomInt(0, 250),
+            "notional": this.generateRandomInt(0, 300),// this.getRandomItem(this.getNotionals()),
+            "deskId": this.generateRandomInt(0, 400),
             "counterparty": this.getRandomItem(this.getCounterparties()),
             "currency": tradeCurrency,
             "country": this.getRandomItem(this.getCountries()),
-            "changeOnYear": this.getMeaningfulPositiveNegativeDouble(),
+            "changeOnYear": this.getMeaningfulPositiveNegativeInteger(800),//  this.getMeaningfulPositiveNegativeDouble(),
             "amount": this.getRandomItem(this.getAmounts()),
             "price": price,
             "bid": bid,
@@ -214,7 +261,7 @@ export class DataGenerator {
             "settlementDate": this.addDays(tradeDate, 3),
             "bloombergAsk": this.getSimilarNumber(ask),
             "bloombergBid": this.getSimilarNumber(bid),
-            "percentChange": this.generateRandomNullableDouble(),
+            "percentChange": this.generateRandomInt(0, 100), // this.generateRandomNullableDouble(),
             "lastUpdated": this.generateRandomDateAndTime(-7, 0),
             "lastUpdatedBy": this.getRandomItem(this.getNames()),
             /*
@@ -256,20 +303,6 @@ export class DataGenerator {
         return trade;
     }
 
-    //jo: just a poor attempt to create GUID in JS.... what a stupid language
-    protected generateUuid(): string {
-        let d = new Date().getTime();
-        if (window.performance && typeof window.performance.now === "function") {
-            d += performance.now(); //use high-precision timer if available
-        }
-        let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
-            c => {
-                let r = (d + Math.random() * 16) % 16 | 0;
-                d = Math.floor(d / 16);
-                return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
-            });
-        return uuid;
-    }
 
     // If minValue is 1 and maxValue is 2, then Math.random()*(maxValue-minValue+1)
     // generates a value between 0 and 2 =[0, 2), adding 1 makes this
@@ -290,12 +323,12 @@ export class DataGenerator {
     }
 
     protected getStatus(): string {
-      let randomNumber =  this.generateRandomInt(1, 3);
-        if (randomNumber==1){
+        let randomNumber = this.generateRandomInt(1, 3);
+        if (randomNumber == 1) {
             return "Completed"
-        }else  if (randomNumber==2){
+        } else if (randomNumber == 2) {
             return "Pending"
-        }else  if (randomNumber==3){
+        } else if (randomNumber == 3) {
             return "Rejected"
         }
     }
@@ -330,12 +363,20 @@ export class DataGenerator {
         return this.roundTo4Dp(this.generateRandomInt(-150, 150) + this.generateRandomDouble());
     }
 
+    protected getMeaningfulPositiveNegativeInteger(seed: number): number {
+        return this.generateRandomInt(-seed, seed)
+    }
+
     protected removeDecimalPoints(val: number): number {
         return Math.round(val * 1) / 1;
     }
 
     protected roundTo4Dp(val: number): number {
         return Math.round(val * 10000) / 10000;
+    }
+
+    protected roundTo2Dp(val: number): number {
+        return Math.round(val * 100) / 100;
     }
 
     protected getMeaningfulDoubleInRange(min: number, max: number): number {
@@ -395,28 +436,7 @@ export class DataGenerator {
         return tickers[index];
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public getRandomItem(ary: any[] , max?: number): any {
+    public getRandomItem(ary: any[], max?: number): any {
         if (max) {
             return ary[this.generateRandomInt(0, Math.min(max, ary.length - 1))];
         }
@@ -444,7 +464,17 @@ export class DataGenerator {
             0.3,
             0.35,
             0.4,
-            0.5
+            0.5,
+            0.55,
+            0.6,
+            0.65,
+            0.7,
+            0.75,
+            0.8,
+            0.85,
+            0.9,
+            0.95,
+            1.0
         ];
         return bidOfferSpreads;
     }
@@ -459,13 +489,13 @@ export class DataGenerator {
             "JP Morgan",
             "Morgan Stanley",
             "BNP",
-         //   "Lloyds TSB",
-         //   "MUFJ",
-         //   "Rabobank",
-         //   "RBC",
-         //   "Deutsche Bank",
-         //   "Credit Suisse",
-         //   "Nomura"
+            //   "Lloyds TSB",
+            //   "MUFJ",
+            //   "Rabobank",
+            //   "RBC",
+            //   "Deutsche Bank",
+               "Credit Suisse",
+               "Nomura"
         ];
         return counterparties;
     }
@@ -505,11 +535,10 @@ export class DataGenerator {
 
     protected getCountries(): string[] {
         let countries = [
-           "+2502+S",
             "Argentina",
             "Australia",
             "Belgium",
-          /*  "Brazil",
+            "Brazil",
             "Canada",
             "China",
             "Denmark",
@@ -528,7 +557,7 @@ export class DataGenerator {
             "Qatar",
             "Russia",
             "Spain",
-            "Thailand"*/
+            "Thailand"
         ];
         return countries;
     }

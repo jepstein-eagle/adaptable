@@ -1,16 +1,15 @@
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { DistinctCriteriaPairValue } from '../../../Core/Enums';
+import { DistinctCriteriaPairValue } from '../../../Utilities/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
-import { ICustomSort } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { IAdaptableBlotter } from "../../../Core/Interface/IAdaptableBlotter";
+import { ICustomSort } from "../../../Utilities/Interface/BlotterObjects/ICustomSort";
+import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
-    Columns: Array<IColumn>
-   Blotter: IAdaptableBlotter
-}
+  }
 export interface CustomSortValuesWizardState {
     ColumnValues: any[],
     SelectedValues: Array<string>
@@ -28,12 +27,12 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     }
 
     render(): any {
-        let columnId = this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName;
-        let infoBody: any[] = ["Create a custom sort for the '" + columnId + "' column by moving items to the 'Custom Sort Order' listbox.", <br />, <br />, "Use the buttons on the right of the box to order items in the list as required.", <br />, <br />, "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
+        let friendlyName = ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns)
+        let infoBody: any[] = ["Create a custom sort for the '" + friendlyName + "' column by moving items to the 'Custom Sort Order' listbox.", <br />, <br />, "Use the buttons on the right of the box to order items in the list as required.", <br />, <br />, "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."]
         let cssClassName: string = this.props.cssClassName + "-values"
 
         return <div className={cssClassName}>
-            <PanelWithInfo cssClassName={cssClassName} header={"Sort Order for: " + columnId} bsStyle="primary" infoBody={infoBody}>
+            <PanelWithInfo cssClassName={cssClassName} header={"Sort Order for: " + friendlyName} bsStyle="primary" infoBody={infoBody}>
                 <DualListBoxEditor AvailableValues={this.state.ColumnValues}
                     cssClassName={cssClassName}
                     SelectedValues={this.state.SelectedValues}

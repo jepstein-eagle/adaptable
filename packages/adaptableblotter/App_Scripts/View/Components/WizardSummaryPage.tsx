@@ -1,15 +1,13 @@
 import * as React from "react";
-/// <reference path="../../typings/.d.ts" />
-import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
-import { FontWeight, FontStyle } from '../../Core/Enums';
-import { KeyValuePair, IColItem } from "../UIInterfaces";
+import {  IColItem } from "../UIInterfaces";
 import { WizardSummaryRow } from "./WizardSummaryRow";
 import { Panel } from "react-bootstrap";
 import { AdaptableObjectCollection } from "./AdaptableObjectCollection";
+import { IKeyValuePair } from "../../Utilities/Interface/IKeyValuePair";
 
 
 export interface WizardSummaryPageProps extends React.ClassAttributes<WizardSummaryPage> {
-    KeyValuePairs: KeyValuePair[]
+    KeyValuePairs: IKeyValuePair[]
     cssClassName: string
     header: string
 }

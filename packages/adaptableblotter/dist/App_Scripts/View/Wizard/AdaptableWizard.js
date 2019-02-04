@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const WizardLegend_1 = require("./WizardLegend");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ButtonCancel_1 = require("../Components/Buttons/ButtonCancel");
 const ButtonWizardAction_1 = require("../Components/Buttons/ButtonWizardAction");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 class DummyActiveStep {
     constructor() {
         this.StepName = "";
@@ -42,14 +42,18 @@ class AdaptableWizard extends React.Component {
         let BodyElement = this.props.Steps[indexStart];
         let newElement = this.cloneWizardStep(BodyElement);
         this.state = { ActiveState: newElement, IndexState: indexStart };
+        //  this.props.Data.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
+    //   private handleKeyDown(keyEvent: KeyboardEvent | any) {
+    //   alert("hello world")
+    //   }
     render() {
         let cssClassName = StyleConstants.AB_STYLE;
         return (React.createElement(react_bootstrap_1.Modal, { show: true, onHide: this.props.onHide, className: cssClassName + StyleConstants.BASE, container: this.props.ModalContainer },
             React.createElement("div", { className: cssClassName + StyleConstants.WIZARD_BASE },
                 React.createElement(react_bootstrap_1.Modal.Header, { closeButton: true, className: cssClassName + StyleConstants.WIZARD_HEADER },
                     React.createElement(react_bootstrap_1.Modal.Title, null,
-                        React.createElement(WizardLegend_1.WizardLegend, { StepNames: this.props.StepNames, ActiveStepName: this.ActiveStep.StepName, FriendlyName: this.props.FriendlyName }))),
+                        React.createElement(WizardLegend_1.WizardLegend, { StepNames: this.props.StepNames, ActiveStepName: this.ActiveStep.StepName, FriendlyName: this.props.FriendlyName, CanShowAllSteps: this.canFinishWizard(), onStepButtonClicked: (s) => this.onStepButtonClicked(s) }))),
                 React.createElement(react_bootstrap_1.Modal.Body, { className: cssClassName + StyleConstants.WIZARD_BODY },
                     React.createElement("div", { className: "ab_main_wizard" }, this.state.ActiveState)),
                 React.createElement(react_bootstrap_1.Modal.Footer, { className: cssClassName + StyleConstants.WIZARD_FOOTER },
@@ -57,6 +61,12 @@ class AdaptableWizard extends React.Component {
                     React.createElement(ButtonWizardAction_1.ButtonWizardAction, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "default", overrideDisableButton: !this.ActiveStep.canBack() || this.isFirstStep(), onClick: () => this.handleClickBack(), glyph: "chevron-left", overrideText: "Back", AccessLevel: Enums_1.AccessLevel.Full }),
                     React.createElement(ButtonWizardAction_1.ButtonWizardAction, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "info", overrideDisableButton: !this.ActiveStep.canNext() || this.isLastStep(), onClick: () => this.handleClickNext(), overrideText: "Next", glyph: "chevron-right", AccessLevel: Enums_1.AccessLevel.Full }),
                     React.createElement(ButtonWizardAction_1.ButtonWizardAction, { cssClassName: cssClassName, DisplayMode: "Glyph+Text", bsStyle: "primary", overrideDisableButton: !this.canFinishWizard(), onClick: () => this.handleClickFinish(), overrideText: "Finish", glyph: "ok", AccessLevel: Enums_1.AccessLevel.Full })))));
+    }
+    onStepButtonClicked(stepName) {
+        let stepIndex = this.props.StepNames.findIndex(s => s == stepName);
+        let BodyElement = this.props.Steps[stepIndex];
+        let newElement = this.cloneWizardStep(BodyElement);
+        this.setState({ ActiveState: newElement, IndexState: stepIndex });
     }
     ForceUpdateGoBackState() {
         //to force back/next. We'll see if that needs to be optimised'
@@ -110,7 +120,10 @@ class AdaptableWizard extends React.Component {
         return React.cloneElement(step, {
             ref: (Element) => { this.ActiveStep = Element; this.forceUpdate(); },
             Data: this.props.Data,
-            UpdateGoBackState: () => this.ForceUpdateGoBackState()
+            UpdateGoBackState: () => this.ForceUpdateGoBackState(),
+            Blotter: this.props.Blotter,
+            cssClassName: this.props.cssClassName,
+            Columns: this.props.Columns
         });
     }
 }

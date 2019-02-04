@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const ExpressionBuilderConditionSelector_1 = require("./ExpressionBuilderConditionSelector");
 const react_bootstrap_1 = require("react-bootstrap");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const ExpressionBuilderPreview_1 = require("./ExpressionBuilderPreview");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const ButtonCondition_1 = require("../Components/Buttons/ButtonCondition");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 class ExpressionBuilderPage extends React.Component {
     constructor() {
         super(...arguments);

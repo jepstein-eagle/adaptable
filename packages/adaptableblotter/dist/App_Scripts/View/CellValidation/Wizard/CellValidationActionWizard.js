@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 class CellValidationActionWizard extends React.Component {
@@ -32,11 +32,11 @@ class CellValidationActionWizard extends React.Component {
                         React.createElement(react_bootstrap_1.Radio, { inline: true, value: Enums_1.ActionMode.StopEdit, checked: this.state.ActionMode == Enums_1.ActionMode.StopEdit, onChange: (e) => this.onActionModeChanged(e) }, "Prevent the cell edit"),
                         ' ',
                         ' ',
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Cell Validation Action: Prevent", bodyText: ["Disallows all cell edits that break the validation rule with no override available."], MessageType: Enums_1.MessageType.Info })),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Cell Validation Action: Prevent", bodyText: ["Disallows all cell edits that break the validation rule with no override available."] })),
                     React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
                         React.createElement(react_bootstrap_1.Radio, { inline: true, value: Enums_1.ActionMode.WarnUser, checked: this.state.ActionMode == Enums_1.ActionMode.WarnUser, onChange: (e) => this.onActionModeChanged(e) }, "Show a warning"),
                         ' ',
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Cell Validation Action: Warning", bodyText: ["Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed."], MessageType: Enums_1.MessageType.Info })))));
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Cell Validation Action: Warning", bodyText: ["Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed."] })))));
     }
     onActionModeChanged(event) {
         let e = event.target;

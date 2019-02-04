@@ -1,15 +1,16 @@
 import * as React from "react";
 import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import { IColumn } from "../../../Core/Interface/IColumn";
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ICalculatedColumn } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { ICalculatedColumn } from "../../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
+import { PRIMARY_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
 
 
 export interface CalculatedColumnSettingsWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {
-    Columns: IColumn[]
+    
 }
 export interface CalculatedColumnSettingsWizardState {
     ColumnId: string,
@@ -26,7 +27,7 @@ export class CalculatedColumnSettingsWizard extends React.Component<CalculatedCo
 
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
         return <div className={cssClassName}>
-            <Panel header="Calculated Column Settings" bsStyle="primary">
+            <Panel header="Calculated Column Settings" bsStyle={PRIMARY_BSSTYLE}>
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="formInlineName">
                         <Col xs={3}>

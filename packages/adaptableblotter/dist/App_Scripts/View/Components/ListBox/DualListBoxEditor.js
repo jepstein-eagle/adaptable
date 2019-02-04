@@ -2,13 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const ReactDOM = require("react-dom");
-const Helper_1 = require("../../../Core/Helpers/Helper");
+const Helper_1 = require("../../../Utilities/Helpers/Helper");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Core/Enums");
+const Enums_1 = require("../../../Utilities/Enums");
 const ListBoxFilterSortComponent_1 = require("./ListBoxFilterSortComponent");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 const ButtonDirection_1 = require("../Buttons/ButtonDirection");
-const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 class DualListBoxEditor extends React.Component {
     constructor(props) {
         super(props);
@@ -31,12 +32,13 @@ class DualListBoxEditor extends React.Component {
         });
         this.state = {
             SelectedValues: this.props.SelectedValues,
-            AvailableValues: Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, availableValues, this.props.SortMember),
+            AvailableValues: this.createAvailableValuesList(availableValues, Enums_1.SortOrder.Ascending, this.props.SortMember),
             UiSelectedSelectedValues: [],
             UiSelectedAvailableValues: [],
             FilterValue: "",
             SortOrder: Enums_1.SortOrder.Ascending,
-            AllValues: this.props.SelectedValues.concat(this.props.AvailableValues)
+            AllValues: this.props.AvailableValues,
+            MasterValues: this.buildMasterValues(this.props.MasterChildren)
         };
     }
     componentWillReceiveProps(nextProps, nextContext) {
@@ -78,38 +80,48 @@ class DualListBoxEditor extends React.Component {
         }
         this.setState({
             SelectedValues: nextProps.SelectedValues,
-            AvailableValues: Helper_1.Helper.sortArrayWithProperty(this.state.SortOrder, availableValues, nextProps.SortMember),
+            AvailableValues: this.createAvailableValuesList(availableValues, this.state.SortOrder, nextProps.SortMember),
             UiSelectedAvailableValues: uiAvailableSelected,
             UiSelectedSelectedValues: uiSelectedSelected,
             FilterValue: this.state.FilterValue,
-            SortOrder: this.state.SortOrder
+            SortOrder: this.state.SortOrder,
+            MasterValues: this.buildMasterValues(nextProps.MasterChildren)
         });
     }
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.DOUBLE_LIST_BOX;
         let setRefFirstSelected = true;
-        let itemsElements = this.state.SelectedValues.map(x => {
+        // build selected elements
+        let selectedElements = this.state.SelectedValues.map(x => {
             let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
             if (isActive && setRefFirstSelected) {
                 setRefFirstSelected = false;
-                return React.createElement(react_bootstrap_1.ListGroupItem, { key: x, className: "Selected", draggable: true, onClick: () => this.onClickSelectedItem(x), active: isActive, ref: "FirstSelectedSelected", onDragStart: (event) => this.DragSelectedStart(event, x), onDragEnd: () => this.DragSelectedEnd(), value: x }, x);
+                return React.createElement(react_bootstrap_1.ListGroupItem, { key: x, className: "Selected", draggable: true, onClick: () => this.onClickSelectedItem(x), style: listGroupItemStyle, active: isActive, ref: "FirstSelectedSelected", onDragStart: (event) => this.DragSelectedStart(event, x), onDragEnd: () => this.DragSelectedEnd(), value: x }, x);
             }
             else {
-                return React.createElement(react_bootstrap_1.ListGroupItem, { key: x, className: "Selected", style: listGroupItemStyle, draggable: true, onClick: () => this.onClickSelectedItem(x), active: isActive, onDragStart: (event) => this.DragSelectedStart(event, x), onDragEnd: () => this.DragSelectedEnd(), value: x }, x);
+                return React.createElement(react_bootstrap_1.ListGroupItem, { key: x, className: "Selected", style: listGroupItemStyle, draggable: true, onClick: () => this.onClickSelectedItem(x), bsSize: 'small', active: isActive, onDragStart: (event) => this.DragSelectedStart(event, x), onDragEnd: () => this.DragSelectedEnd(), value: x }, x);
             }
         });
-        let columnValuesElements = this.state.AvailableValues.map(x => {
+        // build available elements - might have master/children
+        let availableElements = this.state.AvailableValues.map(x => {
             let isActive = this.state.UiSelectedAvailableValues.indexOf(x) >= 0;
             let display = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
             let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
-            if (this.state.FilterValue != "" && display.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0) {
+            let masterValue = this.state.MasterValues.find(mv => mv.value == x);
+            let isMasterElement = masterValue != null;
+            if (this.isValueFilteredOut(display)) {
                 return null;
             }
             else {
-                return React.createElement(react_bootstrap_1.ListGroupItem, { active: isActive, className: "Available", style: listGroupItemStyle, draggable: true, onClick: () => this.onClickAvailableValuesItem(x), key: value, onDragStart: (event) => this.DragAvailableStart(event, x), onDragEnd: () => this.DragAvailableEnd(), value: value }, display);
+                return React.createElement("span", { key: value }, isMasterElement ?
+                    React.createElement(react_bootstrap_1.ListGroupItem, { bsSize: 'small', className: "Available", style: listGroupItemStyle, active: isActive, bsStyle: StyleConstants.SUCCESS_BSSTYLE, draggable: false, onClick: () => this.onClickAvailableValuesItem(x), key: value, value: value },
+                        React.createElement(react_bootstrap_1.Checkbox, { key: masterValue.value, checked: masterValue.isOpen, onChange: (e) => this.onMasterValueCheckChanged(e, x), bsClass: 'small' },
+                            ' ',
+                            display)) :
+                    React.createElement(react_bootstrap_1.ListGroupItem, { bsSize: 'small', className: "Available", style: listGroupItemStyle, active: isActive, draggable: true, onClick: () => this.onClickAvailableValuesItem(x), key: value, onDragStart: (event) => this.DragAvailableStart(event, x), onDragEnd: () => this.DragAvailableEnd(), value: value }, display));
             }
         });
-        let headerFirstListBox = React.createElement(ListBoxFilterSortComponent_1.ListBoxFilterSortComponent, { FilterValue: this.state.FilterValue, sortColumnValues: () => this.sortColumnValues(), SortOrder: this.state.SortOrder, handleChangeFilterValue: (e) => this.handleChangeFilterValue(e) });
+        let headerFirstListBox = React.createElement(ListBoxFilterSortComponent_1.ListBoxFilterSortComponent, { FilterValue: this.state.FilterValue, sortColumnValues: () => this.sortColumnValues(), SortOrder: this.state.SortOrder, handleChangeFilterValue: (e) => this.handleChangeFilterValue(e), DisableSort: ArrayExtensions_1.ArrayExtensions.IsNotEmpty(this.state.MasterValues) });
         let listGroupAvailableStyle = (this.props.ReducedDisplay) ? listGroupStyleAvailableSmall : listGroupStyleAvailableLarge;
         let listGroupSelectedStyle = (this.props.ReducedDisplay) ? listGroupStyleSelectedSmall : listGroupStyleSelectedLarge;
         return (React.createElement("div", { className: cssClassName },
@@ -117,7 +129,7 @@ class DualListBoxEditor extends React.Component {
                 React.createElement(react_bootstrap_1.Panel, { header: this.props.HeaderAvailable, className: "ab_no-padding-anywhere-panel", bsStyle: "info" },
                     React.createElement("div", null,
                         headerFirstListBox,
-                        React.createElement(react_bootstrap_1.ListGroup, { className: "AvailableDropZone", style: listGroupAvailableStyle, onDragEnter: (event) => this.DragEnterAvailable(event), onDragOver: (event) => this.DragOverAvailable(event), onDragLeave: (event) => this.DragLeaveAvailable(event) }, columnValuesElements)))),
+                        React.createElement(react_bootstrap_1.ListGroup, { className: "AvailableDropZone", style: listGroupAvailableStyle, onDragEnter: (event) => this.DragEnterAvailable(event), onDragOver: (event) => this.DragOverAvailable(event), onDragLeave: (event) => this.DragLeaveAvailable(event) }, availableElements)))),
             React.createElement(react_bootstrap_1.Col, { xs: 2, style: colButtonStyle },
                 React.createElement(react_bootstrap_1.ButtonGroup, null,
                     React.createElement(ButtonDirection_1.ButtonDirection, { cssClassName: cssClassName, overrideText: "Add All", DisplayMode: "Text+Glyph", glyph: "fast-forward", style: { width: "110px", marginBottom: "10px" }, overrideDisableButton: this.state.AvailableValues.length == 0, onClick: () => this.AddAll() }),
@@ -127,13 +139,123 @@ class DualListBoxEditor extends React.Component {
             React.createElement(react_bootstrap_1.Col, { xs: 4 },
                 React.createElement(react_bootstrap_1.Panel, { header: this.props.HeaderSelected, className: "ab_no-padding-anywhere-panel", bsStyle: "info" },
                     React.createElement("div", null,
-                        React.createElement(react_bootstrap_1.ListGroup, { style: listGroupSelectedStyle, className: "SelectedDropZone", onDragEnter: (event) => this.DragEnterSelected(event), onDragOver: (event) => this.DragOverSelected(event), onDragLeave: (event) => this.DragLeaveSelected(event) }, itemsElements)))),
+                        React.createElement(react_bootstrap_1.ListGroup, { style: listGroupSelectedStyle, className: "SelectedDropZone", onDragEnter: (event) => this.DragEnterSelected(event), onDragOver: (event) => this.DragOverSelected(event), onDragLeave: (event) => this.DragLeaveSelected(event) }, selectedElements)))),
             React.createElement(react_bootstrap_1.Col, { xs: 2, style: colButtonStyle },
                 React.createElement(react_bootstrap_1.ButtonGroup, null,
                     React.createElement(ButtonDirection_1.ButtonDirection, { cssClassName: cssClassName, overrideText: "Top", DisplayMode: "Glyph+Text", glyph: "triangle-top", style: { width: "110px", marginBottom: "10px" }, overrideDisableButton: !this.canGoTopOrUp(), onClick: () => this.Top() }),
                     React.createElement(ButtonDirection_1.ButtonDirection, { cssClassName: cssClassName, overrideText: "Up", DisplayMode: "Glyph+Text", glyph: "menu-up", style: { width: "110px", marginBottom: "10px" }, overrideDisableButton: !this.canGoTopOrUp(), onClick: () => this.Up() }),
                     React.createElement(ButtonDirection_1.ButtonDirection, { cssClassName: cssClassName, overrideText: "Down", DisplayMode: "Glyph+Text", glyph: "menu-down", style: { width: "110px", marginBottom: "10px" }, overrideDisableButton: !this.canGoDownOrBottom(), onClick: () => this.Down() }),
                     React.createElement(ButtonDirection_1.ButtonDirection, { cssClassName: cssClassName, overrideText: "Bottom", DisplayMode: "Glyph+Text", glyph: "triangle-bottom", style: { width: "110px", marginBottom: "10px" }, overrideDisableButton: !this.canGoDownOrBottom(), onClick: () => this.Bottom() })))));
+    }
+    buildMasterValues(masterChildren) {
+        if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(masterChildren)) {
+            return [];
+        }
+        return this.props.MasterChildren.map(mc => {
+            return { value: mc.Master, isAvailable: false, isOpen: true };
+        });
+    }
+    onMasterValueCheckChanged(event, item) {
+        let e = event.target;
+        let masterValues = [].concat(this.state.MasterValues);
+        let currentMasterValue = masterValues.find(mv => mv.value == item);
+        currentMasterValue.isOpen = e.checked;
+        let newArray = [...this.state.UiSelectedAvailableValues];
+        let index = this.state.UiSelectedAvailableValues.indexOf(item);
+        if (index >= 0) {
+            let newArray = [...this.state.UiSelectedAvailableValues];
+            newArray.splice(index, 1);
+        }
+        this.setState({
+            MasterValues: masterValues, UiSelectedAvailableValues: newArray
+        });
+    }
+    createAvailableValuesList(availableValues, sortOrder, sortMember) {
+        // if there are no master / children then sort the values
+        if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(this.props.MasterChildren)) {
+            let valstoReturn = Helper_1.Helper.sortArrayWithProperty(sortOrder, availableValues, sortMember);
+            return valstoReturn;
+        }
+        // we do have master / children
+        let returnValues = [];
+        // first add any orphans = that are not masters or are not children
+        availableValues.forEach(av => {
+            let masterChildren = this.props.MasterChildren.find(mc => mc.Master == av || ArrayExtensions_1.ArrayExtensions.ContainsItem(mc.Children, av));
+            if (!masterChildren) {
+                returnValues.push(av);
+            }
+        });
+        // now add all the Master Children
+        this.props.MasterChildren.forEach(mc => {
+            let availableChildren = [];
+            mc.Children.forEach(c => {
+                if (ArrayExtensions_1.ArrayExtensions.ContainsItem(availableValues, c)) {
+                    availableChildren.push(c);
+                }
+            });
+            // only add the item if there are available children
+            if (ArrayExtensions_1.ArrayExtensions.IsNotEmpty(availableChildren)) {
+                returnValues.push(mc.Master);
+                availableChildren.forEach(c => {
+                    returnValues.push(c);
+                });
+            }
+        });
+        return returnValues;
+    }
+    isValueFilteredOut(item) {
+        // if not master child then simply filter on the value
+        if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(this.state.MasterValues)) {
+            return (this.state.FilterValue != "" && item.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0);
+        }
+        let masterNames = this.state.MasterValues.map(mv => { return mv.value; });
+        let isFilterMode = StringExtensions_1.StringExtensions.IsNotEmpty(this.state.FilterValue);
+        if (ArrayExtensions_1.ArrayExtensions.ContainsItem(masterNames, item)) {
+            let masterChildren = this.props.MasterChildren.find(mc => mc.Master == item);
+            let filterMaster = true;
+            if (masterChildren) {
+                // so we are dealing with a Master
+                masterChildren.Children.forEach(c => {
+                    if (ArrayExtensions_1.ArrayExtensions.ContainsItem(this.state.AvailableValues, c)) {
+                        // we need the child to be present to show the master
+                        if (isFilterMode) {
+                            // if there is a filter then the child needs to pass that in order to display the Master
+                            if (c.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) >= 0) {
+                                filterMaster = false;
+                            }
+                        }
+                        else {
+                            // if no filter, then always show the Master
+                            filterMaster = false;
+                        }
+                    }
+                });
+            }
+            return filterMaster;
+        }
+        else {
+            // its a child - so first check that the Master is open
+            let masterChildren = this.props.MasterChildren.find(mc => ArrayExtensions_1.ArrayExtensions.ContainsItem(mc.Children, item));
+            if (masterChildren) {
+                let masterValue = this.state.MasterValues.find(mv => mv.value == masterChildren.Master);
+                if (!masterValue.isOpen) { // no open Master so always filter
+                    return true;
+                }
+                else {
+                    // if there is a filter then check on that, otherwise return false
+                    if (isFilterMode) {
+                        return (item.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0);
+                    }
+                    else {
+                        return false;
+                    }
+                }
+            }
+            else {
+                // for orphans filter as normal
+                return (item.toLocaleLowerCase().indexOf(this.state.FilterValue.toLocaleLowerCase()) < 0);
+            }
+        }
     }
     canGoTopOrUp() {
         return this.state.UiSelectedSelectedValues.length != 0
@@ -187,7 +309,8 @@ class DualListBoxEditor extends React.Component {
     Add() {
         let newSelectedValues = [...this.state.SelectedValues];
         let newAvailableValues = [...this.state.AvailableValues];
-        this.state.UiSelectedAvailableValues.forEach(x => {
+        let valuesToAdd = this.getValuesToAdd(this.state.UiSelectedAvailableValues);
+        valuesToAdd.forEach(x => {
             let index = newAvailableValues.indexOf(x);
             newAvailableValues.splice(index, 1);
             if (this.props.ValueMember) {
@@ -197,6 +320,7 @@ class DualListBoxEditor extends React.Component {
                 newSelectedValues.push(x);
             }
         });
+        newAvailableValues = this.createAvailableValuesList(newAvailableValues, this.state.SortOrder, this.props.SortMember);
         this.setState({
             UiSelectedAvailableValues: [],
             SelectedValues: newSelectedValues,
@@ -205,12 +329,15 @@ class DualListBoxEditor extends React.Component {
     }
     AddAll() {
         let newSelectedValues = [].concat(this.state.SelectedValues);
-        this.state.AvailableValues.forEach(x => {
+        let valuesToAdd = this.getValuesToAdd(this.state.AvailableValues);
+        valuesToAdd.forEach(x => {
             if (this.props.ValueMember) {
                 newSelectedValues.push(x[this.props.ValueMember]);
             }
             else {
-                newSelectedValues.push(x);
+                if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(this.state.MasterValues, x)) {
+                    newSelectedValues.push(x);
+                }
             }
         });
         let newAvailableValues = [];
@@ -221,9 +348,30 @@ class DualListBoxEditor extends React.Component {
             AvailableValues: newAvailableValues
         }, () => this.raiseOnChange());
     }
+    getValuesToAdd(addedValues) {
+        if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(this.props.MasterChildren)) {
+            return addedValues;
+        }
+        let newAvailableValues = [];
+        addedValues.forEach(av => {
+            let masterChildren = this.props.MasterChildren.find(mc => mc.Master == av);
+            if (masterChildren) {
+                masterChildren.Children.forEach(c => {
+                    if (ArrayExtensions_1.ArrayExtensions.ContainsItem(this.state.AvailableValues, c)) {
+                        ArrayExtensions_1.ArrayExtensions.AddItem(newAvailableValues, c);
+                    }
+                });
+            }
+            else {
+                ArrayExtensions_1.ArrayExtensions.AddItem(newAvailableValues, av);
+            }
+        });
+        return newAvailableValues;
+    }
     RemoveAll() {
         let newSelectedValues = [];
         let newAvailableValues = [].concat(this.state.AllValues);
+        newAvailableValues = this.createAvailableValuesList(newAvailableValues, this.state.SortOrder, this.props.SortMember);
         this.setState({
             UiSelectedSelectedValues: [],
             UiSelectedAvailableValues: [],
@@ -250,6 +398,7 @@ class DualListBoxEditor extends React.Component {
                 }
             }
         });
+        newAvailableValues = this.createAvailableValuesList(newAvailableValues, this.state.SortOrder, this.props.SortMember);
         this.setState({
             UiSelectedSelectedValues: [],
             SelectedValues: newSelectedValues,
@@ -342,7 +491,8 @@ class DualListBoxEditor extends React.Component {
             this.overHTMLElement = null;
             this.draggedHTMLElement = null;
             this.draggedElement = null;
-            // Update state
+            // Update state 
+            newAvailableValues = this.createAvailableValuesList(newAvailableValues, this.state.SortOrder, this.props.SortMember);
             this.setState({
                 SelectedValues: newSelectedArray,
                 AvailableValues: newAvailableValues,
@@ -557,7 +707,7 @@ var listGroupStyleSelectedSmall = {
 };
 var listGroupItemStyle = {
     'fontSize': 'small',
-    'padding': '8px',
+    'padding': '5px',
 };
 var colButtonStyle = {
     transform: 'translateY(100px)',

@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const WizardSummaryPage_1 = require("../../Components/WizardSummaryPage");
-const StrategyConstants = require("../../../Core/Constants/StrategyConstants");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class CustomSortSummaryWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -20,8 +20,12 @@ class CustomSortSummaryWizard extends React.Component {
     }
     canNext() { return true; }
     canBack() { return true; }
-    Next() { }
-    Back() { }
+    Next() {
+        // todo
+    }
+    Back() {
+        //todo
+    }
     GetIndexStepIncrement() {
         return 1;
     }

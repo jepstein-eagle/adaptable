@@ -2,15 +2,15 @@ import * as React from "react";
 import { Panel, Col, Radio, ControlLabel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 //import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ReportColumnScope, MessageType } from '../../../Core/Enums';
+import { ReportColumnScope, MessageType } from '../../../Utilities/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { DualListBoxEditor } from '../../Components/ListBox/DualListBoxEditor';
-import { IReport } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IReport } from "../../../Utilities/Interface/BlotterObjects/IReport";
 
 export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<IReport> {
-    Columns: Array<IColumn>
+   
 }
 export interface ReportColumnsWizardState {
     AllColumnValues: string[];
@@ -22,7 +22,7 @@ export class ReportColumnChooserWizard extends React.Component<ReportColumnChoos
         super(props);
         this.state = {
             AllColumnValues: this.props.Columns.map(c => c.FriendlyName),
-            SelectedColumnValues: this.props.Data.Columns.map(c =>
+            SelectedColumnValues: this.props.Data.ColumnIds.map(c =>
                 this.props.Columns.find(col => col.ColumnId == c).FriendlyName),
         }
     }
@@ -57,7 +57,7 @@ export class ReportColumnChooserWizard extends React.Component<ReportColumnChoos
     }
     public canBack(): boolean { return true; }
     public Next(): void {
-        this.props.Data.Columns = this.state.SelectedColumnValues.map(c =>
+        this.props.Data.ColumnIds = this.state.SelectedColumnValues.map(c =>
             this.props.Columns.find(col => col.FriendlyName == c).ColumnId)
     }
     public Back(): void {

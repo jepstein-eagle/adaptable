@@ -6,22 +6,24 @@ const react_bootstrap_1 = require("react-bootstrap");
 const PlusMinusRedux = require("../../Redux/ActionsReducers/PlusMinusRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const PlusMinusWizard_1 = require("./Wizard/PlusMinusWizard");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const PlusMinusEntityRow_1 = require("./PlusMinusEntityRow");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const Enums_1 = require("../../Utilities/Enums");
 class PlusMinusPopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
@@ -45,7 +47,7 @@ class PlusMinusPopupComponent extends React.Component {
             { Content: "", Size: 2 },
         ];
         let PlusMinusRules = this.props.PlusMinusRules.map((x, index) => {
-            let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId);
+            let column = ColumnHelper_1.ColumnHelper.getColumnFromId(x.ColumnId, this.props.Columns);
             return React.createElement(PlusMinusEntityRow_1.PlusMinusEntityRow, { cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: x, key: index, Index: index, UserFilters: this.props.UserFilters, Columns: this.props.Columns, onEdit: (index, customSort) => this.onEdit(index, x), TeamSharingActivated: this.props.TeamSharingActivated, onShare: () => this.props.onShare(x), onDeleteConfirm: PlusMinusRedux.PlusMinusDeleteCondition(index), Column: column, onColumnDefaultNudgeValueChange: (index, event) => this.onColumnDefaultNudgeValueChange(index, event) });
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createColumnNudgeValue(), overrideTooltip: "Create Plus / Minus Rule", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
@@ -106,13 +108,14 @@ class PlusMinusPopupComponent extends React.Component {
     }
     onConfirmWarningCellValidation(index, plusMinus) {
         let confirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Existing Default Column Nudge Value for: " + plusMinus.ColumnId,
-            ConfirmationMsg: "Do you want to override it with new value: ?",
-            ConfirmationText: "Bypass Rule",
+            CancelButtonText: "Cancel",
+            Header: "Existing Default Column Nudge Value for: " + plusMinus.ColumnId,
+            Msg: "Do you want to override it with new value: ?",
+            ConfirmButtonText: "Confirm",
             CancelAction: null,
             ConfirmAction: PlusMinusRedux.PlusMinusEditCondition(index, { ColumnId: plusMinus.ColumnId, DefaultNudge: plusMinus.NudgeValue }),
-            ShowCommentBox: false
+            ShowInputBox: false,
+            MessageType: Enums_1.MessageType.Warning
         };
         this.props.onConfirmWarningCellValidation(confirmation);
     }

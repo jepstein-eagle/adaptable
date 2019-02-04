@@ -3,29 +3,31 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { ConditionalStyleScope, AccessLevel } from '../../Core/Enums'
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import { ConditionalStyleScope, AccessLevel } from '../../Utilities/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StyleVisualItem } from '../Components/StyleVisualItem'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IConditionalStyle, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
+import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
 
 
 export interface ConditionalStyleSummaryProps extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
     ConditionalStyles: IConditionalStyle[]
     ColorPalette: string[]
+    ColumnCategories: IColumnCategory[]
     StyleClassNames: string[]
     onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyle) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction
 
@@ -35,7 +37,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
 
     constructor(props: ConditionalStyleSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
 
     }
     render(): any {
@@ -89,6 +91,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<Conditiona
                     SystemFilters={this.props.SystemFilters}
                     ColorPalette={this.props.ColorPalette}
                     StyleClassNames={this.props.StyleClassNames}
+                    ColumnCategories={this.props.ColumnCategories}
                     Blotter={this.props.Blotter}
                     WizardStartIndex={this.state.WizardStartIndex}
                     onCloseWizard={() => this.onCloseWizard()}
@@ -135,7 +138,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         SystemFilters: state.SystemFilter.SystemFilters,
         Entitlements: state.Entitlements.FunctionEntitlements,
         ColorPalette: state.UserInterface.ColorPalette,
-        StyleClassNames: state.UserInterface.StyleClassNames
+        StyleClassNames: state.UserInterface.StyleClassNames,
+        ColumnCategories: state.ColumnCategory.ColumnCategories
     };
 }
 

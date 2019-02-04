@@ -1,8 +1,9 @@
 import * as React from "react";
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from "redux";
-import { IColumn  } from '../../../Core/Interface/IColumn';
-import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IColumn  } from '../../../Utilities/Interface/IColumn';
+import { IAdaptableBlotterObject } from '../../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
 import { IColItem } from "../../UIInterfaces";
 
 

@@ -1,12 +1,12 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IThemeStrategy } from './Interface/IThemeStrategy'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ThemesContent } from '../Styles/themes'
 import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
-import * as GeneralConstants from '../Core/Constants/GeneralConstants'
-import { StateChangedTrigger } from '../Core/Enums';
+import * as GeneralConstants from '../Utilities/Constants/GeneralConstants'
+import { StateChangedTrigger } from '../Utilities/Enums';
 
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
     private ThemeState: ThemeState
@@ -19,7 +19,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
 
         // Create the <style> tag for shipped themes
         this.style = document.createElement("style");
-        this.style.id = `${blotter.BlotterOptions.adaptableBlotterContainer}-theme`;
+        this.style.id = `${blotter.BlotterOptions.containerOptions.adaptableBlotterContainer}-theme`;
         this.style.appendChild(document.createTextNode(""));   // WebKit hack :(
         document.head.appendChild(this.style);  // Adds the <style> element to the page
 

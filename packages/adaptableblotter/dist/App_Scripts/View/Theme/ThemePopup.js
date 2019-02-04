@@ -5,7 +5,7 @@ const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
 const ThemeRedux = require("../../Redux/ActionsReducers/ThemeRedux");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 class ThemePopupComponent extends React.Component {
     render() {

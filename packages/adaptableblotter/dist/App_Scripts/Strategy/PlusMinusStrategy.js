@@ -2,23 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const PlusMinusRedux = require("../Redux/ActionsReducers/PlusMinusRedux");
-const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
-const StrategyConstants = require("../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../Core/Constants/ScreenPopups");
-const Enums_1 = require("../Core/Enums");
-const ExpressionHelper_1 = require("../Core/Helpers/ExpressionHelper");
-const Helper_1 = require("../Core/Helpers/Helper");
-const ObjectFactory_1 = require("../Core/ObjectFactory");
-const ColumnHelper_1 = require("../Core/Helpers/ColumnHelper");
-const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
+const Enums_1 = require("../Utilities/Enums");
+const Helper_1 = require("../Utilities/Helpers/Helper");
+const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
+const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
+const ExpressionHelper_1 = require("../Utilities/Helpers/ExpressionHelper");
+const ObjectFactory_1 = require("../Utilities/ObjectFactory");
+const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
 class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.PlusMinusStrategyId, blotter);
         blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent));
     }
     InitState() {
-        if (this.PlusMinusState != this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus) {
-            this.PlusMinusState = this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
+        if (this.PlusMinusState != this.GetPlusMinusState()) {
+            this.PlusMinusState = this.GetPlusMinusState();
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.PlusMinus, this.PlusMinusState);
             }
@@ -27,11 +27,10 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyConstants.PlusMinusStrategyName, ScreenPopups.PlusMinusPopup, StrategyConstants.PlusMinusGlyph);
     }
-    addContextMenuItem(columnId) {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            let column = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+    addContextMenuItem(column) {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
             if (column && column.DataType == Enums_1.DataType.Number) {
-                this.createContextMenuItemShowPopup("Create Plus/Minus Rule", ScreenPopups.PlusMinusPopup, StrategyConstants.PlusMinusGlyph, "New|" + columnId);
+                this.createContextMenuItemShowPopup("Create Plus/Minus Rule", ScreenPopups.PlusMinusPopup, StrategyConstants.PlusMinusGlyph, "New|" + column.ColumnId);
             }
         }
     }
@@ -51,7 +50,7 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             let warningValues = [];
             for (var keyValuePair of selectedCellInfo.Selection) {
                 for (var selectedCell of keyValuePair[1]) {
-                    let selectedColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == selectedCell.columnId);
+                    let selectedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(selectedCell.columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
                     if (selectedColumn.DataType == Enums_1.DataType.Number && !selectedColumn.ReadOnly) {
                         //for aggrid as we are getting strings sometimes 
                         if (typeof selectedCell.value != "number") {
@@ -83,7 +82,6 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                             NewValue: newValue.Value,
                             ColumnId: selectedCell.columnId,
                             IdentifierValue: keyValuePair[0],
-                            Timestamp: Date.now(),
                             Record: null
                         };
                         let validationRules = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
@@ -118,13 +116,13 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (failedRules.length > 0) {
             let failedMessages = [];
             failedRules.forEach(fr => {
-                let failedMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(fr, this.blotter, false) + "\n";
+                let failedMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(fr, this.blotter) + "\n";
                 let existingMessage = failedMessages.find(f => f == failedMessage);
                 if (existingMessage == null) {
                     failedMessages.push(failedMessage);
                 }
             });
-            this.blotter.api.alertShowError("Nudge(s) failed rule", failedMessages.toString(), true);
+            this.blotter.api.alertApi.ShowError("Nudge(s) failed rule", failedMessages.toString(), true);
         }
     }
     ShowWarningMessages(failedRules, warningValues, successfulValues, keyEventString) {
@@ -132,7 +130,7 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             let allValues = warningValues.concat(...successfulValues);
             let warningMessages = [];
             failedRules.forEach(fr => {
-                let warningMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(fr, this.blotter, false) + "\n";
+                let warningMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(fr, this.blotter) + "\n";
                 let existingMessage = warningMessages.find(w => w == warningMessage);
                 if (existingMessage == null) {
                     warningMessages.push(warningMessage);
@@ -140,22 +138,19 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             });
             let warningMessage = failedRules.length + " Nudge(s) failed rule:\n" + warningMessages.toString();
             ;
-            let confirmation = {
-                CancelText: "Cancel Edit",
-                ConfirmationTitle: "Cell Validation Failed",
-                ConfirmationMsg: warningMessage,
-                ConfirmationText: "Bypass Rule",
-                CancelAction: PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString),
-                ConfirmAction: PlusMinusRedux.PlusMinusApply(allValues, keyEventString),
-                ShowCommentBox: true
-            };
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowConfirmation(confirmation));
+            let confirmAction = PlusMinusRedux.PlusMinusApply(allValues, keyEventString);
+            let cancelAction = PlusMinusRedux.PlusMinusApply(successfulValues, keyEventString);
+            let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
+            this.blotter.api.internalApi.PopupShowConfirmation(confirmation);
         }
     }
     ApplyPlusMinus(keyEventString, successfulValues) {
         if (successfulValues.length > 0) {
             this.blotter.setValueBatch(successfulValues);
         }
+    }
+    GetPlusMinusState() {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
     }
 }
 exports.PlusMinusStrategy = PlusMinusStrategy;

@@ -1,40 +1,28 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
 import { connect } from 'react-redux';
-import { ButtonToolbar, Col, InputGroup, Button } from 'react-bootstrap';
-import { Typeahead } from 'react-bootstrap-typeahead'
+import { InputGroup, Button } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
-import { Helper } from '../../Core/Helpers/Helper';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { ButtonApply } from '../Components/Buttons/ButtonApply';
-import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { IPreviewInfo } from "../../Core/Interface/IPreviewResult";
-import { IColumn } from "../../Core/Interface/IColumn";
-import { IUIConfirmation } from "../../Core/Interface/IMessage";
-import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
-import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
-import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IEvent } from "../../Core/Interface/IEvent";
-import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
-import { IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
-import { MessageType, StatusColour, AccessLevel } from "../../Core/Enums";
+import { StatusColour, AccessLevel, MessageType } from "../../Utilities/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
-import { fail } from "assert";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { UIHelper } from "../UIHelper";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
+import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
+import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;
@@ -56,7 +44,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         super(props);
         this.state = {
             Disabled: true,
-            SubFunc: (sender: IAdaptableBlotter, event: IAdaptableBlotter) => {
+            SubFunc: () => {
                 this.onSelectionChanged()
             }
         }
@@ -85,7 +73,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="default" bsSize="small">Off</Button>
             : <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="primary" bsSize="small">On</Button>
 
-        let selectedColumn = (this.props.PreviewInfo) ?
+        let selectedColumn = (this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.PreviewInfo.ColumnId)) ?
             ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns) :
             null;
 
@@ -191,22 +179,15 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
     }
 
     private onConfirmWarningCellValidation() {
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: BulkUpdateRedux.BulkUpdateApply(false),
-            ConfirmAction: BulkUpdateRedux.BulkUpdateApply(true),
-            ShowCommentBox: true
-        }
-        this.props.onConfirmWarningCellValidation(confirmation)
+        let confirmAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(true)
+        let cancelAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(false);
+        let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
+        this.props.onConfirmWarningCellValidation(confirmation);
     }
 
     onApplyBulkUpdate(): any {
         this.props.onApplyBulkUpdate()
         this.onSelectionChanged()
-
     }
 
 }

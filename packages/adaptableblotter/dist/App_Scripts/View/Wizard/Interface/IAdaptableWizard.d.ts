@@ -1,7 +1,8 @@
 /// <reference types="react" />
-import { IColumn } from '../../../Core/Interface/IColumn';
-import { IUserFilter, IAdaptableBlotterObject } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
-import { IAdaptableBlotter } from '../../../Core/Interface/IAdaptableBlotter';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { IAdaptableBlotterObject } from '../../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 export interface AdaptableWizardStep {
     StepName: string;
     canNext(): boolean;
@@ -15,13 +16,13 @@ export interface AdaptableWizardStepProps<T> {
     Data?: T;
     UpdateGoBackState?(): void;
     StepName?: string;
-    cssClassName: string;
+    cssClassName?: string;
+    Blotter?: IAdaptableBlotter;
+    Columns?: IColumn[];
 }
 export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
-    Columns: Array<IColumn>;
     UserFilters: IUserFilter[];
     SystemFilters: string[];
-    Blotter: IAdaptableBlotter;
 }
 export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View> extends IAdaptableBlotterObjectAdaptableWizardProps<View> {
     Columns: Array<IColumn>;

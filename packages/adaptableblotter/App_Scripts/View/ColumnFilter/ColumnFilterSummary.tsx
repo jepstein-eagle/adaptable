@@ -3,9 +3,9 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
@@ -13,11 +13,10 @@ import { SummaryRowItem } from '../Components/StrategySummary/SummaryRowItem';
 import { StrategyProfile } from '../Components/StrategyProfile'
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IColumnFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { AccessLevel } from "../../Core/Enums";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IEntitlement } from "../../Utilities/Interface/IEntitlement";
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
 
 export interface ColumnFilterSummaryProps extends StrategySummaryProps<ColumnFilterSummaryComponent> {
     ColumnFilters: IColumnFilter[]
@@ -30,7 +29,7 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
 
     constructor(props: ColumnFilterSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render(): any {
@@ -42,8 +41,8 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
         summaryItems.push(description);
         summaryItems.push(
             <ButtonClear cssClassName={this.props.cssClassName}
-                bsStyle={"primary"}
-                size={"small"} onClick={() => this.props.onClearFilter(columnFilter.ColumnId)}
+                bsStyle={StyleConstants.PRIMARY_BSSTYLE}
+                size={"xs"} onClick={() => this.props.onClearFilter(columnFilter.ColumnId)}
                 overrideTooltip="Clear Column Filter"
                 DisplayMode="Glyph"
                 overrideDisableButton={columnFilter == null}
@@ -53,11 +52,7 @@ export class ColumnFilterSummaryComponent extends React.Component<ColumnFilterSu
     }
 
     getDescription(columnFilter: IColumnFilter): string {
-        if (this.props.Blotter && !this.props.Blotter.isFilterable()) {
-            return "Grid is not filterable"
-        }
-
-        if ( this.props.SummarisedColumn  && !this.props.SummarisedColumn.Filterable) {
+       if ( this.props.SummarisedColumn  && !this.props.SummarisedColumn.Filterable) {
             return "Column is not filterable"
         }
 

@@ -1,11 +1,12 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { IFreeTextColumnStrategy } from './Interface/IFreeTextColumnStrategy'
 import { FreeTextColumnState } from '../Redux/ActionsReducers/Interface/IState';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
-import { StateChangedTrigger } from '../Core/Enums';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { StateChangedTrigger } from '../Utilities/Enums';
+import { IColumn } from '../Utilities/Interface/IColumn';
 
 export  class FreeTextColumnStrategy extends AdaptableStrategyBase implements IFreeTextColumnStrategy {
     protected FreeTextColumnState: FreeTextColumnState
@@ -17,21 +18,19 @@ export  class FreeTextColumnStrategy extends AdaptableStrategyBase implements IF
         this.createMenuItemShowPopup(StrategyConstants.FreeTextColumnStrategyName, ScreenPopups.FreeTextColumnPopup, StrategyConstants.FreeTextColumnGlyph);
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter)) {
-            let FreeTextExists: boolean = ArrayExtensions.ContainsItem(this.FreeTextColumnState.FreeTextColumns.map(f => f.ColumnId), columnId)
-            let label = FreeTextExists ? "Edit " : "Create "
-            let popupParam = FreeTextExists ? "Edit|" : "New|"
-
-            this.createContextMenuItemShowPopup(
-                label + StrategyConstants.FreeTextColumnStrategyName,
-                ScreenPopups.FreeTextColumnPopup,
-                StrategyConstants.FreeTextColumnGlyph,
-                popupParam + columnId)
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
+            if (this.FreeTextColumnState.FreeTextColumns.find(cc => cc.ColumnId == column.ColumnId)) {
+                this.createContextMenuItemShowPopup(
+                    "Edit " + StrategyConstants.FreeTextColumnStrategyName,
+                    ScreenPopups.FreeTextColumnPopup,
+                    StrategyConstants.FreeTextColumnGlyph,
+                    "Edit|" + column.ColumnId)
+            }
         }
     }
 
-    protected InitState() {
+      protected InitState() {
         if (this.FreeTextColumnState != this.blotter.AdaptableBlotterStore.TheStore.getState().FreeTextColumn) {
             this.FreeTextColumnState = this.blotter.AdaptableBlotterStore.TheStore.getState().FreeTextColumn;
 

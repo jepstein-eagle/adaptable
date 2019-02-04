@@ -2,9 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
-const ArrayExtensions_1 = require("../../../Core/Extensions/ArrayExtensions");
+const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
+const StyleConstants_1 = require("../../../Utilities/Constants/StyleConstants");
 class AdvancedSearchSettingsWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -18,7 +19,7 @@ class AdvancedSearchSettingsWizard extends React.Component {
         let cssClassName = this.props.cssClassName + "-settings";
         let validationState = StringExtensions_1.StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
         return React.createElement("div", { className: cssClassName },
-            React.createElement(react_bootstrap_1.Panel, { header: "Advanced Search Settings", bsStyle: "primary" },
+            React.createElement(react_bootstrap_1.Panel, { header: "Advanced Search Settings", bsStyle: StyleConstants_1.PRIMARY_BSSTYLE },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "searchName" },
                         React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, "Search Name: "),

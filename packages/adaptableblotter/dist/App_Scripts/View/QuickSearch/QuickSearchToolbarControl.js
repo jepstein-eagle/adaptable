@@ -9,10 +9,10 @@ const QuickSearchRedux = require("../../Redux/ActionsReducers/QuickSearchRedux")
 const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
 const AdaptableBlotterFormControlTextClear_1 = require("../Components/Forms/AdaptableBlotterFormControlTextClear");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
-const GeneralConstants = require("../../Core/Constants/GeneralConstants");
-const Enums_1 = require("../../Core/Enums");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
+const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
+const Enums_1 = require("../../Utilities/Enums");
 class QuickSearchToolbarControlComponent extends React.Component {
     constructor(props) {
         super(props);

@@ -1,50 +1,51 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.CELL_VALIDATION_ADD_UPDATE = 'CELL_VALIDATION_ADD_UPDATE';
 exports.CELL_VALIDATION_DELETE = 'CELL_VALIDATION_DELETE';
 exports.CELL_VALIDATION_CHANGE_MODE = 'CELL_VALIDATION_CHANGE_MODE';
-exports.CellValidationAddUpdate = (Index, CellValidationRule) => ({
+exports.CellValidationAddUpdate = (index, cellValidationRule) => ({
     type: exports.CELL_VALIDATION_ADD_UPDATE,
-    Index,
-    CellValidationRule
+    index,
+    cellValidationRule
 });
-exports.CellValidationDelete = (Index) => ({
+exports.CellValidationDelete = (index) => ({
     type: exports.CELL_VALIDATION_DELETE,
-    Index,
+    index,
 });
-exports.CellValidationChangeMode = (Index, ActionMode) => ({
+exports.CellValidationChangeMode = (index, ActionMode) => ({
     type: exports.CELL_VALIDATION_CHANGE_MODE,
-    Index,
+    index,
     ActionMode
 });
 const initialCellValidationState = {
-    CellValidations: []
+    CellValidations: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.CellValidationReducer = (state = initialCellValidationState, action) => {
-    let CellValidations;
+    let cellValidations;
     switch (action.type) {
         case exports.CELL_VALIDATION_ADD_UPDATE: {
             let actionTyped = action;
-            CellValidations = [].concat(state.CellValidations);
-            if (actionTyped.Index == -1) {
-                CellValidations.push(actionTyped.CellValidationRule);
+            cellValidations = [].concat(state.CellValidations);
+            if (actionTyped.index == -1) {
+                cellValidations.push(actionTyped.cellValidationRule);
             }
             else {
-                CellValidations[actionTyped.Index] = actionTyped.CellValidationRule;
+                cellValidations[actionTyped.index] = actionTyped.cellValidationRule;
             }
-            return Object.assign({}, state, { CellValidations: CellValidations });
+            return Object.assign({}, state, { CellValidations: cellValidations });
         }
         case exports.CELL_VALIDATION_DELETE: {
-            CellValidations = [].concat(state.CellValidations);
-            CellValidations.splice(action.Index, 1);
-            return Object.assign({}, state, { CellValidations: CellValidations });
+            cellValidations = [].concat(state.CellValidations);
+            cellValidations.splice(action.index, 1);
+            return Object.assign({}, state, { CellValidations: cellValidations });
         }
         case exports.CELL_VALIDATION_CHANGE_MODE: {
             let actionTyped = action;
-            CellValidations = [].concat(state.CellValidations);
-            let cellValidation = CellValidations[actionTyped.Index];
-            CellValidations[actionTyped.Index] = Object.assign({}, cellValidation, { ActionMode: actionTyped.ActionMode });
-            return Object.assign({}, state, { CellValidations: CellValidations });
+            cellValidations = [].concat(state.CellValidations);
+            let cellValidation = cellValidations[actionTyped.index];
+            cellValidations[actionTyped.index] = Object.assign({}, cellValidation, { ActionMode: actionTyped.ActionMode });
+            return Object.assign({}, state, { CellValidations: cellValidations });
         }
         default:
             return state;

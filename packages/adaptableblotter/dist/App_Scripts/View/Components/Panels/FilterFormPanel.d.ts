@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PanelProps } from 'react-bootstrap';
-import { ContextMenuTab } from '../../../Core/Enums';
+import { ContextMenuTab } from '../../../Utilities/Enums';
 export interface FilterFormPanelProps extends PanelProps {
     clearFilterButton?: React.ReactElement<any>;
     saveButton?: React.ReactElement<any>;
@@ -13,6 +13,6 @@ export interface FilterFormPanelProps extends PanelProps {
 }
 export declare class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
     render(): JSX.Element;
-    onSelectMenu(tab: any): any;
-    onSelectFilter(tab: any): any;
+    onSelectMenu(): any;
+    onSelectFilter(): any;
 }

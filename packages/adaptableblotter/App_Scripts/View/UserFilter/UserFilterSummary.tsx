@@ -3,22 +3,21 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { UserFilterWizard } from './Wizard/UserFilterWizard'
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
-import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IUserFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
 
 
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
@@ -31,7 +30,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
 
     constructor(props: UserFilterSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render(): any {
@@ -98,11 +97,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     }
 
     getSummary(): string {
-        if (!this.isGridFilterable()) {
-            return "Grid is not filterable"
-        }
-
-        if (!this.isColumnFilterable()) {
+         if (!this.isColumnFilterable()) {
             return "Column is not filterable"
         }
 
@@ -110,11 +105,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     }
 
     getDescription(userFilter: IUserFilter): string {
-        if (!this.isGridFilterable()) {
-            return "Grid is not filterable"
-        }
-
-        if (!this.isColumnFilterable()) {
+         if (!this.isColumnFilterable()) {
             return "Column is not filterable"
         }
 
@@ -122,20 +113,13 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
     }
 
     isFilterable(): boolean {
-        if (!this.isGridFilterable() || !this.isColumnFilterable()) {
+        if ( !this.isColumnFilterable()) {
             return false;
         }
         return true;
     }
 
-    isGridFilterable(): boolean {
-        if (this.props.Blotter && !this.props.Blotter.isFilterable()) {
-            return false;
-        }
-        return true;
-    }
-
-    isColumnFilterable(): boolean {
+       isColumnFilterable(): boolean {
         if (this.props.SummarisedColumn && !this.props.SummarisedColumn.Filterable) {
             return false
         }

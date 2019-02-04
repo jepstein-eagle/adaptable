@@ -4,9 +4,9 @@ const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const GeneralConstants_1 = require("../../Core/Constants/GeneralConstants");
-const LayoutHelper_1 = require("../../Core/Helpers/LayoutHelper");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
+const LayoutHelper_1 = require("../../Utilities/Helpers/LayoutHelper");
 class LayoutEntityRow extends React.Component {
     render() {
         let layout = this.props.AdaptableBlotterObject;

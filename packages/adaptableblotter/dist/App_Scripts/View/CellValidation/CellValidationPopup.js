@@ -3,24 +3,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const CellValidationRedux = require("../../Redux/ActionsReducers/CellValidationRedux");
 const TeamSharingRedux = require("../../Redux/ActionsReducers/TeamSharingRedux");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const CellValidationWizard_1 = require("./Wizard/CellValidationWizard");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const CellValidationEntityRow_1 = require("./CellValidationEntityRow");
 const UIHelper_1 = require("../UIHelper");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
-const ExpressionHelper_1 = require("../../Core/Helpers/ExpressionHelper");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class CellValidationPopupComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = UIHelper_1.UIHelper.EmptyConfigState();
+        this.state = UIHelper_1.UIHelper.getEmptyConfigState();
     }
     componentDidMount() {
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
@@ -40,12 +42,12 @@ class CellValidationPopupComponent extends React.Component {
             "When a rule is broken, you can choose whether to prevent the edit outright, or allow it after a warning is displayed."];
         let colItems = [
             { Content: "Validation Rule", Size: 4 },
-            { Content: "Expression", Size: 4 },
-            { Content: "Action", Size: 2 },
+            { Content: "Expression", Size: 3 },
+            { Content: "Action", Size: 3 },
             { Content: "", Size: 2 },
         ];
         let CellValidationItems = this.props.CellValidations.map((x, index) => {
-            let column = this.props.Columns.find(c => c.ColumnId == x.ColumnId);
+            let column = ColumnHelper_1.ColumnHelper.getColumnFromId(x.ColumnId, this.props.Columns);
             return React.createElement(CellValidationEntityRow_1.CellValidationEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: x, Column: column, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: (index, x) => this.onEdit(index, x), onShare: () => this.props.onShare(x), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: CellValidationRedux.CellValidationDelete(index), onChangeActionMode: (index, x) => this.onActionModeChanged(index, x) });
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createCellValidation(), overrideTooltip: "Create Cell Validation Rule", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
@@ -81,7 +83,7 @@ class CellValidationPopupComponent extends React.Component {
         let cellValidationRule = this.state.EditedAdaptableBlotterObject;
         return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(cellValidationRule.ColumnId) &&
             (ExpressionHelper_1.ExpressionHelper.IsEmptyOrValidExpression(cellValidationRule.Expression)) &&
-            StringExtensions_1.StringExtensions.IsNotNullOrEmpty(cellValidationRule.Description);
+            StringExtensions_1.StringExtensions.IsNotNullOrEmpty(CellValidationHelper_1.CellValidationHelper.createCellValidationDescription(cellValidationRule, this.props.Columns));
     }
 }
 function mapStateToProps(state, ownProps) {

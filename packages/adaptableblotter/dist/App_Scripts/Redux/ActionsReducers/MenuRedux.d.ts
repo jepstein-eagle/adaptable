@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
-import { IMenuItem } from '../../Core/Interface/IMenu';
 import { MenuState } from './Interface/IState';
+import { IMenuItem } from '../../Utilities/Interface/IMenu';
 export declare const SET_MENUITEMS = "SET_MENUITEMS";
 export declare const BUILD_COLUMN_CONTEXT_MENU = "BUILD_COLUMN_CONTEXT_MENU";
 export declare const ADD_ITEM_COLUMN_CONTEXT_MENU = "ADD_ITEM_COLUMN_CONTEXT_MENU";

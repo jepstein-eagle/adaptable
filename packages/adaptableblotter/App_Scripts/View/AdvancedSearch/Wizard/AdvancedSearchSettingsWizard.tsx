@@ -1,10 +1,11 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IAdvancedSearch } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../../Core/Extensions/ArrayExtensions";
+import { IAdvancedSearch } from "../../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
+import { PRIMARY_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
 
 export interface AdvancedSearchSettingsWizardProps extends AdaptableWizardStepProps<IAdvancedSearch> {
     AdvancedSearches: IAdvancedSearch[]
@@ -29,7 +30,7 @@ export class AdvancedSearchSettingsWizard extends React.Component<AdvancedSearch
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
 
         return <div className={cssClassName}>
-            <Panel header="Advanced Search Settings" bsStyle="primary">
+            <Panel header="Advanced Search Settings" bsStyle={PRIMARY_BSSTYLE}>
                 <AdaptableBlotterForm horizontal>
                     <FormGroup controlId="searchName">
                         <Col xs={3} componentClass={ControlLabel}>Search Name: </Col>

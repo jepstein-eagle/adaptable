@@ -1,16 +1,16 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { DataType, MessageType, StateChangedTrigger } from '../Core/Enums'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import { DataType, MessageType, StateChangedTrigger } from '../Utilities/Enums'
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy'
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
 import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState'
-import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
-import { ICellInfo } from '../Core/Interface/Interfaces';
-import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
-import { ICellValidationRule } from '../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICellInfo } from "../Utilities/Interface/ICellInfo";
+import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
+import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
     protected BulkUpdateState: BulkUpdateState
@@ -67,7 +67,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             return {
                 Alert: {
                     Header: "Bulk Update Error",
-                    Msg: "Bulk Update is not allowed on readonly columns.\nPlease adjust the cell selection.",
+                    Msg: "Bulk Update is not permitted on readonly columns.\nPlease adjust the cell selection.",
                     MessageType: MessageType.Error
                 }
             }
@@ -98,12 +98,11 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             for (let pair of selectedCells.Selection) {
                 for (let selectedCell of pair[1]) {
 
-                    let dataChangedEvent: IDataChangedEvent = {
+                    let dataChangedEvent: IDataChangedInfo = {
                         OldValue: selectedCell.value,
                         NewValue: typedBulkUpdateValue,
                         ColumnId: selectedCell.columnId,
                         IdentifierValue: pair[0],
-                        Timestamp: Date.now(),
                         Record: null
                     }
 

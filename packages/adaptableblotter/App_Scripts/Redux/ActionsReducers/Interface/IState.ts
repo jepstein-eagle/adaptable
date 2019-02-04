@@ -1,31 +1,59 @@
-import { IScreenPopup, IConfirmationPopup, IPromptPopup, IAlertPopup, IChartPopup, ILoadingPopup, IAlert } from '../../../Core/Interface/IMessage'
-import { IMenuItem, IContextMenu } from '../../../Core/Interface/IMenu'
-import { ISharedEntity } from '../../../Strategy/Interface/ITeamSharingStrategy';
-import { IPreviewInfo } from '../../../Core/Interface/IPreviewResult';
-import { IColumn } from '../../../Core/Interface/IColumn';
-import { IEntitlement, IPermittedColumnValues, ISystemStatus, IColumnCategory } from '../../../Core/Interface/Interfaces';
-import { IAdvancedSearch, ICalculatedColumn, IGridSort, IShortcut, IReport, IFlashingCell, IPlusMinusRule, ICustomSort, IConditionalStyle, ICalendar, IColumnFilter, IUserFilter, ICellValidationRule, ILayout, IFormatColumn, IUserTheme, IStyle, IAlertDefinition, IChartDefinition, IFreeTextColumn } from '../../../Core/Api/Interface/IAdaptableBlotterObjects';
-import { IPPDomain, ILiveReport } from '../../../Strategy/Interface/IExportStrategy';
-import { ISelectedCellInfo, ISelectedCellSummmary } from '../../../Strategy/Interface/ISelectedCellsStrategy';
+import { ISharedEntity } from "../../../Utilities/Interface/ISharedEntity";
+import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { IEntitlement } from "../../../Utilities/Interface/IEntitlement";
+import { IGridSort } from "../../../Utilities/Interface/IGridSort";
+import { IStyle } from "../../../Utilities/Interface/IStyle";
+import { IPermittedColumnValues } from "../../../Utilities/Interface/IPermittedColumnValues";
+import { ISystemStatus } from "../../../Utilities/Interface/ISystemStatus";
+import { IColumnCategory } from "../../../Utilities/Interface/BlotterObjects/IColumnCategory";
+import { IFormatColumn } from "../../../Utilities/Interface/BlotterObjects/IFormatColumn";
+import { ILayout } from "../../../Utilities/Interface/BlotterObjects/ILayout";
+import { IPlusMinusRule } from "../../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
+import { IShortcut } from "../../../Utilities/Interface/BlotterObjects/IShortcut";
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IUserTheme } from "../../../Utilities/Interface/BlotterObjects/IUserTheme";
+import { IPercentBar } from "../../../Utilities/Interface/BlotterObjects/IPercentBar";
+import { IFreeTextColumn } from "../../../Utilities/Interface/BlotterObjects/IFreeTextColumn";
+import { IReport } from "../../../Utilities/Interface/BlotterObjects/IReport";
+import { IFlashingCell } from "../../../Utilities/Interface/BlotterObjects/IFlashingCell";
+import { ICustomSort } from "../../../Utilities/Interface/BlotterObjects/ICustomSort";
+import { IConditionalStyle } from "../../../Utilities/Interface/BlotterObjects/IConditionalStyle";
+import { IColumnFilter } from "../../../Utilities/Interface/BlotterObjects/IColumnFilter";
+import { ICellValidationRule } from "../../../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { ICalendar } from "../../../Utilities/Interface/BlotterObjects/ICalendar";
+import { ICalculatedColumn } from "../../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
+import { IAdvancedSearch } from "../../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
+import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IAlertDefinition } from "../../../Utilities/Interface/BlotterObjects/IAlertDefinition";
+import { IPPDomain } from "../../../Utilities/Interface/Reports/IPPDomain";
+import { ILiveReport } from "../../../Utilities/Interface/Reports/ILiveReport";
+import { ISelectedCellInfo } from "../../../Utilities/Interface/SelectedCell/ISelectedCellInfo";
+import { ISelectedCellSummmary } from "../../../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
+import { IPreviewInfo } from '../../../Utilities/Interface/IPreview';
+import { IMenuItem, IContextMenu } from '../../../Utilities/Interface/IMenu';
+import { IAlert, IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPopup, IAboutPopup } from '../../../Utilities/Interface/IMessage';
+import { ChartVisibility } from '../../../Utilities/ChartEnums';
 
-export interface IState{
-
+// Base interface
+export interface IState {
 }
 
+/**
+ * Interface for System related State elements
+ * This is created by the system at run-time and NOT part of predefined or user config.
+ * Therefore it is not saved nor included in State events
+
+ */ 
 export interface ISystemState extends IState {
 }
 
+// Interface for State elements which are provided at Design time and never modified in the Blotter
 export interface IDesignTimeState extends IState {
 }
 
+// Interface for State elements which the User is able to modify during the lifetime of the application
 export interface IUserState extends IState {
 }
-
-/*
-System Config
-This is created by the system at run-time and NOT part of predefined or user config.
-Therefore it is not saved nor included in State events
-*/
 
 export interface SystemState extends ISystemState {
     SystemStatus: ISystemStatus;
@@ -36,6 +64,11 @@ export interface SystemState extends ISystemState {
     SmartEditPreviewInfo: IPreviewInfo;
     IsValidBulkUpdateSelection: boolean;
     BulkUpdatePreviewInfo: IPreviewInfo;
+    ChartData: any;
+    ChartVisibility: ChartVisibility;
+    CalculatedColumnErrorMessage: string;
+    IPPDomainsPages: IPPDomain[];
+    ReportErrorMessage: string;
 }
 
 export interface GridState extends ISystemState {
@@ -52,11 +85,11 @@ export interface MenuState extends ISystemState {
 
 export interface PopupState extends ISystemState {
     ScreenPopup: IScreenPopup;
-    ChartPopup: IChartPopup;
     AlertPopup: IAlertPopup;
     ConfirmationPopup: IConfirmationPopup;
     PromptPopup: IPromptPopup;
     LoadingPopup: ILoadingPopup;
+    AboutPopup: IAboutPopup;
 }
 
 export interface TeamSharingState extends ISystemState {
@@ -64,6 +97,9 @@ export interface TeamSharingState extends ISystemState {
     SharedEntities: ISharedEntity[];
 }
 
+export interface HomeState extends ISystemState {
+
+}
 
 /*
 Predefined Config Only 
@@ -78,7 +114,6 @@ export interface UserInterfaceState extends IDesignTimeState {
     ColorPalette: string[];
     StyleClassNames: string[];
     PermittedColumnValues: IPermittedColumnValues[];
-    ColumnCategories: IColumnCategory[];
 }
 
 export interface SystemFilterState extends IDesignTimeState {
@@ -110,7 +145,6 @@ export interface BulkUpdateState extends IUserState {
 
 export interface CalculatedColumnState extends IUserState {
     CalculatedColumns: ICalculatedColumn[];
-    CalculatedColumnErrorMessage: string;
 }
 
 export interface CalendarState extends IUserState {
@@ -123,8 +157,17 @@ export interface CellValidationState extends IUserState {
 
 export interface ChartState extends IUserState {
     ChartDefinitions: IChartDefinition[];
-    CurrentChartName: string;
-    ChartData: any;
+    CurrentChartDefinition: string;
+    ShowModal: boolean;
+    RefreshRate: number;
+}
+
+export interface ColumnCategoryState extends IUserState {
+    ColumnCategories: IColumnCategory[];
+}
+
+export interface ColumnFilterState extends IUserState {
+    ColumnFilters: IColumnFilter[];
 }
 
 export interface ConditionalStyleState extends IUserState {
@@ -142,8 +185,10 @@ export interface DashboardState extends IUserState {
     Zoom: number;
     DashboardVisibility: 'Minimised' | 'Visible' | 'Hidden';
     ShowSystemStatusButton: boolean;
+    ShowAboutButton: boolean;
     ShowFunctionsDropdown: boolean;
     ShowColumnsDropdown: boolean;
+    ShowToolbarsDropdown: boolean;
     HomeToolbarTitle: string;
     ApplicationToolbarTitle: string;
 }
@@ -154,22 +199,15 @@ export interface DataSourceState extends IUserState {
 }
 
 export interface ExportState extends IUserState {
-    IPPDomainsPages: IPPDomain[];  // should we persist this???
     CurrentReport: string;
     Reports: IReport[];
-    ErrorMsg: string;
-}
-
-export interface ColumnFilterState extends IUserState {
-    ColumnFilters: IColumnFilter[];
-}
-
-export interface UserFilterState extends IUserState {
-    UserFilters: IUserFilter[];
 }
 
 export interface FlashingCellState extends IUserState {
     FlashingCells: IFlashingCell[];
+    DefaultUpColor?: string;
+    DefautDownColor?: string;
+    DefaultDuration?: 250 | 500| 750|1000 ;
 }
 
 export interface FormatColumnState extends IUserState {
@@ -185,13 +223,16 @@ export interface LayoutState extends IUserState {
     Layouts: ILayout[];
 }
 
+export interface PercentBarState extends IUserState {
+    PercentBars: IPercentBar[];
+}
+
 export interface PlusMinusState extends IUserState {
     PlusMinusRules: IPlusMinusRule[];
 }
 
 export interface QuickSearchState extends IUserState {
     QuickSearchText: string;
-    Operator: 'Contains' | 'StartsWith';
     DisplayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
     Style: IStyle;
 }
@@ -213,4 +254,9 @@ export interface ThemeState extends IUserState {
     CurrentTheme: string;
     SystemThemes: string[];
     UserThemes: IUserTheme[];
+}
+
+
+export interface UserFilterState extends IUserState {
+    UserFilters: IUserFilter[];
 }

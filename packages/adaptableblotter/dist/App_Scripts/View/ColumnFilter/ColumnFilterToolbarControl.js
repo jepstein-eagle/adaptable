@@ -7,13 +7,13 @@ const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const ColumnFilterRedux = require("../../Redux/ActionsReducers/ColumnFilterRedux");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
 const AdaptablePopover_1 = require("../AdaptablePopover");
-const Enums_1 = require("../../Core/Enums");
-const GeneralConstants = require("../../Core/Constants/GeneralConstants");
+const Enums_1 = require("../../Utilities/Enums");
+const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const react_bootstrap_1 = require("react-bootstrap");
-const ColumnFilterHelper_1 = require("../../Core/Helpers/ColumnFilterHelper");
+const ColumnFilterHelper_1 = require("../../Utilities/Helpers/ColumnFilterHelper");
 class ColumnFilterToolbarControlComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__columnfilter";
@@ -37,10 +37,15 @@ class ColumnFilterToolbarControlComponent extends React.Component {
                 ' ',
                 infoBody.length > 0 &&
                     React.createElement("span", null,
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Active Filters", bodyText: infoBody, tooltipText: "Show Filter Details", MessageType: Enums_1.MessageType.Info, useButton: true, triggerAction: "click" }),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Active Filters", bodyText: infoBody, tooltipText: "Show Filter Details", useButton: true, triggerAction: "click" }),
                         ' ',
-                        React.createElement(ButtonClear_1.ButtonClear, { onClick: () => this.props.onClearAllFilters(), bsStyle: "primary", cssClassName: cssClassName, size: "small", overrideTooltip: "Clear Column Filters", DisplayMode: "Text+Glyph", overrideDisableButton: this.props.ColumnFilters.length == 0, AccessLevel: this.props.AccessLevel }))));
+                        React.createElement(ButtonClear_1.ButtonClear, { onClick: () => this.onClearFilters(), bsStyle: "primary", cssClassName: cssClassName, size: "small", overrideTooltip: "Clear Column Filters", DisplayMode: "Text+Glyph", overrideDisableButton: this.props.ColumnFilters.length == 0, AccessLevel: this.props.AccessLevel }))));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.ColumnFilterStrategyName, glyphicon: StrategyConstants.ColumnFilterGlyph, onClose: () => this.props.onClose(StrategyConstants.ColumnFilterStrategyId), onConfigure: () => this.props.onConfigure() }, content);
+    }
+    onClearFilters() {
+        // better to put in store but lets test first...
+        this.props.onClearAllFilters();
+        this.props.Blotter.clearGridFiltering();
     }
 }
 function mapStateToProps(state, ownProps) {

@@ -8,10 +8,12 @@ import { Button, Glyphicon } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
-import { IPPDomain, ILiveReport } from "../../Strategy/Interface/IExportStrategy";
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
-import { ExportDestination } from "../../Core/Enums";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
+import { IPPDomain } from "../../Utilities/Interface/Reports/IPPDomain";
+import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
+import { ExportDestination } from "../../Utilities/Enums";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 
 interface IPushPullDomainPageSelectorProps extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
     IPPDomainsPages: IPPDomain[]
@@ -56,7 +58,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDoma
         return <PanelWithButton cssClassName={cssClassName} headerText="iPushPull Folder and Page Selector" bsStyle="primary" glyphicon="export">
 
 
-            {StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? <Alert bsStyle="danger">
+            {StringExtensions.IsNotNullOrEmpty(this.props.ErrorMsg) ? <Alert bsStyle={StyleConstants.DANGER_BSSTYLE}>
                 Error getting iPushPull Pages : {this.props.ErrorMsg}
             </Alert> : <ListGroup fill className="ab_preview_panel">
                     {itemsElements}
@@ -82,8 +84,8 @@ class IPushPullDomainPageSelectorComponent extends React.Component<IPushPullDoma
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        IPPDomainsPages: state.Export.IPPDomainsPages,
-        ErrorMsg: state.Export.ErrorMsg,
+        IPPDomainsPages: state.System.IPPDomainsPages,
+        ErrorMsg: state.System.ReportErrorMessage,
         LiveReports: state.System.CurrentLiveReports,
     };
 }
@@ -91,7 +93,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onApplyExport: (value: string, folder: string, page: string) => dispatch(ExportRedux.ExportApply(value, ExportDestination.iPushPull, folder, page)),
-        onCancel: () => { dispatch(PopupRedux.PopupHideScreen()); dispatch(ExportRedux.ReportSetErrorMsg("")) }
+        onCancel: () => { dispatch(PopupRedux.PopupHideScreen()); dispatch(SystemRedux.ReportSetErrorMessage("")) }
     };
 }
 

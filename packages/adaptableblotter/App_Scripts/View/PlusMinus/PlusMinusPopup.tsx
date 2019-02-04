@@ -6,26 +6,27 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Core/Interface/IColumn';
-import { Helper } from '../../Core/Helpers/Helper';
+import { IColumn } from '../../Utilities/Interface/IColumn';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { ObjectFactory } from '../../Core/ObjectFactory';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { PlusMinusEntityRow } from './PlusMinusEntityRow'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
-import { IUIConfirmation } from "../../Core/Interface/IMessage";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { ExpressionHelper } from "../../Core/Helpers/ExpressionHelper";
-import { IPlusMinusRule, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { AccessLevel } from "../../Core/Enums";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IPlusMinusRule } from "../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
+import { MessageType } from "../../Utilities/Enums";
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
     DefaultNudgeValue: number,
@@ -39,7 +40,7 @@ interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupCompo
 class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, EditableConfigEntityState> {
     constructor(props: PlusMinusPopupProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     componentDidMount() {
@@ -67,8 +68,8 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
             { Content: "", Size: 2 },
         ]
         let PlusMinusRules = this.props.PlusMinusRules.map((x, index) => {
-            let column = this.props.Columns.find(y => y.ColumnId == x.ColumnId)
-
+            let column = ColumnHelper.getColumnFromId(x.ColumnId, this.props.Columns);
+          
             return <PlusMinusEntityRow
                 cssClassName={cssClassName}
                 colItems={colItems}
@@ -179,13 +180,14 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
 
     private onConfirmWarningCellValidation(index: number, plusMinus: IPlusMinusRule) {
         let confirmation: IUIConfirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Existing Default Column Nudge Value for: " + plusMinus.ColumnId,
-            ConfirmationMsg: "Do you want to override it with new value: ?",
-            ConfirmationText: "Bypass Rule",
+            CancelButtonText: "Cancel",
+            Header: "Existing Default Column Nudge Value for: " + plusMinus.ColumnId,
+           Msg: "Do you want to override it with new value: ?",
+            ConfirmButtonText: "Confirm",
             CancelAction: null,
             ConfirmAction: PlusMinusRedux.PlusMinusEditCondition(index, { ColumnId: plusMinus.ColumnId, DefaultNudge: plusMinus.NudgeValue }),
-            ShowCommentBox: false
+            ShowInputBox: false,
+            MessageType: MessageType.Warning
         }
         this.props.onConfirmWarningCellValidation(confirmation)
     }

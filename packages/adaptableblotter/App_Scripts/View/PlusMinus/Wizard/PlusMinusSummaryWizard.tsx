@@ -1,20 +1,15 @@
 import * as React from "react";
-import { ControlLabel, Radio, FormGroup, FormControl, Col, Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { MessageType } from '../../../Core/Enums';
-import { AdaptablePopover } from '../../AdaptablePopover';
-import { ExpressionHelper } from '../../../Core/Helpers/ExpressionHelper'
-import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { KeyValuePair } from "../../UIInterfaces";
+import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
-import { IColumn } from "../../../Core/Interface/IColumn";
-import { LayoutHelper } from "../../../Core/Helpers/LayoutHelper";
-import { IUserFilter, IPlusMinusRule } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
+import { IColumn } from "../../../Utilities/Interface/IColumn";
+import { IPlusMinusRule } from "../../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
+import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
+import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 
 export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
-    Columns: IColumn[]
     UserFilters: IUserFilter[]
 }
 
@@ -25,7 +20,7 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let keyValuePairs: KeyValuePair[] = [
+        let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId,  this.props.Columns)},
             { Key: "Nudge Value", Value: this.props.Data.NudgeValue },
             { Key: "Is Column Default", Value: this.props.Data.IsDefaultNudge ? "True" : "False" },

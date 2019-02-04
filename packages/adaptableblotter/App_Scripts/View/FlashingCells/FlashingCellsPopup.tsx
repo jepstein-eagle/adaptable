@@ -4,19 +4,21 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import { FormGroup, Col, Checkbox } from 'react-bootstrap';
-import { DataType, SortOrder } from '../../Core/Enums'
+import { DataType, SortOrder } from '../../Utilities/Enums'
 import { FlashingCellEntityRow } from './FlashingCellEntityRow'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { Helper } from '../../Core/Helpers/Helper'
-import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import { Helper } from '../../Utilities/Helpers/Helper'
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IFlashingCell, ICalculatedColumn } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ArrayExtensions } from "../../Core/Extensions/ArrayExtensions";
+import { IFlashingCell } from "../../Utilities/Interface/BlotterObjects/IFlashingCell";
+import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { FlashingCellState } from "../../Redux/ActionsReducers/Interface/IState";
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
     FlashingCells: IFlashingCell[],
@@ -53,10 +55,11 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
 
         let allPotentialFlashingCells: IFlashingCell[] = [];
+        let flashingCellState: FlashingCellState = this.props.Blotter.api.configApi.configGetFlashingCellState(false);
         numericNonCalcColumns.forEach(nc => {
             let existingfc = this.props.FlashingCells.find(e => e.ColumnId == nc.ColumnId)
             if (!existingfc) {
-                allPotentialFlashingCells.push(ObjectFactory.CreateDefaultFlashingCell(nc))
+                allPotentialFlashingCells.push(ObjectFactory.CreateDefaultFlashingCell(nc, flashingCellState.DefaultUpColor, flashingCellState.DefautDownColor, flashingCellState.DefaultDuration))
             }
             else {
                 allPotentialFlashingCells.push(existingfc);

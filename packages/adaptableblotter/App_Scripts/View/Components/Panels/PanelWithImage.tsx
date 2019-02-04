@@ -1,14 +1,15 @@
 import * as React from "react";
 import { PanelProps, Panel, Row, Col, Glyphicon } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { MessageType } from '../../../Core/Enums';
+import { MessageType } from '../../../Utilities/Enums';
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export interface PanelWithImageProps extends PanelProps {
     glyphicon?: string
     infoBody?: any[]
     cssClassName: string
+    button?: React.ReactElement<any>;
 }
 
 
@@ -21,20 +22,23 @@ export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
         
         let headerRow = <AdaptableBlotterForm inline>
             <Row style={{ display: "flex", alignItems: "center" }}>
-                <Col xs={12}>
+                <Col xs={9}>
                     {<Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />}
                     {this.props.header}
                     {' '}
                     {this.props.infoBody != null &&
                         <span>
                             <label>{' '}</label>
-                            <span>  {' '} <AdaptablePopover  cssClassName={cssClassName} headerText="" bodyText={this.props.infoBody} MessageType={MessageType.Info} /></span>
+                            <span>  {' '} <AdaptablePopover  cssClassName={cssClassName} headerText="" bodyText={this.props.infoBody} /></span>
                         </span>
                     }
                 </Col>
+                <Col xs={3}>
+                     {this.props.button && React.cloneElement(this.props.button, { style: { float: 'right' } })}
+                </Col>
             </Row>
         </AdaptableBlotterForm>;
-        return <Panel header={headerRow} className={cssClassName} style={this.props.style} bsStyle={this.props.bsStyle}>
+        return <Panel header={headerRow} className={cssClassName} style={this.props.style} bsStyle={this.props.bsStyle} bsSize={this.props.bsSize} > 
             {this.props.children}
         </Panel>;
     }

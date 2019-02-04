@@ -1,13 +1,13 @@
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { FreeTextColumnSettingsWizard } from './FreeTextColumnSettingsWizard'
 import { FreeTextColumnSummaryWizard } from './FreeTextColumnSummaryWizard'
-import * as StrategyConstants from '../../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface FreeTextColumnWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<FreeTextColumnWizard> {
-  }
+}
 
 export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardProps, {}> {
 
@@ -19,19 +19,20 @@ export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardPr
                 StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
+                Blotter={this.props.Blotter}
+                Columns={this.props.Columns}
                 Steps={
                     [
-                         <FreeTextColumnSettingsWizard cssClassName={this.props.cssClassName} StepName={stepNames[1]} Columns={this.props.Columns}/>,
-                        < FreeTextColumnSummaryWizard cssClassName={this.props.cssClassName} StepName={stepNames[2]} Columns={this.props.Columns} />
+                        <FreeTextColumnSettingsWizard StepName={stepNames[0]} />,
+                        <FreeTextColumnSummaryWizard StepName={stepNames[1]} />
                     ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}
-                onFinish={() => this.props.onFinishWizard()} 
+                onFinish={() => this.props.onFinishWizard()}
                 canFinishWizard={() => this.props.canFinishWizard()}
-                />
-         
+            />
+
         </div>
     }
 }
-

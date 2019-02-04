@@ -1,25 +1,28 @@
 import * as React from "react";
-import { Button, Modal, Glyphicon } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard'
 import { WizardLegend } from './WizardLegend'
-import { UIHelper } from "../UIHelper";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ButtonCancel } from "../Components/Buttons/ButtonCancel";
 import { ButtonWizardAction } from "../Components/Buttons/ButtonWizardAction";
-import { AccessLevel } from "../../Core/Enums";
+import { AccessLevel } from "../../Utilities/Enums";
+import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
+import { IColumn } from "../../Utilities/Interface/IColumn";
 
 
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
-    Steps: JSX.Element[]
-    Data: any
+    Steps: JSX.Element[];
+    Data: any;
     onHide: Function;
     onFinish?: Function;
-    StepStartIndex?: number
-    StepNames?: string[] // feels wrong, wrong, wrong
-    FriendlyName?: string
-    ModalContainer: HTMLElement
-    cssClassName: string
-    canFinishWizard: Function
+    StepStartIndex?: number;
+    StepNames?: string[]; // feels wrong, wrong, wrong
+    FriendlyName?: string;
+    ModalContainer: HTMLElement;
+    cssClassName: string;
+    canFinishWizard: Function;
+    Blotter: IAdaptableBlotter;
+    Columns: Array<IColumn>
 }
 
 export interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
@@ -38,6 +41,7 @@ class DummyActiveStep implements AdaptableWizardStep {
     public Back(): void {
         // no implementation for this
     }
+
     public GetIndexStepIncrement() {
         return 1;
     }
@@ -64,7 +68,13 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         let BodyElement: JSX.Element = this.props.Steps[indexStart];
         let newElement = this.cloneWizardStep(BodyElement)
         this.state = { ActiveState: newElement, IndexState: indexStart }
+
+        //  this.props.Data.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
+
+ //   private handleKeyDown(keyEvent: KeyboardEvent | any) {
+     //   alert("hello world")
+ //   }
 
     render() {
         let cssClassName: string = StyleConstants.AB_STYLE
@@ -74,7 +84,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                 <div className={cssClassName + StyleConstants.WIZARD_BASE}>
                     <Modal.Header closeButton className={cssClassName + StyleConstants.WIZARD_HEADER}>
                         <Modal.Title>
-                            <WizardLegend StepNames={this.props.StepNames} ActiveStepName={this.ActiveStep.StepName} FriendlyName={this.props.FriendlyName} />
+                            <WizardLegend StepNames={this.props.StepNames} ActiveStepName={this.ActiveStep.StepName} FriendlyName={this.props.FriendlyName} CanShowAllSteps={this.canFinishWizard()} onStepButtonClicked={(s) => this.onStepButtonClicked(s)} />
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body className={cssClassName + StyleConstants.WIZARD_BODY}>
@@ -83,15 +93,23 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                         </div>
                     </Modal.Body>
                     <Modal.Footer className={cssClassName + StyleConstants.WIZARD_FOOTER}>
-                        <ButtonCancel cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle={"default"} style={{ float: "left", marginRight: "5px" }} onClick={() => this.props.onHide()} hideToolTip={true} AccessLevel={AccessLevel.Full}/>
-                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="default" overrideDisableButton={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()} glyph="chevron-left" overrideText="Back" AccessLevel={AccessLevel.Full}/>
-                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="info" overrideDisableButton={!this.ActiveStep.canNext() || this.isLastStep()} onClick={() => this.handleClickNext()} overrideText="Next" glyph={"chevron-right"} AccessLevel={AccessLevel.Full}/>
+                        <ButtonCancel cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle={"default"} style={{ float: "left", marginRight: "5px" }} onClick={() => this.props.onHide()} hideToolTip={true} AccessLevel={AccessLevel.Full} />
+                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="default" overrideDisableButton={!this.ActiveStep.canBack() || this.isFirstStep()} onClick={() => this.handleClickBack()} glyph="chevron-left" overrideText="Back" AccessLevel={AccessLevel.Full} />
+                        <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="info" overrideDisableButton={!this.ActiveStep.canNext() || this.isLastStep()} onClick={() => this.handleClickNext()} overrideText="Next" glyph={"chevron-right"} AccessLevel={AccessLevel.Full} />
                         <ButtonWizardAction cssClassName={cssClassName} DisplayMode={"Glyph+Text"} bsStyle="primary" overrideDisableButton={!this.canFinishWizard()} onClick={() => this.handleClickFinish()} overrideText="Finish" glyph={"ok"} AccessLevel={AccessLevel.Full} />
                     </Modal.Footer>
                 </div>
             </Modal>
         );
     }
+
+    private onStepButtonClicked(stepName: string): void {
+        let stepIndex: number = this.props.StepNames.findIndex(s => s == stepName);
+        let BodyElement: any = this.props.Steps[stepIndex];
+        let newElement = this.cloneWizardStep(BodyElement)
+        this.setState({ ActiveState: newElement, IndexState: stepIndex })
+    }
+
     ForceUpdateGoBackState() {
         //to force back/next. We'll see if that needs to be optimised'
         /*
@@ -152,7 +170,10 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         return React.cloneElement(step, {
             ref: (Element: AdaptableWizardStep) => { this.ActiveStep = Element; this.forceUpdate(); },
             Data: this.props.Data,
-            UpdateGoBackState: () => this.ForceUpdateGoBackState()
+            UpdateGoBackState: () => this.ForceUpdateGoBackState(),
+            Blotter: this.props.Blotter,
+            cssClassName: this.props.cssClassName,
+            Columns: this.props.Columns
         })
     }
 }

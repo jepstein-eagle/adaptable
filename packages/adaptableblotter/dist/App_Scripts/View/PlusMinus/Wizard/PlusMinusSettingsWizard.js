@@ -2,9 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Core/Enums");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
-const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 class PlusMinusSettingsWizard extends React.Component {
     constructor(props) {
@@ -30,11 +29,11 @@ class PlusMinusSettingsWizard extends React.Component {
                             React.createElement(react_bootstrap_1.Radio, { value: "expression", checked: !this.state.IsDefaultNudge, onChange: (e) => this.onExpressionOptionChange(e) },
                                 "Custom Plus/Minus Rule ",
                                 ' ',
-                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Plus Minus Settings: Apply As", bodyText: ["Create a Custom Plus/Minus Rule (using the Query Builder in the next step of the wizard)"], MessageType: Enums_1.MessageType.Info })),
+                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Plus Minus Settings: Apply As", bodyText: ["Create a Custom Plus/Minus Rule (using the Query Builder in the next step of the wizard)"] })),
                             React.createElement(react_bootstrap_1.Radio, { value: "default", checked: this.state.IsDefaultNudge, onChange: (e) => this.onExpressionOptionChange(e) },
                                 "Default Nudge Value for Column ",
                                 ' ',
-                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Plus Minus Settings: Apply As", bodyText: ["Set default nudge value for the column"], MessageType: Enums_1.MessageType.Info })))))));
+                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Plus Minus Settings: Apply As", bodyText: ["Set default nudge value for the column"] })))))));
     }
     onExpressionOptionChange(event) {
         let e = event.target;

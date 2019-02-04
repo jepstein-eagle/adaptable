@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyConstants = require("../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../Core/Constants/ScreenPopups");
-const Enums_1 = require("../Core/Enums");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
+const Enums_1 = require("../Utilities/Enums");
 class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.AdvancedSearchStrategyId, blotter);
@@ -17,7 +17,7 @@ class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
             // this is re-applying grid filtering even if the change to the search state doesnt effect the current advanced search
             //  probably not an issue but might be worth revisiting ...
             this.blotter.applyGridFiltering();
-            if (this.blotter.BlotterOptions.serverSearchOption != 'None') {
+            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption != 'None') {
                 this.publishSearchChanged(Enums_1.SearchChangedTrigger.AdvancedSearch);
             }
             if (this.blotter.isInitialised) {

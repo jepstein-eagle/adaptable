@@ -1,37 +1,36 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
 import { connect } from 'react-redux';
-import {  InputGroup, DropdownButton, FormControl, MenuItem } from 'react-bootstrap';
+import { InputGroup, DropdownButton, FormControl, MenuItem } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { IPreviewInfo } from "../../Core/Interface/IPreviewResult";
-import { IUIConfirmation } from "../../Core/Interface/IMessage";
-import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
-import * as GeneralConstants from '../../Core/Constants/GeneralConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
+import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
+import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
-import { StatusColour, MathOperation, AccessLevel } from "../../Core/Enums";
+import { StatusColour, MathOperation, AccessLevel, MessageType } from "../../Utilities/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
-import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { UIHelper } from "../UIHelper";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
+import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 interface SmartEditToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {
     SmartEditValue: string;
     MathOperation: MathOperation;
     IsValidSelection: boolean;
     PreviewInfo: IPreviewInfo;
-     onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
+    onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
     onSmartEditOperationChange: (MathOperation: MathOperation) => SmartEditRedux.SmartEditChangeOperationAction;
     onSmartEditCheckSelectedCells: () => SystemRedux.SmartEditCheckCellSelectionAction;
     onApplySmartEdit: () => SmartEditRedux.SmartEditApplyAction;
@@ -69,10 +68,11 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
     render() {
 
         let statusColour: StatusColour = this.getStatusColour()
-       
+
         let cssClassName: string = this.props.cssClassName + "__SmartEdit";
 
-        let selctedColumn = ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns);
+        let selectedColumn = (StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)) ? ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns) : null
+
         let previewPanel =
             <PreviewResultsPanel
                 cssClassName={cssClassName}
@@ -80,7 +80,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
                 PreviewInfo={this.props.PreviewInfo}
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
-                SelectedColumn={selctedColumn}
+                SelectedColumn={selectedColumn}
                 ShowPanel={true}
                 ShowHeader={false}
             />
@@ -90,7 +90,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
         })
 
         let content = <span>
-            <div className={this.props.AccessLevel==AccessLevel.ReadOnly || !this.props.IsValidSelection ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <div className={this.props.AccessLevel == AccessLevel.ReadOnly || !this.props.IsValidSelection ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <InputGroup>
 
                     <DropdownButton style={{ marginRight: "3px", width: "75px" }} title={this.props.MathOperation} id="SmartEdit_Operation" bsSize="small" componentClass={InputGroup.Button}>
@@ -109,9 +109,9 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
                         bsStyle={UIHelper.getStyleNameByStatusColour(statusColour)}
                         overrideTooltip="Apply Smart Edit"
                         overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)}
-                        DisplayMode="Glyph" 
+                        DisplayMode="Glyph"
                         AccessLevel={this.props.AccessLevel}
-                        />
+                    />
                 }
 
                 {this.props.IsValidSelection &&
@@ -170,16 +170,10 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
     }
 
     private onConfirmWarningCellValidation() {
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: SmartEditRedux.SmartEditApply(false),
-            ConfirmAction: SmartEditRedux.SmartEditApply(true),
-            ShowCommentBox: true
-        }
-        this.props.onConfirmWarningCellValidation(confirmation)
+        let confirmAction: Redux.Action = SmartEditRedux.SmartEditApply(true)
+        let cancelAction: Redux.Action = SmartEditRedux.SmartEditApply(false);
+        let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
+        this.props.onConfirmWarningCellValidation(confirmation);
     }
 
     onApplySmartEdit(): any {

@@ -1,8 +1,8 @@
 import { IDataManagementStrategy } from './Interface/IDataManagementStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 
 export class DataManagementStrategy extends AdaptableStrategyBase implements IDataManagementStrategy {
     constructor(blotter: IAdaptableBlotter) {

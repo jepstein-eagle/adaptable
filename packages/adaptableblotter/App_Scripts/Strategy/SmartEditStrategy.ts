@@ -1,17 +1,17 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { MathOperation, DataType, MessageType, StateChangedTrigger } from '../Core/Enums'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import { MathOperation, DataType, MessageType, StateChangedTrigger } from '../Utilities/Enums'
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy'
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService'
-import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState'
-import { IPreviewInfo, IPreviewResult } from '../Core/Interface/IPreviewResult';
-import { ICellInfo } from '../Core/Interface/Interfaces';
-import { PreviewHelper } from '../Core/Helpers/PreviewHelper';
-import { ICellValidationRule } from '../Core/Api/Interface/IAdaptableBlotterObjects';
-import { ISelectedCellInfo } from './Interface/ISelectedCellsStrategy';
+import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState';
+import { ICellInfo } from "../Utilities/Interface/ICellInfo";
+import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
+import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     
@@ -74,7 +74,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
             return {
                 Alert: {
                     Header: "Smart Edit Error",
-                    Msg: "Smart Edit is not allowed on readonly columns.\nPlease adjust the cell selection.",
+                    Msg: "Smart Edit is not permitted on readonly columns.\nPlease adjust the cell selection.",
                     MessageType: MessageType.Error
                 }
             }
@@ -108,13 +108,12 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 //avoid the 0.0000000000x 
                 newValue = parseFloat(newValue.toFixed(12))
 
-                let dataChangedEvent: IDataChangedEvent = {
+                let dataChangedEvent: IDataChangedInfo = {
                     OldValue: Number(selectedCell.value),
                     NewValue: newValue,
                     ColumnId: selectedCell.columnId,
                     IdentifierValue: pair[0],
-                    Timestamp: Date.now(),
-                    Record: null
+                     Record: null
                 }
 
                 let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);

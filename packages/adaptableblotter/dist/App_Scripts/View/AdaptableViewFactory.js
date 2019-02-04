@@ -23,18 +23,18 @@ const FormatColumnPopup_1 = require("./FormatColumn/FormatColumnPopup");
 const ThemePopup_1 = require("./Theme/ThemePopup");
 const CellValidationPopup_1 = require("./CellValidation/CellValidationPopup");
 const LayoutPopup_1 = require("./Layout/LayoutPopup");
+const ColumnCategoryPopup_1 = require("./ColumnCategory/ColumnCategoryPopup");
 const LayoutToolbarControl_1 = require("./Layout/LayoutToolbarControl");
 const ExportToolbarControl_1 = require("./Export/ExportToolbarControl");
 const TeamSharingPopup_1 = require("./TeamSharing/TeamSharingPopup");
 const IPushPullLogin_1 = require("./Export/IPushPullLogin");
 const HomeToolbarControl_1 = require("./Home/HomeToolbarControl");
 const HomeButtonsPopup_1 = require("./Home/HomeButtonsPopup");
-const AboutPopup_1 = require("./About/AboutPopup");
 const ApplicationPopup_1 = require("./Application/ApplicationPopup");
 const DashboardPopup_1 = require("./Dashboard/DashboardPopup");
 const DataManagementPopup_1 = require("./DataManagement/DataManagementPopup");
 const ColumnFilterPopup_1 = require("./ColumnFilter/ColumnFilterPopup");
-const StrategyConstants = require("../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 const CalculatedColumnPopup_1 = require("./CalculatedColumn/CalculatedColumnPopup");
 const IPushPullDomainPageSelector_1 = require("./Export/IPushPullDomainPageSelector");
 const BulkUpdatePopup_1 = require("./BulkUpdate/BulkUpdatePopup");
@@ -48,14 +48,15 @@ const ChartPopup_1 = require("./Chart/ChartPopup");
 const ChartDisplayPopup_1 = require("./Chart/ChartDisplayPopup");
 const ChartToolbarControl_1 = require("./Chart/ChartToolbarControl");
 const FreeTextColumnPopup_1 = require("./FreeTextColumn/FreeTextColumnPopup");
+const PercentBarPopup_1 = require("./PercentBar/PercentBarPopup");
 exports.AdaptableViewFactory = {
-    AboutPopup: AboutPopup_1.AboutPopup,
     AdvancedSearchPopup: AdvancedSearchPopup_1.AdvancedSearchPopup,
     AlertPopup: AlertPopup_1.AlertPopup,
     ApplicationPopup: ApplicationPopup_1.ApplicationPopup,
     BulkUpdatePopup: BulkUpdatePopup_1.BulkUpdatePopup,
     CalculatedColumnPopup: CalculatedColumnPopup_1.CalculatedColumnPopup,
     CalendarsPopup: CalendarsPopup_1.CalendarsPopup,
+    PercentBarPopup: PercentBarPopup_1.PercentBarPopup,
     CellValidationPopup: CellValidationPopup_1.CellValidationPopup,
     ChartPopup: ChartPopup_1.ChartPopup,
     ColumnChooserPopup: ColumnChooserPopup_1.ColumnChooserPopup,
@@ -74,6 +75,7 @@ exports.AdaptableViewFactory = {
     IPushPullLogin: IPushPullLogin_1.IPushPullLogin,
     IPushPullDomainPageSelector: IPushPullDomainPageSelector_1.IPushPullDomainPageSelector,
     LayoutPopup: LayoutPopup_1.LayoutPopup,
+    ColumnCategoryPopup: ColumnCategoryPopup_1.ColumnCategoryPopup,
     PlusMinusPopup: PlusMinusPopup_1.PlusMinusPopup,
     QuickSearchPopup: QuickSearchPopup_1.QuickSearchPopup,
     SelectedCellsPopup: SelectedCellsPopup_1.SelectedCellsPopup,

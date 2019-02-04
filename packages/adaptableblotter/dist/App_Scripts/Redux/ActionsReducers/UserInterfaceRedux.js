@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const UIHelper_1 = require("../../View/UIHelper");
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.COLOR_PALETTE_SET = 'COLOR_PALETTE_SET';
 exports.COLOR_PALETTE_ADD = 'COLOR_PALETTE_ADD';
 exports.STYLE_CLASSNAMES_ADD = 'STYLE_CLASSNAMES_ADD';
-//export const PERMITTED_COLUMNVALUES_ADD = 'PERMITTED_COLUMNVALUES_ADD';
 exports.PERMITTED_COLUMNVALUES_SET = 'PERMITTED_COLUMNVALUES_SET';
 exports.PERMITTED_COLUMNVALUES_DELETE = 'PERMITTED_COLUMNVALUES_DELETE';
 exports.ColorPaletteSet = (ColorPalette) => ({
@@ -31,31 +32,9 @@ exports.PermittedColumnValuesDelete = (Column) => ({
 //    ColumnValues
 //})
 const initialUserInterfaceState = {
-    ColorPalette: [
-        "#000000",
-        "#ffffff",
-        "#C0C0C0",
-        "#808080",
-        "#800000",
-        "#808000",
-        "#008000",
-        "#00FF00",
-        "#FFFF00",
-        "#FFFFCC",
-        "#000080",
-        "#0000FF",
-        "#008080",
-        "#00FFFF",
-        "#FF00FF",
-        "#800080",
-        "#8B0000",
-        "#FF0000",
-        "#FF6961",
-        "#FFA500",
-    ],
-    StyleClassNames: [],
-    PermittedColumnValues: [],
-    ColumnCategories: []
+    ColorPalette: UIHelper_1.UIHelper.getDefaultColors(),
+    StyleClassNames: GeneralConstants_1.EMPTY_ARRAY,
+    PermittedColumnValues: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.UserInterfaceStateReducer = (state = initialUserInterfaceState, action) => {
     let permittedColumnValues;

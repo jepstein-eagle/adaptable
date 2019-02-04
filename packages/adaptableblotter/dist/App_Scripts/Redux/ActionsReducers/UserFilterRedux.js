@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.USER_FILTER_ADD_UPDATE = 'USER_FILTER_ADD_UPDATE';
 exports.USER_FILTER_DELETE = 'USER_FILTER_DELETE';
-exports.CREATE_USER_FILTER_FROM_COLUMN_FILTER = 'CREATE_USER_FILTER_FROM_COLUMN_FILTER';
+exports.USER_FILTER_CREATE_FROM_COLUMN_FILTER = 'USER_FILTER_CREATE_FROM_COLUMN_FILTER';
 exports.UserFilterAddUpdate = (Index, UserFilter) => ({
     type: exports.USER_FILTER_ADD_UPDATE,
     Index,
@@ -13,12 +14,12 @@ exports.UserFilterDelete = (UserFilter) => ({
     UserFilter
 });
 exports.CreateUserFilterFromColumnFilter = (ColumnFilter, InputText) => ({
-    type: exports.CREATE_USER_FILTER_FROM_COLUMN_FILTER,
+    type: exports.USER_FILTER_CREATE_FROM_COLUMN_FILTER,
     ColumnFilter,
     InputText
 });
 const initialFilterState = {
-    UserFilters: [],
+    UserFilters: GeneralConstants_1.EMPTY_ARRAY,
 };
 exports.UserFilterReducer = (state = initialFilterState, action) => {
     let index;

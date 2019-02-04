@@ -1,9 +1,9 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumn } from '../../../Core/Interface/IColumn';
-import { IPlusMinusRule } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { IPlusMinusRule } from "../../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
 export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
-    Columns: Array<IColumn>;
+    NumericColumns: Array<IColumn>;
 }
 export interface PlusMinusColumnWizardState {
     SelectedColumnId: string;

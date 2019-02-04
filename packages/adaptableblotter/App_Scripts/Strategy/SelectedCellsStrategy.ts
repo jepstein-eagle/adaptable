@@ -1,15 +1,19 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { ISelectedCellsStrategy, ISelectedCellInfo, ISelectedCellSummmary, ISelectedCell } from "./Interface/ISelectedCellsStrategy";
-import { DataType, StateChangedTrigger } from '../Core/Enums';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { ISelectedCellsStrategy } from "./Interface/ISelectedCellsStrategy";
+import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
+import { ISelectedCellSummmary } from "../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
+import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
+import { DataType, StateChangedTrigger } from '../Utilities/Enums';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { SelectedCellsState } from '../Redux/ActionsReducers/Interface/IState';
+import { Helper } from '../Utilities/Helpers/Helper';
 
 export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISelectedCellsStrategy {
     private SelectedCellsState: SelectedCellsState
-   
+
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.SelectedCellsStrategyId, blotter)
@@ -22,11 +26,11 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
     protected InitState() {
         if (this.SelectedCellsState != this.blotter.AdaptableBlotterStore.TheStore.getState().SelectedCells) {
             this.SelectedCellsState = this.blotter.AdaptableBlotterStore.TheStore.getState().SelectedCells;
-       
+
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.SelectedCells, this.SelectedCellsState)
             }
-         }
+        }
     }
 
     public CreateSelectedCellSummary(selectedCellInfo: ISelectedCellInfo): ISelectedCellSummmary {
@@ -51,9 +55,10 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
                     allValues.push(value);
 
                     if (numericColumns.indexOf(i) != -1) {
+                        let valueAsNumber =Number(value);
                         // possible that its not a number despite it being a numeric column
-                        if (!isNaN(Number(value))) {
-                            numericValues.push(value)
+                        if (!isNaN(Number(valueAsNumber))) {
+                            numericValues.push(valueAsNumber)
                         }
                     }
                 }
@@ -62,12 +67,12 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
             let hasNumericColumns: boolean = numericValues.length > 0;
             let distinct = ArrayExtensions.RetrieveDistinct(allValues).length;
             selectedCellSummary = {
-                Sum: (hasNumericColumns) ? this.roundNumberToFourPlaces(this.sumNumberArray(numericValues)) : "",
-                Average: (hasNumericColumns) ? this.roundNumberToFourPlaces(this.meanNumberArray(numericValues)) : "",
-                Median: (hasNumericColumns) ?this.roundNumberToFourPlaces(this.medianNumberArray(numericValues)) : "",
+                Sum: (hasNumericColumns) ? Helper.RoundNumberTo4dp(this.sumNumberArray(numericValues)) : "",
+                Average: (hasNumericColumns) ? Helper.RoundNumberTo4dp(this.meanNumberArray(numericValues)) : "",
+                Median: (hasNumericColumns) ? Helper.RoundNumberTo4dp(this.medianNumberArray(numericValues)) : "",
                 Distinct: distinct,
-                Max: (hasNumericColumns) ? this.roundNumberToFourPlaces(Math.max(...numericValues)) : "",
-                Min: (hasNumericColumns) ? this.roundNumberToFourPlaces(Math.min(...numericValues)) : "",
+                Max: (hasNumericColumns) ? Helper.RoundNumberTo4dp(Math.max(...numericValues)) : "",
+                Min: (hasNumericColumns) ? Helper.RoundNumberTo4dp(Math.min(...numericValues)) : "",
                 Count: allValues.length,
                 Only: (distinct == 1) ? allValues[0] : "",
                 VWAP: (numericColumns.length == 2) ? this.calculateVwap(numericValues) : ""
@@ -83,12 +88,12 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
     private meanNumberArray(numericValues: number[]): number {
         return this.sumNumberArray(numericValues) / numericValues.length;
     }
-    
-    private  medianNumberArray(numericValues: number[]): number {
+
+    private medianNumberArray(numericValues: number[]): number {
         // median of [3, 5, 4, 4, 1, 1, 2, 3] = 3
         var median = 0, numsLen = numericValues.length;
         numericValues.sort();
-     
+
         if (
             numsLen % 2 === 0 // is even
         ) {
@@ -98,15 +103,12 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
             // middle number only
             median = numericValues[(numsLen - 1) / 2];
         }
-     
+
         return median;
     }
-    
-    private roundNumberToFourPlaces(numberToRound: any,):number{
-        return Math.round(numberToRound * 10000) / 10000;
-    }
 
-    
+
+
     private calculateVwap(numericValues: number[]): any {
         let firstColValues: number[] = []
         let secondColComputedValues: number[] = []
@@ -120,7 +122,7 @@ export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISel
         }
         let firstColTotal: number = this.sumNumberArray(firstColValues)
         let secondColTotal: number = this.sumNumberArray(secondColComputedValues)
-        let result: any = this.roundNumberToFourPlaces((secondColTotal/firstColTotal))
+        let result: any = Helper.RoundNumberTo4dp((secondColTotal / firstColTotal))
         return result;
     }
 }

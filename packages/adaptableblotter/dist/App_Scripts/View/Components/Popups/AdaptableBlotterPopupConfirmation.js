@@ -1,25 +1,64 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
-//we use that syntax to import the default export from the module.... Took me a while to find the syntax
-const react_bootstrap_sweetalert_1 = require("react-bootstrap-sweetalert");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
+const UIHelper_1 = require("../../UIHelper");
+const react_bootstrap_1 = require("react-bootstrap");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
+const PanelWithImage_1 = require("../Panels/PanelWithImage");
 class AdaptableBlotterPopupConfirmation extends React.Component {
     constructor(props) {
         super(props);
+        this.changeContent = (e) => {
+            this.setState({ PromptText: e.target.value });
+        };
+        this.state = { PromptText: "" };
     }
     render() {
-        let title = this.props.ShowCommentBox ? React.createElement("span", null,
-            React.createElement(react_bootstrap_sweetalert_1.default.WarningIcon, null),
-            this.props.Title) : this.props.Title;
-        let msgSplit = this.props.Msg.split("\n");
-        return this.props.ShowPopup && React.createElement("div", { className: StyleConstants.POPUP_CONFIRMATION },
-            React.createElement(react_bootstrap_sweetalert_1.default, { type: this.props.ShowCommentBox ? "input" : "warning", btnSize: "sm", showCancel: true, confirmBtnBsStyle: "primary", confirmBtnBsSize: "sm", confirmBtnText: this.props.ConfirmText, cancelBtnBsStyle: "default", cancelBtnText: this.props.CancelText, title: title, placeholder: "Please enter a comment to confirm", onConfirm: (inputValue) => this.props.onConfirm(inputValue), onCancel: () => this.props.onCancel() },
-                React.createElement("p", null, msgSplit.map(function (item, index) {
-                    return (React.createElement("span", { key: index },
-                        item,
-                        index != msgSplit.length - 1 && React.createElement("br", null)));
-                }))));
+        let style = UIHelper_1.UIHelper.getStyleNameByMessageType(this.props.MessageType);
+        let header = this.props.Header;
+        let glyph = UIHelper_1.UIHelper.getGlyphByMessageType(this.props.MessageType);
+        let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+        let cssClassName = StyleConstants.POPUP_PROMPT;
+        return this.props.ShowPopup && React.createElement("div", { className: StyleConstants.POPUP_PROMPT },
+            React.createElement(react_bootstrap_1.Modal, { show: this.props.ShowPopup, onHide: this.props.onCancel, className: cssClassName, container: modalContainer, bsSize: "medium" },
+                React.createElement("div", { className: cssClassName + StyleConstants.MODAL_BASE },
+                    React.createElement(react_bootstrap_1.Modal.Body, { className: cssClassName + StyleConstants.MODAL_BODY },
+                        React.createElement("div", { className: cssClassName },
+                            React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: header, bsStyle: style, glyphicon: glyph, bsSize: "small" },
+                                React.createElement("div", null,
+                                    React.createElement("div", { style: { display: "flex", alignItems: "center" } }, this.props.Msg.split("\n").map(function (item, index) {
+                                        return (React.createElement(react_bootstrap_1.ControlLabel, { key: index },
+                                            item,
+                                            React.createElement("br", null)));
+                                    })),
+                                    this.props.ShowInputBox &&
+                                        React.createElement("div", { style: { marginTop: '20px' } },
+                                            React.createElement("span", null, "Please enter a comment to confirm"),
+                                            React.createElement("br", null),
+                                            React.createElement(react_bootstrap_1.FormControl, { style: { marginTop: '20px' }, value: this.state.PromptText, type: "string", placeholder: "Enter text", onChange: (e) => this.changeContent(e) })),
+                                    React.createElement("div", { style: { marginTop: '20px' } },
+                                        React.createElement(react_bootstrap_1.Row, null,
+                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
+                                                React.createElement(react_bootstrap_1.Button, { bsStyle: StyleConstants.PRIMARY_BSSTYLE, className: cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CONFIRM_BUTTON, disabled: !this.canConfirm(), onClick: () => this.onConfirmmForm() }, this.props.ConfirmButtonText)),
+                                            React.createElement(react_bootstrap_1.Col, { xs: 2 }),
+                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
+                                                React.createElement(react_bootstrap_1.Button, { bsStyle: StyleConstants.DEFAULT_BSSTYLE, className: cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CANCEL_BUTTON, onClick: () => this.onCancelForm() }, this.props.CancelButtonText)))))))))));
+    }
+    onCancelForm() {
+        this.setState({ PromptText: "" });
+        this.props.onCancel();
+    }
+    onConfirmmForm() {
+        let promptText = this.state.PromptText;
+        this.setState({ PromptText: "" });
+        this.props.onConfirm(promptText);
+    }
+    canConfirm() {
+        if (this.props.ShowInputBox) {
+            return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.PromptText);
+        }
+        return true;
     }
 }
 exports.AdaptableBlotterPopupConfirmation = AdaptableBlotterPopupConfirmation;

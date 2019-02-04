@@ -1,17 +1,18 @@
 import * as React from "react";
 import { Radio, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { DataType, LeafExpressionOperator, MessageType, RangeOperandType } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { DataType, LeafExpressionOperator, MessageType, RangeOperandType } from '../../../Utilities/Enums';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ExpressionHelper } from "../../../Core/Helpers/ExpressionHelper";
+import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IAlertDefinition, IRange } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { IAlertDefinition } from "../../../Utilities/Interface/BlotterObjects/IAlertDefinition";
+import { IRange } from "../../../Utilities/Interface/Expression/IRange";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface AlertRulesWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
-    Columns: Array<IColumn>
+    
 }
 export interface AlertSettingsWizardState {
     Operator: LeafExpressionOperator;
@@ -51,11 +52,11 @@ export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, Ale
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="None" checked={this.state.Operator == LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Show Alert for ALL changes</Radio>
-                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Alert: All Changes"} bodyText={["An alert will fire for any change."]} MessageType={MessageType.Info} />
+                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Alert: All Changes"} bodyText={["An alert will fire for any change."]} />
                     </Col>
                     <Col xs={12} className="ab_large_margin">
                         <Radio inline value="others" checked={this.state.Operator != LeafExpressionOperator.None} onChange={(e) => this.onDisallowEditChanged(e)}>Show Alert when new cell value matches rule:</Radio>
-                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Alert: Custom"} bodyText={["Only show alerts that match the rule defined in the dropdown below."]} MessageType={MessageType.Info} />
+                        {' '}<AdaptablePopover cssClassName={cssClassName} headerText={"Alert: Custom"} bodyText={["Only show alerts that match the rule defined in the dropdown below."]} />
                     </Col>
                 </AdaptableBlotterForm>
 
@@ -140,7 +141,7 @@ export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, Ale
             case DataType.Boolean:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];
             case DataType.String:
-                return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.Contains, LeafExpressionOperator.NotContains, LeafExpressionOperator.StartsWith, LeafExpressionOperator.Regex];
+                return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.Contains, LeafExpressionOperator.NotContains, LeafExpressionOperator.StartsWith, LeafExpressionOperator.Regex, LeafExpressionOperator.NoDuplicates];
             case DataType.Date:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.LessThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween];
             case DataType.Number:

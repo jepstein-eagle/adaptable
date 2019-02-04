@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IStyle } from "../../Utilities/Interface/IStyle";
 export interface StyleVisualItemProps extends React.ClassAttributes<StyleVisualItem> {
     Style: IStyle;
 }

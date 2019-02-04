@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const PanelWithInfo_1 = require("../../Components/Panels/PanelWithInfo");
 const DualListBoxEditor_1 = require("../../Components/ListBox/DualListBoxEditor");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class LayoutColumnWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -11,7 +11,6 @@ class LayoutColumnWizard extends React.Component {
         this.state = {
             SelectedColumns: ColumnHelper_1.ColumnHelper.getFriendlyNamesFromColumnIds(this.props.Data.Columns, this.props.Columns)
         };
-        //  this.StepName = this.StepName + this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName
     }
     render() {
         let infoBody = ["Create a layout.", React.createElement("br", null), React.createElement("br", null), "Use the buttons on the right of the box to order items in the list as required.", React.createElement("br", null), React.createElement("br", null), "The new sort will consist first of the items in the 'Custom Sort Order' listbox; all other column values will then sort alphabetically."];

@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Core/Enums");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const Enums_1 = require("../../../Utilities/Enums");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
-const ExpressionHelper_1 = require("../../../Core/Helpers/ExpressionHelper");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
-const ColumnHelper_1 = require("../../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class AlertRulesWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -34,11 +34,11 @@ class AlertRulesWizard extends React.Component {
                     React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
                         React.createElement(react_bootstrap_1.Radio, { inline: true, value: "None", checked: this.state.Operator == Enums_1.LeafExpressionOperator.None, onChange: (e) => this.onDisallowEditChanged(e) }, "Show Alert for ALL changes"),
                         ' ',
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert: All Changes", bodyText: ["An alert will fire for any change."], MessageType: Enums_1.MessageType.Info })),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert: All Changes", bodyText: ["An alert will fire for any change."] })),
                     React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
                         React.createElement(react_bootstrap_1.Radio, { inline: true, value: "others", checked: this.state.Operator != Enums_1.LeafExpressionOperator.None, onChange: (e) => this.onDisallowEditChanged(e) }, "Show Alert when new cell value matches rule:"),
                         ' ',
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert: Custom", bodyText: ["Only show alerts that match the rule defined in the dropdown below."], MessageType: Enums_1.MessageType.Info }))),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Alert: Custom", bodyText: ["Only show alerts that match the rule defined in the dropdown below."] }))),
                 React.createElement(react_bootstrap_1.FormGroup, { className: "ab_large_margin" },
                     React.createElement(react_bootstrap_1.Col, { xs: 1 }),
                     React.createElement(react_bootstrap_1.Col, { xs: 6 },
@@ -88,7 +88,7 @@ class AlertRulesWizard extends React.Component {
             case Enums_1.DataType.Boolean:
                 return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.IsTrue, Enums_1.LeafExpressionOperator.IsFalse];
             case Enums_1.DataType.String:
-                return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.Equals, Enums_1.LeafExpressionOperator.NotEquals, Enums_1.LeafExpressionOperator.Contains, Enums_1.LeafExpressionOperator.NotContains, Enums_1.LeafExpressionOperator.StartsWith, Enums_1.LeafExpressionOperator.Regex];
+                return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.Equals, Enums_1.LeafExpressionOperator.NotEquals, Enums_1.LeafExpressionOperator.Contains, Enums_1.LeafExpressionOperator.NotContains, Enums_1.LeafExpressionOperator.StartsWith, Enums_1.LeafExpressionOperator.Regex, Enums_1.LeafExpressionOperator.NoDuplicates];
             case Enums_1.DataType.Date:
                 return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.Equals, Enums_1.LeafExpressionOperator.NotEquals, Enums_1.LeafExpressionOperator.GreaterThan, Enums_1.LeafExpressionOperator.LessThan, Enums_1.LeafExpressionOperator.Between, Enums_1.LeafExpressionOperator.NotBetween];
             case Enums_1.DataType.Number:

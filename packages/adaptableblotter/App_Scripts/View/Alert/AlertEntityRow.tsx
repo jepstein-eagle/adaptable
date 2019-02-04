@@ -1,17 +1,17 @@
 import * as React from "react";
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from '../../Core/Interface/IColumn';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper';
+import { IColumn } from '../../Utilities/Interface/IColumn';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from "../UIInterfaces";
-import { IAlertDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
-import { MessageType } from "../../Core/Enums";
+import { IAlertDefinition } from "../../Utilities/Interface/BlotterObjects/IAlertDefinition";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { MessageType } from "../../Utilities/Enums";
 import { FormControl } from 'react-bootstrap';
-import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { AlertHelper } from "../../Core/Helpers/AlertHelper";
+import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import { AlertHelper } from "../../Utilities/Helpers/AlertHelper";
 
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {

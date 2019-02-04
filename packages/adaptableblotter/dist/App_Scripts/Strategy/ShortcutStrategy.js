@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
-const StrategyConstants = require("../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../Core/Constants/ScreenPopups");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
 const ShortcutRedux = require("../Redux/ActionsReducers/ShortcutRedux");
-const PopupRedux = require("../Redux/ActionsReducers/PopupRedux");
-const Helper_1 = require("../Core/Helpers/Helper");
-const Enums_1 = require("../Core/Enums");
-const Enums_2 = require("../Core/Enums");
-const ObjectFactory_1 = require("../Core/ObjectFactory");
-const ArrayExtensions_1 = require("../Core/Extensions/ArrayExtensions");
+const Enums_1 = require("../Utilities/Enums");
+const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
+const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
+const Helper_1 = require("../Utilities/Helpers/Helper");
+const ObjectFactory_1 = require("../Utilities/ObjectFactory");
+const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
 class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.ShortcutStrategyId, blotter);
@@ -34,7 +34,7 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (!activeCell) {
             return;
         }
-        let selectedColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.find(c => c.ColumnId == activeCell.ColumnId);
+        let selectedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
         if (activeCell && !selectedColumn.ReadOnly) {
             let columnDataType = selectedColumn.DataType;
             let keyEventString = Helper_1.Helper.getStringRepresentionFromKey(keyEvent);
@@ -77,7 +77,6 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     NewValue: valueToReplace,
                     ColumnId: activeCell.ColumnId,
                     IdentifierValue: activeCell.Id,
-                    Timestamp: Date.now(),
                     Record: null
                 };
                 let validationRules = this.blotter.ValidationService.ValidateCellChanging(dataChangedEvent);
@@ -106,15 +105,15 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         let firstNumber = Number(first);
         let secondNumber = Number(second);
         switch (shortcutOperation) {
-            case Enums_2.MathOperation.Add:
+            case Enums_1.MathOperation.Add:
                 return firstNumber + secondNumber;
-            case Enums_2.MathOperation.Subtract:
+            case Enums_1.MathOperation.Subtract:
                 return (firstNumber - secondNumber);
-            case Enums_2.MathOperation.Multiply:
+            case Enums_1.MathOperation.Multiply:
                 return (firstNumber * secondNumber);
-            case Enums_2.MathOperation.Divide:
+            case Enums_1.MathOperation.Divide:
                 return (firstNumber / secondNumber);
-            case Enums_2.MathOperation.Replace:
+            case Enums_1.MathOperation.Replace:
                 return secondNumber;
         }
     }
@@ -122,24 +121,17 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.blotter.setValueBatch([{ Id: activeCell.Id, ColumnId: activeCell.ColumnId, Value: newValue }]);
     }
     ShowErrorPreventMessage(failedRule) {
-        this.blotter.api.alertShowError("Shortcut Failed", ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true);
+        this.blotter.api.alertApi.ShowError("Shortcut Failed", ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true);
     }
     ShowWarningMessages(failedRules, shortcut, activeCell, keyEventString, newValue, oldValue) {
         let warningMessage = "";
         failedRules.forEach(f => {
             warningMessage = warningMessage + ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(f, this.blotter) + "\n";
         });
-        let confirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: warningMessage,
-            ConfirmationText: "Bypass Rule",
-            //We cancel the edit before applying the shortcut so if cancel then there is nothing to do
-            CancelAction: null,
-            ConfirmAction: ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue),
-            ShowCommentBox: true
-        };
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowConfirmation(confirmation));
+        let confirmAction = ShortcutRedux.ShortcutApply(shortcut, activeCell, keyEventString, newValue);
+        let cancelAction = null;
+        let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
+        this.blotter.api.internalApi.PopupShowConfirmation(confirmation);
     }
 }
 exports.ShortcutStrategy = ShortcutStrategy;

@@ -1,8 +1,8 @@
 import * as React from "react";
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IAlertDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { MessageType } from "../../Core/Enums";
+import { IAlertDefinition } from "../../Utilities/Interface/BlotterObjects/IAlertDefinition";
+import { MessageType } from "../../Utilities/Enums";
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
     Column: IColumn;
     onChangeMessageType: (index: number, Type: MessageType) => void;

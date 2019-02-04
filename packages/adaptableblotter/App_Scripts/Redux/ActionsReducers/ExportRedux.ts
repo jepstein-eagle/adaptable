@@ -1,19 +1,15 @@
 import { ExportState } from './Interface/IState';
-import { IPPDomain } from '../../Strategy/Interface/IExportStrategy'
-import { ExportDestination } from '../../Core/Enums';
+import { ExportDestination } from '../../Utilities/Enums';
 import * as Redux from 'redux'
-import { ReportHelper } from '../../Core/Helpers/ReportHelper';
-import { ILiveReport } from '../../Strategy/Interface/IExportStrategy'
-import { IReport } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
+import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 export const EXPORT_APPLY = 'EXPORT_APPLY';
 export const IPP_LOGIN = 'IPP_LOGIN';
-export const SET_DOMAIN_PAGES = 'SET_DOMAIN_PAGES';
-
 export const REPORT_SELECT = 'REPORT_SELECT';
 export const REPORT_ADD_UPDATE = 'REPORT_ADD_UPDATE';
 export const REPORT_DELETE = 'REPORT_DELETE';
-export const REPORT_SET_ERROR_MSG = 'REPORT_SET_ERROR_MSG';
 
 export interface ExportApplyAction extends Redux.Action {
     Report: string;
@@ -27,11 +23,6 @@ export interface IPPLoginAction extends Redux.Action {
     Password: string;
 }
 
-export interface SetDomainPagesAction extends Redux.Action {
-    IPPDomainsPages: IPPDomain[];
-}
-
-
 export interface ReportSelectAction extends Redux.Action {
     SelectedReport: string;
 }
@@ -43,12 +34,6 @@ export interface ReportAddUpdateAction extends Redux.Action {
 
 export interface ReportDeleteAction extends Redux.Action {
     Index: number
-}
-
-
-
-export interface ReportSetErrorMsgAction extends Redux.Action {
-    ErrorMsg: string
 }
 
 export const ReportSelect = (SelectedReport: string): ReportSelectAction => ({
@@ -68,11 +53,6 @@ export const ReportDelete = (Index: number): ReportDeleteAction => ({
 })
 
 
-export const ReportSetErrorMsg = (ErrorMsg: string): ReportSetErrorMsgAction => ({
-    type: REPORT_SET_ERROR_MSG,
-    ErrorMsg
-})
-
 export const ExportApply = (Report: string, ExportDestination: ExportDestination, Folder?: string, Page?: string): ExportApplyAction => ({
     type: EXPORT_APPLY,
     Report,
@@ -87,31 +67,16 @@ export const IPPLogin = (Login: string, Password: string): IPPLoginAction => ({
     Password
 })
 
-export const SetDomainPages = (IPPDomainsPages: IPPDomain[]): SetDomainPagesAction => ({
-    type: SET_DOMAIN_PAGES,
-    IPPDomainsPages
-})
-
 const initialExportState: ExportState = {
-    IPPDomainsPages: [],
-    Reports: ReportHelper.CreateSystemReports(),
-    CurrentReport: "",
-    ErrorMsg: ""
-}
+     Reports: ReportHelper.CreateSystemReports(),
+    CurrentReport: EMPTY_STRING,
+    }
 
 export const ExportReducer: Redux.Reducer<ExportState> = (state: ExportState = initialExportState, action: Redux.Action): ExportState => {
     switch (action.type) {
-        case SET_DOMAIN_PAGES: {
-            let actionTyped = (<SetDomainPagesAction>action)
-            return Object.assign({}, state, { IPPDomainsPages: actionTyped.IPPDomainsPages })
-        }
-        case REPORT_SELECT:
+         case REPORT_SELECT:
             return Object.assign({}, state, { CurrentReport: (<ReportSelectAction>action).SelectedReport })
-        case REPORT_SET_ERROR_MSG: {
-            let actionTyped = (<ReportSetErrorMsgAction>action)
-            return Object.assign({}, state, { ErrorMsg: actionTyped.ErrorMsg })
-        }
-        case REPORT_ADD_UPDATE: {
+          case REPORT_ADD_UPDATE: {
             let Reports: IReport[] = [].concat(state.Reports);
 
             let actionTypedAddUpdate = (<ReportAddUpdateAction>action)

@@ -1,6 +1,8 @@
 
 var adaptableblotter
 var trades
+var quickSearchText
+
 function capitalize(string) {
     return (/[a-z]/.test(string) ? string : string.toLowerCase())
         .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
@@ -34,10 +36,10 @@ function getSchema(data) {
 
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
-     trades = dataGen.getTrades(15000);
-
-    var vendorGrid = new fin.Hypergrid('#grid', { data: trades, schema: getSchema(trades) });
-    //  dataGen.startTickingDataHypergrid(vendorGrid)
+    trades = dataGen.getTrades(5000);
+    var gridOptions = { data: trades, schema: getSchema(trades) };
+    var vendorGrid = new fin.Hypergrid('#grid', gridOptions);
+     dataGen.startTickingDataHypergrid(vendorGrid)
     //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
     vendorGrid.addProperties({ renderFalsy: true })
     //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
@@ -80,7 +82,7 @@ function InitBlotter() {
     // Make DeskID not sortable
     behavior.setColumnProperties(2, {
         unsortable: true,
-     //   unfilterable: true
+        //   unfilterable: true
     });
 
 
@@ -99,34 +101,61 @@ function InitBlotter() {
         format: 'shortDateFormat'
     });
 
-    var blotterOptions = {
-        primaryKey: "tradeId",
-        userName: "jonathan",
-        blotterId: "my Blotter",
-        enableAuditLog: false,
-        enableRemoteConfigServer: false,
-        //  predefinedConfig: json,
-        serverSearchOption: "None",
-        vendorGrid: vendorGrid,
-        useDefaultVendorGridThemes: true,
+    let adaptableBlotterOptions = {
+        vendorGrid: vendorGrid, // the underlying hypergrid - MANDATORY
+        //  primaryKey: "date", // pk for blotter - required
+        primaryKey: "tradeId", // pk for blotter - required
+        userName: "demo user", // name of current user
+        blotterId: "demo blotter 2.5", // id for blotter
+
+         predefinedConfig: categoryJson,
+
+        auditLogOptions: {
+            auditCellEdits: true,
+            auditFunctionEvents: true,
+            auditUserStateChanges: false,
+            auditInternalStateChanges: false,
+            pingInterval: 120
+        },
+        configServerOptions: {
+            enableConfigServer: false,
+            //  configServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
+        },
+        layoutOptions: {
+            // includeVendorStateInLayouts: true,
+            // autoSaveLayouts: true,
+        },
+        queryOptions: {
+            ignoreCaseInQueries: false,
+            //maxColumnValueItemsDisplayed: 5,
+            columnValuesOnlyInQueries: false,
+            // getColumnValues: retrieveValues,
+            //  maxColumnValueItemsDisplayed: 5
+        },
+        filterOptions: {
+            //useAdaptableBlotterFilterForm: false,
+            // useAdaptableBlotterQuickFilter: false
+        },
+        generalOptions: {
+            //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
+        },
         iPushPullConfig: {
             api_key: "CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP",
             api_secret: "xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj",
         },
-        getColumnValues: retrieveValues,
-        maxColumnValueItemsDisplayed: 1000
+
     }
 
-    adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(blotterOptions);
-    adaptableblotter.api.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs))
-  
- //  adaptableblotter.api.onSearchedChanged().Subscribe((blotter, searchArgs) => getTradesForSearch(searchArgs, dataGen))
-  //  vendorGrid.addProperties(lightTheme);
+    adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(adaptableBlotterOptions);
+    adaptableblotter.api.eventApi.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs))
+
+    //  adaptableblotter.api.eventApi.onSearchedChanged().Subscribe((blotter, searchArgs) => getTradesForSearch(searchArgs, dataGen))
+    //  vendorGrid.addProperties(lightTheme);
 }
 
 function listenToStateChange(stateChangedArgs) {
-    console.log("state event received")
-    console.log(stateChangedArgs)
+    //  console.log("state event received")
+    //  console.log(stateChangedArgs)
 }
 
 function retrieveValues(columnName) {
@@ -154,37 +183,119 @@ function getValuesForColumn(columnName) {
     return { DistinctCriteriaPairValue: "DisplayValue", ColumnValues: vals }
 }
 
-function getTradesForSearch(searchArgs, dataGen) {
-    if (searchArgs.data != null && searchArgs.data.length > -1) {
-        let searchChangedInfo = searchArgs.data[0].id;
-        if (searchChangedInfo.searchChangedTrigger == "QuickSearch") {
-            alert("Quick search: " + searchChangedInfo.blotterSearchState.quickSearch)
+function apiTester(state, gridOptions) {
+    if (state.QuickSearch.QuickSearchText != quickSearchText) {
+        quickSearchText = state.QuickSearch.QuickSearchText
+        if (quickSearchText == "#advanced") {
+            let test = adaptableblotter.api.ConfigApi.configGetUserStateByFunction('AdvancedSearch')
+            console.log("object");
+            console.log(test);
+            let test2 = adaptableblotter.api.ConfigApi.configGetUserStateByFunction('AdvancedSearch', true)
+            console.log("string version");
+            console.log(test2);
+            let test3 = adaptableblotter.api.ConfigApi.configGetAllUserState()
+            console.log("all version");
+            console.log(test3);
+            let test4 = adaptableblotter.api.ConfigApi.configGetAdvancedSearchState()
+            console.log("advanced search");
+            console.log(test4);
+            let test5 = adaptableblotter.api.ConfigApi.configGetAdvancedSearchState(true)
+            console.log("advanced search string");
+            console.log(test5);
+        } else if (quickSearchText == "#hideabout") {
+            adaptableblotter.api.DashboardApi.dashboardHideAboutButton()
+        } else if (quickSearchText == "#showabout") {
+            adaptableblotter.api.DashboardApi.dashboardShowAboutButton()
+        } else if (quickSearchText == "#permies") {
+            adaptableblotter.api.UserInterfaceApi.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third'])
+        } else if (quickSearchText == "#systemfilters") {
+            adaptableblotter.api.SystemFilterApi.systemFilterClear()
+        } else if (quickSearchText == "#reset") {
+            //     adaptableblotter.api.configDeleteLocalStorage()
+        } else if (quickSearchText == "#loadUserState") {
+            adaptableblotter.api.loadUserState(oldjson)
 
-            let jsonstring = JSON.stringify(searchArgs)
-            console.log(jsonstring)
+        } else if (quickSearchText == "#miguel") {
+            setTimeout(() => adaptableblotter.api.uiSetColumnPermittedValues("deskId", ["5555555",
+                "8888888"
+            ]), 20000);
+        } else if (quickSearchText == "#allsf") {
+            let thisxx = adaptableblotter.api.filterGetAllSystemFilters()
+        } else if (quickSearchText == "#permiex") {
+            adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['fourth', 'fith', 'sixth'])
+        } else if (quickSearchText == "#clear") {
+            adaptableblotter.api.uiClearColumnPermittedValues('counterparty')
+        } else if (quickSearchText == "#send") {
+            adaptableblotter.api.ExportApi.exportSendReport('All Data', 'CSV')
+        } else if (quickSearchText == "#info") {
+            adaptableblotter.api.AlertApi.alertShow("Hello",
+                "Your data is fine actually its very good and I want to check that this wraps", "Info",
+                true)
+        } else if (quickSearchText == "#warning") {
+            adaptableblotter.api.AlertApi.alertShow("End of Day", "Dont forget to send the report", "Warning",
+                true)
+        } else if (quickSearchText == "#error") {
+            adaptableblotter.api.AlertApi.alertShow("Limits Breached", "Pleae adjust your PnL", "Error", true)
+        } else if (quickSearchText == "#green") {
+            adaptableblotter.api.SystemStatusApi.systemStatusSetGreen("The server is fine")
+        } else if (quickSearchText == "#amber") {
+            adaptableblotter.api.SystemStatusApi.systemStatusSetAmber("The server is running slowly")
+        } else if (quickSearchText == "#red") {
+            adaptableblotter.api.SystemStatusApi.systemStatusSetRed("The server has stopped ")
+        } else if (quickSearchText == "#sbutton") {
+            adaptableblotter.api.DashboardApi.dashboardShowSystemStatusButton()
+        } else if (quickSearchText == "#hbutton") {
+            adaptableblotter.api.DashboardApi.dashboardHideSystemStatusButton()
+        } else if (quickSearchText == "#sfunc") {
+            adaptableblotter.api.DashboardApi.dashboardShowFunctionsDropdown()
+        } else if (quickSearchText == "#hfunc") {
+            adaptableblotter.api.DashboardApi.dashboardHideFunctionsDropdown()
+        } else if (quickSearchText == "#scols") {
+            adaptableblotter.api.DashboardApi.dashboardShowColumnsDropdown()
+        } else if (quickSearchText == "#hcols") {
+            adaptableblotter.api.DashboardApi.dashboardHideColumnsDropdown()
+        } else if (quickSearchText == "#title") {
+            adaptableblotter.api.DashboardApi.dashboardSetHomeToolbarTitle("hello world")
+        } else if (quickSearchText == "#filterclear") {
+            adaptableblotter.api.ColumnFilterApi.columnFilterClearAll()
+        } else if (quickSearchText == "#userfilter") {
+            adaptableblotter.api.ColumnFilterApi.columnFilterSetUserFilter("Big Desk Id")
+        } else if (quickSearchText == "#savelayout") {
+            adaptableblotter.api.LayoutApi.layoutSave()
+        } else if (quickSearchText == "#setlayout") {
+            adaptableblotter.api.LayoutApi.layoutSet("miguel")
+        } else if (quickSearchText == "#notional") {
+            gridOptions.api.forEachNode((rowNode, index) => {
+                if (index == 4) {
+                    rowNode.setDataValue("notional", 2000000000)
+                }
+            });
         }
-
-
-        if (searchArgs.SearchChangedTrigger == "DataSourcexxxx") {
-            if (searchArgs.BlotterSearchState.DataSource == "Dollar") {
-                adaptableblotter.api.setGridData(dataGen.getDollarTrades(50));
-                adaptableblotter.api.layoutSet("Dollar View")
-            } else if (searchArgs.BlotterSearchState.DataSource == "Sterling") {
-                adaptableblotter.api.setGridData(dataGen.getGBPTrades(50));
-                adaptableblotter.api.layoutSet("Sterling View")
-            } else if (searchArgs.BlotterSearchState.DataSource == "Euro") {
-                adaptableblotter.api.setGridData(dataGen.getEuroTrades(50));
-                adaptableblotter.api.layoutSet("Euro View")
-            } else {
-                adaptableblotter.api.setGridData(dataGen.getTrades(15000));
-                adaptableblotter.api.layoutClear();
-            }
-        }
-
     }
 }
 
-
+let categoryJson = {
+    "Entitlements": {
+        "FunctionEntitlements": [
+            {
+                "FunctionName": "CustomSort",
+                "AccessLevel": "ReadOnly"
+            },
+            {
+                "FunctionName": "QuickSearch",
+                "AccessLevel": "ReadOnly"
+            },
+            {
+                "FunctionName": "PlusMinus",
+                "AccessLevel": "Hidden"
+            },
+            {
+                "FunctionName": "SmartEdit",
+                "AccessLevel": "Readonly"
+            }
+        ]
+    }
+}
 
 let json = {
     "UserInterface": {

@@ -1,8 +1,9 @@
 import { ShortcutState } from './Interface/IState';
-import { MathOperation } from '../../Core/Enums';
+import { MathOperation } from '../../Utilities/Enums';
 import * as Redux from 'redux'
-import { ICellInfo } from '../../Core/Interface/Interfaces';
-import { IShortcut } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
+import { IShortcut } from "../../Utilities/Interface/BlotterObjects/IShortcut";
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';
 export const SHORTCUT_ADD = 'SHORTCUT_ADD';
@@ -79,7 +80,7 @@ export const ShortcutDelete = (Shortcut: IShortcut): ShortcutDeleteAction => ({
 })
 
 const initialShortcutState: ShortcutState = {
-    Shortcuts: []
+    Shortcuts: EMPTY_ARRAY
 }
 
 export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutState = initialShortcutState, action: Redux.Action): ShortcutState => {
@@ -96,9 +97,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
             shortcuts = [].concat(state.Shortcuts)
             let index = shortcuts.indexOf(shortcut)
             shortcuts[index] = Object.assign({}, shortcut, { ShortcutKey: actionTyped.NewShortcutKey })
-            return Object.assign({}, state, {
-                Shortcuts: shortcuts
-            });
+            return Object.assign({}, state, { Shortcuts: shortcuts });
         }
         case SHORTCUT_CHANGE_OPERATION: {
             let actionTyped = <ShortcutChangeOperationAction>action
@@ -106,9 +105,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
             shortcuts = [].concat(state.Shortcuts)
             let index = shortcuts.indexOf(shortcut)
             shortcuts[index] = Object.assign({}, shortcut, { ShortcutOperation: actionTyped.NewShortcutOperation })
-            return Object.assign({}, state, {
-                Shortcuts: shortcuts
-            });
+            return Object.assign({}, state, { Shortcuts: shortcuts });
         }
         case SHORTCUT_CHANGE_RESULT: {
             let actionTyped = <ShortcutChangeResultAction>action
@@ -116,29 +113,20 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (state: ShortcutSta
             shortcuts = [].concat(state.Shortcuts)
             let index = shortcuts.indexOf(shortcut)
             shortcuts[index] = Object.assign({}, shortcut, { ShortcutResult: actionTyped.NewShortcutResult })
-            return Object.assign({}, state, {
-                Shortcuts: shortcuts
-            });
+            return Object.assign({}, state, { Shortcuts: shortcuts });
         }
         case SHORTCUT_ADD: {
             let newShortcut = (<ShortcutAddAction>action).Shortcut
             shortcuts = [].concat(state.Shortcuts)
             shortcuts.push(newShortcut);
-            return Object.assign({}, state, {
-                Shortcuts: shortcuts
-            });
+            return Object.assign({}, state, { Shortcuts: shortcuts });
         }
-
         case SHORTCUT_DELETE: {
             let deletedShortcut = (<ShortcutDeleteAction>action).Shortcut;
             shortcuts = [].concat(state.Shortcuts)
             let index = shortcuts.findIndex(x => x.ShortcutKey == deletedShortcut.ShortcutKey)
             shortcuts.splice(index, 1);
-
-            return Object.assign({}, state, {
-                Shortcuts: shortcuts
-            });
-
+            return Object.assign({}, state, { Shortcuts: shortcuts });
         }
         default:
             return state

@@ -6,21 +6,23 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { MathOperation, MessageType } from '../../Core/Enums'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import { MathOperation, MessageType } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { ExpressionHelper } from '../../Core/Helpers/ExpressionHelper'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions';
-import { IUIConfirmation } from '../../Core/Interface/IMessage';
-import { EnumExtensions } from "../../Core/Extensions/EnumExtensions";
-import { IPreviewResult, IPreviewInfo } from "../../Core/Interface/IPreviewResult";
+import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
-import { PreviewHelper } from "../../Core/Helpers/PreviewHelper";
+import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { ICellValidationRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { ICellValidationRule } from "../../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { DEFAULT_BSSTYLE, WARNING_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
+import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 interface SmartEditPopupProps extends StrategyViewPopupProps<SmartEditPopupComponent> {
     SmartEditValue: string;
@@ -54,7 +56,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
         let col: IColumn
         if (this.props.PreviewInfo) {
-            col = this.props.Columns.find(c => c.ColumnId == this.props.PreviewInfo.ColumnId)
+            col = ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns);
         }
 
 
@@ -116,25 +118,19 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
     }
 
     private onConfirmWarningCellValidation() {
-        let confirmation: IUIConfirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: SmartEditRedux.SmartEditApply(false),
-            ConfirmAction: SmartEditRedux.SmartEditApply(true),
-            ShowCommentBox: true
-        }
-        this.props.onConfirmWarningCellValidation(confirmation)
+        let confirmAction: Redux.Action = SmartEditRedux.SmartEditApply(true)
+        let cancelAction: Redux.Action = SmartEditRedux.SmartEditApply(false);
+        let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
+        this.props.onConfirmWarningCellValidation(confirmation);
     }
 
     private getButtonStyle(): string {
         if (this.props.PreviewInfo) {
             if (this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent) {
-                return "default";
+                return DEFAULT_BSSTYLE;
             }
             if (this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning || this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent) {
-                return "warning";
+                return WARNING_BSSTYLE;
             }
         }
         return "success";

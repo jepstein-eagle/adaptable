@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.FORMAT_COLUMN_ADD = 'FORMAT_COLUMN_ADD';
 exports.FORMAT_COLUMN_EDIT = 'FORMAT_COLUMN_EDIT';
 exports.FORMAT_COLUMN_DELETE = 'FORMAT_COLUMN_DELETE';
@@ -16,7 +17,7 @@ exports.FormatColumnDelete = (FormatColumn) => ({
     FormatColumn
 });
 const initialFormatColumnState = {
-    FormatColumns: []
+    FormatColumns: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.FormatColumnReducer = (state = initialFormatColumnState, action) => {
     let formatColumns;

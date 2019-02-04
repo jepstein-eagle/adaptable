@@ -1,13 +1,13 @@
 import * as React from "react";
 import { FormGroup, FormControl, Row, Col, Panel, Checkbox, HelpBlock, Well } from 'react-bootstrap';
-import { FontWeight, FontStyle, FontSize, MessageType } from '../../Core/Enums';
-import { EnumExtensions } from '../../Core/Extensions/EnumExtensions';
+import { FontWeight, FontStyle, FontSize, MessageType } from '../../Utilities/Enums';
+import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { AdaptableBlotterForm } from "./Forms/AdaptableBlotterForm";
-import { StringExtensions } from "../../Core/Extensions/StringExtensions";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IStyle } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { IStyle } from "../../Utilities/Interface/IStyle";
 
 
 export interface StyleComponentProps extends React.ClassAttributes<StyleComponent> {
@@ -130,7 +130,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                                                         </FormControl>
                                                         {' '}<AdaptablePopover  cssClassName={cssClassName} headerText={"Conditional Style: Font Size"}
                                                             bodyText={["Select the size of the font for the Conditional Style.  The default is 'Medium'."]}
-                                                            MessageType={MessageType.Info} />
+                                                            />
                                                     </AdaptableBlotterForm  >
                                                 }
                                             </Col>

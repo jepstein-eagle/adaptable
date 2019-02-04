@@ -1,15 +1,17 @@
-import { ConditionalStyleState } from '../Redux/ActionsReducers/Interface/IState';
+import { ConditionalStyleState, ColumnCategoryState } from '../Redux/ActionsReducers/Interface/IState';
 import { IConditionalStyleStrategy } from './Interface/IConditionalStyleStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { IDataChangedEvent } from '../Core/Services/Interface/IAuditService';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IColumn } from '../Utilities/Interface/IColumn';
+import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 export declare abstract class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     protected ConditionalStyleState: ConditionalStyleState;
+    protected ColumnCategoryState: ColumnCategoryState;
     constructor(blotter: IAdaptableBlotter);
     protected addPopupMenuItem(): void;
     protected InitState(): void;
-    addContextMenuItem(columnId: string): void;
-    protected abstract handleDataSourceChanged(dataChangedEvent: IDataChangedEvent): void;
+    addContextMenuItem(column: IColumn): void;
+    protected abstract handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void;
     private handleGridDataBound;
     abstract InitStyles(): void;
 }

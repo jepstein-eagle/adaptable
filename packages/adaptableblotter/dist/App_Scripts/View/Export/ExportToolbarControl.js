@@ -3,32 +3,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const ExportRedux = require("../../Redux/ActionsReducers/ExportRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
-//import { IDashboardStrategyControlConfiguration } from '../../Strategy/Interface/IDashboardStrategy';
-const Helper_1 = require("../../Core/Helpers/Helper");
 const ButtonDelete_1 = require("../Components/Buttons/ButtonDelete");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
-const Enums_1 = require("../../Core/Enums");
-const OpenfinHelper_1 = require("../../Core/Helpers/OpenfinHelper");
-const iPushPullHelper_1 = require("../../Core/Helpers/iPushPullHelper");
-const GeneralConstants = require("../../Core/Constants/GeneralConstants");
-const ReportHelper_1 = require("../../Core/Helpers/ReportHelper");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
+const Enums_1 = require("../../Utilities/Enums");
+const OpenfinHelper_1 = require("../../Utilities/Helpers/OpenfinHelper");
+const iPushPullHelper_1 = require("../../Utilities/Helpers/iPushPullHelper");
+const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
+const ReportHelper_1 = require("../../Utilities/Helpers/ReportHelper");
 class ExportToolbarControlComponent extends React.Component {
     render() {
         const selectReportString = "Select a Report";
         let cssClassName = this.props.cssClassName + "__export";
         let savedReport = this.props.Reports.find(s => s.Name == this.props.CurrentReport);
         let savedReportIndex = this.props.Reports.findIndex(s => s.Name == this.props.CurrentReport);
-        let sortedReports = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.Reports, "Name");
         let currentReportId = StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentReport) ?
             selectReportString : this.props.CurrentReport;
         let availableReports = this.props.Reports.filter(s => s.Name != this.props.CurrentReport).map((report, index) => {
@@ -60,6 +57,10 @@ class ExportToolbarControlComponent extends React.Component {
                 " ",
                 "Start Sync with iPushPull");
         }
+        let deleteMessage = "Are you sure you want to delete '";
+        if (savedReport != null) {
+            deleteMessage = deleteMessage + savedReport.Name + "?";
+        }
         const exportGlyph = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "exportOverlay", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                 " ",
                 "Export") },
@@ -80,7 +81,7 @@ class ExportToolbarControlComponent extends React.Component {
                     iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem),
                 React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, onClick: () => this.props.onEditReport(), cssClassName: cssClassName, size: "small", overrideTooltip: "Edit Report", overrideDisableButton: savedReport == null || ReportHelper_1.ReportHelper.IsSystemReport(savedReport), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
                 React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewReport(), size: "small", overrideTooltip: "Create New Report", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
-                React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Report", overrideDisableButton: savedReport == null || ReportHelper_1.ReportHelper.IsSystemReport(savedReport), DisplayMode: "Glyph", ConfirmAction: ExportRedux.ReportDelete(savedReportIndex), ConfirmationMsg: "Are you sure you want to delete '" + !savedReport ? "" : savedReport.Name + "'?", ConfirmationTitle: "Delete Report", AccessLevel: this.props.AccessLevel })));
+                React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: "small", overrideTooltip: "Delete Report", overrideDisableButton: savedReport == null || ReportHelper_1.ReportHelper.IsSystemReport(savedReport), DisplayMode: "Glyph", ConfirmAction: ExportRedux.ReportDelete(savedReportIndex), ConfirmationMsg: deleteMessage, ConfirmationTitle: "Delete Report", AccessLevel: this.props.AccessLevel })));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.ExportStrategyName, glyphicon: StrategyConstants.ExportGlyph, onClose: () => this.props.onClose(StrategyConstants.ExportStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectedReportChanged(reportName) {

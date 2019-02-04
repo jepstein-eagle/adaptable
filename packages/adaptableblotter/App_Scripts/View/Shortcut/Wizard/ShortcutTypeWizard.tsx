@@ -1,9 +1,9 @@
-import { IShortcut } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IShortcut } from "../../../Utilities/Interface/BlotterObjects/IShortcut";
 /// <reference path="../../typings/index.d.ts" />
 import * as React from "react";
 import { Radio, Panel, Col, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { DataType, MathOperation } from '../../../Core/Enums';
+import { DataType, MathOperation } from '../../../Utilities/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 
 export interface ShortcutTypeWizardProps extends AdaptableWizardStepProps<IShortcut> {

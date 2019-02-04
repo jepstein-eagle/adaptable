@@ -3,22 +3,22 @@ import * as Redux from "redux";
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import { Helper } from '../../Core/Helpers/Helper';
+import { Helper } from '../../Utilities/Helpers/Helper';
 import { CellValidationWizard } from './Wizard/CellValidationWizard'
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
-import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import { StringExtensions } from '../../Core/Extensions/StringExtensions'
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IAdaptableBlotterObject, ICellValidationRule } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { AccessLevel } from "../../Core/Enums";
-import { EntitlementHelper } from "../../Core/Helpers/EntitlementHelper";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { ICellValidationRule } from "../../Utilities/Interface/BlotterObjects/ICellValidationRule";
+import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
 
 export interface CellValidationSummaryProps extends StrategySummaryProps<CellValidationSummaryComponent> {
     CellValidations: ICellValidationRule[]
@@ -30,15 +30,13 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
 
     constructor(props: CellValidationSummaryProps) {
         super(props);
-        this.state = UIHelper.EmptyConfigState();
+        this.state = UIHelper.getEmptyConfigState();
     }
 
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__cellvalidation";
-         let strategySummaries: any = []
-         alert("AccessLevel for cv: " + this.props.AccessLevel)
+        let strategySummaries: any = []
     
-     
         // title row
         let titleRow = <StrategyHeader
             key={StrategyConstants.CellValidationStrategyName}
@@ -59,7 +57,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
                         cssClassName={this.props.cssClassName}
                         key={"CV" + index}
                         Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode)}
-                        Item2={item.Description}
+                        Item2={CellValidationHelper.createCellValidationDescription(item, this.props.Columns)}
                         ConfigEnity={item}
                         EntityName={StrategyConstants.CellValidationStrategyName}
                         showShare={this.props.TeamSharingActivated}
@@ -123,7 +121,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         UserFilters: state.UserFilter.UserFilters,
         SystemFilters: state.SystemFilter.SystemFilters,
         Entitlements: state.Entitlements.FunctionEntitlements
-      
+
     };
 }
 

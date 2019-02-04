@@ -11,13 +11,13 @@ const ButtonDelete_1 = require("../Components/Buttons/ButtonDelete");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const ButtonUndo_1 = require("../Components/Buttons/ButtonUndo");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
-const GeneralConstants = require("../../Core/Constants/GeneralConstants");
-const ObjectFactory_1 = require("../../Core/ObjectFactory");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
+const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
+const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
-const ArrayExtensions_1 = require("../../Core/Extensions/ArrayExtensions");
-const Enums_1 = require("../../Core/Enums");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
+const Enums_1 = require("../../Utilities/Enums");
 class LayoutToolbarControlComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__layout";

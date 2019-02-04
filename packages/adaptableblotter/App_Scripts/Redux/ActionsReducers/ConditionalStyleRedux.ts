@@ -1,6 +1,7 @@
 import { ConditionalStyleState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IConditionalStyle } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const CONDITIONAL_STYLE_ADD_UPDATE = 'CONDITIONAL_STYLE_ADD_UPDATE';
 export const CONDITIONAL_STYLE_DELETE = 'CONDITIONAL_STYLE_DELETE';
@@ -28,7 +29,7 @@ export const ConditionalStyleDelete = (Index: number,conditionalStyle: IConditio
 })
 
 const initialConditionalStyleState: ConditionalStyleState = {
-    ConditionalStyles: []
+    ConditionalStyles: EMPTY_ARRAY
 }
 
 export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (state: ConditionalStyleState = initialConditionalStyleState, action: Redux.Action): ConditionalStyleState => {

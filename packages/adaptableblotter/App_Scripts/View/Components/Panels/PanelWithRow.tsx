@@ -2,7 +2,7 @@ import * as React from "react";
 import { PanelProps, Panel, Row, Col } from 'react-bootstrap';
 import { IColItem } from "../../UIInterfaces";
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export interface PanelWithRowProps extends PanelProps {
     // CellInfo: [string, number][]

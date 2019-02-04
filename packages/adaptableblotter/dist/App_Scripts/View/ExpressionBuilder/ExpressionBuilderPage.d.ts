@@ -1,19 +1,19 @@
 import * as React from "react";
-import { IColumn } from '../../Core/Interface/IColumn';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep } from '../Wizard/Interface/IAdaptableWizard';
-import { ExpressionMode, QueryBuildStatus, QueryTab } from '../../Core/Enums';
-import { IUserFilter } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../Core/Api/Expression";
-import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
+import { ExpressionMode, QueryBuildStatus, QueryTab } from '../../Utilities/Enums';
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { Expression } from "../../Utilities/Expression";
+import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
-    Columns: Array<IColumn>;
     UserFilters: Array<IUserFilter>;
     SystemFilters: Array<string>;
     ExpressionMode?: ExpressionMode;
     UpdateGoBackState?(finish?: boolean): void;
     StepName?: string;
-    cssClassName: string;
-    Blotter: IAdaptableBlotter;
+    cssClassName?: string;
+    Columns?: Array<IColumn>;
+    Blotter?: IAdaptableBlotter;
 }
 export interface ExpressionBuilderPageState {
     Expression: Expression;

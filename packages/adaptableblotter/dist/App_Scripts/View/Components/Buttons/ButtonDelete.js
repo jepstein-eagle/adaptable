@@ -4,21 +4,23 @@ const React = require("react");
 const react_redux_1 = require("react-redux");
 const PopupRedux = require("../../../Redux/ActionsReducers/PopupRedux");
 const ButtonBase_1 = require("./ButtonBase");
-const StyleConstants = require("../../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
+const Enums_1 = require("../../../Utilities/Enums");
 class ButtonDeleteComponent extends React.Component {
     render() {
-        return React.createElement(ButtonBase_1.ButtonBase, { ToolTipAndText: "Delete", bsStyle: 'danger', bsSize: this.props.size, glyph: "trash", onClick: () => this.onClick(), overrideDisableButton: this.props.overrideDisableButton, overrideTooltip: this.props.overrideTooltip, style: this.props.style, DisplayMode: this.props.DisplayMode, overrideText: this.props.overrideText, cssClassName: this.props.cssClassName + StyleConstants.DELETE_BUTTON });
+        return React.createElement(ButtonBase_1.ButtonBase, { ToolTipAndText: "Delete", bsStyle: StyleConstants.DANGER_BSSTYLE, bsSize: this.props.size, glyph: "trash", onClick: () => this.onClick(), overrideDisableButton: this.props.overrideDisableButton, overrideTooltip: this.props.overrideTooltip, style: this.props.style, DisplayMode: this.props.DisplayMode, overrideText: this.props.overrideText, cssClassName: this.props.cssClassName + StyleConstants.DELETE_BUTTON });
     }
     onClick() {
         if (this.props.ConfirmAction) {
             let confirmation = {
-                CancelText: "Cancel",
-                ConfirmationTitle: this.props.ConfirmationTitle,
-                ConfirmationMsg: this.props.ConfirmationMsg,
-                ConfirmationText: "Delete",
+                CancelButtonText: "Cancel",
+                Header: this.props.ConfirmationTitle,
+                Msg: this.props.ConfirmationMsg,
+                ConfirmButtonText: "Delete",
                 CancelAction: null,
                 ConfirmAction: this.props.ConfirmAction,
-                ShowCommentBox: false
+                ShowInputBox: false,
+                MessageType: Enums_1.MessageType.Warning
             };
             this.props.onConfirmWarning(confirmation);
         }

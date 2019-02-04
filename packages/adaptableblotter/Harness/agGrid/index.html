@@ -6,37 +6,50 @@
     <meta charset="utf-8" />
     <title>Adaptable Blotter - ag-Grid Demo</title>
 
+    <!-- Use the stylesheet for the demo - mainly heights of divs but also some named styles so can use for testing-->
     <link href="agGridHarnessStyleSheet.css" rel="stylesheet" />
 
-    <!-- Latest compiled and minified CSS -->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">-->
-    <!-- ******************************** -->
-    <script src="ExtLibs/agGrid/ag-grid.min.js"></script>
+    <!-- Latest compiled and minified agGrid -->
+    <script src="ExtLibs/agGrid/ag-grid-community.min.js"></script>
     <script src="ExtLibs/agGrid/ag-grid-enterprise.min.js"></script>
-    <!-- ******************************** -->
+
+    <!--Our vendor bundle - saves having to build fully eac h time (result of running abVendors)-->
     <script src="ExtLibs/ABVendorsDist/abvendors.bundle.js"></script>
-    <script src="harness-bundle.js"></script>
+
+    <!-- the main script that instantiates agGrid and the Adaptable Blotter -->
     <script src="indexharnessaggrid.js"></script>
 
-    <script src="ExtLibs/angular/angular.min.js"></script>
-    <script src="ExtLibs/iPushPull/ng-ipushpull-standalone.js"></script>
+    <!-- we need these but not entirely sure why! -->
     <script src="adaptableblotteraggrid-bundle.js"></script>
+    <script src="harness-bundle.js"></script>
 
 </head>
 
 <body>
-    <div id="">
-        <b>User Div Alert Tester</b>
-        <br />
-        <div id="alertshere"></div>
-        <br />
-    </div>
 
-    <!-- div for the adaptable blotter - please always this 'adaptableBlotter' or set the 'adaptableBlotterContainer' property in IAdaptableBlotterOptions -->
+<!--
+    <div id="">
+        <br />
+        &nbsp;
+        <label>Quick Search (from client application via Adaptable Blotter API): </label>
+        <input type="text" id="txtQuickSearchText" />
+        <button title="Runfdfdfdsf" onclick=runQuickSearchViaAPI()>Run</button>
+        <button title="Clear" onclick=clearQuickSearchViaAPI()>Clear</button>
+        <button onclick=getColumns()>Get Columns</button>
+        <button onclick=getData()>Get Data</button>
+        <br /> <br />
+    </div>
+-->
+
+
+    <!-- div for the adaptable blotter - please always this 'adaptableBlotter' or set the 'adaptableBlotterContainer' property in IAdaptableBlotterOptions 
+    <div id="charttest">chart hopefully here!</div>
+-->
+
     <div id="adaptableBlotter" style="margin:0px"></div>
 
     <!-- div for the underlying grid - please always call this 'grid' or set the 'vendorContainer' property in IAdaptableBlotterOptions -->
-    <div id="grid" style="margin:0px"></div>
+    <div id="grid" style="margin:5px"></div>
 
     <!-- script to instantiate the Adaptable Blotter-->
     <script>

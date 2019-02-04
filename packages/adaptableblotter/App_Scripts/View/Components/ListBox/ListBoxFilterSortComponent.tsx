@@ -1,6 +1,6 @@
 import * as React from "react";
 import {  FormGroup, InputGroup, FormControl, Glyphicon, Button } from 'react-bootstrap';
-import { SortOrder } from '../../../Core/Enums'
+import { SortOrder } from '../../../Utilities/Enums'
 import { AdaptableBlotterForm } from "../Forms/AdaptableBlotterForm";
 
 export interface ListBoxFilterSortComponentProps extends React.ClassAttributes<ListBoxFilterSortComponent> {
@@ -8,6 +8,7 @@ export interface ListBoxFilterSortComponentProps extends React.ClassAttributes<L
     SortOrder: SortOrder
     handleChangeFilterValue: (value: string) => void
     sortColumnValues: () => void
+    DisableSort: boolean
 }
 
 export class ListBoxFilterSortComponent extends React.Component<ListBoxFilterSortComponentProps, {}> {
@@ -27,8 +28,8 @@ export class ListBoxFilterSortComponent extends React.Component<ListBoxFilterSor
                     </InputGroup.Button>
                     <InputGroup.Button>
                         {this.props.SortOrder == SortOrder.Ascending ?
-                            <Button onClick={() => this.props.sortColumnValues()} ><Glyphicon glyph="sort-by-alphabet" /></Button> :
-                            <Button onClick={() => this.props.sortColumnValues()} ><Glyphicon glyph="sort-by-alphabet-alt" /></Button>
+                            <Button disabled={this.props.DisableSort} onClick={() => this.props.sortColumnValues()} ><Glyphicon glyph="sort-by-alphabet" /></Button> :
+                            <Button disabled={this.props.DisableSort} onClick={() => this.props.sortColumnValues()} ><Glyphicon glyph="sort-by-alphabet-alt" /></Button>
                         }
                     </InputGroup.Button>
                 </InputGroup>

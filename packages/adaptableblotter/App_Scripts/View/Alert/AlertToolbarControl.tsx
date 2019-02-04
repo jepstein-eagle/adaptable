@@ -9,14 +9,13 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../../Core/Constants/ScreenPopups'
-import { IAlertDefinition } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { IAlert } from "../../Core/Interface/IMessage";
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
+import { IAlertDefinition } from "../../Utilities/Interface/BlotterObjects/IAlertDefinition";
 import { AdaptablePopover } from "../AdaptablePopover";
-import { MessageType, AccessLevel } from "../../Core/Enums";
+import { MessageType, AccessLevel } from "../../Utilities/Enums";
 import { AlertsPanel } from "../Components/AlertsPanel";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
+import { IAlert } from "../../Utilities/Interface/IMessage";
 
 interface AlertToolbarControlProps extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
     AlertDefinitions: IAlertDefinition[];

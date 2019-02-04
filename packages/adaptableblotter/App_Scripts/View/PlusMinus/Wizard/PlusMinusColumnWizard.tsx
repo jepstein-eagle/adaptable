@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Panel } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IColumn } from '../../../Core/Interface/IColumn';
-import { SelectionMode } from '../../../Core/Enums';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { SelectionMode } from '../../../Utilities/Enums';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { IPlusMinusRule } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IPlusMinusRule } from "../../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
 
 export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
-    Columns: Array<IColumn>
+    NumericColumns: Array<IColumn>
 }
 
 export interface PlusMinusColumnWizardState {
@@ -23,12 +23,13 @@ export class PlusMinusColumnWizard extends React.Component<PlusMinusColumnWizard
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-column"
         return <div className={cssClassName}>
-        <Panel header="Select a Column" bsStyle="primary">
-                <ColumnSelector  cssClassName={cssClassName} SelectedColumnIds={[this.state.SelectedColumnId]}
-                    ColumnList={this.props.Columns}
+            <Panel header="Select a Column" bsStyle="primary">
+                <ColumnSelector cssClassName={cssClassName}
+                    SelectedColumnIds={[this.state.SelectedColumnId]}
+                    ColumnList={this.props.NumericColumns}
                     onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                     SelectionMode={SelectionMode.Single} />
-               </Panel>
+            </Panel>
         </div>
     }
 
@@ -40,10 +41,10 @@ export class PlusMinusColumnWizard extends React.Component<PlusMinusColumnWizard
     public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumnId }
     public Back(): void {  //todo
     }
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
     public StepName = this.props.StepName

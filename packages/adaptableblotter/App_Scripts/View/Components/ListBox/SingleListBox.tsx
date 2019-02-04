@@ -1,10 +1,10 @@
 import * as React from "react";
-import { Helper } from '../../../Core/Helpers/Helper'
-import { SortOrder, SelectionMode } from '../../../Core/Enums'
+import { Helper } from '../../../Utilities/Helpers/Helper'
+import { SortOrder, SelectionMode } from '../../../Utilities/Enums'
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, ListGroup, ListGroupProps } from 'react-bootstrap';
-import { StringExtensions } from '../../../Core/Extensions/StringExtensions';
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export interface SingleListBoxProps extends ListGroupProps {
     Values: Array<any>
@@ -69,7 +69,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         })
 
         let header = <ListBoxFilterSortComponent FilterValue={this.state.FilterValue} sortColumnValues={() => this.sortColumnValues()}
-            SortOrder={this.state.SortOrder} handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)}></ListBoxFilterSortComponent>
+            SortOrder={this.state.SortOrder} handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)} DisableSort={false}></ListBoxFilterSortComponent>
 
         return <div className={cssClassName}>
             {header}

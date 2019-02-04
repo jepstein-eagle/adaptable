@@ -1,7 +1,8 @@
 import { TeamSharingState } from './Interface/IState';
 import * as Redux from 'redux'
-import { ISharedEntity } from '../../Strategy/Interface/ITeamSharingStrategy';
-import { IAdaptableBlotterObject } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ISharedEntity } from "../../Utilities/Interface/ISharedEntity";
+import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 
 export const TEAMSHARING_SHARE = 'TEAMSHARING_SHARE';
@@ -49,7 +50,7 @@ export const TeamSharingGet = (): TeamSharingGetAction => ({
 
 const initialTeamSharingState: TeamSharingState = {
     Activated: false,
-    SharedEntities: []
+    SharedEntities: EMPTY_ARRAY
 }
 
 export const TeamSharingReducer: Redux.Reducer<TeamSharingState> = (state: TeamSharingState = initialTeamSharingState, action: Redux.Action): TeamSharingState => {

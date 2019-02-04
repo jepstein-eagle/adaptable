@@ -3,7 +3,8 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import { IUserFilter, IAdaptableBlotterObject } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
     onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) => UserFilterRedux.UserFilterAddUpdateAction;
     onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
@@ -14,7 +15,6 @@ export declare class UserFilterSummaryComponent extends React.Component<UserFilt
     getSummary(): string;
     getDescription(userFilter: IUserFilter): string;
     isFilterable(): boolean;
-    isGridFilterable(): boolean;
     isColumnFilterable(): boolean;
     onNew(): void;
     onEdit(index: number, UserFilter: IUserFilter): void;

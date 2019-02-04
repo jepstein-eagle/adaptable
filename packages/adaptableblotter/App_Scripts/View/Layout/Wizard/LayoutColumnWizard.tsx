@@ -1,17 +1,16 @@
 
 import * as React from "react";
-import { IColumn } from '../../../Core/Interface/IColumn';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
-import { Helper } from "../../../Core/Helpers/Helper";
+import { Helper } from "../../../Utilities/Helpers/Helper";
 import { SHORTCUT_ADD } from "../../../Redux/ActionsReducers/ShortcutRedux";
-import { ILayout } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { ColumnHelper } from "../../../Core/Helpers/ColumnHelper";
+import { ILayout } from "../../../Utilities/Interface/BlotterObjects/ILayout";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface LayoutColumnWizardProps extends AdaptableWizardStepProps<ILayout> {
-    Columns: Array<IColumn>
-}
+  }
 export interface LayoutColumnWizardState {
     SelectedColumns: Array<string>
 }
@@ -22,7 +21,6 @@ export class LayoutColumnWizard extends React.Component<LayoutColumnWizardProps,
         this.state = {
             SelectedColumns: ColumnHelper.getFriendlyNamesFromColumnIds(this.props.Data.Columns, this.props.Columns)
         }
-        //  this.StepName = this.StepName + this.props.Columns.find(x => x.ColumnId == this.props.Data.ColumnId).FriendlyName
     }
 
     render(): any {

@@ -7,24 +7,25 @@ const BulkUpdateRedux = require("../../Redux/ActionsReducers/BulkUpdateRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
-const StringExtensions_1 = require("../../Core/Extensions/StringExtensions");
+const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const ButtonApply_1 = require("../Components/Buttons/ButtonApply");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
-const ScreenPopups = require("../../Core/Constants/ScreenPopups");
-const ColumnValueSelector_1 = require("../Components/Selectors/ColumnValueSelector");
-const GeneralConstants = require("../../Core/Constants/GeneralConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
+const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const AdaptablePopover_1 = require("../AdaptablePopover");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 const PreviewResultsPanel_1 = require("../Components/PreviewResultsPanel");
-const ColumnHelper_1 = require("../../Core/Helpers/ColumnHelper");
+const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const UIHelper_1 = require("../UIHelper");
+const ColumnValueSelector_1 = require("../Components/Selectors/ColumnValueSelector");
+const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
 class BulkUpdateToolbarControlComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             Disabled: true,
-            SubFunc: (sender, event) => {
+            SubFunc: () => {
                 this.onSelectionChanged();
             }
         };
@@ -47,7 +48,7 @@ class BulkUpdateToolbarControlComponent extends React.Component {
         let activeButton = this.state.Disabled ?
             React.createElement(react_bootstrap_1.Button, { style: { marginRight: "3px" }, onClick: () => this.onDisabledChanged(), bsStyle: "default", bsSize: "small" }, "Off")
             : React.createElement(react_bootstrap_1.Button, { style: { marginRight: "3px" }, onClick: () => this.onDisabledChanged(), bsStyle: "primary", bsSize: "small" }, "On");
-        let selectedColumn = (this.props.PreviewInfo) ?
+        let selectedColumn = (this.props.PreviewInfo && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PreviewInfo.ColumnId)) ?
             ColumnHelper_1.ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns) :
             null;
         let previewPanel = React.createElement(PreviewResultsPanel_1.PreviewResultsPanel, { cssClassName: cssClassName, UpdateValue: this.props.BulkUpdateValue, PreviewInfo: this.props.PreviewInfo, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SelectedColumn: selectedColumn, ShowPanel: true, ShowHeader: false });
@@ -99,15 +100,9 @@ class BulkUpdateToolbarControlComponent extends React.Component {
             this.onApplyBulkUpdate();
     }
     onConfirmWarningCellValidation() {
-        let confirmation = {
-            CancelText: "Cancel Edit",
-            ConfirmationTitle: "Cell Validation Failed",
-            ConfirmationMsg: "Do you want to continue?",
-            ConfirmationText: "Bypass Rule",
-            CancelAction: BulkUpdateRedux.BulkUpdateApply(false),
-            ConfirmAction: BulkUpdateRedux.BulkUpdateApply(true),
-            ShowCommentBox: true
-        };
+        let confirmAction = BulkUpdateRedux.BulkUpdateApply(true);
+        let cancelAction = BulkUpdateRedux.BulkUpdateApply(false);
+        let confirmation = CellValidationHelper_1.CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction);
         this.props.onConfirmWarningCellValidation(confirmation);
     }
     onApplyBulkUpdate() {

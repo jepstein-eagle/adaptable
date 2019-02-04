@@ -1,10 +1,10 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import { MathOperation } from '../Core/Enums';
+import { MathOperation } from '../Utilities/Enums';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
-import { IPreviewInfo } from '../Core/Interface/IPreviewResult';
-import { ICellInfo } from '../Core/Interface/Interfaces';
+import { ICellInfo } from "../Utilities/Interface/ICellInfo";
+import { IPreviewInfo } from '../Utilities/Interface/IPreview';
 export declare class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
     private SmartEditState;
     constructor(blotter: IAdaptableBlotter);

@@ -1,0 +1,47 @@
+{
+	"Layout": {
+		"CurrentLayout": "Citi Price",
+		"Layouts": [
+			{
+				"Columns": [
+					"ask",
+					"bid",
+					"bidOfferSpread"
+				],
+				"GridSorts": [],
+				"Name": "Citi Price"	
+			}
+		]
+	},
+	"Entitlements": {
+		"FunctionEntitlements": [
+			{
+				"FunctionName": "ColumnCategory",
+				"AccessLevel": "Hidden"
+			},
+			{
+				"FunctionName": "Layout",
+				"AccessLevel": "ReadOnly"
+			}
+		]
+	},
+	"Dashboard": {
+		"VisibleToolbars": [
+			"Export",
+			"QuickSearch",
+			"SmartEdit",
+			"Layout"
+		],
+		"VisibleButtons": [
+			"About",
+			"Dashboard",
+			"QuickSearch",
+			"SmartEdit",
+			"ColumnChooser",
+			"BulkUpdate"
+		],
+		"Zoom": "0.9",
+		"DashboardVisibility": "Hidden",
+		"ShowSystemStatusButton": false
+	}
+}

@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Core/Enums");
-const StringExtensions_1 = require("../../../Core/Extensions/StringExtensions");
+const Enums_1 = require("../../../Utilities/Enums");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const ColumnSelector_1 = require("../../Components/Selectors/ColumnSelector");
 class CustomSortColumnWizard extends React.Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class CustomSortColumnWizard extends React.Component {
         let cssClassName = this.props.cssClassName + "-column";
         return React.createElement("div", { className: cssClassName },
             React.createElement(react_bootstrap_1.Panel, { header: "Select a Column", bsStyle: "primary" },
-                React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.SelectedColumnId], ColumnList: this.props.Columns, onColumnChange: columns => this.onColumnSelectedChanged(columns), SelectionMode: Enums_1.SelectionMode.Single })));
+                React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.SelectedColumnId], ColumnList: this.props.SortedColumns, onColumnChange: columns => this.onColumnSelectedChanged(columns), SelectionMode: Enums_1.SelectionMode.Single })));
     }
     onColumnSelectedChanged(columns) {
         this.setState({ SelectedColumnId: columns.length > 0 ? columns[0].ColumnId : "" }, () => this.props.UpdateGoBackState());

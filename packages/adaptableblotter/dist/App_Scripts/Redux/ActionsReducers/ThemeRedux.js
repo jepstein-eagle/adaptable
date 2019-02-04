@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const themes_1 = require("../../Styles/themes");
-const GeneralConstants_1 = require("../../Core/Constants/GeneralConstants");
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 const THEME_SET_SYSTEM_THEMES = 'THEME_SET_SYSTEM_THEMES';
 const THEME_SET_USER_THEMES = 'THEME_SET_USER_THEMES';
 const THEME_SELECT = 'THEME_SELECT';
@@ -18,9 +18,9 @@ exports.ThemeSelect = (Theme) => ({
     Theme
 });
 const initialThemeState = {
-    CurrentTheme: GeneralConstants_1.LIGHT_THEME,
+    CurrentTheme: GeneralConstants_1.THEME_DEFAULT_CURRENT_THEME,
     SystemThemes: themes_1.StaticThemes,
-    UserThemes: []
+    UserThemes: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.ThemeReducer = (state = initialThemeState, action) => {
     switch (action.type) {

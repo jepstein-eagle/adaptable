@@ -1,13 +1,13 @@
 import { IColumnFilterStrategy } from './Interface/IColumnFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Core/Constants/StrategyConstants'
-import * as ScreenPopups from '../Core/Constants/ScreenPopups'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux'
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
-import { IColumnFilter } from '../Core/Api/Interface/IAdaptableBlotterObjects';
-import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
-import { IColumn } from '../Core/Interface/IColumn';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IColumnFilter } from "../Utilities/Interface/BlotterObjects/IColumnFilter";
+import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
+import { IColumn } from '../Utilities/Interface/IColumn';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
     private columnFilterState: IColumnFilter[]
@@ -20,18 +20,14 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
         this.createMenuItemShowPopup(StrategyConstants.ColumnFilterStrategyName, ScreenPopups.ColumnFilterPopup, StrategyConstants.ColumnFilterGlyph);
     }
 
-    public addContextMenuItem(columnId: string): void {
-        if (this.canCreateContextMenuItem(columnId, this.blotter, "filter")) {
-
-            let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
-            if (column) {
-                let existingColumnFilter = this.columnFilterState.find(x => x.ColumnId == columnId);
-                if (existingColumnFilter) {
-                    this.createContextMenuItemReduxAction(
-                        "Clear Column Filter",
-                        StrategyConstants.ColumnFilterGlyph,
-                        ColumnFilterRedux.ColumnFilterClear(columnId))
-                }
+    public addContextMenuItem(column: IColumn): void {
+        if (this.canCreateContextMenuItem(column, this.blotter, "columnfilter")) {
+            let existingColumnFilter = this.columnFilterState.find(x => x.ColumnId == column.ColumnId);
+            if (existingColumnFilter) {
+                this.createContextMenuItemReduxAction(
+                    "Clear Column Filter",
+                    StrategyConstants.ColumnFilterGlyph,
+                    ColumnFilterRedux.ColumnFilterClear(column.ColumnId))
             }
         }
     }
@@ -41,7 +37,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
             this.columnFilterState = this.GetColumnFilterState();
 
             setTimeout(() => this.blotter.applyGridFiltering(), 5);
-            if (this.blotter.BlotterOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
+            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
                 this.publishSearchChanged(SearchChangedTrigger.ColumnFilter)
             }
 

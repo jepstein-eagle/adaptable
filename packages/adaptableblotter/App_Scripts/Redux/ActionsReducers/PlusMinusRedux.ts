@@ -1,7 +1,8 @@
 import { PlusMinusState } from './Interface/IState';
 import * as Redux from 'redux'
-import { ICellInfo } from '../../Core/Interface/Interfaces';
-import { IPlusMinusRule } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
+import { IPlusMinusRule } from "../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const PLUSMINUS_APPLY = 'PLUSMINUS_APPLY';
 export const PLUSMINUS_ADD_UPDATE_CONDITION = 'PLUSMINUS_ADD_UPDATE_CONDITION';
@@ -51,7 +52,7 @@ export const PlusMinusDeleteCondition = (Index: number): PlusMinusDeleteConditio
 })
 
 const initialPlusMinusState: PlusMinusState = {
-    PlusMinusRules: []
+    PlusMinusRules: EMPTY_ARRAY
 }
 
 export const PlusMinusReducer: Redux.Reducer<PlusMinusState> = (state: PlusMinusState = initialPlusMinusState, action: Redux.Action): PlusMinusState => {

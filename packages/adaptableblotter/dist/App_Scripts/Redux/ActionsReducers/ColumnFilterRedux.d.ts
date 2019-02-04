@@ -1,6 +1,6 @@
 import { ColumnFilterState } from './Interface/IState';
 import * as Redux from 'redux';
-import { IColumnFilter } from '../../Core/Api/Interface/IAdaptableBlotterObjects';
+import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
 export declare const COLUMN_FILTER_ADD_UPDATE = "COLUMN_FILTER_ADD_UPDATE";
 export declare const COLUMN_FILTER_CLEAR_ALL = "COLUMN_FILTER_CLEAR_ALL";
 export declare const COLUMN_FILTER_CLEAR = "COLUMN_FILTER_CLEAR";

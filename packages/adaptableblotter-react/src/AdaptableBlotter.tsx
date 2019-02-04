@@ -6,7 +6,7 @@ import { IAdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter/ty
 // It simply takes an IAdaptableBlotterOptions object and instantiates the appropriate instance of the Adaptable Blotter
 export interface AdaptableBlotterProps extends React.ClassAttributes<AdaptableBlotter> {
   AdaptableBlotterOptions: IAdaptableBlotterOptions
-  VendorGridName: 'agGrid' | 'Hypergrid' | 'Kendo' | 'AdaptableGrid'
+  VendorGridName: 'agGrid' | 'Hypergrid'
 }
 
 export interface AdaptableBlotterState extends React.ClassAttributes<AdaptableBlotter> {
@@ -19,8 +19,8 @@ export default class AdaptableBlotter extends React.Component<
 > {
   componentWillMount() {
     const { AdaptableBlotterOptions, VendorGridName } = this.props;
-    AdaptableBlotterOptions.adaptableBlotterContainer =
-      AdaptableBlotterOptions.adaptableBlotterContainer || `adaptableBlotter-${Math.random() * 10000 | 0}`;
+    AdaptableBlotterOptions.containerOptions.adaptableBlotterContainer =
+      AdaptableBlotterOptions.containerOptions.adaptableBlotterContainer || `adaptableBlotter-${Math.random() * 10000 | 0}`;
     this.setState({
       AdaptableBlotter: BlotterFactory.CreateAdaptableBlotter(
         AdaptableBlotterOptions,

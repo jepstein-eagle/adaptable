@@ -3,14 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_redux_1 = require("react-redux");
 const react_bootstrap_1 = require("react-bootstrap");
-const StrategyConstants = require("../../Core/Constants/StrategyConstants");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const GridRedux = require("../../Redux/ActionsReducers/GridRedux");
-const StyleConstants = require("../../Core/Constants/StyleConstants");
+const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const PanelWithRow_1 = require("../Components/Panels/PanelWithRow");
-const Helper_1 = require("../../Core/Helpers/Helper");
+const Helper_1 = require("../../Utilities/Helpers/Helper");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
-const Enums_1 = require("../../Core/Enums");
+const Enums_1 = require("../../Utilities/Enums");
 class SelectedCellsPopupComponent extends React.Component {
     componentDidMount() {
         this.props.onSelectedCellsCreateSummary();

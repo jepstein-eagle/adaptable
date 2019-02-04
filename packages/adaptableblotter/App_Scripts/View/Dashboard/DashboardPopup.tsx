@@ -5,13 +5,11 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { FormControl, ControlLabel } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { ColumnHelper } from "../../Core/Helpers/ColumnHelper";
-import { IEntitlement } from "../../Core/Interface/Interfaces";
-
+import { IEntitlement } from "../../Utilities/Interface/IEntitlement";
 
 interface DashboardPopupProps extends StrategyViewPopupProps<DashboardPopupComponent> {
     AvailableToolbars: string[];

@@ -1,19 +1,19 @@
-import { IAdaptableBlotter } from '../Core/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IStrategy, } from './Interface/IStrategy';
-import { IMenuItem } from '../Core/Interface/IMenu';
-import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Core/MenuItem';
 import { Action } from 'redux';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import { IEntitlement } from '../Core/Interface/Interfaces';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../Core/Api/Interface/IStateEvents';
-import { SearchChangedTrigger, StateChangedTrigger } from '../Core/Enums';
-import { ArrayExtensions } from '../Core/Extensions/ArrayExtensions';
-import { StringExtensions } from '../Core/Extensions/StringExtensions';
-import { IAdvancedSearch } from '../Core/Api/Interface/IAdaptableBlotterObjects';
-import { IColumn } from '../Core/Interface/IColumn';
-import { ColumnHelper } from '../Core/Helpers/ColumnHelper';
+import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
+import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Utilities/Enums';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
+import { IEntitlement } from "../Utilities/Interface/IEntitlement";
+import { IAdvancedSearch } from "../Utilities/Interface/BlotterObjects/IAdvancedSearch";
+import { IColumn } from '../Utilities/Interface/IColumn';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
+import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
+import { IMenuItem } from '../Utilities/Interface/IMenu';
 
 
 export abstract class AdaptableStrategyBase implements IStrategy {
@@ -51,7 +51,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         // base class implementation which is empty
     }
 
-    public addContextMenuItem(columnId: string): void {
+    public addContextMenuItem(column: IColumn): void {
         // base class implementation which is empty
     }
 
@@ -90,7 +90,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             this.Id,
             ComponentName,
             GlyphIcon,
-          //  this.isReadOnlyStrategy(),
+            //  this.isReadOnlyStrategy(),
             this.isVisibleStrategy(),
             PopupParams)
         this.popupMenuItem = menuItemShowPopup;
@@ -136,27 +136,24 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         // check for duplicates here
         let existingMenuItems = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.map(m => m.StrategyId)
         if (!ArrayExtensions.ContainsItem(existingMenuItems, menuItem.StrategyId)) {
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(
-                MenuRedux.AddItemColumnContextMenu(
-                    menuItem
-                ))
+            this.blotter.api.internalApi.ColumnContextMenuAddItem(menuItem);
         }
     }
 
-    canCreateContextMenuItem(columnId: string, blotter: IAdaptableBlotter, functionType: string = ""): boolean {
+    canCreateContextMenuItem(column: IColumn, blotter: IAdaptableBlotter, functionType: string = ""): boolean {
         if (this.isReadOnlyStrategy()) {
             return false;
         }
-
-        let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
-        if (column == null) {
-            return false;
-        }
-
-        if (functionType == "sort" && !column.Sortable) {
-            return false;
-        } else if (functionType == "filter" && (!column.Filterable || !blotter.isFilterable())) {
-            return false;
+        if (StringExtensions.IsNotNullOrEmpty(functionType)) {
+            if (functionType == "sort") {
+                return column.Sortable;
+            } else if (functionType == "numeric") {
+                return column.DataType == DataType.Number;
+            } else if (functionType == "columnfilter") {
+                return column.Filterable
+            } else if (functionType == "floatingfilter") {
+                return (blotter.hasFloatingFilter() && blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter)
+            }
         }
         return true;
     }

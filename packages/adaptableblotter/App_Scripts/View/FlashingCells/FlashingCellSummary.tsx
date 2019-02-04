@@ -4,15 +4,17 @@ import { Button } from 'react-bootstrap';
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
-import { ObjectFactory } from '../../Core/ObjectFactory';
-import * as StrategyConstants from '../../Core/Constants/StrategyConstants'
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FlashingCellRedux from '../../Redux/ActionsReducers/FlashingCellsRedux'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { IColumn } from "../../Core/Interface/IColumn";
+import { IColumn } from "../../Utilities/Interface/IColumn";
 import { IColItem } from "../UIInterfaces";
-import * as StyleConstants from '../../Core/Constants/StyleConstants';
-import { IFlashingCell } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
+import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { IFlashingCell } from "../../Utilities/Interface/BlotterObjects/IFlashingCell";
+import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { FlashingCellState } from "../../Redux/ActionsReducers/Interface/IState";
 
 export interface FlashingCellSummaryProps extends StrategySummaryProps<FlashingCellSummaryComponent> {
     FlashingCells: IFlashingCell[]
@@ -32,15 +34,16 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
         colItems.push({ Size: 3, Content: <b>{StrategyConstants.FlashingCellsStrategyName}</b> });
         colItems.push({ Size: 5, Content: showFlashingButton });
         colItems.push({ Size: 3, Content: null });
-        
-        return <AdaptableObjectRow cssClassName={cssWizardClassName} colItems ={colItems} />
-     }
+
+        return <AdaptableObjectRow cssClassName={cssWizardClassName} colItems={colItems} />
+    }
 
     onFlashingSelectedChanged(flashingCell: IFlashingCell) {
         let existingfc = this.props.FlashingCells.find(e => e.ColumnId == this.props.SummarisedColumn.ColumnId)
         if (!existingfc) {
-            let col: IColumn = this.props.Columns.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId);
-            existingfc = ObjectFactory.CreateDefaultFlashingCell(col);
+            let flashingCellState: FlashingCellState = this.props.Blotter.api.configApi.configGetFlashingCellState(false);
+            let col: IColumn = ColumnHelper.getColumnFromId(this.props.SummarisedColumn.ColumnId, this.props.Columns);
+            existingfc = ObjectFactory.CreateDefaultFlashingCell(col, flashingCellState.DefaultUpColor, flashingCellState.DefautDownColor, flashingCellState.DefaultDuration);
             this.props.onSelectFlashingCell(existingfc)
         }
         this.props.onSelectFlashingCell(existingfc)

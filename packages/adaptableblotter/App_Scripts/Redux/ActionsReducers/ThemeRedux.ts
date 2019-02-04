@@ -1,12 +1,11 @@
 import * as Redux from 'redux';
 import { ThemeState } from './Interface/IState'
 import { StaticThemes } from '../../Styles/themes'
-import { LIGHT_THEME } from "../../Core/Constants/GeneralConstants";
+import { LIGHT_THEME, EMPTY_ARRAY, THEME_DEFAULT_CURRENT_THEME } from "../../Utilities/Constants/GeneralConstants";
 
 const THEME_SET_SYSTEM_THEMES = 'THEME_SET_SYSTEM_THEMES';
 const THEME_SET_USER_THEMES = 'THEME_SET_USER_THEMES';
 const THEME_SELECT = 'THEME_SELECT';
-
 
 
 export interface ThemeSetSystemThemesAction extends Redux.Action {
@@ -37,9 +36,9 @@ export const ThemeSelect = (Theme: string): ThemeSelectAction => ({
 })
 
 const initialThemeState: ThemeState = {
-    CurrentTheme: LIGHT_THEME,
+    CurrentTheme: THEME_DEFAULT_CURRENT_THEME,
     SystemThemes: StaticThemes,
-    UserThemes: []
+    UserThemes: EMPTY_ARRAY
 }
 
 export const ThemeReducer: Redux.Reducer<ThemeState> = (state: ThemeState = initialThemeState, action: Redux.Action): ThemeState => {

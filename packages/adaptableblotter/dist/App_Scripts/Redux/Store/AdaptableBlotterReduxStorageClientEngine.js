@@ -41,7 +41,7 @@ class AdaptableBlotterReduxStorageClientEngine {
             },
         };
         return fetch(this.url, saveOptions).then(checkStatus).catch(error => {
-            this.blotter.api.alertShowError("Cannot Save Config", error.message, true);
+            this.blotter.api.alertApi.ShowError("Cannot Save Config", error.message, true);
             return Promise.reject("Cannot save config:" + error.message);
         });
         ;

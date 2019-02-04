@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ButtonBase, ButtonProps } from './ButtonBase'
-import * as StyleConstants from '../../../Core/Constants/StyleConstants';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export class ButtonMinimise extends React.Component<ButtonProps, {}> {
     render() {
@@ -15,6 +15,7 @@ export class ButtonMinimise extends React.Component<ButtonProps, {}> {
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.MINIMISE_BUTTON}
+            hideToolTip={this.props.hideToolTip}
         />;
     }
 }

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 exports.LAYOUT_SELECT = 'LAYOUT_SELECT';
 exports.LAYOUT_ADD_UPDATE = 'LAYOUT_ADD_UPDATE';
 exports.LAYOUT_SAVE = 'LAYOUT_SAVE';
@@ -24,8 +25,8 @@ exports.LayoutDelete = (LayoutName) => ({
     LayoutName
 });
 const initialLayoutState = {
-    CurrentLayout: "",
-    Layouts: []
+    CurrentLayout: GeneralConstants_1.EMPTY_STRING,
+    Layouts: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.LayoutReducer = (state = initialLayoutState, action) => {
     let index;

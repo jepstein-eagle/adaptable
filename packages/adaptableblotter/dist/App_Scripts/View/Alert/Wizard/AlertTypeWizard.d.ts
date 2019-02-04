@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType } from '../../../Core/Enums';
-import { IAlertDefinition } from "../../../Core/Api/Interface/IAdaptableBlotterObjects";
+import { MessageType } from '../../../Utilities/Enums';
+import { IAlertDefinition } from "../../../Utilities/Interface/BlotterObjects/IAlertDefinition";
 export interface AlertTypeWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {
 }
 export interface AlertTypeWizardState {

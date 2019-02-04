@@ -1,9 +1,11 @@
 import * as Redux from 'redux';
 import { SystemState } from './Interface/IState';
-import { ISystemStatus } from '../../Core/Interface/Interfaces';
-import { IAlert } from '../../Core/Interface/IMessage';
-import { ExportDestination } from '../../Core/Enums';
-import { IPreviewInfo } from '../../Core/Interface/IPreviewResult';
+import { ExportDestination } from '../../Utilities/Enums';
+import { IPPDomain } from "../../Utilities/Interface/Reports/IPPDomain";
+import { ISystemStatus } from "../../Utilities/Interface/ISystemStatus";
+import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
+import { IAlert } from '../../Utilities/Interface/IMessage';
+import { ChartVisibility } from '../../Utilities/ChartEnums';
 export declare const SYSTEM_SET_HEALTH_STATUS = "SYSTEM_SET_HEALTH_STATUS";
 export declare const SYSTEM_CLEAR_HEALTH_STATUS = "SYSTEM_CLEAR_HEALTH_STATUS";
 export declare const SYSTEM_ALERT_ADD = "SYSTEM_ALERT_ADD";
@@ -11,6 +13,8 @@ export declare const SYSTEM_ALERT_DELETE = "SYSTEM_ALERT_DELETE";
 export declare const SYSTEM_ALERT_DELETE_ALL = "SYSTEM_ALERT_DELETE_ALL";
 export declare const REPORT_START_LIVE = "REPORT_START_LIVE";
 export declare const REPORT_STOP_LIVE = "REPORT_STOP_LIVE";
+export declare const SET_IPP_DOMAIN_PAGES = "SET_IPP_DOMAIN_PAGES";
+export declare const REPORT_SET_ERROR_MESSAGE = "REPORT_SET_ERROR_MESSAGE";
 export declare const SMARTEDIT_CHECK_CELL_SELECTION = "SMARTEDIT_CHECK_CELL_SELECTION";
 export declare const SMARTEDIT_FETCH_PREVIEW = "SMARTEDIT_FETCH_PREVIEW";
 export declare const SMARTEDIT_SET_VALID_SELECTION = "SMARTEDIT_SET_VALID_SELECTION";
@@ -18,6 +22,9 @@ export declare const SMARTEDIT_SET_PREVIEW = "SMARTEDIT_SET_PREVIEW";
 export declare const BULK_UPDATE_CHECK_CELL_SELECTION = "BULK_UPDATE_CHECK_CELL_SELECTION";
 export declare const BULK_UPDATE_SET_VALID_SELECTION = "BULK_UPDATE_SET_VALID_SELECTION";
 export declare const BULK_UPDATE_SET_PREVIEW = "BULK_UPDATE_SET_PREVIEW";
+export declare const CHART_SET_CHART_DATA = "CHART_SET_CHART_DATA";
+export declare const CHART_SET_CHART_VISIBILITY = "CHART_SET_CHART_VISIBILITY";
+export declare const CALCULATEDCOLUMN_SET_ERROR_MESSAGE = "CALCULATEDCOLUMN_SET_ERROR_MESSAGE";
 export interface SystemSetHealthStatusAction extends Redux.Action {
     SystemStatus: ISystemStatus;
 }
@@ -59,6 +66,21 @@ export interface BulkUpdateSetPreviewAction extends Redux.Action {
 export interface BulkUpdateSetValidSelectionAction extends Redux.Action {
     IsValidBulkUpdateSelection: boolean;
 }
+export interface ChartSetChartDataAction extends Redux.Action {
+    chartData: any;
+}
+export interface ChartSetChartVisibiityAction extends Redux.Action {
+    ChartVisibility: ChartVisibility;
+}
+export interface CalculatedColumnSetErrorMessageAction extends Redux.Action {
+    ErrorMsg: string;
+}
+export interface SetIPPDomainPagesAction extends Redux.Action {
+    IPPDomainsPages: IPPDomain[];
+}
+export interface ReportSetErrorMessagection extends Redux.Action {
+    ErrorMessage: string;
+}
 export declare const SystemSetHealthStatus: (SystemStatus: ISystemStatus) => SystemSetHealthStatusAction;
 export declare const SystemClearHealthStatus: () => SystemClearHealthStatusAction;
 export declare const SystemAlertAdd: (Alert: IAlert, MaxAlerts: number) => SystemAlertAddAction;
@@ -72,4 +94,9 @@ export declare const SmartEditSetPreview: (SmartEditPreviewInfo: IPreviewInfo) =
 export declare const BulkUpdateCheckCellSelection: () => BulkUpdateCheckCellSelectionAction;
 export declare const BulkUpdateSetValidSelection: (IsValidBulkUpdateSelection: boolean) => BulkUpdateSetValidSelectionAction;
 export declare const BulkUpdateSetPreview: (BulkUpdatePreviewInfo: IPreviewInfo) => BulkUpdateSetPreviewAction;
+export declare const ChartSetChartData: (chartData: any) => ChartSetChartDataAction;
+export declare const ChartSetChartVisibility: (ChartVisibility: ChartVisibility) => ChartSetChartVisibiityAction;
+export declare const CalculatedColumnSetErrorMessage: (ErrorMsg: string) => CalculatedColumnSetErrorMessageAction;
+export declare const SetIPPDomainPages: (IPPDomainsPages: IPPDomain[]) => SetIPPDomainPagesAction;
+export declare const ReportSetErrorMessage: (ErrorMessage: string) => ReportSetErrorMessagection;
 export declare const SystemReducer: Redux.Reducer<SystemState>;

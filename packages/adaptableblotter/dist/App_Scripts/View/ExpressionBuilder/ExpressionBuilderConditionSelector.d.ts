@@ -1,10 +1,11 @@
 import * as React from "react";
-import { IColumn } from '../../Core/Interface/IColumn';
-import { ExpressionMode, QueryBuildStatus, QueryTab } from '../../Core/Enums';
+import { IColumn } from '../../Utilities/Interface/IColumn';
+import { ExpressionMode, QueryBuildStatus, QueryTab } from '../../Utilities/Enums';
 import { IRawValueDisplayValuePair } from "../UIInterfaces";
-import { IUserFilter, IRange } from "../../Core/Api/Interface/IAdaptableBlotterObjects";
-import { Expression } from "../../Core/Api/Expression";
-import { IAdaptableBlotter } from "../../Core/Interface/IAdaptableBlotter";
+import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
+import { IRange } from "../../Utilities/Interface/Expression/IRange";
+import { Expression } from "../../Utilities/Expression";
+import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 export interface ExpressionBuilderConditionSelectorProps extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
     ColumnsList: Array<IColumn>;
     Expression: Expression;
