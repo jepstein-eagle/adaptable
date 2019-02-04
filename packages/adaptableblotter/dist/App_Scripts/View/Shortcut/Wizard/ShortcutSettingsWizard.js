@@ -50,7 +50,7 @@ class ShortcutSettingsWizard extends React.Component {
                                 React.createElement("option", { value: "select", key: "select" }, "Select Key"),
                                 optionKeys)),
                         React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                            React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Shortcut: Key", bodyText: ["The keyboard key that, when pressed, triggers the shortcut."], MessageType: Enums_1.MessageType.Info }))),
+                            React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Shortcut: Key", bodyText: ["The keyboard key that, when pressed, triggers the shortcut."] }))),
                     this.props.Data.ColumnType == Enums_1.DataType.Number ?
                         React.createElement("span", null,
                             React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineAction" },
@@ -59,14 +59,14 @@ class ShortcutSettingsWizard extends React.Component {
                                 React.createElement(react_bootstrap_1.Col, { xs: 6 },
                                     React.createElement(react_bootstrap_1.FormControl, { componentClass: "select", placeholder: "select", value: currentActionValue, onChange: (x) => this.onShortcutOperationChanged(x) }, optionActions)),
                                 React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                    React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Shortcut: Operation", bodyText: ["The mathematical operation that is peformed on the cell's current value - using the shortcut's 'value' - in order to calculate the new total for the cell."], MessageType: Enums_1.MessageType.Info }))),
+                                    React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Shortcut: Operation", bodyText: ["The mathematical operation that is peformed on the cell's current value - using the shortcut's 'value' - in order to calculate the new total for the cell."] }))),
                             React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineNumberResult" },
                                 React.createElement(react_bootstrap_1.Col, { xs: 3 },
                                     React.createElement(react_bootstrap_1.ControlLabel, null, "Value:")),
                                 React.createElement(react_bootstrap_1.Col, { xs: 6 },
                                     React.createElement(react_bootstrap_1.FormControl, { type: "number", placeholder: "Enter Number", onChange: this.changeContent, value: this.state.ShortcutResult })),
                                 React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                    React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Shortcut: Value", bodyText: ["The number that is used - together with the shortcut's mathmetical 'operation' and the current cell value - in order to calculate the new total for the cell."], MessageType: Enums_1.MessageType.Info }))))
+                                    React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Shortcut: Value", bodyText: ["The number that is used - together with the shortcut's mathmetical 'operation' and the current cell value - in order to calculate the new total for the cell."] }))))
                         :
                             React.createElement("span", null,
                                 React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineDateType" },
@@ -76,7 +76,7 @@ class ShortcutSettingsWizard extends React.Component {
                                         React.createElement(react_bootstrap_1.Radio, { inline: true, value: "custom", checked: this.state.IsDynamic == false, onChange: (e) => this.onDynamicSelectChanged(e) }, "Custom"),
                                         React.createElement(react_bootstrap_1.Radio, { inline: true, value: "dynamic", checked: this.state.IsDynamic == true, onChange: (e) => this.onDynamicSelectChanged(e) }, "Dynamic")),
                                     React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Shortcut: Date Type", bodyText: [React.createElement("b", null, "Custom dates"), " are 'real' dates chosen by the user.", React.createElement("br", null), React.createElement("br", null), React.createElement("b", null, "Dynamic dates"), " are predefined dates that come with the Blotter and are re-evaluated each day (e.g. 'Today').", React.createElement("br", null), React.createElement("br", null), "Dynamic dates that use working days are based on the current holiday calendar."], MessageType: Enums_1.MessageType.Info }))),
+                                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Shortcut: Date Type", bodyText: [React.createElement("b", null, "Custom dates"), " are 'real' dates chosen by the user.", React.createElement("br", null), React.createElement("br", null), React.createElement("b", null, "Dynamic dates"), " are predefined dates that come with the Blotter and are re-evaluated each day (e.g. 'Today').", React.createElement("br", null), React.createElement("br", null), "Dynamic dates that use working days are based on the current holiday calendar."] }))),
                                 this.state.IsDynamic == true ?
                                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineDateResultPredefined" },
                                         React.createElement(react_bootstrap_1.Col, { xs: 3 },
@@ -90,7 +90,7 @@ class ShortcutSettingsWizard extends React.Component {
                                                 React.createElement("option", { value: CalendarConstants.PREVIOUS_WORK_DAY, key: CalendarConstants.PREVIOUS_WORK_DAY }, "Previous Work Day"),
                                                 React.createElement("option", { value: CalendarConstants.NEXT_WORK_DAY, key: CalendarConstants.NEXT_WORK_DAY }, "Next Work Day"))),
                                         React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                            React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Shortcut: Dynamic Date", bodyText: ["The dynamic date that becomes the cell's new value when the shortcut is triggered."], MessageType: Enums_1.MessageType.Info })))
+                                            React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Shortcut: Dynamic Date", bodyText: ["The dynamic date that becomes the cell's new value when the shortcut is triggered."] })))
                                     :
                                         React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineDateResultCustom" },
                                             React.createElement(react_bootstrap_1.Col, { xs: 3 },
@@ -98,7 +98,7 @@ class ShortcutSettingsWizard extends React.Component {
                                             React.createElement(react_bootstrap_1.Col, { xs: 6 },
                                                 React.createElement(react_bootstrap_1.FormControl, { type: "date", placeholder: "Shortcut Result", onChange: this.changeContent, value: this.state.ShortcutResult })),
                                             React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Shortcut: Custom Date", bodyText: ["The date that becomes the cell's new value when the shortcut is triggered."], MessageType: Enums_1.MessageType.Info })))))));
+                                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Shortcut: Custom Date", bodyText: ["The date that becomes the cell's new value when the shortcut is triggered."] })))))));
     }
     onShortcutKeyChanged(event) {
         let e = event.target;

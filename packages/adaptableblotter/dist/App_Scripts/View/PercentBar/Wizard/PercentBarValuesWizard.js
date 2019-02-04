@@ -40,7 +40,7 @@ class PercentBarValuesWizard extends React.Component {
                                 ' ',
                                 React.createElement(react_bootstrap_1.Radio, { inline: true, value: "column", checked: this.state.UseMinColumn == true, onChange: (e) => this.onUseMinColumnSelectChanged(e) }, "Another Column Value"),
                                 React.createElement("span", { style: { marginLeft: '10px' } },
-                                    React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Percent Bar: Minimum Value", bodyText: ["The minimum value of the column (can be minus).  Defaults to the currenty smallest value in the column.  If the column only contains positive numbers use 0.  Additionally, you can set the value to be that in another column."], MessageType: Enums_1.MessageType.Info })))),
+                                    React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Percent Bar: Minimum Value", bodyText: ["The minimum value of the column (can be minus).  Defaults to the currenty smallest value in the column.  If the column only contains positive numbers use 0.  Additionally, you can set the value to be that in another column."] })))),
                         React.createElement(react_bootstrap_1.Row, { style: { marginTop: '10px' } },
                             React.createElement(react_bootstrap_1.Col, { xs: 3 },
                                 React.createElement(react_bootstrap_1.ControlLabel, null, this.state.UseMinColumn == false ?
@@ -62,7 +62,7 @@ class PercentBarValuesWizard extends React.Component {
                                 ' ',
                                 React.createElement(react_bootstrap_1.Radio, { inline: true, value: "column", checked: this.state.UseMaxColumn == true, onChange: (e) => this.onUseMaxColumnSelectChanged(e) }, "Another Column Value"),
                                 React.createElement("span", { style: { marginLeft: '10px' } },
-                                    React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Percent Bar: Maximum Value", bodyText: ["The maximum value of the bar.  Defaults to the currently largest value in the column.  Additionally, you can set the value to be that in another column."], MessageType: Enums_1.MessageType.Info })))),
+                                    React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Percent Bar: Maximum Value", bodyText: ["The maximum value of the bar.  Defaults to the currently largest value in the column.  Additionally, you can set the value to be that in another column."] })))),
                         React.createElement(react_bootstrap_1.Row, { style: { marginTop: '10px' } },
                             React.createElement(react_bootstrap_1.Col, { xs: 3 },
                                 React.createElement(react_bootstrap_1.ControlLabel, null, this.state.UseMaxColumn == false ?

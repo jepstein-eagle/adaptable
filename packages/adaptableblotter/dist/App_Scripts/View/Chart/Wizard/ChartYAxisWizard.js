@@ -58,7 +58,7 @@ class ChartYAxisWizard extends React.Component {
                                 ' ',
                                 " ",
                                 ' ',
-                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Chart Y Axis: Display Total", bodyText: ["Choose whether the X Axis is grouped according to the sum of it values (by X Axis) or their average."], MessageType: Enums_1.MessageType.Info }))),
+                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Chart Y Axis: Display Total", bodyText: ["Choose whether the X Axis is grouped according to the sum of it values (by X Axis) or their average."] }))),
                         existingColumnRows,
                         newRow))));
     }

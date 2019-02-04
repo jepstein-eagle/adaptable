@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
-const Enums_1 = require("../../../Utilities/Enums");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 const ColorPicker_1 = require("../../ColorPicker");
@@ -41,7 +40,7 @@ class PercentBarSettingsWizard extends React.Component {
                             React.createElement(react_bootstrap_1.Col, { xs: 1 },
                                 React.createElement(react_bootstrap_1.Checkbox, { style: { margin: '0px' }, onChange: (e) => this.onShowValueChanged(e), checked: this.state.ShowValue })),
                             React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Percent Bar: Show Value", bodyText: ["Whether to show additionally the value of the cell in the bar."], MessageType: Enums_1.MessageType.Info })))))));
+                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Percent Bar: Show Value", bodyText: ["Whether to show additionally the value of the cell in the bar."] })))))));
     }
     onPositiveColorSelectChanged(event) {
         let e = event.target;

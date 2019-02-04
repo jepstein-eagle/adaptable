@@ -13,6 +13,6 @@ export interface FilterFormPanelProps extends PanelProps {
 }
 export declare class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
     render(): JSX.Element;
-    onSelectMenu(tab: any): any;
-    onSelectFilter(tab: any): any;
+    onSelectMenu(): any;
+    onSelectFilter(): any;
 }

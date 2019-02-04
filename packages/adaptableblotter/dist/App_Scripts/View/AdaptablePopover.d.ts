@@ -3,7 +3,7 @@ import { MessageType } from '../Utilities/Enums';
 export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
     headerText: string;
     bodyText: any[];
-    MessageType: MessageType;
+    MessageType?: MessageType;
     cssClassName: string;
     triggerAction?: string;
     useButton?: boolean;

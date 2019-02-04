@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
-const Enums_1 = require("../../../Utilities/Enums");
 const AdaptableBlotterForm_1 = require("../Forms/AdaptableBlotterForm");
 const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 
@@ -35,7 +34,7 @@ class PanelWithButton extends React.Component {
                                 "  ",
                                 ' ',
                                 " ",
-                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: this.props.cssClassName, headerText: "", bodyText: this.props.infoBody, MessageType: Enums_1.MessageType.Info })))),
+                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: this.props.cssClassName, headerText: "", bodyText: this.props.infoBody })))),
                 React.createElement(react_bootstrap_1.Col, { xs: 3 },
                     buttonContent &&
                         React.createElement(react_bootstrap_1.Button, { bsSize: "small", bsStyle: buttonStyle, disabled: this.props.buttonDisabled, onClick: () => this.props.buttonClick(), style: { float: 'right' } }, buttonContent),

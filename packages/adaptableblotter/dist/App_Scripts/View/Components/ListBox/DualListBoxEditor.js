@@ -37,7 +37,7 @@ class DualListBoxEditor extends React.Component {
             UiSelectedAvailableValues: [],
             FilterValue: "",
             SortOrder: Enums_1.SortOrder.Ascending,
-            AllValues: this.props.SelectedValues.concat(this.props.AvailableValues),
+            AllValues: this.props.AvailableValues,
             MasterValues: this.buildMasterValues(this.props.MasterChildren)
         };
     }
@@ -173,7 +173,8 @@ class DualListBoxEditor extends React.Component {
     createAvailableValuesList(availableValues, sortOrder, sortMember) {
         // if there are no master / children then sort the values
         if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(this.props.MasterChildren)) {
-            return Helper_1.Helper.sortArrayWithProperty(sortOrder, availableValues, sortMember);
+            let valstoReturn = Helper_1.Helper.sortArrayWithProperty(sortOrder, availableValues, sortMember);
+            return valstoReturn;
         }
         // we do have master / children
         let returnValues = [];

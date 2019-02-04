@@ -71,7 +71,7 @@ class StyleComponent extends React.Component {
                                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true, componentClass: 'fieldset' },
                                                         React.createElement(react_bootstrap_1.FormControl, { componentClass: "select", placeholder: "select", value: this.state.myStyle.FontSize.toString(), onChange: (x) => this.onFontSizeChange(x) }, optionFontSizes),
                                                         ' ',
-                                                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Conditional Style: Font Size", bodyText: ["Select the size of the font for the Conditional Style.  The default is 'Medium'."], MessageType: Enums_1.MessageType.Info })))))))))));
+                                                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Conditional Style: Font Size", bodyText: ["Select the size of the font for the Conditional Style.  The default is 'Medium'."] })))))))))));
     }
     onShowClassNameChanged(event) {
         let e = event.target;

@@ -15,7 +15,6 @@ const PanelWithButton_1 = require("../Panels/PanelWithButton");
 const ButtonMaximise_1 = require("../Buttons/ButtonMaximise");
 const ButtonMinimise_1 = require("../Buttons/ButtonMinimise");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
-const Enums_1 = require("../../../Utilities/Enums");
 class AdaptableBlotterAbout extends React.Component {
     constructor(props) {
         super(props);
@@ -288,7 +287,7 @@ class AdaptableBlotterAbout extends React.Component {
         rowColItems[0].Content = item1;
         rowColItems[1].Content = item2;
         if (item3) {
-            let infoButton = React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: this.state.cssClassName, headerText: null, bodyText: [item3], MessageType: Enums_1.MessageType.Info });
+            let infoButton = React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: this.state.cssClassName, headerText: null, bodyText: [item3] });
             rowColItems[2].Content = infoButton;
         }
         return rowColItems;

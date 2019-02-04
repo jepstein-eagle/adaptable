@@ -27,13 +27,13 @@ class LayoutSelectionWizard extends React.Component {
                         ' ',
                         " ",
                         ' ',
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Layout:  Current Grid", bodyText: ["The new layout will contain the current column order and sort order in the grid."], MessageType: Enums_1.MessageType.Info })),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Layout:  Current Grid", bodyText: ["The new layout will contain the current column order and sort order in the grid."] })),
                     React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
                         React.createElement(react_bootstrap_1.Radio, { inline: true, value: "New", checked: this.state.LayoutSource == Enums_1.LayoutSource.New, onChange: (e) => this.onScopeSelectChanged(e) }, "Create a new Layout"),
                         ' ',
                         " ",
                         ' ',
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Layout: New", bodyText: ["Build the layout yourself by selecting columns and sort order (in following steps)."], MessageType: Enums_1.MessageType.Info })))));
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Layout: New", bodyText: ["Build the layout yourself by selecting columns and sort order (in following steps)."] })))));
     }
     onScopeSelectChanged(event) {
         let e = event.target;

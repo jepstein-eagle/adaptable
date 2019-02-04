@@ -27,7 +27,7 @@ class ReportRowTypeWizard extends React.Component {
                             "All Rows in the Data Source"),
                         ' ',
                         " ",
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: All Rows", bodyText: ["All rows in the datasource will be included in the report, whether visible or not at time of export."], MessageType: Enums_1.MessageType.Info }))),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: All Rows", bodyText: ["All rows in the datasource will be included in the report, whether visible or not at time of export."] }))),
                 React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                         React.createElement(react_bootstrap_1.Radio, { value: "Visible", checked: this.state.ReportRowScope == Enums_1.ReportRowScope.VisibleRows, onChange: (e) => this.onScopeSelectChanged(e) },
@@ -38,7 +38,7 @@ class ReportRowTypeWizard extends React.Component {
                             "Visible Rows Only (at time that report is run)"),
                         ' ',
                         " ",
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: Visible Rows", bodyText: ["Only rows that are visible at the time the Report is exported will be included in the Export."], MessageType: Enums_1.MessageType.Info }))),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: Visible Rows", bodyText: ["Only rows that are visible at the time the Report is exported will be included in the Export."] }))),
                 React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_large_margin" },
                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                         React.createElement(react_bootstrap_1.Radio, { value: "Expression", checked: this.state.ReportRowScope == Enums_1.ReportRowScope.ExpressionRows, onChange: (e) => this.onScopeSelectChanged(e) },
@@ -49,7 +49,7 @@ class ReportRowTypeWizard extends React.Component {
                             "By Query - built by you in next step"),
                         ' ',
                         " ",
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: Bespoke Rows", bodyText: ["Only the rows which match the query will be exported (visible or not)."], MessageType: Enums_1.MessageType.Info })))));
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Report: Bespoke Rows", bodyText: ["Only the rows which match the query will be exported (visible or not)."] })))));
     }
     onScopeSelectChanged(event) {
         let e = event.target;
