@@ -95,6 +95,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
                         key={StrategyConstants.CustomSortStrategyId}
                         SummarisedColumn={this.state.SelectedColumn}
                         TeamSharingActivated={this.props.TeamSharingActivated}
+                        Blotter ={this.props.Blotter}
                         getColumnValueDisplayValuePairDistinctList={this.props.Blotter.getColumnValueDisplayValuePairDistinctList}
                         AccessLevel={this.getAccessLevel(StrategyConstants.CustomSortStrategyId)}
                     />

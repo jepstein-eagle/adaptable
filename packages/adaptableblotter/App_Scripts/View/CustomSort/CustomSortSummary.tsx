@@ -66,7 +66,8 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
             customSortRow = <StrategyDetail
                 cssClassName={this.props.cssClassName}
                 key={StrategyConstants.CustomSortStrategyName}
-                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyConstants.CustomSortStrategyId} />}
+                Item1={<StrategyProfile cssClassName={this.props.cssClassName} 
+                StrategyId={StrategyConstants.CustomSortStrategyId} />}
                 Item2={customSort.SortedValues.join(', ')}
                 ConfigEnity={customSort}
                 EntityName={StrategyConstants.CustomSortStrategyName}
