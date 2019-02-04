@@ -111,18 +111,6 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
         this.props.onSmartEditValueChange(Number(e.value));
     }
 
-    private getValidationErrorMessage(CellValidations: ICellValidationRule[]): string {
-        let returnString: string[] = []
-        for (let CellValidation of CellValidations) {
-            let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression( CellValidation.Expression)) ?
-                " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns) :
-                "";
-            returnString.push(CellValidation.Description + expressionDescription)
-        }
-
-        return returnString.join("\n");
-    }
-
     private onApplySmartEdit(): void {
         this.props.onApplySmartEdit()
     }
