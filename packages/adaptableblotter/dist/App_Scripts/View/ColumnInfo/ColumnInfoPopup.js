@@ -55,7 +55,7 @@ class ColumnInfoPopupComponent extends React.Component {
             }
             if (this.isStrategyVisible(StrategyConstants.CustomSortStrategyId)) {
                 summaries.push(React.createElement("div", { key: StrategyConstants.CustomSortStrategyId, className: this.isStrategyReadOnly(StrategyConstants.CustomSortStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
-                    React.createElement(CustomSortSummary_1.CustomSortSummary, { key: StrategyConstants.CustomSortStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList, AccessLevel: this.getAccessLevel(StrategyConstants.CustomSortStrategyId) })));
+                    React.createElement(CustomSortSummary_1.CustomSortSummary, { key: StrategyConstants.CustomSortStrategyId, SummarisedColumn: this.state.SelectedColumn, TeamSharingActivated: this.props.TeamSharingActivated, Blotter: this.props.Blotter, getColumnValueDisplayValuePairDistinctList: this.props.Blotter.getColumnValueDisplayValuePairDistinctList, AccessLevel: this.getAccessLevel(StrategyConstants.CustomSortStrategyId) })));
             }
             if (this.isStrategyVisible(StrategyConstants.ConditionalStyleStrategyId)) {
                 summaries.push(React.createElement("div", { key: StrategyConstants.ConditionalStyleStrategyId, className: this.isStrategyReadOnly(StrategyConstants.ConditionalStyleStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
