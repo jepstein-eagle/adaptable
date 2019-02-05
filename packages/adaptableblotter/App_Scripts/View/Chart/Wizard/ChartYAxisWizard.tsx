@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, Col, Panel, Well, Row, Radio } from 'react-bootstrap';
+import { ControlLabel, FormGroup, Col, Panel,  Row, Radio, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
@@ -57,9 +57,9 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
                         <Row>
                             <Col xs={1} />
                             <Col xs={10}>
-                                <Well>Select numeric column(s) for the Y Axis. <br />
+                                <HelpBlock>Select numeric column(s) for the Y Axis. <br />
                                     You can choose as many columns as required.<br />
-                                    Check the 'Display Total' to specify how this column is grouped.</Well>
+                                    Check the 'Display Total' to specify how this column is grouped.</HelpBlock>
                             </Col>
                             <Col xs={1} />
                         </Row>

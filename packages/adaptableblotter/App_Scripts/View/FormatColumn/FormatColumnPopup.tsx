@@ -5,7 +5,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { Well } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { FormatColumnEntityRow } from './FormatColumnEntityRow'
 import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -91,11 +91,9 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
                 button={newButton}
                 bsStyle="primary" className="ab_main_popup" glyphicon={StrategyConstants.FormatColumnGlyph} infoBody={infoBody}>
 
-                {this.props.FormatColumns.length == 0 &&
-                    <Well bsSize="small">Click 'New' to create a new column format.</Well>
-                }
-
-                {FormatColumns.length > 0 &&
+                {this.props.FormatColumns.length == 0 ?
+                    <HelpBlock >Click 'New' to create a new column format.</HelpBlock>
+               :
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems ={colItems} items={FormatColumns} />
                 }
 

@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -91,12 +91,10 @@ class ShortcutPopupComponent extends React.Component<ShortcutPopupProps, Editabl
                 bsStyle="primary" glyphicon={StrategyConstants.ShortcutGlyph}
                 infoBody={infoBody}>
 
-                {shortcuts.length > 0 &&
+                {shortcuts.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={shortcuts} />
-                }
-
-                {shortcuts.length == 0 &&
-                    <Well bsSize="small">Click 'New' to add a new Shortcut.</Well>
+               :
+                    <HelpBlock>Click 'New' to add a new Shortcut.</HelpBlock>
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&

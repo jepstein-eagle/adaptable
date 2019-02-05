@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well, HelpBlock } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
@@ -52,9 +52,9 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     render() {
         let cssClassName: string = this.props.cssClassName + "__Alert";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__Alert";
-   
+
         let infoBody: any[] = ["Alert Definitions define which changes to the source data will trigger an Alert.", <br />, <br />,
-            "An Alert will appear either as a popup or in the alerts container."]
+            "An Alert will appear either as a popup or in the alerts toolbar."]
 
         let colItems: IColItem[] = [
             { Content: "Alert Definition", Size: 4 },
@@ -63,7 +63,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
             { Content: "", Size: 2 },
         ]
 
-        let AlertItems = this.props.AlertDefinitions.map((x, index) => {
+        let alertEntities = this.props.AlertDefinitions.map((x, index) => {
             let column = ColumnHelper.getColumnFromId(x.ColumnId, this.props.Columns);
             return <AlertEntityRow
                 key={index}
@@ -79,32 +79,33 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 onDeleteConfirm={AlertRedux.AlertDefinitionDelete(index)}
                 onChangeMessageType={(index, x) => this.onMessageTypeChanged(index, x)}
-
             />
-
-
         })
+
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.createAlert()}
             overrideTooltip="Create Alert"
             DisplayMode="Glyph+Text"
-            size={"small"} 
+            size={"small"}
             AccessLevel={this.props.AccessLevel}
-            />
+        />
 
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyConstants.AlertStrategyName} bsStyle="primary" cssClassName={cssClassName}
                 button={newButton}
                 glyphicon={StrategyConstants.AlertGlyph}
                 infoBody={infoBody}>
-                {AlertItems.length > 0 &&
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={AlertItems} />
-                }
-
-                {AlertItems.length == 0 &&
-                    <Well bsSize="small">
-                        <HelpBlock>Click 'New' to start creating alert definitions.</HelpBlock>
-                        <HelpBlock>An alert will be triggered whenever an edit - or external data change - matches the condition in the alert definition.</HelpBlock>
-                    </Well>
+                {alertEntities.length > 0 ?
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={alertEntities} />
+                    :
+                    <div>
+                        <HelpBlock>You have no Alert Definitions.</HelpBlock>
+                        {this.props.AccessLevel != AccessLevel.ReadOnly &&
+                            <div>
+                                <HelpBlock>Click 'New' to start creating alert definitions.</HelpBlock>
+                                <HelpBlock>An alert will be triggered whenever an edit - or external data change - matches the condition in the alert definition.</HelpBlock>
+                            </div>
+                        }
+                    </div>
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&

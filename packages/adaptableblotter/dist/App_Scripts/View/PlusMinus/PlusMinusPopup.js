@@ -53,10 +53,10 @@ class PlusMinusPopupComponent extends React.Component {
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createColumnNudgeValue(), overrideTooltip: "Create Plus / Minus Rule", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.PlusMinusStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyConstants.PlusMinusGlyph, infoBody: infoBody },
-                PlusMinusRules.length > 0 &&
-                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: PlusMinusRules }),
-                PlusMinusRules.length == 0 &&
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Click 'New' to create new Nudge Value rules for when the '+' or '-' keys are clicked while in a numeric cell."),
+                PlusMinusRules.length > 0 ?
+                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: PlusMinusRules })
+                    :
+                        React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to create new Nudge Value rules for when the '+' or '-' keys are clicked while in a numeric cell."),
                 this.state.EditedAdaptableBlotterObject != null &&
                     React.createElement(PlusMinusWizard_1.PlusMinusWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: null, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, WizardStartIndex: this.state.WizardStartIndex, SelectedColumnId: null, Blotter: this.props.Blotter, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }

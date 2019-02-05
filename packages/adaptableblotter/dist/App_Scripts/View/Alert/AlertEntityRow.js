@@ -14,7 +14,7 @@ class AlertEntityRow extends React.Component {
     render() {
         let alert = this.props.AdaptableBlotterObject;
         let MessageTypes = EnumExtensions_1.EnumExtensions.getNames(Enums_1.MessageType).map((type) => {
-            return React.createElement("option", { style: { fontSize: "5px" }, key: type, value: type }, type);
+            return React.createElement("option", { key: type, value: type }, type);
         });
         let colItems = [].concat(this.props.colItems);
         colItems[0].Content = this.getColumnandRule(alert);

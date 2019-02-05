@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -92,12 +92,10 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.CalculatedColumnStrategyName} className="ab_main_popup" infoBody={infoBody}
                 button={newButton} bsStyle="primary" glyphicon={StrategyConstants.CalculatedColumnGlyph}>
 
-                {this.props.CalculatedColumns.length > 0 &&
+                {this.props.CalculatedColumns.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={calculatedColumns} />
-                }
-
-                {this.props.CalculatedColumns.length == 0 &&
-                    <Well bsSize="small">Click 'New' to create a new Calculated Column.</Well>
+               :
+                    <HelpBlock >Click 'New' to create a new Calculated Column.</HelpBlock>
                 }
 
                 {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}

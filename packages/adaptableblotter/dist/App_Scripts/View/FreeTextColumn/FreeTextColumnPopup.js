@@ -46,10 +46,10 @@ class FreeTextColumnPopupComponent extends React.Component {
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create FreeText Column", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.FreeTextColumnStrategyName, button: newButton, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyConstants.FreeTextColumnGlyph, infoBody: infoBody },
-                this.props.FreeTextColumns.length == 0 &&
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Click 'New' to create a new column FreeText."),
-                freeTextColumns.length > 0 &&
-                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: freeTextColumns }),
+                this.props.FreeTextColumns.length == 0 ?
+                    React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to create a new column FreeText.")
+                    :
+                        React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: freeTextColumns }),
                 this.state.EditedAdaptableBlotterObject != null &&
                     React.createElement(FreeTextColumnWizard_1.FreeTextColumnWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ModalContainer: this.props.ModalContainer, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Columns: this.props.Columns, Blotter: this.props.Blotter, ConfigEntities: this.props.FreeTextColumns, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }

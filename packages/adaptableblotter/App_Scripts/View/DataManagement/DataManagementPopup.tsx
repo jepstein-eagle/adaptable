@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
@@ -37,8 +37,8 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
 
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyConstants.DataManagementStrategyName} button={null} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyConstants.DataManagementGlyph} infoBody={infoBody}>
-                <Well bsSize="small">Click below to clear all current state.<br /><br />
-                    When you restart / refresh the Blotter any predefined config will be re-added.</Well>
+                <HelpBlock>Click below to clear all current state.<br /><br />
+                    When you restart / refresh the Blotter any predefined config will be re-added.</HelpBlock>
 
                 {clearButton}
 

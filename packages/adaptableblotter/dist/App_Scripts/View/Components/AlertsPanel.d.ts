@@ -1,7 +1,7 @@
 import * as React from "react";
-import { IAlert } from "../../Utilities/Interface/IMessage";
+import { IAdaptableAlert } from "../../Utilities/Interface/IMessage";
 export interface AlertsPanelProps extends React.ClassAttributes<AlertsPanel> {
-    Alerts: IAlert[];
+    Alerts: IAdaptableAlert[];
     ShowPanel: boolean;
     cssClassName: string;
     ShowHeader: boolean;

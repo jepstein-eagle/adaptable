@@ -18,6 +18,7 @@ const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
+const Enums_1 = require("../../Utilities/Enums");
 class AdvancedSearchPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -42,6 +43,9 @@ class AdvancedSearchPopupComponent extends React.Component {
             "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard."];
         let contentSize = (this.props.TeamSharingActivated) ? 6 : 7;
         let buttonSize = (this.props.TeamSharingActivated) ? 3 : 2;
+        let noExistingObjectText = "You have no Advanced Searches.";
+        let startWizardText = (this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly) ? "" :
+            " Click 'New' to start the Advanced Search Wizard to create a new Advanced Search.";
         let colItems = [
             { Content: "Current", Size: 1 },
             { Content: "Name", Size: 2 },
@@ -57,8 +61,9 @@ class AdvancedSearchPopupComponent extends React.Component {
                 advancedSearchRows.length > 0 &&
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: advancedSearchRows }),
                 advancedSearchRows.length == 0 &&
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" },
-                        React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to start creating advanced searches.")),
+                    React.createElement("div", null,
+                        React.createElement(react_bootstrap_1.HelpBlock, null, noExistingObjectText),
+                        React.createElement(react_bootstrap_1.HelpBlock, null, startWizardText)),
                 this.state.EditedAdaptableBlotterObject != null &&
                     React.createElement(AdvancedSearchWizard_1.AdvancedSearchWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: this.props.AdvancedSearches, Blotter: this.props.Blotter, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }

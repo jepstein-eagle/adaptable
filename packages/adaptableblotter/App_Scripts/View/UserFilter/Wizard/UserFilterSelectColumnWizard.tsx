@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Panel, Well, HelpBlock } from 'react-bootstrap';
+import { Panel,  HelpBlock } from 'react-bootstrap';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";

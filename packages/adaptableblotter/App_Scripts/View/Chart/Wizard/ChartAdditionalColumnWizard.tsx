@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, Col, Panel, Well, Row, Radio } from 'react-bootstrap';
+import { ControlLabel, FormGroup, Col, Panel,  Row, Radio, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
@@ -47,7 +47,7 @@ export class ChartAdditionalColumnWizard extends React.Component<ChartAdditional
                     <FormGroup controlId="additionalColumn">
                         <Row>  <Col xs={1} />
                             <Col xs={10}>
-                                <Well>You can, optionally, segment the X Axis further by grouping totals against the values in another column</Well>
+                                <HelpBlock>You can, optionally, segment the X Axis further by grouping totals against the values in another column</HelpBlock>
                             </Col>
                             <Col xs={1} />
                         </Row>

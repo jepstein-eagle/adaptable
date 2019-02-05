@@ -6,10 +6,10 @@ import { ButtonClear } from "./Buttons/ButtonClear";
 import { ButtonPreviewDelete } from "./Buttons/ButtonPreviewDelete";
 import { PanelWithButton } from "./Panels/PanelWithButton";
 import { AccessLevel } from "../../Utilities/Enums";
-import { IAlert } from "../../Utilities/Interface/IMessage";
+import { IAdaptableAlert} from "../../Utilities/Interface/IMessage";
 
 export interface AlertsPanelProps extends React.ClassAttributes<AlertsPanel> {
-    Alerts: IAlert[];
+    Alerts: IAdaptableAlert[];
     ShowPanel: boolean
     cssClassName: string
     ShowHeader: boolean
@@ -27,7 +27,7 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
         let cssClassName: string = this.props.cssClassName + StyleConstants.ALERTS
         let panelHeader: string = this.props.ShowHeader && this.props.Alerts != null ? "Alerts: " : "";
 
-        let alerts = this.props.Alerts.map((alert: IAlert, index: number) => {
+        let alerts = this.props.Alerts.map((alert: IAdaptableAlert, index: number) => {
 
             let alertText = <div style={{ maxWidth: "600px" }}>
                 <div>

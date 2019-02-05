@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well, HelpBlock } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
@@ -115,15 +115,13 @@ class PercentBarPopupComponent extends React.Component<PercentBarPopupProps, Edi
                 button={newButton}
                 glyphicon={StrategyConstants.PercentBarGlyph}
                 infoBody={infoBody}>
-                {PercentBarItems.length > 0 &&
+                {PercentBarItems.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={PercentBarItems} />
-                }
-
-                {PercentBarItems.length == 0 &&
-                    <Well bsSize="small">
+                 :
+                    <div>
                         <HelpBlock>Click 'New' to start creating s for valid cell edits.</HelpBlock>
                         <HelpBlock>Edits that fail validation can be either prevented altogether or allowed (after over-riding a warning and providing a reason).</HelpBlock>
-                    </Well>
+                    </div>
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&

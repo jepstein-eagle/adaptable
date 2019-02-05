@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -95,12 +95,10 @@ class CustomSortPopupComponent extends React.Component<CustomSortPopupProps, Edi
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.CustomSortStrategyName} className="ab_main_popup" infoBody={infoBody}
                 button={newButton} bsStyle="primary" glyphicon={StrategyConstants.CustomSortGlyph}>
 
-                {customSorts.length > 0 &&
+                {customSorts.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={customSorts} />
-                }
-
-                {customSorts.length == 0 &&
-                    <Well bsSize="small">Click 'New' to create a bespoke sort order for a selected column.</Well>
+               :
+                    <HelpBlock>Click 'New' to create a bespoke sort order for a selected column.</HelpBlock>
                 }
 
                 {this.state.EditedAdaptableBlotterObject &&

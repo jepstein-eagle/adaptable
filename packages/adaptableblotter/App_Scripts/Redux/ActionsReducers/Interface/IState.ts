@@ -31,7 +31,7 @@ import { ISelectedCellInfo } from "../../../Utilities/Interface/SelectedCell/ISe
 import { ISelectedCellSummmary } from "../../../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
 import { IPreviewInfo } from '../../../Utilities/Interface/IPreview';
 import { IMenuItem, IContextMenu } from '../../../Utilities/Interface/IMenu';
-import { IAlert, IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPopup, IAboutPopup } from '../../../Utilities/Interface/IMessage';
+import { IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPopup, IAboutPopup, IAdaptableAlert } from '../../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../../Utilities/ChartEnums';
 
 // Base interface
@@ -57,7 +57,7 @@ export interface IUserState extends IState {
 
 export interface SystemState extends ISystemState {
     SystemStatus: ISystemStatus;
-    Alerts: IAlert[];
+    Alerts: IAdaptableAlert[];
     AvailableCalendars: ICalendar[];
     CurrentLiveReports: ILiveReport[];
     IsValidSmartEditSelection: boolean;

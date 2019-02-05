@@ -30,7 +30,7 @@ class StyleComponent extends React.Component {
                 this.props.CanUseClassName && this.props.StyleClassNames.length > 0 &&
                     React.createElement(react_bootstrap_1.Checkbox, { inline: true, style: { marginBottom: "10px" }, onChange: (e) => this.onShowClassNameChanged(e), checked: this.state.ShowClassName }, "Use Style Class Name"),
                 this.state.ShowClassName ?
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" },
+                    React.createElement("div", null,
                         React.createElement(react_bootstrap_1.HelpBlock, null, "Choose a style from the dropdown."),
                         React.createElement(react_bootstrap_1.HelpBlock, null, "Note: This assumes that you have provided a style with the same name in a stylesheet."),
                         React.createElement(react_bootstrap_1.FormControl, { componentClass: "select", placeholder: "select", value: this.state.myStyle.ClassName, onChange: (x) => this.onStyleClassNameChanged(x) },

@@ -43,7 +43,7 @@ class ChartYAxisWizard extends React.Component {
                         React.createElement(react_bootstrap_1.Row, null,
                             React.createElement(react_bootstrap_1.Col, { xs: 1 }),
                             React.createElement(react_bootstrap_1.Col, { xs: 10 },
-                                React.createElement(react_bootstrap_1.Well, null,
+                                React.createElement(react_bootstrap_1.HelpBlock, null,
                                     "Select numeric column(s) for the Y Axis. ",
                                     React.createElement("br", null),
                                     "You can choose as many columns as required.",

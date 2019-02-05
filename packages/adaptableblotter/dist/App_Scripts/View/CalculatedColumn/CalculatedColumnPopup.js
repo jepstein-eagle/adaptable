@@ -50,10 +50,10 @@ class CalculatedColumnPopupComponent extends React.Component {
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { onClick: () => { this.onNew(); }, cssClassName: cssClassName, overrideTooltip: "Create Calculated Column", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.CalculatedColumnStrategyName, className: "ab_main_popup", infoBody: infoBody, button: newButton, bsStyle: "primary", glyphicon: StrategyConstants.CalculatedColumnGlyph },
-                this.props.CalculatedColumns.length > 0 &&
-                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: calculatedColumns }),
-                this.props.CalculatedColumns.length == 0 &&
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Click 'New' to create a new Calculated Column."),
+                this.props.CalculatedColumns.length > 0 ?
+                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: calculatedColumns })
+                    :
+                        React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to create a new Calculated Column."),
                 this.state.EditedAdaptableBlotterObject &&
                     React.createElement(CalculatedColumnWizard_1.CalculatedColumnWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: this.props.CalculatedColumns, Columns: this.props.Columns, ModalContainer: this.props.ModalContainer, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, GetErrorMessage: () => this.props.CalculatedColumnErrorMessage, IsExpressionValid: (expression) => this.props.IsExpressionValid(expression), Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }

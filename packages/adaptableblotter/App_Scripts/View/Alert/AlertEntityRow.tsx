@@ -24,7 +24,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
         let alert: IAlertDefinition = this.props.AdaptableBlotterObject as IAlertDefinition;
 
         let MessageTypes = EnumExtensions.getNames(MessageType).map((type) => {
-            return <option style={{ fontSize: "5px" }} key={type} value={type}>{type}</option>
+            return <option key={type} value={type}>{type}</option>
         })
 
         let colItems: IColItem[] = [].concat(this.props.colItems);

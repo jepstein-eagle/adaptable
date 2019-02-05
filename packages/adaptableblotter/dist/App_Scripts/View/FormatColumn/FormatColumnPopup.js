@@ -50,10 +50,10 @@ class FormatColumnPopupComponent extends React.Component {
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Format Column", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.FormatColumnStrategyName, button: newButton, bsStyle: "primary", className: "ab_main_popup", glyphicon: StrategyConstants.FormatColumnGlyph, infoBody: infoBody },
-                this.props.FormatColumns.length == 0 &&
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Click 'New' to create a new column format."),
-                FormatColumns.length > 0 &&
-                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: FormatColumns }),
+                this.props.FormatColumns.length == 0 ?
+                    React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to create a new column format.")
+                    :
+                        React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: FormatColumns }),
                 this.state.EditedAdaptableBlotterObject != null &&
                     React.createElement(FormatColumnWizard_1.FormatColumnWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ModalContainer: this.props.ModalContainer, ColorPalette: this.props.ColorPalette, StyleClassNames: this.props.StyleClassNames, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Columns: this.props.Columns, Blotter: this.props.Blotter, ConfigEntities: this.props.FormatColumns, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }

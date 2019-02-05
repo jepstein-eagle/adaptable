@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { FormGroup, ControlLabel, FormControl, Col, Well } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, Col,  HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -98,12 +98,10 @@ class PlusMinusPopupComponent extends React.Component<PlusMinusPopupProps, Edita
                 button={newButton} glyphicon={StrategyConstants.PlusMinusGlyph}
                 infoBody={infoBody}>
 
-                {PlusMinusRules.length > 0 &&
+                {PlusMinusRules.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={PlusMinusRules} />
-                }
-
-                {PlusMinusRules.length == 0 &&
-                    <Well bsSize="small">Click 'New' to create new Nudge Value rules for when the '+' or '-' keys are clicked while in a numeric cell.</Well>
+                :
+                    <HelpBlock>Click 'New' to create new Nudge Value rules for when the '+' or '-' keys are clicked while in a numeric cell.</HelpBlock>
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&

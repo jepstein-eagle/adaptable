@@ -1,5 +1,5 @@
 import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState'
-import { DataType, FontWeight, FontStyle, StatusColour, MessageType } from '../Utilities/Enums';
+import { DataType, FontWeight, FontStyle, StatusColour, MessageType, AccessLevel } from '../Utilities/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { IStyle } from "../Utilities/Interface/IStyle";
@@ -7,6 +7,8 @@ import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilde
 import { Expression } from '../Utilities/Expression';
 import { SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO_BSSTYLE } from '../Utilities/Constants/StyleConstants';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
+import { IEntitlement } from '../Utilities/Interface/IEntitlement';
+import React from 'react';
 
 
 export module UIHelper {
@@ -198,8 +200,6 @@ export module UIHelper {
                 return "exclamation-sign";
         }
     }
-
-
 
 
 

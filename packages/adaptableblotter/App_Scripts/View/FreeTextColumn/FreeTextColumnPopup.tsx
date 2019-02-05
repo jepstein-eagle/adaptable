@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as FreeTextColumnRedux from '../../Redux/ActionsReducers/FreeTextColumnRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { Well } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { FreeTextColumnEntityRow } from './FreeTextColumnEntityRow'
 import { FreeTextColumnWizard } from './Wizard/FreeTextColumnWizard'
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -39,7 +39,7 @@ class FreeTextColumnPopupComponent extends React.Component<FreeTextColumnPopupPr
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
             let arrayParams = this.props.PopupParams.split("|")
-             if (arrayParams.length == 2 && arrayParams[0] == "Edit") {
+            if (arrayParams.length == 2 && arrayParams[0] == "Edit") {
                 let editFreeTextColumn = this.props.FreeTextColumns.find(x => x.ColumnId == arrayParams[1])
                 let index = this.props.FreeTextColumns.indexOf(editFreeTextColumn)
                 this.onEdit(index, editFreeTextColumn)
@@ -86,11 +86,9 @@ class FreeTextColumnPopupComponent extends React.Component<FreeTextColumnPopupPr
                 button={newButton}
                 bsStyle="primary" className="ab_main_popup" glyphicon={StrategyConstants.FreeTextColumnGlyph} infoBody={infoBody}>
 
-                {this.props.FreeTextColumns.length == 0 &&
-                    <Well bsSize="small">Click 'New' to create a new column FreeText.</Well>
-                }
-
-                {freeTextColumns.length > 0 &&
+                {this.props.FreeTextColumns.length == 0 ?
+                    <HelpBlock>Click 'New' to create a new column FreeText.</HelpBlock>
+                    :
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={freeTextColumns} />
                 }
 
@@ -120,7 +118,7 @@ class FreeTextColumnPopupComponent extends React.Component<FreeTextColumnPopupPr
 
     onEdit(index: number, FreeTextColumn: IFreeTextColumn) {
         let clonedObject: IFreeTextColumn = Helper.cloneObject(FreeTextColumn);
-        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: index  });
+        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: index });
     }
 
     onCloseWizard() {
@@ -132,7 +130,7 @@ class FreeTextColumnPopupComponent extends React.Component<FreeTextColumnPopupPr
         let freeTextColumn = this.state.EditedAdaptableBlotterObject as IFreeTextColumn
         if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
             this.props.onEditFreeTextColumn(this.state.EditedAdaptableBlotterObjectIndex, freeTextColumn)
-          } else {
+        } else {
             this.props.onAddFreeTextColumn(freeTextColumn)
         }
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });

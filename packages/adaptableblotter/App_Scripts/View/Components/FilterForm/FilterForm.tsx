@@ -26,7 +26,7 @@ import { ButtonClear } from "../Buttons/ButtonClear";
 import { Waiting } from "./Waiting";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { ListBoxMenu } from "./ListBoxMenu";
-import {  Well } from 'react-bootstrap';
+import {   HelpBlock } from 'react-bootstrap';
 import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 import { FilterFormPanel } from "../Panels/FilterFormPanel";
 import { ButtonSave } from "../Buttons/ButtonSave";
@@ -171,6 +171,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             overrideText={"Save as User Filter"}
             DisplayMode="Glyph"
             hideToolTip={true}
+            overrideTooltip={"Save as User Filter"}
             AccessLevel={AccessLevel.Full}
         />
 
@@ -218,7 +219,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                     }
                 </FilterFormPanel>
                 :
-                <Well bsSize="small">{isFilterable}</Well>
+                <HelpBlock>{isFilterable}</HelpBlock>
             }
         </div>
     }

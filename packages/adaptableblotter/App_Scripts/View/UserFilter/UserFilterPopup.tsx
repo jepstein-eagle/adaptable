@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
@@ -105,13 +105,11 @@ class UserFilterPopupComponent extends React.Component<UserFilterPopupProps, Edi
             <PanelWithButton headerText={StrategyConstants.UserFilterStrategyName} bsStyle="primary" cssClassName={cssClassName} infoBody={infoBody}
                 button={newButton} glyphicon={StrategyConstants.UserFilterGlyph}>
 
-                {UserFilterItems.length > 0 &&
+                {UserFilterItems.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={UserFilterItems} />
-                }
-
-                {UserFilterItems.length == 0 &&
-                    <Well bsSize="small">Click 'New' to start creating user filters.<p />
-                        Once created, user filters are accessible both when filtering columns and creating queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.).</Well>
+                :
+                    <HelpBlock>Click 'New' to start creating user filters.<p />
+                        Once created, user filters are accessible both when filtering columns and creating queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.).</HelpBlock>
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&

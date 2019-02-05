@@ -6,9 +6,9 @@ import { IPPDomain } from "../../Utilities/Interface/Reports/IPPDomain";
 import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
 import { ISystemStatus } from "../../Utilities/Interface/ISystemStatus";
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
-import { IAlert } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../Utilities/ChartEnums';
 import { EMPTY_ARRAY, SYSTEM_DEFAULT_CHART_VISIBILITY, EMPTY_STRING, SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR } from '../../Utilities/Constants/GeneralConstants';
+import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -58,7 +58,7 @@ export interface SystemClearHealthStatusAction extends Redux.Action {
 }
 
 export interface SystemAlertAddAction extends Redux.Action {
-    Alert: IAlert
+    Alert: IAdaptableAlert
     MaxAlerts: number
 }
 
@@ -134,7 +134,7 @@ export const SystemClearHealthStatus = (): SystemClearHealthStatusAction => ({
     type: SYSTEM_CLEAR_HEALTH_STATUS,
 })
 
-export const SystemAlertAdd = (Alert: IAlert, MaxAlerts: number): SystemAlertAddAction => ({
+export const SystemAlertAdd = (Alert: IAdaptableAlert, MaxAlerts: number): SystemAlertAddAction => ({
     type: SYSTEM_ALERT_ADD,
     Alert,
     MaxAlerts
@@ -235,7 +235,7 @@ const initialSystemState: SystemState = {
 }
 
 export const SystemReducer: Redux.Reducer<SystemState> = (state: SystemState = initialSystemState, action: Redux.Action): SystemState => {
-    let alerts: IAlert[]
+    let alerts: IAdaptableAlert[]
     switch (action.type) {
         case SYSTEM_SET_HEALTH_STATUS:
             return Object.assign({}, state, { SystemStatus: (<SystemSetHealthStatusAction>action).SystemStatus })

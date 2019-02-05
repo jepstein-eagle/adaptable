@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import { MessageType } from '../../Utilities/Enums';
 
 
-export interface IAlert {
+export interface IAdaptableAlert {
     Header: string,
     Msg: string;
     MessageType: MessageType

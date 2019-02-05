@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import * as Redux from 'redux'
 import { connect } from 'react-redux';
-import { Label, Overlay, Fade, Well, FormControl } from 'react-bootstrap';
+import { Label, Overlay, Fade,  FormControl } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
@@ -15,18 +15,18 @@ import { IAlertDefinition } from "../../Utilities/Interface/BlotterObjects/IAler
 import { AdaptablePopover } from "../AdaptablePopover";
 import { MessageType, AccessLevel } from "../../Utilities/Enums";
 import { AlertsPanel } from "../Components/AlertsPanel";
-import { IAlert } from "../../Utilities/Interface/IMessage";
+import { IAdaptableAlert} from "../../Utilities/Interface/IMessage";
 
 interface AlertToolbarControlProps extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
     AlertDefinitions: IAlertDefinition[];
-    Alerts: IAlert[];
+    Alerts: IAdaptableAlert[];
     onDeleteAlert: (index: number) => SystemRedux.SystemAlertDeleteAction;
     onDeleteAllAlert: () => SystemRedux.SystemAlertDeleteAllAction;
 }
 
 interface AlertToolbarState {
     ShowMessage: boolean
-    Alerts: IAlert[]
+    Alerts: IAdaptableAlert[]
 }
 
 class AlertToolbarControlComponent extends React.Component<AlertToolbarControlProps, AlertToolbarState> {

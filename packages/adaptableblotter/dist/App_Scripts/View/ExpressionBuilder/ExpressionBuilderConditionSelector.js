@@ -161,11 +161,9 @@ class ExpressionBuilderConditionSelector extends React.Component {
         return React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: panelHeader, bsStyle: "info", style: { height: '447px' }, button: clearButton }, this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFurtherColumn ?
             React.createElement("div", null,
                 this.state.QueryBuildStatus == Enums_1.QueryBuildStatus.SelectFirstColumn ?
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" },
-                        React.createElement(react_bootstrap_1.HelpBlock, null, firstTimeText))
+                    React.createElement(react_bootstrap_1.HelpBlock, null, firstTimeText)
                     :
-                        React.createElement(react_bootstrap_1.Well, { bsSize: "small" },
-                            React.createElement(react_bootstrap_1.HelpBlock, null, secondTimeText)),
+                        React.createElement(react_bootstrap_1.HelpBlock, null, secondTimeText),
                 this.state.ShowWaitingMessage ?
                     React.createElement(Waiting_1.Waiting, { WaitingMessage: "Retrieving Column Values..." })
                     :

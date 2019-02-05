@@ -4,7 +4,7 @@ import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues'
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter'
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges'
-import { Well, HelpBlock, Tab, NavItem, Nav } from 'react-bootstrap';
+import {  HelpBlock, Tab, NavItem, Nav } from 'react-bootstrap';
 import { FilterHelper } from '../../Utilities/Helpers/FilterHelper';
 import { DataType, ExpressionMode, DistinctCriteriaPairValue, SelectionMode, QueryBuildStatus, QueryTab, SortOrder } from '../../Utilities/Enums'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
@@ -217,17 +217,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn || this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn ?
                 <div>
                     {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn ?
-                        <Well bsSize="small">
                             <HelpBlock>
                                 {firstTimeText}
                             </HelpBlock>
-                        </Well>
-                        :
-                        <Well bsSize="small">
+                         :
                             <HelpBlock>
                                 {secondTimeText}
                             </HelpBlock>
-                        </Well>
                     }
                     {this.state.ShowWaitingMessage ?
                         <Waiting WaitingMessage="Retrieving Column Values..." />

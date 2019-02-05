@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well, HelpBlock } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ColumnCategoryRedux from '../../Redux/ActionsReducers/ColumnCategoryRedux'
@@ -82,14 +82,10 @@ class ColumnCategoryPopupComponent extends React.Component<ColumnCategoryPopupPr
             <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyConstants.ColumnCategoryStrategyName} infoBody={infoBody}
                 button={newSearchButton} glyphicon={StrategyConstants.ColumnCategoryGlyph} className="ab_main_popup" >
 
-                {ColumnCategoryRows.length > 0 &&
+                {ColumnCategoryRows.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={ColumnCategoryRows} />
-                }
-
-                {ColumnCategoryRows.length == 0 &&
-                    <Well bsSize="small">
-                        <HelpBlock>Click 'New' to start creating ColumnCategorys.</HelpBlock>
-                    </Well>
+                    :
+                    <HelpBlock>Click 'New' to start creating ColumnCategorys.</HelpBlock>
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&

@@ -4,7 +4,7 @@ import { ApiBase } from "./ApiBase";
 import { MessageType } from '../Utilities/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
-import { IAlert } from '../Utilities/Interface/IMessage';
+import { IAdaptableAlert } from '../Utilities/Interface/IMessage';
 import { IAlertApi } from './Interface/IAlertApi';
 
 export class AlertApi extends ApiBase implements IAlertApi {
@@ -12,7 +12,7 @@ export class AlertApi extends ApiBase implements IAlertApi {
   public Show(alertHeader: string, alertMessage: string, MessageType: "Success" | "Info" | "Warning" | "Error", showAsPopup: boolean): void {
     let maxAlerts: number = this.getState().Alert.MaxAlertsInStore;
     let MessageTypeEnum = MessageType as MessageType;
-    let alertToShow: IAlert = {
+    let alertToShow: IAdaptableAlert= {
       Header: alertHeader,
       Msg: alertMessage,
       MessageType: MessageTypeEnum

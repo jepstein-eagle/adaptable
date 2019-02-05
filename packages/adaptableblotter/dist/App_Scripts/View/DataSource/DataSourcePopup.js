@@ -20,9 +20,8 @@ class DataSourcePopupComponent extends React.Component {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onSelectedDataSourceChanged(dataSource) }, dataSource);
         });
         let content = React.createElement("div", null,
-            React.createElement(react_bootstrap_1.Well, { bsSize: "small" },
-                React.createElement(react_bootstrap_1.HelpBlock, null, "Choose a Data Source from the dropdown."),
-                React.createElement(react_bootstrap_1.HelpBlock, null, "Data Sources run on your server and supply data to the Grid.")),
+            React.createElement(react_bootstrap_1.HelpBlock, null, "Choose a Data Source from the dropdown."),
+            React.createElement(react_bootstrap_1.HelpBlock, null, "Data Sources run on your server and supply data to the Grid."),
             React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true },
                 React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineName" },
                     React.createElement(react_bootstrap_1.InputGroup, null,

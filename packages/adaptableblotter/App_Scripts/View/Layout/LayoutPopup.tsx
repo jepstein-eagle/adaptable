@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well, HelpBlock } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
@@ -55,7 +55,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     render() {
         let cssClassName: string = this.props.cssClassName + "__layout";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__layout";
-       
+
 
         let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName)
 
@@ -91,21 +91,17 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         let newSearchButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
             overrideTooltip="Create New Advanced Search"
             DisplayMode="Glyph+Text"
-            size={"small"} 
-            AccessLevel={this.props.AccessLevel}/>
+            size={"small"}
+            AccessLevel={this.props.AccessLevel} />
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} bsStyle="primary" headerText={StrategyConstants.LayoutStrategyName} infoBody={infoBody}
                 button={newSearchButton} glyphicon={StrategyConstants.LayoutGlyph} className="ab_main_popup" >
 
-                {LayoutRows.length > 0 &&
+                {LayoutRows.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={LayoutRows} />
-                }
-
-                {LayoutRows.length == 0 &&
-                    <Well bsSize="small">
-                        <HelpBlock>Click 'New' to start creating layouts.</HelpBlock>
-                    </Well>
+                    :
+                    <HelpBlock>Click 'New' to start creating layouts.</HelpBlock>
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&

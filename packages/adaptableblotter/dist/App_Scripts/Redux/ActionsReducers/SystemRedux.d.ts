@@ -4,8 +4,8 @@ import { ExportDestination } from '../../Utilities/Enums';
 import { IPPDomain } from "../../Utilities/Interface/Reports/IPPDomain";
 import { ISystemStatus } from "../../Utilities/Interface/ISystemStatus";
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
-import { IAlert } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../Utilities/ChartEnums';
+import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 export declare const SYSTEM_SET_HEALTH_STATUS = "SYSTEM_SET_HEALTH_STATUS";
 export declare const SYSTEM_CLEAR_HEALTH_STATUS = "SYSTEM_CLEAR_HEALTH_STATUS";
 export declare const SYSTEM_ALERT_ADD = "SYSTEM_ALERT_ADD";
@@ -31,7 +31,7 @@ export interface SystemSetHealthStatusAction extends Redux.Action {
 export interface SystemClearHealthStatusAction extends Redux.Action {
 }
 export interface SystemAlertAddAction extends Redux.Action {
-    Alert: IAlert;
+    Alert: IAdaptableAlert;
     MaxAlerts: number;
 }
 export interface SystemAlertDeleteAction extends Redux.Action {
@@ -83,7 +83,7 @@ export interface ReportSetErrorMessagection extends Redux.Action {
 }
 export declare const SystemSetHealthStatus: (SystemStatus: ISystemStatus) => SystemSetHealthStatusAction;
 export declare const SystemClearHealthStatus: () => SystemClearHealthStatusAction;
-export declare const SystemAlertAdd: (Alert: IAlert, MaxAlerts: number) => SystemAlertAddAction;
+export declare const SystemAlertAdd: (Alert: IAdaptableAlert, MaxAlerts: number) => SystemAlertAddAction;
 export declare const SystemAlertDelete: (Index: number) => SystemAlertDeleteAction;
 export declare const SystemAlertDeleteAll: () => SystemAlertDeleteAllAction;
 export declare const ReportStartLive: (Report: string, WorkbookName: string, ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => ReportStartLiveAction;

@@ -53,12 +53,12 @@ class CellValidationPopupComponent extends React.Component {
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createCellValidation(), overrideTooltip: "Create Cell Validation Rule", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.CellValidationStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyConstants.CellValidationGlyph, infoBody: infoBody },
-                CellValidationItems.length > 0 &&
-                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: CellValidationItems }),
-                CellValidationItems.length == 0 &&
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" },
-                        React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to start creating rules for valid cell edits."),
-                        React.createElement(react_bootstrap_1.HelpBlock, null, "Edits that fail validation can be either prevented altogether or allowed (after over-riding a warning and providing a reason).")),
+                CellValidationItems.length > 0 ?
+                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: CellValidationItems })
+                    :
+                        React.createElement("div", null,
+                            React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to start creating rules for valid cell edits."),
+                            React.createElement(react_bootstrap_1.HelpBlock, null, "Edits that fail validation can be either prevented altogether or allowed (after over-riding a warning and providing a reason).")),
                 this.state.EditedAdaptableBlotterObject != null &&
                     React.createElement(CellValidationWizard_1.CellValidationWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: null, Blotter: this.props.Blotter, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }

@@ -20,7 +20,7 @@ import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { ISystemStatus } from "../../Utilities/Interface/ISystemStatus";
 import { IMenuItem } from "../../Utilities/Interface/IMenu";
-import { IAlert } from "../../Utilities/Interface/IMessage";
+import { IAdaptableAlert} from "../../Utilities/Interface/IMessage";
 import { UIHelper } from "../UIHelper";
 
 
@@ -33,7 +33,7 @@ interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeTo
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
     onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction
     onSetToolbarVisibility: (strategyIds: string[]) => DashboardRedux.DashboardSetToolbarsAction
-    onShowStatusMessage: (alert: IAlert) => PopupRedux.PopupShowAlertAction
+    onShowStatusMessage: (alert: IAdaptableAlert) => PopupRedux.PopupShowAlertAction
     onShowAbout: () => PopupRedux.PopupShowAboutAction
 }
 
@@ -197,7 +197,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         let statusColor: StatusColour = this.props.SystemStatus.StatusColour as StatusColour
         switch (statusColor) {
             case StatusColour.Green:
-                let success: IAlert = {
+                let success: IAdaptableAlert= {
                     Header: "System Status",
                     Msg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
                         this.props.SystemStatus.StatusMessage :
@@ -207,7 +207,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 this.props.onShowStatusMessage(success)
                 return;
             case StatusColour.Blue:
-                let info: IAlert = {
+                let info: IAdaptableAlert= {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
                     MessageType: MessageType.Info
@@ -215,7 +215,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 this.props.onShowStatusMessage(info)
                 return;
             case StatusColour.Amber:
-                let warning: IAlert = {
+                let warning: IAdaptableAlert= {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
                     MessageType: MessageType.Warning
@@ -223,7 +223,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 this.props.onShowStatusMessage(warning)
                 return;
             case StatusColour.Red:
-                let error: IAlert = {
+                let error: IAdaptableAlert= {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
                     MessageType: MessageType.Error
@@ -283,7 +283,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility: Visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
         onSetToolbarVisibility: (strategyIds: string[]) => dispatch(DashboardRedux.DashboardSetToolbars(strategyIds)),
-        onShowStatusMessage: (alert: IAlert) => dispatch(PopupRedux.PopupShowAlert(alert)),
+        onShowStatusMessage: (alert: IAdaptableAlert) => dispatch(PopupRedux.PopupShowAlert(alert)),
         onShowAbout: () => dispatch(PopupRedux.PopupShowAbout()),
     };
 }

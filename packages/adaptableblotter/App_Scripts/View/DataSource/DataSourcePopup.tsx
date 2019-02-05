@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux'
-import { MenuItem, InputGroup, DropdownButton, HelpBlock, Well, FormGroup } from 'react-bootstrap';
+import { MenuItem, InputGroup, DropdownButton, HelpBlock, FormGroup } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -26,8 +26,8 @@ class DataSourcePopupComponent extends React.Component<DataSourcePopupProps, {}>
     render() {
         const selectDataSourceString: string = "Select Data Source"
         let cssClassName: string = this.props.cssClassName + "__dataSource";
-      
-        let infoBody :any[] = [ "Select a datasource from the dropdown to be evaluated on the server."]
+
+        let infoBody: any[] = ["Select a datasource from the dropdown to be evaluated on the server."]
 
         let currentDataSource = StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource) ?
             selectDataSourceString : this.props.CurrentDataSource
@@ -36,15 +36,14 @@ class DataSourcePopupComponent extends React.Component<DataSourcePopupProps, {}>
             return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedDataSourceChanged(dataSource)} >{dataSource}</MenuItem>
         })
         let content = <div>
-            <Well bsSize="small">
-                <HelpBlock>Choose a Data Source from the dropdown.</HelpBlock>
-                <HelpBlock>Data Sources run on your server and supply data to the Grid.</HelpBlock>
-            </Well>
+
+            <HelpBlock>Choose a Data Source from the dropdown.</HelpBlock>
+            <HelpBlock>Data Sources run on your server and supply data to the Grid.</HelpBlock>
             <AdaptableBlotterForm inline>
                 <FormGroup controlId="formInlineName">
                     <InputGroup>
-                        <DropdownButton disabled={availableSearches.length == 0} style={{minWidth: "500px"}}
-                            className={cssClassName}  bsStyle={"default"} title={currentDataSource} id="DataSource" componentClass={InputGroup.Button}>
+                        <DropdownButton disabled={availableSearches.length == 0} style={{ minWidth: "500px" }}
+                            className={cssClassName} bsStyle={"default"} title={currentDataSource} id="DataSource" componentClass={InputGroup.Button}>
                             {availableSearches}
                         </DropdownButton>
                         <InputGroup.Button>
@@ -54,9 +53,9 @@ class DataSourcePopupComponent extends React.Component<DataSourcePopupProps, {}>
                                 onClick={() => this.onSelectedDataSourceChanged("")}
                                 overrideTooltip="Clear Data Source"
                                 overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource)}
-                                DisplayMode="Text+Glyph" 
+                                DisplayMode="Text+Glyph"
                                 AccessLevel={this.props.AccessLevel}
-                                />
+                            />
                         </InputGroup.Button>
                     </InputGroup>
                 </FormGroup>

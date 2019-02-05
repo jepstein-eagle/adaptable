@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { PopupState } from './Interface/IState';
-import { IAlert, InputAction, IUIPrompt, IUIConfirmation } from '../../Utilities/Interface/IMessage';
+import { InputAction, IUIPrompt, IUIConfirmation, IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 export declare const POPUP_SHOW_SCREEN = "POPUP_SHOW_SCREEN";
 export declare const POPUP_HIDE_SCREEN = "POPUP_HIDE_SCREEN";
 export declare const POPUP_SHOW_LOADING = "POPUP_SHOW_LOADING";
@@ -32,7 +32,7 @@ export interface PopupShowAboutAction extends Redux.Action {
 export interface PopupHideAboutAction extends Redux.Action {
 }
 export interface PopupShowAlertAction extends Redux.Action {
-    Alert: IAlert;
+    Alert: IAdaptableAlert;
 }
 export interface PopupHideAlertAction extends Redux.Action {
 }
@@ -57,7 +57,7 @@ export interface PopupChartClearParamAction extends Redux.Action {
 }
 export declare const PopupShowScreen: (ComponentStrategy: string, ComponentName: string, Params?: string) => PopupShowScreenAction;
 export declare const PopupHideScreen: () => PopupHideScreenAction;
-export declare const PopupShowAlert: (Alert: IAlert) => PopupShowAlertAction;
+export declare const PopupShowAlert: (Alert: IAdaptableAlert) => PopupShowAlertAction;
 export declare const PopupHideAlert: () => PopupHideAlertAction;
 export declare const PopupShowLoading: () => PopupShowLoadingAction;
 export declare const PopupHideLoading: () => PopupHideLoadingAction;

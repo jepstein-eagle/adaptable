@@ -45,8 +45,9 @@ class TeamSharingPopupComponent extends React.Component {
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithImage_1.PanelWithImage, { cssClassName: cssClassName, header: StrategyConstants.TeamSharingStrategyName, infoBody: infoBody, bsStyle: "primary", glyphicon: StrategyConstants.TeamSharingGlyph },
                 this.props.Entities.length == 0 ?
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Shared Items will appear here when available.")
-                    : React.createElement(PanelWithRow_1.PanelWithRow, { cssClassName: cssClassName, colItems: colItems, bsStyle: "info" }),
+                    React.createElement(react_bootstrap_1.HelpBlock, null, "Shared Items will appear here when available.")
+                    :
+                        React.createElement(PanelWithRow_1.PanelWithRow, { cssClassName: cssClassName, colItems: colItems, bsStyle: "info" }),
                 React.createElement(react_bootstrap_1.ListGroup, null, sharedItems)));
     }
     getSharedItemDetails(sharedEntity) {

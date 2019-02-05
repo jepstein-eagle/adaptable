@@ -52,10 +52,10 @@ class ExportPopupComponent extends React.Component {
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Report", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.ExportStrategyName, bsStyle: "primary", glyphicon: StrategyConstants.ExportGlyph, infoBody: infoBody, button: newButton },
-                Reports.length > 0 &&
-                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: Reports, allowOverflow: false }),
-                Reports.length == 0 &&
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Click 'New' to create a new Report.  A Report is named group of columns and Unique values.."),
+                Reports.length > 0 ?
+                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: Reports, allowOverflow: false })
+                    :
+                        React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to create a new Report.  A Report is named group of columns and Unique values.."),
                 this.state.EditedAdaptableBlotterObject &&
                     React.createElement(ReportWizard_1.ReportWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ModalContainer: this.props.ModalContainer, ConfigEntities: this.props.Reports, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }

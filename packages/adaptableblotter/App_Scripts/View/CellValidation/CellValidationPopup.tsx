@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well, HelpBlock } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Utilities/Interface/IColumn';
@@ -97,15 +97,13 @@ class CellValidationPopupComponent extends React.Component<CellValidationPopupPr
                 button={newButton}
                 glyphicon={StrategyConstants.CellValidationGlyph}
                 infoBody={infoBody}>
-                {CellValidationItems.length > 0 &&
+                {CellValidationItems.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={CellValidationItems} />
-                }
-
-                {CellValidationItems.length == 0 &&
-                    <Well bsSize="small">
+               :
+                    <div>
                         <HelpBlock>Click 'New' to start creating rules for valid cell edits.</HelpBlock>
                         <HelpBlock>Edits that fail validation can be either prevented altogether or allowed (after over-riding a warning and providing a reason).</HelpBlock>
-                    </Well>
+                    </div>
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&

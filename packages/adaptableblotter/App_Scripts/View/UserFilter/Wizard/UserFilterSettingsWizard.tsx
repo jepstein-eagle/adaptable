@@ -1,9 +1,7 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock, Well } from 'react-bootstrap';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";

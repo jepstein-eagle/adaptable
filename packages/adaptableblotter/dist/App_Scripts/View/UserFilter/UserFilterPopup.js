@@ -65,13 +65,13 @@ class UserFilterPopupComponent extends React.Component {
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create User Filter", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.UserFilterStrategyName, bsStyle: "primary", cssClassName: cssClassName, infoBody: infoBody, button: newButton, glyphicon: StrategyConstants.UserFilterGlyph },
-                UserFilterItems.length > 0 &&
-                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: UserFilterItems }),
-                UserFilterItems.length == 0 &&
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" },
-                        "Click 'New' to start creating user filters.",
-                        React.createElement("p", null),
-                        "Once created, user filters are accessible both when filtering columns and creating queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.)."),
+                UserFilterItems.length > 0 ?
+                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: UserFilterItems })
+                    :
+                        React.createElement(react_bootstrap_1.HelpBlock, null,
+                            "Click 'New' to start creating user filters.",
+                            React.createElement("p", null),
+                            "Once created, user filters are accessible both when filtering columns and creating queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.)."),
                 this.state.EditedAdaptableBlotterObject != null &&
                     React.createElement(UserFilterWizard_1.UserFilterWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, Columns: this.props.Columns, ConfigEntities: null, ModalContainer: this.props.ModalContainer, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, WizardStartIndex: this.state.WizardStartIndex, SelectedColumnId: selectedColumnId, Blotter: this.props.Blotter, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }

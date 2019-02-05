@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
@@ -100,12 +100,10 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ExportStrategyName} bsStyle="primary" glyphicon={StrategyConstants.ExportGlyph} infoBody={infoBody} button={newButton} >
 
-                {Reports.length > 0 &&
+                {Reports.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Reports} allowOverflow={false} />
-                }
-
-                {Reports.length == 0 &&
-                    <Well bsSize="small">Click 'New' to create a new Report.  A Report is named group of columns and Unique values..</Well>
+              :
+                    <HelpBlock >Click 'New' to create a new Report.  A Report is named group of columns and Unique values..</HelpBlock>
                 }
 
                 {this.state.EditedAdaptableBlotterObject &&

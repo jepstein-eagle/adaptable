@@ -43,10 +43,10 @@ class ShortcutPopupComponent extends React.Component {
         let shortcut = this.state.EditedAdaptableBlotterObject;
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.ShortcutStrategyName, className: "ab_main_popup", button: newButton, bsStyle: "primary", glyphicon: StrategyConstants.ShortcutGlyph, infoBody: infoBody },
-                shortcuts.length > 0 &&
-                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: shortcuts }),
-                shortcuts.length == 0 &&
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, "Click 'New' to add a new Shortcut."),
+                shortcuts.length > 0 ?
+                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: shortcuts })
+                    :
+                        React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to add a new Shortcut."),
                 this.state.EditedAdaptableBlotterObject != null &&
                     React.createElement(ShortcutWizard_1.ShortcutWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: shortcut, ConfigEntities: null, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, DateKeysAvailable: shortcut.ShortcutKey ?
                             keys.filter(x => this.props.Shortcuts.filter(s => s.ColumnType == Enums_1.DataType.Date).findIndex(y => y.ShortcutKey == x) == -1).concat(shortcut.ShortcutKey).sort()

@@ -19,7 +19,7 @@ class DataManagementPopupComponent extends React.Component {
         let clearButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: cssClassName, onClick: () => this.onClear(), bsStyle: "default", overrideText: "Clear User Data", overrideTooltip: "Clear User Data", DisplayMode: "Text", size: "large", AccessLevel: Enums_1.AccessLevel.Full });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.DataManagementStrategyName, button: null, bsStyle: "primary", cssClassName: cssClassName, glyphicon: StrategyConstants.DataManagementGlyph, infoBody: infoBody },
-                React.createElement(react_bootstrap_1.Well, { bsSize: "small" },
+                React.createElement(react_bootstrap_1.HelpBlock, null,
                     "Click below to clear all current state.",
                     React.createElement("br", null),
                     React.createElement("br", null),

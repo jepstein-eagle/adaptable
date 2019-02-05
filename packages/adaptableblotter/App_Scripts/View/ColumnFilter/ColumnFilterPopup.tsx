@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux'
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
@@ -34,7 +34,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
     render() {
         let cssClassName: string = this.props.cssClassName + "__columnfilter";
-     
+
         let infoBody: any[] = ["Column Filters are set using the filter dropdown in the column header menu.", <br />, <br />,
             "This popup allows you to see which columns have filters applied with an option to clear them."]
 
@@ -66,19 +66,17 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
             <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.ColumnFilterStrategyName} bsStyle="primary" className="ab_main_popup" infoBody={infoBody}
                 glyphicon={StrategyConstants.ColumnFilterGlyph}>
 
-                {columnFilterItems.length > 0 &&
+                {columnFilterItems.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={columnFilterItems} />
-                }
-
-                {columnFilterItems.length == 0 &&
-                    <Well bsSize="small">There are currently no column filters applied.  Create column filters by using the filter dropdown in each column header.</Well>
+                    :
+                    <HelpBlock >There are currently no column filters applied.  Create column filters by using the filter dropdown in each column header.</HelpBlock>
                 }
 
             </PanelWithImage>
         </div>
     }
 
-    private onClearColumnFilter(columnId: string){
+    private onClearColumnFilter(columnId: string) {
         this.props.onClearColumnFilter(columnId)
         this.props.Blotter.clearColumnFiltering([columnId])
     }
@@ -90,7 +88,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
             ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(columnFilter, "")
         }
         this.props.onShowPrompt(prompt)
-      }
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

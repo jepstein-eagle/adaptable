@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Well } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -93,12 +93,10 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ChartStrategyName} className="ab_main_popup" infoBody={infoBody}
                 button={newButton} bsStyle="primary" glyphicon={StrategyConstants.ChartGlyph}>
 
-                {Charts.length > 0 &&
+                {Charts.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Charts} />
-                }
-
-                {Charts.length == 0 &&
-                    <Well bsSize="small">Click 'New' to create a bespoke sort order for a selected column.</Well>
+              :
+                    <HelpBlock >Click 'New' to create a new Chart.</HelpBlock>
                 }
 
                 {this.state.EditedAdaptableBlotterObject &&

@@ -7,7 +7,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { Well } from 'react-bootstrap';
+import {  HelpBlock } from 'react-bootstrap';
 import { ConditionalStyleScope, AccessLevel } from '../../Utilities/Enums'
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow'
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard'
@@ -92,11 +92,9 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyConstants.ConditionalStyleStrategyName} button={newButton} bsStyle={StyleConstants.PRIMARY_BSSTYLE} cssClassName={cssClassName} glyphicon={StrategyConstants.ConditionalStyleGlyph} infoBody={infoBody}>
 
-                {this.props.ConditionalStyles.length == 0 &&
-                    <Well bsSize="small">Click 'New' to create a new conditional style to be applied at row or column level.</Well>
-                }
-
-                {conditionalStyles.length > 0 &&
+                {this.props.ConditionalStyles.length == 0 ?
+                    <HelpBlock>Click 'New' to create a new conditional style to be applied at row or column level.</HelpBlock>
+               :
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={conditionalStyles} />
                 }
 

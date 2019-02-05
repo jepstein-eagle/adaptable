@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import { PopupState } from './Interface/IState';
 import { MessageType } from '../../Utilities/Enums';
-import { IAlert, InputAction, IUIPrompt, IUIConfirmation, IScreenPopup, IPromptPopup, IConfirmationPopup, IAlertPopup, ILoadingPopup, IAboutPopup } from '../../Utilities/Interface/IMessage';
+import { InputAction, IUIPrompt, IUIConfirmation, IScreenPopup, IPromptPopup, IConfirmationPopup, IAlertPopup, ILoadingPopup, IAboutPopup, IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 
 export const POPUP_SHOW_SCREEN = 'POPUP_SHOW_SCREEN';
 export const POPUP_HIDE_SCREEN = 'POPUP_HIDE_SCREEN';
@@ -35,7 +35,7 @@ export interface PopupShowAboutAction extends Redux.Action { }
 
 export interface PopupHideAboutAction extends Redux.Action { }
 
-export interface PopupShowAlertAction extends Redux.Action { Alert: IAlert }
+export interface PopupShowAlertAction extends Redux.Action { Alert: IAdaptableAlert}
 
 export interface PopupHideAlertAction extends Redux.Action { }
 
@@ -69,10 +69,12 @@ export const PopupHideScreen = (): PopupHideScreenAction => ({
   type: POPUP_HIDE_SCREEN
 })
 
-export const PopupShowAlert = (Alert: IAlert): PopupShowAlertAction => ({
-  type: POPUP_SHOW_ALERT,
-  Alert
-})
+export const PopupShowAlert = (Alert: IAdaptableAlert): PopupShowAlertAction => {
+  return ({
+    type: POPUP_SHOW_ALERT,
+    Alert
+  });
+}
 
 export const PopupHideAlert = (): PopupHideAlertAction => ({
   type: POPUP_HIDE_ALERT

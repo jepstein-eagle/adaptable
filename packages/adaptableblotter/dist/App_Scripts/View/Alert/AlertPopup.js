@@ -17,6 +17,7 @@ const AlertEntityRow_1 = require("./AlertEntityRow");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
+const Enums_1 = require("../../Utilities/Enums");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class AlertPopupComponent extends React.Component {
     constructor(props) {
@@ -37,26 +38,29 @@ class AlertPopupComponent extends React.Component {
         let cssClassName = this.props.cssClassName + "__Alert";
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__Alert";
         let infoBody = ["Alert Definitions define which changes to the source data will trigger an Alert.", React.createElement("br", null), React.createElement("br", null),
-            "An Alert will appear either as a popup or in the alerts container."];
+            "An Alert will appear either as a popup or in the alerts toolbar."];
         let colItems = [
             { Content: "Alert Definition", Size: 4 },
             { Content: "Type", Size: 2 },
             { Content: "Expression", Size: 4 },
             { Content: "", Size: 2 },
         ];
-        let AlertItems = this.props.AlertDefinitions.map((x, index) => {
+        let alertEntities = this.props.AlertDefinitions.map((x, index) => {
             let column = ColumnHelper_1.ColumnHelper.getColumnFromId(x.ColumnId, this.props.Columns);
             return React.createElement(AlertEntityRow_1.AlertEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: x, Column: column, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: (index, x) => this.onEdit(index, x), onShare: () => this.props.onShare(x), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: AlertRedux.AlertDefinitionDelete(index), onChangeMessageType: (index, x) => this.onMessageTypeChanged(index, x) });
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.createAlert(), overrideTooltip: "Create Alert", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.AlertStrategyName, bsStyle: "primary", cssClassName: cssClassName, button: newButton, glyphicon: StrategyConstants.AlertGlyph, infoBody: infoBody },
-                AlertItems.length > 0 &&
-                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: AlertItems }),
-                AlertItems.length == 0 &&
-                    React.createElement(react_bootstrap_1.Well, { bsSize: "small" },
-                        React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to start creating alert definitions."),
-                        React.createElement(react_bootstrap_1.HelpBlock, null, "An alert will be triggered whenever an edit - or external data change - matches the condition in the alert definition.")),
+                alertEntities.length > 0 ?
+                    React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: alertEntities })
+                    :
+                        React.createElement("div", null,
+                            React.createElement(react_bootstrap_1.HelpBlock, null, "You have no Alert Definitions."),
+                            this.props.AccessLevel != Enums_1.AccessLevel.ReadOnly &&
+                                React.createElement("div", null,
+                                    React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to start creating alert definitions."),
+                                    React.createElement(react_bootstrap_1.HelpBlock, null, "An alert will be triggered whenever an edit - or external data change - matches the condition in the alert definition."))),
                 this.state.EditedAdaptableBlotterObject != null &&
                     React.createElement(AlertWizard_1.AlertWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: null, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }

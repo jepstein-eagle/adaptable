@@ -41,7 +41,7 @@
 			"BulkUpdate"
 		],
 		"Zoom": "0.9",
-		"DashboardVisibility": "Hidden",
+		"DashboardVisibility": "Minimised",
 		"ShowSystemStatusButton": false
 	}
 }

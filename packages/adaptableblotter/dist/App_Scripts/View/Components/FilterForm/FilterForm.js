@@ -88,7 +88,7 @@ class FilterFormComponent extends React.Component {
         let hasUserFilter = uiSelectedUserFilters.length > 0;
         let closeButton = React.createElement(ButtonClose_1.ButtonClose, { cssClassName: cssClassName, onClick: () => this.onCloseForm(), bsStyle: "default", size: "xsmall", DisplayMode: "Glyph", hideToolTip: true, AccessLevel: Enums_1.AccessLevel.Full });
         let clearFilterButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onClearFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter, overrideText: "Clear", DisplayMode: "Text", hideToolTip: true, AccessLevel: Enums_1.AccessLevel.Full });
-        let saveButton = React.createElement(ButtonSave_1.ButtonSave, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onSaveFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter || hasUserFilter, overrideText: "Save as User Filter", DisplayMode: "Glyph", hideToolTip: true, AccessLevel: Enums_1.AccessLevel.Full });
+        let saveButton = React.createElement(ButtonSave_1.ButtonSave, { cssClassName: this.props.cssClassName + " pull-right ", onClick: () => this.onSaveFilter(), bsStyle: "default", style: { margin: "5px" }, size: "xsmall", overrideDisableButton: isEmptyFilter || hasUserFilter, overrideText: "Save as User Filter", DisplayMode: "Glyph", hideToolTip: true, overrideTooltip: "Save as User Filter", AccessLevel: Enums_1.AccessLevel.Full });
         return React.createElement("div", null, StringExtensions_1.StringExtensions.IsNullOrEmpty(isFilterable) ?
             React.createElement(FilterFormPanel_1.FilterFormPanel, { cssClassName: cssClassName, style: panelStyle, className: "ab_no-padding-except-top-panel ab_small-padding-panel", ContextMenuTab: this.state.SelectedTab, ContextMenuChanged: (e) => this.onSelectTab(e), IsAlwaysFilter: this.props.EmbedColumnMenu, bsStyle: "default", clearFilterButton: clearFilterButton, saveButton: saveButton, closeButton: closeButton, showCloseButton: this.props.ShowCloseButton }, this.state.SelectedTab == Enums_1.ContextMenuTab.Menu ?
                 React.createElement(ListBoxMenu_1.ListBoxMenu, { ContextMenuItems: this.props.ContextMenuItems, onContextMenuItemClick: (action) => this.onContextMenuItemClick(action) })
@@ -98,7 +98,7 @@ class FilterFormComponent extends React.Component {
                         :
                             React.createElement(ListBoxFilterForm_1.ListBoxFilterForm, { cssClassName: cssClassName, CurrentColumn: this.props.CurrentColumn, Columns: this.props.Columns, ColumnValuePairs: this.state.ColumnValuePairs, DataType: this.props.CurrentColumn.DataType, DistinctCriteriaPairValue: this.state.DistinctCriteriaPairValue, UiSelectedColumnValues: uiSelectedColumnValues, UiSelectedUserFilters: uiSelectedUserFilters, UiSelectedRange: uiSelectedRangeExpression, UserFilters: appropriateFilterItems, onColumnValueSelectedChange: (list) => this.onClickColumValue(list), onUserFilterSelectedChange: (list) => this.onClickUserFilter(list), Operators: leafExpressionOperators, onCustomRangeExpressionChange: (range) => this.onSetCustomExpression(range) })))
             :
-                React.createElement(react_bootstrap_1.Well, { bsSize: "small" }, isFilterable));
+                React.createElement(react_bootstrap_1.HelpBlock, null, isFilterable));
     }
     isFilterable() {
         if (!this.props.CurrentColumn.Filterable) {

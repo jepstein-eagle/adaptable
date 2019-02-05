@@ -1,6 +1,6 @@
 import * as React from "react";
-import { FormGroup, FormControl, Row, Col, Panel, Checkbox, HelpBlock, Well } from 'react-bootstrap';
-import { FontWeight, FontStyle, FontSize, MessageType } from '../../Utilities/Enums';
+import { FormGroup, FormControl, Row, Col, Panel, Checkbox, HelpBlock } from 'react-bootstrap';
+import { FontWeight, FontStyle, FontSize } from '../../Utilities/Enums';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptablePopover } from '../AdaptablePopover';
@@ -54,7 +54,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                 }
 
                 {this.state.ShowClassName ?
-                    <Well bsSize="small">
+                    <div>
                         <HelpBlock>
                             {"Choose a style from the dropdown."}
                         </HelpBlock>
@@ -66,7 +66,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                             {optionClassNames}
                         </FormControl>
 
-                    </Well>
+                    </div>
                     :
 
                     <Row>

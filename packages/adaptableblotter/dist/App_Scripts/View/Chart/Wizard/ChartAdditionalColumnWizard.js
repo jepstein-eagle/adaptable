@@ -34,7 +34,7 @@ class ChartAdditionalColumnWizard extends React.Component {
                             "  ",
                             React.createElement(react_bootstrap_1.Col, { xs: 1 }),
                             React.createElement(react_bootstrap_1.Col, { xs: 10 },
-                                React.createElement(react_bootstrap_1.Well, null, "You can, optionally, segment the X Axis further by grouping totals against the values in another column")),
+                                React.createElement(react_bootstrap_1.HelpBlock, null, "You can, optionally, segment the X Axis further by grouping totals against the values in another column")),
                             React.createElement(react_bootstrap_1.Col, { xs: 1 })),
                         React.createElement(react_bootstrap_1.Row, null,
                             React.createElement(react_bootstrap_1.Col, { xs: 4, componentClass: react_bootstrap_1.ControlLabel }, "Additional Column: "),

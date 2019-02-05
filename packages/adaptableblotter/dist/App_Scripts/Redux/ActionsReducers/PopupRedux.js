@@ -25,10 +25,12 @@ exports.PopupShowScreen = (ComponentStrategy, ComponentName, Params) => ({
 exports.PopupHideScreen = () => ({
     type: exports.POPUP_HIDE_SCREEN
 });
-exports.PopupShowAlert = (Alert) => ({
-    type: exports.POPUP_SHOW_ALERT,
-    Alert
-});
+exports.PopupShowAlert = (Alert) => {
+    return ({
+        type: exports.POPUP_SHOW_ALERT,
+        Alert
+    });
+};
 exports.PopupHideAlert = () => ({
     type: exports.POPUP_HIDE_ALERT
 });

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, Col, Panel, Row, Well, Radio } from 'react-bootstrap';
+import { ControlLabel, FormGroup, Col, Panel, Row,  Radio, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
@@ -43,7 +43,7 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
                         <Row>
                             <Col xs={1} />
                             <Col xs={10}>
-                                <Well>Select a column for the X Axis.<br />In the next step you can filter which values to display</Well>
+                                <HelpBlock>Select a column for the X Axis.<br />In the next step you can filter which values to display</HelpBlock>
                             </Col>
                             <Col xs={1} />
                         </Row>

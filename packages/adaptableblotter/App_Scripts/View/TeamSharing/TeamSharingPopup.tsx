@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { Button, Col, Panel, ListGroup, Row, Well, Glyphicon, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Button, Col, Panel, ListGroup, Row, Glyphicon, OverlayTrigger, Tooltip, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
@@ -84,8 +84,9 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
             <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.TeamSharingStrategyName} infoBody={infoBody}
                 bsStyle="primary" glyphicon={StrategyConstants.TeamSharingGlyph}>
                 {this.props.Entities.length == 0 ?
-                    <Well bsSize="small">Shared Items will appear here when available.</Well>
-                    : <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />
+                    < HelpBlock>Shared Items will appear here when available.</HelpBlock>
+                    :
+                     <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />
                 }
                 <ListGroup >
                     {sharedItems}
@@ -122,10 +123,10 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
                     <Col xs={4}>{ColumnHelper.getFriendlyNameFromColumnId(cellVal.ColumnId, this.props.Columns)}
                     </Col>
                     <Col xs={4}>
-                        {CellValidationHelper.createCellValidationDescription( cellVal, this.props.Columns)}
+                        {CellValidationHelper.createCellValidationDescription(cellVal, this.props.Columns)}
                     </Col>
                     <Col xs={4}>
-                        {(ExpressionHelper.IsNotEmptyExpression (cellVal.Expression) )?
+                        {(ExpressionHelper.IsNotEmptyExpression(cellVal.Expression)) ?
                             ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Columns) :
                             "No Expression"}
                     </Col>
