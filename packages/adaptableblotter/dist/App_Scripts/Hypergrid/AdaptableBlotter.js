@@ -61,6 +61,7 @@ const ConditionalStyleStrategyHypergrid_1 = require("./Strategy/ConditionalStyle
 const FlashingCellsStrategyHypergrid_1 = require("./Strategy/FlashingCellsStrategyHypergrid");
 const FormatColumnStrategyHypergrid_1 = require("./Strategy/FormatColumnStrategyHypergrid");
 const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
+const ChartStrategy_1 = require("../Strategy/ChartStrategy");
 const GeneralConstants_1 = require("../Utilities/Constants/GeneralConstants");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
@@ -117,7 +118,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(this));
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
-        //    this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy_1.ChartStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy_1.ColumnCategoryStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(this));
