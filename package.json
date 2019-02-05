@@ -2,8 +2,8 @@
   "name": "adaptableblotter-monorepo",
   "private": true,
   "devDependencies": {
-    "lerna": "^3.1.4",
-    "copyfiles": "^2.1.0"
+    "copyfiles": "^2.1.0",
+    "lerna": "^3.10.8"
   },
   "scripts": {
     "cleanup": "lerna clean --yes",
