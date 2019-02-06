@@ -14,6 +14,7 @@ import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { ICalendar, ICalendarEntry } from "../../Utilities/Interface/BlotterObjects/ICalendar";
 import { PanelWithImage } from "../Components/Panels/PanelWithImage";
 
+
 interface CalendarsPopupProps extends StrategyViewPopupProps<CalendarsPopupComponent> {
     CurrentCalendar: string
     AvailableCalendars: ICalendar[]
