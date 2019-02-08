@@ -9,14 +9,14 @@ const GeneralConstants_1 = require("./Constants/GeneralConstants");
 var ObjectFactory;
 (function (ObjectFactory) {
     function CreateEmptyCustomSort() {
-        return { ColumnId: GeneralConstants_1.EMPTY_STRING, SortedValues: GeneralConstants_1.EMPTY_ARRAY };
+        return { ColumnId: GeneralConstants_1.EMPTY_STRING, SortedValues: [] };
     }
     ObjectFactory.CreateEmptyCustomSort = CreateEmptyCustomSort;
     function CreateEmptyChartDefinition() {
         return {
             Title: GeneralConstants_1.EMPTY_STRING,
             SubTitle: GeneralConstants_1.EMPTY_STRING,
-            YAxisColumnIds: GeneralConstants_1.EMPTY_ARRAY,
+            YAxisColumnIds: [],
             YAxisTotal: GeneralConstants_1.CHART_DEFAULT_YAXIS_TOTAL,
             XAxisColumnId: GeneralConstants_1.EMPTY_STRING,
             XAxisExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),

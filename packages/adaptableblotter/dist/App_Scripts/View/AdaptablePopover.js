@@ -13,7 +13,8 @@ class AdaptablePopover extends React.Component {
         let messageType = (this.props.MessageType != null) ? this.props.MessageType : Enums_1.MessageType.Info;
         let triggerAction = (this.props.triggerAction != null) ? this.props.triggerAction : ['click'];
         let useButton = (this.props.useButton != null) ? this.props.useButton : false;
-        const popoverClickRootClose = (React.createElement(react_bootstrap_1.Popover, { style: { margin: "0px", padding: "0px" }, id: "ab_popover", title: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : "" }, this.props.bodyText.map((textOrHTML, index) => React.createElement("span", { key: index }, textOrHTML))));
+        let popoverMinWidth = (this.props.popoverMinWidth != null) ? this.props.popoverMinWidth.toString() + "px" : "auto";
+        const popoverClickRootClose = (React.createElement(react_bootstrap_1.Popover, { style: { margin: "0px", padding: "0px", minWidth: popoverMinWidth }, id: "ab_popover", title: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : "" }, this.props.bodyText.map((textOrHTML, index) => React.createElement("span", { key: index }, textOrHTML))));
         return React.createElement("span", { className: cssClassName },
             React.createElement(react_bootstrap_1.OverlayTrigger, { rootClose: true, trigger: triggerAction, placement: 'bottom', overlay: popoverClickRootClose }, useButton ?
                 React.createElement(ButtonInfo_1.ButtonInfo, { cssClassName: cssClassName, onClick: () => null, size: "small", glyph: UIHelper_1.UIHelper.getGlyphByMessageType(messageType), bsStyle: UIHelper_1.UIHelper.getStyleNameByMessageType(messageType), DisplayMode: "Glyph", tooltipText: this.props.tooltipText })

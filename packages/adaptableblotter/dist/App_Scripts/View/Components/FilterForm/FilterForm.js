@@ -119,8 +119,10 @@ class FilterFormComponent extends React.Component {
             let columnValuePair = (this.state.DistinctCriteriaPairValue == Enums_1.DistinctCriteriaPairValue.DisplayValue) ?
                 this.state.ColumnValuePairs.find(cvp => cvp.DisplayValue == columnValue) :
                 this.state.ColumnValuePairs.find(cvp => cvp.RawValue == columnValue);
-            displayValues.push(columnValuePair.DisplayValue);
-            rawValues.push(columnValuePair.RawValue);
+            if (columnValuePair) { // might not be if previous filter is not in current list
+                displayValues.push(columnValuePair.DisplayValue);
+                rawValues.push(columnValuePair.RawValue);
+            }
         });
         let existingColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
         let userFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?

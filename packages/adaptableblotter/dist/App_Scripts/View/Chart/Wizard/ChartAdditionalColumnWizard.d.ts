@@ -4,7 +4,6 @@ import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IC
 import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { IRawValueDisplayValuePair } from "../../UIInterfaces";
 export interface ChartAdditionalColumnWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
-    ChartDefinitions: IChartDefinition[];
 }
 export interface ChartAdditionalColumnWizardState {
     AdditionalColumn: string;

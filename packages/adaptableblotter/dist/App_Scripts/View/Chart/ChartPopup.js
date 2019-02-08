@@ -67,13 +67,19 @@ class ChartPopupComponent extends React.Component {
         this.setState({ EditedAdaptableBlotterObject: Helper_1.Helper.cloneObject(Chart), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: index });
     }
     onNew() {
-        this.setState({ EditedAdaptableBlotterObject: ObjectFactory_1.ObjectFactory.CreateEmptyChartDefinition(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
+        //     console.log("in new before factory")
+        //     console.log(this.state.EditedAdaptableBlotterObject)
+        let test = ObjectFactory_1.ObjectFactory.CreateEmptyChartDefinition();
+        //  console.log("in new after factory")
+        //   console.log(test);
+        this.setState({ EditedAdaptableBlotterObject: test, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
     }
     onCloseWizard() {
         this.props.onClearPopupParams();
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
     onFinishWizard() {
+        //  alert("wizard finished")
         let index = this.state.EditedAdaptableBlotterObjectIndex;
         let clonedObject = Helper_1.Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
         this.props.onAddUpdateChartDefinition(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);

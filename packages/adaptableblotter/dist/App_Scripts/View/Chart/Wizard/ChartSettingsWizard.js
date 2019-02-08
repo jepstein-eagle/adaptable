@@ -43,7 +43,7 @@ class ChartSettingsWizard extends React.Component {
         let e = event.target;
         this.setState({
             Title: e.value,
-            ErrorMessage: ArrayExtensions_1.ArrayExtensions.ContainsItem(this.props.ChartDefinitions.map(s => s.Title), e.value) ? "A Chart Definition already exists with that title" : null
+            ErrorMessage: ArrayExtensions_1.ArrayExtensions.ContainsItem(this.props.ChartTitles, e.value) ? "A Chart Definition already exists with that title" : null
         }, () => this.props.UpdateGoBackState());
     }
     onChartSubTitleChange(event) {

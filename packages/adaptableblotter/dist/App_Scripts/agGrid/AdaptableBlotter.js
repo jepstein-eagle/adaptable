@@ -1513,6 +1513,8 @@ class AdaptableBlotter {
             }
         }
     }
+    // Method called after we have rendered the grid
+    // where we apply our stuff but also any ag-Grid props that we control
     applyFinalRendering() {
         let currentlayout = this.getState().Layout.CurrentLayout;
         // Check that we have a primary key
@@ -1532,6 +1534,8 @@ class AdaptableBlotter {
         if (this.getState().Layout.CurrentLayout != GeneralConstants_1.DEFAULT_LAYOUT && ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.getState().PercentBar.PercentBars)) {
             this.api.layoutApi.Set(GeneralConstants_1.DEFAULT_LAYOUT);
         }
+        // playing here but seeing if we can update an agGrid option
+        //this.gridOptions.suppressMenuHide= true;
         // at the end so load the current layout, refresh the toolbar and turn off the loading message
         this.api.layoutApi.Set(currentlayout);
     }

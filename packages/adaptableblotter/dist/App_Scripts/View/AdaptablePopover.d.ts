@@ -8,6 +8,7 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
     triggerAction?: string;
     useButton?: boolean;
     tooltipText?: string;
+    popoverMinWidth?: number;
 }
 export declare class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}> {
     render(): JSX.Element;

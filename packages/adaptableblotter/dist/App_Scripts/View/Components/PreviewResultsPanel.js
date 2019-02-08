@@ -29,8 +29,8 @@ class PreviewResultsPanel extends React.Component {
         });
         var header = React.createElement("thead", null,
             React.createElement("tr", null,
-                React.createElement("th", null, "Old Value"),
-                React.createElement("th", null, "New Value"),
+                React.createElement("th", null, "Old"),
+                React.createElement("th", null, "New"),
                 React.createElement("th", null, "Valid")));
         return React.createElement("div", { className: cssClassName }, this.props.ShowPanel &&
             React.createElement(react_bootstrap_1.Panel, { header: previewHeader, bsStyle: "info", className: "ab_preview_panel" },

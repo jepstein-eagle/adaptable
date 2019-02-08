@@ -16,7 +16,7 @@ class HomeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     addContextMenuItem(column) {
         if (this.canCreateContextMenuItem(column, this.blotter, "floatingfilter")) {
             let isFilterActive = this.blotter.isFloatingFilterActive();
-            this.createContextMenuItemReduxAction(isFilterActive ? "Hide Floating Filter Bar" : "Show Floating Filter Bar", isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH, isFilterActive ? HomeRedux.FilterFormHide() : HomeRedux.FloatingilterBarShow());
+            this.createContextMenuItemReduxAction(isFilterActive ? "Hide Floating Filter Bar" : "Show Floating Filter Bar", isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH, isFilterActive ? HomeRedux.FloatingFilterBarHide() : HomeRedux.FloatingilterBarShow());
         }
     }
     InitState() {

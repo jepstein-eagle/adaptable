@@ -4,7 +4,6 @@ import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IC
 import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { AxisTotal } from "../../../Utilities/ChartEnums";
 export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
-    ChartDefinitions: IChartDefinition[];
 }
 export interface ChartYAxisWizardState {
     YAxisColumnIds: string[];

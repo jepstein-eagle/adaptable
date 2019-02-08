@@ -3,7 +3,6 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { Expression } from "../../../Utilities/Expression";
 export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
-    ChartDefinitions: IChartDefinition[];
 }
 export interface ChartXAxisWizardState {
     XAxisColumnId: string;

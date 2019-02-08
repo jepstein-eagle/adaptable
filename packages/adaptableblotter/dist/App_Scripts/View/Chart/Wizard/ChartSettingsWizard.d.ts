@@ -2,7 +2,7 @@ import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 export interface ChartSettingsWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
-    ChartDefinitions: IChartDefinition[];
+    ChartTitles: string[];
 }
 export interface ChartSettingsWizardState {
     Title: string;
