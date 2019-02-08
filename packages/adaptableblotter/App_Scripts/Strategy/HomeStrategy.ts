@@ -2,6 +2,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as GlyphConstants from '../Utilities/Constants/GlyphConstants'
 import * as HomeRedux from '../Redux/ActionsReducers/HomeRedux'
+import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { IHomeStrategy } from './Interface/IHomeStrategy'
 import { GridState } from '../Redux/ActionsReducers/Interface/IState';
@@ -23,11 +24,11 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
 
     public addContextMenuItem(column: IColumn): void {
         if (this.canCreateContextMenuItem(column, this.blotter, "floatingfilter")) {
-            let isFilterActive: boolean = this.blotter.isFloatingFilterActive();
+            let isFilterActive: boolean = this.GridState.IsFloatingFilterActive;
             this.createContextMenuItemReduxAction(
                 isFilterActive ? "Hide Floating Filter Bar" : "Show Floating Filter Bar",
                 isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH,
-                isFilterActive ? HomeRedux.FloatingFilterBarHide() : HomeRedux.FloatingilterBarShow())
+                isFilterActive ? GridRedux.FloatingFilterBarHide() : GridRedux.FloatingilterBarShow())
         }
     }
 

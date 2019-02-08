@@ -16,6 +16,8 @@ export const GRID_SET_SORT = 'GRID_SET_SORT';
 export const GRID_SET_SELECTED_CELLS = 'GRID_SET_SELECTED_CELLS';
 export const GRID_CREATE_SELECTED_CELLS_SUMMARY = 'GRID_CREATE_SELECTED_CELLS_SUMMARY';
 export const GRID_SET_SELECTED_CELLS_SUMMARY = 'GRID_SET_SELECTED_CELLS_SUMMARY';
+export const GRID_FLOATING_FILTER_BAR_SHOW = 'GRID_FLOATING_FILTER_BAR_SHOW';
+export const GRID_FLOATING_FILTER_BAR_HIDE = 'GRID_FLOATING_FILTER_BAR_HIDE';
 
 
 export interface GridSetColumnsAction extends Redux.Action {
@@ -56,6 +58,12 @@ export interface GridCreateSelectedCellSummaryAction extends Redux.Action {
 
 export interface GridSetSelectedCellSummaryAction extends Redux.Action {
     SelectedCellSummary: ISelectedCellSummmary
+}
+
+export interface FloatingFilterBarShowAction extends Redux.Action {
+}
+
+export interface FloatingFilterBarHideAction extends Redux.Action {
 }
 
 export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
@@ -105,11 +113,20 @@ export const GridSetSelectedCellSummary = (SelectedCellSummary: ISelectedCellSum
 })
 
 
+export const FloatingilterBarShow = (): FloatingFilterBarShowAction => ({
+    type: GRID_FLOATING_FILTER_BAR_SHOW
+})
+
+export const FloatingFilterBarHide = (): FloatingFilterBarHideAction => ({
+    type: GRID_FLOATING_FILTER_BAR_HIDE
+})
+
 const initialGridState: GridState = {
     Columns: EMPTY_ARRAY,
     GridSorts: EMPTY_ARRAY,
     SelectedCellInfo: null,
-    SelectedCellSummary: null
+    SelectedCellSummary: null,
+    IsFloatingFilterActive: false
 }
 
 export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initialGridState, action: Redux.Action): GridState => {
@@ -123,11 +140,16 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
             return Object.assign({}, state, { Columns: columns })
         case GRID_SET_SORT:
             return Object.assign({}, state, { GridSorts: (<GridSetSortAction>action).GridSorts })
-         case GRID_SET_SELECTED_CELLS:
+        case GRID_SET_SELECTED_CELLS:
             return Object.assign({}, state, { SelectedCellInfo: (<GridSetSelectedCellsAction>action).SelectedCellInfo })
         case GRID_SET_SELECTED_CELLS_SUMMARY:
             return Object.assign({}, state, { SelectedCellSummary: (<GridSetSelectedCellSummaryAction>action).SelectedCellSummary })
-          default:
+        case GRID_FLOATING_FILTER_BAR_SHOW:
+            return Object.assign({}, state, { IsFloatingFilterActive: true })
+        case GRID_FLOATING_FILTER_BAR_HIDE:
+            return Object.assign({}, state, { IsFloatingFilterActive: false })
+
+        default:
             return state
     }
 }

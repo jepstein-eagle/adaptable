@@ -81,7 +81,8 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                 />
                 <ButtonNew
                     style={{ marginLeft: "2px" }}
-                    cssClassName={cssClassName} onClick={() => this.props.onNewAdvancedSearch()}
+                    cssClassName={cssClassName} 
+                    onClick={() => this.props.onNewAdvancedSearch()}
                     size={"small"}
                     overrideTooltip="Create New Advanced Search"
                     DisplayMode="Glyph"

@@ -46,6 +46,10 @@ export module ArrayExtensions {
         return ArrayExtensions.IsNotNull(arrayToCheck) && ArrayExtensions.IsNotEmpty(arrayToCheck);
     }
 
+    export function HasOneItem(arrayToCheck: any[]): boolean {
+        return arrayToCheck.length ==1;
+    }
+
     export function moveArray(array: any[], from: number, to: number): void {
         array.splice(to, 0, array.splice(from, 1)[0]);
     }

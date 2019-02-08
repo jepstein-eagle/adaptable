@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
+import * as HomeRedux from '../../Redux/ActionsReducers/HomeRedux'
+import * as GridRedux from '../../Redux/ActionsReducers/GridRedux'
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
@@ -18,32 +20,46 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IEntitlement } from "../../Utilities/Interface/IEntitlement";
 import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
 import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnFilter";
-import { FormControl } from "react-bootstrap";
+import { FormControl, Label } from "react-bootstrap";
 import { ColumnFilterHelper } from "../../Utilities/Helpers/ColumnFilterHelper";
 import { IKeyValuePair } from "../../Utilities/Interface/IKeyValuePair";
 import { ActiveFiltersPanel } from "../Components/ActiveFiltersPanel";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { IUIPrompt } from "../../Utilities/Interface/IMessage";
+import { SUCCESS_BSSTYLE, DEFAULT_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
+import { ButtonDelete } from "../Components/Buttons/ButtonDelete";
+import { ButtonNew } from "../Components/Buttons/ButtonNew";
+import { ButtonEdit } from "../Components/Buttons/ButtonEdit";
+import { ButtonHide } from "../Components/Buttons/ButtonHide";
+import { ButtonShow } from "../Components/Buttons/ButtonShow";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction,
     onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction,
     onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
-   ColumnFilters: IColumnFilter[],
+    onHideFloatingFilterBar: () => GridRedux.FloatingFilterBarHideAction;
+    onShowFloatingFilterBar: () => GridRedux.FloatingFilterBarShowAction;
+    ColumnFilters: IColumnFilter[],
     Columns: IColumn[],
     UserFilters: IUserFilter[]
     Entitlements: IEntitlement[];
+    IsFloatingFilterActive: boolean
 }
+
+
+
 class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterToolbarControlComponentProps, {}> {
+
+  
 
     render(): any {
 
         let cssClassName: string = this.props.cssClassName + "__columnfilter";
-        let collapsedText = this.props.ColumnFilters.length == 0 ?
+        let collapsedText = ArrayExtensions.IsNullOrEmpty(this.props.ColumnFilters) ?
             "No Filters" :
-            this.props.ColumnFilters.length == 1 ?
-                "1 Column" :
-                this.props.ColumnFilters.length + " Columns";
+            ArrayExtensions.HasOneItem(this.props.ColumnFilters) ?
+                "1 Filter" :
+                this.props.ColumnFilters.length + " Filters";
 
         let activeFiltersPanel =
             <ActiveFiltersPanel
@@ -57,7 +73,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
 
         let content = <span>
             <div className={this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
-                <FormControl bsSize="small" style={{ width: "80px" }} value={collapsedText} disabled={true} type="string" />
+                <Label bsSize={"large"} bsStyle={this.getStyleForLabel()}>{collapsedText}</Label>
                 {' '}
                 {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) &&
                     <span>
@@ -68,11 +84,32 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                             cssClassName={cssClassName}
                             size={"small"}
                             overrideTooltip="Clear Column Filters"
-                            DisplayMode="Text+Glyph"
+                            DisplayMode="Text"
                             overrideDisableButton={this.props.ColumnFilters.length == 0}
                             AccessLevel={this.props.AccessLevel}
                         />
                     </span>
+                }
+                {this.props.IsFloatingFilterActive ?
+                    <ButtonHide
+                        style={{ marginLeft: "2px" }}
+                        cssClassName={cssClassName}
+                        onClick={() => this.props.onHideFloatingFilterBar()}
+                        size={"small"}
+                        overrideTooltip="Hide Floating Filter"
+                        DisplayMode="Glyph"
+                        AccessLevel={this.props.AccessLevel}
+                    />
+                    :
+                    <ButtonShow
+                        style={{ marginLeft: "2px" }}
+                        cssClassName={cssClassName}
+                        onClick={() => this.props.onShowFloatingFilterBar()}
+                        size={"small"}
+                        overrideTooltip="Show Floating Filter"
+                        DisplayMode="Glyph"
+                        AccessLevel={this.props.AccessLevel}
+                    />
                 }
             </div>
         </span>
@@ -81,6 +118,8 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
             {content}
         </PanelDashboard>
     }
+    
+    
 
     private onClearFilters() {
         // better to put in store but lets test first...
@@ -101,12 +140,17 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
         }
         this.props.onShowPrompt(prompt)
     }
+
+    private getStyleForLabel(): string {
+        return (ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters)) ? SUCCESS_BSSTYLE : DEFAULT_BSSTYLE
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ColumnFilters: state.ColumnFilter.ColumnFilters,
-        Entitlements: state.Entitlements.FunctionEntitlements
+        Entitlements: state.Entitlements.FunctionEntitlements,
+        IsFloatingFilterActive: state.Grid.IsFloatingFilterActive
     };
 }
 
@@ -115,6 +159,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onClearColumnFilter: (columnId: string) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
         onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
+        onHideFloatingFilterBar: () => dispatch(GridRedux.FloatingFilterBarHide()),
+        onShowFloatingFilterBar: () => dispatch(GridRedux.FloatingilterBarShow()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ColumnFilterStrategyId, ScreenPopups.ColumnFilterPopup))
     };

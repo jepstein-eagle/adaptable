@@ -1196,12 +1196,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         /*******************
         * HOME (INTERNAL) ACTIONS (Filter Bar)
         *******************/
-        case HomeRedux.FLOATING_FILTER_BAR_SHOW: {
+        case GridRedux.GRID_FLOATING_FILTER_BAR_SHOW: {
           blotter.showFloatingFilter();
           return next(action);
         }
 
-        case HomeRedux.FLOATING_FILTER_BAR_HIDE: {
+        case GridRedux.GRID_FLOATING_FILTER_BAR_HIDE: {
           blotter.hideFloatingFilter();
           return next(action);
         }

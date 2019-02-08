@@ -1729,10 +1729,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public hasFloatingFilter(): boolean {
-        return true;
+    // this is wrong = come from state!j
+        return true; // is this right or should it be only if its not null?  need to think through...
     }
 
-    public isFloatingFilterActive(): boolean {
+    private isFloatingFilterActive(): boolean {
         return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter;
     }
 
@@ -1742,6 +1743,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.createFloatingFilterWrapper(col);
         });
         this.gridOptions.api.refreshHeader();
+        // dont dispatch as done by store
+     //   this.dispatchAction(GridRedux.FloatingFilterBarHide())
     }
 
     public hideFloatingFilter(): void {
@@ -1750,6 +1753,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //       this.deleteFloatingFilterWrapper(col);
         //   });
         this.gridOptions.api.refreshHeader();
+        // dont dispatch as done by store
+    //    this.dispatchAction(GridRedux.FloatingFilterBarHide())
     }
 
     public applyLightTheme(): void {
@@ -1786,8 +1791,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             document.body.appendChild(css);
         }
 
+
         // sometimes the header row looks wrong when using floating filter so to be sure...
         if (this.isFloatingFilterActive()) {
+            this.dispatchAction(GridRedux.FloatingilterBarShow())
             this.gridOptions.api.refreshHeader();
         }
 

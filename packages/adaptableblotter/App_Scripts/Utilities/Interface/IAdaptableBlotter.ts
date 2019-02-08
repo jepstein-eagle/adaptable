@@ -132,7 +132,7 @@ export interface IAdaptableBlotter {
     isSelectable(): boolean
     isSortable(): boolean
     hasFloatingFilter(): boolean
-    isFloatingFilterActive(): boolean
+ //   isFloatingFilterActive(): boolean
     showFloatingFilter(): void
     hideFloatingFilter(): void
 
