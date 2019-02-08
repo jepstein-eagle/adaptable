@@ -27,7 +27,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
             this.createContextMenuItemReduxAction(
                 isFilterActive ? "Hide Floating Filter Bar" : "Show Floating Filter Bar",
                 isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH,
-                isFilterActive ? HomeRedux.FilterFormHide() : HomeRedux.FloatingilterBarShow())
+                isFilterActive ? HomeRedux.FloatingFilterBarHide() : HomeRedux.FloatingilterBarShow())
         }
     }
 

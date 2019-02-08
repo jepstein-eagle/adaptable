@@ -12,7 +12,7 @@ import { AxisTotal } from "../../../Utilities/ChartEnums";
 import { AdaptablePopover } from "../../AdaptablePopover";
 
 export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
-    ChartDefinitions: IChartDefinition[]
+  //  ChartDefinitions: IChartDefinition[]
    }
 
 export interface ChartYAxisWizardState {

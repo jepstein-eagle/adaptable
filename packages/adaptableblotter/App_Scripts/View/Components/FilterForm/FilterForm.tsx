@@ -26,7 +26,7 @@ import { ButtonClear } from "../Buttons/ButtonClear";
 import { Waiting } from "./Waiting";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { ListBoxMenu } from "./ListBoxMenu";
-import {   HelpBlock } from 'react-bootstrap';
+import { HelpBlock } from 'react-bootstrap';
 import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 import { FilterFormPanel } from "../Panels/FilterFormPanel";
 import { ButtonSave } from "../Buttons/ButtonSave";
@@ -45,7 +45,7 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
     ContextMenuItems: IMenuItem[]
     EmbedColumnMenu: boolean;
     ShowCloseButton: boolean;
-     onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction
+    onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction
     onAddEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddUpdateAction
     onHideFilterForm: () => HomeRedux.FilterFormHideAction
     onContextMenuItemClick: (action: Redux.Action) => Redux.Action,
@@ -225,7 +225,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     }
 
     isFilterable(): string {
-         if (!this.props.CurrentColumn.Filterable) {
+        if (!this.props.CurrentColumn.Filterable) {
             return "Column is not filterable"
         }
         return ""
@@ -247,9 +247,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             let columnValuePair: IRawValueDisplayValuePair = (this.state.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue) ?
                 this.state.ColumnValuePairs.find(cvp => cvp.DisplayValue == columnValue) :
                 this.state.ColumnValuePairs.find(cvp => cvp.RawValue == columnValue)
-
-            displayValues.push(columnValuePair.DisplayValue);
-            rawValues.push(columnValuePair.RawValue);
+            if (columnValuePair) { // might not be if previous filter is not in current list
+                displayValues.push(columnValuePair.DisplayValue);
+                rawValues.push(columnValuePair.RawValue);
+            }
         })
 
         let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);

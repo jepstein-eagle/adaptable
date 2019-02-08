@@ -187,7 +187,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
         this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(this))
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
-      //  this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
@@ -1770,6 +1770,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
     }
 
+    // Method called after we have rendered the grid
+    // where we apply our stuff but also any ag-Grid props that we control
     private applyFinalRendering(): void {
         let currentlayout = this.getState().Layout.CurrentLayout
 
@@ -1793,6 +1795,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (this.getState().Layout.CurrentLayout != DEFAULT_LAYOUT && ArrayExtensions.IsNotNullOrEmpty(this.getState().PercentBar.PercentBars)) {
             this.api.layoutApi.Set(DEFAULT_LAYOUT);
         }
+
+// playing here but seeing if we can update an agGrid option
+//this.gridOptions.suppressMenuHide= true;
+
         // at the end so load the current layout, refresh the toolbar and turn off the loading message
         this.api.layoutApi.Set(currentlayout);
     }

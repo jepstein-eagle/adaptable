@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Label, OverlayTrigger, Glyphicon, Popover, Button } from 'react-bootstrap';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import {  MessageType } from '../Utilities/Enums';
+import { MessageType } from '../Utilities/Enums';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import { ButtonApply } from "./Components/Buttons/ButtonApply";
 import { ButtonInfo } from "./Components/Buttons/ButtonInfo";
@@ -25,7 +25,7 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
     triggerAction?: string
     useButton?: boolean
     tooltipText?: string
-
+    popoverMinWidth?: number
 }
 
 
@@ -33,16 +33,17 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.INFO_BUTTON
 
-        let messageType : MessageType = (this.props.MessageType!= null) ? this.props.MessageType : MessageType.Info;
+        let messageType: MessageType = (this.props.MessageType != null) ? this.props.MessageType : MessageType.Info;
 
         let triggerAction = (this.props.triggerAction != null) ? this.props.triggerAction : ['click'];
 
         let useButton = (this.props.useButton != null) ? this.props.useButton : false
+        let popoverMinWidth: string = (this.props.popoverMinWidth != null) ? this.props.popoverMinWidth.toString() + "px" : "auto"
 
         const popoverClickRootClose = (
-            <Popover style={{margin:"0px", padding: "0px"}} id={"ab_popover"} title={StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ""}>
-                {this.props.bodyText.map((textOrHTML: any, index: any) => <span key={index}>{textOrHTML}</span>)}
-            </Popover>);
+            <Popover style={{ margin: "0px", padding: "0px", minWidth: popoverMinWidth}} id={"ab_popover"} title={StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ""}>
+                     {this.props.bodyText.map((textOrHTML: any, index: any) => <span key={index}>{textOrHTML}</span>)}
+             </Popover>);
 
         return <span className={cssClassName}>
             <OverlayTrigger rootClose trigger={triggerAction} placement={'bottom'} overlay={popoverClickRootClose}>
@@ -65,6 +66,6 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
     }
 
 
-    
+
 }
 

@@ -13,7 +13,7 @@ import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { Expression } from "../../../Utilities/Expression";
 
 export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
-    ChartDefinitions: IChartDefinition[]
+  //  ChartDefinitions: IChartDefinition[]
    }
 
 export interface ChartXAxisWizardState {

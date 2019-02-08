@@ -3,7 +3,7 @@ var adaptableblotter
 var quickSearchText
 var trades
 var gridOptions
-var showTrade = true;
+var showTrade = false;
 
 function runQuickSearchViaAPI() {
   let element = document.getElementById("txtQuickSearchText")
@@ -100,7 +100,7 @@ function InitTradeBlotter() {
       userName: "demo user", // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
 
-        predefinedConfig: "citiConfig.json",
+     //   predefinedConfig: "citiConfig.json",
 
       auditOptions: {
         //     auditCellEdits: true,

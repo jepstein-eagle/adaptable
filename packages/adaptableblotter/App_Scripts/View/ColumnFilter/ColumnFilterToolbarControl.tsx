@@ -2,6 +2,7 @@
 import * as Redux from 'redux'
 import { connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -20,10 +21,15 @@ import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnF
 import { FormControl } from "react-bootstrap";
 import { ColumnFilterHelper } from "../../Utilities/Helpers/ColumnFilterHelper";
 import { IKeyValuePair } from "../../Utilities/Interface/IKeyValuePair";
+import { ActiveFiltersPanel } from "../Components/ActiveFiltersPanel";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { IUIPrompt } from "../../Utilities/Interface/IMessage";
 
 interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
     onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction,
-    ColumnFilters: IColumnFilter[],
+    onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction,
+    onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
+   ColumnFilters: IColumnFilter[],
     Columns: IColumn[],
     UserFilters: IUserFilter[]
     Entitlements: IEntitlement[];
@@ -39,22 +45,23 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                 "1 Column" :
                 this.props.ColumnFilters.length + " Columns";
 
-        let filterStrings: IKeyValuePair[] = ColumnFilterHelper.ConvertColumnFiltersToKVPArray(this.props.ColumnFilters, this.props.Columns)
-        let infoBody: any[] = []
-        filterStrings.forEach(fs => {
-            infoBody.push(<b> {fs.Key} </b>)
-            infoBody.push(fs.Value, <br />)
-
-        })
+        let activeFiltersPanel =
+            <ActiveFiltersPanel
+                cssClassName={cssClassName}
+                Columns={this.props.Columns}
+                ColumnFilters={this.props.ColumnFilters}
+                AccessLevel={this.props.AccessLevel}
+                onClear={(columnFilter: IColumnFilter) => this.onClearColumnFilter(columnFilter)}
+                onSaveColumnFilterasUserFilter={(columnFilter: IColumnFilter) => this.onSaveColumnFilterasUserFilter(columnFilter)}
+            />
 
         let content = <span>
             <div className={this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <FormControl bsSize="small" style={{ width: "80px" }} value={collapsedText} disabled={true} type="string" />
                 {' '}
-                {infoBody.length > 0 &&
+                {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) &&
                     <span>
-                        <AdaptablePopover cssClassName={cssClassName} headerText="Active Filters" bodyText={infoBody} tooltipText={"Show Filter Details"} useButton={true} triggerAction={"click"} />
-
+                        <AdaptablePopover cssClassName={cssClassName} headerText="Active Filters" bodyText={[activeFiltersPanel]} tooltipText={"Show Filter Details"} useButton={true} triggerAction={"click"} popoverMinWidth={400} />
                         {' '}
                         <ButtonClear onClick={() => this.onClearFilters()}
                             bsStyle={"primary"}
@@ -80,6 +87,20 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
         this.props.onClearAllFilters();
         this.props.Blotter.clearGridFiltering();
     }
+
+    private onClearColumnFilter(columnFilter: IColumnFilter) {
+        this.props.onClearColumnFilter(columnFilter.ColumnId)
+        this.props.Blotter.clearColumnFiltering([columnFilter.ColumnId])
+    }
+
+    private onSaveColumnFilterasUserFilter(columnFilter: IColumnFilter): void {
+        let prompt: IUIPrompt = {
+            Header: "Enter name for User Filter",
+            Msg: "",
+            ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(columnFilter, "")
+        }
+        this.props.onShowPrompt(prompt)
+    }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
@@ -91,6 +112,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
+        onClearColumnFilter: (columnId: string) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
+        onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
         onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ColumnFilterStrategyId, ScreenPopups.ColumnFilterPopup))

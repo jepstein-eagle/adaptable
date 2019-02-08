@@ -49,8 +49,8 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
         });
         var header = <thead>
             <tr>
-                <th>Old Value</th>
-                <th>New Value</th>
+                <th>Old</th>
+                <th>New</th>
                 <th>Valid</th>
             </tr>
         </thead>

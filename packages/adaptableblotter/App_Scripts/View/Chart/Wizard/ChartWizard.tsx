@@ -17,8 +17,11 @@ export interface ChartWizardProps extends IAdaptableBlotterObjectExpressionAdapt
 export class ChartWizard extends React.Component<ChartWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Y Axis", "X Axis", "Segemented", "Settings", "Summary"]
-        let Charts: IChartDefinition[] = this.props.ConfigEntities as IChartDefinition[]
+      //  console.log("in wziard0")
+     //   console.log(this.props.EditedAdaptableBlotterObject)
+        let stepNames: string[] = ["Y Axis", "X Axis", "X Segment", "Settings", "Summary"]
+        let chartDefinitions: IChartDefinition[] = this.props.ConfigEntities as IChartDefinition[]
+        let chartTitles: string []= chartDefinitions.map(s => s.Title);
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.ChartStrategyName}
@@ -28,8 +31,8 @@ export class ChartWizard extends React.Component<ChartWizardProps, {}> {
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
                 Steps={[
-                    <ChartYAxisWizard StepName={stepNames[0]} ChartDefinitions={Charts} />,
-                    <ChartXAxisWizard StepName={stepNames[1]} ChartDefinitions={Charts} />,
+                    <ChartYAxisWizard StepName={stepNames[0]}  />,
+                    <ChartXAxisWizard StepName={stepNames[1]}  />,
                     <ChartExpressionWizard
                         StepName={stepNames[1]}
                         Columns={this.props.Columns}
@@ -37,8 +40,8 @@ export class ChartWizard extends React.Component<ChartWizardProps, {}> {
                         SystemFilters={this.props.SystemFilters}
                         ExpressionMode={ExpressionMode.SingleColumn}
                     />,
-                    <ChartAdditionalColumnWizard StepName={stepNames[2]} ChartDefinitions={Charts} />,
-                    <ChartSettingsWizard StepName={stepNames[3]} ChartDefinitions={Charts} />,
+                    <ChartAdditionalColumnWizard StepName={stepNames[2]}  />,
+                    <ChartSettingsWizard StepName={stepNames[3]} ChartTitles={chartTitles} />,
                     <ChartSummaryWizard StepName={stepNames[4]} />
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}

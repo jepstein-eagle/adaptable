@@ -29,21 +29,20 @@ import { Expression } from '../Utilities/Expression';
 import { IVendorGridInfo } from "./Interface/IVendorGridInfo";
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
 import { DefaultChartProperties } from '../Utilities/Defaults/DefaultChartProperties';
-import { AxisTotal } from './ChartEnums';
-import { EMPTY_STRING, EMPTY_ARRAY, CHART_DEFAULT_YAXIS_TOTAL, PLUS_MINUS_DEFAULT_NUDGE_VALUE, ALERT_DEFAULT_OPERATOR, ALERT_DEFAULT_RANGE_OPERAND_TYPE, ALERT_DEFAULT_MESSAGE_TYPE, ALERT_DEFAULT_SHOW_AS_POPUP, DEFAULT_DARK_GREEN_COLOR, DEFAULT_DARK_RED_COLOR } from './Constants/GeneralConstants';
+import { EMPTY_STRING,  CHART_DEFAULT_YAXIS_TOTAL, PLUS_MINUS_DEFAULT_NUDGE_VALUE, ALERT_DEFAULT_OPERATOR, ALERT_DEFAULT_RANGE_OPERAND_TYPE, ALERT_DEFAULT_MESSAGE_TYPE, ALERT_DEFAULT_SHOW_AS_POPUP, DEFAULT_DARK_GREEN_COLOR, DEFAULT_DARK_RED_COLOR } from './Constants/GeneralConstants';
 
 
 export module ObjectFactory {
 
     export function CreateEmptyCustomSort(): ICustomSort {
-        return { ColumnId: EMPTY_STRING, SortedValues: EMPTY_ARRAY}
+        return { ColumnId: EMPTY_STRING, SortedValues: []}
     }
 
     export function CreateEmptyChartDefinition(): IChartDefinition {
         return {
             Title: EMPTY_STRING,
             SubTitle: EMPTY_STRING,
-            YAxisColumnIds: EMPTY_ARRAY,
+            YAxisColumnIds: [],
             YAxisTotal: CHART_DEFAULT_YAXIS_TOTAL,
             XAxisColumnId: EMPTY_STRING,
             XAxisExpression: ExpressionHelper.CreateEmptyExpression(),

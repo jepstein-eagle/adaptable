@@ -131,7 +131,12 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     }
 
     onNew() {
-        this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyChartDefinition(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
+   //     console.log("in new before factory")
+   //     console.log(this.state.EditedAdaptableBlotterObject)
+      let test :IChartDefinition = ObjectFactory.CreateEmptyChartDefinition();
+    //  console.log("in new after factory")
+    //   console.log(test);
+        this.setState({ EditedAdaptableBlotterObject: test , WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
     onCloseWizard() {
@@ -140,6 +145,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     }
 
     onFinishWizard() {
+      //  alert("wizard finished")
         let index: number = this.state.EditedAdaptableBlotterObjectIndex;
         let clonedObject: IChartDefinition = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
         this.props.onAddUpdateChartDefinition(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
