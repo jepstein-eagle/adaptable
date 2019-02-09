@@ -5,8 +5,8 @@ import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 export class ButtonHide extends React.Component<ButtonProps, {}> {
     render() {
         return <ButtonBase 
-        ToolTipAndText="Hide"
-        bsStyle={StyleConstants.DEFAULT_BSSTYLE}
+            ToolTipAndText="Hide"
+            bsStyle={StyleConstants.DEFAULT_BSSTYLE}
             bsSize={this.props.size}
              glyph="resize-small"
             onClick={() => this.props.onClick()}

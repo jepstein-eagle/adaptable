@@ -1509,11 +1509,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false;
     }
 
-    public isFloatingFilterActive(): boolean {
-        // have not yet activated this for hypergrid so always return false;
-        return false;
-    }
-
     public showFloatingFilter(): void {
         // todo
     }

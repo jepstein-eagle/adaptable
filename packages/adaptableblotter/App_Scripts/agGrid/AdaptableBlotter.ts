@@ -415,7 +415,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
-            this.createFloatingFilterWrapper(vendorColumn);
+            //    this.createFloatingFilterWrapper(vendorColumn);
         }
     }
 
@@ -1729,32 +1729,29 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public hasFloatingFilter(): boolean {
-    // this is wrong = come from state!j
+        // this is wrong = come from state!j
         return true; // is this right or should it be only if its not null?  need to think through...
     }
 
     private isFloatingFilterActive(): boolean {
-        return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter;
+        return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter;
     }
 
     public showFloatingFilter(): void {
-        this.gridOptions.floatingFilter = true;
-        this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-            this.createFloatingFilterWrapper(col);
-        });
-        this.gridOptions.api.refreshHeader();
-        // dont dispatch as done by store
-     //   this.dispatchAction(GridRedux.FloatingFilterBarHide())
+        if (this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
+            this.gridOptions.floatingFilter = true;
+            this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+                this.createFloatingFilterWrapper(col);
+            });
+            this.gridOptions.api.refreshHeader();
+        }
     }
 
     public hideFloatingFilter(): void {
-        this.gridOptions.floatingFilter = false;
-        //   this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-        //       this.deleteFloatingFilterWrapper(col);
-        //   });
-        this.gridOptions.api.refreshHeader();
-        // dont dispatch as done by store
-    //    this.dispatchAction(GridRedux.FloatingFilterBarHide())
+        if (this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
+            this.gridOptions.floatingFilter = false;
+            this.gridOptions.api.refreshHeader();
+        }
     }
 
     public applyLightTheme(): void {
@@ -1803,8 +1800,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.api.layoutApi.Set(DEFAULT_LAYOUT);
         }
 
-// playing here but seeing if we can update an agGrid option
-//this.gridOptions.suppressMenuHide= true;
+        // playing here but seeing if we can update an agGrid option
+        //this.gridOptions.suppressMenuHide= true;
 
         // at the end so load the current layout, refresh the toolbar and turn off the loading message
         this.api.layoutApi.Set(currentlayout);

@@ -50,7 +50,7 @@ interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPo
 
 class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterToolbarControlComponentProps, {}> {
 
-  
+
 
     render(): any {
 
@@ -90,6 +90,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                         />
                     </span>
                 }
+
                 {this.props.IsFloatingFilterActive ?
                     <ButtonHide
                         style={{ marginLeft: "2px" }}
@@ -99,6 +100,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                         overrideTooltip="Hide Floating Filter"
                         DisplayMode="Glyph"
                         AccessLevel={this.props.AccessLevel}
+                        overrideDisableButton={!this.props.Blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter}
                     />
                     :
                     <ButtonShow
@@ -109,7 +111,9 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                         overrideTooltip="Show Floating Filter"
                         DisplayMode="Glyph"
                         AccessLevel={this.props.AccessLevel}
+                        overrideDisableButton={!this.props.Blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter}
                     />
+
                 }
             </div>
         </span>
@@ -118,8 +122,8 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
             {content}
         </PanelDashboard>
     }
-    
-    
+
+
 
     private onClearFilters() {
         // better to put in store but lets test first...

@@ -4,10 +4,11 @@ import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export class ButtonShow extends React.Component<ButtonProps, {}> {
     render() {
-        return <ButtonBase ToolTipAndText="Show"
+        return <ButtonBase
+            ToolTipAndText="Show"
             bsStyle={StyleConstants.DEFAULT_BSSTYLE}
             bsSize={this.props.size}
-             glyph="resize-full"
+            glyph="resize-full"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}
             overrideTooltip={this.props.overrideTooltip}
@@ -15,6 +16,6 @@ export class ButtonShow extends React.Component<ButtonProps, {}> {
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.SHOW_BUTTON}
-            />;
+        />;
     }
 }
