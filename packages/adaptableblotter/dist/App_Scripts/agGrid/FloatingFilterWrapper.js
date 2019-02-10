@@ -4,7 +4,7 @@ const ReactDOM = require("react-dom");
 const FloatingFilterForm_1 = require("../View/Components/FilterForm/FloatingFilterForm");
 const ColumnHelper_1 = require("../Utilities/Helpers/ColumnHelper");
 exports.FloatingFilterWrapperFactory = (blotter) => {
-    return class FilterWrapper {
+    return class FloatingFilterWrapper {
         init(params) {
             let colId = params.column.getColId();
             this.filterContainer = document.createElement("div");

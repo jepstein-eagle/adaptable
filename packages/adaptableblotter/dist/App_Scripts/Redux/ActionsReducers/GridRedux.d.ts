@@ -14,6 +14,8 @@ export declare const GRID_SET_SORT = "GRID_SET_SORT";
 export declare const GRID_SET_SELECTED_CELLS = "GRID_SET_SELECTED_CELLS";
 export declare const GRID_CREATE_SELECTED_CELLS_SUMMARY = "GRID_CREATE_SELECTED_CELLS_SUMMARY";
 export declare const GRID_SET_SELECTED_CELLS_SUMMARY = "GRID_SET_SELECTED_CELLS_SUMMARY";
+export declare const GRID_FLOATING_FILTER_BAR_SHOW = "GRID_FLOATING_FILTER_BAR_SHOW";
+export declare const GRID_FLOATING_FILTER_BAR_HIDE = "GRID_FLOATING_FILTER_BAR_HIDE";
 export interface GridSetColumnsAction extends Redux.Action {
     Columns: IColumn[];
 }
@@ -44,6 +46,10 @@ export interface GridCreateSelectedCellSummaryAction extends Redux.Action {
 export interface GridSetSelectedCellSummaryAction extends Redux.Action {
     SelectedCellSummary: ISelectedCellSummmary;
 }
+export interface FloatingFilterBarShowAction extends Redux.Action {
+}
+export interface FloatingFilterBarHideAction extends Redux.Action {
+}
 export declare const GridSetColumns: (Columns: IColumn[]) => GridSetColumnsAction;
 export declare const GridAddColumn: (Column: IColumn) => GridAddColumnAction;
 export declare const GridHideColumn: (ColumnId: string) => GridHideColumnAction;
@@ -53,4 +59,6 @@ export declare const GridSetSort: (GridSorts: IGridSort[]) => GridSetSortAction;
 export declare const GridSetSelectedCells: (SelectedCellInfo: ISelectedCellInfo) => GridSetSelectedCellsAction;
 export declare const GridCreateSelectedCellSummary: () => GridCreateSelectedCellSummaryAction;
 export declare const GridSetSelectedCellSummary: (SelectedCellSummary: ISelectedCellSummmary) => GridSetSelectedCellSummaryAction;
+export declare const FloatingilterBarShow: () => FloatingFilterBarShowAction;
+export declare const FloatingFilterBarHide: () => FloatingFilterBarHideAction;
 export declare const GridReducer: Redux.Reducer<GridState>;

@@ -145,13 +145,12 @@ class ExpressionBuilderConditionSelector extends React.Component {
         let selectedColumnFriendlyName = (selectedColumn) ? selectedColumn.FriendlyName : "";
         // get filter names
         // first system filters
-        let availableFilterNames = [];
-        FilterHelper_1.FilterHelper.GetSystemFiltersForColumn(selectedColumn, this.props.SystemFilters).forEach((sf) => {
-            availableFilterNames.push(sf);
+        let availableSystemFilterNames = FilterHelper_1.FilterHelper.GetSystemFiltersForColumn(selectedColumn, this.props.SystemFilters).map(sf => {
+            return sf;
         });
         // then user filters
-        FilterHelper_1.FilterHelper.GetUserFiltersForColumn(selectedColumn, this.props.UserFilters).forEach((uf) => {
-            availableFilterNames.push(uf.Name);
+        let availableUserFilterNames = FilterHelper_1.FilterHelper.GetUserFiltersForColumn(selectedColumn, this.props.UserFilters).map(uf => {
+            return uf.Name;
         });
         // get the help descriptions
         let firstTimeText = "Start creating the query by selecting a column below.";
@@ -189,7 +188,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                                                 :
                                                     React.createElement(ExpressionBuilderColumnValues_1.ExpressionBuilderColumnValues, { cssClassName: cssClassName, ColumnValues: this.state.ColumnRawValueDisplayValuePairs, SelectedValues: this.state.SelectedColumnDisplayValues, onColumnValuesChange: (selectedValues) => this.onSelectedColumnValuesChange(selectedValues) }))),
                                         React.createElement(react_bootstrap_1.Tab.Pane, { eventKey: Enums_1.QueryTab.Filter }, this.state.SelectedTab == Enums_1.QueryTab.Filter &&
-                                            React.createElement(ExpressionBuilderUserFilter_1.ExpressionBuilderUserFilter, { cssClassName: cssClassName, AvailableFilterNames: availableFilterNames, SelectedFilterNames: this.state.SelectedFilterExpressions, onFilterNameChange: (selectedValues) => this.onSelectedFiltersChanged(selectedValues) })),
+                                            React.createElement(ExpressionBuilderUserFilter_1.ExpressionBuilderUserFilter, { cssClassName: cssClassName, AvailableSystemFilterNames: availableSystemFilterNames, AvailableUserFilterNames: availableUserFilterNames, SelectedFilterNames: this.state.SelectedFilterExpressions, onFilterNameChange: (selectedValues) => this.onSelectedFiltersChanged(selectedValues) })),
                                         React.createElement(react_bootstrap_1.Tab.Pane, { eventKey: Enums_1.QueryTab.Range }, this.state.SelectedTab == Enums_1.QueryTab.Range &&
                                             React.createElement(ExpressionBuilderRanges_1.ExpressionBuilderRanges, { cssClassName: cssClassName, SelectedColumn: selectedColumn, Ranges: this.state.SelectedColumnRanges, Columns: this.props.ColumnsList, onRangesChange: (ranges) => this.onSelectedColumnRangesChange(ranges) }))))))));
     }

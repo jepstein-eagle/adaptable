@@ -67,6 +67,7 @@ export interface GridState extends ISystemState {
     GridSorts: IGridSort[];
     SelectedCellInfo: ISelectedCellInfo;
     SelectedCellSummary: ISelectedCellSummmary;
+    IsFloatingFilterActive: boolean;
 }
 export interface MenuState extends ISystemState {
     MenuItems: IMenuItem[];

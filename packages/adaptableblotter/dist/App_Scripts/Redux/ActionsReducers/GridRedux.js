@@ -10,6 +10,8 @@ exports.GRID_SET_SORT = 'GRID_SET_SORT';
 exports.GRID_SET_SELECTED_CELLS = 'GRID_SET_SELECTED_CELLS';
 exports.GRID_CREATE_SELECTED_CELLS_SUMMARY = 'GRID_CREATE_SELECTED_CELLS_SUMMARY';
 exports.GRID_SET_SELECTED_CELLS_SUMMARY = 'GRID_SET_SELECTED_CELLS_SUMMARY';
+exports.GRID_FLOATING_FILTER_BAR_SHOW = 'GRID_FLOATING_FILTER_BAR_SHOW';
+exports.GRID_FLOATING_FILTER_BAR_HIDE = 'GRID_FLOATING_FILTER_BAR_HIDE';
 exports.GridSetColumns = (Columns) => ({
     type: exports.GRID_SET_COLUMNS,
     Columns
@@ -46,11 +48,18 @@ exports.GridSetSelectedCellSummary = (SelectedCellSummary) => ({
     type: exports.GRID_SET_SELECTED_CELLS_SUMMARY,
     SelectedCellSummary
 });
+exports.FloatingilterBarShow = () => ({
+    type: exports.GRID_FLOATING_FILTER_BAR_SHOW
+});
+exports.FloatingFilterBarHide = () => ({
+    type: exports.GRID_FLOATING_FILTER_BAR_HIDE
+});
 const initialGridState = {
     Columns: GeneralConstants_1.EMPTY_ARRAY,
     GridSorts: GeneralConstants_1.EMPTY_ARRAY,
     SelectedCellInfo: null,
-    SelectedCellSummary: null
+    SelectedCellSummary: null,
+    IsFloatingFilterActive: false
 };
 exports.GridReducer = (state = initialGridState, action) => {
     switch (action.type) {
@@ -67,6 +76,10 @@ exports.GridReducer = (state = initialGridState, action) => {
             return Object.assign({}, state, { SelectedCellInfo: action.SelectedCellInfo });
         case exports.GRID_SET_SELECTED_CELLS_SUMMARY:
             return Object.assign({}, state, { SelectedCellSummary: action.SelectedCellSummary });
+        case exports.GRID_FLOATING_FILTER_BAR_SHOW:
+            return Object.assign({}, state, { IsFloatingFilterActive: true });
+        case exports.GRID_FLOATING_FILTER_BAR_HIDE:
+            return Object.assign({}, state, { IsFloatingFilterActive: false });
         default:
             return state;
     }

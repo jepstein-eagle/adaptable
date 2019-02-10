@@ -39,6 +39,8 @@ export declare const CONFIGURE_BUTTON: string;
 export declare const CONDITION_BUTTON: string;
 export declare const DELETE_BUTTON: string;
 export declare const EDIT_BUTTON: string;
+export declare const SHOW_BUTTON: string;
+export declare const HIDE_BUTTON: string;
 export declare const SHOW_CHARTS_BUTTON: string;
 export declare const SAVE_BUTTON: string;
 export declare const SHARE_BUTTON: string;

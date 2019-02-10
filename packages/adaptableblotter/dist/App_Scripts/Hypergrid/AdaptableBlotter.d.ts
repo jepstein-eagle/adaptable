@@ -130,7 +130,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     isSortable(): boolean;
     private isColumnFilterable;
     hasFloatingFilter(): boolean;
-    isFloatingFilterActive(): boolean;
     showFloatingFilter(): void;
     hideFloatingFilter(): void;
     applyLightTheme(): void;

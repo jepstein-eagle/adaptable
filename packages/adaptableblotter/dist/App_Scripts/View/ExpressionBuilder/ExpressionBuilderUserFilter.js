@@ -5,12 +5,18 @@ const react_bootstrap_1 = require("react-bootstrap");
 class ExpressionBuilderUserFilter extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__queryuserfilters";
-        var userFilterNames = this.props.AvailableFilterNames.map((uf, index) => {
-            return React.createElement(react_bootstrap_1.ListGroupItem, { key: index, bsSize: "xsmall", onClick: () => this.onClickColum(uf), active: this.props.SelectedFilterNames.find(f => f == uf) }, uf);
+        var systemFilterNames = this.props.AvailableSystemFilterNames.map((sf, index) => {
+            return React.createElement(react_bootstrap_1.ListGroupItem, { key: index, bsSize: "xsmall", onClick: () => this.onClickColum(sf), active: this.props.SelectedFilterNames.find(f => f == sf) }, sf);
+        });
+        var userFilterNames = this.props.AvailableUserFilterNames.map((uf, index) => {
+            return React.createElement(react_bootstrap_1.ListGroupItem, { key: index, bsSize: "xsmall", onClick: () => this.onClickColum(uf), active: this.props.SelectedFilterNames.find(f => f == uf) },
+                React.createElement("i", null, uf));
         });
         return React.createElement("div", { className: cssClassName },
             React.createElement(react_bootstrap_1.Panel, { className: "ab_no-padding-anywhere-panel", style: divStyle },
-                React.createElement(react_bootstrap_1.ListGroup, null, userFilterNames)));
+                React.createElement(react_bootstrap_1.ListGroup, null,
+                    systemFilterNames,
+                    userFilterNames)));
     }
     onClickColum(filterName) {
         let newArray = [];

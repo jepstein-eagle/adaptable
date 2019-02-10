@@ -47,6 +47,10 @@ var ArrayExtensions;
         return ArrayExtensions.IsNotNull(arrayToCheck) && ArrayExtensions.IsNotEmpty(arrayToCheck);
     }
     ArrayExtensions.IsNotNullOrEmpty = IsNotNullOrEmpty;
+    function HasOneItem(arrayToCheck) {
+        return arrayToCheck.length == 1;
+    }
+    ArrayExtensions.HasOneItem = HasOneItem;
     function moveArray(array, from, to) {
         array.splice(to, 0, array.splice(from, 1)[0]);
     }

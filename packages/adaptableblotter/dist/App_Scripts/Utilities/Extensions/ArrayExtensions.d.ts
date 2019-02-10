@@ -9,6 +9,7 @@ export declare module ArrayExtensions {
     function IsNotEmpty(arrayToCheck: any[]): boolean;
     function IsNullOrEmpty(arrayToCheck: any[]): boolean;
     function IsNotNullOrEmpty(arrayToCheck: any[]): boolean;
+    function HasOneItem(arrayToCheck: any[]): boolean;
     function moveArray(array: any[], from: number, to: number): void;
     function areArraysEqual(arr1: any[], arr2: any[]): boolean;
     function areArraysEqualWithOrder(arr1: any[], arr2: any[]): boolean;

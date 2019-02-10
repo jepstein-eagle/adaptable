@@ -13,6 +13,7 @@ const ConditionalStylePopup_1 = require("./ConditionalStyle/ConditionalStylePopu
 const QuickSearchPopup_1 = require("./QuickSearch/QuickSearchPopup");
 const QuickSearchToolbarControl_1 = require("./QuickSearch/QuickSearchToolbarControl");
 const ColumnFilterToolbarControl_1 = require("./ColumnFilter/ColumnFilterToolbarControl");
+const ThemeToolbarControl_1 = require("./Theme/ThemeToolbarControl");
 const ApplicationToolbarControl_1 = require("./Application/ApplicationToolbarControl");
 const AdvancedSearchPopup_1 = require("./AdvancedSearch/AdvancedSearchPopup");
 const AdvancedSearchToolbarControl_1 = require("./AdvancedSearch/AdvancedSearchToolbarControl");
@@ -100,6 +101,7 @@ exports.AdaptableDashboardViewFactory = new Map([
     [StrategyConstants.SelectedCellsStrategyId, SelectedCellsToolbarControl_1.SelectedCellsToolbarControl],
     [StrategyConstants.AlertStrategyId, AlertToolbarControl_1.AlertToolbarControl],
     [StrategyConstants.ChartStrategyId, ChartToolbarControl_1.ChartToolbarControl],
+    [StrategyConstants.ThemeStrategyId, ThemeToolbarControl_1.ThemeToolbarControl],
 ]);
 exports.AdaptableDashboardPermanentToolbarFactory = new Map([
     [StrategyConstants.HomeStrategyId, HomeToolbarControl_1.HomeToolbarControl],

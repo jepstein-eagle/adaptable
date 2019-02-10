@@ -307,7 +307,7 @@ class AdaptableBlotter {
             this.createFilterWrapper(vendorColumn);
         }
         if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
-            this.createFloatingFilterWrapper(vendorColumn);
+            //    this.createFloatingFilterWrapper(vendorColumn);
         }
     }
     getQuickSearchClassName() {
@@ -1262,6 +1262,29 @@ class AdaptableBlotter {
             }
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
+        //    let testToolPanel  =   CustomStatsToolPanel();
+        //  console.log(testToolPanel)
+        /*
+        let abToolPanel: any = {
+        id: 'customStats',
+        labelDefault: 'Custom Stats',
+        labelKey: 'customStats',
+        iconKey: 'custom-stats',
+        component: testToolPanel,
+        }
+
+        console.log(abToolPanel);
+
+      let sidebarDef: SideBarDef =  this.gridOptions.sideBar as SideBarDef;
+      sidebarDef.toolPanels.push(abToolPanel);
+      sidebarDef.defaultToolPanel = "customStats"
+
+      console.log(this.gridOptions.sideBar)
+
+   let components: any =   this.gridOptions.components;
+   console.log(components);
+
+*/
         // add any special renderers
         let percentBars = this.getState().PercentBar.PercentBars;
         percentBars.forEach(pcr => {
@@ -1478,24 +1501,26 @@ class AdaptableBlotter {
         return false;
     }
     hasFloatingFilter() {
-        return true;
+        // this is wrong = come from state!j
+        return true; // is this right or should it be only if its not null?  need to think through...
     }
     isFloatingFilterActive() {
-        return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter;
+        return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter;
     }
     showFloatingFilter() {
-        this.gridOptions.floatingFilter = true;
-        this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-            this.createFloatingFilterWrapper(col);
-        });
-        this.gridOptions.api.refreshHeader();
+        if (this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
+            this.gridOptions.floatingFilter = true;
+            this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+                this.createFloatingFilterWrapper(col);
+            });
+            this.gridOptions.api.refreshHeader();
+        }
     }
     hideFloatingFilter() {
-        this.gridOptions.floatingFilter = false;
-        //   this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
-        //       this.deleteFloatingFilterWrapper(col);
-        //   });
-        this.gridOptions.api.refreshHeader();
+        if (this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
+            this.gridOptions.floatingFilter = false;
+            this.gridOptions.api.refreshHeader();
+        }
     }
     applyLightTheme() {
         if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.containerOptions.vendorContainer)) {
@@ -1528,6 +1553,7 @@ class AdaptableBlotter {
         }
         // sometimes the header row looks wrong when using floating filter so to be sure...
         if (this.isFloatingFilterActive()) {
+            this.dispatchAction(GridRedux.FloatingilterBarShow());
             this.gridOptions.api.refreshHeader();
         }
         // if user layout and a percent bar sometimes the first few cells are pre-rendered so we frig it like this

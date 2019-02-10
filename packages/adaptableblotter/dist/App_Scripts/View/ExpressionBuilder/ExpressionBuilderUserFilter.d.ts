@@ -1,6 +1,7 @@
 import * as React from "react";
 export interface ExpressionBuilderUserFilterProps extends React.ClassAttributes<ExpressionBuilderUserFilter> {
-    AvailableFilterNames: Array<string>;
+    AvailableSystemFilterNames: Array<string>;
+    AvailableUserFilterNames: Array<string>;
     SelectedFilterNames: Array<string>;
     onFilterNameChange: (selectedFilterNames: Array<string>) => void;
     cssClassName: string;
