@@ -100,7 +100,7 @@ function InitTradeBlotter() {
       userName: "demo user", // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
 
-     //   predefinedConfig: "citiConfig.json",
+     //   predefinedConfig: "themetest.json",
 
       auditOptions: {
         //     auditCellEdits: true,

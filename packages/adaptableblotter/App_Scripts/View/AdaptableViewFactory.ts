@@ -11,6 +11,7 @@ import { ConditionalStylePopup } from './ConditionalStyle/ConditionalStylePopup'
 import { QuickSearchPopup } from './QuickSearch/QuickSearchPopup'
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl'
 import { ColumnFilterToolbarControl } from './ColumnFilter/ColumnFilterToolbarControl'
+import { ThemeToolbarControl } from './Theme/ThemeToolbarControl'
 import { ApplicationToolbarControl } from './Application/ApplicationToolbarControl'
 import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup'
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl'
@@ -101,6 +102,7 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyConstants.SelectedCellsStrategyId, SelectedCellsToolbarControl],
   [StrategyConstants.AlertStrategyId, AlertToolbarControl],
   [StrategyConstants.ChartStrategyId, ChartToolbarControl],
+  [StrategyConstants.ThemeStrategyId, ThemeToolbarControl],
 ]);
 
 export const AdaptableDashboardPermanentToolbarFactory = new Map<string, React.ComponentClass<any>>([

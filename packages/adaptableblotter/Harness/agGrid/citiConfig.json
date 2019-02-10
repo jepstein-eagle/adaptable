@@ -9,8 +9,14 @@
 					"bidOfferSpread"
 				],
 				"GridSorts": [],
-				"Name": "Citi Price"	
+				"Name": "Citi Price"
 			}
+		]
+	},
+	"Theme": {
+		"UserThemes": [
+			"Hello",
+			"Goodbye"
 		]
 	},
 	"Entitlements": {
