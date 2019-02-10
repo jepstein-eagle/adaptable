@@ -1,6 +1,7 @@
 import { IToolPanel, IToolPanelParams, IToolPanelComp } from "ag-grid-community"
 import { AdaptableBlotter, } from './AdaptableBlotter'
 
+/* At the moment this does NOT work and does NOT get called */
 
 export let ToolPanelWrapperFactory = (blotter: AdaptableBlotter) => {
     return <any>class ToolPanelWrapper implements IToolPanelComp  {
