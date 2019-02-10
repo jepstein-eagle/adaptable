@@ -74,7 +74,8 @@ function InitTradeBlotter() {
     floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
-  //  sideBar: true, // this puts in filters and columns by default
+    sideBar: true, // this puts in filters and columns by default
+  /*
     sideBar: {
       toolPanels: [
         {
@@ -101,7 +102,7 @@ function InitTradeBlotter() {
       ],
       defaultToolPanel: 'customStats'
     },
-  
+  */
     columnTypes: { // not required but helpful for column data type identification
       "abColDefNumber": {},
       "abColDefString": {},
@@ -109,9 +110,9 @@ function InitTradeBlotter() {
       "abColDefDate": {},
       "abColDefObject": {},
     },
-    components: {
-      customStatsToolPanel: CustomStatsToolPanel
-    }
+//    components: {
+ //     customStatsToolPanel: CustomStatsToolPanel
+ //   }
   };
 
   // Create and instantiate an ag-Grid object
