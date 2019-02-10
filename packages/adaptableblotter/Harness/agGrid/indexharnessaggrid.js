@@ -74,13 +74,43 @@ function InitTradeBlotter() {
     floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
-    sideBar: true, // this puts in filters and columns by default
+  //  sideBar: true, // this puts in filters and columns by default
+    sideBar: {
+      toolPanels: [
+        {
+          id: 'columns',
+          labelDefault: 'Columns',
+          labelKey: 'columns',
+          iconKey: 'columns',
+          toolPanel: 'agColumnsToolPanel',
+        },
+        {
+          id: 'filters',
+          labelDefault: 'Filters',
+          labelKey: 'filters',
+          iconKey: 'filter',
+          toolPanel: 'agFiltersToolPanel',
+        },
+        {
+          id: 'customStats',
+          labelDefault: 'Custom Stats',
+          labelKey: 'customStats',
+          iconKey: 'custom-stats',
+          toolPanel: 'customStatsToolPanel',
+        }
+      ],
+      defaultToolPanel: 'customStats'
+    },
+  
     columnTypes: { // not required but helpful for column data type identification
       "abColDefNumber": {},
       "abColDefString": {},
       "abColDefBoolean": {},
       "abColDefDate": {},
       "abColDefObject": {},
+    },
+    components: {
+      customStatsToolPanel: CustomStatsToolPanel
     }
   };
 

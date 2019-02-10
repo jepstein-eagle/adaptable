@@ -9,7 +9,7 @@ import { ColumnHelper } from "../Utilities/Helpers/ColumnHelper";
 
 
 export let FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) => {
-    return <any>class FilterWrapper implements IFloatingFilterComp<any, any, any> {
+    return <any>class FloatingFilterWrapper implements IFloatingFilterComp<any, any, any> {
         private filterContainer: HTMLSpanElement
         init(params: IFloatingFilterParams<any, any>): void {
             let colId = params.column.getColId()

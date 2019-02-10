@@ -48,7 +48,7 @@ import { ChartStrategy } from '../Strategy/ChartStrategy';
 import { PercentBarStrategy } from '../Strategy/PercentBarStrategy';
 import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 // components
-import { FilterWrapperFactory } from './FilterWrapper'
+import { FilterWrapperFactory } from './FilterWrapper';
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 // import other items
 import { EventDispatcher } from '../Utilities/EventDispatcher'
@@ -88,7 +88,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 
 // ag-Grid
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, ICellRendererParams, RefreshCellsParams } from "ag-grid-community"
+import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, ICellRendererParams, RefreshCellsParams, SideBarDef, IToolPanel, IToolPanelComp, ToolPanelDef, IComponent } from "ag-grid-community"
 import { Events } from "ag-grid-community/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid-community/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid-community/dist/lib/entities/gridOptions"
@@ -125,6 +125,8 @@ import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { agGridHelper } from './agGridHelper';
+import { ToolPanelWrapperFactory } from './ToolPanelWrapper';
+import { CustomStatsToolPanel } from './customStatsToolPanel';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -1481,6 +1483,32 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
 
+        
+    //    let testToolPanel  =   CustomStatsToolPanel();
+      //  console.log(testToolPanel)
+
+        /*
+        let abToolPanel: any = {
+        id: 'customStats',
+        labelDefault: 'Custom Stats',
+        labelKey: 'customStats',
+        iconKey: 'custom-stats',
+        component: testToolPanel,
+        }
+
+        console.log(abToolPanel);
+
+      let sidebarDef: SideBarDef =  this.gridOptions.sideBar as SideBarDef;
+      sidebarDef.toolPanels.push(abToolPanel);
+      sidebarDef.defaultToolPanel = "customStats"
+
+      console.log(this.gridOptions.sideBar)
+
+   let components: any =   this.gridOptions.components;
+   console.log(components);
+
+*/
+
         // add any special renderers
         let percentBars: IPercentBar[] = this.getState().PercentBar.PercentBars;
         percentBars.forEach(pcr => {
@@ -1531,6 +1559,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.Strategies.forEach(strat => strat.InitializeWithRedux());
 
             });
+
+            
     }
 
     public addPercentBar(pcr: IPercentBar): void {
@@ -1803,6 +1833,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // playing here but seeing if we can update an agGrid option
         //this.gridOptions.suppressMenuHide= true;
 
+      
         // at the end so load the current layout, refresh the toolbar and turn off the loading message
         this.api.layoutApi.Set(currentlayout);
     }
