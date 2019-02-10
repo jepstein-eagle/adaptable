@@ -4,7 +4,8 @@ import { ListGroupItem, ListGroup, Panel } from 'react-bootstrap';
 
 // this just takes a list of filter names - doesnt care if they are system or user
 export interface ExpressionBuilderUserFilterProps extends React.ClassAttributes<ExpressionBuilderUserFilter> {
-    AvailableFilterNames: Array<string>
+    AvailableSystemFilterNames: Array<string>
+    AvailableUserFilterNames: Array<string>
     SelectedFilterNames: Array<string>
     onFilterNameChange: (selectedFilterNames: Array<string>) => void
     cssClassName: string
@@ -15,22 +16,30 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
 
     render(): any {
         let cssClassName: string = this.props.cssClassName + "__queryuserfilters"
-       
-        var userFilterNames = this.props.AvailableFilterNames.map((uf: string, index: number) => {
+
+        var systemFilterNames = this.props.AvailableSystemFilterNames.map((sf: string, index: number) => {
+            return <ListGroupItem key={index} bsSize={"xsmall"}
+                onClick={() => this.onClickColum(sf)}
+                active={this.props.SelectedFilterNames.find(f => f == sf)}>
+                {sf}
+            </ListGroupItem>
+        })
+
+        var userFilterNames = this.props.AvailableUserFilterNames.map((uf: string, index: number) => {
             return <ListGroupItem key={index} bsSize={"xsmall"}
                 onClick={() => this.onClickColum(uf)}
-                active={this.props.SelectedFilterNames.find(f => f ==uf)}>
-
-                {uf}
+                active={this.props.SelectedFilterNames.find(f => f == uf)}>
+                <i>{uf}</i>
             </ListGroupItem>
         })
 
         return <div className={cssClassName}>
-        <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
-            <ListGroup  >
-                {userFilterNames}
-            </ListGroup>
-        </Panel>
+            <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
+                <ListGroup  >
+                    {systemFilterNames}
+                    {userFilterNames}
+                </ListGroup>
+            </Panel>
         </div>
     }
 

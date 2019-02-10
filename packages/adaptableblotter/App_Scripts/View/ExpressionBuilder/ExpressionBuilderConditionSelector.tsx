@@ -188,14 +188,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
 
         // get filter names
         // first system filters
-        let availableFilterNames: string[] = []
-        FilterHelper.GetSystemFiltersForColumn(selectedColumn, this.props.SystemFilters).forEach((sf: string) => {
-            availableFilterNames.push(sf)
+        let availableSystemFilterNames: string[] =        FilterHelper.GetSystemFiltersForColumn(selectedColumn, this.props.SystemFilters).map(sf => {
+           return sf;
         })
+
         // then user filters
-        FilterHelper.GetUserFiltersForColumn(selectedColumn, this.props.UserFilters).forEach((uf: IUserFilter) => {
-            availableFilterNames.push(uf.Name)
+        let availableUserFilterNames: string[]=  FilterHelper.GetUserFiltersForColumn(selectedColumn, this.props.UserFilters).map(uf=>{
+            return uf.Name
         })
+       
 
         // get the help descriptions
         let firstTimeText: string = "Start creating the query by selecting a column below."
@@ -283,7 +284,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                                                 {this.state.SelectedTab == QueryTab.Filter &&
                                                     <ExpressionBuilderUserFilter
                                                         cssClassName={cssClassName}
-                                                        AvailableFilterNames={availableFilterNames}
+                                                        AvailableSystemFilterNames={availableSystemFilterNames}
+                                                        AvailableUserFilterNames={availableUserFilterNames}
                                                         SelectedFilterNames={this.state.SelectedFilterExpressions}
                                                         onFilterNameChange={(selectedValues) => this.onSelectedFiltersChanged(selectedValues)} >
                                                     </ExpressionBuilderUserFilter>
