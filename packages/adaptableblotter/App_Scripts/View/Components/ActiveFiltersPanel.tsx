@@ -26,10 +26,10 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
         var activeFilters = this.props.ColumnFilters.map((columnFilter: IColumnFilter, index: number) => {
             return <tr key={index} >
                 <td>{ColumnHelper.getFriendlyNameFromColumnId(columnFilter.ColumnId, this.props.Columns)}</td>
-                <td colSpan={2}>{ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns, false)}</td>
+                <td colSpan={2}> {ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns, false)}</td>
 
                 <td>
-                    <span>
+                    <span style={{alignContent: "right"}}>
                         <ButtonSave cssClassName={this.props.cssClassName}
                             onClick={() => this.props.onSaveColumnFilterasUserFilter(columnFilter)}
                             overrideTooltip="Save as User Filter"
@@ -43,7 +43,7 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
                         <ButtonClear cssClassName={this.props.cssClassName}
                             onClick={() => this.props.onClear(columnFilter)}
                             overrideTooltip="Clear Column Filter"
-                            bsStyle={StyleConstants.DANGER_BSSTYLE}
+                            bsStyle={StyleConstants.DEFAULT_BSSTYLE}
                             DisplayMode="Glyph"
                             size={"xs"}
                             overrideDisableButton={columnFilter == null}
@@ -60,7 +60,7 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
                 <th>Column</th>
                 <th>Filter</th>
                 <th></th>
-                <th style={{minWidth:"70px"}}></th>
+                <th ></th>
             </tr>
         </thead>
 

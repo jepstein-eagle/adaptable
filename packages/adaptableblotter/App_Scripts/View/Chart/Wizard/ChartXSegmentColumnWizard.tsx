@@ -1,22 +1,16 @@
 import * as React from "react";
 import { ControlLabel, FormGroup, Col, Panel, Row, Radio, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
-import { SelectionMode, DistinctCriteriaPairValue } from "../../../Utilities/Enums";
+import { SelectionMode } from "../../../Utilities/Enums";
 import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { IRawValueDisplayValuePair } from "../../UIInterfaces";
-import { SingleListBox } from "../../Components/ListBox/SingleListBox";
-import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
-import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { Expression } from "../../../Utilities/Expression";
 
 export interface ChartXSegmentColumnWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
-    //    ChartDefinitions: IChartDefinition[]
 }
 
 export interface ChartXSegmentColumnWizardState {
@@ -78,7 +72,7 @@ export class ChartXSegmentColumnWizard extends React.Component<ChartXSegmentColu
         this.setState({ UseAllAdditionalColumnValues: showAll } as ChartXSegmentColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
-   
+
     onAdditionalColumnChanged(columns: IColumn[]) {
         let isColumn: boolean = ArrayExtensions.IsNotNullOrEmpty(columns)
         this.setState({
@@ -88,7 +82,7 @@ export class ChartXSegmentColumnWizard extends React.Component<ChartXSegmentColu
     }
 
     public canNext(): boolean {
-        return (StringExtensions.IsNotNullOrEmpty(this.state.AdditionalColumnId))
+        return true;/// its not mandatory.... (StringExtensions.IsNotNullOrEmpty(this.state.AdditionalColumnId))
     }
 
     public canBack(): boolean { return true; }
@@ -98,7 +92,9 @@ export class ChartXSegmentColumnWizard extends React.Component<ChartXSegmentColu
         this.props.Data.XSegmentExpression = (this.state.UseAllAdditionalColumnValues) ? ExpressionHelper.CreateEmptyExpression() : this.state.XSegmentExpression
         if (this.props.Data.XSegmentColumnId != this.state.AdditionalColumnId) {
             this.props.Data.XSegmentExpression = ExpressionHelper.CreateEmptyExpression();
-        }  }
+        }
+    }
+
     public Back(): void {
         // todo
     }

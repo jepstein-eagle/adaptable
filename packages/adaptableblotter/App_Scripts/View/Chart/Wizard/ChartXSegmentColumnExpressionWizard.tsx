@@ -3,12 +3,10 @@ import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilder
 import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { UIHelper } from '../../UIHelper';
 
-
-
 export class ChartXSegmentColumnExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(private props2: ExpressionWizardProps<IChartDefinition>) {
         super(props2)
-        this.state = UIHelper.getExpressionBuilderStateWithColumn(this.props2.Data.XSegmentExpression, this.props2.Data.XAxisColumnId)
+        this.state = UIHelper.getExpressionBuilderStateWithColumn(this.props2.Data.XSegmentExpression, this.props2.Data.XSegmentColumnId)
     }
 
     public Next(): void {
@@ -16,6 +14,4 @@ export class ChartXSegmentColumnExpressionWizard extends ExpressionBuilderPage i
     }
     
     public canBack(): boolean { return true; }
-    
-   
 }

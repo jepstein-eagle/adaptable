@@ -1,7 +1,5 @@
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IChartProperties } from "../Interface/IChartProperties";
 import { IChartDefinition } from "../Interface/BlotterObjects/IChartDefinition";
 import { IColumnValueExpression } from "../Interface/Expression/IColumnValueExpression";
 import { IColumn } from '../Interface/IColumn';
@@ -13,6 +11,7 @@ import { Expression } from '../../Utilities/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { AxisTotal } from '../ChartEnums';
 import { Helper } from '../Helpers/Helper';
+import { StringExtensions } from '../Extensions/StringExtensions';
 
 
 export class ChartService implements IChartService {
@@ -22,22 +21,11 @@ export class ChartService implements IChartService {
 
     public BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any {
 
-        //  let yAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.YAxisColumnIds[0], columns)
         let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns)
 
-        let xAxisColValues: string[] = [];
-        if (ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
-            xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
-        } else {
-            this.blotter.forAllRecordsDo((row) => {
-                if (ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XAxisExpression, row, columns, this.blotter)) {
-                    let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XAxisColumnId)
-                    ArrayExtensions.AddItem(xAxisColValues, columnValue);
-                }
-            })
-        }
+        let xAxisColValues: string[] = this.getXAxisColumnValues(chartDefinition, columns);
 
-        let additionalColValues: string[] = this.getAdditionalColumnValues(chartDefinition);
+        let xSegmentColValues: string[] = this.getXSegmentColumnValues(chartDefinition, columns);
 
         let chartData: any = xAxisColValues.map(cv => {
             let chartDataRow: any = new Object()
@@ -46,8 +34,8 @@ export class ChartService implements IChartService {
 
             let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
 
-            if (ArrayExtensions.IsNotEmpty(additionalColValues)) {
-                additionalColValues.forEach((columnValue: string) => {
+            if (ArrayExtensions.IsNotEmpty(xSegmentColValues)) {
+                xSegmentColValues.forEach((columnValue: string) => {
                     let columnValueKVP: IKeyValuePair = { Key: chartDefinition.XSegmentColumnId, Value: columnValue }
                     chartDefinition.YAxisColumnIds.forEach(colID => {
                         let colFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns)
@@ -98,14 +86,36 @@ export class ChartService implements IChartService {
         return Helper.RoundNumberTo4dp(finalTotal);
     }
 
-    private getAdditionalColumnValues(chartDefinition: IChartDefinition): string[] {
-     // todo: leave this for tonight but it should just be an expression, nothing else...
-//        if (ArrayExtensions.IsNullOrEmpty(chartDefinition.AdditionalColumnValues)) {
- //           return []
- //       }
- //       return chartDefinition.AdditionalColumnValues.length > 0 && chartDefinition.AdditionalColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES ?
-   ///         chartDefinition.AdditionalColumnValues :
-    //        this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.AdditionalColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
-return [];
+    private getXAxisColumnValues(chartDefinition: IChartDefinition, columns: IColumn[]): string[] {
+        let xAxisColValues: string[] = [];
+        if (ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
+            xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
+        } else {
+            this.blotter.forAllRecordsDo((row) => {
+                if (ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XAxisExpression, row, columns, this.blotter)) {
+                    let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XAxisColumnId)
+                    ArrayExtensions.AddItem(xAxisColValues, columnValue);
+                }
+            })
+        }
+        return xAxisColValues;
+    }
+
+    private getXSegmentColumnValues(chartDefinition: IChartDefinition, columns: IColumn[]): string[] {
+        let xSegmentColValues: string[] = [];
+        if (StringExtensions.IsNullOrEmpty(chartDefinition.XSegmentColumnId)) {
+            return xSegmentColValues;
+        }
+        if (ExpressionHelper.IsEmptyExpression(chartDefinition.XSegmentExpression)) {
+            xSegmentColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XSegmentColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
+        } else {
+            this.blotter.forAllRecordsDo((row) => {
+                if (ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XSegmentExpression, row, columns, this.blotter)) {
+                    let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XSegmentColumnId)
+                    ArrayExtensions.AddItem(xSegmentColValues, columnValue);
+                }
+            })
+        }
+        return xSegmentColValues;
     }
 }

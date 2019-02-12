@@ -1,11 +1,9 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
-import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 import { Expression } from "../../../Utilities/Expression";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
@@ -30,8 +28,8 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
             { Key: "Total", Value: this.props.Data.YAxisTotal },
             { Key: "X Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId, this.props.Columns) },
             { Key: "X Axis Values", Value: this.getExpressionString(this.props.Data.XAxisExpression) },
-            { Key: "Additional Column", Value: (this.props.Data.XSegmentColumnId) ? ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XSegmentColumnId, this.props.Columns) : "None" },
-            { Key: "Additional Column Values", Value: this.getExpressionString(this.props.Data.XSegmentExpression) },
+            { Key: "X Segment Column", Value: (this.props.Data.XSegmentColumnId) ? ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XSegmentColumnId, this.props.Columns) : "[None]" },
+            { Key: "X Segment Column Values", Value: (this.props.Data.XSegmentColumnId) ? this.getExpressionString(this.props.Data.XSegmentExpression) : "[None]" },
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.ChartStrategyName} />
@@ -40,17 +38,9 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
         </div>
     }
 
-    private getColumnValuesList(columnValueArray: string[]): string {
-        if (columnValueArray[0] == GeneralConstants.ALL_COLUMN_VALUES) {
-            return "All Column Values"
-        } else {
-            return columnValueArray.join(', ')
-        }
-    }
-
     private getExpressionString(expression: Expression): string {
         if (ExpressionHelper.IsEmptyExpression(expression)) {
-            return "All Column Values"
+            return "[All Column Values]"
         } else {
             return ExpressionHelper.ConvertExpressionToString(expression, this.props.Columns, false)
         }

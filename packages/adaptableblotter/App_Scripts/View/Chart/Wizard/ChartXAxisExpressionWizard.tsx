@@ -3,8 +3,6 @@ import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilder
 import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { UIHelper } from '../../UIHelper';
 
-
-
 export class ChartXAxisExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(private props2: ExpressionWizardProps<IChartDefinition>) {
         super(props2)
@@ -17,5 +15,4 @@ export class ChartXAxisExpressionWizard extends ExpressionBuilderPage implements
     
     public canBack(): boolean { return true; }
     
-   
 }

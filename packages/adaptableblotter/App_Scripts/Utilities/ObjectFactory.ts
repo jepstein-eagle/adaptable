@@ -46,6 +46,8 @@ export module ObjectFactory {
             YAxisTotal: CHART_DEFAULT_YAXIS_TOTAL,
             XAxisColumnId: EMPTY_STRING,
             XAxisExpression: ExpressionHelper.CreateEmptyExpression(),
+            XSegmentColumnId: EMPTY_STRING,
+            XSegmentExpression: ExpressionHelper.CreateEmptyExpression(),
             ChartProperties: DefaultChartProperties
         }
     }

@@ -55,52 +55,48 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
                     <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
 
                         <div className={cssClassName}>
-                        <PanelWithImage
-                                    cssClassName={cssClassName}
-                                    header={header}
-                                    bsStyle={style} 
-                                    glyphicon={glyph}
-                                    bsSize={"small"}
-                                >
-                            <div>
-                                 <div style={{ display: "flex", alignItems: "center" }}>
-                                    {this.props.Msg.split("\n").map(function (item, index) {
-                                        return (
-                                            <ControlLabel key={index}>
-                                                {item}
-                                                <br />
-                                            </ControlLabel>
-                                        )
-                                    })}
-                                </div>
-                                {this.props.ShowInputBox &&
-                                    <div style={{ marginTop: '20px' }}>
-                                       <span>Please enter a comment to confirm</span>
-                                       <br/>
-                                        <FormControl style={{ marginTop: '20px' }}
-                                            value={this.state.PromptText}
-                                            type="string"
-                                            placeholder="Enter text"
-                                            onChange={(e) => this.changeContent(e)} />
+                            <PanelWithImage
+                                cssClassName={cssClassName}
+                                header={header}
+                                bsStyle={style}
+                                glyphicon={glyph}
+                                bsSize={"small"}
+                            >
+                                <div>
+                                    <div style={{ display: "flex", alignItems: "center" }}>
+                                        {this.props.Msg.split("\n").map(function (item, index) {
+                                            return (
+                                                <ControlLabel key={index}>
+                                                    {item}
+                                                    <br />
+                                                </ControlLabel>
+                                            )
+                                        })}
                                     </div>
-                                }
-                                <div style={{ marginTop: '20px' }}>
-                                    <Row >
-                                        <Col xs={5} >
-                                            <Button
+                                    {this.props.ShowInputBox &&
+                                        <div style={{ marginTop: '20px' }}>
+                                            <span>Please enter a comment to confirm</span>
+                                            <br />
+                                            <FormControl style={{ marginTop: '20px' }}
+                                                value={this.state.PromptText}
+                                                type="string"
+                                                placeholder="Enter text"
+                                                onChange={(e) => this.changeContent(e)} />
+                                        </div>
+                                    }
+                                    <div style={{ marginTop: '20px' }}>
+                                        <Row >
+                                        <Button style={{ float: "left", marginLeft: "15px" }}
                                                 bsStyle={StyleConstants.PRIMARY_BSSTYLE} className={cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CONFIRM_BUTTON}
                                                 disabled={!this.canConfirm()}
                                                 onClick={() => this.onConfirmmForm()}>{this.props.ConfirmButtonText}</Button>
-                                        </Col>
-                                        <Col xs={2}></Col>
-                                        <Col xs={5} >
-                                            <Button
+                                            <Button style={{ float: "right", marginRight: "15px" }}
                                                 bsStyle={StyleConstants.DEFAULT_BSSTYLE} className={cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CANCEL_BUTTON}
                                                 onClick={() => this.onCancelForm()}>{this.props.CancelButtonText}</Button>
-                                        </Col>
-                                    </Row>
+
+                                        </Row>
+                                    </div>
                                 </div>
-                            </div>
                             </PanelWithImage>
                         </div>
                     </Modal.Body>
