@@ -57,5 +57,5 @@ export class LayoutColumnWizard extends React.Component<LayoutColumnWizardProps,
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }   

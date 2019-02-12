@@ -54,7 +54,7 @@ export class FreeTextColumnSummaryWizard extends React.Component<FreeTextColumnS
         return 1;
     }
 
-    public StepName = this.props.StepName
+   
 
 }
 

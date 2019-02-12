@@ -68,5 +68,5 @@ export class CalculatedColumnSettingsWizard extends React.Component<CalculatedCo
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }

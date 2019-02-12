@@ -8,7 +8,7 @@ export interface IChartDefinition extends IAdaptableBlotterObject {
   YAxisTotal: 'Sum' | 'Average';
   XAxisColumnId: string;
   XAxisExpression: Expression;
-  AdditionalColumnId?: string;
-  AdditionalColumnValues?: string[];
+  XSegmentColumnId?: string;
+  XSegmentExpression?: Expression;
   ChartProperties: IChartProperties;
 }

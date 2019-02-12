@@ -222,6 +222,6 @@ export class PercentBarValuesWizard extends React.Component<PercentBarValuesWiza
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

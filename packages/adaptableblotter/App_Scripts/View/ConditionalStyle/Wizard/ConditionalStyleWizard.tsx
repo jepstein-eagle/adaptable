@@ -18,25 +18,40 @@ export interface ConditionalStyleWizardProps extends IAdaptableBlotterObjectExpr
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Scope", "Style", "Query", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.ConditionalStyleStrategyName}
-                StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
                 Steps={[
-                    <ConditionalStyleScopeWizard StepName={stepNames[0]} ColumnCategories={this.props.ColumnCategories} />,
-                    <ConditionalStyleStyleWizard StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
-                    <ConditionalStyleExpressionWizard
-                        StepName={stepNames[2]}
-                        UserFilters={this.props.UserFilters}
-                        SystemFilters={this.props.SystemFilters}
-                        />,
-                    < ConditionalStyleSummaryWizard StepName={stepNames[3]} UserFilters={this.props.UserFilters} />
+                    {
+                        StepName: "Scope",
+                        Index: 0,
+                        Element: <ConditionalStyleScopeWizard ColumnCategories={this.props.ColumnCategories} />,
 
+                    },
+                    {
+                        StepName: "Style",
+                        Index: 1,
+                        Element: <ConditionalStyleStyleWizard ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
+
+                    },
+                    {
+                        StepName: "Query",
+                        Index: 2,
+                        Element: <ConditionalStyleExpressionWizard
+                            UserFilters={this.props.UserFilters}
+                            SystemFilters={this.props.SystemFilters}
+                        />,
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 3,
+                        Element: < ConditionalStyleSummaryWizard UserFilters={this.props.UserFilters} />
+
+                    }
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
@@ -48,5 +63,3 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
         </div>
     }
 }
-
-

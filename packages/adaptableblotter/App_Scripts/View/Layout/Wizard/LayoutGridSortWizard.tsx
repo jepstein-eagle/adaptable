@@ -128,7 +128,7 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
     public GetIndexStepDecrement() {
         return 1;  // some way of knowing to go back 2 steps?
     }
-    public StepName = this.props.StepName
+   
 }
 
 let divStyle: React.CSSProperties = {

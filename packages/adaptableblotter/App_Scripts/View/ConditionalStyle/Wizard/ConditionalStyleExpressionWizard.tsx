@@ -15,5 +15,5 @@ export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage impl
     public Back(): void { 
         //todo
     }
-    public StepName = this.props.StepName
+   
 }

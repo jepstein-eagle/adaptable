@@ -14,5 +14,5 @@ export class AlertExpressionWizard extends ExpressionBuilderPage implements Adap
         this.props2.Data.Expression = this.state.Expression
     }
 
-    public StepName = this.props.StepName
+   
 }

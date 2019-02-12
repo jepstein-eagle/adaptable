@@ -47,5 +47,5 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
     public GetIndexStepDecrement(){
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }

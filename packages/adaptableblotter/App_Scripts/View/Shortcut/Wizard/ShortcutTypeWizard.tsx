@@ -74,6 +74,6 @@ export class ShortcutTypeWizard extends React.Component<ShortcutTypeWizardProps,
     public GetIndexStepDecrement(){
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

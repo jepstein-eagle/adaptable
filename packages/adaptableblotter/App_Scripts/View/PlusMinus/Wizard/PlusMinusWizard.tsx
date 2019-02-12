@@ -18,25 +18,39 @@ export interface PlusMinusWizardProps extends IAdaptableBlotterObjectExpressionA
 export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Column", "Settings", "Query", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.PlusMinusStrategyName}
-                StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
-                Steps={
-                    [<PlusMinusColumnWizard StepName={stepNames[0]} NumericColumns={this.props.Columns.filter(x => x.DataType == DataType.Number)} />,
-                    <PlusMinusSettingsWizard StepName={stepNames[1]} />,
-                    <PlusMinusExpressionWizard StepName={stepNames[2]} 
-                        UserFilters={this.props.UserFilters}
-                        SystemFilters={this.props.SystemFilters}
+                Steps={[
+                    {
+                        StepName: "Column",
+                        Index: 0,
+                        Element: <PlusMinusColumnWizard NumericColumns={this.props.Columns.filter(x => x.DataType == DataType.Number)} />,
+                    },
+                    {
+                        StepName: "Settings",
+                        Index: 1,
+                        Element: <PlusMinusSettingsWizard />,
+                    },
+                    {
+                        StepName: "Query",
+                        Index: 2,
+                        Element: <PlusMinusExpressionWizard
+                            UserFilters={this.props.UserFilters}
+                            SystemFilters={this.props.SystemFilters}
                         />,
-                    < PlusMinusSummaryWizard StepName={stepNames[3]} UserFilters={this.props.UserFilters} />
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 3,
+                        Element: < PlusMinusSummaryWizard UserFilters={this.props.UserFilters} />
 
-                    ]}
+                    }
+                ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}

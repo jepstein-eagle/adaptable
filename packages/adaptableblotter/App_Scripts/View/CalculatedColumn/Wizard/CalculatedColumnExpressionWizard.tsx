@@ -55,5 +55,5 @@ export class CalculatedColumnExpressionWizard extends React.Component<Calculated
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }

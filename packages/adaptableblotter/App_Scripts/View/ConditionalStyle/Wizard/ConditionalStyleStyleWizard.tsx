@@ -60,7 +60,7 @@ export class ConditionalStyleStyleWizard extends React.Component<ConditionalStyl
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 
 

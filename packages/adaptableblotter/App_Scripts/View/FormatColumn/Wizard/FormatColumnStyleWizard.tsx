@@ -65,7 +65,7 @@ export class FormatColumnStyleWizard extends React.Component<FormatColumnStyleWi
 
 
 
-    public StepName = this.props.StepName
+   
 
 }
 

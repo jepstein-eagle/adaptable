@@ -8,15 +8,20 @@ import { ButtonWizardAction } from "../Components/Buttons/ButtonWizardAction";
 import { AccessLevel } from "../../Utilities/Enums";
 import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 import { IColumn } from "../../Utilities/Interface/IColumn";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
+export interface IWizardStepInfo {
+    StepName: string;
+    Element: JSX.Element;
+    Index: number;
+}
 
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
-    Steps: JSX.Element[];
+    Steps: IWizardStepInfo[];
     Data: any;
     onHide: Function;
     onFinish?: Function;
     StepStartIndex?: number;
-    StepNames?: string[]; // feels wrong, wrong, wrong
     FriendlyName?: string;
     ModalContainer: HTMLElement;
     cssClassName: string;
@@ -31,7 +36,6 @@ export interface AdaptableWizardState extends React.ClassAttributes<AdaptableWiz
 }
 
 class DummyActiveStep implements AdaptableWizardStep {
-    public StepName = ""
     public canNext(): boolean { return false; }
     public canBack(): boolean { return false; }
 
@@ -58,33 +62,30 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     //we need to init with a dummy one as Ref is a callback once the component is rendered. So once set we force Re render.... 
     //I have no idea so far how to do it differently
     private ActiveStep: AdaptableWizardStep = new DummyActiveStep();
-    public StepName: string
+    private stepName: string
     constructor(props: AdaptableWizardProps) {
         super(props);
         let indexStart = 0
         if (this.props.StepStartIndex) {
             indexStart = this.props.StepStartIndex
         }
-        let BodyElement: JSX.Element = this.props.Steps[indexStart];
+    
+        let BodyElement: JSX.Element = this.props.Steps[indexStart].Element;
+        this.stepName = this.props.Steps[indexStart].StepName;
         let newElement = this.cloneWizardStep(BodyElement)
         this.state = { ActiveState: newElement, IndexState: indexStart }
-
-        //  this.props.Data.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent))
     }
-
- //   private handleKeyDown(keyEvent: KeyboardEvent | any) {
-     //   alert("hello world")
- //   }
 
     render() {
         let cssClassName: string = StyleConstants.AB_STYLE
+        let wizardStepNames: string[] = ArrayExtensions.RetrieveDistinct(this.props.Steps.map(x => { return x.StepName }));
         return (
             <Modal show={true} onHide={this.props.onHide} className={cssClassName + StyleConstants.BASE}
                 container={this.props.ModalContainer} >
                 <div className={cssClassName + StyleConstants.WIZARD_BASE}>
                     <Modal.Header closeButton className={cssClassName + StyleConstants.WIZARD_HEADER}>
                         <Modal.Title>
-                            <WizardLegend StepNames={this.props.StepNames} ActiveStepName={this.ActiveStep.StepName} FriendlyName={this.props.FriendlyName} CanShowAllSteps={this.canFinishWizard()} onStepButtonClicked={(s) => this.onStepButtonClicked(s)} />
+                            <WizardLegend StepNames={wizardStepNames} ActiveStepName={this.stepName} FriendlyName={this.props.FriendlyName} CanShowAllSteps={this.canFinishWizard()} onStepButtonClicked={(s) => this.onStepButtonClicked(s)} />
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body className={cssClassName + StyleConstants.WIZARD_BODY}>
@@ -104,21 +105,16 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
     }
 
     private onStepButtonClicked(stepName: string): void {
-        let stepIndex: number = this.props.StepNames.findIndex(s => s == stepName);
-        let BodyElement: any = this.props.Steps[stepIndex];
-        let newElement = this.cloneWizardStep(BodyElement)
-        this.setState({ ActiveState: newElement, IndexState: stepIndex })
+        let wizardStepInfo: IWizardStepInfo = this.props.Steps.find(s => s.StepName == stepName);
+        let bodyElement: any = wizardStepInfo.Element;
+        let newElement = this.cloneWizardStep(bodyElement)
+        this.stepName = wizardStepInfo.StepName;
+        this.setState({ ActiveState: newElement, IndexState: wizardStepInfo.Index })
     }
 
     ForceUpdateGoBackState() {
-        //to force back/next. We'll see if that needs to be optimised'
-        /*
-           <Modal.Title>Step {this.state.IndexState + 1 + " of " + this.props.Steps.length} - {this.ActiveStep.StepName}</Modal.Title>
-                
-           */
         this.forceUpdate();
-        //  this.setState({ ForceFinish: forceFinish } as AdaptableWizardState)
-    }
+     }
 
     isLastStep(): boolean {
         return this.state.IndexState == (this.props.Steps.length - 1);
@@ -137,8 +133,10 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             if (this.ActiveStep.canBack()) {
                 let decrement = this.ActiveStep.GetIndexStepDecrement()
                 this.ActiveStep.Back();
-                let BodyElement: any = this.props.Steps[this.state.IndexState - decrement];
-                let newElement = this.cloneWizardStep(BodyElement)
+                let activeWizardInfo: IWizardStepInfo = this.props.Steps[this.state.IndexState - decrement];
+                let bodyElement: JSX.Element = activeWizardInfo.Element;
+                let newElement = this.cloneWizardStep(bodyElement)
+                this.stepName = activeWizardInfo.StepName;
                 this.setState({ ActiveState: newElement, IndexState: this.state.IndexState - decrement })
             }
         }
@@ -148,8 +146,10 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         if (this.ActiveStep.canNext()) {
             let increment = this.ActiveStep.GetIndexStepIncrement()
             this.ActiveStep.Next();
-            let BodyElement: any = this.props.Steps[this.state.IndexState + increment];
-            let newElement = this.cloneWizardStep(BodyElement)
+            let activeWizardInfo: IWizardStepInfo = this.props.Steps[this.state.IndexState + increment];
+            let bodyElement: JSX.Element = activeWizardInfo.Element;
+            let newElement = this.cloneWizardStep(bodyElement)
+            this.stepName = activeWizardInfo.StepName;
             this.setState({ ActiveState: newElement, IndexState: this.state.IndexState + increment })
         }
     }

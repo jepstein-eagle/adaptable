@@ -14,5 +14,5 @@ export class CellValidationExpressionWizard extends ExpressionBuilderPage implem
         this.props2.Data.Expression = this.state.Expression
     }
 
-    public StepName = this.props.StepName
+   
 }

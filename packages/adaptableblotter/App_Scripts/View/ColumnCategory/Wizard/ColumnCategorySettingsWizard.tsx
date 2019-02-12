@@ -76,6 +76,6 @@ export class ColumnCategorySettingsWizard extends React.Component<ColumnCategory
     public GetIndexStepDecrement(){
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

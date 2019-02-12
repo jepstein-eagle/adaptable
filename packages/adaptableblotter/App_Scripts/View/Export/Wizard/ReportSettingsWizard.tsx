@@ -63,6 +63,6 @@ export class ReportSettingsWizard extends React.Component<ReportSettingsWizardPr
     public GetIndexStepDecrement(){
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

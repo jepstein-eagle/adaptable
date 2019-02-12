@@ -1,6 +1,4 @@
-import { IPercentBar } from "../../../Utilities/Interface/BlotterObjects/IPercentBar";
 import * as React from "react";
-import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { PercentBarSelectColumnWizard } from '././PercentBarSelectColumnWizard'
 import { PercentBarSummaryWizard } from '././PercentBarSummaryWizard'
@@ -16,21 +14,35 @@ export interface PercentBarWizardProps extends IAdaptableBlotterObjectExpression
 export class PercentBarWizard extends React.Component<PercentBarWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Column", "Values", "Settings", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.PercentBarStrategyName}
-                StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
                 Steps={[
-                     <PercentBarSelectColumnWizard StepName={stepNames[0]} />,
-                    <PercentBarValuesWizard StepName={stepNames[1]} />,
-                    <PercentBarSettingsWizard StepName={stepNames[2]} ColorPalette={this.props.ColorPalette} />,
-                    <PercentBarSummaryWizard StepName={stepNames[3]} />
-                ]}
+                    {
+                        StepName: "Column",
+                        Index: 0,
+                        Element: <PercentBarSelectColumnWizard />
+                    },
+                    {
+                        StepName: "Values",
+                        Index: 1,
+                        Element: <PercentBarValuesWizard />,
+                    },
+                    {
+                        StepName: "Settings",
+                        Index: 2,
+                        Element: <PercentBarSettingsWizard ColorPalette={this.props.ColorPalette} />,
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 3,
+                        Element: < PercentBarSummaryWizard />
+                    }
+                ]} 
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}
@@ -42,4 +54,3 @@ export class PercentBarWizard extends React.Component<PercentBarWizardProps, {}>
     }
 
 }
-

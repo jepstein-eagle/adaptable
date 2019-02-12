@@ -158,6 +158,6 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
         return 1;
     }
 
-    public StepName = this.props.StepName
+   
 }
 

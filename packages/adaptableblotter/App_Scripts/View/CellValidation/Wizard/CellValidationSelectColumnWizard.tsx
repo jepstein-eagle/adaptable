@@ -57,5 +57,5 @@ export class CellValidationSelectColumnWizard extends React.Component<CellValida
     public GetIndexStepDecrement(){
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }

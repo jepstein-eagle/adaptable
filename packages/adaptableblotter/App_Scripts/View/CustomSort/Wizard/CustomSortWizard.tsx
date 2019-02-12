@@ -13,22 +13,31 @@ export interface CustomSortWizardProps extends IAdaptableBlotterObjectExpression
 export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Column", "Sort Order", "Summary"]
         let customSorts: ICustomSort[] = this.props.ConfigEntities as ICustomSort[]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.CustomSortStrategyName}
-                StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
                 Steps={[
-                    <CustomSortColumnWizard StepName={stepNames[0]} SortedColumns={this.props.Columns.filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId))} />,
-                    <CustomSortValuesWizard StepName={stepNames[1]}  />,
-                    < CustomSortSummaryWizard StepName={stepNames[2]} />
-                ]}
-                Data={this.props.EditedAdaptableBlotterObject}
+                    {
+                        StepName: "Column",
+                        Index: 0,
+                        Element: <CustomSortColumnWizard SortedColumns={this.props.Columns.filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId))} />,
+                    },
+                    {
+                        StepName: "Sort Order",
+                        Index: 1,
+                        Element: <CustomSortValuesWizard />,
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 2,
+                        Element: < CustomSortSummaryWizard />
+                    }
+                ]} Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}
                 onFinish={() => this.props.onFinishWizard()}

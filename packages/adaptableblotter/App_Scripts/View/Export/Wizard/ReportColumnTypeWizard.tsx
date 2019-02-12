@@ -84,7 +84,7 @@ export class ReportColumnTypeWizard extends React.Component<ReportColumnTypeWiza
         return 1;
     }
 
-    public StepName = this.props.StepName
+   
 }
 
 

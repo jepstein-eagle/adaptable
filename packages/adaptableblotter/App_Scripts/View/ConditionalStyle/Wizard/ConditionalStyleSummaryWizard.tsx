@@ -64,7 +64,7 @@ export class ConditionalStyleSummaryWizard extends React.Component<ConditionalSt
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 
 

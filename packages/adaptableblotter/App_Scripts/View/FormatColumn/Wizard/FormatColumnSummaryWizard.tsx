@@ -55,7 +55,7 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
 
 
 
-    public StepName = this.props.StepName
+   
 
 }
 

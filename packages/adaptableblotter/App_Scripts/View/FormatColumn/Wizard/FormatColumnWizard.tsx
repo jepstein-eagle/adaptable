@@ -15,28 +15,37 @@ export interface FormatColumnWizardProps extends IAdaptableBlotterObjectExpressi
 export class FormatColumnWizard extends React.Component<FormatColumnWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Column", "Style", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.FormatColumnStrategyName}
-                StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
-                Steps={
-                    [
-                        <FormatColumnScopeWizard StepName={stepNames[0]} />,
-                        <FormatColumnStyleWizard StepName={stepNames[1]} ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
-                        < FormatColumnSummaryWizard StepName={stepNames[2]} />
-                    ]}
+                Steps={[
+                    {
+                        StepName: "Column",
+                        Index: 0,
+                        Element: <FormatColumnScopeWizard />
+                    },
+                    {
+                        StepName: "Style",
+                        Index: 1,
+                        Element: <FormatColumnStyleWizard ColorPalette={this.props.ColorPalette} StyleClassNames={this.props.StyleClassNames} />,
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 2,
+                        Element: < FormatColumnSummaryWizard />
+                    }
+                ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}
-                onFinish={() => this.props.onFinishWizard()} 
+                onFinish={() => this.props.onFinishWizard()}
                 canFinishWizard={() => this.props.canFinishWizard()}
-                />
-         
+            />
+
         </div>
     }
 }

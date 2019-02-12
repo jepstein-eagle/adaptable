@@ -70,7 +70,7 @@ export class ReportColumnChooserWizard extends React.Component<ReportColumnChoos
         return 1;
     }
 
-    public StepName = this.props.StepName
+   
 }
 
 

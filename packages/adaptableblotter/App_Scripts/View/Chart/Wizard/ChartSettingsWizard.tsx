@@ -5,8 +5,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
-import { ChartType } from "../../../Utilities/ChartEnums";
+import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 export interface ChartSettingsWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
     ChartTitles: string[]
@@ -31,10 +30,7 @@ export class ChartSettingsWizard extends React.Component<ChartSettingsWizardProp
         let cssClassName: string = this.props.cssClassName + "-settings"
 
         let validationState: "error" | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
-        let optionChartTypes = EnumExtensions.getNames(ChartType).map((enumName) => {
-            return <option key={enumName} value={enumName}>{enumName as ChartType}</option>
-        })
-
+      
         return <div className={cssClassName}>
             <Panel header="Chart Definition Settings" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
@@ -99,8 +95,8 @@ export class ChartSettingsWizard extends React.Component<ChartSettingsWizardProp
         return 1;
     }
     public GetIndexStepDecrement() {
-        return 1;
+        return (ExpressionHelper.IsEmptyExpression(this.props.Data.XSegmentExpression)) ? 2 : 1
     }
-    public StepName = this.props.StepName
+   
 }
 

@@ -10,34 +10,43 @@ import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wiz
 export interface CalculatedColumnWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CalculatedColumnWizard> {
     IsExpressionValid: (expression: string) => void
     GetErrorMessage: () => string
-  }
+}
 
 export class CalculatedColumnWizard extends React.Component<CalculatedColumnWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Column", "Expression", "Summary"]
-        
         return <div className={this.props.cssClassName}>
-        <AdaptableWizard
+            <AdaptableWizard
                 FriendlyName={StrategyConstants.CalculatedColumnStrategyName}
-                StepNames={stepNames}
+
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
                 Steps={[
-                    <CalculatedColumnSettingsWizard  StepName={stepNames[0]} />,
-                    <CalculatedColumnExpressionWizard  StepName={stepNames[1]}
-                        GetErrorMessage={this.props.GetErrorMessage}
-                        IsExpressionValid={this.props.IsExpressionValid} />,
-                        < CalculatedColumnSummaryWizard StepName={stepNames[2]}/>
-
+                    {
+                        StepName: "Column",
+                        Index: 0,
+                        Element: <CalculatedColumnSettingsWizard />
+                    },
+                    {
+                        StepName: "Expression",
+                        Index: 1,
+                        Element: <CalculatedColumnExpressionWizard
+                            GetErrorMessage={this.props.GetErrorMessage}
+                            IsExpressionValid={this.props.IsExpressionValid} />,
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 2,
+                        Element: < CalculatedColumnSummaryWizard />
+                    }
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}
-                onFinish={() => this.props.onFinishWizard()} 
-                canFinishWizard={() => this.props.canFinishWizard()}/>
+                onFinish={() => this.props.onFinishWizard()}
+                canFinishWizard={() => this.props.canFinishWizard()} />
         </div>
     }
 

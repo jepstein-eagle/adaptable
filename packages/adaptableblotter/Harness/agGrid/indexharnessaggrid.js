@@ -3,7 +3,7 @@ var adaptableblotter
 var quickSearchText
 var trades
 var gridOptions
-var showTrade = false;
+var showTrade = true;
 
 function runQuickSearchViaAPI() {
   let element = document.getElementById("txtQuickSearchText")
@@ -74,8 +74,8 @@ function InitTradeBlotter() {
     floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
-    sideBar: true, // this puts in filters and columns by default
-  /*
+    //   sideBar: true, // this puts in filters and columns by default
+
     sideBar: {
       toolPanels: [
         {
@@ -92,6 +92,7 @@ function InitTradeBlotter() {
           iconKey: 'filter',
           toolPanel: 'agFiltersToolPanel',
         },
+        /** 
         {
           id: 'customStats',
           labelDefault: 'Custom Stats',
@@ -99,10 +100,11 @@ function InitTradeBlotter() {
           iconKey: 'custom-stats',
           toolPanel: 'customStatsToolPanel',
         }
+        */
       ],
-      defaultToolPanel: 'customStats'
+      //  defaultToolPanel: 'customStats'
     },
-  */
+
     columnTypes: { // not required but helpful for column data type identification
       "abColDefNumber": {},
       "abColDefString": {},
@@ -110,9 +112,9 @@ function InitTradeBlotter() {
       "abColDefDate": {},
       "abColDefObject": {},
     },
-//    components: {
- //     customStatsToolPanel: CustomStatsToolPanel
- //   }
+  //  components: {
+  //    customStatsToolPanel: CustomStatsToolPanel
+  //  }
   };
 
   // Create and instantiate an ag-Grid object
@@ -131,7 +133,7 @@ function InitTradeBlotter() {
       userName: "demo user", // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
 
-     //   predefinedConfig: "themetest.json",
+      //   predefinedConfig: "themetest.json",
 
       auditOptions: {
         //     auditCellEdits: true,
@@ -215,7 +217,7 @@ function listenToColumnStateChange(columnChangedArgs) {
 
 function listenToStateChange(stateChangedArgs) {
   //  console.log("state event received")
- //    console.log(stateChangedArgs)
+  //    console.log(stateChangedArgs)
 }
 
 function listenToSearchChange(searchChangedArgs) {
@@ -224,8 +226,8 @@ function listenToSearchChange(searchChangedArgs) {
 }
 
 function listenToAlertFired(alertFiredArgs) {
- console.log("from Harness");
- console.log(alertFiredArgs.alert);
+  console.log("from Harness");
+  console.log(alertFiredArgs.alert);
 }
 
 function getValuesForColumn(columnName) {
@@ -353,7 +355,7 @@ function getTradeSchema() {
   schema.push({
     headerName: "Country",
     field: "country",
-      editable: true,
+    editable: true,
     enableRowGroup: true
   });
   schema.push({

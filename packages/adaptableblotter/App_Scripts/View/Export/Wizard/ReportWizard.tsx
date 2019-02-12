@@ -13,25 +13,47 @@ import { ReportRowTypeWizard } from "./ReportRowTypeWizard";
 export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpressionAdaptableWizardProps<ReportWizard>, {}> {
 
     render() {
-        let stepNames: string[] = ["Columns", "Rows", "Settings", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.ExportStrategyName}
-                StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
                 Steps={[
-                    <ReportColumnTypeWizard StepName={stepNames[0]} />,
-                    <ReportColumnChooserWizard StepName={stepNames[0]} />,
-                    <ReportRowTypeWizard StepName={stepNames[1]} />,
-                    <ReportExpressionWizard StepName={stepNames[1]} 
-                        UserFilters={this.props.UserFilters}
-                        SystemFilters={this.props.SystemFilters}
-                    />,
-                    <ReportSettingsWizard StepName={stepNames[2]} Reports={this.props.ConfigEntities as IReport[]} />,
-                    <ReportSummaryWizard StepName={stepNames[3]} UserFilters={this.props.UserFilters} />
+                    {
+                        StepName: "Column",
+                        Index: 0,
+                        Element: <ReportColumnTypeWizard />
+                    },
+                    {
+                        StepName: "Column",
+                        Index: 1,
+                        Element: <ReportColumnChooserWizard />
+                    },
+                    {
+                        StepName: "Rows",
+                        Index: 2,
+                        Element: <ReportRowTypeWizard />,
+                    },
+                    {
+                        StepName: "Rows",
+                        Index: 3,
+                        Element: <ReportExpressionWizard
+                            UserFilters={this.props.UserFilters}
+                            SystemFilters={this.props.SystemFilters}
+                        />,
+                    },
+                    {
+                        StepName: "Settings",
+                        Index: 4,
+                        Element:   <ReportSettingsWizard  Reports={this.props.ConfigEntities as IReport[]} />,
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 5,
+                        Element:  <ReportSummaryWizard UserFilters={this.props.UserFilters} />
+                    }
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject as IReport}
                 StepStartIndex={this.props.WizardStartIndex}

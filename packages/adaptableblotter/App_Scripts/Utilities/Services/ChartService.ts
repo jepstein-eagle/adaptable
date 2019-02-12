@@ -48,7 +48,7 @@ export class ChartService implements IChartService {
 
             if (ArrayExtensions.IsNotEmpty(additionalColValues)) {
                 additionalColValues.forEach((columnValue: string) => {
-                    let columnValueKVP: IKeyValuePair = { Key: chartDefinition.AdditionalColumnId, Value: columnValue }
+                    let columnValueKVP: IKeyValuePair = { Key: chartDefinition.XSegmentColumnId, Value: columnValue }
                     chartDefinition.YAxisColumnIds.forEach(colID => {
                         let colFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns)
                         let total = this.buildTotal(colID, [xAxisKVP, columnValueKVP], columns, showAverageTotal)
@@ -99,12 +99,13 @@ export class ChartService implements IChartService {
     }
 
     private getAdditionalColumnValues(chartDefinition: IChartDefinition): string[] {
-        if (ArrayExtensions.IsNullOrEmpty(chartDefinition.AdditionalColumnValues)) {
-            return []
-        }
-        return chartDefinition.AdditionalColumnValues.length > 0 && chartDefinition.AdditionalColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES ?
-            chartDefinition.AdditionalColumnValues :
-            this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.AdditionalColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
-
+     // todo: leave this for tonight but it should just be an expression, nothing else...
+//        if (ArrayExtensions.IsNullOrEmpty(chartDefinition.AdditionalColumnValues)) {
+ //           return []
+ //       }
+ //       return chartDefinition.AdditionalColumnValues.length > 0 && chartDefinition.AdditionalColumnValues[0] != GeneralConstants.ALL_COLUMN_VALUES ?
+   ///         chartDefinition.AdditionalColumnValues :
+    //        this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.AdditionalColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
+return [];
     }
 }

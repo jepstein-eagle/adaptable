@@ -63,6 +63,6 @@ export class FormatColumnScopeWizard extends React.Component<FormatColumnScopeWi
     public GetIndexStepDecrement(){
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

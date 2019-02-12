@@ -57,6 +57,6 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
     public GetIndexStepDecrement() {
         return ExpressionHelper.IsEmptyExpression(this.props.Data.Expression) ? 2 : 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

@@ -187,6 +187,6 @@ export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, Ale
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

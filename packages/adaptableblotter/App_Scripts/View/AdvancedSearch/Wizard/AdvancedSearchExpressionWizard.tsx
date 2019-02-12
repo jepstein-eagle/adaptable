@@ -18,5 +18,5 @@ export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage implem
         // todo
     }
 
-    public StepName = this.props.StepName
+   
 }

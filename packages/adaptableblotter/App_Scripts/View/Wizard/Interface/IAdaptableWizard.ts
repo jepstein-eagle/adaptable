@@ -4,7 +4,6 @@ import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFi
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 
 export interface AdaptableWizardStep {
-    StepName: string
     canNext(): boolean
     canBack(): boolean
     Next(): void
@@ -16,9 +15,8 @@ export interface AdaptableWizardStep {
 export interface AdaptableWizardStepProps<T> {
     Data?: T
     UpdateGoBackState?(): void
-    StepName?: string
     cssClassName?: string
-    Blotter?:IAdaptableBlotter
+    Blotter?: IAdaptableBlotter
     Columns?: IColumn[]
 }
 
@@ -26,7 +24,6 @@ export interface AdaptableWizardStepProps<T> {
 export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
     UserFilters: IUserFilter[],
     SystemFilters: string[],
- //   Blotter: IAdaptableBlotter
 }
 
 // props for a wizard that wraps a config entity that contans an Expression

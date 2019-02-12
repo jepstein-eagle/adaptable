@@ -80,5 +80,5 @@ export class LayoutSelectionWizard extends React.Component<LayoutSelectionWizard
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }

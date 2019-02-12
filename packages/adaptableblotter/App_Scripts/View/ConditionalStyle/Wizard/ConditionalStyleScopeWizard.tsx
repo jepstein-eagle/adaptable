@@ -131,7 +131,7 @@ export class ConditionalStyleScopeWizard extends React.Component<ConditionalStyl
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 
 

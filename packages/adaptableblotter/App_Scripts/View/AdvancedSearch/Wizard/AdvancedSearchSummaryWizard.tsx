@@ -53,6 +53,6 @@ export class AdvancedSearchSummaryWizard extends React.Component<AdvancedSearchS
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

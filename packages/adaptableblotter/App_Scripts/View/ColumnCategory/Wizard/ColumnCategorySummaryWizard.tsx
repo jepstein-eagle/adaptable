@@ -51,6 +51,6 @@ export class ColumnCategorySummaryWizard extends React.Component<ColumnCategoryS
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

@@ -76,6 +76,6 @@ export class LayoutSettingsWizard extends React.Component<LayoutSettingsWizardPr
     public GetIndexStepDecrement(){
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

@@ -110,7 +110,6 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
 }
 
 

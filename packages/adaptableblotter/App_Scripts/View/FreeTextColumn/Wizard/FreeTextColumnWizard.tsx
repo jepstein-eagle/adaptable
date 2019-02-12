@@ -12,20 +12,25 @@ export interface FreeTextColumnWizardProps extends IAdaptableBlotterObjectExpres
 export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Settings", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.FreeTextColumnStrategyName}
-                StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
-                Steps={
-                    [
-                        <FreeTextColumnSettingsWizard StepName={stepNames[0]} />,
-                        <FreeTextColumnSummaryWizard StepName={stepNames[1]} />
-                    ]}
+                Steps={[
+                    {
+                        StepName: "Settings",
+                        Index: 0,
+                        Element: <FreeTextColumnSettingsWizard />,
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 1,
+                        Element: < FreeTextColumnSummaryWizard />
+                    }
+                ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}
@@ -36,3 +41,4 @@ export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardPr
         </div>
     }
 }
+

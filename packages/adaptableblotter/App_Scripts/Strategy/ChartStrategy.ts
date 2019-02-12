@@ -77,7 +77,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             let currentChartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
             if ( ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
                 currentChartDefinition.XAxisColumnId == columnChangedId ||
-                currentChartDefinition.AdditionalColumnId == columnChangedId) {
+                currentChartDefinition.XSegmentColumnId == columnChangedId) {
                 this.debouncedSetChartData();
             }
         }

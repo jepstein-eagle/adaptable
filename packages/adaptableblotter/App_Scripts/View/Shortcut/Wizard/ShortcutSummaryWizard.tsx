@@ -49,7 +49,7 @@ export class ShortcutSummaryWizard extends React.Component<ShortcutSummaryWizard
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 
 

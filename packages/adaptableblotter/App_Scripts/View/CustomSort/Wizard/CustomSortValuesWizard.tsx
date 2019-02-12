@@ -62,5 +62,5 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }   

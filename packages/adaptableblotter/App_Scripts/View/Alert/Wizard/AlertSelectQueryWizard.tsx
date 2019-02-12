@@ -69,6 +69,6 @@ export class AlertSelectQueryWizard extends React.Component<AlertSelectQueryWiza
     public GetIndexStepDecrement(){
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

@@ -45,6 +45,6 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

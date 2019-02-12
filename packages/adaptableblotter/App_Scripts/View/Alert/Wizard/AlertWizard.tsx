@@ -15,27 +15,49 @@ export interface AlertWizardProps extends IAdaptableBlotterObjectExpressionAdapt
 export class AlertWizard extends React.Component<AlertWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Column", "Rules", "Type", "Query", "Summary"]
-        return <div className={this.props.cssClassName}>
+         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.AlertStrategyName}
-                StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
                 Steps={[
-                    <AlertSelectColumnWizard StepName={stepNames[0]} />,
-                    <AlertRulesWizard StepName={stepNames[1]} />,
-                    <AlertTypeWizard StepName={stepNames[2]} />,
-                    <AlertSelectQueryWizard StepName={stepNames[3]} />,
-                    <AlertExpressionWizard StepName={stepNames[4]} Columns={this.props.Columns}
+                    {
+                        StepName: "Column",
+                        Index: 0,
+                        Element: <AlertSelectColumnWizard                                                   />
+                    },
+                    {
+                        StepName: "Rules",
+                        Index: 1,
+                        Element: <AlertRulesWizard  />,
+
+                    },
+                    {
+                        StepName: "Type",
+                        Index: 2,
+                        Element: < AlertTypeWizard />
+                    },
+                    {
+                        StepName: "Query",
+                        Index: 3,
+                        Element: < AlertSelectQueryWizard  />
+                    },
+                    {
+                        StepName: "Query",
+                        Index: 4,
+                        Element:  <AlertExpressionWizard Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
                         Blotter={this.props.Blotter}
                     />,
-                    < AlertSummaryWizard StepName={stepNames[4]} UserFilters={this.props.UserFilters} />
-
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 5,
+                        Element: < AlertSummaryWizard  UserFilters={this.props.UserFilters} />
+                    },
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}

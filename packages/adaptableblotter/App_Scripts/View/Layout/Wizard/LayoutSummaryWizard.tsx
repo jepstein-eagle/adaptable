@@ -52,6 +52,6 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

@@ -5,7 +5,7 @@ import { UIHelper } from '../../UIHelper';
 
 
 
-export class ChartExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
+export class ChartXAxisExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
     constructor(private props2: ExpressionWizardProps<IChartDefinition>) {
         super(props2)
         this.state = UIHelper.getExpressionBuilderStateWithColumn(this.props2.Data.XAxisExpression, this.props2.Data.XAxisColumnId)
@@ -17,5 +17,5 @@ export class ChartExpressionWizard extends ExpressionBuilderPage implements Adap
     
     public canBack(): boolean { return true; }
     
-    public StepName = this.props.StepName
+   
 }

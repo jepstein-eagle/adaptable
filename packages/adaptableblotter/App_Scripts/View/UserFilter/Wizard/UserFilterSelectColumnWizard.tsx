@@ -64,5 +64,5 @@ export class UserFilterSelectColumnWizard extends React.Component<UserFilterSele
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }

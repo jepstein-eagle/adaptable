@@ -49,5 +49,5 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }

@@ -13,39 +13,57 @@ import { ILayout } from "../../../Utilities/Interface/BlotterObjects/ILayout";
 
 
 export interface LayoutWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {
-  GridSorts:IGridSort[]
- }
+    GridSorts: IGridSort[]
+}
 
 export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Source", "Columns", "Sort", "Settings", "Summary"]
         let layouts: ILayout[] = this.props.ConfigEntities as ILayout[]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.LayoutStrategyName}
-                StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
-                    Steps={[
-                    <LayoutSelectionWizard   StepName={stepNames[0]} Layouts={layouts} GridSorts={this.props.GridSorts}  />,
-                    <LayoutColumnWizard  StepName={stepNames[1]} />,
-                    <LayoutGridSortWizard  StepName={stepNames[2]}  />,
-                    <LayoutSettingsWizard  StepName={stepNames[3]} Layouts={layouts} />,
-                    < LayoutSummaryWizard StepName={stepNames[4]} />
-           
+                Steps={[
+                    {
+                        StepName: "Source",
+                        Index: 0,
+                        Element: <LayoutSelectionWizard Layouts={layouts} GridSorts={this.props.GridSorts} />
+                    },
+                    {
+                        StepName: "Columns",
+                        Index: 1,
+                        Element: <LayoutColumnWizard />
+                    },
+                    {
+                        StepName: "Sort",
+                        Index: 2,
+                        Element: <LayoutGridSortWizard />,
+                    },
+                    {
+                        StepName: "Settings",
+                        Index: 3,
+                        Element: <LayoutSettingsWizard Layouts={layouts} />,
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 4,
+                        Element: < LayoutSummaryWizard />
+                    }
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
                 onHide={() => this.props.onCloseWizard()}
-                onFinish={() => this.props.onFinishWizard()} 
+                onFinish={() => this.props.onFinishWizard()}
                 canFinishWizard={() => this.props.canFinishWizard()}
-                />
-         >
+            />
+            >
         </div>
     }
 
 }
+
 

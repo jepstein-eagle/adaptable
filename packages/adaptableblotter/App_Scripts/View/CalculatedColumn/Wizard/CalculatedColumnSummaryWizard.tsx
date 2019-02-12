@@ -42,5 +42,5 @@ export class CalculatedColumnSummaryWizard extends React.Component<CalculatedCol
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }

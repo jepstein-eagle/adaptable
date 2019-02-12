@@ -3,6 +3,7 @@ import * as React from "react";
 import { Glyphicon, Label, Button } from 'react-bootstrap';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 
+// Keep this simple - it just takes a list of step names and the active step name
 
 export interface WizardLegendProps extends React.ClassAttributes<WizardLegend> {
     StepNames: string[];
@@ -16,7 +17,7 @@ export class WizardLegend extends React.Component<WizardLegendProps, {}> {
     render(): any {
         let count: number = this.props.StepNames.length - 1;
         let activeStepIndex: number = this.props.StepNames.findIndex(s => s == this.props.ActiveStepName);
-        let stepNames: any = this.props.StepNames.map((s, index) => {
+        let stepButtons: any = this.props.StepNames.map((s, index) => {
             let isActiveStep: boolean = index == activeStepIndex;
             let isDisabled: boolean = (this.props.CanShowAllSteps) ?
                 false :
@@ -33,7 +34,7 @@ export class WizardLegend extends React.Component<WizardLegendProps, {}> {
         })
 
         return <div className={StyleConstants.WIZARD_LEGEND}>
-            {this.props.FriendlyName} : {stepNames}
+            {this.props.FriendlyName} : {stepButtons}
         </div>
     }
 

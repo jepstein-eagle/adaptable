@@ -86,7 +86,7 @@ export class ReportRowTypeWizard extends React.Component<ReportRowTypeWizardProp
         return (this.props.Data.ReportColumnScope == ReportColumnScope.BespokeColumns) ? 1 : 2;
     }
 
-    public StepName = this.props.StepName
+   
 }
 
 

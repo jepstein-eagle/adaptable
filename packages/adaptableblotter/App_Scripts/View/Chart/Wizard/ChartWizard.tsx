@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
+import { AdaptableWizard, IWizardStepInfo } from '../../Wizard/AdaptableWizard'
 import { ChartYAxisWizard } from './ChartYAxisWizard'
 import { ChartSummaryWizard } from './ChartSummaryWizard'
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
@@ -7,9 +7,10 @@ import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wiz
 import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ChartXAxisWizard } from "./ChartXAxisWizard";
 import { ChartSettingsWizard } from "./ChartSettingsWizard";
-import { ChartAdditionalColumnWizard } from "./ChartAdditionalColumnWizard";
-import { ChartExpressionWizard } from "./ChartExpressionWizard";
+import { ChartXSegmentColumnWizard } from "./ChartXSegmentColumnWizard";
+import { ChartXAxisExpressionWizard } from "./ChartXAxisExpressionWizard";
 import { ExpressionMode } from "../../../Utilities/Enums";
+import { ChartXSegmentColumnExpressionWizard } from "./ChartXSegmentColumnExpressionWizard";
 
 export interface ChartWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ChartWizard> {
 }
@@ -17,32 +18,51 @@ export interface ChartWizardProps extends IAdaptableBlotterObjectExpressionAdapt
 export class ChartWizard extends React.Component<ChartWizardProps, {}> {
 
     render() {
-      //  console.log("in wziard0")
-     //   console.log(this.props.EditedAdaptableBlotterObject)
-        let stepNames: string[] = ["Y Axis", "X Axis", "X Segment", "Settings", "Summary"]
         let chartDefinitions: IChartDefinition[] = this.props.ConfigEntities as IChartDefinition[]
-        let chartTitles: string []= chartDefinitions.map(s => s.Title);
+        let chartTitles: string[] = chartDefinitions.map(s => s.Title);
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.ChartStrategyName}
-                StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
                 Steps={[
-                    <ChartYAxisWizard StepName={stepNames[0]}  />,
-                    <ChartXAxisWizard StepName={stepNames[1]}  />,
-                    <ChartExpressionWizard
-                        StepName={stepNames[1]}
-                        Columns={this.props.Columns}
-                        UserFilters={this.props.UserFilters}
-                        SystemFilters={this.props.SystemFilters}
-                        ExpressionMode={ExpressionMode.SingleColumn}
-                    />,
-                    <ChartAdditionalColumnWizard StepName={stepNames[2]}  />,
-                    <ChartSettingsWizard StepName={stepNames[3]} ChartTitles={chartTitles} />,
-                    <ChartSummaryWizard StepName={stepNames[4]} />
+                    {
+                        StepName: "Y Axis",
+                        Index: 0,
+                        Element: <ChartYAxisWizard />
+                    },
+                    {
+                        StepName: "X Axis",
+                        Index: 1,
+                        Element: <ChartXAxisWizard />
+                    },
+                    {
+                        StepName: "X Axis",
+                        Index: 2,
+                        Element: <ChartXAxisExpressionWizard Columns={this.props.Columns} UserFilters={this.props.UserFilters} SystemFilters={this.props.SystemFilters} ExpressionMode={ExpressionMode.SingleColumn} />
+                    },
+                    {
+                        StepName: "X Segment",
+                        Index: 3,
+                        Element: <ChartXSegmentColumnWizard />
+                    },
+                    {
+                        StepName: "X Segment",
+                        Index: 4,
+                        Element: <ChartXSegmentColumnExpressionWizard Columns={this.props.Columns} UserFilters={this.props.UserFilters} SystemFilters={this.props.SystemFilters} ExpressionMode={ExpressionMode.SingleColumn} />
+                    },
+                    {
+                        StepName: "Settings",
+                        Index: 5,
+                        Element: <ChartSettingsWizard ChartTitles={chartTitles} />,
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 6,
+                        Element: <ChartSummaryWizard />
+                    },
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
@@ -54,4 +74,3 @@ export class ChartWizard extends React.Component<ChartWizardProps, {}> {
     }
 
 }
-

@@ -80,5 +80,5 @@ export class UserFilterSettingsWizard extends React.Component<UserFilterSettings
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }

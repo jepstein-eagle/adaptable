@@ -15,5 +15,5 @@ export class UserFilterExpressionWizard extends ExpressionBuilderPage implements
         this.props2.Data.Expression = this.state.Expression
     }
     
-    public StepName = this.props.StepName
+   
 }

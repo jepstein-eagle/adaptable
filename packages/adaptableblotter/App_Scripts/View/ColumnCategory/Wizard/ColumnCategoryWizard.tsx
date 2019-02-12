@@ -14,20 +14,29 @@ export interface ColumnCategoryWizardProps extends IAdaptableBlotterObjectExpres
 export class ColumnCategoryWizard extends React.Component<ColumnCategoryWizardProps, {}> {
 
     render() {
-        let stepNames: string[] = ["Name", "Columns", "Summary"]
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.ColumnCategoryStrategyName}
-                StepNames={stepNames}
                 ModalContainer={this.props.ModalContainer}
                 cssClassName={this.props.cssClassName}
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
                 Steps={[
-                    <ColumnCategorySettingsWizard StepName={stepNames[0]} ColumnCategorys={this.props.ColumnCategorys} />,
-                    <ColumnCategoryColumnsWizard StepName={stepNames[1]} ColumnCategorys={this.props.ColumnCategorys} />,
-                    <ColumnCategorySummaryWizard StepName={stepNames[2]} />
-
+                    {
+                        StepName: "Name",
+                        Index: 0,
+                        Element: <ColumnCategorySettingsWizard ColumnCategorys={this.props.ColumnCategorys} />
+                    },
+                    {
+                        StepName: "Columns",
+                        Index: 1,
+                        Element: <ColumnCategoryColumnsWizard ColumnCategorys={this.props.ColumnCategorys} />,
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 2,
+                        Element: < ColumnCategorySummaryWizard />
+                    }
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}
                 StepStartIndex={this.props.WizardStartIndex}
@@ -35,7 +44,7 @@ export class ColumnCategoryWizard extends React.Component<ColumnCategoryWizardPr
                 onFinish={() => this.props.onFinishWizard()}
                 canFinishWizard={() => this.props.canFinishWizard()}
             />
-         </div>
+        </div>
     }
 
 }

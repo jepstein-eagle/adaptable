@@ -82,6 +82,6 @@ export class CellValidationActionWizard extends React.Component<CellValidationAc
     public GetIndexStepDecrement(){
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
 

@@ -49,5 +49,5 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
     public GetIndexStepDecrement() {
         return this.props.Data.IsDefaultNudge ? 2 : 1;
     }
-    public StepName = this.props.StepName
+   
 }

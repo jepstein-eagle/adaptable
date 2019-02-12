@@ -1318,8 +1318,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     private createDefaultXAxisTitle(): string {
         let returnString: string = ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.XAxisColumnId, this.props.Columns);
-        if (StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.AdditionalColumnId)) {
-            returnString = returnString + " (by " + ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.AdditionalColumnId, this.props.Columns) + ")"
+        if (StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.XSegmentColumnId)) {
+            returnString = returnString + " (by " + ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.XSegmentColumnId, this.props.Columns) + ")"
         }
         return returnString;
     }

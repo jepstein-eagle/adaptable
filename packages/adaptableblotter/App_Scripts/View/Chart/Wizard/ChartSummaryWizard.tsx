@@ -12,7 +12,7 @@ import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 
 export interface ChartSummaryWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
-   }
+}
 
 export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps, {}> implements AdaptableWizardStep {
     constructor(props: ChartSummaryWizardProps) {
@@ -30,12 +30,8 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
             { Key: "Total", Value: this.props.Data.YAxisTotal },
             { Key: "X Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId, this.props.Columns) },
             { Key: "X Axis Values", Value: this.getExpressionString(this.props.Data.XAxisExpression) },
-            {
-                Key: "Additional Column", Value: (this.props.Data.AdditionalColumnId) ?
-                    ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.AdditionalColumnId, this.props.Columns) :
-                    "None"
-            },
-            { Key: "Additional Column Values", Value: (this.props.Data.AdditionalColumnValues) ? this.getColumnValuesList(this.props.Data.AdditionalColumnValues) : "n/a" },
+            { Key: "Additional Column", Value: (this.props.Data.XSegmentColumnId) ? ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XSegmentColumnId, this.props.Columns) : "None" },
+            { Key: "Additional Column Values", Value: this.getExpressionString(this.props.Data.XSegmentExpression) },
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.ChartStrategyName} />
@@ -53,7 +49,7 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
     }
 
     private getExpressionString(expression: Expression): string {
-        if  ( ExpressionHelper.IsEmptyExpression(expression) ) {
+        if (ExpressionHelper.IsEmptyExpression(expression)) {
             return "All Column Values"
         } else {
             return ExpressionHelper.ConvertExpressionToString(expression, this.props.Columns, false)
@@ -74,5 +70,5 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+
 }

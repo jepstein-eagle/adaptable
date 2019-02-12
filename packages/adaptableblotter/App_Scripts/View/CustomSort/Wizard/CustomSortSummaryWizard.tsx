@@ -43,5 +43,5 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }

@@ -16,5 +16,5 @@ export class PlusMinusExpressionWizard extends ExpressionBuilderPage implements 
     }
     public Back(): void {  //todo
     }
-    public StepName = this.props.StepName
+   
 }

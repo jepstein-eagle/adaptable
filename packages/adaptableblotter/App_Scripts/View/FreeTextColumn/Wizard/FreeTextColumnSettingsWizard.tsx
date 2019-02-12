@@ -94,5 +94,5 @@ export class FreeTextColumnSettingsWizard extends React.Component<FreeTextColumn
     public GetIndexStepDecrement() {
         return 1;
     }
-    public StepName = this.props.StepName
+   
 }
