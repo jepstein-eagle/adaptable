@@ -721,8 +721,8 @@ class ChartDisplayPopupComponent extends React.Component {
     }
     createDefaultXAxisTitle() {
         let returnString = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.XAxisColumnId, this.props.Columns);
-        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.AdditionalColumnId)) {
-            returnString = returnString + " (by " + ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.AdditionalColumnId, this.props.Columns) + ")";
+        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.XSegmentColumnId)) {
+            returnString = returnString + " (by " + ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.XSegmentColumnId, this.props.Columns) + ")";
         }
         return returnString;
     }

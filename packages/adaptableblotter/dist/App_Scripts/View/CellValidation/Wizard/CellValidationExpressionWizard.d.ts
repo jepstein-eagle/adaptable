@@ -5,5 +5,4 @@ export declare class CellValidationExpressionWizard extends ExpressionBuilderPag
     private props2;
     constructor(props2: ExpressionWizardProps<ICellValidationRule>);
     Next(): void;
-    StepName: string;
 }

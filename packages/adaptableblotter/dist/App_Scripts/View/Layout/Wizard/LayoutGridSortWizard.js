@@ -9,15 +9,14 @@ const AdaptableObjectCollection_1 = require("../../Components/AdaptableObjectCol
 const ObjectFactory_1 = require("../../../Utilities/ObjectFactory");
 const PanelWithButton_1 = require("../../Components/Panels/PanelWithButton");
 class LayoutGridSortWizard extends React.Component {
+    onEdit(arg0) {
+        throw new Error("Method not implemented.");
+    }
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             GridSorts: this.props.Data.GridSorts
         };
-    }
-    onEdit(arg0) {
-        throw new Error("Method not implemented.");
     }
     render() {
         let addButton = React.createElement(react_bootstrap_1.Button, { bsSize: "small", bsStyle: "default", style: { marginBottom: '20px' }, onClick: () => this.addSort() },

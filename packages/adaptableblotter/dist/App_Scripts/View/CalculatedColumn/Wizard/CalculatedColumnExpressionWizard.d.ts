@@ -18,5 +18,4 @@ export declare class CalculatedColumnExpressionWizard extends React.Component<Ca
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

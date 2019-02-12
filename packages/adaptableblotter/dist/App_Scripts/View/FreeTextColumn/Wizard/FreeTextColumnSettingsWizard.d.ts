@@ -19,5 +19,4 @@ export declare class FreeTextColumnSettingsWizard extends React.Component<FreeTe
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

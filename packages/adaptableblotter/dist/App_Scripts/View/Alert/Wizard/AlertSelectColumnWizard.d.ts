@@ -16,5 +16,4 @@ export declare class AlertSelectColumnWizard extends React.Component<AlertSelect
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

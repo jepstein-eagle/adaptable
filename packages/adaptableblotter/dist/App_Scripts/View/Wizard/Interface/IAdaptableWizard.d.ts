@@ -4,7 +4,6 @@ import { IAdaptableBlotterObject } from '../../../Utilities/Interface/BlotterObj
 import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 export interface AdaptableWizardStep {
-    StepName: string;
     canNext(): boolean;
     canBack(): boolean;
     Next(): void;
@@ -15,7 +14,6 @@ export interface AdaptableWizardStep {
 export interface AdaptableWizardStepProps<T> {
     Data?: T;
     UpdateGoBackState?(): void;
-    StepName?: string;
     cssClassName?: string;
     Blotter?: IAdaptableBlotter;
     Columns?: IColumn[];

@@ -20,5 +20,4 @@ export declare class LayoutSelectionWizard extends React.Component<LayoutSelecti
     Back(): void;
     GetIndexStepIncrement(): 1 | 3;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

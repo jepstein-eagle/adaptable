@@ -26,5 +26,4 @@ export declare class AlertRulesWizard extends React.Component<AlertRulesWizardPr
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

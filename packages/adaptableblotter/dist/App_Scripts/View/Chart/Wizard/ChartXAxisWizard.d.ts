@@ -20,5 +20,4 @@ export declare class ChartXAxisWizard extends React.Component<ChartXAxisWizardPr
     Back(): void;
     GetIndexStepIncrement(): 1 | 2;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

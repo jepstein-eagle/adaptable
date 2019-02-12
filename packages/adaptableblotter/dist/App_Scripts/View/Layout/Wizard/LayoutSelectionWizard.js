@@ -8,7 +8,6 @@ const AdaptablePopover_1 = require("../../AdaptablePopover");
 class LayoutSelectionWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             LayoutSource: Enums_1.LayoutSource.Existing
         };

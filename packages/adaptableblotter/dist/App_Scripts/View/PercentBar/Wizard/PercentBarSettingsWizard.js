@@ -9,7 +9,6 @@ const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensio
 class PercentBarSettingsWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             PositiveColor: this.props.Data.PositiveColor,
             NegativeColor: this.props.Data.NegativeColor,

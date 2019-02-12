@@ -16,5 +16,4 @@ export declare class PercentBarSelectColumnWizard extends React.Component<Percen
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

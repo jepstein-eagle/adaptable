@@ -9,7 +9,6 @@ const ColumnSelector_1 = require("../../Components/Selectors/ColumnSelector");
 class UserFilterSelectColumnWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             ColumnId: props.Data.ColumnId
         };

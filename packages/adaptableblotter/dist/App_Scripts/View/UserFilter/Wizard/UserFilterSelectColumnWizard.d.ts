@@ -16,5 +16,4 @@ export declare class UserFilterSelectColumnWizard extends React.Component<UserFi
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

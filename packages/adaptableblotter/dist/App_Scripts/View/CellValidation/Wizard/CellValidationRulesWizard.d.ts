@@ -25,5 +25,4 @@ export declare class CellValidationRulesWizard extends React.Component<CellValid
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

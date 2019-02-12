@@ -6,7 +6,6 @@ const StrategyConstants = require("../../../Utilities/Constants/StrategyConstant
 class CalculatedColumnSummaryWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = { ColumnId: this.props.Data.ColumnId, ErrorMessage: null };
     }
     render() {

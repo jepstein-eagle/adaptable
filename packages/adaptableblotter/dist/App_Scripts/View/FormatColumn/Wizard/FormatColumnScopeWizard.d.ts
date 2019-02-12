@@ -16,5 +16,4 @@ export declare class FormatColumnScopeWizard extends React.Component<FormatColum
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

@@ -8,7 +8,6 @@ const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterF
 class PlusMinusSettingsWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             NudgeValue: this.props.Data.NudgeValue,
             IsDefaultNudge: this.props.Data.IsDefaultNudge

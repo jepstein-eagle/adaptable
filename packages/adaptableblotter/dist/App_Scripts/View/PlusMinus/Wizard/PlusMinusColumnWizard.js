@@ -8,7 +8,6 @@ const ColumnSelector_1 = require("../../Components/Selectors/ColumnSelector");
 class PlusMinusColumnWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = { SelectedColumnId: this.props.Data.ColumnId };
     }
     render() {

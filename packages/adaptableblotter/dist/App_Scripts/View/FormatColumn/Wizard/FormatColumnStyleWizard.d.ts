@@ -19,5 +19,4 @@ export declare class FormatColumnStyleWizard extends React.Component<FormatColum
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
     private onUpdateStyle;
-    StepName: string;
 }

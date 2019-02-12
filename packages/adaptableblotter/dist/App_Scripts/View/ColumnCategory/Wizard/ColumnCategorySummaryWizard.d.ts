@@ -13,5 +13,4 @@ export declare class ColumnCategorySummaryWizard extends React.Component<ColumnC
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

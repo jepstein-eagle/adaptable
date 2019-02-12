@@ -12,5 +12,4 @@ export declare class FormatColumnSummaryWizard extends React.Component<FormatCol
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

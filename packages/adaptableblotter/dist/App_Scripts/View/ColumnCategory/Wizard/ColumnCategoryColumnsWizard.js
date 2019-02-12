@@ -8,7 +8,6 @@ const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class ColumnCategoryColumnsWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         let selectedFriendlyColumns = ColumnHelper_1.ColumnHelper.getFriendlyNamesFromColumnIds(this.props.Data.ColumnIds, this.props.Columns);
         let currentlyColumnCategorys = [];
         this.props.ColumnCategorys.map(lk => {

@@ -14,5 +14,4 @@ export declare class ReportSummaryWizard extends React.Component<ReportSummaryWi
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

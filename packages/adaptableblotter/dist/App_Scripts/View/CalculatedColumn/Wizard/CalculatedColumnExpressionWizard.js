@@ -7,7 +7,6 @@ const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterF
 class CalculatedColumnExpressionWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = { ColumnExpression: this.props.Data.ColumnExpression };
     }
     render() {

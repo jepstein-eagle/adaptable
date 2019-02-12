@@ -13,5 +13,4 @@ export declare class LayoutSummaryWizard extends React.Component<LayoutSummaryWi
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

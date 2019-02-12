@@ -8,7 +8,6 @@ const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class CustomSortValuesWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             ColumnValues: this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue),
             SelectedValues: this.props.Data.SortedValues,

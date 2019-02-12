@@ -16,5 +16,4 @@ export declare class ShortcutTypeWizard extends React.Component<ShortcutTypeWiza
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

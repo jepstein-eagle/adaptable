@@ -18,5 +18,4 @@ export declare class CustomSortValuesWizard extends React.Component<CustomSortVa
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

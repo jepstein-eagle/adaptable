@@ -6,7 +6,6 @@ const StrategyConstants = require("../../../Utilities/Constants/StrategyConstant
 class ShortcutSummaryWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
     }
     render() {
         let cssClassName = this.props.cssClassName + "-summary";

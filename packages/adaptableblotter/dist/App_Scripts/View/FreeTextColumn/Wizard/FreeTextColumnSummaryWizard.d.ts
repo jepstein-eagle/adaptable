@@ -12,5 +12,4 @@ export declare class FreeTextColumnSummaryWizard extends React.Component<FreeTex
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

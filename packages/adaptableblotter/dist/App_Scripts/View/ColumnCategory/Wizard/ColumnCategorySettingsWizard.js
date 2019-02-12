@@ -9,7 +9,6 @@ const StyleConstants_1 = require("../../../Utilities/Constants/StyleConstants");
 class ColumnCategorySettingsWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             ColumnCategoryId: props.Data.ColumnCategoryId,
             ErrorMessage: null

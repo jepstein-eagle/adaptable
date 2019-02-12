@@ -19,5 +19,4 @@ export declare class AlertTypeWizard extends React.Component<AlertTypeWizardProp
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

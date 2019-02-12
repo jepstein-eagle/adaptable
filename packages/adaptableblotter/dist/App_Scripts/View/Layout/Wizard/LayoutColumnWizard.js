@@ -7,7 +7,6 @@ const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class LayoutColumnWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             SelectedColumns: ColumnHelper_1.ColumnHelper.getFriendlyNamesFromColumnIds(this.props.Data.Columns, this.props.Columns)
         };

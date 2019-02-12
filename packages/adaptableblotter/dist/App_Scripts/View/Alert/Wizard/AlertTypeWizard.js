@@ -8,7 +8,6 @@ const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterF
 class AlertTypeWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             MessageType: this.props.Data.MessageType,
             ShowAsPopup: this.props.Data.ShowAsPopup,

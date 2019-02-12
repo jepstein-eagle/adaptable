@@ -15,5 +15,4 @@ export declare class ConditionalStyleSummaryWizard extends React.Component<Condi
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

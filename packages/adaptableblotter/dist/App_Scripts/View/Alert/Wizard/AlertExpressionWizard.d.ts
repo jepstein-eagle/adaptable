@@ -5,5 +5,4 @@ export declare class AlertExpressionWizard extends ExpressionBuilderPage impleme
     private props2;
     constructor(props2: ExpressionWizardProps<IAlertDefinition>);
     Next(): void;
-    StepName: string;
 }

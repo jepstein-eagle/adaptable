@@ -8,7 +8,6 @@ const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions
 class FreeTextColumnSettingsWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = { ColumnId: this.props.Data.ColumnId, ErrorMessage: null, DefaultValue: this.props.Data.DefaultValue };
     }
     render() {

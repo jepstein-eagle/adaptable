@@ -21,5 +21,4 @@ export declare class PercentBarSettingsWizard extends React.Component<PercentBar
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

@@ -27,5 +27,4 @@ export declare class ShortcutSettingsWizard extends React.Component<ShortcutSett
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

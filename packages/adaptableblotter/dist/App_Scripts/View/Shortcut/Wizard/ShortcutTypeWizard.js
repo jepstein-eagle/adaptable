@@ -8,7 +8,6 @@ const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterF
 class ShortcutTypeWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             ColumnType: this.props.Data.ColumnType,
         };

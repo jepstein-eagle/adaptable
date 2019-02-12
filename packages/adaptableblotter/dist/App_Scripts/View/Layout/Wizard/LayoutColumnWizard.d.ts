@@ -16,5 +16,4 @@ export declare class LayoutColumnWizard extends React.Component<LayoutColumnWiza
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

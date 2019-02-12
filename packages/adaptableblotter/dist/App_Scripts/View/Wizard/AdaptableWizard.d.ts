@@ -1,13 +1,17 @@
 import * as React from "react";
 import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 import { IColumn } from "../../Utilities/Interface/IColumn";
+export interface IWizardStepInfo {
+    StepName: string;
+    Element: JSX.Element;
+    Index: number;
+}
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
-    Steps: JSX.Element[];
+    Steps: IWizardStepInfo[];
     Data: any;
     onHide: Function;
     onFinish?: Function;
     StepStartIndex?: number;
-    StepNames?: string[];
     FriendlyName?: string;
     ModalContainer: HTMLElement;
     cssClassName: string;
@@ -21,7 +25,7 @@ export interface AdaptableWizardState extends React.ClassAttributes<AdaptableWiz
 }
 export declare class AdaptableWizard extends React.Component<AdaptableWizardProps, AdaptableWizardState> {
     private ActiveStep;
-    StepName: string;
+    private stepName;
     constructor(props: AdaptableWizardProps);
     render(): JSX.Element;
     private onStepButtonClicked;

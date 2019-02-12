@@ -12,7 +12,6 @@ const AdaptablePopover_1 = require("../../AdaptablePopover");
 class ChartYAxisWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             YAxisColumnIds: props.Data.YAxisColumnIds,
             YAxisTotal: props.Data.YAxisTotal

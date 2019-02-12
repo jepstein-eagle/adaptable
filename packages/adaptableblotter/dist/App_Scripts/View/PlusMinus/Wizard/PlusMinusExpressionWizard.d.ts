@@ -6,5 +6,4 @@ export declare class PlusMinusExpressionWizard extends ExpressionBuilderPage imp
     constructor(props2: ExpressionWizardProps<IPlusMinusRule>);
     Next(): void;
     Back(): void;
-    StepName: string;
 }

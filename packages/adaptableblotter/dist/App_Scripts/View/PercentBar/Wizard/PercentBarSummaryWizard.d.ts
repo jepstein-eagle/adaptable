@@ -12,5 +12,4 @@ export declare class PercentBarSummaryWizard extends React.Component<PercentBarS
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

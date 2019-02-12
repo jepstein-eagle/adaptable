@@ -19,5 +19,4 @@ export declare class ConditionalStyleStyleWizard extends React.Component<Conditi
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

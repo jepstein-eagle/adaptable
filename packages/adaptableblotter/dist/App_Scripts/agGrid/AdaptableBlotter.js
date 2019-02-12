@@ -1131,6 +1131,8 @@ class AdaptableBlotter {
         this.gridOptions.api.addEventListener(eventKeys_1.Events.EVENT_RANGE_SELECTION_CHANGED, () => {
             this.debouncedSetSelectedCells();
         });
+        // this.gridOptions.api.addEventListener(Events.EVENT_TOOL_PANEL_VISIBLE_CHANGED, () => {
+        // });
         //  this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
         //     console.log(params)
         // });
@@ -1262,29 +1264,6 @@ class AdaptableBlotter {
             }
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
-        //    let testToolPanel  =   CustomStatsToolPanel();
-        //  console.log(testToolPanel)
-        /*
-        let abToolPanel: any = {
-        id: 'customStats',
-        labelDefault: 'Custom Stats',
-        labelKey: 'customStats',
-        iconKey: 'custom-stats',
-        component: testToolPanel,
-        }
-
-        console.log(abToolPanel);
-
-      let sidebarDef: SideBarDef =  this.gridOptions.sideBar as SideBarDef;
-      sidebarDef.toolPanels.push(abToolPanel);
-      sidebarDef.defaultToolPanel = "customStats"
-
-      console.log(this.gridOptions.sideBar)
-
-   let components: any =   this.gridOptions.components;
-   console.log(components);
-
-*/
         // add any special renderers
         let percentBars = this.getState().PercentBar.PercentBars;
         percentBars.forEach(pcr => {
@@ -1562,6 +1541,7 @@ class AdaptableBlotter {
         }
         // playing here but seeing if we can update an agGrid option
         //this.gridOptions.suppressMenuHide= true;
+        // this.testToolPanelStuff();
         // at the end so load the current layout, refresh the toolbar and turn off the loading message
         this.api.layoutApi.Set(currentlayout);
     }
@@ -1571,6 +1551,26 @@ class AdaptableBlotter {
     }
     dispatchAction(action) {
         this.AdaptableBlotterStore.TheStore.dispatch(action);
+    }
+    testToolPanelStuff() {
+        //    let testToolPanel  =   CustomStatsToolPanel();
+        //  console.log(testToolPanel)
+        let abToolPanel = {
+            id: 'customStats',
+            labelDefault: 'Custom Stats',
+            labelKey: 'customStats',
+            iconKey: 'columns',
+            toolPanel: 'customStatsToolPanel',
+        };
+        console.log(abToolPanel);
+        let sidebarDef = this.gridOptions.sideBar;
+        let toolbarDefs = sidebarDef.toolPanels;
+        //  toolbarDefs.push(abToolPanel);
+        sidebarDef.toolPanels = toolbarDefs;
+        sidebarDef.defaultToolPanel = "customStats";
+        console.log(this.gridOptions.sideBar);
+        let components = this.gridOptions.components;
+        console.log(components);
     }
 }
 exports.AdaptableBlotter = AdaptableBlotter;

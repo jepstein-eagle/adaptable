@@ -7,7 +7,6 @@ const DualListBoxEditor_1 = require("../../Components/ListBox/DualListBoxEditor"
 class ReportColumnChooserWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             AllColumnValues: this.props.Columns.map(c => c.FriendlyName),
             SelectedColumnValues: this.props.Data.ColumnIds.map(c => this.props.Columns.find(col => col.ColumnId == c).FriendlyName),

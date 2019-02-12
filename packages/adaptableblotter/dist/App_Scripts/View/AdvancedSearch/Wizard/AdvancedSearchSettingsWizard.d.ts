@@ -18,5 +18,4 @@ export declare class AdvancedSearchSettingsWizard extends React.Component<Advanc
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

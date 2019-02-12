@@ -23,5 +23,4 @@ export declare class ConditionalStyleScopeWizard extends React.Component<Conditi
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

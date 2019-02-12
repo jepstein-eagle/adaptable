@@ -18,5 +18,4 @@ export declare class PlusMinusColumnWizard extends React.Component<PlusMinusColu
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

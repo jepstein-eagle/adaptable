@@ -7,5 +7,4 @@ export declare class ReportExpressionWizard extends ExpressionBuilderPage implem
     Next(): void;
     Back(): void;
     GetIndexStepDecrement(): 1 | 2;
-    StepName: string;
 }

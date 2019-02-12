@@ -17,5 +17,4 @@ export declare class ReportRowTypeWizard extends React.Component<ReportRowTypeWi
     Back(): void;
     GetIndexStepIncrement(): 1 | 2;
     GetIndexStepDecrement(): 1 | 2;
-    StepName: string;
 }

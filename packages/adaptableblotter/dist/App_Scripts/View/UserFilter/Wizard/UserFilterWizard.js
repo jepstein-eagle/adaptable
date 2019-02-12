@@ -10,13 +10,28 @@ const UserFilterSummaryWizard_1 = require("./UserFilterSummaryWizard");
 const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class UserFilterWizard extends React.Component {
     render() {
-        let stepNames = ["Column", "Query", "Settings", "Summary"];
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.UserFilterStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
-                    React.createElement(UserFilterSelectColumnWizard_1.UserFilterSelectColumnWizard, { StepName: stepNames[0] }),
-                    React.createElement(UserFilterExpressionWizard_1.UserFilterExpressionWizard, { StepName: stepNames[1], UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, ExpressionMode: Enums_1.ExpressionMode.SingleColumn }),
-                    React.createElement(UserFilterSettingsWizard_1.UserFilterSettingsWizard, { StepName: stepNames[2], UserFilters: this.props.UserFilters }),
-                    React.createElement(UserFilterSummaryWizard_1.UserFilterSummaryWizard, { StepName: stepNames[3], UserFilters: this.props.UserFilters })
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.UserFilterStrategyName, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
+                    {
+                        StepName: "Column",
+                        Index: 0,
+                        Element: React.createElement(UserFilterSelectColumnWizard_1.UserFilterSelectColumnWizard, null)
+                    },
+                    {
+                        StepName: "Query",
+                        Index: 1,
+                        Element: React.createElement(UserFilterExpressionWizard_1.UserFilterExpressionWizard, { UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, ExpressionMode: Enums_1.ExpressionMode.SingleColumn }),
+                    },
+                    {
+                        StepName: "Settings",
+                        Index: 2,
+                        Element: React.createElement(UserFilterSettingsWizard_1.UserFilterSettingsWizard, { UserFilters: this.props.UserFilters })
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 3,
+                        Element: React.createElement(UserFilterSummaryWizard_1.UserFilterSummaryWizard, { UserFilters: this.props.UserFilters })
+                    }
                 ], Data: this.props.EditedAdaptableBlotterObject, StepStartIndex: this.props.WizardStartIndex, onHide: () => this.props.onCloseWizard(), onFinish: () => this.props.onFinishWizard(), canFinishWizard: () => this.props.canFinishWizard() }));
     }
 }

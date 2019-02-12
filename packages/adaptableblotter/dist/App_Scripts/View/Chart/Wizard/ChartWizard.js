@@ -7,24 +7,51 @@ const ChartSummaryWizard_1 = require("./ChartSummaryWizard");
 const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 const ChartXAxisWizard_1 = require("./ChartXAxisWizard");
 const ChartSettingsWizard_1 = require("./ChartSettingsWizard");
-const ChartAdditionalColumnWizard_1 = require("./ChartAdditionalColumnWizard");
-const ChartExpressionWizard_1 = require("./ChartExpressionWizard");
+const ChartXSegmentColumnWizard_1 = require("./ChartXSegmentColumnWizard");
+const ChartXAxisExpressionWizard_1 = require("./ChartXAxisExpressionWizard");
 const Enums_1 = require("../../../Utilities/Enums");
+const ChartXSegmentColumnExpressionWizard_1 = require("./ChartXSegmentColumnExpressionWizard");
 class ChartWizard extends React.Component {
     render() {
-        //  console.log("in wziard0")
-        //   console.log(this.props.EditedAdaptableBlotterObject)
-        let stepNames = ["Y Axis", "X Axis", "X Segment", "Settings", "Summary"];
         let chartDefinitions = this.props.ConfigEntities;
         let chartTitles = chartDefinitions.map(s => s.Title);
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.ChartStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
-                    React.createElement(ChartYAxisWizard_1.ChartYAxisWizard, { StepName: stepNames[0] }),
-                    React.createElement(ChartXAxisWizard_1.ChartXAxisWizard, { StepName: stepNames[1] }),
-                    React.createElement(ChartExpressionWizard_1.ChartExpressionWizard, { StepName: stepNames[1], Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, ExpressionMode: Enums_1.ExpressionMode.SingleColumn }),
-                    React.createElement(ChartAdditionalColumnWizard_1.ChartAdditionalColumnWizard, { StepName: stepNames[2] }),
-                    React.createElement(ChartSettingsWizard_1.ChartSettingsWizard, { StepName: stepNames[3], ChartTitles: chartTitles }),
-                    React.createElement(ChartSummaryWizard_1.ChartSummaryWizard, { StepName: stepNames[4] })
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.ChartStrategyName, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
+                    {
+                        StepName: "Y Axis",
+                        Index: 0,
+                        Element: React.createElement(ChartYAxisWizard_1.ChartYAxisWizard, null)
+                    },
+                    {
+                        StepName: "X Axis",
+                        Index: 1,
+                        Element: React.createElement(ChartXAxisWizard_1.ChartXAxisWizard, null)
+                    },
+                    {
+                        StepName: "X Axis",
+                        Index: 2,
+                        Element: React.createElement(ChartXAxisExpressionWizard_1.ChartXAxisExpressionWizard, { Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, ExpressionMode: Enums_1.ExpressionMode.SingleColumn })
+                    },
+                    {
+                        StepName: "X Segment",
+                        Index: 3,
+                        Element: React.createElement(ChartXSegmentColumnWizard_1.ChartXSegmentColumnWizard, null)
+                    },
+                    {
+                        StepName: "X Segment",
+                        Index: 4,
+                        Element: React.createElement(ChartXSegmentColumnExpressionWizard_1.ChartXSegmentColumnExpressionWizard, { Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, ExpressionMode: Enums_1.ExpressionMode.SingleColumn })
+                    },
+                    {
+                        StepName: "Settings",
+                        Index: 5,
+                        Element: React.createElement(ChartSettingsWizard_1.ChartSettingsWizard, { ChartTitles: chartTitles }),
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 6,
+                        Element: React.createElement(ChartSummaryWizard_1.ChartSummaryWizard, null)
+                    },
                 ], Data: this.props.EditedAdaptableBlotterObject, StepStartIndex: this.props.WizardStartIndex, onHide: () => this.props.onCloseWizard(), onFinish: () => this.props.onFinishWizard(), canFinishWizard: () => this.props.canFinishWizard() }));
     }
 }

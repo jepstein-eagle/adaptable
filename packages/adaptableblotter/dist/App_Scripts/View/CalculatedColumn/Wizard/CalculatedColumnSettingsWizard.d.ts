@@ -17,5 +17,4 @@ export declare class CalculatedColumnSettingsWizard extends React.Component<Calc
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

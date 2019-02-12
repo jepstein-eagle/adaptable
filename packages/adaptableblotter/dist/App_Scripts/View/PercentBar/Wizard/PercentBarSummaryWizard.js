@@ -10,7 +10,6 @@ const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensio
 class PercentBarSummaryWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
     }
     render() {
         let cssClassName = this.props.cssClassName + "-summary";

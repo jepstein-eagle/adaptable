@@ -8,7 +8,7 @@ class WizardLegend extends React.Component {
     render() {
         let count = this.props.StepNames.length - 1;
         let activeStepIndex = this.props.StepNames.findIndex(s => s == this.props.ActiveStepName);
-        let stepNames = this.props.StepNames.map((s, index) => {
+        let stepButtons = this.props.StepNames.map((s, index) => {
             let isActiveStep = index == activeStepIndex;
             let isDisabled = (this.props.CanShowAllSteps) ?
                 false :
@@ -23,7 +23,7 @@ class WizardLegend extends React.Component {
         return React.createElement("div", { className: StyleConstants.WIZARD_LEGEND },
             this.props.FriendlyName,
             " : ",
-            stepNames);
+            stepButtons);
     }
     onStepButtonClicked(stepName) {
         this.props.onStepButtonClicked(stepName);

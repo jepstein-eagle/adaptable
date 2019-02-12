@@ -5,12 +5,10 @@ const react_bootstrap_1 = require("react-bootstrap");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
-const EnumExtensions_1 = require("../../../Utilities/Extensions/EnumExtensions");
-const ChartEnums_1 = require("../../../Utilities/ChartEnums");
+const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
 class ChartSettingsWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             Title: props.Data.Title,
             SubTitle: props.Data.SubTitle,
@@ -20,9 +18,6 @@ class ChartSettingsWizard extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "-settings";
         let validationState = StringExtensions_1.StringExtensions.IsNullOrEmpty(this.state.ErrorMessage) ? null : "error";
-        let optionChartTypes = EnumExtensions_1.EnumExtensions.getNames(ChartEnums_1.ChartType).map((enumName) => {
-            return React.createElement("option", { key: enumName, value: enumName }, enumName);
-        });
         return React.createElement("div", { className: cssClassName },
             React.createElement(react_bootstrap_1.Panel, { header: "Chart Definition Settings", bsStyle: "primary" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
@@ -65,7 +60,7 @@ class ChartSettingsWizard extends React.Component {
         return 1;
     }
     GetIndexStepDecrement() {
-        return 1;
+        return (ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(this.props.Data.XSegmentExpression)) ? 2 : 1;
     }
 }
 exports.ChartSettingsWizard = ChartSettingsWizard;

@@ -8,7 +8,6 @@ const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper"
 class AlertSelectQueryWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             HasExpression: ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(this.props.Data.Expression),
         };

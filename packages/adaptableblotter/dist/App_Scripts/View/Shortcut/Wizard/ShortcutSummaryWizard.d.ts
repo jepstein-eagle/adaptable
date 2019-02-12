@@ -12,5 +12,4 @@ export declare class ShortcutSummaryWizard extends React.Component<ShortcutSumma
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

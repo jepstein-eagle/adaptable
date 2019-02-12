@@ -18,5 +18,4 @@ export declare class UserFilterSettingsWizard extends React.Component<UserFilter
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

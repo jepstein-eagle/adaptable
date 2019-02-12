@@ -5,5 +5,4 @@ export declare class UserFilterExpressionWizard extends ExpressionBuilderPage im
     private props2;
     constructor(props2: ExpressionWizardProps<IUserFilter>);
     Next(): void;
-    StepName: string;
 }

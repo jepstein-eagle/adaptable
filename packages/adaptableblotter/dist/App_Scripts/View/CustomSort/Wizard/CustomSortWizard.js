@@ -8,13 +8,24 @@ const CustomSortSummaryWizard_1 = require("./CustomSortSummaryWizard");
 const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class CustomSortWizard extends React.Component {
     render() {
-        let stepNames = ["Column", "Sort Order", "Summary"];
         let customSorts = this.props.ConfigEntities;
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.CustomSortStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
-                    React.createElement(CustomSortColumnWizard_1.CustomSortColumnWizard, { StepName: stepNames[0], SortedColumns: this.props.Columns.filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId)) }),
-                    React.createElement(CustomSortValuesWizard_1.CustomSortValuesWizard, { StepName: stepNames[1] }),
-                    React.createElement(CustomSortSummaryWizard_1.CustomSortSummaryWizard, { StepName: stepNames[2] })
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.CustomSortStrategyName, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
+                    {
+                        StepName: "Column",
+                        Index: 0,
+                        Element: React.createElement(CustomSortColumnWizard_1.CustomSortColumnWizard, { SortedColumns: this.props.Columns.filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId)) }),
+                    },
+                    {
+                        StepName: "Sort Order",
+                        Index: 1,
+                        Element: React.createElement(CustomSortValuesWizard_1.CustomSortValuesWizard, null),
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 2,
+                        Element: React.createElement(CustomSortSummaryWizard_1.CustomSortSummaryWizard, null)
+                    }
                 ], Data: this.props.EditedAdaptableBlotterObject, StepStartIndex: this.props.WizardStartIndex, onHide: () => this.props.onCloseWizard(), onFinish: () => this.props.onFinishWizard(), canFinishWizard: () => this.props.canFinishWizard() }));
     }
 }

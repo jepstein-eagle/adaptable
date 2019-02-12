@@ -6,5 +6,4 @@ export declare class AdvancedSearchExpressionWizard extends ExpressionBuilderPag
     constructor(props2: ExpressionWizardProps<IAdvancedSearch>);
     Next(): void;
     Back(): void;
-    StepName: string;
 }

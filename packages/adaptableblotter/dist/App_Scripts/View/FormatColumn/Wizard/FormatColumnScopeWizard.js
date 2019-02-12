@@ -8,7 +8,6 @@ const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensio
 class FormatColumnScopeWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             ColumnId: this.props.Data.ColumnId
         };

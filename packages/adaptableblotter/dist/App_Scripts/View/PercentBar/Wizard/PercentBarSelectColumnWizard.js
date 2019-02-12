@@ -9,7 +9,6 @@ const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class PercentBarSelectColumnWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             ColumnId: this.props.Data.ColumnId,
         };

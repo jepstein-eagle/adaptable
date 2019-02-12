@@ -7,11 +7,18 @@ const FreeTextColumnSummaryWizard_1 = require("./FreeTextColumnSummaryWizard");
 const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class FreeTextColumnWizard extends React.Component {
     render() {
-        let stepNames = ["Settings", "Summary"];
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.FreeTextColumnStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
-                    React.createElement(FreeTextColumnSettingsWizard_1.FreeTextColumnSettingsWizard, { StepName: stepNames[0] }),
-                    React.createElement(FreeTextColumnSummaryWizard_1.FreeTextColumnSummaryWizard, { StepName: stepNames[1] })
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.FreeTextColumnStrategyName, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
+                    {
+                        StepName: "Settings",
+                        Index: 0,
+                        Element: React.createElement(FreeTextColumnSettingsWizard_1.FreeTextColumnSettingsWizard, null),
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 1,
+                        Element: React.createElement(FreeTextColumnSummaryWizard_1.FreeTextColumnSummaryWizard, null)
+                    }
                 ], Data: this.props.EditedAdaptableBlotterObject, StepStartIndex: this.props.WizardStartIndex, onHide: () => this.props.onCloseWizard(), onFinish: () => this.props.onFinishWizard(), canFinishWizard: () => this.props.canFinishWizard() }));
     }
 }

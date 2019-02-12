@@ -21,5 +21,4 @@ export declare class LayoutGridSortWizard extends React.Component<LayoutGridSort
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

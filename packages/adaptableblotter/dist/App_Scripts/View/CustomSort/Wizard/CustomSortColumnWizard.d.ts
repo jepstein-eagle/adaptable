@@ -18,5 +18,4 @@ export declare class CustomSortColumnWizard extends React.Component<CustomSortCo
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

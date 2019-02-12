@@ -11,15 +11,38 @@ const CellValidationSelectQueryWizard_1 = require("./CellValidationSelectQueryWi
 const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class CellValidationWizard extends React.Component {
     render() {
-        let stepNames = ["Column", "Action", "Validation", "Query", "Summary"];
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.CellValidationStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
-                    React.createElement(CellValidationSelectColumnWizard_1.CellValidationSelectColumnWizard, { StepName: stepNames[0] }),
-                    React.createElement(CellValidationActionWizard_1.CellValidationActionWizard, { StepName: stepNames[1] }),
-                    React.createElement(CellValidationRulesWizard_1.CellValidationRulesWizard, { StepName: stepNames[2] }),
-                    React.createElement(CellValidationSelectQueryWizard_1.CellValidationSelectQueryWizard, { StepName: stepNames[3] }),
-                    React.createElement(CellValidationExpressionWizard_1.CellValidationExpressionWizard, { StepName: stepNames[3], UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters }),
-                    React.createElement(CellValidationSummaryWizard_1.CellValidationSummaryWizard, { StepName: stepNames[4], UserFilters: this.props.UserFilters })
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.CellValidationStrategyName, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
+                    {
+                        StepName: "Column",
+                        Index: 0,
+                        Element: React.createElement(CellValidationSelectColumnWizard_1.CellValidationSelectColumnWizard, null)
+                    },
+                    {
+                        StepName: "Action",
+                        Index: 1,
+                        Element: React.createElement(CellValidationActionWizard_1.CellValidationActionWizard, null),
+                    },
+                    {
+                        StepName: "Validation",
+                        Index: 2,
+                        Element: React.createElement(CellValidationRulesWizard_1.CellValidationRulesWizard, null),
+                    },
+                    {
+                        StepName: "Query",
+                        Index: 3,
+                        Element: React.createElement(CellValidationSelectQueryWizard_1.CellValidationSelectQueryWizard, null),
+                    },
+                    {
+                        StepName: "Query",
+                        Index: 4,
+                        Element: React.createElement(CellValidationExpressionWizard_1.CellValidationExpressionWizard, { UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters }),
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 5,
+                        Element: React.createElement(CellValidationSummaryWizard_1.CellValidationSummaryWizard, { UserFilters: this.props.UserFilters })
+                    }
                 ], Data: this.props.EditedAdaptableBlotterObject, StepStartIndex: this.props.WizardStartIndex, onHide: () => this.props.onCloseWizard(), onFinish: () => this.props.onFinishWizard(), canFinishWizard: () => this.props.canFinishWizard() }));
     }
 }

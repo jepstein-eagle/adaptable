@@ -59,7 +59,7 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             let currentChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition);
             if (ArrayExtensions_1.ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
                 currentChartDefinition.XAxisColumnId == columnChangedId ||
-                currentChartDefinition.AdditionalColumnId == columnChangedId) {
+                currentChartDefinition.XSegmentColumnId == columnChangedId) {
                 this.debouncedSetChartData();
             }
         }

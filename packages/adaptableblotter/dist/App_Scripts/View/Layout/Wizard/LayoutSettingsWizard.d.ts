@@ -18,5 +18,4 @@ export declare class LayoutSettingsWizard extends React.Component<LayoutSettings
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

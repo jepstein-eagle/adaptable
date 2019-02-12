@@ -14,5 +14,4 @@ export declare class AdvancedSearchSummaryWizard extends React.Component<Advance
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

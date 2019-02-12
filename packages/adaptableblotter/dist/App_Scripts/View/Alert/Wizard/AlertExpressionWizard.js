@@ -6,7 +6,6 @@ class AlertExpressionWizard extends ExpressionBuilderPage_1.ExpressionBuilderPag
     constructor(props2) {
         super(props2);
         this.props2 = props2;
-        this.StepName = this.props.StepName;
         this.state = UIHelper_1.UIHelper.getExpressionBuilderState(this.props2.Data.Expression);
     }
     Next() {

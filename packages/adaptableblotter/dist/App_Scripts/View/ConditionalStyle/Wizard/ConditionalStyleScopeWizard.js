@@ -11,7 +11,6 @@ const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions
 class ConditionalStyleScopeWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             ColumnId: StringExtensions_1.StringExtensions.IsNull(this.props.Data.ColumnId) ? "" : this.props.Data.ColumnId,
             ColumnCategoryId: StringExtensions_1.StringExtensions.IsNull(this.props.Data.ColumnCategoryId) ? "" : this.props.Data.ColumnCategoryId,

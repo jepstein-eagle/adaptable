@@ -7,5 +7,6 @@ export declare class ChartService implements IChartService {
     constructor(blotter: IAdaptableBlotter);
     BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any;
     private buildTotal;
-    private getAdditionalColumnValues;
+    private getXAxisColumnValues;
+    private getXSegmentColumnValues;
 }

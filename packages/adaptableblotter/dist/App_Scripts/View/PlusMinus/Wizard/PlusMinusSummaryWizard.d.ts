@@ -14,5 +14,4 @@ export declare class PlusMinusSummaryWizard extends React.Component<PlusMinusSum
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): 1 | 2;
-    StepName: string;
 }

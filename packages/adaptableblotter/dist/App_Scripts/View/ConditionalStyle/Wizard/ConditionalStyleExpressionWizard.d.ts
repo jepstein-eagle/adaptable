@@ -6,5 +6,4 @@ export declare class ConditionalStyleExpressionWizard extends ExpressionBuilderP
     constructor(props2: ExpressionWizardProps<IConditionalStyle>);
     Next(): void;
     Back(): void;
-    StepName: string;
 }

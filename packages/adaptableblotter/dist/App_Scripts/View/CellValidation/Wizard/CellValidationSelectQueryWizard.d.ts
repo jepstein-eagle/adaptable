@@ -16,5 +16,4 @@ export declare class CellValidationSelectQueryWizard extends React.Component<Cel
     Back(): void;
     GetIndexStepIncrement(): 1 | 2;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

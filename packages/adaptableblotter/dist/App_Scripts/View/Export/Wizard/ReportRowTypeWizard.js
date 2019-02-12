@@ -9,7 +9,6 @@ const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper"
 class ReportRowTypeWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             ReportRowScope: this.props.Data.ReportRowScope
         };

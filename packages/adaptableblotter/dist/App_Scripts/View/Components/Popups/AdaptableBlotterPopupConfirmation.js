@@ -39,11 +39,8 @@ class AdaptableBlotterPopupConfirmation extends React.Component {
                                             React.createElement(react_bootstrap_1.FormControl, { style: { marginTop: '20px' }, value: this.state.PromptText, type: "string", placeholder: "Enter text", onChange: (e) => this.changeContent(e) })),
                                     React.createElement("div", { style: { marginTop: '20px' } },
                                         React.createElement(react_bootstrap_1.Row, null,
-                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                React.createElement(react_bootstrap_1.Button, { bsStyle: StyleConstants.PRIMARY_BSSTYLE, className: cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CONFIRM_BUTTON, disabled: !this.canConfirm(), onClick: () => this.onConfirmmForm() }, this.props.ConfirmButtonText)),
-                                            React.createElement(react_bootstrap_1.Col, { xs: 2 }),
-                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                React.createElement(react_bootstrap_1.Button, { bsStyle: StyleConstants.DEFAULT_BSSTYLE, className: cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CANCEL_BUTTON, onClick: () => this.onCancelForm() }, this.props.CancelButtonText)))))))))));
+                                            React.createElement(react_bootstrap_1.Button, { style: { float: "left", marginLeft: "15px" }, bsStyle: StyleConstants.PRIMARY_BSSTYLE, className: cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CONFIRM_BUTTON, disabled: !this.canConfirm(), onClick: () => this.onConfirmmForm() }, this.props.ConfirmButtonText),
+                                            React.createElement(react_bootstrap_1.Button, { style: { float: "right", marginRight: "15px" }, bsStyle: StyleConstants.DEFAULT_BSSTYLE, className: cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CANCEL_BUTTON, onClick: () => this.onCancelForm() }, this.props.CancelButtonText))))))))));
     }
     onCancelForm() {
         this.setState({ PromptText: "" });

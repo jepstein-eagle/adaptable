@@ -12,5 +12,4 @@ export declare class CalculatedColumnSummaryWizard extends React.Component<Calcu
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

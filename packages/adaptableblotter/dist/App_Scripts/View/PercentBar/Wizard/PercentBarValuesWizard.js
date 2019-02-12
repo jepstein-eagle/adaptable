@@ -16,7 +16,6 @@ class PercentBarValuesWizard extends React.Component {
         this.onMaxValueChanged = (e) => {
             this.setState({ MaxValue: e.target.value }, () => this.props.UpdateGoBackState());
         };
-        this.StepName = this.props.StepName;
         this.state = {
             MinValue: this.props.Data.MinValue,
             MaxValue: this.props.Data.MaxValue,

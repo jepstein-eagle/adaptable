@@ -8,12 +8,23 @@ const ColumnCategorySummaryWizard_1 = require("./ColumnCategorySummaryWizard");
 const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 class ColumnCategoryWizard extends React.Component {
     render() {
-        let stepNames = ["Name", "Columns", "Summary"];
         return React.createElement("div", { className: this.props.cssClassName },
-            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.ColumnCategoryStrategyName, StepNames: stepNames, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
-                    React.createElement(ColumnCategorySettingsWizard_1.ColumnCategorySettingsWizard, { StepName: stepNames[0], ColumnCategorys: this.props.ColumnCategorys }),
-                    React.createElement(ColumnCategoryColumnsWizard_1.ColumnCategoryColumnsWizard, { StepName: stepNames[1], ColumnCategorys: this.props.ColumnCategorys }),
-                    React.createElement(ColumnCategorySummaryWizard_1.ColumnCategorySummaryWizard, { StepName: stepNames[2] })
+            React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.ColumnCategoryStrategyName, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
+                    {
+                        StepName: "Name",
+                        Index: 0,
+                        Element: React.createElement(ColumnCategorySettingsWizard_1.ColumnCategorySettingsWizard, { ColumnCategorys: this.props.ColumnCategorys })
+                    },
+                    {
+                        StepName: "Columns",
+                        Index: 1,
+                        Element: React.createElement(ColumnCategoryColumnsWizard_1.ColumnCategoryColumnsWizard, { ColumnCategorys: this.props.ColumnCategorys }),
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 2,
+                        Element: React.createElement(ColumnCategorySummaryWizard_1.ColumnCategorySummaryWizard, null)
+                    }
                 ], Data: this.props.EditedAdaptableBlotterObject, StepStartIndex: this.props.WizardStartIndex, onHide: () => this.props.onCloseWizard(), onFinish: () => this.props.onFinishWizard(), canFinishWizard: () => this.props.canFinishWizard() }));
     }
 }

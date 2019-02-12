@@ -6,7 +6,6 @@ const UIHelper_1 = require("../../UIHelper");
 class ConditionalStyleStyleWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = { Style: this.props.Data.Style };
     }
     render() {

@@ -9,7 +9,6 @@ const CellValidationHelper_1 = require("../../../Utilities/Helpers/CellValidatio
 class CellValidationSummaryWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
     }
     render() {
         let cssClassName = this.props.cssClassName + "-summary";

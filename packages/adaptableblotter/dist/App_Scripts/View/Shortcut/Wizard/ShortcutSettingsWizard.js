@@ -14,7 +14,6 @@ class ShortcutSettingsWizard extends React.Component {
         this.changeContent = (e) => {
             this.setState({ ShortcutResult: e.target.value }, () => this.props.UpdateGoBackState());
         };
-        this.StepName = this.props.StepName;
         this.state = {
             ShortcutKey: this.props.Data.ShortcutKey,
             ShortcutResult: this.props.Data.ShortcutResult == null ? "" : this.props.Data.ShortcutResult,

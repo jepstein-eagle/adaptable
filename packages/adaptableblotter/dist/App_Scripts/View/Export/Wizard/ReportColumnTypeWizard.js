@@ -8,7 +8,6 @@ const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterF
 class ReportColumnTypeWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             ReportColumnScope: this.props.Data.ReportColumnScope
         };

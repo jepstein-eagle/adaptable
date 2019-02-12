@@ -12,5 +12,4 @@ export declare class CustomSortSummaryWizard extends React.Component<CustomSortS
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

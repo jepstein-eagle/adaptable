@@ -151,4 +151,5 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private applyFinalRendering;
     private getState;
     private dispatchAction;
+    private testToolPanelStuff;
 }

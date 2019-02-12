@@ -11,7 +11,6 @@ const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class AlertRulesWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             Operator: this.props.Data.Range.Operator,
             Operand1: this.props.Data.Range.Operand1,

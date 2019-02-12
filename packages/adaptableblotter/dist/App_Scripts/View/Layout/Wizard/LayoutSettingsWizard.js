@@ -8,7 +8,6 @@ const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions
 class LayoutSettingsWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             LayoutName: props.Data.Name,
             ErrorMessage: null

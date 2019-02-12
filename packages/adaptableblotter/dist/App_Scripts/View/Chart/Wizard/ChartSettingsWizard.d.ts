@@ -19,6 +19,5 @@ export declare class ChartSettingsWizard extends React.Component<ChartSettingsWi
     Next(): void;
     Back(): void;
     GetIndexStepIncrement(): number;
-    GetIndexStepDecrement(): number;
-    StepName: string;
+    GetIndexStepDecrement(): 1 | 2;
 }

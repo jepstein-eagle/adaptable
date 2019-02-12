@@ -19,5 +19,4 @@ export declare class ColumnCategoryColumnsWizard extends React.Component<ColumnC
     Back(): void;
     GetIndexStepIncrement(): number;
     GetIndexStepDecrement(): number;
-    StepName: string;
 }

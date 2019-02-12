@@ -8,7 +8,6 @@ const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 class FormatColumnSummaryWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = { Style: this.props.Data.Style };
     }
     render() {

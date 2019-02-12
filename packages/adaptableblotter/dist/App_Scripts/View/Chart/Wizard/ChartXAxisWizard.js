@@ -11,7 +11,6 @@ const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper"
 class ChartXAxisWizard extends React.Component {
     constructor(props) {
         super(props);
-        this.StepName = this.props.StepName;
         this.state = {
             XAxisColumnId: props.Data.XAxisColumnId,
             UseAllXAsisColumnValues: ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(this.props.Data.XAxisExpression),
