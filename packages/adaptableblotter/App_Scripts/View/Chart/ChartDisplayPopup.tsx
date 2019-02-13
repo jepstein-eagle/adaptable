@@ -31,17 +31,16 @@ import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ButtonGeneral } from "../Components/Buttons/ButtonGeneral";
 import { DefaultChartProperties } from "../../Utilities/Defaults/DefaultChartProperties";
 import { PanelWithTwoButtons } from "../Components/Panels/PanelWithTwoButtons";
+import { ChartDisplayPopupState } from "./ChartDisplayPopupState";
+import { ChartUIHelper } from "./ChartUIHelper";
 
 /*
 Set the reference value for y axis
 overlap for x axis (within a group - set to negative vlue)
-
 closing chart BUG  didnt close in toolbar
 XAxisInterval - let users choose (default is Auto) // add help
-
 transitions 
 and dont reset the data
-
 */
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
@@ -56,81 +55,17 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
     onSetChartVisibility: (chartVisibility: ChartVisibility) => SystemRedux.ChartSetChartVisibiityAction
 }
 
-export interface ChartDisplayPopupState {
-    // Global
-    //  IsChartMinimised: boolean;
-    IsChartSettingsVisible: boolean;
-    EditedChartDefinition: IChartDefinition;
-    ChartProperties: IChartProperties
-
-    // General
-    IsGeneralMinimised: boolean;
-
-    // Y Axis
-    SetYAxisMinimumValue: boolean;
-    SetYAxisLabelColor: boolean;
-    SetYAxisTitleColor: boolean;
-    IsYAxisMinimised: boolean;
-    UseDefaultYAxisTitle: boolean;
-
-    // X Axis
-    IsXAxisMinimised: boolean;
-    SetXAxisLabelColor: boolean;
-    SetXAxisTitleColor: boolean;
-    UseDefaultXAxisTitle: boolean;
-
-    // Highlights
-    IsHighlightsMinimised: boolean;
-
-    // Misc
-    IsMiscMinimised: boolean;
-    TitleMargin: number;
-    SubTitleMargin: number;
-}
-
 class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps, ChartDisplayPopupState> {
 
     constructor(props: ChartDisplayPopupProps) {
         super(props);
 
-        this.state = {
-            ChartProperties: this.props.CurrentChartDefinition.ChartProperties,
-            EditedChartDefinition: null,
-            IsChartSettingsVisible: false,
-
-            // General
-            IsGeneralMinimised: false,
-
-            // Y Axis
-            IsYAxisMinimised: true,
-            SetYAxisMinimumValue: this.props.CurrentChartDefinition.ChartProperties.YAxisMinimumValue != undefined,
-            SetYAxisLabelColor: StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.YAxisLabelColor),
-            SetYAxisTitleColor: StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.YAxisTitleColor),
-            UseDefaultYAxisTitle: this.isDefaultYAxisTitle(), // StringExtensions.IsNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.YAxisTitle),
-
-            // X Axis
-            IsXAxisMinimised: true,
-            SetXAxisLabelColor: StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisLabelColor),
-            SetXAxisTitleColor: StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisTitleColor),
-            UseDefaultXAxisTitle: this.isDefaultXAxisTitle(), // StringExtensions.IsNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisTitle),
-
-            // Highlights
-            IsHighlightsMinimised: true,
-
-            // Misc
-            IsMiscMinimised: true,
-            TitleMargin: (this.props.CurrentChartDefinition.ChartProperties.TitleAlignment == HorizontalAlignment.Right) ? 5 : 0,
-            SubTitleMargin: (this.props.CurrentChartDefinition.ChartProperties.SubTitleAlignment == HorizontalAlignment.Right) ? 5 : 0
-
-        }
+        this.state = ChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition, this.props.Columns);
         IgrCategoryChartModule.register();
         IgrDataChartAnnotationModule.register();
-
-
     }
 
     componentDidMount() {
-        // not sure about this - right place?
         // if showing modal, we only display a small size chart with no ability to change
         if (this.props.ShowModal && this.state.ChartProperties.ChartSize != ChartSize.Small) {
             let chartProperties: IChartProperties = this.state.ChartProperties;
@@ -159,7 +94,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             <ButtonEdit
                 cssClassName={cssClassName}
                 style={{ marginRight: "5px" }}
-                onClick={() => this.onEdit()}
+                onClick={() => this.onEditChart()}
                 bsStyle={PRIMARY_BSSTYLE}
                 size={"small"}
                 DisplayMode="Glyph+Text"
@@ -336,11 +271,11 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 overrideText={'Reset Defaults'}
             />
 
-        let chartWidth: string = this.setChartWidth();
-        let chartHeight: string = this.setChartHeight();
-        let panelWidth: string = this.setPanelWidth();
-        let chartColumnSize: number = this.setChartColumnSize();
-        let legendColumnSize: number = this.setLegendColumnSize();
+        let chartWidth: string = ChartUIHelper.setChartWidth(this.state.ChartProperties, this.state.IsChartSettingsVisible);
+        let chartHeight: string = ChartUIHelper.setChartHeight(this.state.ChartProperties);
+        let panelWidth: string = ChartUIHelper.setPanelWidth(this.state.ChartProperties);
+        let chartColumnSize: number = ChartUIHelper.setChartColumnSize(this.state.ChartProperties);
+        let legendColumnSize: number = ChartUIHelper.setLegendColumnSize(this.state.ChartProperties);
         let chartData = (this.props.ChartVisibility == ChartVisibility.Maximised && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
 
             <IgrCategoryChart
@@ -396,10 +331,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
                 xAxisTickStroke="yellow"
 
-
-
-
-
                 //  subtitleRightMargin={this.state.TitleMargin}
                 //subtitleTopMargin = {this.state.TitleMargin}
 
@@ -411,7 +342,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 // calloutsContentMemberPath="yValue"
 
                 //xAxisInterval={1}
-                xAxisLabelAngle={this.getAngleFromEnum(this.state.ChartProperties.XAxisAngle)}
+                xAxisLabelAngle={ChartUIHelper.getAngleFromEnum(this.state.ChartProperties.XAxisAngle)}
             // properties used in ig example
             //    xAxisFormatLabel={this.formatDateLabel}
 
@@ -424,30 +355,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             :
             null;
 
-
-        let optionChartTypes = EnumExtensions.getNames(ChartType).map((enumName) => {
-            return <option key={enumName} value={enumName}>{enumName as ChartType}</option>
-        })
-
-        let optionToolTipTypes = EnumExtensions.getNames(ToolTipType).map((enumName) => {
-            return <option key={enumName} value={enumName}>{enumName as ToolTipType}</option>
-        })
-
-        let optionCrossHairModeTypes = EnumExtensions.getNames(ChartCrosshairsMode).map((enumName) => {
-            return <option key={enumName} value={enumName}>{enumName as ChartCrosshairsMode}</option>
-        })
-
-        let optionChartSizes = EnumExtensions.getNames(ChartSize).map((enumName) => {
-            return <option key={enumName} value={enumName}>{enumName as ChartSize}</option>
-        })
-
-        let optionAligments = EnumExtensions.getNames(HorizontalAlignment).map((enumName) => {
-            return <option key={enumName} value={enumName}>{enumName as HorizontalAlignment}</option>
-        })
-
-        let optionAxisAngles = EnumExtensions.getNames(AxisAngle).map((enumName) => {
-            return <option key={enumName} value={enumName}>{enumName as AxisAngle}</option>
-        })
 
         return <div className={cssClassName}>
             <PanelWithImageThreeButtons
@@ -485,7 +392,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                     <PanelWithTwoButtons bsSize={"xs"} bsStyle={INFO_BSSTYLE} headerText={"Chart Settings"} cssClassName={cssClassName}
                                         firstButton={closeChartSettingsButton} secondButton={setDefaultsButton}>
 
-                                        <PanelWithButton bsSize={"xs"} headerText={"General"} cssClassName={cssClassName} button={showGeneralPropertiesButton} style={{ marginTop: '10px' }}>
+                                        <PanelWithButton glyphicon={"wrench"} bsSize={"xs"} headerText={"General"} cssClassName={cssClassName} button={showGeneralPropertiesButton} style={{ marginTop: '10px' }}>
                                             {this.state.IsGeneralMinimised == false &&
                                                 <div>
                                                     <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
@@ -495,7 +402,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                             </Col>
                                                             <Col xs={7}>
                                                                 <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.ChartType} onChange={(x) => this.onChartTypeChange(x)} >
-                                                                    {optionChartTypes}
+                                                                    {ChartUIHelper.getChartTypeOptions()}
                                                                 </FormControl>
                                                             </Col>
                                                         </Row>
@@ -508,7 +415,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                 </Col>
                                                                 <Col xs={7}>
                                                                     <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.ChartSize} onChange={(x) => this.onChartSizeChange(x)} >
-                                                                        {optionChartSizes}
+                                                                        {ChartUIHelper.getChartSizeOptions()}
                                                                     </FormControl>
                                                                 </Col>
                                                             </Row>
@@ -533,7 +440,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                     </Col>
                                                                     <Col xs={7}>
                                                                         <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.ToolTipType} onChange={(x) => this.onToolTipTypeChange(x)} >
-                                                                            {optionToolTipTypes}
+                                                                            {ChartUIHelper.getToolTipOptions()}
                                                                         </FormControl>
                                                                     </Col>
                                                                 </Row>
@@ -545,7 +452,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                     </Col>
                                                                     <Col xs={7}>
                                                                         <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.ChartCrosshairsMode} onChange={(x) => this.onCrosshairsModeChange(x)} >
-                                                                            {optionCrossHairModeTypes}
+                                                                            {ChartUIHelper.getCrossHairModeOptions()}
                                                                         </FormControl>
                                                                     </Col>
                                                                 </Row>
@@ -578,7 +485,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
                                         {this.state.ChartProperties.ChartSize != ChartSize.XSmall &&
                                             <div>
-                                                <PanelWithButton bsSize={"xs"} headerText={"Y Axis"} cssClassName={cssClassName} button={showYAxisPropertiesButton} style={{ marginTop: '10px' }}>
+                                                <PanelWithButton glyphicon={"resize-vertical"} bsSize={"xs"} headerText={"Y (Vertical) Axis"} cssClassName={cssClassName} button={showYAxisPropertiesButton} style={{ marginTop: '10px' }}>
                                                     {this.state.IsYAxisMinimised == false &&
                                                         <div>
                                                             <AdaptableBlotterForm horizontal>
@@ -690,7 +597,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                         </div>
                                                     }
                                                 </PanelWithButton>
-                                                <PanelWithButton bsSize={"xs"} headerText={"X Axis"} cssClassName={cssClassName} button={showXAxisPropertiesButton}>
+                                              
+                                                <PanelWithButton glyphicon={"resize-horizontal"} bsSize={"xs"} headerText={"X (Horizontal) Axis"} cssClassName={cssClassName} button={showXAxisPropertiesButton}>
                                                     {this.state.IsXAxisMinimised == false &&
                                                         <div>
                                                             <AdaptableBlotterForm horizontal >
@@ -769,7 +677,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                             </Col>
                                                                             <Col xs={7}>
                                                                                 <FormControl bsSize="small" componentClass="select" placeholder="select" value={this.state.ChartProperties.XAxisAngle} onChange={(x) => this.onXAxisAngleChanged(x)} >
-                                                                                    {optionAxisAngles}
+                                                                                    {ChartUIHelper.getAxisAngleOptions()}
                                                                                 </FormControl>
                                                                             </Col>
                                                                         </Row>
@@ -798,7 +706,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                     }
                                                 </PanelWithButton>
 
-                                                <PanelWithButton bsSize={"xs"} headerText={"Highlights"} cssClassName={cssClassName} button={showHighlightsPropertiesButton}>
+                                                <PanelWithButton glyphicon={"asterisk"} bsSize={"xs"} headerText={"Highlights"} cssClassName={cssClassName} button={showHighlightsPropertiesButton}>
                                                     {this.state.IsHighlightsMinimised == false &&
                                                         <div>
                                                             <AdaptableBlotterForm horizontal >
@@ -835,7 +743,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                         </div>
                                                     }
                                                 </PanelWithButton>
-                                                <PanelWithButton bsSize={"xs"} headerText={"Misc"} cssClassName={cssClassName} button={showMiscPropertiesButton}>
+                                            
+                                                <PanelWithButton glyphicon={"briefcase"} bsSize={"xs"} headerText={"Misc"} cssClassName={cssClassName} button={showMiscPropertiesButton}>
                                                     {this.state.IsMiscMinimised == false &&
                                                         <div>
                                                             <AdaptableBlotterForm horizontal >
@@ -845,7 +754,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                     </Col>
                                                                     <Col xs={7}>
                                                                         <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.TitleAlignment} onChange={(x) => this.onTitleAlignmentChange(x)} >
-                                                                            {optionAligments}
+                                                                            {ChartUIHelper.getAlignmentOptions()}
                                                                         </FormControl>
                                                                     </Col>
                                                                 </Row>
@@ -857,7 +766,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                     </Col>
                                                                     <Col xs={7}>
                                                                         <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.SubTitleAlignment} onChange={(x) => this.onSubTitleAlignmentChange(x)} >
-                                                                            {optionAligments}
+                                                                            {ChartUIHelper.getAlignmentOptions()}
                                                                         </FormControl>
                                                                     </Col>
                                                                 </Row>
@@ -926,7 +835,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         </div>
     }
 
-    onEdit(): void {
+    onEditChart(): void {
         this.setState({ EditedChartDefinition: Helper.cloneObject(this.props.CurrentChartDefinition) });
     }
 
@@ -940,20 +849,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     onSetPropertyDefaults() {
         // first update our state
-        this.setState({
-            IsGeneralMinimised: false,
-            IsYAxisMinimised: true,
-            SetYAxisMinimumValue: false,
-            SetYAxisLabelColor: false,
-            SetYAxisTitleColor: false,
-            IsXAxisMinimised: true,
-            SetXAxisLabelColor: false,
-            SetXAxisTitleColor: false,
-            IsMiscMinimised: true,
-            TitleMargin: 0,
-            SubTitleMargin: 0,
-            UseDefaultXAxisTitle: true
-        } as ChartDisplayPopupState)
+        this.setState(ChartUIHelper.setDefaultChartDisplayPopupState() as ChartDisplayPopupState);
         // then update the properties
         let chartProperties: IChartProperties = Helper.cloneObject(DefaultChartProperties);
         // do the titles 
@@ -1256,7 +1152,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         }
         let chartProperties: IChartProperties = this.state.ChartProperties;
         chartProperties.XAxisGap = factor;
-
         this.updateChartProperties(chartProperties);
     }
 
@@ -1281,7 +1176,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             chartProperties.YAxisTitle = "";
             this.updateChartProperties(chartProperties);
         }
-
         this.setState({ UseDefaultYAxisTitle: e.checked, } as ChartDisplayPopupState)
     }
 
@@ -1292,46 +1186,21 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             chartProperties.XAxisTitle = "";
             this.updateChartProperties(chartProperties);
         }
-
         this.setState({ UseDefaultXAxisTitle: e.checked, } as ChartDisplayPopupState)
     }
 
     private getYAxisTitle(useDefault: boolean): string {
         if (useDefault) {
-            return this.createDefaultYAxisTitle();
+            return ChartUIHelper.createDefaultYAxisTitle(this.props.CurrentChartDefinition, this.props.Columns);
         }
         return this.state.ChartProperties.YAxisTitle;
     }
 
     private getXAxisTitle(useDefault: boolean): string {
         if (useDefault) {
-            return this.createDefaultXAxisTitle();
+            return ChartUIHelper.createDefaultXAxisTitle(this.props.CurrentChartDefinition, this.props.Columns);
         }
         return this.state.ChartProperties.XAxisTitle;
-    }
-
-    private createDefaultYAxisTitle(): string {
-        return this.props.CurrentChartDefinition.YAxisColumnIds.map(c => {
-            return ColumnHelper.getFriendlyNameFromColumnId(c, this.props.Columns)
-        }).join(', ')
-    }
-
-    private createDefaultXAxisTitle(): string {
-        let returnString: string = ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.XAxisColumnId, this.props.Columns);
-        if (StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.XSegmentColumnId)) {
-            returnString = returnString + " (by " + ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.XSegmentColumnId, this.props.Columns) + ")"
-        }
-        return returnString;
-    }
-
-    private isDefaultYAxisTitle(): boolean {
-        return StringExtensions.IsNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.YAxisTitle) ||
-            this.props.CurrentChartDefinition.ChartProperties.YAxisTitle == this.createDefaultYAxisTitle();
-    }
-
-    private isDefaultXAxisTitle(): boolean {
-        return StringExtensions.IsNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisTitle) ||
-            this.props.CurrentChartDefinition.ChartProperties.XAxisTitle == this.createDefaultXAxisTitle();
     }
 
     onCloseWizard() {
@@ -1348,96 +1217,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     canFinishWizard() {
         return StringExtensions.IsNotNullOrEmpty(this.state.EditedChartDefinition.Title);
-    }
-
-    setChartHeight(): string {
-        switch (this.state.ChartProperties.ChartSize) {
-            case ChartSize.XSmall:
-                return '350px';
-            case ChartSize.Small:
-                return '450px';
-            case ChartSize.Medium:
-                return '600px';
-            case ChartSize.Large:
-                return '750px';
-            case ChartSize.XLarge:
-                return '850px';
-        }
-    }
-
-    setChartWidth(): string {
-        let chartWidth: number;
-        switch (this.state.ChartProperties.ChartSize) {
-            case ChartSize.XSmall:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 375 : 600
-                break;
-            case ChartSize.Small:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 525 : 850
-                break;
-            case ChartSize.Medium:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 750 : 1100
-                break;
-            case ChartSize.Large:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 1050 : 1350
-                break;
-            case ChartSize.XLarge:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 1200 : 1600
-                break;
-        }
-        chartWidth = (this.state.ChartProperties.XAxisLabelVisibility == LabelVisibility.Visible) ? chartWidth : chartWidth - 10;
-        return chartWidth + 'px'
-    }
-
-    setPanelWidth(): string {
-        switch (this.state.ChartProperties.ChartSize) {
-            case ChartSize.XSmall:
-                return '650px';
-            case ChartSize.Small:
-                return '900px';
-            case ChartSize.Medium:
-                return '1150px';
-            case ChartSize.Large:
-                return '1400px';
-            case ChartSize.XLarge:
-                return '1650px';
-        }
-    }
-
-    setChartColumnSize(): number {
-        switch (this.state.ChartProperties.ChartSize) {
-            case ChartSize.XSmall:
-            case ChartSize.Small:
-                return 7;
-            case ChartSize.Medium:
-                return 8;
-            case ChartSize.Large:
-            case ChartSize.XLarge:
-                return 9;
-        }
-    }
-
-    setLegendColumnSize(): number {
-        switch (this.state.ChartProperties.ChartSize) {
-            case ChartSize.XSmall:
-            case ChartSize.Small:
-                return 5;
-            case ChartSize.Medium:
-                return 4;
-            case ChartSize.Large:
-            case ChartSize.XLarge:
-                return 3;
-        }
-    }
-
-    getAngleFromEnum(axisAngle: AxisAngle): number {
-        switch (axisAngle) {
-            case AxisAngle.Horizontal:
-                return 0;
-            case AxisAngle.Diagonal:
-                return 45;
-            case AxisAngle.Vertical:
-                return 90;
-        }
     }
 
 }

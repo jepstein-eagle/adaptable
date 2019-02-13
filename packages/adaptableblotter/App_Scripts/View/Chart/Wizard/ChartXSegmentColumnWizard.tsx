@@ -14,8 +14,8 @@ export interface ChartXSegmentColumnWizardProps extends AdaptableWizardStepProps
 }
 
 export interface ChartXSegmentColumnWizardState {
-    AdditionalColumnId: string,
-    UseAllAdditionalColumnValues: boolean,
+    XSegmentColumnId: string,
+    UseAllXSegmentColumnValues: boolean,
     XSegmentExpression: Expression
 }
 
@@ -23,8 +23,8 @@ export class ChartXSegmentColumnWizard extends React.Component<ChartXSegmentColu
     constructor(props: ChartXSegmentColumnWizardProps) {
         super(props)
         this.state = {
-            AdditionalColumnId: props.Data.XSegmentColumnId,
-            UseAllAdditionalColumnValues: ExpressionHelper.IsEmptyExpression(this.props.Data.XSegmentExpression),
+            XSegmentColumnId: props.Data.XSegmentColumnId,
+            UseAllXSegmentColumnValues: ExpressionHelper.IsEmptyExpression(this.props.Data.XSegmentExpression),
             XSegmentExpression: this.props.Data.XSegmentExpression
         }
     }
@@ -32,9 +32,9 @@ export class ChartXSegmentColumnWizard extends React.Component<ChartXSegmentColu
         let cssClassName: string = this.props.cssClassName + "-settings"
 
         return <div className={cssClassName}>
-            <Panel header="X Axis Additional Column" bsStyle="primary">
+            <Panel header="X Axis Segment Column" bsStyle="primary">
                 <AdaptableBlotterForm horizontal>
-                    <FormGroup controlId="additionalColumn">
+                    <FormGroup controlId="segmentColumn">
                         <Row>  <Col xs={1} />
                             <Col xs={10}>
                                 <HelpBlock>You can, optionally, segment the X Axis further by grouping totals against the values in another column</HelpBlock>
@@ -42,19 +42,19 @@ export class ChartXSegmentColumnWizard extends React.Component<ChartXSegmentColu
                             <Col xs={1} />
                         </Row>
                         <Row>
-                            <Col xs={4} componentClass={ControlLabel}>Additional Column: </Col>
+                            <Col xs={4} componentClass={ControlLabel}>Segment Column: </Col>
                             <Col xs={6}>
-                                <ColumnSelector cssClassName={cssClassName} SelectedColumnIds={[this.state.AdditionalColumnId]}
+                                <ColumnSelector cssClassName={cssClassName} SelectedColumnIds={[this.state.XSegmentColumnId]}
                                     ColumnList={this.props.Columns}
-                                    onColumnChange={columns => this.onAdditionalColumnChanged(columns)}
+                                    onColumnChange={columns => this.onSegmentColumnChanged(columns)}
                                     SelectionMode={SelectionMode.Single} />
                             </Col>
                         </Row>
                         <Row>
-                            <Col xs={4} componentClass={ControlLabel}>Additional Column Values:</Col>
+                            <Col xs={4} componentClass={ControlLabel}>Segment Column Values:</Col>
                             <Col xs={6} >
-                                <Radio inline value="All" checked={this.state.UseAllAdditionalColumnValues == true} onChange={(e) => this.onUseAllColumnValuesChanged(e)}>All</Radio>
-                                <Radio inline value="Bespoke" checked={this.state.UseAllAdditionalColumnValues == false} onChange={(e) => this.onUseAllColumnValuesChanged(e)}>Bespoke</Radio>
+                                <Radio inline value="All" checked={this.state.UseAllXSegmentColumnValues == true} onChange={(e) => this.onUseAllColumnValuesChanged(e)}>All</Radio>
+                                <Radio inline value="Bespoke" checked={this.state.UseAllXSegmentColumnValues == false} onChange={(e) => this.onUseAllColumnValuesChanged(e)}>Bespoke</Radio>
                             </Col>
                         </Row>
 
@@ -69,28 +69,28 @@ export class ChartXSegmentColumnWizard extends React.Component<ChartXSegmentColu
     private onUseAllColumnValuesChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let showAll: boolean = e.value == "All"
-        this.setState({ UseAllAdditionalColumnValues: showAll } as ChartXSegmentColumnWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ UseAllXSegmentColumnValues: showAll } as ChartXSegmentColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
 
-    onAdditionalColumnChanged(columns: IColumn[]) {
+    onSegmentColumnChanged(columns: IColumn[]) {
         let isColumn: boolean = ArrayExtensions.IsNotNullOrEmpty(columns)
         this.setState({
-            AdditionalColumnId: isColumn ? columns[0].ColumnId : "",
-            UseAllAdditionalColumnValues: true,
+            XSegmentColumnId: isColumn ? columns[0].ColumnId : "",
+            UseAllXSegmentColumnValues: true,
         } as ChartXSegmentColumnWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {
-        return true;/// its not mandatory.... (StringExtensions.IsNotNullOrEmpty(this.state.AdditionalColumnId))
+        return true;/// its not mandatory
     }
 
     public canBack(): boolean { return true; }
 
     public Next(): void {
-        this.props.Data.XSegmentColumnId = this.state.AdditionalColumnId
-        this.props.Data.XSegmentExpression = (this.state.UseAllAdditionalColumnValues) ? ExpressionHelper.CreateEmptyExpression() : this.state.XSegmentExpression
-        if (this.props.Data.XSegmentColumnId != this.state.AdditionalColumnId) {
+        this.props.Data.XSegmentColumnId = this.state.XSegmentColumnId
+        this.props.Data.XSegmentExpression = (this.state.UseAllXSegmentColumnValues) ? ExpressionHelper.CreateEmptyExpression() : this.state.XSegmentExpression
+        if (this.props.Data.XSegmentColumnId != this.state.XSegmentColumnId) {
             this.props.Data.XSegmentExpression = ExpressionHelper.CreateEmptyExpression();
         }
     }
@@ -100,7 +100,7 @@ export class ChartXSegmentColumnWizard extends React.Component<ChartXSegmentColu
     }
 
     public GetIndexStepIncrement() {
-        return (this.state.UseAllAdditionalColumnValues) ? 2 : 1
+        return (this.state.UseAllXSegmentColumnValues) ? 2 : 1
     }
     public GetIndexStepDecrement() {
         return (ExpressionHelper.IsEmptyExpression(this.props.Data.XAxisExpression)) ? 2 : 1

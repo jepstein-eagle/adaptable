@@ -3,13 +3,13 @@ import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { DistinctCriteriaPairValue } from '../../../Utilities/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
-import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
+import { DualListBoxEditor, DisplaySize } from "../../Components/ListBox/DualListBoxEditor";
 import { ICustomSort } from "../../../Utilities/Interface/BlotterObjects/ICustomSort";
 import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {
-  }
+}
 export interface CustomSortValuesWizardState {
     ColumnValues: any[],
     SelectedValues: Array<string>
@@ -42,7 +42,8 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
                     SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
                     ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
                     onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}
-                    ReducedDisplay={true} />
+                    DisplaySize={DisplaySize.Small}
+                />
             </PanelWithInfo>
         </div>
     }
@@ -62,5 +63,5 @@ export class CustomSortValuesWizard extends React.Component<CustomSortValuesWiza
     public GetIndexStepDecrement() {
         return 1;
     }
-   
+
 }   

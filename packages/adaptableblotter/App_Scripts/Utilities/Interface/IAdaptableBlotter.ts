@@ -6,7 +6,6 @@ import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
 import { IGridSort } from "./IGridSort";
-import { ILayout } from "./BlotterObjects/ILayout";
 import { IPercentBar } from "./BlotterObjects/IPercentBar";
 import { IFreeTextColumn } from "./BlotterObjects/IFreeTextColumn";
 import { ICalculatedColumn } from "./BlotterObjects/ICalculatedColumn";
@@ -22,12 +21,13 @@ import { IChartService } from '../Services/Interface/IChartService';
 import { IPPStyle } from "./Reports/IPPStyle";
 import { IEvent } from './IEvent';
 import { IAdaptableStrategyCollection } from '../../Strategy/Interface/IStrategy';
-import { AdaptableBlotterStore } from '../../Redux/Store/AdaptableBlotterStore';
 
+/**
+ *  The only interface for the AdaptableBlotter  
+ *  Contains all the properties and methods that each implemenation must include
+ */
 export interface IAdaptableBlotter {
-    /**
-     * The main external interface for users of the Blotter (e.g. Devs).  Ideally the methods contained there should be all they ever require...
-     */
+   
     api: IBlotterApi
     BlotterOptions: IAdaptableBlotterOptions
 
@@ -60,7 +60,6 @@ export interface IAdaptableBlotter {
 
     // General
     createMenu(): void
-    getPrimaryKeyValueFromRecord(record: any): any
     setGridData(dataSource: any): void
 
     // cell / column selection
@@ -69,13 +68,16 @@ export interface IAdaptableBlotter {
 
     // column related
     setColumnIntoStore(): void
+    setNewColumnListOrder(visibleColumnList: Array<IColumn>): void
+  
+    // getting records and keys
+    getPrimaryKeyValueFromRecord(record: any): any
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
     getDisplayValue(id: any, columnId: string): string
     getDisplayValueFromRecord(row: any, columnId: string): string
     getRawValueFromRecord(row: any, columnId: string): any
     getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any
     getRecordIsSatisfiedFunctionFromRecord(record: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any
-    setNewColumnListOrder(visibleColumnList: Array<IColumn>): void
     getDisplayValueFromRawValue(columnId: string, rawValue: any): any
 
     // editing related
@@ -131,8 +133,9 @@ export interface IAdaptableBlotter {
     // vendor grid related
     isSelectable(): boolean
     isSortable(): boolean
-    hasFloatingFilter(): boolean
- //   isFloatingFilterActive(): boolean
+
+    // floating filter
+    hasFloatingFilter: boolean
     showFloatingFilter(): void
     hideFloatingFilter(): void
 

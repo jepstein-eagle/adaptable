@@ -2,7 +2,7 @@ import * as React from "react";
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
-import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
+import { DualListBoxEditor, DisplaySize } from "../../Components/ListBox/DualListBoxEditor";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { IColumnCategory } from "../../../Utilities/Interface/BlotterObjects/IColumnCategory";
@@ -57,7 +57,8 @@ export class ColumnCategoryColumnsWizard extends React.Component<ColumnCategoryC
                     HeaderAvailable="Available Columns"
                     HeaderSelected="Selected Columns"
                     onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}
-                    ReducedDisplay={true} />
+                    DisplaySize={DisplaySize.Small}
+                    />
             </PanelWithInfo>
         </div>
     }

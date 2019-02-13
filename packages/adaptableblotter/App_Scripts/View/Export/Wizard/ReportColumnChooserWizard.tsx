@@ -6,7 +6,7 @@ import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ReportColumnScope, MessageType } from '../../../Utilities/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { DualListBoxEditor } from '../../Components/ListBox/DualListBoxEditor';
+import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { IReport } from "../../../Utilities/Interface/BlotterObjects/IReport";
 
 export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<IReport> {
@@ -38,7 +38,8 @@ export class ReportColumnChooserWizard extends React.Component<ReportColumnChoos
                         HeaderAvailable="Columns"
                         HeaderSelected="Columns in Report"
                         onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}
-                        ReducedDisplay={true} />
+                        DisplaySize={DisplaySize.Small}
+                        />
                 </Panel>
             }
         </div>

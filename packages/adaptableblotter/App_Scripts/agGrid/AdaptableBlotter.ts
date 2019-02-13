@@ -154,6 +154,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public isInitialised: boolean
     private throttleApplyGridFilteringUser: (() => void) & _.Cancelable;
     private throttleApplyGridFilteringExternal: (() => void) & _.Cancelable;
+    public hasFloatingFilter: boolean
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
@@ -162,6 +163,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.VendorGridName = 'agGrid';
         this.EmbedColumnMenu = true
         this.isInitialised = false;
+        this.hasFloatingFilter = true;
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -1743,10 +1745,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false;
     }
 
-    public hasFloatingFilter(): boolean {
-        // this is wrong = come from state!j
-        return true; // is this right or should it be only if its not null?  need to think through...
-    }
+  
 
     private isFloatingFilterActive(): boolean {
         return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter;

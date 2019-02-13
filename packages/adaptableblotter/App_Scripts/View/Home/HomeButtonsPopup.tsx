@@ -6,7 +6,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { MenuState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
+import { DualListBoxEditor, DisplaySize } from "../Components/ListBox/DualListBoxEditor";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { FormGroup, Col, Checkbox, Row } from "react-bootstrap";
@@ -75,7 +75,8 @@ class HomeButtonsPopupComponent extends React.Component<HomeButtonsPopupComponen
                     HeaderAvailable="Hidden Function Buttons"
                     HeaderSelected="Visible Function Buttons"
                     onChange={(SelectedValues) => this.ListChange(SelectedValues)}
-                    ReducedDisplay={true} />
+                    DisplaySize={DisplaySize.Small}
+                    />
             </PanelWithButton>
         </div>
     }

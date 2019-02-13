@@ -3,7 +3,7 @@ import * as React from "react";
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
-import { DualListBoxEditor } from "../../Components/ListBox/DualListBoxEditor";
+import { DualListBoxEditor, DisplaySize } from "../../Components/ListBox/DualListBoxEditor";
 import { Helper } from "../../../Utilities/Helpers/Helper";
 import { SHORTCUT_ADD } from "../../../Redux/ActionsReducers/ShortcutRedux";
 import { ILayout } from "../../../Utilities/Interface/BlotterObjects/ILayout";
@@ -35,7 +35,8 @@ export class LayoutColumnWizard extends React.Component<LayoutColumnWizardProps,
                     HeaderAvailable="Available Columns"
                     HeaderSelected="Columns in Layout"
                     onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}
-                    ReducedDisplay={true} />
+                    DisplaySize={DisplaySize.Small}
+                    />
             </PanelWithInfo>
         </div>
     }

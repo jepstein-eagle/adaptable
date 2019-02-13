@@ -10,6 +10,11 @@ import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { IMasterChildren } from "../../../Utilities/Interface/IMasterChildren";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 
+export enum DisplaySize {
+    Large,
+    Small,
+    XSmall
+}
 export interface IMasterValue {
     value: string;
     isOpen: boolean;
@@ -26,7 +31,7 @@ export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBo
     DisplayMember?: string
     ValueMember?: string
     SortMember?: string
-    ReducedDisplay?: boolean
+    DisplaySize?: DisplaySize
     MasterChildren?: IMasterChildren[]
     cssClassName: string
 }
@@ -127,6 +132,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     render() {
         let cssClassName: string = this.props.cssClassName + StyleConstants.DOUBLE_LIST_BOX;
         let setRefFirstSelected = true
+        let displaySize: DisplaySize = (this.props.DisplaySize) ? this.props.DisplaySize : DisplaySize.Large
 
         // build selected elements
         let selectedElements = this.state.SelectedValues.map(x => {
@@ -209,8 +215,9 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
             handleChangeFilterValue={(e) => this.handleChangeFilterValue(e)}
             DisableSort={ArrayExtensions.IsNotEmpty(this.state.MasterValues)} />
 
-        let listGroupAvailableStyle: any = (this.props.ReducedDisplay) ? listGroupStyleAvailableSmall : listGroupStyleAvailableLarge
-        let listGroupSelectedStyle: any = (this.props.ReducedDisplay) ? listGroupStyleSelectedSmall : listGroupStyleSelectedLarge
+        let listGroupAvailableStyle: any = this.getListGroupAvailableStyle(displaySize);
+        let listGroupSelectedStyle: any = this.getListGroupSelectedStyle(displaySize);
+
 
         return (<div className={cssClassName}>
             <Col xs={4}>
@@ -261,6 +268,32 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
         </div>
         );
     }
+
+    // let listGroupAvailableStyle: any = (this.props.ReducedDisplay) ? listGroupStyleAvailableSmall : listGroupStyleAvailableLarge
+    private getListGroupAvailableStyle(displaySize: DisplaySize): any {
+        switch (displaySize) {
+            case DisplaySize.Large:
+                return listGroupStyleAvailableLarge;
+            case DisplaySize.Small:
+                return listGroupStyleAvailableSmall;
+            case DisplaySize.XSmall:
+                return listGroupStyleAvailableExtraSmall;
+        }
+    }
+
+    private getListGroupSelectedStyle(displaySize: DisplaySize): any {
+        switch (displaySize) {
+            case DisplaySize.Large:
+                return listGroupStyleSelectedLarge;
+            case DisplaySize.Small:
+                return listGroupStyleSelectedSmall;
+            case DisplaySize.XSmall:
+                return listGroupStyleSelectedExraSmall;
+        }
+
+    }
+
+
 
     buildMasterValues(masterChildren: IMasterChildren[]): IMasterValue[] {
         if (ArrayExtensions.IsNullOrEmpty(masterChildren)) {
@@ -872,6 +905,17 @@ var listGroupStyleAvailableSmall: React.CSSProperties = {
 var listGroupStyleSelectedSmall: React.CSSProperties = {
     'overflowY': 'auto',
     'height': '385px',
+    'marginBottom': '0px'
+};
+var listGroupStyleAvailableExtraSmall: React.CSSProperties = {
+    'overflowY': 'auto',
+    'height': '300px',
+    'marginBottom': '0px'
+};
+
+var listGroupStyleSelectedExraSmall: React.CSSProperties = {
+    'overflowY': 'auto',
+    'height': '335px',
     'marginBottom': '0px'
 };
 

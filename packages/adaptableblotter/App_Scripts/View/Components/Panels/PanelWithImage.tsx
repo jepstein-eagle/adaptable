@@ -21,7 +21,7 @@ export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
         let cssClassName = this.props.cssClassName + StyleConstants.PANEL_WITH_IMAGE
         
         let headerRow = <AdaptableBlotterForm inline>
-            <Row style={{ display: "flex", alignItems: "center" }}>
+            <Row style={{ display: "flex", alignItems: "center" }} >
                 <Col xs={9}>
                     {<Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />}
                     {this.props.header}

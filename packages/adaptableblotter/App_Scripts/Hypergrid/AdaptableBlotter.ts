@@ -53,7 +53,7 @@ import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import * as _ from 'lodash'
-import {  CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
+import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
 import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
 import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
 import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
@@ -142,7 +142,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private throttleApplyGridFilteringUser: (() => void) & _.Cancelable;
     private throttleApplyGridFilteringExternal: (() => void) & _.Cancelable;
-
+    public hasFloatingFilter: boolean
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
@@ -151,6 +151,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.hyperGrid = this.BlotterOptions.vendorGrid;
         this.VendorGridName = 'Hypergrid';
         this.EmbedColumnMenu = false;
+        this.hasFloatingFilter = true;
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -746,7 +747,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
                 }
                 if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
-                       return Array.from(returnMap.values())
+                    return Array.from(returnMap.values())
                 }
             }
         }
@@ -1505,9 +1506,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return true;
     }
 
-    public hasFloatingFilter(): boolean {
-        return false;
-    }
+
 
     public showFloatingFilter(): void {
         // todo

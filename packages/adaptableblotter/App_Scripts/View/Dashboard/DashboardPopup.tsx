@@ -6,7 +6,7 @@ import { FormControl, ControlLabel } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
+import { DualListBoxEditor, DisplaySize } from "../Components/ListBox/DualListBoxEditor";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { IEntitlement } from "../../Utilities/Interface/IEntitlement";
@@ -33,11 +33,11 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
     render() {
         let cssClassName: string = this.props.cssClassName + "__dashboard";
 
-        let availableToolbarNames: string[] = this.props.AvailableToolbars.filter(at=>this.isVisibleStrategy(at)).map(at => {
+        let availableToolbarNames: string[] = this.props.AvailableToolbars.filter(at => this.isVisibleStrategy(at)).map(at => {
             return StrategyConstants.getNameForStrategyId(at)
         })
 
-        let visibleToolbarNames: string[] = this.props.VisibleToolbars.filter(at=>this.isVisibleStrategy(at)).map(vt => {
+        let visibleToolbarNames: string[] = this.props.VisibleToolbars.filter(at => this.isVisibleStrategy(at)).map(vt => {
             return StrategyConstants.getNameForStrategyId(vt)
         })
 
@@ -58,7 +58,8 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
                     HeaderAvailable="Available Toolbars"
                     HeaderSelected="Visible Toolbars"
                     onChange={(SelectedValues) => this.ListChange(SelectedValues)}
-                    ReducedDisplay={true} />
+                    DisplaySize={DisplaySize.Small}
+                />
 
             </PanelWithButton>
         </div>
@@ -71,7 +72,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupProps, Dashb
         }
         return true;
     }
-    
+
     private ListChange(selectedValues: string[]) {
         let selectedColumnIds: string[] = selectedValues.map(sv => {
             return StrategyConstants.getIdForStrategyName(sv)

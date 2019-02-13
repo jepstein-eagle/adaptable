@@ -5,11 +5,11 @@ import {  AccessLevel } from '../../../Utilities/Enums'
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux'
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps'
-import { UIHelper } from '../../UIHelper';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants'
 import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
 import { BlotterHelper } from '../../../Utilities/Helpers/BlotterHelper';
+import { UIHelper } from '../../UIHelper';
 
 /**
  * This is the main popup that we use - so all function popups will appear here.
