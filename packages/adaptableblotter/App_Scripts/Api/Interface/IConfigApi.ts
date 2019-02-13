@@ -1,4 +1,4 @@
-import { IUserState, AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState } from '../../Redux/ActionsReducers/Interface/IState';
+import { IUserState, AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState,  ShortcutState, SmartEditState, ThemeState, UserFilterState, CellSummaryState } from '../../Redux/ActionsReducers/Interface/IState';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 
 export interface IConfigApi {
@@ -19,7 +19,7 @@ export interface IConfigApi {
   configGetAllUserState(): IUserState[]
   configGetUserStateByFunction(functionName: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
     'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
-    'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' |
+    'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'CellSummary' |
     'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean): IUserState
 
   configGetAdvancedSearchState(returnJson: boolean): AdvancedSearchState
@@ -40,7 +40,7 @@ export interface IConfigApi {
   configGetLayoutState(returnJson: boolean): LayoutState
   configGetPlusMinusState(returnJson: boolean): PlusMinusState
   configGetQuickSearchState(returnJson: boolean): QuickSearchState
-  configGetSelectedCellsState(returnJson: boolean): SelectedCellsState
+  configGetCellSummaryState(returnJson: boolean): CellSummaryState
   configGetShortcutState(returnJson: boolean): ShortcutState
   configGetSmartEditState(returnJson: boolean): SmartEditState
   configGetThemeState(returnJson: boolean): ThemeState

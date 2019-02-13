@@ -4,7 +4,7 @@ import { ICellInfo } from "../../Utilities/Interface/ICellInfo";
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { IGridSort } from "../../Utilities/Interface/IGridSort";
 import { ISelectedCellInfo } from "../../Utilities/Interface/SelectedCell/ISelectedCellInfo";
-import { ISelectedCellSummmary } from "../../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
+import { ICellSummmary } from "../../Utilities/Interface/SelectedCell/ICellSummmary";
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
@@ -14,8 +14,8 @@ export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
 export const GRID_SET_SORT = 'GRID_SET_SORT';
 export const GRID_SET_SELECTED_CELLS = 'GRID_SET_SELECTED_CELLS';
-export const GRID_CREATE_SELECTED_CELLS_SUMMARY = 'GRID_CREATE_SELECTED_CELLS_SUMMARY';
-export const GRID_SET_SELECTED_CELLS_SUMMARY = 'GRID_SET_SELECTED_CELLS_SUMMARY';
+export const GRID_CREATE_CELLS_SUMMARY = 'GRID_CREATE_CELLS_SUMMARY';
+export const GRID_SET_CELLS_SUMMARY = 'GRID_SET_CELLS_SUMMARY';
 export const GRID_FLOATING_FILTER_BAR_SHOW = 'GRID_FLOATING_FILTER_BAR_SHOW';
 export const GRID_FLOATING_FILTER_BAR_HIDE = 'GRID_FLOATING_FILTER_BAR_HIDE';
 
@@ -53,11 +53,11 @@ export interface GridSetSelectedCellsAction extends Redux.Action {
     SelectedCellInfo: ISelectedCellInfo;
 }
 
-export interface GridCreateSelectedCellSummaryAction extends Redux.Action {
+export interface GridCreateCellSummaryAction extends Redux.Action {
 }
 
-export interface GridSetSelectedCellSummaryAction extends Redux.Action {
-    SelectedCellSummary: ISelectedCellSummmary
+export interface GridSetCellSummaryAction extends Redux.Action {
+   CellSummary: ICellSummmary
 }
 
 export interface FloatingFilterBarShowAction extends Redux.Action {
@@ -103,13 +103,13 @@ export const GridSetSelectedCells = (SelectedCellInfo: ISelectedCellInfo): GridS
     SelectedCellInfo
 })
 
-export const GridCreateSelectedCellSummary = (): GridCreateSelectedCellSummaryAction => ({
-    type: GRID_CREATE_SELECTED_CELLS_SUMMARY
+export const GridCreateCellSummary = (): GridCreateCellSummaryAction => ({
+    type: GRID_CREATE_CELLS_SUMMARY
 })
 
-export const GridSetSelectedCellSummary = (SelectedCellSummary: ISelectedCellSummmary): GridSetSelectedCellSummaryAction => ({
-    type: GRID_SET_SELECTED_CELLS_SUMMARY,
-    SelectedCellSummary
+export const GridSetCellSummary = (CellSummary: ICellSummmary): GridSetCellSummaryAction => ({
+    type: GRID_SET_CELLS_SUMMARY,
+   CellSummary
 })
 
 
@@ -125,7 +125,7 @@ const initialGridState: GridState = {
     Columns: EMPTY_ARRAY,
     GridSorts: EMPTY_ARRAY,
     SelectedCellInfo: null,
-    SelectedCellSummary: null,
+    CellSummary: null,
     IsFloatingFilterActive: false
 }
 
@@ -142,8 +142,8 @@ export const GridReducer: Redux.Reducer<GridState> = (state: GridState = initial
             return Object.assign({}, state, { GridSorts: (<GridSetSortAction>action).GridSorts })
         case GRID_SET_SELECTED_CELLS:
             return Object.assign({}, state, { SelectedCellInfo: (<GridSetSelectedCellsAction>action).SelectedCellInfo })
-        case GRID_SET_SELECTED_CELLS_SUMMARY:
-            return Object.assign({}, state, { SelectedCellSummary: (<GridSetSelectedCellSummaryAction>action).SelectedCellSummary })
+        case GRID_SET_CELLS_SUMMARY:
+            return Object.assign({}, state, { CellSummary: (<GridSetCellSummaryAction>action).CellSummary })
         case GRID_FLOATING_FILTER_BAR_SHOW:
             return Object.assign({}, state, { IsFloatingFilterActive: true })
         case GRID_FLOATING_FILTER_BAR_HIDE:

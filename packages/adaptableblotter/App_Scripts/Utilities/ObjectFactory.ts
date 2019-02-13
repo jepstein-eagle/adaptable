@@ -24,7 +24,7 @@ import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, M
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { ColumnHelper } from './Helpers/ColumnHelper';
-import { ISelectedCellSummmary } from "./Interface/SelectedCell/ISelectedCellSummmary";
+import { ICellSummmary } from "./Interface/SelectedCell/ICellSummmary";
 import { Expression } from '../Utilities/Expression';
 import { IVendorGridInfo } from "./Interface/IVendorGridInfo";
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
@@ -284,7 +284,7 @@ export module ObjectFactory {
         }
     }
 
-    export function CreateEmptySelectedCellSummmary(): ISelectedCellSummmary {
+    export function CreateEmptyCellSummmary(): ICellSummmary {
         return {
             Sum: null,
             Average: null,

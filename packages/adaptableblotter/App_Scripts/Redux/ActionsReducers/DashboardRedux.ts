@@ -204,7 +204,7 @@ const initialDashboardState: DashboardState = {
         StrategyConstants.DataSourceStrategyId,
         StrategyConstants.BulkUpdateStrategyId,
         StrategyConstants.SmartEditStrategyId,
-        StrategyConstants.SelectedCellsStrategyId,
+        StrategyConstants.CellSummaryStrategyId,
         StrategyConstants.ApplicationStrategyId,
         StrategyConstants.AlertStrategyId,
         StrategyConstants.ChartStrategyId,
@@ -219,7 +219,7 @@ const initialDashboardState: DashboardState = {
       //  StrategyConstants.SmartEditStrategyId,
         // StrategyConstants.ChartStrategyId,
         //   StrategyConstants.AlertStrategyId,
-        // StrategyConstants.SelectedCellsStrategyId,
+        // StrategyConstants.CellSummaryStrategyId,
         // StrategyConstants.BulkUpdateStrategyId
     ],
     VisibleButtons: [

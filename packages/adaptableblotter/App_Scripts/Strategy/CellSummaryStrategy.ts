@@ -2,39 +2,39 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { ISelectedCellsStrategy } from "./Interface/ISelectedCellsStrategy";
+import { ICellSummaryStrategy } from "./Interface/ICellSummaryStrategy";
 import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
-import { ISelectedCellSummmary } from "../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
+import { ICellSummmary } from "../Utilities/Interface/SelectedCell/ICellSummmary";
 import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
 import { DataType, StateChangedTrigger } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { SelectedCellsState } from '../Redux/ActionsReducers/Interface/IState';
+import { CellSummaryState } from '../Redux/ActionsReducers/Interface/IState';
 import { Helper } from '../Utilities/Helpers/Helper';
 
-export class SelectedCellsStrategy extends AdaptableStrategyBase implements ISelectedCellsStrategy {
-    private SelectedCellsState: SelectedCellsState
+export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
+    private CellSummaryState: CellSummaryState
 
 
     constructor(blotter: IAdaptableBlotter) {
-        super(StrategyConstants.SelectedCellsStrategyId, blotter)
+        super(StrategyConstants.CellSummaryStrategyId, blotter)
     }
 
     protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstants.SelectedCellsStrategyName, ScreenPopups.SelectedCellsPopup, StrategyConstants.SelectedCellsGlyph);
+        this.createMenuItemShowPopup(StrategyConstants.CellSummaryStrategyName, ScreenPopups.CellSummaryPopup, StrategyConstants.CellSummaryGlyph);
     }
 
     protected InitState() {
-        if (this.SelectedCellsState != this.blotter.AdaptableBlotterStore.TheStore.getState().SelectedCells) {
-            this.SelectedCellsState = this.blotter.AdaptableBlotterStore.TheStore.getState().SelectedCells;
+        if (this.CellSummaryState != this.blotter.AdaptableBlotterStore.TheStore.getState().CellSummary) {
+            this.CellSummaryState = this.blotter.AdaptableBlotterStore.TheStore.getState().CellSummary;
 
             if (this.blotter.isInitialised) {
-                this.publishStateChanged(StateChangedTrigger.SelectedCells, this.SelectedCellsState)
+                this.publishStateChanged(StateChangedTrigger.CellSummary, this.CellSummaryState)
             }
         }
     }
 
-    public CreateSelectedCellSummary(selectedCellInfo: ISelectedCellInfo): ISelectedCellSummmary {
-        let selectedCellSummary: ISelectedCellSummmary;
+    public CreateCellSummary(selectedCellInfo: ISelectedCellInfo): ICellSummmary {
+        let selectedCellSummary: ICellSummmary;
 
         if (selectedCellInfo && selectedCellInfo.Selection.size > 0) {
             let numericValues: number[] = []

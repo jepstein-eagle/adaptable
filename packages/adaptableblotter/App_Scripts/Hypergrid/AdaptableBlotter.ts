@@ -53,7 +53,7 @@ import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import * as _ from 'lodash'
-import { SelectedCellsStrategy } from '../Strategy/SelectedCellsStrategy';
+import {  CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
 import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
 import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
 import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
@@ -191,7 +191,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(this))
         //   this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
-        this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy(this))
+        this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(this))
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))

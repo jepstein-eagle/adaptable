@@ -1,4 +1,4 @@
-import { IUserState, AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, SelectedCellsState, ShortcutState, SmartEditState, ThemeState, UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
+import { IUserState, AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, ShortcutState, SmartEditState, ThemeState, UserFilterState, CellSummaryState } from '../Redux/ActionsReducers/Interface/IState';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { ResetUserData, LoadState } from '../Redux/Store/AdaptableBlotterStore';
 import { StateChangedTrigger } from '../Utilities/Enums';
@@ -44,7 +44,7 @@ export class ConfigApi extends ApiBase implements IConfigApi {
 
   public configGetUserStateByFunction(functionName: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
     'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
-    'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' |
+    'Export' | 'FlashingCell' | 'FormatColumn' | 'Layout' | 'PlusMinus' | 'QuickSearch' | 'CellSummary' |
     'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean = false): IUserState {
     switch (functionName as StateChangedTrigger) {
       case StateChangedTrigger.AdvancedSearch:
@@ -83,8 +83,8 @@ export class ConfigApi extends ApiBase implements IConfigApi {
         return (returnJson) ? JSON.stringify(this.getState().PlusMinus) : this.getState().PlusMinus
       case StateChangedTrigger.QuickSearch:
         return (returnJson) ? JSON.stringify(this.getState().QuickSearch) : this.getState().QuickSearch
-      case StateChangedTrigger.SelectedCells:
-        return (returnJson) ? JSON.stringify(this.getState().SelectedCells) : this.getState().SelectedCells
+      case StateChangedTrigger.CellSummary:
+        return (returnJson) ? JSON.stringify(this.getState().SelectedCells) : this.getState().CellSummary
       case StateChangedTrigger.Shortcut:
         return (returnJson) ? JSON.stringify(this.getState().Shortcut) : this.getState().Shortcut
       case StateChangedTrigger.SmartEdit:
@@ -150,8 +150,8 @@ export class ConfigApi extends ApiBase implements IConfigApi {
   public configGetQuickSearchState(returnJson: boolean = false): QuickSearchState {
     return this.configGetUserStateByFunction(StateChangedTrigger.QuickSearch, returnJson) as QuickSearchState
   }
-  public configGetSelectedCellsState(returnJson: boolean = false): SelectedCellsState {
-    return this.configGetUserStateByFunction(StateChangedTrigger.SelectedCells, returnJson) as SelectedCellsState
+  public configGetCellSummaryState(returnJson: boolean = false): CellSummaryState {
+    return this.configGetUserStateByFunction(StateChangedTrigger.CellSummary, returnJson) as CellSummaryState
   }
   public configGetShortcutState(returnJson: boolean = false): ShortcutState {
     return this.configGetUserStateByFunction(StateChangedTrigger.Shortcut, returnJson) as ShortcutState

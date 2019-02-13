@@ -202,7 +202,7 @@ export enum StateChangedTrigger {
     ColumnCategory = "ColumnCategory",
     PlusMinus = "PlusMinus",
     QuickSearch = "QuickSearch",
-    SelectedCells = "SelectedCells",
+    CellSummary = "CellSummary",
     Shortcut = "Shortcut",
     SmartEdit = "SmartEdit",
     Theme = "Theme",
@@ -243,7 +243,7 @@ export enum MessageType {
 }
 
 
-export enum SelectedCellOperation {
+export enum CellSumaryOperation {
     Sum = 'Sum',
     Average = 'Average',
     Median = 'Median',

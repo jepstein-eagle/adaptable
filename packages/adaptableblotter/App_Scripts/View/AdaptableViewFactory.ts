@@ -40,8 +40,6 @@ import { IPushPullDomainPageSelector } from './Export/IPushPullDomainPageSelecto
 import { BulkUpdatePopup } from './BulkUpdate/BulkUpdatePopup';
 import { DataSourcePopup } from './DataSource/DataSourcePopup';
 import { DataSourceToolbarControl } from './DataSource/DataSourceToolbarControl';
-import { SelectedCellsPopup } from './SelectedCells/SelectedCellsPopup';
-import { SelectedCellsToolbarControl } from './SelectedCells/SelectedCellsToolbarControl';
 import { AlertPopup } from './Alert/AlertPopup';
 import { AlertToolbarControl } from './Alert/AlertToolbarControl';
 import { ChartPopup } from './Chart/ChartPopup';
@@ -49,6 +47,8 @@ import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 import { ChartToolbarControl } from './Chart/ChartToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
 import { PercentBarPopup } from './PercentBar/PercentBarPopup';
+import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
+import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup: AdvancedSearchPopup,
@@ -79,7 +79,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ColumnCategoryPopup: ColumnCategoryPopup,
   PlusMinusPopup: PlusMinusPopup,
   QuickSearchPopup: QuickSearchPopup,
-  SelectedCellsPopup: SelectedCellsPopup,
+  CellSummaryPopup: CellSummaryPopup,
   SmartEditPopup: SmartEditPopup,
   ShortcutPopup: ShortcutPopup,
   ThemePopup: ThemePopup,
@@ -99,7 +99,7 @@ export const AdaptableDashboardViewFactory = new Map<string, React.ComponentClas
   [StrategyConstants.ExportStrategyId, ExportToolbarControl],
   [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolbarControl],
   [StrategyConstants.SmartEditStrategyId, SmartEditToolbarControl],
-  [StrategyConstants.SelectedCellsStrategyId, SelectedCellsToolbarControl],
+  [StrategyConstants.CellSummaryStrategyId, CellSummaryToolbarControl],
   [StrategyConstants.AlertStrategyId, AlertToolbarControl],
   [StrategyConstants.ChartStrategyId, ChartToolbarControl],
   [StrategyConstants.ThemeStrategyId, ThemeToolbarControl],

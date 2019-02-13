@@ -6,6 +6,7 @@ export const ApplicationStrategyId: string = "Application"
 export const BulkUpdateStrategyId: string = "BulkUpdate"
 export const CalculatedColumnStrategyId: string = "CalculatedColumn"
 export const CalendarStrategyId: string = "Calendar"
+export const CellSummaryStrategyId: string = "CellSummary"
 export const CellValidationStrategyId: string = "CellValidation"
 export const ChartStrategyId: string = "Chart"
 export const ColumnCategoryStrategyId: string = "ColumnCategory"
@@ -27,7 +28,6 @@ export const PercentBarStrategyId: string = "PercentBar"
 export const PlusMinusStrategyId: string = "PlusMinus"
 export const QuickSearchStrategyId: string = "QuickSearch"
 export const SelectColumnStrategyId: string = "SelectColumn"
-export const SelectedCellsStrategyId: string = "SelectedCells"
 export const ShortcutStrategyId: string = "Shortcut"
 export const SmartEditStrategyId: string = "SmartEdit"
 export const TeamSharingStrategyId: string = "TeamSharing"
@@ -41,6 +41,7 @@ export const ApplicationStrategyName: string = "Application"
 export const BulkUpdateStrategyName: string = "Bulk Update"
 export const CalculatedColumnStrategyName: string = "Calculated Column"
 export const CalendarStrategyName: string = "Calendar"
+export const CellSummaryStrategyName: string = "Cell Summary"
 export const CellValidationStrategyName: string = "Cell Validation"
 export const ChartStrategyName: string = "Chart"
 export const ColumnCategoryStrategyName: string = "Column Category"
@@ -61,7 +62,6 @@ export const PercentBarStrategyName: string = "Percent Bar"
 export const PlusMinusStrategyName: string = "Plus Minus"
 export const QuickSearchStrategyName: string = "Quick Search"
 export const SelectColumnStrategyName: string = "Select Column"
-export const SelectedCellsStrategyName: string = "Selected Cells"
 export const ShortcutStrategyName: string = "Shortcut"
 export const SmartEditStrategyName: string = "Smart Edit"
 export const TeamSharingStrategyName: string = "Team Sharing"
@@ -75,6 +75,7 @@ export const ApplicationGlyph: string = "font"
 export const BulkUpdateGlyph: string = "hand-up"
 export const CalculatedColumnGlyph: string = "th-list"
 export const CalendarGlyph: string = "calendar"
+export const CellSummaryGlyph: string = "th-large"
 export const CellValidationGlyph: string = "flag"
 export const ChartGlyph: string = "signal"
 export const ColumnCategoryGlyph: string = "link"
@@ -96,7 +97,6 @@ export const PercentBarGlyph: string = "transfer"
 export const PlusMinusGlyph: string = "plus-sign"
 export const QuickSearchGlyph: string = "eye-open"
 export const SelectColumnGlyph: string = "compressed"
-export const SelectedCellsGlyph: string = "th-large"
 export const ShortcutGlyph: string = "road"
 export const SmartEditGlyph: string = "pencil"
 export const TeamSharingGlyph: string = "share"
@@ -157,8 +157,8 @@ export function getIdForStrategyName(strategyName: string) {
             return QuickSearchStrategyId
         case SelectColumnStrategyName:
             return SelectColumnStrategyId;
-        case SelectedCellsStrategyName:
-            return SelectedCellsStrategyId;
+        case CellSummaryStrategyName:
+            return CellSummaryStrategyId;
         case ShortcutStrategyName:
             return ShortcutStrategyId
         case SmartEditStrategyName:
@@ -227,8 +227,8 @@ export function getNameForStrategyId(strategyID: string) {
             return QuickSearchStrategyName
         case SelectColumnStrategyId:
             return SelectColumnStrategyName;
-        case SelectedCellsStrategyId:
-            return SelectedCellsStrategyName;
+        case CellSummaryStrategyId:
+            return CellSummaryStrategyName;
         case ShortcutStrategyId:
             return ShortcutStrategyName
         case SmartEditStrategyId:
@@ -294,8 +294,8 @@ export function getGhyphiconForStrategyId(strategyID: string) {
             return ShortcutGlyph
         case SelectColumnStrategyId:
             return SelectColumnGlyph
-        case SelectedCellsStrategyId:
-            return SelectedCellsGlyph
+        case CellSummaryStrategyId:
+            return CellSummaryGlyph
         case SmartEditStrategyId:
             return SmartEditGlyph
         case TeamSharingStrategyId:

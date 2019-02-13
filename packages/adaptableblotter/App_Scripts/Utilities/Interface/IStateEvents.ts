@@ -48,7 +48,7 @@ export interface ISearchEventData extends IEventData {
 export interface IStateChangedInfo {
   stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
   'PercentBar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
-  'Export' | 'FlashingCell' | 'FormatColumn' | 'FreeTextColumn' | 'Layout' | 'ColumnCategory' |'PlusMinus' | 'QuickSearch' | 'SelectedCells' |
+  'Export' | 'FlashingCell' | 'FormatColumn' | 'FreeTextColumn' | 'Layout' | 'ColumnCategory' |'PlusMinus' | 'QuickSearch' | 'CellSummary' |
   'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter';
   userState: IUserState;
 }

@@ -42,9 +42,9 @@ import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import * as PercentBarRedux from '../ActionsReducers/PercentBarRedux'
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
+import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux'
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux'
-import * as SelectedCellsRedux from '../ActionsReducers/SelectedCellsRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter'
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy'
@@ -78,8 +78,8 @@ import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';
-import { ISelectedCellsStrategy } from '../../Strategy/Interface/ISelectedCellsStrategy';
-import { ISelectedCellSummmary } from "../../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
+import {  ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
+import { ICellSummmary } from "../../Utilities/Interface/SelectedCell/ICellSummmary";
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
@@ -119,7 +119,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   PercentBar: PercentBarRedux.PercentBarReducer,
   PlusMinus: PlusMinusRedux.PlusMinusReducer,
   QuickSearch: QuickSearchRedux.QuickSearchReducer,
-  SelectedCells: SelectedCellsRedux.SelectedCellsReducer,
+  CellSummary: CellSummaryRedux.CellSummaryReducer,
   Shortcut: ShortcutRedux.ShortcutReducer,
   SmartEdit: SmartEditRedux.SmartEditReducer,
   SystemFilter: SystemFilterRedux.SystemFilterReducer,
@@ -345,8 +345,8 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
         case GridRedux.GRID_SELECT_COLUMN:
         case GridRedux.GRID_SET_SORT:
         case GridRedux.GRID_SET_SELECTED_CELLS:
-        case GridRedux.GRID_CREATE_SELECTED_CELLS_SUMMARY:
-        case GridRedux.GRID_SET_SELECTED_CELLS_SUMMARY:
+        case GridRedux.GRID_CREATE_CELLS_SUMMARY:
+        case GridRedux.GRID_SET_CELLS_SUMMARY:
 
         case MenuRedux.SET_MENUITEMS:
         case MenuRedux.BUILD_COLUMN_CONTEXT_MENU:
@@ -1156,12 +1156,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           blotter.selectColumn(actionTyped.ColumnId)
           return next(action);
         }
-        case GridRedux.GRID_CREATE_SELECTED_CELLS_SUMMARY: {
-          let SelectedCellsStrategy = <ISelectedCellsStrategy>(blotter.Strategies.get(StrategyConstants.SelectedCellsStrategyId));
+        case GridRedux.GRID_CREATE_CELLS_SUMMARY: {
+          let SelectedCellsStrategy = <ICellSummaryStrategy>(blotter.Strategies.get(StrategyConstants.CellSummaryStrategyId));
           let returnAction = next(action);
           let selectedCellInfo = middlewareAPI.getState().Grid.SelectedCellInfo
-          let apiSummaryReturn: ISelectedCellSummmary = SelectedCellsStrategy.CreateSelectedCellSummary(selectedCellInfo);
-          middlewareAPI.dispatch(GridRedux.GridSetSelectedCellSummary(apiSummaryReturn));
+          let apiSummaryReturn: ICellSummmary = SelectedCellsStrategy.CreateCellSummary(selectedCellInfo);
+          middlewareAPI.dispatch(GridRedux.GridSetCellSummary(apiSummaryReturn));
           return returnAction;
         }
 
