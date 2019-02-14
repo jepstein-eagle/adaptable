@@ -17,6 +17,8 @@ import { DropdownButton, MenuItem, InputGroup, ControlLabel } from "react-bootst
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ICellSummmary } from "../../Utilities/Interface/SelectedCell/ICellSummmary";
+import { AdaptablePopover } from "../AdaptablePopover";
+import { CellSummaryPopover } from "./CellSummaryPopover";
 
 interface CellSummaryToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<CellSummaryToolbarControlComponent> {
     SelectedCellInfo: ISelectedCellInfo
@@ -60,14 +62,26 @@ class CellSummaryToolbarControlComponent extends React.Component<CellSummaryTool
             return <MenuItem key={index} eventKey="index" onClick={() => this.props.onCellSummaryOperationChange(selectedCellOperation)}>{selectedCellOperation as CellSumaryOperation}</MenuItem>
         })
 
+        let cellSummaryPopover =
+            <CellSummaryPopover
+                cssClassName={cssClassName}
+                CellSummary={this.props.CellSummary}
+            />
+
         let content = <span>
-            <div className={this.props.AccessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <div className={this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <InputGroup>
                     <DropdownButton style={{ marginRight: "3px", width: "75px" }} title={this.props.CellSumaryOperation} id="CellSummary_Operation" bsSize="small" componentClass={InputGroup.Button}>
                         {operationMenuItems}
                     </DropdownButton>
                     {this.props.CellSummary != null &&
-                        <ControlLabel style={{ marginTop: "5px", marginLeft: "3px" }}>{this.getOperationValue()} </ControlLabel>
+                        <span>
+                            <ControlLabel style={{ marginTop: "5px", marginLeft: "3px" }}>{this.getOperationValue()} </ControlLabel>
+                            {' '}
+                            {this.props.CellSummary != null && this.props.CellSummary.Count > 0 &&
+                                <AdaptablePopover cssClassName={cssClassName} headerText="Cell Summary" bodyText={[cellSummaryPopover]} tooltipText={"Show Cell Summary"} useButton={true} triggerAction={"click"} popoverMinWidth={300} />
+                            }
+                        </span>
                     }
                 </InputGroup>
 
@@ -91,7 +105,7 @@ class CellSummaryToolbarControlComponent extends React.Component<CellSummaryTool
                 return this.props.CellSummary.Sum;
             case CellSumaryOperation.Average:
                 return this.props.CellSummary.Average;
-             case CellSumaryOperation.Median:
+            case CellSumaryOperation.Median:
                 return this.props.CellSummary.Median;
             case CellSumaryOperation.Max:
                 return this.props.CellSummary.Max;

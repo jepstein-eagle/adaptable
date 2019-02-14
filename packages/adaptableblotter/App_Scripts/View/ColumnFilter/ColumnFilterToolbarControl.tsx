@@ -23,7 +23,7 @@ import { IColumnFilter } from "../../Utilities/Interface/BlotterObjects/IColumnF
 import { FormControl, Label } from "react-bootstrap";
 import { ColumnFilterHelper } from "../../Utilities/Helpers/ColumnFilterHelper";
 import { IKeyValuePair } from "../../Utilities/Interface/IKeyValuePair";
-import { ActiveFiltersPanel } from "../Components/ActiveFiltersPanel";
+import { ActiveFiltersPanel } from "./ActiveFiltersPanel";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { IUIPrompt } from "../../Utilities/Interface/IMessage";
 import { SUCCESS_BSSTYLE, DEFAULT_BSSTYLE } from "../../Utilities/Constants/StyleConstants";

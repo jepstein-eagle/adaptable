@@ -14,7 +14,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { IAlertDefinition } from "../../Utilities/Interface/BlotterObjects/IAlertDefinition";
 import { AdaptablePopover } from "../AdaptablePopover";
 import { MessageType, AccessLevel } from "../../Utilities/Enums";
-import { AlertsPanel } from "../Components/AlertsPanel";
+import { AlertsPanel } from "./AlertsPanel";
 import { IAdaptableAlert} from "../../Utilities/Interface/IMessage";
 
 interface AlertToolbarControlProps extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
