@@ -6,15 +6,15 @@ import { Expression } from "../../../Utilities/Expression";
 export interface ChartXSegmentColumnWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
 }
 export interface ChartXSegmentColumnWizardState {
-    AdditionalColumnId: string;
-    UseAllAdditionalColumnValues: boolean;
+    XSegmentColumnId: string;
+    UseAllXSegmentColumnValues: boolean;
     XSegmentExpression: Expression;
 }
 export declare class ChartXSegmentColumnWizard extends React.Component<ChartXSegmentColumnWizardProps, ChartXSegmentColumnWizardState> implements AdaptableWizardStep {
     constructor(props: ChartXSegmentColumnWizardProps);
     render(): any;
     private onUseAllColumnValuesChanged;
-    onAdditionalColumnChanged(columns: IColumn[]): void;
+    onSegmentColumnChanged(columns: IColumn[]): void;
     canNext(): boolean;
     canBack(): boolean;
     Next(): void;

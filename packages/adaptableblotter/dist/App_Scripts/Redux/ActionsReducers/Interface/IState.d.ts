@@ -28,7 +28,7 @@ import { IAlertDefinition } from "../../../Utilities/Interface/BlotterObjects/IA
 import { IPPDomain } from "../../../Utilities/Interface/Reports/IPPDomain";
 import { ILiveReport } from "../../../Utilities/Interface/Reports/ILiveReport";
 import { ISelectedCellInfo } from "../../../Utilities/Interface/SelectedCell/ISelectedCellInfo";
-import { ISelectedCellSummmary } from "../../../Utilities/Interface/SelectedCell/ISelectedCellSummmary";
+import { ICellSummmary } from "../../../Utilities/Interface/SelectedCell/ICellSummmary";
 import { IPreviewInfo } from '../../../Utilities/Interface/IPreview';
 import { IMenuItem, IContextMenu } from '../../../Utilities/Interface/IMenu';
 import { IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPopup, IAboutPopup, IAdaptableAlert } from '../../../Utilities/Interface/IMessage';
@@ -66,7 +66,7 @@ export interface GridState extends ISystemState {
     Columns: IColumn[];
     GridSorts: IGridSort[];
     SelectedCellInfo: ISelectedCellInfo;
-    SelectedCellSummary: ISelectedCellSummmary;
+    CellSummary: ICellSummmary;
     IsFloatingFilterActive: boolean;
 }
 export interface MenuState extends ISystemState {
@@ -188,8 +188,8 @@ export interface QuickSearchState extends IUserState {
     DisplayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
     Style: IStyle;
 }
-export interface SelectedCellsState extends IUserState {
-    SelectedCellOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only';
+export interface CellSummaryState extends IUserState {
+    CellSumaryOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only';
 }
 export interface ShortcutState extends IUserState {
     Shortcuts: IShortcut[];

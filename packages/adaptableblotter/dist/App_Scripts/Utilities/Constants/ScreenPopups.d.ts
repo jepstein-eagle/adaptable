@@ -25,7 +25,7 @@ export declare const FreeTextColumnPopup: string;
 export declare const HomeButtonsPopup: string;
 export declare const LayoutPopup: string;
 export declare const PlusMinusPopup: string;
-export declare const SelectedCellsPopup: string;
+export declare const CellSummaryPopup: string;
 export declare const ShortcutPopup: string;
 export declare const SmartEditPopup: string;
 export declare const TeamSharingPopup: string;

@@ -71,8 +71,8 @@ class ConfigApi extends ApiBase_1.ApiBase {
                 return (returnJson) ? JSON.stringify(this.getState().PlusMinus) : this.getState().PlusMinus;
             case Enums_1.StateChangedTrigger.QuickSearch:
                 return (returnJson) ? JSON.stringify(this.getState().QuickSearch) : this.getState().QuickSearch;
-            case Enums_1.StateChangedTrigger.SelectedCells:
-                return (returnJson) ? JSON.stringify(this.getState().SelectedCells) : this.getState().SelectedCells;
+            case Enums_1.StateChangedTrigger.CellSummary:
+                return (returnJson) ? JSON.stringify(this.getState().SelectedCells) : this.getState().CellSummary;
             case Enums_1.StateChangedTrigger.Shortcut:
                 return (returnJson) ? JSON.stringify(this.getState().Shortcut) : this.getState().Shortcut;
             case Enums_1.StateChangedTrigger.SmartEdit:
@@ -137,8 +137,8 @@ class ConfigApi extends ApiBase_1.ApiBase {
     configGetQuickSearchState(returnJson = false) {
         return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.QuickSearch, returnJson);
     }
-    configGetSelectedCellsState(returnJson = false) {
-        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.SelectedCells, returnJson);
+    configGetCellSummaryState(returnJson = false) {
+        return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.CellSummary, returnJson);
     }
     configGetShortcutState(returnJson = false) {
         return this.configGetUserStateByFunction(Enums_1.StateChangedTrigger.Shortcut, returnJson);

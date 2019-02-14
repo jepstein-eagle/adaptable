@@ -3,52 +3,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
-const ColumnSelector_1 = require("../../Components/Selectors/ColumnSelector");
-const Enums_1 = require("../../../Utilities/Enums");
 const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 const ChartEnums_1 = require("../../../Utilities/ChartEnums");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
+const DualListBoxEditor_1 = require("../../Components/ListBox/DualListBoxEditor");
 class ChartYAxisWizard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             YAxisColumnIds: props.Data.YAxisColumnIds,
-            YAxisTotal: props.Data.YAxisTotal
+            YAxisTotal: props.Data.YAxisTotal,
         };
     }
     render() {
         let cssClassName = this.props.cssClassName + "-settings";
-        let newLabelText = "Y Axis Column";
-        let idsCount = this.state.YAxisColumnIds.length + 1;
-        if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.state.YAxisColumnIds)) {
-            let additionalLabelTextString = ' (' + idsCount + ')';
-            newLabelText = newLabelText + additionalLabelTextString;
-        }
-        let availableCols = this.getAvailableNumericColumns("");
-        let newRow = ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(availableCols) ?
-            this.createRow(idsCount, newLabelText, cssClassName, "", this.state.YAxisColumnIds.length, availableCols)
-            : null;
-        let existingColumnRows = this.state.YAxisColumnIds.map((colId, index) => {
-            let columnNumber = index + 1;
-            let labelText = "Y Axis Column (" + columnNumber + ")";
-            let availableNumericCols = this.getAvailableNumericColumns(colId);
-            return this.createRow(columnNumber, labelText, cssClassName, colId, index, availableNumericCols);
+        let numericColumnIds = ColumnHelper_1.ColumnHelper.getNumericColumns(this.props.Columns).map(c => { return c.ColumnId; });
+        let availableColumns = numericColumnIds.filter(c => ArrayExtensions_1.ArrayExtensions.NotContainsItem(this.state.YAxisColumnIds, c)).map(ac => {
+            return ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(ac, this.props.Columns);
+        });
+        let existingColumns = this.state.YAxisColumnIds.map(ec => {
+            return ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(ec, this.props.Columns);
         });
         return React.createElement("div", { className: cssClassName },
             React.createElement(react_bootstrap_1.Panel, { header: "Chart: Y (Vertical) Axis Column(s)", bsStyle: "primary" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "yAxisColumn" },
-                        React.createElement(react_bootstrap_1.Row, null,
-                            React.createElement(react_bootstrap_1.Col, { xs: 1 }),
-                            React.createElement(react_bootstrap_1.Col, { xs: 10 },
-                                React.createElement(react_bootstrap_1.HelpBlock, null,
-                                    "Select numeric column(s) for the Y Axis. ",
-                                    React.createElement("br", null),
-                                    "You can choose as many columns as required.",
-                                    React.createElement("br", null),
-                                    "Check the 'Display Total' to specify how this column is grouped.")),
-                            React.createElement(react_bootstrap_1.Col, { xs: 1 })),
                         React.createElement(react_bootstrap_1.Row, null,
                             React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, "Display Total:"),
                             React.createElement(react_bootstrap_1.Col, { xs: 7 },
@@ -57,52 +37,17 @@ class ChartYAxisWizard extends React.Component {
                                 ' ',
                                 " ",
                                 ' ',
-                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Chart Y Axis: Display Total", bodyText: ["Choose whether the X Axis is grouped according to the sum of it values (by X Axis) or their average."] }))),
-                        existingColumnRows,
-                        newRow))));
+                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Chart Y Axis: Display Total", bodyText: ["Choose whether the X Axis is grouped according to the sum of it values (by X Axis) or their average."] }))))),
+                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: availableColumns, cssClassName: cssClassName, SelectedValues: existingColumns, HeaderAvailable: "Numeric Columns", HeaderSelected: "Y Axis Columns", onChange: (SelectedValues) => this.OnSelectedValuesChange(SelectedValues), DisplaySize: DualListBoxEditor_1.DisplaySize.XSmall })));
     }
-    createRow(columnNumber, labelText, cssClassName, colId, index, availableCols) {
-        return React.createElement(react_bootstrap_1.Row, { key: columnNumber, style: { marginTop: '10px' } },
-            React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, labelText),
-            React.createElement(react_bootstrap_1.Col, { xs: 8 },
-                React.createElement(ColumnSelector_1.ColumnSelector, { key: "colSelect" + columnNumber, cssClassName: cssClassName, SelectedColumnIds: [colId], ColumnList: availableCols, onColumnChange: columns => this.onYAxisColumnChanged(columns, index), SelectionMode: Enums_1.SelectionMode.Single })));
-    }
-    onYAxisColumnChanged(columns, index) {
-        let column = columns.length > 0 ? columns[0].ColumnId : "";
-        let currentColumns = this.state.YAxisColumnIds;
-        if (column == "") {
-            if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(currentColumns)) {
-                currentColumns.splice(index, 1);
-            }
-        }
-        else {
-            if (currentColumns.length <= index) {
-                currentColumns.push(column);
-            }
-            else {
-                currentColumns[index] = column;
-            }
-        }
-        this.setState({ YAxisColumnIds: currentColumns }, () => this.props.UpdateGoBackState());
+    OnSelectedValuesChange(newValues) {
+        let yAxisColumnIds = ColumnHelper_1.ColumnHelper.getColumnIdsFromFriendlyNames(newValues, this.props.Columns);
+        this.setState({ YAxisColumnIds: yAxisColumnIds }, () => this.props.UpdateGoBackState());
     }
     onYAisTotalChanged(event) {
         let e = event.target;
         let axisTotal = (e.value == "Sum") ? ChartEnums_1.AxisTotal.Sum : ChartEnums_1.AxisTotal.Average;
         this.setState({ YAxisTotal: axisTotal }, () => this.props.UpdateGoBackState());
-    }
-    getAvailableNumericColumns(selectedColumnId) {
-        let cols = [];
-        ColumnHelper_1.ColumnHelper.getNumericColumns(this.props.Columns).forEach(c => {
-            if (c.ColumnId == selectedColumnId) {
-                cols.push(c);
-            }
-            else {
-                if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(this.state.YAxisColumnIds, c.ColumnId)) {
-                    cols.push(c);
-                }
-            }
-        });
-        return cols;
     }
     canNext() {
         return (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.state.YAxisColumnIds));

@@ -41,8 +41,6 @@ const IPushPullDomainPageSelector_1 = require("./Export/IPushPullDomainPageSelec
 const BulkUpdatePopup_1 = require("./BulkUpdate/BulkUpdatePopup");
 const DataSourcePopup_1 = require("./DataSource/DataSourcePopup");
 const DataSourceToolbarControl_1 = require("./DataSource/DataSourceToolbarControl");
-const SelectedCellsPopup_1 = require("./SelectedCells/SelectedCellsPopup");
-const SelectedCellsToolbarControl_1 = require("./SelectedCells/SelectedCellsToolbarControl");
 const AlertPopup_1 = require("./Alert/AlertPopup");
 const AlertToolbarControl_1 = require("./Alert/AlertToolbarControl");
 const ChartPopup_1 = require("./Chart/ChartPopup");
@@ -50,6 +48,8 @@ const ChartDisplayPopup_1 = require("./Chart/ChartDisplayPopup");
 const ChartToolbarControl_1 = require("./Chart/ChartToolbarControl");
 const FreeTextColumnPopup_1 = require("./FreeTextColumn/FreeTextColumnPopup");
 const PercentBarPopup_1 = require("./PercentBar/PercentBarPopup");
+const CellSummaryPopup_1 = require("./CellSummary/CellSummaryPopup");
+const CellSummaryToolbarControl_1 = require("./CellSummary/CellSummaryToolbarControl");
 exports.AdaptableViewFactory = {
     AdvancedSearchPopup: AdvancedSearchPopup_1.AdvancedSearchPopup,
     AlertPopup: AlertPopup_1.AlertPopup,
@@ -79,7 +79,7 @@ exports.AdaptableViewFactory = {
     ColumnCategoryPopup: ColumnCategoryPopup_1.ColumnCategoryPopup,
     PlusMinusPopup: PlusMinusPopup_1.PlusMinusPopup,
     QuickSearchPopup: QuickSearchPopup_1.QuickSearchPopup,
-    SelectedCellsPopup: SelectedCellsPopup_1.SelectedCellsPopup,
+    CellSummaryPopup: CellSummaryPopup_1.CellSummaryPopup,
     SmartEditPopup: SmartEditPopup_1.SmartEditPopup,
     ShortcutPopup: ShortcutPopup_1.ShortcutPopup,
     ThemePopup: ThemePopup_1.ThemePopup,
@@ -98,7 +98,7 @@ exports.AdaptableDashboardViewFactory = new Map([
     [StrategyConstants.ExportStrategyId, ExportToolbarControl_1.ExportToolbarControl],
     [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolbarControl_1.BulkUpdateToolbarControl],
     [StrategyConstants.SmartEditStrategyId, SmartEditToolbarControl_1.SmartEditToolbarControl],
-    [StrategyConstants.SelectedCellsStrategyId, SelectedCellsToolbarControl_1.SelectedCellsToolbarControl],
+    [StrategyConstants.CellSummaryStrategyId, CellSummaryToolbarControl_1.CellSummaryToolbarControl],
     [StrategyConstants.AlertStrategyId, AlertToolbarControl_1.AlertToolbarControl],
     [StrategyConstants.ChartStrategyId, ChartToolbarControl_1.ChartToolbarControl],
     [StrategyConstants.ThemeStrategyId, ThemeToolbarControl_1.ThemeToolbarControl],
