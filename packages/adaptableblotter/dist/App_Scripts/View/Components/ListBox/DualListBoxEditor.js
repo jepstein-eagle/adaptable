@@ -10,6 +10,12 @@ const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 const ButtonDirection_1 = require("../Buttons/ButtonDirection");
 const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
+var DisplaySize;
+(function (DisplaySize) {
+    DisplaySize[DisplaySize["Large"] = 0] = "Large";
+    DisplaySize[DisplaySize["Small"] = 1] = "Small";
+    DisplaySize[DisplaySize["XSmall"] = 2] = "XSmall";
+})(DisplaySize = exports.DisplaySize || (exports.DisplaySize = {}));
 class DualListBoxEditor extends React.Component {
     constructor(props) {
         super(props);
@@ -91,6 +97,7 @@ class DualListBoxEditor extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.DOUBLE_LIST_BOX;
         let setRefFirstSelected = true;
+        let displaySize = (this.props.DisplaySize) ? this.props.DisplaySize : DisplaySize.Large;
         // build selected elements
         let selectedElements = this.state.SelectedValues.map(x => {
             let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
@@ -122,8 +129,8 @@ class DualListBoxEditor extends React.Component {
             }
         });
         let headerFirstListBox = React.createElement(ListBoxFilterSortComponent_1.ListBoxFilterSortComponent, { FilterValue: this.state.FilterValue, sortColumnValues: () => this.sortColumnValues(), SortOrder: this.state.SortOrder, handleChangeFilterValue: (e) => this.handleChangeFilterValue(e), DisableSort: ArrayExtensions_1.ArrayExtensions.IsNotEmpty(this.state.MasterValues) });
-        let listGroupAvailableStyle = (this.props.ReducedDisplay) ? listGroupStyleAvailableSmall : listGroupStyleAvailableLarge;
-        let listGroupSelectedStyle = (this.props.ReducedDisplay) ? listGroupStyleSelectedSmall : listGroupStyleSelectedLarge;
+        let listGroupAvailableStyle = this.getListGroupAvailableStyle(displaySize);
+        let listGroupSelectedStyle = this.getListGroupSelectedStyle(displaySize);
         return (React.createElement("div", { className: cssClassName },
             React.createElement(react_bootstrap_1.Col, { xs: 4 },
                 React.createElement(react_bootstrap_1.Panel, { header: this.props.HeaderAvailable, className: "ab_no-padding-anywhere-panel", bsStyle: "info" },
@@ -146,6 +153,27 @@ class DualListBoxEditor extends React.Component {
                     React.createElement(ButtonDirection_1.ButtonDirection, { cssClassName: cssClassName, overrideText: "Up", DisplayMode: "Glyph+Text", glyph: "menu-up", style: { width: "110px", marginBottom: "10px" }, overrideDisableButton: !this.canGoTopOrUp(), onClick: () => this.Up() }),
                     React.createElement(ButtonDirection_1.ButtonDirection, { cssClassName: cssClassName, overrideText: "Down", DisplayMode: "Glyph+Text", glyph: "menu-down", style: { width: "110px", marginBottom: "10px" }, overrideDisableButton: !this.canGoDownOrBottom(), onClick: () => this.Down() }),
                     React.createElement(ButtonDirection_1.ButtonDirection, { cssClassName: cssClassName, overrideText: "Bottom", DisplayMode: "Glyph+Text", glyph: "triangle-bottom", style: { width: "110px", marginBottom: "10px" }, overrideDisableButton: !this.canGoDownOrBottom(), onClick: () => this.Bottom() })))));
+    }
+    // let listGroupAvailableStyle: any = (this.props.ReducedDisplay) ? listGroupStyleAvailableSmall : listGroupStyleAvailableLarge
+    getListGroupAvailableStyle(displaySize) {
+        switch (displaySize) {
+            case DisplaySize.Large:
+                return listGroupStyleAvailableLarge;
+            case DisplaySize.Small:
+                return listGroupStyleAvailableSmall;
+            case DisplaySize.XSmall:
+                return listGroupStyleAvailableExtraSmall;
+        }
+    }
+    getListGroupSelectedStyle(displaySize) {
+        switch (displaySize) {
+            case DisplaySize.Large:
+                return listGroupStyleSelectedLarge;
+            case DisplaySize.Small:
+                return listGroupStyleSelectedSmall;
+            case DisplaySize.XSmall:
+                return listGroupStyleSelectedExraSmall;
+        }
     }
     buildMasterValues(masterChildren) {
         if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(masterChildren)) {
@@ -703,6 +731,16 @@ var listGroupStyleAvailableSmall = {
 var listGroupStyleSelectedSmall = {
     'overflowY': 'auto',
     'height': '385px',
+    'marginBottom': '0px'
+};
+var listGroupStyleAvailableExtraSmall = {
+    'overflowY': 'auto',
+    'height': '300px',
+    'marginBottom': '0px'
+};
+var listGroupStyleSelectedExraSmall = {
+    'overflowY': 'auto',
+    'height': '335px',
     'marginBottom': '0px'
 };
 var listGroupItemStyle = {

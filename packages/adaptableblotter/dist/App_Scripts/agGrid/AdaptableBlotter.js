@@ -27,7 +27,7 @@ const ColumnInfoStrategy_1 = require("../Strategy/ColumnInfoStrategy");
 const DashboardStrategy_1 = require("../Strategy/DashboardStrategy");
 const CalculatedColumnStrategy_1 = require("../Strategy/CalculatedColumnStrategy");
 const SelectColumnStrategy_1 = require("../Strategy/SelectColumnStrategy");
-const SelectedCellsStrategy_1 = require("../Strategy/SelectedCellsStrategy");
+const CellSummaryStrategy_1 = require("../Strategy/CellSummaryStrategy");
 const DataSourceStrategy_1 = require("../Strategy/DataSourceStrategy");
 const HomeStrategy_1 = require("../Strategy/HomeStrategy");
 const FreeTextColumnStrategy_1 = require("../Strategy/FreeTextColumnStrategy");
@@ -100,6 +100,7 @@ class AdaptableBlotter {
         this.VendorGridName = 'agGrid';
         this.EmbedColumnMenu = true;
         this.isInitialised = false;
+        this.hasFloatingFilter = true;
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore_1.AdaptableBlotterStore(this);
         // create the services
@@ -147,7 +148,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
         this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy_1.ThemeStrategy(this));
         this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy_1.SelectColumnStrategy(this));
-        this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy_1.SelectedCellsStrategy(this));
+        this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy_1.CellSummaryStrategy(this));
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         iPushPullHelper_1.iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
         this.AdaptableBlotterStore.Load
@@ -1478,10 +1479,6 @@ class AdaptableBlotter {
             return this.gridOptions.enableSorting;
         }
         return false;
-    }
-    hasFloatingFilter() {
-        // this is wrong = come from state!j
-        return true; // is this right or should it be only if its not null?  need to think through...
     }
     isFloatingFilterActive() {
         return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter;

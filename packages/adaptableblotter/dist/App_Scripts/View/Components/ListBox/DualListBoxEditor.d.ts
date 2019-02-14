@@ -1,6 +1,11 @@
 import * as React from "react";
 import { SortOrder } from '../../../Utilities/Enums';
 import { IMasterChildren } from "../../../Utilities/Interface/IMasterChildren";
+export declare enum DisplaySize {
+    Large = 0,
+    Small = 1,
+    XSmall = 2
+}
 export interface IMasterValue {
     value: string;
     isOpen: boolean;
@@ -15,7 +20,7 @@ export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBo
     DisplayMember?: string;
     ValueMember?: string;
     SortMember?: string;
-    ReducedDisplay?: boolean;
+    DisplaySize?: DisplaySize;
     MasterChildren?: IMasterChildren[];
     cssClassName: string;
 }
@@ -34,6 +39,8 @@ export declare class DualListBoxEditor extends React.Component<DualListBoxEditor
     constructor(props: DualListBoxEditorProps);
     componentWillReceiveProps(nextProps: DualListBoxEditorProps, nextContext: any): void;
     render(): JSX.Element;
+    private getListGroupAvailableStyle;
+    private getListGroupSelectedStyle;
     buildMasterValues(masterChildren: IMasterChildren[]): IMasterValue[];
     onMasterValueCheckChanged(event: React.FormEvent<any>, item: any): void;
     createAvailableValuesList(availableValues: any[], sortOrder: SortOrder, sortMember: string): any[];

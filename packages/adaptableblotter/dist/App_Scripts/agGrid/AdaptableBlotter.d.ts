@@ -48,6 +48,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     isInitialised: boolean;
     private throttleApplyGridFilteringUser;
     private throttleApplyGridFilteringExternal;
+    hasFloatingFilter: boolean;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
     debouncedSetColumnIntoStore: (() => void) & _.Cancelable;
     debouncedSaveGridLayout: (() => void) & _.Cancelable;
@@ -142,7 +143,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private setColumnState;
     isSelectable(): boolean;
     isSortable(): boolean;
-    hasFloatingFilter(): boolean;
     private isFloatingFilterActive;
     showFloatingFilter(): void;
     hideFloatingFilter(): void;

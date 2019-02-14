@@ -35,7 +35,7 @@ export interface ISearchEventData extends IEventData {
     id: ISearchChangedInfo;
 }
 export interface IStateChangedInfo {
-    stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' | 'PercentBar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' | 'Export' | 'FlashingCell' | 'FormatColumn' | 'FreeTextColumn' | 'Layout' | 'ColumnCategory' | 'PlusMinus' | 'QuickSearch' | 'SelectedCells' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter';
+    stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' | 'PercentBar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' | 'Export' | 'FlashingCell' | 'FormatColumn' | 'FreeTextColumn' | 'Layout' | 'ColumnCategory' | 'PlusMinus' | 'QuickSearch' | 'CellSummary' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter';
     userState: IUserState;
 }
 export interface ISearchChangedInfo {

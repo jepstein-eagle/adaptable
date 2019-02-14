@@ -7,7 +7,6 @@ const ButtonClose_1 = require("../Components/Buttons/ButtonClose");
 const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const react_bootstrap_1 = require("react-bootstrap");
-const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
 const ButtonMinimise_1 = require("../Components/Buttons/ButtonMinimise");
 const ButtonMaximise_1 = require("../Components/Buttons/ButtonMaximise");
 const ChartRedux = require("../../Redux/ActionsReducers/ChartRedux");
@@ -19,7 +18,6 @@ const igr_data_chart_annotation_module_1 = require("igniteui-react-charts/ES2015
 const ChartWizard_1 = require("./Wizard/ChartWizard");
 const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
-const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const PanelWithIImageThreeButtons_1 = require("../Components/Panels/PanelWithIImageThreeButtons");
 const ChartEnums_1 = require("../../Utilities/ChartEnums");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
@@ -28,6 +26,7 @@ const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm
 const ButtonGeneral_1 = require("../Components/Buttons/ButtonGeneral");
 const DefaultChartProperties_1 = require("../../Utilities/Defaults/DefaultChartProperties");
 const PanelWithTwoButtons_1 = require("../Components/Panels/PanelWithTwoButtons");
+const ChartUIHelper_1 = require("./ChartUIHelper");
 class ChartDisplayPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -41,35 +40,11 @@ class ChartDisplayPopupComponent extends React.Component {
             chartProperties.TransitionInDuration = e.target.value;
             this.updateChartProperties(chartProperties);
         };
-        this.state = {
-            ChartProperties: this.props.CurrentChartDefinition.ChartProperties,
-            EditedChartDefinition: null,
-            IsChartSettingsVisible: false,
-            // General
-            IsGeneralMinimised: false,
-            // Y Axis
-            IsYAxisMinimised: true,
-            SetYAxisMinimumValue: this.props.CurrentChartDefinition.ChartProperties.YAxisMinimumValue != undefined,
-            SetYAxisLabelColor: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.YAxisLabelColor),
-            SetYAxisTitleColor: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.YAxisTitleColor),
-            UseDefaultYAxisTitle: this.isDefaultYAxisTitle(),
-            // X Axis
-            IsXAxisMinimised: true,
-            SetXAxisLabelColor: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisLabelColor),
-            SetXAxisTitleColor: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisTitleColor),
-            UseDefaultXAxisTitle: this.isDefaultXAxisTitle(),
-            // Highlights
-            IsHighlightsMinimised: true,
-            // Misc
-            IsMiscMinimised: true,
-            TitleMargin: (this.props.CurrentChartDefinition.ChartProperties.TitleAlignment == ChartEnums_1.HorizontalAlignment.Right) ? 5 : 0,
-            SubTitleMargin: (this.props.CurrentChartDefinition.ChartProperties.SubTitleAlignment == ChartEnums_1.HorizontalAlignment.Right) ? 5 : 0
-        };
+        this.state = ChartUIHelper_1.ChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition, this.props.Columns);
         igr_category_chart_module_1.IgrCategoryChartModule.register();
         igr_data_chart_annotation_module_1.IgrDataChartAnnotationModule.register();
     }
     componentDidMount() {
-        // not sure about this - right place?
         // if showing modal, we only display a small size chart with no ability to change
         if (this.props.ShowModal && this.state.ChartProperties.ChartSize != ChartEnums_1.ChartSize.Small) {
             let chartProperties = this.state.ChartProperties;
@@ -84,7 +59,7 @@ class ChartDisplayPopupComponent extends React.Component {
             React.createElement(ButtonClose_1.ButtonClose, { cssClassName: cssClassName, onClick: () => this.props.onClose(), bsStyle: StyleConstants_1.PRIMARY_BSSTYLE, size: "small", DisplayMode: "Glyph", hideToolTip: true });
         let editButton = (this.props.ChartVisibility == ChartEnums_1.ChartVisibility.Minimised) ?
             null :
-            React.createElement(ButtonEdit_1.ButtonEdit, { cssClassName: cssClassName, style: { marginRight: "5px" }, onClick: () => this.onEdit(), bsStyle: StyleConstants_1.PRIMARY_BSSTYLE, size: "small", DisplayMode: "Glyph+Text", overrideText: "Edit Chart", hideToolTip: true });
+            React.createElement(ButtonEdit_1.ButtonEdit, { cssClassName: cssClassName, style: { marginRight: "5px" }, onClick: () => this.onEditChart(), bsStyle: StyleConstants_1.PRIMARY_BSSTYLE, size: "small", DisplayMode: "Glyph+Text", overrideText: "Edit Chart", hideToolTip: true });
         let minmaxButton = (this.props.ShowModal) ?
             null :
             this.props.ChartVisibility == ChartEnums_1.ChartVisibility.Minimised ?
@@ -114,11 +89,11 @@ class ChartDisplayPopupComponent extends React.Component {
         let closeChartSettingsButton = React.createElement(ButtonClose_1.ButtonClose, { cssClassName: cssClassName, onClick: () => this.onHideChartSettings(), bsStyle: StyleConstants_1.DEFAULT_BSSTYLE, size: "xs", DisplayMode: "Glyph", hideToolTip: false, overrideTooltip: "Close Chart Settings" });
         let openChartSettingsButton = React.createElement(ButtonGeneral_1.ButtonGeneral, { cssClassName: cssClassName, style: { marginRight: '20px' }, onClick: () => this.onShowChartSettings(), bsStyle: StyleConstants_1.INFO_BSSTYLE, size: "small", DisplayMode: "Text", hideToolTip: true, overrideText: 'Show Chart Settings' });
         let setDefaultsButton = React.createElement(ButtonGeneral_1.ButtonGeneral, { cssClassName: cssClassName, onClick: () => this.onSetPropertyDefaults(), bsStyle: StyleConstants_1.DEFAULT_BSSTYLE, DisplayMode: "Text", size: "small", hideToolTip: true, overrideText: 'Reset Defaults' });
-        let chartWidth = this.setChartWidth();
-        let chartHeight = this.setChartHeight();
-        let panelWidth = this.setPanelWidth();
-        let chartColumnSize = this.setChartColumnSize();
-        let legendColumnSize = this.setLegendColumnSize();
+        let chartWidth = ChartUIHelper_1.ChartUIHelper.setChartWidth(this.state.ChartProperties, this.state.IsChartSettingsVisible);
+        let chartHeight = ChartUIHelper_1.ChartUIHelper.setChartHeight(this.state.ChartProperties);
+        let panelWidth = ChartUIHelper_1.ChartUIHelper.setPanelWidth(this.state.ChartProperties);
+        let chartColumnSize = ChartUIHelper_1.ChartUIHelper.setChartColumnSize(this.state.ChartProperties);
+        let legendColumnSize = ChartUIHelper_1.ChartUIHelper.setLegendColumnSize(this.state.ChartProperties);
         let chartData = (this.props.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
             React.createElement(igr_category_chart_1.IgrCategoryChart
             // datasource
@@ -157,27 +132,9 @@ class ChartDisplayPopupComponent extends React.Component {
                 // calloutsLabelMemberPath="content"
                 // calloutsContentMemberPath="yValue"
                 //xAxisInterval={1}
-                xAxisLabelAngle: this.getAngleFromEnum(this.state.ChartProperties.XAxisAngle) })
+                xAxisLabelAngle: ChartUIHelper_1.ChartUIHelper.getAngleFromEnum(this.state.ChartProperties.XAxisAngle) })
             :
                 null;
-        let optionChartTypes = EnumExtensions_1.EnumExtensions.getNames(ChartEnums_1.ChartType).map((enumName) => {
-            return React.createElement("option", { key: enumName, value: enumName }, enumName);
-        });
-        let optionToolTipTypes = EnumExtensions_1.EnumExtensions.getNames(ChartEnums_1.ToolTipType).map((enumName) => {
-            return React.createElement("option", { key: enumName, value: enumName }, enumName);
-        });
-        let optionCrossHairModeTypes = EnumExtensions_1.EnumExtensions.getNames(ChartEnums_1.ChartCrosshairsMode).map((enumName) => {
-            return React.createElement("option", { key: enumName, value: enumName }, enumName);
-        });
-        let optionChartSizes = EnumExtensions_1.EnumExtensions.getNames(ChartEnums_1.ChartSize).map((enumName) => {
-            return React.createElement("option", { key: enumName, value: enumName }, enumName);
-        });
-        let optionAligments = EnumExtensions_1.EnumExtensions.getNames(ChartEnums_1.HorizontalAlignment).map((enumName) => {
-            return React.createElement("option", { key: enumName, value: enumName }, enumName);
-        });
-        let optionAxisAngles = EnumExtensions_1.EnumExtensions.getNames(ChartEnums_1.AxisAngle).map((enumName) => {
-            return React.createElement("option", { key: enumName, value: enumName }, enumName);
-        });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithIImageThreeButtons_1.PanelWithImageThreeButtons, { cssClassName: cssClassName, header: StrategyConstants.ChartStrategyName, style: { width: panelWidth }, bsStyle: StyleConstants_1.PRIMARY_BSSTYLE, glyphicon: StrategyConstants.ChartGlyph, secondButton: closeButton, firstButton: editButton, thirdButton: minmaxButton }, this.props.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised &&
                 React.createElement("div", null,
@@ -192,21 +149,21 @@ class ChartDisplayPopupComponent extends React.Component {
                         this.state.IsChartSettingsVisible &&
                             React.createElement(react_bootstrap_1.Col, { xs: legendColumnSize },
                                 React.createElement(PanelWithTwoButtons_1.PanelWithTwoButtons, { bsSize: "xs", bsStyle: StyleConstants_1.INFO_BSSTYLE, headerText: "Chart Settings", cssClassName: cssClassName, firstButton: closeChartSettingsButton, secondButton: setDefaultsButton },
-                                    React.createElement(PanelWithButton_1.PanelWithButton, { bsSize: "xs", headerText: "General", cssClassName: cssClassName, button: showGeneralPropertiesButton, style: { marginTop: '10px' } }, this.state.IsGeneralMinimised == false &&
+                                    React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "wrench", bsSize: "xs", headerText: "General", cssClassName: cssClassName, button: showGeneralPropertiesButton, style: { marginTop: '10px' } }, this.state.IsGeneralMinimised == false &&
                                         React.createElement("div", null,
                                             React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
                                                 React.createElement(react_bootstrap_1.Row, null,
                                                     React.createElement(react_bootstrap_1.Col, { xs: 5 },
                                                         React.createElement(react_bootstrap_1.ControlLabel, null, "Type")),
                                                     React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.ChartType, onChange: (x) => this.onChartTypeChange(x) }, optionChartTypes)))),
+                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.ChartType, onChange: (x) => this.onChartTypeChange(x) }, ChartUIHelper_1.ChartUIHelper.getChartTypeOptions())))),
                                             this.props.ShowModal == false &&
                                                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
                                                     React.createElement(react_bootstrap_1.Row, null,
                                                         React.createElement(react_bootstrap_1.Col, { xs: 5 },
                                                             React.createElement(react_bootstrap_1.ControlLabel, null, "Size")),
                                                         React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                            React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.ChartSize, onChange: (x) => this.onChartSizeChange(x) }, optionChartSizes)))),
+                                                            React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.ChartSize, onChange: (x) => this.onChartSizeChange(x) }, ChartUIHelper_1.ChartUIHelper.getChartSizeOptions())))),
                                             React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
                                                 React.createElement(react_bootstrap_1.Row, null,
                                                     React.createElement(react_bootstrap_1.Col, { xs: 5 }),
@@ -219,13 +176,13 @@ class ChartDisplayPopupComponent extends React.Component {
                                                             React.createElement(react_bootstrap_1.Col, { xs: 5 },
                                                                 React.createElement(react_bootstrap_1.ControlLabel, null, "Tooltip")),
                                                             React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.ToolTipType, onChange: (x) => this.onToolTipTypeChange(x) }, optionToolTipTypes)))),
+                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.ToolTipType, onChange: (x) => this.onToolTipTypeChange(x) }, ChartUIHelper_1.ChartUIHelper.getToolTipOptions())))),
                                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
                                                         React.createElement(react_bootstrap_1.Row, null,
                                                             React.createElement(react_bootstrap_1.Col, { xs: 5 },
                                                                 React.createElement(react_bootstrap_1.ControlLabel, null, "Crosshairs")),
                                                             React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.ChartCrosshairsMode, onChange: (x) => this.onCrosshairsModeChange(x) }, optionCrossHairModeTypes)))),
+                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.ChartCrosshairsMode, onChange: (x) => this.onCrosshairsModeChange(x) }, ChartUIHelper_1.ChartUIHelper.getCrossHairModeOptions())))),
                                                     this.state.ChartProperties.ChartCrosshairsMode != ChartEnums_1.ChartCrosshairsMode.None &&
                                                         React.createElement("div", null,
                                                             React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
@@ -239,7 +196,7 @@ class ChartDisplayPopupComponent extends React.Component {
                                                                         React.createElement(react_bootstrap_1.Checkbox, { inline: true, onChange: (e) => this.onEnableCrosshairsAnnotationsOptionChanged(e), checked: this.state.ChartProperties.EnableCrosshairsAnnotations }, "Show Label")))))))),
                                     this.state.ChartProperties.ChartSize != ChartEnums_1.ChartSize.XSmall &&
                                         React.createElement("div", null,
-                                            React.createElement(PanelWithButton_1.PanelWithButton, { bsSize: "xs", headerText: "Y Axis", cssClassName: cssClassName, button: showYAxisPropertiesButton, style: { marginTop: '10px' } }, this.state.IsYAxisMinimised == false &&
+                                            React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "resize-vertical", bsSize: "xs", headerText: "Y (Vertical) Axis", cssClassName: cssClassName, button: showYAxisPropertiesButton, style: { marginTop: '10px' } }, this.state.IsYAxisMinimised == false &&
                                                 React.createElement("div", null,
                                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                                                         React.createElement(react_bootstrap_1.Row, null,
@@ -293,7 +250,7 @@ class ChartDisplayPopupComponent extends React.Component {
                                                                         React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetYAxisTitleColorOptionChanged(e), checked: this.state.SetYAxisTitleColor })),
                                                                     React.createElement(react_bootstrap_1.Col, { xs: 5 }, this.state.SetYAxisTitleColor &&
                                                                         React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: this.state.ChartProperties.YAxisTitleColor, onChange: (x) => this.onYAxisTitleColorChange(x) }))))))),
-                                            React.createElement(PanelWithButton_1.PanelWithButton, { bsSize: "xs", headerText: "X Axis", cssClassName: cssClassName, button: showXAxisPropertiesButton }, this.state.IsXAxisMinimised == false &&
+                                            React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "resize-horizontal", bsSize: "xs", headerText: "X (Horizontal) Axis", cssClassName: cssClassName, button: showXAxisPropertiesButton }, this.state.IsXAxisMinimised == false &&
                                                 React.createElement("div", null,
                                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                                                         React.createElement(react_bootstrap_1.Row, null,
@@ -337,14 +294,14 @@ class ChartDisplayPopupComponent extends React.Component {
                                                                     React.createElement(react_bootstrap_1.Col, { xs: 5 },
                                                                         React.createElement(react_bootstrap_1.ControlLabel, null, "Angle")),
                                                                     React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.XAxisAngle, onChange: (x) => this.onXAxisAngleChanged(x) }, optionAxisAngles)))),
+                                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.XAxisAngle, onChange: (x) => this.onXAxisAngleChanged(x) }, ChartUIHelper_1.ChartUIHelper.getAxisAngleOptions())))),
                                                             React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
                                                                 React.createElement(react_bootstrap_1.Row, null,
                                                                     React.createElement(react_bootstrap_1.Col, { xs: 5 },
                                                                         React.createElement(react_bootstrap_1.ControlLabel, null, "Axis Gap")),
                                                                     React.createElement(react_bootstrap_1.Col, { xs: 7 },
                                                                         React.createElement(react_bootstrap_1.FormControl, { value: this.state.ChartProperties.XAxisGap, bsSize: "small", type: "number", min: "0", step: "0.1", max: "1", placeholder: "Enter Number", onChange: (e) => this.onXAxisGapChanged(e) }))))))),
-                                            React.createElement(PanelWithButton_1.PanelWithButton, { bsSize: "xs", headerText: "Highlights", cssClassName: cssClassName, button: showHighlightsPropertiesButton }, this.state.IsHighlightsMinimised == false &&
+                                            React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "asterisk", bsSize: "xs", headerText: "Highlights", cssClassName: cssClassName, button: showHighlightsPropertiesButton }, this.state.IsHighlightsMinimised == false &&
                                                 React.createElement("div", null,
                                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                                                         React.createElement(react_bootstrap_1.Row, null,
@@ -364,20 +321,20 @@ class ChartDisplayPopupComponent extends React.Component {
                                                                 React.createElement(react_bootstrap_1.ControlLabel, null, "Item")),
                                                             React.createElement(react_bootstrap_1.Col, { xs: 6 },
                                                                 React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onEnableItemHighlightingOptionChanged(e), checked: this.state.ChartProperties.EnableItemHighlighting })))))),
-                                            React.createElement(PanelWithButton_1.PanelWithButton, { bsSize: "xs", headerText: "Misc", cssClassName: cssClassName, button: showMiscPropertiesButton }, this.state.IsMiscMinimised == false &&
+                                            React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "briefcase", bsSize: "xs", headerText: "Misc", cssClassName: cssClassName, button: showMiscPropertiesButton }, this.state.IsMiscMinimised == false &&
                                                 React.createElement("div", null,
                                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
                                                         React.createElement(react_bootstrap_1.Row, null,
                                                             React.createElement(react_bootstrap_1.Col, { xs: 5 },
                                                                 React.createElement(react_bootstrap_1.ControlLabel, null, "Title")),
                                                             React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.TitleAlignment, onChange: (x) => this.onTitleAlignmentChange(x) }, optionAligments)))),
+                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.TitleAlignment, onChange: (x) => this.onTitleAlignmentChange(x) }, ChartUIHelper_1.ChartUIHelper.getAlignmentOptions())))),
                                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
                                                         React.createElement(react_bootstrap_1.Row, null,
                                                             React.createElement(react_bootstrap_1.Col, { xs: 5 },
                                                                 React.createElement(react_bootstrap_1.ControlLabel, null, "Subtitle")),
                                                             React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.SubTitleAlignment, onChange: (x) => this.onSubTitleAlignmentChange(x) }, optionAligments)))),
+                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.SubTitleAlignment, onChange: (x) => this.onSubTitleAlignmentChange(x) }, ChartUIHelper_1.ChartUIHelper.getAlignmentOptions())))),
                                                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
                                                         React.createElement(react_bootstrap_1.Row, null,
                                                             React.createElement(react_bootstrap_1.Col, { xs: 5 },
@@ -394,7 +351,7 @@ class ChartDisplayPopupComponent extends React.Component {
             this.state.EditedChartDefinition &&
                 React.createElement(ChartWizard_1.ChartWizard, { cssClassName: cssClassName, EditedAdaptableBlotterObject: this.state.EditedChartDefinition, ConfigEntities: this.props.ChartDefinitions, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: 0, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() }));
     }
-    onEdit() {
+    onEditChart() {
         this.setState({ EditedChartDefinition: Helper_1.Helper.cloneObject(this.props.CurrentChartDefinition) });
     }
     onChartMinimised() {
@@ -405,20 +362,7 @@ class ChartDisplayPopupComponent extends React.Component {
     }
     onSetPropertyDefaults() {
         // first update our state
-        this.setState({
-            IsGeneralMinimised: false,
-            IsYAxisMinimised: true,
-            SetYAxisMinimumValue: false,
-            SetYAxisLabelColor: false,
-            SetYAxisTitleColor: false,
-            IsXAxisMinimised: true,
-            SetXAxisLabelColor: false,
-            SetXAxisTitleColor: false,
-            IsMiscMinimised: true,
-            TitleMargin: 0,
-            SubTitleMargin: 0,
-            UseDefaultXAxisTitle: true
-        });
+        this.setState(ChartUIHelper_1.ChartUIHelper.setDefaultChartDisplayPopupState());
         // then update the properties
         let chartProperties = Helper_1.Helper.cloneObject(DefaultChartProperties_1.DefaultChartProperties);
         // do the titles 
@@ -704,35 +648,15 @@ class ChartDisplayPopupComponent extends React.Component {
     }
     getYAxisTitle(useDefault) {
         if (useDefault) {
-            return this.createDefaultYAxisTitle();
+            return ChartUIHelper_1.ChartUIHelper.createDefaultYAxisTitle(this.props.CurrentChartDefinition, this.props.Columns);
         }
         return this.state.ChartProperties.YAxisTitle;
     }
     getXAxisTitle(useDefault) {
         if (useDefault) {
-            return this.createDefaultXAxisTitle();
+            return ChartUIHelper_1.ChartUIHelper.createDefaultXAxisTitle(this.props.CurrentChartDefinition, this.props.Columns);
         }
         return this.state.ChartProperties.XAxisTitle;
-    }
-    createDefaultYAxisTitle() {
-        return this.props.CurrentChartDefinition.YAxisColumnIds.map(c => {
-            return ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(c, this.props.Columns);
-        }).join(', ');
-    }
-    createDefaultXAxisTitle() {
-        let returnString = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.XAxisColumnId, this.props.Columns);
-        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.XSegmentColumnId)) {
-            returnString = returnString + " (by " + ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.CurrentChartDefinition.XSegmentColumnId, this.props.Columns) + ")";
-        }
-        return returnString;
-    }
-    isDefaultYAxisTitle() {
-        return StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.YAxisTitle) ||
-            this.props.CurrentChartDefinition.ChartProperties.YAxisTitle == this.createDefaultYAxisTitle();
-    }
-    isDefaultXAxisTitle() {
-        return StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentChartDefinition.ChartProperties.XAxisTitle) ||
-            this.props.CurrentChartDefinition.ChartProperties.XAxisTitle == this.createDefaultXAxisTitle();
     }
     onCloseWizard() {
         this.setState({ EditedChartDefinition: null });
@@ -746,90 +670,6 @@ class ChartDisplayPopupComponent extends React.Component {
     }
     canFinishWizard() {
         return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.EditedChartDefinition.Title);
-    }
-    setChartHeight() {
-        switch (this.state.ChartProperties.ChartSize) {
-            case ChartEnums_1.ChartSize.XSmall:
-                return '350px';
-            case ChartEnums_1.ChartSize.Small:
-                return '450px';
-            case ChartEnums_1.ChartSize.Medium:
-                return '600px';
-            case ChartEnums_1.ChartSize.Large:
-                return '750px';
-            case ChartEnums_1.ChartSize.XLarge:
-                return '850px';
-        }
-    }
-    setChartWidth() {
-        let chartWidth;
-        switch (this.state.ChartProperties.ChartSize) {
-            case ChartEnums_1.ChartSize.XSmall:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 375 : 600;
-                break;
-            case ChartEnums_1.ChartSize.Small:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 525 : 850;
-                break;
-            case ChartEnums_1.ChartSize.Medium:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 750 : 1100;
-                break;
-            case ChartEnums_1.ChartSize.Large:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 1050 : 1350;
-                break;
-            case ChartEnums_1.ChartSize.XLarge:
-                chartWidth = (this.state.IsChartSettingsVisible) ? 1200 : 1600;
-                break;
-        }
-        chartWidth = (this.state.ChartProperties.XAxisLabelVisibility == ChartEnums_1.LabelVisibility.Visible) ? chartWidth : chartWidth - 10;
-        return chartWidth + 'px';
-    }
-    setPanelWidth() {
-        switch (this.state.ChartProperties.ChartSize) {
-            case ChartEnums_1.ChartSize.XSmall:
-                return '650px';
-            case ChartEnums_1.ChartSize.Small:
-                return '900px';
-            case ChartEnums_1.ChartSize.Medium:
-                return '1150px';
-            case ChartEnums_1.ChartSize.Large:
-                return '1400px';
-            case ChartEnums_1.ChartSize.XLarge:
-                return '1650px';
-        }
-    }
-    setChartColumnSize() {
-        switch (this.state.ChartProperties.ChartSize) {
-            case ChartEnums_1.ChartSize.XSmall:
-            case ChartEnums_1.ChartSize.Small:
-                return 7;
-            case ChartEnums_1.ChartSize.Medium:
-                return 8;
-            case ChartEnums_1.ChartSize.Large:
-            case ChartEnums_1.ChartSize.XLarge:
-                return 9;
-        }
-    }
-    setLegendColumnSize() {
-        switch (this.state.ChartProperties.ChartSize) {
-            case ChartEnums_1.ChartSize.XSmall:
-            case ChartEnums_1.ChartSize.Small:
-                return 5;
-            case ChartEnums_1.ChartSize.Medium:
-                return 4;
-            case ChartEnums_1.ChartSize.Large:
-            case ChartEnums_1.ChartSize.XLarge:
-                return 3;
-        }
-    }
-    getAngleFromEnum(axisAngle) {
-        switch (axisAngle) {
-            case ChartEnums_1.AxisAngle.Horizontal:
-                return 0;
-            case ChartEnums_1.AxisAngle.Diagonal:
-                return 45;
-            case ChartEnums_1.AxisAngle.Vertical:
-                return 90;
-        }
     }
 }
 function mapStateToProps(state) {

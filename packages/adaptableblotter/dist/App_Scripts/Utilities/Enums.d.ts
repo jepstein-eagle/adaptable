@@ -166,7 +166,7 @@ export declare enum StateChangedTrigger {
     ColumnCategory = "ColumnCategory",
     PlusMinus = "PlusMinus",
     QuickSearch = "QuickSearch",
-    SelectedCells = "SelectedCells",
+    CellSummary = "CellSummary",
     Shortcut = "Shortcut",
     SmartEdit = "SmartEdit",
     Theme = "Theme",
@@ -198,7 +198,7 @@ export declare enum MessageType {
     Warning = "Warning",
     Error = "Error"
 }
-export declare enum SelectedCellOperation {
+export declare enum CellSumaryOperation {
     Sum = "Sum",
     Average = "Average",
     Median = "Median",

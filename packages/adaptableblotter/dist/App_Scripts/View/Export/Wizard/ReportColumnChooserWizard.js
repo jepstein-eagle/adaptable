@@ -16,7 +16,7 @@ class ReportColumnChooserWizard extends React.Component {
         let cssClassName = this.props.cssClassName + "-choosecolumns";
         return React.createElement("div", { className: cssClassName }, this.props.Data.ReportColumnScope == Enums_1.ReportColumnScope.BespokeColumns &&
             React.createElement(react_bootstrap_1.Panel, null,
-                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: this.state.AllColumnValues, cssClassName: cssClassName, SelectedValues: this.state.SelectedColumnValues, HeaderAvailable: "Columns", HeaderSelected: "Columns in Report", onChange: (SelectedValues) => this.OnSelectedValuesChange(SelectedValues), ReducedDisplay: true })));
+                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: this.state.AllColumnValues, cssClassName: cssClassName, SelectedValues: this.state.SelectedColumnValues, HeaderAvailable: "Columns", HeaderSelected: "Columns in Report", onChange: (SelectedValues) => this.OnSelectedValuesChange(SelectedValues), DisplaySize: DualListBoxEditor_1.DisplaySize.Small })));
     }
     OnSelectedValuesChange(newValues) {
         this.setState({ SelectedColumnValues: newValues }, () => this.props.UpdateGoBackState());

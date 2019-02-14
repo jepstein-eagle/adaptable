@@ -34,7 +34,7 @@ class HomeButtonsPopupComponent extends React.Component {
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Home Toolbar Configuration", bsStyle: "primary", glyphicon: StrategyConstants.FunctionsGlyph, className: "ab_main_popup" },
                 individualHomeToolbarOptions,
-                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: availableValues, cssClassName: cssClassName, SelectedValues: selectedValues, HeaderAvailable: "Hidden Function Buttons", HeaderSelected: "Visible Function Buttons", onChange: (SelectedValues) => this.ListChange(SelectedValues), ReducedDisplay: true })));
+                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: availableValues, cssClassName: cssClassName, SelectedValues: selectedValues, HeaderAvailable: "Hidden Function Buttons", HeaderSelected: "Visible Function Buttons", onChange: (SelectedValues) => this.ListChange(SelectedValues), DisplaySize: DualListBoxEditor_1.DisplaySize.Small })));
     }
     onShowFunctionsDropdownChanged(event) {
         let e = event.target;

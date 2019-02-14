@@ -4,11 +4,11 @@ const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../../Utilities/Enums");
 const AdaptableViewFactory_1 = require("../../AdaptableViewFactory");
-const UIHelper_1 = require("../../UIHelper");
 const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 const GeneralConstants = require("../../../Utilities/Constants/GeneralConstants");
 const StrategyHelper_1 = require("../../../Utilities/Helpers/StrategyHelper");
 const BlotterHelper_1 = require("../../../Utilities/Helpers/BlotterHelper");
+const UIHelper_1 = require("../../UIHelper");
 class AdaptableBlotterPopup extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE;

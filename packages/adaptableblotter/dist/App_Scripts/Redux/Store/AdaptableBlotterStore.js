@@ -43,9 +43,9 @@ const DashboardRedux = require("../ActionsReducers/DashboardRedux");
 const CellValidationRedux = require("../ActionsReducers/CellValidationRedux");
 const PercentBarRedux = require("../ActionsReducers/PercentBarRedux");
 const EntitlementsRedux = require("../ActionsReducers/EntitlementsRedux");
+const CellSummaryRedux = require("../ActionsReducers/CellSummaryRedux");
 const TeamSharingRedux = require("../ActionsReducers/TeamSharingRedux");
 const UserInterfaceRedux = require("../ActionsReducers/UserInterfaceRedux");
-const SelectedCellsRedux = require("../ActionsReducers/SelectedCellsRedux");
 const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
 const ConfigConstants = require("../../Utilities/Constants/ConfigConstants");
@@ -89,7 +89,7 @@ const rootReducer = Redux.combineReducers({
     PercentBar: PercentBarRedux.PercentBarReducer,
     PlusMinus: PlusMinusRedux.PlusMinusReducer,
     QuickSearch: QuickSearchRedux.QuickSearchReducer,
-    SelectedCells: SelectedCellsRedux.SelectedCellsReducer,
+    CellSummary: CellSummaryRedux.CellSummaryReducer,
     Shortcut: ShortcutRedux.ShortcutReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
     SystemFilter: SystemFilterRedux.SystemFilterReducer,
@@ -274,8 +274,8 @@ var diffStateAuditMiddleware = (adaptableBlotter) => function (middlewareAPI) {
                 case GridRedux.GRID_SELECT_COLUMN:
                 case GridRedux.GRID_SET_SORT:
                 case GridRedux.GRID_SET_SELECTED_CELLS:
-                case GridRedux.GRID_CREATE_SELECTED_CELLS_SUMMARY:
-                case GridRedux.GRID_SET_SELECTED_CELLS_SUMMARY:
+                case GridRedux.GRID_CREATE_CELLS_SUMMARY:
+                case GridRedux.GRID_SET_CELLS_SUMMARY:
                 case MenuRedux.SET_MENUITEMS:
                 case MenuRedux.BUILD_COLUMN_CONTEXT_MENU:
                 case MenuRedux.ADD_ITEM_COLUMN_CONTEXT_MENU:
@@ -998,12 +998,12 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     blotter.selectColumn(actionTyped.ColumnId);
                     return next(action);
                 }
-                case GridRedux.GRID_CREATE_SELECTED_CELLS_SUMMARY: {
-                    let SelectedCellsStrategy = (blotter.Strategies.get(StrategyConstants.SelectedCellsStrategyId));
+                case GridRedux.GRID_CREATE_CELLS_SUMMARY: {
+                    let SelectedCellsStrategy = (blotter.Strategies.get(StrategyConstants.CellSummaryStrategyId));
                     let returnAction = next(action);
                     let selectedCellInfo = middlewareAPI.getState().Grid.SelectedCellInfo;
-                    let apiSummaryReturn = SelectedCellsStrategy.CreateSelectedCellSummary(selectedCellInfo);
-                    middlewareAPI.dispatch(GridRedux.GridSetSelectedCellSummary(apiSummaryReturn));
+                    let apiSummaryReturn = SelectedCellsStrategy.CreateCellSummary(selectedCellInfo);
+                    middlewareAPI.dispatch(GridRedux.GridSetCellSummary(apiSummaryReturn));
                     return returnAction;
                 }
                 /*******************

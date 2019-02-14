@@ -8,8 +8,8 @@ exports.GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
 exports.GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
 exports.GRID_SET_SORT = 'GRID_SET_SORT';
 exports.GRID_SET_SELECTED_CELLS = 'GRID_SET_SELECTED_CELLS';
-exports.GRID_CREATE_SELECTED_CELLS_SUMMARY = 'GRID_CREATE_SELECTED_CELLS_SUMMARY';
-exports.GRID_SET_SELECTED_CELLS_SUMMARY = 'GRID_SET_SELECTED_CELLS_SUMMARY';
+exports.GRID_CREATE_CELLS_SUMMARY = 'GRID_CREATE_CELLS_SUMMARY';
+exports.GRID_SET_CELLS_SUMMARY = 'GRID_SET_CELLS_SUMMARY';
 exports.GRID_FLOATING_FILTER_BAR_SHOW = 'GRID_FLOATING_FILTER_BAR_SHOW';
 exports.GRID_FLOATING_FILTER_BAR_HIDE = 'GRID_FLOATING_FILTER_BAR_HIDE';
 exports.GridSetColumns = (Columns) => ({
@@ -41,12 +41,12 @@ exports.GridSetSelectedCells = (SelectedCellInfo) => ({
     type: exports.GRID_SET_SELECTED_CELLS,
     SelectedCellInfo
 });
-exports.GridCreateSelectedCellSummary = () => ({
-    type: exports.GRID_CREATE_SELECTED_CELLS_SUMMARY
+exports.GridCreateCellSummary = () => ({
+    type: exports.GRID_CREATE_CELLS_SUMMARY
 });
-exports.GridSetSelectedCellSummary = (SelectedCellSummary) => ({
-    type: exports.GRID_SET_SELECTED_CELLS_SUMMARY,
-    SelectedCellSummary
+exports.GridSetCellSummary = (CellSummary) => ({
+    type: exports.GRID_SET_CELLS_SUMMARY,
+    CellSummary
 });
 exports.FloatingilterBarShow = () => ({
     type: exports.GRID_FLOATING_FILTER_BAR_SHOW
@@ -58,7 +58,7 @@ const initialGridState = {
     Columns: GeneralConstants_1.EMPTY_ARRAY,
     GridSorts: GeneralConstants_1.EMPTY_ARRAY,
     SelectedCellInfo: null,
-    SelectedCellSummary: null,
+    CellSummary: null,
     IsFloatingFilterActive: false
 };
 exports.GridReducer = (state = initialGridState, action) => {
@@ -74,8 +74,8 @@ exports.GridReducer = (state = initialGridState, action) => {
             return Object.assign({}, state, { GridSorts: action.GridSorts });
         case exports.GRID_SET_SELECTED_CELLS:
             return Object.assign({}, state, { SelectedCellInfo: action.SelectedCellInfo });
-        case exports.GRID_SET_SELECTED_CELLS_SUMMARY:
-            return Object.assign({}, state, { SelectedCellSummary: action.SelectedCellSummary });
+        case exports.GRID_SET_CELLS_SUMMARY:
+            return Object.assign({}, state, { CellSummary: action.CellSummary });
         case exports.GRID_FLOATING_FILTER_BAR_SHOW:
             return Object.assign({}, state, { IsFloatingFilterActive: true });
         case exports.GRID_FLOATING_FILTER_BAR_HIDE:

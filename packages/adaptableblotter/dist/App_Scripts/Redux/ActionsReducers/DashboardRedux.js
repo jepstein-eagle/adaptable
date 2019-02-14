@@ -104,7 +104,7 @@ const initialDashboardState = {
         StrategyConstants.DataSourceStrategyId,
         StrategyConstants.BulkUpdateStrategyId,
         StrategyConstants.SmartEditStrategyId,
-        StrategyConstants.SelectedCellsStrategyId,
+        StrategyConstants.CellSummaryStrategyId,
         StrategyConstants.ApplicationStrategyId,
         StrategyConstants.AlertStrategyId,
         StrategyConstants.ChartStrategyId,
