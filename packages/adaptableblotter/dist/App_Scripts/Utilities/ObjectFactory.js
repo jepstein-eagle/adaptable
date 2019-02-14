@@ -258,7 +258,7 @@ var ObjectFactory;
         };
     }
     ObjectFactory.CreateEmptyStyle = CreateEmptyStyle;
-    function CreateEmptySelectedCellSummmary() {
+    function CreateEmptyCellSummmary() {
         return {
             Sum: null,
             Average: null,
@@ -271,5 +271,5 @@ var ObjectFactory;
             VWAP: null
         };
     }
-    ObjectFactory.CreateEmptySelectedCellSummmary = CreateEmptySelectedCellSummmary;
+    ObjectFactory.CreateEmptyCellSummmary = CreateEmptyCellSummmary;
 })(ObjectFactory = exports.ObjectFactory || (exports.ObjectFactory = {}));

@@ -1,7 +1,30 @@
-0 silly argv { _: [ 'bootstrap' ],
+0 silly argv { _: [ 'clean' ],
 0 silly argv   lernaVersion: '3.4.3',
 0 silly argv   '$0': '..\\..\\..\\..\\AppData\\Roaming\\npm\\node_modules\\lerna\\cli.js' }
 1 notice cli v3.4.3
-2 verbose rootPath C:\Users\jonny\Documents\code\adaptableblotter\adaptableblotter
+2 verbose rootPath C:\Users\jonny\Documents\code\playground\adaptableblotter
 3 info versioning independent
-4 error
+4 info Removing the following directories:
+5 info clean packages\adaptableblotter-angular-aggrid\node_modules
+5 info clean packages\adaptableblotter-react-test\node_modules
+5 info clean packages\adaptableblotter-react\node_modules
+5 info clean packages\adaptableblotter-test\node_modules
+5 info clean packages\adaptableblotter\node_modules
+6 info clean removing C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter-angular-aggrid\node_modules
+7 silly rimrafDir C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter-angular-aggrid\node_modules
+8 info clean removing C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter-react-test\node_modules
+9 silly rimrafDir C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter-react-test\node_modules
+10 info clean removing C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter-react\node_modules
+11 silly rimrafDir C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter-react\node_modules
+12 info clean removing C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter-test\node_modules
+13 silly rimrafDir C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter-test\node_modules
+14 verbose rimrafDir removed C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter-react-test\node_modules
+15 info clean removing C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter\node_modules
+16 silly rimrafDir C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter\node_modules
+17 verbose rimrafDir removed C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter-test\node_modules
+18 verbose rimrafDir removed C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter-react\node_modules
+19 verbose rimrafDir removed C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter-angular-aggrid\node_modules
+20 error Error: Command failed: C:\Program Files\nodejs\node.exe C:\Users\jonny\AppData\Roaming\npm\node_modules\lerna\node_modules\rimraf\bin.js --no-glob C:\Users\jonny\Documents\code\playground\adaptableblotter\packages\adaptableblotter\node_modules\
+20 error     at makeError (C:\Users\jonny\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:174:9)
+20 error     at Promise.all.then.arr (C:\Users\jonny\AppData\Roaming\npm\node_modules\lerna\node_modules\execa\index.js:278:16)
+20 error     at <anonymous>

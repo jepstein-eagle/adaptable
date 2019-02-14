@@ -21,10 +21,11 @@ import { IChartService } from '../Services/Interface/IChartService';
 import { IPPStyle } from "./Reports/IPPStyle";
 import { IEvent } from './IEvent';
 import { IAdaptableStrategyCollection } from '../../Strategy/Interface/IStrategy';
+/**
+ *  The only interface for the AdaptableBlotter
+ *  Contains all the properties and methods that each implemenation must include
+ */
 export interface IAdaptableBlotter {
-    /**
-     * The main external interface for users of the Blotter (e.g. Devs).  Ideally the methods contained there should be all they ever require...
-     */
     api: IBlotterApi;
     BlotterOptions: IAdaptableBlotterOptions;
     AdaptableBlotterStore: IAdaptableBlotterStore;
@@ -47,18 +48,18 @@ export interface IAdaptableBlotter {
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
     AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
     createMenu(): void;
-    getPrimaryKeyValueFromRecord(record: any): any;
     setGridData(dataSource: any): void;
     getActiveCell(): ICellInfo;
     selectColumn(columnId: string): void;
     setColumnIntoStore(): void;
+    setNewColumnListOrder(visibleColumnList: Array<IColumn>): void;
+    getPrimaryKeyValueFromRecord(record: any): any;
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: any, columnId: string): string;
     getRawValueFromRecord(row: any, columnId: string): any;
     getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
     getRecordIsSatisfiedFunctionFromRecord(record: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
-    setNewColumnListOrder(visibleColumnList: Array<IColumn>): void;
     getDisplayValueFromRawValue(columnId: string, rawValue: any): any;
     setValue(cellInfo: ICellInfo): void;
     setValueBatch(batchValues: ICellInfo[]): void;
@@ -92,7 +93,7 @@ export interface IAdaptableBlotter {
     setVendorGridState(vendorGridState: IVendorGridInfo): void;
     isSelectable(): boolean;
     isSortable(): boolean;
-    hasFloatingFilter(): boolean;
+    hasFloatingFilter: boolean;
     showFloatingFilter(): void;
     hideFloatingFilter(): void;
     applyLightTheme(): void;

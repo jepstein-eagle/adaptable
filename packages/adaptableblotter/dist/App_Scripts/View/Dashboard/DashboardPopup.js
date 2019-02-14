@@ -30,7 +30,7 @@ class DashboardPopupComponent extends React.Component {
                 ' ',
                 React.createElement("div", null,
                     React.createElement("br", null)),
-                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: availableToolbarNames, cssClassName: cssClassName, SelectedValues: visibleToolbarNames, HeaderAvailable: "Available Toolbars", HeaderSelected: "Visible Toolbars", onChange: (SelectedValues) => this.ListChange(SelectedValues), ReducedDisplay: true })));
+                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: availableToolbarNames, cssClassName: cssClassName, SelectedValues: visibleToolbarNames, HeaderAvailable: "Available Toolbars", HeaderSelected: "Visible Toolbars", onChange: (SelectedValues) => this.ListChange(SelectedValues), DisplaySize: DualListBoxEditor_1.DisplaySize.Small })));
     }
     isVisibleStrategy(strategyId) {
         let entitlement = this.props.Entitlements.find(x => x.FunctionName == strategyId);

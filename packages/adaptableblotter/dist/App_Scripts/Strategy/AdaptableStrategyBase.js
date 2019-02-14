@@ -100,7 +100,7 @@ class AdaptableStrategyBase {
                 return column.Filterable;
             }
             else if (functionType == "floatingfilter") {
-                return (blotter.hasFloatingFilter() && blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter);
+                return (blotter.hasFloatingFilter && blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter);
             }
         }
         return true;

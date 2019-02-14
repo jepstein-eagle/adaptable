@@ -33,7 +33,7 @@ class ColumnCategoryColumnsWizard extends React.Component {
         let cssClassName = this.props.cssClassName + "-values";
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithInfo_1.PanelWithInfo, { cssClassName: cssClassName, header: "Columns in Column Category: " + this.props.Data.ColumnCategoryId, bsStyle: "primary", infoBody: infoBody },
-                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: this.state.AvailableColumns, cssClassName: cssClassName, SelectedValues: this.state.SelectedColumns, HeaderAvailable: "Available Columns", HeaderSelected: "Selected Columns", onChange: (SelectedValues) => this.OnSelectedValuesChange(SelectedValues), ReducedDisplay: true })));
+                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: this.state.AvailableColumns, cssClassName: cssClassName, SelectedValues: this.state.SelectedColumns, HeaderAvailable: "Available Columns", HeaderSelected: "Selected Columns", onChange: (SelectedValues) => this.OnSelectedValuesChange(SelectedValues), DisplaySize: DualListBoxEditor_1.DisplaySize.Small })));
     }
     OnSelectedValuesChange(newValues) {
         this.setState({ SelectedColumns: newValues }, () => this.props.UpdateGoBackState());

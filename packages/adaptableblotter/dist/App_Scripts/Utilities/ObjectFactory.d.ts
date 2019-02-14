@@ -23,7 +23,7 @@ import { IRange } from "./Interface/Expression/IRange";
 import { LeafExpressionOperator, RangeOperandType, ActionMode } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
-import { ISelectedCellSummmary } from "./Interface/SelectedCell/ISelectedCellSummmary";
+import { ICellSummmary } from "./Interface/SelectedCell/ICellSummmary";
 import { Expression } from '../Utilities/Expression';
 import { IVendorGridInfo } from "./Interface/IVendorGridInfo";
 export declare module ObjectFactory {
@@ -54,5 +54,5 @@ export declare module ObjectFactory {
     function CreateRangeEvaluation(operator: LeafExpressionOperator, operand1: any, operand2: any, newValue: any, initialValue: any, columnId: string): IRangeEvaluation;
     function CreateCellValidationRule(columnId: string, range: IRange, actionMode: ActionMode, expression: Expression): ICellValidationRule;
     function CreateEmptyStyle(): IStyle;
-    function CreateEmptySelectedCellSummmary(): ISelectedCellSummmary;
+    function CreateEmptyCellSummmary(): ICellSummmary;
 }

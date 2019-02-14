@@ -7,6 +7,7 @@ exports.ApplicationStrategyId = "Application";
 exports.BulkUpdateStrategyId = "BulkUpdate";
 exports.CalculatedColumnStrategyId = "CalculatedColumn";
 exports.CalendarStrategyId = "Calendar";
+exports.CellSummaryStrategyId = "CellSummary";
 exports.CellValidationStrategyId = "CellValidation";
 exports.ChartStrategyId = "Chart";
 exports.ColumnCategoryStrategyId = "ColumnCategory";
@@ -28,7 +29,6 @@ exports.PercentBarStrategyId = "PercentBar";
 exports.PlusMinusStrategyId = "PlusMinus";
 exports.QuickSearchStrategyId = "QuickSearch";
 exports.SelectColumnStrategyId = "SelectColumn";
-exports.SelectedCellsStrategyId = "SelectedCells";
 exports.ShortcutStrategyId = "Shortcut";
 exports.SmartEditStrategyId = "SmartEdit";
 exports.TeamSharingStrategyId = "TeamSharing";
@@ -41,6 +41,7 @@ exports.ApplicationStrategyName = "Application";
 exports.BulkUpdateStrategyName = "Bulk Update";
 exports.CalculatedColumnStrategyName = "Calculated Column";
 exports.CalendarStrategyName = "Calendar";
+exports.CellSummaryStrategyName = "Cell Summary";
 exports.CellValidationStrategyName = "Cell Validation";
 exports.ChartStrategyName = "Chart";
 exports.ColumnCategoryStrategyName = "Column Category";
@@ -61,7 +62,6 @@ exports.PercentBarStrategyName = "Percent Bar";
 exports.PlusMinusStrategyName = "Plus Minus";
 exports.QuickSearchStrategyName = "Quick Search";
 exports.SelectColumnStrategyName = "Select Column";
-exports.SelectedCellsStrategyName = "Selected Cells";
 exports.ShortcutStrategyName = "Shortcut";
 exports.SmartEditStrategyName = "Smart Edit";
 exports.TeamSharingStrategyName = "Team Sharing";
@@ -74,6 +74,7 @@ exports.ApplicationGlyph = "font";
 exports.BulkUpdateGlyph = "hand-up";
 exports.CalculatedColumnGlyph = "th-list";
 exports.CalendarGlyph = "calendar";
+exports.CellSummaryGlyph = "th-large";
 exports.CellValidationGlyph = "flag";
 exports.ChartGlyph = "signal";
 exports.ColumnCategoryGlyph = "link";
@@ -95,7 +96,6 @@ exports.PercentBarGlyph = "transfer";
 exports.PlusMinusGlyph = "plus-sign";
 exports.QuickSearchGlyph = "eye-open";
 exports.SelectColumnGlyph = "compressed";
-exports.SelectedCellsGlyph = "th-large";
 exports.ShortcutGlyph = "road";
 exports.SmartEditGlyph = "pencil";
 exports.TeamSharingGlyph = "share";
@@ -155,8 +155,8 @@ function getIdForStrategyName(strategyName) {
             return exports.QuickSearchStrategyId;
         case exports.SelectColumnStrategyName:
             return exports.SelectColumnStrategyId;
-        case exports.SelectedCellsStrategyName:
-            return exports.SelectedCellsStrategyId;
+        case exports.CellSummaryStrategyName:
+            return exports.CellSummaryStrategyId;
         case exports.ShortcutStrategyName:
             return exports.ShortcutStrategyId;
         case exports.SmartEditStrategyName:
@@ -224,8 +224,8 @@ function getNameForStrategyId(strategyID) {
             return exports.QuickSearchStrategyName;
         case exports.SelectColumnStrategyId:
             return exports.SelectColumnStrategyName;
-        case exports.SelectedCellsStrategyId:
-            return exports.SelectedCellsStrategyName;
+        case exports.CellSummaryStrategyId:
+            return exports.CellSummaryStrategyName;
         case exports.ShortcutStrategyId:
             return exports.ShortcutStrategyName;
         case exports.SmartEditStrategyId:
@@ -291,8 +291,8 @@ function getGhyphiconForStrategyId(strategyID) {
             return exports.ShortcutGlyph;
         case exports.SelectColumnStrategyId:
             return exports.SelectColumnGlyph;
-        case exports.SelectedCellsStrategyId:
-            return exports.SelectedCellsGlyph;
+        case exports.CellSummaryStrategyId:
+            return exports.CellSummaryGlyph;
         case exports.SmartEditStrategyId:
             return exports.SmartEditGlyph;
         case exports.TeamSharingStrategyId:

@@ -16,7 +16,7 @@ class LayoutColumnWizard extends React.Component {
         let cssClassName = this.props.cssClassName + "-column";
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithInfo_1.PanelWithInfo, { cssClassName: cssClassName, header: "Choose columns for the Layout", bsStyle: "primary", infoBody: infoBody },
-                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: this.props.Columns.map(x => x.FriendlyName), cssClassName: cssClassName, SelectedValues: this.state.SelectedColumns, HeaderAvailable: "Available Columns", HeaderSelected: "Columns in Layout", onChange: (SelectedValues) => this.OnSelectedValuesChange(SelectedValues), ReducedDisplay: true })));
+                React.createElement(DualListBoxEditor_1.DualListBoxEditor, { AvailableValues: this.props.Columns.map(x => x.FriendlyName), cssClassName: cssClassName, SelectedValues: this.state.SelectedColumns, HeaderAvailable: "Available Columns", HeaderSelected: "Columns in Layout", onChange: (SelectedValues) => this.OnSelectedValuesChange(SelectedValues), DisplaySize: DualListBoxEditor_1.DisplaySize.Small })));
     }
     OnSelectedValuesChange(newValues) {
         this.setState({ SelectedColumns: newValues }, () => this.props.UpdateGoBackState());

@@ -34,7 +34,7 @@ const BulkUpdateStrategy_1 = require("../Strategy/BulkUpdateStrategy");
 const FilterForm_1 = require("../View/Components/FilterForm/FilterForm");
 const DataSourceStrategy_1 = require("../Strategy/DataSourceStrategy");
 const _ = require("lodash");
-const SelectedCellsStrategy_1 = require("../Strategy/SelectedCellsStrategy");
+const CellSummaryStrategy_1 = require("../Strategy/CellSummaryStrategy");
 const ColumnCategoryStrategy_1 = require("../Strategy/ColumnCategoryStrategy");
 const ChartService_1 = require("../Utilities/Services/ChartService");
 const AlertStrategy_1 = require("../Strategy/AlertStrategy");
@@ -100,6 +100,7 @@ class AdaptableBlotter {
         this.hyperGrid = this.BlotterOptions.vendorGrid;
         this.VendorGridName = 'Hypergrid';
         this.EmbedColumnMenu = false;
+        this.hasFloatingFilter = true;
         this.AdaptableBlotterStore = new AdaptableBlotterStore_1.AdaptableBlotterStore(this);
         // create the services
         this.CalendarService = new CalendarService_1.CalendarService(this);
@@ -137,7 +138,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
         //   this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
-        this.Strategies.set(StrategyConstants.SelectedCellsStrategyId, new SelectedCellsStrategy_1.SelectedCellsStrategy(this));
+        this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy_1.CellSummaryStrategy(this));
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
@@ -1288,9 +1289,6 @@ class AdaptableBlotter {
             return this.hyperGrid.behavior.filterable;
         }
         return true;
-    }
-    hasFloatingFilter() {
-        return false;
     }
     showFloatingFilter() {
         // todo

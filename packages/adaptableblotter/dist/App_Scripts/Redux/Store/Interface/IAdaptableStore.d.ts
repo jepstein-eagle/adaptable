@@ -30,7 +30,7 @@ export interface AdaptableBlotterState {
     ColumnCategory: AdaptableBlotterStates.ColumnCategoryState;
     PlusMinus: AdaptableBlotterStates.PlusMinusState;
     QuickSearch: AdaptableBlotterStates.QuickSearchState;
-    SelectedCells: AdaptableBlotterStates.SelectedCellsState;
+    CellSummary: AdaptableBlotterStates.CellSummaryState;
     Shortcut: AdaptableBlotterStates.ShortcutState;
     SmartEdit: AdaptableBlotterStates.SmartEditState;
     TeamSharing: AdaptableBlotterStates.TeamSharingState;
