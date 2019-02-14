@@ -23,6 +23,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
 import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
+import { TestDragEditor } from "./TestDragEditor";
 
 interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {
     onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnAddAction
@@ -98,6 +99,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
                     <HelpBlock >Click 'New' to create a new Calculated Column.</HelpBlock>
                 }
 
+              
                 {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
                 {this.state.EditedAdaptableBlotterObject &&
 

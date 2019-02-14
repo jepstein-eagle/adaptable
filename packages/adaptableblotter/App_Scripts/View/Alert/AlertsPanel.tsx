@@ -2,9 +2,9 @@ import * as React from "react";
 import { Glyphicon, Label, ListGroupItem, ListGroup, InputGroup } from "react-bootstrap";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UIHelper } from "../UIHelper";
-import { ButtonClear } from "./Buttons/ButtonClear";
-import { ButtonPreviewDelete } from "./Buttons/ButtonPreviewDelete";
-import { PanelWithButton } from "./Panels/PanelWithButton";
+import { ButtonClear } from "../Components/Buttons/ButtonClear";
+import { ButtonPreviewDelete } from "../Components/Buttons/ButtonPreviewDelete";
+import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { AccessLevel } from "../../Utilities/Enums";
 import { IAdaptableAlert} from "../../Utilities/Interface/IMessage";
 
