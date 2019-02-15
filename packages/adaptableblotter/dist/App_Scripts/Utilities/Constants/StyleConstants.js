@@ -70,6 +70,7 @@ exports.PUSHPULL_PAGE_SELECTOR = exports.AB_STYLE + "__pushpullpageselector";
 exports.STYLE_COMPONENT = "__stylecomponent";
 exports.PREVIEW_RESULTS = "__previewresults";
 exports.ACTIVE_FILTERS = "__activefilters";
+exports.CELL_SUMMARY = "__cellsummary";
 exports.ALERTS = "__alerts";
 exports.COLOR_PICKER = "__colorpicker";
 exports.COLUMN_SELECTOR = "__columnselector";
