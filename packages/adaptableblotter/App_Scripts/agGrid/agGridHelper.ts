@@ -1,4 +1,4 @@
-import { ICellRendererFunc, ICellRendererParams, ColDef } from "ag-grid-community";
+import { ICellRendererFunc, ICellRendererParams, ColDef, GridOptions } from "ag-grid-community";
 import { StringExtensions } from "../Utilities/Extensions/StringExtensions";
 import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
 import { ArrayExtensions } from "../Utilities/Extensions/ArrayExtensions";
@@ -106,4 +106,11 @@ export module agGridHelper {
         }
         return render({ value: valueToRender }) || "";
     }
+
+    export function safeSetColDefs(colDefs:  ColDef[], gridOptions: GridOptions){
+          // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
+          gridOptions.api.setColumnDefs([]) 
+          gridOptions.api.setColumnDefs(colDefs)
+    }
+
 }

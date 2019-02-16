@@ -36,7 +36,7 @@ export module ColumnHelper {
         if (foundColumn) {
             return getFriendlyNameFromColumn(columnId, foundColumn);
         } else {
-             LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+            LoggingHelper.LogWarning("No column found named '" + columnId + "'");
             return columnId + GeneralConstants.MISSING_COLUMN
         }
     }
@@ -56,8 +56,8 @@ export module ColumnHelper {
         let foundColumn: IColumn = columns.find(c => c.FriendlyName == friendlyName);
         if (foundColumn) {
             return foundColumn.ColumnId;
-        } else {            
-   LoggingHelper.LogWarning("No column found named '" + friendlyName + "'");
+        } else {
+            LoggingHelper.LogWarning("No column found named '" + friendlyName + "'");
             return friendlyName + GeneralConstants.MISSING_COLUMN
         }
     }
@@ -75,8 +75,8 @@ export module ColumnHelper {
         return friendlyNames.map(friendlyName => columns.find(x => x.FriendlyName == friendlyName))
     }
 
-    export function getColumnFromId(columnId: string, columns: IColumn[]): IColumn {
-       // just return null if no columns rather than logging a warning - otherwise get lots at startup
+    export function getColumnFromId(columnId: string, columns: IColumn[], logWarning = true): IColumn {
+        // just return null if no columns rather than logging a warning - otherwise get lots at startup
         if (ArrayExtensions.IsNullOrEmpty(columns)) {
             return null;
         }
@@ -84,7 +84,26 @@ export module ColumnHelper {
         if (foundColumn) {
             return foundColumn;
         } else {
-            LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+            if (logWarning) {
+                LoggingHelper.LogWarning("No column found with Id: '" + columnId + "'");
+            }
+            return null;
+        }
+
+    }
+
+    export function getColumnFromName(columnName: string, columns: IColumn[], logWarning = true): IColumn {
+        // just return null if no columns rather than logging a warning - otherwise get lots at startup
+        if (ArrayExtensions.IsNullOrEmpty(columns)) {
+            return null;
+        }
+        let foundColumn: IColumn = columns.find(c => c.FriendlyName == columnName)
+        if (foundColumn) {
+            return foundColumn;
+        } else {
+            if (logWarning) {
+                LoggingHelper.LogWarning("No column found named '" + columnName + "'");
+            }
             return null;
         }
 

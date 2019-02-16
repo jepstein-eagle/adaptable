@@ -1020,12 +1020,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // first change the value getter in the coldefs - nothing else needs to change
         let colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
         let colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumn.ColumnId)
-
+        let cols: IColumn[] = this.getState().Grid.Columns;
+        let cleanedExpression:string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
+      
         let newColDef: ColDef = colDefs[colDefIndex];
-        newColDef.valueGetter = (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.ColumnExpression, params.node)
+        newColDef.valueGetter = (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node)
 
         colDefs[colDefIndex] = newColDef
-        this.gridOptions.api.setColumnDefs(colDefs)
+        agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
 
         // for column list its an itnernal map only so we can first delete
         for (let columnList of this._calculatedColumnPathMap.values()) {
@@ -1035,7 +1037,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         // and then add
-        let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.ColumnExpression)
+        let columnList = this.CalculatedColumnExpressionService.GetColumnListFromExpression(cleanedExpression)
         for (let column of columnList) {
             let childrenColumnList = this._calculatedColumnPathMap.get(column)
             if (!childrenColumnList) {
@@ -1052,7 +1054,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumnID)
         if (colDefIndex > -1) {
             colDefs.splice(colDefIndex, 1)
-            this.gridOptions.api.setColumnDefs(colDefs)
+            agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
         }
         for (let columnList of this._calculatedColumnPathMap.values()) {
             let index = columnList.indexOf(calculatedColumnID);
@@ -1067,18 +1069,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let venderCols = this.gridOptions.columnApi.getAllColumns()
         let colDefs: ColDef[] = venderCols.map(x => x.getColDef())
 
+         let cols: IColumn[] = this.getState().Grid.Columns;
+        let cleanedExpression:string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
+       
         let newColDef: ColDef = {
             headerName: calculatedColumn.ColumnId,
             colId: calculatedColumn.ColumnId,
             hide: true,
-            valueGetter: (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(calculatedColumn.ColumnExpression, params.node)
+            valueGetter: (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node)
         }
         colDefs.push(newColDef);
-        // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
-        this.gridOptions.api.setColumnDefs([])
-        this.gridOptions.api.setColumnDefs(colDefs)
+        agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
 
-        let columnList = this.CalculatedColumnExpressionService.getColumnListFromExpression(calculatedColumn.ColumnExpression)
+        let columnList = this.CalculatedColumnExpressionService.GetColumnListFromExpression(cleanedExpression)
         for (let column of columnList) {
             let childrenColumnList = this._calculatedColumnPathMap.get(column)
             if (!childrenColumnList) {
@@ -1101,9 +1104,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             valueGetter: (params: ValueGetterParams) => this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node)
         }
         colDefs.push(newColDef);
-        // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
-        this.gridOptions.api.setColumnDefs([])
-        this.gridOptions.api.setColumnDefs(colDefs)
+        agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
 
         this.addSpecialColumnToState(freeTextColumn.ColumnId, false);
     }
@@ -1345,8 +1346,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, () => {
             this.debouncedSetSelectedCells();
         });
-       // this.gridOptions.api.addEventListener(Events.EVENT_TOOL_PANEL_VISIBLE_CHANGED, () => {
-       // });
+        // this.gridOptions.api.addEventListener(Events.EVENT_TOOL_PANEL_VISIBLE_CHANGED, () => {
+        // });
 
 
 
@@ -1745,7 +1746,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return false;
     }
 
-  
+
 
     private isFloatingFilterActive(): boolean {
         return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter;

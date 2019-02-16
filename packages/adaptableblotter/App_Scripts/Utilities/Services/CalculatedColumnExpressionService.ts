@@ -2,17 +2,20 @@ import { ICalculatedColumnExpressionService } from "./Interface/ICalculatedColum
 import * as math from 'mathjs'
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
+import { ColumnHelper } from "../Helpers/ColumnHelper";
+import { IColumn } from "../Interface/IColumn";
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
     constructor(private blotter: IAdaptableBlotter, private colFunctionValue: (columnId: string, record: any) => any) {
     }
 
-    IsExpressionValid(expression: string): { IsValid: Boolean, ErrorMsg?: string } {
+    IsExpressionValid(expression: string, columns: IColumn[]): { IsValid: Boolean, ErrorMsg?: string } {
         try {
+            let cleanedExpression: string = this.CleanExpressionColumnNames(expression, columns);
             let firstRecord = this.blotter.getFirstRecord();
-            math.eval(expression, {
+            math.eval(cleanedExpression, {
                 Col: (columnId: string) => {
-                    try { return this.colFunctionValue(columnId, firstRecord) }
+                     try { return this.colFunctionValue(columnId, firstRecord) }
                     catch (e) {
                         throw Error("Unknown column " + columnId)
                     }
@@ -28,7 +31,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
     ComputeExpressionValue(expression: string, record: any): any {
         try {
-            if(this.blotter.isGroupRecord(record)){
+            if (this.blotter.isGroupRecord(record)) {
                 return null;
             }
             return math.eval(expression, {
@@ -47,37 +50,72 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
         }
     }
 
-    getColumnListFromExpression(expression: string): string[] {
+    GetColumnListFromExpression(expression: string): string[] {
         let columnList: string[] = []
-        let regEx = /\b(?:Col\(")([a-zA-Z]+)(?:"\))/g
+        let regEx: RegExp = /\b(?:Col\(")([a-zA-Z]+)(?:"\))/g
         let match = regEx.exec(expression);
         while (match !== null) {
             columnList.push(match[1])
             match = regEx.exec(expression);
         }
         return columnList
-
     }
 
-    Test(expression: string, record: any): any {
-        try {
-            if(this.blotter.isGroupRecord(record)){
-                return null;
+
+    CleanExpressionColumnNames(expression: string, columns: IColumn[]): string {
+        let newExpression: string = expression;
+        let columnNameList: string[] = []
+        let regEx: RegExp = /\b(?:Col\(")([a-zA-Z]+)(?:"\))/g
+        let match = regEx.exec(expression);
+        while (match !== null) {
+            let columnId: any = match[1];
+
+            // check if its a column name
+            let col: IColumn = ColumnHelper.getColumnFromId(columnId, columns, false);
+            if (!col) { // no column so lets see if they are using FriendlyName
+                col = ColumnHelper.getColumnFromName(columnId, columns);
+                columnNameList.push(columnId)
             }
-            return math.eval(expression, {
-                node: record,
-                Col: (columnId: string) => {
-                    try { return this.colFunctionValue(columnId, record) }
-                    catch (e) {
-                        throw Error("Unknown column " + columnId)
-                    }
-                }
-            })
+
+            match = regEx.exec(expression);
         }
-        catch (e) {
-            LoggingHelper.LogError(e);
-            return null;
-        }
+
+        
+        columnNameList.forEach(c => {
+
+            let stringToReplace: string = 'Col("' + c + '")'
+             let columnId = ColumnHelper.getColumnIdFromFriendlyName(c, columns);
+            let newString: string = 'Col("' + columnId + '")'
+            newExpression = newExpression.replace(stringToReplace, newString)
+        })
+
+        return newExpression
+
+
+        /*
+        
+        
+                let columnIds: string[] = this.getColumnListFromExpression(expression, columns);
+                columnIds.forEach(c => {
+                    let stringToReplace: string = 'Col("' + c + '")'
+                    alert("replacing " + stringToReplace);
+                    let columnFriendName = ColumnHelper.getFriendlyNameFromColumnId(c, columns);
+                    let newString: string = "[" + columnFriendName + "]"
+                    newExpression = newExpression.replace(stringToReplace, newString)
+                    alert("new exp: " +newExpression)
+                })
+        
+                alert("returnIng: " + newExpression)
+                return newExpression
+        
+                */
     }
+
+
+
+
+
+
 
 }
+

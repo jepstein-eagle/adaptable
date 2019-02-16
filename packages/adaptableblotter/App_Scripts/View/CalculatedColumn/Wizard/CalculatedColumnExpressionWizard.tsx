@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Panel, FormGroup, FormControl, HelpBlock } from 'react-bootstrap';
+import { Panel, FormGroup, FormControl, HelpBlock, Button } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
@@ -26,7 +26,9 @@ export class CalculatedColumnExpressionWizard extends React.Component<Calculated
             <Panel header="Calculated Column Expression" bsStyle="primary">
                 <AdaptableBlotterForm>
                     <FormGroup controlId="formInlineName" validationState={validationState}>
-                        <FormControl value={this.state.ColumnExpression} componentClass="textarea" placeholder="Enter expression" onChange={(e) => this.handleExpressionChange(e)} />
+                        <FormControl value={this.state.ColumnExpression} componentClass="textarea" placeholder="Enter expression" onChange={(e) => this.handleExpressionChange(e)} >
+                     <Button  >Hello</Button>>
+                        </FormControl>
                         <FormControl.Feedback />
                         <HelpBlock>{this.props.GetErrorMessage()}</HelpBlock>
                     </FormGroup>
