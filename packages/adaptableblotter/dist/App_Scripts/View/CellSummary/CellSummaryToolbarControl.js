@@ -13,6 +13,8 @@ const Enums_1 = require("../../Utilities/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
 const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
 const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
+const AdaptablePopover_1 = require("../AdaptablePopover");
+const CellSummaryPopover_1 = require("./CellSummaryPopover");
 class CellSummaryToolbarControlComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -37,14 +39,19 @@ class CellSummaryToolbarControlComponent extends React.Component {
         let operationMenuItems = EnumExtensions_1.EnumExtensions.getNames(Enums_1.CellSumaryOperation).map((selectedCellOperation, index) => {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: "index", onClick: () => this.props.onCellSummaryOperationChange(selectedCellOperation) }, selectedCellOperation);
         });
+        let cellSummaryPopover = React.createElement(CellSummaryPopover_1.CellSummaryPopover, { cssClassName: cssClassName, CellSummary: this.props.CellSummary });
         let content = React.createElement("span", null,
             React.createElement("div", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(react_bootstrap_1.InputGroup, null,
                     React.createElement(react_bootstrap_1.DropdownButton, { style: { marginRight: "3px", width: "75px" }, title: this.props.CellSumaryOperation, id: "CellSummary_Operation", bsSize: "small", componentClass: react_bootstrap_1.InputGroup.Button }, operationMenuItems),
                     this.props.CellSummary != null &&
-                        React.createElement(react_bootstrap_1.ControlLabel, { style: { marginTop: "5px", marginLeft: "3px" } },
-                            this.getOperationValue(),
-                            " "))));
+                        React.createElement("span", null,
+                            React.createElement(react_bootstrap_1.ControlLabel, { style: { marginTop: "5px", marginLeft: "3px" } },
+                                this.getOperationValue(),
+                                " "),
+                            ' ',
+                            this.props.CellSummary != null && this.props.CellSummary.Count > 0 &&
+                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Cell Summary", bodyText: [cellSummaryPopover], tooltipText: "Show Cell Summary", useButton: true, triggerAction: "click", popoverMinWidth: 300 })))));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.CellSummaryStrategyName, glyphicon: StrategyConstants.CellSummaryGlyph, onClose: () => this.props.onClose(StrategyConstants.CellSummaryStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectionChanged() {

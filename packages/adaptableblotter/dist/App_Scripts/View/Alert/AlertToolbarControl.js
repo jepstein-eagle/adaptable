@@ -11,7 +11,7 @@ const StrategyConstants = require("../../Utilities/Constants/StrategyConstants")
 const ScreenPopups = require("../../Utilities/Constants/ScreenPopups");
 const AdaptablePopover_1 = require("../AdaptablePopover");
 const Enums_1 = require("../../Utilities/Enums");
-const AlertsPanel_1 = require("../Components/AlertsPanel");
+const AlertsPanel_1 = require("./AlertsPanel");
 class AlertToolbarControlComponent extends React.Component {
     constructor(props) {
         super(props);

@@ -58,6 +58,7 @@ export declare const PUSHPULL_PAGE_SELECTOR: string;
 export declare const STYLE_COMPONENT: string;
 export declare const PREVIEW_RESULTS: string;
 export declare const ACTIVE_FILTERS: string;
+export declare const CELL_SUMMARY: string;
 export declare const ALERTS: string;
 export declare const COLOR_PICKER: string;
 export declare const COLUMN_SELECTOR: string;
