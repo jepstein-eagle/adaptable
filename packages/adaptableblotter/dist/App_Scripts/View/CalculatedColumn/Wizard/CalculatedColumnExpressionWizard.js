@@ -16,7 +16,9 @@ class CalculatedColumnExpressionWizard extends React.Component {
             React.createElement(react_bootstrap_1.Panel, { header: "Calculated Column Expression", bsStyle: "primary" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, null,
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineName", validationState: validationState },
-                        React.createElement(react_bootstrap_1.FormControl, { value: this.state.ColumnExpression, componentClass: "textarea", placeholder: "Enter expression", onChange: (e) => this.handleExpressionChange(e) }),
+                        React.createElement(react_bootstrap_1.FormControl, { value: this.state.ColumnExpression, componentClass: "textarea", placeholder: "Enter expression", onChange: (e) => this.handleExpressionChange(e) },
+                            React.createElement(react_bootstrap_1.Button, null, "Hello"),
+                            ">"),
                         React.createElement(react_bootstrap_1.FormControl.Feedback, null),
                         React.createElement(react_bootstrap_1.HelpBlock, null, this.props.GetErrorMessage())))));
     }

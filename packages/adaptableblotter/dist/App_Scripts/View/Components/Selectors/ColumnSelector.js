@@ -4,10 +4,10 @@ const React = require("react");
 const react_bootstrap_typeahead_1 = require("react-bootstrap-typeahead");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const Enums_1 = require("../../../Utilities/Enums");
-const Helper_1 = require("../../../Utilities/Helpers/Helper");
 const react_bootstrap_1 = require("react-bootstrap");
 const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 const ButtonClear_1 = require("../Buttons/ButtonClear");
+const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 class ColumnSelector extends React.Component {
     // _typeahead: any;
     componentWillReceiveProps(nextProps, nextContext) {
@@ -21,7 +21,7 @@ class ColumnSelector extends React.Component {
     }
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.COLUMN_SELECTOR;
-        let sortedColumns = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.ColumnList, "FriendlyName");
+        let sortedColumns = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.ColumnList, "FriendlyName");
         let selectedColumnIds = this.props.SelectedColumnIds.filter(x => StringExtensions_1.StringExtensions.IsNotNullOrEmpty(x));
         let selectedColums = this.props.ColumnList.filter(x => selectedColumnIds.find(c => c == x.ColumnId));
         let placeHolder = (this.props.SelectionMode == Enums_1.SelectionMode.Single) ? "Select a column" : "Select columns";

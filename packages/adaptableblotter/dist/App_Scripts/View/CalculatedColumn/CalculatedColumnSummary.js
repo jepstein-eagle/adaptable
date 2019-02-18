@@ -22,7 +22,7 @@ class CalculatedColumnSummaryComponent extends React.Component {
         this.props.CalculatedColumns.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
                 detailRow =
-                    React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "UF" + index, Item1: StrategyConstants.CalculatedColumnStrategyName, Item2: item.ColumnExpression, ConfigEnity: item, showShare: this.props.TeamSharingActivated, EntityName: StrategyConstants.CalculatedColumnStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: CalculatedColumnRedux.CalculatedColumnDelete(index), showBold: true });
+                    React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "UF" + index, Item1: StrategyConstants.CalculatedColumnStrategyName, Item2: item.ColumnExpression, ConfigEnity: item, showShare: this.props.TeamSharingActivated, EntityType: StrategyConstants.CalculatedColumnStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: CalculatedColumnRedux.CalculatedColumnDelete(index), showBold: true });
             }
         });
         return React.createElement("div", null,

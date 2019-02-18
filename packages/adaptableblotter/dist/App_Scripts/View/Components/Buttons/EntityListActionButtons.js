@@ -13,7 +13,7 @@ class EntityListActionButtons extends React.Component {
             this.props.showEdit &&
                 React.createElement(ButtonEdit_1.ButtonEdit, { onClick: () => this.props.editClick(), cssClassName: this.props.cssClassName, style: { marginLeft: "0px", marginTop: "2px", marginBottom: "2px", marginRight: "2px" }, overrideDisableButton: this.props.overrideDisableEdit, overrideTooltip: this.props.overrideTooltipEdit, DisplayMode: "Glyph", size: this.props.editSize, AccessLevel: this.props.AccessLevel }),
             this.props.showDelete &&
-                React.createElement(ButtonDelete_1.ButtonDelete, { cssClassName: this.props.cssClassName, style: { marginLeft: "1px", marginTop: "2px", marginBottom: "2px", marginRight: "1px" }, overrideDisableButton: this.props.overrideDisableDelete, overrideTooltip: this.props.overrideTooltipDelete, DisplayMode: "Glyph", ConfirmAction: this.props.ConfirmDeleteAction, ConfirmationMsg: "Are you sure you want to delete this " + this.props.EntityName + "?", ConfirmationTitle: "Delete " + this.props.EntityName, size: this.props.deleteSize, AccessLevel: this.props.AccessLevel }),
+                React.createElement(ButtonDelete_1.ButtonDelete, { cssClassName: this.props.cssClassName, style: { marginLeft: "1px", marginTop: "2px", marginBottom: "2px", marginRight: "1px" }, overrideDisableButton: this.props.overrideDisableDelete, overrideTooltip: this.props.overrideTooltipDelete, DisplayMode: "Glyph", ConfirmAction: this.props.ConfirmDeleteAction, ConfirmationMsg: "Are you sure you want to delete this " + this.props.EntityType + "?", ConfirmationTitle: "Delete " + this.props.EntityType, size: this.props.deleteSize, AccessLevel: this.props.AccessLevel }),
             this.props.showShare &&
                 React.createElement(ButtonShare_1.ButtonShare, { onClick: () => this.props.shareClick(), cssClassName: this.props.cssClassName, style: { marginLeft: "2px", marginTop: "2px", marginBottom: "2px", marginRight: "0px" }, overrideDisableButton: this.props.overrideDisableShare, overrideTooltip: this.props.overrideTooltipShare, DisplayMode: "Glyph", size: this.props.shareSize, AccessLevel: this.props.AccessLevel }));
     }
@@ -26,7 +26,7 @@ EntityListActionButtons.defaultProps = {
     overrideDisableDelete: false,
     overrideDisableShare: false,
     ConfirmDeleteAction: null,
-    EntityName: "",
+    EntityType: "",
     cssClassName: "",
     AccessLevel: Enums_1.AccessLevel.Full,
     editSize: "small",

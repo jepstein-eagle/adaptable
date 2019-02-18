@@ -4,8 +4,15 @@ const Enums_1 = require("../Utilities/Enums");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const StyleConstants_1 = require("../Utilities/Constants/StyleConstants");
 const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
+const fontawesome_svg_core_1 = require("@fortawesome/fontawesome-svg-core");
+const free_brands_svg_icons_1 = require("@fortawesome/free-brands-svg-icons");
+const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 var UIHelper;
 (function (UIHelper) {
+    function buildFontAwesomeLibrary() {
+        fontawesome_svg_core_1.library.add(free_brands_svg_icons_1.fab, free_solid_svg_icons_1.faCheckSquare, free_solid_svg_icons_1.faCoffee);
+    }
+    UIHelper.buildFontAwesomeLibrary = buildFontAwesomeLibrary;
     function getDefaultColors() {
         return [
             "#000000",

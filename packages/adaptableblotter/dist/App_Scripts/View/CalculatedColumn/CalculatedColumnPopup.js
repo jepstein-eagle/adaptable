@@ -17,6 +17,7 @@ const CalculatedColumnEntityRow_1 = require("./CalculatedColumnEntityRow");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Utilities/Constants/StyleConstants");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class CalculatedColumnPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -42,10 +43,10 @@ class CalculatedColumnPopupComponent extends React.Component {
             { Content: "Column Expression", Size: 7 },
             { Content: "", Size: 2 },
         ];
-        let propCalculatedColumns = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
+        let propCalculatedColumns = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
         let calculatedColumns = propCalculatedColumns.map((calculatedColumn, index) => {
             // let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
-            return React.createElement(CalculatedColumnEntityRow_1.CalculatedColumnEntityRow, { cssClassName: cssClassName, Index: index, colItems: colItems, onShare: () => this.props.onShare(calculatedColumn), TeamSharingActivated: this.props.TeamSharingActivated, AdaptableBlotterObject: calculatedColumn, key: calculatedColumn.ColumnId, onEdit: (index, calculatedColumn) => this.onEdit(index, calculatedColumn), onDeleteConfirm: CalculatedColumnRedux.CalculatedColumnDelete(index) });
+            return React.createElement(CalculatedColumnEntityRow_1.CalculatedColumnEntityRow, { cssClassName: cssClassName, Index: index, colItems: colItems, Columns: this.props.Columns, onShare: () => this.props.onShare(calculatedColumn), TeamSharingActivated: this.props.TeamSharingActivated, AdaptableBlotterObject: calculatedColumn, key: calculatedColumn.ColumnId, onEdit: (index, calculatedColumn) => this.onEdit(index, calculatedColumn), onDeleteConfirm: CalculatedColumnRedux.CalculatedColumnDelete(index) });
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { onClick: () => { this.onNew(); }, cssClassName: cssClassName, overrideTooltip: "Create Calculated Column", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },

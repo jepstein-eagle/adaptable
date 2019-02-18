@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const StringExtensions_1 = require("../Extensions/StringExtensions");
 const LoggingHelper_1 = require("./LoggingHelper");
-const Enums_1 = require("../Enums");
 var Helper;
 (function (Helper) {
     function getStringRepresentionFromKey(event) {
@@ -18,47 +17,6 @@ var Helper;
         return JSON.parse(JSON.stringify(obj));
     }
     Helper.cloneObject = cloneObject;
-    function sortArrayWithProperty(sortOrder, values, sortProperty) {
-        if (sortProperty) {
-            let newValues = [].concat(values);
-            let direction = 1;
-            if (sortOrder == Enums_1.SortOrder.Descending) {
-                direction = -1;
-            }
-            return newValues.sort((a, b) => {
-                let aSortProperty = a[sortProperty];
-                let bSortProperty = b[sortProperty];
-                if (typeof (aSortProperty) == "string" && typeof (bSortProperty) == "string") {
-                    return aSortProperty.localeCompare(bSortProperty) * direction;
-                }
-                else {
-                    return (aSortProperty < bSortProperty) ? -1 * direction : (aSortProperty > bSortProperty) ? 1 * direction : 0;
-                }
-            });
-        }
-        else {
-            return sortArray(values, sortOrder);
-        }
-    }
-    Helper.sortArrayWithProperty = sortArrayWithProperty;
-    function sortArray(values, sortOrder = Enums_1.SortOrder.Ascending) {
-        let newValues = [].concat(values);
-        let direction = 1;
-        if (sortOrder == Enums_1.SortOrder.Descending) {
-            direction = -1;
-        }
-        return newValues.sort((a, b) => (a < b) ? -1 * direction : (a > b) ? 1 * direction : 0);
-    }
-    Helper.sortArray = sortArray;
-    function groupBy(array, prop) {
-        return array.reduce((acc, item) => {
-            var key = item[prop];
-            acc[key] = acc[key] || [];
-            acc[key].push(item);
-            return acc;
-        }, {});
-    }
-    Helper.groupBy = groupBy;
     function capitalize(string) {
         return (/[a-z]/.test(string) ? string : string.toLowerCase())
             .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
@@ -256,4 +214,14 @@ var Helper;
         return RoundNumber(numberToRound, 4);
     }
     Helper.RoundNumberTo4dp = RoundNumberTo4dp;
+    function RoundValueIfNumeric(numberToRound, decimalPlaces) {
+        let returnValue;
+        if (!isNaN(Number(numberToRound))) {
+            console.log("was: " + numberToRound);
+            returnValue = RoundNumber(numberToRound, decimalPlaces);
+            console.log("now: " + returnValue);
+        }
+        return returnValue;
+    }
+    Helper.RoundValueIfNumeric = RoundValueIfNumeric;
 })(Helper = exports.Helper || (exports.Helper = {}));

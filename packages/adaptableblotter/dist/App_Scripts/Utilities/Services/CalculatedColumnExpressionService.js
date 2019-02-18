@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const math = require("mathjs");
 const LoggingHelper_1 = require("../Helpers/LoggingHelper");
+const CalculatedColumnHelper_1 = require("../Helpers/CalculatedColumnHelper");
 class CalculatedColumnExpressionService {
     constructor(blotter, colFunctionValue) {
         this.blotter = blotter;
@@ -9,8 +10,10 @@ class CalculatedColumnExpressionService {
     }
     IsExpressionValid(expression) {
         try {
+            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let cleanedExpression = CalculatedColumnHelper_1.CalculatedColumnHelper.CleanExpressionColumnNames(expression, columns);
             let firstRecord = this.blotter.getFirstRecord();
-            math.eval(expression, {
+            math.eval(cleanedExpression, {
                 Col: (columnId) => {
                     try {
                         return this.colFunctionValue(columnId, firstRecord);
@@ -28,38 +31,6 @@ class CalculatedColumnExpressionService {
         }
     }
     ComputeExpressionValue(expression, record) {
-        try {
-            if (this.blotter.isGroupRecord(record)) {
-                return null;
-            }
-            return math.eval(expression, {
-                node: record,
-                Col: (columnId) => {
-                    try {
-                        return this.colFunctionValue(columnId, record);
-                    }
-                    catch (e) {
-                        throw Error("Unknown column " + columnId);
-                    }
-                }
-            });
-        }
-        catch (e) {
-            LoggingHelper_1.LoggingHelper.LogError(e);
-            return null;
-        }
-    }
-    getColumnListFromExpression(expression) {
-        let columnList = [];
-        let regEx = /\b(?:Col\(")([a-zA-Z]+)(?:"\))/g;
-        let match = regEx.exec(expression);
-        while (match !== null) {
-            columnList.push(match[1]);
-            match = regEx.exec(expression);
-        }
-        return columnList;
-    }
-    Test(expression, record) {
         try {
             if (this.blotter.isGroupRecord(record)) {
                 return null;

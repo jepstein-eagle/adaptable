@@ -1,10 +1,6 @@
-import { SortOrder } from '../Enums';
 export declare module Helper {
     function getStringRepresentionFromKey(event: KeyboardEvent | any): string;
     function cloneObject(obj: any): any;
-    function sortArrayWithProperty(sortOrder: SortOrder, values: any[], sortProperty?: string): any[];
-    function sortArray(values: any[], sortOrder?: SortOrder): any[];
-    function groupBy(array: Array<any>, prop: string): Array<any>;
     function capitalize(string: string): string;
     function convertArrayToCsv(array: any[], separator?: string): string;
     function createDownloadedFile(content: any, fileName: string, mimeType: string): void;
@@ -17,4 +13,5 @@ export declare module Helper {
     function StringifyValue(value: any): string;
     function RoundNumber(numberToRound: any, decimalPlaces: number): number;
     function RoundNumberTo4dp(numberToRound: any): number;
+    function RoundValueIfNumeric(numberToRound: any, decimalPlaces: number): any;
 }

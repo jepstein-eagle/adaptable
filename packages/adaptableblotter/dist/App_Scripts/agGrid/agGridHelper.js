@@ -95,4 +95,10 @@ var agGridHelper;
         return render({ value: valueToRender }) || "";
     }
     agGridHelper.getRenderedValue = getRenderedValue;
+    function safeSetColDefs(colDefs, gridOptions) {
+        // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
+        gridOptions.api.setColumnDefs([]);
+        gridOptions.api.setColumnDefs(colDefs);
+    }
+    agGridHelper.safeSetColDefs = safeSetColDefs;
 })(agGridHelper = exports.agGridHelper || (exports.agGridHelper = {}));

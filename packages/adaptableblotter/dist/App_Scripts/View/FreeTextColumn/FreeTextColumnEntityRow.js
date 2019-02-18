@@ -14,7 +14,7 @@ class FreeTextColumnEntityRow extends React.Component {
         colItems[0].Content = FreeTextColumn.ColumnId;
         colItems[1].Content = StringExtensions_1.StringExtensions.IsNullOrEmpty(FreeTextColumn.DefaultValue) ? "[None]" : FreeTextColumn.DefaultValue;
         colItems[2].Content = ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(FreeTextColumn.FreeTextStoredValues) ? 0 : FreeTextColumn.FreeTextStoredValues.length;
-        colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, editClick: () => this.props.onEdit(this.props.Index, FreeTextColumn), showShare: this.props.TeamSharingActivated, shareClick: () => this.props.onShare(), ConfirmDeleteAction: this.props.onDeleteConfirm, EntityName: StrategyConstants.FreeTextColumnStrategyName });
+        colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, editClick: () => this.props.onEdit(this.props.Index, FreeTextColumn), showShare: this.props.TeamSharingActivated, shareClick: () => this.props.onShare(), ConfirmDeleteAction: this.props.onDeleteConfirm, EntityType: StrategyConstants.FreeTextColumnStrategyName });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }
 }

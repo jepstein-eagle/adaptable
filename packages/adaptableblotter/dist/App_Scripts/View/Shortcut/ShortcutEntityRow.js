@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
+const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../Utilities/Enums");
 const Enums_2 = require("../../Utilities/Enums");
@@ -30,7 +31,7 @@ class ShortcutEntityRow extends React.Component {
                 shortcut.ShortcutResult :
                 React.createElement(react_bootstrap_1.FormControl, { type: shortcut.ColumnType == Enums_1.DataType.Date ? "date" : "number", placeholder: "Shortcut Result", onChange: (e) => this.onResultChange(e), value: shortcut.ShortcutResult });
         colItems[4].Content =
-            React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, showEdit: false, shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, ConfirmDeleteAction: this.props.onDeleteConfirm, EntityName: "Shortcut" });
+            React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, showEdit: false, shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, ConfirmDeleteAction: this.props.onDeleteConfirm, EntityType: StrategyConstants.ShortcutStrategyName });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }
     onResultChange(event) {

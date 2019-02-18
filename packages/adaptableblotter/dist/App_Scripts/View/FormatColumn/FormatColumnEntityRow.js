@@ -13,7 +13,7 @@ class FormatColumnEntityRow extends React.Component {
         let colItems = [].concat(this.props.colItems);
         colItems[0].Content = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(formatColumn.ColumnId, this.props.Columns);
         colItems[1].Content = React.createElement(StyleVisualItem_1.StyleVisualItem, { Style: formatColumn.Style });
-        colItems[2].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, editClick: () => this.props.onEdit(this.props.Index, formatColumn), showShare: this.props.TeamSharingActivated, shareClick: () => this.props.onShare(), ConfirmDeleteAction: this.props.onDeleteConfirm, EntityName: StrategyConstants.FormatColumnStrategyName });
+        colItems[2].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, editClick: () => this.props.onEdit(this.props.Index, formatColumn), showShare: this.props.TeamSharingActivated, shareClick: () => this.props.onShare(), ConfirmDeleteAction: this.props.onDeleteConfirm, EntityType: StrategyConstants.FormatColumnStrategyName });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }
 }

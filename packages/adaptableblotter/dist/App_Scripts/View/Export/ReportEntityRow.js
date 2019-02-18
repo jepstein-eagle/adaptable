@@ -46,7 +46,7 @@ class ReportEntityRow extends React.Component {
                 OpenfinHelper_1.OpenfinHelper.isRunningInOpenfin() && OpenfinHelper_1.OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem,
                 iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem));
         colItems[3].Content = exportButton;
-        let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, editClick: () => this.props.onEdit(this.props.Index, report), overrideDisableEdit: isSystemReport, overrideDisableDelete: isSystemReport, overrideDisableShare: isSystemReport, showShare: this.props.TeamSharingActivated, shareClick: () => this.props.onShare(), EntityName: "Report" });
+        let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, editClick: () => this.props.onEdit(this.props.Index, report), overrideDisableEdit: isSystemReport, overrideDisableDelete: isSystemReport, overrideDisableShare: isSystemReport, showShare: this.props.TeamSharingActivated, shareClick: () => this.props.onShare(), EntityType: "Report" });
         colItems[4].Content = buttons;
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }

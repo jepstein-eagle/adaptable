@@ -6,7 +6,6 @@ const AdvancedSearchRedux = require("../../Redux/ActionsReducers/AdvancedSearchR
 const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
-const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
 const ButtonDelete_1 = require("../Components/Buttons/ButtonDelete");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
@@ -17,6 +16,7 @@ const Enums_1 = require("../../Utilities/Enums");
 const react_bootstrap_1 = require("react-bootstrap");
 const ButtonClear_1 = require("../Components/Buttons/ButtonClear");
 const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class AdvancedSearchToolbarControlComponent extends React.Component {
     render() {
         const selectSearchString = "Select a Search";
@@ -24,7 +24,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component {
         let savedSearch = this.props.AdvancedSearches.find(s => s.Name == this.props.CurrentAdvancedSearchName);
         let currentSearchName = StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName) ?
             selectSearchString : this.props.CurrentAdvancedSearchName;
-        let sortedAdvancedSearches = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.AdvancedSearches, "Name");
+        let sortedAdvancedSearches = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.AdvancedSearches, "Name");
         let availableSearches = sortedAdvancedSearches.filter(s => s.Name != this.props.CurrentAdvancedSearchName).map((search, index) => {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onSelectedSearchChanged(search.Name) }, search.Name);
         });

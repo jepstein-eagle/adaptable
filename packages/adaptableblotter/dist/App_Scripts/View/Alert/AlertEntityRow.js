@@ -21,7 +21,7 @@ class AlertEntityRow extends React.Component {
         colItems[1].Content =
             React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: alert.MessageType, onChange: (x) => this.onMessageTypeChanged(this.props.Index, x) }, MessageTypes);
         colItems[2].Content = this.setExpressionDescription(alert);
-        colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, alert), shareClick: () => this.props.onShare(), overrideDisableEdit: !this.props.Column, EntityName: StrategyConstants.AlertStrategyName });
+        colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, alert), shareClick: () => this.props.onShare(), overrideDisableEdit: !this.props.Column, EntityType: StrategyConstants.AlertStrategyName });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }
     setExpressionDescription(Alert) {

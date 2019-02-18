@@ -5,6 +5,8 @@ const ChartEnums_1 = require("../../Utilities/ChartEnums");
 const EnumExtensions_1 = require("../../Utilities/Extensions/EnumExtensions");
 const React = require("react");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+/* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
+*/
 var ChartUIHelper;
 (function (ChartUIHelper) {
     function setChartDisplayPopupState(chartDefinition, columns) {

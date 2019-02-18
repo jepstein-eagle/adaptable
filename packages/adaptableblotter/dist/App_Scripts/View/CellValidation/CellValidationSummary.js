@@ -28,7 +28,7 @@ class CellValidationSummaryComponent extends React.Component {
         // existing items
         this.props.CellValidations.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: StringExtensions_1.StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode), Item2: CellValidationHelper_1.CellValidationHelper.createCellValidationDescription(item, this.props.Columns), ConfigEnity: item, EntityName: StrategyConstants.CellValidationStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: CellValidationRedux.CellValidationDelete(index) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: StringExtensions_1.StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode), Item2: CellValidationHelper_1.CellValidationHelper.createCellValidationDescription(item, this.props.Columns), ConfigEnity: item, EntityType: StrategyConstants.CellValidationStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: CellValidationRedux.CellValidationDelete(index) });
                 strategySummaries.push(detailRow);
             }
         });

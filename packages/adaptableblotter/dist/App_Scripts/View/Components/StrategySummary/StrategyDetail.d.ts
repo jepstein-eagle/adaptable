@@ -6,7 +6,7 @@ export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetai
     Item1: any;
     Item2: any;
     ConfigEnity: IAdaptableBlotterObject;
-    EntityName: string;
+    EntityType: string;
     onEdit: () => void;
     onShare: () => void;
     onDelete: Redux.Action;

@@ -27,7 +27,7 @@ class AlertSummaryComponent extends React.Component {
         // existing items
         this.props.Alerts.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: "something here?", Item2: AlertHelper_1.AlertHelper.createAlertDescription(item, this.props.Columns), ConfigEnity: item, EntityName: StrategyConstants.AlertStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: AlertRedux.AlertDefinitionDelete(index) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { cssClassName: this.props.cssClassName, key: "CV" + index, Item1: "something here?", Item2: AlertHelper_1.AlertHelper.createAlertDescription(item, this.props.Columns), ConfigEnity: item, EntityType: StrategyConstants.AlertStrategyName, showShare: this.props.TeamSharingActivated, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: AlertRedux.AlertDefinitionDelete(index) });
                 strategySummaries.push(detailRow);
             }
         });

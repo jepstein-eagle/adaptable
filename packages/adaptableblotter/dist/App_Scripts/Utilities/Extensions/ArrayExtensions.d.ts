@@ -1,3 +1,4 @@
+import { SortOrder } from "../Enums";
 export declare module ArrayExtensions {
     function AddItem(array: any[], itemToAdd: any): void;
     function ContainsItem(array: any[], itemToCheck: any): boolean;
@@ -14,4 +15,7 @@ export declare module ArrayExtensions {
     function areArraysEqual(arr1: any[], arr2: any[]): boolean;
     function areArraysEqualWithOrder(arr1: any[], arr2: any[]): boolean;
     function areArraysEqualWithOrderandProperties(value: any[], other: any[]): boolean;
+    function sortArrayWithProperty(sortOrder: SortOrder, values: any[], sortProperty?: string): any[];
+    function sortArray(values: any[], sortOrder?: SortOrder): any[];
+    function groupArrayBy(array: Array<any>, prop: string): Array<any>;
 }

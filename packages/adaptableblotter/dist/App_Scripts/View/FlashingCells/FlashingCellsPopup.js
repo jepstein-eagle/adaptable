@@ -7,7 +7,6 @@ const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../Utilities/Enums");
 const FlashingCellEntityRow_1 = require("./FlashingCellEntityRow");
 const PanelWithImage_1 = require("../Components/Panels/PanelWithImage");
-const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
@@ -28,7 +27,7 @@ class FlashingCellsPopupComponent extends React.Component {
         let calculatedColumns = this.props.CalculatedColumns.map(c => c.ColumnId);
         let numericColumns = this.props.Columns.filter(c => c.DataType == Enums_1.DataType.Number);
         let numericNonCalcColumns = numericColumns.filter(c => ArrayExtensions_1.ArrayExtensions.NotContainsItem(calculatedColumns, c.ColumnId));
-        numericNonCalcColumns = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, numericNonCalcColumns, "FriendlyName");
+        numericNonCalcColumns = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, numericNonCalcColumns, "FriendlyName");
         let allPotentialFlashingCells = [];
         let flashingCellState = this.props.Blotter.api.configApi.configGetFlashingCellState(false);
         numericNonCalcColumns.forEach(nc => {

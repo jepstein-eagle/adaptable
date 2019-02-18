@@ -29,7 +29,7 @@ class PlusMinusSummaryComponent extends React.Component {
         // existing items
         this.props.PlusMinusRules.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "PM" + index, cssClassName: this.props.cssClassName, Item1: "Nudge Value: " + item.NudgeValue, Item2: this.wrapExpressionDescription(ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)), ConfigEnity: item, showShare: this.props.TeamSharingActivated, EntityName: StrategyConstants.PlusMinusStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: PlusMinusRedux.PlusMinusDeleteCondition(index) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "PM" + index, cssClassName: this.props.cssClassName, Item1: "Nudge Value: " + item.NudgeValue, Item2: this.wrapExpressionDescription(ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)), ConfigEnity: item, showShare: this.props.TeamSharingActivated, EntityType: StrategyConstants.PlusMinusStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: PlusMinusRedux.PlusMinusDeleteCondition(index) });
                 strategySummaries.push(detailRow);
             }
         });

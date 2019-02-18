@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
-const Helper_1 = require("../../../Utilities/Helpers/Helper");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const react_bootstrap_typeahead_1 = require("react-bootstrap-typeahead");
 const Enums_1 = require("../../../Utilities/Enums");
@@ -34,7 +33,7 @@ class ColumnValueSelector extends React.Component {
                 let existingPair = columnDisplayValuePairs.find(cdv => cdv.RawValue == this.props.SelectedColumnValue);
                 selectedValue = (existingPair) ? existingPair.DisplayValue : this.props.SelectedColumnValue;
             }
-            sortedColumnValues = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnDisplayValuePairs, "RawValue");
+            sortedColumnValues = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnDisplayValuePairs, "RawValue");
         }
         return React.createElement(react_bootstrap_typeahead_1.Typeahead, { ref: "typeahead", bsSize: this.props.bsSize, emptyLabel: "", placeholder: placeholderText, labelKey: "DisplayValue", multiple: false, selected: [selectedValue], onChange: (selected) => { this.onColumnChange(selected); }, options: sortedColumnValues, disabled: this.props.disabled, allowNew: allowNew, newSelectionPrefix: "new value: ", filterBy: ["DisplayValue"] });
     }

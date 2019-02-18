@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
-const Helper_1 = require("../../../Utilities/Helpers/Helper");
 const Enums_1 = require("../../../Utilities/Enums");
 const ListBoxFilterSortComponent_1 = require("./ListBoxFilterSortComponent");
 const react_bootstrap_1 = require("react-bootstrap");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
+const ArrayExtensions_1 = require("../../../Utilities/Extensions/ArrayExtensions");
 class SingleListBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            Values: Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.Values, this.props.SortMember),
+            Values: ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.Values, this.props.SortMember),
             UiSelectedValues: this.props.UiSelectedValues,
             FilterValue: "",
             SortOrder: Enums_1.SortOrder.Ascending
@@ -19,7 +19,7 @@ class SingleListBox extends React.Component {
     }
     componentWillReceiveProps(nextProps, nextContext) {
         this.setState({
-            Values: Helper_1.Helper.sortArrayWithProperty(this.state.SortOrder, nextProps.Values, this.props.SortMember),
+            Values: ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(this.state.SortOrder, nextProps.Values, this.props.SortMember),
             UiSelectedValues: nextProps.UiSelectedValues,
             FilterValue: this.state.FilterValue,
             SortOrder: this.state.SortOrder
@@ -57,13 +57,13 @@ class SingleListBox extends React.Component {
     sortColumnValues() {
         if (this.state.SortOrder == Enums_1.SortOrder.Ascending) {
             this.setState({
-                Values: Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Descending, this.state.Values, this.props.SortMember),
+                Values: ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Descending, this.state.Values, this.props.SortMember),
                 SortOrder: Enums_1.SortOrder.Descending
             });
         }
         else {
             this.setState({
-                Values: Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.state.Values, this.props.SortMember),
+                Values: ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.state.Values, this.props.SortMember),
                 SortOrder: Enums_1.SortOrder.Ascending
             });
         }

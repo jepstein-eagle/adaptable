@@ -6,7 +6,6 @@ const PopupRedux = require("../../Redux/ActionsReducers/PopupRedux");
 const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const ChartRedux = require("../../Redux/ActionsReducers/ChartRedux");
 const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
-const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ButtonEdit_1 = require("../Components/Buttons/ButtonEdit");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const PanelDashboard_1 = require("../Components/Panels/PanelDashboard");
@@ -19,13 +18,14 @@ const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const ButtonShowChart_1 = require("../Components/Buttons/ButtonShowChart");
 const ChartEnums_1 = require("../../Utilities/ChartEnums");
 const ButtonDelete_1 = require("../Components/Buttons/ButtonDelete");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class ChartToolbarControlComponent extends React.Component {
     render() {
         const selectChartString = "Select a Chart";
         let cssClassName = this.props.cssClassName + "__Chart";
         let currentChartDefinitionName = this.props.CurrentChartDefinition == null ?
             selectChartString : this.props.CurrentChartDefinition.Title;
-        let sortedChartDefinitions = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.ChartDefinitions, "Title");
+        let sortedChartDefinitions = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.ChartDefinitions, "Title");
         let availablechartDefinitions = sortedChartDefinitions.filter(s => s.Title != currentChartDefinitionName).map((chartDefinition, index) => {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onSelectedChartDefinitionChanged(chartDefinition.Title) }, chartDefinition.Title);
         });
@@ -43,7 +43,6 @@ class ChartToolbarControlComponent extends React.Component {
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.ChartStrategyName, glyphicon: StrategyConstants.ChartGlyph, onClose: () => this.props.onClose(StrategyConstants.ChartStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectedChartDefinitionChanged(chartDefinitionName) {
-        //   let chartDefinition = this.props.ChartDefinitions.find(cd => cd.Title == chartDefinitionName);
         this.props.onSelectChartDefinition(chartDefinitionName);
     }
     onShowChart() {

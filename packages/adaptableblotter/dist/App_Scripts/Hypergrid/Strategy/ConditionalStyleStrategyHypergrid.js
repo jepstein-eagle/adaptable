@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ConditionalStyleStrategy_1 = require("../../Strategy/ConditionalStyleStrategy");
 const Enums_1 = require("../../Utilities/Enums");
 const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
-const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
 class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy_1.ConditionalStyleStrategy {
     constructor(blotter) {
@@ -69,7 +68,7 @@ class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy_1.Condi
             let columnConditionalStyles = this.ConditionalStyleState.ConditionalStyles
                 .filter(x => x.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Column)
                 .map(cs => cs);
-            let columnConditionalStylesGroupedByColumn = Helper_1.Helper.groupBy(columnConditionalStyles, "ColumnId");
+            let columnConditionalStylesGroupedByColumn = ArrayExtensions_1.ArrayExtensions.groupArrayBy(columnConditionalStyles, "ColumnId");
             theBlotter.forAllRecordsDo((row) => {
                 //here we use the operator "in" on purpose as the GroupBy function that I wrote creates
                 //an object with properties that have the name of the groupbykey

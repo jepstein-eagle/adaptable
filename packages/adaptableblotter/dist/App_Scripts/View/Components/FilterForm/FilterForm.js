@@ -9,7 +9,6 @@ const PopupRedux = require("../../../Redux/ActionsReducers/PopupRedux");
 const ExpressionHelper_1 = require("../../../Utilities/Helpers/ExpressionHelper");
 const FilterHelper_1 = require("../../../Utilities/Helpers/FilterHelper");
 const Enums_1 = require("../../../Utilities/Enums");
-const Helper_1 = require("../../../Utilities/Helpers/Helper");
 const ListBoxFilterForm_1 = require("./ListBoxFilterForm");
 const ButtonClose_1 = require("../Buttons/ButtonClose");
 const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
@@ -41,7 +40,7 @@ class FilterFormComponent extends React.Component {
                     then(result => {
                     if (result == null) { // if nothing returned then default to normal
                         columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
-                        columnValuePairs = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
+                        columnValuePairs = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
                         this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: Enums_1.DistinctCriteriaPairValue.DisplayValue });
                     }
                     else { // get the distinct items and make sure within max items that can be displayed
@@ -65,7 +64,7 @@ class FilterFormComponent extends React.Component {
             }
             else {
                 columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
-                columnValuePairs = Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
+                columnValuePairs = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
                 this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: Enums_1.DistinctCriteriaPairValue.DisplayValue });
             }
         }

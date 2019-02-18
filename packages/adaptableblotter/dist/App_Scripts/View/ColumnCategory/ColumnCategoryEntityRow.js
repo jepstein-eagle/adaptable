@@ -12,7 +12,7 @@ class ColumnCategoryEntityRow extends React.Component {
         let columnNames = ColumnCategory.ColumnIds.map(ci => { return ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(ci, this.props.Columns); });
         colItems[0].Content = ColumnCategory.ColumnCategoryId;
         colItems[1].Content = columnNames.join(', ');
-        let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, ColumnCategory), shareClick: () => this.props.onShare(), overrideDisableEdit: false, EntityName: StrategyConstants.ColumnCategoryStrategyName });
+        let buttons = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, ColumnCategory), shareClick: () => this.props.onShare(), overrideDisableEdit: false, EntityType: StrategyConstants.ColumnCategoryStrategyName });
         colItems[2].Content = buttons;
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }

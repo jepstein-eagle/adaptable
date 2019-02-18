@@ -5,6 +5,7 @@ import { IStyle } from "../Utilities/Interface/IStyle";
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../Utilities/Expression';
 export declare module UIHelper {
+    function buildFontAwesomeLibrary(): void;
     function getDefaultColors(): string[];
     function getEmptyConfigState(): EditableConfigEntityState;
     function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState;

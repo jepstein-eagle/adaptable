@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
 const ReactDOM = require("react-dom");
-const Helper_1 = require("../../../Utilities/Helpers/Helper");
 const react_bootstrap_1 = require("react-bootstrap");
 const Enums_1 = require("../../../Utilities/Enums");
 const ListBoxFilterSortComponent_1 = require("./ListBoxFilterSortComponent");
@@ -201,7 +200,7 @@ class DualListBoxEditor extends React.Component {
     createAvailableValuesList(availableValues, sortOrder, sortMember) {
         // if there are no master / children then sort the values
         if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(this.props.MasterChildren)) {
-            let valstoReturn = Helper_1.Helper.sortArrayWithProperty(sortOrder, availableValues, sortMember);
+            let valstoReturn = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(sortOrder, availableValues, sortMember);
             return valstoReturn;
         }
         // we do have master / children
@@ -667,13 +666,13 @@ class DualListBoxEditor extends React.Component {
     sortColumnValues() {
         if (this.state.SortOrder == Enums_1.SortOrder.Ascending) {
             this.setState({
-                AvailableValues: Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Descending, this.state.AvailableValues, this.props.SortMember),
+                AvailableValues: ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Descending, this.state.AvailableValues, this.props.SortMember),
                 SortOrder: Enums_1.SortOrder.Descending
             });
         }
         else {
             this.setState({
-                AvailableValues: Helper_1.Helper.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.state.AvailableValues, this.props.SortMember),
+                AvailableValues: ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.state.AvailableValues, this.props.SortMember),
                 SortOrder: Enums_1.SortOrder.Ascending
             });
         }

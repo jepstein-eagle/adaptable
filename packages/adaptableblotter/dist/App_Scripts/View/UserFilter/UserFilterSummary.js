@@ -28,7 +28,7 @@ class UserFilterSummaryComponent extends React.Component {
         // existing items
         this.props.UserFilters.map((item, index) => {
             if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
-                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "UF" + index, cssClassName: this.props.cssClassName, Item1: item.Name, Item2: this.getDescription(item), ConfigEnity: item, showShare: this.props.TeamSharingActivated, showEdit: this.isFilterable(), EntityName: StrategyConstants.UserFilterStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: UserFilterRedux.UserFilterDelete(item) });
+                let detailRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: "UF" + index, cssClassName: this.props.cssClassName, Item1: item.Name, Item2: this.getDescription(item), ConfigEnity: item, showShare: this.props.TeamSharingActivated, showEdit: this.isFilterable(), EntityType: StrategyConstants.UserFilterStrategyName, onEdit: () => this.onEdit(index, item), onShare: () => this.props.onShare(item), onDelete: UserFilterRedux.UserFilterDelete(item) });
                 strategySummaries.push(detailRow);
             }
         });

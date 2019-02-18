@@ -21,7 +21,7 @@ class CellValidationEntityRow extends React.Component {
         colItems[1].Content = this.setExpressionDescription(cellValidation);
         colItems[2].Content =
             React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: cellValidation.ActionMode, onChange: (x) => this.onActionModeChanged(this.props.Index, x) }, ActionModeTypes);
-        colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, cellValidation), shareClick: () => this.props.onShare(), overrideDisableEdit: !this.props.Column, EntityName: StrategyConstants.CellValidationStrategyName });
+        colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, cellValidation), shareClick: () => this.props.onShare(), overrideDisableEdit: !this.props.Column, EntityType: StrategyConstants.CellValidationStrategyName });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }
     setExpressionDescription(CellValidation) {

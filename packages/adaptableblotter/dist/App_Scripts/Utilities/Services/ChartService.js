@@ -7,6 +7,11 @@ const ExpressionHelper_1 = require("../Helpers/ExpressionHelper");
 const ChartEnums_1 = require("../ChartEnums");
 const Helper_1 = require("../Helpers/Helper");
 const StringExtensions_1 = require("../Extensions/StringExtensions");
+/*
+Class that buils the chart - probably needs some refactoring but working for the time being.
+Makes use of Expressions to get the data required.
+Returns a ChartData object that the ChartDisplay will receive and then show to teh user
+*/
 class ChartService {
     constructor(blotter) {
         this.blotter = blotter;
@@ -18,7 +23,7 @@ class ChartService {
         let chartData = xAxisColValues.map(cv => {
             let chartDataRow = new Object();
             chartDataRow[xAxisColumnName] = cv;
-            let showAverageTotal = chartDefinition.YAxisTotal == ChartEnums_1.AxisTotal.Average;
+            let showAverageTotal = (chartDefinition.YAxisTotal == ChartEnums_1.AxisTotal.Average);
             let xAxisKVP = { Key: chartDefinition.XAxisColumnId, Value: cv };
             if (ArrayExtensions_1.ArrayExtensions.IsNotEmpty(xSegmentColValues)) {
                 xSegmentColValues.forEach((columnValue) => {
@@ -69,6 +74,7 @@ class ChartService {
         }
         return Helper_1.Helper.RoundNumberTo4dp(finalTotal);
     }
+    // Gets the unique values in the (horizontal) X Axis column - either through an expression or getting the distinct values
     getXAxisColumnValues(chartDefinition, columns) {
         let xAxisColValues = [];
         if (ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
@@ -84,6 +90,7 @@ class ChartService {
         }
         return xAxisColValues;
     }
+    // Gets the unique values in the X Sgegmet column - either through an Extension or as unique values.
     getXSegmentColumnValues(chartDefinition, columns) {
         let xSegmentColValues = [];
         if (StringExtensions_1.StringExtensions.IsNullOrEmpty(chartDefinition.XSegmentColumnId)) {

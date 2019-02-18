@@ -23,7 +23,7 @@ class PercentBarEntityRow extends React.Component {
                 "[" + ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(PercentBar.MaxValueColumnId, this.props.Columns) + "]";
         colItems[3].Content = React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: PercentBar.PositiveColor, onChange: (x) => this.onPositiveColorChanged(x) });
         colItems[4].Content = React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: PercentBar.NegativeColor, onChange: (x) => this.onNegativeColorChanged(x) });
-        colItems[5].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, PercentBar), shareClick: () => this.props.onShare(), overrideDisableEdit: !this.props.Column, EntityName: StrategyConstants.PercentBarStrategyName });
+        colItems[5].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, PercentBar), shareClick: () => this.props.onShare(), overrideDisableEdit: !this.props.Column, EntityType: StrategyConstants.PercentBarStrategyName });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }
     onMinimumValueChanged(event) {

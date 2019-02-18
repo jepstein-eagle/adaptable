@@ -38,7 +38,7 @@ class ChartPopupComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__Chart";
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__Chart";
-        let infoBody = ["Use Charts to see youyr grid data visually."];
+        let infoBody = ["Create Charts to view your grid data visually."];
         let colItems = [
             { Content: "Title", Size: 4 },
             { Content: "Subtitle", Size: 4 },

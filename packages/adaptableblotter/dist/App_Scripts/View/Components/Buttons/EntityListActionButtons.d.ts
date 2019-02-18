@@ -15,7 +15,7 @@ export interface EntityListActionButtonsProps extends React.ClassAttributes<Enti
     overrideTooltipDelete?: string;
     overrideTooltipShare?: string;
     ConfirmDeleteAction: Redux.Action;
-    EntityName: string;
+    EntityType: string;
     cssClassName: string;
     AccessLevel: AccessLevel;
     editSize: Sizes;

@@ -24,7 +24,7 @@ var ColumnHelper;
             return column.FriendlyName;
         }
         else {
-            LoggingHelper_1.LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+            LogMissingColumnWarning(columnId);
             return columnId + GeneralConstants.MISSING_COLUMN;
         }
     }
@@ -35,7 +35,7 @@ var ColumnHelper;
             return getFriendlyNameFromColumn(columnId, foundColumn);
         }
         else {
-            LoggingHelper_1.LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+            LogMissingColumnWarning(columnId);
             return columnId + GeneralConstants.MISSING_COLUMN;
         }
     }
@@ -57,7 +57,7 @@ var ColumnHelper;
             return foundColumn.ColumnId;
         }
         else {
-            LoggingHelper_1.LoggingHelper.LogWarning("No column found named '" + friendlyName + "'");
+            LogMissingColumnWarning(friendlyName);
             return friendlyName + GeneralConstants.MISSING_COLUMN;
         }
     }
@@ -75,7 +75,7 @@ var ColumnHelper;
         return friendlyNames.map(friendlyName => columns.find(x => x.FriendlyName == friendlyName));
     }
     ColumnHelper.getColumnsFromFriendlyNames = getColumnsFromFriendlyNames;
-    function getColumnFromId(columnId, columns) {
+    function getColumnFromId(columnId, columns, logWarning = true) {
         // just return null if no columns rather than logging a warning - otherwise get lots at startup
         if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(columns)) {
             return null;
@@ -85,11 +85,30 @@ var ColumnHelper;
             return foundColumn;
         }
         else {
-            LoggingHelper_1.LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+            if (logWarning) {
+                LogMissingColumnWarning(columnId);
+            }
             return null;
         }
     }
     ColumnHelper.getColumnFromId = getColumnFromId;
+    function getColumnFromName(columnName, columns, logWarning = true) {
+        // just return null if no columns rather than logging a warning - otherwise get lots at startup
+        if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(columns)) {
+            return null;
+        }
+        let foundColumn = columns.find(c => c.FriendlyName == columnName);
+        if (foundColumn) {
+            return foundColumn;
+        }
+        else {
+            if (logWarning) {
+                LogMissingColumnWarning(columnName);
+            }
+            return null;
+        }
+    }
+    ColumnHelper.getColumnFromName = getColumnFromName;
     function getNumericColumns(columns) {
         return columns.filter(c => c.DataType == Enums_1.DataType.Number);
     }
@@ -107,4 +126,9 @@ var ColumnHelper;
         return returnValue;
     }
     ColumnHelper.getColumnCategoryFromColumnCategories = getColumnCategoryFromColumnCategories;
+    function LogMissingColumnWarning(columnId) {
+        if (!isSpecialColumn(columnId)) {
+            LoggingHelper_1.LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+        }
+    }
 })(ColumnHelper = exports.ColumnHelper || (exports.ColumnHelper = {}));
