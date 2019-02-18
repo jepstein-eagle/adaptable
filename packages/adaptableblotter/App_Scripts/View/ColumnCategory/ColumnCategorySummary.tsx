@@ -57,7 +57,7 @@ export class ColumnCategorySummaryComponent extends React.Component<ColumnCatego
                 Item2={ColumnCategory.ColumnCategoryId}
                 ConfigEnity={ColumnCategory}
                 showShare={this.props.TeamSharingActivated}
-                EntityName={StrategyConstants.ColumnCategoryStrategyName}
+                EntityType={StrategyConstants.ColumnCategoryStrategyName}
                 onEdit={() => this.onEdit(ColumnCategory)}
                 onShare={() => this.props.onShare(ColumnCategory)}
                 onDelete={ColumnCategoryRedux.ColumnCategoryDelete(ColumnCategory)}

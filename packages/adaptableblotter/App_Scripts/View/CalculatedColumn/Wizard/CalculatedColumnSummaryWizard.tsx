@@ -4,7 +4,7 @@ import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { ICalculatedColumn } from "../../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
-
+import { CalculatedColumnHelper } from "../../../Utilities/Helpers/CalculatedColumnHelper";
 
 export interface CalculatedColumnSummaryWizardProps extends AdaptableWizardStepProps<ICalculatedColumn> {
 }
@@ -19,7 +19,7 @@ export class CalculatedColumnSummaryWizard extends React.Component<CalculatedCol
 
         let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.ColumnId },
-            { Key: "Expression", Value: this.props.Data.ColumnExpression }
+            { Key: "Expression", Value: CalculatedColumnHelper.GetExpressionString(this.props.Data.ColumnExpression, this.props.Columns) }
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.CalculatedColumnStrategyName} />
@@ -28,11 +28,11 @@ export class CalculatedColumnSummaryWizard extends React.Component<CalculatedCol
         </div>
     }
 
-      public canNext(): boolean { return true; }
+    public canNext(): boolean { return true; }
     public canBack(): boolean { return true; }
-    public Next(): void { 
+    public Next(): void {
         //
-     }
+    }
     public Back(): void {
         //
     }
@@ -42,5 +42,5 @@ export class CalculatedColumnSummaryWizard extends React.Component<CalculatedCol
     public GetIndexStepDecrement() {
         return 1;
     }
-   
+
 }

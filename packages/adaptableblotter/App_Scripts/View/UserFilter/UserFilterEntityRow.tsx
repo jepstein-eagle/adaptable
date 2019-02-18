@@ -26,7 +26,7 @@ export class UserFilterEntityRow extends React.Component<SharedEntityExpressionR
             showShare={this.props.TeamSharingActivated}
             overrideDisableEdit={false}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
-            EntityName={StrategyConstants.UserFilterStrategyName} />
+            EntityType={StrategyConstants.UserFilterStrategyName} />
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }

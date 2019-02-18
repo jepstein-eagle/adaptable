@@ -70,7 +70,7 @@ export class CustomSortSummaryComponent extends React.Component<CustomSortSummar
                 StrategyId={StrategyConstants.CustomSortStrategyId} />}
                 Item2={customSort.SortedValues.join(', ')}
                 ConfigEnity={customSort}
-                EntityName={StrategyConstants.CustomSortStrategyName}
+                EntityType={StrategyConstants.CustomSortStrategyName}
                 onEdit={() => this.onEdit(customSort)}
                 onShare={() => this.props.onShare(customSort)}
                 showShare={this.props.TeamSharingActivated}

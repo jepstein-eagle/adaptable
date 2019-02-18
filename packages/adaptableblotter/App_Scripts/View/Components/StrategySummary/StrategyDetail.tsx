@@ -11,7 +11,7 @@ export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetai
     Item1: any
     Item2: any
     ConfigEnity: IAdaptableBlotterObject
-    EntityName: string
+    EntityType: string
     onEdit: () => void
     onShare: () => void
     onDelete: Redux.Action
@@ -37,7 +37,7 @@ export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
             editClick={() => this.props.onEdit()}
             shareClick={() => this.props.onShare()}
             showShare={this.props.showShare}
-             EntityName={this.props.EntityName} 
+            EntityType={this.props.EntityType} 
              editSize={'xs'}
              deleteSize={'xs'}
              shareSize={'xs'}

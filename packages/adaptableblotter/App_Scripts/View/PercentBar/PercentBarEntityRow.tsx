@@ -57,7 +57,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
             editClick={() => this.props.onEdit(this.props.Index, PercentBar)}
             shareClick={() => this.props.onShare()}
             overrideDisableEdit={!this.props.Column}
-            EntityName={StrategyConstants.PercentBarStrategyName} />
+            EntityType={StrategyConstants.PercentBarStrategyName} />
 
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />

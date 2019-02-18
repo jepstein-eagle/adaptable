@@ -7,9 +7,17 @@ import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilde
 import { Expression } from '../Utilities/Expression';
 import { SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO_BSSTYLE } from '../Utilities/Constants/StyleConstants';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 
 export module UIHelper {
+export function buildFontAwesomeLibrary():void{
+    library.add(fab, faCheckSquare, faCoffee)   
+}
+
+
     export function getDefaultColors(): string[] {
         return [
             "#000000", //  {/* black */}

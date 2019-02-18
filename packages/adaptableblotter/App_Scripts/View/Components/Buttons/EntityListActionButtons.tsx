@@ -21,7 +21,7 @@ export interface EntityListActionButtonsProps extends React.ClassAttributes<Enti
     overrideTooltipDelete?: string
     overrideTooltipShare?: string
     ConfirmDeleteAction: Redux.Action
-    EntityName: string
+    EntityType: string
     cssClassName: string
     AccessLevel: AccessLevel
     editSize: Sizes
@@ -38,7 +38,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         overrideDisableDelete: false,
         overrideDisableShare: false,
         ConfirmDeleteAction: null,
-        EntityName: "",
+        EntityType: "",
         cssClassName: "",
         AccessLevel: AccessLevel.Full,
         editSize: "small",
@@ -65,8 +65,8 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
                     overrideTooltip={this.props.overrideTooltipDelete}
                     DisplayMode="Glyph"
                     ConfirmAction={this.props.ConfirmDeleteAction}
-                    ConfirmationMsg={"Are you sure you want to delete this " + this.props.EntityName + "?"}
-                    ConfirmationTitle={"Delete " + this.props.EntityName}
+                    ConfirmationMsg={"Are you sure you want to delete this " + this.props.EntityType + "?"}
+                    ConfirmationTitle={"Delete " + this.props.EntityType}
                     size={this.props.deleteSize}
                     AccessLevel={this.props.AccessLevel} 
                     />}

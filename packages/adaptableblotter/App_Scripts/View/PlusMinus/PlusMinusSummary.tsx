@@ -61,7 +61,7 @@ export class PlusMinusSummaryComponent extends React.Component<PlusMinusSummaryP
                         Item2={this.wrapExpressionDescription(ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns))}
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
-                        EntityName={StrategyConstants.PlusMinusStrategyName}
+                        EntityType={StrategyConstants.PlusMinusStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={PlusMinusRedux.PlusMinusDeleteCondition(index)}

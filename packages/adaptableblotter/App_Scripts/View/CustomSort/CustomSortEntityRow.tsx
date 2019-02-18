@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Helper } from '../../Utilities/Helpers/Helper';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
@@ -25,9 +26,8 @@ export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProp
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
             overrideDisableEdit={this.props.ColumnLabel.includes(GeneralConstants.MISSING_COLUMN)}
-            EntityName="Custom Sort">
-        </EntityListActionButtons>
-
+            EntityType={StrategyConstants.CustomSortStrategyName} />
+     
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 

@@ -59,7 +59,7 @@ export class CellValidationSummaryComponent extends React.Component<CellValidati
                         Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode)}
                         Item2={CellValidationHelper.createCellValidationDescription(item, this.props.Columns)}
                         ConfigEnity={item}
-                        EntityName={StrategyConstants.CellValidationStrategyName}
+                        EntityType={StrategyConstants.CellValidationStrategyName}
                         showShare={this.props.TeamSharingActivated}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}

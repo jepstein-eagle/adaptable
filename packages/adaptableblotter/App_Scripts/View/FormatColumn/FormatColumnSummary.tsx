@@ -64,7 +64,7 @@ export class FormatColumnSummaryComponent extends React.Component<FormatColumnSu
                 Item2={<StyleVisualItem Style={formatColumn.Style} />}
                 ConfigEnity={formatColumn}
                 showShare={this.props.TeamSharingActivated}
-                EntityName={StrategyConstants.FormatColumnStrategyName}
+                EntityType={StrategyConstants.FormatColumnStrategyName}
                 onEdit={() => this.onEdit(formatColumn)}
                 onShare={() => this.props.onShare(formatColumn)}
                 onDelete={FormatColumnRedux.FormatColumnDelete(formatColumn)}

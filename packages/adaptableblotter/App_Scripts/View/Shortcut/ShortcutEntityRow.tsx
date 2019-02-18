@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { FormGroup, FormControl } from 'react-bootstrap';
 import { DataType } from '../../Utilities/Enums'
 import { MathOperation } from '../../Utilities/Enums'
@@ -64,8 +65,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
                 shareClick={() => this.props.onShare()}
                 showShare={this.props.TeamSharingActivated}
                 ConfirmDeleteAction={this.props.onDeleteConfirm}
-                EntityName="Shortcut">
-            </EntityListActionButtons>
+                EntityType={StrategyConstants.ShortcutStrategyName} />
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
 

@@ -64,7 +64,7 @@ export class UserFilterSummaryComponent extends React.Component<UserFilterSummar
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
                         showEdit={this.isFilterable()}
-                        EntityName={StrategyConstants.UserFilterStrategyName}
+                        EntityType={StrategyConstants.UserFilterStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={UserFilterRedux.UserFilterDelete(item)}

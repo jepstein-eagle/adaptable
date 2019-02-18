@@ -530,8 +530,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
          * Action: If it is valid, then clear any error; otherwise set one
          */
         case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
-          let columns = middlewareAPI.getState().Grid.Columns
-          let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).expression, columns);
+         let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).expression);
           if (!returnObj.IsValid) {
             middlewareAPI.dispatch(SystemRedux.CalculatedColumnSetErrorMessage(returnObj.ErrorMsg))
           }

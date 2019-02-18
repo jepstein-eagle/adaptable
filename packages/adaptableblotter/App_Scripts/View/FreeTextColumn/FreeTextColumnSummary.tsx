@@ -53,7 +53,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<FreeTextColu
                 Item2={description}
                 ConfigEnity={freeTextColumn}
                 showShare={this.props.TeamSharingActivated}
-                EntityName={StrategyConstants.FreeTextColumnStrategyName}
+                EntityType={StrategyConstants.FreeTextColumnStrategyName}
                 onEdit={() => this.onEdit(index, freeTextColumn)}
                 onShare={() => this.props.onShare(freeTextColumn)}
                 onDelete={FreeTextColumnRedux.FreeTextColumnDelete(freeTextColumn)}

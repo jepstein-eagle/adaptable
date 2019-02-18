@@ -46,7 +46,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<Calculated
                         Item2={item.ColumnExpression}
                         ConfigEnity={item}
                         showShare={this.props.TeamSharingActivated}
-                        EntityName={StrategyConstants.CalculatedColumnStrategyName}
+                        EntityType={StrategyConstants.CalculatedColumnStrategyName}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}
                         onDelete={CalculatedColumnRedux.CalculatedColumnDelete(index)}

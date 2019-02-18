@@ -68,7 +68,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
             overrideDisableShare={isSystemReport}
             showShare={this.props.TeamSharingActivated}
             shareClick={() => this.props.onShare()}
-            EntityName="Report" />
+            EntityType="Report" />
 
         colItems[4].Content = buttons
 

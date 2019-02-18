@@ -59,7 +59,7 @@ export class AlertSummaryComponent extends React.Component<AlertSummaryProps, Ed
                         Item1={"something here?"}
                         Item2={AlertHelper.createAlertDescription( item, this.props.Columns)}
                         ConfigEnity={item}
-                        EntityName={StrategyConstants.AlertStrategyName}
+                        EntityType={StrategyConstants.AlertStrategyName}
                         showShare={this.props.TeamSharingActivated}
                         onEdit={() => this.onEdit(index, item)}
                         onShare={() => this.props.onShare(item)}

@@ -5,6 +5,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { Helper } from '../../Utilities/Helpers/Helper';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColItem } from "../UIInterfaces";
@@ -32,8 +33,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
             overrideDisableEdit={false}
-             EntityName="Plus/Minus">
-        </EntityListActionButtons>
+            EntityType={StrategyConstants.PlusMinusStrategyName + " Rule "} />
         colItems[3].Content = buttons
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />

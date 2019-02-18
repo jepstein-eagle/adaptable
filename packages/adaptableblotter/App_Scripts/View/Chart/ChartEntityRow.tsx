@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
@@ -36,10 +37,8 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
             overrideDisableEdit={null}
-            EntityName="Chart">
-        </EntityListActionButtons>
-
-        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
+            EntityType={StrategyConstants.ChartStrategyName} />
+         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 
 }

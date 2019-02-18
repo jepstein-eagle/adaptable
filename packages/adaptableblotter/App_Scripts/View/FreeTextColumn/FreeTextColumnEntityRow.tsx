@@ -25,7 +25,7 @@ export class FreeTextColumnEntityRow extends React.Component<SharedEntityExpress
             showShare={this.props.TeamSharingActivated}
             shareClick={() => this.props.onShare()}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
-            EntityName={StrategyConstants.FreeTextColumnStrategyName} />
+            EntityType={StrategyConstants.FreeTextColumnStrategyName} />
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }

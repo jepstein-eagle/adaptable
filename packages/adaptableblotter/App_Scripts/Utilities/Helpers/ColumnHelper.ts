@@ -4,7 +4,6 @@ import { IColumn } from '../Interface/IColumn';
 import { DataType } from '../Enums';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IAdaptableBlotterOptions } from '../Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { IColumnCategory } from "../Interface/BlotterObjects/IColumnCategory";
 
 export module ColumnHelper {
@@ -26,7 +25,7 @@ export module ColumnHelper {
         if (column) {
             return column.FriendlyName
         } else {
-            LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+            LogMissingColumnWarning(columnId);
             return columnId + GeneralConstants.MISSING_COLUMN
         }
     }
@@ -36,7 +35,7 @@ export module ColumnHelper {
         if (foundColumn) {
             return getFriendlyNameFromColumn(columnId, foundColumn);
         } else {
-            LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+            LogMissingColumnWarning(columnId);
             return columnId + GeneralConstants.MISSING_COLUMN
         }
     }
@@ -57,7 +56,7 @@ export module ColumnHelper {
         if (foundColumn) {
             return foundColumn.ColumnId;
         } else {
-            LoggingHelper.LogWarning("No column found named '" + friendlyName + "'");
+            LogMissingColumnWarning(friendlyName);
             return friendlyName + GeneralConstants.MISSING_COLUMN
         }
     }
@@ -85,7 +84,7 @@ export module ColumnHelper {
             return foundColumn;
         } else {
             if (logWarning) {
-                LoggingHelper.LogWarning("No column found with Id: '" + columnId + "'");
+                LogMissingColumnWarning(columnId);
             }
             return null;
         }
@@ -102,7 +101,7 @@ export module ColumnHelper {
             return foundColumn;
         } else {
             if (logWarning) {
-                LoggingHelper.LogWarning("No column found named '" + columnName + "'");
+                LogMissingColumnWarning(columnName);
             }
             return null;
         }
@@ -124,6 +123,12 @@ export module ColumnHelper {
             }
         })
         return returnValue;
+    }
+
+    function LogMissingColumnWarning(columnId: string): void {
+        if (!isSpecialColumn(columnId)) {
+            LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+        }
     }
 
 }

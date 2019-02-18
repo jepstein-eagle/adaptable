@@ -29,7 +29,7 @@ export class ColumnCategoryEntityRow extends React.Component<ColumnCategoryEntit
             editClick={() => this.props.onEdit(this.props.Index, ColumnCategory)}
             shareClick={() => this.props.onShare()}
             overrideDisableEdit={false}
-            EntityName={StrategyConstants.ColumnCategoryStrategyName} />
+            EntityType={StrategyConstants.ColumnCategoryStrategyName} />
 
         colItems[2].Content = buttons;
 

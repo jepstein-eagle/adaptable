@@ -127,6 +127,7 @@ import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper'
 import { agGridHelper } from './agGridHelper';
 import { ToolPanelWrapperFactory } from './ToolPanelWrapper';
 import { CustomStatsToolPanel } from './customStatsToolPanel';
+import { CalculatedColumnHelper } from '../Utilities/Helpers/CalculatedColumnHelper';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -1021,8 +1022,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
         let colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumn.ColumnId)
         let cols: IColumn[] = this.getState().Grid.Columns;
-        let cleanedExpression:string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
-      
+        let cleanedExpression: string = CalculatedColumnHelper.CleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
+
         let newColDef: ColDef = colDefs[colDefIndex];
         newColDef.valueGetter = (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node)
 
@@ -1037,7 +1038,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         // and then add
-        let columnList = this.CalculatedColumnExpressionService.GetColumnListFromExpression(cleanedExpression)
+        let columnList = CalculatedColumnHelper.GetColumnListFromExpression(cleanedExpression)
         for (let column of columnList) {
             let childrenColumnList = this._calculatedColumnPathMap.get(column)
             if (!childrenColumnList) {
@@ -1046,7 +1047,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             childrenColumnList.push(calculatedColumn.ColumnId)
         }
-
     }
 
     public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
@@ -1069,19 +1069,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let venderCols = this.gridOptions.columnApi.getAllColumns()
         let colDefs: ColDef[] = venderCols.map(x => x.getColDef())
 
-         let cols: IColumn[] = this.getState().Grid.Columns;
-        let cleanedExpression:string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
-       
+        let cols: IColumn[] = this.getState().Grid.Columns;
+        let cleanedExpression: string = CalculatedColumnHelper.CleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
+
         let newColDef: ColDef = {
             headerName: calculatedColumn.ColumnId,
             colId: calculatedColumn.ColumnId,
             hide: true,
+            enableValue: true, // makes the column 'summable'
+            editable: false,
+            filter: 'agTextColumnFilter',
             valueGetter: (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node)
         }
+
         colDefs.push(newColDef);
         agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
 
-        let columnList = this.CalculatedColumnExpressionService.GetColumnListFromExpression(cleanedExpression)
+        let columnList = CalculatedColumnHelper.GetColumnListFromExpression(cleanedExpression)
         for (let column of columnList) {
             let childrenColumnList = this._calculatedColumnPathMap.get(column)
             if (!childrenColumnList) {
@@ -1121,6 +1125,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             Sortable: this.isSortable(),
             Filterable: true, // why not?  need to test...
         }
+
+        if (this.isFloatingFilterActive()) {
+            this.createFloatingFilterWrapper(vendorColumn);
+            this.gridOptions.api.refreshHeader();
+        }
+
         this.dispatchAction(GridRedux.GridAddColumn(specialColumn));
 
         let quickSearchClassName = this.getQuickSearchClassName();
@@ -1429,8 +1439,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (isFilterActive) {
                 //used in particular at init time to show the filter icon correctly
                 for (let colFilter of columnFilters) {
-                    if (!this.gridOptions.columnApi.getColumn(colFilter.ColumnId).isFilterActive()) {
-                        this.gridOptions.columnApi.getColumn(colFilter.ColumnId).setFilterActive(true);
+                    let agGridCol = this.gridOptions.columnApi.getColumn(colFilter.ColumnId);
+                    if (agGridCol) {
+                        if (!agGridCol.isFilterActive()) {
+                            agGridCol.setFilterActive(true);
+                        }
                     }
                 }
             }

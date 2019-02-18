@@ -73,6 +73,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
                 cssClassName={cssClassName}
                 Index={index}
                 colItems={colItems}
+                Columns={this.props.Columns}
                 onShare={() => this.props.onShare(calculatedColumn)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
                 AdaptableBlotterObject={calculatedColumn} key={calculatedColumn.ColumnId}

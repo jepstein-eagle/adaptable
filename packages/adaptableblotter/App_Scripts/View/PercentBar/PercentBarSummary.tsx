@@ -65,7 +65,7 @@ export class PercentBarSummaryComponent extends React.Component<PercentBarSummar
                 Item2={"Percent Bar set"}
                 ConfigEnity={percentBar}
                 showShare={this.props.TeamSharingActivated}
-                EntityName={StrategyConstants.PercentBarStrategyName}
+                EntityType={StrategyConstants.PercentBarStrategyName}
                 onEdit={() => this.onEdit(percentBarIndex, percentBar)}
                 onShare={() => this.props.onShare(percentBar)}
                 onDelete={PercentBarRedux.PercentBarDelete(percentBarIndex)}
