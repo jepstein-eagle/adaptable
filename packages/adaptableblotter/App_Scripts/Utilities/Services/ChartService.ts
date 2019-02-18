@@ -13,7 +13,11 @@ import { AxisTotal } from '../ChartEnums';
 import { Helper } from '../Helpers/Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 
-
+/* 
+Class that buils the chart - probably needs some refactoring but working for the time being.
+Makes use of Expressions to get the data required.
+Returns a ChartData object that the ChartDisplay will receive and then show to teh user
+*/
 export class ChartService implements IChartService {
 
     constructor(private blotter: IAdaptableBlotter) {
@@ -30,7 +34,7 @@ export class ChartService implements IChartService {
         let chartData: any = xAxisColValues.map(cv => {
             let chartDataRow: any = new Object()
             chartDataRow[xAxisColumnName] = cv
-            let showAverageTotal = chartDefinition.YAxisTotal == AxisTotal.Average;
+            let showAverageTotal: boolean = (chartDefinition.YAxisTotal == AxisTotal.Average);
 
             let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
 
@@ -86,6 +90,7 @@ export class ChartService implements IChartService {
         return Helper.RoundNumberTo4dp(finalTotal);
     }
 
+    // Gets the unique values in the (horizontal) X Axis column - either through an expression or getting the distinct values
     private getXAxisColumnValues(chartDefinition: IChartDefinition, columns: IColumn[]): string[] {
         let xAxisColValues: string[] = [];
         if (ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
@@ -101,6 +106,7 @@ export class ChartService implements IChartService {
         return xAxisColValues;
     }
 
+    // Gets the unique values in the X Sgegmet column - either through an Extension or as unique values.
     private getXSegmentColumnValues(chartDefinition: IChartDefinition, columns: IColumn[]): string[] {
         let xSegmentColValues: string[] = [];
         if (StringExtensions.IsNullOrEmpty(chartDefinition.XSegmentColumnId)) {
