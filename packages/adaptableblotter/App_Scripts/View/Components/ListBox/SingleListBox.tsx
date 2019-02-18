@@ -5,6 +5,7 @@ import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent'
 import { ListGroupItem, ListGroup, ListGroupProps } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 
 export interface SingleListBoxProps extends ListGroupProps {
     Values: Array<any>
@@ -29,7 +30,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     constructor(props: SingleListBoxProps) {
         super(props);
         this.state = {
-            Values: Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.Values, this.props.SortMember),
+            Values: ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, this.props.Values, this.props.SortMember),
             UiSelectedValues: this.props.UiSelectedValues,
             FilterValue: "",
             SortOrder: SortOrder.Ascending
@@ -37,7 +38,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     }
     componentWillReceiveProps(nextProps: SingleListBoxProps, nextContext: any) {
         this.setState({
-            Values: Helper.sortArrayWithProperty(this.state.SortOrder, nextProps.Values, this.props.SortMember),
+            Values: ArrayExtensions.sortArrayWithProperty(this.state.SortOrder, nextProps.Values, this.props.SortMember),
             UiSelectedValues: nextProps.UiSelectedValues,
             FilterValue: this.state.FilterValue,
             SortOrder: this.state.SortOrder
@@ -88,13 +89,13 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     sortColumnValues() {
         if (this.state.SortOrder == SortOrder.Ascending) {
             this.setState({
-                Values: Helper.sortArrayWithProperty(SortOrder.Descending, this.state.Values, this.props.SortMember),
+                Values: ArrayExtensions.sortArrayWithProperty(SortOrder.Descending, this.state.Values, this.props.SortMember),
                 SortOrder: SortOrder.Descending
             } as SingleListBoxState);
         }
         else {
             this.setState({
-                Values: Helper.sortArrayWithProperty(SortOrder.Ascending, this.state.Values, this.props.SortMember),
+                Values: ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, this.state.Values, this.props.SortMember),
                 SortOrder: SortOrder.Ascending
             } as SingleListBoxState);
         }

@@ -57,7 +57,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
         let cssClassName: string = this.props.cssClassName + "__Chart";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__Chart";
 
-        let infoBody: any[] = ["Use Charts to see youyr grid data visually."]
+        let infoBody: any[] = ["Create Charts to view your grid data visually."]
 
         let colItems: IColItem[] = [
             { Content: "Title", Size: 4 },

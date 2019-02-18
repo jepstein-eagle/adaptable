@@ -19,6 +19,7 @@ import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IAdvancedSearch } from "../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
     CurrentAdvancedSearchName: string;
@@ -40,7 +41,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         let currentSearchName = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName) ?
             selectSearchString : this.props.CurrentAdvancedSearchName
 
-        let sortedAdvancedSearches: IAdvancedSearch[] = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.AdvancedSearches, "Name")
+        let sortedAdvancedSearches: IAdvancedSearch[] = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, this.props.AdvancedSearches, "Name")
 
         let availableSearches: any[] = sortedAdvancedSearches.filter(s => s.Name != this.props.CurrentAdvancedSearchName).map((search, index) => {
             return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedSearchChanged(search.Name)} >{search.Name}</MenuItem>

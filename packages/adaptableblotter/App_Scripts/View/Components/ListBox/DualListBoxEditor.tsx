@@ -329,7 +329,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     createAvailableValuesList(availableValues: any[], sortOrder: SortOrder, sortMember: string): any[] {
         // if there are no master / children then sort the values
         if (ArrayExtensions.IsNullOrEmpty(this.props.MasterChildren)) {
-            let valstoReturn: any[] = Helper.sortArrayWithProperty(sortOrder, availableValues, sortMember);
+            let valstoReturn: any[] = ArrayExtensions.sortArrayWithProperty(sortOrder, availableValues, sortMember);
             return valstoReturn;
         }
 
@@ -835,13 +835,13 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
     sortColumnValues() {
         if (this.state.SortOrder == SortOrder.Ascending) {
             this.setState({
-                AvailableValues: Helper.sortArrayWithProperty(SortOrder.Descending, this.state.AvailableValues, this.props.SortMember),
+                AvailableValues: ArrayExtensions.sortArrayWithProperty(SortOrder.Descending, this.state.AvailableValues, this.props.SortMember),
                 SortOrder: SortOrder.Descending
             } as DualListBoxEditorState);
         }
         else {
             this.setState({
-                AvailableValues: Helper.sortArrayWithProperty(SortOrder.Ascending, this.state.AvailableValues, this.props.SortMember),
+                AvailableValues: ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, this.state.AvailableValues, this.props.SortMember),
                 SortOrder: SortOrder.Ascending
             } as DualListBoxEditorState);
         }

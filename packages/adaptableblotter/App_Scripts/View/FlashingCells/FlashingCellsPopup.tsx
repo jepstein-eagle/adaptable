@@ -51,7 +51,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
         let calculatedColumns: string[] = this.props.CalculatedColumns.map(c => c.ColumnId);
         let numericColumns = this.props.Columns.filter(c => c.DataType == DataType.Number)
         let numericNonCalcColumns = numericColumns.filter(c => ArrayExtensions.NotContainsItem(calculatedColumns, c.ColumnId));
-        numericNonCalcColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, numericNonCalcColumns, "FriendlyName")
+        numericNonCalcColumns = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, numericNonCalcColumns, "FriendlyName")
 
 
         let allPotentialFlashingCells: IFlashingCell[] = [];

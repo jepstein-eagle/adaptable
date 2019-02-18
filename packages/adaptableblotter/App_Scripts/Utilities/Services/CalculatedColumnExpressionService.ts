@@ -2,9 +2,8 @@ import { ICalculatedColumnExpressionService } from "./Interface/ICalculatedColum
 import * as math from 'mathjs'
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
-import { ColumnHelper } from "../Helpers/ColumnHelper";
-import { IColumn } from "../Interface/IColumn";
 import { CalculatedColumnHelper } from "../Helpers/CalculatedColumnHelper";
+import { Helper } from "../Helpers/Helper";
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
     constructor(private blotter: IAdaptableBlotter, private colFunctionValue: (columnId: string, record: any) => any) {
@@ -12,7 +11,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
     IsExpressionValid(expression: string): { IsValid: Boolean, ErrorMsg?: string } {
         try {
-           let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
             let cleanedExpression: string = CalculatedColumnHelper.CleanExpressionColumnNames(expression, columns);
             let firstRecord = this.blotter.getFirstRecord();
             math.eval(cleanedExpression, {
@@ -39,7 +38,9 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
             return math.eval(expression, {
                 node: record,
                 Col: (columnId: string) => {
-                    try { return this.colFunctionValue(columnId, record) }
+                    try {
+                        return this.colFunctionValue(columnId, record);
+                    }
                     catch (e) {
                         throw Error("Unknown column " + columnId)
                     }
@@ -52,8 +53,8 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
         }
     }
 
-   
 
-    
+
+
 
 }

@@ -28,7 +28,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(30);
+    return dataGen.getTrades(10);
   } else {
     return dataGen.getFtseData(10)
   }
@@ -121,7 +121,7 @@ function InitTradeBlotter() {
   let gridcontainer = document.getElementById('grid');
   gridcontainer.innerHTML = ""
   let grid = new agGrid.Grid(gridcontainer, gridOptions);
-  dataGen.startTickingDataagGrid(gridOptions);
+//  dataGen.startTickingDataagGrid(gridOptions);
 
   let s = 2;
 
@@ -361,6 +361,12 @@ function getTradeSchema() {
   schema.push({
     headerName: "Ask",
     field: "ask",
+    columnGroupShow: 'closed',
+    cellClass: 'number-cell'
+  });
+  schema.push({
+    headerName: "DV01",
+    field: "dv01",
     columnGroupShow: 'closed',
     cellClass: 'number-cell'
   });

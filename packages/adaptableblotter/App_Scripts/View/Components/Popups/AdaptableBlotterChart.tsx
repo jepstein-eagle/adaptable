@@ -12,6 +12,15 @@ import { ChartDisplayPopupPropsBase } from '../SharedProps/ChartDisplayPopupProp
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
 
+/*
+The Chart popup or Div.
+If ShowModal prop is true (set via Predefined Config then we show the chart modally - the same we do for all popups)
+Otherwise we show it in a Div.  The logic *should* be as follows:
+If they have set the name of a div in BlotterOptions / ContainerOptions / ChartContainer, then we use that;
+Otherwise we use the default.
+*/
+
+
 export interface IAdaptableBlotterChartProps extends React.ClassAttributes<AdaptableBlotterChart> {
   showChart: boolean;
   onClose?: Function;

@@ -81,7 +81,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                     then(result => {
                         if (result == null) { // if nothing returned then default to normal
                             columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
-                            columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
+                            columnValuePairs = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                             this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue });
                         } else { // get the distinct items and make sure within max items that can be displayed
                             let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
@@ -104,7 +104,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             }
             else {
                 columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
-                columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
+                columnValuePairs = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                 this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue });
             }
         }

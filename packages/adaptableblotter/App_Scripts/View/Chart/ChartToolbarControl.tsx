@@ -21,6 +21,7 @@ import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChar
 import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
 import { ChartVisibility } from "../../Utilities/ChartEnums";
 import { ButtonDelete } from "../Components/Buttons/ButtonDelete";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 
 interface ChartToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ChartToolbarControlComponent> {
@@ -42,7 +43,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
         let currentChartDefinitionName = this.props.CurrentChartDefinition == null ?
             selectChartString : this.props.CurrentChartDefinition.Title
 
-        let sortedChartDefinitions: IChartDefinition[] = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.ChartDefinitions, "Title")
+        let sortedChartDefinitions: IChartDefinition[] = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, this.props.ChartDefinitions, "Title")
 
         let availablechartDefinitions: any[] = sortedChartDefinitions.filter(s => s.Title != currentChartDefinitionName).map((chartDefinition, index) => {
             return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedChartDefinitionChanged(chartDefinition.Title)} >{chartDefinition.Title}</MenuItem>
@@ -123,8 +124,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
     }
 
     onSelectedChartDefinitionChanged(chartDefinitionName: string) {
-        //   let chartDefinition = this.props.ChartDefinitions.find(cd => cd.Title == chartDefinitionName);
-        this.props.onSelectChartDefinition(chartDefinitionName);
+       this.props.onSelectChartDefinition(chartDefinitionName);
     }
 
     onShowChart() {

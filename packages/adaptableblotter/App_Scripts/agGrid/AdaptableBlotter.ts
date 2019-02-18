@@ -1025,7 +1025,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let cleanedExpression: string = CalculatedColumnHelper.CleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
 
         let newColDef: ColDef = colDefs[colDefIndex];
-        newColDef.valueGetter = (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node)
+         newColDef.valueGetter = (params: ValueGetterParams) =>  Helper.RoundValueIfNumeric( this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node), 4);
 
         colDefs[colDefIndex] = newColDef
         agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
@@ -1079,7 +1079,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             enableValue: true, // makes the column 'summable'
             editable: false,
             filter: 'agTextColumnFilter',
-            valueGetter: (params: ValueGetterParams) => this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node)
+            valueGetter: (params: ValueGetterParams) =>  Helper.RoundValueIfNumeric(this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node),4)
         }
 
         colDefs.push(newColDef);

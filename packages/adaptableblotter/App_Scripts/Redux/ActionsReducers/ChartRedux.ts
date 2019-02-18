@@ -57,7 +57,7 @@ export const ChartDefinitionSelect = (CurrentChartDefinition: string): ChartDefi
 const initialChartState: ChartState = {
     ChartDefinitions: EMPTY_ARRAY,
     CurrentChartDefinition: EMPTY_STRING,
-    ShowModal: true,//CHART_DEFAULT_SHOW_MODAL,
+    ShowModal: CHART_DEFAULT_SHOW_MODAL,
     RefreshRate: CHART_DEFAULT_REFRESH_RATE
 }
 

@@ -251,6 +251,7 @@ export class DataGenerator {
             "price": price,
             "bid": bid,
             "ask": ask,
+            "dv01": ask,
             "bidOfferSpread": bidOfferSpread,
             "status": this.getStatus(),
             "isLive": this.generateRandomBool(),

@@ -11,6 +11,7 @@
         price: number;
         bid: number;
         ask: number;
+        dv01: number;
         bidOfferSpread: number;
         status: string;
         isLive: boolean;

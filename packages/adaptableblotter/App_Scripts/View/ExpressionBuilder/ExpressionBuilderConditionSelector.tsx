@@ -155,7 +155,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                     then(result => {
                         if (result == null) { // if nothing returned then default to normal
                             columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue)
-                            columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
+                            columnValuePairs = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                             this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                         } else { // get the distinct items and make sure within max items that can be displayed
                             let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
@@ -173,7 +173,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
             }
             else {
                 columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue)
-                columnValuePairs = Helper.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
+                columnValuePairs = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                 this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
             }
         }

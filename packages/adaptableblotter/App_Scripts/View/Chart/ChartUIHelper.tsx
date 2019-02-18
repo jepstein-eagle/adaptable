@@ -8,6 +8,8 @@ import { IChartProperties } from "../../Utilities/Interface/IChartProperties";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { IColumn } from "../../Utilities/Interface/IColumn";
 
+/* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
+*/
 export module ChartUIHelper {
 
     export function setChartDisplayPopupState(chartDefinition: IChartDefinition, columns: IColumn[]): ChartDisplayPopupState {

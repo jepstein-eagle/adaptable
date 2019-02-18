@@ -1,21 +1,19 @@
 ﻿import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { FormControl, Panel, FormGroup, DropdownButton, Button, Table, MenuItem, InputGroup, Glyphicon, Checkbox, Col, Row, HelpBlock } from 'react-bootstrap';
+import { FormControl, FormGroup, Button, Checkbox, Col, Row, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { MathOperation, MessageType, DataType } from '../../Utilities/Enums'
+import { MessageType, DataType } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UIHelper } from "../UIHelper";
 import { IColumn } from "../../Utilities/Interface/IColumn";
-import { isNumber, isDate } from "util";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { PreviewHelper } from "../../Utilities/Helpers/PreviewHelper";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";

@@ -140,7 +140,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 <ButtonMinimise
                     cssClassName={cssClassName}
                     style={{ marginBottom: '10px' }}
-                    onClick={() => this.onHideGeneralProperties()}
+                    onClick={() => this.onHidePropertiesGroup()}
                     bsStyle={DEFAULT_BSSTYLE}
                     size={"xs"}
                     DisplayMode="Glyph"
@@ -163,7 +163,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 <ButtonMinimise
                     cssClassName={cssClassName}
                     style={{ marginBottom: '10px' }}
-                    onClick={() => this.onHideYAxisProperties()}
+                    onClick={() => this.onHidePropertiesGroup()}
                     bsStyle={DEFAULT_BSSTYLE}
                     size={"xs"}
                     DisplayMode="Glyph"
@@ -185,7 +185,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 :
                 <ButtonMinimise
                     cssClassName={cssClassName}
-                    onClick={() => this.onHideXAxisProperties()}
+                    onClick={() => this.onHidePropertiesGroup()}
                     bsStyle={DEFAULT_BSSTYLE}
                     size={"xs"}
                     DisplayMode="Glyph"
@@ -207,7 +207,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 :
                 <ButtonMinimise
                     cssClassName={cssClassName}
-                    onClick={() => this.onHideHighlightsProperties()}
+                    onClick={() => this.onHidePropertiesGroup()}
                     bsStyle={DEFAULT_BSSTYLE}
                     size={"xs"}
                     DisplayMode="Glyph"
@@ -229,7 +229,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 :
                 <ButtonMinimise
                     cssClassName={cssClassName}
-                    onClick={() => this.onHideMiscProperties()}
+                    onClick={() => this.onHidePropertiesGroup()}
                     bsStyle={DEFAULT_BSSTYLE}
                     size={"xs"}
                     DisplayMode="Glyph"
@@ -862,41 +862,27 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupState)
     }
 
-    onHideGeneralProperties() {
-        this.setState({ IsGeneralMinimised: true, } as ChartDisplayPopupState)
-    }
-
     onShowYAxisProperties() {
         this.setState({ IsYAxisMinimised: false, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupState);
-    }
-
-    onHideYAxisProperties() {
-        this.setState({ IsYAxisMinimised: true, } as ChartDisplayPopupState)
     }
 
     onShowXAxisProperties() {
         this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: false, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupState)
     }
 
-    onHideXAxisProperties() {
-        this.setState({ IsXAxisMinimised: true, } as ChartDisplayPopupState)
-    }
-
     onShowHighlightsProperties() {
         this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: false, IsMiscMinimised: true } as ChartDisplayPopupState)
-    }
-
-    onHideHighlightsProperties() {
-        this.setState({ IsHighlightsMinimised: true, } as ChartDisplayPopupState)
     }
 
     onShowMiscProperties() {
         this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: false } as ChartDisplayPopupState)
     }
 
-    onHideMiscProperties() {
-        this.setState({ IsMiscMinimised: true, } as ChartDisplayPopupState)
+    onHidePropertiesGroup() {
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupState)
     }
+
+
 
     onShowChartSettings() {
         this.setState({ IsChartSettingsVisible: true, } as ChartDisplayPopupState)

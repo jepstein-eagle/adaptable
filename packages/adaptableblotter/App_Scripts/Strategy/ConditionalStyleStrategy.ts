@@ -4,7 +4,6 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';

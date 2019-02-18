@@ -8,6 +8,7 @@ import { Sizes, InputGroup } from "react-bootstrap";
 import { CSSProperties } from "react";
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ButtonClear } from "../Buttons/ButtonClear";
+import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 
 export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     ColumnList: IColumn[]
@@ -35,7 +36,7 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
 
     render() {
         let cssClassName: string = this.props.cssClassName + StyleConstants.COLUMN_SELECTOR;
-        let sortedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.ColumnList, "FriendlyName")
+        let sortedColumns = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, this.props.ColumnList, "FriendlyName")
         let selectedColumnIds = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x))
         let selectedColums: IColumn[] = this.props.ColumnList.filter(x => selectedColumnIds.find(c => c == x.ColumnId))
         let placeHolder: string = (this.props.SelectionMode == SelectionMode.Single) ? "Select a column" : "Select columns"

@@ -47,7 +47,7 @@ export class    ColumnValueSelector extends React.Component<ColumnValueSelectorP
                 let existingPair: IRawValueDisplayValuePair = columnDisplayValuePairs.find(cdv => cdv.RawValue == this.props.SelectedColumnValue);
                 selectedValue = (existingPair) ? existingPair.DisplayValue : this.props.SelectedColumnValue
             }
-            sortedColumnValues = Helper.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "RawValue")
+            sortedColumnValues = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, columnDisplayValuePairs, "RawValue")
         }
 
         return <Typeahead ref="typeahead"

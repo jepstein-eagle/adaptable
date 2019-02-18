@@ -78,7 +78,7 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy 
                 .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column)
                 .map(cs => cs)
 
-            let columnConditionalStylesGroupedByColumn = Helper.groupBy(columnConditionalStyles, "ColumnId")
+            let columnConditionalStylesGroupedByColumn = ArrayExtensions.groupArrayBy(columnConditionalStyles, "ColumnId")
             theBlotter.forAllRecordsDo((row: any) => {
                 //here we use the operator "in" on purpose as the GroupBy function that I wrote creates
                 //an object with properties that have the name of the groupbykey

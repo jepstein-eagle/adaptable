@@ -5,7 +5,7 @@ export module CalculatedColumnHelper {
 
     export function GetColumnListFromExpression(expression: string): string[] {
         let columnList: string[] = []
-        let regEx: RegExp = /\b(?:Col\(")([a-zA-Z ]+)(?:"\))/g
+        let regEx: RegExp = /\b(?:Col\(")([a-zA-Z0-9 ]+)(?:"\))/g
         let match = regEx.exec(expression);
         while (match !== null) {
             columnList.push(match[1])
@@ -17,7 +17,7 @@ export module CalculatedColumnHelper {
     export function CleanExpressionColumnNames(expression: string, columns: IColumn[]): string {
         let newExpression: string = expression;
         let columnNameList: string[] = []
-        let regEx: RegExp = /\b(?:Col\(")([a-zA-Z ]+)(?:"\))/g
+        let regEx: RegExp = /\b(?:Col\(")([a-zA-Z0-9 ]+)(?:"\))/g
         let match = regEx.exec(expression);
         while (match !== null) {
             let columnId: any = match[1];

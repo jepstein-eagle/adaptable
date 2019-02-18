@@ -24,6 +24,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
 import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { TestDragEditor } from "./TestDragEditor";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {
     onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) => CalculatedColumnRedux.CalculatedColumnAddAction
@@ -65,7 +66,7 @@ class CalculatedColumnPopupComponent extends React.Component<CalculatedColumnPop
             { Content: "", Size: 2 },
         ]
 
-        let propCalculatedColumns = Helper.sortArrayWithProperty(SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
+        let propCalculatedColumns = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, this.props.CalculatedColumns, "ColumnId");
         let calculatedColumns = propCalculatedColumns.map((calculatedColumn: ICalculatedColumn, index) => {
            // let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
 
