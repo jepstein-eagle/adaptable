@@ -48,17 +48,17 @@ class CellSummaryStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase 
                 }
             });
             let hasNumericColumns = numericValues.length > 0;
-            let distinct = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(allValues).length;
+            let distinctCount = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(allValues).length;
             selectedCellSummary = {
                 Sum: (hasNumericColumns) ? Helper_1.Helper.RoundNumberTo4dp(this.sumNumberArray(numericValues)) : "",
                 Average: (hasNumericColumns) ? Helper_1.Helper.RoundNumberTo4dp(this.meanNumberArray(numericValues)) : "",
                 Median: (hasNumericColumns) ? Helper_1.Helper.RoundNumberTo4dp(this.medianNumberArray(numericValues)) : "",
-                Distinct: distinct,
+                Distinct: distinctCount,
                 Max: (hasNumericColumns) ? Helper_1.Helper.RoundNumberTo4dp(Math.max(...numericValues)) : "",
                 Min: (hasNumericColumns) ? Helper_1.Helper.RoundNumberTo4dp(Math.min(...numericValues)) : "",
                 Count: allValues.length,
-                Only: (distinct == 1) ? allValues[0] : "",
-                VWAP: (numericColumns.length == 2) ? this.calculateVwap(numericValues) : ""
+                Only: this.calculateOnly(distinctCount, allValues),
+                VWAP: this.calculateVwap(numericValues, numericColumns)
             };
         }
         return selectedCellSummary;
@@ -84,7 +84,19 @@ class CellSummaryStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase 
         }
         return median;
     }
-    calculateVwap(numericValues) {
+    calculateOnly(distinctCount, allValues) {
+        if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(this.CellSummaryState.SystemSummaryOperations, Enums_1.CellSumaryOptionalOperation.Only)) {
+            return null;
+        }
+        return (distinctCount == 1) ? allValues[0] : "";
+    }
+    calculateVwap(numericValues, numericColumns) {
+        if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(this.CellSummaryState.SystemSummaryOperations, Enums_1.CellSumaryOptionalOperation.VWAP)) {
+            return null;
+        }
+        if (numericColumns.length == 2) {
+            return "";
+        }
         let firstColValues = [];
         let secondColComputedValues = [];
         for (var i = 0; i < numericValues.length; i++) {

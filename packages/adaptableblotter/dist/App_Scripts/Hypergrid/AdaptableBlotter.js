@@ -63,6 +63,7 @@ const FormatColumnStrategyHypergrid_1 = require("./Strategy/FormatColumnStrategy
 const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
 const ChartStrategy_1 = require("../Strategy/ChartStrategy");
 const GeneralConstants_1 = require("../Utilities/Constants/GeneralConstants");
+const LicenceService_1 = require("../Utilities/Services/LicenceService");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -110,6 +111,7 @@ class AdaptableBlotter {
         this.ChartService = new ChartService_1.ChartService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService_1.CalculatedColumnExpressionService(this, (columnId, record) => { let column = this.getHypergridColumn(columnId); return this.valOrFunc(record, column); });
         this.FreeTextColumnService = new FreeTextColumnService_1.FreeTextColumnService(this);
+        this.LicenceService = new LicenceService_1.LicenceService(this);
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map();
@@ -146,7 +148,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
         if (this.abContainerElement == null) {
-            LoggingHelper_1.LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
             return;
         }
         this.abContainerElement.innerHTML = "";
@@ -158,13 +160,13 @@ class AdaptableBlotter {
         iPushPullHelper_1.iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
-            LoggingHelper_1.LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
             //for now i'm still initializing the strategies even if loading state has failed.... 
             //we may revisit that later
             this.Strategies.forEach(strat => strat.InitializeWithRedux());
         })
             .then(() => this.initInternalGridLogic(), (e) => {
-            LoggingHelper_1.LoggingHelper.LogError('Failed to Init Strategies : ', e);
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError('Failed to Init Strategies : ', e);
             //for now i'm still initializing the grid even if loading state has failed.... 
             //we may revisit that later
             this.initInternalGridLogic();
@@ -359,7 +361,7 @@ class AdaptableBlotter {
     getColumnDataType(column) {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            LoggingHelper_1.LoggingHelper.LogWarning('columnId is undefined returning String for Type');
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning('columnId is undefined returning String for Type');
             return Enums_1.DataType.String;
         }
         if (column) {
@@ -409,7 +411,7 @@ class AdaptableBlotter {
                                     break;
                             }
                         }
-                        LoggingHelper_1.LoggingHelper.LogWarning('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType);
+                        LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType);
                     }
                     /* falls through */
                     default:
@@ -434,7 +436,7 @@ class AdaptableBlotter {
                 //  }
             }
         }
-        LoggingHelper_1.LoggingHelper.LogWarning('columnId does not exist');
+        LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning('columnId does not exist');
         return Enums_1.DataType.String;
     }
     setValue(cellInfo) {
@@ -541,7 +543,7 @@ class AdaptableBlotter {
             //in our current use cases as of 02/10/2017 it should never happens that we
             //check for editable on a different column that we edit
             else {
-                LoggingHelper_1.LoggingHelper.LogWarning("Editing " + this.hyperGrid.cellEditor.column.name + " but checking for editable on column " + columnId);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("Editing " + this.hyperGrid.cellEditor.column.name + " but checking for editable on column " + columnId);
             }
         }
         else {
@@ -1187,7 +1189,7 @@ class AdaptableBlotter {
                 return originalGetCellReturn || this.hyperGrid.Bars.get(declaredRendererName);
             }
             catch (err) {
-                LoggingHelper_1.LoggingHelper.LogError("Error during GetCell", err);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Error during GetCell", err);
             }
         };
         this.hyperGrid.addEventListener('fin-column-sort', (e) => {

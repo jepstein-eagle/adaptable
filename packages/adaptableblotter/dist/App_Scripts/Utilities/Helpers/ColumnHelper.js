@@ -128,7 +128,7 @@ var ColumnHelper;
     ColumnHelper.getColumnCategoryFromColumnCategories = getColumnCategoryFromColumnCategories;
     function LogMissingColumnWarning(columnId) {
         if (!isSpecialColumn(columnId)) {
-            LoggingHelper_1.LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("No column found named '" + columnId + "'");
         }
     }
 })(ColumnHelper = exports.ColumnHelper || (exports.ColumnHelper = {}));

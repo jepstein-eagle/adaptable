@@ -38,9 +38,9 @@ var OpenfinHelper;
     OpenfinHelper.isExcelOpenfinLoaded = isExcelOpenfinLoaded;
     function addWorkbook() {
         return new Promise((resolve, reject) => {
-            LoggingHelper_1.LoggingHelper.LogInfo('Creating new workbook');
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo('Creating new workbook');
             fin.desktop.Excel.addWorkbook(function (workbook) {
-                LoggingHelper_1.LoggingHelper.LogSuccess('workbook created:' + workbook.name);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterSuccess('workbook created:' + workbook.name);
                 resolve(workbook.name);
                 // workbook.addEventListener("workbookActivated", (event) => onWorkbookActivated(event, resolve));
                 // workbook.activate();
@@ -73,7 +73,7 @@ var OpenfinHelper;
         return new Promise((resolve, reject) => {
             let workBook = fin.desktop.Excel.getWorkbookByName(workBookName);
             if (!workBook) {
-                LoggingHelper_1.LoggingHelper.LogError("Cannot find workbook:" + workBookName);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Cannot find workbook:" + workBookName);
                 reject("Cannot find workbook:" + workBookName);
             }
             let worksheet = workBook.getWorksheetByName("Sheet1");
@@ -92,7 +92,7 @@ var OpenfinHelper;
                 .then(onExcelConnected)
                 .then(addWorkbook)
                 .catch(err => {
-                LoggingHelper_1.LoggingHelper.LogError(err);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(err);
                 return "";
             });
         }
@@ -102,7 +102,7 @@ var OpenfinHelper;
                 .then(onExcelConnected)
                 .then(addWorkbook)
                 .catch(err => {
-                LoggingHelper_1.LoggingHelper.LogError(err);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(err);
                 return "";
             });
         }
@@ -114,7 +114,7 @@ var OpenfinHelper;
         var servicePath = 'OpenFin.ExcelService.exe';
         var addInPath = 'OpenFin.ExcelApi-AddIn.xll';
         if (excelStatus != ExcelServiceStatus.Unknown) {
-            LoggingHelper_1.LoggingHelper.LogInfo("Skipping Add-in deployment as already deployed");
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Skipping Add-in deployment as already deployed");
             return Promise.resolve();
         }
         excelStatus = ExcelServiceStatus.Connecting;
@@ -125,13 +125,13 @@ var OpenfinHelper;
     }
     function deployAddIn(servicePath, installFolder) {
         return new Promise((resolve, reject) => {
-            LoggingHelper_1.LoggingHelper.LogInfo('Deploying Add-In');
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo('Deploying Add-In');
             fin.desktop.System.launchExternalProcess({
                 alias: 'excel-api-addin',
                 target: servicePath,
                 arguments: '-d "' + installFolder + '"',
                 listener: function (args) {
-                    LoggingHelper_1.LoggingHelper.LogSuccess('Installer script completed! ' + args.exitCode);
+                    LoggingHelper_1.LoggingHelper.LogAdaptableBlotterSuccess('Installer script completed! ' + args.exitCode);
                     resolve();
                 }
             });
@@ -143,12 +143,12 @@ var OpenfinHelper;
             fin.desktop.System.getAllExternalApplications((extApps) => {
                 var excelServiceIndex = extApps.findIndex(extApp => extApp.uuid === serviceUuid);
                 if (excelServiceIndex >= 0) {
-                    LoggingHelper_1.LoggingHelper.LogInfo('Service Already Running');
+                    LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo('Service Already Running');
                     resolve();
                     return;
                 }
                 var onServiceStarted = () => {
-                    LoggingHelper_1.LoggingHelper.LogSuccess('Service Started');
+                    LoggingHelper_1.LoggingHelper.LogAdaptableBlotterSuccess('Service Started');
                     fin.desktop.Excel.instance.removeEventListener('started', onServiceStarted);
                     resolve();
                 };
@@ -159,7 +159,7 @@ var OpenfinHelper;
                         arguments: '-p ' + details.port,
                         uuid: serviceUuid,
                     }, (process) => {
-                        LoggingHelper_1.LoggingHelper.LogSuccess('Service Launched: ' + process.uuid);
+                        LoggingHelper_1.LoggingHelper.LogAdaptableBlotterSuccess('Service Launched: ' + process.uuid);
                     }, (error) => {
                         reject('Error starting Excel service');
                     });
@@ -169,9 +169,9 @@ var OpenfinHelper;
     }
     function registerAddIn(servicePath, installFolder) {
         return new Promise((resolve, reject) => {
-            LoggingHelper_1.LoggingHelper.LogInfo('Registering Add-In');
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo('Registering Add-In');
             fin.desktop.Excel.install((ack) => {
-                LoggingHelper_1.LoggingHelper.LogInfo("Add-In Registration callback", ack);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Add-In Registration callback", ack);
                 //if (ack.success) {
                 resolve();
                 //}
@@ -182,11 +182,11 @@ var OpenfinHelper;
         return new Promise((resolve, reject) => {
             fin.desktop.Excel.instance.getExcelInstances((instances) => {
                 if (instances.length > 0) {
-                    LoggingHelper_1.LoggingHelper.LogInfo("Excel Already Running");
+                    LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Excel Already Running");
                     resolve();
                 }
                 else {
-                    LoggingHelper_1.LoggingHelper.LogInfo("Launching Excel");
+                    LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Launching Excel");
                     fin.desktop.Excel.run(resolve);
                 }
             });
@@ -200,19 +200,19 @@ var OpenfinHelper;
         _onWorkbookSaved.Dispatch(this, { OldName: event.oldWorkbookName, NewName: event.workbook.name });
     }
     function onWorkbookActivated(event) {
-        LoggingHelper_1.LoggingHelper.LogInfo("Workbook Activated: " + event.target.name);
+        LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Workbook Activated: " + event.target.name);
         event.target.getWorksheets((ack) => {
-            LoggingHelper_1.LoggingHelper.LogInfo('getWorksheets:', ack);
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo('getWorksheets:', ack);
         });
     }
     function onWorkbookAdded(event) {
-        LoggingHelper_1.LoggingHelper.LogSuccess("Workbook Added: " + event.workbook.name);
+        LoggingHelper_1.LoggingHelper.LogAdaptableBlotterSuccess("Workbook Added: " + event.workbook.name);
         let workbook = event.workbook;
         workbook.addEventListener("workbookActivated", onWorkbookActivated);
     }
     function onExcelConnected() {
         if (excelStatus != ExcelServiceStatus.Connected) {
-            LoggingHelper_1.LoggingHelper.LogSuccess("Excel Connected: " + fin.desktop.Excel.legacyApi.connectionUuid);
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterSuccess("Excel Connected: " + fin.desktop.Excel.legacyApi.connectionUuid);
             excelStatus = ExcelServiceStatus.Connected;
             // fin.desktop.Excel.instance.removeEventListener("excelConnected", onExcelConnected);
             fin.desktop.Excel.addEventListener("workbookClosed", onWorkbookRemoved);
@@ -221,7 +221,7 @@ var OpenfinHelper;
             // Grab a snapshot of the current instance, it can change!
             var legacyApi = fin.desktop.Excel.legacyApi;
             var onExcelDisconnected = function () {
-                LoggingHelper_1.LoggingHelper.LogInfo("Excel Disconnected: " + legacyApi.connectionUuid);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Excel Disconnected: " + legacyApi.connectionUuid);
                 fin.desktop.Excel.instance.removeEventListener("excelDisconnected", onExcelDisconnected);
                 legacyApi.removeEventListener("workbookClosed", onWorkbookRemoved);
                 legacyApi.removeEventListener("workbookSaved", onWorkbookSaved);

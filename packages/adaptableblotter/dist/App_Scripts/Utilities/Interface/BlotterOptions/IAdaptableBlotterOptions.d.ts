@@ -40,6 +40,10 @@ export interface IAdaptableBlotterOptions {
     */
     predefinedConfig?: any;
     /**
+     * blah
+     */
+    licenceKey?: string;
+    /**
      * Options for setting the <div>s which the Adaptable Blotter and underlying grid are placed.
      * Also can set where popups are displayed relative to the page.
     */

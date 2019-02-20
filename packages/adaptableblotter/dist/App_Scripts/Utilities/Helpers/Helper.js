@@ -100,14 +100,14 @@ var Helper;
                 return document.execCommand("copy"); // Security exception may be thrown by some browsers.
             }
             catch (ex) {
-                LoggingHelper_1.LoggingHelper.LogWarning("Copy to clipboard failed.", ex);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("Copy to clipboard failed.", ex);
                 return false;
             }
             finally {
                 document.body.removeChild(textarea);
             }
         }
-        LoggingHelper_1.LoggingHelper.LogWarning("Copy not available on this computer.");
+        LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("Copy not available on this computer.");
     }
     Helper.copyToClipboard = copyToClipboard;
     function ReturnItemCount(items, itemName) {

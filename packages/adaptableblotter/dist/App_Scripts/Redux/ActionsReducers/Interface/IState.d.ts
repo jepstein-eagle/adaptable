@@ -118,6 +118,10 @@ export interface CalculatedColumnState extends IUserState {
 export interface CalendarState extends IUserState {
     CurrentCalendar: string;
 }
+export interface CellSummaryState extends IUserState {
+    SummaryOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'VWap' | 'Only';
+    SystemSummaryOperations: string[];
+}
 export interface CellValidationState extends IUserState {
     CellValidations: ICellValidationRule[];
 }
@@ -187,9 +191,6 @@ export interface QuickSearchState extends IUserState {
     QuickSearchText: string;
     DisplayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
     Style: IStyle;
-}
-export interface CellSummaryState extends IUserState {
-    CellSumaryOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only';
 }
 export interface ShortcutState extends IUserState {
     Shortcuts: IShortcut[];

@@ -245,9 +245,12 @@ var CellSumaryOperation;
     CellSumaryOperation["Max"] = "Max";
     CellSumaryOperation["Min"] = "Min";
     CellSumaryOperation["Count"] = "Count";
-    CellSumaryOperation["Only"] = "Only";
-    CellSumaryOperation["VWAP"] = "VWAP";
 })(CellSumaryOperation = exports.CellSumaryOperation || (exports.CellSumaryOperation = {}));
+var CellSumaryOptionalOperation;
+(function (CellSumaryOptionalOperation) {
+    CellSumaryOptionalOperation["Only"] = "Only";
+    CellSumaryOptionalOperation["VWAP"] = "VWAP";
+})(CellSumaryOptionalOperation = exports.CellSumaryOptionalOperation || (exports.CellSumaryOptionalOperation = {}));
 var PinnedColumnDirection;
 (function (PinnedColumnDirection) {
     PinnedColumnDirection["Left"] = "Leftt";
@@ -259,3 +262,9 @@ var FilterOnDataChangeOptions;
     FilterOnDataChangeOptions["Never"] = "Never";
     FilterOnDataChangeOptions["Throttle"] = "Throttle";
 })(FilterOnDataChangeOptions = exports.FilterOnDataChangeOptions || (exports.FilterOnDataChangeOptions = {}));
+var LicenceType;
+(function (LicenceType) {
+    LicenceType["Community"] = "Community";
+    LicenceType["Enterprise"] = "Enterprise";
+    LicenceType["Advanced"] = "Advanced";
+})(LicenceType = exports.LicenceType || (exports.LicenceType = {}));

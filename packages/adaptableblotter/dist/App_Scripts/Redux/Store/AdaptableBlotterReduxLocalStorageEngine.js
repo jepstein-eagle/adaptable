@@ -27,13 +27,13 @@ class AdaptableBlotterReduxLocalStorageEngine {
                 .then(response => response.json())
                 //     .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeState(parsedPredefinedState, parsedJsonState))
-                .catch(err => LoggingHelper_1.LoggingHelper.LogError(err));
+                .catch(err => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(err));
         }
         else if (this.predefinedConfig != null) {
             return new Promise((resolve) => resolve(this.predefinedConfig))
                 //      .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
                 .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeState(parsedPredefinedState, parsedJsonState))
-                .catch(err => LoggingHelper_1.LoggingHelper.LogError(err));
+                .catch(err => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(err));
         }
         else {
             return new Promise((resolve) => {

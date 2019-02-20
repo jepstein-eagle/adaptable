@@ -79,6 +79,7 @@ const QuickSearchStrategyagGrid_1 = require("./Strategy/QuickSearchStrategyagGri
 const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
 const agGridHelper_1 = require("./agGridHelper");
 const CalculatedColumnHelper_1 = require("../Utilities/Helpers/CalculatedColumnHelper");
+const LicenceService_1 = require("../Utilities/Services/LicenceService");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this._calculatedColumnPathMap = new Map();
@@ -112,6 +113,7 @@ class AdaptableBlotter {
         this.StyleService = new StyleService_1.StyleService(this);
         this.ChartService = new ChartService_1.ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService_1.FreeTextColumnService(this);
+        this.LicenceService = new LicenceService_1.LicenceService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService_1.CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi_1.BlotterApi(this);
@@ -152,15 +154,16 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy_1.CellSummaryStrategy(this));
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         iPushPullHelper_1.iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
+        agGridHelper_1.agGridHelper.CheckLicenceKey(this.LicenceService.LicenceType);
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
-            LoggingHelper_1.LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
             //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
             this.Strategies.forEach(strat => strat.InitializeWithRedux());
             this.dispatchAction(PopupRedux.PopupHideLoading()); // doesnt really help but at least clears the screen
         })
             .then(() => this.initInternalGridLogic(), (e) => {
-            LoggingHelper_1.LoggingHelper.LogError('Failed to Init Strategies : ', e);
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError('Failed to Init Strategies : ', e);
             //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?)
             this.initInternalGridLogic();
             this.dispatchAction(PopupRedux.PopupHideLoading()); // doesnt really help but at least clears the screen
@@ -253,7 +256,7 @@ class AdaptableBlotter {
         VisibleColumnList.forEach((column, index) => {
             let col = this.gridOptions.columnApi.getColumn(column.ColumnId);
             if (!col) {
-                LoggingHelper_1.LoggingHelper.LogError("Cannot find vendor column:" + column.ColumnId);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Cannot find vendor column:" + column.ColumnId);
             }
             if (!col.isVisible()) {
                 this.setColumnVisible(this.gridOptions.columnApi, col, true, "api");
@@ -433,7 +436,7 @@ class AdaptableBlotter {
     getColumnDataType(column) {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            LoggingHelper_1.LoggingHelper.LogWarning('column is undefined returning String for Type');
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning('column is undefined returning String for Type');
             return Enums_1.DataType.String;
         }
         // get the column type if already in store (and not unknown)
@@ -472,7 +475,7 @@ class AdaptableBlotter {
         }
         let row = this.gridOptions.api.getModel().getRow(0);
         if (row == null) { // possible that there will be no data.
-            LoggingHelper_1.LoggingHelper.LogWarning('No data in grid so returning type "Unknown" for Column: "' + column.getColId() + '"');
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning('No data in grid so returning type "Unknown" for Column: "' + column.getColId() + '"');
             return Enums_1.DataType.Unknown;
         }
         //if it's a group we need the content of the group
@@ -502,7 +505,7 @@ class AdaptableBlotter {
                     break;
             }
         }
-        LoggingHelper_1.LoggingHelper.LogWarning("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType);
+        LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType);
         return dataType;
     }
     getabColDefValue(colType) {
@@ -1012,7 +1015,7 @@ class AdaptableBlotter {
             this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
         }
         if (this.abContainerElement == null) {
-            LoggingHelper_1.LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter");
             return;
         }
         let gridContainerElement = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
@@ -1317,7 +1320,7 @@ class AdaptableBlotter {
         };
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
-            LoggingHelper_1.LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
             //for now i'm still initializing the strategies even if loading state has failed....
             //we may revisit that later
             this.Strategies.forEach(strat => strat.InitializeWithRedux());

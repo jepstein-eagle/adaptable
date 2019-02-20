@@ -39,7 +39,7 @@ class DashboardComponent extends React.Component {
                     return React.createElement(react_bootstrap_1.Nav, { key: control, style: { marginRight: "5px", marginTop: "3px", marginBottom: "3px" } }, dashboardElememt);
                 }
                 else {
-                    LoggingHelper_1.LoggingHelper.LogError("Cannot find Dashboard Control for " + control);
+                    LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Cannot find Dashboard Control for " + control);
                 }
             }
         });

@@ -74,7 +74,7 @@ var ExpressionHelper;
             let isColumnSatisfied = false;
             let column = columnBlotterList.find(x => x.ColumnId == columnId);
             if (!column) {
-                LoggingHelper_1.LoggingHelper.LogWarning("Could not find column id:" + columnId);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("Could not find column id:" + columnId);
                 isColumnSatisfied = true;
             }
             // check for display column values

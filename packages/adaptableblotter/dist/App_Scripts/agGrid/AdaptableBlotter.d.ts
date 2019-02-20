@@ -27,6 +27,7 @@ import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { RowNode } from "ag-grid-community";
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IEvent } from '../Utilities/Interface/IEvent';
+import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
     Strategies: IAdaptableStrategyCollection;
@@ -41,6 +42,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     ChartService: IChartService;
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
     FreeTextColumnService: IFreeTextColumnService;
+    LicenceService: ILicenceService;
     private _calculatedColumnPathMap;
     private abContainerElement;
     private gridOptions;

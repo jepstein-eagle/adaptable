@@ -113,15 +113,15 @@ class AuditLogService {
             adaptableblotter_number_of_missed_ping: this.numberOfMissedPing
         };
         let xhr = new XMLHttpRequest();
-        xhr.onerror = (ev) => { LoggingHelper_1.LoggingHelper.LogError("error sending ping: " + ev.message); this.SetCanSendLog(false); };
-        xhr.ontimeout = (ev) => { LoggingHelper_1.LoggingHelper.LogError("timeout sending ping"); this.SetCanSendLog(false); };
+        xhr.onerror = (ev) => { LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("error sending ping: " + ev.message); this.SetCanSendLog(false); };
+        xhr.ontimeout = (ev) => { LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("timeout sending ping"); this.SetCanSendLog(false); };
         xhr.onload = (ev) => {
             if (xhr.readyState == 4) {
                 if (xhr.status == 200) {
                     this.SetCanSendLog(true);
                 }
                 else {
-                    LoggingHelper_1.LoggingHelper.LogError("error sending ping: " + xhr.statusText);
+                    LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("error sending ping: " + xhr.statusText);
                     this.SetCanSendLog(false);
                 }
             }
@@ -150,12 +150,12 @@ class AuditLogService {
         // while (obj && this.sockJS.readyState == SockJS.OPEN) {
         while (obj) {
             let xhr = new XMLHttpRequest();
-            xhr.onerror = (ev) => LoggingHelper_1.LoggingHelper.LogError("error sending AuditLog: " + ev.message);
-            xhr.ontimeout = (pe) => LoggingHelper_1.LoggingHelper.LogError("timeout sending AuditLog");
+            xhr.onerror = (ev) => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("error sending AuditLog: " + ev.message);
+            xhr.ontimeout = (pe) => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("timeout sending AuditLog");
             xhr.onload = (pe) => {
                 if (xhr.readyState == 4) {
                     if (xhr.status != 200) {
-                        LoggingHelper_1.LoggingHelper.LogError("error sending AuditLog: " + xhr.statusText);
+                        LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("error sending AuditLog: " + xhr.statusText);
                     }
                 }
             };

@@ -18,12 +18,34 @@ export class LicenceService implements ILicenceService {
 
     LicenceType: LicenceType;
 
-    HasAdvancedModulesLicenceKey: boolean;
 
     private setLicenceType(): LicenceType {
-        // use code from whats app...
-        return LicenceType.Enterprise;
+        let myString: string = this.blotter.BlotterOptions.licenceKey;
+        let myArr: string[] = myString.split("-");
+
+        let teamId: string = myArr[0];
+       
+        let enterpriseId: string = myArr[1].replace(/\D/g, '');
+        let isEnterpriseValid: boolean = this.isPrime(Number(enterpriseId));
+     
+        let chartId: string = myArr[2].replace(/\D/g, '');
+        let isChartValid: boolean = this.isPrime(Number(chartId));
+       
+        if (isChartValid) {
+            return LicenceType.Advanced
+        } else if (isEnterpriseValid) {
+            return LicenceType.Enterprise;
+        }
+        return LicenceType.Community;
     }
 
-   
+    private isPrime(num: number): boolean {
+        for (let i = 2, s = Math.sqrt(num); i <= s; i++) {
+            if (num % i === 0) {
+                return false;
+            }
+        }
+        return num > 1;
+    }
+
 }

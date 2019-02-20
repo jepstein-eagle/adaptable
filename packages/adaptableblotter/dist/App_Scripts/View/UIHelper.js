@@ -106,7 +106,7 @@ var UIHelper;
                 }
             }
             else {
-                LoggingHelper_1.LoggingHelper.LogError("Chart div name cannot be found: " + blotterOptions.containerOptions.chartContainer);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Chart div name cannot be found: " + blotterOptions.containerOptions.chartContainer);
             }
         }
         else { // not provided one so return whole document if modal, or 'chart' if not

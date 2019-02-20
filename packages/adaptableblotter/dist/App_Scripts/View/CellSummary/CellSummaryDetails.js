@@ -23,8 +23,12 @@ class CellSummaryDetails extends React.Component {
             rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOperation.Max, this.props.CellSummary.Max, cssClassName));
             rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOperation.Min, this.props.CellSummary.Min, cssClassName));
             rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOperation.Count, this.props.CellSummary.Count, cssClassName));
-            rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOperation.Only, this.props.CellSummary.Only, cssClassName));
-            rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOperation.VWAP, this.props.CellSummary.VWAP, cssClassName));
+            if (this.props.CellSummary.Only != null) {
+                rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOptionalOperation.Only, this.props.CellSummary.Only, cssClassName));
+            }
+            if (this.props.CellSummary.VWAP != null) {
+                rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOptionalOperation.VWAP, this.props.CellSummary.VWAP, cssClassName));
+            }
         }
         return React.createElement("div", { className: cssClassName + StyleConstants.ITEMS_TABLE },
             React.createElement(PanelWithRow_1.PanelWithRow, { cssClassName: cssClassName, colItems: colItems, bsStyle: "info" }),

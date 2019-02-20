@@ -12,5 +12,6 @@ export declare class CellSummaryStrategy extends AdaptableStrategyBase implement
     private sumNumberArray;
     private meanNumberArray;
     private medianNumberArray;
+    private calculateOnly;
     private calculateVwap;
 }

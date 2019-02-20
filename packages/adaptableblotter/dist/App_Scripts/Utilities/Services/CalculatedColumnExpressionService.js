@@ -26,7 +26,7 @@ class CalculatedColumnExpressionService {
             return { IsValid: true };
         }
         catch (e) {
-            LoggingHelper_1.LoggingHelper.LogWarning(e);
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning(e);
             return { IsValid: false, ErrorMsg: e.message };
         }
     }
@@ -48,7 +48,7 @@ class CalculatedColumnExpressionService {
             });
         }
         catch (e) {
-            LoggingHelper_1.LoggingHelper.LogError(e);
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(e);
             return null;
         }
     }

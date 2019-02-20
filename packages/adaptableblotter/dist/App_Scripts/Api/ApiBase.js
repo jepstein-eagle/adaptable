@@ -8,7 +8,7 @@ class ApiBase {
     }
     checkItemExists(item, name, type) {
         if (!item) {
-            LoggingHelper_1.LoggingHelper.LogError("No " + type + " found with the name: " + name);
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("No " + type + " found with the name: " + name);
             return false;
         }
         return true;

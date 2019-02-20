@@ -205,7 +205,9 @@ export declare enum CellSumaryOperation {
     Distinct = "Distinct",
     Max = "Max",
     Min = "Min",
-    Count = "Count",
+    Count = "Count"
+}
+export declare enum CellSumaryOptionalOperation {
     Only = "Only",
     VWAP = "VWAP"
 }
@@ -217,4 +219,9 @@ export declare enum FilterOnDataChangeOptions {
     Always = "Always",
     Never = "Never",
     Throttle = "Throttle"
+}
+export declare enum LicenceType {
+    Community = "Community",
+    Enterprise = "Enterprise",
+    Advanced = "Advanced"
 }

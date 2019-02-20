@@ -22,7 +22,7 @@ class FreeTextColumnService {
             return freeTextColumn.DefaultValue;
         }
         catch (e) {
-            LoggingHelper_1.LoggingHelper.LogError(e);
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(e);
             return null;
         }
     }

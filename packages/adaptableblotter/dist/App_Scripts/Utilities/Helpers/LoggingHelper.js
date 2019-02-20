@@ -7,21 +7,21 @@ var LoggingHelper;
     function LogAlert(message, messageType, ...optionalParams) {
         switch (messageType) {
             case Enums_1.MessageType.Info:
-                LogInfo(message, optionalParams);
+                LogAdaptableBlotterInfo(message, optionalParams);
                 break;
             case Enums_1.MessageType.Success:
-                LogSuccess(message, optionalParams);
+                LogAdaptableBlotterSuccess(message, optionalParams);
                 break;
             case Enums_1.MessageType.Warning:
-                LogWarning(message, optionalParams);
+                LogAdaptableBlotterWarning(message, optionalParams);
                 break;
             case Enums_1.MessageType.Error:
-                LogError(message, optionalParams);
+                LogAdaptableBlotterError(message, optionalParams);
                 break;
         }
     }
     LoggingHelper.LogAlert = LogAlert;
-    function LogInfo(message, ...optionalParams) {
+    function LogAdaptableBlotterInfo(message, ...optionalParams) {
         if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
             console.log("Adaptable Blotter Info: " + message, optionalParams);
         }
@@ -29,8 +29,8 @@ var LoggingHelper;
             console.log("Adaptable Blotter Info: " + message);
         }
     }
-    LoggingHelper.LogInfo = LogInfo;
-    function LogSuccess(message, ...optionalParams) {
+    LoggingHelper.LogAdaptableBlotterInfo = LogAdaptableBlotterInfo;
+    function LogAdaptableBlotterSuccess(message, ...optionalParams) {
         if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
             console.log("Adaptable Blotter Success: " + message, optionalParams);
         }
@@ -38,22 +38,31 @@ var LoggingHelper;
             console.log("Adaptable Blotter Success: " + message);
         }
     }
-    LoggingHelper.LogSuccess = LogSuccess;
-    function LogWarning(message, ...optionalParams) {
+    LoggingHelper.LogAdaptableBlotterSuccess = LogAdaptableBlotterSuccess;
+    function LogAdaptableBlotterWarning(message, ...optionalParams) {
         if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
-            console.warn("Adaptable Blotter Warning: " + message, optionalParams);
+            console.warn("Adaptable Blovtter Warning: " + message, optionalParams);
         }
         else {
             console.warn("Adaptable Blotter Warning: " + message);
         }
     }
-    LoggingHelper.LogWarning = LogWarning;
-    function LogError(message, ...optionalParams) {
+    LoggingHelper.LogAdaptableBlotterWarning = LogAdaptableBlotterWarning;
+    function LogAdaptableBlotterError(message, ...optionalParams) {
         if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
             console.error("Adaptable Blotter Error: " + message, optionalParams);
         }
         else {
             console.error("Adaptable Blotter Error: " + message);
+        }
+    }
+    LoggingHelper.LogAdaptableBlotterError = LogAdaptableBlotterError;
+    function LogError(message, ...optionalParams) {
+        if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
+            console.error(message, optionalParams);
+        }
+        else {
+            console.error(message);
         }
     }
     LoggingHelper.LogError = LogError;

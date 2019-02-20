@@ -223,7 +223,7 @@ class AdaptableBlotterStore {
             //We load the previous saved session. Redux is pretty awesome in its simplicity!
             loadStorage(this.TheStore)
                 .then(() => this.TheStore.dispatch(exports.InitState()), (e) => {
-                LoggingHelper_1.LoggingHelper.LogError('Failed to load previous adaptable blotter state : ', e);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError('Failed to load previous adaptable blotter state : ', e);
                 //for now i'm still initializing the AB even if loading state has failed....
                 //we may revisit that later
                 this.TheStore.dispatch(exports.InitState());
@@ -551,7 +551,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                                 blotterColumns.push(column);
                             }
                             else {
-                                LoggingHelper_1.LoggingHelper.LogWarning("Column '" + c + "' not found while selecting layout: " + currentLayout);
+                                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("Column '" + c + "' not found while selecting layout: " + currentLayout);
                             }
                         });
                         middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(blotterColumns));
@@ -759,7 +759,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         });
                         middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullDomainPageSelector", report));
                     }).catch((error) => {
-                        LoggingHelper_1.LoggingHelper.LogError("Login failed", error);
+                        LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Login failed", error);
                         middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(error));
                     });
                     return next(action);
@@ -801,12 +801,12 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     let actionTyped = action;
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
-                    xhr.onerror = (ev) => LoggingHelper_1.LoggingHelper.LogError("TeamSharing share error :" + ev.message, actionTyped.Entity);
-                    xhr.ontimeout = () => LoggingHelper_1.LoggingHelper.LogWarning("TeamSharing share timeout", actionTyped.Entity);
+                    xhr.onerror = (ev) => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("TeamSharing share error :" + ev.message, actionTyped.Entity);
+                    xhr.ontimeout = () => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("TeamSharing share timeout", actionTyped.Entity);
                     xhr.onload = () => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
-                                LoggingHelper_1.LoggingHelper.LogError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
+                                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
                                 middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: Enums_1.MessageType.Error }));
                             }
                             else {
@@ -830,12 +830,12 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 case TeamSharingRedux.TEAMSHARING_GET: {
                     let returnAction = next(action);
                     let xhr = new XMLHttpRequest();
-                    xhr.onerror = (ev) => LoggingHelper_1.LoggingHelper.LogError("TeamSharing get error :" + ev.message);
-                    xhr.ontimeout = () => LoggingHelper_1.LoggingHelper.LogWarning("TeamSharing get timeout");
+                    xhr.onerror = (ev) => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("TeamSharing get error :" + ev.message);
+                    xhr.ontimeout = () => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("TeamSharing get timeout");
                     xhr.onload = () => {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
-                                LoggingHelper_1.LoggingHelper.LogError("TeamSharing get error : " + xhr.statusText);
+                                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("TeamSharing get error : " + xhr.statusText);
                             }
                             else {
                                 middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(JSON.parse(xhr.responseText, (key, value) => {
@@ -972,7 +972,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", MessageType: Enums_1.MessageType.Info }));
                     }
                     else {
-                        LoggingHelper_1.LoggingHelper.LogError("Unknown item type", actionTyped.Entity);
+                        LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Unknown item type", actionTyped.Entity);
                         middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import", MessageType: Enums_1.MessageType.Error }));
                     }
                     return returnAction;

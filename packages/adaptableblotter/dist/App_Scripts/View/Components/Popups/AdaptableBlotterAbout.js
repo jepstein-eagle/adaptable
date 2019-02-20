@@ -179,6 +179,7 @@ class AdaptableBlotterAbout extends React.Component {
             });
             returnRows.push(this.createColItem(colItems, "Vendor Grid", this.props.AdaptableBlotter.VendorGridName));
             returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "3.2"));
+            returnRows.push(this.createColItem(colItems, "Licence Type", this.props.AdaptableBlotter.LicenceService.LicenceType));
             returnRows.push(this.createColItem(colItems, "Sorted Columns", ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(sorts) ? sorts.join("; ") : "None"));
             returnRows.push(this.createColItem(colItems, "Column Filters", columnFilterDescription));
             returnRows.push(this.createColItem(colItems, "All Rows", this.props.AdaptableBlotter.getRowCount()));
@@ -199,6 +200,7 @@ class AdaptableBlotterAbout extends React.Component {
             returnRows.push(this.createColItem(colItems, "userName", options.userName, "Current user of the Adaptable Blotter"));
             returnRows.push(this.createColItem(colItems, "primaryKey", options.primaryKey, "Unique column in the grid (useful for cell identification purposes)"));
             returnRows.push(this.createColItem(colItems, "predefinedConfig", options.predefinedConfig, "Configuration properties and objects set at design-time"));
+            returnRows.push(this.createColItem(colItems, "licenceKey", options.licenceKey, "The licence key for this version of the Adaptable Blotter"));
         }
         return returnRows;
     }

@@ -25,7 +25,7 @@ var BlotterHelper;
                 blotter.api.alertApi.ShowError("No Primary Key", errorMessage, true);
             }
             else { // otherwise just log it
-                LoggingHelper_1.LoggingHelper.LogError(errorMessage);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(errorMessage);
             }
         }
     }

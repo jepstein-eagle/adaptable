@@ -25,6 +25,7 @@ import { AuditLogService } from '../Utilities/Services/AuditLogService';
 import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTextColumnService';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IEvent } from '../Utilities/Interface/IEvent';
+import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
     Strategies: IAdaptableStrategyCollection;
@@ -34,6 +35,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     ValidationService: IValidationService;
     AuditLogService: AuditLogService;
     ChartService: IChartService;
+    LicenceService: ILicenceService;
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
     FreeTextColumnService: IFreeTextColumnService;
     BlotterOptions: IAdaptableBlotterOptions;

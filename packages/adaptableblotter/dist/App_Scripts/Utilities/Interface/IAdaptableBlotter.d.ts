@@ -21,6 +21,7 @@ import { IChartService } from '../Services/Interface/IChartService';
 import { IPPStyle } from "./Reports/IPPStyle";
 import { IEvent } from './IEvent';
 import { IAdaptableStrategyCollection } from '../../Strategy/Interface/IStrategy';
+import { ILicenceService } from '../Services/Interface/ILicenceService';
 /**
  *  The only interface for the AdaptableBlotter
  *  Contains all the properties and methods that each implemenation must include
@@ -39,6 +40,7 @@ export interface IAdaptableBlotter {
     AuditLogService: AuditLogService;
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
     ChartService: IChartService;
+    LicenceService: ILicenceService;
     onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any>;
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
