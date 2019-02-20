@@ -60,7 +60,7 @@ export module iPushPullHelper {
                     resolve(result);
                 })
                 .catch((x: any) => {
-                    LoggingHelper.LogError("couldn't get Domain/Pages from IPP : ", x)
+                    LoggingHelper.LogAdaptableBlotterError("couldn't get Domain/Pages from IPP : ", x)
                     reject(x.message)
                 })
         })
@@ -72,7 +72,7 @@ export module iPushPullHelper {
               let page = new iPushPullApp.page(pageIPP, folderIPP)
 
             page.on(page.EVENT_NEW_CONTENT, function (data: any) {
-                LoggingHelper.LogInfo("Page Ready : " + pageIPP)
+                LoggingHelper.LogAdaptableBlotterInfo("Page Ready : " + pageIPP)
                 pages.set(pageIPP, page)
                 resolve(page);
                 //we return true so it removes the listener for new content.
@@ -87,7 +87,7 @@ export module iPushPullHelper {
         if (pageIPP) {
             pageIPP.destroy()
             pages.delete(page)
-            LoggingHelper.LogInfo("Page Unloaded : " + page)
+            LoggingHelper.LogAdaptableBlotterInfo("Page Unloaded : " + page)
         }
     }
 
@@ -155,10 +155,10 @@ export module iPushPullHelper {
             pageIPP.Content.canDoDelta = false;
             pageIPP.Content.update(newData, true);
             pageIPP.push().then(function () {
-                LoggingHelper.LogSuccess('Data pushed for iPushPull page : ' + page);
+                LoggingHelper.LogAdaptableBlotterSuccess('Data pushed for iPushPull page : ' + page);
                 resolve()
             }, (err: any) => {
-                LoggingHelper.LogInfo('Error pushing data for iPushPull page : ' + page);
+                LoggingHelper.LogAdaptableBlotterInfo('Error pushing data for iPushPull page : ' + page);
                 reject();
             });
         })

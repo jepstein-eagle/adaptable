@@ -128,6 +128,8 @@ import { agGridHelper } from './agGridHelper';
 import { ToolPanelWrapperFactory } from './ToolPanelWrapper';
 import { CustomStatsToolPanel } from './customStatsToolPanel';
 import { CalculatedColumnHelper } from '../Utilities/Helpers/CalculatedColumnHelper';
+import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
+import { LicenceService } from '../Utilities/Services/LicenceService';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -146,6 +148,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ChartService: IChartService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public FreeTextColumnService: IFreeTextColumnService
+    public LicenceService: ILicenceService
 
     private _calculatedColumnPathMap: Map<string, string[]> = new Map()
 
@@ -176,6 +179,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.StyleService = new StyleService(this);
         this.ChartService = new ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService(this);
+        this.LicenceService = new LicenceService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi(this);
@@ -220,11 +224,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
 
+        agGridHelper.CheckLicenceKey(this.LicenceService.LicenceType);
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
                 (e) => {
-                    LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
+                    LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
                     //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
                     this.dispatchAction(PopupRedux.PopupHideLoading());  // doesnt really help but at least clears the screen
@@ -232,7 +237,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             .then(
                 () => this.initInternalGridLogic(),
                 (e) => {
-                    LoggingHelper.LogError('Failed to Init Strategies : ', e);
+                    LoggingHelper.LogAdaptableBlotterError('Failed to Init Strategies : ', e);
                     //for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?)
                     this.initInternalGridLogic()
                     this.dispatchAction(PopupRedux.PopupHideLoading()); // doesnt really help but at least clears the screen
@@ -256,6 +261,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.throttleApplyGridFilteringUser = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
         this.throttleApplyGridFilteringExternal = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
     }
+
 
 
     // debounced methods
@@ -359,7 +365,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         VisibleColumnList.forEach((column, index) => {
             let col = this.gridOptions.columnApi.getColumn(column.ColumnId)
             if (!col) {
-                LoggingHelper.LogError("Cannot find vendor column:" + column.ColumnId)
+                LoggingHelper.LogAdaptableBlotterError("Cannot find vendor column:" + column.ColumnId)
             }
             if (!col.isVisible()) {
                 this.setColumnVisible(this.gridOptions.columnApi, col, true, "api")
@@ -559,7 +565,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private getColumnDataType(column: Column): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            LoggingHelper.LogWarning('column is undefined returning String for Type')
+            LoggingHelper.LogAdaptableBlotterWarning('column is undefined returning String for Type')
             return DataType.String;
         }
 
@@ -602,7 +608,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let row = this.gridOptions.api.getModel().getRow(0)
 
         if (row == null) { // possible that there will be no data.
-            LoggingHelper.LogWarning('No data in grid so returning type "Unknown" for Column: "' + column.getColId() + '"')
+            LoggingHelper.LogAdaptableBlotterWarning('No data in grid so returning type "Unknown" for Column: "' + column.getColId() + '"')
             return DataType.Unknown;
         }
         //if it's a group we need the content of the group
@@ -632,7 +638,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     break;
             }
         }
-        LoggingHelper.LogWarning("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType)
+        LoggingHelper.LogAdaptableBlotterWarning("No defined type for column '" + column.getColId() + "'. Defaulting to type of first value: " + dataType)
         return dataType
     }
 
@@ -1025,7 +1031,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let cleanedExpression: string = CalculatedColumnHelper.CleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
 
         let newColDef: ColDef = colDefs[colDefIndex];
-         newColDef.valueGetter = (params: ValueGetterParams) =>  Helper.RoundValueIfNumeric( this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node), 4);
+        newColDef.valueGetter = (params: ValueGetterParams) => Helper.RoundValueIfNumeric(this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node), 4);
 
         colDefs[colDefIndex] = newColDef
         agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
@@ -1079,7 +1085,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             enableValue: true, // makes the column 'summable'
             editable: false,
             filter: 'agTextColumnFilter',
-            valueGetter: (params: ValueGetterParams) =>  Helper.RoundValueIfNumeric(this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node),4)
+            valueGetter: (params: ValueGetterParams) => Helper.RoundValueIfNumeric(this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node), 4)
         }
 
         colDefs.push(newColDef);
@@ -1215,7 +1221,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
         }
         if (this.abContainerElement == null) {
-            LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
+            LoggingHelper.LogAdaptableBlotterError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
             return
         }
 
@@ -1554,7 +1560,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
-                LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
+                LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
                 //for now i'm still initializing the strategies even if loading state has failed....
                 //we may revisit that later
                 this.Strategies.forEach(strat => strat.InitializeWithRedux());

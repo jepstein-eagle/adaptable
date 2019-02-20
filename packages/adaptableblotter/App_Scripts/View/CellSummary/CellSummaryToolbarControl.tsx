@@ -12,18 +12,20 @@ import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 import { PanelDashboard } from "../Components/Panels/PanelDashboard";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { ISelectedCellInfo } from "../../Utilities/Interface/SelectedCell/ISelectedCellInfo";
-import { AccessLevel, CellSumaryOperation } from "../../Utilities/Enums";
+import { AccessLevel, CellSumaryOperation, CellSumaryOptionalOperation } from "../../Utilities/Enums";
 import { DropdownButton, MenuItem, InputGroup, ControlLabel } from "react-bootstrap";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ICellSummmary } from "../../Utilities/Interface/SelectedCell/ICellSummmary";
 import { AdaptablePopover } from "../AdaptablePopover";
 import { CellSummaryPopover } from "./CellSummaryPopover";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 interface CellSummaryToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<CellSummaryToolbarControlComponent> {
     SelectedCellInfo: ISelectedCellInfo
-    CellSumaryOperation: CellSumaryOperation
-    onCellSummaryOperationChange: (SelectedCellOperation: CellSumaryOperation) => SelectedCellsRedux.CellSummaryChangeOperationAction;
+    CellSumaryOperation: CellSumaryOperation | CellSumaryOptionalOperation
+    SystemSummaryOperations: string[]
+    onCellSummaryOperationChange: (summaryOperation: CellSumaryOperation | CellSumaryOptionalOperation) => SelectedCellsRedux.CellSummaryChangeOperationAction;
     onCreateCellSummary: () => GridRedux.GridCreateCellSummaryAction;
     CellSummary: ICellSummmary
 }
@@ -58,8 +60,14 @@ class CellSummaryToolbarControlComponent extends React.Component<CellSummaryTool
 
         let cssClassName: string = this.props.cssClassName + "__CellSummary";
 
-        let operationMenuItems = EnumExtensions.getNames(CellSumaryOperation).map((selectedCellOperation: CellSumaryOperation, index) => {
-            return <MenuItem key={index} eventKey="index" onClick={() => this.props.onCellSummaryOperationChange(selectedCellOperation)}>{selectedCellOperation as CellSumaryOperation}</MenuItem>
+        let operationMenuItems = EnumExtensions.getNames(CellSumaryOperation).map((summaryOperation: CellSumaryOperation, index) => {
+            return <MenuItem key={index} eventKey="index" onClick={() => this.props.onCellSummaryOperationChange(summaryOperation)}>{summaryOperation as CellSumaryOperation}</MenuItem>
+        })
+
+        let operationOptionalMenuItems = EnumExtensions.getNames(CellSumaryOptionalOperation).map((summaryOperation: CellSumaryOptionalOperation, index) => {
+            if (ArrayExtensions.ContainsItem(this.props.SystemSummaryOperations, summaryOperation)) {
+                return <MenuItem key={index} eventKey="index" onClick={() => this.props.onCellSummaryOperationChange(summaryOperation)}>{summaryOperation as CellSumaryOptionalOperation}</MenuItem>
+            }
         })
 
         let cellSummaryPopover =
@@ -73,6 +81,7 @@ class CellSummaryToolbarControlComponent extends React.Component<CellSummaryTool
                 <InputGroup>
                     <DropdownButton style={{ marginRight: "3px", width: "75px" }} title={this.props.CellSumaryOperation} id="CellSummary_Operation" bsSize="small" componentClass={InputGroup.Button}>
                         {operationMenuItems}
+                        {operationOptionalMenuItems}
                     </DropdownButton>
                     {this.props.CellSummary != null &&
                         <span>
@@ -115,9 +124,9 @@ class CellSummaryToolbarControlComponent extends React.Component<CellSummaryTool
                 return this.props.CellSummary.Distinct;
             case CellSumaryOperation.Count:
                 return this.props.CellSummary.Count;
-            case CellSumaryOperation.Only:
+            case CellSumaryOptionalOperation.Only:
                 return this.props.CellSummary.Only;
-            case CellSumaryOperation.VWAP:
+            case CellSumaryOptionalOperation.VWAP:
                 return this.props.CellSummary.VWAP;
         }
     }
@@ -126,14 +135,15 @@ class CellSummaryToolbarControlComponent extends React.Component<CellSummaryTool
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         SelectedCellInfo: state.Grid.SelectedCellInfo,
-        CellSumaryOperation: state.CellSummary.CellSumaryOperation,
+        CellSumaryOperation: state.CellSummary.SummaryOperation,
+        SystemSummaryOperations: state.CellSummary.SystemSummaryOperations,
         CellSummary: state.Grid.CellSummary,
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onCellSummaryOperationChange: (CellSumaryOperation: CellSumaryOperation) => dispatch(SelectedCellsRedux.CellSummaryChangeOperation(CellSumaryOperation)),
+        onCellSummaryOperationChange: (summaryOperation: CellSumaryOperation | CellSumaryOptionalOperation) => dispatch(SelectedCellsRedux.CellSummaryChangeOperation(summaryOperation)),
         onCreateCellSummary: () => dispatch(GridRedux.GridCreateCellSummary()),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.CellSummaryStrategyId, ScreenPopups.CellSummaryPopup))

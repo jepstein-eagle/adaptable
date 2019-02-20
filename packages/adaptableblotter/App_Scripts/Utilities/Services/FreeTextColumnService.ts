@@ -27,7 +27,7 @@ export class FreeTextColumnService implements IFreeTextColumnService {
             return freeTextColumn.DefaultValue;
         }
         catch (e) {
-            LoggingHelper.LogError(e);
+            LoggingHelper.LogAdaptableBlotterError(e);
             return null;
         }
     }

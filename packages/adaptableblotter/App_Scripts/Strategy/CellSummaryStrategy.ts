@@ -6,7 +6,7 @@ import { ICellSummaryStrategy } from "./Interface/ICellSummaryStrategy";
 import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
 import { ICellSummmary } from "../Utilities/Interface/SelectedCell/ICellSummmary";
 import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
-import { DataType, StateChangedTrigger } from '../Utilities/Enums';
+import { DataType, StateChangedTrigger, CellSumaryOperation, CellSumaryOptionalOperation } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { CellSummaryState } from '../Redux/ActionsReducers/Interface/IState';
 import { Helper } from '../Utilities/Helpers/Helper';
@@ -55,7 +55,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
                     allValues.push(value);
 
                     if (numericColumns.indexOf(i) != -1) {
-                        let valueAsNumber =Number(value);
+                        let valueAsNumber = Number(value);
                         // possible that its not a number despite it being a numeric column
                         if (!isNaN(Number(valueAsNumber))) {
                             numericValues.push(valueAsNumber)
@@ -65,17 +65,17 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
             })
 
             let hasNumericColumns: boolean = numericValues.length > 0;
-            let distinct = ArrayExtensions.RetrieveDistinct(allValues).length;
+            let distinctCount: number = ArrayExtensions.RetrieveDistinct(allValues).length;
             selectedCellSummary = {
                 Sum: (hasNumericColumns) ? Helper.RoundNumberTo4dp(this.sumNumberArray(numericValues)) : "",
                 Average: (hasNumericColumns) ? Helper.RoundNumberTo4dp(this.meanNumberArray(numericValues)) : "",
                 Median: (hasNumericColumns) ? Helper.RoundNumberTo4dp(this.medianNumberArray(numericValues)) : "",
-                Distinct: distinct,
+                Distinct: distinctCount,
                 Max: (hasNumericColumns) ? Helper.RoundNumberTo4dp(Math.max(...numericValues)) : "",
                 Min: (hasNumericColumns) ? Helper.RoundNumberTo4dp(Math.min(...numericValues)) : "",
                 Count: allValues.length,
-                Only: (distinct == 1) ? allValues[0] : "",
-                VWAP: (numericColumns.length == 2) ? this.calculateVwap(numericValues) : ""
+                Only: this.calculateOnly(distinctCount, allValues),
+                VWAP: this.calculateVwap(numericValues, numericColumns)
             }
         }
         return selectedCellSummary;
@@ -107,9 +107,21 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
         return median;
     }
 
+    private calculateOnly(distinctCount: number, allValues: any[]): any {
+        if (ArrayExtensions.NotContainsItem(this.CellSummaryState.SystemSummaryOperations, CellSumaryOptionalOperation.Only)) {
+            return null;
+        }
+        return (distinctCount == 1) ? allValues[0] : "";
+    }
 
+    private calculateVwap(numericValues: number[],  numericColumns: number[]): any {
+        if (ArrayExtensions.NotContainsItem(this.CellSummaryState.SystemSummaryOperations, CellSumaryOptionalOperation.VWAP)) {
+            return null;
+        }
+           if (numericColumns.length == 2){
+           return  ""
+       }
 
-    private calculateVwap(numericValues: number[]): any {
         let firstColValues: number[] = []
         let secondColComputedValues: number[] = []
         for (var i = 0; i < numericValues.length; i++) {

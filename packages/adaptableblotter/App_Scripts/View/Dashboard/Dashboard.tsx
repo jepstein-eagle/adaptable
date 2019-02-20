@@ -53,7 +53,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                     </Nav>
                 }
                 else {
-                    LoggingHelper.LogError("Cannot find Dashboard Control for " + control)
+                    LoggingHelper.LogAdaptableBlotterError("Cannot find Dashboard Control for " + control)
                 }
             }
         })

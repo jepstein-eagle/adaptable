@@ -250,7 +250,10 @@ export enum CellSumaryOperation {
     Distinct = 'Distinct',
     Max = 'Max',
     Min = 'Min',
-    Count = 'Count',
+    Count = 'Count'
+}
+
+export enum CellSumaryOptionalOperation {
     Only = 'Only',
     VWAP = 'VWAP'
 }
@@ -266,4 +269,10 @@ export enum FilterOnDataChangeOptions {
     Always = 'Always',
     Never = 'Never',
     Throttle = 'Throttle'
+}
+
+export enum LicenceType {
+    Community = 'Community',
+    Enterprise = 'Enterprise',
+    Advanced = 'Advanced'
 }

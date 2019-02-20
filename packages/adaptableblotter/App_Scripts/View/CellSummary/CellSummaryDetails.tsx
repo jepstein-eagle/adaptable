@@ -4,7 +4,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { PanelWithRow } from "../Components/Panels/PanelWithRow";
 import { Helper } from "../../Utilities/Helpers/Helper";
 import { AdaptableObjectRow } from "../Components/AdaptableObjectRow";
-import { CellSumaryOperation } from "../../Utilities/Enums";
+import { CellSumaryOperation, CellSumaryOptionalOperation } from "../../Utilities/Enums";
 import { ICellSummmary } from "../../Utilities/Interface/SelectedCell/ICellSummmary";
 import { ControlLabel } from "react-bootstrap";
 
@@ -32,25 +32,29 @@ export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps,
             rowElements.push(this.createRow(colItems, CellSumaryOperation.Max, this.props.CellSummary.Max, cssClassName));
             rowElements.push(this.createRow(colItems, CellSumaryOperation.Min, this.props.CellSummary.Min, cssClassName));
             rowElements.push(this.createRow(colItems, CellSumaryOperation.Count, this.props.CellSummary.Count, cssClassName));
-            rowElements.push(this.createRow(colItems, CellSumaryOperation.Only, this.props.CellSummary.Only, cssClassName));
-            rowElements.push(this.createRow(colItems, CellSumaryOperation.VWAP, this.props.CellSummary.VWAP, cssClassName));
+            if (this.props.CellSummary.Only != null) {
+                rowElements.push(this.createRow(colItems, CellSumaryOptionalOperation.Only, this.props.CellSummary.Only, cssClassName));
+            }
+            if (this.props.CellSummary.VWAP != null) {
+                rowElements.push(this.createRow(colItems, CellSumaryOptionalOperation.VWAP, this.props.CellSummary.VWAP, cssClassName));
+            }
         }
 
         return <div className={cssClassName + StyleConstants.ITEMS_TABLE}>
-            <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info"  />
-                    {this.props.CellSummary != null ?
-                        <div className={cssClassName + StyleConstants.ITEMS_TABLE_BODY}>
-                            {rowElements}
-                        </div>
-                        :
-                        <ControlLabel>No cells are selected - please select some cells.</ControlLabel>
-                    }
+            <PanelWithRow cssClassName={cssClassName} colItems={colItems} bsStyle="info" />
+            {this.props.CellSummary != null ?
+                <div className={cssClassName + StyleConstants.ITEMS_TABLE_BODY}>
+                    {rowElements}
+                </div>
+                :
+                <ControlLabel>No cells are selected - please select some cells.</ControlLabel>
+            }
         </div>
 
 
     }
 
-    private createRow(colItems: IColItem[], key: CellSumaryOperation, value: any, cssClassName: string): any {
+    private createRow(colItems: IColItem[], key: any, value: any, cssClassName: string): any {
         let rowColItems: IColItem[] = Helper.cloneObject(colItems)
         rowColItems[0].Content = key
         rowColItems[1].Content = value

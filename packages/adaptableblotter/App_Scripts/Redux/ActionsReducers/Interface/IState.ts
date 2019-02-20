@@ -152,6 +152,11 @@ export interface CalendarState extends IUserState {
     CurrentCalendar: string;
 }
 
+export interface CellSummaryState extends IUserState {
+    SummaryOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count'| 'VWap' | 'Only';
+    SystemSummaryOperations: string[]; // for now just 'VWaP' and 'Only' are available
+}
+
 export interface CellValidationState extends IUserState {
     CellValidations: ICellValidationRule[];
 }
@@ -238,9 +243,7 @@ export interface QuickSearchState extends IUserState {
     Style: IStyle;
 }
 
-export interface CellSummaryState extends IUserState {
-    CellSumaryOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'Only';
-}
+
 
 export interface ShortcutState extends IUserState {
     Shortcuts: IShortcut[];

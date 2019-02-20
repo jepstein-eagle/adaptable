@@ -127,7 +127,7 @@ export module ColumnHelper {
 
     function LogMissingColumnWarning(columnId: string): void {
         if (!isSpecialColumn(columnId)) {
-            LoggingHelper.LogWarning("No column found named '" + columnId + "'");
+            LoggingHelper.LogAdaptableBlotterWarning("No column found named '" + columnId + "'");
         }
     }
 

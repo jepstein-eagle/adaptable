@@ -11,7 +11,7 @@ export abstract class ApiBase {
 
     public checkItemExists(item: any, name: string, type: string): boolean {
         if (!item) {
-          LoggingHelper.LogError("No " + type + " found with the name: " + name)
+          LoggingHelper.LogAdaptableBlotterError("No " + type + " found with the name: " + name)
           return false;
         }
         return true;

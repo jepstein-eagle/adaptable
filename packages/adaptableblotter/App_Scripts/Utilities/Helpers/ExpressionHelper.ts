@@ -107,7 +107,7 @@ export module ExpressionHelper {
 
             let column = columnBlotterList.find(x => x.ColumnId == columnId)
             if (!column) {
-                LoggingHelper.LogWarning("Could not find column id:" + columnId)
+                LoggingHelper.LogAdaptableBlotterWarning("Could not find column id:" + columnId)
                 isColumnSatisfied = true
             }
 

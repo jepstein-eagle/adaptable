@@ -2,6 +2,8 @@ import { ICellRendererFunc, ICellRendererParams, ColDef, GridOptions } from "ag-
 import { StringExtensions } from "../Utilities/Extensions/StringExtensions";
 import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
 import { ArrayExtensions } from "../Utilities/Extensions/ArrayExtensions";
+import { LoggingHelper } from "../Utilities/Helpers/LoggingHelper";
+import { LicenceType } from "../Utilities/Enums";
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy 
@@ -10,7 +12,20 @@ import { ArrayExtensions } from "../Utilities/Extensions/ArrayExtensions";
 
 export module agGridHelper {
 
-    export function  createCellRendererFunc(pcr: IPercentBar): ICellRendererFunc {
+    export function CheckLicenceKey(licenceType: LicenceType): void {
+        if (licenceType == LicenceType.Community) {
+            let licenceMessage: string = '\n';
+            licenceMessage += '***********************************************************************************\n'
+            licenceMessage += '********************* Adaptable Blotter Enterprise License ************************\n'
+            licenceMessage += '**************** This licence is an evaluation / community licence ****************\n'
+            licenceMessage += '************ It contains full functionality but you cannot load state *************\n'
+            licenceMessage += '********* Please contact sales@adaptabletools.com for upgrade information *********\n'
+            licenceMessage += '***********************************************************************************\n'
+            LoggingHelper.LogError(licenceMessage);
+        }
+    }
+
+    export function createCellRendererFunc(pcr: IPercentBar): ICellRendererFunc {
         let showNegatives: boolean = pcr.MinValue < 0;
         let showPositives: boolean = pcr.MaxValue > 0;
 
@@ -78,11 +93,11 @@ export module agGridHelper {
             }
             return eOuterDiv;
         }
-        
+
         return cellRendererFunc;
     }
 
-  
+
 
     export function cleanValue(value: string): string {
         if (value == null || value == 'null') {
@@ -94,12 +109,12 @@ export module agGridHelper {
         }
     }
 
-    export function getRenderedValue(percentBars: IPercentBar[], colDef: ColDef, valueToRender: any):any{
+    export function getRenderedValue(percentBars: IPercentBar[], colDef: ColDef, valueToRender: any): any {
         let isRenderedColumn = ArrayExtensions.ContainsItem(percentBars, colDef.field);
         if (isRenderedColumn) {
             return valueToRender;
         }
-        
+
         let render: any = colDef.cellRenderer
         if (typeof render == "string") {
             return agGridHelper.cleanValue(valueToRender)
@@ -107,10 +122,10 @@ export module agGridHelper {
         return render({ value: valueToRender }) || "";
     }
 
-    export function safeSetColDefs(colDefs:  ColDef[], gridOptions: GridOptions){
-          // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
-          gridOptions.api.setColumnDefs([]) 
-          gridOptions.api.setColumnDefs(colDefs)
+    export function safeSetColDefs(colDefs: ColDef[], gridOptions: GridOptions) {
+        // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
+        gridOptions.api.setColumnDefs([])
+        gridOptions.api.setColumnDefs(colDefs)
     }
 
 }

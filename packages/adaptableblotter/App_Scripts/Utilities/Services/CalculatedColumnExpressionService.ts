@@ -25,7 +25,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
             return { IsValid: true };
         }
         catch (e) {
-            LoggingHelper.LogWarning(e);
+            LoggingHelper.LogAdaptableBlotterWarning(e);
             return { IsValid: false, ErrorMsg: e.message };
         }
     }
@@ -48,7 +48,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
             })
         }
         catch (e) {
-            LoggingHelper.LogError(e);
+            LoggingHelper.LogAdaptableBlotterError(e);
             return null;
         }
     }

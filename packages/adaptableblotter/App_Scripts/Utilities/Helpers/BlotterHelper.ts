@@ -26,7 +26,7 @@ export module BlotterHelper {
             if (blotter.BlotterOptions.generalOptions.showMissingPrimaryKeyWarning == true) { // show an alert if that is the option  
                 blotter.api.alertApi.ShowError("No Primary Key", errorMessage, true)
             } else { // otherwise just log it
-                LoggingHelper.LogError(errorMessage);
+                LoggingHelper.LogAdaptableBlotterError(errorMessage);
             }
         }
     }

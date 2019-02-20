@@ -21,6 +21,7 @@ import { IChartService } from '../Services/Interface/IChartService';
 import { IPPStyle } from "./Reports/IPPStyle";
 import { IEvent } from './IEvent';
 import { IAdaptableStrategyCollection } from '../../Strategy/Interface/IStrategy';
+import { ILicenceService } from '../Services/Interface/ILicenceService';
 
 /**
  *  The only interface for the AdaptableBlotter  
@@ -45,6 +46,7 @@ export interface IAdaptableBlotter {
     AuditLogService: AuditLogService
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     ChartService: IChartService
+    LicenceService: ILicenceService
 
     // Grid Events
     onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any>;

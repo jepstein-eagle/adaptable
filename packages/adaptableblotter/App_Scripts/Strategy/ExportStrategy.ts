@@ -31,14 +31,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
 
         OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
-            LoggingHelper.LogInfo("Excel closed stopping all Live Excel");
+            LoggingHelper.LogAdaptableBlotterInfo("Excel closed stopping all Live Excel");
             this.CurrentLiveReports.forEach(cle => {
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                     SystemRedux.ReportStopLive(cle.Report, ExportDestination.OpenfinExcel));
             })
         })
         OpenfinHelper.OnWorkbookDisconnected().Subscribe((sender, workbook) => {
-            LoggingHelper.LogInfo("Workbook closed:" + workbook.name + ", Stopping Openfin Live Excel");
+            LoggingHelper.LogAdaptableBlotterInfo("Workbook closed:" + workbook.name + ", Stopping Openfin Live Excel");
             let liveReport = this.CurrentLiveReports.find(x => x.WorkbookName == workbook.name)
             if (liveReport) {
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
@@ -46,7 +46,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             }
         })
         OpenfinHelper.OnWorkbookSaved().Subscribe((sender, workbookSavedEvent) => {
-            LoggingHelper.LogInfo("Workbook Saved", workbookSavedEvent);
+            LoggingHelper.LogAdaptableBlotterInfo("Workbook Saved", workbookSavedEvent);
             let liveReport = this.CurrentLiveReports.find(x => x.WorkbookName == workbookSavedEvent.OldName)
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                 SystemRedux.ReportStopLive(liveReport.Report, ExportDestination.OpenfinExcel));
@@ -127,7 +127,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                             return OpenfinHelper.pushData(cle.WorkbookName, ReportAsArray)
                         })
                             .catch((reason) => {
-                                LoggingHelper.LogWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
+                                LoggingHelper.LogAdaptableBlotterWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
                                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                                     SystemRedux.ReportStopLive(cle.Report, ExportDestination.OpenfinExcel));
                                 this.blotter.api.alertApi.ShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
@@ -153,7 +153,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                             return iPushPullHelper.pushData(cle.WorkbookName, ReportAsArray, ippStyle)
                         })
                             .catch((reason) => {
-                                LoggingHelper.LogWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
+                                LoggingHelper.LogAdaptableBlotterWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
                                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                                     SystemRedux.ReportStopLive(cle.Report, ExportDestination.iPushPull));
                                 this.blotter.api.alertApi.ShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
@@ -163,10 +163,10 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 }
             })
             Promise.all(promises).then(() => {
-                LoggingHelper.LogSuccess("All live report data sent")
+                LoggingHelper.LogAdaptableBlotterSuccess("All live report data sent")
                 this.isSendingData = false
             }).catch(() => {
-                LoggingHelper.LogWarning("One live Excel failed to send data")
+                LoggingHelper.LogAdaptableBlotterWarning("One live Excel failed to send data")
                 this.isSendingData = false
             })
         }

@@ -93,6 +93,8 @@ import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { ChartStrategy } from '../Strategy/ChartStrategy';
 import { HALF_SECOND } from '../Utilities/Constants/GeneralConstants';
+import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
+import { LicenceService } from '../Utilities/Services/LicenceService';
 
 
 //icon to indicate toggle state
@@ -125,9 +127,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ValidationService: IValidationService
     public AuditLogService: AuditLogService
     public ChartService: IChartService
-
+    public LicenceService: ILicenceService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public FreeTextColumnService: IFreeTextColumnService
+ 
     public BlotterOptions: IAdaptableBlotterOptions
     public VendorGridName: any
     public EmbedColumnMenu: boolean;
@@ -163,6 +166,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ChartService = new ChartService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => { let column = this.getHypergridColumn(columnId); return this.valOrFunc(record, column) });
         this.FreeTextColumnService = new FreeTextColumnService(this);
+        this.LicenceService = new LicenceService(this);
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -201,7 +205,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
         if (this.abContainerElement == null) {
-            LoggingHelper.LogError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
+            LoggingHelper.LogAdaptableBlotterError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
             return;
         }
         this.abContainerElement.innerHTML = ""
@@ -217,7 +221,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
                 (e) => {
-                    LoggingHelper.LogError('Failed to Init AdaptableBlotterStore : ', e);
+                    LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
                     //for now i'm still initializing the strategies even if loading state has failed.... 
                     //we may revisit that later
                     this.Strategies.forEach(strat => strat.InitializeWithRedux())
@@ -225,7 +229,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             .then(
                 () => this.initInternalGridLogic(),
                 (e) => {
-                    LoggingHelper.LogError('Failed to Init Strategies : ', e);
+                    LoggingHelper.LogAdaptableBlotterError('Failed to Init Strategies : ', e);
                     //for now i'm still initializing the grid even if loading state has failed.... 
                     //we may revisit that later
                     this.initInternalGridLogic()
@@ -460,7 +464,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public getColumnDataType(column: any): DataType {
         //Some columns can have no ID or Title. we return string as a consequence but it needs testing
         if (!column) {
-            LoggingHelper.LogWarning('columnId is undefined returning String for Type')
+            LoggingHelper.LogAdaptableBlotterWarning('columnId is undefined returning String for Type')
             return DataType.String;
         }
 
@@ -512,7 +516,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                                     break;
                             }
                         }
-                        LoggingHelper.LogWarning('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType)
+                        LoggingHelper.LogAdaptableBlotterWarning('No defined type for column ' + column.name + ". Defaulting to type of first value: " + dataType)
                     }
                     /* falls through */
                     default:
@@ -538,7 +542,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 //  }
             }
         }
-        LoggingHelper.LogWarning('columnId does not exist')
+        LoggingHelper.LogAdaptableBlotterWarning('columnId does not exist')
         return DataType.String;
     }
 
@@ -668,7 +672,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //in our current use cases as of 02/10/2017 it should never happens that we
             //check for editable on a different column that we edit
             else {
-                LoggingHelper.LogWarning("Editing " + this.hyperGrid.cellEditor.column.name + " but checking for editable on column " + columnId)
+                LoggingHelper.LogAdaptableBlotterWarning("Editing " + this.hyperGrid.cellEditor.column.name + " but checking for editable on column " + columnId)
             }
         }
         else {
@@ -1384,7 +1388,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 return originalGetCellReturn || this.hyperGrid.Bars.get(declaredRendererName);
             }
             catch (err) {
-                LoggingHelper.LogError("Error during GetCell", err)
+                LoggingHelper.LogAdaptableBlotterError("Error during GetCell", err)
             }
         };
         this.hyperGrid.addEventListener('fin-column-sort', (e: any) => {

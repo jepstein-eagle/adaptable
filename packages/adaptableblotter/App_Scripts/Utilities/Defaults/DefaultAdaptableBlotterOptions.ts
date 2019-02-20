@@ -7,6 +7,7 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     userName: GeneralConstants.USER_NAME,
     blotterId: GeneralConstants.BLOTTER_ID,
     predefinedConfig: null,
+    licenceKey: '',
     auditOptions: {
         auditCellEdits: false,
         auditFunctionEvents: false,
@@ -17,7 +18,7 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     },
     configServerOptions: {
         enableConfigServer: false,
-        configServerUrl: "",
+        configServerUrl: '',
     },
     containerOptions: {
         adaptableBlotterContainer: "adaptableBlotter",

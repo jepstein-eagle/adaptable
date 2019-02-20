@@ -32,12 +32,12 @@ class AdaptableBlotterReduxLocalStorageEngine implements IAdaptableBlotterReduxL
         .then(response => response.json())
         //     .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
         .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
-        .catch(err => LoggingHelper.LogError(err));
+        .catch(err => LoggingHelper.LogAdaptableBlotterError(err));
     } else if (this.predefinedConfig != null) {
       return new Promise((resolve) => resolve(this.predefinedConfig))
         //      .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
         .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
-        .catch(err => LoggingHelper.LogError(err));
+        .catch(err => LoggingHelper.LogAdaptableBlotterError(err));
     }
     else {
       return new Promise((resolve) => {
