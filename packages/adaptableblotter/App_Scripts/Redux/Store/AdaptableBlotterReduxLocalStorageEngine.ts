@@ -1,9 +1,10 @@
 import * as ReduxStorage from 'redux-storage'
 import * as fetch from 'isomorphic-fetch';
-import { MergeState } from './AdaptableBlotterReduxMerger'
+import { MergeStateFunctionChooser } from './AdaptableBlotterReduxMerger'
 import { Helper } from '../../Utilities/Helpers/Helper'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
+import { LicenceType } from '../../Utilities/Enums';
 
 const checkStatus = (response: Response) => {
   const error = new Error(response.statusText);
@@ -11,35 +12,32 @@ const checkStatus = (response: Response) => {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-
-  //error.response = response;
   throw error;
 };
 
 interface IAdaptableBlotterReduxLocalStorageEngine extends ReduxStorage.StorageEngine { }
 
-
-
 class AdaptableBlotterReduxLocalStorageEngine implements IAdaptableBlotterReduxLocalStorageEngine {
-  constructor(private key: string, private predefinedConfig: object) { }
+  constructor(private key: string, private predefinedConfig: object, private licenceType: LicenceType) { }
 
   load(): Promise<any> {
     const jsonState = localStorage.getItem(this.key);
-    let parsedJsonState = JSON.parse(jsonState/*, this.reviver*/) || {}
+    let parsedJsonState = JSON.parse(jsonState) || {}
     if (typeof this.predefinedConfig == 'string' && StringExtensions.IsNotNullOrEmpty(this.predefinedConfig)) {
+      // we have config in a file so lets merge it with the other state
       return fetch(this.predefinedConfig)
         .then(checkStatus)
         .then(response => response.json())
-        //     .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
-        .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
+        .then(parsedPredefinedState => MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceType))
         .catch(err => LoggingHelper.LogAdaptableBlotterError(err));
     } else if (this.predefinedConfig != null) {
+      // we have config as an object so need to merge that
       return new Promise((resolve) => resolve(this.predefinedConfig))
-        //      .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
-        .then(parsedPredefinedState => MergeState(parsedPredefinedState, parsedJsonState))
+        .then(parsedPredefinedState => MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceType))
         .catch(err => LoggingHelper.LogAdaptableBlotterError(err));
     }
     else {
+      // no predefined config so nothing to merge
       return new Promise((resolve) => {
         resolve(parsedJsonState || {});
       }).catch(rejectWithMessage);
@@ -59,6 +57,6 @@ function rejectWithMessage(error: any) {
   return Promise.reject(error.message);
 }
 
-export function createEngine(key: string, predefinedConfig: object): ReduxStorage.StorageEngine {
-  return new AdaptableBlotterReduxLocalStorageEngine(key, predefinedConfig)
+export function createEngine(key: string, predefinedConfig: object, licenceType: LicenceType): ReduxStorage.StorageEngine {
+  return new AdaptableBlotterReduxLocalStorageEngine(key, predefinedConfig, licenceType)
 }

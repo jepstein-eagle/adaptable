@@ -168,6 +168,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.EmbedColumnMenu = true
         this.isInitialised = false;
         this.hasFloatingFilter = true;
+        // set the licence first
+        this.LicenceService = new LicenceService(this);
+        
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -179,7 +182,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.StyleService = new StyleService(this);
         this.ChartService = new ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService(this);
-        this.LicenceService = new LicenceService(this);
+       
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi(this);

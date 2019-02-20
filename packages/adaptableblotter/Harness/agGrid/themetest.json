@@ -10,5 +10,11 @@
 				"Url": "Goodnight Cowboy"
 			}
 		]
+	},
+	"QuickSearch": {
+		"QuickSearchText": "Pen"
+	},
+	"Dashboard": {
+		"DashboardVisibility": "Minimised"
 	}
 }

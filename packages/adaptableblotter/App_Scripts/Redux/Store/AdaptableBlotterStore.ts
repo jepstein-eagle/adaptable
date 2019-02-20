@@ -1,4 +1,4 @@
-import { ExportDestination, MathOperation, MessageType } from '../../Utilities/Enums';
+import { ExportDestination, MathOperation, MessageType, LicenceType } from '../../Utilities/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
@@ -6,7 +6,7 @@ import * as DeepDiff from 'deep-diff'
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createEngine as createEngineRemote } from './AdaptableBlotterReduxStorageClientEngine';
 import { createEngine as createEngineLocal } from './AdaptableBlotterReduxLocalStorageEngine';
-import { MergeState } from './AdaptableBlotterReduxMerger';
+import { MergeStateCommunityLicence, MergeStateEnterpriseLicence, MergeStateAdvancedLicence } from './AdaptableBlotterReduxMerger';
 import filter from 'redux-storage-decorator-filter'
 
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
@@ -78,7 +78,7 @@ import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';
-import {  ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
+import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
 import { ICellSummmary } from "../../Utilities/Interface/SelectedCell/ICellSummmary";
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
@@ -221,7 +221,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       engineReduxStorage = createEngineRemote(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
     }
     else {
-      engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig);
+      engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceType);
     }
 
     // engine with migrate is where we manage the bits that we dont want to persist, but need to keep in the store
@@ -254,7 +254,19 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       ]);
 
     //here we use our own merger function which is derived from redux simple merger
-    reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeState);
+    // we now use a different Merge function based on the licence type to ensure that state is only loaded if user has access
+    switch (blotter.LicenceService.LicenceType) {
+      case LicenceType.Community:
+        reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateCommunityLicence);
+        break;
+      case LicenceType.Enterprise:
+        reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateEnterpriseLicence);
+        break;
+      case LicenceType.Advanced:
+        reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateAdvancedLicence);
+        break;
+    }
+
     loadStorage = ReduxStorage.createLoader(engineWithFilter);
     let composeEnhancers
     if ("production" != process.env.NODE_ENV) {
@@ -530,7 +542,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
          * Action: If it is valid, then clear any error; otherwise set one
          */
         case CalculatedColumnRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID: {
-         let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).expression);
+          let returnObj = blotter.CalculatedColumnExpressionService.IsExpressionValid((<CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction>action).expression);
           if (!returnObj.IsValid) {
             middlewareAPI.dispatch(SystemRedux.CalculatedColumnSetErrorMessage(returnObj.ErrorMsg))
           }

@@ -134,7 +134,7 @@ function InitTradeBlotter() {
       blotterId: getBlotterIdforGrid(), // id for blotter
       licenceKey: 'xs2543-as6b8osw3-e94syjze7a',
 
-      //   predefinedConfig: "themetest.json",
+         predefinedConfig: myJson,
 
       auditOptions: {
         //     auditCellEdits: true,
@@ -724,4 +724,23 @@ function currencyRendereragGrid(params) {
 }
 
 
-
+let myJson = {
+	"Theme": {
+		"UserThemes": [
+			{
+				"Name": "Hello",
+				"Url": "Hello world"
+			},
+			{
+				"Name": "Goodnight",
+				"Url": "Goodnight Cowboy"
+			}
+		]
+	},
+	"QuickSearch": {
+		"QuickSearchText": "Pen"
+	},
+	"Dashboard": {
+		"DashboardVisibility": "Minimised"
+	}
+}

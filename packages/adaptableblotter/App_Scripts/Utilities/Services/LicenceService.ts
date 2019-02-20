@@ -1,6 +1,5 @@
 import { ILicenceService } from './Interface/ILicenceService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { StringExtensions } from '../Extensions/StringExtensions';
 import { LicenceType } from '../Enums';
 
 /*
@@ -18,19 +17,16 @@ export class LicenceService implements ILicenceService {
 
     LicenceType: LicenceType;
 
-
     private setLicenceType(): LicenceType {
         let myString: string = this.blotter.BlotterOptions.licenceKey;
         let myArr: string[] = myString.split("-");
 
-        let teamId: string = myArr[0];
-       
         let enterpriseId: string = myArr[1].replace(/\D/g, '');
-        let isEnterpriseValid: boolean = this.isPrime(Number(enterpriseId));
-     
+        let isEnterpriseValid: boolean = this.isPrimeNumber(Number(enterpriseId));
+
         let chartId: string = myArr[2].replace(/\D/g, '');
-        let isChartValid: boolean = this.isPrime(Number(chartId));
-       
+        let isChartValid: boolean = this.isPrimeNumber(Number(chartId));
+
         if (isChartValid) {
             return LicenceType.Advanced
         } else if (isEnterpriseValid) {
@@ -39,7 +35,7 @@ export class LicenceService implements ILicenceService {
         return LicenceType.Community;
     }
 
-    private isPrime(num: number): boolean {
+    private isPrimeNumber(num: number): boolean {
         for (let i = 2, s = Math.sqrt(num); i <= s; i++) {
             if (num % i === 0) {
                 return false;
