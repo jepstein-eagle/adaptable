@@ -206,6 +206,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
                         <FlashingCellSummary
                             key={StrategyConstants.FlashingCellsStrategyId}
                             SummarisedColumn={this.state.SelectedColumn}
+                            Blotter ={this.props.Blotter}
                             AccessLevel={this.getAccessLevel(StrategyConstants.FlashingCellsStrategyId)}
                         />
                     </div>)

@@ -93,7 +93,7 @@ class ConditionalStylePopupComponent extends React.Component<ConditionalStylePop
             <PanelWithButton headerText={StrategyConstants.ConditionalStyleStrategyName} button={newButton} bsStyle={StyleConstants.PRIMARY_BSSTYLE} cssClassName={cssClassName} glyphicon={StrategyConstants.ConditionalStyleGlyph} infoBody={infoBody}>
 
                 {this.props.ConditionalStyles.length == 0 ?
-                    <HelpBlock>Click 'New' to create a new conditional style to be applied at row or column level.</HelpBlock>
+                    <HelpBlock>Click 'New' to create a new conditional style to be applied at row or column level when a rule set by you is met.</HelpBlock>
                :
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={conditionalStyles} />
                 }

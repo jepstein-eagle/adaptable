@@ -25,15 +25,17 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
     render(): any {
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__flashingcells";
         let flashingCell: IFlashingCell = this.props.FlashingCells.find(fc => fc.ColumnId == this.props.SummarisedColumn.ColumnId);
+        let isFlashingCellColumn: boolean = (flashingCell && flashingCell.IsLive);
 
-        let showFlashingButton = (!flashingCell || !flashingCell.IsLive) ?
-            <Button onClick={() => this.onFlashingSelectedChanged(flashingCell)} bsStyle="info" bsSize="small">Flashing Off</Button>
-            : <Button onClick={() => this.onFlashingSelectedChanged(flashingCell)} bsStyle="success" bsSize="small">Flashing On</Button>
+        let message: string = isFlashingCellColumn ? "Flashing on" : "Flashing off"
+        let showFlashingButton = isFlashingCellColumn ?
+            <Button onClick={() => this.onFlashingSelectedChanged(flashingCell)} bsStyle="default" bsSize="small">Turn Off</Button>
+            : <Button onClick={() => this.onFlashingSelectedChanged(flashingCell)} bsStyle="deffault" bsSize="small">Turn On</Button>
 
         let colItems: IColItem[] = []
         colItems.push({ Size: 3, Content: <b>{StrategyConstants.FlashingCellsStrategyName}</b> });
-        colItems.push({ Size: 5, Content: showFlashingButton });
-        colItems.push({ Size: 3, Content: null });
+        colItems.push({ Size: 7, Content: message });
+        colItems.push({ Size: 2, Content: showFlashingButton });
 
         return <AdaptableObjectRow cssClassName={cssWizardClassName} colItems={colItems} />
     }

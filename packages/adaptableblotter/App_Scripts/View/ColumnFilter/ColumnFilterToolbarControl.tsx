@@ -77,7 +77,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                 {' '}
                 {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) &&
                     <span>
-                        <AdaptablePopover cssClassName={cssClassName} headerText="Active Filters" bodyText={[activeFiltersPanel]} tooltipText={"Show Filter Details"} useButton={true} triggerAction={"click"} popoverMinWidth={350} />
+                        <AdaptablePopover cssClassName={cssClassName} headerText="" bodyText={[activeFiltersPanel]} tooltipText={"Show Filter Details"} useButton={true} triggerAction={"click"} popoverMinWidth={400} />
                         {' '}
                         <ButtonClear onClick={() => this.onClearFilters()}
                             bsStyle={"primary"}

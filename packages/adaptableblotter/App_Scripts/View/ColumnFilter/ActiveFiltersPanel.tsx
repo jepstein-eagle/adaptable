@@ -28,8 +28,8 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
 
         let colItems: IColItem[] = [
             { Content: "Column", Size: 4 },
-            { Content: "Filter", Size: 4 },
-            { Content: "", Size: 4 },
+            { Content: "Filter", Size: 5 },
+            { Content: "", Size: 3 },
         ]
 
         let rowElements: any[] = []
