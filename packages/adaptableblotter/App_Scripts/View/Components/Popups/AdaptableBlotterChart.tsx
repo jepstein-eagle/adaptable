@@ -30,7 +30,6 @@ export interface IAdaptableBlotterChartProps extends React.ClassAttributes<Adapt
 
 export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChartProps, {}> {
   render() {
-    
     let cssClassName: string = StyleConstants.AB_STYLE
 
     let chartContainer: HTMLElement = UIHelper.getChartContainer(this.props.AdaptableBlotter.BlotterOptions, document, this.props.showModal);
@@ -60,13 +59,9 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
     }
     let bodyElement: any = AdaptableViewFactory[ScreenPopups.ChartDisplayPopup];
 
-
-
     var body: any = React.createElement(bodyElement, commonProps);
 
     // only do this if its NOT default I guess...
-
-
 
     return (
       <div>
@@ -85,10 +80,11 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
             </div>
           </Modal>
           :
-          <div style={{ marginLeft: '25px', marginBottom: '25px' }}>
-            {body}
-          </div>
-
+          ReactDOM.createPortal(
+            (<div style={{ marginLeft: '25px', marginBottom: '25px' }}>
+              {body}
+            </div>),
+            chartContainer)
         }
       </div>
     );

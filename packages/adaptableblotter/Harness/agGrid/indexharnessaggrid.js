@@ -101,7 +101,7 @@ function InitTradeBlotter() {
           iconKey: 'filter',
           toolPanel: 'agFiltersToolPanel',
         },
-        /** 
+        /**
         {
           id: 'customStats',
           labelDefault: 'Custom Stats',
@@ -153,6 +153,9 @@ function InitTradeBlotter() {
         //     auditUserStateChanges: true,
         //     auditInternalStateChanges: true,
         //        pingInterval: 120
+      },
+      containerOptions: {
+        chartContainer: 'chart-container-x'
       },
       configServerOptions: {
         enableConfigServer: false,

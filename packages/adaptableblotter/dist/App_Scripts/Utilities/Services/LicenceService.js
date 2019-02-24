@@ -15,6 +15,7 @@ class LicenceService {
         this.LicenceType = this.setLicenceType();
     }
     setLicenceType() {
+<<<<<<< HEAD
         let licenceKey = this.blotter.BlotterOptions.licenceKey;
         // if key is empty return Community
         if (StringExtensions_1.StringExtensions.IsNullOrEmpty(licenceKey)) {
@@ -66,6 +67,29 @@ class LicenceService {
             return Enums_1.LicenceType.Standard;
         }
         return Enums_1.LicenceType.Enterprise;
+=======
+        let myString = this.blotter.BlotterOptions.licenceKey;
+        let myArr = myString.split("-");
+        let enterpriseId = myArr[1].replace(/\D/g, '');
+        let isEnterpriseValid = this.isPrimeNumber(Number(enterpriseId));
+        let chartId = myArr[2].replace(/\D/g, '');
+        let isChartValid = this.isPrimeNumber(Number(chartId));
+        if (isChartValid) {
+            return Enums_1.LicenceType.Advanced;
+        }
+        else if (isEnterpriseValid) {
+            return Enums_1.LicenceType.Enterprise;
+        }
+        return Enums_1.LicenceType.Community;
+    }
+    isPrimeNumber(num) {
+        for (let i = 2, s = Math.sqrt(num); i <= s; i++) {
+            if (num % i === 0) {
+                return false;
+            }
+        }
+        return num > 1;
+>>>>>>> Put charts in the given chart container
     }
     isPrimeNumber(num) {
         for (let i = 2, s = Math.sqrt(num); i <= s; i++) {
