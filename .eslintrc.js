@@ -12,7 +12,9 @@ module.exports = {
     "strict": 0,
     "max-len": 0,
     "func-names": 0,
+    "vars-on-top": 0,
     "no-await-in-loop": 0,
+    "no-undef": 1,
     "no-param-reassign": 0,
     "no-use-before-define": 1,
     "no-prototype-builtins": 0,
@@ -37,5 +39,9 @@ module.exports = {
     "it": true,
     "beforeEach": true,
     "afterEach": true,
+    "document": true,
+    "window": true,
+    "harness": true,
+    "agGrid": true,
   }
 };
