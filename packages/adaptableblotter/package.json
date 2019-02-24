@@ -54,7 +54,6 @@
   "devDependencies": {
     "ag-grid-community": "^19.1.4",
     "ag-grid-enterprise": "^19.1.4",
-    "ag-grid-react": "^19.1.2",
     "amdefine": "^1.0.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^6.4.1",
