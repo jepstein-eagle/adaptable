@@ -13,16 +13,26 @@ import { LicenceType } from "../Utilities/Enums";
 export module agGridHelper {
 
     export function CheckLicenceKey(licenceType: LicenceType): void {
-        if (licenceType == LicenceType.Community) {
-            let licenceMessage: string = '\n';
-            licenceMessage += '***********************************************************************************\n'
-            licenceMessage += '********************* Adaptable Blotter Enterprise License ************************\n'
-            licenceMessage += '**************** This licence is an evaluation / community licence ****************\n'
-            licenceMessage += '************ It contains full functionality but you cannot load state *************\n'
-            licenceMessage += '********* Please contact sales@adaptabletools.com for upgrade information *********\n'
-            licenceMessage += '***********************************************************************************\n'
-            LoggingHelper.LogError(licenceMessage);
+        switch (licenceType) {
+            case LicenceType.Community:
+                let licenceMessage: string = '\n';
+                licenceMessage += '***********************************************************************************\n'
+                licenceMessage += '********************* Adaptable Blotter Enterprise License ************************\n'
+                licenceMessage += '**************** This licence is an evaluation / community licence ****************\n'
+                licenceMessage += '************ It contains full functionality but you cannot load state *************\n'
+                licenceMessage += '********* Please contact sales@adaptabletools.com for upgrade information *********\n'
+                licenceMessage += '***********************************************************************************\n'
+                LoggingHelper.LogError(licenceMessage);
+                break;
+
+            case LicenceType.Standard:
+                LoggingHelper.LogAdaptableBlotterSuccess(" Licence Type: Standard")
+                break;
+            case LicenceType.Enterprise:
+                LoggingHelper.LogAdaptableBlotterSuccess(" Licence Type: Enterprise")
+                break;
         }
+
     }
 
     export function createCellRendererFunc(pcr: IPercentBar): ICellRendererFunc {

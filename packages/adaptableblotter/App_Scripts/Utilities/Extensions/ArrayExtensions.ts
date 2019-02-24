@@ -2,6 +2,18 @@ import { SortOrder } from "../Enums";
 
 export module ArrayExtensions {
 
+    export function GetLength(arrayToCheck: any[]): number {
+        return arrayToCheck.length;
+    }
+
+    export function CorrectLength(arrayToCheck: any[], requiredLength: number): boolean {
+        return GetLength(arrayToCheck)== requiredLength;
+    }
+
+    export function NotCorrectLength(arrayToCheck: any[], requiredLength: number): boolean {
+        return !CorrectLength(arrayToCheck, requiredLength);
+    }
+
     export function AddItem(array: any[], itemToAdd: any): void {
       if(this.NotContainsItem(array, itemToAdd)){
           array.push(itemToAdd);

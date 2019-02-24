@@ -6,7 +6,7 @@ import * as DeepDiff from 'deep-diff'
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createEngine as createEngineRemote } from './AdaptableBlotterReduxStorageClientEngine';
 import { createEngine as createEngineLocal } from './AdaptableBlotterReduxLocalStorageEngine';
-import { MergeStateCommunityLicence, MergeStateEnterpriseLicence, MergeStateAdvancedLicence } from './AdaptableBlotterReduxMerger';
+import { MergeStateCommunityLicence, MergeStateStandardLicence, MergeStateEnterpriseLicence } from './AdaptableBlotterReduxMerger';
 import filter from 'redux-storage-decorator-filter'
 
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
@@ -259,11 +259,11 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       case LicenceType.Community:
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateCommunityLicence);
         break;
+      case LicenceType.Standard:
+        reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateStandardLicence);
+        break;
       case LicenceType.Enterprise:
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateEnterpriseLicence);
-        break;
-      case LicenceType.Advanced:
-        reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateAdvancedLicence);
         break;
     }
 

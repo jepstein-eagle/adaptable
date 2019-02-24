@@ -273,6 +273,6 @@ export enum FilterOnDataChangeOptions {
 
 export enum LicenceType {
     Community = 'Community',
-    Enterprise = 'Enterprise',
-    Advanced = 'Advanced'
+    Standard = 'Standard',
+    Enterprise = 'Enterprise'
 }

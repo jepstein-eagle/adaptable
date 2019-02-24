@@ -1,6 +1,8 @@
 import { ILicenceService } from './Interface/ILicenceService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { LicenceType } from '../Enums';
+import { StringExtensions } from '../Extensions/StringExtensions';
+import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 
 /*
 Class to manage licence keys.  
@@ -18,20 +20,74 @@ export class LicenceService implements ILicenceService {
     LicenceType: LicenceType;
 
     private setLicenceType(): LicenceType {
-        let myString: string = this.blotter.BlotterOptions.licenceKey;
-        let myArr: string[] = myString.split("-");
 
-        let enterpriseId: string = myArr[1].replace(/\D/g, '');
-        let isEnterpriseValid: boolean = this.isPrimeNumber(Number(enterpriseId));
+        let licenceKey: string = this.blotter.BlotterOptions.licenceKey;
 
-        let chartId: string = myArr[2].replace(/\D/g, '');
-        let isChartValid: boolean = this.isPrimeNumber(Number(chartId));
-
-        if (isChartValid) {
-            return LicenceType.Advanced
-        } else if (isEnterpriseValid) {
-            return LicenceType.Enterprise;
+        if (StringExtensions.IsNullOrEmpty(licenceKey)) {
+            alert(1)
+            return LicenceType.Community;
         }
+
+        let licenceKeyArray: string[] = licenceKey.split("-");
+        if (ArrayExtensions.NotCorrectLength(licenceKeyArray, 3)) {
+            alert(2)
+              return LicenceType.Community;
+        }
+
+        // standard licence - allows saving of items and loading of state but not access to enterprise features (charts)
+        // the whole key should be 9 characters of which 4 are numbers
+        let standardIdAlphaNumeric: string = licenceKeyArray[1];
+        if (!this.isCorrectLength(standardIdAlphaNumeric, 9)) {
+            alert(3)
+               return LicenceType.Community;
+        }
+        let standardIdString: string = standardIdAlphaNumeric.replace(/\D/g, '');
+        if (!this.isCorrectLength(standardIdString, 3)) {
+            alert(4)
+            alert(standardIdString)
+               return LicenceType.Community;
+        }
+
+         let standardIdNumber = Number(standardIdString);
+        if(isNaN(standardIdNumber)){
+            alert(5)
+                return LicenceType.Community;       
+        }
+        let isStandardIdValid: boolean = this.isPrimeNumber(standardIdNumber);
+        if(!isStandardIdValid){
+            return LicenceType.Community;
+        }
+
+        // enterprise licence - allows saving and loading of state of all items (including charts)
+        // the whole key should be 10 characters of which 4 are numbers
+        let enterpriseIdAlphaNumeric: string = licenceKeyArray[2];
+        if (!this.isCorrectLength(enterpriseIdAlphaNumeric, 10)) {
+              return LicenceType.Standard;
+        }
+        let enterpriseIdString: string = enterpriseIdAlphaNumeric.replace(/\D/g, '');
+        if (!this.isCorrectLength(enterpriseIdString, 3)) {
+            alert(7)
+            return LicenceType.Standard;
+        }
+
+        // need a NAN check???
+        let enterpriseIdNumber = Number(enterpriseIdString);
+        if(isNaN(enterpriseIdNumber)){
+            alert(8)
+            return LicenceType.Standard;
+        }
+        let isEnterpriseValid: boolean = this.isPrimeNumber(Number(enterpriseIdNumber));
+        if(!isEnterpriseValid){
+            return LicenceType.Standard;
+        }
+
+
+        if (isEnterpriseValid) {
+            return LicenceType.Enterprise
+        } else if (isStandardIdValid) {
+            return LicenceType.Standard;
+        }
+
         return LicenceType.Community;
     }
 
@@ -42,6 +98,10 @@ export class LicenceService implements ILicenceService {
             }
         }
         return num > 1;
+    }
+
+    private isCorrectLength(stringToCheck: string, requiredLength: number): boolean {
+        return stringToCheck.length === requiredLength;
     }
 
 }

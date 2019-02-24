@@ -15,10 +15,10 @@ export function MergeStateFunctionChooser(oldState: any, newState: any, licenceT
   switch (licenceType) {
     case LicenceType.Community:
       return MergeStateCommunityLicence(oldState, newState);
+    case LicenceType.Standard:
+      return MergeStateStandardLicence(oldState, newState);
     case LicenceType.Enterprise:
       return MergeStateEnterpriseLicence(oldState, newState);
-    case LicenceType.Advanced:
-      return MergeStateAdvancedLicence(oldState, newState);
   }
 }
 
@@ -28,12 +28,12 @@ export function MergeStateCommunityLicence(oldState: any, newState: any) {
 }
 
 // We merge most state - except for Chart (and others to come)
-export function MergeStateEnterpriseLicence(oldState: any, newState: any) {
+export function MergeStateStandardLicence(oldState: any, newState: any) {
   return MergeState(oldState, newState, ['Chart']);
 }
 
 // We merge everything 
-export function MergeStateAdvancedLicence(oldState: any, newState: any) {
+export function MergeStateEnterpriseLicence(oldState: any, newState: any) {
   return MergeState(oldState, newState, []);
 }
 

@@ -16,6 +16,15 @@ function clearQuickSearchViaAPI() {
   adaptableblotter.api.quickSearchApi.Clear()
 }
 
+function getCommunityKey(){
+  return "blah"
+}
+function getStandardKey(){
+  return 'xs2543-as6b8osw3-e94syjze8a'
+}
+function getEnterpriseKey(){
+  return 'xs2543-as6b8osw3-e94syjze7a'
+}
 function getColumns() {
   this.gridOptions.api.setColumnDefs(getTradeSchema())
 }
@@ -132,7 +141,9 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: "demo user", // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
-      licenceKey: 'xs2543-as6b8osw3-e94syjze7a',
+   //   licenceKey: getCommunityKey(),
+      licenceKey: getStandardKey(),
+  //    licenceKey: getEnterpriseKey(),
 
          predefinedConfig: myJson,
 
