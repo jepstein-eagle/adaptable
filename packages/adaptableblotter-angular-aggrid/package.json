@@ -24,9 +24,9 @@
     "@angular/platform-browser-dynamic": "^6.1.7",
     "@angular/router": "^6.1.7",
     "adaptableblotter": "^3.2.7",
-    "ag-grid-angular": "^19.1.2",
-    "ag-grid-community": "^19.1.4",
-    "ag-grid-enterprise": "^19.1.4",
+    "ag-grid-angular": "^20.1.0",
+    "ag-grid-community": "^20.1.0",
+    "ag-grid-enterprise": "^20.1.0",
     "core-js": "^2.5.4",
     "rxjs": "^6.2.2",
     "zone.js": "~0.8.26"

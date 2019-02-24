@@ -3,5 +3,6 @@
     "todoIgnore":   ["**/node_modules/**","**/typings/**","**/dist/**"],
     "files.associations": {"*.ejs": "html", "*.abjson" : "json"},
     "workbench.editor.enablePreview": false,
-    "workbench.editor.enablePreviewFromQuickOpen": false
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+    "git.ignoreLimitWarning": true
 }

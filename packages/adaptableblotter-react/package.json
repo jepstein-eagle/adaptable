@@ -103,9 +103,9 @@
 		"typescript": "^3.0.1"
 	},
 	"dependencies": {
-		"ag-grid-community": "^19.1.4",
-		"ag-grid-enterprise": "^19.1.4",
-		"ag-grid-react": "^19.1.2"
+		"ag-grid-community": "^20.1.0",
+		"ag-grid-enterprise": "^20.1.0",
+		"ag-grid-react": "^20.1.0"
 	},
 	"peerDependencies": {
 		"mathjs": "^5.1.1",
