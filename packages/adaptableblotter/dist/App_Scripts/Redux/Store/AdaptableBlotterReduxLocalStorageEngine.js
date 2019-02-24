@@ -10,32 +10,33 @@ const checkStatus = (response) => {
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
-    //error.response = response;
     throw error;
 };
 class AdaptableBlotterReduxLocalStorageEngine {
-    constructor(key, predefinedConfig) {
+    constructor(key, predefinedConfig, licenceType) {
         this.key = key;
         this.predefinedConfig = predefinedConfig;
+        this.licenceType = licenceType;
     }
     load() {
         const jsonState = localStorage.getItem(this.key);
-        let parsedJsonState = JSON.parse(jsonState /*, this.reviver*/) || {};
+        let parsedJsonState = JSON.parse(jsonState) || {};
         if (typeof this.predefinedConfig == 'string' && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.predefinedConfig)) {
+            // we have config in a file so lets merge it with the other state
             return fetch(this.predefinedConfig)
                 .then(checkStatus)
                 .then(response => response.json())
-                //     .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
-                .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeState(parsedPredefinedState, parsedJsonState))
+                .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceType))
                 .catch(err => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(err));
         }
         else if (this.predefinedConfig != null) {
+            // we have config as an object so need to merge that
             return new Promise((resolve) => resolve(this.predefinedConfig))
-                //      .then(parsedPredefinedState => ForcePredefinedItems(parsedPredefinedState))
-                .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeState(parsedPredefinedState, parsedJsonState))
+                .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceType))
                 .catch(err => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(err));
         }
         else {
+            // no predefined config so nothing to merge
             return new Promise((resolve) => {
                 resolve(parsedJsonState || {});
             }).catch(rejectWithMessage);
@@ -53,7 +54,7 @@ class AdaptableBlotterReduxLocalStorageEngine {
 function rejectWithMessage(error) {
     return Promise.reject(error.message);
 }
-function createEngine(key, predefinedConfig) {
-    return new AdaptableBlotterReduxLocalStorageEngine(key, predefinedConfig);
+function createEngine(key, predefinedConfig, licenceType) {
+    return new AdaptableBlotterReduxLocalStorageEngine(key, predefinedConfig, licenceType);
 }
 exports.createEngine = createEngine;

@@ -91,7 +91,7 @@ class ColumnInfoPopupComponent extends React.Component {
             }
             if (this.isStrategyVisible(StrategyConstants.FlashingCellsStrategyId) && this.state.SelectedColumn.DataType == Enums_1.DataType.Number) {
                 summaries.push(React.createElement("div", { key: StrategyConstants.FlashingCellsStrategyId, className: this.isStrategyReadOnly(StrategyConstants.FlashingCellsStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },
-                    React.createElement(FlashingCellSummary_1.FlashingCellSummary, { key: StrategyConstants.FlashingCellsStrategyId, SummarisedColumn: this.state.SelectedColumn, AccessLevel: this.getAccessLevel(StrategyConstants.FlashingCellsStrategyId) })));
+                    React.createElement(FlashingCellSummary_1.FlashingCellSummary, { key: StrategyConstants.FlashingCellsStrategyId, SummarisedColumn: this.state.SelectedColumn, Blotter: this.props.Blotter, AccessLevel: this.getAccessLevel(StrategyConstants.FlashingCellsStrategyId) })));
             }
             if (this.isStrategyVisible(StrategyConstants.CalculatedColumnStrategyId) && this.props.CalculatedColumns.findIndex(c => c.ColumnId == this.state.SelectedColumn.ColumnId) != -1) {
                 summaries.push(React.createElement("div", { key: StrategyConstants.CalculatedColumnStrategyId, className: this.isStrategyReadOnly(StrategyConstants.CalculatedColumnStrategyId) ? GeneralConstants.READ_ONLY_STYLE : "" },

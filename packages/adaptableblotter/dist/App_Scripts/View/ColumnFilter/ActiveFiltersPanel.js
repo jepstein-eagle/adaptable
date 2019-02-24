@@ -15,8 +15,8 @@ class ActiveFiltersPanel extends React.Component {
         let cssClassName = this.props.cssClassName + StyleConstants.ACTIVE_FILTERS;
         let colItems = [
             { Content: "Column", Size: 4 },
-            { Content: "Filter", Size: 4 },
-            { Content: "", Size: 4 },
+            { Content: "Filter", Size: 5 },
+            { Content: "", Size: 3 },
         ];
         let rowElements = [];
         this.props.ColumnFilters.forEach((columnFilter, index) => {

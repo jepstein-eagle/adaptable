@@ -52,7 +52,7 @@ class ConditionalStylePopupComponent extends React.Component {
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.ConditionalStyleStrategyName, button: newButton, bsStyle: StyleConstants.PRIMARY_BSSTYLE, cssClassName: cssClassName, glyphicon: StrategyConstants.ConditionalStyleGlyph, infoBody: infoBody },
                 this.props.ConditionalStyles.length == 0 ?
-                    React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to create a new conditional style to be applied at row or column level.")
+                    React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to create a new conditional style to be applied at row or column level when a rule set by you is met.")
                     :
                         React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: conditionalStyles }),
                 this.state.EditedAdaptableBlotterObject != null &&
