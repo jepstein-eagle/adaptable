@@ -13,8 +13,27 @@ class LicenceService {
         this.LicenceType = this.setLicenceType();
     }
     setLicenceType() {
-        // use code from whats app...
-        return Enums_1.LicenceType.Enterprise;
+        let myString = this.blotter.BlotterOptions.licenceKey;
+        let myArr = myString.split("-");
+        let enterpriseId = myArr[1].replace(/\D/g, '');
+        let isEnterpriseValid = this.isPrimeNumber(Number(enterpriseId));
+        let chartId = myArr[2].replace(/\D/g, '');
+        let isChartValid = this.isPrimeNumber(Number(chartId));
+        if (isChartValid) {
+            return Enums_1.LicenceType.Advanced;
+        }
+        else if (isEnterpriseValid) {
+            return Enums_1.LicenceType.Enterprise;
+        }
+        return Enums_1.LicenceType.Community;
+    }
+    isPrimeNumber(num) {
+        for (let i = 2, s = Math.sqrt(num); i <= s; i++) {
+            if (num % i === 0) {
+                return false;
+            }
+        }
+        return num > 1;
     }
 }
 exports.LicenceService = LicenceService;

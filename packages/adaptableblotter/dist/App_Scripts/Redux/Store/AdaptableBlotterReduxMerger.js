@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = require("lodash");
+const ArrayExtensions_1 = require("../../Utilities/Extensions/ArrayExtensions");
+const Enums_1 = require("../../Utilities/Enums");
 function customizer(objValue, srcValue) {
     if (_.isArray(objValue)) {
         if (srcValue) {
@@ -8,9 +10,40 @@ function customizer(objValue, srcValue) {
         }
     }
 }
-function MergeState(oldState, newState) {
+// Works out which Merge function to use (for prdedefined config) based on Licence Type
+function MergeStateFunctionChooser(oldState, newState, licenceType) {
+    switch (licenceType) {
+        case Enums_1.LicenceType.Community:
+            return MergeStateCommunityLicence(oldState, newState);
+        case Enums_1.LicenceType.Enterprise:
+            return MergeStateEnterpriseLicence(oldState, newState);
+        case Enums_1.LicenceType.Advanced:
+            return MergeStateAdvancedLicence(oldState, newState);
+    }
+}
+exports.MergeStateFunctionChooser = MergeStateFunctionChooser;
+// Simplest of the 3 - we basically dont merge under any circumstance!
+function MergeStateCommunityLicence(oldState, newState) {
+    return _.extend({}, oldState);
+}
+exports.MergeStateCommunityLicence = MergeStateCommunityLicence;
+// We merge most state - except for Chart (and others to come)
+function MergeStateEnterpriseLicence(oldState, newState) {
+    return MergeState(oldState, newState, ['Chart']);
+}
+exports.MergeStateEnterpriseLicence = MergeStateEnterpriseLicence;
+// We merge everything 
+function MergeStateAdvancedLicence(oldState, newState) {
+    return MergeState(oldState, newState, []);
+}
+exports.MergeStateAdvancedLicence = MergeStateAdvancedLicence;
+// main merge function
+function MergeState(oldState, newState, nonMergableKeys) {
     const result = _.extend({}, oldState);
     for (const key in newState) {
+        if (ArrayExtensions_1.ArrayExtensions.ContainsItem(nonMergableKeys, key)) {
+            continue;
+        }
         if (!newState.hasOwnProperty(key)) {
             continue;
         }

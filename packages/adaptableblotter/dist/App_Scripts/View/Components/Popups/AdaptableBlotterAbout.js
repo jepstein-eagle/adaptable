@@ -199,7 +199,7 @@ class AdaptableBlotterAbout extends React.Component {
             returnRows.push(this.createColItem(colItems, "blotterId", options.blotterId, "Identifier for this instance of the Adaptable Blotter"));
             returnRows.push(this.createColItem(colItems, "userName", options.userName, "Current user of the Adaptable Blotter"));
             returnRows.push(this.createColItem(colItems, "primaryKey", options.primaryKey, "Unique column in the grid (useful for cell identification purposes)"));
-            returnRows.push(this.createColItem(colItems, "predefinedConfig", options.predefinedConfig, "Configuration properties and objects set at design-time"));
+            //   returnRows.push(this.createColItem(colItems, "predefinedConfig", options.predefinedConfig, "Configuration properties and objects set at design-time"));
             returnRows.push(this.createColItem(colItems, "licenceKey", options.licenceKey, "The licence key for this version of the Adaptable Blotter"));
         }
         return returnRows;

@@ -103,6 +103,8 @@ class AdaptableBlotter {
         this.EmbedColumnMenu = true;
         this.isInitialised = false;
         this.hasFloatingFilter = true;
+        // set the licence first
+        this.LicenceService = new LicenceService_1.LicenceService(this);
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore_1.AdaptableBlotterStore(this);
         // create the services
@@ -113,7 +115,6 @@ class AdaptableBlotter {
         this.StyleService = new StyleService_1.StyleService(this);
         this.ChartService = new ChartService_1.ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService_1.FreeTextColumnService(this);
-        this.LicenceService = new LicenceService_1.LicenceService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService_1.CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi_1.BlotterApi(this);

@@ -13,13 +13,15 @@ class FlashingCellSummaryComponent extends React.Component {
     render() {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__flashingcells";
         let flashingCell = this.props.FlashingCells.find(fc => fc.ColumnId == this.props.SummarisedColumn.ColumnId);
-        let showFlashingButton = (!flashingCell || !flashingCell.IsLive) ?
-            React.createElement(react_bootstrap_1.Button, { onClick: () => this.onFlashingSelectedChanged(flashingCell), bsStyle: "info", bsSize: "small" }, "Flashing Off")
-            : React.createElement(react_bootstrap_1.Button, { onClick: () => this.onFlashingSelectedChanged(flashingCell), bsStyle: "success", bsSize: "small" }, "Flashing On");
+        let isFlashingCellColumn = (flashingCell && flashingCell.IsLive);
+        let message = isFlashingCellColumn ? "Flashing on" : "Flashing off";
+        let showFlashingButton = isFlashingCellColumn ?
+            React.createElement(react_bootstrap_1.Button, { onClick: () => this.onFlashingSelectedChanged(flashingCell), bsStyle: "default", bsSize: "small" }, "Turn Off")
+            : React.createElement(react_bootstrap_1.Button, { onClick: () => this.onFlashingSelectedChanged(flashingCell), bsStyle: "deffault", bsSize: "small" }, "Turn On");
         let colItems = [];
         colItems.push({ Size: 3, Content: React.createElement("b", null, StrategyConstants.FlashingCellsStrategyName) });
-        colItems.push({ Size: 5, Content: showFlashingButton });
-        colItems.push({ Size: 3, Content: null });
+        colItems.push({ Size: 7, Content: message });
+        colItems.push({ Size: 2, Content: showFlashingButton });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: cssWizardClassName, colItems: colItems });
     }
     onFlashingSelectedChanged(flashingCell) {

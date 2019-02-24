@@ -175,7 +175,7 @@ class AdaptableBlotterStore {
             engineReduxStorage = AdaptableBlotterReduxStorageClientEngine_1.createEngine(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
         }
         else {
-            engineReduxStorage = AdaptableBlotterReduxLocalStorageEngine_1.createEngine(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig);
+            engineReduxStorage = AdaptableBlotterReduxLocalStorageEngine_1.createEngine(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceType);
         }
         // engine with migrate is where we manage the bits that we dont want to persist, but need to keep in the store
         // perhaps would be better to have 2 stores - persistence store and in-memory store
@@ -204,7 +204,18 @@ class AdaptableBlotterStore {
             PopupRedux.POPUP_SHOW_LOADING, PopupRedux.POPUP_HIDE_LOADING
         ]);
         //here we use our own merger function which is derived from redux simple merger
-        reducerWithStorage = ReduxStorage.reducer(rootReducerWithResetManagement, AdaptableBlotterReduxMerger_1.MergeState);
+        // we now use a different Merge function based on the licence type to ensure that state is only loaded if user has access
+        switch (blotter.LicenceService.LicenceType) {
+            case Enums_1.LicenceType.Community:
+                reducerWithStorage = ReduxStorage.reducer(rootReducerWithResetManagement, AdaptableBlotterReduxMerger_1.MergeStateCommunityLicence);
+                break;
+            case Enums_1.LicenceType.Enterprise:
+                reducerWithStorage = ReduxStorage.reducer(rootReducerWithResetManagement, AdaptableBlotterReduxMerger_1.MergeStateEnterpriseLicence);
+                break;
+            case Enums_1.LicenceType.Advanced:
+                reducerWithStorage = ReduxStorage.reducer(rootReducerWithResetManagement, AdaptableBlotterReduxMerger_1.MergeStateAdvancedLicence);
+                break;
+        }
         loadStorage = ReduxStorage.createLoader(engineWithFilter);
         let composeEnhancers;
         if ("production" != process.env.NODE_ENV) {
