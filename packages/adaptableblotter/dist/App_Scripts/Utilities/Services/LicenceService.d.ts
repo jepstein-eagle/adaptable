@@ -7,8 +7,5 @@ export declare class LicenceService implements ILicenceService {
     LicenceType: LicenceType;
     private setLicenceType;
     private isPrimeNumber;
-<<<<<<< HEAD
     private isCorrectLength;
-=======
->>>>>>> Put charts in the given chart container
 }

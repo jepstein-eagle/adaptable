@@ -209,21 +209,12 @@ class AdaptableBlotterStore {
             case Enums_1.LicenceType.Community:
                 reducerWithStorage = ReduxStorage.reducer(rootReducerWithResetManagement, AdaptableBlotterReduxMerger_1.MergeStateCommunityLicence);
                 break;
-<<<<<<< HEAD
             case Enums_1.LicenceType.Standard:
                 reducerWithStorage = ReduxStorage.reducer(rootReducerWithResetManagement, AdaptableBlotterReduxMerger_1.MergeStateStandardLicence);
                 break;
             case Enums_1.LicenceType.Enterprise:
                 reducerWithStorage = ReduxStorage.reducer(rootReducerWithResetManagement, AdaptableBlotterReduxMerger_1.MergeStateEnterpriseLicence);
                 break;
-=======
-            case Enums_1.LicenceType.Enterprise:
-                reducerWithStorage = ReduxStorage.reducer(rootReducerWithResetManagement, AdaptableBlotterReduxMerger_1.MergeStateEnterpriseLicence);
-                break;
-            case Enums_1.LicenceType.Advanced:
-                reducerWithStorage = ReduxStorage.reducer(rootReducerWithResetManagement, AdaptableBlotterReduxMerger_1.MergeStateAdvancedLicence);
-                break;
->>>>>>> Put charts in the given chart container
         }
         loadStorage = ReduxStorage.createLoader(engineWithFilter);
         let composeEnhancers;
