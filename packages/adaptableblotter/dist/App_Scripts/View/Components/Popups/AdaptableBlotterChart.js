@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
+const ReactDOM = require("react-dom");
 const react_bootstrap_1 = require("react-bootstrap");
 const AdaptableViewFactory_1 = require("../../AdaptableViewFactory");
 const UIHelper_1 = require("../../UIHelper");
@@ -45,7 +46,7 @@ class AdaptableBlotterChart extends React.Component {
                     React.createElement(react_bootstrap_1.Modal.Footer, { className: cssClassName + StyleConstants.MODAL_FOOTER },
                         React.createElement(react_bootstrap_1.Button, { className: cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON, onClick: () => this.props.onClose() }, "Close"))))
             :
-                React.createElement("div", { style: { marginLeft: '25px', marginBottom: '25px' } }, body)));
+                ReactDOM.createPortal((React.createElement("div", { style: { marginLeft: '25px', marginBottom: '25px' } }, body)), chartContainer)));
     }
 }
 exports.AdaptableBlotterChart = AdaptableBlotterChart;

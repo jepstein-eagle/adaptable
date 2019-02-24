@@ -101,7 +101,6 @@ function InitTradeBlotter() {
           iconKey: 'filter',
           toolPanel: 'agFiltersToolPanel',
         },
-        /**
         {
           id: 'customStats',
           labelDefault: 'Custom Stats',
@@ -109,7 +108,6 @@ function InitTradeBlotter() {
           iconKey: 'custom-stats',
           toolPanel: 'customStatsToolPanel',
         }
-        */
       ],
       //  defaultToolPanel: 'customStats'
     },
@@ -121,9 +119,9 @@ function InitTradeBlotter() {
       "abColDefDate": {},
       "abColDefObject": {},
     },
-  //  components: {
-  //    customStatsToolPanel: CustomStatsToolPanel
-  //  }
+    components: {
+      customStatsToolPanel: CustomStatsToolPanel
+    }
   };
 
   // Create and instantiate an ag-Grid object
