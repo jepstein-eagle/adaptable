@@ -1,5 +1,8 @@
 import { SortOrder } from "../Enums";
 export declare module ArrayExtensions {
+    function GetLength(arrayToCheck: any[]): number;
+    function CorrectLength(arrayToCheck: any[], requiredLength: number): boolean;
+    function NotCorrectLength(arrayToCheck: any[], requiredLength: number): boolean;
     function AddItem(array: any[], itemToAdd: any): void;
     function ContainsItem(array: any[], itemToCheck: any): boolean;
     function NotContainsItem(array: any[], itemToCheck: any): boolean;

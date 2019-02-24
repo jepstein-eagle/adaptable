@@ -17,8 +17,8 @@ export module agGridHelper {
             case LicenceType.Community:
                 let licenceMessage: string = '\n';
                 licenceMessage += '***********************************************************************************\n'
-                licenceMessage += '********************* Adaptable Blotter Enterprise License ************************\n'
-                licenceMessage += '**************** This licence is an evaluation / community licence ****************\n'
+                licenceMessage += '************************** Adaptable Blotter License ******************************\n'
+                licenceMessage += '********************* This is an evaluation / community licence *******************\n'
                 licenceMessage += '************ It contains full functionality but you cannot load state *************\n'
                 licenceMessage += '********* Please contact sales@adaptabletools.com for upgrade information *********\n'
                 licenceMessage += '***********************************************************************************\n'

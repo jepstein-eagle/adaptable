@@ -3,6 +3,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Enums_1 = require("../Enums");
 var ArrayExtensions;
 (function (ArrayExtensions) {
+    function GetLength(arrayToCheck) {
+        return arrayToCheck.length;
+    }
+    ArrayExtensions.GetLength = GetLength;
+    function CorrectLength(arrayToCheck, requiredLength) {
+        return GetLength(arrayToCheck) == requiredLength;
+    }
+    ArrayExtensions.CorrectLength = CorrectLength;
+    function NotCorrectLength(arrayToCheck, requiredLength) {
+        return !CorrectLength(arrayToCheck, requiredLength);
+    }
+    ArrayExtensions.NotCorrectLength = NotCorrectLength;
     function AddItem(array, itemToAdd) {
         if (this.NotContainsItem(array, itemToAdd)) {
             array.push(itemToAdd);

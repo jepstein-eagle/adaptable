@@ -23,72 +23,64 @@ export class LicenceService implements ILicenceService {
 
         let licenceKey: string = this.blotter.BlotterOptions.licenceKey;
 
+        // if key is empty return Community
         if (StringExtensions.IsNullOrEmpty(licenceKey)) {
-            alert(1)
             return LicenceType.Community;
         }
 
+        // turn key into 3 item array ; if fails - return Community
         let licenceKeyArray: string[] = licenceKey.split("-");
         if (ArrayExtensions.NotCorrectLength(licenceKeyArray, 3)) {
-            alert(2)
-              return LicenceType.Community;
+               return LicenceType.Community;
         }
 
         // standard licence - allows saving of items and loading of state but not access to enterprise features (charts)
-        // the whole key should be 9 characters of which 4 are numbers
+        // the whole key should be 9 characters of which 3 are numbers; if that fails, return Community
         let standardIdAlphaNumeric: string = licenceKeyArray[1];
         if (!this.isCorrectLength(standardIdAlphaNumeric, 9)) {
-            alert(3)
                return LicenceType.Community;
         }
         let standardIdString: string = standardIdAlphaNumeric.replace(/\D/g, '');
         if (!this.isCorrectLength(standardIdString, 3)) {
-            alert(4)
-            alert(standardIdString)
                return LicenceType.Community;
         }
 
+        // turn the digits into a number and return Community if that fails
          let standardIdNumber = Number(standardIdString);
         if(isNaN(standardIdNumber)){
-            alert(5)
                 return LicenceType.Community;       
         }
+
+        // Check that its prime and return Community if that fails
         let isStandardIdValid: boolean = this.isPrimeNumber(standardIdNumber);
         if(!isStandardIdValid){
             return LicenceType.Community;
         }
 
         // enterprise licence - allows saving and loading of state of all items (including charts)
-        // the whole key should be 10 characters of which 4 are numbers
+        // the whole key should be 10 characters of which 4 are numbers; if it fails return Standard
         let enterpriseIdAlphaNumeric: string = licenceKeyArray[2];
         if (!this.isCorrectLength(enterpriseIdAlphaNumeric, 10)) {
               return LicenceType.Standard;
         }
         let enterpriseIdString: string = enterpriseIdAlphaNumeric.replace(/\D/g, '');
         if (!this.isCorrectLength(enterpriseIdString, 3)) {
-            alert(7)
             return LicenceType.Standard;
         }
 
-        // need a NAN check???
+        // turn digits to number ; return Standard if that fails
         let enterpriseIdNumber = Number(enterpriseIdString);
         if(isNaN(enterpriseIdNumber)){
-            alert(8)
             return LicenceType.Standard;
         }
+
+        // Check that its prime and return Standard if that fails
         let isEnterpriseValid: boolean = this.isPrimeNumber(Number(enterpriseIdNumber));
         if(!isEnterpriseValid){
             return LicenceType.Standard;
         }
 
-
-        if (isEnterpriseValid) {
-            return LicenceType.Enterprise
-        } else if (isStandardIdValid) {
-            return LicenceType.Standard;
-        }
-
-        return LicenceType.Community;
+        return LicenceType.Enterprise;
     }
 
     private isPrimeNumber(num: number): boolean {

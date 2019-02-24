@@ -265,6 +265,6 @@ var FilterOnDataChangeOptions;
 var LicenceType;
 (function (LicenceType) {
     LicenceType["Community"] = "Community";
+    LicenceType["Standard"] = "Standard";
     LicenceType["Enterprise"] = "Enterprise";
-    LicenceType["Advanced"] = "Advanced";
 })(LicenceType = exports.LicenceType || (exports.LicenceType = {}));

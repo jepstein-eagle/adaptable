@@ -11,15 +11,23 @@ const Enums_1 = require("../Utilities/Enums");
 var agGridHelper;
 (function (agGridHelper) {
     function CheckLicenceKey(licenceType) {
-        if (licenceType == Enums_1.LicenceType.Community) {
-            let licenceMessage = '\n';
-            licenceMessage += '***********************************************************************************\n';
-            licenceMessage += '********************* Adaptable Blotter Enterprise License ************************\n';
-            licenceMessage += '**************** This licence is an evaluation / community licence ****************\n';
-            licenceMessage += '************ It contains full functionality but you cannot load state *************\n';
-            licenceMessage += '********* Please contact sales@adaptabletools.com for upgrade information *********\n';
-            licenceMessage += '***********************************************************************************\n';
-            LoggingHelper_1.LoggingHelper.LogError(licenceMessage);
+        switch (licenceType) {
+            case Enums_1.LicenceType.Community:
+                let licenceMessage = '\n';
+                licenceMessage += '***********************************************************************************\n';
+                licenceMessage += '************************** Adaptable Blotter License ******************************\n';
+                licenceMessage += '********************* This is an evaluation / community licence *******************\n';
+                licenceMessage += '************ It contains full functionality but you cannot load state *************\n';
+                licenceMessage += '********* Please contact sales@adaptabletools.com for upgrade information *********\n';
+                licenceMessage += '***********************************************************************************\n';
+                LoggingHelper_1.LoggingHelper.LogError(licenceMessage);
+                break;
+            case Enums_1.LicenceType.Standard:
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterSuccess(" Licence Type: Standard");
+                break;
+            case Enums_1.LicenceType.Enterprise:
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterSuccess(" Licence Type: Enterprise");
+                break;
         }
     }
     agGridHelper.CheckLicenceKey = CheckLicenceKey;

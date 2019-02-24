@@ -7,4 +7,5 @@ export declare class LicenceService implements ILicenceService {
     LicenceType: LicenceType;
     private setLicenceType;
     private isPrimeNumber;
+    private isCorrectLength;
 }

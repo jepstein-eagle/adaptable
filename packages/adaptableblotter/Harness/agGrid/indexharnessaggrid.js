@@ -17,7 +17,7 @@ function clearQuickSearchViaAPI() {
 }
 
 function getCommunityKey(){
-  return "blah"
+  return 'AB Licence Key'
 }
 function getStandardKey(){
   return 'xs2543-as6b8osw3-e94syjze8a'
@@ -141,9 +141,9 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: "demo user", // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
-   //   licenceKey: getCommunityKey(),
-      licenceKey: getStandardKey(),
-  //    licenceKey: getEnterpriseKey(),
+    //  licenceKey: getCommunityKey(),
+   //   licenceKey: getStandardKey(),
+      licenceKey: getEnterpriseKey(),
 
          predefinedConfig: myJson,
 

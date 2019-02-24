@@ -222,6 +222,6 @@ export declare enum FilterOnDataChangeOptions {
 }
 export declare enum LicenceType {
     Community = "Community",
-    Enterprise = "Enterprise",
-    Advanced = "Advanced"
+    Standard = "Standard",
+    Enterprise = "Enterprise"
 }

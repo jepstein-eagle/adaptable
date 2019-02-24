@@ -15,10 +15,10 @@ function MergeStateFunctionChooser(oldState, newState, licenceType) {
     switch (licenceType) {
         case Enums_1.LicenceType.Community:
             return MergeStateCommunityLicence(oldState, newState);
+        case Enums_1.LicenceType.Standard:
+            return MergeStateStandardLicence(oldState, newState);
         case Enums_1.LicenceType.Enterprise:
             return MergeStateEnterpriseLicence(oldState, newState);
-        case Enums_1.LicenceType.Advanced:
-            return MergeStateAdvancedLicence(oldState, newState);
     }
 }
 exports.MergeStateFunctionChooser = MergeStateFunctionChooser;
@@ -28,15 +28,15 @@ function MergeStateCommunityLicence(oldState, newState) {
 }
 exports.MergeStateCommunityLicence = MergeStateCommunityLicence;
 // We merge most state - except for Chart (and others to come)
-function MergeStateEnterpriseLicence(oldState, newState) {
+function MergeStateStandardLicence(oldState, newState) {
     return MergeState(oldState, newState, ['Chart']);
 }
-exports.MergeStateEnterpriseLicence = MergeStateEnterpriseLicence;
+exports.MergeStateStandardLicence = MergeStateStandardLicence;
 // We merge everything 
-function MergeStateAdvancedLicence(oldState, newState) {
+function MergeStateEnterpriseLicence(oldState, newState) {
     return MergeState(oldState, newState, []);
 }
-exports.MergeStateAdvancedLicence = MergeStateAdvancedLicence;
+exports.MergeStateEnterpriseLicence = MergeStateEnterpriseLicence;
 // main merge function
 function MergeState(oldState, newState, nonMergableKeys) {
     const result = _.extend({}, oldState);
