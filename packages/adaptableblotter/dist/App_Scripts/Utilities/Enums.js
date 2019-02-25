@@ -236,21 +236,21 @@ var MessageType;
     MessageType["Warning"] = "Warning";
     MessageType["Error"] = "Error";
 })(MessageType = exports.MessageType || (exports.MessageType = {}));
-var CellSumaryOperation;
-(function (CellSumaryOperation) {
-    CellSumaryOperation["Sum"] = "Sum";
-    CellSumaryOperation["Average"] = "Average";
-    CellSumaryOperation["Median"] = "Median";
-    CellSumaryOperation["Distinct"] = "Distinct";
-    CellSumaryOperation["Max"] = "Max";
-    CellSumaryOperation["Min"] = "Min";
-    CellSumaryOperation["Count"] = "Count";
-})(CellSumaryOperation = exports.CellSumaryOperation || (exports.CellSumaryOperation = {}));
-var CellSumaryOptionalOperation;
-(function (CellSumaryOptionalOperation) {
-    CellSumaryOptionalOperation["Only"] = "Only";
-    CellSumaryOptionalOperation["VWAP"] = "VWAP";
-})(CellSumaryOptionalOperation = exports.CellSumaryOptionalOperation || (exports.CellSumaryOptionalOperation = {}));
+var CellSummaryOperation;
+(function (CellSummaryOperation) {
+    CellSummaryOperation["Sum"] = "Sum";
+    CellSummaryOperation["Average"] = "Average";
+    CellSummaryOperation["Median"] = "Median";
+    CellSummaryOperation["Distinct"] = "Distinct";
+    CellSummaryOperation["Max"] = "Max";
+    CellSummaryOperation["Min"] = "Min";
+    CellSummaryOperation["Count"] = "Count";
+})(CellSummaryOperation = exports.CellSummaryOperation || (exports.CellSummaryOperation = {}));
+var CellSummaryOptionalOperation;
+(function (CellSummaryOptionalOperation) {
+    CellSummaryOptionalOperation["Only"] = "Only";
+    CellSummaryOptionalOperation["VWAP"] = "VWAP";
+})(CellSummaryOptionalOperation = exports.CellSummaryOptionalOperation || (exports.CellSummaryOptionalOperation = {}));
 var PinnedColumnDirection;
 (function (PinnedColumnDirection) {
     PinnedColumnDirection["Left"] = "Leftt";

@@ -120,7 +120,7 @@ export interface CalendarState extends IUserState {
 }
 export interface CellSummaryState extends IUserState {
     SummaryOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'VWap' | 'Only';
-    SystemSummaryOperations: string[];
+    OptionalSummaryOperations: string[];
 }
 export interface CellValidationState extends IUserState {
     CellValidations: ICellValidationRule[];

@@ -16,18 +16,18 @@ class CellSummaryDetails extends React.Component {
         ];
         let rowElements = [];
         if (this.props.CellSummary != null) {
-            rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOperation.Sum, this.props.CellSummary.Sum, cssClassName));
-            rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOperation.Average, this.props.CellSummary.Average, cssClassName));
-            rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOperation.Median, this.props.CellSummary.Median, cssClassName));
-            rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOperation.Distinct, this.props.CellSummary.Distinct, cssClassName));
-            rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOperation.Max, this.props.CellSummary.Max, cssClassName));
-            rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOperation.Min, this.props.CellSummary.Min, cssClassName));
-            rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOperation.Count, this.props.CellSummary.Count, cssClassName));
+            rowElements.push(this.createRow(colItems, Enums_1.CellSummaryOperation.Sum, this.props.CellSummary.Sum, cssClassName));
+            rowElements.push(this.createRow(colItems, Enums_1.CellSummaryOperation.Average, this.props.CellSummary.Average, cssClassName));
+            rowElements.push(this.createRow(colItems, Enums_1.CellSummaryOperation.Median, this.props.CellSummary.Median, cssClassName));
+            rowElements.push(this.createRow(colItems, Enums_1.CellSummaryOperation.Distinct, this.props.CellSummary.Distinct, cssClassName));
+            rowElements.push(this.createRow(colItems, Enums_1.CellSummaryOperation.Max, this.props.CellSummary.Max, cssClassName));
+            rowElements.push(this.createRow(colItems, Enums_1.CellSummaryOperation.Min, this.props.CellSummary.Min, cssClassName));
+            rowElements.push(this.createRow(colItems, Enums_1.CellSummaryOperation.Count, this.props.CellSummary.Count, cssClassName));
             if (this.props.CellSummary.Only != null) {
-                rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOptionalOperation.Only, this.props.CellSummary.Only, cssClassName));
+                rowElements.push(this.createRow(colItems, Enums_1.CellSummaryOptionalOperation.Only, this.props.CellSummary.Only, cssClassName));
             }
             if (this.props.CellSummary.VWAP != null) {
-                rowElements.push(this.createRow(colItems, Enums_1.CellSumaryOptionalOperation.VWAP, this.props.CellSummary.VWAP, cssClassName));
+                rowElements.push(this.createRow(colItems, Enums_1.CellSummaryOptionalOperation.VWAP, this.props.CellSummary.VWAP, cssClassName));
             }
         }
         return React.createElement("div", { className: cssClassName + StyleConstants.ITEMS_TABLE },

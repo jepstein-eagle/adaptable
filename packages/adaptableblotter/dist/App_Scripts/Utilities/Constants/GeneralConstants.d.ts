@@ -26,7 +26,7 @@ export declare const QUICK_SEARCH_DEFAULT_FORE_COLOR: string;
 export declare const FLASHING_CELLS_DEFAULT_DURATION: 250 | 500 | 750 | 1000;
 export declare const SMART_EDIT_DEFAULT_VALUE: number;
 export declare const SMART_EDIT_DEFAULT_OPERATION: 'Add' | 'Subtract' | 'Multiply' | 'Divide';
-export declare const SELECTED_CELLS_DEFAULT_OPERATION: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'VWap' | 'Only';
+export declare const CELL_SUMMARY_DEFAULT_OPERATION: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'VWap' | 'Only';
 export declare const SYSTEM_DEFAULT_CHART_VISIBILITY: ChartVisibility;
 export declare const SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR: "Red" | "Amber" | "Green" | "Blue";
 export declare const THEME_DEFAULT_CURRENT_THEME: string;

@@ -130,7 +130,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     getVendorGridState(): IVendorGridInfo;
     setVendorGridState(vendorGridState: IVendorGridInfo): void;
     isSelectable(): boolean;
-    isSortable(): boolean;
+    private isSortable;
     private isColumnFilterable;
     showFloatingFilter(): void;
     hideFloatingFilter(): void;

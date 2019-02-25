@@ -126,6 +126,10 @@ var ColumnHelper;
         return returnValue;
     }
     ColumnHelper.getColumnCategoryFromColumnCategories = getColumnCategoryFromColumnCategories;
+    function getSortableColumns(columns) {
+        return columns.filter(c => c.Sortable);
+    }
+    ColumnHelper.getSortableColumns = getSortableColumns;
     function LogMissingColumnWarning(columnId) {
         if (!isSpecialColumn(columnId)) {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("No column found named '" + columnId + "'");

@@ -37,11 +37,11 @@ class CellSummaryToolbarControlComponent extends React.Component {
     }
     render() {
         let cssClassName = this.props.cssClassName + "__CellSummary";
-        let operationMenuItems = EnumExtensions_1.EnumExtensions.getNames(Enums_1.CellSumaryOperation).map((summaryOperation, index) => {
+        let operationMenuItems = EnumExtensions_1.EnumExtensions.getNames(Enums_1.CellSummaryOperation).map((summaryOperation, index) => {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: "index", onClick: () => this.props.onCellSummaryOperationChange(summaryOperation) }, summaryOperation);
         });
-        let operationOptionalMenuItems = EnumExtensions_1.EnumExtensions.getNames(Enums_1.CellSumaryOptionalOperation).map((summaryOperation, index) => {
-            if (ArrayExtensions_1.ArrayExtensions.ContainsItem(this.props.SystemSummaryOperations, summaryOperation)) {
+        let operationOptionalMenuItems = EnumExtensions_1.EnumExtensions.getNames(Enums_1.CellSummaryOptionalOperation).map((summaryOperation, index) => {
+            if (ArrayExtensions_1.ArrayExtensions.ContainsItem(this.props.OptionalSummaryOperations, summaryOperation)) {
                 return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: "index", onClick: () => this.props.onCellSummaryOperationChange(summaryOperation) }, summaryOperation);
             }
         });
@@ -49,7 +49,7 @@ class CellSummaryToolbarControlComponent extends React.Component {
         let content = React.createElement("span", null,
             React.createElement("div", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(react_bootstrap_1.InputGroup, null,
-                    React.createElement(react_bootstrap_1.DropdownButton, { style: { marginRight: "3px", width: "75px" }, title: this.props.CellSumaryOperation, id: "CellSummary_Operation", bsSize: "small", componentClass: react_bootstrap_1.InputGroup.Button },
+                    React.createElement(react_bootstrap_1.DropdownButton, { style: { marginRight: "3px", width: "75px" }, title: this.props.CellSummaryOperation, id: "CellSummary_Operation", bsSize: "small", componentClass: react_bootstrap_1.InputGroup.Button },
                         operationMenuItems,
                         operationOptionalMenuItems),
                     this.props.CellSummary != null &&
@@ -66,24 +66,24 @@ class CellSummaryToolbarControlComponent extends React.Component {
         this.props.onCreateCellSummary();
     }
     getOperationValue() {
-        switch (this.props.CellSumaryOperation) {
-            case Enums_1.CellSumaryOperation.Sum:
+        switch (this.props.CellSummaryOperation) {
+            case Enums_1.CellSummaryOperation.Sum:
                 return this.props.CellSummary.Sum;
-            case Enums_1.CellSumaryOperation.Average:
+            case Enums_1.CellSummaryOperation.Average:
                 return this.props.CellSummary.Average;
-            case Enums_1.CellSumaryOperation.Median:
+            case Enums_1.CellSummaryOperation.Median:
                 return this.props.CellSummary.Median;
-            case Enums_1.CellSumaryOperation.Max:
+            case Enums_1.CellSummaryOperation.Max:
                 return this.props.CellSummary.Max;
-            case Enums_1.CellSumaryOperation.Min:
+            case Enums_1.CellSummaryOperation.Min:
                 return this.props.CellSummary.Min;
-            case Enums_1.CellSumaryOperation.Distinct:
+            case Enums_1.CellSummaryOperation.Distinct:
                 return this.props.CellSummary.Distinct;
-            case Enums_1.CellSumaryOperation.Count:
+            case Enums_1.CellSummaryOperation.Count:
                 return this.props.CellSummary.Count;
-            case Enums_1.CellSumaryOptionalOperation.Only:
+            case Enums_1.CellSummaryOptionalOperation.Only:
                 return this.props.CellSummary.Only;
-            case Enums_1.CellSumaryOptionalOperation.VWAP:
+            case Enums_1.CellSummaryOptionalOperation.VWAP:
                 return this.props.CellSummary.VWAP;
         }
     }
@@ -91,8 +91,8 @@ class CellSummaryToolbarControlComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         SelectedCellInfo: state.Grid.SelectedCellInfo,
-        CellSumaryOperation: state.CellSummary.SummaryOperation,
-        SystemSummaryOperations: state.CellSummary.SystemSummaryOperations,
+        CellSummaryOperation: state.CellSummary.SummaryOperation,
+        OptionalSummaryOperations: state.CellSummary.OptionalSummaryOperations,
         CellSummary: state.Grid.CellSummary,
     };
 }

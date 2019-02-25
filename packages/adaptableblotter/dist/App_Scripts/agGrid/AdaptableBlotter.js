@@ -346,7 +346,7 @@ class AdaptableBlotter {
         return abColumn;
     }
     addFiltersToVendorColumn(vendorColumn) {
-        if (this.gridOptions.enableFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
+        if (vendorColumn.getColDef().filter && this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
             this.createFilterWrapper(vendorColumn);
         }
         if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
@@ -684,21 +684,17 @@ class AdaptableBlotter {
         }
     }
     isColumnSortable(columnId) {
-        if (!this.isSortable()) {
-            return false;
-        }
+        // follow agGrid logic which is that ONLY if sortable explicitly set to false do you suppress sort
         let colDef = this.gridOptions.api.getColumnDef(columnId);
-        if (colDef.suppressSorting != null) {
-            return !colDef.suppressSorting;
+        if (colDef.sortable != null) {
+            return colDef.sortable;
         }
         return true;
     }
     isColumnFilterable(columnId) {
+        // follow agGrid logic which is that ONLY filterable if one explicitly set
         let colDef = this.gridOptions.api.getColumnDef(columnId);
-        if (colDef.suppressFilter != null) {
-            return !colDef.suppressFilter;
-        }
-        return true;
+        return colDef.filter != null && colDef.filter != false;
     }
     setCustomSort(columnId, comparer) {
         let sortModel = this.gridOptions.api.getSortModel();
@@ -971,7 +967,7 @@ class AdaptableBlotter {
             DataType: this.getColumnDataType(vendorColumn),
             Visible: false,
             ReadOnly: isReadOnly,
-            Sortable: this.isSortable(),
+            Sortable: true,
             Filterable: true,
         };
         if (this.isFloatingFilterActive()) {
@@ -1523,12 +1519,6 @@ class AdaptableBlotter {
     isSelectable() {
         if (this.gridOptions.enableRangeSelection != null) {
             return this.gridOptions.enableRangeSelection;
-        }
-        return false;
-    }
-    isSortable() {
-        if (this.gridOptions.enableSorting != null) {
-            return this.gridOptions.enableSorting;
         }
         return false;
     }

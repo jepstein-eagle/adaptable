@@ -7,8 +7,8 @@ exports.CellSummaryChangeOperation = (SummaryOperation) => ({
     SummaryOperation
 });
 const initialCellSummaryState = {
-    SummaryOperation: GeneralConstants_1.SELECTED_CELLS_DEFAULT_OPERATION,
-    SystemSummaryOperations: []
+    SummaryOperation: GeneralConstants_1.CELL_SUMMARY_DEFAULT_OPERATION,
+    OptionalSummaryOperations: []
 };
 exports.CellSummaryReducer = (state = initialCellSummaryState, action) => {
     switch (action.type) {

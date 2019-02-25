@@ -39,8 +39,8 @@ exports.FLASHING_CELLS_DEFAULT_DURATION = 500;
 // Selected Cells
 exports.SMART_EDIT_DEFAULT_VALUE = 1;
 exports.SMART_EDIT_DEFAULT_OPERATION = Enums_1.MathOperation.Multiply;
-// Selected Cells
-exports.SELECTED_CELLS_DEFAULT_OPERATION = Enums_1.CellSumaryOperation.Sum;
+// Cells Summary
+exports.CELL_SUMMARY_DEFAULT_OPERATION = Enums_1.CellSummaryOperation.Sum;
 // system
 exports.SYSTEM_DEFAULT_CHART_VISIBILITY = ChartEnums_1.ChartVisibility.Hidden;
 exports.SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR = Enums_1.StatusColour.Green;

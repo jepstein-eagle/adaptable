@@ -148,7 +148,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private moveColumn;
     private setColumnState;
     isSelectable(): boolean;
-    isSortable(): boolean;
     private isFloatingFilterActive;
     showFloatingFilter(): void;
     hideFloatingFilter(): void;

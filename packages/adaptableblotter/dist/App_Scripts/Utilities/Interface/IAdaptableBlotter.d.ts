@@ -94,7 +94,6 @@ export interface IAdaptableBlotter {
     getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo;
     setVendorGridState(vendorGridState: IVendorGridInfo): void;
     isSelectable(): boolean;
-    isSortable(): boolean;
     hasFloatingFilter: boolean;
     showFloatingFilter(): void;
     hideFloatingFilter(): void;

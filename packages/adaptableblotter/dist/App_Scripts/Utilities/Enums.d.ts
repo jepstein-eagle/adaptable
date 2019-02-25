@@ -198,7 +198,7 @@ export declare enum MessageType {
     Warning = "Warning",
     Error = "Error"
 }
-export declare enum CellSumaryOperation {
+export declare enum CellSummaryOperation {
     Sum = "Sum",
     Average = "Average",
     Median = "Median",
@@ -207,7 +207,7 @@ export declare enum CellSumaryOperation {
     Min = "Min",
     Count = "Count"
 }
-export declare enum CellSumaryOptionalOperation {
+export declare enum CellSummaryOptionalOperation {
     Only = "Only",
     VWAP = "VWAP"
 }

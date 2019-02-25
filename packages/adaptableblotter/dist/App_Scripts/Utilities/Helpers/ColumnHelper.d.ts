@@ -14,4 +14,5 @@ export declare module ColumnHelper {
     function getColumnFromName(columnName: string, columns: IColumn[], logWarning?: boolean): IColumn;
     function getNumericColumns(columns: IColumn[]): IColumn[];
     function getColumnCategoryFromColumnCategories(columnId: string, ColumnCategoryns: IColumnCategory[]): string;
+    function getSortableColumns(columns: IColumn[]): IColumn[];
 }

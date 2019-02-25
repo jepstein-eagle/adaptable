@@ -85,13 +85,13 @@ class CellSummaryStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase 
         return median;
     }
     calculateOnly(distinctCount, allValues) {
-        if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(this.CellSummaryState.SystemSummaryOperations, Enums_1.CellSumaryOptionalOperation.Only)) {
+        if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(this.CellSummaryState.OptionalSummaryOperations, Enums_1.CellSummaryOptionalOperation.Only)) {
             return null;
         }
         return (distinctCount == 1) ? allValues[0] : "";
     }
     calculateVwap(numericValues, numericColumns) {
-        if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(this.CellSummaryState.SystemSummaryOperations, Enums_1.CellSumaryOptionalOperation.VWAP)) {
+        if (ArrayExtensions_1.ArrayExtensions.NotContainsItem(this.CellSummaryState.OptionalSummaryOperations, Enums_1.CellSummaryOptionalOperation.VWAP)) {
             return null;
         }
         if (numericColumns.length == 2) {
