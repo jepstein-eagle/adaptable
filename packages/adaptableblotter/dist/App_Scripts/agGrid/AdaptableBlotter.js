@@ -52,6 +52,10 @@ const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 const Helper_1 = require("../Utilities/Helpers/Helper");
+// ag-Grid
+//if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
+const ag_grid_community_1 = require("ag-grid-community");
+require("ag-grid-enterprise");
 const eventKeys_1 = require("ag-grid-community/dist/lib/eventKeys");
 const RangeHelper_1 = require("../Utilities/Helpers/RangeHelper");
 const BlotterHelper_1 = require("../Utilities/Helpers/BlotterHelper");
@@ -78,8 +82,11 @@ const FormatColumnStrategyagGrid_1 = require("./Strategy/FormatColumnStrategyagG
 const QuickSearchStrategyagGrid_1 = require("./Strategy/QuickSearchStrategyagGrid");
 const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
 const agGridHelper_1 = require("./agGridHelper");
+// import { ToolPanelWrapperFactory } from './ToolPanelWrapper';
+// import { CustomStatsToolPanel } from './customStatsToolPanel';
 const CalculatedColumnHelper_1 = require("../Utilities/Helpers/CalculatedColumnHelper");
 const LicenceService_1 = require("../Utilities/Services/LicenceService");
+const AdaptableBlotterToolPanel_1 = require("../View/Components/ToolPanel/AdaptableBlotterToolPanel");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this._calculatedColumnPathMap = new Map();
@@ -115,6 +122,14 @@ class AdaptableBlotter {
         this.StyleService = new StyleService_1.StyleService(this);
         this.ChartService = new ChartService_1.ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService_1.FreeTextColumnService(this);
+        const isGridInstantiated = this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
+        if (!isGridInstantiated) {
+            const instantiateResult = this.instantiateAgGrid();
+            if (!instantiateResult) {
+                // we have no grid, we can't do anything
+                return;
+            }
+        }
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService_1.CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi_1.BlotterApi(this);
@@ -186,6 +201,28 @@ class AdaptableBlotter {
         // create debounce methods that take a time based on user settings
         this.throttleApplyGridFilteringUser = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
         this.throttleApplyGridFilteringExternal = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
+    }
+    instantiateAgGrid() {
+        let vendorContainer = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
+        if (!vendorContainer) {
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError('You must provide an element id in `containerOptions.vendorContainer`');
+            return false;
+        }
+        this.gridOptions.sideBar = this.gridOptions.sideBar || {};
+        this.gridOptions.components = this.gridOptions.components || {};
+        const sidebarDef = this.gridOptions.sideBar;
+        sidebarDef.toolPanels = sidebarDef.toolPanels || [];
+        sidebarDef.toolPanels.push({
+            id: 'adaptableBlotterToolPanel',
+            labelDefault: 'Adaptable Blotter',
+            labelKey: 'adaptableBlotterToolPanel',
+            iconKey: 'adaptable-blotter',
+            toolPanel: 'adaptableBlotterToolPanel',
+        });
+        const toolpanelContext = { Blotter: this };
+        this.gridOptions.components.adaptableBlotterToolPanel = AdaptableBlotterToolPanel_1.AdaptableBlotterToolPanelBuilder(toolpanelContext);
+        this.grid = new ag_grid_community_1.Grid(vendorContainer, this.gridOptions);
+        return true;
     }
     filterOnUserDataChange() {
         if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Always) {
@@ -1046,7 +1083,7 @@ class AdaptableBlotter {
                     // ignore
                 }
                 else {
-                    // set the column into the store  
+                    // set the column into the store
                     this.debouncedSetColumnIntoStore(); // was: this.setColumnIntoStore();
                 }
                 // refilter the grid if required
@@ -1551,9 +1588,6 @@ class AdaptableBlotter {
         if (this.getState().Layout.CurrentLayout != GeneralConstants_1.DEFAULT_LAYOUT && ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.getState().PercentBar.PercentBars)) {
             this.api.layoutApi.Set(GeneralConstants_1.DEFAULT_LAYOUT);
         }
-        // playing here but seeing if we can update an agGrid option
-        //this.gridOptions.suppressMenuHide= true;
-        // this.testToolPanelStuff();
         // at the end so load the current layout, refresh the toolbar and turn off the loading message
         this.api.layoutApi.Set(currentlayout);
     }
@@ -1563,26 +1597,6 @@ class AdaptableBlotter {
     }
     dispatchAction(action) {
         this.AdaptableBlotterStore.TheStore.dispatch(action);
-    }
-    testToolPanelStuff() {
-        //    let testToolPanel  =   CustomStatsToolPanel();
-        //  console.log(testToolPanel)
-        let abToolPanel = {
-            id: 'customStats',
-            labelDefault: 'Custom Stats',
-            labelKey: 'customStats',
-            iconKey: 'columns',
-            toolPanel: 'customStatsToolPanel',
-        };
-        console.log(abToolPanel);
-        let sidebarDef = this.gridOptions.sideBar;
-        let toolbarDefs = sidebarDef.toolPanels;
-        //  toolbarDefs.push(abToolPanel);
-        sidebarDef.toolPanels = toolbarDefs;
-        sidebarDef.defaultToolPanel = "customStats";
-        console.log(this.gridOptions.sideBar);
-        let components = this.gridOptions.components;
-        console.log(components);
     }
 }
 exports.AdaptableBlotter = AdaptableBlotter;
