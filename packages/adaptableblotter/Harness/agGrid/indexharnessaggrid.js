@@ -16,14 +16,14 @@ function clearQuickSearchViaAPI() {
   adaptableblotter.api.quickSearchApi.Clear();
 }
 
-function getCommunityKey(){
-  return 'AB Licence Key'
+function getCommunityKey() {
+  return 'AB Licence Key';
 }
-function getStandardKey(){
-  return 'xs2543-as6b8osw3-e94syjze8a'
+function getStandardKey() {
+  return 'xs2543-as6b8osw3-e94syjze8a';
 }
-function getEnterpriseKey(){
-  return 'xs2543-as6b8osw3-e94syjze7a'
+function getEnterpriseKey() {
+  return 'xs2543-as6b8osw3-e94syjze7a';
 }
 function getColumns() {
   this.gridOptions.api.setColumnDefs(getTradeSchema());
@@ -96,15 +96,15 @@ function InitTradeBlotter() {
           iconKey: 'filter',
           toolPanel: 'agFiltersToolPanel',
         },
-        {
-          id: 'customStats',
-          labelDefault: 'Custom Stats',
-          labelKey: 'customStats',
-          iconKey: 'custom-stats',
-          toolPanel: 'customStatsToolPanel',
-        },
+        // {
+        //   id: 'customStats',
+        //   labelDefault: 'Custom Stats',
+        //   labelKey: 'customStats',
+        //   iconKey: 'custom-stats',
+        //   toolPanel: 'customStatsToolPanel',
+        // },
       ],
-      //  defaultToolPanel: 'customStats'
+      // defaultToolPanel: 'customStats',
     },
 
     columnTypes: { // not required but helpful for column data type identification
@@ -115,14 +115,14 @@ function InitTradeBlotter() {
       abColDefObject: {},
     },
     components: {
-      customStatsToolPanel: CustomStatsToolPanel,
+      // customStatsToolPanel: CustomStatsToolPanel,
     },
   };
 
   // Create and instantiate an ag-Grid object
   const gridcontainer = document.getElementById('grid');
   gridcontainer.innerHTML = '';
-  const grid = new agGrid.Grid(gridcontainer, gridOptions);
+  // const grid = new agGrid.Grid(gridcontainer, gridOptions);
   dataGen.startTickingDataagGrid(gridOptions);
 
   const s = 2;
@@ -134,8 +134,8 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
-    //  licenceKey: getCommunityKey(),
-   //   licenceKey: getStandardKey(),
+      //  licenceKey: getCommunityKey(),
+      //   licenceKey: getStandardKey(),
       licenceKey: getEnterpriseKey(),
 
   //    predefinedConfig: myJson,
@@ -149,6 +149,7 @@ function InitTradeBlotter() {
       },
       containerOptions: {
         chartContainer: 'chart-container-x',
+        vendorContainer: 'grid',
       },
       configServerOptions: {
         enableConfigServer: false,
@@ -203,7 +204,6 @@ function InitTradeBlotter() {
         gridOptions.columnApi.autoSizeAllColumns();
       }
     });
-    gridOptions.api.closeToolPanel();
   }
 }
 

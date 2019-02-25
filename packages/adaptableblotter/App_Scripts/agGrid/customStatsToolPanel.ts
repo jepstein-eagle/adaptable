@@ -1,4 +1,5 @@
 export function CustomStatsToolPanel() {
+  // empty
 }
 
 CustomStatsToolPanel.prototype.init = function (params:any) {
@@ -15,7 +16,7 @@ CustomStatsToolPanel.prototype.getGui = function () {
 };
 
 function calculateStats(params: any) {
-  
+
     return `<span>
                <h2><i class="fa fa-calculator"></i> Custom Stats</h2>
             <h4>Hello Samed! </h4>
