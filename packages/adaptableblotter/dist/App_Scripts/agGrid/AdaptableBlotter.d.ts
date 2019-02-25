@@ -24,7 +24,8 @@ import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
-import { RowNode } from "ag-grid-community";
+import { Grid, RowNode } from "ag-grid-community";
+import 'ag-grid-enterprise';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
@@ -51,7 +52,10 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private throttleApplyGridFilteringUser;
     private throttleApplyGridFilteringExternal;
     hasFloatingFilter: boolean;
+    grid: Grid;
+    gridContainer: HTMLElement;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
+    private instantiateAgGrid;
     debouncedSetColumnIntoStore: (() => void) & _.Cancelable;
     debouncedSaveGridLayout: (() => void) & _.Cancelable;
     debouncedSetSelectedCells: (() => void) & _.Cancelable;
@@ -153,5 +157,4 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private applyFinalRendering;
     private getState;
     private dispatchAction;
-    private testToolPanelStuff;
 }

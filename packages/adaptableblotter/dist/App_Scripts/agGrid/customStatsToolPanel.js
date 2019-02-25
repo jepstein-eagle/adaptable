@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function CustomStatsToolPanel() {
+    // empty
 }
 exports.CustomStatsToolPanel = CustomStatsToolPanel;
 CustomStatsToolPanel.prototype.init = function (params) {
