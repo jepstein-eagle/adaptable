@@ -13,7 +13,6 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotterStore, AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
-import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 // services
@@ -88,7 +87,8 @@ import { Helper } from '../Utilities/Helpers/Helper';
 
 // ag-Grid
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, ICellRendererParams, RefreshCellsParams, SideBarDef, IToolPanel, IToolPanelComp, ToolPanelDef, IComponent } from "ag-grid-community"
+import { Grid, GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, SideBarDef } from "ag-grid-community"
+import 'ag-grid-enterprise';
 import { Events } from "ag-grid-community/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid-community/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid-community/dist/lib/entities/gridOptions"
@@ -125,11 +125,13 @@ import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { agGridHelper } from './agGridHelper';
-import { ToolPanelWrapperFactory } from './ToolPanelWrapper';
-import { CustomStatsToolPanel } from './customStatsToolPanel';
+// import { ToolPanelWrapperFactory } from './ToolPanelWrapper';
+// import { CustomStatsToolPanel } from './customStatsToolPanel';
 import { CalculatedColumnHelper } from '../Utilities/Helpers/CalculatedColumnHelper';
 import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
 import { LicenceService } from '../Utilities/Services/LicenceService';
+import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableBlotterToolPanel';
+import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdaptableBlotterToolPanelContext';
 
 
 export class AdaptableBlotter implements IAdaptableBlotter {
@@ -160,6 +162,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private throttleApplyGridFilteringExternal: (() => void) & _.Cancelable;
     public hasFloatingFilter: boolean
 
+    public grid: Grid
+    public gridContainer: HTMLElement
+
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
         this.BlotterOptions = BlotterHelper.AssignBlotterOptions(blotterOptions);
@@ -170,7 +175,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.hasFloatingFilter = true;
         // set the licence first
         this.LicenceService = new LicenceService(this);
-        
+
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -182,11 +187,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.StyleService = new StyleService(this);
         this.ChartService = new ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService(this);
-       
+
+        const isGridInstantiated = this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
+        if (!isGridInstantiated) {
+          const instantiateResult = this.instantiateAgGrid();
+          if (!instantiateResult) {
+            // we have no grid, we can't do anything
+            return;
+          }
+        }
+
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi(this);
-
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -265,7 +278,32 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.throttleApplyGridFilteringExternal = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
     }
 
+    private instantiateAgGrid(): boolean {
+      let vendorContainer = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
+      if (!vendorContainer) {
+        LoggingHelper.LogAdaptableBlotterError('You must provide an element id in `containerOptions.vendorContainer`');
+        return false;
+      }
 
+      this.gridOptions.sideBar = this.gridOptions.sideBar || {};
+      this.gridOptions.components = this.gridOptions.components || {};
+
+      const sidebarDef = (this.gridOptions.sideBar as SideBarDef);
+      sidebarDef.toolPanels = sidebarDef.toolPanels || [];
+      sidebarDef.toolPanels.push({
+        id: 'adaptableBlotterToolPanel',
+        labelDefault: 'Adaptable Blotter',
+        labelKey: 'adaptableBlotterToolPanel',
+        iconKey: 'adaptable-blotter',
+        toolPanel: 'adaptableBlotterToolPanel',
+      });
+
+      const toolpanelContext: IAdaptableBlotterToolPanelContext = { Blotter: this };
+      this.gridOptions.components.adaptableBlotterToolPanel = AdaptableBlotterToolPanelBuilder(toolpanelContext);
+
+      this.grid = new Grid(vendorContainer, this.gridOptions);
+      return true;
+    }
 
     // debounced methods
     debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), HALF_SECOND);
@@ -1255,7 +1293,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 if (popupState.ShowScreenPopup && (popupState.ComponentName == ScreenPopups.ColumnChooserPopup || ScreenPopups.CalculatedColumnPopup)) {
                     // ignore
                 } else {
-                    // set the column into the store  
+                    // set the column into the store
                     this.debouncedSetColumnIntoStore() // was: this.setColumnIntoStore();
 
                 }
@@ -1837,16 +1875,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.api.layoutApi.Set(DEFAULT_LAYOUT);
         }
 
-        // playing here but seeing if we can update an agGrid option
-        //this.gridOptions.suppressMenuHide= true;
-
-        // this.testToolPanelStuff();
-
         // at the end so load the current layout, refresh the toolbar and turn off the loading message
         this.api.layoutApi.Set(currentlayout);
     }
-
-
 
     // A couple of state management functions
     private getState(): AdaptableBlotterState {
@@ -1856,33 +1887,4 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private dispatchAction(action: Action): void {
         this.AdaptableBlotterStore.TheStore.dispatch(action);
     }
-
-
-    private testToolPanelStuff() {
-        //    let testToolPanel  =   CustomStatsToolPanel();
-        //  console.log(testToolPanel)
-
-
-        let abToolPanel: ToolPanelDef = {
-            id: 'customStats',
-            labelDefault: 'Custom Stats',
-            labelKey: 'customStats',
-            iconKey: 'columns',
-            toolPanel: 'customStatsToolPanel',
-        }
-
-        console.log(abToolPanel);
-
-        let sidebarDef: SideBarDef = this.gridOptions.sideBar as SideBarDef;
-        let toolbarDefs: ToolPanelDef[] = sidebarDef.toolPanels as ToolPanelDef[];
-        //  toolbarDefs.push(abToolPanel);
-        sidebarDef.toolPanels = toolbarDefs;
-        sidebarDef.defaultToolPanel = "customStats"
-
-        console.log(this.gridOptions.sideBar)
-
-        let components: any = this.gridOptions.components;
-        console.log(components);
-    }
-
 }
