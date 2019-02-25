@@ -15,8 +15,10 @@ module.exports = {
                 'igniteui-react-charts/ES2015/igr-data-chart-annotation-module',
                 'ipushpull-js',
                 'isomorphic-fetch',
+                'json-loader',
                 'lodash',
                 'mathjs',
+                'node-schedule',
                 'prop-types',
                 'react',
                 'react-bootstrap',
@@ -41,7 +43,7 @@ module.exports = {
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
-        extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
+        extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.json']
     },
 
     plugins: [
@@ -65,8 +67,9 @@ module.exports = {
                     path.resolve(__dirname, "node_modules/igniteui-react-core"),
                     path.resolve(__dirname, "node_modules/igniteui-react-charts")
                 ],
-            }
-        ]
+            },
+            {include: /\.json$/, loaders: ["json-loader"]}
+        ],
+        
     }
-
 };

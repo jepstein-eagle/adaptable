@@ -318,8 +318,7 @@ function getTradeSchema() {
     enableValue: true,
     editable: true,
     // valueFormatter: notionalFormatter,
-    suppressSorting: true,
-    cellClass: 'number-cell'
+     cellClass: 'number-cell'
   });
   schema.push({
     headerName: "Counterparty",
@@ -453,8 +452,7 @@ function getTradeSchema() {
     headerName: "Pct Change",
     field: "percentChange",
     editable: true,
-    filter: 'text',
-    suppressFilter: false,
+    filter: false,
     //  type: "numericColumn"
   });
   schema.push({
@@ -463,8 +461,7 @@ function getTradeSchema() {
     editable: true,
     // cellRenderer: percentCellRenderer,
     enableRowGroup: true,
-    suppressSorting: false,
-    suppressFilter: true
+  
   });
   return schema;
 }
