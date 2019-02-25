@@ -170,7 +170,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.hasFloatingFilter = true;
         // set the licence first
         this.LicenceService = new LicenceService(this);
-        
+
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -182,7 +182,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.StyleService = new StyleService(this);
         this.ChartService = new ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService(this);
-       
+
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi(this);
@@ -424,7 +424,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private addFiltersToVendorColumn(vendorColumn: Column): void {
-        if (this.gridOptions.enableFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
+        if (vendorColumn.getColDef().filter && this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
             this.createFilterWrapper(vendorColumn);
         }
 
@@ -806,23 +806,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private isColumnSortable(columnId: string): boolean {
-        if (!this.isSortable()) {
-            return false;
-        }
-
+        // follow agGrid logic which is that ONLY if sortable explicitly set to false do you suppress sort
         let colDef: ColDef = this.gridOptions.api.getColumnDef(columnId)
-        if (colDef.suppressSorting != null) {
-            return !colDef.suppressSorting;
+        if (colDef.sortable != null) {
+            return colDef.sortable;
         }
         return true;
     }
 
     private isColumnFilterable(columnId: string): boolean {
-        let colDef: ColDef = this.gridOptions.api.getColumnDef(columnId)
-        if (colDef.suppressFilter != null) {
-            return !colDef.suppressFilter;
-        }
-        return true;
+         // follow agGrid logic which is that ONLY filterable if one explicitly set
+         let colDef: ColDef = this.gridOptions.api.getColumnDef(columnId)
+        return colDef.filter != null && colDef.filter != false;
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
@@ -1131,7 +1126,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             DataType: this.getColumnDataType(vendorColumn),
             Visible: false,
             ReadOnly: isReadOnly,
-            Sortable: this.isSortable(),
+            Sortable: true,
             Filterable: true, // why not?  need to test...
         }
 
@@ -1760,14 +1755,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         return false;
     }
-
-    public isSortable(): boolean {
-        if (this.gridOptions.enableSorting != null) {
-            return this.gridOptions.enableSorting;
-        }
-        return false;
-    }
-
 
 
     private isFloatingFilterActive(): boolean {

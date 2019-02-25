@@ -4,7 +4,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { PanelWithRow } from "../Components/Panels/PanelWithRow";
 import { Helper } from "../../Utilities/Helpers/Helper";
 import { AdaptableObjectRow } from "../Components/AdaptableObjectRow";
-import { CellSumaryOperation, CellSumaryOptionalOperation } from "../../Utilities/Enums";
+import { CellSummaryOperation, CellSummaryOptionalOperation } from "../../Utilities/Enums";
 import { ICellSummmary } from "../../Utilities/Interface/SelectedCell/ICellSummmary";
 import { ControlLabel } from "react-bootstrap";
 
@@ -25,18 +25,18 @@ export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps,
 
         let rowElements: any[] = []
         if (this.props.CellSummary != null) {
-            rowElements.push(this.createRow(colItems, CellSumaryOperation.Sum, this.props.CellSummary.Sum, cssClassName));
-            rowElements.push(this.createRow(colItems, CellSumaryOperation.Average, this.props.CellSummary.Average, cssClassName));
-            rowElements.push(this.createRow(colItems, CellSumaryOperation.Median, this.props.CellSummary.Median, cssClassName));
-            rowElements.push(this.createRow(colItems, CellSumaryOperation.Distinct, this.props.CellSummary.Distinct, cssClassName));
-            rowElements.push(this.createRow(colItems, CellSumaryOperation.Max, this.props.CellSummary.Max, cssClassName));
-            rowElements.push(this.createRow(colItems, CellSumaryOperation.Min, this.props.CellSummary.Min, cssClassName));
-            rowElements.push(this.createRow(colItems, CellSumaryOperation.Count, this.props.CellSummary.Count, cssClassName));
+            rowElements.push(this.createRow(colItems, CellSummaryOperation.Sum, this.props.CellSummary.Sum, cssClassName));
+            rowElements.push(this.createRow(colItems, CellSummaryOperation.Average, this.props.CellSummary.Average, cssClassName));
+            rowElements.push(this.createRow(colItems, CellSummaryOperation.Median, this.props.CellSummary.Median, cssClassName));
+            rowElements.push(this.createRow(colItems, CellSummaryOperation.Distinct, this.props.CellSummary.Distinct, cssClassName));
+            rowElements.push(this.createRow(colItems, CellSummaryOperation.Max, this.props.CellSummary.Max, cssClassName));
+            rowElements.push(this.createRow(colItems, CellSummaryOperation.Min, this.props.CellSummary.Min, cssClassName));
+            rowElements.push(this.createRow(colItems, CellSummaryOperation.Count, this.props.CellSummary.Count, cssClassName));
             if (this.props.CellSummary.Only != null) {
-                rowElements.push(this.createRow(colItems, CellSumaryOptionalOperation.Only, this.props.CellSummary.Only, cssClassName));
+                rowElements.push(this.createRow(colItems, CellSummaryOptionalOperation.Only, this.props.CellSummary.Only, cssClassName));
             }
             if (this.props.CellSummary.VWAP != null) {
-                rowElements.push(this.createRow(colItems, CellSumaryOptionalOperation.VWAP, this.props.CellSummary.VWAP, cssClassName));
+                rowElements.push(this.createRow(colItems, CellSummaryOptionalOperation.VWAP, this.props.CellSummary.VWAP, cssClassName));
             }
         }
 

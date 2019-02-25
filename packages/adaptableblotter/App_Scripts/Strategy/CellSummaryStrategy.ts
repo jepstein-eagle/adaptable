@@ -6,7 +6,7 @@ import { ICellSummaryStrategy } from "./Interface/ICellSummaryStrategy";
 import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
 import { ICellSummmary } from "../Utilities/Interface/SelectedCell/ICellSummmary";
 import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
-import { DataType, StateChangedTrigger, CellSumaryOperation, CellSumaryOptionalOperation } from '../Utilities/Enums';
+import { DataType, StateChangedTrigger, CellSummaryOperation, CellSummaryOptionalOperation } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { CellSummaryState } from '../Redux/ActionsReducers/Interface/IState';
 import { Helper } from '../Utilities/Helpers/Helper';
@@ -108,14 +108,14 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     }
 
     private calculateOnly(distinctCount: number, allValues: any[]): any {
-        if (ArrayExtensions.NotContainsItem(this.CellSummaryState.SystemSummaryOperations, CellSumaryOptionalOperation.Only)) {
+        if (ArrayExtensions.NotContainsItem(this.CellSummaryState.OptionalSummaryOperations, CellSummaryOptionalOperation.Only)) {
             return null;
         }
         return (distinctCount == 1) ? allValues[0] : "";
     }
 
     private calculateVwap(numericValues: number[],  numericColumns: number[]): any {
-        if (ArrayExtensions.NotContainsItem(this.CellSummaryState.SystemSummaryOperations, CellSumaryOptionalOperation.VWAP)) {
+        if (ArrayExtensions.NotContainsItem(this.CellSummaryState.OptionalSummaryOperations, CellSummaryOptionalOperation.VWAP)) {
             return null;
         }
            if (numericColumns.length == 2){

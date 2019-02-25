@@ -7,6 +7,7 @@ import { SelectionMode } from '../../../Utilities/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { ICustomSort } from "../../../Utilities/Interface/BlotterObjects/ICustomSort";
+import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {
     SortedColumns: IColumn[]
@@ -23,10 +24,12 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
     }
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-column"
+        let sortableCols = ColumnHelper.getSortableColumns(this.props.Columns);
         return <div className={cssClassName}>
-             <Panel header="Select a Column" bsStyle="primary">
-                <ColumnSelector  cssClassName={cssClassName} SelectedColumnIds={[this.state.SelectedColumnId]}
-                    ColumnList={this.props.SortedColumns}
+            <Panel header="Select a Column" bsStyle="primary">
+                <ColumnSelector cssClassName={cssClassName}
+                    SelectedColumnIds={[this.state.SelectedColumnId]}
+                    ColumnList={sortableCols}
                     onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                     SelectionMode={SelectionMode.Single} />
             </Panel>
@@ -41,11 +44,11 @@ export class CustomSortColumnWizard extends React.Component<CustomSortColumnWiza
     public Next(): void { this.props.Data.ColumnId = this.state.SelectedColumnId }
     // tslint:disable-next-line:no-empty
     public Back(): void { }
-    public GetIndexStepIncrement(){
+    public GetIndexStepIncrement() {
         return 1;
     }
-    public GetIndexStepDecrement(){
+    public GetIndexStepDecrement() {
         return 1;
     }
-   
+
 }

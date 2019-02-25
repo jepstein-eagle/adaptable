@@ -10,9 +10,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     let gridOptions = {
-      enableSorting: true,
       enableRangeSelection: true,
-      enableFilter: true,
       enableColResize: true
     };
     this.state = {

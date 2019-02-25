@@ -140,6 +140,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
+    
     canCreateContextMenuItem(column: IColumn, blotter: IAdaptableBlotter, functionType: string = ""): boolean {
         if (this.isReadOnlyStrategy()) {
             return false;

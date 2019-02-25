@@ -50,7 +50,6 @@ export class ReactHarnessHelper {
       editable: false,
       filter: 'text',
       enableRowGroup: true,
-      suppressFilter: true
     })
     schema.push({
       headerName: 'Change On Year',

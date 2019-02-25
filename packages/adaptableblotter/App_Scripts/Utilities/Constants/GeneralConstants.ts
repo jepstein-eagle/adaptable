@@ -1,4 +1,4 @@
-import { DisplayAction, MathOperation, StatusColour, LeafExpressionOperator, CellSumaryOperation } from "../Enums";
+import { DisplayAction, MathOperation, StatusColour, LeafExpressionOperator, CellSummaryOperation } from "../Enums";
 import { ChartVisibility, AxisTotal } from "../ChartEnums";
 
 export const MISSING_COLUMN: string = " [MISSING]";
@@ -43,8 +43,8 @@ export const FLASHING_CELLS_DEFAULT_DURATION: 250 | 500 | 750 | 1000 = 500;
 // Selected Cells
 export const SMART_EDIT_DEFAULT_VALUE: number = 1;
 export const SMART_EDIT_DEFAULT_OPERATION: 'Add' | 'Subtract' | 'Multiply' | 'Divide' = MathOperation.Multiply
-// Selected Cells
-export const SELECTED_CELLS_DEFAULT_OPERATION: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'VWap' | 'Only'= CellSumaryOperation.Sum;
+// Cells Summary
+export const CELL_SUMMARY_DEFAULT_OPERATION: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'VWap' | 'Only'= CellSummaryOperation.Sum;
 // system
 export const SYSTEM_DEFAULT_CHART_VISIBILITY: ChartVisibility = ChartVisibility.Hidden;
 export const SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR: "Red" | "Amber" | "Green" | "Blue" = StatusColour.Green;

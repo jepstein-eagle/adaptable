@@ -243,7 +243,7 @@ export enum MessageType {
 }
 
 
-export enum CellSumaryOperation {
+export enum CellSummaryOperation {
     Sum = 'Sum',
     Average = 'Average',
     Median = 'Median',
@@ -253,7 +253,7 @@ export enum CellSumaryOperation {
     Count = 'Count'
 }
 
-export enum CellSumaryOptionalOperation {
+export enum CellSummaryOptionalOperation {
     Only = 'Only',
     VWAP = 'VWAP'
 }

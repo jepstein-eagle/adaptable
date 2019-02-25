@@ -75,7 +75,6 @@ function InitTradeBlotter() {
     rowData: trades, // the dummy data we are using
     enableSorting: true,
     enableRangeSelection: true,
-    enableFilter: true,
     floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,
@@ -139,7 +138,7 @@ function InitTradeBlotter() {
    //   licenceKey: getStandardKey(),
       licenceKey: getEnterpriseKey(),
 
-      predefinedConfig: myJson,
+  //    predefinedConfig: myJson,
 
       auditOptions: {
         //     auditCellEdits: true,
@@ -166,8 +165,8 @@ function InitTradeBlotter() {
         // getColumnValues: retrieveValues,
       },
       filterOptions: {
-        // useAdaptableBlotterFilterForm: false,
-        // useAdaptableBlotterQuickFilter: false
+       //  useAdaptableBlotterFilterForm: false,
+       //  useAdaptableBlotterQuickFilter: false
       },
       generalOptions: {
         // serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
@@ -303,6 +302,8 @@ function getTradeSchema() {
     field: 'tradeId',
     editable: true,
     type: 'abColDefNumber',
+    sortable: false,
+    filter: true
   });
   schema.push({
     headerName: 'Notional',
@@ -310,14 +311,15 @@ function getTradeSchema() {
     enableValue: true,
     editable: true,
     // valueFormatter: notionalFormatter,
-    suppressSorting: true,
     cellClass: 'number-cell',
+    filter: false
   });
   schema.push({
     headerName: 'Counterparty',
     field: 'counterparty',
     editable: true,
     enableRowGroup: true,
+    sortable: true
   });
 
   schema.push({
@@ -446,7 +448,6 @@ function getTradeSchema() {
     field: 'percentChange',
     editable: true,
     filter: 'text',
-    suppressFilter: false,
     //  type: "numericColumn"
   });
   schema.push({
@@ -455,9 +456,7 @@ function getTradeSchema() {
     editable: true,
     // cellRenderer: percentCellRenderer,
     enableRowGroup: true,
-    suppressSorting: false,
-    suppressFilter: true,
-  });
+   });
   return schema;
 }
 

@@ -134,8 +134,7 @@ export interface IAdaptableBlotter {
 
     // vendor grid related
     isSelectable(): boolean
-    isSortable(): boolean
-
+ 
     // floating filter
     hasFloatingFilter: boolean
     showFloatingFilter(): void

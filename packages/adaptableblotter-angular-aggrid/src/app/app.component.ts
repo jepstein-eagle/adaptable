@@ -28,9 +28,7 @@ export class AppComponent {
   gridOptions: GridOptions = {
     columnDefs: new HarnessHelper().getTradeSchema(),
     rowData: new DataGenerator().getTrades(5000),
-    enableSorting: true,
     enableRangeSelection: true,
-    enableFilter: true,
     enableColResize: true
   };
 

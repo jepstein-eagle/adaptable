@@ -28,9 +28,7 @@ export default class App extends React.Component {
         { headerName: "Model", field: "model" },
         { headerName: "Price", field: "price" ,editable: true}
       ],
-      enableSorting: true,
       enableRangeSelection: true,
-      enableFilter: true,
       enableColResize: true,
       suppressColumnVirtualisation: false
     };

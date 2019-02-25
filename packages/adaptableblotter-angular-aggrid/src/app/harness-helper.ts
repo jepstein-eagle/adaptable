@@ -54,8 +54,7 @@ export default class HarnessHelper {
       editable: false,
       filter: 'text',
       enableRowGroup: true,
-      suppressFilter: true
-    });
+     });
     schema.push({
       headerName: 'Change On Year',
       field: 'changeOnYear',

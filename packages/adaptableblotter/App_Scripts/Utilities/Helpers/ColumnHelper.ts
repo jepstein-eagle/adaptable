@@ -125,6 +125,10 @@ export module ColumnHelper {
         return returnValue;
     }
 
+    export function getSortableColumns(columns: IColumn[]): IColumn[] {
+       return columns.filter(c=>c.Sortable);
+    }
+
     function LogMissingColumnWarning(columnId: string): void {
         if (!isSpecialColumn(columnId)) {
             LoggingHelper.LogAdaptableBlotterWarning("No column found named '" + columnId + "'");

@@ -35,9 +35,7 @@ export default class App extends React.Component<{}, AppState> {
     return {
       columnDefs: new ReactHarnessHelper().getTradeSchema(),
       rowData: new DataGenerator().getTrades(15000),
-      enableSorting: true,
       enableRangeSelection: true,
-      enableFilter: true,
       enableColResize: true,
       suppressColumnVirtualisation: false
     };

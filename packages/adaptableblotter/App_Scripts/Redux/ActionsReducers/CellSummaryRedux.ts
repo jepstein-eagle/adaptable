@@ -1,23 +1,22 @@
 import { CellSummaryState } from './Interface/IState';
-import { CellSumaryOperation, CellSumaryOptionalOperation } from '../../Utilities/Enums';
+import { CellSummaryOperation, CellSummaryOptionalOperation } from '../../Utilities/Enums';
 import * as Redux from 'redux'
-import { SELECTED_CELLS_DEFAULT_OPERATION } from '../../Utilities/Constants/GeneralConstants';
+import {CELL_SUMMARY_DEFAULT_OPERATION } from '../../Utilities/Constants/GeneralConstants';
 
 export const CELL_SUMMARY_CHANGE_OPERATION = 'CELL_SUMMARY_CHANGE_OPERATION';
 
 export interface CellSummaryChangeOperationAction extends Redux.Action {
-    SummaryOperation: CellSumaryOperation | CellSumaryOptionalOperation
+    SummaryOperation: CellSummaryOperation | CellSummaryOptionalOperation
 }
 
-export const CellSummaryChangeOperation = (SummaryOperation: CellSumaryOperation| CellSumaryOptionalOperation): CellSummaryChangeOperationAction => ({
+export const CellSummaryChangeOperation = (SummaryOperation: CellSummaryOperation| CellSummaryOptionalOperation): CellSummaryChangeOperationAction => ({
     type: CELL_SUMMARY_CHANGE_OPERATION,
     SummaryOperation
 })
 
 const initialCellSummaryState: CellSummaryState = {
-    SummaryOperation: SELECTED_CELLS_DEFAULT_OPERATION,
-    SystemSummaryOperations: []
-
+    SummaryOperation: CELL_SUMMARY_DEFAULT_OPERATION,
+    OptionalSummaryOperations: []
 }
 
 export const CellSummaryReducer: Redux.Reducer<CellSummaryState> = (state: CellSummaryState = initialCellSummaryState, action: Redux.Action): CellSummaryState => {

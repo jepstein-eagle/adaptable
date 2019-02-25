@@ -154,7 +154,7 @@ export interface CalendarState extends IUserState {
 
 export interface CellSummaryState extends IUserState {
     SummaryOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count'| 'VWap' | 'Only';
-    SystemSummaryOperations: string[]; // for now just 'VWaP' and 'Only' are available
+    OptionalSummaryOperations: string[]; // for now just 'VWaP' and 'Only' are available
 }
 
 export interface CellValidationState extends IUserState {

@@ -20,9 +20,7 @@ export class AppAgGridComponent {
   gridOptions: GridOptions = {
     columnDefs: new HarnessHelper().getTradeSchema(),
     rowData: new DataGenerator().getTrades(5000),
-    enableSorting: true,
-    enableRangeSelection: true,
-    enableFilter: true,
+     enableRangeSelection: true,
     floatingFilter: true,
     enableColResize: true,
     suppressColumnVirtualisation: false,

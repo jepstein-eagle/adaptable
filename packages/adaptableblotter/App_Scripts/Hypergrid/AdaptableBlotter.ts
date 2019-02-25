@@ -1495,7 +1495,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return true;
     }
 
-    public isSortable(): boolean {
+    private isSortable(): boolean {
         if (this.hyperGrid.properties.hasOwnProperty('unsortable')) {
             return !this.hyperGrid.behavior.unsortable;
         }
