@@ -37,7 +37,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(200);
+    return dataGen.getTrades(5);
   }
   return dataGen.getFtseData(10);
 }
@@ -70,43 +70,40 @@ function InitTradeBlotter() {
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
   gridOptions = {
-    // columnDefs: [],
     columnDefs: getColumnsForGrid(), // returns a list of agGrid column definitions
     rowData: trades, // the dummy data we are using
-    enableSorting: true,
     enableRangeSelection: true,
     floatingFilter: true,
-    enableColResize: true,
     suppressColumnVirtualisation: false,
-    //   sideBar: true, // this puts in filters and columns by default
-
-    sideBar: {
-      toolPanels: [
-        {
-          id: 'columns',
-          labelDefault: 'Columns',
-          labelKey: 'columns',
-          iconKey: 'columns',
-          toolPanel: 'agColumnsToolPanel',
+  //  sideBar: undefined, // this puts in filters and columns by default
+    
+        sideBar: {
+          toolPanels: [
+            {
+              id: 'columns',
+              labelDefault: 'Columns',
+              labelKey: 'columns',
+              iconKey: 'columns',
+              toolPanel: 'agColumnsToolPanel',
+            },
+            {
+              id: 'hello',  
+              labelDefault: 'Hello',
+              labelKey: 'hello',
+              iconKey: 'filter',
+              toolPanel: 'agFiltersToolPanel',
+            },
+            // {
+            //   id: 'customStats',
+            //   labelDefault: 'Custom Stats',
+            //   labelKey: 'customStats',
+            //   iconKey: 'custom-stats',
+            //   toolPanel: 'customStatsToolPanel',
+            // },
+          ],
+          // defaultToolPanel: 'customStats',
         },
-        {
-          id: 'filters',
-          labelDefault: 'Filters',
-          labelKey: 'filters',
-          iconKey: 'filter',
-          toolPanel: 'agFiltersToolPanel',
-        },
-        // {
-        //   id: 'customStats',
-        //   labelDefault: 'Custom Stats',
-        //   labelKey: 'customStats',
-        //   iconKey: 'custom-stats',
-        //   toolPanel: 'customStatsToolPanel',
-        // },
-      ],
-      // defaultToolPanel: 'customStats',
-    },
-
+    
     columnTypes: { // not required but helpful for column data type identification
       abColDefNumber: {},
       abColDefString: {},
@@ -120,8 +117,8 @@ function InitTradeBlotter() {
   };
 
   // Create and instantiate an ag-Grid object
-  const gridcontainer = document.getElementById('grid');
-  gridcontainer.innerHTML = '';
+  // const gridcontainer = document.getElementById('grid');
+  // gridcontainer.innerHTML = '';
   // const grid = new agGrid.Grid(gridcontainer, gridOptions);
   dataGen.startTickingDataagGrid(gridOptions);
 
@@ -138,7 +135,7 @@ function InitTradeBlotter() {
       //   licenceKey: getStandardKey(),
       licenceKey: getEnterpriseKey(),
 
-  //    predefinedConfig: myJson,
+      //    predefinedConfig: myJson,
 
       auditOptions: {
         //     auditCellEdits: true,
@@ -166,8 +163,8 @@ function InitTradeBlotter() {
         // getColumnValues: retrieveValues,
       },
       filterOptions: {
-       //  useAdaptableBlotterFilterForm: false,
-       //  useAdaptableBlotterQuickFilter: false
+        //  useAdaptableBlotterFilterForm: false,
+        //  useAdaptableBlotterQuickFilter: false
       },
       generalOptions: {
         // serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
@@ -456,7 +453,7 @@ function getTradeSchema() {
     editable: true,
     // cellRenderer: percentCellRenderer,
     enableRowGroup: true,
-   });
+  });
   return schema;
 }
 

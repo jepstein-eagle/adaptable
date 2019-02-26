@@ -22,7 +22,6 @@ export class AppAgGridComponent {
     rowData: new DataGenerator().getTrades(5000),
      enableRangeSelection: true,
     floatingFilter: true,
-    enableColResize: true,
     suppressColumnVirtualisation: false,
   };
   blotterOptions: IAdaptableBlotterOptions = {

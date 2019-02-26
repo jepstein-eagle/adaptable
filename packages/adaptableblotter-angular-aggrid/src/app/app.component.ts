@@ -29,7 +29,6 @@ export class AppComponent {
     columnDefs: new HarnessHelper().getTradeSchema(),
     rowData: new DataGenerator().getTrades(5000),
     enableRangeSelection: true,
-    enableColResize: true
   };
 
   blotterOptions: IAdaptableBlotterOptions = {

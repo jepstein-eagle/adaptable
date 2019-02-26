@@ -8,33 +8,39 @@ import { IToolPanelComp, IToolPanelParams } from "ag-grid-community";
 import { render } from "react-dom";
 
 interface AdaptableBlotterToolPanelProps extends StrategyViewPopupProps<AdaptableBlotterToolPanelComponent> {
+  QuickSearchText: string
 }
 
 export interface AdaptableBlotterToolPanelState {
 }
 
 class AdaptableBlotterToolPanelComponent extends React.Component<AdaptableBlotterToolPanelProps, AdaptableBlotterToolPanelState> {
-    constructor(props: AdaptableBlotterToolPanelProps) {
-        super(props);
-        this.state = {};
-        // we got agGrid api from props
-        // console.log(this.props.api);
-        console.log(this.props);
-    }
+  constructor(props: AdaptableBlotterToolPanelProps) {
+    super(props);
+    this.state = {};
+    // we got agGrid api from props
+    // console.log(this.props.api);
+   // console.log(this.props);
+  }
 
-    render(): any {
-        return <div>Hello from the Container if it works</div>
-    }
+  render(): any {
+    return <div>
+      <span> Coming in Version 3.4</span><br/>
+      <span> (April 2019)</span>
+    
+    </div>
+  }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
-    return {
-    };
+  return {
+    QuickSearchText: state.QuickSearch.QuickSearchText
+  };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
-    return {
-     };
+  return {
+  };
 }
 
 export const ConnectedAdaptableBlotterToolPanel = connect(mapStateToProps, mapDispatchToProps)(AdaptableBlotterToolPanelComponent);
@@ -59,7 +65,7 @@ export const AdaptableBlotterToolPanelBuilder = (ctx: IAdaptableBlotterToolPanel
 
       if (params && params.api) {
         params.api.addEventListener('modelUpdated', (newModel: any) => {
-          console.log('Model updated', newModel);
+      //    console.log('Model updated', newModel);
         });
       }
     }

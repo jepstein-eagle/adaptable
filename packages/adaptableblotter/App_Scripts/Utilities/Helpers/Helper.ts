@@ -224,9 +224,7 @@ export module Helper {
     export function RoundValueIfNumeric(numberToRound: any, decimalPlaces: number): any {
         let returnValue: any;
         if (!isNaN(Number(numberToRound))) {
-            console.log("was: " + numberToRound)
-            returnValue = RoundNumber(numberToRound, decimalPlaces);
-            console.log("now: " + returnValue)
+             returnValue = RoundNumber(numberToRound, decimalPlaces);
         }
         return returnValue
     }

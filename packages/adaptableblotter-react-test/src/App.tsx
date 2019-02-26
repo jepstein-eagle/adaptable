@@ -22,7 +22,6 @@ export default class App extends React.Component<{}, AppState> {
     super(props);
     let gridOptions: GridOptions = {
       enableRangeSelection: true,
-      enableColResize: true
     };
     this.state = {
       gridOptions: gridOptions,

@@ -1,4 +1,4 @@
-import { ICellRendererFunc, ICellRendererParams, ColDef, GridOptions } from "ag-grid-community";
+import { ICellRendererFunc, ICellRendererParams, ColDef, GridOptions, SideBarDef, ToolPanelDef } from "ag-grid-community";
 import { StringExtensions } from "../Utilities/Extensions/StringExtensions";
 import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
 import { ArrayExtensions } from "../Utilities/Extensions/ArrayExtensions";
@@ -136,6 +136,54 @@ export module agGridHelper {
         // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
         gridOptions.api.setColumnDefs([])
         gridOptions.api.setColumnDefs(colDefs)
+    }
+
+    export function createAdaptableBlotterSideBarDefs(showFilterPanel: boolean, showColumnsPanel: boolean): SideBarDef {
+        let toolPanelDef: ToolPanelDef[] = [];
+
+        if (showFilterPanel) {
+
+            let filterToolPanel: ToolPanelDef = {
+                id: 'filters',
+                labelDefault: 'Filters',
+                labelKey: 'filters',
+                iconKey: 'filter',
+                toolPanel: 'agFiltersToolPanel',
+            }
+            toolPanelDef.push(filterToolPanel);
+        }
+
+        if (showColumnsPanel) {
+            let columnsToolPanel: ToolPanelDef = {
+                id: 'columns',
+                labelDefault: 'Columns',
+                labelKey: 'columns',
+                iconKey: 'columns',
+                toolPanel: 'agColumnsToolPanel',
+            }
+            toolPanelDef.push(columnsToolPanel);
+
+        }
+
+        
+        toolPanelDef.push(createAdaptableBlotterToolPanel())
+
+        let abSideBarDef: SideBarDef = {
+            toolPanels: toolPanelDef,
+            defaultToolPanel: '' // for now we wont show an open (default) tool panel in this scenario - might revisit
+        }
+
+        return abSideBarDef;
+    }
+
+    export function createAdaptableBlotterToolPanel(): ToolPanelDef {
+        return{
+            id: 'adaptableBlotterToolPanel',
+            labelDefault: 'Adaptable Blotter',
+            labelKey: 'adaptableBlotterToolPanel',
+            iconKey: 'menu',
+            toolPanel: 'adaptableBlotterToolPanel',
+        };
     }
 
 }

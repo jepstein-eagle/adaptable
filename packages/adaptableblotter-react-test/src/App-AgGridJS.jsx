@@ -29,7 +29,6 @@ export default class App extends React.Component {
         { headerName: "Price", field: "price" ,editable: true}
       ],
       enableRangeSelection: true,
-      enableColResize: true,
       suppressColumnVirtualisation: false
     };
   }

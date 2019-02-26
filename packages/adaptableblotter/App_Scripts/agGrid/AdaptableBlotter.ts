@@ -87,7 +87,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 
 // ag-Grid
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { Grid, GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, SideBarDef } from "ag-grid-community"
+import { Grid, GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, SideBarDef, ToolPanelDef, GridOptionsWrapper } from "ag-grid-community"
 import 'ag-grid-enterprise';
 import { Events } from "ag-grid-community/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid-community/dist/lib/entities/colDef"
@@ -194,15 +194,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         if (!isGridInstantiated) {
 
-          const instantiateResult = this.instantiateAgGrid();
+            const instantiateResult = this.instantiateAgGrid();
 
-          if (!instantiateResult) {
+            if (!instantiateResult) {
 
-            // we have no grid, we can't do anything
+                // we have no grid, we can't do anything
 
-            return;
+                return;
 
-          }
+            }
 
         }
 
@@ -210,7 +210,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
 
-          // get the api ready
+        // get the api ready
         this.api = new BlotterApi(this);
 
         //we build the list of strategies
@@ -291,30 +291,41 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private instantiateAgGrid(): boolean {
-      let vendorContainer = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
-      if (!vendorContainer) {
-        LoggingHelper.LogAdaptableBlotterError('You must provide an element id in `containerOptions.vendorContainer`');
-        return false;
-      }
+        let vendorContainer = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
+        if (!vendorContainer) {
+            LoggingHelper.LogAdaptableBlotterError('You must provide an element id in `containerOptions.vendorContainer`');
+            return false;
+        }
 
-      this.gridOptions.sideBar = this.gridOptions.sideBar || {};
-      this.gridOptions.components = this.gridOptions.components || {};
+        this.gridOptions.sideBar = this.gridOptions.sideBar || {};
+        this.gridOptions.components = this.gridOptions.components || {};
+        // https://www.ag-grid.com/javascript-grid-side-bar/
 
-      const sidebarDef = (this.gridOptions.sideBar as SideBarDef);
-      sidebarDef.toolPanels = sidebarDef.toolPanels || [];
-      sidebarDef.toolPanels.push({
-        id: 'adaptableBlotterToolPanel',
-        labelDefault: 'Adaptable Blotter',
-        labelKey: 'adaptableBlotterToolPanel',
-        iconKey: 'adaptable-blotter',
-        toolPanel: 'adaptableBlotterToolPanel',
-      });
+        if (this.gridOptions.sideBar) {
 
-      const toolpanelContext: IAdaptableBlotterToolPanelContext = { Blotter: this };
-      this.gridOptions.components.adaptableBlotterToolPanel = AdaptableBlotterToolPanelBuilder(toolpanelContext);
-
-      this.grid = new Grid(vendorContainer, this.gridOptions);
-      return true;
+            const sidebar = this.gridOptions.sideBar;
+            if (sidebar === true) {
+                // Possibility 1: Sidebar is true - meaning that they want the default filter and columns, so create both:
+                this.gridOptions.sideBar = agGridHelper.createAdaptableBlotterSideBarDefs(true, true);
+            } else if (sidebar === 'columns') {
+                // Possibility 2: Sidebar is 'columns' (string) - meaning column only so create just that
+                this.gridOptions.sideBar = agGridHelper.createAdaptableBlotterSideBarDefs(false, true);
+            } else if (sidebar === 'filters') {
+                // Possibility 3: Sidebar is 'filters' (string) - meaning filters only so create just that   
+                this.gridOptions.sideBar = agGridHelper.createAdaptableBlotterSideBarDefs(true, false);
+            } else {
+                // Possibilty 4: either no sidebar or created their own so just add Blotter Tool panel
+                const sidebarDef = (this.gridOptions.sideBar as SideBarDef);
+                if (sidebarDef) {
+                    sidebarDef.toolPanels = sidebarDef.toolPanels || [];
+                    sidebarDef.toolPanels.push(agGridHelper.createAdaptableBlotterToolPanel());
+                }
+            }
+            const toolpanelContext: IAdaptableBlotterToolPanelContext = { Blotter: this };
+            this.gridOptions.components.adaptableBlotterToolPanel = AdaptableBlotterToolPanelBuilder(toolpanelContext);
+        }
+        this.grid = new Grid(vendorContainer, this.gridOptions);
+        return true;
     }
 
     // debounced methods
@@ -865,8 +876,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private isColumnFilterable(columnId: string): boolean {
-         // follow agGrid logic which is that ONLY filterable if one explicitly set
-         let colDef: ColDef = this.gridOptions.api.getColumnDef(columnId)
+        // follow agGrid logic which is that ONLY filterable if one explicitly set
+        let colDef: ColDef = this.gridOptions.api.getColumnDef(columnId)
         return colDef.filter != null && colDef.filter != false;
     }
 
