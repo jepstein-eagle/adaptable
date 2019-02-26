@@ -124,4 +124,44 @@ var agGridHelper;
         gridOptions.api.setColumnDefs(colDefs);
     }
     agGridHelper.safeSetColDefs = safeSetColDefs;
+    function createAdaptableBlotterSideBarDefs(showFilterPanel, showColumnsPanel) {
+        let toolPanelDef = [];
+        if (showFilterPanel) {
+            let filterToolPanel = {
+                id: 'filters',
+                labelDefault: 'Filters',
+                labelKey: 'filters',
+                iconKey: 'filter',
+                toolPanel: 'agFiltersToolPanel',
+            };
+            toolPanelDef.push(filterToolPanel);
+        }
+        if (showColumnsPanel) {
+            let columnsToolPanel = {
+                id: 'columns',
+                labelDefault: 'Columns',
+                labelKey: 'columns',
+                iconKey: 'columns',
+                toolPanel: 'agColumnsToolPanel',
+            };
+            toolPanelDef.push(columnsToolPanel);
+        }
+        toolPanelDef.push(createAdaptableBlotterToolPanel());
+        let abSideBarDef = {
+            toolPanels: toolPanelDef,
+            defaultToolPanel: '' // for now we wont show an open (default) tool panel in this scenario - might revisit
+        };
+        return abSideBarDef;
+    }
+    agGridHelper.createAdaptableBlotterSideBarDefs = createAdaptableBlotterSideBarDefs;
+    function createAdaptableBlotterToolPanel() {
+        return {
+            id: 'adaptableBlotterToolPanel',
+            labelDefault: 'Adaptable Blotter',
+            labelKey: 'adaptableBlotterToolPanel',
+            iconKey: 'menu',
+            toolPanel: 'adaptableBlotterToolPanel',
+        };
+    }
+    agGridHelper.createAdaptableBlotterToolPanel = createAdaptableBlotterToolPanel;
 })(agGridHelper = exports.agGridHelper || (exports.agGridHelper = {}));

@@ -9,14 +9,19 @@ class AdaptableBlotterToolPanelComponent extends React.Component {
         this.state = {};
         // we got agGrid api from props
         // console.log(this.props.api);
-        console.log(this.props);
+        // console.log(this.props);
     }
     render() {
-        return React.createElement("div", null, "Hello from the Container if it works");
+        return React.createElement("div", null,
+            React.createElement("span", null, " Coming in Version 3.4"),
+            React.createElement("br", null),
+            React.createElement("span", null, " (April 2019)"));
     }
 }
 function mapStateToProps(state, ownProps) {
-    return {};
+    return {
+        QuickSearchText: state.QuickSearch.QuickSearchText
+    };
 }
 function mapDispatchToProps(dispatch) {
     return {};
@@ -32,7 +37,7 @@ exports.AdaptableBlotterToolPanelBuilder = (ctx) => class AdaptableBlotterToolPa
             React.createElement(exports.ConnectedAdaptableBlotterToolPanel, { Blotter: this.ctx.Blotter, TeamSharingActivated: false }))), this.gui);
         if (params && params.api) {
             params.api.addEventListener('modelUpdated', (newModel) => {
-                console.log('Model updated', newModel);
+                //    console.log('Model updated', newModel);
             });
         }
     }

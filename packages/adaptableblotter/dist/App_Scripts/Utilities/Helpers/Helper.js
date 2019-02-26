@@ -217,9 +217,7 @@ var Helper;
     function RoundValueIfNumeric(numberToRound, decimalPlaces) {
         let returnValue;
         if (!isNaN(Number(numberToRound))) {
-            console.log("was: " + numberToRound);
             returnValue = RoundNumber(numberToRound, decimalPlaces);
-            console.log("now: " + returnValue);
         }
         return returnValue;
     }

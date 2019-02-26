@@ -210,17 +210,32 @@ class AdaptableBlotter {
         }
         this.gridOptions.sideBar = this.gridOptions.sideBar || {};
         this.gridOptions.components = this.gridOptions.components || {};
-        const sidebarDef = this.gridOptions.sideBar;
-        sidebarDef.toolPanels = sidebarDef.toolPanels || [];
-        sidebarDef.toolPanels.push({
-            id: 'adaptableBlotterToolPanel',
-            labelDefault: 'Adaptable Blotter',
-            labelKey: 'adaptableBlotterToolPanel',
-            iconKey: 'adaptable-blotter',
-            toolPanel: 'adaptableBlotterToolPanel',
-        });
-        const toolpanelContext = { Blotter: this };
-        this.gridOptions.components.adaptableBlotterToolPanel = AdaptableBlotterToolPanel_1.AdaptableBlotterToolPanelBuilder(toolpanelContext);
+        // https://www.ag-grid.com/javascript-grid-side-bar/
+        if (this.gridOptions.sideBar) {
+            const sidebar = this.gridOptions.sideBar;
+            if (sidebar === true) {
+                // Possibility 1: Sidebar is true - meaning that they want the default filter and columns, so create both:
+                this.gridOptions.sideBar = agGridHelper_1.agGridHelper.createAdaptableBlotterSideBarDefs(true, true);
+            }
+            else if (sidebar === 'columns') {
+                // Possibility 2: Sidebar is 'columns' (string) - meaning column only so create just that
+                this.gridOptions.sideBar = agGridHelper_1.agGridHelper.createAdaptableBlotterSideBarDefs(false, true);
+            }
+            else if (sidebar === 'filters') {
+                // Possibility 3: Sidebar is 'filters' (string) - meaning filters only so create just that   
+                this.gridOptions.sideBar = agGridHelper_1.agGridHelper.createAdaptableBlotterSideBarDefs(true, false);
+            }
+            else {
+                // Possibilty 4: either no sidebar or created their own so just add Blotter Tool panel
+                const sidebarDef = this.gridOptions.sideBar;
+                if (sidebarDef) {
+                    sidebarDef.toolPanels = sidebarDef.toolPanels || [];
+                    sidebarDef.toolPanels.push(agGridHelper_1.agGridHelper.createAdaptableBlotterToolPanel());
+                }
+            }
+            const toolpanelContext = { Blotter: this };
+            this.gridOptions.components.adaptableBlotterToolPanel = AdaptableBlotterToolPanel_1.AdaptableBlotterToolPanelBuilder(toolpanelContext);
+        }
         this.grid = new ag_grid_community_1.Grid(vendorContainer, this.gridOptions);
         return true;
     }
