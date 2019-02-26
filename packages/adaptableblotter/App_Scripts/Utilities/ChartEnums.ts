@@ -18,7 +18,7 @@ export enum ChartType {
     Waterfall = 'Waterfall'
 }
 
-export enum ChartCrosshairsMode {
+export enum CrosshairDisplayMode {
     None = 'None',
     Horizontal = 'Horizontal',
     Vertical = 'Vertical',
@@ -38,10 +38,28 @@ export enum AxisLabelsLocation {
     OutsideBottom = 'OutsideBottom',
     OutsideLeft = 'OutsideLeft',
     OutsideRight = 'OutsideRight',
+    // these are used only when using crossingAxis and crossingValue properties:
     InsideTop = 'InsideTop',
     InsideBottom = 'InsideBottom',
     InsideLeft = 'InsideLeft',
     InsideRight = 'InsideRight',
+}
+
+export enum AxisScale {
+  Linear = 'Linear',
+  Log = 'Log',
+}
+
+// TODO remove
+export enum YAxisLabelsLocation {
+  OutsideLeft = 'Left',
+  OutsideRight = 'Right',
+}
+
+// TODO remove
+export enum XAxisLabelsLocation {
+  OutsideTop = 'Top',
+  OutsideBottom = 'Bottom',
 }
 
 export enum HorizontalAlignment {
@@ -67,8 +85,25 @@ export  enum ToolTipType {
     None = 'None'
 }
 
-export  enum AxisAngle {
+export enum AxisAngle {
     Horizontal = 'Horizontal',
     Diagonal = 'Diagonal',
     Vertical ='Vertical'
+}
+
+export enum MarkerType {
+  // Unset = 'Unset',  // commented out because Default is more descriptive enum
+  Default = 'Default', // added special enum to resolve marker type based on chart type
+  Automatic = 'Automatic', // assigns different markers for each series in the chart, e.g.  Circle, Triangle, etc
+  Circle = 'Circle',
+  Triangle = 'Triangle',
+  Pyramid = 'Pyramid',
+  Square = 'Square',
+  Diamond = 'Diamond',
+  Pentagon = 'Pentagon',
+  Hexagon = 'Hexagon',
+  Tetragram = 'Tetragram',
+  Pentagram = 'Pentagram',
+  Hexagram = 'Hexagram',
+  None = 'None',
 }

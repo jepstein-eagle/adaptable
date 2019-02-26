@@ -13,7 +13,7 @@ import { AxisTotal } from '../ChartEnums';
 import { Helper } from '../Helpers/Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 
-/* 
+/*
 Class that buils the chart - probably needs some refactoring but working for the time being.
 Makes use of Expressions to get the data required.
 Returns a ChartData object that the ChartDisplay will receive and then show to teh user
@@ -26,16 +26,18 @@ export class ChartService implements IChartService {
     public BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any {
 
         let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns)
-
         let xAxisColValues: string[] = this.getXAxisColumnValues(chartDefinition, columns);
-
         let xSegmentColValues: string[] = this.getXSegmentColumnValues(chartDefinition, columns);
 
-        let chartData: any = xAxisColValues.map(cv => {
-            let chartDataRow: any = new Object()
-            chartDataRow[xAxisColumnName] = cv
-            let showAverageTotal: boolean = (chartDefinition.YAxisTotal == AxisTotal.Average);
+        console.log("BuildChartData xAxisColumnName " + xAxisColumnName);
+        console.log("BuildChartData yAxisColumnIds " + chartDefinition.YAxisColumnIds);
+        let yAxisColumnNames: string[] = [];
 
+        let chartData: any = xAxisColValues.map(cv => {
+            let chartItem: any = new Object()
+
+            chartItem[xAxisColumnName] = cv
+            let showAverageTotal: boolean = (chartDefinition.YAxisTotal == AxisTotal.Average);
             let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
 
             if (ArrayExtensions.IsNotEmpty(xSegmentColValues)) {
@@ -44,20 +46,41 @@ export class ChartService implements IChartService {
                     chartDefinition.YAxisColumnIds.forEach(colID => {
                         let colFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns)
                         let total = this.buildTotal(colID, [xAxisKVP, columnValueKVP], columns, showAverageTotal)
-                        chartDataRow[colFriendlyName + '(' + columnValue + ")"] = total;
+                        let colName = colFriendlyName + '(' + columnValue + ")"
+                        if (yAxisColumnNames.indexOf(colName) < 0) {
+                            yAxisColumnNames.push(colName);
+                        }
+                        chartItem[colName] = total;
                     });
                 })
             } else { // otherwise do the y cols
                 chartDefinition.YAxisColumnIds.forEach(colID => {
                     let total = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal);
                     let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
-                    chartDataRow[colName] = total;
+                    if (yAxisColumnNames.indexOf(colName) < 0) {
+                        yAxisColumnNames.push(colName);
+                    }
+                    chartItem[colName] = total;
                 })
             }
-            return chartDataRow
+            return chartItem
         })
-        // console.log(chartData);
-        return chartData
+        console.log("BuildChartData yAxisColumnNames " + yAxisColumnNames);
+        // console.log("BuildChartData chartData ");
+        // console.log("BuildChartData chartData " + chartData);
+        console.log("BuildChartData props " + Object.getOwnPropertyNames(chartData[0]));
+        console.log("BuildChartData keys " + Object.keys(chartData[0]));
+
+        let subset: any[] = [];
+        let index = 0;
+        chartData.forEach((item: any) => {
+          if (index < 40) {
+            subset.push(item);
+          }
+          index++
+        });
+         return subset;
+       // return chartData;
     }
 
     private buildTotal(yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[], showAverageTotal: boolean): number {

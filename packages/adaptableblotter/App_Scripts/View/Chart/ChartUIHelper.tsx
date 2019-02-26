@@ -1,7 +1,10 @@
 import { ChartDisplayPopupState } from "./ChartDisplayPopupState";
 import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { HorizontalAlignment, ChartType, ToolTipType, ChartCrosshairsMode, ChartSize, AxisAngle, LabelVisibility } from "../../Utilities/ChartEnums";
+import { HorizontalAlignment, ChartType, ToolTipType, CrosshairDisplayMode, ChartSize,
+  AxisAngle, AxisScale, AxisLabelsLocation,
+  LabelVisibility, MarkerType } from "../../Utilities/ChartEnums";
+
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import * as React from "react";
 import { IChartProperties } from "../../Utilities/Interface/IChartProperties";
@@ -24,6 +27,7 @@ export module ChartUIHelper {
             // Y Axis
             IsYAxisMinimised: true,
             SetYAxisMinimumValue: chartDefinition.ChartProperties.YAxisMinimumValue != undefined,
+            SetYAxisMaximumValue: chartDefinition.ChartProperties.YAxisMaximumValue != undefined,
             SetYAxisLabelColor: StringExtensions.IsNotNullOrEmpty(chartDefinition.ChartProperties.YAxisLabelColor),
             SetYAxisTitleColor: StringExtensions.IsNotNullOrEmpty(chartDefinition.ChartProperties.YAxisTitleColor),
             UseDefaultYAxisTitle: isDefaultYAxisTitle(chartDefinition, columns), // StringExtensions.IsNullOrEmpty(chartDefinition.ChartProperties.YAxisTitle),
@@ -104,8 +108,8 @@ export module ChartUIHelper {
     }
 
     export function getCrossHairModeOptions(): JSX.Element[] {
-        let optionCrossHairModeTypes = EnumExtensions.getNames(ChartCrosshairsMode).map((enumName) => {
-            return <option key={enumName} value={enumName}>{enumName as ChartCrosshairsMode}</option>
+        let optionCrossHairModeTypes = EnumExtensions.getNames(CrosshairDisplayMode).map((enumName) => {
+            return <option key={enumName} value={enumName}>{enumName as CrosshairDisplayMode}</option>
         })
         return optionCrossHairModeTypes;
     }
@@ -124,31 +128,79 @@ export module ChartUIHelper {
         return optionAligments;
     }
 
-    export function getAxisAngleOptions(): JSX.Element[] {
-        let optionAxisAngles = EnumExtensions.getNames(AxisAngle).map((enumName) => {
-            return <option key={enumName} value={enumName}>{enumName as AxisAngle}</option>
-        })
-        return optionAxisAngles;
+    export function getMarkerTypeOptions(): JSX.Element[] {
+      let options = EnumExtensions.getNames(MarkerType).map((enumName) => {
+          let name = enumName.toString();
+          return <option key={name} value={name}>{name}</option>
+      })
+      return options;
     }
 
+    export function getMarkerFromProps(chartProps: IChartProperties): string {
+      let chartType = chartProps.ChartType;
+      let markerType = chartProps.MarkerType;
+      return getMarkerFor(chartType, markerType);
+    }
+
+    export function getMarkerFor(charType: ChartType, markerType: string): string {
+      // resolves marker for specified chart type since some charts have markers hidden by default
+      if (markerType === "Default" || markerType === "Unset") {
+        markerType = charType == ChartType.Point ? "Automatic" : "None";
+      } else {
+        // markerType is unchanged and we show markers that the user wants
+      }
+      return markerType;
+    }
+
+    export function getYAxisLabelsLocations(): JSX.Element[] {
+        let options = [
+            <option key="Left" value={AxisLabelsLocation.OutsideLeft}>Left</option>,
+            <option key="Right" value={AxisLabelsLocation.OutsideRight}>Right</option>,
+        ]
+        return options;
+    }
+
+    export function getXAxisLabelsLocations(): JSX.Element[] {
+      let options = [
+          <option key="Top" value={AxisLabelsLocation.OutsideTop}>Top</option>,
+          <option key="Bottom" value={AxisLabelsLocation.OutsideBottom}>Bottom</option>,
+      ]
+      return options;
+    }
+
+    export function getAxisAngleOptions(): JSX.Element[] {
+        let options = EnumExtensions.getNames(AxisAngle).map((enumName) => {
+            return <option key={enumName} value={enumName}>{enumName as AxisAngle}</option>
+        })
+        return options;
+    }
+
+    export function getAxisLabelScales(): JSX.Element[] {
+      let options = EnumExtensions.getNames(AxisScale).map((enumName) => {
+          return <option key={enumName} value={enumName}>{enumName as AxisScale}</option>
+      })
+      return options;
+    }
 
     export function setChartHeight(chartProperties: IChartProperties): string {
-        switch (chartProperties.ChartSize) {
-            case ChartSize.XSmall:
-                return '350px';
-            case ChartSize.Small:
-                return '450px';
-            case ChartSize.Medium:
-                return '600px';
-            case ChartSize.Large:
-                return '750px';
-            case ChartSize.XLarge:
-                return '850px';
-        }
+      return '450px';
+        // switch (chartProperties.ChartSize) {
+        //     case ChartSize.XSmall:
+        //         return '350px';
+        //     case ChartSize.Small:
+        //         return '450px';
+        //     case ChartSize.Medium:
+        //         return '600px';
+        //     case ChartSize.Large:
+        //         return '750px';
+        //     case ChartSize.XLarge:
+        //         return '850px';
+        // }
     }
 
     export function setChartWidth(chartProperties: IChartProperties, isChartSettingsVisible: boolean): string {
         let chartWidth: number;
+        // chartWidth = (isChartSettingsVisible) ? 1050 : 1350;
         switch (chartProperties.ChartSize) {
             case ChartSize.XSmall:
                 chartWidth = (isChartSettingsVisible) ? 375 : 600
@@ -222,7 +274,142 @@ export module ChartUIHelper {
         }
     }
 
+    export function getDataProperties(chartData: any): string[] {
+      if (chartData === undefined){
+        return [];
+      }
+      let item = chartData[0];
+      let allProps = Object.keys(item);
+      let dataProps: string[] = [];
+      allProps.forEach((name: string) => {
+        // excluding Callouts properties, e.g. CalloutsIndex
+        if (!name.startsWith("Callouts")){
+          dataProps.push(name);
+        }
+      });
+      console.log("getDataProperties " + dataProps);
+      return dataProps; //["CalloutsIndex"];
+    }
 
+    export function getNumericProperties(chartData: any): string[] {
+      if (chartData === undefined){
+        return [];
+      }
+      let dataItem = chartData[0];
+      let allProps = Object.keys(dataItem);
+      let dataProps: string[] = [];
+
+      // console.log("getNumericProperties " + isNaN("2").tostring);
+
+      allProps.forEach((name: string) => {
+        // excluding Callouts properties, e.g. CalloutsIndex
+        let dataValue = dataItem[name];
+        if (typeof(dataValue) === "number"){
+          dataProps.push(name);
+        }
+      });
+      console.log("getNumericProperties " + dataProps);
+      return dataProps;
+    }
+
+
+    export function getDataCallouts(chartData: any): any[] {
+      if (chartData === undefined){
+        return undefined;
+      }
+
+      let callouts: any[] = [];
+
+      let numericProps = getNumericProperties(chartData);
+      numericProps.forEach((name: string) => {
+        let prevValue: number = 0;
+        let gainValue: number = Number.MIN_VALUE;
+        let gainChange: number = Number.MIN_VALUE;
+        let gainIndex: number = 0;
+        let dropChange: number = Number.MAX_VALUE;
+        let dropValue: number = Number.MAX_VALUE;
+        let dropIndex: number = 0;
+
+        let minValue: number = Number.MAX_VALUE;
+        let minIndex: number = 0;
+        let maxValue: number = Number.MIN_VALUE;
+        let maxIndex: number = 0;
+        let itemIndex = 0;
+
+        chartData.forEach((item: any) => {
+          let itemValue = item[name];
+          let itemChange = item[name] - prevValue;
+
+          let info = (itemIndex + 1) + ", v=" + itemValue.toFixed(2)+ ", d=" + itemChange.toFixed(2);
+
+          if (itemIndex > 0 &&
+              gainChange < itemChange) {
+              gainChange = itemChange;
+              gainValue = itemValue;
+              gainIndex = itemIndex;
+          }
+
+          if (itemIndex > 0 &&
+              dropChange > itemChange) {
+              dropChange = itemChange;
+              dropValue = itemValue;
+              dropIndex = itemIndex;
+              console.log("d " + info + " changed to " + dropChange.toFixed(2));
+          } else {
+              console.log("d " + info);
+          }
+
+          if (minValue > itemValue) {
+              minValue = itemValue;
+              minIndex = itemIndex;
+          }
+          if (maxValue < itemValue) {
+              maxValue = itemValue;
+              maxIndex = itemIndex;
+          }
+
+            callouts.push({
+                ItemLabel: itemValue.toFixed(1),
+                ItemIndex: itemIndex,
+                ItemValue: itemValue,
+                MemberPath: name
+            });
+
+            prevValue = itemValue;
+            itemIndex++;
+        });
+
+        callouts.push({
+            CalloutsLabel: "BIGGEST GAIN",
+            CalloutsIndex: gainIndex,
+            CalloutsValue: gainValue,
+            MemberPath: name
+        });
+        callouts.push({
+            CalloutsLabel: "BIGGEST DROP",
+            CalloutsIndex: dropIndex,
+            CalloutsValue: dropValue,
+            MemberPath: name
+        });
+
+        callouts.push({
+          CalloutsLabel: "MAX",
+          CalloutsIndex: maxIndex,
+          CalloutsValue: maxValue,
+          MemberPath: name
+        });
+        callouts.push({
+            CalloutsLabel: "MIN",
+            CalloutsIndex: minIndex,
+            CalloutsValue: minValue,
+            MemberPath: name
+        });
+
+      });
+
+      console.log("getCalloutData " + callouts.length);
+      return callouts;
+    }
 
 
 

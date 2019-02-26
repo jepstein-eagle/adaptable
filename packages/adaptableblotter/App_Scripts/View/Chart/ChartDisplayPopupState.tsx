@@ -12,6 +12,7 @@ export interface ChartDisplayPopupState {
     IsGeneralMinimised: boolean;
     // Y Axis
     SetYAxisMinimumValue: boolean;
+    SetYAxisMaximumValue: boolean;
     SetYAxisLabelColor: boolean;
     SetYAxisTitleColor: boolean;
     IsYAxisMinimised: boolean;
