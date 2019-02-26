@@ -4,6 +4,7 @@ var quickSearchText;
 var trades;
 var gridOptions;
 var showTrade = true;
+var instantiateAgGridInHarness = false;
 
 function runQuickSearchViaAPI() {
   const element = document.getElementById('txtQuickSearchText');
@@ -20,10 +21,10 @@ function getCommunityKey() {
   return 'AB Licence Key';
 }
 function getStandardKey() {
-  return 'xs2543-as6b8osw3-e94syjze8a';
+  return 'xs2543-as6b8ejw3-e94syjze8a';
 }
 function getEnterpriseKey() {
-  return 'xs2543-as6b8osw3-e94syjze7a';
+  return 'xs2543-as6b8esw3-e94fyjzc7a';
 }
 function getColumns() {
   this.gridOptions.api.setColumnDefs(getTradeSchema());
@@ -75,35 +76,27 @@ function InitTradeBlotter() {
     enableRangeSelection: true,
     floatingFilter: true,
     suppressColumnVirtualisation: false,
-  //  sideBar: undefined, // this puts in filters and columns by default
-    
-        sideBar: {
-          toolPanels: [
-            {
-              id: 'columns',
-              labelDefault: 'Columns',
-              labelKey: 'columns',
-              iconKey: 'columns',
-              toolPanel: 'agColumnsToolPanel',
-            },
-            {
-              id: 'hello',  
-              labelDefault: 'Hello',
-              labelKey: 'hello',
-              iconKey: 'filter',
-              toolPanel: 'agFiltersToolPanel',
-            },
-            // {
-            //   id: 'customStats',
-            //   labelDefault: 'Custom Stats',
-            //   labelKey: 'customStats',
-            //   iconKey: 'custom-stats',
-            //   toolPanel: 'customStatsToolPanel',
-            // },
-          ],
-          // defaultToolPanel: 'customStats',
+    //  sideBar: undefined, // this puts in filters and columns by default
+
+    sideBar: {
+      toolPanels: [
+        {
+          id: 'columns',
+          labelDefault: 'Columns',
+          labelKey: 'columns',
+          iconKey: 'columns',
+          toolPanel: 'agColumnsToolPanel',
         },
-    
+        {
+          id: 'filters',
+          labelDefault: 'Filters',
+          labelKey: 'filters',
+          iconKey: 'filter',
+          toolPanel: 'agFiltersToolPanel',
+        },
+      ],
+    },
+
     columnTypes: { // not required but helpful for column data type identification
       abColDefNumber: {},
       abColDefString: {},
@@ -111,15 +104,14 @@ function InitTradeBlotter() {
       abColDefDate: {},
       abColDefObject: {},
     },
-    components: {
-      // customStatsToolPanel: CustomStatsToolPanel,
-    },
   };
 
   // Create and instantiate an ag-Grid object
-  // const gridcontainer = document.getElementById('grid');
-  // gridcontainer.innerHTML = '';
-  // const grid = new agGrid.Grid(gridcontainer, gridOptions);
+  if (instantiateAgGridInHarness) {
+    const gridcontainer = document.getElementById('grid');
+    gridcontainer.innerHTML = '';
+    const grid = new agGrid.Grid(gridcontainer, gridOptions);
+  }
   dataGen.startTickingDataagGrid(gridOptions);
 
   const s = 2;
@@ -131,9 +123,9 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
-      //  licenceKey: getCommunityKey(),
-      //   licenceKey: getStandardKey(),
-      licenceKey: getEnterpriseKey(),
+        licenceKey: getCommunityKey(),
+      //    licenceKey: getStandardKey(),
+     // licenceKey: getEnterpriseKey(),
 
       //    predefinedConfig: myJson,
 

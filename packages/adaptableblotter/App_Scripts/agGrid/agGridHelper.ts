@@ -142,7 +142,6 @@ export module agGridHelper {
         let toolPanelDef: ToolPanelDef[] = [];
 
         if (showFilterPanel) {
-
             let filterToolPanel: ToolPanelDef = {
                 id: 'filters',
                 labelDefault: 'Filters',
@@ -162,17 +161,13 @@ export module agGridHelper {
                 toolPanel: 'agColumnsToolPanel',
             }
             toolPanelDef.push(columnsToolPanel);
-
         }
-
-        
         toolPanelDef.push(createAdaptableBlotterToolPanel())
 
         let abSideBarDef: SideBarDef = {
             toolPanels: toolPanelDef,
             defaultToolPanel: '' // for now we wont show an open (default) tool panel in this scenario - might revisit
         }
-
         return abSideBarDef;
     }
 

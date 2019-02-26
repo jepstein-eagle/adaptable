@@ -6,7 +6,7 @@ export module StringExtensions {
   }
 
   export function IsNotNull(stringToCheck: string) {
-    return !StringExtensions.IsNull(stringToCheck);
+    return !IsNull(stringToCheck);
   }
 
   export function IsEmpty(stringToCheck: string) {
@@ -14,11 +14,11 @@ export module StringExtensions {
   }
 
   export function IsNotEmpty(stringToCheck: string) {
-    return !StringExtensions.IsEmpty(stringToCheck);
+    return !IsEmpty(stringToCheck);
   }
 
   export function IsNullOrEmpty(stringToCheck: string) {
-    return StringExtensions.IsNull(stringToCheck) || StringExtensions.IsEmpty(stringToCheck);
+    return IsNull(stringToCheck) || StringExtensions.IsEmpty(stringToCheck);
   }
 
   export function IsNotNullOrEmpty(stringToCheck: string) {
@@ -34,7 +34,15 @@ export module StringExtensions {
   }
 
   export function ToLowerCase(stringToCheck: string) {
-    return (StringExtensions.IsNullOrEmpty(stringToCheck)) ? stringToCheck : stringToCheck.toLowerCase()
+    return (IsNullOrEmpty(stringToCheck)) ? stringToCheck : stringToCheck.toLowerCase()
+  }
+
+  export function Includes(stringToCheck: string, valueToCheck: string) {
+    return stringToCheck.includes(valueToCheck);
+  }
+
+  export function NotIncludes(stringToCheck: string, valueToCheck: string) {
+    return !Includes(stringToCheck, valueToCheck)
   }
 
 }

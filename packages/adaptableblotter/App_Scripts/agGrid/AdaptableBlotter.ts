@@ -297,32 +297,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             return false;
         }
 
-        this.gridOptions.sideBar = this.gridOptions.sideBar || {};
-        this.gridOptions.components = this.gridOptions.components || {};
-        // https://www.ag-grid.com/javascript-grid-side-bar/
+        if (this.BlotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
+            this.gridOptions.sideBar = this.gridOptions.sideBar || {};
+            this.gridOptions.components = this.gridOptions.components || {};
+            // https://www.ag-grid.com/javascript-grid-side-bar/
 
-        if (this.gridOptions.sideBar) {
+            if (this.gridOptions.sideBar) {
 
-            const sidebar = this.gridOptions.sideBar;
-            if (sidebar === true) {
-                // Possibility 1: Sidebar is true - meaning that they want the default filter and columns, so create both:
-                this.gridOptions.sideBar = agGridHelper.createAdaptableBlotterSideBarDefs(true, true);
-            } else if (sidebar === 'columns') {
-                // Possibility 2: Sidebar is 'columns' (string) - meaning column only so create just that
-                this.gridOptions.sideBar = agGridHelper.createAdaptableBlotterSideBarDefs(false, true);
-            } else if (sidebar === 'filters') {
-                // Possibility 3: Sidebar is 'filters' (string) - meaning filters only so create just that   
-                this.gridOptions.sideBar = agGridHelper.createAdaptableBlotterSideBarDefs(true, false);
-            } else {
-                // Possibilty 4: either no sidebar or created their own so just add Blotter Tool panel
-                const sidebarDef = (this.gridOptions.sideBar as SideBarDef);
-                if (sidebarDef) {
-                    sidebarDef.toolPanels = sidebarDef.toolPanels || [];
-                    sidebarDef.toolPanels.push(agGridHelper.createAdaptableBlotterToolPanel());
+                const sidebar = this.gridOptions.sideBar;
+                if (sidebar === true) {
+                    // Possibility 1: Sidebar is true - meaning that they want the default filter and columns, so create both:
+                    this.gridOptions.sideBar = agGridHelper.createAdaptableBlotterSideBarDefs(true, true);
+                } else if (sidebar === 'columns') {
+                    // Possibility 2: Sidebar is 'columns' (string) - meaning column only so create just that
+                    this.gridOptions.sideBar = agGridHelper.createAdaptableBlotterSideBarDefs(false, true);
+                } else if (sidebar === 'filters') {
+                    // Possibility 3: Sidebar is 'filters' (string) - meaning filters only so create just that   
+                    this.gridOptions.sideBar = agGridHelper.createAdaptableBlotterSideBarDefs(true, false);
+                } else {
+                    // Possibilty 4: either no sidebar or created their own so just add Blotter Tool panel
+                    const sidebarDef = (this.gridOptions.sideBar as SideBarDef);
+                    if (sidebarDef) {
+                        sidebarDef.toolPanels = sidebarDef.toolPanels || [];
+                        sidebarDef.toolPanels.push(agGridHelper.createAdaptableBlotterToolPanel());
+                    }
                 }
+                const toolpanelContext: IAdaptableBlotterToolPanelContext = { Blotter: this };
+                this.gridOptions.components.adaptableBlotterToolPanel = AdaptableBlotterToolPanelBuilder(toolpanelContext);
             }
-            const toolpanelContext: IAdaptableBlotterToolPanelContext = { Blotter: this };
-            this.gridOptions.components.adaptableBlotterToolPanel = AdaptableBlotterToolPanelBuilder(toolpanelContext);
         }
         this.grid = new Grid(vendorContainer, this.gridOptions);
         return true;

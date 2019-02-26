@@ -54,6 +54,7 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
         showMissingPrimaryKeyWarning: true,
         preventDuplicatePrimaryKeyValues: true,
         serverSearchOption: 'None',
+        showAdaptableBlotterToolPanel: false
     }
 }
 
