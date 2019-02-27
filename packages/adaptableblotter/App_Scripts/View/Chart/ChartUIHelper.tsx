@@ -1,7 +1,7 @@
 import { ChartDisplayPopupState } from "./ChartDisplayPopupState";
 import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { HorizontalAlignment, ChartType, ToolTipType, CrosshairDisplayMode, ChartSize,
+import { HorizontalAlignment, ChartType, ToolTipType, CrosshairDisplayMode,
   AxisAngle, AxisScale, AxisLabelsLocation,
   LabelVisibility, MarkerType, CalloutsType } from "../../Utilities/ChartEnums";
 
@@ -110,14 +110,7 @@ export module ChartUIHelper {
         return optionCrossHairModeTypes;
     }
 
-    export function getChartSizeOptions(): JSX.Element[] {
-        let optionChartSizes = EnumExtensions.getNames(ChartSize).map((enumName) => {
-            return <option key={enumName} value={enumName}>{enumName as ChartSize}</option>
-        })
-        return optionChartSizes;
-    }
-
-    export function getAlignmentOptions(): JSX.Element[] {
+      export function getAlignmentOptions(): JSX.Element[] {
         let optionAligments = EnumExtensions.getNames(HorizontalAlignment).map((enumName) => {
             return <option key={enumName} value={enumName}>{enumName as HorizontalAlignment}</option>
         })
@@ -189,84 +182,6 @@ export module ChartUIHelper {
       return options;
     }
 
-    export function setChartHeight(chartProperties: IChartProperties): string {
-        switch (chartProperties.ChartSize) {
-            case ChartSize.XSmall:
-                return '350px';
-            case ChartSize.Small:
-                return '450px';
-            case ChartSize.Medium:
-                return '600px';
-            case ChartSize.Large:
-                return '750px';
-            case ChartSize.XLarge:
-                return '850px';
-        }
-    }
-
-    export function setChartWidth(chartProperties: IChartProperties, isChartSettingsVisible: boolean): string {
-        let chartWidth: number;
-        switch (chartProperties.ChartSize) {
-            case ChartSize.XSmall:
-                chartWidth = (isChartSettingsVisible) ? 375 : 600
-                break;
-            case ChartSize.Small:
-                chartWidth = (isChartSettingsVisible) ? 525 : 850
-                break;
-            case ChartSize.Medium:
-                chartWidth = (isChartSettingsVisible) ? 750 : 1100
-                break;
-            case ChartSize.Large:
-                chartWidth = (isChartSettingsVisible) ? 1050 : 1350
-                break;
-            case ChartSize.XLarge:
-                chartWidth = (isChartSettingsVisible) ? 1200 : 1600
-                break;
-        }
-        chartWidth = (chartProperties.XAxisLabelVisibility == LabelVisibility.Visible) ? chartWidth : chartWidth - 10;
-        return chartWidth + 'px'
-    }
-
-    export function setPanelWidth(chartProperties: IChartProperties): string {
-        switch (chartProperties.ChartSize) {
-            case ChartSize.XSmall:
-                return '650px';
-            case ChartSize.Small:
-                return '900px';
-            case ChartSize.Medium:
-                return '1150px';
-            case ChartSize.Large:
-                return '1400px';
-            case ChartSize.XLarge:
-                return '1650px';
-        }
-    }
-
-    export function setChartColumnSize(chartProperties: IChartProperties): number {
-        switch (chartProperties.ChartSize) {
-            case ChartSize.XSmall:
-            case ChartSize.Small:
-                return 7;
-            case ChartSize.Medium:
-                return 8;
-            case ChartSize.Large:
-            case ChartSize.XLarge:
-                return 9;
-        }
-    }
-
-    export function setLegendColumnSize(chartProperties: IChartProperties): number {
-        switch (chartProperties.ChartSize) {
-            case ChartSize.XSmall:
-            case ChartSize.Small:
-                return 5;
-            case ChartSize.Medium:
-                return 4;
-            case ChartSize.Large:
-            case ChartSize.XLarge:
-                return 3;
-        }
-    }
 
     export function getAngleFromEnum(axisAngle: AxisAngle): number {
         switch (axisAngle) {

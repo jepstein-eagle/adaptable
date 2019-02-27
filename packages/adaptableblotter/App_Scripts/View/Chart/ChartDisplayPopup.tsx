@@ -9,8 +9,7 @@ import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChar
 import { ButtonClose } from "../Components/Buttons/ButtonClose";
 import { PRIMARY_BSSTYLE, DEFAULT_BSSTYLE, INFO_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { Row, Col, ControlLabel, FormControl, Checkbox, Radio } from "react-bootstrap";
-import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
+import { Row, Col, ControlLabel, FormControl, Checkbox, Radio, Table } from "react-bootstrap";
 import { ButtonMinimise } from "../Components/Buttons/ButtonMinimise";
 import { ButtonMaximise } from "../Components/Buttons/ButtonMaximise";
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
@@ -22,11 +21,12 @@ import { IgrDataChartAnnotationModule } from 'igniteui-react-charts/ES2015/igr-d
 import { ChartWizard } from "./Wizard/ChartWizard";
 import { Helper } from "../../Utilities/Helpers/Helper";
 import { ButtonEdit } from "../Components/Buttons/ButtonEdit";
-import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { PanelWithImageThreeButtons } from "../Components/Panels/PanelWithIImageThreeButtons";
-import { ChartSize, ChartType, CrosshairDisplayMode,
-  AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ToolTipType, ChartVisibility,
-  AxisAngle, AxisScale } from "../../Utilities/ChartEnums";
+import {
+     ChartType, CrosshairDisplayMode,
+    AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ToolTipType, ChartVisibility,
+    AxisAngle, AxisScale
+} from "../../Utilities/ChartEnums";
 import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ColorPicker } from "../ColorPicker";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
@@ -35,16 +35,6 @@ import { DefaultChartProperties } from "../../Utilities/Defaults/DefaultChartPro
 import { PanelWithTwoButtons } from "../Components/Panels/PanelWithTwoButtons";
 import { ChartDisplayPopupState } from "./ChartDisplayPopupState";
 import { ChartUIHelper } from "./ChartUIHelper";
-import { markType } from "igniteui-react-core/ES2015/type";
-
-/*
-Set the reference value for y axis
-overlap for x axis (within a group - set to negative vlue)
-closing chart BUG  didnt close in toolbar
-XAxisInterval - let users choose (default is Auto) // add help
-transitions
-and dont reset the data
-*/
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
     ChartDefinitions: IChartDefinition[];
@@ -52,7 +42,7 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
     ChartData: any;
     CalloutsData: any;
     ChartVisibility: ChartVisibility;
-    //  ShowModal:
+  
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
     onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => ChartRedux.ChartPropertiesUpdateAction,
     onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction,
@@ -61,7 +51,7 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
 
 class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps, ChartDisplayPopupState> {
 
-    public seriesColors: Map<string,string> = new Map<string,string>();
+    public seriesColors: Map<string, string> = new Map<string, string>();
 
     constructor(props: ChartDisplayPopupProps) {
         super(props);
@@ -75,15 +65,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         IgrDataChartAnnotationModule.register();
     }
 
-    componentDidMount() {
-        // if showing modal, we only display a small size chart with no ability to change
-        if (this.props.ShowModal && this.state.ChartProperties.ChartSize != ChartSize.Small) {
-            let chartProperties: IChartProperties = this.state.ChartProperties;
-            chartProperties.ChartSize = ChartSize.Small;
-            this.updateChartProperties(chartProperties);
-        }
-    }
-
+   
     render() {
 
         let cssClassName: string = this.props.cssClassName + "__Charts";
@@ -281,15 +263,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 overrideText={'Reset Defaults'}
             />
 
-        let chartWidth: string = ChartUIHelper.setChartWidth(this.state.ChartProperties, this.state.IsChartSettingsVisible);
-        let chartHeight: string = ChartUIHelper.setChartHeight(this.state.ChartProperties);
-        let panelWidth: string = ChartUIHelper.setPanelWidth(this.state.ChartProperties);
-        let chartColumnSize: number = ChartUIHelper.setChartColumnSize(this.state.ChartProperties);
-        let legendColumnSize: number = ChartUIHelper.setLegendColumnSize(this.state.ChartProperties);
-
-        // TODO consider renaming this local chartData variable to something else that is not confusing with this.props.ChartData
-        // perhaps chartElement?
-        let chartData = (this.props.ChartVisibility == ChartVisibility.Maximised && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
+        let chartElement = (this.props.ChartVisibility == ChartVisibility.Maximised && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
 
             <IgrCategoryChart
                 // data source
@@ -298,8 +272,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 chartType={this.state.ChartProperties.ChartType}
                 markerTypes={ChartUIHelper.getMarkerFromProps(this.state.ChartProperties)}
                 // size
-                width={chartWidth}
-                height={chartHeight}
+                width={'100%'}
+                height={'500px'}
                 // titles (titles, alignment and margins)
                 chartTitle={this.props.CurrentChartDefinition.Title}
                 subtitle={this.props.CurrentChartDefinition.SubTitle}
@@ -388,8 +362,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             <PanelWithImageThreeButtons
                 cssClassName={cssClassName}
                 header={StrategyConstants.ChartStrategyName}
-                style={{ width: panelWidth }}
                 bsStyle={PRIMARY_BSSTYLE}
+                style={{ marginRight: '30px' }}
                 glyphicon={StrategyConstants.ChartGlyph}
                 secondButton={closeButton}
                 firstButton={editButton}
@@ -409,267 +383,254 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
                             </div>
                         }
-                        <Row>
-                            <Col xs={chartColumnSize}>
-                                {this.props.ChartData != null &&
-                                    chartData
-                                }
-                            </Col>
-                            {this.state.IsChartSettingsVisible &&
-                                <Col xs={legendColumnSize}>
-                                    <PanelWithTwoButtons bsSize={"xs"} bsStyle={INFO_BSSTYLE} headerText={"Chart Settings"} cssClassName={cssClassName}
-                                        firstButton={closeChartSettingsButton} secondButton={setDefaultsButton}>
+                        {this.state.IsChartSettingsVisible ?
+                            <Row>
+                                <Table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                {this.props.ChartData != null &&
+                                                    chartElement
+                                                }
+                                            </td>
+                                            <td style={{ width: '350px', marginRight: '15px' }}>
+                                                <PanelWithTwoButtons bsSize={"xs"} bsStyle={INFO_BSSTYLE} headerText={"Chart Settings"} cssClassName={cssClassName}
+                                                    firstButton={closeChartSettingsButton} secondButton={setDefaultsButton}>
 
-                                        <PanelWithButton glyphicon={"wrench"} bsSize={"xs"} headerText={"General"} cssClassName={cssClassName} button={showGeneralPropertiesButton} style={{ marginTop: '2px' }}>
-                                            {this.state.IsGeneralMinimised == false &&
-                                                <div>
-                                                  {/* NOTE consider applying ChartSize only to chart height and width should always stretch */}
-                                                  {this.props.ShowModal == false &&
-                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                            <Row>
-                                                                <Col xs={7}><ControlLabel>Chart Size</ControlLabel></Col>
-                                                                <Col xs={5}>
-                                                                    <FormControl bsSize={"small"} componentClass="select" placeholder="select"
-                                                                     value={this.state.ChartProperties.ChartSize}
-                                                                      onChange={(x) => this.onChartSizeChange(x)} >
-                                                                        {ChartUIHelper.getChartSizeOptions()}
-                                                                    </FormControl>
-                                                                </Col>
-                                                            </Row>
-                                                        </AdaptableBlotterForm>
-                                                    }
-
-                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                        <Row>
-                                                            <Col xs={7}><ControlLabel>Chart Type</ControlLabel></Col>
-                                                            <Col xs={5}>
-                                                                <FormControl bsSize={"small"} componentClass="select" placeholder="select"
-                                                                value={this.state.ChartProperties.ChartType}
-                                                                onChange={(x) => this.onChartTypeChange(x)} >
-                                                                    {ChartUIHelper.getChartTypeOptions()}
-                                                                </FormControl>
-                                                            </Col>
-                                                        </Row>
-                                                    </AdaptableBlotterForm>
-                                                    {/* Martin added controls for changing MarkerType  */}
-                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                        <Row>
-                                                            <Col xs={7}><ControlLabel>Marker Type</ControlLabel></Col>
-                                                            <Col xs={5}>
-                                                                <FormControl bsSize={"small"} componentClass="select" placeholder="select"
-                                                                value={this.state.ChartProperties.MarkerType}
-                                                                onChange={(x) => this.onMarkerTypeChange(x)} >
-                                                                    {ChartUIHelper.getMarkerTypeOptions()}
-                                                                </FormControl>
-                                                            </Col>
-                                                        </Row>
-                                                    </AdaptableBlotterForm>
-
-                                                    {/* Martin move Gap setting here because it allies only to Column chart type */}
-                                                    {this.state.ChartProperties.ChartType == ChartType.Column &&
-                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                        <Row>
-                                                            <Col xs={7}><ControlLabel>Column Gap</ControlLabel></Col>
-                                                            <Col xs={5}>
-                                                                <FormControl
-                                                                    value={this.state.ChartProperties.XAxisGap}
-                                                                    bsSize={"small"} type="number"
-                                                                    min="0" step="0.1" max="1"
-                                                                    placeholder="Enter"
-                                                                    onChange={(e) => this.onXAxisGapChanged(e)}/>
-                                                            </Col>
-                                                        </Row>
-                                                    </AdaptableBlotterForm>}
-                                                    {/* Martin add Overlap setting here because it applies only to Column chart type */}
-                                                    {this.state.ChartProperties.ChartType == ChartType.Column &&
-                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                        <Row>
-                                                            <Col xs={7}><ControlLabel>Column Overlap</ControlLabel></Col>
-                                                            <Col xs={5}>
-                                                                <FormControl
-                                                                    value={this.state.ChartProperties.XAxisOverlap}
-                                                                    bsSize={"small"} type="number"
-                                                                    min="0" step="0.1" max="1"
-                                                                    placeholder="Enter"
-                                                                    onChange={(e) => this.onXAxisOverlapChanged(e)}/>
-                                                            </Col>
-                                                        </Row>
-                                                    </AdaptableBlotterForm>}
-
-                                                </div>
-                                            }
-                                        </PanelWithButton>
-
-                                        {this.state.ChartProperties.ChartSize != ChartSize.XSmall &&
-                                            <div>
-                                                <PanelWithButton glyphicon={"resize-vertical"} bsSize={"xs"} headerText={"Y (Vertical) Axis"} cssClassName={cssClassName} button={showYAxisPropertiesButton} style={{ marginTop: '2px' }}>
-                                                    {this.state.IsYAxisMinimised == false &&
-                                                        <div>
-                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                <Row>
-                                                                    <Col xs={5}><ControlLabel>Axis Visible</ControlLabel></Col>
-                                                                    <Col xs={1} >
-                                                                        {/* TODO move this Checkbox next to showYAxisPropertiesButton since it applies to all Y-Axis properties  */}
-                                                                        <Checkbox onChange={(e) => this.onYAxisVisibilityOptionChanged(e)}
-                                                                                  checked={this.state.ChartProperties.YAxisLabelVisibility == LabelVisibility.Visible} />
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
-
-                                                            {this.state.ChartProperties.YAxisLabelVisibility == LabelVisibility.Visible &&
-                                                                <div>
-                                                                  <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                      <Row>
-                                                                          <Col xs={5}><ControlLabel>Axis Inverted</ControlLabel></Col>
-                                                                          <Col xs={1}>
-                                                                              <Checkbox onChange={(e) => this.onYAxisInvertedChanged(e)}
-                                                                                        checked={this.state.ChartProperties.YAxisInverted} />
-                                                                          </Col>
-                                                                      </Row>
-                                                                  </AdaptableBlotterForm>
-                                                                  <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                      <Row>
-                                                                          <Col xs={6}><ControlLabel>Axis Location</ControlLabel></Col>
-                                                                          <Col xs={5}>
-                                                                            {/* Martin: replaced radio boxes with a select for consitent look */}
+                                                    <PanelWithButton glyphicon={"wrench"} bsSize={"xs"} headerText={"General"} cssClassName={cssClassName} button={showGeneralPropertiesButton} style={{ marginTop: '2px' }}>
+                                                        {this.state.IsGeneralMinimised == false &&
+                                                            <div>
+                                                           
+                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                    <Row>
+                                                                        <Col xs={7}><ControlLabel>Chart Type</ControlLabel></Col>
+                                                                        <Col xs={5}>
                                                                             <FormControl bsSize={"small"} componentClass="select" placeholder="select"
-                                                                                value={this.state.ChartProperties.YAxisLabelLocation}
-                                                                                onChange={(x) => this.onYAxisLabelLocationChange(x)} >
-                                                                                {ChartUIHelper.getYAxisLabelsLocations()}
+                                                                                value={this.state.ChartProperties.ChartType}
+                                                                                onChange={(x) => this.onChartTypeChange(x)} >
+                                                                                {ChartUIHelper.getChartTypeOptions()}
                                                                             </FormControl>
-                                                                          </Col>
-                                                                      </Row>
-                                                                  </AdaptableBlotterForm>
-                                                                  <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                      <Row>
-                                                                          <Col xs={6}><ControlLabel>Labels Scale</ControlLabel></Col>
-                                                                          <Col xs={5}>
-                                                                                <FormControl bsSize={"small"} componentClass="select" placeholder="select"
-                                                                                    value={this.state.ChartProperties.YAxisLabelScale}
-                                                                                    onChange={(x) => this.onYAxisLabelScaleChanged(x)} >
-                                                                                    {ChartUIHelper.getAxisLabelScales()}
-                                                                                </FormControl>
-                                                                          </Col>
-                                                                      </Row>
-                                                                  </AdaptableBlotterForm>
-                                                                  <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                      <Row>
-                                                                          <Col xs={5}><ControlLabel>Labels Min</ControlLabel></Col>
-                                                                          <Col xs={1}>
-                                                                              <Checkbox onChange={(e) => this.onSetYAxisMinValueOptionChanged(e)}
-                                                                                        checked={this.state.SetYAxisMinimumValue} />
-                                                                          </Col>
-                                                                          <Col xs={4}>
-                                                                              {this.state.SetYAxisMinimumValue &&
-                                                                                  <FormControl
-                                                                                      bsSize={"small"} type="number"
-                                                                                      placeholder={"Input"}
-                                                                                      onChange={this.onYAxisMinValueChanged}
-                                                                                      value={this.state.ChartProperties.YAxisMinimumValue}/>
-                                                                              }
-                                                                          </Col>
-                                                                      </Row>
-                                                                  </AdaptableBlotterForm>
-                                                                  <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                      <Row>
-                                                                          <Col xs={5}><ControlLabel>Labels Max</ControlLabel></Col>
-                                                                          <Col xs={1}>
-                                                                              <Checkbox onChange={(e) => this.onSetYAxisMaxValueOptionChanged(e)}
-                                                                                        checked={this.state.SetYAxisMaximumValue} />
-                                                                          </Col>
-                                                                          <Col xs={4}>
-                                                                              {this.state.SetYAxisMaximumValue &&
-                                                                                  <FormControl
-                                                                                      bsSize={"small"} type="number"
-                                                                                      placeholder={"Input"}
-                                                                                      onChange={this.onYAxisMaxValueChanged}
-                                                                                      value={this.state.ChartProperties.YAxisMaximumValue}/>
-                                                                              }
-                                                                          </Col>
-                                                                      </Row>
-                                                                  </AdaptableBlotterForm>
-                                                                  <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                      <Row>
-                                                                          <Col xs={5}><ControlLabel>Labels Color</ControlLabel></Col>
-                                                                          <Col xs={1}>
-                                                                              <Checkbox onChange={(e) => this.onSetYAxisLabelColorOptionChanged(e)}
-                                                                                        checked={this.state.SetYAxisLabelColor} />
-                                                                          </Col>
-                                                                          <Col xs={5}>
-                                                                              {this.state.SetYAxisLabelColor &&
-                                                                                  <ColorPicker ColorPalette={this.props.ColorPalette}
-                                                                                  value={this.state.ChartProperties.YAxisLabelColor}
-                                                                                  onChange={(x) => this.onYAxisLabelColorChange(x)} />
-                                                                              }
-                                                                          </Col>
-                                                                      </Row>
-                                                                  </AdaptableBlotterForm>
+                                                                        </Col>
+                                                                    </Row>
+                                                                </AdaptableBlotterForm>
+                                                                {/* Martin added controls for changing MarkerType  */}
+                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                    <Row>
+                                                                        <Col xs={7}><ControlLabel>Marker Type</ControlLabel></Col>
+                                                                        <Col xs={5}>
+                                                                            <FormControl bsSize={"small"} componentClass="select" placeholder="select"
+                                                                                value={this.state.ChartProperties.MarkerType}
+                                                                                onChange={(x) => this.onMarkerTypeChange(x)} >
+                                                                                {ChartUIHelper.getMarkerTypeOptions()}
+                                                                            </FormControl>
+                                                                        </Col>
+                                                                    </Row>
+                                                                </AdaptableBlotterForm>
 
-                                                                  <AdaptableBlotterForm horizontal style={{ marginTop: '5px' }}>
-                                                                      <Row>
-                                                                          <Col xs={5}><ControlLabel>Title Default</ControlLabel></Col>
-                                                                          <Col xs={1}>
-                                                                              <Checkbox onChange={(e) => this.onUseDefaultYAxisTitleOptionChanged(e)}
-                                                                                        checked={this.state.UseDefaultYAxisTitle}  />
-                                                                          </Col>
-                                                                          {this.state.UseDefaultYAxisTitle == false &&
-                                                                          <Col xs={5}>
-                                                                              <FormControl
-                                                                                  bsSize={"small"} type="text"
-                                                                                  placeholder={"Enter Title"}
-                                                                                  onChange={(e) => this.onYAxisTitleChanged(e)}
-                                                                                  value={this.state.ChartProperties.YAxisTitle}/>
-                                                                          </Col>}
-                                                                      </Row>
-                                                                  </AdaptableBlotterForm>
-                                                                  <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                      <Row>
-                                                                          <Col xs={5}><ControlLabel>Title Color</ControlLabel></Col>
-                                                                          <Col xs={1}>
-                                                                              <Checkbox onChange={(e) => this.onSetYAxisTitleColorOptionChanged(e)}
-                                                                                        checked={this.state.SetYAxisTitleColor} />
-                                                                          </Col>
-                                                                          <Col xs={5}>
-                                                                              {/* {this.state.SetYAxisTitleColor && */}
-                                                                              <ColorPicker ColorPalette={this.props.ColorPalette}
-                                                                              value={this.state.ChartProperties.YAxisTitleColor}
-                                                                              onChange={(x) => this.onYAxisTitleColorChange(x)} />
-                                                                              {/* } */}
-                                                                          </Col>
-                                                                      </Row>
-                                                                  </AdaptableBlotterForm>
-                                                                </div>
-                                                            }
-                                                        </div>
-                                                    }
-                                                </PanelWithButton>
+                                                                {/* Martin move Gap setting here because it allies only to Column chart type */}
+                                                                {this.state.ChartProperties.ChartType == ChartType.Column &&
+                                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                        <Row>
+                                                                            <Col xs={7}><ControlLabel>Column Gap</ControlLabel></Col>
+                                                                            <Col xs={5}>
+                                                                                <FormControl
+                                                                                    value={this.state.ChartProperties.XAxisGap}
+                                                                                    bsSize={"small"} type="number"
+                                                                                    min="0" step="0.1" max="1"
+                                                                                    placeholder="Enter"
+                                                                                    onChange={(e) => this.onXAxisGapChanged(e)} />
+                                                                            </Col>
+                                                                        </Row>
+                                                                    </AdaptableBlotterForm>}
+                                                                {/* Martin add Overlap setting here because it applies only to Column chart type */}
+                                                                {this.state.ChartProperties.ChartType == ChartType.Column &&
+                                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                        <Row>
+                                                                            <Col xs={7}><ControlLabel>Column Overlap</ControlLabel></Col>
+                                                                            <Col xs={5}>
+                                                                                <FormControl
+                                                                                    value={this.state.ChartProperties.XAxisOverlap}
+                                                                                    bsSize={"small"} type="number"
+                                                                                    min="0" step="0.1" max="1"
+                                                                                    placeholder="Enter"
+                                                                                    onChange={(e) => this.onXAxisOverlapChanged(e)} />
+                                                                            </Col>
+                                                                        </Row>
+                                                                    </AdaptableBlotterForm>}
 
-                                                <PanelWithButton glyphicon={"resize-horizontal"} bsSize={"xs"} headerText={"X (Horizontal) Axis"} cssClassName={cssClassName} button={showXAxisPropertiesButton} style={{ marginTop: '2px' }}>
-                                                    {this.state.IsXAxisMinimised == false &&
+                                                            </div>
+                                                        }
+                                                    </PanelWithButton>
+
                                                         <div>
-                                                            <AdaptableBlotterForm horizontal  style={{ marginTop: '2px' }}>
-                                                                <Row>
-                                                                    <Col xs={5}><ControlLabel>Axis Visible</ControlLabel></Col>
-                                                                    <Col xs={1}>
-                                                                        {/* TODO move this Checkbox next to showXAxisPropertiesButton since it applies to all X-Axis properties  */}
-                                                                        <Checkbox onChange={(e) => this.onXAxisVisibilityOptionChanged(e)}
-                                                                                  checked={this.state.ChartProperties.XAxisLabelVisibility == LabelVisibility.Visible} />
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
-                                                            {this.state.ChartProperties.XAxisLabelVisibility == LabelVisibility.Visible &&
-                                                                <div>
-                                                                  <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                      <Row>
-                                                                          <Col xs={5}><ControlLabel>Axis Inverted</ControlLabel></Col>
-                                                                          <Col xs={1}>
-                                                                              <Checkbox onChange={(e) => this.onXAxisInvertedChanged(e)}
-                                                                                        checked={this.state.ChartProperties.XAxisInverted} />
-                                                                          </Col>
-                                                                      </Row>
-                                                                  </AdaptableBlotterForm>
-                                                                    {/* TODO uncomment when ChategoryChart has 'xAxisLabelLocation' property */}
-                                                                    {/* <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                            <PanelWithButton glyphicon={"resize-vertical"} bsSize={"xs"} headerText={"Y (Vertical) Axis"} cssClassName={cssClassName} button={showYAxisPropertiesButton} style={{ marginTop: '2px' }}>
+                                                                {this.state.IsYAxisMinimised == false &&
+                                                                    <div>
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                            <Row>
+                                                                                <Col xs={5}><ControlLabel>Axis Visible</ControlLabel></Col>
+                                                                                <Col xs={1} >
+                                                                                    {/* TODO move this Checkbox next to showYAxisPropertiesButton since it applies to all Y-Axis properties  */}
+                                                                                    <Checkbox onChange={(e) => this.onYAxisVisibilityOptionChanged(e)}
+                                                                                        checked={this.state.ChartProperties.YAxisLabelVisibility == LabelVisibility.Visible} />
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+
+                                                                        {this.state.ChartProperties.YAxisLabelVisibility == LabelVisibility.Visible &&
+                                                                            <div>
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={5}><ControlLabel>Axis Inverted</ControlLabel></Col>
+                                                                                        <Col xs={1}>
+                                                                                            <Checkbox onChange={(e) => this.onYAxisInvertedChanged(e)}
+                                                                                                checked={this.state.ChartProperties.YAxisInverted} />
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={6}><ControlLabel>Axis Location</ControlLabel></Col>
+                                                                                        <Col xs={5}>
+                                                                                            {/* Martin: replaced radio boxes with a select for consitent look */}
+                                                                                            <FormControl bsSize={"small"} componentClass="select" placeholder="select"
+                                                                                                value={this.state.ChartProperties.YAxisLabelLocation}
+                                                                                                onChange={(x) => this.onYAxisLabelLocationChange(x)} >
+                                                                                                {ChartUIHelper.getYAxisLabelsLocations()}
+                                                                                            </FormControl>
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={6}><ControlLabel>Labels Scale</ControlLabel></Col>
+                                                                                        <Col xs={5}>
+                                                                                            <FormControl bsSize={"small"} componentClass="select" placeholder="select"
+                                                                                                value={this.state.ChartProperties.YAxisLabelScale}
+                                                                                                onChange={(x) => this.onYAxisLabelScaleChanged(x)} >
+                                                                                                {ChartUIHelper.getAxisLabelScales()}
+                                                                                            </FormControl>
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={5}><ControlLabel>Labels Min</ControlLabel></Col>
+                                                                                        <Col xs={1}>
+                                                                                            <Checkbox onChange={(e) => this.onSetYAxisMinValueOptionChanged(e)}
+                                                                                                checked={this.state.SetYAxisMinimumValue} />
+                                                                                        </Col>
+                                                                                        <Col xs={4}>
+                                                                                            {this.state.SetYAxisMinimumValue &&
+                                                                                                <FormControl
+                                                                                                    bsSize={"small"} type="number"
+                                                                                                    placeholder={"Input"}
+                                                                                                    onChange={this.onYAxisMinValueChanged}
+                                                                                                    value={this.state.ChartProperties.YAxisMinimumValue} />
+                                                                                            }
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={5}><ControlLabel>Labels Max</ControlLabel></Col>
+                                                                                        <Col xs={1}>
+                                                                                            <Checkbox onChange={(e) => this.onSetYAxisMaxValueOptionChanged(e)}
+                                                                                                checked={this.state.SetYAxisMaximumValue} />
+                                                                                        </Col>
+                                                                                        <Col xs={4}>
+                                                                                            {this.state.SetYAxisMaximumValue &&
+                                                                                                <FormControl
+                                                                                                    bsSize={"small"} type="number"
+                                                                                                    placeholder={"Input"}
+                                                                                                    onChange={this.onYAxisMaxValueChanged}
+                                                                                                    value={this.state.ChartProperties.YAxisMaximumValue} />
+                                                                                            }
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={5}><ControlLabel>Labels Color</ControlLabel></Col>
+                                                                                        <Col xs={1}>
+                                                                                            <Checkbox onChange={(e) => this.onSetYAxisLabelColorOptionChanged(e)}
+                                                                                                checked={this.state.SetYAxisLabelColor} />
+                                                                                        </Col>
+                                                                                        <Col xs={5}>
+                                                                                            {this.state.SetYAxisLabelColor &&
+                                                                                                <ColorPicker ColorPalette={this.props.ColorPalette}
+                                                                                                    value={this.state.ChartProperties.YAxisLabelColor}
+                                                                                                    onChange={(x) => this.onYAxisLabelColorChange(x)} />
+                                                                                            }
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
+
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '5px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={5}><ControlLabel>Title Default</ControlLabel></Col>
+                                                                                        <Col xs={1}>
+                                                                                            <Checkbox onChange={(e) => this.onUseDefaultYAxisTitleOptionChanged(e)}
+                                                                                                checked={this.state.UseDefaultYAxisTitle} />
+                                                                                        </Col>
+                                                                                        {this.state.UseDefaultYAxisTitle == false &&
+                                                                                            <Col xs={5}>
+                                                                                                <FormControl
+                                                                                                    bsSize={"small"} type="text"
+                                                                                                    placeholder={"Enter Title"}
+                                                                                                    onChange={(e) => this.onYAxisTitleChanged(e)}
+                                                                                                    value={this.state.ChartProperties.YAxisTitle} />
+                                                                                            </Col>}
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={5}><ControlLabel>Title Color</ControlLabel></Col>
+                                                                                        <Col xs={1}>
+                                                                                            <Checkbox onChange={(e) => this.onSetYAxisTitleColorOptionChanged(e)}
+                                                                                                checked={this.state.SetYAxisTitleColor} />
+                                                                                        </Col>
+                                                                                        <Col xs={5}>
+                                                                                            {/* {this.state.SetYAxisTitleColor && */}
+                                                                                            <ColorPicker ColorPalette={this.props.ColorPalette}
+                                                                                                value={this.state.ChartProperties.YAxisTitleColor}
+                                                                                                onChange={(x) => this.onYAxisTitleColorChange(x)} />
+                                                                                            {/* } */}
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                }
+                                                            </PanelWithButton>
+
+                                                            <PanelWithButton glyphicon={"resize-horizontal"} bsSize={"xs"} headerText={"X (Horizontal) Axis"} cssClassName={cssClassName} button={showXAxisPropertiesButton} style={{ marginTop: '2px' }}>
+                                                                {this.state.IsXAxisMinimised == false &&
+                                                                    <div>
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                            <Row>
+                                                                                <Col xs={5}><ControlLabel>Axis Visible</ControlLabel></Col>
+                                                                                <Col xs={1}>
+                                                                                    {/* TODO move this Checkbox next to showXAxisPropertiesButton since it applies to all X-Axis properties  */}
+                                                                                    <Checkbox onChange={(e) => this.onXAxisVisibilityOptionChanged(e)}
+                                                                                        checked={this.state.ChartProperties.XAxisLabelVisibility == LabelVisibility.Visible} />
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                        {this.state.ChartProperties.XAxisLabelVisibility == LabelVisibility.Visible &&
+                                                                            <div>
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={5}><ControlLabel>Axis Inverted</ControlLabel></Col>
+                                                                                        <Col xs={1}>
+                                                                                            <Checkbox onChange={(e) => this.onXAxisInvertedChanged(e)}
+                                                                                                checked={this.state.ChartProperties.XAxisInverted} />
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
+                                                                                {/* TODO uncomment when ChategoryChart has 'xAxisLabelLocation' property */}
+                                                                                {/* <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
                                                                         <Row>
                                                                             <Col xs={6}><ControlLabel>Axis Location</ControlLabel></Col>
                                                                             <Col xs={5}>
@@ -681,268 +642,288 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                             </Col>
                                                                         </Row>
                                                                     </AdaptableBlotterForm> */}
-                                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                      <Row>
-                                                                          <Col xs={6}>
-                                                                              <ControlLabel>Labels Angle</ControlLabel>
-                                                                          </Col>
-                                                                          <Col xs={5}>
-                                                                              <FormControl bsSize="small" componentClass="select" placeholder="select"
-                                                                              value={this.state.ChartProperties.XAxisAngle}
-                                                                              onChange={(x) => this.onXAxisAngleChanged(x)} >
-                                                                                  {ChartUIHelper.getAxisAngleOptions()}
-                                                                              </FormControl>
-                                                                          </Col>
-                                                                      </Row>
-                                                                    </AdaptableBlotterForm>
-                                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                        <Row>
-                                                                            <Col xs={5}>
-                                                                                <ControlLabel>Labels Color</ControlLabel>
-                                                                            </Col>
-                                                                            <Col xs={1}>
-                                                                                <Checkbox onChange={(e) => this.onSetXAxisLabelColorOptionChanged(e)}
-                                                                                          checked={this.state.SetXAxisLabelColor} />
-                                                                            </Col>
-                                                                            <Col xs={5}>
-                                                                                {this.state.SetXAxisLabelColor &&
-                                                                                    <ColorPicker ColorPalette={this.props.ColorPalette}
-                                                                                    value={this.state.ChartProperties.XAxisLabelColor}
-                                                                                    onChange={(x) => this.onXAxisLabelColorChange(x)} />
-                                                                                }
-                                                                            </Col>
-                                                                        </Row>
-                                                                    </AdaptableBlotterForm>
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={6}>
+                                                                                            <ControlLabel>Labels Angle</ControlLabel>
+                                                                                        </Col>
+                                                                                        <Col xs={5}>
+                                                                                            <FormControl bsSize="small" componentClass="select" placeholder="select"
+                                                                                                value={this.state.ChartProperties.XAxisAngle}
+                                                                                                onChange={(x) => this.onXAxisAngleChanged(x)} >
+                                                                                                {ChartUIHelper.getAxisAngleOptions()}
+                                                                                            </FormControl>
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={5}>
+                                                                                            <ControlLabel>Labels Color</ControlLabel>
+                                                                                        </Col>
+                                                                                        <Col xs={1}>
+                                                                                            <Checkbox onChange={(e) => this.onSetXAxisLabelColorOptionChanged(e)}
+                                                                                                checked={this.state.SetXAxisLabelColor} />
+                                                                                        </Col>
+                                                                                        <Col xs={5}>
+                                                                                            {this.state.SetXAxisLabelColor &&
+                                                                                                <ColorPicker ColorPalette={this.props.ColorPalette}
+                                                                                                    value={this.state.ChartProperties.XAxisLabelColor}
+                                                                                                    onChange={(x) => this.onXAxisLabelColorChange(x)} />
+                                                                                            }
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
 
 
-                                                                    {/* Title props */}
-                                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                        <Row>
-                                                                            <Col xs={5}><ControlLabel>Title Default</ControlLabel>
-                                                                            </Col>
-                                                                            <Col xs={1}>
-                                                                                <Checkbox onChange={(e) => this.onUseDefaultXAxisTitleOptionChanged(e)}
-                                                                                          checked={this.state.UseDefaultXAxisTitle} />
-                                                                            </Col>
-                                                                          {this.state.UseDefaultXAxisTitle == false &&
-                                                                          <Col xs={5}>
-                                                                              <FormControl
-                                                                                  bsSize={"small"} type="text"
-                                                                                  placeholder={"Enter Title"}
-                                                                                  onChange={(e) => this.onXAxisTitleChanged(e)}
-                                                                                  value={this.state.ChartProperties.XAxisTitle}/>
-                                                                          </Col>}
-                                                                        </Row>
-                                                                    </AdaptableBlotterForm>
-                                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                        <Row>
-                                                                            <Col xs={5}>
-                                                                                <ControlLabel>Title Color</ControlLabel>
-                                                                            </Col>
-                                                                            <Col xs={1}>
-                                                                                <Checkbox onChange={(e) => this.onSetXAxisTitleColorOptionChanged(e)} checked={this.state.SetXAxisTitleColor} />
-                                                                            </Col>
-                                                                            <Col xs={5}>
-                                                                                {this.state.SetXAxisTitleColor &&
-                                                                                    <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.ChartProperties.XAxisTitleColor} onChange={(x) => this.onXAxisTitleColorChange(x)} />
-                                                                                }
-                                                                            </Col>
-                                                                        </Row>
-                                                                    </AdaptableBlotterForm>
+                                                                                {/* Title props */}
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={5}><ControlLabel>Title Default</ControlLabel>
+                                                                                        </Col>
+                                                                                        <Col xs={1}>
+                                                                                            <Checkbox onChange={(e) => this.onUseDefaultXAxisTitleOptionChanged(e)}
+                                                                                                checked={this.state.UseDefaultXAxisTitle} />
+                                                                                        </Col>
+                                                                                        {this.state.UseDefaultXAxisTitle == false &&
+                                                                                            <Col xs={5}>
+                                                                                                <FormControl
+                                                                                                    bsSize={"small"} type="text"
+                                                                                                    placeholder={"Enter Title"}
+                                                                                                    onChange={(e) => this.onXAxisTitleChanged(e)}
+                                                                                                    value={this.state.ChartProperties.XAxisTitle} />
+                                                                                            </Col>}
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={5}>
+                                                                                            <ControlLabel>Title Color</ControlLabel>
+                                                                                        </Col>
+                                                                                        <Col xs={1}>
+                                                                                            <Checkbox onChange={(e) => this.onSetXAxisTitleColorOptionChanged(e)} checked={this.state.SetXAxisTitleColor} />
+                                                                                        </Col>
+                                                                                        <Col xs={5}>
+                                                                                            {this.state.SetXAxisTitleColor &&
+                                                                                                <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.ChartProperties.XAxisTitleColor} onChange={(x) => this.onXAxisTitleColorChange(x)} />
+                                                                                            }
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
 
-                                                                </div>
-                                                            }
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                }
+                                                            </PanelWithButton>
+
+                                                            <PanelWithButton glyphicon={"asterisk"} bsSize={"xs"} headerText={"Annotations"} cssClassName={cssClassName} button={showHighlightsPropertiesButton} style={{ marginTop: '2px' }}>
+                                                                {this.state.IsHighlightsMinimised == false &&
+                                                                    <div>
+
+                                                                        <AdaptableBlotterForm horizontal >
+                                                                            <Row>
+                                                                                <Col xs={8}><ControlLabel>Final Values</ControlLabel></Col>
+                                                                                <Col xs={1}>
+                                                                                    <Checkbox
+                                                                                        onChange={(e) => this.onEnableFinalValueAnnotationsOptionChanged(e)}
+                                                                                        checked={this.state.ChartProperties.EnableFinalValueAnnotations} ></Checkbox>
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                            <Row>
+                                                                                <Col xs={8}><ControlLabel>Highlight Series</ControlLabel></Col>
+                                                                                <Col xs={1}>
+                                                                                    <Checkbox
+                                                                                        onChange={(e) => this.onEnableSeriesHighlightingOptionChanged(e)}
+                                                                                        checked={this.state.ChartProperties.EnableSeriesHighlighting} />
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                            <Row>
+                                                                                <Col xs={8}><ControlLabel>Highlight Category</ControlLabel></Col>
+                                                                                <Col xs={1}>
+                                                                                    <Checkbox
+                                                                                        onChange={(e) => this.onEnableCategoryHighlightingOptionChanged(e)}
+                                                                                        checked={this.state.ChartProperties.EnableCategoryHighlighting} />
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                            <Row>
+                                                                                <Col xs={8}><ControlLabel>Highlight Item</ControlLabel></Col>
+                                                                                <Col xs={1}>
+                                                                                    <Checkbox
+                                                                                        onChange={(e) => this.onEnableItemHighlightingOptionChanged(e)}
+                                                                                        checked={this.state.ChartProperties.EnableItemHighlighting} />
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                            <Row>
+                                                                                <Col xs={6}><ControlLabel>Callout Type</ControlLabel></Col>
+                                                                                <Col xs={6}>
+                                                                                    <FormControl bsSize={"small"} componentClass="select" placeholder="select"
+                                                                                        value={this.state.ChartProperties.CalloutsType}
+                                                                                        onChange={(x) => this.onChangedCalloutsType(x)} >
+                                                                                        {ChartUIHelper.getCalloutTypeOptions()}
+                                                                                    </FormControl>
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+
+                                                                        {/* {this.state.ChartProperties.CalloutsType == "Data Points" && */}
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                            <Row>
+                                                                                <Col xs={6}><ControlLabel>Callout Interval</ControlLabel></Col>
+                                                                                <Col xs={6}>
+                                                                                    <FormControl
+                                                                                        value={this.state.ChartProperties.CalloutsInterval}
+                                                                                        bsSize={"small"} type="number"
+                                                                                        min="1" step="1" max="20"
+                                                                                        placeholder="Enter"
+                                                                                        onChange={(e) => this.onChangedCalloutsInterval(e)} />
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                        {/* } */}
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                            <Row>
+                                                                                <Col xs={6}><ControlLabel>Tooltips</ControlLabel></Col>
+                                                                                <Col xs={6}>
+                                                                                    <FormControl bsSize={"small"} componentClass="select" placeholder="select"
+                                                                                        value={this.state.ChartProperties.ToolTipType}
+                                                                                        onChange={(x) => this.onToolTipTypeChange(x)} >
+                                                                                        {ChartUIHelper.getToolTipOptions()}
+                                                                                    </FormControl>
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                            <Row>
+                                                                                <Col xs={6}><ControlLabel>Crosshairs</ControlLabel></Col>
+                                                                                <Col xs={6}>
+                                                                                    <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.CrosshairDisplayMode} onChange={(x) => this.onCrosshairsModeChange(x)} >
+                                                                                        {ChartUIHelper.getCrossHairModeOptions()}
+                                                                                    </FormControl>
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                        {this.state.ChartProperties.CrosshairDisplayMode != CrosshairDisplayMode.None &&
+                                                                            <div>
+                                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                                    <Row>
+                                                                                        <Col xs={5}></Col>
+                                                                                        <Col xs={7}>
+                                                                                            <Checkbox
+                                                                                                onChange={(e) => this.onCrosshairSnapToDataOptionChanged(e)}
+                                                                                                checked={this.state.ChartProperties.CrosshairSnapToData} >Snap to Data</Checkbox>
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                    <Row>
+                                                                                        <Col xs={5}></Col>
+                                                                                        <Col xs={7}>
+                                                                                            <Checkbox inline
+                                                                                                onChange={(e) => this.onCrosshairAnnotationEnabledOptionChanged(e)}
+                                                                                                checked={this.state.ChartProperties.CrosshairAnnotationEnabled} >Show Values</Checkbox>
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </AdaptableBlotterForm>
+                                                                            </div>
+                                                                        }
+
+                                                                    </div>
+                                                                }
+                                                            </PanelWithButton>
+
+                                                            <PanelWithButton glyphicon={"briefcase"} bsSize={"xs"} headerText={"Misc"} cssClassName={cssClassName} button={showMiscPropertiesButton} style={{ marginTop: '2px' }}>
+                                                                {this.state.IsMiscMinimised == false &&
+                                                                    <div>
+                                                                        <AdaptableBlotterForm horizontal >
+                                                                            <Row>
+                                                                                <Col xs={5}>
+                                                                                    <ControlLabel>Title</ControlLabel>
+                                                                                </Col>
+                                                                                <Col xs={7}>
+                                                                                    <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.TitleAlignment} onChange={(x) => this.onTitleAlignmentChange(x)} >
+                                                                                        {ChartUIHelper.getAlignmentOptions()}
+                                                                                    </FormControl>
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                            <Row>
+                                                                                <Col xs={5}>
+                                                                                    <ControlLabel>Subtitle</ControlLabel>
+                                                                                </Col>
+                                                                                <Col xs={7}>
+                                                                                    <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.SubTitleAlignment} onChange={(x) => this.onSubTitleAlignmentChange(x)} >
+                                                                                        {ChartUIHelper.getAlignmentOptions()}
+                                                                                    </FormControl>
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                            <Row>
+                                                                                <Col xs={5}>
+                                                                                    <ControlLabel>Transitions</ControlLabel>
+                                                                                </Col>
+                                                                                <Col xs={6}>
+                                                                                    <Checkbox onChange={(e) => this.onEnableTransitionsOptionChanged(e)} checked={this.state.ChartProperties.EnableTransitions} />
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                        {this.state.ChartProperties.EnableTransitions &&
+                                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
+                                                                                <Row>
+                                                                                    <Col xs={5}>
+                                                                                        <ControlLabel>Duration</ControlLabel>
+                                                                                    </Col>
+                                                                                    <Col xs={7}>
+                                                                                        <FormControl
+                                                                                            bsSize={"small"}
+                                                                                            placeholder={"Length (ms)"}
+                                                                                            type="number"
+                                                                                            onChange={this.onTransitionDurationChanged}
+                                                                                            value={this.state.ChartProperties.TransitionInDuration}
+                                                                                        />
+                                                                                    </Col>
+                                                                                </Row>
+                                                                            </AdaptableBlotterForm>
+                                                                        }
+                                                                    </div>
+                                                                }
+                                                            </PanelWithButton>
+
                                                         </div>
-                                                    }
-                                                </PanelWithButton>
+                                                   </PanelWithTwoButtons>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </Row>
+                            :
 
-                                                <PanelWithButton glyphicon={"asterisk"} bsSize={"xs"} headerText={"Annotations"} cssClassName={cssClassName} button={showHighlightsPropertiesButton} style={{ marginTop: '2px' }}>
-                                                    {this.state.IsHighlightsMinimised == false &&
-                                                        <div>
+                            <Row>
+                                <Table>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                {this.props.ChartData != null &&
+                                                    chartElement
+                                                }
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </Row>
 
-                                                            <AdaptableBlotterForm horizontal >
-                                                                <Row>
-                                                                    <Col xs={8}><ControlLabel>Final Values</ControlLabel></Col>
-                                                                    <Col xs={1}>
-                                                                        <Checkbox
-                                                                        onChange={(e) => this.onEnableFinalValueAnnotationsOptionChanged(e)}
-                                                                        checked={this.state.ChartProperties.EnableFinalValueAnnotations} ></Checkbox>
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
-                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                <Row>
-                                                                    <Col xs={8}><ControlLabel>Highlight Series</ControlLabel></Col>
-                                                                    <Col xs={1}>
-                                                                        <Checkbox
-                                                                        onChange={(e) => this.onEnableSeriesHighlightingOptionChanged(e)}
-                                                                        checked={this.state.ChartProperties.EnableSeriesHighlighting} />
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
-                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                <Row>
-                                                                    <Col xs={8}><ControlLabel>Highlight Category</ControlLabel></Col>
-                                                                    <Col xs={1}>
-                                                                        <Checkbox
-                                                                        onChange={(e) => this.onEnableCategoryHighlightingOptionChanged(e)}
-                                                                        checked={this.state.ChartProperties.EnableCategoryHighlighting} />
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
-                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                <Row>
-                                                                    <Col xs={8}><ControlLabel>Highlight Item</ControlLabel></Col>
-                                                                    <Col xs={1}>
-                                                                        <Checkbox
-                                                                        onChange={(e) => this.onEnableItemHighlightingOptionChanged(e)}
-                                                                        checked={this.state.ChartProperties.EnableItemHighlighting} />
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
-                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                <Row>
-                                                                    <Col xs={6}><ControlLabel>Callout Type</ControlLabel></Col>
-                                                                    <Col xs={6}>
-                                                                          <FormControl bsSize={"small"} componentClass="select" placeholder="select"
-                                                                              value={this.state.ChartProperties.CalloutsType}
-                                                                                 onChange={(x) => this.onChangedCalloutsType(x)} >
-                                                                              {ChartUIHelper.getCalloutTypeOptions()}
-                                                                          </FormControl>
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
+                        }
 
-                                                            {/* {this.state.ChartProperties.CalloutsType == "Data Points" && */}
-                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
-                                                                <Row>
-                                                                    <Col xs={6}><ControlLabel>Callout Interval</ControlLabel></Col>
-                                                                    <Col xs={6}>
-                                                                      <FormControl
-                                                                          value={this.state.ChartProperties.CalloutsInterval}
-                                                                          bsSize={"small"} type="number"
-                                                                          min="1" step="1" max="20"
-                                                                          placeholder="Enter"
-                                                                          onChange={(e) => this.onChangedCalloutsInterval(e)}/>
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
-                                                            {/* } */}
-                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
-                                                                <Row>
-                                                                    <Col xs={6}><ControlLabel>Tooltips</ControlLabel></Col>
-                                                                    <Col xs={6}>
-                                                                        <FormControl bsSize={"small"} componentClass="select" placeholder="select"
-                                                                        value={this.state.ChartProperties.ToolTipType}
-                                                                        onChange={(x) => this.onToolTipTypeChange(x)} >
-                                                                        {ChartUIHelper.getToolTipOptions()}
-                                                                        </FormControl>
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
-                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
-                                                                <Row>
-                                                                    <Col xs={6}><ControlLabel>Crosshairs</ControlLabel></Col>
-                                                                    <Col xs={6}>
-                                                                        <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.CrosshairDisplayMode} onChange={(x) => this.onCrosshairsModeChange(x)} >
-                                                                            {ChartUIHelper.getCrossHairModeOptions()}
-                                                                        </FormControl>
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
-                                                            {this.state.ChartProperties.CrosshairDisplayMode != CrosshairDisplayMode.None &&
-                                                                <div>
-                                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
-                                                                        <Row>
-                                                                            <Col xs={5}></Col>
-                                                                            <Col xs={7}>
-                                                                                <Checkbox
-                                                                                onChange={(e) => this.onCrosshairSnapToDataOptionChanged(e)}
-                                                                                checked={this.state.ChartProperties.CrosshairSnapToData} >Snap to Data</Checkbox>
-                                                                            </Col>
-                                                                        </Row>
-                                                                        <Row>
-                                                                            <Col xs={5}></Col>
-                                                                            <Col xs={7}>
-                                                                                <Checkbox inline
-                                                                                onChange={(e) => this.onCrosshairAnnotationEnabledOptionChanged(e)}
-                                                                                checked={this.state.ChartProperties.CrosshairAnnotationEnabled} >Show Values</Checkbox>
-                                                                            </Col>
-                                                                        </Row>
-                                                                    </AdaptableBlotterForm>
-                                                                </div>
-                                                            }
 
-                                                        </div>
-                                                    }
-                                                </PanelWithButton>
 
-                                                <PanelWithButton glyphicon={"briefcase"} bsSize={"xs"} headerText={"Misc"} cssClassName={cssClassName} button={showMiscPropertiesButton} style={{ marginTop: '2px' }}>
-                                                    {this.state.IsMiscMinimised == false &&
-                                                        <div>
-                                                            <AdaptableBlotterForm horizontal >
-                                                                <Row>
-                                                                    <Col xs={5}>
-                                                                        <ControlLabel>Title</ControlLabel>
-                                                                    </Col>
-                                                                    <Col xs={7}>
-                                                                        <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.TitleAlignment} onChange={(x) => this.onTitleAlignmentChange(x)} >
-                                                                            {ChartUIHelper.getAlignmentOptions()}
-                                                                        </FormControl>
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
-                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
-                                                                <Row>
-                                                                    <Col xs={5}>
-                                                                        <ControlLabel>Subtitle</ControlLabel>
-                                                                    </Col>
-                                                                    <Col xs={7}>
-                                                                        <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={this.state.ChartProperties.SubTitleAlignment} onChange={(x) => this.onSubTitleAlignmentChange(x)} >
-                                                                            {ChartUIHelper.getAlignmentOptions()}
-                                                                        </FormControl>
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
-                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
-                                                                <Row>
-                                                                    <Col xs={5}>
-                                                                        <ControlLabel>Transitions</ControlLabel>
-                                                                    </Col>
-                                                                    <Col xs={6}>
-                                                                        <Checkbox onChange={(e) => this.onEnableTransitionsOptionChanged(e)} checked={this.state.ChartProperties.EnableTransitions} />
-                                                                    </Col>
-                                                                </Row>
-                                                            </AdaptableBlotterForm>
-                                                            {this.state.ChartProperties.EnableTransitions &&
-                                                                <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
-                                                                    <Row>
-                                                                        <Col xs={5}>
-                                                                            <ControlLabel>Duration</ControlLabel>
-                                                                        </Col>
-                                                                        <Col xs={7}>
-                                                                            <FormControl
-                                                                                bsSize={"small"}
-                                                                                placeholder={"Length (ms)"}
-                                                                                type="number"
-                                                                                onChange={this.onTransitionDurationChanged}
-                                                                                value={this.state.ChartProperties.TransitionInDuration}
-                                                                            />
-                                                                        </Col>
-                                                                    </Row>
-                                                                </AdaptableBlotterForm>
-                                                            }
-                                                        </div>
-                                                    }
-                                                </PanelWithButton>
-
-                                            </div>
-                                        }
-
-                                    </PanelWithTwoButtons>
-                                </Col>
-                            }
-                        </Row>
                     </div>
                 }
 
@@ -1061,14 +1042,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         this.updateChartProperties(chartProps);
     }
 
-    onChartSizeChange(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
-        chartProperties.ChartSize = e.value as ChartSize;
-        this.updateChartProperties(chartProperties);
-    }
-
-    onYAxisLabelLocationChange(event: React.FormEvent<any>) {
+   onYAxisLabelLocationChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let props: IChartProperties = this.state.ChartProperties;
         let selected = e.value.toString();
@@ -1129,26 +1103,26 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     onChangedCalloutsType(event: React.FormEvent<any>) {
-      let e = event.target as HTMLInputElement;
-      let chartProperties: IChartProperties = this.state.ChartProperties;
-       // Note not changing to CalloutsType enum because a user might selected a da column name from data source
-      chartProperties.CalloutsType = e.value;
-      this.updateChartProperties(chartProperties);
+        let e = event.target as HTMLInputElement;
+        let chartProperties: IChartProperties = this.state.ChartProperties;
+        // Note not changing to CalloutsType enum because a user might selected a da column name from data source
+        chartProperties.CalloutsType = e.value;
+        this.updateChartProperties(chartProperties);
     }
 
     private onChangedCalloutsInterval(event: React.FormEvent<any>) {
-      let e = event.target as HTMLInputElement;
-      let value = Number(e.value)
-      if (value >= 1000) {
-          value = 1000;
-      }
-      if (value < 1) {
-          value = 1;
-      }
-      let chartProps: IChartProperties = this.state.ChartProperties;
-      chartProps.CalloutsInterval = value;
-      // chartProps.CalloutsInterval = e.target.value;
-      this.updateChartProperties(chartProps);
+        let e = event.target as HTMLInputElement;
+        let value = Number(e.value)
+        if (value >= 1000) {
+            value = 1000;
+        }
+        if (value < 1) {
+            value = 1;
+        }
+        let chartProps: IChartProperties = this.state.ChartProperties;
+        chartProps.CalloutsInterval = value;
+        // chartProps.CalloutsInterval = e.target.value;
+        this.updateChartProperties(chartProps);
     }
 
     onCrosshairsModeChange(event: React.FormEvent<any>) {
@@ -1211,16 +1185,16 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     private onYAxisInvertedChanged(event: React.FormEvent<any>) {
-      let e = event.target as HTMLInputElement;
-      let chartProps: IChartProperties = this.state.ChartProperties;
-      chartProps.YAxisInverted = e.checked;
-      this.updateChartProperties(chartProps);
+        let e = event.target as HTMLInputElement;
+        let chartProps: IChartProperties = this.state.ChartProperties;
+        chartProps.YAxisInverted = e.checked;
+        this.updateChartProperties(chartProps);
     }
     private onXAxisInvertedChanged(event: React.FormEvent<any>) {
-      let e = event.target as HTMLInputElement;
-      let chartProps: IChartProperties = this.state.ChartProperties;
-      chartProps.XAxisInverted = e.checked;
-      this.updateChartProperties(chartProps);
+        let e = event.target as HTMLInputElement;
+        let chartProps: IChartProperties = this.state.ChartProperties;
+        chartProps.XAxisInverted = e.checked;
+        this.updateChartProperties(chartProps);
     }
 
     private onSetYAxisMinValueOptionChanged(event: React.FormEvent<any>) {
@@ -1236,15 +1210,15 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     private onSetYAxisMaxValueOptionChanged(event: React.FormEvent<any>) {
-      let e = event.target as HTMLInputElement;
-      if (e.checked) {
-          this.setState({ SetYAxisMaximumValue: true } as ChartDisplayPopupState)
-      } else { // set YAxisMaxValue to undefined
-          this.setState({ SetYAxisMaximumValue: e.checked } as ChartDisplayPopupState)
-          let chartProps: IChartProperties = this.state.ChartProperties;
-          chartProps.YAxisMaximumValue = undefined;
-          this.updateChartProperties(chartProps);
-      }
+        let e = event.target as HTMLInputElement;
+        if (e.checked) {
+            this.setState({ SetYAxisMaximumValue: true } as ChartDisplayPopupState)
+        } else { // set YAxisMaxValue to undefined
+            this.setState({ SetYAxisMaximumValue: e.checked } as ChartDisplayPopupState)
+            let chartProps: IChartProperties = this.state.ChartProperties;
+            chartProps.YAxisMaximumValue = undefined;
+            this.updateChartProperties(chartProps);
+        }
     }
 
 
@@ -1375,18 +1349,18 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         this.updateChartProperties(chartProps);
     }
     private onXAxisOverlapChanged(event: React.FormEvent<any>) {
-      let e = event.target as HTMLInputElement;
-      let factor = Number(e.value)
-      if (factor > 1) {
-          factor = 1;
-      }
-      if (factor < 0) {
-          factor = 0;
-      }
-      let chartProps: IChartProperties = this.state.ChartProperties;
-      chartProps.XAxisOverlap = factor;
-      this.updateChartProperties(chartProps);
-  }
+        let e = event.target as HTMLInputElement;
+        let factor = Number(e.value)
+        if (factor > 1) {
+            factor = 1;
+        }
+        if (factor < 0) {
+            factor = 0;
+        }
+        let chartProps: IChartProperties = this.state.ChartProperties;
+        chartProps.XAxisOverlap = factor;
+        this.updateChartProperties(chartProps);
+    }
 
     private onXAxisTitleChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
@@ -1403,12 +1377,12 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     private onYAxisLabelScaleChanged(event: React.FormEvent<any>) {
-      let e = event.target as HTMLInputElement;
-      let scale = e.value as AxisScale;
-      let chartProps: IChartProperties = this.state.ChartProperties;
-      // chartProps.YAxisIsLogarithmic = scale == AxisScale.Log;
-      chartProps.YAxisLabelScale = scale;
-      this.updateChartProperties(chartProps);
+        let e = event.target as HTMLInputElement;
+        let scale = e.value as AxisScale;
+        let chartProps: IChartProperties = this.state.ChartProperties;
+        // chartProps.YAxisIsLogarithmic = scale == AxisScale.Log;
+        chartProps.YAxisLabelScale = scale;
+        this.updateChartProperties(chartProps);
     }
 
     private onUseDefaultYAxisTitleOptionChanged(event: React.FormEvent<any>) {
@@ -1448,7 +1422,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     private getYAxisIsLogarithmic(scaleMode: AxisScale): boolean {
-      return scaleMode == AxisScale.Log;
+        return scaleMode == AxisScale.Log;
     }
 
     onCloseWizard() {

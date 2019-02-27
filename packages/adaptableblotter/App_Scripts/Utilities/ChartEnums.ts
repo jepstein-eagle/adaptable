@@ -25,14 +25,6 @@ export enum CrosshairDisplayMode {
     Both = 'Both'
 }
 
-export enum ChartSize {
-    XSmall = 'XSmall',
-    Small = 'Small',
-    Medium = 'Medium',
-    Large = 'Large',
-    XLarge = 'XLarge'
-}
-
 export enum AxisLabelsLocation {
     OutsideTop = 'OutsideTop',
     OutsideBottom = 'OutsideBottom',

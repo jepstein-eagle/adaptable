@@ -112,7 +112,7 @@ function InitTradeBlotter() {
     gridcontainer.innerHTML = '';
     const grid = new agGrid.Grid(gridcontainer, gridOptions);
   }
-  //dataGen.startTickingDataagGrid(gridOptions);
+  dataGen.startTickingDataagGrid(gridOptions);
 
   const s = 2;
 
@@ -127,7 +127,7 @@ function InitTradeBlotter() {
       //    licenceKey: getStandardKey(),
       licenceKey: getEnterpriseKey(),
 
-      //    predefinedConfig: myJson,
+       //   predefinedConfig: myJson,
 
       auditOptions: {
         //     auditCellEdits: true,
@@ -292,7 +292,7 @@ function getTradeSchema() {
     editable: true,
     type: 'abColDefNumber',
     sortable: false,
-    filter: true
+    filter: true,
   });
   schema.push({
     headerName: 'Notional',
@@ -308,12 +308,14 @@ function getTradeSchema() {
     field: 'counterparty',
     editable: true,
     enableRowGroup: true,
+    filter: true,
     sortable: true
   });
 
   schema.push({
     headerName: 'Change On Year',
     field: 'changeOnYear',
+    filter: true,
     editable: true,
   });
   schema.push({
@@ -327,6 +329,7 @@ function getTradeSchema() {
     headerName: 'Status',
     field: 'status',
     editable: true,
+    filter: true,
     enableRowGroup: true,
   });
   schema.push({
@@ -335,6 +338,7 @@ function getTradeSchema() {
     columnGroupShow: 'open',
     enableValue: true,
     editable: true,
+    filter: true,
     cellClass: 'number-cell',
   });
   schema.push({
@@ -351,24 +355,28 @@ function getTradeSchema() {
     headerName: 'Country',
     field: 'country',
     editable: true,
+    filter: true,
     enableRowGroup: true,
   });
   schema.push({
     headerName: 'Ask',
     field: 'ask',
     columnGroupShow: 'closed',
+    filter: true,
     cellClass: 'number-cell',
   });
   schema.push({
     headerName: 'DV01',
     field: 'dv01',
     columnGroupShow: 'closed',
+    filter: true,
     cellClass: 'number-cell',
   });
   schema.push({
     headerName: 'Bid',
     field: 'bid',
     columnGroupShow: 'closed',
+    filter: true,
     cellClass: 'number-cell',
   });
 
@@ -388,6 +396,7 @@ function getTradeSchema() {
     headerName: 'Moodys',
     field: 'moodysRating',
     editable: true,
+    filter: true,
     filter: 'text',
   });
   schema.push({
@@ -405,6 +414,7 @@ function getTradeSchema() {
     headerName: 'SandP',
     field: 'sandpRating',
     editable: true,
+    sortable: true,
     filter: 'text',
   });
   schema.push({
@@ -708,18 +718,6 @@ function currencyRendereragGrid(params) {
 
 
 let myJson = {
-  Theme: {
-    UserThemes: [
-      {
-        Name: 'Hello',
-        Url: 'Hello world',
-      },
-      {
-        Name: 'Goodnight',
-        Url: 'Goodnight Cowboy',
-      },
-    ],
-  },
   QuickSearch: {
     QuickSearchText: 'Pen',
   },

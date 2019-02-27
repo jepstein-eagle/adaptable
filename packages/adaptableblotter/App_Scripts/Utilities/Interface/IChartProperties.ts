@@ -1,5 +1,5 @@
 import { ChartType, CrosshairDisplayMode,
-  AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize, ToolTipType,
+  AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ToolTipType,
   AxisAngle, AxisScale, CalloutsType } from '../ChartEnums';
 
 export interface ICalloutProperties {
@@ -10,7 +10,7 @@ export interface ICalloutProperties {
 export interface IChartProperties {
   // General
   ChartType?: ChartType;
-  ChartSize?: ChartSize;
+//  ChartSize?: ChartSize;
   SeriesThickness?: number; // and bind it to
 
   MarkerType?: string; // using a string because chart expects a string or an array of MarkerType enums
