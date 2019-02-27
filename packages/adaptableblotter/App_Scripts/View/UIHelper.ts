@@ -115,7 +115,8 @@ export function buildFontAwesomeLibrary():void{
                     chartContainer.className += chartContainerClassName;
                 }
             } else {
-                LoggingHelper.LogAdaptableBlotterError("Chart div name cannot be found: " + blotterOptions.containerOptions.chartContainer)
+                LoggingHelper.LogAdaptableBlotterError("Chart div name cannot be found: " + blotterOptions.containerOptions.chartContainer + " so creating standard div")
+                chartContainer =document.getElementById("ad");
             }
         } else {  // not provided one so return whole document if modal, or 'chart' if not
             chartContainer = (showModal) ? document.body : document.getElementById("ad");
@@ -125,7 +126,6 @@ export function buildFontAwesomeLibrary():void{
 
     export function IsNotEmptyStyle(style: IStyle): boolean {
         return style.BackColor != null || style.ForeColor != null || style.FontWeight != FontWeight.Normal || style.FontStyle != FontStyle.Normal || style.FontSize != null || StringExtensions.IsNotNullOrEmpty(style.ClassName)
-
     }
 
 

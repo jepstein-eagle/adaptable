@@ -137,7 +137,7 @@ function InitTradeBlotter() {
         //        pingInterval: 120
       },
       containerOptions: {
-        chartContainer: 'chart-container-x',
+        chartContainer: 'chart-container-x', // set our own container
         vendorContainer: 'grid',
       },
       configServerOptions: {
