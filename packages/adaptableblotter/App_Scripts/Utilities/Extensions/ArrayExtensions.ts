@@ -75,6 +75,10 @@ export module ArrayExtensions {
         return arr1.every(x => arr2.indexOf(x) != -1)
     }
 
+    export function areArraysNotEqual(arr1: any[], arr2: any[]) {
+       return !areArraysEqual(arr1, arr2);
+    }
+
     export function areArraysEqualWithOrder(arr1: any[], arr2: any[]): boolean {
         if (arr1 == null) {
             return true

@@ -906,7 +906,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                             </Row>
                             :
 
-                            <Row>
+                            <Row style={{marginBottom: '0px'}}  >
                                 <Table>
                                     <tbody>
                                         <tr>
@@ -921,9 +921,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                             </Row>
 
                         }
-
-
-
                     </div>
                 }
 

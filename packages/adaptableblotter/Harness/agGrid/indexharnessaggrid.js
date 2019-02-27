@@ -112,7 +112,7 @@ function InitTradeBlotter() {
     gridcontainer.innerHTML = '';
     const grid = new agGrid.Grid(gridcontainer, gridOptions);
   }
-  dataGen.startTickingDataagGrid(gridOptions);
+ // dataGen.startTickingDataagGrid(gridOptions);
 
   const s = 2;
 

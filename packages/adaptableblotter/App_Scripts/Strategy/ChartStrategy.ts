@@ -12,6 +12,8 @@ import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { IChartDefinition } from "../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ChartVisibility } from '../Utilities/ChartEnums';
+import { faSleigh } from '@fortawesome/free-solid-svg-icons';
+import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
 
@@ -25,7 +27,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
         this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         let refreshRate = blotter.AdaptableBlotterStore.TheStore.getState().Chart.RefreshRate * 1000;
-         this.throttleSetChartData = _.throttle(this.setChartData, refreshRate );
+        this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
     }
 
     protected addPopupMenuItem() {
@@ -36,17 +38,23 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         let isChartRelatedStateChanged: boolean = false;
 
         if (this.ChartState != this.GetChartState()) {
-      //      if(this.areEqualChartDefinitionsExceptProperties(this.ChartState.CurrentChartDefinition, this.GetChartState().CurrentChartDefinition)){
-      //          isChartRelatedStateChanged = true;
-      //      }
+            if (this.ChartState == null) {
+                isChartRelatedStateChanged = true;
+            } else {
+                let chartStateDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
+                let storeStateDefinition: IChartDefinition = this.GetChartState().ChartDefinitions.find(c => c.Title == this.GetChartState().CurrentChartDefinition)
+
+                if (this.doChartDefinitionChangesRequireDataUpdate(chartStateDefinition, storeStateDefinition)) {
+                    console.log('they are different so will get new chart data')
+                    isChartRelatedStateChanged = true;
+                }
+            }
             this.ChartState = this.GetChartState();
-            console.log("ive changed")
-            isChartRelatedStateChanged = true;
         }
 
         if (this.SystemState != this.GetSystemState()) {
             if (this.SystemState == null) {
-                isChartRelatedStateChanged = true; // correct?
+                isChartRelatedStateChanged = true; // correct? seems not but not urgent to fix
             } else {
                 if (this.SystemState.ChartVisibility != this.GetSystemState().ChartVisibility) {
                     isChartRelatedStateChanged = true;
@@ -74,26 +82,55 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         }
     }
 
-    private areEqualChartDefinitionsExceptProperties(x: IChartDefinition, y: IChartDefinition): boolean{
-        return true;
+    private doChartDefinitionChangesRequireDataUpdate(a: IChartDefinition, b: IChartDefinition): boolean {
+       // function is not perfect as teh Expression check is wrong - but at least we dont fail when changing properties
+       // todo: write a proper Expression Equality Comparper
+       
+        if (a == null && b !== null) {
+            console.log(1)
+            return true;
+        }
+        if (b == null && a !== null) {
+            console.log(2)
+            return true;
+        }
+
+       if (a.XAxisColumnId != b.XAxisColumnId) {
+            console.log(3)
+            return true;
+        }
+          if (ArrayExtensions.areArraysNotEqual(a.YAxisColumnIds, b.YAxisColumnIds)) {
+            console.log(4)
+            return true;
+        }
+        if (a.YAxisTotal != b.YAxisTotal) {
+            console.log(5)
+            return true;
+        }
+        if ( a.XAxisExpression != b.XAxisExpression) {
+            console.log(6)
+            return true;
+        }
+    
+        return false;
     }
 
     protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo): void {
-        if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty( this.ChartState.CurrentChartDefinition)) {
+        if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartDefinition)) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId: string = dataChangedInfo.ColumnId;
             let currentChartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
-            if ( ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
-                currentChartDefinition.XAxisColumnId == columnChangedId ) {
-                    this.throttleSetChartData();
+            if (ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
+                currentChartDefinition.XAxisColumnId == columnChangedId) {
+                this.throttleSetChartData();
             }
         }
     }
-    
+
 
     private setChartData() {
         console.log("data set has changed")
-          let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let chartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
         if (chartDefinition) {
             let chartData: any = this.blotter.ChartService.BuildChartData(chartDefinition, columns);
