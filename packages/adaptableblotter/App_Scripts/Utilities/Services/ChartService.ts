@@ -25,12 +25,19 @@ export class ChartService implements IChartService {
 
     public BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any {
 
+        // NOTE this method is need only when we using Segmented column(s) otherwise,
+        // you can assign chart.dataSource to the whole data (e.g. whatever the grid is displaying)
+        // and then set chart.includedProperties to array of strings that contain selected data columns:
+        // xAxisColumnName and all yAxisColumnNames, e.g. "Trade Date", "Trade Price", "Trade Volume"
+
+        // TODO find out why BuildChartData function is called when changing IChartProperties?
+        console.log("calling BuildChartData function...");
+
         let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns)
         let xAxisColValues: string[] = this.getXAxisColumnValues(chartDefinition, columns);
         let xSegmentColValues: string[] = this.getXSegmentColumnValues(chartDefinition, columns);
 
-        console.log("BuildChartData xAxisColumnName " + xAxisColumnName);
-        console.log("BuildChartData yAxisColumnIds " + chartDefinition.YAxisColumnIds);
+        //TODO save yAxisColumnNames in chartDefinition so we can populate getCalloutTypeOptions()
         let yAxisColumnNames: string[] = [];
 
         let chartData: any = xAxisColValues.map(cv => {
@@ -65,22 +72,17 @@ export class ChartService implements IChartService {
             }
             return chartItem
         })
-        console.log("BuildChartData yAxisColumnNames " + yAxisColumnNames);
-        // console.log("BuildChartData chartData ");
-        // console.log("BuildChartData chartData " + chartData);
-        console.log("BuildChartData props " + Object.getOwnPropertyNames(chartData[0]));
-        console.log("BuildChartData keys " + Object.keys(chartData[0]));
 
-        let subset: any[] = [];
-        let index = 0;
-        chartData.forEach((item: any) => {
-          if (index < 40) {
-            subset.push(item);
-          }
-          index++
-        });
-         return subset;
-       // return chartData;
+        // let subset: any[] = [];
+        // let index = 0;
+        // chartData.forEach((item: any) => {
+        //   if (index < 40) {
+        //     subset.push(item);
+        //   }
+        //   index++
+        // });
+        //  return subset;
+       return chartData;
     }
 
     private buildTotal(yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[], showAverageTotal: boolean): number {

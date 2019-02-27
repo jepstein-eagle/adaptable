@@ -61,8 +61,14 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
 
 class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps, ChartDisplayPopupState> {
 
+    public seriesColors: Map<string,string> = new Map<string,string>();
+
     constructor(props: ChartDisplayPopupProps) {
         super(props);
+
+        // added for synchronizing color of series with colors of callouts:
+        this.seriesAdded = this.seriesAdded.bind(this);
+        this.calloutStyleUpdating = this.calloutStyleUpdating.bind(this);
 
         this.state = ChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition, this.props.Columns);
         IgrCategoryChartModule.register();
@@ -286,12 +292,11 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let chartData = (this.props.ChartVisibility == ChartVisibility.Maximised && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
 
             <IgrCategoryChart
-                // datasource
+                // data source
                 dataSource={this.props.ChartData}
                 // chart type
                 chartType={this.state.ChartProperties.ChartType}
                 markerTypes={ChartUIHelper.getMarkerFromProps(this.state.ChartProperties)}
-                // markerTypes="Circle"
                 // size
                 width={chartWidth}
                 height={chartHeight}
@@ -341,6 +346,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 isItemHighlightingEnabled={this.state.ChartProperties.EnableItemHighlighting}
                 //transitionDuration
 
+
                 // playing
                 xAxisTickStroke="gray"
                 xAxisTickLength={5}
@@ -348,18 +354,20 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 //ubtitleRightMargin={this.state.TitleMargin}
                 //subtitleTopMargin = {this.state.TitleMargin}
 
-                // callouts - not doing yet as not sure how we can with dynamic data...
-                includedProperties={ChartUIHelper.getDataProperties(this.props.ChartData)}
-                // excludedProperties={ChartUIHelper.getDataProperties(this.props.ChartData)}
-                calloutsDataSource={ChartUIHelper.getDataCallouts(this.props.ChartData)}
-                calloutsVisible={true}
-                // calloutsXMemberPath="CalloutsIndex"
-                // calloutsYMemberPath="CalloutsValue"
-                // calloutsLabelMemberPath="CalloutsLabel"
+                // TODO consider adding this binding for Line, Spline, Area, Step ChartTypes
+                // and showing controls for editing this value in Chart Settings UI under the General panel
+                // thickness={this.state.ChartProperties.SeriesThickness}
 
-                calloutsXMemberPath="ItemIndex"
-                calloutsYMemberPath="ItemValue"
-                calloutsLabelMemberPath="ItemLabel"
+                // callouts generated dynamiclly based on current data source and callout properties:
+                calloutsDataSource={ChartUIHelper.getCalloutsData(this.props.ChartData, this.state.ChartProperties)}
+                calloutsVisible={true}
+                calloutsXMemberPath="CalloutsIndex"
+                calloutsYMemberPath="CalloutsValue"
+                calloutsLabelMemberPath="CalloutsLabel"
+                calloutsContentMemberPath="MemberPath"
+                calloutStyleUpdating={this.calloutStyleUpdating}
+                calloutStyleUpdatingEventEnabled={true}
+                seriesAdded={this.seriesAdded}
 
                 //xAxisInterval={1}
                 xAxisLabelAngle={ChartUIHelper.getAngleFromEnum(this.state.ChartProperties.XAxisAngle)}
@@ -443,6 +451,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                             </Col>
                                                         </Row>
                                                     </AdaptableBlotterForm>
+                                                    {/* Martin added controls for changing MarkerType  */}
                                                     <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
                                                         <Row>
                                                             <Col xs={7}><ControlLabel>Marker Type</ControlLabel></Col>
@@ -471,7 +480,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                             </Col>
                                                         </Row>
                                                     </AdaptableBlotterForm>}
-                                                    {/* Martin add Overlap setting here because it allies only to Column chart type */}
+                                                    {/* Martin add Overlap setting here because it applies only to Column chart type */}
                                                     {this.state.ChartProperties.ChartType == ChartType.Column &&
                                                     <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
                                                         <Row>
@@ -791,6 +800,34 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                     </Col>
                                                                 </Row>
                                                             </AdaptableBlotterForm>
+                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                <Row>
+                                                                    <Col xs={6}><ControlLabel>Callout Type</ControlLabel></Col>
+                                                                    <Col xs={6}>
+                                                                          <FormControl bsSize={"small"} componentClass="select" placeholder="select"
+                                                                              value={this.state.ChartProperties.CalloutsType}
+                                                                                 onChange={(x) => this.onChangedCalloutsType(x)} >
+                                                                              {ChartUIHelper.getCalloutTypeOptions()}
+                                                                          </FormControl>
+                                                                    </Col>
+                                                                </Row>
+                                                            </AdaptableBlotterForm>
+
+                                                            {/* {this.state.ChartProperties.CalloutsType == "Data Points" && */}
+                                                            <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
+                                                                <Row>
+                                                                    <Col xs={6}><ControlLabel>Callout Interval</ControlLabel></Col>
+                                                                    <Col xs={6}>
+                                                                      <FormControl
+                                                                          value={this.state.ChartProperties.CalloutsInterval}
+                                                                          bsSize={"small"} type="number"
+                                                                          min="1" step="1" max="20"
+                                                                          placeholder="Enter"
+                                                                          onChange={(e) => this.onChangedCalloutsInterval(e)}/>
+                                                                    </Col>
+                                                                </Row>
+                                                            </AdaptableBlotterForm>
+                                                            {/* } */}
                                                             <AdaptableBlotterForm horizontal style={{ marginTop: '10px' }}>
                                                                 <Row>
                                                                     <Col xs={6}><ControlLabel>Tooltips</ControlLabel></Col>
@@ -931,6 +968,26 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         </div>
     }
 
+    public calloutStyleUpdating(sender: any, args: any) {
+        if (args.item && this.seriesColors.has(args.item)) {
+            let color = this.seriesColors.get(args.item)!;
+            args.outline = color;
+            args.background = color;
+            args.leaderBrush = "#d8d8d8";
+            args.textColor = "white";
+            // console.log("calloutStyleUpdating "  + args.item);
+        }
+    }
+
+    public seriesAdded(sender: any, args: any) {
+        const series = (args.series as any);
+        if (series.valueMemberPath &&
+            series.valueMemberPath !== "") {
+            this.seriesColors.set(series.valueMemberPath, args.series.actualBrush);
+            // console.log("seriesAdded " + series.valueMemberPath);
+        }
+    }
+
     onEditChart(): void {
         this.setState({ EditedChartDefinition: Helper.cloneObject(this.props.CurrentChartDefinition) });
     }
@@ -1069,6 +1126,29 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let chartProperties: IChartProperties = this.state.ChartProperties;
         chartProperties.ToolTipType = e.value as ToolTipType;
         this.updateChartProperties(chartProperties);
+    }
+
+    onChangedCalloutsType(event: React.FormEvent<any>) {
+      let e = event.target as HTMLInputElement;
+      let chartProperties: IChartProperties = this.state.ChartProperties;
+       // Note not changing to CalloutsType enum because a user might selected a da column name from data source
+      chartProperties.CalloutsType = e.value;
+      this.updateChartProperties(chartProperties);
+    }
+
+    private onChangedCalloutsInterval(event: React.FormEvent<any>) {
+      let e = event.target as HTMLInputElement;
+      let value = Number(e.value)
+      if (value >= 1000) {
+          value = 1000;
+      }
+      if (value < 1) {
+          value = 1;
+      }
+      let chartProps: IChartProperties = this.state.ChartProperties;
+      chartProps.CalloutsInterval = value;
+      // chartProps.CalloutsInterval = e.target.value;
+      this.updateChartProperties(chartProps);
     }
 
     onCrosshairsModeChange(event: React.FormEvent<any>) {

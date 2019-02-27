@@ -1,15 +1,21 @@
 import { IChartProperties } from "../Interface/IChartProperties";
 import { ChartType, ChartSize, CrosshairDisplayMode, ToolTipType,
   AxisLabelsLocation, LabelVisibility, HorizontalAlignment,
-  AxisAngle, AxisScale } from '../ChartEnums';
+  AxisAngle, AxisScale, CalloutsType } from '../ChartEnums';
 
 export const DefaultChartProperties: IChartProperties = {
     // General
-    ChartType: ChartType.Line,
+    ChartType: ChartType.Line, // changed to line because it work better with a lot of data points
     ChartSize: ChartSize.Small,
+    SeriesThickness: 1,
     // added special Default enum to resolve marker type based on chart type. Do not use enums for this property
     MarkerType: "Default",
-    // annotations:
+
+    // Callouts:
+    CalloutsType: "None", // using CalloutsType.None enum as a string
+    CalloutsInterval: 1,  // this really should default to round(chartData.length / 8) for best performance
+
+    // Annotations:
     EnableFinalValueAnnotations: false,
     CrosshairDisplayMode: CrosshairDisplayMode.None,
     CrosshairSnapToData: false,
@@ -18,6 +24,7 @@ export const DefaultChartProperties: IChartProperties = {
     EnableSeriesHighlighting: false,
     EnableCategoryHighlighting: false,
     EnableItemHighlighting: false,
+
     // Y Axis props:
     // changed YAxisLabelLocation to right because it works better with final values annotation
     YAxisLabelLocation: AxisLabelsLocation.OutsideRight,
@@ -27,6 +34,8 @@ export const DefaultChartProperties: IChartProperties = {
     YAxisTitleColor: "",
     YAxisMinimumValue: undefined, // auto-calculated based on data range
     YAxisMaximumValue: undefined, // auto-calculated based on data range
+    // TODO we should implement "Auto" scale that changes between
+    // Log and Linear depending on range of data values on y-Axis
     YAxisLabelScale: AxisScale.Linear,
     YAxisIsLogarithmic: false,
     YAxisInverted: false,

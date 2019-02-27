@@ -3,7 +3,7 @@ import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChar
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { HorizontalAlignment, ChartType, ToolTipType, CrosshairDisplayMode, ChartSize,
   AxisAngle, AxisScale, AxisLabelsLocation,
-  LabelVisibility, MarkerType } from "../../Utilities/ChartEnums";
+  LabelVisibility, MarkerType, CalloutsType } from "../../Utilities/ChartEnums";
 
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import * as React from "react";
@@ -143,7 +143,7 @@ export module ChartUIHelper {
     }
 
     export function getMarkerFor(charType: ChartType, markerType: string): string {
-      // resolves marker for specified chart type since some charts have markers hidden by default
+      // resolves marker for specified chart type since some chart types should hide markers by default
       if (markerType === "Default" || markerType === "Unset") {
         markerType = charType == ChartType.Point ? "Automatic" : "None";
       } else {
@@ -182,25 +182,34 @@ export module ChartUIHelper {
       return options;
     }
 
+    export function getCalloutTypeOptions(): JSX.Element[] {
+      let options = EnumExtensions.getNames(CalloutsType).map((enumName) => {
+          let name = enumName.toString();
+          // adding known callouts as strings because we will add non-numeric properties from data source in future
+          return <option key={name} value={name}>{name}</option>
+      })
+      // TODO get non-numeric properties from data source and then add them to above options:
+      // <option key={PropName} value={PropName}>PropName</option>,
+      return options;
+    }
+
     export function setChartHeight(chartProperties: IChartProperties): string {
-      return '450px';
-        // switch (chartProperties.ChartSize) {
-        //     case ChartSize.XSmall:
-        //         return '350px';
-        //     case ChartSize.Small:
-        //         return '450px';
-        //     case ChartSize.Medium:
-        //         return '600px';
-        //     case ChartSize.Large:
-        //         return '750px';
-        //     case ChartSize.XLarge:
-        //         return '850px';
-        // }
+        switch (chartProperties.ChartSize) {
+            case ChartSize.XSmall:
+                return '350px';
+            case ChartSize.Small:
+                return '450px';
+            case ChartSize.Medium:
+                return '600px';
+            case ChartSize.Large:
+                return '750px';
+            case ChartSize.XLarge:
+                return '850px';
+        }
     }
 
     export function setChartWidth(chartProperties: IChartProperties, isChartSettingsVisible: boolean): string {
         let chartWidth: number;
-        // chartWidth = (isChartSettingsVisible) ? 1050 : 1350;
         switch (chartProperties.ChartSize) {
             case ChartSize.XSmall:
                 chartWidth = (isChartSettingsVisible) ? 375 : 600
@@ -274,23 +283,17 @@ export module ChartUIHelper {
         }
     }
 
+    // TODO see a note in BuildChartData function
     export function getDataProperties(chartData: any): string[] {
       if (chartData === undefined){
         return [];
       }
       let item = chartData[0];
-      let allProps = Object.keys(item);
-      let dataProps: string[] = [];
-      allProps.forEach((name: string) => {
-        // excluding Callouts properties, e.g. CalloutsIndex
-        if (!name.startsWith("Callouts")){
-          dataProps.push(name);
-        }
-      });
-      console.log("getDataProperties " + dataProps);
-      return dataProps; //["CalloutsIndex"];
+      let dataProps = Object.keys(item);
+      return dataProps;
     }
 
+    // TODO ideally we should get names of numeric using IChartDefinition.YAxisColumnIds instead of:
     export function getNumericProperties(chartData: any): string[] {
       if (chartData === undefined){
         return [];
@@ -299,119 +302,137 @@ export module ChartUIHelper {
       let allProps = Object.keys(dataItem);
       let dataProps: string[] = [];
 
-      // console.log("getNumericProperties " + isNaN("2").tostring);
-
       allProps.forEach((name: string) => {
-        // excluding Callouts properties, e.g. CalloutsIndex
         let dataValue = dataItem[name];
         if (typeof(dataValue) === "number"){
           dataProps.push(name);
         }
       });
-      console.log("getNumericProperties " + dataProps);
+      // console.log("getNumericProperties " + dataProps);
       return dataProps;
     }
 
-
-    export function getDataCallouts(chartData: any): any[] {
-      if (chartData === undefined){
-        return undefined;
-      }
+    export function getCalloutsData(chartData: any, chartProps: IChartProperties): any[] {
+      // TODO ideally we should get names of numeric using IChartDefinition.YAxisColumnIds instead of this:
+      let numericProps = getNumericProperties(chartData);
 
       let callouts: any[] = [];
+      if (chartProps.CalloutsType == CalloutsType.DataRanges) {
+        // skipping filtering of callouts for DataRanges because there are only 2 callouts for each Y-column
+        return getCalloutsDataRanges(chartData, numericProps);
+      } else if (chartProps.CalloutsType == CalloutsType.DataChangesInValues ) {
+        callouts = getCalloutsDataChanges(chartData, numericProps, false);
+      } else if (chartProps.CalloutsType == CalloutsType.DataChangesInPercentage) {
+        callouts = getCalloutsDataChanges(chartData, numericProps, true);
+      } else if (chartProps.CalloutsType == CalloutsType.DataPoints) {
+        callouts = getCalloutsDataPoints(chartData, numericProps);
+      } else if (chartProps.CalloutsType == CalloutsType.None) {
+        return [];
+      } else {
+        let dataColumn = chartProps.CalloutsType;
+        // TODO implement a function for getting values a column named dataColumn from chartData
+      }
 
-      let numericProps = getNumericProperties(chartData);
-      numericProps.forEach((name: string) => {
-        let prevValue: number = 0;
-        let gainValue: number = Number.MIN_VALUE;
-        let gainChange: number = Number.MIN_VALUE;
-        let gainIndex: number = 0;
-        let dropChange: number = Number.MAX_VALUE;
-        let dropValue: number = Number.MAX_VALUE;
-        let dropIndex: number = 0;
+      // users can filter out callouts and thus improve chart performance using IChartProperties.CalloutsInterval
+      // perhaps this should depend on IChartProperties.XAxisInterval (when added) so that callouts align with labels on XAxis
+      let filtered: any[] = [];
+      for (let i = 0; i < callouts.length; i++) {
+        if (i % chartProps.CalloutsInterval == 0) {
+          filtered.push(callouts[i]);
+        }
+      }
+      return filtered;
+    }
 
+    export function getCalloutsDataRanges(chartData: any, numericProps: string[]): any[] {
+      let callouts: any[] = [];
+
+      numericProps.forEach((columnName: string) => {
+        // setting initial values that will catch first values of an item
         let minValue: number = Number.MAX_VALUE;
-        let minIndex: number = 0;
         let maxValue: number = Number.MIN_VALUE;
+        let minIndex: number = 0;
         let maxIndex: number = 0;
-        let itemIndex = 0;
 
-        chartData.forEach((item: any) => {
-          let itemValue = item[name];
-          let itemChange = item[name] - prevValue;
-
-          let info = (itemIndex + 1) + ", v=" + itemValue.toFixed(2)+ ", d=" + itemChange.toFixed(2);
-
-          if (itemIndex > 0 &&
-              gainChange < itemChange) {
-              gainChange = itemChange;
-              gainValue = itemValue;
-              gainIndex = itemIndex;
-          }
-
-          if (itemIndex > 0 &&
-              dropChange > itemChange) {
-              dropChange = itemChange;
-              dropValue = itemValue;
-              dropIndex = itemIndex;
-              console.log("d " + info + " changed to " + dropChange.toFixed(2));
-          } else {
-              console.log("d " + info);
-          }
-
+        // find index and MIN/MAX values of each data column
+        for (let i = 0; i < chartData.length; i++) {
+          const item = chartData[i];
+          let itemValue = item[columnName];
           if (minValue > itemValue) {
               minValue = itemValue;
-              minIndex = itemIndex;
+              minIndex = i;
           }
           if (maxValue < itemValue) {
               maxValue = itemValue;
-              maxIndex = itemIndex;
+              maxIndex = i;
           }
-
-            callouts.push({
-                ItemLabel: itemValue.toFixed(1),
-                ItemIndex: itemIndex,
-                ItemValue: itemValue,
-                MemberPath: name
-            });
-
-            prevValue = itemValue;
-            itemIndex++;
-        });
-
+        }
+        // add callouts for MIN/MAX values of each data column
         callouts.push({
-            CalloutsLabel: "BIGGEST GAIN",
-            CalloutsIndex: gainIndex,
-            CalloutsValue: gainValue,
-            MemberPath: name
-        });
-        callouts.push({
-            CalloutsLabel: "BIGGEST DROP",
-            CalloutsIndex: dropIndex,
-            CalloutsValue: dropValue,
-            MemberPath: name
-        });
-
-        callouts.push({
-          CalloutsLabel: "MAX",
+          CalloutsLabel: "MAX " + maxValue.toFixed(1),
           CalloutsIndex: maxIndex,
           CalloutsValue: maxValue,
-          MemberPath: name
+          MemberPath: columnName
         });
         callouts.push({
-            CalloutsLabel: "MIN",
+            CalloutsLabel: "MIN " + minValue.toFixed(1),
             CalloutsIndex: minIndex,
             CalloutsValue: minValue,
-            MemberPath: name
+            MemberPath: columnName
         });
-
       });
 
-      console.log("getCalloutData " + callouts.length);
       return callouts;
     }
 
+    export function getCalloutsDataChanges(chartData: any, numericProps: string[], showPercentages: boolean): any[] {
+      let callouts: any[] = [];
+      if (chartData.length < 2) {
+         return callouts;
+      }
 
+      numericProps.forEach((column: string) => {
+        // calculate changes between consecutive items for each data column
+        for (let i = 1; i < chartData.length; i++) {
+          const itemCurrent = chartData[i];
+          const itemPrevious = chartData[i - 1];
+          let itemChange = itemCurrent[column] - itemPrevious[column];
+          let itemLabel = itemChange >= 0 ? "+" : "";
+
+          if (showPercentages) {
+             itemChange = itemChange / itemPrevious[column] * 100.0
+             itemLabel = itemLabel + itemChange.toFixed(0) + "%";
+          } else {
+             itemLabel = itemLabel + itemChange.toFixed(1);
+          }
+
+          callouts.push({
+              CalloutsLabel: itemLabel,
+              CalloutsValue: itemCurrent[column],
+              CalloutsIndex: i,
+              MemberPath: column
+          });
+        };
+      });
+      return callouts;
+    }
+
+    export function getCalloutsDataPoints(chartData: any, numericProps: string[]): any[] {
+      let callouts: any[] = [];
+      numericProps.forEach((column: string) => {
+        // get values of consecutive items for each data column
+        for (let i = 0; i < chartData.length; i++) {
+          const itemCurrent = chartData[i];
+          callouts.push({
+              CalloutsLabel: itemCurrent[column].toFixed(1),
+              CalloutsValue: itemCurrent[column],
+              CalloutsIndex: i,
+              MemberPath: column
+          });
+        };
+      });
+      return callouts;
+    }
 
 
 }

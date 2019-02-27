@@ -38,7 +38,7 @@ export enum AxisLabelsLocation {
     OutsideBottom = 'OutsideBottom',
     OutsideLeft = 'OutsideLeft',
     OutsideRight = 'OutsideRight',
-    // these are used only when using crossingAxis and crossingValue properties:
+    // these enums are used only when using crossingAxis and crossingValue properties:
     InsideTop = 'InsideTop',
     InsideBottom = 'InsideBottom',
     InsideLeft = 'InsideLeft',
@@ -106,4 +106,14 @@ export enum MarkerType {
   Pentagram = 'Pentagram',
   Hexagram = 'Hexagram',
   None = 'None',
+}
+
+export enum CalloutsType {
+  None = 'None',
+  DataRanges = 'Data Ranges',
+  DataPoints = 'Data Points',
+  DataChangesInValues = 'Data Changes',
+  DataChangesInPercentage = 'Data Changes (%)',
+  // note populate getCalloutTypeOptions() with names of non-numeric data columns
+  // to add more callout types
 }

@@ -1,12 +1,23 @@
 import { ChartType, CrosshairDisplayMode,
   AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize, ToolTipType,
-  AxisAngle, AxisScale, MarkerType } from '../ChartEnums';
+  AxisAngle, AxisScale, CalloutsType } from '../ChartEnums';
+
+export interface ICalloutProperties {
+  Type: string;
+  Interval?: number;
+}
 
 export interface IChartProperties {
   // General
   ChartType?: ChartType;
   ChartSize?: ChartSize;
+  SeriesThickness?: number; // and bind it to
+
   MarkerType?: string; // using a string because chart expects a string or an array of MarkerType enums
+
+  CalloutsType?: string; // using string because we need add non-numeric properties from data source in getCalloutTypeOptions()
+  CalloutsInterval: number; // this controls how many callouts
+  // Annotations:
   EnableFinalValueAnnotations?: boolean;
   CrosshairDisplayMode?: CrosshairDisplayMode;
   CrosshairSnapToData?: boolean;
