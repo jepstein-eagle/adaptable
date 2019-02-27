@@ -6,6 +6,7 @@ export interface ChartDisplayPopupState {
     ChartProperties: IChartProperties;
     IsGeneralMinimised: boolean;
     SetYAxisMinimumValue: boolean;
+    SetYAxisMaximumValue: boolean;
     SetYAxisLabelColor: boolean;
     SetYAxisTitleColor: boolean;
     IsYAxisMinimised: boolean;

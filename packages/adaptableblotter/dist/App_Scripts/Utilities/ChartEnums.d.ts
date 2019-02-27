@@ -14,7 +14,7 @@ export declare enum ChartType {
     StepLine = "StepLine",
     Waterfall = "Waterfall"
 }
-export declare enum ChartCrosshairsMode {
+export declare enum CrosshairDisplayMode {
     None = "None",
     Horizontal = "Horizontal",
     Vertical = "Vertical",
@@ -36,6 +36,10 @@ export declare enum AxisLabelsLocation {
     InsideBottom = "InsideBottom",
     InsideLeft = "InsideLeft",
     InsideRight = "InsideRight"
+}
+export declare enum AxisScale {
+    Linear = "Linear",
+    Log = "Log"
 }
 export declare enum HorizontalAlignment {
     Left = "Left",
@@ -60,4 +64,26 @@ export declare enum AxisAngle {
     Horizontal = "Horizontal",
     Diagonal = "Diagonal",
     Vertical = "Vertical"
+}
+export declare enum MarkerType {
+    Default = "Default",
+    Automatic = "Automatic",
+    Circle = "Circle",
+    Triangle = "Triangle",
+    Pyramid = "Pyramid",
+    Square = "Square",
+    Diamond = "Diamond",
+    Pentagon = "Pentagon",
+    Hexagon = "Hexagon",
+    Tetragram = "Tetragram",
+    Pentagram = "Pentagram",
+    Hexagram = "Hexagram",
+    None = "None"
+}
+export declare enum CalloutsType {
+    None = "None",
+    DataRanges = "Data Ranges",
+    DataPoints = "Data Points",
+    DataChangesInValues = "Data Changes",
+    DataChangesInPercentage = "Data Changes (%)"
 }

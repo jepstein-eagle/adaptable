@@ -54,5 +54,6 @@ exports.DefaultAdaptableBlotterOptions = {
         showMissingPrimaryKeyWarning: true,
         preventDuplicatePrimaryKeyValues: true,
         serverSearchOption: 'None',
+        showAdaptableBlotterToolPanel: false
     }
 };

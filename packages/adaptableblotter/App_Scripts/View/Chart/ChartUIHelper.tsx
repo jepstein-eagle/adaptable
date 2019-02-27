@@ -67,12 +67,8 @@ export module ChartUIHelper {
     }
 
   export  function createDefaultXAxisTitle(chartDefinition: IChartDefinition, columns: IColumn[]): string {
-        let returnString: string = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns);
-        if (StringExtensions.IsNotNullOrEmpty(chartDefinition.XSegmentColumnId)) {
-            returnString = returnString + " (by " + ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XSegmentColumnId, columns) + ")"
-        }
-        return returnString;
-    }
+       return ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns);
+     }
 
     export function setDefaultChartDisplayPopupState(): ChartDisplayPopupState {
         let defaultState = {

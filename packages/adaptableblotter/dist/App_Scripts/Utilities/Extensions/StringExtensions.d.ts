@@ -8,4 +8,6 @@ export declare module StringExtensions {
     function PlaceSpaceBetweenCapitalisedWords(stringToCheck: string): string;
     function RemoveTrailingComma(stringToCheck: string): string;
     function ToLowerCase(stringToCheck: string): string;
+    function Includes(stringToCheck: string, valueToCheck: string): boolean;
+    function NotIncludes(stringToCheck: string, valueToCheck: string): boolean;
 }

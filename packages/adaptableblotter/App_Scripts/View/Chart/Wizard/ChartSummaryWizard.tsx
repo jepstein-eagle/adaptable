@@ -28,9 +28,7 @@ export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps,
             { Key: "Total", Value: this.props.Data.YAxisTotal },
             { Key: "X Axis Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId, this.props.Columns) },
             { Key: "X Axis Values", Value: this.getExpressionString(this.props.Data.XAxisExpression) },
-            { Key: "X Segment Column", Value: (this.props.Data.XSegmentColumnId) ? ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XSegmentColumnId, this.props.Columns) : "[None]" },
-            { Key: "X Segment Column Values", Value: (this.props.Data.XSegmentColumnId) ? this.getExpressionString(this.props.Data.XSegmentExpression) : "[None]" },
-        ]
+          ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.ChartStrategyName} />
         return <div className={cssClassName}>

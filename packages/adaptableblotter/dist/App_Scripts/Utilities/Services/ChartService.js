@@ -17,12 +17,20 @@ class ChartService {
         this.blotter = blotter;
     }
     BuildChartData(chartDefinition, columns) {
+        // NOTE this method is need only when we using Segmented column(s) otherwise,
+        // you can assign chart.dataSource to the whole data (e.g. whatever the grid is displaying)
+        // and then set chart.includedProperties to array of strings that contain selected data columns:
+        // xAxisColumnName and all yAxisColumnNames, e.g. "Trade Date", "Trade Price", "Trade Volume"
+        // TODO find out why BuildChartData function is called when changing IChartProperties?
+        console.log("calling BuildChartData function...");
         let xAxisColumnName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns);
         let xAxisColValues = this.getXAxisColumnValues(chartDefinition, columns);
         let xSegmentColValues = this.getXSegmentColumnValues(chartDefinition, columns);
+        //TODO save yAxisColumnNames in chartDefinition so we can populate getCalloutTypeOptions()
+        let yAxisColumnNames = [];
         let chartData = xAxisColValues.map(cv => {
-            let chartDataRow = new Object();
-            chartDataRow[xAxisColumnName] = cv;
+            let chartItem = new Object();
+            chartItem[xAxisColumnName] = cv;
             let showAverageTotal = (chartDefinition.YAxisTotal == ChartEnums_1.AxisTotal.Average);
             let xAxisKVP = { Key: chartDefinition.XAxisColumnId, Value: cv };
             if (ArrayExtensions_1.ArrayExtensions.IsNotEmpty(xSegmentColValues)) {
@@ -31,7 +39,11 @@ class ChartService {
                     chartDefinition.YAxisColumnIds.forEach(colID => {
                         let colFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
                         let total = this.buildTotal(colID, [xAxisKVP, columnValueKVP], columns, showAverageTotal);
-                        chartDataRow[colFriendlyName + '(' + columnValue + ")"] = total;
+                        let colName = colFriendlyName + '(' + columnValue + ")";
+                        if (yAxisColumnNames.indexOf(colName) < 0) {
+                            yAxisColumnNames.push(colName);
+                        }
+                        chartItem[colName] = total;
                     });
                 });
             }
@@ -39,12 +51,14 @@ class ChartService {
                 chartDefinition.YAxisColumnIds.forEach(colID => {
                     let total = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal);
                     let colName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
-                    chartDataRow[colName] = total;
+                    if (yAxisColumnNames.indexOf(colName) < 0) {
+                        yAxisColumnNames.push(colName);
+                    }
+                    chartItem[colName] = total;
                 });
             }
-            return chartDataRow;
+            return chartItem;
         });
-        // console.log(chartData);
         return chartData;
     }
     buildTotal(yAxisColumn, kvps, columns, showAverageTotal) {

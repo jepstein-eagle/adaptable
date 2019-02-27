@@ -26,9 +26,12 @@ class LicenceService {
             return Enums_1.LicenceType.Community;
         }
         // standard licence - allows saving of items and loading of state but not access to enterprise features (charts)
-        // the whole key should be 9 characters of which 3 are numbers; if that fails, return Community
+        // the whole key should be 9 characters and contain an 'e' and an 'a' and 3 numbers; if any of that fails, return Community
         let standardIdAlphaNumeric = licenceKeyArray[1];
         if (!this.isCorrectLength(standardIdAlphaNumeric, 9)) {
+            return Enums_1.LicenceType.Community;
+        }
+        if (StringExtensions_1.StringExtensions.NotIncludes(standardIdAlphaNumeric, 'a') || StringExtensions_1.StringExtensions.NotIncludes(standardIdAlphaNumeric, 'e')) {
             return Enums_1.LicenceType.Community;
         }
         let standardIdString = standardIdAlphaNumeric.replace(/\D/g, '');
@@ -46,9 +49,12 @@ class LicenceService {
             return Enums_1.LicenceType.Community;
         }
         // enterprise licence - allows saving and loading of state of all items (including charts)
-        // the whole key should be 10 characters of which 4 are numbers; if it fails return Standard
+        // the whole key should be 10 characters and contain an 'c' and an 'f' and 3 numbers; if any of that fails, return Standard
         let enterpriseIdAlphaNumeric = licenceKeyArray[2];
         if (!this.isCorrectLength(enterpriseIdAlphaNumeric, 10)) {
+            return Enums_1.LicenceType.Standard;
+        }
+        if (StringExtensions_1.StringExtensions.NotIncludes(enterpriseIdAlphaNumeric, 'c') || StringExtensions_1.StringExtensions.NotIncludes(enterpriseIdAlphaNumeric, 'f')) {
             return Enums_1.LicenceType.Standard;
         }
         let enterpriseIdString = enterpriseIdAlphaNumeric.replace(/\D/g, '');

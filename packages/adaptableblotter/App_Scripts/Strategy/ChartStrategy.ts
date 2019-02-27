@@ -34,6 +34,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
         if (this.ChartState != this.GetChartState()) {
             this.ChartState = this.GetChartState();
+            console.log("ive changed")
             isChartRelatedStateChanged = true;
         }
 
@@ -70,15 +71,13 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     debouncedSetChartData = _.debounce(() => this.setChartData(), this.getRefreshrate());
 
     protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo): void {
- //     console.log(dataChangedInfo.ColumnId)
         if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty( this.ChartState.CurrentChartDefinition)) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId: string = dataChangedInfo.ColumnId;
             let currentChartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
             if ( ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
-                currentChartDefinition.XAxisColumnId == columnChangedId ||
-                currentChartDefinition.XSegmentColumnId == columnChangedId) {
-                this.debouncedSetChartData();
+                currentChartDefinition.XAxisColumnId == columnChangedId ) {
+                 this.debouncedSetChartData();
             }
         }
     }

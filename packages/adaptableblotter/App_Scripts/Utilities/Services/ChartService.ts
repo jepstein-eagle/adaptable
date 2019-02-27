@@ -30,12 +30,8 @@ export class ChartService implements IChartService {
         // and then set chart.includedProperties to array of strings that contain selected data columns:
         // xAxisColumnName and all yAxisColumnNames, e.g. "Trade Date", "Trade Price", "Trade Volume"
 
-        // TODO find out why BuildChartData function is called when changing IChartProperties?
-        console.log("calling BuildChartData function...");
-
-        let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns)
+         let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns)
         let xAxisColValues: string[] = this.getXAxisColumnValues(chartDefinition, columns);
-        let xSegmentColValues: string[] = this.getXSegmentColumnValues(chartDefinition, columns);
 
         //TODO save yAxisColumnNames in chartDefinition so we can populate getCalloutTypeOptions()
         let yAxisColumnNames: string[] = [];
@@ -47,21 +43,7 @@ export class ChartService implements IChartService {
             let showAverageTotal: boolean = (chartDefinition.YAxisTotal == AxisTotal.Average);
             let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
 
-            if (ArrayExtensions.IsNotEmpty(xSegmentColValues)) {
-                xSegmentColValues.forEach((columnValue: string) => {
-                    let columnValueKVP: IKeyValuePair = { Key: chartDefinition.XSegmentColumnId, Value: columnValue }
-                    chartDefinition.YAxisColumnIds.forEach(colID => {
-                        let colFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns)
-                        let total = this.buildTotal(colID, [xAxisKVP, columnValueKVP], columns, showAverageTotal)
-                        let colName = colFriendlyName + '(' + columnValue + ")"
-                        if (yAxisColumnNames.indexOf(colName) < 0) {
-                            yAxisColumnNames.push(colName);
-                        }
-                        chartItem[colName] = total;
-                    });
-                })
-            } else { // otherwise do the y cols
-                chartDefinition.YAxisColumnIds.forEach(colID => {
+                  chartDefinition.YAxisColumnIds.forEach(colID => {
                     let total = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal);
                     let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
                     if (yAxisColumnNames.indexOf(colName) < 0) {
@@ -69,8 +51,7 @@ export class ChartService implements IChartService {
                     }
                     chartItem[colName] = total;
                 })
-            }
-            return chartItem
+             return chartItem
         })
 
        return chartData;
@@ -122,22 +103,5 @@ export class ChartService implements IChartService {
         return xAxisColValues;
     }
 
-    // Gets the unique values in the X Sgegmet column - either through an Extension or as unique values.
-    private getXSegmentColumnValues(chartDefinition: IChartDefinition, columns: IColumn[]): string[] {
-        let xSegmentColValues: string[] = [];
-        if (StringExtensions.IsNullOrEmpty(chartDefinition.XSegmentColumnId)) {
-            return xSegmentColValues;
-        }
-        if (ExpressionHelper.IsEmptyExpression(chartDefinition.XSegmentExpression)) {
-            xSegmentColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XSegmentColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
-        } else {
-            this.blotter.forAllRecordsDo((row) => {
-                if (ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XSegmentExpression, row, columns, this.blotter)) {
-                    let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XSegmentColumnId)
-                    ArrayExtensions.AddItem(xSegmentColValues, columnValue);
-                }
-            })
-        }
-        return xSegmentColValues;
-    }
+    
 }

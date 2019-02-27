@@ -19,13 +19,13 @@ var ChartType;
     ChartType["StepLine"] = "StepLine";
     ChartType["Waterfall"] = "Waterfall";
 })(ChartType = exports.ChartType || (exports.ChartType = {}));
-var ChartCrosshairsMode;
-(function (ChartCrosshairsMode) {
-    ChartCrosshairsMode["None"] = "None";
-    ChartCrosshairsMode["Horizontal"] = "Horizontal";
-    ChartCrosshairsMode["Vertical"] = "Vertical";
-    ChartCrosshairsMode["Both"] = "Both";
-})(ChartCrosshairsMode = exports.ChartCrosshairsMode || (exports.ChartCrosshairsMode = {}));
+var CrosshairDisplayMode;
+(function (CrosshairDisplayMode) {
+    CrosshairDisplayMode["None"] = "None";
+    CrosshairDisplayMode["Horizontal"] = "Horizontal";
+    CrosshairDisplayMode["Vertical"] = "Vertical";
+    CrosshairDisplayMode["Both"] = "Both";
+})(CrosshairDisplayMode = exports.CrosshairDisplayMode || (exports.CrosshairDisplayMode = {}));
 var ChartSize;
 (function (ChartSize) {
     ChartSize["XSmall"] = "XSmall";
@@ -40,11 +40,17 @@ var AxisLabelsLocation;
     AxisLabelsLocation["OutsideBottom"] = "OutsideBottom";
     AxisLabelsLocation["OutsideLeft"] = "OutsideLeft";
     AxisLabelsLocation["OutsideRight"] = "OutsideRight";
+    // these enums are used only when using crossingAxis and crossingValue properties:
     AxisLabelsLocation["InsideTop"] = "InsideTop";
     AxisLabelsLocation["InsideBottom"] = "InsideBottom";
     AxisLabelsLocation["InsideLeft"] = "InsideLeft";
     AxisLabelsLocation["InsideRight"] = "InsideRight";
 })(AxisLabelsLocation = exports.AxisLabelsLocation || (exports.AxisLabelsLocation = {}));
+var AxisScale;
+(function (AxisScale) {
+    AxisScale["Linear"] = "Linear";
+    AxisScale["Log"] = "Log";
+})(AxisScale = exports.AxisScale || (exports.AxisScale = {}));
 var HorizontalAlignment;
 (function (HorizontalAlignment) {
     HorizontalAlignment["Left"] = "Left";
@@ -74,3 +80,30 @@ var AxisAngle;
     AxisAngle["Diagonal"] = "Diagonal";
     AxisAngle["Vertical"] = "Vertical";
 })(AxisAngle = exports.AxisAngle || (exports.AxisAngle = {}));
+var MarkerType;
+(function (MarkerType) {
+    // Unset = 'Unset',  // commented out because Default is more descriptive enum
+    MarkerType["Default"] = "Default";
+    MarkerType["Automatic"] = "Automatic";
+    MarkerType["Circle"] = "Circle";
+    MarkerType["Triangle"] = "Triangle";
+    MarkerType["Pyramid"] = "Pyramid";
+    MarkerType["Square"] = "Square";
+    MarkerType["Diamond"] = "Diamond";
+    MarkerType["Pentagon"] = "Pentagon";
+    MarkerType["Hexagon"] = "Hexagon";
+    MarkerType["Tetragram"] = "Tetragram";
+    MarkerType["Pentagram"] = "Pentagram";
+    MarkerType["Hexagram"] = "Hexagram";
+    MarkerType["None"] = "None";
+})(MarkerType = exports.MarkerType || (exports.MarkerType = {}));
+var CalloutsType;
+(function (CalloutsType) {
+    CalloutsType["None"] = "None";
+    CalloutsType["DataRanges"] = "Data Ranges";
+    CalloutsType["DataPoints"] = "Data Points";
+    CalloutsType["DataChangesInValues"] = "Data Changes";
+    CalloutsType["DataChangesInPercentage"] = "Data Changes (%)";
+    // note populate getCalloutTypeOptions() with names of non-numeric data columns
+    // to add more callout types
+})(CalloutsType = exports.CalloutsType || (exports.CalloutsType = {}));

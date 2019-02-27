@@ -7,7 +7,7 @@ var StringExtensions;
     }
     StringExtensions.IsNull = IsNull;
     function IsNotNull(stringToCheck) {
-        return !StringExtensions.IsNull(stringToCheck);
+        return !IsNull(stringToCheck);
     }
     StringExtensions.IsNotNull = IsNotNull;
     function IsEmpty(stringToCheck) {
@@ -15,11 +15,11 @@ var StringExtensions;
     }
     StringExtensions.IsEmpty = IsEmpty;
     function IsNotEmpty(stringToCheck) {
-        return !StringExtensions.IsEmpty(stringToCheck);
+        return !IsEmpty(stringToCheck);
     }
     StringExtensions.IsNotEmpty = IsNotEmpty;
     function IsNullOrEmpty(stringToCheck) {
-        return StringExtensions.IsNull(stringToCheck) || StringExtensions.IsEmpty(stringToCheck);
+        return IsNull(stringToCheck) || StringExtensions.IsEmpty(stringToCheck);
     }
     StringExtensions.IsNullOrEmpty = IsNullOrEmpty;
     function IsNotNullOrEmpty(stringToCheck) {
@@ -35,7 +35,15 @@ var StringExtensions;
     }
     StringExtensions.RemoveTrailingComma = RemoveTrailingComma;
     function ToLowerCase(stringToCheck) {
-        return (StringExtensions.IsNullOrEmpty(stringToCheck)) ? stringToCheck : stringToCheck.toLowerCase();
+        return (IsNullOrEmpty(stringToCheck)) ? stringToCheck : stringToCheck.toLowerCase();
     }
     StringExtensions.ToLowerCase = ToLowerCase;
+    function Includes(stringToCheck, valueToCheck) {
+        return stringToCheck.includes(valueToCheck);
+    }
+    StringExtensions.Includes = Includes;
+    function NotIncludes(stringToCheck, valueToCheck) {
+        return !Includes(stringToCheck, valueToCheck);
+    }
+    StringExtensions.NotIncludes = NotIncludes;
 })(StringExtensions = exports.StringExtensions || (exports.StringExtensions = {}));

@@ -95,7 +95,7 @@ export class ChartSettingsWizard extends React.Component<ChartSettingsWizardProp
         return 1;
     }
     public GetIndexStepDecrement() {
-        return (ExpressionHelper.IsEmptyExpression(this.props.Data.XSegmentExpression)) ? 2 : 1
+        return (ExpressionHelper.IsEmptyExpression(this.props.Data.XAxisExpression)) ? 2 : 1
     }
    
 }

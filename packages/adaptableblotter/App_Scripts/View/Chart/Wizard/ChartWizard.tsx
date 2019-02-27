@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AdaptableWizard, IWizardStepInfo } from '../../Wizard/AdaptableWizard'
+import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
 import { ChartYAxisWizard } from './ChartYAxisWizard'
 import { ChartSummaryWizard } from './ChartSummaryWizard'
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
@@ -7,10 +7,8 @@ import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wiz
 import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ChartXAxisWizard } from "./ChartXAxisWizard";
 import { ChartSettingsWizard } from "./ChartSettingsWizard";
-import { ChartXSegmentColumnWizard } from "./ChartXSegmentColumnWizard";
 import { ChartXAxisExpressionWizard } from "./ChartXAxisExpressionWizard";
 import { ExpressionMode } from "../../../Utilities/Enums";
-import { ChartXSegmentColumnExpressionWizard } from "./ChartXSegmentColumnExpressionWizard";
 
 export interface ChartWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ChartWizard> {
 }
@@ -43,17 +41,7 @@ export class ChartWizard extends React.Component<ChartWizardProps, {}> {
                         Index: 2,
                         Element: <ChartXAxisExpressionWizard Columns={this.props.Columns} UserFilters={this.props.UserFilters} SystemFilters={this.props.SystemFilters} ExpressionMode={ExpressionMode.SingleColumn} />
                     },
-                    {
-                        StepName: "X Segment",
-                        Index: 3,
-                        Element: <ChartXSegmentColumnWizard />
-                    },
-                    {
-                        StepName: "X Segment",
-                        Index: 4,
-                        Element: <ChartXSegmentColumnExpressionWizard Columns={this.props.Columns} UserFilters={this.props.UserFilters} SystemFilters={this.props.SystemFilters} ExpressionMode={ExpressionMode.SingleColumn} />
-                    },
-                    {
+                         {
                         StepName: "Settings",
                         Index: 5,
                         Element: <ChartSettingsWizard ChartTitles={chartTitles} />,

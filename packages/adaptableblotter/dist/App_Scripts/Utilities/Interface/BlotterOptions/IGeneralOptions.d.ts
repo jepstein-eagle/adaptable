@@ -20,4 +20,9 @@ export interface IGeneralOptions {
     * Recommended to set to true (default) to ensure that each cell can in the grid can be uniquely identified and referred to.
     */
     preventDuplicatePrimaryKeyValues?: boolean;
+    /**
+    * Whether to show a Blotter Tool Panel on the right hand side (ag-Grid only)
+    * Recommended to set to true (default) to give users access
+    */
+    showAdaptableBlotterToolPanel?: boolean;
 }

@@ -38,7 +38,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(5);
+    return dataGen.getTrades(50);
   }
   return dataGen.getFtseData(10);
 }
@@ -112,7 +112,7 @@ function InitTradeBlotter() {
     gridcontainer.innerHTML = '';
     const grid = new agGrid.Grid(gridcontainer, gridOptions);
   }
-  dataGen.startTickingDataagGrid(gridOptions);
+  //dataGen.startTickingDataagGrid(gridOptions);
 
   const s = 2;
 
@@ -123,9 +123,9 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
-        licenceKey: getCommunityKey(),
+     //   licenceKey: getCommunityKey(),
       //    licenceKey: getStandardKey(),
-     // licenceKey: getEnterpriseKey(),
+      licenceKey: getEnterpriseKey(),
 
       //    predefinedConfig: myJson,
 
