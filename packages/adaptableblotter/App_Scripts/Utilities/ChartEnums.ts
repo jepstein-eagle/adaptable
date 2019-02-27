@@ -50,18 +50,6 @@ export enum AxisScale {
   Log = 'Log',
 }
 
-// TODO remove
-export enum YAxisLabelsLocation {
-  OutsideLeft = 'Left',
-  OutsideRight = 'Right',
-}
-
-// TODO remove
-export enum XAxisLabelsLocation {
-  OutsideTop = 'Top',
-  OutsideBottom = 'Bottom',
-}
-
 export enum HorizontalAlignment {
     Left = 'Left',
     Center = 'Center',

@@ -73,15 +73,6 @@ export class ChartService implements IChartService {
             return chartItem
         })
 
-        // let subset: any[] = [];
-        // let index = 0;
-        // chartData.forEach((item: any) => {
-        //   if (index < 40) {
-        //     subset.push(item);
-        //   }
-        //   index++
-        // });
-        //  return subset;
        return chartData;
     }
 
