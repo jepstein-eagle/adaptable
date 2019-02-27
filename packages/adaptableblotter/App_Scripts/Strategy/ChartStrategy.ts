@@ -2,7 +2,6 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
-import * as ChartRedux from '../Redux/ActionsReducers/ChartRedux'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
 import { ChartState, SystemState } from '../Redux/ActionsReducers/Interface/IState';
@@ -18,11 +17,15 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private ChartState: ChartState
     private SystemState: SystemState
+    private throttleSetChartData: (() => void) & _.Cancelable;
+
+
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.ChartStrategyId, blotter)
 
         this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
-
+        let refreshRate = blotter.AdaptableBlotterStore.TheStore.getState().Chart.RefreshRate * 1000;
+         this.throttleSetChartData = _.throttle(this.setChartData, refreshRate );
     }
 
     protected addPopupMenuItem() {
@@ -33,6 +36,9 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         let isChartRelatedStateChanged: boolean = false;
 
         if (this.ChartState != this.GetChartState()) {
+      //      if(this.areEqualChartDefinitionsExceptProperties(this.ChartState.CurrentChartDefinition, this.GetChartState().CurrentChartDefinition)){
+      //          isChartRelatedStateChanged = true;
+      //      }
             this.ChartState = this.GetChartState();
             console.log("ive changed")
             isChartRelatedStateChanged = true;
@@ -68,7 +74,9 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         }
     }
 
-    debouncedSetChartData = _.debounce(() => this.setChartData(), this.getRefreshrate());
+    private areEqualChartDefinitionsExceptProperties(x: IChartDefinition, y: IChartDefinition): boolean{
+        return true;
+    }
 
     protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo): void {
         if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty( this.ChartState.CurrentChartDefinition)) {
@@ -77,17 +85,15 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             let currentChartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
             if ( ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
                 currentChartDefinition.XAxisColumnId == columnChangedId ) {
-                 this.debouncedSetChartData();
+                    this.throttleSetChartData();
             }
         }
     }
-
-    private getRefreshrate() {
-        return (this.ChartState == null) ? 1000 : this.ChartState.RefreshRate * 1000;
-    }
+    
 
     private setChartData() {
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        console.log("data set has changed")
+          let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let chartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
         if (chartDefinition) {
             let chartData: any = this.blotter.ChartService.BuildChartData(chartDefinition, columns);

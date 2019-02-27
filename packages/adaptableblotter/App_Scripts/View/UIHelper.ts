@@ -13,9 +13,9 @@ import { faCheckSquare, faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 
 export module UIHelper {
-export function buildFontAwesomeLibrary():void{
-    library.add(fab, faCheckSquare, faCoffee)   
-}
+    export function buildFontAwesomeLibrary(): void {
+        library.add(fab, faCheckSquare, faCoffee)
+    }
 
 
     export function getDefaultColors(): string[] {
@@ -115,13 +115,20 @@ export function buildFontAwesomeLibrary():void{
                     chartContainer.className += chartContainerClassName;
                 }
             } else {
-                LoggingHelper.LogAdaptableBlotterError("Chart div name cannot be found: " + blotterOptions.containerOptions.chartContainer + " so creating standard div")
-                chartContainer =document.getElementById("ad");
+                LoggingHelper.LogAdaptableBlotterError("Chart div called '" + blotterOptions.containerOptions.chartContainer + "' not found: so creating standard div")
+                chartContainer = document.getElementById("ad");
             }
         } else {  // not provided one so return whole document if modal, or 'chart' if not
             chartContainer = (showModal) ? document.body : document.getElementById("ad");
         }
         return chartContainer;
+    }
+
+    export function isValidUserChartContainer(blotterOptions: IAdaptableBlotterOptions, document: Document): boolean {
+         if (StringExtensions.IsNotNullOrEmpty(blotterOptions.containerOptions.chartContainer)) { 
+           return (document.getElementById(blotterOptions.containerOptions.chartContainer)!= null);
+        }
+        return false;
     }
 
     export function IsNotEmptyStyle(style: IStyle): boolean {

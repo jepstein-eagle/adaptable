@@ -33,7 +33,7 @@ export const ALERT_DEFAULT_MAX_ALERTS_IN_STORE: number = 5;
 export const CALENDAR_DEFAULT_CURRENT_CALENDER: string = "United States"
 // Charts
 export const CHART_DEFAULT_SHOW_MODAL: boolean = false;
-export const CHART_DEFAULT_REFRESH_RATE: number = 1;
+export const CHART_DEFAULT_REFRESH_RATE: number = 3;  // refresh the chart every 3 seconds if stuff chnanges
 // Quick Search
 export const QUICK_SEARCH_DEFAULT_DISPLAY_ACTION: DisplayAction = DisplayAction.HighlightCell;
 export const QUICK_SEARCH_DEFAULT_BACK_COLOR: string = '#FFFFCC';
