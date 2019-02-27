@@ -34,7 +34,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
         if (this.ChartState != this.GetChartState()) {
             this.ChartState = this.GetChartState();
-            console.log("ive changed")
+            console.log("ChartStrategy.InitState() ChartState changed");
             isChartRelatedStateChanged = true;
         }
 
@@ -51,6 +51,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
         if (isChartRelatedStateChanged) {
 
+            console.log("ChartStrategy.InitState() isChartRelatedStateChanged=true");
             if (StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartDefinition)
                 && this.SystemState.ChartVisibility == ChartVisibility.Maximised) {
                 this.setChartData();
@@ -77,6 +78,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             let currentChartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
             if ( ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
                 currentChartDefinition.XAxisColumnId == columnChangedId ) {
+                console.log("ChartStrategy.handleDataSourceChanged() XAxisColumnId changed");
                  this.debouncedSetChartData();
             }
         }
@@ -90,6 +92,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let chartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
         if (chartDefinition) {
+            console.log("ChartStrategy.setChartData()");
             let chartData: any = this.blotter.ChartService.BuildChartData(chartDefinition, columns);
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
         }
@@ -97,6 +100,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private clearChartData() {
         if (this.GetSystemState().ChartData != null) {
+            console.log("ChartStrategy.clearChartData()");
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(null));
         }
     }

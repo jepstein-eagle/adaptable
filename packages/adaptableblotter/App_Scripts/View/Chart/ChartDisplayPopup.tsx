@@ -42,7 +42,7 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
     ChartData: any;
     CalloutsData: any;
     ChartVisibility: ChartVisibility;
-  
+
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
     onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => ChartRedux.ChartPropertiesUpdateAction,
     onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction,
@@ -65,7 +65,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         IgrDataChartAnnotationModule.register();
     }
 
-   
+
     render() {
 
         let cssClassName: string = this.props.cssClassName + "__Charts";
@@ -400,7 +400,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                     <PanelWithButton glyphicon={"wrench"} bsSize={"xs"} headerText={"General"} cssClassName={cssClassName} button={showGeneralPropertiesButton} style={{ marginTop: '2px' }}>
                                                         {this.state.IsGeneralMinimised == false &&
                                                             <div>
-                                                           
+
                                                                 <AdaptableBlotterForm horizontal style={{ marginTop: '2px' }}>
                                                                     <Row>
                                                                         <Col xs={7}><ControlLabel>Chart Type</ControlLabel></Col>
@@ -1029,6 +1029,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     onChartTypeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let chartProps: IChartProperties = this.state.ChartProperties;
+        console.log("ChartDisplayPopupProps.onChartTypeChange() " + chartProps.ChartType + " -> " + e.value)
         chartProps.ChartType = e.value as ChartType;
         chartProps.MarkerType = ChartUIHelper.getMarkerFor(chartProps.ChartType, chartProps.MarkerType);
         this.updateChartProperties(chartProps);
@@ -1310,6 +1311,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     private updateChartProperties(chartProperties: IChartProperties): void {
+        console.log("ChartDisplayPopup.updateChartProperties ...");
         this.setState({ ChartProperties: chartProperties, } as ChartDisplayPopupState)
         this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Title, chartProperties)
     }

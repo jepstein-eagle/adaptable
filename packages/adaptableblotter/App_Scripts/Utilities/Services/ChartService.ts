@@ -30,7 +30,7 @@ export class ChartService implements IChartService {
         // and then set chart.includedProperties to array of strings that contain selected data columns:
         // xAxisColumnName and all yAxisColumnNames, e.g. "Trade Date", "Trade Price", "Trade Volume"
 
-         let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns)
+        let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns)
         let xAxisColValues: string[] = this.getXAxisColumnValues(chartDefinition, columns);
 
         //TODO save yAxisColumnNames in chartDefinition so we can populate getCalloutTypeOptions()
@@ -54,6 +54,7 @@ export class ChartService implements IChartService {
              return chartItem
         })
 
+       console.log("ChartService.BuildChartData() generated " + chartData.length + " items");
        return chartData;
     }
 
@@ -103,5 +104,5 @@ export class ChartService implements IChartService {
         return xAxisColValues;
     }
 
-    
+
 }
