@@ -1018,15 +1018,13 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         let e = event.target as HTMLInputElement;
         let chartProps: IChartProperties = this.state.ChartProperties;
         chartProps.ChartType = e.value as ChartType;
-        chartProps.MarkerType = ChartUIHelper.getMarkerFor(chartProps.ChartType, chartProps.MarkerType);
         this.updateChartProperties(chartProps);
     }
 
     onMarkerTypeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let currentMarker = e.value;
         let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.MarkerType = ChartUIHelper.getMarkerFor(chartProps.ChartType, currentMarker);
+        chartProps.MarkerType = e.value;
         this.updateChartProperties(chartProps);
     }
 
