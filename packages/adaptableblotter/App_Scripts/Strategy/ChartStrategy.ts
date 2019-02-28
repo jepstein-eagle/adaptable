@@ -12,15 +12,14 @@ import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { IChartDefinition } from "../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ChartVisibility } from '../Utilities/ChartEnums';
-import { faSleigh } from '@fortawesome/free-solid-svg-icons';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
+import { IColumn } from '../Utilities/Interface/IColumn';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
 
     private ChartState: ChartState
     private SystemState: SystemState
     private throttleSetChartData: (() => void) & _.Cancelable;
-
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.ChartStrategyId, blotter)
@@ -45,7 +44,6 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
                 let storeStateDefinition: IChartDefinition = this.GetChartState().ChartDefinitions.find(c => c.Title == this.GetChartState().CurrentChartDefinition)
 
                 if (this.doChartDefinitionChangesRequireDataUpdate(chartStateDefinition, storeStateDefinition)) {
-                    console.log('they are different so will get new chart data')
                     isChartRelatedStateChanged = true;
                 }
             }
@@ -83,35 +81,25 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
 
     private doChartDefinitionChangesRequireDataUpdate(a: IChartDefinition, b: IChartDefinition): boolean {
-       // function is not perfect as teh Expression check is wrong - but at least we dont fail when changing properties
-       // todo: write a proper Expression Equality Comparper
-       
-        if (a == null && b !== null) {
-            console.log(1)
+         if (a == null && b !== null) {
             return true;
         }
         if (b == null && a !== null) {
-            console.log(2)
             return true;
         }
 
-       if (a.XAxisColumnId != b.XAxisColumnId) {
-            console.log(3)
+        if (a.XAxisColumnId != b.XAxisColumnId) {
             return true;
         }
-          if (ArrayExtensions.areArraysNotEqual(a.YAxisColumnIds, b.YAxisColumnIds)) {
-            console.log(4)
+        if (ArrayExtensions.areArraysNotEqual(a.YAxisColumnIds, b.YAxisColumnIds)) {
             return true;
         }
         if (a.YAxisTotal != b.YAxisTotal) {
-            console.log(5)
             return true;
         }
-        if ( a.XAxisExpression != b.XAxisExpression) {
-            console.log(6)
+        if (ExpressionHelper.ConvertExpressionToString(a.XAxisExpression, this.GetColumnState()) != ExpressionHelper.ConvertExpressionToString(b.XAxisExpression, this.GetColumnState())) {
             return true;
         }
-    
         return false;
     }
 
@@ -127,9 +115,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         }
     }
 
-
     private setChartData() {
-        console.log("data set has changed")
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let chartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
         if (chartDefinition) {
@@ -150,6 +136,10 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private GetChartState(): ChartState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Chart;
+    }
+
+    private GetColumnState(): IColumn[] {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
     }
 
 }
