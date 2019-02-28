@@ -26,14 +26,6 @@ var CrosshairDisplayMode;
     CrosshairDisplayMode["Vertical"] = "Vertical";
     CrosshairDisplayMode["Both"] = "Both";
 })(CrosshairDisplayMode = exports.CrosshairDisplayMode || (exports.CrosshairDisplayMode = {}));
-var ChartSize;
-(function (ChartSize) {
-    ChartSize["XSmall"] = "XSmall";
-    ChartSize["Small"] = "Small";
-    ChartSize["Medium"] = "Medium";
-    ChartSize["Large"] = "Large";
-    ChartSize["XLarge"] = "XLarge";
-})(ChartSize = exports.ChartSize || (exports.ChartSize = {}));
 var AxisLabelsLocation;
 (function (AxisLabelsLocation) {
     AxisLabelsLocation["OutsideTop"] = "OutsideTop";

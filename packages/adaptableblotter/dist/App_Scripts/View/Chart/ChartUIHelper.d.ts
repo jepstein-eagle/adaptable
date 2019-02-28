@@ -12,7 +12,6 @@ export declare module ChartUIHelper {
     function getChartTypeOptions(): JSX.Element[];
     function getToolTipOptions(): JSX.Element[];
     function getCrossHairModeOptions(): JSX.Element[];
-    function getChartSizeOptions(): JSX.Element[];
     function getAlignmentOptions(): JSX.Element[];
     function getMarkerTypeOptions(): JSX.Element[];
     function getMarkerFromProps(chartProps: IChartProperties): string;
@@ -22,11 +21,6 @@ export declare module ChartUIHelper {
     function getAxisAngleOptions(): JSX.Element[];
     function getAxisLabelScales(): JSX.Element[];
     function getCalloutTypeOptions(): JSX.Element[];
-    function setChartHeight(chartProperties: IChartProperties): string;
-    function setChartWidth(chartProperties: IChartProperties, isChartSettingsVisible: boolean): string;
-    function setPanelWidth(chartProperties: IChartProperties): string;
-    function setChartColumnSize(chartProperties: IChartProperties): number;
-    function setLegendColumnSize(chartProperties: IChartProperties): number;
     function getAngleFromEnum(axisAngle: AxisAngle): number;
     function getDataProperties(chartData: any): string[];
     function getNumericProperties(chartData: any): string[];

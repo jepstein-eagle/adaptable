@@ -6,7 +6,6 @@ const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 const ExpressionHelper_1 = require("../Helpers/ExpressionHelper");
 const ChartEnums_1 = require("../ChartEnums");
 const Helper_1 = require("../Helpers/Helper");
-const StringExtensions_1 = require("../Extensions/StringExtensions");
 /*
 Class that buils the chart - probably needs some refactoring but working for the time being.
 Makes use of Expressions to get the data required.
@@ -21,11 +20,8 @@ class ChartService {
         // you can assign chart.dataSource to the whole data (e.g. whatever the grid is displaying)
         // and then set chart.includedProperties to array of strings that contain selected data columns:
         // xAxisColumnName and all yAxisColumnNames, e.g. "Trade Date", "Trade Price", "Trade Volume"
-        // TODO find out why BuildChartData function is called when changing IChartProperties?
-        console.log("calling BuildChartData function...");
         let xAxisColumnName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns);
         let xAxisColValues = this.getXAxisColumnValues(chartDefinition, columns);
-        let xSegmentColValues = this.getXSegmentColumnValues(chartDefinition, columns);
         //TODO save yAxisColumnNames in chartDefinition so we can populate getCalloutTypeOptions()
         let yAxisColumnNames = [];
         let chartData = xAxisColValues.map(cv => {
@@ -33,30 +29,14 @@ class ChartService {
             chartItem[xAxisColumnName] = cv;
             let showAverageTotal = (chartDefinition.YAxisTotal == ChartEnums_1.AxisTotal.Average);
             let xAxisKVP = { Key: chartDefinition.XAxisColumnId, Value: cv };
-            if (ArrayExtensions_1.ArrayExtensions.IsNotEmpty(xSegmentColValues)) {
-                xSegmentColValues.forEach((columnValue) => {
-                    let columnValueKVP = { Key: chartDefinition.XSegmentColumnId, Value: columnValue };
-                    chartDefinition.YAxisColumnIds.forEach(colID => {
-                        let colFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
-                        let total = this.buildTotal(colID, [xAxisKVP, columnValueKVP], columns, showAverageTotal);
-                        let colName = colFriendlyName + '(' + columnValue + ")";
-                        if (yAxisColumnNames.indexOf(colName) < 0) {
-                            yAxisColumnNames.push(colName);
-                        }
-                        chartItem[colName] = total;
-                    });
-                });
-            }
-            else { // otherwise do the y cols
-                chartDefinition.YAxisColumnIds.forEach(colID => {
-                    let total = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal);
-                    let colName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
-                    if (yAxisColumnNames.indexOf(colName) < 0) {
-                        yAxisColumnNames.push(colName);
-                    }
-                    chartItem[colName] = total;
-                });
-            }
+            chartDefinition.YAxisColumnIds.forEach(colID => {
+                let total = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal);
+                let colName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
+                if (yAxisColumnNames.indexOf(colName) < 0) {
+                    yAxisColumnNames.push(colName);
+                }
+                chartItem[colName] = total;
+            });
             return chartItem;
         });
         return chartData;
@@ -103,25 +83,6 @@ class ChartService {
             });
         }
         return xAxisColValues;
-    }
-    // Gets the unique values in the X Sgegmet column - either through an Extension or as unique values.
-    getXSegmentColumnValues(chartDefinition, columns) {
-        let xSegmentColValues = [];
-        if (StringExtensions_1.StringExtensions.IsNullOrEmpty(chartDefinition.XSegmentColumnId)) {
-            return xSegmentColValues;
-        }
-        if (ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(chartDefinition.XSegmentExpression)) {
-            xSegmentColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XSegmentColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue; });
-        }
-        else {
-            this.blotter.forAllRecordsDo((row) => {
-                if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XSegmentExpression, row, columns, this.blotter)) {
-                    let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XSegmentColumnId);
-                    ArrayExtensions_1.ArrayExtensions.AddItem(xSegmentColValues, columnValue);
-                }
-            });
-        }
-        return xSegmentColValues;
     }
 }
 exports.ChartService = ChartService;

@@ -106,7 +106,8 @@ var UIHelper;
                 }
             }
             else {
-                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Chart div name cannot be found: " + blotterOptions.containerOptions.chartContainer);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Chart div called '" + blotterOptions.containerOptions.chartContainer + "' not found: so creating standard div");
+                chartContainer = document.getElementById("ad");
             }
         }
         else { // not provided one so return whole document if modal, or 'chart' if not
@@ -115,6 +116,13 @@ var UIHelper;
         return chartContainer;
     }
     UIHelper.getChartContainer = getChartContainer;
+    function isValidUserChartContainer(blotterOptions, document) {
+        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(blotterOptions.containerOptions.chartContainer)) {
+            return (document.getElementById(blotterOptions.containerOptions.chartContainer) != null);
+        }
+        return false;
+    }
+    UIHelper.isValidUserChartContainer = isValidUserChartContainer;
     function IsNotEmptyStyle(style) {
         return style.BackColor != null || style.ForeColor != null || style.FontWeight != Enums_1.FontWeight.Normal || style.FontStyle != Enums_1.FontStyle.Normal || style.FontSize != null || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(style.ClassName);
     }

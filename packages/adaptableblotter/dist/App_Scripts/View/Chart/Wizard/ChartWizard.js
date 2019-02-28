@@ -7,10 +7,8 @@ const ChartSummaryWizard_1 = require("./ChartSummaryWizard");
 const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 const ChartXAxisWizard_1 = require("./ChartXAxisWizard");
 const ChartSettingsWizard_1 = require("./ChartSettingsWizard");
-const ChartXSegmentColumnWizard_1 = require("./ChartXSegmentColumnWizard");
 const ChartXAxisExpressionWizard_1 = require("./ChartXAxisExpressionWizard");
 const Enums_1 = require("../../../Utilities/Enums");
-const ChartXSegmentColumnExpressionWizard_1 = require("./ChartXSegmentColumnExpressionWizard");
 class ChartWizard extends React.Component {
     render() {
         let chartDefinitions = this.props.ConfigEntities;
@@ -31,16 +29,6 @@ class ChartWizard extends React.Component {
                         StepName: "X Axis",
                         Index: 2,
                         Element: React.createElement(ChartXAxisExpressionWizard_1.ChartXAxisExpressionWizard, { Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, ExpressionMode: Enums_1.ExpressionMode.SingleColumn })
-                    },
-                    {
-                        StepName: "X Segment",
-                        Index: 3,
-                        Element: React.createElement(ChartXSegmentColumnWizard_1.ChartXSegmentColumnWizard, null)
-                    },
-                    {
-                        StepName: "X Segment",
-                        Index: 4,
-                        Element: React.createElement(ChartXSegmentColumnExpressionWizard_1.ChartXSegmentColumnExpressionWizard, { Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, ExpressionMode: Enums_1.ExpressionMode.SingleColumn })
                     },
                     {
                         StepName: "Settings",

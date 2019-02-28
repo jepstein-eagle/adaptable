@@ -4,7 +4,7 @@ const ChartEnums_1 = require("../ChartEnums");
 exports.DefaultChartProperties = {
     // General
     ChartType: ChartEnums_1.ChartType.Line,
-    ChartSize: ChartEnums_1.ChartSize.Small,
+    //    ChartSize: ChartSize.Small,
     SeriesThickness: 1,
     // added special Default enum to resolve marker type based on chart type. Do not use enums for this property
     MarkerType: "Default",

@@ -76,6 +76,10 @@ var ArrayExtensions;
         return arr1.every(x => arr2.indexOf(x) != -1);
     }
     ArrayExtensions.areArraysEqual = areArraysEqual;
+    function areArraysNotEqual(arr1, arr2) {
+        return !areArraysEqual(arr1, arr2);
+    }
+    ArrayExtensions.areArraysNotEqual = areArraysNotEqual;
     function areArraysEqualWithOrder(arr1, arr2) {
         if (arr1 == null) {
             return true;

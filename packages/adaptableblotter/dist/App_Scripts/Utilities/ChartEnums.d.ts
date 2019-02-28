@@ -20,13 +20,6 @@ export declare enum CrosshairDisplayMode {
     Vertical = "Vertical",
     Both = "Both"
 }
-export declare enum ChartSize {
-    XSmall = "XSmall",
-    Small = "Small",
-    Medium = "Medium",
-    Large = "Large",
-    XLarge = "XLarge"
-}
 export declare enum AxisLabelsLocation {
     OutsideTop = "OutsideTop",
     OutsideBottom = "OutsideBottom",

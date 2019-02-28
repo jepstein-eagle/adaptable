@@ -16,6 +16,7 @@ export declare module ArrayExtensions {
     function HasOneItem(arrayToCheck: any[]): boolean;
     function moveArray(array: any[], from: number, to: number): void;
     function areArraysEqual(arr1: any[], arr2: any[]): boolean;
+    function areArraysNotEqual(arr1: any[], arr2: any[]): boolean;
     function areArraysEqualWithOrder(arr1: any[], arr2: any[]): boolean;
     function areArraysEqualWithOrderandProperties(value: any[], other: any[]): boolean;
     function sortArrayWithProperty(sortOrder: SortOrder, values: any[], sortProperty?: string): any[];

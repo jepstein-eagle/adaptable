@@ -20,8 +20,6 @@ var ObjectFactory;
             YAxisTotal: GeneralConstants_1.CHART_DEFAULT_YAXIS_TOTAL,
             XAxisColumnId: GeneralConstants_1.EMPTY_STRING,
             XAxisExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
-            XSegmentColumnId: GeneralConstants_1.EMPTY_STRING,
-            XSegmentExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
             ChartProperties: DefaultChartProperties_1.DefaultChartProperties
         };
     }

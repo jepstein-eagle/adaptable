@@ -8,5 +8,4 @@ export declare class ChartService implements IChartService {
     BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any;
     private buildTotal;
     private getXAxisColumnValues;
-    private getXSegmentColumnValues;
 }

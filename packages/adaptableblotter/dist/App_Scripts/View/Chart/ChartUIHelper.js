@@ -52,11 +52,7 @@ var ChartUIHelper;
     }
     ChartUIHelper.createDefaultYAxisTitle = createDefaultYAxisTitle;
     function createDefaultXAxisTitle(chartDefinition, columns) {
-        let returnString = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns);
-        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(chartDefinition.XSegmentColumnId)) {
-            returnString = returnString + " (by " + ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XSegmentColumnId, columns) + ")";
-        }
-        return returnString;
+        return ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns);
     }
     ChartUIHelper.createDefaultXAxisTitle = createDefaultXAxisTitle;
     function setDefaultChartDisplayPopupState() {
@@ -98,13 +94,6 @@ var ChartUIHelper;
         return optionCrossHairModeTypes;
     }
     ChartUIHelper.getCrossHairModeOptions = getCrossHairModeOptions;
-    function getChartSizeOptions() {
-        let optionChartSizes = EnumExtensions_1.EnumExtensions.getNames(ChartEnums_1.ChartSize).map((enumName) => {
-            return React.createElement("option", { key: enumName, value: enumName }, enumName);
-        });
-        return optionChartSizes;
-    }
-    ChartUIHelper.getChartSizeOptions = getChartSizeOptions;
     function getAlignmentOptions() {
         let optionAligments = EnumExtensions_1.EnumExtensions.getNames(ChartEnums_1.HorizontalAlignment).map((enumName) => {
             return React.createElement("option", { key: enumName, value: enumName }, enumName);
@@ -178,85 +167,6 @@ var ChartUIHelper;
         return options;
     }
     ChartUIHelper.getCalloutTypeOptions = getCalloutTypeOptions;
-    function setChartHeight(chartProperties) {
-        switch (chartProperties.ChartSize) {
-            case ChartEnums_1.ChartSize.XSmall:
-                return '350px';
-            case ChartEnums_1.ChartSize.Small:
-                return '450px';
-            case ChartEnums_1.ChartSize.Medium:
-                return '600px';
-            case ChartEnums_1.ChartSize.Large:
-                return '750px';
-            case ChartEnums_1.ChartSize.XLarge:
-                return '850px';
-        }
-    }
-    ChartUIHelper.setChartHeight = setChartHeight;
-    function setChartWidth(chartProperties, isChartSettingsVisible) {
-        let chartWidth;
-        switch (chartProperties.ChartSize) {
-            case ChartEnums_1.ChartSize.XSmall:
-                chartWidth = (isChartSettingsVisible) ? 375 : 600;
-                break;
-            case ChartEnums_1.ChartSize.Small:
-                chartWidth = (isChartSettingsVisible) ? 525 : 850;
-                break;
-            case ChartEnums_1.ChartSize.Medium:
-                chartWidth = (isChartSettingsVisible) ? 750 : 1100;
-                break;
-            case ChartEnums_1.ChartSize.Large:
-                chartWidth = (isChartSettingsVisible) ? 1050 : 1350;
-                break;
-            case ChartEnums_1.ChartSize.XLarge:
-                chartWidth = (isChartSettingsVisible) ? 1200 : 1600;
-                break;
-        }
-        chartWidth = (chartProperties.XAxisLabelVisibility == ChartEnums_1.LabelVisibility.Visible) ? chartWidth : chartWidth - 10;
-        return chartWidth + 'px';
-    }
-    ChartUIHelper.setChartWidth = setChartWidth;
-    function setPanelWidth(chartProperties) {
-        switch (chartProperties.ChartSize) {
-            case ChartEnums_1.ChartSize.XSmall:
-                return '650px';
-            case ChartEnums_1.ChartSize.Small:
-                return '900px';
-            case ChartEnums_1.ChartSize.Medium:
-                return '1150px';
-            case ChartEnums_1.ChartSize.Large:
-                return '1400px';
-            case ChartEnums_1.ChartSize.XLarge:
-                return '1650px';
-        }
-    }
-    ChartUIHelper.setPanelWidth = setPanelWidth;
-    function setChartColumnSize(chartProperties) {
-        switch (chartProperties.ChartSize) {
-            case ChartEnums_1.ChartSize.XSmall:
-            case ChartEnums_1.ChartSize.Small:
-                return 7;
-            case ChartEnums_1.ChartSize.Medium:
-                return 8;
-            case ChartEnums_1.ChartSize.Large:
-            case ChartEnums_1.ChartSize.XLarge:
-                return 9;
-        }
-    }
-    ChartUIHelper.setChartColumnSize = setChartColumnSize;
-    function setLegendColumnSize(chartProperties) {
-        switch (chartProperties.ChartSize) {
-            case ChartEnums_1.ChartSize.XSmall:
-            case ChartEnums_1.ChartSize.Small:
-                return 5;
-            case ChartEnums_1.ChartSize.Medium:
-                return 4;
-            case ChartEnums_1.ChartSize.Large:
-            case ChartEnums_1.ChartSize.XLarge:
-                return 3;
-        }
-    }
-    ChartUIHelper.setLegendColumnSize = setLegendColumnSize;
     function getAngleFromEnum(axisAngle) {
         switch (axisAngle) {
             case ChartEnums_1.AxisAngle.Horizontal:

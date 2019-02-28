@@ -1,11 +1,10 @@
-import { ChartType, CrosshairDisplayMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ChartSize, ToolTipType, AxisAngle, AxisScale } from '../ChartEnums';
+import { ChartType, CrosshairDisplayMode, AxisLabelsLocation, HorizontalAlignment, LabelVisibility, ToolTipType, AxisAngle, AxisScale } from '../ChartEnums';
 export interface ICalloutProperties {
     Type: string;
     Interval?: number;
 }
 export interface IChartProperties {
     ChartType?: ChartType;
-    ChartSize?: ChartSize;
     SeriesThickness?: number;
     MarkerType?: string;
     CalloutsType?: string;

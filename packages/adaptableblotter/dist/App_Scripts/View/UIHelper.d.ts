@@ -14,6 +14,7 @@ export declare module UIHelper {
     function getPlaceHolderforDataType(dataType: DataType): "Enter Value" | "Enter Number" | "Enter Date";
     function getModalContainer(blotterOptions: IAdaptableBlotterOptions, document: Document): HTMLElement;
     function getChartContainer(blotterOptions: IAdaptableBlotterOptions, document: Document, showModal: boolean): HTMLElement;
+    function isValidUserChartContainer(blotterOptions: IAdaptableBlotterOptions, document: Document): boolean;
     function IsNotEmptyStyle(style: IStyle): boolean;
     function getMessageTypeByStatusColour(statusColour: StatusColour): MessageType;
     function getStyleNameByStatusColour(statusColour: StatusColour): string;
