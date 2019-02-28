@@ -128,17 +128,12 @@ export module ChartUIHelper {
     export function getMarkerFromProps(chartProps: IChartProperties): string {
       let chartType = chartProps.ChartType;
       let markerType = chartProps.MarkerType;
-      return getMarkerFor(chartType, markerType);
-    }
-
-    export function getMarkerFor(charType: ChartType, markerType: string): string {
       // resolves marker for specified chart type since some chart types should hide markers by default
       if (markerType === "Default" || markerType === "Unset") {
-        markerType = charType == ChartType.Point ? "Automatic" : "None";
+        return chartType == ChartType.Point ? "Circle" : "None";
       } else {
-        // markerType is unchanged and we show markers that the user wants
+        return markerType // return marker that the user selected
       }
-      return markerType;
     }
 
     export function getYAxisLabelsLocations(): JSX.Element[] {
