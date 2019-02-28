@@ -95,6 +95,7 @@ import { ChartStrategy } from '../Strategy/ChartStrategy';
 import { HALF_SECOND } from '../Utilities/Constants/GeneralConstants';
 import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
 import { LicenceService } from '../Utilities/Services/LicenceService';
+import { Helper } from '../Utilities/Helpers/Helper';
 
 
 //icon to indicate toggle state
@@ -156,8 +157,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.EmbedColumnMenu = false;
         this.hasFloatingFilter = true;
 
-        this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
-
+       
         // create the services
         this.CalendarService = new CalendarService(this);
         this.DataService = new DataService(this);
@@ -167,6 +167,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => { let column = this.getHypergridColumn(columnId); return this.valOrFunc(record, column) });
         this.FreeTextColumnService = new FreeTextColumnService(this);
         this.LicenceService = new LicenceService(this);
+        Helper.CheckLicenceKey(this.LicenceService.LicenceType);
+
+        this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
+
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
@@ -216,7 +220,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.filterContainer.style.visibility = "hidden"
         this.abContainerElement.ownerDocument.body.appendChild(this.filterContainer)
 
-        iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
+        iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
+
+       
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),

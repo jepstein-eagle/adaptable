@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const StringExtensions_1 = require("../Extensions/StringExtensions");
 const LoggingHelper_1 = require("./LoggingHelper");
+const Enums_1 = require("../Enums");
 var Helper;
 (function (Helper) {
     function getStringRepresentionFromKey(event) {
@@ -222,4 +223,25 @@ var Helper;
         return returnValue;
     }
     Helper.RoundValueIfNumeric = RoundValueIfNumeric;
+    function CheckLicenceKey(licenceType) {
+        switch (licenceType) {
+            case Enums_1.LicenceType.Community:
+                let licenceMessage = '\n';
+                licenceMessage += '***********************************************************************************\n';
+                licenceMessage += '************************** Adaptable Blotter License ******************************\n';
+                licenceMessage += '********************* This is an evaluation / community licence *******************\n';
+                licenceMessage += '************ It contains full functionality but you cannot load state *************\n';
+                licenceMessage += '********* Please contact sales@adaptabletools.com for upgrade information *********\n';
+                licenceMessage += '***********************************************************************************\n';
+                LoggingHelper_1.LoggingHelper.LogError(licenceMessage);
+                break;
+            case Enums_1.LicenceType.Standard:
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterSuccess(" Licence Type: Standard");
+                break;
+            case Enums_1.LicenceType.Enterprise:
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterSuccess(" Licence Type: Enterprise");
+                break;
+        }
+    }
+    Helper.CheckLicenceKey = CheckLicenceKey;
 })(Helper = exports.Helper || (exports.Helper = {}));

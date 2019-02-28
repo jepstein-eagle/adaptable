@@ -252,7 +252,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
 
-        agGridHelper.CheckLicenceKey(this.LicenceService.LicenceType);
+       Helper.CheckLicenceKey(this.LicenceService.LicenceType);
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),

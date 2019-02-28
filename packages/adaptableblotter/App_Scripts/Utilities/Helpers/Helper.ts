@@ -1,5 +1,6 @@
 import { StringExtensions } from '../Extensions/StringExtensions'
 import { LoggingHelper } from './LoggingHelper';
+import { LicenceType } from '../Enums';
 
 export module Helper {
 
@@ -229,6 +230,28 @@ export module Helper {
         return returnValue
     }
 
+    export function CheckLicenceKey(licenceType: LicenceType): void {
+        switch (licenceType) {
+            case LicenceType.Community:
+                let licenceMessage: string = '\n';
+                licenceMessage += '***********************************************************************************\n'
+                licenceMessage += '************************** Adaptable Blotter License ******************************\n'
+                licenceMessage += '********************* This is an evaluation / community licence *******************\n'
+                licenceMessage += '************ It contains full functionality but you cannot load state *************\n'
+                licenceMessage += '********* Please contact sales@adaptabletools.com for upgrade information *********\n'
+                licenceMessage += '***********************************************************************************\n'
+                LoggingHelper.LogError(licenceMessage);
+                break;
+
+            case LicenceType.Standard:
+                LoggingHelper.LogAdaptableBlotterSuccess(" Licence Type: Standard")
+                break;
+            case LicenceType.Enterprise:
+                LoggingHelper.LogAdaptableBlotterSuccess(" Licence Type: Enterprise")
+                break;
+        }
+
+    }
 
 }
 

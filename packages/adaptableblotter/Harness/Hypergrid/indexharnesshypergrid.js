@@ -3,6 +3,10 @@ var adaptableblotter
 var trades
 var quickSearchText
 
+function getEnterpriseKey() {
+    return 'xs2543-as6b8esw3-e94fyjzc7a';
+  }
+  
 function capitalize(string) {
     return (/[a-z]/.test(string) ? string : string.toLowerCase())
         .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
@@ -92,12 +96,12 @@ function InitBlotter() {
     });
 
     //Add Edit for Trade Date column
-    behavior.setColumnProperties(17, {
+    behavior.setColumnProperties(18, {
         format: 'shortDateFormat'
     });
 
     //Add Edit for Settlement Date column
-    behavior.setColumnProperties(18, {
+    behavior.setColumnProperties(19, {
         format: 'shortDateFormat'
     });
 
@@ -107,7 +111,7 @@ function InitBlotter() {
         primaryKey: "tradeId", // pk for blotter - required
         userName: "demo user", // name of current user
         blotterId: "demo blotter 2.5", // id for blotter
-
+        licenceKey: getEnterpriseKey(),
          predefinedConfig: categoryJson,
 
         auditLogOptions: {

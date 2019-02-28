@@ -170,7 +170,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy_1.CellSummaryStrategy(this));
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         iPushPullHelper_1.iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
-        agGridHelper_1.agGridHelper.CheckLicenceKey(this.LicenceService.LicenceType);
+        Helper_1.Helper.CheckLicenceKey(this.LicenceService.LicenceType);
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
