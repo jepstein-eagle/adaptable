@@ -36,8 +36,7 @@ export class PanelWithImageThreeButtons extends React.Component<PanelWithImageTh
             className += " " + this.props.className
         }
         className += " " + "ab_panel-with-button-reduce-header-padding"
-        let header = <AdaptableBlotterForm inline>
-            <Row style={{ display: "flex", alignItems: "center" }}>
+        let header =             <Row style={{ display: "flex", alignItems: "center" }}>
 
                 <Col xs={4}>
                     {<Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />}
@@ -57,13 +56,10 @@ export class PanelWithImageThreeButtons extends React.Component<PanelWithImageTh
                     {this.props.firstButton && React.cloneElement(this.props.firstButton, { style: { float: 'right', marginRight: '20px' } })}
                     </Col>
             </Row>
-        </AdaptableBlotterForm>;
-        return <div className={cssClassName}>
-            <Panel header={header} className={className} style={this.props.style} bsStyle={this.props.bsStyle} >
+        return             <Panel header={header} className={className} style={this.props.style} bsStyle={this.props.bsStyle} >
                 {this.props.children}
             </Panel>
-        </div>;
-    }
+     }
 
 
 }

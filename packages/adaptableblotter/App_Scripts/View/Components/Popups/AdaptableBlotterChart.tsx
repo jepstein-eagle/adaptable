@@ -56,7 +56,7 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
     var body: any = React.createElement(bodyElement, commonProps);
 
      return (
-      <div>
+      <span>
         {this.props.showModal ?
           <Modal show={this.props.showChart} onHide={this.props.onClose} className={cssClassName + StyleConstants.BASE}
             container={chartContainer} >
@@ -72,7 +72,7 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
             </div>
           </Modal>
           :
-          <div>
+          <span>
             {isValidUserChartContainer ?
               ReactDOM.createPortal(
                 (<div id="ad" style={{ marginLeft: '25px', marginBottom: '25px' }}>
@@ -84,9 +84,9 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
                 {body}
               </div>
             }
-          </div>
+          </span>
         }
-      </div>
+      </span>
     );
   }
 }
