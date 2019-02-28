@@ -112,20 +112,15 @@ var ChartUIHelper;
     function getMarkerFromProps(chartProps) {
         let chartType = chartProps.ChartType;
         let markerType = chartProps.MarkerType;
-        return getMarkerFor(chartType, markerType);
-    }
-    ChartUIHelper.getMarkerFromProps = getMarkerFromProps;
-    function getMarkerFor(charType, markerType) {
         // resolves marker for specified chart type since some chart types should hide markers by default
         if (markerType === "Default" || markerType === "Unset") {
-            markerType = charType == ChartEnums_1.ChartType.Point ? "Automatic" : "None";
+            return chartType == ChartEnums_1.ChartType.Point ? "Circle" : "None";
         }
         else {
-            // markerType is unchanged and we show markers that the user wants
+            return markerType; // return marker that the user selected
         }
-        return markerType;
     }
-    ChartUIHelper.getMarkerFor = getMarkerFor;
+    ChartUIHelper.getMarkerFromProps = getMarkerFromProps;
     function getYAxisLabelsLocations() {
         let options = [
             React.createElement("option", { key: "Left", value: ChartEnums_1.AxisLabelsLocation.OutsideLeft }, "Left"),

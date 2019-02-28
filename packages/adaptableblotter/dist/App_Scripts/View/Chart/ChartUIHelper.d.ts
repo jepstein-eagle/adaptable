@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import { ChartDisplayPopupState } from "./ChartDisplayPopupState";
 import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
-import { ChartType, AxisAngle } from "../../Utilities/ChartEnums";
+import { AxisAngle } from "../../Utilities/ChartEnums";
 import { IChartProperties } from "../../Utilities/Interface/IChartProperties";
 import { IColumn } from "../../Utilities/Interface/IColumn";
 export declare module ChartUIHelper {
@@ -15,7 +15,6 @@ export declare module ChartUIHelper {
     function getAlignmentOptions(): JSX.Element[];
     function getMarkerTypeOptions(): JSX.Element[];
     function getMarkerFromProps(chartProps: IChartProperties): string;
-    function getMarkerFor(charType: ChartType, markerType: string): string;
     function getYAxisLabelsLocations(): JSX.Element[];
     function getXAxisLabelsLocations(): JSX.Element[];
     function getAxisAngleOptions(): JSX.Element[];

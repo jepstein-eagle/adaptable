@@ -453,14 +453,12 @@ class ChartDisplayPopupComponent extends React.Component {
         let e = event.target;
         let chartProps = this.state.ChartProperties;
         chartProps.ChartType = e.value;
-        chartProps.MarkerType = ChartUIHelper_1.ChartUIHelper.getMarkerFor(chartProps.ChartType, chartProps.MarkerType);
         this.updateChartProperties(chartProps);
     }
     onMarkerTypeChange(event) {
         let e = event.target;
-        let currentMarker = e.value;
         let chartProps = this.state.ChartProperties;
-        chartProps.MarkerType = ChartUIHelper_1.ChartUIHelper.getMarkerFor(chartProps.ChartType, currentMarker);
+        chartProps.MarkerType = e.value;
         this.updateChartProperties(chartProps);
     }
     onYAxisLabelLocationChange(event) {
