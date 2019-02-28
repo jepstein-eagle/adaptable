@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter",
-  "version": "3.2.7",
+  "version": "3.2.8-beta.56+38b869ae",
   "description": "Powerful data-agnostic HTML5 datagrid add-on that sits on top of an underlying grid component and provides all the rich functionality that advanced users expect from their grids and blotters",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -138,5 +138,5 @@
     "url": "git+https://github.com/JonnyAdaptableTools/adaptableblotter.git"
   },
   "license": "SEE LICENSE IN LICENSE.md",
-  "gitHead": "66f139eca77b2e86df113902acef205e00421294"
+  "gitHead": "38b869ae9280b7fadf33448b7814fa06cbbdaa43"
 }
