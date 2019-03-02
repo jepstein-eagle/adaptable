@@ -25,7 +25,6 @@ import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { Grid, RowNode } from "ag-grid-community";
-import 'ag-grid-enterprise';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';

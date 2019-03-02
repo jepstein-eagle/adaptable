@@ -4,7 +4,7 @@ var quickSearchText;
 var trades;
 var gridOptions;
 var showTrade = false;
-var instantiateAgGridInHarness = false;
+var instantiateAgGridInHarness = true;
 
 function runQuickSearchViaAPI() {
   const element = document.getElementById('txtQuickSearchText');

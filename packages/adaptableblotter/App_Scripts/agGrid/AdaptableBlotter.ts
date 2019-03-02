@@ -87,8 +87,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 
 // ag-Grid
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { Grid, GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, SideBarDef, ToolPanelDef, GridOptionsWrapper } from "ag-grid-community"
-import 'ag-grid-enterprise';
+import { Grid, GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, SideBarDef } from "ag-grid-community"
 import { Events } from "ag-grid-community/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid-community/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid-community/dist/lib/entities/gridOptions"
@@ -130,7 +129,7 @@ import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService
 import { LicenceService } from '../Utilities/Services/LicenceService';
 import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableBlotterToolPanel';
 import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdaptableBlotterToolPanelContext';
-
+import * as agGridEnterprise from 'ag-grid-enterprise';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -191,17 +190,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         const isGridInstantiated = this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
 
         if (!isGridInstantiated) {
-
             const instantiateResult = this.instantiateAgGrid();
-
             if (!instantiateResult) {
-
                 // we have no grid, we can't do anything
-
                 return;
-
             }
-
         }
 
 
@@ -250,7 +243,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
 
-       Helper.CheckLicenceKey(this.LicenceService.LicenceType);
+        Helper.CheckLicenceKey(this.LicenceService.LicenceType);
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
@@ -287,6 +280,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.throttleApplyGridFilteringUser = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
         this.throttleApplyGridFilteringExternal = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
     }
+
 
     private instantiateAgGrid(): boolean {
         let vendorContainer = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
@@ -327,6 +321,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.grid = new Grid(vendorContainer, this.gridOptions);
         return true;
     }
+
 
     // debounced methods
     debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), HALF_SECOND);

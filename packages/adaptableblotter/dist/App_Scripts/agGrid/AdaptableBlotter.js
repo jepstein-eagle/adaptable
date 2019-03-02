@@ -55,7 +55,6 @@ const Helper_1 = require("../Utilities/Helpers/Helper");
 // ag-Grid
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
 const ag_grid_community_1 = require("ag-grid-community");
-require("ag-grid-enterprise");
 const eventKeys_1 = require("ag-grid-community/dist/lib/eventKeys");
 const RangeHelper_1 = require("../Utilities/Helpers/RangeHelper");
 const BlotterHelper_1 = require("../Utilities/Helpers/BlotterHelper");
