@@ -16,9 +16,6 @@ import { AdaptableBlotterChart } from "./Components/Popups/AdaptableBlotterChart
 import { AdaptableBlotterLoadingScreen } from "./Components/Popups/AdaptableBlotterLoadingScreen";
 import { AdaptableBlotterAbout } from "./Components/Popups/AdaptableBlotterAbout";
 import { ChartVisibility } from "../Utilities/ChartEnums";
-import { UIHelper } from "./UIHelper";
-
-UIHelper.buildFontAwesomeLibrary();
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
     PopupState: PopupState;

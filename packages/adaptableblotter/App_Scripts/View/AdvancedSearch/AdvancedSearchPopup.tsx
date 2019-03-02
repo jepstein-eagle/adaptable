@@ -24,7 +24,6 @@ import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObject
 import { IAdvancedSearch } from "../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
 import { PRIMARY_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { AccessLevel } from "../../Utilities/Enums";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
@@ -116,11 +115,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
                         <HelpBlock >{startWizardText}</HelpBlock>
                     </div>
                 }
-                {/*
-                    <FontAwesomeIcon icon="check-square" />
-                    Favorite beverage: <FontAwesomeIcon icon="coffee" />
-                 */}
-
+              
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <AdvancedSearchWizard
                         cssClassName={cssWizardClassName}

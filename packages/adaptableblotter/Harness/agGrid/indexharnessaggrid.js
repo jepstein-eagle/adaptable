@@ -3,7 +3,7 @@ var adaptableblotter;
 var quickSearchText;
 var trades;
 var gridOptions;
-var showTrade = true;
+var showTrade = false;
 var instantiateAgGridInHarness = false;
 
 function runQuickSearchViaAPI() {

@@ -29,17 +29,31 @@ export interface IAdaptableBlotterChartProps extends React.ClassAttributes<Adapt
   showModal: boolean;
 }
 
-export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChartProps, {}> {
+export interface AdaptableBlotterChartState {
+   chartContainer: HTMLElement 
+     accessLevel: AccessLevel 
+     isValidUserChartContainer: boolean 
+}
+
+export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChartProps, AdaptableBlotterChartState> {
+ 
+  constructor(props: IAdaptableBlotterChartProps) {
+    super(props);
+    this.state = {
+       chartContainer:  UIHelper.getChartContainer(this.props.AdaptableBlotter.BlotterOptions, document, this.props.showModal),
+       accessLevel: StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, StrategyConstants.ChartStrategyId),
+       isValidUserChartContainer: UIHelper.isValidUserChartContainer(this.props.AdaptableBlotter.BlotterOptions, document),
+  
+    }
+}
+ 
+ 
   render() {
     let cssClassName: string = StyleConstants.AB_STYLE
    
-    let chartContainer: HTMLElement = UIHelper.getChartContainer(this.props.AdaptableBlotter.BlotterOptions, document, this.props.showModal);
-    let accessLevel: AccessLevel = StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, StrategyConstants.ChartStrategyId);
-    let isValidUserChartContainer: boolean = UIHelper.isValidUserChartContainer(this.props.AdaptableBlotter.BlotterOptions, document);
-
-    let commonProps: ChartDisplayPopupPropsBase<this> = {
+      let commonProps: ChartDisplayPopupPropsBase<this> = {
       Columns: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
-      ModalContainer: chartContainer,
+      ModalContainer: this.state.chartContainer,
       cssClassName: cssClassName + StyleConstants.MODAL_BODY,
       onClose: this.props.onClose,
       ShowModal: this.props.showModal,
@@ -48,7 +62,7 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
       SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
       ColumnFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters,
       ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
-      AccessLevel: accessLevel
+      AccessLevel: this.state.accessLevel
     }
 
     let bodyElement: any = AdaptableViewFactory[ScreenPopups.ChartDisplayPopup];
@@ -59,7 +73,7 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
       <span>
         {this.props.showModal ?
           <Modal show={this.props.showChart} onHide={this.props.onClose} className={cssClassName + StyleConstants.BASE}
-            container={chartContainer} >
+            container={this.state.chartContainer} >
             <div className={cssClassName + StyleConstants.MODAL_BASE}>
               <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
                 <div className="ab_main_chart">
@@ -73,12 +87,12 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
           </Modal>
           :
           <span>
-            {isValidUserChartContainer ?
+            {this.state.isValidUserChartContainer ?
               ReactDOM.createPortal(
                 (<div id="ad" style={{ marginLeft: '25px', marginBottom: '25px' }}>
                   {body}
                 </div>),
-                chartContainer)
+                this.state.chartContainer)
               :
               <div style={{ marginLeft: '25px', marginBottom: '25px' }}>
                 {body}

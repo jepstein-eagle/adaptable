@@ -125,8 +125,6 @@ import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { agGridHelper } from './agGridHelper';
-// import { ToolPanelWrapperFactory } from './ToolPanelWrapper';
-// import { CustomStatsToolPanel } from './customStatsToolPanel';
 import { CalculatedColumnHelper } from '../Utilities/Helpers/CalculatedColumnHelper';
 import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
 import { LicenceService } from '../Utilities/Services/LicenceService';
