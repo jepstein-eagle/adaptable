@@ -14,8 +14,6 @@ const AdaptableBlotterChart_1 = require("./Components/Popups/AdaptableBlotterCha
 const AdaptableBlotterLoadingScreen_1 = require("./Components/Popups/AdaptableBlotterLoadingScreen");
 const AdaptableBlotterAbout_1 = require("./Components/Popups/AdaptableBlotterAbout");
 const ChartEnums_1 = require("../Utilities/ChartEnums");
-const UIHelper_1 = require("./UIHelper");
-UIHelper_1.UIHelper.buildFontAwesomeLibrary();
 //PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
 class AdaptableBlotterView extends React.Component {
     render() {

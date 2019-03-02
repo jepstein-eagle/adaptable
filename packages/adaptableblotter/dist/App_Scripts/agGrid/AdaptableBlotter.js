@@ -82,8 +82,6 @@ const FormatColumnStrategyagGrid_1 = require("./Strategy/FormatColumnStrategyagG
 const QuickSearchStrategyagGrid_1 = require("./Strategy/QuickSearchStrategyagGrid");
 const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
 const agGridHelper_1 = require("./agGridHelper");
-// import { ToolPanelWrapperFactory } from './ToolPanelWrapper';
-// import { CustomStatsToolPanel } from './customStatsToolPanel';
 const CalculatedColumnHelper_1 = require("../Utilities/Helpers/CalculatedColumnHelper");
 const LicenceService_1 = require("../Utilities/Services/LicenceService");
 const AdaptableBlotterToolPanel_1 = require("../View/Components/ToolPanel/AdaptableBlotterToolPanel");
