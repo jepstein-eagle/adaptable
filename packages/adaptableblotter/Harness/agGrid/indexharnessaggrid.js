@@ -112,7 +112,7 @@ function InitTradeBlotter() {
     gridcontainer.innerHTML = '';
     const grid = new agGrid.Grid(gridcontainer, gridOptions);
   }
-  dataGen.startTickingDataagGrid(gridOptions);
+  //dataGen.startTickingDataagGrid(gridOptions);
 
   const s = 2;
 
@@ -137,7 +137,7 @@ function InitTradeBlotter() {
         //        pingInterval: 120
       },
       containerOptions: {
-        chartContainer: 'chart-container-xx', // set our own container
+       // chartContainer: 'chart-container-xx', // set our own container
         vendorContainer: 'grid',
       },
       configServerOptions: {
