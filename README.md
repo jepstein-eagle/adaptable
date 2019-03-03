@@ -23,13 +23,19 @@ AdaptableBlotter.JS is fully data agnostic and can work with any data set you pr
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
 There are 3 licence types available (all sold on an annual basis):
 
-* *Community* - free for charities, students in full time education and open-source projects.  
-* *End User* - licences are sold in bands depending on the number of end users
-* *Universal* - unlimited users and usage.
+* *Community* - free for charities, students in full time education and open-source projects.  Offers full range of functionality but state cannot be saved.
+* *Standard* - full functionality of the Adaptable Blotter other than Enteprise modules like Charting (which can be created by not saved).
+* *Enterprise* - full access to all functionality and modules in the Adaptable Blotter.
 
-The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support.  Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
+The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support.
 
-Note: The Adaptable Blotter licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commercial licence, you must purchase that separately.
+It is free to use the Evaluation for an evaulation (a Community licence will be given).
+
+Licences are sold to end-users (they are free for developers), typically in 'bands' so the price per user falls as volumne increases.  There is also a Universal option which gives unlimited usage to unlimited users.
+
+Note: The Adaptable Blotter licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
+
+Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
 
 
 ## Help
