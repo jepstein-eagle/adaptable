@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { ChartDisplayPopupPropsBase } from '../Components/SharedProps/ChartDisplayPopupPropsBase'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import { IChartProperties } from "../../Utilities/Interface/IChartProperties";
-import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ButtonClose } from "../Components/Buttons/ButtonClose";
 import { PRIMARY_BSSTYLE, DEFAULT_BSSTYLE, INFO_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
@@ -31,14 +29,20 @@ import { PanelWithButton } from "../Components/Panels/PanelWithButton";
 import { ColorPicker } from "../ColorPicker";
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
 import { ButtonGeneral } from "../Components/Buttons/ButtonGeneral";
-import { DefaultChartProperties } from "../../Utilities/Defaults/DefaultChartProperties";
+import { DefaultCategoryChartProperties } from "../../Utilities/Defaults/DefaultCategoryChartProperties";
 import { PanelWithTwoButtons } from "../Components/Panels/PanelWithTwoButtons";
-import { ChartDisplayPopupState } from "./ChartDisplayPopupState";
+import { CategoryChartDisplayPopupState } from "./ChartDisplayPopupState";
 import { ChartUIHelper } from "./ChartUIHelper";
+import { IChartDefinition, IChartProperties, ICategoryChartDefinition, ICategoryChartProperties } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 
+
+/*
+This is really only going to be for Category Charts.  
+As we add other chart types we will need to rethink this and some of the assumptions
+*/
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
     ChartDefinitions: IChartDefinition[];
-    CurrentChartDefinition: IChartDefinition;
+    CurrentChartDefinition: ICategoryChartDefinition;
     ChartData: any;
     CalloutsData: any;
     ChartVisibility: ChartVisibility;
@@ -49,7 +53,7 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
     onSetChartVisibility: (chartVisibility: ChartVisibility) => SystemRedux.ChartSetChartVisibiityAction
 }
 
-class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps, ChartDisplayPopupState> {
+class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps, CategoryChartDisplayPopupState> {
 
     public seriesColors: Map<string, string> = new Map<string, string>();
 
@@ -60,7 +64,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         this.seriesAdded = this.seriesAdded.bind(this);
         this.calloutStyleUpdating = this.calloutStyleUpdating.bind(this);
 
-        this.state = ChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition, this.props.Columns);
+        this.state = ChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition as ICategoryChartDefinition, this.props.Columns);
         IgrCategoryChartModule.register();
         IgrDataChartAnnotationModule.register();
     }
@@ -939,66 +943,66 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     onSetPropertyDefaults() {
         // first update our state
-        this.setState(ChartUIHelper.setDefaultChartDisplayPopupState() as ChartDisplayPopupState);
+        this.setState(ChartUIHelper.setDefaultChartDisplayPopupState() as CategoryChartDisplayPopupState);
         // then update the properties
-        let chartProps: IChartProperties = Helper.cloneObject(DefaultChartProperties);
+        let chartProperties: ICategoryChartProperties = Helper.cloneObject(DefaultCategoryChartProperties);
         // do the titles
-        chartProps.YAxisTitle = this.getYAxisTitle(true);
-        chartProps.XAxisTitle = this.getXAxisTitle(true);
-        this.updateChartProperties(chartProps);
+        chartProperties.YAxisTitle = this.getYAxisTitle(true);
+        chartProperties.XAxisTitle = this.getXAxisTitle(true);
+        this.updateChartProperties(chartProperties);
     }
 
     onShowGeneralProperties() {
-        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupState)
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as CategoryChartDisplayPopupState)
     }
 
     onShowYAxisProperties() {
-        this.setState({ IsYAxisMinimised: false, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupState);
+        this.setState({ IsYAxisMinimised: false, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as CategoryChartDisplayPopupState);
     }
 
     onShowXAxisProperties() {
-        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: false, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupState)
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: false, IsHighlightsMinimised: true, IsMiscMinimised: true } as CategoryChartDisplayPopupState)
     }
 
     onShowHighlightsProperties() {
-        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: false, IsMiscMinimised: true } as ChartDisplayPopupState)
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: false, IsMiscMinimised: true } as CategoryChartDisplayPopupState)
     }
 
     onShowMiscProperties() {
-        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: false } as ChartDisplayPopupState)
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: false } as CategoryChartDisplayPopupState)
     }
 
     onHidePropertiesGroup() {
-        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as ChartDisplayPopupState)
+        this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as CategoryChartDisplayPopupState)
     }
 
 
 
     onShowChartSettings() {
-        this.setState({ IsChartSettingsVisible: true, } as ChartDisplayPopupState)
+        this.setState({ IsChartSettingsVisible: true, } as CategoryChartDisplayPopupState)
     }
 
     onHideChartSettings() {
-        this.setState({ IsChartSettingsVisible: false, } as ChartDisplayPopupState)
+        this.setState({ IsChartSettingsVisible: false, } as CategoryChartDisplayPopupState)
     }
 
     onChartTypeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.ChartType = e.value as ChartType;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.ChartType = e.value as ChartType;
+        this.updateChartProperties(chartProperties);
     }
 
     onMarkerTypeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.MarkerType = e.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.MarkerType = e.value;
+        this.updateChartProperties(chartProperties);
     }
 
     onYAxisLabelLocationChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let props: IChartProperties = this.state.ChartProperties;
+        let props: ICategoryChartProperties = this.state.ChartProperties;
         let selected = e.value.toString();
         if (selected.indexOf("Left") > 0) {
             props.YAxisLabelLocation = AxisLabelsLocation.OutsideLeft;
@@ -1010,7 +1014,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
     onXAxisLabelLocationChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let props: IChartProperties = this.state.ChartProperties;
+        let props: ICategoryChartProperties = this.state.ChartProperties;
         let selected = e.value.toString();
         if (selected.indexOf("Top") > 0) {
             props.XAxisLabelLocation = AxisLabelsLocation.OutsideTop;
@@ -1023,42 +1027,42 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     private onYAxisLabelColorChange(event: React.FormEvent<ColorPicker>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.YAxisLabelColor = e.value;
         this.updateChartProperties(chartProperties);
     }
 
     private onXAxisLabelColorChange(event: React.FormEvent<ColorPicker>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.XAxisLabelColor = e.value;
         this.updateChartProperties(chartProperties);
     }
 
     private onYAxisTitleColorChange(event: React.FormEvent<ColorPicker>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.YAxisTitleColor = e.value;
         this.updateChartProperties(chartProperties);
     }
 
     private onXAxisTitleColorChange(event: React.FormEvent<ColorPicker>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.XAxisTitleColor = e.value;
         this.updateChartProperties(chartProperties);
     }
 
     onToolTipTypeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.ToolTipType = e.value as ToolTipType;
         this.updateChartProperties(chartProperties);
     }
 
     onChangedCalloutsType(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         // Note not changing to CalloutsType enum because a user might selected a da column name from data source
         chartProperties.CalloutsType = e.value;
         this.updateChartProperties(chartProperties);
@@ -1073,64 +1077,64 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         if (value < 1) {
             value = 1;
         }
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.CalloutsInterval = value;
-        // chartProps.CalloutsInterval = e.target.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.CalloutsInterval = value;
+        // chartProperties.CalloutsInterval = e.target.value;
+        this.updateChartProperties(chartProperties);
     }
 
     onCrosshairsModeChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.CrosshairDisplayMode = e.value as CrosshairDisplayMode;
         this.updateChartProperties(chartProperties);
     }
 
     private onCrosshairSnapToDataOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.CrosshairSnapToData = e.checked
         this.updateChartProperties(chartProperties);
     }
 
     private onCrosshairAnnotationEnabledOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.CrosshairAnnotationEnabled = e.checked
         this.updateChartProperties(chartProperties);
     }
 
     private onEnableFinalValueAnnotationsOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.EnableFinalValueAnnotations = e.checked;
         this.updateChartProperties(chartProperties);
     }
 
     private onEnableSeriesHighlightingOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.EnableSeriesHighlighting = e.checked;
         this.updateChartProperties(chartProperties);
     }
 
     private onEnableCategoryHighlightingOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.EnableCategoryHighlighting = e.checked;
         this.updateChartProperties(chartProperties);
     }
 
     private onEnableItemHighlightingOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.EnableItemHighlighting = e.checked;
         this.updateChartProperties(chartProperties);
     }
 
     private onEnableTransitionsOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.EnableTransitions = e.checked;
         if (e.checked == false) {
             chartProperties.TransitionInDuration = undefined;
@@ -1140,38 +1144,38 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     private onYAxisInvertedChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.YAxisInverted = e.checked;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.YAxisInverted = e.checked;
+        this.updateChartProperties(chartProperties);
     }
     private onXAxisInvertedChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.XAxisInverted = e.checked;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.XAxisInverted = e.checked;
+        this.updateChartProperties(chartProperties);
     }
 
     private onSetYAxisMinValueOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.setState({ SetYAxisMinimumValue: true } as ChartDisplayPopupState)
+            this.setState({ SetYAxisMinimumValue: true } as CategoryChartDisplayPopupState)
         } else { // set YAxisMinValue to undefined
-            this.setState({ SetYAxisMinimumValue: e.checked } as ChartDisplayPopupState)
-            let chartProps: IChartProperties = this.state.ChartProperties;
-            chartProps.YAxisMinimumValue = undefined;
-            this.updateChartProperties(chartProps);
+            this.setState({ SetYAxisMinimumValue: e.checked } as CategoryChartDisplayPopupState)
+            let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+            chartProperties.YAxisMinimumValue = undefined;
+            this.updateChartProperties(chartProperties);
         }
     }
 
     private onSetYAxisMaxValueOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.setState({ SetYAxisMaximumValue: true } as ChartDisplayPopupState)
+            this.setState({ SetYAxisMaximumValue: true } as CategoryChartDisplayPopupState)
         } else { // set YAxisMaxValue to undefined
-            this.setState({ SetYAxisMaximumValue: e.checked } as ChartDisplayPopupState)
-            let chartProps: IChartProperties = this.state.ChartProperties;
-            chartProps.YAxisMaximumValue = undefined;
-            this.updateChartProperties(chartProps);
+            this.setState({ SetYAxisMaximumValue: e.checked } as CategoryChartDisplayPopupState)
+            let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+            chartProperties.YAxisMaximumValue = undefined;
+            this.updateChartProperties(chartProperties);
         }
     }
 
@@ -1179,12 +1183,12 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     private onSetYAxisLabelColorOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.setState({ SetYAxisLabelColor: true } as ChartDisplayPopupState)
+            this.setState({ SetYAxisLabelColor: true } as CategoryChartDisplayPopupState)
         } else { // set YAxisMinValue to undefined
-            this.setState({ SetYAxisLabelColor: e.checked } as ChartDisplayPopupState)
-            let chartProps: IChartProperties = this.state.ChartProperties;
-            chartProps.YAxisLabelColor = "";
-            this.updateChartProperties(chartProps);
+            this.setState({ SetYAxisLabelColor: e.checked } as CategoryChartDisplayPopupState)
+            let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+            chartProperties.YAxisLabelColor = "";
+            this.updateChartProperties(chartProperties);
         }
 
     }
@@ -1192,10 +1196,10 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     private onSetXAxisLabelColorOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.setState({ SetXAxisLabelColor: true } as ChartDisplayPopupState)
+            this.setState({ SetXAxisLabelColor: true } as CategoryChartDisplayPopupState)
         } else { // set YAxisMinValue to undefined
-            this.setState({ SetXAxisLabelColor: e.checked } as ChartDisplayPopupState)
-            let chartProperties: IChartProperties = this.state.ChartProperties;
+            this.setState({ SetXAxisLabelColor: e.checked } as CategoryChartDisplayPopupState)
+            let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
             chartProperties.XAxisLabelColor = "";
             this.updateChartProperties(chartProperties);
         }
@@ -1205,10 +1209,10 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     private onSetYAxisTitleColorOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.setState({ SetYAxisTitleColor: true } as ChartDisplayPopupState)
+            this.setState({ SetYAxisTitleColor: true } as CategoryChartDisplayPopupState)
         } else { // set YAxisMinValue to undefined
-            this.setState({ SetYAxisTitleColor: e.checked } as ChartDisplayPopupState)
-            let chartProperties: IChartProperties = this.state.ChartProperties;
+            this.setState({ SetYAxisTitleColor: e.checked } as CategoryChartDisplayPopupState)
+            let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
             chartProperties.YAxisTitleColor = "";
             this.updateChartProperties(chartProperties);
         }
@@ -1217,10 +1221,10 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     private onSetXAxisTitleColorOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) {
-            this.setState({ SetXAxisTitleColor: true } as ChartDisplayPopupState)
+            this.setState({ SetXAxisTitleColor: true } as CategoryChartDisplayPopupState)
         } else { // set YAxisMinValue to undefined
-            this.setState({ SetXAxisTitleColor: e.checked } as ChartDisplayPopupState)
-            let chartProperties: IChartProperties = this.state.ChartProperties;
+            this.setState({ SetXAxisTitleColor: e.checked } as CategoryChartDisplayPopupState)
+            let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
             chartProperties.XAxisTitleColor = "";
             this.updateChartProperties(chartProperties);
         }
@@ -1229,64 +1233,64 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     onTitleAlignmentChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.TitleAlignment = e.value as HorizontalAlignment;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.TitleAlignment = e.value as HorizontalAlignment;
+        this.updateChartProperties(chartProperties);
         let titleMargin: number = (e.value == HorizontalAlignment.Right) ? 5 : 0
-        this.setState({ TitleMargin: titleMargin, } as ChartDisplayPopupState)
+        this.setState({ TitleMargin: titleMargin, } as CategoryChartDisplayPopupState)
     }
 
     onSubTitleAlignmentChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.SubTitleAlignment = e.value as HorizontalAlignment;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.SubTitleAlignment = e.value as HorizontalAlignment;
+        this.updateChartProperties(chartProperties);
         let subtitleMargin: number = (e.value == HorizontalAlignment.Right) ? 5 : 0
-        this.setState({ SubTitleMargin: subtitleMargin, } as ChartDisplayPopupState)
+        this.setState({ SubTitleMargin: subtitleMargin, } as CategoryChartDisplayPopupState)
     }
 
     private onYAxisMinValueChanged = (e: any) => {
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.YAxisMinimumValue = e.target.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.YAxisMinimumValue = e.target.value;
+        this.updateChartProperties(chartProperties);
     }
     private onYAxisMaxValueChanged = (e: any) => {
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.YAxisMaximumValue = e.target.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.YAxisMaximumValue = e.target.value;
+        this.updateChartProperties(chartProperties);
     }
 
 
     private onTransitionDurationChanged = (e: any) => {
-        let chartProperties: IChartProperties = this.state.ChartProperties;
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.TransitionInDuration = e.target.value;
         this.updateChartProperties(chartProperties);
     }
 
     private updateChartProperties(chartProperties: IChartProperties): void {
-        this.setState({ ChartProperties: chartProperties, } as ChartDisplayPopupState)
+        this.setState({ ChartProperties: chartProperties, } as CategoryChartDisplayPopupState)
         this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Title, chartProperties)
     }
 
     private onXAxisVisibilityOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.XAxisLabelVisibility = (e.checked) ? LabelVisibility.Visible : LabelVisibility.Collapsed;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.XAxisLabelVisibility = (e.checked) ? LabelVisibility.Visible : LabelVisibility.Collapsed;
+        this.updateChartProperties(chartProperties);
     }
 
     private onYAxisVisibilityOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.YAxisLabelVisibility = (e.checked) ? LabelVisibility.Visible : LabelVisibility.Collapsed;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.YAxisLabelVisibility = (e.checked) ? LabelVisibility.Visible : LabelVisibility.Collapsed;
+        this.updateChartProperties(chartProperties);
     }
 
     private onYAxisTitleChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.YAxisTitle = e.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.YAxisTitle = e.value;
+        this.updateChartProperties(chartProperties);
     }
 
     private onXAxisGapChanged(event: React.FormEvent<any>) {
@@ -1298,9 +1302,9 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         if (factor < 0) {
             factor = 0;
         }
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.XAxisGap = factor;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.XAxisGap = factor;
+        this.updateChartProperties(chartProperties);
     }
     private onXAxisOverlapChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
@@ -1311,54 +1315,54 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         if (factor < 0) {
             factor = 0;
         }
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.XAxisOverlap = factor;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.XAxisOverlap = factor;
+        this.updateChartProperties(chartProperties);
     }
 
     private onXAxisTitleChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.XAxisTitle = e.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.XAxisTitle = e.value;
+        this.updateChartProperties(chartProperties);
     }
 
     private onXAxisAngleChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        chartProps.XAxisAngle = e.value as AxisAngle;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.XAxisAngle = e.value as AxisAngle;
+        this.updateChartProperties(chartProperties);
     }
 
     private onYAxisLabelScaleChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let scale = e.value as AxisScale;
-        let chartProps: IChartProperties = this.state.ChartProperties;
-        // chartProps.YAxisIsLogarithmic = scale == AxisScale.Log;
-        chartProps.YAxisLabelScale = scale;
-        this.updateChartProperties(chartProps);
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        // chartProperties.YAxisIsLogarithmic = scale == AxisScale.Log;
+        chartProperties.YAxisLabelScale = scale;
+        this.updateChartProperties(chartProperties);
     }
 
     private onUseDefaultYAxisTitleOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) { // if its not checked then we need to clear the title
-            let chartProps: IChartProperties = this.state.ChartProperties;
-            chartProps.YAxisTitle = "";
-            this.updateChartProperties(chartProps);
+            let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+            chartProperties.YAxisTitle = "";
+            this.updateChartProperties(chartProperties);
         }
         // do we really need to update ChartDisplayPopupState?
-        this.setState({ UseDefaultYAxisTitle: e.checked, } as ChartDisplayPopupState)
+        this.setState({ UseDefaultYAxisTitle: e.checked, } as CategoryChartDisplayPopupState)
     }
 
     private onUseDefaultXAxisTitleOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         if (e.checked) { // if its not checked then we need to clear the title
-            let chartProps: IChartProperties = this.state.ChartProperties;
-            chartProps.XAxisTitle = "";
-            this.updateChartProperties(chartProps);
+            let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+            chartProperties.XAxisTitle = "";
+            this.updateChartProperties(chartProperties);
         }
         // do we really need to update ChartDisplayPopupState?
-        this.setState({ UseDefaultXAxisTitle: e.checked, } as ChartDisplayPopupState)
+        this.setState({ UseDefaultXAxisTitle: e.checked, } as CategoryChartDisplayPopupState)
     }
 
     private getYAxisTitle(useDefault: boolean): string {

@@ -2,14 +2,14 @@ import * as React from "react";
 import { ControlLabel, FormGroup, Col, Panel, Row, Radio, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { AxisTotal } from "../../../Utilities/ChartEnums";
 import { AdaptablePopover } from "../../AdaptablePopover";
 import { DualListBoxEditor, DisplaySize } from "../../Components/ListBox/DualListBoxEditor";
 
-export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
+export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
 }
 
 export interface ChartYAxisWizardState {

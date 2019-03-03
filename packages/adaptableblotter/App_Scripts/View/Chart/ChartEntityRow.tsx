@@ -4,7 +4,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from "../UIInterfaces";
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
 import { AccessLevel } from "../../Utilities/Enums";
 
@@ -15,7 +15,8 @@ export interface ChartEntityRowProps extends SharedEntityRowProps<ChartEntityRow
 
 export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
     render(): any {
-        let Chart: IChartDefinition = this.props.AdaptableBlotterObject as IChartDefinition;
+        // assuming only category charts for now - silly assumption to make in due course...
+        let Chart: ICategoryChartDefinition = this.props.AdaptableBlotterObject as ICategoryChartDefinition;
         let colItems: IColItem[] = [].concat(this.props.colItems);
        
         colItems[0].Content = Chart.Title

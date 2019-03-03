@@ -3,11 +3,11 @@ import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'rea
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
-export interface ChartSettingsWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
+export interface ChartSettingsWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
     ChartTitles: string[]
 }
 

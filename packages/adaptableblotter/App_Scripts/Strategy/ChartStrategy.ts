@@ -9,7 +9,7 @@ import { StateChangedTrigger } from '../Utilities/Enums';
 import * as _ from 'lodash'
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
-import { IChartDefinition } from "../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition } from "../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ChartVisibility } from '../Utilities/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
@@ -80,8 +80,12 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         }
     }
 
-    private doChartDefinitionChangesRequireDataUpdate(a: IChartDefinition, b: IChartDefinition): boolean {
-         if (a == null && b !== null) {
+    private doChartDefinitionChangesRequireDataUpdate(cd1: IChartDefinition, cd2: IChartDefinition): boolean {
+        // slightly nonsensical for now but iwll change as more charts are added I think...
+        let a = cd1 as ICategoryChartDefinition;
+        let b = cd2 as ICategoryChartDefinition;
+
+        if (a == null && b !== null) {
             return true;
         }
         if (b == null && a !== null) {
@@ -107,7 +111,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartDefinition)) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId: string = dataChangedInfo.ColumnId;
-            let currentChartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
+            let currentChartDefinition: ICategoryChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition) as ICategoryChartDefinition
             if (ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
                 currentChartDefinition.XAxisColumnId == columnChangedId) {
                 this.throttleSetChartData();
@@ -117,9 +121,9 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private setChartData() {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let chartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
+        let chartDefinition: ICategoryChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition) as ICategoryChartDefinition
         if (chartDefinition) {
-            let chartData: any = this.blotter.ChartService.BuildChartData(chartDefinition, columns);
+            let chartData: any = this.blotter.ChartService.BuildCategoryChartData(chartDefinition, columns);
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
         }
     }

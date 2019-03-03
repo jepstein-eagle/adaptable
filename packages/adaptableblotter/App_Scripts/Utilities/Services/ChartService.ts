@@ -1,6 +1,6 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IChartDefinition } from "../Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition } from "../Interface/BlotterObjects/IChartDefinition";
 import { IColumnValueExpression } from "../Interface/Expression/IColumnValueExpression";
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
@@ -23,7 +23,7 @@ export class ChartService implements IChartService {
     constructor(private blotter: IAdaptableBlotter) {
     }
 
-    public BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any {
+    public BuildCategoryChartData(chartDefinition: ICategoryChartDefinition , columns: IColumn[]): any {
 
         // NOTE this method is need only when we using Segmented column(s) otherwise,
         // you can assign chart.dataSource to the whole data (e.g. whatever the grid is displaying)
@@ -88,7 +88,7 @@ export class ChartService implements IChartService {
     }
 
     // Gets the unique values in the (horizontal) X Axis column - either through an expression or getting the distinct values
-    private getXAxisColumnValues(chartDefinition: IChartDefinition, columns: IColumn[]): string[] {
+    private getXAxisColumnValues(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): string[] {
         let xAxisColValues: string[] = [];
         if (ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
             xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })

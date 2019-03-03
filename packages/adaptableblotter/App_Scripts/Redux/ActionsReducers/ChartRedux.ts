@@ -1,7 +1,6 @@
 import * as Redux from 'redux';
 import { ChartState } from './Interface/IState'
-import { IChartProperties } from "../../Utilities/Interface/IChartProperties";
-import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartProperties, IChartProperties } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { EMPTY_ARRAY, EMPTY_STRING, CHART_DEFAULT_SHOW_MODAL, CHART_DEFAULT_REFRESH_RATE } from '../../Utilities/Constants/GeneralConstants';
 
 export const CHART_DEFINITION_ADD_UPDATE = 'CHART_DEFINITION_ADD_UPDATE';

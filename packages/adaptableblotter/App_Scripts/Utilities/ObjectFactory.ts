@@ -17,7 +17,7 @@ import { IColumnFilter } from "./Interface/BlotterObjects/IColumnFilter";
 import { ICellValidationRule } from "./Interface/BlotterObjects/ICellValidationRule";
 import { ICalculatedColumn } from "./Interface/BlotterObjects/ICalculatedColumn";
 import { IAdvancedSearch } from "./Interface/BlotterObjects/IAdvancedSearch";
-import { IChartDefinition } from "./Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition } from "./Interface/BlotterObjects/IChartDefinition";
 import { IAlertDefinition } from "./Interface/BlotterObjects/IAlertDefinition";
 import { IRange } from "./Interface/Expression/IRange";
 import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ActionMode } from './Enums';
@@ -28,8 +28,8 @@ import { ICellSummmary } from "./Interface/SelectedCell/ICellSummmary";
 import { Expression } from '../Utilities/Expression';
 import { IVendorGridInfo } from "./Interface/IVendorGridInfo";
 import { CellValidationHelper } from './Helpers/CellValidationHelper';
-import { DefaultChartProperties } from '../Utilities/Defaults/DefaultChartProperties';
 import { EMPTY_STRING,  CHART_DEFAULT_YAXIS_TOTAL, PLUS_MINUS_DEFAULT_NUDGE_VALUE, ALERT_DEFAULT_OPERATOR, ALERT_DEFAULT_RANGE_OPERAND_TYPE, ALERT_DEFAULT_MESSAGE_TYPE, ALERT_DEFAULT_SHOW_AS_POPUP, DEFAULT_DARK_GREEN_COLOR, DEFAULT_DARK_RED_COLOR } from './Constants/GeneralConstants';
+import { DefaultCategoryChartProperties } from './Defaults/DefaultCategoryChartProperties';
 
 
 export module ObjectFactory {
@@ -38,7 +38,7 @@ export module ObjectFactory {
         return { ColumnId: EMPTY_STRING, SortedValues: []}
     }
 
-    export function CreateEmptyChartDefinition(): IChartDefinition {
+    export function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition {
         return {
             Title: EMPTY_STRING,
             SubTitle: EMPTY_STRING,
@@ -46,7 +46,7 @@ export module ObjectFactory {
             YAxisTotal: CHART_DEFAULT_YAXIS_TOTAL,
             XAxisColumnId: EMPTY_STRING,
             XAxisExpression: ExpressionHelper.CreateEmptyExpression(),
-             ChartProperties: DefaultChartProperties
+             ChartProperties: DefaultCategoryChartProperties
         }
     }
 

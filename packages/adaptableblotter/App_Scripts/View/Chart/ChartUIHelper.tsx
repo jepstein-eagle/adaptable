@@ -1,5 +1,5 @@
-import { ChartDisplayPopupState } from "./ChartDisplayPopupState";
-import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import {  CategoryChartDisplayPopupState } from "./ChartDisplayPopupState";
+import { IChartDefinition, ICategoryChartDefinition, ICategoryChartProperties } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { HorizontalAlignment, ChartType, ToolTipType, CrosshairDisplayMode,
   AxisAngle, AxisScale, AxisLabelsLocation,
@@ -7,7 +7,6 @@ import { HorizontalAlignment, ChartType, ToolTipType, CrosshairDisplayMode,
 
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import * as React from "react";
-import { IChartProperties } from "../../Utilities/Interface/IChartProperties";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { IColumn } from "../../Utilities/Interface/IColumn";
 
@@ -15,9 +14,11 @@ import { IColumn } from "../../Utilities/Interface/IColumn";
 */
 export module ChartUIHelper {
 
-    export function setChartDisplayPopupState(chartDefinition: IChartDefinition, columns: IColumn[]): ChartDisplayPopupState {
-        return {
-            ChartProperties: chartDefinition.ChartProperties,
+    export function setChartDisplayPopupState(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): CategoryChartDisplayPopupState {
+      let categoryChartProperties : ICategoryChartProperties = chartDefinition.ChartProperties as ICategoryChartProperties
+      
+      return {
+            ChartProperties: categoryChartProperties,
             EditedChartDefinition: null,
             IsChartSettingsVisible: false,
 
@@ -26,16 +27,16 @@ export module ChartUIHelper {
 
             // Y Axis
             IsYAxisMinimised: true,
-            SetYAxisMinimumValue: chartDefinition.ChartProperties.YAxisMinimumValue != undefined,
-            SetYAxisMaximumValue: chartDefinition.ChartProperties.YAxisMaximumValue != undefined,
-            SetYAxisLabelColor: StringExtensions.IsNotNullOrEmpty(chartDefinition.ChartProperties.YAxisLabelColor),
-            SetYAxisTitleColor: StringExtensions.IsNotNullOrEmpty(chartDefinition.ChartProperties.YAxisTitleColor),
+            SetYAxisMinimumValue: categoryChartProperties.YAxisMinimumValue != undefined,
+            SetYAxisMaximumValue: categoryChartProperties.YAxisMaximumValue != undefined,
+            SetYAxisLabelColor: StringExtensions.IsNotNullOrEmpty(categoryChartProperties.YAxisLabelColor),
+            SetYAxisTitleColor: StringExtensions.IsNotNullOrEmpty(categoryChartProperties.YAxisTitleColor),
             UseDefaultYAxisTitle: isDefaultYAxisTitle(chartDefinition, columns), // StringExtensions.IsNullOrEmpty(chartDefinition.ChartProperties.YAxisTitle),
 
             // X Axis
             IsXAxisMinimised: true,
-            SetXAxisLabelColor: StringExtensions.IsNotNullOrEmpty(chartDefinition.ChartProperties.XAxisLabelColor),
-            SetXAxisTitleColor: StringExtensions.IsNotNullOrEmpty(chartDefinition.ChartProperties.XAxisTitleColor),
+            SetXAxisLabelColor: StringExtensions.IsNotNullOrEmpty(categoryChartProperties.XAxisLabelColor),
+            SetXAxisTitleColor: StringExtensions.IsNotNullOrEmpty(categoryChartProperties.XAxisTitleColor),
             UseDefaultXAxisTitle: isDefaultXAxisTitle(chartDefinition, columns), // StringExtensions.IsNullOrEmpty(chartDefinition.ChartProperties.XAxisTitle),
 
             // Highlights
@@ -43,34 +44,36 @@ export module ChartUIHelper {
 
             // Misc
             IsMiscMinimised: true,
-            TitleMargin: (chartDefinition.ChartProperties.TitleAlignment == HorizontalAlignment.Right) ? 5 : 0,
-            SubTitleMargin: (chartDefinition.ChartProperties.SubTitleAlignment == HorizontalAlignment.Right) ? 5 : 0
+            TitleMargin: (categoryChartProperties.TitleAlignment == HorizontalAlignment.Right) ? 5 : 0,
+            SubTitleMargin: (categoryChartProperties.SubTitleAlignment == HorizontalAlignment.Right) ? 5 : 0
 
         }
 
     }
 
-    function isDefaultYAxisTitle(chartDefinition: IChartDefinition, columns: IColumn[]): boolean {
-        return StringExtensions.IsNullOrEmpty(chartDefinition.ChartProperties.YAxisTitle) ||
-            chartDefinition.ChartProperties.YAxisTitle == createDefaultYAxisTitle(chartDefinition, columns);
+    function isDefaultYAxisTitle(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): boolean {
+      let categoryChartProperties : ICategoryChartProperties = chartDefinition.ChartProperties as ICategoryChartProperties
+        return StringExtensions.IsNullOrEmpty(categoryChartProperties.YAxisTitle) ||
+        categoryChartProperties.YAxisTitle == createDefaultYAxisTitle(chartDefinition, columns);
     }
 
-    function isDefaultXAxisTitle(chartDefinition: IChartDefinition, columns: IColumn[]): boolean {
-        return StringExtensions.IsNullOrEmpty(chartDefinition.ChartProperties.XAxisTitle) ||
-            chartDefinition.ChartProperties.XAxisTitle == createDefaultXAxisTitle(chartDefinition, columns);
+    function isDefaultXAxisTitle(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): boolean {
+      let categoryChartProperties : ICategoryChartProperties = chartDefinition.ChartProperties as ICategoryChartProperties
+      return StringExtensions.IsNullOrEmpty(categoryChartProperties.XAxisTitle) ||
+      categoryChartProperties.XAxisTitle == createDefaultXAxisTitle(chartDefinition, columns);
     }
 
-  export  function createDefaultYAxisTitle(chartDefinition: IChartDefinition, columns: IColumn[]): string {
-        return chartDefinition.YAxisColumnIds.map(c => {
+  export  function createDefaultYAxisTitle(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): string {
+     return chartDefinition.YAxisColumnIds.map(c => {
             return ColumnHelper.getFriendlyNameFromColumnId(c, columns)
         }).join(', ')
     }
 
-  export  function createDefaultXAxisTitle(chartDefinition: IChartDefinition, columns: IColumn[]): string {
+  export  function createDefaultXAxisTitle(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): string {
        return ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns);
      }
 
-    export function setDefaultChartDisplayPopupState(): ChartDisplayPopupState {
+    export function setDefaultChartDisplayPopupState(): CategoryChartDisplayPopupState {
         let defaultState = {
             IsGeneralMinimised: false,
             IsYAxisMinimised: true,
@@ -84,7 +87,7 @@ export module ChartUIHelper {
             TitleMargin: 0,
             SubTitleMargin: 0,
             UseDefaultXAxisTitle: true
-        } as ChartDisplayPopupState;
+        } as CategoryChartDisplayPopupState;
         return defaultState;
     }
 
@@ -125,7 +128,7 @@ export module ChartUIHelper {
       return options;
     }
 
-    export function getMarkerFromProps(chartProps: IChartProperties): string {
+    export function getMarkerFromProps(chartProps: ICategoryChartProperties): string {
       let chartType = chartProps.ChartType;
       let markerType = chartProps.MarkerType;
       // resolves marker for specified chart type since some chart types should hide markers by default
@@ -218,7 +221,7 @@ export module ChartUIHelper {
       return dataProps;
     }
 
-    export function getCalloutsData(chartData: any, chartProps: IChartProperties): any[] {
+    export function getCalloutsData(chartData: any, chartProps: ICategoryChartProperties): any[] {
       // TODO ideally we should get names of numeric using IChartDefinition.YAxisColumnIds instead of this:
       let numericProps = getNumericProperties(chartData);
 

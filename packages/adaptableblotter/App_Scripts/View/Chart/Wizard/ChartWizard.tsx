@@ -4,7 +4,7 @@ import { ChartYAxisWizard } from './ChartYAxisWizard'
 import { ChartSummaryWizard } from './ChartSummaryWizard'
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ChartXAxisWizard } from "./ChartXAxisWizard";
 import { ChartSettingsWizard } from "./ChartSettingsWizard";
 import { ChartXAxisExpressionWizard } from "./ChartXAxisExpressionWizard";
@@ -16,7 +16,7 @@ export interface ChartWizardProps extends IAdaptableBlotterObjectExpressionAdapt
 export class ChartWizard extends React.Component<ChartWizardProps, {}> {
 
     render() {
-        let chartDefinitions: IChartDefinition[] = this.props.ConfigEntities as IChartDefinition[]
+        let chartDefinitions: ICategoryChartDefinition[] = this.props.ConfigEntities as ICategoryChartDefinition[]
         let chartTitles: string[] = chartDefinitions.map(s => s.Title);
         return <div className={this.props.cssClassName}>
             <AdaptableWizard

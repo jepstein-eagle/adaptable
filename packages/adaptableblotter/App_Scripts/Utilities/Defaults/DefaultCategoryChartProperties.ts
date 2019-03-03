@@ -1,9 +1,9 @@
-import { IChartProperties } from "../Interface/IChartProperties";
 import { ChartType, CrosshairDisplayMode, ToolTipType,
   AxisLabelsLocation, LabelVisibility, HorizontalAlignment,
   AxisAngle, AxisScale, CalloutsType } from '../ChartEnums';
+import { ICategoryChartProperties } from '../Interface/BlotterObjects/IChartDefinition';
 
-export const DefaultChartProperties: IChartProperties = {
+export const DefaultCategoryChartProperties: ICategoryChartProperties = {
     // General
     ChartType: ChartType.Line, // changed to line because it work better with a lot of data points
 //    ChartSize: ChartSize.Small,

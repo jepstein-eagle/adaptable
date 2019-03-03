@@ -2,14 +2,14 @@ import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
-import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 import { Expression } from "../../../Utilities/Expression";
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 
 
-export interface ChartSummaryWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
+export interface ChartSummaryWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
 }
 
 export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps, {}> implements AdaptableWizardStep {

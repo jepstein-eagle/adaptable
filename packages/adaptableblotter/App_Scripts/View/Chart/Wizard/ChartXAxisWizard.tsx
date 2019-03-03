@@ -3,7 +3,7 @@ import { ControlLabel, FormGroup, Col, Panel, Row,  Radio, HelpBlock } from 'rea
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { SelectionMode } from "../../../Utilities/Enums";
 import { IColumn } from "../../../Utilities/Interface/IColumn";
@@ -12,7 +12,7 @@ import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotte
 import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { Expression } from "../../../Utilities/Expression";
 
-export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
+export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
   //  ChartDefinitions: IChartDefinition[]
    }
 
