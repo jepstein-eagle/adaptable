@@ -129,7 +129,7 @@ import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService
 import { LicenceService } from '../Utilities/Services/LicenceService';
 import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableBlotterToolPanel';
 import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdaptableBlotterToolPanelContext';
-import * as agGridEnterprise from 'ag-grid-enterprise';
+import 'ag-grid-enterprise';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -288,9 +288,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             LoggingHelper.LogAdaptableBlotterError('You must provide an element id in `containerOptions.vendorContainer`');
             return false;
         }
-
+        
         if (this.BlotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
-            this.gridOptions.sideBar = this.gridOptions.sideBar || {};
+
+             this.gridOptions.sideBar = this.gridOptions.sideBar || {};
             this.gridOptions.components = this.gridOptions.components || {};
             // https://www.ag-grid.com/javascript-grid-side-bar/
 
@@ -485,7 +486,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
-            //    this.createFloatingFilterWrapper(vendorColumn);
+                this.createFloatingFilterWrapper(vendorColumn);
         }
     }
 

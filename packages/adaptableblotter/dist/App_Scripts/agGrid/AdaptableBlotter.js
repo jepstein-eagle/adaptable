@@ -84,6 +84,7 @@ const agGridHelper_1 = require("./agGridHelper");
 const CalculatedColumnHelper_1 = require("../Utilities/Helpers/CalculatedColumnHelper");
 const LicenceService_1 = require("../Utilities/Services/LicenceService");
 const AdaptableBlotterToolPanel_1 = require("../View/Components/ToolPanel/AdaptableBlotterToolPanel");
+require("ag-grid-enterprise");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this._calculatedColumnPathMap = new Map();
@@ -364,7 +365,7 @@ class AdaptableBlotter {
             this.createFilterWrapper(vendorColumn);
         }
         if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
-            //    this.createFloatingFilterWrapper(vendorColumn);
+            this.createFloatingFilterWrapper(vendorColumn);
         }
     }
     getQuickSearchClassName() {

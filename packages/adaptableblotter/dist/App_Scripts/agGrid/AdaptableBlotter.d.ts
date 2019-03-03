@@ -28,6 +28,7 @@ import { Grid, RowNode } from "ag-grid-community";
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
+import 'ag-grid-enterprise';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
     Strategies: IAdaptableStrategyCollection;

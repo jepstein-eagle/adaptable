@@ -3,8 +3,8 @@ var adaptableblotter;
 var quickSearchText;
 var trades;
 var gridOptions;
-var showTrade = false;
-var instantiateAgGridInHarness = true;
+var showTrade = true;
+var instantiateAgGridInHarness = false;
 
 function runQuickSearchViaAPI() {
   const element = document.getElementById('txtQuickSearchText');
@@ -73,7 +73,7 @@ function InitTradeBlotter() {
   gridOptions = {
     columnDefs: getColumnsForGrid(), // returns a list of agGrid column definitions
     rowData: trades, // the dummy data we are using
-    enableRangeSelection: true,
+ //   enableRangeSelection: true,
     floatingFilter: true,
     suppressColumnVirtualisation: false,
     //  sideBar: undefined, // this puts in filters and columns by default
@@ -112,7 +112,7 @@ function InitTradeBlotter() {
     gridcontainer.innerHTML = '';
     const grid = new agGrid.Grid(gridcontainer, gridOptions);
   }
- // dataGen.startTickingDataagGrid(gridOptions);
+  dataGen.startTickingDataagGrid(gridOptions);
 
   const s = 2;
 
