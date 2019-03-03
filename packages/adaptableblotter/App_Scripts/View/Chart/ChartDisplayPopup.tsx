@@ -65,7 +65,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         IgrDataChartAnnotationModule.register();
     }
 
-
     render() {
 
         let cssClassName: string = this.props.cssClassName + "__Charts";
@@ -322,8 +321,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
 
                 // playing
-                xAxisTickStroke="gray"
-                xAxisTickLength={5}
+                //  xAxisTickStroke="gray"
+                //  xAxisTickLength={5}
 
                 //ubtitleRightMargin={this.state.TitleMargin}
                 //subtitleTopMargin = {this.state.TitleMargin}
@@ -356,7 +355,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             />
             :
             null;
-
 
         return <span className={cssClassName}>
             <PanelWithImageThreeButtons
@@ -413,7 +411,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                         </Col>
                                                                     </Row>
                                                                 </AdaptableBlotterForm>
-                                                                {/* Martin added controls for changing MarkerType  */}
                                                                 <AdaptableBlotterForm horizontal style={{ marginTop: '6px' }}>
                                                                     <Row>
                                                                         <Col xs={6}><ControlLabel>Marker Type</ControlLabel></Col>
@@ -427,36 +424,37 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                     </Row>
                                                                 </AdaptableBlotterForm>
 
-                                                                {/* Martin move Gap setting here because it allies only to Column chart type */}
                                                                 {this.state.ChartProperties.ChartType == ChartType.Column &&
-                                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '6px' }}>
-                                                                        <Row>
-                                                                            <Col xs={6}><ControlLabel>Column Gap</ControlLabel></Col>
-                                                                            <Col xs={6}>
-                                                                                <FormControl
-                                                                                    value={this.state.ChartProperties.XAxisGap}
-                                                                                    bsSize={"small"} type="number"
-                                                                                    min="0" step="0.1" max="1"
-                                                                                    placeholder="Enter"
-                                                                                    onChange={(e) => this.onXAxisGapChanged(e)} />
-                                                                            </Col>
-                                                                        </Row>
-                                                                    </AdaptableBlotterForm>}
-                                                                {/* Martin add Overlap setting here because it applies only to Column chart type */}
-                                                                {this.state.ChartProperties.ChartType == ChartType.Column &&
-                                                                    <AdaptableBlotterForm horizontal style={{ marginTop: '6px' }}>
-                                                                        <Row>
-                                                                            <Col xs={6}><ControlLabel>Column Overlap</ControlLabel></Col>
-                                                                            <Col xs={6}>
-                                                                                <FormControl
-                                                                                    value={this.state.ChartProperties.XAxisOverlap}
-                                                                                    bsSize={"small"} type="number"
-                                                                                    min="0" step="0.1" max="1"
-                                                                                    placeholder="Enter"
-                                                                                    onChange={(e) => this.onXAxisOverlapChanged(e)} />
-                                                                            </Col>
-                                                                        </Row>
-                                                                    </AdaptableBlotterForm>}
+                                                                    <div>
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '6px' }}>
+                                                                            <Row>
+                                                                                <Col xs={6}><ControlLabel>Column Gap</ControlLabel></Col>
+                                                                                <Col xs={6}>
+                                                                                    <FormControl
+                                                                                        value={this.state.ChartProperties.XAxisGap}
+                                                                                        bsSize={"small"} type="number"
+                                                                                        min="0" step="0.1" max="1"
+                                                                                        placeholder="Enter"
+                                                                                        onChange={(e) => this.onXAxisGapChanged(e)} />
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '6px' }}>
+                                                                            <Row>
+                                                                                <Col xs={6}><ControlLabel>Column Overlap</ControlLabel></Col>
+                                                                                <Col xs={6}>
+                                                                                    <FormControl
+                                                                                        value={this.state.ChartProperties.XAxisOverlap}
+                                                                                        bsSize={"small"} type="number"
+                                                                                        min="0" step="0.1" max="1"
+                                                                                        placeholder="Enter"
+                                                                                        onChange={(e) => this.onXAxisOverlapChanged(e)} />
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </AdaptableBlotterForm>
+                                                                    </div>
+                                                                }
 
                                                             </div>
                                                         }
@@ -489,7 +487,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                             <Row>
                                                                                 <Col xs={6}><ControlLabel>Axis Location</ControlLabel></Col>
                                                                                 <Col xs={6}>
-                                                                                    {/* Martin: replaced radio boxes with a select for consitent look */}
                                                                                     <FormControl bsSize={"small"} componentClass="select" placeholder="select"
                                                                                         value={this.state.ChartProperties.YAxisLabelLocation}
                                                                                         onChange={(x) => this.onYAxisLabelLocationChange(x)} >
@@ -662,8 +659,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                             </Row>
                                                                         </AdaptableBlotterForm>
 
-
-                                                                        {/* Title props */}
                                                                         <AdaptableBlotterForm horizontal style={{ marginTop: '6px' }}>
                                                                             <Row>
                                                                                 <Col xs={6}>
@@ -766,7 +761,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                         </Col>
                                                                     </Row>
                                                                 </AdaptableBlotterForm>
-                                                                {/* } */}
+
                                                                 <AdaptableBlotterForm horizontal style={{ marginTop: '6px' }}>
                                                                     <Row>
                                                                         <Col xs={6}><ControlLabel>Tooltips</ControlLabel></Col>
@@ -872,7 +867,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                         }
                                                     </PanelWithButton>
 
-
                                                 </PanelWithTwoButtons>
                                             </td>
                                         </tr>
@@ -880,7 +874,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                 </Table>
                             </Row>
                             :
-
                             <div>
                                 {this.props.ChartData != null &&
                                     chartElement
