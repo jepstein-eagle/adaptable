@@ -27,8 +27,8 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 isChartRelatedStateChanged = true;
             }
             else {
-                let chartStateDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition);
-                let storeStateDefinition = this.GetChartState().ChartDefinitions.find(c => c.Title == this.GetChartState().CurrentChartDefinition);
+                let chartStateDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
+                let storeStateDefinition = this.GetChartState().ChartDefinitions.find(c => c.Name == this.GetChartState().CurrentChartName);
                 if (this.doChartDefinitionChangesRequireDataUpdate(chartStateDefinition, storeStateDefinition)) {
                     isChartRelatedStateChanged = true;
                 }
@@ -47,14 +47,14 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             this.SystemState = this.blotter.AdaptableBlotterStore.TheStore.getState().System;
         }
         if (isChartRelatedStateChanged) {
-            if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartDefinition)
+            if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)
                 && this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised) {
                 this.setChartData();
             }
             else {
                 this.clearChartData();
             }
-            if (this.ChartState.CurrentChartDefinition == null && this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised) {
+            if (this.ChartState.CurrentChartName == null && this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised) {
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartEnums_1.ChartVisibility.Hidden));
             }
             if (this.blotter.isInitialised) {
@@ -87,10 +87,10 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         return false;
     }
     handleDataSourceChanged(dataChangedInfo) {
-        if (this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartDefinition)) {
+        if (this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId = dataChangedInfo.ColumnId;
-            let currentChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition);
+            let currentChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
             if (ArrayExtensions_1.ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
                 currentChartDefinition.XAxisColumnId == columnChangedId) {
                 this.throttleSetChartData();
@@ -99,7 +99,7 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     }
     setChartData() {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let chartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition);
+        let chartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
         if (chartDefinition) {
             let chartData = this.blotter.ChartService.BuildCategoryChartData(chartDefinition, columns);
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));

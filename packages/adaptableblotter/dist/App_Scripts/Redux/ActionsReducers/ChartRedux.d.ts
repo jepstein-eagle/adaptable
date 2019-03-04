@@ -11,17 +11,17 @@ export interface ChartDefinitionAddUpdateAction extends Redux.Action {
     ChartDefinition: IChartDefinition;
 }
 export interface ChartPropertiesUpdateAction extends Redux.Action {
-    ChartTitle: string;
+    ChartName: string;
     ChartProperties: IChartProperties;
 }
 export interface ChartDefinitionDeleteAction extends Redux.Action {
     ChartDefinition: IChartDefinition;
 }
 export interface ChartDefinitionSelectAction extends Redux.Action {
-    CurrentChartDefinition: string;
+    CurrentChartName: string;
 }
 export declare const ChartDefinitionAddUpdate: (Index: number, ChartDefinition: IChartDefinition) => ChartDefinitionAddUpdateAction;
-export declare const ChartPropertiesUpdate: (ChartTitle: string, ChartProperties: IChartProperties) => ChartPropertiesUpdateAction;
+export declare const ChartPropertiesUpdate: (ChartName: string, ChartProperties: IChartProperties) => ChartPropertiesUpdateAction;
 export declare const ChartDefinitionDelete: (ChartDefinition: IChartDefinition) => ChartDefinitionDeleteAction;
-export declare const ChartDefinitionSelect: (CurrentChartDefinition: string) => ChartDefinitionSelectAction;
+export declare const ChartDefinitionSelect: (CurrentChartName: string) => ChartDefinitionSelectAction;
 export declare const ChartReducer: Redux.Reducer<ChartState>;

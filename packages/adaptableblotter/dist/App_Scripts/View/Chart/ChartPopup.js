@@ -30,7 +30,7 @@ class ChartPopupComponent extends React.Component {
                 this.onNew();
             }
             if (this.props.PopupParams == "Edit") {
-                let index = this.props.ChartDefinitions.findIndex(cd => cd.Title == this.props.CurrentChartDefinition.Title);
+                let index = this.props.ChartDefinitions.findIndex(cd => cd.Name == this.props.CurrentChartDefinition.Name);
                 this.onEdit(index, this.props.CurrentChartDefinition);
             }
         }
@@ -46,7 +46,7 @@ class ChartPopupComponent extends React.Component {
             { Content: "", Size: 3 },
         ];
         let Charts = this.props.ChartDefinitions.map((Chart, index) => {
-            return React.createElement(ChartEntityRow_1.ChartEntityRow, { cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: Chart, key: Chart.Title, Index: index, onEdit: (index, Chart) => this.onEdit(index, Chart), TeamSharingActivated: this.props.TeamSharingActivated, onShare: () => this.props.onShare(Chart), onDeleteConfirm: ChartRedux.ChartDefinitionDelete(Chart), onShowChart: (chartName) => this.onShowChart(chartName), AccessLevel: this.props.AccessLevel });
+            return React.createElement(ChartEntityRow_1.ChartEntityRow, { cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: Chart, key: Chart.Name, Index: index, onEdit: (index, Chart) => this.onEdit(index, Chart), TeamSharingActivated: this.props.TeamSharingActivated, onShare: () => this.props.onShare(Chart), onDeleteConfirm: ChartRedux.ChartDefinitionDelete(Chart), onShowChart: (chartName) => this.onShowChart(chartName), AccessLevel: this.props.AccessLevel });
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Chart Definition", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         return React.createElement("div", { className: cssClassName },
@@ -86,21 +86,21 @@ class ChartPopupComponent extends React.Component {
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
         let currentChartIndex = (this.props.CurrentChartDefinition == null) ?
             -1 :
-            this.props.ChartDefinitions.findIndex(as => as.Title == this.props.CurrentChartDefinition.Title);
+            this.props.ChartDefinitions.findIndex(as => as.Name == this.props.CurrentChartDefinition.Name);
         if (index == -1 || index == currentChartIndex) {
             // its new so make it the new chart or we are editing the current chart (but might have changed the title)
-            this.props.onSelectChartDefinition(clonedObject.Title);
+            this.props.onSelectChartDefinition(clonedObject.Name);
         }
     }
     canFinishWizard() {
         let Chart = this.state.EditedAdaptableBlotterObject;
-        return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(Chart.Title);
+        return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(Chart.Name);
     }
 }
 function mapStateToProps(state, ownProps) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Title == state.Chart.CurrentChartDefinition),
+        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Name == state.Chart.CurrentChartName),
     };
 }
 function mapDispatchToProps(dispatch) {

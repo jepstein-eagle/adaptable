@@ -12,7 +12,7 @@ const Enums_1 = require("../../../Utilities/Enums");
 class ChartWizard extends React.Component {
     render() {
         let chartDefinitions = this.props.ConfigEntities;
-        let chartTitles = chartDefinitions.map(s => s.Title);
+        let chartNames = chartDefinitions.map(s => s.Name);
         return React.createElement("div", { className: this.props.cssClassName },
             React.createElement(AdaptableWizard_1.AdaptableWizard, { FriendlyName: StrategyConstants.ChartStrategyName, ModalContainer: this.props.ModalContainer, cssClassName: this.props.cssClassName, Blotter: this.props.Blotter, Columns: this.props.Columns, Steps: [
                     {
@@ -33,7 +33,7 @@ class ChartWizard extends React.Component {
                     {
                         StepName: "Settings",
                         Index: 5,
-                        Element: React.createElement(ChartSettingsWizard_1.ChartSettingsWizard, { ChartTitles: chartTitles }),
+                        Element: React.createElement(ChartSettingsWizard_1.ChartSettingsWizard, { ChartNames: chartNames }),
                     },
                     {
                         StepName: "Summary",

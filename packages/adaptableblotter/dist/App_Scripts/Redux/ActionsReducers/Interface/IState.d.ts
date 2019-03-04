@@ -127,7 +127,7 @@ export interface CellValidationState extends IUserState {
 }
 export interface ChartState extends IUserState {
     ChartDefinitions: IChartDefinition[];
-    CurrentChartDefinition: string;
+    CurrentChartName: string;
     ShowModal: boolean;
     RefreshRate: number;
 }

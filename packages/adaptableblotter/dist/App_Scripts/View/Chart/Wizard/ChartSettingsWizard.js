@@ -10,8 +10,8 @@ class ChartSettingsWizard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            Title: props.Data.Title,
-            SubTitle: props.Data.SubTitle,
+            Name: props.Data.Name,
+            Description: props.Data.Description,
             ErrorMessage: null
         };
     }
@@ -21,37 +21,37 @@ class ChartSettingsWizard extends React.Component {
         return React.createElement("div", { className: cssClassName },
             React.createElement(react_bootstrap_1.Panel, { header: "Chart Definition Settings", bsStyle: "primary" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
-                    React.createElement(react_bootstrap_1.FormGroup, { controlId: "chartTitle" },
-                        React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, "Title:"),
-                        React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                            React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineTitle", validationState: validationState },
-                                React.createElement(react_bootstrap_1.FormControl, { value: this.state.Title, type: "string", placeholder: "Enter chart title", onChange: (e) => this.onChartTitleChange(e) }),
-                                React.createElement(react_bootstrap_1.FormControl.Feedback, null),
-                                React.createElement(react_bootstrap_1.HelpBlock, null, this.state.ErrorMessage)))),
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "chartName" },
-                        React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, "Sub title:"),
+                        React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, "Name:"),
                         React.createElement(react_bootstrap_1.Col, { xs: 7 },
                             React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineName", validationState: validationState },
-                                React.createElement(react_bootstrap_1.FormControl, { value: this.state.SubTitle, type: "string", placeholder: "Enter chart subtitle (optional)", onChange: (e) => this.onChartSubTitleChange(e) })))))));
+                                React.createElement(react_bootstrap_1.FormControl, { value: this.state.Name, type: "string", placeholder: "Enter chart name", onChange: (e) => this.onChartNameChange(e) }),
+                                React.createElement(react_bootstrap_1.FormControl.Feedback, null),
+                                React.createElement(react_bootstrap_1.HelpBlock, null, this.state.ErrorMessage)))),
+                    React.createElement(react_bootstrap_1.FormGroup, { controlId: "chartDescription" },
+                        React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, "Description:"),
+                        React.createElement(react_bootstrap_1.Col, { xs: 7 },
+                            React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineDescription", validationState: validationState },
+                                React.createElement(react_bootstrap_1.FormControl, { value: this.state.Description, type: "string", placeholder: "Enter description (optional)", onChange: (e) => this.onChartDescriptionChange(e) })))))));
     }
-    onChartTitleChange(event) {
+    onChartNameChange(event) {
         let e = event.target;
         this.setState({
-            Title: e.value,
-            ErrorMessage: ArrayExtensions_1.ArrayExtensions.ContainsItem(this.props.ChartTitles, e.value) ? "A Chart Definition already exists with that title" : null
+            Name: e.value,
+            ErrorMessage: ArrayExtensions_1.ArrayExtensions.ContainsItem(this.props.ChartNames, e.value) ? "A Chart Definition already exists with that name" : null
         }, () => this.props.UpdateGoBackState());
     }
-    onChartSubTitleChange(event) {
+    onChartDescriptionChange(event) {
         let e = event.target;
-        this.setState({ SubTitle: e.value, }, () => this.props.UpdateGoBackState());
+        this.setState({ Description: e.value, }, () => this.props.UpdateGoBackState());
     }
     canNext() {
-        return StringExtensions_1.StringExtensions.IsNotEmpty(this.state.Title) && StringExtensions_1.StringExtensions.IsNullOrEmpty(this.state.ErrorMessage);
+        return StringExtensions_1.StringExtensions.IsNotEmpty(this.state.Name) && StringExtensions_1.StringExtensions.IsNullOrEmpty(this.state.ErrorMessage);
     }
     canBack() { return true; }
     Next() {
-        this.props.Data.Title = this.state.Title;
-        this.props.Data.SubTitle = this.state.SubTitle;
+        this.props.Data.Name = this.state.Name;
+        this.props.Data.Description = this.state.Description;
     }
     Back() {
         // todo

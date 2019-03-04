@@ -15,8 +15,8 @@ class ChartSummaryWizard extends React.Component {
             return ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(c, this.props.Columns);
         });
         let keyValuePairs = [
-            { Key: "Title", Value: this.props.Data.Title },
-            { Key: "Sub title", Value: this.props.Data.SubTitle },
+            { Key: "Name", Value: this.props.Data.Name },
+            { Key: "Description", Value: this.props.Data.Description },
             { Key: "Y Axis Column(s)", Value: friendlyNames.join(', ') },
             { Key: "Total", Value: this.props.Data.YAxisTotal },
             { Key: "X Axis Column", Value: ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId, this.props.Columns) },

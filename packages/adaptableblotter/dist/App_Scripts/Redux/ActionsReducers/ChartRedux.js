@@ -11,22 +11,22 @@ exports.ChartDefinitionAddUpdate = (Index, ChartDefinition) => ({
     Index,
     ChartDefinition
 });
-exports.ChartPropertiesUpdate = (ChartTitle, ChartProperties) => ({
+exports.ChartPropertiesUpdate = (ChartName, ChartProperties) => ({
     type: exports.CHART_PROPERTIES_UPDATE,
-    ChartTitle,
+    ChartName,
     ChartProperties
 });
 exports.ChartDefinitionDelete = (ChartDefinition) => ({
     type: exports.CHART_DEFINITION_DELETE,
     ChartDefinition
 });
-exports.ChartDefinitionSelect = (CurrentChartDefinition) => ({
+exports.ChartDefinitionSelect = (CurrentChartName) => ({
     type: exports.CHART_DEFINITION_SELECT,
-    CurrentChartDefinition
+    CurrentChartName
 });
 const initialChartState = {
     ChartDefinitions: GeneralConstants_1.EMPTY_ARRAY,
-    CurrentChartDefinition: GeneralConstants_1.EMPTY_STRING,
+    CurrentChartName: GeneralConstants_1.EMPTY_STRING,
     ShowModal: GeneralConstants_1.CHART_DEFAULT_SHOW_MODAL,
     RefreshRate: GeneralConstants_1.CHART_DEFAULT_REFRESH_RATE
 };
@@ -46,16 +46,16 @@ exports.ChartReducer = (state = initialChartState, action) => {
         case exports.CHART_PROPERTIES_UPDATE:
             let actionTypedPropertiesUpdate = action;
             chartDefinitions = [].concat(state.ChartDefinitions);
-            let chartDefinition = chartDefinitions.find(c => c.Title == actionTypedPropertiesUpdate.ChartTitle);
+            let chartDefinition = chartDefinitions.find(c => c.Name == actionTypedPropertiesUpdate.ChartName);
             chartDefinition.ChartProperties = actionTypedPropertiesUpdate.ChartProperties;
             return Object.assign({}, state, { ChartDefinitions: chartDefinitions });
         case exports.CHART_DEFINITION_DELETE:
             chartDefinitions = [].concat(state.ChartDefinitions);
-            let index = chartDefinitions.findIndex(x => x.Title == action.ChartDefinition.Title);
+            let index = chartDefinitions.findIndex(x => x.Name == action.ChartDefinition.Name);
             chartDefinitions.splice(index, 1);
             return Object.assign({}, state, { ChartDefinitions: chartDefinitions });
         case exports.CHART_DEFINITION_SELECT:
-            return Object.assign({}, state, { CurrentChartDefinition: action.CurrentChartDefinition });
+            return Object.assign({}, state, { CurrentChartName: action.CurrentChartName });
         default:
             return state;
     }

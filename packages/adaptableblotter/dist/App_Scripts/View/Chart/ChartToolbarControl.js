@@ -24,10 +24,10 @@ class ChartToolbarControlComponent extends React.Component {
         const selectChartString = "Select a Chart";
         let cssClassName = this.props.cssClassName + "__Chart";
         let currentChartDefinitionName = this.props.CurrentChartDefinition == null ?
-            selectChartString : this.props.CurrentChartDefinition.Title;
+            selectChartString : this.props.CurrentChartDefinition.Name;
         let sortedChartDefinitions = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.ChartDefinitions, "Title");
-        let availablechartDefinitions = sortedChartDefinitions.filter(s => s.Title != currentChartDefinitionName).map((chartDefinition, index) => {
-            return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onSelectedChartDefinitionChanged(chartDefinition.Title) }, chartDefinition.Title);
+        let availablechartDefinitions = sortedChartDefinitions.filter(s => s.Name != currentChartDefinitionName).map((chartDefinition, index) => {
+            return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onSelectedChartDefinitionChanged(chartDefinition.Name) }, chartDefinition.Name);
         });
         let content = React.createElement("span", null,
             React.createElement(react_bootstrap_1.InputGroup, null,
@@ -51,7 +51,7 @@ class ChartToolbarControlComponent extends React.Component {
 }
 function mapStateToProps(state, ownProps) {
     return {
-        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Title == state.Chart.CurrentChartDefinition),
+        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Name == state.Chart.CurrentChartName),
         ChartDefinitions: state.Chart.ChartDefinitions,
     };
 }

@@ -2,8 +2,8 @@ import { Expression } from '../../Expression';
 import { IAdaptableBlotterObject } from './IAdaptableBlotterObject';
 import { ChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment } from '../../ChartEnums';
 export interface IChartDefinition extends IAdaptableBlotterObject {
-    Title: string;
-    SubTitle: string;
+    Name: string;
+    Description: string;
     ChartProperties: IChartProperties;
 }
 export interface IChartProperties extends IAdaptableBlotterObject {

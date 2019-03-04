@@ -101,7 +101,7 @@ class ChartDisplayPopupComponent extends React.Component {
                 // size
                 width: '100%', height: '500px', 
                 // titles (titles, alignment and margins)
-                chartTitle: this.props.CurrentChartDefinition.Title, subtitle: this.props.CurrentChartDefinition.SubTitle, titleAlignment: this.state.ChartProperties.TitleAlignment, titleRightMargin: this.state.TitleMargin, titleTopMargin: this.state.TitleMargin, subtitleAlignment: this.state.ChartProperties.SubTitleAlignment, subtitleRightMargin: this.state.SubTitleMargin, 
+                chartTitle: this.props.CurrentChartDefinition.Name, subtitle: this.props.CurrentChartDefinition.Description, titleAlignment: this.state.ChartProperties.TitleAlignment, titleRightMargin: this.state.TitleMargin, titleTopMargin: this.state.TitleMargin, subtitleAlignment: this.state.ChartProperties.SubTitleAlignment, subtitleRightMargin: this.state.SubTitleMargin, 
                 // yAxis
                 yAxisMinimumValue: this.state.ChartProperties.YAxisMinimumValue, yAxisMaximumValue: this.state.ChartProperties.YAxisMaximumValue, yAxisTitle: this.getYAxisTitle(this.state.UseDefaultYAxisTitle), yAxisLabelVisibility: this.state.ChartProperties.YAxisLabelVisibility, yAxisLabelLocation: this.state.ChartProperties.YAxisLabelLocation, yAxisLabelTextColor: this.state.ChartProperties.YAxisLabelColor, yAxisTitleTextColor: this.state.ChartProperties.YAxisTitleColor, yAxisIsLogarithmic: this.getYAxisIsLogarithmic(this.state.ChartProperties.YAxisLabelScale), yAxisInverted: this.state.ChartProperties.YAxisInverted, 
                 // xAxis
@@ -674,7 +674,7 @@ class ChartDisplayPopupComponent extends React.Component {
     }
     updateChartProperties(chartProperties) {
         this.setState({ ChartProperties: chartProperties, });
-        this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Title, chartProperties);
+        this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Name, chartProperties);
     }
     onXAxisVisibilityOptionChanged(event) {
         let e = event.target;
@@ -780,19 +780,19 @@ class ChartDisplayPopupComponent extends React.Component {
     }
     onFinishWizard() {
         let clonedObject = Helper_1.Helper.cloneObject(this.state.EditedChartDefinition);
-        let index = this.props.ChartDefinitions.findIndex(cd => cd.Title == this.state.EditedChartDefinition.Title);
+        let index = this.props.ChartDefinitions.findIndex(cd => cd.Name == this.state.EditedChartDefinition.Name);
         this.props.onAddUpdateChartDefinition(index, clonedObject);
         this.setState({ EditedChartDefinition: null });
-        this.props.onSelectChartDefinition(clonedObject.Title);
+        this.props.onSelectChartDefinition(clonedObject.Name);
     }
     canFinishWizard() {
-        return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.EditedChartDefinition.Title);
+        return StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.EditedChartDefinition.Name);
     }
 }
 function mapStateToProps(state) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Title == state.Chart.CurrentChartDefinition),
+        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Name == state.Chart.CurrentChartName),
         ChartData: state.System.ChartData,
         ChartVisibility: state.System.ChartVisibility,
     };

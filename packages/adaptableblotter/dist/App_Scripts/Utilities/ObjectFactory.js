@@ -14,8 +14,8 @@ var ObjectFactory;
     ObjectFactory.CreateEmptyCustomSort = CreateEmptyCustomSort;
     function CreateEmptyCategoryChartDefinition() {
         return {
-            Title: GeneralConstants_1.EMPTY_STRING,
-            SubTitle: GeneralConstants_1.EMPTY_STRING,
+            Name: GeneralConstants_1.EMPTY_STRING,
+            Description: GeneralConstants_1.EMPTY_STRING,
             YAxisColumnIds: [],
             YAxisTotal: GeneralConstants_1.CHART_DEFAULT_YAXIS_TOTAL,
             XAxisColumnId: GeneralConstants_1.EMPTY_STRING,
