@@ -24,7 +24,7 @@ const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const ColorPicker_1 = require("../ColorPicker");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 const ButtonGeneral_1 = require("../Components/Buttons/ButtonGeneral");
-const DefaultChartProperties_1 = require("../../Utilities/Defaults/DefaultChartProperties");
+const DefaultCategoryChartProperties_1 = require("../../Utilities/Defaults/DefaultCategoryChartProperties");
 const PanelWithTwoButtons_1 = require("../Components/Panels/PanelWithTwoButtons");
 const ChartUIHelper_1 = require("./ChartUIHelper");
 class ChartDisplayPopupComponent extends React.Component {
@@ -32,14 +32,14 @@ class ChartDisplayPopupComponent extends React.Component {
         super(props);
         this.seriesColors = new Map();
         this.onYAxisMinValueChanged = (e) => {
-            let chartProps = this.state.ChartProperties;
-            chartProps.YAxisMinimumValue = e.target.value;
-            this.updateChartProperties(chartProps);
+            let chartProperties = this.state.ChartProperties;
+            chartProperties.YAxisMinimumValue = e.target.value;
+            this.updateChartProperties(chartProperties);
         };
         this.onYAxisMaxValueChanged = (e) => {
-            let chartProps = this.state.ChartProperties;
-            chartProps.YAxisMaximumValue = e.target.value;
-            this.updateChartProperties(chartProps);
+            let chartProperties = this.state.ChartProperties;
+            chartProperties.YAxisMaximumValue = e.target.value;
+            this.updateChartProperties(chartProperties);
         };
         this.onTransitionDurationChanged = (e) => {
             let chartProperties = this.state.ChartProperties;
@@ -120,7 +120,8 @@ class ChartDisplayPopupComponent extends React.Component {
                 isSeriesHighlightingEnabled: this.state.ChartProperties.EnableSeriesHighlighting, isCategoryHighlightingEnabled: this.state.ChartProperties.EnableCategoryHighlighting, isItemHighlightingEnabled: this.state.ChartProperties.EnableItemHighlighting, 
                 //transitionDuration
                 // playing
-                xAxisTickStroke: "gray", xAxisTickLength: 5, 
+                //  xAxisTickStroke="gray"
+                //  xAxisTickLength={5}
                 //ubtitleRightMargin={this.state.TitleMargin}
                 //subtitleTopMargin = {this.state.TitleMargin}
                 // TODO consider adding this binding for Line, Spline, Area, Step ChartTypes
@@ -151,237 +152,221 @@ class ChartDisplayPopupComponent extends React.Component {
                                             React.createElement(PanelWithTwoButtons_1.PanelWithTwoButtons, { bsSize: "xs", bsStyle: StyleConstants_1.INFO_BSSTYLE, headerText: "Chart Settings", cssClassName: cssClassName, firstButton: closeChartSettingsButton, secondButton: setDefaultsButton },
                                                 React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "wrench", bsSize: "xs", headerText: "General", cssClassName: cssClassName, button: showGeneralPropertiesButton, style: { marginTop: '2px' } }, this.state.IsGeneralMinimised == false &&
                                                     React.createElement("div", null,
-                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
                                                             React.createElement(react_bootstrap_1.Row, null,
-                                                                React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                    React.createElement(react_bootstrap_1.ControlLabel, null, "Chart Type")),
-                                                                React.createElement(react_bootstrap_1.Col, { xs: 5 },
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null, "Chart Type")),
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
                                                                     React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.ChartType, onChange: (x) => this.onChartTypeChange(x) }, ChartUIHelper_1.ChartUIHelper.getChartTypeOptions())))),
-                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
                                                             React.createElement(react_bootstrap_1.Row, null,
-                                                                React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                    React.createElement(react_bootstrap_1.ControlLabel, null, "Marker Type")),
-                                                                React.createElement(react_bootstrap_1.Col, { xs: 5 },
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null, "Marker Type")),
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
                                                                     React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.MarkerType, onChange: (x) => this.onMarkerTypeChange(x) }, ChartUIHelper_1.ChartUIHelper.getMarkerTypeOptions())))),
                                                         this.state.ChartProperties.ChartType == ChartEnums_1.ChartType.Column &&
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Column Gap")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                        React.createElement(react_bootstrap_1.FormControl, { value: this.state.ChartProperties.XAxisGap, bsSize: "small", type: "number", min: "0", step: "0.1", max: "1", placeholder: "Enter", onChange: (e) => this.onXAxisGapChanged(e) })))),
-                                                        this.state.ChartProperties.ChartType == ChartEnums_1.ChartType.Column &&
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Column Overlap")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                        React.createElement(react_bootstrap_1.FormControl, { value: this.state.ChartProperties.XAxisOverlap, bsSize: "small", type: "number", min: "0", step: "0.1", max: "1", placeholder: "Enter", onChange: (e) => this.onXAxisOverlapChanged(e) })))))),
-                                                React.createElement("div", null,
-                                                    React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "resize-vertical", bsSize: "xs", headerText: "Y (Vertical) Axis", cssClassName: cssClassName, button: showYAxisPropertiesButton, style: { marginTop: '2px' } }, this.state.IsYAxisMinimised == false &&
-                                                        React.createElement("div", null,
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Axis Visible")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onYAxisVisibilityOptionChanged(e), checked: this.state.ChartProperties.YAxisLabelVisibility == ChartEnums_1.LabelVisibility.Visible })))),
-                                                            this.state.ChartProperties.YAxisLabelVisibility == ChartEnums_1.LabelVisibility.Visible &&
-                                                                React.createElement("div", null,
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Axis Inverted")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onYAxisInvertedChanged(e), checked: this.state.ChartProperties.YAxisInverted })))),
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Axis Location")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.YAxisLabelLocation, onChange: (x) => this.onYAxisLabelLocationChange(x) }, ChartUIHelper_1.ChartUIHelper.getYAxisLabelsLocations())))),
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Labels Scale")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.YAxisLabelScale, onChange: (x) => this.onYAxisLabelScaleChanged(x) }, ChartUIHelper_1.ChartUIHelper.getAxisLabelScales())))),
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Labels Min")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetYAxisMinValueOptionChanged(e), checked: this.state.SetYAxisMinimumValue })),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 4 }, this.state.SetYAxisMinimumValue &&
-                                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "number", placeholder: "Input", onChange: this.onYAxisMinValueChanged, value: this.state.ChartProperties.YAxisMinimumValue })))),
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Labels Max")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetYAxisMaxValueOptionChanged(e), checked: this.state.SetYAxisMaximumValue })),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 4 }, this.state.SetYAxisMaximumValue &&
-                                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "number", placeholder: "Input", onChange: this.onYAxisMaxValueChanged, value: this.state.ChartProperties.YAxisMaximumValue })))),
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Labels Color")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetYAxisLabelColorOptionChanged(e), checked: this.state.SetYAxisLabelColor })),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 }, this.state.SetYAxisLabelColor &&
-                                                                                React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: this.state.ChartProperties.YAxisLabelColor, onChange: (x) => this.onYAxisLabelColorChange(x) })))),
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '5px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Title Default")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onUseDefaultYAxisTitleOptionChanged(e), checked: this.state.UseDefaultYAxisTitle })),
-                                                                            this.state.UseDefaultYAxisTitle == false &&
-                                                                                React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                    React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "text", placeholder: "Enter Title", onChange: (e) => this.onYAxisTitleChanged(e), value: this.state.ChartProperties.YAxisTitle })))),
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Title Color")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetYAxisTitleColorOptionChanged(e), checked: this.state.SetYAxisTitleColor })),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: this.state.ChartProperties.YAxisTitleColor, onChange: (x) => this.onYAxisTitleColorChange(x) }))))))),
-                                                    React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "resize-horizontal", bsSize: "xs", headerText: "X (Horizontal) Axis", cssClassName: cssClassName, button: showXAxisPropertiesButton, style: { marginTop: '2px' } }, this.state.IsXAxisMinimised == false &&
-                                                        React.createElement("div", null,
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Axis Visible")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onXAxisVisibilityOptionChanged(e), checked: this.state.ChartProperties.XAxisLabelVisibility == ChartEnums_1.LabelVisibility.Visible })))),
-                                                            this.state.ChartProperties.XAxisLabelVisibility == ChartEnums_1.LabelVisibility.Visible &&
-                                                                React.createElement("div", null,
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Axis Inverted")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onXAxisInvertedChanged(e), checked: this.state.ChartProperties.XAxisInverted })))),
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Labels Angle")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.XAxisAngle, onChange: (x) => this.onXAxisAngleChanged(x) }, ChartUIHelper_1.ChartUIHelper.getAxisAngleOptions())))),
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Labels Color")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetXAxisLabelColorOptionChanged(e), checked: this.state.SetXAxisLabelColor })),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 }, this.state.SetXAxisLabelColor &&
-                                                                                React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: this.state.ChartProperties.XAxisLabelColor, onChange: (x) => this.onXAxisLabelColorChange(x) })))),
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Title Default")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onUseDefaultXAxisTitleOptionChanged(e), checked: this.state.UseDefaultXAxisTitle })),
-                                                                            this.state.UseDefaultXAxisTitle == false &&
-                                                                                React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                    React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "text", placeholder: "Enter Title", onChange: (e) => this.onXAxisTitleChanged(e), value: this.state.ChartProperties.XAxisTitle })))),
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                                React.createElement(react_bootstrap_1.ControlLabel, null, "Title Color")),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetXAxisTitleColorOptionChanged(e), checked: this.state.SetXAxisTitleColor })),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 }, this.state.SetXAxisTitleColor &&
-                                                                                React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: this.state.ChartProperties.XAxisTitleColor, onChange: (x) => this.onXAxisTitleColorChange(x) }))))))),
-                                                    React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "asterisk", bsSize: "xs", headerText: "Annotations", cssClassName: cssClassName, button: showHighlightsPropertiesButton, style: { marginTop: '2px' } }, this.state.IsHighlightsMinimised == false &&
-                                                        React.createElement("div", null,
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 8 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Final Values")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onEnableFinalValueAnnotationsOptionChanged(e), checked: this.state.ChartProperties.EnableFinalValueAnnotations })))),
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 8 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Highlight Series")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onEnableSeriesHighlightingOptionChanged(e), checked: this.state.ChartProperties.EnableSeriesHighlighting })))),
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 8 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Highlight Category")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onEnableCategoryHighlightingOptionChanged(e), checked: this.state.ChartProperties.EnableCategoryHighlighting })))),
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 8 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Highlight Item")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 1 },
-                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onEnableItemHighlightingOptionChanged(e), checked: this.state.ChartProperties.EnableItemHighlighting })))),
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Callout Type")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.CalloutsType, onChange: (x) => this.onChangedCalloutsType(x) }, ChartUIHelper_1.ChartUIHelper.getCalloutTypeOptions())))),
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '2px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Callout Interval")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                                                        React.createElement(react_bootstrap_1.FormControl, { value: this.state.ChartProperties.CalloutsInterval, bsSize: "small", type: "number", min: "1", step: "1", max: "20", placeholder: "Enter", onChange: (e) => this.onChangedCalloutsInterval(e) })))),
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Tooltips")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.ToolTipType, onChange: (x) => this.onToolTipTypeChange(x) }, ChartUIHelper_1.ChartUIHelper.getToolTipOptions())))),
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Crosshairs")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.CrosshairDisplayMode, onChange: (x) => this.onCrosshairsModeChange(x) }, ChartUIHelper_1.ChartUIHelper.getCrossHairModeOptions())))),
-                                                            this.state.ChartProperties.CrosshairDisplayMode != ChartEnums_1.CrosshairDisplayMode.None &&
-                                                                React.createElement("div", null,
-                                                                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 }),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onCrosshairSnapToDataOptionChanged(e), checked: this.state.ChartProperties.CrosshairSnapToData }, "Snap to Data"))),
-                                                                        React.createElement(react_bootstrap_1.Row, null,
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 5 }),
-                                                                            React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                                React.createElement(react_bootstrap_1.Checkbox, { inline: true, onChange: (e) => this.onCrosshairAnnotationEnabledOptionChanged(e), checked: this.state.ChartProperties.CrosshairAnnotationEnabled }, "Show Values"))))))),
-                                                    React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "briefcase", bsSize: "xs", headerText: "Misc", cssClassName: cssClassName, button: showMiscPropertiesButton, style: { marginTop: '2px' } }, this.state.IsMiscMinimised == false &&
-                                                        React.createElement("div", null,
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Title")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.TitleAlignment, onChange: (x) => this.onTitleAlignmentChange(x) }, ChartUIHelper_1.ChartUIHelper.getAlignmentOptions())))),
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Subtitle")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.SubTitleAlignment, onChange: (x) => this.onSubTitleAlignmentChange(x) }, ChartUIHelper_1.ChartUIHelper.getAlignmentOptions())))),
-                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
-                                                                React.createElement(react_bootstrap_1.Row, null,
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                        React.createElement(react_bootstrap_1.ControlLabel, null, "Transitions")),
-                                                                    React.createElement(react_bootstrap_1.Col, { xs: 6 },
-                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onEnableTransitionsOptionChanged(e), checked: this.state.ChartProperties.EnableTransitions })))),
-                                                            this.state.ChartProperties.EnableTransitions &&
-                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '10px' } },
+                                                            React.createElement("div", null,
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
                                                                     React.createElement(react_bootstrap_1.Row, null,
-                                                                        React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                                            React.createElement(react_bootstrap_1.ControlLabel, null, "Duration")),
-                                                                        React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                                            React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", placeholder: "Length (ms)", type: "number", onChange: this.onTransitionDurationChanged, value: this.state.ChartProperties.TransitionInDuration })))))))))))))
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.HelpBlock, null, "Column Gap")),
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.FormControl, { value: this.state.ChartProperties.XAxisGap, bsSize: "small", type: "number", min: "0", step: "0.1", max: "1", placeholder: "Enter", onChange: (e) => this.onXAxisGapChanged(e) })))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.Row, null,
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.HelpBlock, null, "Column Overlap")),
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.FormControl, { value: this.state.ChartProperties.XAxisOverlap, bsSize: "small", type: "number", min: "0", step: "0.1", max: "1", placeholder: "Enter", onChange: (e) => this.onXAxisOverlapChanged(e) }))))))),
+                                                React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "resize-vertical", bsSize: "xs", headerText: "Y (Vertical) Axis", cssClassName: cssClassName, button: showYAxisPropertiesButton, style: { marginTop: '2px' } }, this.state.IsYAxisMinimised == false &&
+                                                    React.createElement("div", null,
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onYAxisVisibilityOptionChanged(e), checked: this.state.ChartProperties.YAxisLabelVisibility == ChartEnums_1.LabelVisibility.Visible }, "Axis Visible"))))),
+                                                        this.state.ChartProperties.YAxisLabelVisibility == ChartEnums_1.LabelVisibility.Visible &&
+                                                            React.createElement("div", null,
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.Row, null,
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                                                                            React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onYAxisInvertedChanged(e), checked: this.state.ChartProperties.YAxisInverted }, "Axis Inverted"))))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.Row, null,
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.HelpBlock, null, "Axis Location")),
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.YAxisLabelLocation, onChange: (x) => this.onYAxisLabelLocationChange(x) }, ChartUIHelper_1.ChartUIHelper.getYAxisLabelsLocations())))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.Row, null,
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.HelpBlock, null, "Labels Scale")),
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.YAxisLabelScale, onChange: (x) => this.onYAxisLabelScaleChanged(x) }, ChartUIHelper_1.ChartUIHelper.getAxisLabelScales())))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Row, null,
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetYAxisMinValueOptionChanged(e), checked: this.state.SetYAxisMinimumValue }, "Labels Min")),
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 }, this.state.SetYAxisMinimumValue &&
+                                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "number", placeholder: "Input", onChange: this.onYAxisMinValueChanged, value: this.state.ChartProperties.YAxisMinimumValue }))))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Row, null,
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetYAxisMaxValueOptionChanged(e), checked: this.state.SetYAxisMaximumValue }, "Labels Max")),
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 }, this.state.SetYAxisMaximumValue &&
+                                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "number", placeholder: "Input", onChange: this.onYAxisMaxValueChanged, value: this.state.ChartProperties.YAxisMaximumValue }))))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Row, null,
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetYAxisLabelColorOptionChanged(e), checked: this.state.SetYAxisLabelColor }, "Labels Color")),
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 }, this.state.SetYAxisLabelColor &&
+                                                                                React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: this.state.ChartProperties.YAxisLabelColor, onChange: (x) => this.onYAxisLabelColorChange(x) }))))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.Row, null,
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onUseDefaultYAxisTitleOptionChanged(e), checked: this.state.UseDefaultYAxisTitle }, "Title Default"))),
+                                                                        this.state.UseDefaultYAxisTitle == false &&
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "text", placeholder: "Enter Title", onChange: (e) => this.onYAxisTitleChanged(e), value: this.state.ChartProperties.YAxisTitle })))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Row, null,
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetYAxisTitleColorOptionChanged(e), checked: this.state.SetYAxisTitleColor }, "Title Color")),
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 }, this.state.SetYAxisTitleColor &&
+                                                                                React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: this.state.ChartProperties.YAxisTitleColor, onChange: (x) => this.onYAxisTitleColorChange(x) })))))))),
+                                                React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "resize-horizontal", bsSize: "xs", headerText: "X (Horizontal) Axis", cssClassName: cssClassName, button: showXAxisPropertiesButton, style: { marginTop: '2px' } }, this.state.IsXAxisMinimised == false &&
+                                                    React.createElement("div", null,
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onXAxisVisibilityOptionChanged(e), checked: this.state.ChartProperties.XAxisLabelVisibility == ChartEnums_1.LabelVisibility.Visible }, "Axis Visible"))))),
+                                                        this.state.ChartProperties.XAxisLabelVisibility == ChartEnums_1.LabelVisibility.Visible &&
+                                                            React.createElement("div", null,
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.Row, null,
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                                                                            React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onXAxisInvertedChanged(e), checked: this.state.ChartProperties.XAxisInverted }, "Axis Inverted"))))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.Row, null,
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.HelpBlock, null, "Labels Angle")),
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.XAxisAngle, onChange: (x) => this.onXAxisAngleChanged(x) }, ChartUIHelper_1.ChartUIHelper.getAxisAngleOptions())))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Row, null,
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetXAxisLabelColorOptionChanged(e), checked: this.state.SetXAxisLabelColor }, "Labels Color")),
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 }, this.state.SetXAxisLabelColor &&
+                                                                                React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: this.state.ChartProperties.XAxisLabelColor, onChange: (x) => this.onXAxisLabelColorChange(x) }))))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.Row, null,
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onUseDefaultXAxisTitleOptionChanged(e), checked: this.state.UseDefaultXAxisTitle }, "Title Default"))),
+                                                                        this.state.UseDefaultXAxisTitle == false &&
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "text", placeholder: "Enter Title", onChange: (e) => this.onXAxisTitleChanged(e), value: this.state.ChartProperties.XAxisTitle })))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Row, null,
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetXAxisTitleColorOptionChanged(e), checked: this.state.SetXAxisTitleColor }, "Title Color")),
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 }, this.state.SetXAxisTitleColor &&
+                                                                                React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: this.state.ChartProperties.XAxisTitleColor, onChange: (x) => this.onXAxisTitleColorChange(x) })))))))),
+                                                React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "asterisk", bsSize: "xs", headerText: "Annotations", cssClassName: cssClassName, button: showHighlightsPropertiesButton, style: { marginTop: '2px' } }, this.state.IsHighlightsMinimised == false &&
+                                                    React.createElement("div", null,
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onEnableFinalValueAnnotationsOptionChanged(e), checked: this.state.ChartProperties.EnableFinalValueAnnotations }, "Final Values"))))),
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onEnableSeriesHighlightingOptionChanged(e), checked: this.state.ChartProperties.EnableSeriesHighlighting }, "Highlight Series"))))),
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onEnableCategoryHighlightingOptionChanged(e), checked: this.state.ChartProperties.EnableCategoryHighlighting }, "Highlight Category"))))),
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onEnableItemHighlightingOptionChanged(e), checked: this.state.ChartProperties.EnableItemHighlighting }, "Highlight Item"))))),
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null, "Callout Type")),
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.CalloutsType, onChange: (x) => this.onChangedCalloutsType(x) }, ChartUIHelper_1.ChartUIHelper.getCalloutTypeOptions())))),
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null, "Callout Interval")),
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.FormControl, { value: this.state.ChartProperties.CalloutsInterval, bsSize: "small", type: "number", min: "1", step: "1", max: "20", placeholder: "Enter", onChange: (e) => this.onChangedCalloutsInterval(e) })))),
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null, "Tooltips")),
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.ToolTipType, onChange: (x) => this.onToolTipTypeChange(x) }, ChartUIHelper_1.ChartUIHelper.getToolTipOptions())))),
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null, "Crosshairs")),
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.CrosshairDisplayMode, onChange: (x) => this.onCrosshairsModeChange(x) }, ChartUIHelper_1.ChartUIHelper.getCrossHairModeOptions())))),
+                                                        this.state.ChartProperties.CrosshairDisplayMode != ChartEnums_1.CrosshairDisplayMode.None &&
+                                                            React.createElement("div", null,
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.Row, null,
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 }),
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onCrosshairSnapToDataOptionChanged(e), checked: this.state.ChartProperties.CrosshairSnapToData }, "Snap to Data")))),
+                                                                    React.createElement(react_bootstrap_1.Row, null,
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 }),
+                                                                        React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                            React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { inline: true, onChange: (e) => this.onCrosshairAnnotationEnabledOptionChanged(e), checked: this.state.ChartProperties.CrosshairAnnotationEnabled }, "Show Values")))))))),
+                                                React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "briefcase", bsSize: "xs", headerText: "Misc", cssClassName: cssClassName, button: showMiscPropertiesButton, style: { marginTop: '2px' } }, this.state.IsMiscMinimised == false &&
+                                                    React.createElement("div", null,
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null, "Title")),
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.TitleAlignment, onChange: (x) => this.onTitleAlignmentChange(x) }, ChartUIHelper_1.ChartUIHelper.getAlignmentOptions())))),
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null, "Subtitle")),
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                    React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.SubTitleAlignment, onChange: (x) => this.onSubTitleAlignmentChange(x) }, ChartUIHelper_1.ChartUIHelper.getAlignmentOptions())))),
+                                                        React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                            React.createElement(react_bootstrap_1.Row, null,
+                                                                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onEnableTransitionsOptionChanged(e), checked: this.state.ChartProperties.EnableTransitions }, "Enable Transitions"))))),
+                                                        this.state.ChartProperties.EnableTransitions &&
+                                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                React.createElement(react_bootstrap_1.Row, null,
+                                                                    React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                        React.createElement(react_bootstrap_1.HelpBlock, null, "Duration")),
+                                                                    React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", placeholder: "Length (ms)", type: "number", onChange: this.onTransitionDurationChanged, value: this.state.ChartProperties.TransitionInDuration }))))))))))))
                         :
                             React.createElement("div", null, this.props.ChartData != null &&
                                 chartElement))),
@@ -419,11 +404,11 @@ class ChartDisplayPopupComponent extends React.Component {
         // first update our state
         this.setState(ChartUIHelper_1.ChartUIHelper.setDefaultChartDisplayPopupState());
         // then update the properties
-        let chartProps = Helper_1.Helper.cloneObject(DefaultChartProperties_1.DefaultChartProperties);
+        let chartProperties = Helper_1.Helper.cloneObject(DefaultCategoryChartProperties_1.DefaultCategoryChartProperties);
         // do the titles
-        chartProps.YAxisTitle = this.getYAxisTitle(true);
-        chartProps.XAxisTitle = this.getXAxisTitle(true);
-        this.updateChartProperties(chartProps);
+        chartProperties.YAxisTitle = this.getYAxisTitle(true);
+        chartProperties.XAxisTitle = this.getXAxisTitle(true);
+        this.updateChartProperties(chartProperties);
     }
     onShowGeneralProperties() {
         this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: false, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true });
@@ -451,15 +436,15 @@ class ChartDisplayPopupComponent extends React.Component {
     }
     onChartTypeChange(event) {
         let e = event.target;
-        let chartProps = this.state.ChartProperties;
-        chartProps.ChartType = e.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.ChartType = e.value;
+        this.updateChartProperties(chartProperties);
     }
     onMarkerTypeChange(event) {
         let e = event.target;
-        let chartProps = this.state.ChartProperties;
-        chartProps.MarkerType = e.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.MarkerType = e.value;
+        this.updateChartProperties(chartProperties);
     }
     onYAxisLabelLocationChange(event) {
         let e = event.target;
@@ -531,10 +516,10 @@ class ChartDisplayPopupComponent extends React.Component {
         if (value < 1) {
             value = 1;
         }
-        let chartProps = this.state.ChartProperties;
-        chartProps.CalloutsInterval = value;
-        // chartProps.CalloutsInterval = e.target.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.CalloutsInterval = value;
+        // chartProperties.CalloutsInterval = e.target.value;
+        this.updateChartProperties(chartProperties);
     }
     onCrosshairsModeChange(event) {
         let e = event.target;
@@ -589,15 +574,15 @@ class ChartDisplayPopupComponent extends React.Component {
     }
     onYAxisInvertedChanged(event) {
         let e = event.target;
-        let chartProps = this.state.ChartProperties;
-        chartProps.YAxisInverted = e.checked;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.YAxisInverted = e.checked;
+        this.updateChartProperties(chartProperties);
     }
     onXAxisInvertedChanged(event) {
         let e = event.target;
-        let chartProps = this.state.ChartProperties;
-        chartProps.XAxisInverted = e.checked;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.XAxisInverted = e.checked;
+        this.updateChartProperties(chartProperties);
     }
     onSetYAxisMinValueOptionChanged(event) {
         let e = event.target;
@@ -606,9 +591,9 @@ class ChartDisplayPopupComponent extends React.Component {
         }
         else { // set YAxisMinValue to undefined
             this.setState({ SetYAxisMinimumValue: e.checked });
-            let chartProps = this.state.ChartProperties;
-            chartProps.YAxisMinimumValue = undefined;
-            this.updateChartProperties(chartProps);
+            let chartProperties = this.state.ChartProperties;
+            chartProperties.YAxisMinimumValue = undefined;
+            this.updateChartProperties(chartProperties);
         }
     }
     onSetYAxisMaxValueOptionChanged(event) {
@@ -618,9 +603,9 @@ class ChartDisplayPopupComponent extends React.Component {
         }
         else { // set YAxisMaxValue to undefined
             this.setState({ SetYAxisMaximumValue: e.checked });
-            let chartProps = this.state.ChartProperties;
-            chartProps.YAxisMaximumValue = undefined;
-            this.updateChartProperties(chartProps);
+            let chartProperties = this.state.ChartProperties;
+            chartProperties.YAxisMaximumValue = undefined;
+            this.updateChartProperties(chartProperties);
         }
     }
     onSetYAxisLabelColorOptionChanged(event) {
@@ -630,9 +615,9 @@ class ChartDisplayPopupComponent extends React.Component {
         }
         else { // set YAxisMinValue to undefined
             this.setState({ SetYAxisLabelColor: e.checked });
-            let chartProps = this.state.ChartProperties;
-            chartProps.YAxisLabelColor = "";
-            this.updateChartProperties(chartProps);
+            let chartProperties = this.state.ChartProperties;
+            chartProperties.YAxisLabelColor = "";
+            this.updateChartProperties(chartProperties);
         }
     }
     onSetXAxisLabelColorOptionChanged(event) {
@@ -673,17 +658,17 @@ class ChartDisplayPopupComponent extends React.Component {
     }
     onTitleAlignmentChange(event) {
         let e = event.target;
-        let chartProps = this.state.ChartProperties;
-        chartProps.TitleAlignment = e.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.TitleAlignment = e.value;
+        this.updateChartProperties(chartProperties);
         let titleMargin = (e.value == ChartEnums_1.HorizontalAlignment.Right) ? 5 : 0;
         this.setState({ TitleMargin: titleMargin, });
     }
     onSubTitleAlignmentChange(event) {
         let e = event.target;
-        let chartProps = this.state.ChartProperties;
-        chartProps.SubTitleAlignment = e.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.SubTitleAlignment = e.value;
+        this.updateChartProperties(chartProperties);
         let subtitleMargin = (e.value == ChartEnums_1.HorizontalAlignment.Right) ? 5 : 0;
         this.setState({ SubTitleMargin: subtitleMargin, });
     }
@@ -693,21 +678,21 @@ class ChartDisplayPopupComponent extends React.Component {
     }
     onXAxisVisibilityOptionChanged(event) {
         let e = event.target;
-        let chartProps = this.state.ChartProperties;
-        chartProps.XAxisLabelVisibility = (e.checked) ? ChartEnums_1.LabelVisibility.Visible : ChartEnums_1.LabelVisibility.Collapsed;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.XAxisLabelVisibility = (e.checked) ? ChartEnums_1.LabelVisibility.Visible : ChartEnums_1.LabelVisibility.Collapsed;
+        this.updateChartProperties(chartProperties);
     }
     onYAxisVisibilityOptionChanged(event) {
         let e = event.target;
-        let chartProps = this.state.ChartProperties;
-        chartProps.YAxisLabelVisibility = (e.checked) ? ChartEnums_1.LabelVisibility.Visible : ChartEnums_1.LabelVisibility.Collapsed;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.YAxisLabelVisibility = (e.checked) ? ChartEnums_1.LabelVisibility.Visible : ChartEnums_1.LabelVisibility.Collapsed;
+        this.updateChartProperties(chartProperties);
     }
     onYAxisTitleChanged(event) {
         let e = event.target;
-        let chartProps = this.state.ChartProperties;
-        chartProps.YAxisTitle = e.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.YAxisTitle = e.value;
+        this.updateChartProperties(chartProperties);
     }
     onXAxisGapChanged(event) {
         let e = event.target;
@@ -718,9 +703,9 @@ class ChartDisplayPopupComponent extends React.Component {
         if (factor < 0) {
             factor = 0;
         }
-        let chartProps = this.state.ChartProperties;
-        chartProps.XAxisGap = factor;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.XAxisGap = factor;
+        this.updateChartProperties(chartProperties);
     }
     onXAxisOverlapChanged(event) {
         let e = event.target;
@@ -731,36 +716,36 @@ class ChartDisplayPopupComponent extends React.Component {
         if (factor < 0) {
             factor = 0;
         }
-        let chartProps = this.state.ChartProperties;
-        chartProps.XAxisOverlap = factor;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.XAxisOverlap = factor;
+        this.updateChartProperties(chartProperties);
     }
     onXAxisTitleChanged(event) {
         let e = event.target;
-        let chartProps = this.state.ChartProperties;
-        chartProps.XAxisTitle = e.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.XAxisTitle = e.value;
+        this.updateChartProperties(chartProperties);
     }
     onXAxisAngleChanged(event) {
         let e = event.target;
-        let chartProps = this.state.ChartProperties;
-        chartProps.XAxisAngle = e.value;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        chartProperties.XAxisAngle = e.value;
+        this.updateChartProperties(chartProperties);
     }
     onYAxisLabelScaleChanged(event) {
         let e = event.target;
         let scale = e.value;
-        let chartProps = this.state.ChartProperties;
-        // chartProps.YAxisIsLogarithmic = scale == AxisScale.Log;
-        chartProps.YAxisLabelScale = scale;
-        this.updateChartProperties(chartProps);
+        let chartProperties = this.state.ChartProperties;
+        // chartProperties.YAxisIsLogarithmic = scale == AxisScale.Log;
+        chartProperties.YAxisLabelScale = scale;
+        this.updateChartProperties(chartProperties);
     }
     onUseDefaultYAxisTitleOptionChanged(event) {
         let e = event.target;
         if (e.checked) { // if its not checked then we need to clear the title
-            let chartProps = this.state.ChartProperties;
-            chartProps.YAxisTitle = "";
-            this.updateChartProperties(chartProps);
+            let chartProperties = this.state.ChartProperties;
+            chartProperties.YAxisTitle = "";
+            this.updateChartProperties(chartProperties);
         }
         // do we really need to update ChartDisplayPopupState?
         this.setState({ UseDefaultYAxisTitle: e.checked, });
@@ -768,9 +753,9 @@ class ChartDisplayPopupComponent extends React.Component {
     onUseDefaultXAxisTitleOptionChanged(event) {
         let e = event.target;
         if (e.checked) { // if its not checked then we need to clear the title
-            let chartProps = this.state.ChartProperties;
-            chartProps.XAxisTitle = "";
-            this.updateChartProperties(chartProps);
+            let chartProperties = this.state.ChartProperties;
+            chartProperties.XAxisTitle = "";
+            this.updateChartProperties(chartProperties);
         }
         // do we really need to update ChartDisplayPopupState?
         this.setState({ UseDefaultXAxisTitle: e.checked, });

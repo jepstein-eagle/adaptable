@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
-export interface ChartSummaryWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
+import { ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+export interface ChartSummaryWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
 }
 export declare class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps, {}> implements AdaptableWizardStep {
     constructor(props: ChartSummaryWizardProps);

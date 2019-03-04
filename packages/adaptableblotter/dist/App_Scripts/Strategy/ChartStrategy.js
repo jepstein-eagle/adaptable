@@ -62,7 +62,10 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             }
         }
     }
-    doChartDefinitionChangesRequireDataUpdate(a, b) {
+    doChartDefinitionChangesRequireDataUpdate(cd1, cd2) {
+        // slightly nonsensical for now but iwll change as more charts are added I think...
+        let a = cd1;
+        let b = cd2;
         if (a == null && b !== null) {
             return true;
         }
@@ -98,7 +101,7 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let chartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition);
         if (chartDefinition) {
-            let chartData = this.blotter.ChartService.BuildChartData(chartDefinition, columns);
+            let chartData = this.blotter.ChartService.BuildCategoryChartData(chartDefinition, columns);
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
         }
     }

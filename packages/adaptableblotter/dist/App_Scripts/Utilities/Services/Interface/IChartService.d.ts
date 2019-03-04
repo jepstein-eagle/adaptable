@@ -1,5 +1,5 @@
-import { IChartDefinition } from "../../Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition } from "../../Interface/BlotterObjects/IChartDefinition";
 import { IColumn } from "../../Interface/IColumn";
 export interface IChartService {
-    BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any;
+    BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): any;
 }

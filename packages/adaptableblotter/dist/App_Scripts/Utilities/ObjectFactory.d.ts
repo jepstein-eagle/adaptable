@@ -17,7 +17,7 @@ import { IColumnFilter } from "./Interface/BlotterObjects/IColumnFilter";
 import { ICellValidationRule } from "./Interface/BlotterObjects/ICellValidationRule";
 import { ICalculatedColumn } from "./Interface/BlotterObjects/ICalculatedColumn";
 import { IAdvancedSearch } from "./Interface/BlotterObjects/IAdvancedSearch";
-import { IChartDefinition } from "./Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition } from "./Interface/BlotterObjects/IChartDefinition";
 import { IAlertDefinition } from "./Interface/BlotterObjects/IAlertDefinition";
 import { IRange } from "./Interface/Expression/IRange";
 import { LeafExpressionOperator, RangeOperandType, ActionMode } from './Enums';
@@ -28,7 +28,7 @@ import { Expression } from '../Utilities/Expression';
 import { IVendorGridInfo } from "./Interface/IVendorGridInfo";
 export declare module ObjectFactory {
     function CreateEmptyCustomSort(): ICustomSort;
-    function CreateEmptyChartDefinition(): IChartDefinition;
+    function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition;
     function CreateEmptyCalculatedColumn(): ICalculatedColumn;
     function CreateEmptyPlusMinusRule(): IPlusMinusRule;
     function CreateEmptyAlertDefinition(): IAlertDefinition;

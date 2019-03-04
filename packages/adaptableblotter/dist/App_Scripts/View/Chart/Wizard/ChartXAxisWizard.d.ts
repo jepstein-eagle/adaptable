@@ -1,8 +1,8 @@
 import * as React from "react";
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { Expression } from "../../../Utilities/Expression";
-export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<IChartDefinition> {
+export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
 }
 export interface ChartXAxisWizardState {
     XAxisColumnId: string;

@@ -1,11 +1,11 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IChartDefinition } from "../Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition } from "../Interface/BlotterObjects/IChartDefinition";
 import { IColumn } from '../Interface/IColumn';
 export declare class ChartService implements IChartService {
     private blotter;
     constructor(blotter: IAdaptableBlotter);
-    BuildChartData(chartDefinition: IChartDefinition, columns: IColumn[]): any;
+    BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): any;
     private buildTotal;
     private getXAxisColumnValues;
 }

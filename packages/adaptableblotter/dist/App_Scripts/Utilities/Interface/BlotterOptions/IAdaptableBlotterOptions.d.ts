@@ -40,7 +40,9 @@ export interface IAdaptableBlotterOptions {
     */
     predefinedConfig?: any;
     /**
-     * blah
+     * A unique key - provided by the Adaptable Tools team that uniquely identifies the user / team
+     * Required to get access to Standard or Enterprise functionality.
+     * If not supplied then user has Community / Evaluation access where state cannot be saved or loaded.
      */
     licenceKey?: string;
     /**

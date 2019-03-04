@@ -7,6 +7,7 @@ const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const ButtonShowChart_1 = require("../Components/Buttons/ButtonShowChart");
 class ChartEntityRow extends React.Component {
     render() {
+        // assuming only category charts for now - silly assumption to make in due course...
         let Chart = this.props.AdaptableBlotterObject;
         let colItems = [].concat(this.props.colItems);
         colItems[0].Content = Chart.Title;

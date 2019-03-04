@@ -1,9 +1,8 @@
-import { IChartProperties } from "../../Utilities/Interface/IChartProperties";
-import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
-export interface ChartDisplayPopupState {
+import { IChartDefinition, ICategoryChartProperties } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+export interface CategoryChartDisplayPopupState {
     IsChartSettingsVisible: boolean;
     EditedChartDefinition: IChartDefinition;
-    ChartProperties: IChartProperties;
+    ChartProperties: ICategoryChartProperties;
     IsGeneralMinimised: boolean;
     SetYAxisMinimumValue: boolean;
     SetYAxisMaximumValue: boolean;

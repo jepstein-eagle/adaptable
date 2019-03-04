@@ -4,15 +4,15 @@ const ExpressionHelper_1 = require("./Helpers/ExpressionHelper");
 const Enums_1 = require("./Enums");
 const ColumnHelper_1 = require("./Helpers/ColumnHelper");
 const CellValidationHelper_1 = require("./Helpers/CellValidationHelper");
-const DefaultChartProperties_1 = require("../Utilities/Defaults/DefaultChartProperties");
 const GeneralConstants_1 = require("./Constants/GeneralConstants");
+const DefaultCategoryChartProperties_1 = require("./Defaults/DefaultCategoryChartProperties");
 var ObjectFactory;
 (function (ObjectFactory) {
     function CreateEmptyCustomSort() {
         return { ColumnId: GeneralConstants_1.EMPTY_STRING, SortedValues: [] };
     }
     ObjectFactory.CreateEmptyCustomSort = CreateEmptyCustomSort;
-    function CreateEmptyChartDefinition() {
+    function CreateEmptyCategoryChartDefinition() {
         return {
             Title: GeneralConstants_1.EMPTY_STRING,
             SubTitle: GeneralConstants_1.EMPTY_STRING,
@@ -20,10 +20,10 @@ var ObjectFactory;
             YAxisTotal: GeneralConstants_1.CHART_DEFAULT_YAXIS_TOTAL,
             XAxisColumnId: GeneralConstants_1.EMPTY_STRING,
             XAxisExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
-            ChartProperties: DefaultChartProperties_1.DefaultChartProperties
+            ChartProperties: DefaultCategoryChartProperties_1.DefaultCategoryChartProperties
         };
     }
-    ObjectFactory.CreateEmptyChartDefinition = CreateEmptyChartDefinition;
+    ObjectFactory.CreateEmptyCategoryChartDefinition = CreateEmptyCategoryChartDefinition;
     function CreateEmptyCalculatedColumn() {
         return { ColumnId: GeneralConstants_1.EMPTY_STRING, ColumnExpression: GeneralConstants_1.EMPTY_STRING };
     }

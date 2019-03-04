@@ -69,7 +69,7 @@ class ChartPopupComponent extends React.Component {
     onNew() {
         //     console.log("in new before factory")
         //     console.log(this.state.EditedAdaptableBlotterObject)
-        let test = ObjectFactory_1.ObjectFactory.CreateEmptyChartDefinition();
+        let test = ObjectFactory_1.ObjectFactory.CreateEmptyCategoryChartDefinition();
         //  console.log("in new after factory")
         //   console.log(test);
         this.setState({ EditedAdaptableBlotterObject: test, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });

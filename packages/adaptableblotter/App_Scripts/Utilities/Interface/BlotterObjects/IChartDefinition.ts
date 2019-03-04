@@ -8,12 +8,11 @@ import { ChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, Label
 export interface IChartDefinition extends IAdaptableBlotterObject {
   Title: string;
   SubTitle: string;
-
   ChartProperties: IChartProperties
  }
 
 export interface IChartProperties extends IAdaptableBlotterObject {
-  // not sure at this stage...
+  // still empty at this stage
  }
 
 
@@ -23,7 +22,7 @@ export interface ICategoryChartDefinition extends IChartDefinition {
   YAxisTotal: 'Sum' | 'Average';
   XAxisColumnId: string;
   XAxisExpression: Expression;
-  //ChartProperties: ICategoryChartProperties;
+ // ChartProperties: ICategoryChartProperties;
 }
 
 export interface ICalloutProperties {

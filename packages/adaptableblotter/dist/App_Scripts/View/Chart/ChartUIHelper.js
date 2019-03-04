@@ -10,40 +10,43 @@ const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 var ChartUIHelper;
 (function (ChartUIHelper) {
     function setChartDisplayPopupState(chartDefinition, columns) {
+        let categoryChartProperties = chartDefinition.ChartProperties;
         return {
-            ChartProperties: chartDefinition.ChartProperties,
+            ChartProperties: categoryChartProperties,
             EditedChartDefinition: null,
             IsChartSettingsVisible: false,
             // General
             IsGeneralMinimised: false,
             // Y Axis
             IsYAxisMinimised: true,
-            SetYAxisMinimumValue: chartDefinition.ChartProperties.YAxisMinimumValue != undefined,
-            SetYAxisMaximumValue: chartDefinition.ChartProperties.YAxisMaximumValue != undefined,
-            SetYAxisLabelColor: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(chartDefinition.ChartProperties.YAxisLabelColor),
-            SetYAxisTitleColor: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(chartDefinition.ChartProperties.YAxisTitleColor),
+            SetYAxisMinimumValue: categoryChartProperties.YAxisMinimumValue != undefined,
+            SetYAxisMaximumValue: categoryChartProperties.YAxisMaximumValue != undefined,
+            SetYAxisLabelColor: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(categoryChartProperties.YAxisLabelColor),
+            SetYAxisTitleColor: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(categoryChartProperties.YAxisTitleColor),
             UseDefaultYAxisTitle: isDefaultYAxisTitle(chartDefinition, columns),
             // X Axis
             IsXAxisMinimised: true,
-            SetXAxisLabelColor: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(chartDefinition.ChartProperties.XAxisLabelColor),
-            SetXAxisTitleColor: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(chartDefinition.ChartProperties.XAxisTitleColor),
+            SetXAxisLabelColor: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(categoryChartProperties.XAxisLabelColor),
+            SetXAxisTitleColor: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(categoryChartProperties.XAxisTitleColor),
             UseDefaultXAxisTitle: isDefaultXAxisTitle(chartDefinition, columns),
             // Highlights
             IsHighlightsMinimised: true,
             // Misc
             IsMiscMinimised: true,
-            TitleMargin: (chartDefinition.ChartProperties.TitleAlignment == ChartEnums_1.HorizontalAlignment.Right) ? 5 : 0,
-            SubTitleMargin: (chartDefinition.ChartProperties.SubTitleAlignment == ChartEnums_1.HorizontalAlignment.Right) ? 5 : 0
+            TitleMargin: (categoryChartProperties.TitleAlignment == ChartEnums_1.HorizontalAlignment.Right) ? 5 : 0,
+            SubTitleMargin: (categoryChartProperties.SubTitleAlignment == ChartEnums_1.HorizontalAlignment.Right) ? 5 : 0
         };
     }
     ChartUIHelper.setChartDisplayPopupState = setChartDisplayPopupState;
     function isDefaultYAxisTitle(chartDefinition, columns) {
-        return StringExtensions_1.StringExtensions.IsNullOrEmpty(chartDefinition.ChartProperties.YAxisTitle) ||
-            chartDefinition.ChartProperties.YAxisTitle == createDefaultYAxisTitle(chartDefinition, columns);
+        let categoryChartProperties = chartDefinition.ChartProperties;
+        return StringExtensions_1.StringExtensions.IsNullOrEmpty(categoryChartProperties.YAxisTitle) ||
+            categoryChartProperties.YAxisTitle == createDefaultYAxisTitle(chartDefinition, columns);
     }
     function isDefaultXAxisTitle(chartDefinition, columns) {
-        return StringExtensions_1.StringExtensions.IsNullOrEmpty(chartDefinition.ChartProperties.XAxisTitle) ||
-            chartDefinition.ChartProperties.XAxisTitle == createDefaultXAxisTitle(chartDefinition, columns);
+        let categoryChartProperties = chartDefinition.ChartProperties;
+        return StringExtensions_1.StringExtensions.IsNullOrEmpty(categoryChartProperties.XAxisTitle) ||
+            categoryChartProperties.XAxisTitle == createDefaultXAxisTitle(chartDefinition, columns);
     }
     function createDefaultYAxisTitle(chartDefinition, columns) {
         return chartDefinition.YAxisColumnIds.map(c => {

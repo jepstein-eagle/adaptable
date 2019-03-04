@@ -15,7 +15,7 @@ class ChartService {
     constructor(blotter) {
         this.blotter = blotter;
     }
-    BuildChartData(chartDefinition, columns) {
+    BuildCategoryChartData(chartDefinition, columns) {
         // NOTE this method is need only when we using Segmented column(s) otherwise,
         // you can assign chart.dataSource to the whole data (e.g. whatever the grid is displaying)
         // and then set chart.includedProperties to array of strings that contain selected data columns:
