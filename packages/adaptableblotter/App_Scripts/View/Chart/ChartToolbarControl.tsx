@@ -41,12 +41,12 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
         let cssClassName: string = this.props.cssClassName + "__Chart";
 
         let currentChartDefinitionName = this.props.CurrentChartDefinition == null ?
-            selectChartString : this.props.CurrentChartDefinition.Title
+            selectChartString : this.props.CurrentChartDefinition.Name
 
         let sortedChartDefinitions: IChartDefinition[] = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, this.props.ChartDefinitions, "Title")
 
-        let availablechartDefinitions: any[] = sortedChartDefinitions.filter(s => s.Title != currentChartDefinitionName).map((chartDefinition, index) => {
-            return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedChartDefinitionChanged(chartDefinition.Title)} >{chartDefinition.Title}</MenuItem>
+        let availablechartDefinitions: any[] = sortedChartDefinitions.filter(s => s.Name != currentChartDefinitionName).map((chartDefinition, index) => {
+            return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedChartDefinitionChanged(chartDefinition.Name)} >{chartDefinition.Name}</MenuItem>
         })
 
 
@@ -134,7 +134,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Title == state.Chart.CurrentChartDefinition),
+        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Name == state.Chart.CurrentChartName),
         ChartDefinitions: state.Chart.ChartDefinitions,
     };
 }

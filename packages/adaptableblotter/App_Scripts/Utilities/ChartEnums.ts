@@ -38,8 +38,8 @@ export enum AxisLabelsLocation {
 }
 
 export enum AxisScale {
-  Linear = 'Linear',
-  Log = 'Log',
+    Linear = 'Linear',
+    Log = 'Log',
 }
 
 export enum HorizontalAlignment {
@@ -58,7 +58,7 @@ export enum LabelVisibility {
     Collapsed = 'collapsed',
 }
 
-export  enum ToolTipType {
+export enum ToolTipType {
     Default = 'Default',
     Item = 'Item',
     Category = 'Category',
@@ -68,32 +68,32 @@ export  enum ToolTipType {
 export enum AxisAngle {
     Horizontal = 'Horizontal',
     Diagonal = 'Diagonal',
-    Vertical ='Vertical'
+    Vertical = 'Vertical'
 }
 
 export enum MarkerType {
-  // Unset = 'Unset',  // commented out because Default is more descriptive enum
-  Default = 'Default', // added special enum to resolve marker type based on chart type
-  Automatic = 'Automatic', // assigns different markers for each series in the chart, e.g.  Circle, Triangle, etc
-  Circle = 'Circle',
-  Triangle = 'Triangle',
-  Pyramid = 'Pyramid',
-  Square = 'Square',
-  Diamond = 'Diamond',
-  Pentagon = 'Pentagon',
-  Hexagon = 'Hexagon',
-  Tetragram = 'Tetragram',
-  Pentagram = 'Pentagram',
-  Hexagram = 'Hexagram',
-  None = 'None',
+    // Unset = 'Unset',  // commented out because Default is more descriptive enum
+    Default = 'Default', // added special enum to resolve marker type based on chart type
+    Automatic = 'Automatic', // assigns different markers for each series in the chart, e.g.  Circle, Triangle, etc
+    Circle = 'Circle',
+    Triangle = 'Triangle',
+    Pyramid = 'Pyramid',
+    Square = 'Square',
+    Diamond = 'Diamond',
+    Pentagon = 'Pentagon',
+    Hexagon = 'Hexagon',
+    Tetragram = 'Tetragram',
+    Pentagram = 'Pentagram',
+    Hexagram = 'Hexagram',
+    None = 'None',
 }
 
 export enum CalloutsType {
-  None = 'None',
-  DataRanges = 'Data Ranges',
-  DataPoints = 'Data Points',
-  DataChangesInValues = 'Data Changes',
-  DataChangesInPercentage = 'Data Changes (%)',
-  // note populate getCalloutTypeOptions() with names of non-numeric data columns
-  // to add more callout types
+    None = 'None',
+    DataRanges = 'Data Ranges',
+    DataPoints = 'Data Points',
+    DataChangesInValues = 'Data Changes',
+    DataChangesInPercentage = 'Data Changes (%)',
+    // note populate getCalloutTypeOptions() with names of non-numeric data columns
+    // to add more callout types
 }

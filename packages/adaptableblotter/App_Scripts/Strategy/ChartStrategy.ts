@@ -40,8 +40,8 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             if (this.ChartState == null) {
                 isChartRelatedStateChanged = true;
             } else {
-                let chartStateDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition)
-                let storeStateDefinition: IChartDefinition = this.GetChartState().ChartDefinitions.find(c => c.Title == this.GetChartState().CurrentChartDefinition)
+                let chartStateDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName)
+                let storeStateDefinition: IChartDefinition = this.GetChartState().ChartDefinitions.find(c => c.Name == this.GetChartState().CurrentChartName)
 
                 if (this.doChartDefinitionChangesRequireDataUpdate(chartStateDefinition, storeStateDefinition)) {
                     isChartRelatedStateChanged = true;
@@ -63,14 +63,14 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
         if (isChartRelatedStateChanged) {
 
-            if (StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartDefinition)
+            if (StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)
                 && this.SystemState.ChartVisibility == ChartVisibility.Maximised) {
                 this.setChartData();
             } else {
                 this.clearChartData();
             }
 
-            if (this.ChartState.CurrentChartDefinition == null && this.SystemState.ChartVisibility == ChartVisibility.Maximised) {
+            if (this.ChartState.CurrentChartName == null && this.SystemState.ChartVisibility == ChartVisibility.Maximised) {
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden));
             }
 
@@ -108,10 +108,10 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
 
     protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo): void {
-        if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartDefinition)) {
+        if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId: string = dataChangedInfo.ColumnId;
-            let currentChartDefinition: ICategoryChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition) as ICategoryChartDefinition
+            let currentChartDefinition: ICategoryChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName) as ICategoryChartDefinition
             if (ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
                 currentChartDefinition.XAxisColumnId == columnChangedId) {
                 this.throttleSetChartData();
@@ -121,7 +121,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private setChartData() {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let chartDefinition: ICategoryChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Title == this.ChartState.CurrentChartDefinition) as ICategoryChartDefinition
+        let chartDefinition: ICategoryChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName) as ICategoryChartDefinition
         if (chartDefinition) {
             let chartData: any = this.blotter.ChartService.BuildCategoryChartData(chartDefinition, columns);
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));

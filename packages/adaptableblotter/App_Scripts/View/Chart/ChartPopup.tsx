@@ -47,7 +47,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 this.onNew()
             }
             if (this.props.PopupParams == "Edit") {
-                let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Title == this.props.CurrentChartDefinition.Title)
+                let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Name == this.props.CurrentChartDefinition.Name)
                 this.onEdit(index, this.props.CurrentChartDefinition)
             }
         }
@@ -71,7 +71,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 cssClassName={cssClassName}
                 colItems={colItems}
                 AdaptableBlotterObject={Chart}
-                key={Chart.Title}
+                key={Chart.Name}
                 Index={index}
                 onEdit={(index, Chart) => this.onEdit(index, Chart as IChartDefinition)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
@@ -152,17 +152,17 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
         let currentChartIndex: number = (this.props.CurrentChartDefinition == null) ?
             -1 :
-            this.props.ChartDefinitions.findIndex(as => as.Title == this.props.CurrentChartDefinition.Title)
+            this.props.ChartDefinitions.findIndex(as => as.Name == this.props.CurrentChartDefinition.Name)
 
         if (index == -1 || index == currentChartIndex) {
             // its new so make it the new chart or we are editing the current chart (but might have changed the title)
-            this.props.onSelectChartDefinition(clonedObject.Title);
+            this.props.onSelectChartDefinition(clonedObject.Name);
         }
     }
 
     canFinishWizard() {
         let Chart = this.state.EditedAdaptableBlotterObject as IChartDefinition
-        return StringExtensions.IsNotNullOrEmpty(Chart.Title);
+        return StringExtensions.IsNotNullOrEmpty(Chart.Name);
     }
 
 }
@@ -170,7 +170,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c=>c.Title == state.Chart.CurrentChartDefinition),
+        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c=>c.Name == state.Chart.CurrentChartName),
     };
 }
 

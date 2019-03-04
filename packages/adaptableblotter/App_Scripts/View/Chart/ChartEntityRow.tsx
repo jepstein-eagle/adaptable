@@ -19,13 +19,13 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
         let Chart: ICategoryChartDefinition = this.props.AdaptableBlotterObject as ICategoryChartDefinition;
         let colItems: IColItem[] = [].concat(this.props.colItems);
        
-        colItems[0].Content = Chart.Title
-        colItems[1].Content = Chart.SubTitle
+        colItems[0].Content = Chart.Name
+        colItems[1].Content = Chart.Description
         colItems[2].Content = <ButtonShowChart
-            key={"key:" + Chart.Title}
+            key={"key:" + Chart.Name}
             style={{ marginLeft: "2px" }}
             cssClassName={this.props.cssClassName}
-            onClick={() => this.props.onShowChart(Chart.Title)}
+            onClick={() => this.props.onShowChart(Chart.Name)}
             size={"small"}
             overrideTooltip="Show Chart"
             DisplayMode="Glyph" 

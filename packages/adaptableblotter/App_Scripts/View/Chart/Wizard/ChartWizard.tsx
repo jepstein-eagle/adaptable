@@ -4,7 +4,7 @@ import { ChartYAxisWizard } from './ChartYAxisWizard'
 import { ChartSummaryWizard } from './ChartSummaryWizard'
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IChartDefinition, ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ChartXAxisWizard } from "./ChartXAxisWizard";
 import { ChartSettingsWizard } from "./ChartSettingsWizard";
 import { ChartXAxisExpressionWizard } from "./ChartXAxisExpressionWizard";
@@ -17,7 +17,7 @@ export class ChartWizard extends React.Component<ChartWizardProps, {}> {
 
     render() {
         let chartDefinitions: ICategoryChartDefinition[] = this.props.ConfigEntities as ICategoryChartDefinition[]
-        let chartTitles: string[] = chartDefinitions.map(s => s.Title);
+        let chartNames: string[] = chartDefinitions.map(s => s.Name);
         return <div className={this.props.cssClassName}>
             <AdaptableWizard
                 FriendlyName={StrategyConstants.ChartStrategyName}
@@ -44,7 +44,7 @@ export class ChartWizard extends React.Component<ChartWizardProps, {}> {
                          {
                         StepName: "Settings",
                         Index: 5,
-                        Element: <ChartSettingsWizard ChartTitles={chartTitles} />,
+                        Element: <ChartSettingsWizard ChartNames={chartNames} />,
                     },
                     {
                         StepName: "Summary",

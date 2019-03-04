@@ -278,8 +278,8 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 width={'100%'}
                 height={'500px'}
                 // titles (titles, alignment and margins)
-                chartTitle={this.props.CurrentChartDefinition.Title}
-                subtitle={this.props.CurrentChartDefinition.SubTitle}
+                chartTitle={this.props.CurrentChartDefinition.Name}
+                subtitle={this.props.CurrentChartDefinition.Description}
                 titleAlignment={this.state.ChartProperties.TitleAlignment}
                 titleRightMargin={this.state.TitleMargin}
                 titleTopMargin={this.state.TitleMargin}
@@ -1313,7 +1313,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     private updateChartProperties(chartProperties: IChartProperties): void {
         this.setState({ ChartProperties: chartProperties, } as CategoryChartDisplayPopupState)
-        this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Title, chartProperties)
+        this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Name, chartProperties)
     }
 
     private onXAxisVisibilityOptionChanged(event: React.FormEvent<any>) {
@@ -1433,14 +1433,14 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     onFinishWizard() {
         let clonedObject: IChartDefinition = Helper.cloneObject(this.state.EditedChartDefinition);
-        let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Title == this.state.EditedChartDefinition.Title);
+        let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Name == this.state.EditedChartDefinition.Name);
         this.props.onAddUpdateChartDefinition(index, clonedObject);
         this.setState({ EditedChartDefinition: null });
-        this.props.onSelectChartDefinition(clonedObject.Title);
+        this.props.onSelectChartDefinition(clonedObject.Name);
     }
 
     canFinishWizard() {
-        return StringExtensions.IsNotNullOrEmpty(this.state.EditedChartDefinition.Title);
+        return StringExtensions.IsNotNullOrEmpty(this.state.EditedChartDefinition.Name);
     }
 
 }
@@ -1448,7 +1448,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 function mapStateToProps(state: AdaptableBlotterState) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Title == state.Chart.CurrentChartDefinition),
+        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Name == state.Chart.CurrentChartName),
         ChartData: state.System.ChartData,
         ChartVisibility: state.System.ChartVisibility,
     };

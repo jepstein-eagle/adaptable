@@ -40,8 +40,8 @@ export module ObjectFactory {
 
     export function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition {
         return {
-            Title: EMPTY_STRING,
-            SubTitle: EMPTY_STRING,
+            Name: EMPTY_STRING,
+            Description: EMPTY_STRING,
             YAxisColumnIds: [],
             YAxisTotal: CHART_DEFAULT_YAXIS_TOTAL,
             XAxisColumnId: EMPTY_STRING,

@@ -6,8 +6,8 @@ import { ChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, Label
 // trying to make it as flexible as possible though I suspeect some stuff will break as we go forward...
 
 export interface IChartDefinition extends IAdaptableBlotterObject {
-  Title: string;
-  SubTitle: string;
+  Name: string;
+  Description: string;
   ChartProperties: IChartProperties
  }
 

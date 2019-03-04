@@ -15,7 +15,7 @@ export interface ChartDefinitionAddUpdateAction extends Redux.Action {
 }
 
 export interface ChartPropertiesUpdateAction extends Redux.Action {
-    ChartTitle: string
+    ChartName: string
     ChartProperties: IChartProperties
 }
 
@@ -25,7 +25,7 @@ export interface ChartDefinitionDeleteAction extends Redux.Action {
 }
 
 export interface ChartDefinitionSelectAction extends Redux.Action {
-    CurrentChartDefinition: string
+    CurrentChartName: string
 }
 
 export const ChartDefinitionAddUpdate = (Index: number, ChartDefinition: IChartDefinition): ChartDefinitionAddUpdateAction => ({
@@ -34,9 +34,9 @@ export const ChartDefinitionAddUpdate = (Index: number, ChartDefinition: IChartD
     ChartDefinition
 })
 
-export const ChartPropertiesUpdate = (ChartTitle: string, ChartProperties: IChartProperties): ChartPropertiesUpdateAction => ({
+export const ChartPropertiesUpdate = (ChartName: string, ChartProperties: IChartProperties): ChartPropertiesUpdateAction => ({
     type: CHART_PROPERTIES_UPDATE,
-    ChartTitle,
+    ChartName,
     ChartProperties
 })
 
@@ -48,14 +48,14 @@ export const ChartDefinitionDelete = (ChartDefinition: IChartDefinition): ChartD
 
 
 
-export const ChartDefinitionSelect = (CurrentChartDefinition: string): ChartDefinitionSelectAction => ({
+export const ChartDefinitionSelect = (CurrentChartName: string): ChartDefinitionSelectAction => ({
     type: CHART_DEFINITION_SELECT,
-    CurrentChartDefinition
+    CurrentChartName
 })
 
 const initialChartState: ChartState = {
     ChartDefinitions: EMPTY_ARRAY,
-    CurrentChartDefinition: EMPTY_STRING,
+    CurrentChartName: EMPTY_STRING,
     ShowModal: CHART_DEFAULT_SHOW_MODAL,
     RefreshRate: CHART_DEFAULT_REFRESH_RATE
 }
@@ -78,18 +78,18 @@ export const ChartReducer: Redux.Reducer<ChartState> = (state: ChartState = init
         case CHART_PROPERTIES_UPDATE:
             let actionTypedPropertiesUpdate = (<ChartPropertiesUpdateAction>action)
             chartDefinitions = [].concat(state.ChartDefinitions)
-            let chartDefinition: IChartDefinition = chartDefinitions.find(c => c.Title == actionTypedPropertiesUpdate.ChartTitle)
+            let chartDefinition: IChartDefinition = chartDefinitions.find(c => c.Name == actionTypedPropertiesUpdate.ChartName)
             chartDefinition.ChartProperties = actionTypedPropertiesUpdate.ChartProperties;
             return Object.assign({}, state, { ChartDefinitions: chartDefinitions })
 
         case CHART_DEFINITION_DELETE:
             chartDefinitions = [].concat(state.ChartDefinitions);
-            let index = chartDefinitions.findIndex(x => x.Title == (<ChartDefinitionDeleteAction>action).ChartDefinition.Title)
+            let index = chartDefinitions.findIndex(x => x.Name == (<ChartDefinitionDeleteAction>action).ChartDefinition.Name)
             chartDefinitions.splice(index, 1);
             return Object.assign({}, state, { ChartDefinitions: chartDefinitions });
 
         case CHART_DEFINITION_SELECT:
-            return Object.assign({}, state, { CurrentChartDefinition: (<ChartDefinitionSelectAction>action).CurrentChartDefinition })
+            return Object.assign({}, state, { CurrentChartName: (<ChartDefinitionSelectAction>action).CurrentChartName })
 
         default:
             return state
