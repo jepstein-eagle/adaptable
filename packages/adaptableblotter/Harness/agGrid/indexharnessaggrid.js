@@ -24,7 +24,7 @@ function getStandardKey() {
   return 'xs2543-as6b8ejw3-e94syjze8a';
 }
 function getEnterpriseKey() {
-  return 'xs2543-as6b8esw3-e94fyjzc7a';
+  return 'rbc001-yt5a4evp1-r1oq9nclf1';
 }
 function getColumns() {
   this.gridOptions.api.setColumnDefs(getTradeSchema());
