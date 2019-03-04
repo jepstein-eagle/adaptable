@@ -6,6 +6,7 @@ export interface IFtse {
     end: number;
     low: number;
     high: number;
+    volume: number;
 }
 
 export interface IBond {
@@ -168,13 +169,15 @@ export class DataGenerator {
         let high = (start > end) ?
             this.roundTo2Dp(start + this.generateRandomInt(0, 10) + this.generateRandomDouble()) :
             this.roundTo2Dp(end + this.generateRandomInt(0, 10) + this.generateRandomDouble());
+            let volume = this.generateRandomInt(3423, 6978) ;
         let ftse =
         {
             "date": newDate,
             "start": start,
             "end": end,
             "low": low,
-            "high": high
+            "high": high,
+            "volume": volume
         };
         return ftse;
     }

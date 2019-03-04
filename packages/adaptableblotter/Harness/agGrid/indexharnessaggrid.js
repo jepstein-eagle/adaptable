@@ -3,7 +3,7 @@ var adaptableblotter;
 var quickSearchText;
 var trades;
 var gridOptions;
-var showTrade = true;
+var showTrade = false;
 var instantiateAgGridInHarness = false;
 
 function runQuickSearchViaAPI() {
@@ -38,9 +38,9 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(50);
+    return dataGen.getTrades(100);
   }
-  return dataGen.getFtseData(10);
+  return dataGen.getFtseData(199);
 }
 
 function getColumnsForGrid() {
@@ -74,7 +74,7 @@ function InitTradeBlotter() {
     columnDefs: getColumnsForGrid(), // returns a list of agGrid column definitions
     rowData: trades, // the dummy data we are using
  //   enableRangeSelection: true,
-    floatingFilter: true,
+ //   floatingFilter: true,
     suppressColumnVirtualisation: false,
     //  sideBar: undefined, // this puts in filters and columns by default
 
@@ -277,6 +277,12 @@ function getFTSESchema() {
   schema.push({
     headerName: 'High',
     field: 'high',
+    editable: true,
+    cellClass: 'number-cell',
+  });
+  schema.push({
+    headerName: 'Volume',
+    field: 'volume',
     editable: true,
     cellClass: 'number-cell',
   });
