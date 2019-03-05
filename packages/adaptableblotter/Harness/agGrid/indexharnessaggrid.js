@@ -74,7 +74,7 @@ function InitTradeBlotter() {
     columnDefs: getColumnsForGrid(), // returns a list of agGrid column definitions
     rowData: trades, // the dummy data we are using
  //   enableRangeSelection: true,
- //   floatingFilter: true,
+    floatingFilter: true,
     suppressColumnVirtualisation: false,
     //  sideBar: undefined, // this puts in filters and columns by default
 
@@ -155,8 +155,8 @@ function InitTradeBlotter() {
         // getColumnValues: retrieveValues,
       },
       filterOptions: {
-        //  useAdaptableBlotterFilterForm: false,
-        //  useAdaptableBlotterQuickFilter: false
+          useAdaptableBlotterFilterForm: true,
+          useAdaptableBlotterQuickFilter: false
       },
       generalOptions: {
         // serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
@@ -249,6 +249,7 @@ function getFTSESchema() {
     headerName: 'Date',
     field: 'date',
     editable: false,
+    filter: true,
     cellEditorParams: {
       useFormatter: true,
     },
@@ -259,18 +260,21 @@ function getFTSESchema() {
   schema.push({
     headerName: 'Start',
     field: 'start',
+    filter: true,
     editable: true,
     cellClass: 'number-cell',
   });
   schema.push({
     headerName: 'End',
     field: 'end',
+    filter: true,
     editable: true,
     cellClass: 'number-cell',
   });
   schema.push({
     headerName: 'Low',
     field: 'low',
+    filter: true,
     editable: true,
     cellClass: 'number-cell',
   });
@@ -283,6 +287,7 @@ function getFTSESchema() {
   schema.push({
     headerName: 'Volume',
     field: 'volume',
+    filter: true,
     editable: true,
     cellClass: 'number-cell',
   });
