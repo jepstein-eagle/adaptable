@@ -5,6 +5,7 @@ import { ILayoutOptions } from "./ILayoutOptions";
 import { IFilterOptions } from "./IFilterOptions";
 import { IQueryOptions } from "./IQueryOptions";
 import { IGeneralOptions } from "./IGeneralOptions";
+import { IChartOptions } from "./IChartOptions";
 
 
 /**
@@ -78,6 +79,10 @@ export interface IAdaptableBlotterOptions {
    * Whether to use Adaptable Blotter or vendor grid forms
   */
   filterOptions?: IFilterOptions;
+  /**
+   * Manage Adaptable Blotter charting
+  */
+  chartOptions?: IChartOptions;
   /**
    * General options to manage the Adaptable Blotter
   */

@@ -158,6 +158,10 @@ function InitTradeBlotter() {
           useAdaptableBlotterFilterForm: true,
           useAdaptableBlotterQuickFilter: false
       },
+      chartOptions:{
+        displayOnStartUp: true,
+        showModal: false,
+      },
       generalOptions: {
         // serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
       },

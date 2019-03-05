@@ -131,12 +131,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     }
 
     onNew() {
-   //     console.log("in new before factory")
-   //     console.log(this.state.EditedAdaptableBlotterObject)
-      let test :IChartDefinition = ObjectFactory.CreateEmptyCategoryChartDefinition();
-    //  console.log("in new after factory")
-    //   console.log(test);
-        this.setState({ EditedAdaptableBlotterObject: test , WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
+       let emptyChartDefinition :IChartDefinition = ObjectFactory.CreateEmptyCategoryChartDefinition();
+         this.setState({ EditedAdaptableBlotterObject: emptyChartDefinition , WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
     onCloseWizard() {

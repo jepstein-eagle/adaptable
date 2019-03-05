@@ -49,6 +49,10 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
         getColumnValues: null,
         ignoreCaseInQueries: true,
     },
+    chartOptions: {
+        displayOnStartUp: false,
+        showModal: false,
+    },
     generalOptions: {
         useDefaultVendorGridThemes: true,
         showMissingPrimaryKeyWarning: true,

@@ -35,10 +35,15 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     protected InitState() {
         let isChartRelatedStateChanged: boolean = false;
+        let displayChartAtStartUp: boolean = false;
 
         if (this.ChartState != this.GetChartState()) {
             if (this.ChartState == null) {
                 isChartRelatedStateChanged = true;
+                // if user has set display at startup to be true and there is a current chart then show it
+                if (this.blotter.BlotterOptions.chartOptions.displayOnStartUp && StringExtensions.IsNotNullOrEmpty(this.GetChartState().CurrentChartName)) {
+                     displayChartAtStartUp = true;
+                }
             } else {
                 let chartStateDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName)
                 let storeStateDefinition: IChartDefinition = this.GetChartState().ChartDefinitions.find(c => c.Name == this.GetChartState().CurrentChartName)
@@ -76,6 +81,11 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Chart, this.ChartState)
+            }
+
+            if(displayChartAtStartUp){
+                this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised));
+                this.setChartData();
             }
         }
     }

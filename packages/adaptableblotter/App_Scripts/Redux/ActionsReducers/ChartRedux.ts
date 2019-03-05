@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import { ChartState } from './Interface/IState'
-import { IChartDefinition, ICategoryChartProperties, IChartProperties } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
-import { EMPTY_ARRAY, EMPTY_STRING, CHART_DEFAULT_SHOW_MODAL, CHART_DEFAULT_REFRESH_RATE } from '../../Utilities/Constants/GeneralConstants';
+import { IChartDefinition, IChartProperties } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { EMPTY_ARRAY, EMPTY_STRING, CHART_DEFAULT_REFRESH_RATE } from '../../Utilities/Constants/GeneralConstants';
 
 export const CHART_DEFINITION_ADD_UPDATE = 'CHART_DEFINITION_ADD_UPDATE';
 export const CHART_PROPERTIES_UPDATE = 'CHART_PROPERTIES_UPDATE';
@@ -56,8 +56,7 @@ export const ChartDefinitionSelect = (CurrentChartName: string): ChartDefinition
 const initialChartState: ChartState = {
     ChartDefinitions: EMPTY_ARRAY,
     CurrentChartName: EMPTY_STRING,
-    ShowModal: CHART_DEFAULT_SHOW_MODAL,
-    RefreshRate: CHART_DEFAULT_REFRESH_RATE
+     RefreshRate: CHART_DEFAULT_REFRESH_RATE
 }
 
 export const ChartReducer: Redux.Reducer<ChartState> = (state: ChartState = initialChartState, action: Redux.Action): ChartState => {
