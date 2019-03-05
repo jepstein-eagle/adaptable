@@ -30,7 +30,7 @@ export class FlashingCellSummaryComponent extends React.Component<FlashingCellSu
         let message: string = isFlashingCellColumn ? "Flashing on" : "Flashing off"
         let showFlashingButton = isFlashingCellColumn ?
             <Button onClick={() => this.onFlashingSelectedChanged(flashingCell)} bsStyle="default" bsSize="small">Turn Off</Button>
-            : <Button onClick={() => this.onFlashingSelectedChanged(flashingCell)} bsStyle="deffault" bsSize="small">Turn On</Button>
+            : <Button onClick={() => this.onFlashingSelectedChanged(flashingCell)} bsStyle="default" bsSize="small">Turn On</Button>
 
         let colItems: IColItem[] = []
         colItems.push({ Size: 3, Content: <b>{StrategyConstants.FlashingCellsStrategyName}</b> });

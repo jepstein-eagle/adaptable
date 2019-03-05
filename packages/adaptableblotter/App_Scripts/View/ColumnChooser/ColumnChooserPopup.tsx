@@ -13,7 +13,6 @@ import { IMasterChildren } from "../../Utilities/Interface/IMasterChildren";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
 
-
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {
     onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
     ColumnCategories: Array<IColumnCategory>
@@ -33,7 +32,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
                 }
             })
         }
-        availableValues = this.props.Columns.filter(x => !x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x));
+        availableValues = this.props.Columns.map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x));
         selectedValues = this.props.Columns.filter(x => x.Visible).map(x => ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x))
 
         let infoBody: any[] = ["Move items between the 'Hidden Columns' and 'Visible Columns' listboxes to hide / show them.", <br />, <br />,
@@ -42,7 +41,8 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
 
         return <div className={cssClassName}>
             <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.ColumnChooserStrategyName} bsStyle="primary" glyphicon={StrategyConstants.ColumnChooserGlyph} infoBody={infoBody}>
-                <DualListBoxEditor AvailableValues={availableValues}
+                <DualListBoxEditor
+                 AvailableValues={availableValues}
                     cssClassName={cssClassName}
                     SelectedValues={selectedValues}
                     HeaderAvailable="Hidden Columns"

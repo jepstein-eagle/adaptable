@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, Col, Panel, Row,  Radio, HelpBlock } from 'react-bootstrap';
+import { ControlLabel, FormGroup, Col, Panel, Row, Radio, HelpBlock } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
@@ -13,8 +13,8 @@ import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
 import { Expression } from "../../../Utilities/Expression";
 
 export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
-  //  ChartDefinitions: IChartDefinition[]
-   }
+    //  ChartDefinitions: IChartDefinition[]
+}
 
 export interface ChartXAxisWizardState {
     XAxisColumnId: string,
@@ -43,7 +43,8 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
                         <Row>
                             <Col xs={1} />
                             <Col xs={10}>
-                                <HelpBlock>Select a column for the X Axis.<br />In the next step you can filter which values to display</HelpBlock>
+                                <HelpBlock>Select a column for the X Axis.<br />
+                                    Choose whether to show all values for this column or to filter them (performed in next step)</HelpBlock>
                             </Col>
                             <Col xs={1} />
                         </Row>
