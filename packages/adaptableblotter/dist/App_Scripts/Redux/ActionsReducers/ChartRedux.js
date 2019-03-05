@@ -27,7 +27,6 @@ exports.ChartDefinitionSelect = (CurrentChartName) => ({
 const initialChartState = {
     ChartDefinitions: GeneralConstants_1.EMPTY_ARRAY,
     CurrentChartName: GeneralConstants_1.EMPTY_STRING,
-    ShowModal: GeneralConstants_1.CHART_DEFAULT_SHOW_MODAL,
     RefreshRate: GeneralConstants_1.CHART_DEFAULT_REFRESH_RATE
 };
 exports.ChartReducer = (state = initialChartState, action) => {

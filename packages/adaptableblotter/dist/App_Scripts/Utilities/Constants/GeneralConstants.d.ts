@@ -18,7 +18,6 @@ export declare const DEFAULT_DARK_GREEN_COLOR: string;
 export declare const DEFAULT_DARK_RED_COLOR: string;
 export declare const ALERT_DEFAULT_MAX_ALERTS_IN_STORE: number;
 export declare const CALENDAR_DEFAULT_CURRENT_CALENDER: string;
-export declare const CHART_DEFAULT_SHOW_MODAL: boolean;
 export declare const CHART_DEFAULT_REFRESH_RATE: number;
 export declare const QUICK_SEARCH_DEFAULT_DISPLAY_ACTION: DisplayAction;
 export declare const QUICK_SEARCH_DEFAULT_BACK_COLOR: string;

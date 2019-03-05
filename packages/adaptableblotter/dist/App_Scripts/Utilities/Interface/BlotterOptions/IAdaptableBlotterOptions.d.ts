@@ -5,6 +5,7 @@ import { ILayoutOptions } from "./ILayoutOptions";
 import { IFilterOptions } from "./IFilterOptions";
 import { IQueryOptions } from "./IQueryOptions";
 import { IGeneralOptions } from "./IGeneralOptions";
+import { IChartOptions } from "./IChartOptions";
 /**
   * The class injected into the Adaptable Blotter at startup
   * providing all the user, grid and config information required
@@ -76,6 +77,10 @@ export interface IAdaptableBlotterOptions {
      * Whether to use Adaptable Blotter or vendor grid forms
     */
     filterOptions?: IFilterOptions;
+    /**
+     * Manage Adaptable Blotter charting
+    */
+    chartOptions?: IChartOptions;
     /**
      * General options to manage the Adaptable Blotter
     */

@@ -380,7 +380,6 @@ class ChartDisplayPopupComponent extends React.Component {
             args.background = color;
             args.leaderBrush = "#d8d8d8";
             args.textColor = "white";
-            // console.log("calloutStyleUpdating "  + args.item);
         }
     }
     seriesAdded(sender, args) {
@@ -388,7 +387,6 @@ class ChartDisplayPopupComponent extends React.Component {
         if (series.valueMemberPath &&
             series.valueMemberPath !== "") {
             this.seriesColors.set(series.valueMemberPath, args.series.actualBrush);
-            // console.log("seriesAdded " + series.valueMemberPath);
         }
     }
     onEditChart() {

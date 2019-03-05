@@ -22,9 +22,14 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     }
     InitState() {
         let isChartRelatedStateChanged = false;
+        let displayChartAtStartUp = false;
         if (this.ChartState != this.GetChartState()) {
             if (this.ChartState == null) {
                 isChartRelatedStateChanged = true;
+                // if user has set display at startup to be true and there is a current chart then show it
+                if (this.blotter.BlotterOptions.chartOptions.displayOnStartUp && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.GetChartState().CurrentChartName)) {
+                    displayChartAtStartUp = true;
+                }
             }
             else {
                 let chartStateDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
@@ -59,6 +64,10 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             }
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Chart, this.ChartState);
+            }
+            if (displayChartAtStartUp) {
+                this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartEnums_1.ChartVisibility.Maximised));
+                this.setChartData();
             }
         }
     }

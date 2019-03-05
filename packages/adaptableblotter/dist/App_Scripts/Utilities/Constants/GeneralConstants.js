@@ -28,7 +28,6 @@ exports.ALERT_DEFAULT_MAX_ALERTS_IN_STORE = 5;
 // Calendar
 exports.CALENDAR_DEFAULT_CURRENT_CALENDER = "United States";
 // Charts
-exports.CHART_DEFAULT_SHOW_MODAL = false;
 exports.CHART_DEFAULT_REFRESH_RATE = 3; // refresh the chart every 3 seconds if stuff chnanges
 // Quick Search
 exports.QUICK_SEARCH_DEFAULT_DISPLAY_ACTION = Enums_1.DisplayAction.HighlightCell;
