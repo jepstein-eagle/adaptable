@@ -37,7 +37,7 @@ import { IChartDefinition, IChartProperties, ICategoryChartDefinition, ICategory
 
 
 /*
-This is really only going to be for Category Charts.  
+This is really only going to be for Category Charts.
 As we add other chart types we will need to rethink this and some of the assumptions
 */
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
@@ -295,6 +295,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 yAxisTitleTextColor={this.state.ChartProperties.YAxisTitleColor}
                 yAxisIsLogarithmic={this.getYAxisIsLogarithmic(this.state.ChartProperties.YAxisLabelScale)}
                 yAxisInverted={this.state.ChartProperties.YAxisInverted}
+                yAxisInterval={this.state.ChartProperties.YAxisIntervalValue}
                 // xAxis
                 xAxisLabelVisibility={this.state.ChartProperties.XAxisLabelVisibility}
                 xAxisTitle={this.getXAxisTitle(this.state.UseDefaultXAxisTitle)}
@@ -303,6 +304,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                 xAxisGap={this.state.ChartProperties.XAxisGap}
                 xAxisOverlap={this.state.ChartProperties.XAxisOverlap}
                 xAxisInverted={this.state.ChartProperties.XAxisInverted}
+                xAxisInterval={this.state.ChartProperties.XAxisIntervalValue}
                 // TODO we will add 'xAxisLabelLocation' in the next release (ETA middle of 2019)
                 // xAxisLabelLocation={this.state.ChartProperties.XAxisLabelLocation}
 
@@ -519,10 +521,10 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                         <HelpBlock>
                                                                              <Row>
                                                                                 <Col xs={6}>
-                                                                                    
+
                                                                                         <Checkbox onChange={(e) => this.onSetYAxisMinValueOptionChanged(e)}
                                                                                             checked={this.state.SetYAxisMinimumValue} >Labels Min</Checkbox>
-                                                                                   
+
                                                                                 </Col>
                                                                                 <Col xs={6}>
                                                                                     {this.state.SetYAxisMinimumValue &&
@@ -533,7 +535,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                                             value={this.state.ChartProperties.YAxisMinimumValue} />
                                                                                     }
                                                                                 </Col>
-                                                                            
+
                                                                             </Row>
                                                                             </HelpBlock>
                                                                         </AdaptableBlotterForm>
@@ -541,10 +543,10 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                         <HelpBlock>
                                                                               <Row>
                                                                                 <Col xs={6}>
-                                                                                   
+
                                                                                         <Checkbox onChange={(e) => this.onSetYAxisMaxValueOptionChanged(e)}
                                                                                             checked={this.state.SetYAxisMaximumValue} >Labels Max</Checkbox>
-                                                                                   
+
                                                                                 </Col>
                                                                                 <Col xs={6}>
                                                                                     {this.state.SetYAxisMaximumValue &&
@@ -553,6 +555,27 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                                             placeholder={"Input"}
                                                                                             onChange={this.onYAxisMaxValueChanged}
                                                                                             value={this.state.ChartProperties.YAxisMaximumValue} />
+                                                                                    }
+                                                                                </Col>
+                                                                            </Row>
+                                                                             </HelpBlock>
+                                                                        </AdaptableBlotterForm>
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
+                                                                        <HelpBlock>
+                                                                              <Row>
+                                                                                <Col xs={6}>
+
+                                                                                        <Checkbox onChange={(e) => this.onSetYAxisIntervalValueOptionChanged(e)}
+                                                                                            checked={this.state.ChartProperties.YAxisIntervalCustom} >Labels Interval</Checkbox>
+
+                                                                                </Col>
+                                                                                <Col xs={6}>
+                                                                                    {this.state.ChartProperties.YAxisIntervalCustom &&
+                                                                                        <FormControl
+                                                                                            bsSize={"small"} type="number"
+                                                                                            placeholder={"Input"}
+                                                                                            onChange={this.onYAxisIntervalValueChanged}
+                                                                                            value={this.state.ChartProperties.YAxisIntervalValue} />
                                                                                     }
                                                                                 </Col>
                                                                             </Row>
@@ -657,7 +680,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                         </Row>
                                                                     </AdaptableBlotterForm> */}
                                                                         <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                                                        
+
                                                                             <Row>
                                                                                 <Col xs={6}>
                                                                                     <HelpBlock>Labels Angle</HelpBlock>
@@ -687,6 +710,26 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                                 </Col>
                                                                             </Row>
                                                                             </HelpBlock>
+                                                                        </AdaptableBlotterForm>
+
+                                                                        <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
+                                                                          <HelpBlock>
+                                                                                <Row>
+                                                                                  <Col xs={6}>
+                                                                                          <Checkbox onChange={(e) => this.onSetXAxisIntervalValueOptionChanged(e)}
+                                                                                              checked={this.state.ChartProperties.XAxisIntervalCustom} >Labels Interval</Checkbox>
+                                                                                  </Col>
+                                                                                  <Col xs={6}>
+                                                                                      {this.state.ChartProperties.XAxisIntervalCustom &&
+                                                                                          <FormControl
+                                                                                              bsSize={"small"} type="number"
+                                                                                              placeholder={"Input"}
+                                                                                              onChange={this.onXAxisIntervalValueChanged}
+                                                                                              value={this.state.ChartProperties.XAxisIntervalValue} />
+                                                                                      }
+                                                                                  </Col>
+                                                                              </Row>
+                                                                             </HelpBlock>
                                                                         </AdaptableBlotterForm>
 
                                                                         <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
@@ -1221,6 +1264,26 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         }
     }
 
+    private onSetYAxisIntervalValueOptionChanged(event: React.FormEvent<any>) {
+      let e = event.target as HTMLInputElement;
+      let chartProps: ICategoryChartProperties = this.state.ChartProperties;
+      chartProps.YAxisIntervalCustom = e.checked;
+      if (!e.checked) {
+          // set YAxisIntervalValue to undefined so it is auto calculated by the chart
+          chartProps.YAxisIntervalValue = undefined;
+      }
+      this.updateChartProperties(chartProps);
+  }
+  private onSetXAxisIntervalValueOptionChanged(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    let chartProps: ICategoryChartProperties = this.state.ChartProperties;
+    chartProps.XAxisIntervalCustom = e.checked;
+    if (!e.checked) {
+        // set XAxisIntervalValue to undefined so it is auto calculated by the chart
+        chartProps.XAxisIntervalValue = undefined;
+    }
+    this.updateChartProperties(chartProps);
+}
 
     private onSetYAxisLabelColorOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
@@ -1299,6 +1362,16 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     private onYAxisMaxValueChanged = (e: any) => {
         let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
         chartProperties.YAxisMaximumValue = e.target.value;
+        this.updateChartProperties(chartProperties);
+    }
+    private onYAxisIntervalValueChanged = (e: any) => {
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.YAxisIntervalValue = e.target.value;
+        this.updateChartProperties(chartProperties);
+    }
+    private onXAxisIntervalValueChanged = (e: any) => {
+        let chartProperties: ICategoryChartProperties = this.state.ChartProperties;
+        chartProperties.XAxisIntervalValue = e.target.value;
         this.updateChartProperties(chartProperties);
     }
 

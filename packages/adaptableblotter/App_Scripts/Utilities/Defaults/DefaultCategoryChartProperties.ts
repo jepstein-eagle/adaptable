@@ -31,6 +31,8 @@ export const DefaultCategoryChartProperties: ICategoryChartProperties = {
   YAxisLabelLocation: AxisLabelsLocation.OutsideRight,
   YAxisLabelVisibility: LabelVisibility.Visible,
   YAxisLabelColor: "",
+  YAxisIntervalCustom: false,
+  YAxisIntervalValue: undefined,
   YAxisTitle: "",
   YAxisTitleColor: "",
   YAxisMinimumValue: undefined, // auto-calculated based on data range
@@ -44,6 +46,8 @@ export const DefaultCategoryChartProperties: ICategoryChartProperties = {
   XAxisLabelLocation: AxisLabelsLocation.OutsideBottom,
   XAxisLabelVisibility: LabelVisibility.Visible,
   XAxisLabelColor: "",
+  XAxisIntervalCustom: false,
+  XAxisIntervalValue: undefined,
   XAxisTitle: "",
   XAxisTitleColor: "",
   XAxisGap: 0.5,
