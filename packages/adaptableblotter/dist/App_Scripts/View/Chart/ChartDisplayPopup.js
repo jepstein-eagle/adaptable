@@ -41,6 +41,16 @@ class ChartDisplayPopupComponent extends React.Component {
             chartProperties.YAxisMaximumValue = e.target.value;
             this.updateChartProperties(chartProperties);
         };
+        this.onYAxisIntervalValueChanged = (e) => {
+            let chartProperties = this.state.ChartProperties;
+            chartProperties.YAxisIntervalValue = e.target.value;
+            this.updateChartProperties(chartProperties);
+        };
+        this.onXAxisIntervalValueChanged = (e) => {
+            let chartProperties = this.state.ChartProperties;
+            chartProperties.XAxisIntervalValue = e.target.value;
+            this.updateChartProperties(chartProperties);
+        };
         this.onTransitionDurationChanged = (e) => {
             let chartProperties = this.state.ChartProperties;
             chartProperties.TransitionInDuration = e.target.value;
@@ -103,9 +113,9 @@ class ChartDisplayPopupComponent extends React.Component {
                 // titles (titles, alignment and margins)
                 chartTitle: this.props.CurrentChartDefinition.Name, subtitle: this.props.CurrentChartDefinition.Description, titleAlignment: this.state.ChartProperties.TitleAlignment, titleRightMargin: this.state.TitleMargin, titleTopMargin: this.state.TitleMargin, subtitleAlignment: this.state.ChartProperties.SubTitleAlignment, subtitleRightMargin: this.state.SubTitleMargin, 
                 // yAxis
-                yAxisMinimumValue: this.state.ChartProperties.YAxisMinimumValue, yAxisMaximumValue: this.state.ChartProperties.YAxisMaximumValue, yAxisTitle: this.getYAxisTitle(this.state.UseDefaultYAxisTitle), yAxisLabelVisibility: this.state.ChartProperties.YAxisLabelVisibility, yAxisLabelLocation: this.state.ChartProperties.YAxisLabelLocation, yAxisLabelTextColor: this.state.ChartProperties.YAxisLabelColor, yAxisTitleTextColor: this.state.ChartProperties.YAxisTitleColor, yAxisIsLogarithmic: this.getYAxisIsLogarithmic(this.state.ChartProperties.YAxisLabelScale), yAxisInverted: this.state.ChartProperties.YAxisInverted, 
+                yAxisMinimumValue: this.state.ChartProperties.YAxisMinimumValue, yAxisMaximumValue: this.state.ChartProperties.YAxisMaximumValue, yAxisTitle: this.getYAxisTitle(this.state.UseDefaultYAxisTitle), yAxisLabelVisibility: this.state.ChartProperties.YAxisLabelVisibility, yAxisLabelLocation: this.state.ChartProperties.YAxisLabelLocation, yAxisLabelTextColor: this.state.ChartProperties.YAxisLabelColor, yAxisTitleTextColor: this.state.ChartProperties.YAxisTitleColor, yAxisIsLogarithmic: this.getYAxisIsLogarithmic(this.state.ChartProperties.YAxisLabelScale), yAxisInverted: this.state.ChartProperties.YAxisInverted, yAxisInterval: this.state.ChartProperties.YAxisIntervalValue, 
                 // xAxis
-                xAxisLabelVisibility: this.state.ChartProperties.XAxisLabelVisibility, xAxisTitle: this.getXAxisTitle(this.state.UseDefaultXAxisTitle), xAxisTitleTextColor: this.state.ChartProperties.XAxisTitleColor, xAxisLabelTextColor: this.state.ChartProperties.XAxisLabelColor, xAxisGap: this.state.ChartProperties.XAxisGap, xAxisOverlap: this.state.ChartProperties.XAxisOverlap, xAxisInverted: this.state.ChartProperties.XAxisInverted, 
+                xAxisLabelVisibility: this.state.ChartProperties.XAxisLabelVisibility, xAxisTitle: this.getXAxisTitle(this.state.UseDefaultXAxisTitle), xAxisTitleTextColor: this.state.ChartProperties.XAxisTitleColor, xAxisLabelTextColor: this.state.ChartProperties.XAxisLabelColor, xAxisGap: this.state.ChartProperties.XAxisGap, xAxisOverlap: this.state.ChartProperties.XAxisOverlap, xAxisInverted: this.state.ChartProperties.XAxisInverted, xAxisInterval: this.state.ChartProperties.XAxisIntervalValue, 
                 // TODO we will add 'xAxisLabelLocation' in the next release (ETA middle of 2019)
                 // xAxisLabelLocation={this.state.ChartProperties.XAxisLabelLocation}
                 // tooltip
@@ -222,6 +232,13 @@ class ChartDisplayPopupComponent extends React.Component {
                                                                     React.createElement(react_bootstrap_1.HelpBlock, null,
                                                                         React.createElement(react_bootstrap_1.Row, null,
                                                                             React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetYAxisIntervalValueOptionChanged(e), checked: this.state.ChartProperties.YAxisIntervalCustom }, "Labels Interval")),
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 }, this.state.ChartProperties.YAxisIntervalCustom &&
+                                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "number", placeholder: "Input", onChange: this.onYAxisIntervalValueChanged, value: this.state.ChartProperties.YAxisIntervalValue }))))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Row, null,
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
                                                                                 React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetYAxisLabelColorOptionChanged(e), checked: this.state.SetYAxisLabelColor }, "Labels Color")),
                                                                             React.createElement(react_bootstrap_1.Col, { xs: 6 }, this.state.SetYAxisLabelColor &&
                                                                                 React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: this.state.ChartProperties.YAxisLabelColor, onChange: (x) => this.onYAxisLabelColorChange(x) }))))),
@@ -267,6 +284,13 @@ class ChartDisplayPopupComponent extends React.Component {
                                                                                 React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetXAxisLabelColorOptionChanged(e), checked: this.state.SetXAxisLabelColor }, "Labels Color")),
                                                                             React.createElement(react_bootstrap_1.Col, { xs: 6 }, this.state.SetXAxisLabelColor &&
                                                                                 React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, value: this.state.ChartProperties.XAxisLabelColor, onChange: (x) => this.onXAxisLabelColorChange(x) }))))),
+                                                                React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                                                                    React.createElement(react_bootstrap_1.HelpBlock, null,
+                                                                        React.createElement(react_bootstrap_1.Row, null,
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 },
+                                                                                React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onSetXAxisIntervalValueOptionChanged(e), checked: this.state.ChartProperties.XAxisIntervalCustom }, "Labels Interval")),
+                                                                            React.createElement(react_bootstrap_1.Col, { xs: 6 }, this.state.ChartProperties.XAxisIntervalCustom &&
+                                                                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "number", placeholder: "Input", onChange: this.onXAxisIntervalValueChanged, value: this.state.ChartProperties.XAxisIntervalValue }))))),
                                                                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
                                                                     React.createElement(react_bootstrap_1.Row, null,
                                                                         React.createElement(react_bootstrap_1.Col, { xs: 6 },
@@ -605,6 +629,26 @@ class ChartDisplayPopupComponent extends React.Component {
             chartProperties.YAxisMaximumValue = undefined;
             this.updateChartProperties(chartProperties);
         }
+    }
+    onSetYAxisIntervalValueOptionChanged(event) {
+        let e = event.target;
+        let chartProps = this.state.ChartProperties;
+        chartProps.YAxisIntervalCustom = e.checked;
+        if (!e.checked) {
+            // set YAxisIntervalValue to undefined so it is auto calculated by the chart
+            chartProps.YAxisIntervalValue = undefined;
+        }
+        this.updateChartProperties(chartProps);
+    }
+    onSetXAxisIntervalValueOptionChanged(event) {
+        let e = event.target;
+        let chartProps = this.state.ChartProperties;
+        chartProps.XAxisIntervalCustom = e.checked;
+        if (!e.checked) {
+            // set XAxisIntervalValue to undefined so it is auto calculated by the chart
+            chartProps.XAxisIntervalValue = undefined;
+        }
+        this.updateChartProperties(chartProps);
     }
     onSetYAxisLabelColorOptionChanged(event) {
         let e = event.target;

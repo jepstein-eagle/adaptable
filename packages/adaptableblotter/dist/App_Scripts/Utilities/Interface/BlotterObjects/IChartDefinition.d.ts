@@ -32,6 +32,8 @@ export interface ICategoryChartProperties extends IChartProperties {
     YAxisLabelLocation?: AxisLabelsLocation;
     YAxisLabelVisibility?: LabelVisibility;
     YAxisLabelScale?: AxisScale;
+    YAxisIntervalCustom?: boolean;
+    YAxisIntervalValue?: number;
     YAxisTitle?: string;
     YAxisLabelColor?: string;
     YAxisTitleColor?: string;
@@ -42,6 +44,8 @@ export interface ICategoryChartProperties extends IChartProperties {
     XAxisLabelLocation?: AxisLabelsLocation;
     XAxisLabelVisibility?: LabelVisibility;
     XAxisLabelColor?: string;
+    XAxisIntervalCustom?: boolean;
+    XAxisIntervalValue?: number;
     XAxisTitle?: string;
     XAxisTitleColor?: string;
     XAxisGap?: number;
