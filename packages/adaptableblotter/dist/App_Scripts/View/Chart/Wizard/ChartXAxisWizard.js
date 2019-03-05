@@ -29,7 +29,7 @@ class ChartXAxisWizard extends React.Component {
                                 React.createElement(react_bootstrap_1.HelpBlock, null,
                                     "Select a column for the X Axis.",
                                     React.createElement("br", null),
-                                    "In the next step you can filter which values to display")),
+                                    "Choose whether to show all values for this column or to filter them (performed in next step)")),
                             React.createElement(react_bootstrap_1.Col, { xs: 1 })),
                         React.createElement(react_bootstrap_1.Row, null,
                             React.createElement(react_bootstrap_1.Col, { xs: 4, componentClass: react_bootstrap_1.ControlLabel }, "X Axis Column: "),

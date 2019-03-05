@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ChartEnums_1 = require("../ChartEnums");
 exports.DefaultCategoryChartProperties = {
     // General
-    ChartType: ChartEnums_1.ChartType.Column,
+    ChartType: ChartEnums_1.ChartType.Line,
     // jw: changed back to column as I *think* that is what our users want but genuinely unsure...
     SeriesThickness: 1,
     // added special Default enum to resolve marker type based on chart type. Do not use enums for this property

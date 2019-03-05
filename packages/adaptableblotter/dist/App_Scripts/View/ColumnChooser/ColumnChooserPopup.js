@@ -22,7 +22,7 @@ class ColumnChooserPopupComponent extends React.Component {
                 };
             });
         }
-        availableValues = this.props.Columns.filter(x => !x.Visible).map(x => ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x));
+        availableValues = this.props.Columns.map(x => ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x));
         selectedValues = this.props.Columns.filter(x => x.Visible).map(x => ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x));
         let infoBody = ["Move items between the 'Hidden Columns' and 'Visible Columns' listboxes to hide / show them.", React.createElement("br", null), React.createElement("br", null),
             "Use the buttons on the right of the 'Visible Columns' listbox to order them as required.", React.createElement("br", null), React.createElement("br", null),

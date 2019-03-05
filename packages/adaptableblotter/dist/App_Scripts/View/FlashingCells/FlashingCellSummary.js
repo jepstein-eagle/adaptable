@@ -17,7 +17,7 @@ class FlashingCellSummaryComponent extends React.Component {
         let message = isFlashingCellColumn ? "Flashing on" : "Flashing off";
         let showFlashingButton = isFlashingCellColumn ?
             React.createElement(react_bootstrap_1.Button, { onClick: () => this.onFlashingSelectedChanged(flashingCell), bsStyle: "default", bsSize: "small" }, "Turn Off")
-            : React.createElement(react_bootstrap_1.Button, { onClick: () => this.onFlashingSelectedChanged(flashingCell), bsStyle: "deffault", bsSize: "small" }, "Turn On");
+            : React.createElement(react_bootstrap_1.Button, { onClick: () => this.onFlashingSelectedChanged(flashingCell), bsStyle: "default", bsSize: "small" }, "Turn On");
         let colItems = [];
         colItems.push({ Size: 3, Content: React.createElement("b", null, StrategyConstants.FlashingCellsStrategyName) });
         colItems.push({ Size: 7, Content: message });
