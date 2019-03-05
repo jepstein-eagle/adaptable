@@ -177,7 +177,11 @@ export module ExpressionHelper {
         if (includeColumnName) {
             returnValue += "[" + columnFriendlyName + "]"
         }
-        returnValue += " In (" + columnValueExpression.ColumnDisplayValues.join(", ") + ")"
+        if (columnValueExpression !== undefined &&
+            columnValueExpression.ColumnDisplayValues !== undefined &&
+            columnValueExpression.ColumnDisplayValues.length > 0 ) {
+              returnValue += " In (" + columnValueExpression.ColumnDisplayValues.join(", ") + ")"
+        }
         return returnValue;
     }
 
@@ -415,7 +419,7 @@ export module ExpressionHelper {
     }
 
     export function IsExpressionValid(expression: Expression): boolean {
-        //nothing to check for ColumnValues. 
+        //nothing to check for ColumnValues.
         //we check that all ranges are properly populated
         return expression.RangeExpressions.every(x => {
             return x.Ranges.every(range => {
@@ -624,4 +628,4 @@ export module ExpressionHelper {
     }
 
 
-} 
+}
