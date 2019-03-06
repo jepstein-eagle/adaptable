@@ -3,7 +3,7 @@ var adaptableblotter;
 var quickSearchText;
 var trades;
 var gridOptions;
-var showTrade = false;
+var showTrade = true;
 var instantiateAgGridInHarness = false;
 
 function runQuickSearchViaAPI() {
@@ -328,7 +328,7 @@ function getTradeSchema() {
   });
 
   schema.push({
-    headerName: 'Change On Year',
+    headerName: 'Change',
     field: 'changeOnYear',
     filter: true,
     editable: true,
