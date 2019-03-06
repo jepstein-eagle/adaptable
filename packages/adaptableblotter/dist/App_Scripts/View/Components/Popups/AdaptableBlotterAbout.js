@@ -178,7 +178,7 @@ class AdaptableBlotterAbout extends React.Component {
                 return ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ": " + gs.SortOrder;
             });
             returnRows.push(this.createColItem(colItems, "Vendor Grid", this.props.AdaptableBlotter.VendorGridName));
-            returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "3.2"));
+            returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "3.3"));
             returnRows.push(this.createColItem(colItems, "Licence Type", this.props.AdaptableBlotter.LicenceService.LicenceType));
             returnRows.push(this.createColItem(colItems, "Sorted Columns", ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(sorts) ? sorts.join("; ") : "None"));
             returnRows.push(this.createColItem(colItems, "Column Filters", columnFilterDescription));
