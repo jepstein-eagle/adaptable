@@ -18,9 +18,6 @@ import { PanelWithButton } from "../Panels/PanelWithButton";
 import { ButtonMaximise } from "../Buttons/ButtonMaximise";
 import { ButtonMinimise } from "../Buttons/ButtonMinimise";
 import { AdaptablePopover } from "../../AdaptablePopover";
-import { MessageType } from "../../../Utilities/Enums";
-import { BlotterApi } from "../../../Api/BlotterApi";
-
 
 interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlotterAbout> {
     AdaptableBlotter: IAdaptableBlotter
@@ -289,7 +286,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
                 return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ": " + gs.SortOrder   
             })
             returnRows.push(this.createColItem(colItems, "Vendor Grid", this.props.AdaptableBlotter.VendorGridName));
-            returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "3.2"));
+            returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "3.3"));
             returnRows.push(this.createColItem(colItems, "Licence Type", this.props.AdaptableBlotter.LicenceService.LicenceType));
             returnRows.push(this.createColItem(colItems, "Sorted Columns", ArrayExtensions.IsNotNullOrEmpty(sorts) ? sorts.join("; ") : "None"));
             returnRows.push(this.createColItem(colItems, "Column Filters", columnFilterDescription));
