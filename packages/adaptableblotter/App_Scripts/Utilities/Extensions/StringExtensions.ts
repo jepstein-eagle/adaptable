@@ -18,7 +18,7 @@ export module StringExtensions {
   }
 
   export function IsNullOrEmpty(stringToCheck: string) {
-    return IsNull(stringToCheck) || StringExtensions.IsEmpty(stringToCheck);
+    return IsNull(stringToCheck) || IsEmpty(stringToCheck);
   }
 
   export function IsNotNullOrEmpty(stringToCheck: string) {

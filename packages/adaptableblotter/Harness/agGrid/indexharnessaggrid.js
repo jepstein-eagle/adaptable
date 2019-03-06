@@ -73,7 +73,7 @@ function InitTradeBlotter() {
   gridOptions = {
     columnDefs: getColumnsForGrid(), // returns a list of agGrid column definitions
     rowData: trades, // the dummy data we are using
- //   enableRangeSelection: true,
+    enableRangeSelection: true,
     floatingFilter: true,
     suppressColumnVirtualisation: false,
     //  sideBar: undefined, // this puts in filters and columns by default
@@ -123,11 +123,11 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
-     //   licenceKey: getCommunityKey(),
+      //   licenceKey: getCommunityKey(),
       //    licenceKey: getStandardKey(),
       licenceKey: getEnterpriseKey(),
 
-       //   predefinedConfig: myJson,
+      //   predefinedConfig: myJson,
 
       auditOptions: {
         //     auditCellEdits: true,
@@ -137,7 +137,7 @@ function InitTradeBlotter() {
         //        pingInterval: 120
       },
       containerOptions: {
-       // chartContainer: 'chart-container-xx', // set our own container
+        // chartContainer: 'chart-container-xx', // set our own container
         vendorContainer: 'grid',
       },
       configServerOptions: {
@@ -155,10 +155,10 @@ function InitTradeBlotter() {
         // getColumnValues: retrieveValues,
       },
       filterOptions: {
-          useAdaptableBlotterFilterForm: true,
-          useAdaptableBlotterQuickFilter: false
+        useAdaptableBlotterFilterForm: true,
+        useAdaptableBlotterQuickFilter: false
       },
-      chartOptions:{
+      chartOptions: {
         displayOnStartUp: true,
         showModal: false,
       },
