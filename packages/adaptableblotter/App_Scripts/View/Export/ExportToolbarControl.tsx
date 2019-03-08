@@ -19,7 +19,7 @@ import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
-import { ExportDestination, SortOrder, AccessLevel } from '../../Utilities/Enums';
+import { ExportDestination, SortOrder, AccessLevel, DashboardSize } from '../../Utilities/Enums';
 import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
@@ -38,6 +38,7 @@ interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
     Reports: IReport[];
     CurrentReport: string;
     LiveReports: ILiveReport[];
+    DashboardSize: DashboardSize;
 }
 
 class ExportToolbarControlComponent extends React.Component<ExportToolbarControlComponentProps, {}> {
@@ -74,10 +75,10 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         }
 
         let deleteMessage: string = "Are you sure you want to delete '";
-        if(savedReport!=null){
+        if (savedReport != null) {
             deleteMessage = deleteMessage + savedReport.Name + "?";
         }
-      
+
         const exportGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Export"}</Tooltip >}>
             <Glyphicon glyph={StrategyConstants.ExportGlyph} />
         </OverlayTrigger>
@@ -89,7 +90,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     disabled={availableReports.length == 0}
                     style={{ minWidth: "120px" }}
                     className={cssClassName}
-                    bsSize={"small"}
+                    bsSize={this.props.DashboardSize}
                     bsStyle={"default"}
                     title={currentReportId}
                     id="report" >
@@ -102,7 +103,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                             bsStyle={"default"}
                             cssClassName={cssClassName}
                             onClick={() => this.onSelectedReportChanged("")}
-                            size={"small"}
+                            size={this.props.DashboardSize}
                             overrideTooltip="Clear Report"
                             overrideDisableButton={currentReportId == selectReportString}
                             DisplayMode="Glyph"
@@ -117,8 +118,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             <span className={this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <DropdownButton
                     style={{ marginLeft: "5px" }}
-
-                    bsSize="small"
+                    bsSize={this.props.DashboardSize}
                     bsStyle="primary"
                     title={exportGlyph}
                     id="exportDropdown"
@@ -135,7 +135,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     style={{ marginLeft: "2px" }}
                     onClick={() => this.props.onEditReport()}
                     cssClassName={cssClassName}
-                    size={"small"}
+                    size={this.props.DashboardSize}
                     overrideTooltip="Edit Report"
                     overrideDisableButton={savedReport == null || ReportHelper.IsSystemReport(savedReport)}
                     DisplayMode="Glyph"
@@ -145,7 +145,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                 <ButtonNew
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} onClick={() => this.props.onNewReport()}
-                    size={"small"}
+                    size={this.props.DashboardSize}
                     overrideTooltip="Create New Report"
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
@@ -154,7 +154,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                 <ButtonDelete
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName}
-                    size={"small"}
+                    size={this.props.DashboardSize}
                     overrideTooltip="Delete Report"
                     overrideDisableButton={savedReport == null || ReportHelper.IsSystemReport(savedReport)}
                     DisplayMode="Glyph"
@@ -181,6 +181,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentReport: state.Export.CurrentReport,
         Reports: state.Export.Reports,
         LiveReports: state.System.CurrentLiveReports,
+        DashboardSize: state.Dashboard.DashboardSize
     };
 }
 

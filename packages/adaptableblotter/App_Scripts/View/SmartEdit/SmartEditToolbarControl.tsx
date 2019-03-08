@@ -16,7 +16,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
-import { StatusColour, MathOperation, AccessLevel, MessageType } from "../../Utilities/Enums";
+import { StatusColour, MathOperation, AccessLevel, MessageType, DashboardSize } from "../../Utilities/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
@@ -30,6 +30,7 @@ interface SmartEditToolbarControlComponentProps extends ToolbarStrategyViewPopup
     MathOperation: MathOperation;
     IsValidSelection: boolean;
     PreviewInfo: IPreviewInfo;
+    DashboardSize: DashboardSize;
     onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
     onSmartEditOperationChange: (MathOperation: MathOperation) => SmartEditRedux.SmartEditChangeOperationAction;
     onSmartEditCheckSelectedCells: () => SystemRedux.SmartEditCheckCellSelectionAction;
@@ -73,6 +74,8 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
 
         let selectedColumn = (StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)) ? ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns) : null
 
+        let formControlStyle: any = (this.props.DashboardSize == 'xsmall') ? smallFormControlStyle: standardFormControlStyle;
+
         let previewPanel =
             <PreviewResultsPanel
                 cssClassName={cssClassName}
@@ -93,18 +96,18 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
             <div className={this.props.AccessLevel == AccessLevel.ReadOnly || !this.props.IsValidSelection ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <InputGroup>
 
-                    <DropdownButton style={{ marginRight: "3px", width: "75px" }} title={this.props.MathOperation} id="SmartEdit_Operation" bsSize="small" componentClass={InputGroup.Button}>
+                    <DropdownButton style={{ marginRight: "3px", width: "75px" }} title={this.props.MathOperation} id="SmartEdit_Operation" bsSize={this.props.DashboardSize} componentClass={InputGroup.Button}>
                         {operationMenuItems}
                     </DropdownButton>
 
-                    <FormControl value={this.props.SmartEditValue.toString()} style={{ width: "70px" }} type="number" placeholder="Enter a Number" bsSize="small" step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
+                    <FormControl value={this.props.SmartEditValue.toString()} style={formControlStyle} type="number" placeholder="Enter a Number" bsSize={this.props.DashboardSize} step="any" onChange={(e) => this.onSmartEditValueChange(e)} />
                 </InputGroup>
 
                 {this.props.IsValidSelection &&
                     <ButtonApply cssClassName={cssClassName}
                         style={{ marginLeft: "3px" }}
                         onClick={() => this.onApplyClick()}
-                        size={"small"}
+                        size={this.props.DashboardSize}
                         glyph={"ok"}
                         bsStyle={UIHelper.getStyleNameByStatusColour(statusColour)}
                         overrideTooltip="Apply Smart Edit"
@@ -116,7 +119,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
 
                 {this.props.IsValidSelection &&
                     <span style={{ marginLeft: "3px" }}>
-                        <AdaptablePopover cssClassName={cssClassName} headerText="Preview Results" tooltipText="Preview Results" bodyText={[previewPanel]} MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)} useButton={true} triggerAction={"click"} />
+                        <AdaptablePopover size={this.props.DashboardSize} cssClassName={cssClassName} headerText="Preview Results" tooltipText="Preview Results" bodyText={[previewPanel]} MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)} useButton={true} triggerAction={"click"} />
                     </span>
                 }
 
@@ -188,6 +191,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         MathOperation: state.SmartEdit.MathOperation,
         IsValidSelection: state.System.IsValidSmartEditSelection,
         PreviewInfo: state.System.SmartEditPreviewInfo,
+        DashboardSize: state.Dashboard.DashboardSize
     };
 }
 
@@ -204,3 +208,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let SmartEditToolbarControl = connect(mapStateToProps, mapDispatchToProps)(SmartEditToolbarControlComponent);
+
+
+let smallFormControlStyle: React.CSSProperties = {
+    'fontSize': 'xsmall',
+    'height': '22px',
+    'width': '70px'
+}
+
+let standardFormControlStyle: React.CSSProperties = {
+    'width': '70px'
+}

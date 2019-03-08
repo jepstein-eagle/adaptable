@@ -14,7 +14,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
-import { SortOrder, AccessLevel } from '../../Utilities/Enums';
+import { SortOrder, AccessLevel, DashboardSize } from '../../Utilities/Enums';
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
@@ -24,6 +24,7 @@ import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
     CurrentAdvancedSearchName: string;
     AdvancedSearches: IAdvancedSearch[];
+    DashboardSize: DashboardSize;
     onSelectAdvancedSearch: (advancedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction;
     onNewAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
     onEditAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
@@ -50,7 +51,9 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
             <InputGroup>
                 <DropdownButton disabled={availableSearches.length == 0} style={{ minWidth: "120px" }}
-                    className={cssClassName} bsSize={"small"} bsStyle={"default"} title={currentSearchName} id="advancedSearch" componentClass={InputGroup.Button}>
+                    className={cssClassName} 
+                    bsSize={this.props.DashboardSize}
+                    bsStyle={"default"} title={currentSearchName} id="advancedSearch" componentClass={InputGroup.Button}>
                     {availableSearches}
                 </DropdownButton>
                 {currentSearchName != selectSearchString &&
@@ -59,7 +62,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                             bsStyle={"default"}
                             cssClassName={cssClassName}
                             onClick={() => this.onSelectedSearchChanged("")}
-                            size={"small"}
+                            size={this.props.DashboardSize}
                             overrideTooltip="Clear Search"
                             overrideDisableButton={currentSearchName == selectSearchString}
                             DisplayMode="Glyph"
@@ -74,7 +77,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     style={{ marginLeft: "5px" }}
                     onClick={() => this.props.onEditAdvancedSearch()}
                     cssClassName={cssClassName}
-                    size={"small"}
+                    size={this.props.DashboardSize}
                     overrideTooltip="Edit Current Advanced Search"
                     overrideDisableButton={currentSearchName == selectSearchString}
                      DisplayMode="Glyph"
@@ -84,15 +87,15 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} 
                     onClick={() => this.props.onNewAdvancedSearch()}
-                    size={"small"}
-                    overrideTooltip="Create New Advanced Search"
+                    size={this.props.DashboardSize}
+                            overrideTooltip="Create New Advanced Search"
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
                 />
                 <ButtonDelete
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName}
-                    size={"small"}
+                    size={this.props.DashboardSize}
                     overrideTooltip="Delete Advanced Search"
                     overrideDisableButton={currentSearchName == selectSearchString}
                      DisplayMode="Glyph"
@@ -121,6 +124,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
+        DashboardSize: state.Dashboard.DashboardSize
     };
 }
 

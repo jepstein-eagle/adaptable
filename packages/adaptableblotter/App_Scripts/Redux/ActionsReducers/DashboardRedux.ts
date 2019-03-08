@@ -231,6 +231,7 @@ const initialDashboardState: DashboardState = {
     ],
     Zoom: 1,
     DashboardVisibility: Visibility.Visible,
+    DashboardSize: 'xsmall',
     ShowSystemStatusButton: true,
     ShowAboutButton: true,
     ShowFunctionsDropdown: true,

@@ -12,8 +12,8 @@ import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
 import { PanelDashboard } from "../Components/Panels/PanelDashboard";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 import { ISelectedCellInfo } from "../../Utilities/Interface/SelectedCell/ISelectedCellInfo";
-import { AccessLevel, CellSummaryOperation, CellSummaryOptionalOperation } from "../../Utilities/Enums";
-import { DropdownButton, MenuItem, InputGroup, ControlLabel } from "react-bootstrap";
+import { AccessLevel, CellSummaryOperation, CellSummaryOptionalOperation, DashboardSize } from "../../Utilities/Enums";
+import { DropdownButton, MenuItem, InputGroup, ControlLabel, FormControl } from "react-bootstrap";
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { ICellSummmary } from "../../Utilities/Interface/SelectedCell/ICellSummmary";
@@ -27,7 +27,8 @@ interface CellSummaryToolbarControlComponentProps extends ToolbarStrategyViewPop
     OptionalSummaryOperations: string[]
     onCellSummaryOperationChange: (summaryOperation: CellSummaryOperation | CellSummaryOptionalOperation) => SelectedCellsRedux.CellSummaryChangeOperationAction;
     onCreateCellSummary: () => GridRedux.GridCreateCellSummaryAction;
-    CellSummary: ICellSummmary
+    CellSummary: ICellSummmary;
+    DashboardSize: DashboardSize;
 }
 
 interface CellSummaryToolbarControlComponentState {
@@ -69,7 +70,6 @@ class CellSummaryToolbarControlComponent extends React.Component<CellSummaryTool
                 return <MenuItem key={index} eventKey="index" onClick={() => this.props.onCellSummaryOperationChange(summaryOperation)}>{summaryOperation as CellSummaryOptionalOperation}</MenuItem>
             }
         })
-
         let cellSummaryPopover =
             <CellSummaryPopover
                 cssClassName={cssClassName}
@@ -79,16 +79,16 @@ class CellSummaryToolbarControlComponent extends React.Component<CellSummaryTool
         let content = <span>
             <div className={this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <InputGroup>
-                    <DropdownButton style={{ marginRight: "3px", width: "75px" }} title={this.props.CellSummaryOperation} id="CellSummary_Operation" bsSize="small" componentClass={InputGroup.Button}>
+                    <DropdownButton style={{ marginRight: "3px", width: "75px" }} title={this.props.CellSummaryOperation} id="CellSummary_Operation" bsSize={this.props.DashboardSize} componentClass={InputGroup.Button}>
                         {operationMenuItems}
                         {operationOptionalMenuItems}
                     </DropdownButton>
                     {this.props.CellSummary != null &&
                         <span>
-                            <ControlLabel style={{ marginTop: "5px", marginLeft: "3px" }}>{this.getOperationValue()} </ControlLabel>
+                            <ControlLabel style={{ marginLeft: "3px" }}>{this.getOperationValue()} </ControlLabel>
                             {' '}
                             {this.props.CellSummary != null && this.props.CellSummary.Count > 0 &&
-                                <AdaptablePopover cssClassName={cssClassName} headerText="Cell Summary" bodyText={[cellSummaryPopover]} tooltipText={"Show Cell Summary"} useButton={true} triggerAction={"click"} popoverMinWidth={300} />
+                                <AdaptablePopover size={this.props.DashboardSize} cssClassName={cssClassName} headerText="Cell Summary" bodyText={[cellSummaryPopover]} tooltipText={"Show Cell Summary"} useButton={true} triggerAction={"click"} popoverMinWidth={300} />
                             }
                         </span>
                     }
@@ -138,6 +138,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CellSummaryOperation: state.CellSummary.SummaryOperation,
         OptionalSummaryOperations: state.CellSummary.OptionalSummaryOperations,
         CellSummary: state.Grid.CellSummary,
+        DashboardSize: state.Dashboard.DashboardSize
     };
 }
 

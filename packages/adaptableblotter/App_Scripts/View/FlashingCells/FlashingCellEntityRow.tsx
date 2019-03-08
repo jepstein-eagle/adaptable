@@ -21,10 +21,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
     render(): any {
         let flashingCell: IFlashingCell = this.props.AdaptableBlotterObject as IFlashingCell;
 
-        //we could have the typeahead combobox with freetext and the correct items in the list
-        //but I don't think we should allow users to enter a value....
-        //I'm only managing the case where the duration is not one of the predefined ones to be nicely displayed in the UI
-        let durations = this.props.FlashingCellDurations.map((flashingCellDuration) => {
+           let durations = this.props.FlashingCellDurations.map((flashingCellDuration) => {
             return <option key={flashingCellDuration} value={flashingCellDuration}>{this.getFriendlyFlashingDuration(flashingCellDuration)}</option>
         })
         if (!this.props.FlashingCellDurations.find(x => x == flashingCell.FlashingCellDuration)) {

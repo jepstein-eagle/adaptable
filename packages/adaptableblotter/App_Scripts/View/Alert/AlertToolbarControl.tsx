@@ -13,13 +13,14 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { IAlertDefinition } from "../../Utilities/Interface/BlotterObjects/IAlertDefinition";
 import { AdaptablePopover } from "../AdaptablePopover";
-import { MessageType, AccessLevel } from "../../Utilities/Enums";
+import { MessageType, AccessLevel, DashboardSize } from "../../Utilities/Enums";
 import { AlertsPanel } from "./AlertsPanel";
 import { IAdaptableAlert} from "../../Utilities/Interface/IMessage";
 
 interface AlertToolbarControlProps extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
     AlertDefinitions: IAlertDefinition[];
     Alerts: IAdaptableAlert[];
+    DashboardSize: DashboardSize;
     onDeleteAlert: (index: number) => SystemRedux.SystemAlertDeleteAction;
     onDeleteAllAlert: () => SystemRedux.SystemAlertDeleteAllAction;
 }
@@ -60,15 +61,18 @@ class AlertToolbarControlComponent extends React.Component<AlertToolbarControlPr
             />
 
         let collapsedText = this.props.Alerts.length == 0 ?
-            "No Alerts" :
+            "0 Alerts" :
             this.props.Alerts.length == 1 ?
                 "1 Alert" :
                 this.props.Alerts.length + " Alerts";
 
+                let formControlStyle: any = (this.props.DashboardSize == 'xsmall') ? smallFormControlStyle: standardFormControlStyle;
+
+     
 
         let content = <span>
 
-            <FormControl bsSize="small" style={{ width: "80px" }} value={collapsedText} disabled={true} type="string" />
+            <FormControl bsSize={this.props.DashboardSize} style={formControlStyle} value={collapsedText} disabled={true} type="string" />
             {' '}
             {this.state.ShowMessage &&
                 <Label bsStyle="success">New</Label>
@@ -76,7 +80,7 @@ class AlertToolbarControlComponent extends React.Component<AlertToolbarControlPr
             {' '}
             {this.props.Alerts.length > 0 &&
                 <span style={{ marginLeft: "3px" }}>
-                    <AdaptablePopover cssClassName={cssClassName} headerText="" tooltipText="Alerts" bodyText={[alertsPanel]} MessageType={this.getMessageType()} useButton={true} triggerAction={"click"} />
+                    <AdaptablePopover size={this.props.DashboardSize} cssClassName={cssClassName} headerText="" tooltipText="Alerts" bodyText={[alertsPanel]} MessageType={this.getMessageType()} useButton={true} triggerAction={"click"} />
                 </span>
             }
         </span>
@@ -105,6 +109,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         AlertDefinitions: state.Alert.AlertDefinitions,
         Alerts: state.System.Alerts,
+        DashboardSize: state.Dashboard.DashboardSize
     };
 }
 
@@ -118,3 +123,15 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let AlertToolbarControl = connect(mapStateToProps, mapDispatchToProps)(AlertToolbarControlComponent);
+
+
+
+let smallFormControlStyle: React.CSSProperties = {
+    'fontSize': 'xsmall',
+    'height': '22px',
+    'width': '80px'
+}
+
+let standardFormControlStyle: React.CSSProperties = {
+    'width': '80px'
+}
