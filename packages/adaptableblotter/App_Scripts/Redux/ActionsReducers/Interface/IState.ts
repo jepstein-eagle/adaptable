@@ -43,7 +43,7 @@ export interface IState {
  * This is created by the system at run-time and NOT part of predefined or user config.
  * Therefore it is not saved nor included in State events
 
- */ 
+ */
 export interface ISystemState extends IState {
 }
 
@@ -76,7 +76,7 @@ export interface GridState extends ISystemState {
     GridSorts: IGridSort[];
     SelectedCellInfo: ISelectedCellInfo;
     CellSummary: ICellSummmary;
-    IsFloatingFilterActive: boolean; 
+    IsFloatingFilterActive: boolean;
 }
 
 export interface MenuState extends ISystemState {
@@ -153,7 +153,7 @@ export interface CalendarState extends IUserState {
 }
 
 export interface CellSummaryState extends IUserState {
-    SummaryOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count'| 'VWap' | 'Only';
+    SummaryOperation: 'Sum' | 'Average' | 'Mode' | 'Median' | 'Distinct' | 'Max' | 'Min' | 'Count' | 'VWap' | 'Only';
     OptionalSummaryOperations: string[]; // for now just 'VWaP' and 'Only' are available
 }
 
@@ -196,6 +196,7 @@ export interface DashboardState extends IUserState {
     ShowToolbarsDropdown: boolean;
     HomeToolbarTitle: string;
     ApplicationToolbarTitle: string;
+    DashboardSize: 'large' | 'medium' | 'small' | 'xsmall'
 }
 
 export interface DataSourceState extends IUserState {
@@ -212,7 +213,7 @@ export interface FlashingCellState extends IUserState {
     FlashingCells: IFlashingCell[];
     DefaultUpColor?: string;
     DefautDownColor?: string;
-    DefaultDuration?: 250 | 500| 750|1000 ;
+    DefaultDuration?: 250 | 500 | 750 | 1000;
 }
 
 export interface FormatColumnState extends IUserState {

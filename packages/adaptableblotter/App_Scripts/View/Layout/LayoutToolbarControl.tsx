@@ -1,10 +1,9 @@
 ﻿import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { FormControl, Row, Col, InputGroup, InputGroupButton, Glyphicon, MenuItem, DropdownButton } from 'react-bootstrap';
+import { InputGroup, MenuItem, DropdownButton } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
@@ -20,7 +19,7 @@ import { ObjectFactory } from "../../Utilities/ObjectFactory";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { ILayout } from "../../Utilities/Interface/BlotterObjects/ILayout";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
-import { AccessLevel } from "../../Utilities/Enums";
+import { AccessLevel, DashboardSize } from "../../Utilities/Enums";
 
 interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
     onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
@@ -28,7 +27,8 @@ interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
     onNewLayout: () => PopupRedux.PopupShowScreenAction;
     Layouts: ILayout[];
     CurrentLayout: string;
-  }
+    DashboardSize: DashboardSize;
+}
 
 
 class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControlComponentProps, {}> {
@@ -53,7 +53,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
 
             <InputGroup>
-                <DropdownButton disabled={availableLayouts.length == 0} style={{ minWidth: "120px" }} className={cssClassName} bsSize={"small"} bsStyle={"default"} title={currentLayoutTitle} id="layout" >
+                <DropdownButton disabled={availableLayouts.length == 0} style={{ minWidth: "120px" }} className={cssClassName} bsSize={this.props.DashboardSize} bsStyle={"default"} title={currentLayoutTitle} id="layout" >
                     {availableLayouts}
                 </DropdownButton>
 
@@ -63,21 +63,21 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                             bsStyle={"default"}
                             cssClassName={cssClassName}
                             onClick={() => this.onLayoutChanged(GeneralConstants.DEFAULT_LAYOUT)}
-                            size={"small"}
+                            size={this.props.DashboardSize}
                             overrideTooltip="Clear layout"
                             overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
-                             DisplayMode="Glyph"
+                            DisplayMode="Glyph"
                             AccessLevel={this.props.AccessLevel}
                         />
                     </InputGroup.Button>
                 }
             </InputGroup>
 
-            <span className={this.props.AccessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <span className={this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <ButtonSave
                     style={{ marginLeft: "5px" }}
                     cssClassName={cssClassName} onClick={() => this.onSave()}
-                    size={"small"}
+                    size={this.props.DashboardSize}
                     overrideTooltip="Save Changes to Current Layout"
                     overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
                     DisplayMode="Glyph"
@@ -87,7 +87,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                 <ButtonNew
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} onClick={() => this.props.onNewLayout()}
-                    size={"small"}
+                    size={this.props.DashboardSize}
                     overrideTooltip="Create a new Layout"
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
@@ -95,19 +95,20 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
 
                 <ButtonUndo style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} onClick={() => this.props.onSelectLayout(this.props.CurrentLayout)}
-                    size={"small"}
+                    size={this.props.DashboardSize}
                     overrideTooltip="Undo Layout Changes"
                     overrideDisableButton={!currentLayoutTitle.endsWith(("(Modified)"))}
-                     DisplayMode="Glyph"
+                    DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
                 />
 
                 <ButtonDelete
                     style={{ marginLeft: "2px" }}
-                    cssClassName={cssClassName} size={"small"}
+                    cssClassName={cssClassName}
+                    size={this.props.DashboardSize}
                     overrideTooltip="Delete Layout"
                     overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
-                     DisplayMode="Glyph"
+                    DisplayMode="Glyph"
                     ConfirmAction={LayoutRedux.LayoutDelete(this.props.CurrentLayout)}
                     ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
                     ConfirmationTitle={"Delete Layout"}
@@ -164,7 +165,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentLayout: state.Layout.CurrentLayout,
         Layouts: state.Layout.Layouts,
-     };
+        DashboardSize: state.Dashboard.DashboardSize
+    };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

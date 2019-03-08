@@ -15,7 +15,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { AdaptablePopover } from "../AdaptablePopover";
-import { StatusColour, AccessLevel, MessageType } from "../../Utilities/Enums";
+import { StatusColour, AccessLevel, MessageType, DashboardSize } from "../../Utilities/Enums";
 import { PreviewResultsPanel } from "../Components/PreviewResultsPanel";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { UIHelper } from "../UIHelper";
@@ -28,7 +28,8 @@ interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopu
     BulkUpdateValue: string;
     IsValidSelection: boolean;
     PreviewInfo: IPreviewInfo;
-   onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
+    DashboardSize: DashboardSize;
+    onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
     onBulkUpdateCheckSelectedCells: () => SystemRedux.BulkUpdateCheckCellSelectionAction;
     onApplyBulkUpdate: () => BulkUpdateRedux.BulkUpdateApplyAction;
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) => PopupRedux.PopupShowConfirmationAction;
@@ -70,8 +71,8 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         let cssClassName: string = this.props.cssClassName + "__bulkupdate";
 
         let activeButton = this.state.Disabled ?
-            <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="default" bsSize="small">Off</Button>
-            : <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="primary" bsSize="small">On</Button>
+            <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="default" bsSize={this.props.DashboardSize}>Off</Button>
+            : <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="primary" bsSize={this.props.DashboardSize}>On</Button>
 
         let selectedColumn = (this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.PreviewInfo.ColumnId)) ?
             ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns) :
@@ -90,20 +91,20 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             />
 
         let content = <span>
-            <div className={this.props.AccessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <div className={this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <InputGroup>
                     <InputGroup.Button>
                         {activeButton}
                     </InputGroup.Button>
 
                     <ColumnValueSelector
-                        style={{ width: "120px" }}
+                        style={{ width: "120px", height: '10px' }}
                         cssClassName={cssClassName}
                         disabled={!this.props.IsValidSelection}
                         bsSize={"small"}
                         SelectedColumnValue={this.props.BulkUpdateValue}
                         SelectedColumn={selectedColumn}
-                        Blotter ={this.props.Blotter} 
+                        Blotter={this.props.Blotter}
                         onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
                     />
 
@@ -113,19 +114,19 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
                     <ButtonApply cssClassName={cssClassName}
                         style={{ marginLeft: "3px" }}
                         onClick={() => this.onApplyClick()}
-                        size={"small"}
+                        size={this.props.DashboardSize}
                         glyph={"ok"}
                         bsStyle={UIHelper.getStyleNameByStatusColour(statusColour)}
                         overrideTooltip="Apply Bulk Update"
                         overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)}
-                        DisplayMode="Glyph" 
+                        DisplayMode="Glyph"
                         AccessLevel={this.props.AccessLevel}
-                        />
+                    />
                 }
 
                 {this.props.IsValidSelection && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
                     <span style={{ marginLeft: "3px" }}>
-                        <AdaptablePopover cssClassName={cssClassName} headerText="Preview Results" bodyText={[previewPanel]} MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)} useButton={true} triggerAction={"click"} />
+                        <AdaptablePopover size={this.props.DashboardSize} cssClassName={cssClassName} headerText="Preview Results" bodyText={[previewPanel]} MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)} useButton={true} triggerAction={"click"} />
                     </span>
                 }
 
@@ -197,6 +198,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
         IsValidSelection: state.System.IsValidBulkUpdateSelection,
         PreviewInfo: state.System.BulkUpdatePreviewInfo,
+        DashboardSize: state.Dashboard.DashboardSize
     };
 }
 

@@ -276,3 +276,10 @@ export enum LicenceType {
     Standard = 'Standard',
     Enterprise = 'Enterprise'
 }
+
+export enum DashboardSize {
+    Large = 'large',
+    Medium = 'medium',
+    Small = 'small',
+    XSmall = 'xsmall'
+}

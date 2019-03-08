@@ -26,6 +26,7 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
     useButton?: boolean
     tooltipText?: string
     popoverMinWidth?: number
+    size?: ReactBootstrap.Sizes;
 }
 
 
@@ -39,6 +40,7 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
 
         let useButton = (this.props.useButton != null) ? this.props.useButton : false
         let popoverMinWidth: string = (this.props.popoverMinWidth != null) ? this.props.popoverMinWidth.toString() + "px" : "auto"
+let size = (this.props.size)? this.props.size: 'small';
 
         const popoverClickRootClose = (
             <Popover style={{ margin: "0px", padding: "0px", minWidth: popoverMinWidth}} id={"ab_popover"} title={StringExtensions.IsNotNullOrEmpty(this.props.headerText) ? this.props.headerText : ""}>
@@ -50,7 +52,7 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
                 {useButton ?
                     <ButtonInfo cssClassName={cssClassName}
                         onClick={() => null}
-                        size={"small"}
+                        size={size}
                         glyph={UIHelper.getGlyphByMessageType(messageType)}
                         bsStyle={UIHelper.getStyleNameByMessageType(messageType)}
                         DisplayMode="Glyph"

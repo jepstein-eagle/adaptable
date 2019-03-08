@@ -15,6 +15,7 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<Adapta
     render() {
         let size: any = (this.props.bsSize) ? this.props.bsSize : 'sm'
         let cssClassName: string = this.props.cssClassName + StyleConstants.TEXT_ENTRY_FORM;
+        let style: any = (size == 'xs' || size == 'xsmall') ? smallFormControlStyle: this.props.style;
 
         return <span>
             <InputGroup>
@@ -22,7 +23,7 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<Adapta
                     className={cssClassName}
                     autoFocus={this.props.autoFocus}
                     bsSize={size}
-                    style={this.props.style}
+                    style={style}
                     type="text"
                     placeholder={this.props.placeholder}
                     value={this.props.value}
@@ -36,7 +37,7 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<Adapta
                             onClick={() => this.props.OnTextChange("")}
                             size={size}
                             overrideTooltip="Clear"
-                             DisplayMode="Glyph" />
+                            DisplayMode="Glyph" />
                     </InputGroup.Button>
                 }
             </InputGroup>
@@ -47,3 +48,11 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<Adapta
         </span>
     }
 }
+
+
+let smallFormControlStyle: React.CSSProperties = {
+    'fontSize': 'xsmall',
+    'height': '22px',
+    'width': '150px'
+}
+

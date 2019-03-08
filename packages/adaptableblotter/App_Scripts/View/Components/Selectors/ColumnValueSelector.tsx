@@ -51,7 +51,7 @@ export class    ColumnValueSelector extends React.Component<ColumnValueSelectorP
         }
 
         return <Typeahead ref="typeahead"
-            bsSize={this.props.bsSize}
+            bsSize={'sm'}
             emptyLabel={""}
             placeholder={placeholderText}
             labelKey={"DisplayValue"}
@@ -63,7 +63,7 @@ export class    ColumnValueSelector extends React.Component<ColumnValueSelectorP
             allowNew={allowNew}
             newSelectionPrefix={"new value: "}
             filterBy={["DisplayValue"]}
-          />
+            />
 
     }
 
@@ -83,4 +83,12 @@ export class    ColumnValueSelector extends React.Component<ColumnValueSelectorP
         }
     }
 
+}
+
+
+
+let smallFormControlStyle: React.CSSProperties = {
+    'fontSize': 'xsmall',
+    'height': '22px',
+    'width': '70px'
 }

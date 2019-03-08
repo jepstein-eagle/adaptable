@@ -9,11 +9,12 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { AccessLevel } from "../../Utilities/Enums";
+import { AccessLevel, DashboardSize } from "../../Utilities/Enums";
 
 interface ApplicationToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ApplicationToolbarControlComponent> {
     ApplicationToolbarTitle: string;
-
+    DashboardSize: DashboardSize;
+ 
 }
 class ApplicationToolbarControlComponent extends React.Component<ApplicationToolbarControlComponentProps, {}> {
 
@@ -23,9 +24,10 @@ class ApplicationToolbarControlComponent extends React.Component<ApplicationTool
         let headerText = StringExtensions.IsNotNullOrEmpty(this.props.ApplicationToolbarTitle) ?
             this.props.ApplicationToolbarTitle :
             StrategyConstants.ApplicationStrategyName
+            let minHeight = (this.props.DashboardSize == DashboardSize.XSmall)? '22px': '30px'
 
         return <PanelDashboard cssClassName={cssClassName} headerText={headerText} glyphicon={StrategyConstants.ApplicationGlyph} onClose={() => this.props.onClose(StrategyConstants.ApplicationStrategyId)} onConfigure={() => this.props.onConfigure()}>
-            <div className="ApplicationToolBarContents" style={{ minHeight: 30 }}>
+            <div className="ApplicationToolBarContents" style={{ minHeight: minHeight }}>
 
             </div>
         </PanelDashboard>
@@ -35,7 +37,8 @@ class ApplicationToolbarControlComponent extends React.Component<ApplicationTool
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ApplicationToolbarTitle: state.Dashboard.ApplicationToolbarTitle,
-
+        DashboardSize: state.Dashboard.DashboardSize
+ 
     };
 }
 

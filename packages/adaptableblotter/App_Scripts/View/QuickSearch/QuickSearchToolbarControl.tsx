@@ -13,12 +13,13 @@ import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/Adapta
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { AccessLevel } from "../../Utilities/Enums";
+import { AccessLevel, DashboardSize } from "../../Utilities/Enums";
 
 interface QuickSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<QuickSearchToolbarControlComponent> {
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
     onShowQuickSearchPopup: () => PopupRedux.PopupShowScreenAction;
-     QuickSearchText: string
+    QuickSearchText: string;
+    DashboardSize: DashboardSize;
 }
 
 interface QuickSearchToolbarControlComponentState {
@@ -39,24 +40,24 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
     render() {
         let cssClassName: string = this.props.cssClassName + "__quicksearch";
-    
+
         let content = <span>
 
             <AdaptableBlotterFormControlTextClear
                 cssClassName={cssClassName}
                 style={{ width: "120px" }}
-                bsSize="small"
+                bsSize={this.props.DashboardSize}
                 type="text"
                 placeholder="Search Text"
                 value={this.state.EditedQuickSearchText}
                 OnTextChange={(x) => this.onUpdateQuickSearchText(x)} />
             {' '}
-            <span className={this.props.AccessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <span className={this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <ButtonEdit cssClassName={cssClassName} onClick={() => this.props.onShowQuickSearchPopup()}
-                    size={"small"}
+                    size={this.props.DashboardSize}
                     overrideTooltip="Edit Quick Search"
-                    DisplayMode="Glyph" 
-                    AccessLevel={this.props.AccessLevel}/>
+                    DisplayMode="Glyph"
+                    AccessLevel={this.props.AccessLevel} />
             </span>
         </span>
         return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.QuickSearchStrategyName} glyphicon={StrategyConstants.QuickSearchGlyph} onClose={() => this.props.onClose(StrategyConstants.QuickSearchStrategyId)}
@@ -75,7 +76,8 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         QuickSearchText: state.QuickSearch.QuickSearchText,
-      };
+        DashboardSize: state.Dashboard.DashboardSize
+    };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

@@ -13,7 +13,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
-import { SortOrder, AccessLevel } from '../../Utilities/Enums';
+import { SortOrder, AccessLevel, DashboardSize } from '../../Utilities/Enums';
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
@@ -27,6 +27,7 @@ import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 interface ChartToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ChartToolbarControlComponent> {
     ChartDefinitions: IChartDefinition[]
     CurrentChartDefinition: IChartDefinition
+    DashboardSize: DashboardSize;
     onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction;
     onNewChartDefinition: () => PopupRedux.PopupShowScreenAction;
     onEditChartDefinition: () => PopupRedux.PopupShowScreenAction;
@@ -54,7 +55,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
 
             <InputGroup>
                 <DropdownButton disabled={availablechartDefinitions.length == 0} style={{ minWidth: "120px" }}
-                    className={cssClassName} bsSize={"small"} bsStyle={"default"} title={currentChartDefinitionName} id="Chart" componentClass={InputGroup.Button}>
+                    className={cssClassName}    bsSize={this.props.DashboardSize}                     bsStyle={"default"} title={currentChartDefinitionName} id="Chart" componentClass={InputGroup.Button}>
                     {availablechartDefinitions}
                 </DropdownButton>
                 {currentChartDefinitionName != selectChartString &&
@@ -63,7 +64,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                             bsStyle={"default"}
                             cssClassName={cssClassName}
                             onClick={() => this.onSelectedChartDefinitionChanged("")}
-                            size={"small"}
+                            size={this.props.DashboardSize}
                             overrideTooltip="Clear Chart"
                             overrideDisableButton={currentChartDefinitionName == selectChartString}
                             DisplayMode="Glyph"
@@ -77,8 +78,8 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                 <ButtonShowChart
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} onClick={() => this.onShowChart()}
-                    size={"small"}
-                    overrideTooltip="Show Chart"
+                    size={this.props.DashboardSize}
+                        overrideTooltip="Show Chart"
                     overrideDisableButton={currentChartDefinitionName == selectChartString}
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
@@ -86,7 +87,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                 <ButtonNew
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} onClick={() => this.props.onNewChartDefinition()}
-                    size={"small"}
+                    size={this.props.DashboardSize}
                     overrideTooltip="Create New Chart Definition"
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
@@ -95,8 +96,8 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                 <ButtonEdit
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} onClick={() => this.props.onEditChartDefinition()}
-                    size={"small"}
-                    overrideTooltip="Edit Chart Definition"
+                    size={this.props.DashboardSize}
+                       overrideTooltip="Edit Chart Definition"
                     overrideDisableButton={currentChartDefinitionName == selectChartString}
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
@@ -105,7 +106,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                 <ButtonDelete
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName}
-                    size={"small"}
+                    size={this.props.DashboardSize}
                     overrideTooltip="Delete Chart"
                     overrideDisableButton={currentChartDefinitionName == selectChartString}
                     DisplayMode="Glyph"
@@ -136,6 +137,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Name == state.Chart.CurrentChartName),
         ChartDefinitions: state.Chart.ChartDefinitions,
+        DashboardSize: state.Dashboard.DashboardSize
     };
 }
 

@@ -10,7 +10,7 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
-import { AccessLevel } from "../../Utilities/Enums";
+import { AccessLevel, DashboardSize } from "../../Utilities/Enums";
 import { DropdownButton, MenuItem } from "react-bootstrap";
 import { IUserTheme } from "../../Utilities/Interface/BlotterObjects/IUserTheme";
 
@@ -18,7 +18,9 @@ interface ThemeToolbarControlComponentProps extends ToolbarStrategyViewPopupProp
     onSelectTheme: (theme: string) => ThemeRedux.ThemeSelectAction,
     SystemThemes: string[],
     UserThemes: IUserTheme[],
-    CurrentTheme: string
+    CurrentTheme: string;
+    DashboardSize: DashboardSize;
+   
 }
 
 class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlComponentProps, {}> {
@@ -37,7 +39,7 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
             <DropdownButton
                 style={{ minWidth: "100px" }}
                 className={cssClassName}
-                bsSize={"small"}
+                bsSize={this.props.DashboardSize}
                 bsStyle={"default"}
                 title={this.props.CurrentTheme}
                 id="themeDropDown"                >
@@ -62,6 +64,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentTheme: state.Theme.CurrentTheme,
         UserThemes: state.Theme.UserThemes,
         Entitlements: state.Entitlements.FunctionEntitlements,
+        DashboardSize: state.Dashboard.DashboardSize
     };
 }
 
