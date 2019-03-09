@@ -16,6 +16,7 @@ export class ButtonCancel extends React.Component<ButtonProps, {}> {
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.CANCEL_BUTTON}
             hideToolTip={this.props.hideToolTip}
-        />;
+            showDefaultStyle={this.props.showDefaultStyle}
+            />;
     }
 }

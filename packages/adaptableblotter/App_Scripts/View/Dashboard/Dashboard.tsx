@@ -9,7 +9,7 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import { Visibility, AccessLevel } from "../../Utilities/Enums";
+import { Visibility, AccessLevel, DashboardSize } from "../../Utilities/Enums";
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { LoggingHelper } from "../../Utilities/Helpers/LoggingHelper";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
@@ -33,6 +33,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         let showBlotterName: string = "Show " + blotterName + " Dashboard"
         let hiddenEntitlements: IEntitlement[] = this.props.EntitlementsState.FunctionEntitlements.filter(e => e.AccessLevel == "Hidden");
         let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(vt => ArrayExtensions.NotContainsItem(hiddenEntitlements, vt));//.filter(dc => dc.IsVisible);
+       
+       let dashboardSize: DashboardSize = this.props.DashboardState.UseExtraSmallButtons ? DashboardSize.XSmall: DashboardSize.Small;
+
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
             let accessLevel: AccessLevel = StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
             if (accessLevel != AccessLevel.Hidden) {
@@ -46,7 +49,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                         ColorPalette: this.props.ColorPalette,
                         GridSorts: this.props.GridSorts,
                         cssClassName: cssClassName,
-                        AccessLevel: accessLevel
+                        AccessLevel: accessLevel,
+                        DashboardSize: dashboardSize,
+                        UseSingleColourForButtons: this.props.DashboardState.UseSingleColourForButtons
                     });
                     return <Nav key={control} style={{ marginRight: "5px", marginTop: "3px", marginBottom: "3px" }} >
                         {dashboardElememt}

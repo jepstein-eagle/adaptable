@@ -16,6 +16,7 @@ export class ButtonHide extends React.Component<ButtonProps, {}> {
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.HIDE_BUTTON}
+            showDefaultStyle={this.props.showDefaultStyle}
             />;
     }
 }

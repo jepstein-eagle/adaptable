@@ -10,7 +10,8 @@ export interface ApplyButtonProps extends ButtonProps {
 
 export class ButtonApply extends React.Component<ApplyButtonProps, {}> {
     render() {
-        return <ButtonBase ToolTipAndText="Apply"
+        return <ButtonBase 
+            ToolTipAndText="Apply"
             bsStyle={this.props.bsStyle}
             bsSize={this.props.size}
             glyph={this.props.glyph}
@@ -21,6 +22,7 @@ export class ButtonApply extends React.Component<ApplyButtonProps, {}> {
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.APPLY_BUTTON}
+            showDefaultStyle={this.props.showDefaultStyle}
         />;
     }
 }

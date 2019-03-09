@@ -13,7 +13,7 @@ import { AccessLevel, DashboardSize } from "../../Utilities/Enums";
 
 interface ApplicationToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ApplicationToolbarControlComponent> {
     ApplicationToolbarTitle: string;
-    DashboardSize: DashboardSize;
+ 
  
 }
 class ApplicationToolbarControlComponent extends React.Component<ApplicationToolbarControlComponentProps, {}> {
@@ -37,7 +37,7 @@ class ApplicationToolbarControlComponent extends React.Component<ApplicationTool
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ApplicationToolbarTitle: state.Dashboard.ApplicationToolbarTitle,
-        DashboardSize: state.Dashboard.DashboardSize
+       
  
     };
 }

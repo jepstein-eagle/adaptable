@@ -15,6 +15,7 @@ export class ButtonSave extends React.Component<ButtonProps, {}> {
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.SAVE_BUTTON}
+            showDefaultStyle={this.props.showDefaultStyle}
             />;
     }
 }

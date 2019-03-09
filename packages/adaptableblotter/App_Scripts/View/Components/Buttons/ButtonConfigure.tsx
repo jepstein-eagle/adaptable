@@ -15,6 +15,7 @@ export class ButtonConfigure extends React.Component<ButtonProps, {}> {
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.CONFIGURE_BUTTON}
+            showDefaultStyle={this.props.showDefaultStyle}
         />;
     }
 }

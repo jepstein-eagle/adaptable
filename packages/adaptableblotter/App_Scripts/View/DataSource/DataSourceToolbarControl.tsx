@@ -18,7 +18,7 @@ import { DashboardSize } from "../../Utilities/Enums";
 interface DataSourceToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<DataSourceToolbarControlComponent> {
     CurrentDataSource: string;
     DataSources: string[];
-    DashboardSize: DashboardSize;
+ 
     onSelectDataSource: (DataSourceName: string) => DataSourceRedux.DataSourceSelectAction;
 }
 
@@ -75,7 +75,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentDataSource: state.DataSource.CurrentDataSource,
         DataSources: state.DataSource.DataSources,
-        DashboardSize: state.Dashboard.DashboardSize
+       
     };
 }
 

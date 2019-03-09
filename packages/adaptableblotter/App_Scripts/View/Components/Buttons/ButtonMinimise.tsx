@@ -16,7 +16,8 @@ export class ButtonMinimise extends React.Component<ButtonProps, {}> {
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.MINIMISE_BUTTON}
             hideToolTip={this.props.hideToolTip}
-        />;
+            showDefaultStyle={this.props.showDefaultStyle}
+            />;
     }
 }
 

@@ -20,7 +20,7 @@ import { IAdaptableAlert} from "../../Utilities/Interface/IMessage";
 interface AlertToolbarControlProps extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
     AlertDefinitions: IAlertDefinition[];
     Alerts: IAdaptableAlert[];
-    DashboardSize: DashboardSize;
+ 
     onDeleteAlert: (index: number) => SystemRedux.SystemAlertDeleteAction;
     onDeleteAllAlert: () => SystemRedux.SystemAlertDeleteAllAction;
 }
@@ -68,19 +68,19 @@ class AlertToolbarControlComponent extends React.Component<AlertToolbarControlPr
 
                 let formControlStyle: any = (this.props.DashboardSize == 'xsmall') ? smallFormControlStyle: standardFormControlStyle;
 
-     
+     let labelStyle =  (this.props.UseSingleColourForButtons)? 'default': 'success';
 
         let content = <span>
 
             <FormControl bsSize={this.props.DashboardSize} style={formControlStyle} value={collapsedText} disabled={true} type="string" />
             {' '}
             {this.state.ShowMessage &&
-                <Label bsStyle="success">New</Label>
+                <Label bsStyle={labelStyle}>New</Label>
             }
             {' '}
             {this.props.Alerts.length > 0 &&
                 <span style={{ marginLeft: "3px" }}>
-                    <AdaptablePopover size={this.props.DashboardSize} cssClassName={cssClassName} headerText="" tooltipText="Alerts" bodyText={[alertsPanel]} MessageType={this.getMessageType()} useButton={true} triggerAction={"click"} />
+                    <AdaptablePopover  showDefaultStyle={this.props.UseSingleColourForButtons} size={this.props.DashboardSize} cssClassName={cssClassName} headerText="" tooltipText="Alerts" bodyText={[alertsPanel]} MessageType={this.getMessageType()} useButton={true} triggerAction={"click"} />
                 </span>
             }
         </span>
@@ -109,7 +109,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         AlertDefinitions: state.Alert.AlertDefinitions,
         Alerts: state.System.Alerts,
-        DashboardSize: state.Dashboard.DashboardSize
+       
     };
 }
 

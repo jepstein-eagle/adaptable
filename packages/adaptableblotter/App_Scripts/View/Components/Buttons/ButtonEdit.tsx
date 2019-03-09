@@ -7,7 +7,7 @@ export class ButtonEdit extends React.Component<ButtonProps, {}> {
         return <ButtonBase ToolTipAndText="Edit"
             bsStyle='success'
             bsSize={this.props.size}
-             glyph="edit"
+            glyph="edit"
             onClick={() => this.props.onClick()}
             overrideDisableButton={this.props.overrideDisableButton}
             overrideTooltip={this.props.overrideTooltip}
@@ -15,6 +15,7 @@ export class ButtonEdit extends React.Component<ButtonProps, {}> {
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.EDIT_BUTTON}
-            />;
+            showDefaultStyle={this.props.showDefaultStyle}
+        />;
     }
 }

@@ -38,7 +38,7 @@ interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPo
     UserFilters: IUserFilter[]
     Entitlements: IEntitlement[];
     IsFloatingFilterActive: boolean;
-    DashboardSize: DashboardSize;
+
 
 }
 
@@ -73,7 +73,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                 {' '}
                 {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) &&
                     <span>
-                        <AdaptablePopover size={this.props.DashboardSize} cssClassName={cssClassName} headerText="" bodyText={[activeFiltersPanel]} tooltipText={"Show Filter Details"} useButton={true} triggerAction={"click"} popoverMinWidth={400} />
+                        <AdaptablePopover showDefaultStyle={this.props.UseSingleColourForButtons} size={this.props.DashboardSize} cssClassName={cssClassName} headerText="" bodyText={[activeFiltersPanel]} tooltipText={"Show Filter Details"} useButton={true} triggerAction={"click"} popoverMinWidth={400} />
                         {' '}
                         <ButtonClear onClick={() => this.onClearFilters()}
                             bsStyle={"primary"}
@@ -83,6 +83,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                             DisplayMode="Text"
                             overrideDisableButton={this.props.ColumnFilters.length == 0}
                             AccessLevel={this.props.AccessLevel}
+                            showDefaultStyle={this.props.UseSingleColourForButtons}
                         />
                     </span>
                 }
@@ -97,7 +98,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                         DisplayMode="Glyph"
                         AccessLevel={this.props.AccessLevel}
                         overrideDisableButton={!this.props.Blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter}
-                    />
+                        showDefaultStyle={this.props.UseSingleColourForButtons} />
                     :
                     <ButtonShow
                         style={{ marginLeft: "2px" }}
@@ -108,6 +109,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
                         DisplayMode="Glyph"
                         AccessLevel={this.props.AccessLevel}
                         overrideDisableButton={!this.props.Blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter}
+                        showDefaultStyle={this.props.UseSingleColourForButtons}
                     />
 
                 }
@@ -142,7 +144,9 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
     }
 
     private getStyleForLabel(): string {
-        return (ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters)) ? SUCCESS_BSSTYLE : DEFAULT_BSSTYLE
+        return (this.props.UseSingleColourForButtons == false && ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters)) ?
+            SUCCESS_BSSTYLE :
+            DEFAULT_BSSTYLE
     }
 }
 
@@ -151,7 +155,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         ColumnFilters: state.ColumnFilter.ColumnFilters,
         Entitlements: state.Entitlements.FunctionEntitlements,
         IsFloatingFilterActive: state.Grid.IsFloatingFilterActive,
-        DashboardSize: state.Dashboard.DashboardSize
+
     };
 }
 

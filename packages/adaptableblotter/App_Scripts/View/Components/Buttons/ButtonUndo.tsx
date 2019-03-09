@@ -16,6 +16,7 @@ export class ButtonUndo extends React.Component<ButtonProps, {}> {
             overrideText={this.props.overrideText}
             transformGlyph={true}
             cssClassName={this.props.cssClassName + StyleConstants.UNDO_BUTTON}
-        />;
+            showDefaultStyle={this.props.showDefaultStyle}
+            />;
     }
 }

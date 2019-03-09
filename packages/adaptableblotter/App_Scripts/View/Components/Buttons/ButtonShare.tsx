@@ -16,6 +16,7 @@ export class ButtonShare extends React.Component<ButtonProps, {}> {
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.SHARE_BUTTON}
+            showDefaultStyle={this.props.showDefaultStyle}
             />;
     }
 }

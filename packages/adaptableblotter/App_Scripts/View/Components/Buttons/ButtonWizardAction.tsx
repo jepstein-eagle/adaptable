@@ -16,7 +16,8 @@ export class ButtonWizardAction extends React.Component<ButtonProps, {}> {
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.WIZARD_ACTION_BUTTON}
             hideToolTip={true}
-        />;
+            showDefaultStyle={this.props.showDefaultStyle}
+            />;
     }
 }
 

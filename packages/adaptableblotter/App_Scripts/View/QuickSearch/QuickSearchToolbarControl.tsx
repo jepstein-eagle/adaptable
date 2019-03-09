@@ -19,7 +19,7 @@ interface QuickSearchToolbarControlComponentProps extends ToolbarStrategyViewPop
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
     onShowQuickSearchPopup: () => PopupRedux.PopupShowScreenAction;
     QuickSearchText: string;
-    DashboardSize: DashboardSize;
+ 
 }
 
 interface QuickSearchToolbarControlComponentState {
@@ -45,13 +45,15 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 
             <AdaptableBlotterFormControlTextClear
                 cssClassName={cssClassName}
-                style={{ width: "120px" }}
+                style={{ width: "135px" }}
                 bsSize={this.props.DashboardSize}
                 type="text"
                 placeholder="Search Text"
                 value={this.state.EditedQuickSearchText}
                 OnTextChange={(x) => this.onUpdateQuickSearchText(x)} />
             {' '}
+            {/*
+            // taking this out as we dont really need it come to think of it as you can use the configure above
             <span className={this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <ButtonEdit cssClassName={cssClassName} onClick={() => this.props.onShowQuickSearchPopup()}
                     size={this.props.DashboardSize}
@@ -59,6 +61,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel} />
             </span>
+             */}
         </span>
         return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.QuickSearchStrategyName} glyphicon={StrategyConstants.QuickSearchGlyph} onClose={() => this.props.onClose(StrategyConstants.QuickSearchStrategyId)}
             onConfigure={() => this.props.onConfigure()}>
@@ -76,7 +79,7 @@ class QuickSearchToolbarControlComponent extends React.Component<QuickSearchTool
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         QuickSearchText: state.QuickSearch.QuickSearchText,
-        DashboardSize: state.Dashboard.DashboardSize
+       
     };
 }
 

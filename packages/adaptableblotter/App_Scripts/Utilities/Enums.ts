@@ -278,8 +278,6 @@ export enum LicenceType {
 }
 
 export enum DashboardSize {
-    Large = 'large',
-    Medium = 'medium',
     Small = 'small',
     XSmall = 'xsmall'
 }

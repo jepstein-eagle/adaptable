@@ -15,6 +15,7 @@ export class ButtonCondition extends React.Component<ButtonProps, {}> {
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.CONDITION_BUTTON}
+            showDefaultStyle={this.props.showDefaultStyle}
             />;
     }
 }

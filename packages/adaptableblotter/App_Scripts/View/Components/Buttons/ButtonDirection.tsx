@@ -16,6 +16,7 @@ export class ButtonDirection extends React.Component<ButtonProps, {}> {
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.DIRECTION_BUTTON}
             hideToolTip={true}
+            showDefaultStyle={this.props.showDefaultStyle}
         />;
     }
 }

@@ -21,6 +21,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     glyph?: string
     hideToolTip?: boolean
     AccessLevel?: AccessLevel
+    showDefaultStyle?: boolean
 }
 
 export interface ButtonBaseProps extends ButtonProps {
@@ -41,7 +42,8 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
         DisplayMode: "Glyph+Text",
         transformGlyph: false,
         cssClassName: "btn",
-        AccessLevel: AccessLevel.Full
+        AccessLevel: AccessLevel.Full,
+        showDefaultStyle: false
     };
     render() {
         let isDisabled: boolean
@@ -82,9 +84,12 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
                 <Glyphicon glyph={this.props.glyph} />
             </div>
         }
+        
+        let bsStyle = (this.props.showDefaultStyle && this.props.showDefaultStyle == true) ? 'default' : this.props.bsStyle
+        
         let button = <Button style={this.props.style}
             className={this.props.cssClassName}
-            bsStyle={this.props.bsStyle}
+            bsStyle={bsStyle}
             disabled={isDisabled}
             bsSize={this.props.bsSize}
             onClick={() => this.props.onClick()}

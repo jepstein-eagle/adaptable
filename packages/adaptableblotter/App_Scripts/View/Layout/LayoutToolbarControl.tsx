@@ -27,7 +27,7 @@ interface LayoutToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
     onNewLayout: () => PopupRedux.PopupShowScreenAction;
     Layouts: ILayout[];
     CurrentLayout: string;
-    DashboardSize: DashboardSize;
+ 
 }
 
 
@@ -68,7 +68,8 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                             overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
                             DisplayMode="Glyph"
                             AccessLevel={this.props.AccessLevel}
-                        />
+                            showDefaultStyle={this.props.UseSingleColourForButtons}
+                            />
                     </InputGroup.Button>
                 }
             </InputGroup>
@@ -82,7 +83,8 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
-                />
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
+                    />
 
                 <ButtonNew
                     style={{ marginLeft: "2px" }}
@@ -91,7 +93,8 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     overrideTooltip="Create a new Layout"
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
-                />
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
+               />
 
                 <ButtonUndo style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} onClick={() => this.props.onSelectLayout(this.props.CurrentLayout)}
@@ -100,7 +103,8 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     overrideDisableButton={!currentLayoutTitle.endsWith(("(Modified)"))}
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
-                />
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
+                    />
 
                 <ButtonDelete
                     style={{ marginLeft: "2px" }}
@@ -113,7 +117,8 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
                     ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
                     ConfirmationTitle={"Delete Layout"}
                     AccessLevel={this.props.AccessLevel}
-                />
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
+                    />
             </span>
         </span>
 
@@ -165,7 +170,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentLayout: state.Layout.CurrentLayout,
         Layouts: state.Layout.Layouts,
-        DashboardSize: state.Dashboard.DashboardSize
+       
     };
 }
 

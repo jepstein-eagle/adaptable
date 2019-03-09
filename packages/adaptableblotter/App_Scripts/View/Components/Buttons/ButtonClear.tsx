@@ -16,6 +16,7 @@ export class ButtonClear extends React.Component<ButtonProps, {}> {
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.CLEAR_BUTTON}
             hideToolTip={this.props.hideToolTip}
-        />;
+            showDefaultStyle={this.props.showDefaultStyle}
+            />;
     }
 }

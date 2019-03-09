@@ -18,6 +18,7 @@ export class ButtonDashboard extends React.Component<ButtonBaseProps, {}> {
             ToolTipAndText={this.props.ToolTipAndText}
             cssClassName={this.props.cssClassName + StyleConstants.DASHBOARD_BUTTON}
             AccessLevel={AccessLevel.Full}
-        />;
+            showDefaultStyle={this.props.showDefaultStyle}
+            />;
     }
 }

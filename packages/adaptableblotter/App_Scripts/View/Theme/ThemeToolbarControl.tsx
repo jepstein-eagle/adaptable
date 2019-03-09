@@ -19,7 +19,7 @@ interface ThemeToolbarControlComponentProps extends ToolbarStrategyViewPopupProp
     SystemThemes: string[],
     UserThemes: IUserTheme[],
     CurrentTheme: string;
-    DashboardSize: DashboardSize;
+ 
    
 }
 
@@ -64,8 +64,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentTheme: state.Theme.CurrentTheme,
         UserThemes: state.Theme.UserThemes,
         Entitlements: state.Entitlements.FunctionEntitlements,
-        DashboardSize: state.Dashboard.DashboardSize
-    };
+     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {

@@ -27,6 +27,7 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
     tooltipText?: string
     popoverMinWidth?: number
     size?: ReactBootstrap.Sizes;
+    showDefaultStyle?: boolean
 }
 
 
@@ -50,13 +51,15 @@ let size = (this.props.size)? this.props.size: 'small';
         return <span className={cssClassName}>
             <OverlayTrigger rootClose trigger={triggerAction} placement={'bottom'} overlay={popoverClickRootClose}>
                 {useButton ?
-                    <ButtonInfo cssClassName={cssClassName}
+                    <ButtonInfo 
+                        cssClassName={cssClassName}
                         onClick={() => null}
                         size={size}
                         glyph={UIHelper.getGlyphByMessageType(messageType)}
                         bsStyle={UIHelper.getStyleNameByMessageType(messageType)}
                         DisplayMode="Glyph"
                         tooltipText={this.props.tooltipText}
+                        showDefaultStyle={this.props.showDefaultStyle}
                     />
                     :
                     <Label bsSize="large" bsStyle={UIHelper.getStyleNameByMessageType(messageType)} className="ab_medium_padding">

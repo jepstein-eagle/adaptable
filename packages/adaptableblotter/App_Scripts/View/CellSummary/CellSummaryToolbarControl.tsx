@@ -28,7 +28,7 @@ interface CellSummaryToolbarControlComponentProps extends ToolbarStrategyViewPop
     onCellSummaryOperationChange: (summaryOperation: CellSummaryOperation | CellSummaryOptionalOperation) => SelectedCellsRedux.CellSummaryChangeOperationAction;
     onCreateCellSummary: () => GridRedux.GridCreateCellSummaryAction;
     CellSummary: ICellSummmary;
-    DashboardSize: DashboardSize;
+
 }
 
 interface CellSummaryToolbarControlComponentState {
@@ -88,7 +88,7 @@ class CellSummaryToolbarControlComponent extends React.Component<CellSummaryTool
                             <ControlLabel style={{ marginLeft: "3px" }}>{this.getOperationValue()} </ControlLabel>
                             {' '}
                             {this.props.CellSummary != null && this.props.CellSummary.Count > 0 &&
-                                <AdaptablePopover size={this.props.DashboardSize} cssClassName={cssClassName} headerText="Cell Summary" bodyText={[cellSummaryPopover]} tooltipText={"Show Cell Summary"} useButton={true} triggerAction={"click"} popoverMinWidth={300} />
+                                <AdaptablePopover showDefaultStyle={this.props.UseSingleColourForButtons} size={this.props.DashboardSize} cssClassName={cssClassName} headerText="Cell Summary" bodyText={[cellSummaryPopover]} tooltipText={"Show Cell Summary"} useButton={true} triggerAction={"click"} popoverMinWidth={300} />
                             }
                         </span>
                     }
@@ -138,7 +138,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CellSummaryOperation: state.CellSummary.SummaryOperation,
         OptionalSummaryOperations: state.CellSummary.OptionalSummaryOperations,
         CellSummary: state.Grid.CellSummary,
-        DashboardSize: state.Dashboard.DashboardSize
+
     };
 }
 

@@ -28,7 +28,7 @@ interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopu
     BulkUpdateValue: string;
     IsValidSelection: boolean;
     PreviewInfo: IPreviewInfo;
-    DashboardSize: DashboardSize;
+
     onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
     onBulkUpdateCheckSelectedCells: () => SystemRedux.BulkUpdateCheckCellSelectionAction;
     onApplyBulkUpdate: () => BulkUpdateRedux.BulkUpdateApplyAction;
@@ -121,12 +121,13 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
                         overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)}
                         DisplayMode="Glyph"
                         AccessLevel={this.props.AccessLevel}
+                        showDefaultStyle={this.props.UseSingleColourForButtons}
                     />
                 }
 
                 {this.props.IsValidSelection && StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
                     <span style={{ marginLeft: "3px" }}>
-                        <AdaptablePopover size={this.props.DashboardSize} cssClassName={cssClassName} headerText="Preview Results" bodyText={[previewPanel]} MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)} useButton={true} triggerAction={"click"} />
+                        <AdaptablePopover showDefaultStyle={this.props.UseSingleColourForButtons} size={this.props.DashboardSize} cssClassName={cssClassName} headerText="Preview Results" bodyText={[previewPanel]} MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)} useButton={true} triggerAction={"click"} />
                     </span>
                 }
 
@@ -198,7 +199,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
         IsValidSelection: state.System.IsValidBulkUpdateSelection,
         PreviewInfo: state.System.BulkUpdatePreviewInfo,
-        DashboardSize: state.Dashboard.DashboardSize
+
     };
 }
 

@@ -30,7 +30,7 @@ interface SmartEditToolbarControlComponentProps extends ToolbarStrategyViewPopup
     MathOperation: MathOperation;
     IsValidSelection: boolean;
     PreviewInfo: IPreviewInfo;
-    DashboardSize: DashboardSize;
+
     onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
     onSmartEditOperationChange: (MathOperation: MathOperation) => SmartEditRedux.SmartEditChangeOperationAction;
     onSmartEditCheckSelectedCells: () => SystemRedux.SmartEditCheckCellSelectionAction;
@@ -74,7 +74,7 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
 
         let selectedColumn = (StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)) ? ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns) : null
 
-        let formControlStyle: any = (this.props.DashboardSize == 'xsmall') ? smallFormControlStyle: standardFormControlStyle;
+        let formControlStyle: any = (this.props.DashboardSize == 'xsmall') ? smallFormControlStyle : standardFormControlStyle;
 
         let previewPanel =
             <PreviewResultsPanel
@@ -114,12 +114,13 @@ class SmartEditToolbarControlComponent extends React.Component<SmartEditToolbarC
                         overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)}
                         DisplayMode="Glyph"
                         AccessLevel={this.props.AccessLevel}
+                        showDefaultStyle={this.props.UseSingleColourForButtons}
                     />
                 }
 
                 {this.props.IsValidSelection &&
                     <span style={{ marginLeft: "3px" }}>
-                        <AdaptablePopover size={this.props.DashboardSize} cssClassName={cssClassName} headerText="Preview Results" tooltipText="Preview Results" bodyText={[previewPanel]} MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)} useButton={true} triggerAction={"click"} />
+                        <AdaptablePopover showDefaultStyle={this.props.UseSingleColourForButtons} size={this.props.DashboardSize} cssClassName={cssClassName} headerText="Preview Results" tooltipText="Preview Results" bodyText={[previewPanel]} MessageType={UIHelper.getMessageTypeByStatusColour(statusColour)} useButton={true} triggerAction={"click"} />
                     </span>
                 }
 
@@ -191,7 +192,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         MathOperation: state.SmartEdit.MathOperation,
         IsValidSelection: state.System.IsValidSmartEditSelection,
         PreviewInfo: state.System.SmartEditPreviewInfo,
-        DashboardSize: state.Dashboard.DashboardSize
+
     };
 }
 

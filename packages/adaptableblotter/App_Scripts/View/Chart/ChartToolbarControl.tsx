@@ -27,7 +27,7 @@ import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 interface ChartToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ChartToolbarControlComponent> {
     ChartDefinitions: IChartDefinition[]
     CurrentChartDefinition: IChartDefinition
-    DashboardSize: DashboardSize;
+ 
     onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction;
     onNewChartDefinition: () => PopupRedux.PopupShowScreenAction;
     onEditChartDefinition: () => PopupRedux.PopupShowScreenAction;
@@ -83,7 +83,8 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                     overrideDisableButton={currentChartDefinitionName == selectChartString}
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
-                />
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
+                    />
                 <ButtonNew
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} onClick={() => this.props.onNewChartDefinition()}
@@ -91,7 +92,8 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                     overrideTooltip="Create New Chart Definition"
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
-                />
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
+                    />
 
                 <ButtonEdit
                     style={{ marginLeft: "2px" }}
@@ -101,7 +103,8 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                     overrideDisableButton={currentChartDefinitionName == selectChartString}
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
-                />
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
+                    />
 
                 <ButtonDelete
                     style={{ marginLeft: "2px" }}
@@ -114,7 +117,8 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                     ConfirmationMsg={"Are you sure you want to delete '" + currentChartDefinitionName + "'?"}
                     ConfirmationTitle={"Delete Chart"}
                     AccessLevel={this.props.AccessLevel}
-                />
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
+                    />
             </span>
         </span>
 
@@ -137,7 +141,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Name == state.Chart.CurrentChartName),
         ChartDefinitions: state.Chart.ChartDefinitions,
-        DashboardSize: state.Dashboard.DashboardSize
+       
     };
 }
 

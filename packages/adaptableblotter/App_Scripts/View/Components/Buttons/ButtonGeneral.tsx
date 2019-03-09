@@ -17,6 +17,7 @@ export class ButtonGeneral extends React.Component<ButtonProps, {}> {
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.NEW_BUTTON}
             hideToolTip={this.props.hideToolTip}
-        />;
+            showDefaultStyle={this.props.showDefaultStyle}
+            />;
     }
 }

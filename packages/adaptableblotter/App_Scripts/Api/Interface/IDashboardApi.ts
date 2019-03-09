@@ -24,6 +24,10 @@ export interface IDashboardApi {
     // If no value is set, the title of the Home Toolbar will be the ​​blotterId​​ property in IAdaptableBlotterOptions
     SetHomeToolbarTitle(title: string): void;
     SetApplicationToolbarTitle(title: string): void;
+    UseSingleColourForButtons(): void;
+    UseMultipleColourForButtons(): void;
+    UseExtraSmallButtons(): void;
+    UseDefaultSizeButtons(): void;
     Minimise(): void;
 }
 

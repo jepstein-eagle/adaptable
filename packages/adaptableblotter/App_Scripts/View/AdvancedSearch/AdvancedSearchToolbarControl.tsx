@@ -24,7 +24,6 @@ import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 interface AdvancedSearchToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
     CurrentAdvancedSearchName: string;
     AdvancedSearches: IAdvancedSearch[];
-    DashboardSize: DashboardSize;
     onSelectAdvancedSearch: (advancedSearchName: string) => AdvancedSearchRedux.AdvancedSearchSelectAction;
     onNewAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
     onEditAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
@@ -36,7 +35,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
     render() {
         const selectSearchString: string = "Select a Search"
         let cssClassName: string = this.props.cssClassName + "__advancedsearch";
-      
+
         let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(s => s.Name == this.props.CurrentAdvancedSearchName);
 
         let currentSearchName = StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName) ?
@@ -51,7 +50,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
 
             <InputGroup>
                 <DropdownButton disabled={availableSearches.length == 0} style={{ minWidth: "120px" }}
-                    className={cssClassName} 
+                    className={cssClassName}
                     bsSize={this.props.DashboardSize}
                     bsStyle={"default"} title={currentSearchName} id="advancedSearch" componentClass={InputGroup.Button}>
                     {availableSearches}
@@ -67,12 +66,13 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                             overrideDisableButton={currentSearchName == selectSearchString}
                             DisplayMode="Glyph"
                             AccessLevel={this.props.AccessLevel}
+                            showDefaultStyle={this.props.UseSingleColourForButtons}
                         />
                     </InputGroup.Button>
                 }
             </InputGroup>
 
-            <span className={this.props.AccessLevel==AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
+            <span className={this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ""}>
                 <ButtonEdit
                     style={{ marginLeft: "5px" }}
                     onClick={() => this.props.onEditAdvancedSearch()}
@@ -80,17 +80,19 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     size={this.props.DashboardSize}
                     overrideTooltip="Edit Current Advanced Search"
                     overrideDisableButton={currentSearchName == selectSearchString}
-                     DisplayMode="Glyph"
+                    DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
                 />
                 <ButtonNew
                     style={{ marginLeft: "2px" }}
-                    cssClassName={cssClassName} 
+                    cssClassName={cssClassName}
                     onClick={() => this.props.onNewAdvancedSearch()}
                     size={this.props.DashboardSize}
-                            overrideTooltip="Create New Advanced Search"
+                    overrideTooltip="Create New Advanced Search"
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
                 />
                 <ButtonDelete
                     style={{ marginLeft: "2px" }}
@@ -98,11 +100,12 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
                     size={this.props.DashboardSize}
                     overrideTooltip="Delete Advanced Search"
                     overrideDisableButton={currentSearchName == selectSearchString}
-                     DisplayMode="Glyph"
+                    DisplayMode="Glyph"
                     ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
                     ConfirmationMsg={"Are you sure you want to delete '" + !savedSearch ? "" : savedSearch.Name + "'?"}
                     ConfirmationTitle={"Delete Advanced Search"}
                     AccessLevel={this.props.AccessLevel}
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
                 />
             </span>
         </span>
@@ -124,17 +127,16 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
         AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
-        DashboardSize: state.Dashboard.DashboardSize
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectAdvancedSearch: (advancedSearchName: string) => dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),
-        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AdvancedSearchStrategyId,ScreenPopups.AdvancedSearchPopup, "New")),
-        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AdvancedSearchStrategyId,ScreenPopups.AdvancedSearchPopup,  "Edit")),
+        onNewAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AdvancedSearchStrategyId, ScreenPopups.AdvancedSearchPopup, "New")),
+        onEditAdvancedSearch: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AdvancedSearchStrategyId, ScreenPopups.AdvancedSearchPopup, "Edit")),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AdvancedSearchStrategyId,ScreenPopups.AdvancedSearchPopup))
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.AdvancedSearchStrategyId, ScreenPopups.AdvancedSearchPopup))
     };
 }
 

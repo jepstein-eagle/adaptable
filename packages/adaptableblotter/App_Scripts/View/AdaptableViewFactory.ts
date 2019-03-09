@@ -28,7 +28,6 @@ import { ExportToolbarControl } from './Export/ExportToolbarControl'
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup'
 import { IPushPullLogin } from './Export/IPushPullLogin'
 import { HomeToolbarControl } from './Home/HomeToolbarControl'
-import { HomeButtonsPopup } from './Home/HomeButtonsPopup'
 import { ApplicationPopup } from './Application/ApplicationPopup'
 import { DashboardPopup } from './Dashboard/DashboardPopup'
 import { DataManagementPopup } from './DataManagement/DataManagementPopup'
@@ -72,8 +71,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   FlashingCellsPopup: FlashingCellsPopup,
   FormatColumnPopup: FormatColumnPopup,
   FreeTextColumnPopup: FreeTextColumnPopup,
-  HomeButtonsPopup: HomeButtonsPopup,
-  IPushPullLogin: IPushPullLogin,
+   IPushPullLogin: IPushPullLogin,
   IPushPullDomainPageSelector: IPushPullDomainPageSelector,
   LayoutPopup: LayoutPopup,
   ColumnCategoryPopup: ColumnCategoryPopup,

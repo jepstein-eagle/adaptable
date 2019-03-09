@@ -16,7 +16,8 @@ export class ButtonClose extends React.Component<ButtonProps, {}> {
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.CLOSE_BUTTON}
             hideToolTip={this.props.hideToolTip}
-        />;
+            showDefaultStyle={this.props.showDefaultStyle}
+            />;
     }
 }
 

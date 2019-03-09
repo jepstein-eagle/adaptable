@@ -26,6 +26,7 @@ import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import { ReportHelper } from "../../Utilities/Helpers/ReportHelper";
+import { PRIMARY_BSSTYLE, DEFAULT_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 
 
 interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
@@ -38,7 +39,7 @@ interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
     Reports: IReport[];
     CurrentReport: string;
     LiveReports: ILiveReport[];
-    DashboardSize: DashboardSize;
+
 }
 
 class ExportToolbarControlComponent extends React.Component<ExportToolbarControlComponentProps, {}> {
@@ -79,6 +80,8 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             deleteMessage = deleteMessage + savedReport.Name + "?";
         }
 
+        let exportDropdownStyle: string = (this.props.UseSingleColourForButtons) ? DEFAULT_BSSTYLE : PRIMARY_BSSTYLE
+
         const exportGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Export"}</Tooltip >}>
             <Glyphicon glyph={StrategyConstants.ExportGlyph} />
         </OverlayTrigger>
@@ -108,6 +111,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                             overrideDisableButton={currentReportId == selectReportString}
                             DisplayMode="Glyph"
                             AccessLevel={this.props.AccessLevel}
+                            showDefaultStyle={this.props.UseSingleColourForButtons}
                         />
                     </InputGroup.Button>
 
@@ -119,14 +123,16 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                 <DropdownButton
                     style={{ marginLeft: "5px" }}
                     bsSize={this.props.DashboardSize}
-                    bsStyle="primary"
+                    bsStyle={exportDropdownStyle}
                     title={exportGlyph}
                     id="exportDropdown"
                     disabled={currentReportId == selectReportString} >
                     {csvMenuItem}
-                    {clipboardMenuItem} {
+                    {clipboardMenuItem}
+                    {
                         OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem
-                    } {
+                    }
+                    {
                         iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem
                     }
                 </DropdownButton>
@@ -140,6 +146,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     overrideDisableButton={savedReport == null || ReportHelper.IsSystemReport(savedReport)}
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
                 />
 
                 <ButtonNew
@@ -149,6 +156,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     overrideTooltip="Create New Report"
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
                 />
 
                 <ButtonDelete
@@ -162,6 +170,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     ConfirmationMsg={deleteMessage}
                     ConfirmationTitle={"Delete Report"}
                     AccessLevel={this.props.AccessLevel}
+                    showDefaultStyle={this.props.UseSingleColourForButtons}
                 />
             </span>
         </span>
@@ -181,7 +190,6 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         CurrentReport: state.Export.CurrentReport,
         Reports: state.Export.Reports,
         LiveReports: state.System.CurrentLiveReports,
-        DashboardSize: state.Dashboard.DashboardSize
     };
 }
 

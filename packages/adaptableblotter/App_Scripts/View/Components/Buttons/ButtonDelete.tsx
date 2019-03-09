@@ -30,7 +30,8 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
             DisplayMode={this.props.DisplayMode}
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.DELETE_BUTTON}
-        />;
+            showDefaultStyle={this.props.showDefaultStyle}
+            />;
     }
 
     onClick() {

@@ -273,7 +273,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
         DashboardState: state.Dashboard,
         Columns: state.Grid.Columns,
         SystemStatus: state.System.SystemStatus,
-        DashboardSize: state.Dashboard.DashboardSize
+        DashboardSize: state.Dashboard.UseExtraSmallButtons ? DashboardSize.XSmall: DashboardSize.Small
     };
 }
 
@@ -281,7 +281,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onClick: (action: Redux.Action) => dispatch(action),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.HomeStrategyId, ScreenPopups.HomeButtonsPopup)),
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.HomeStrategyId, ScreenPopups.DashboardPopup)),
         onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility: Visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
         onSetToolbarVisibility: (strategyIds: string[]) => dispatch(DashboardRedux.DashboardSetToolbars(strategyIds)),

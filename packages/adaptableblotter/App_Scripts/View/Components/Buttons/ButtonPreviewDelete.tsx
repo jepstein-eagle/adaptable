@@ -4,7 +4,8 @@ import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
 export class ButtonPreviewDelete extends React.Component<ButtonProps, {}> {
     render() {
-        return <ButtonBase ToolTipAndText=""
+        return <ButtonBase 
+            ToolTipAndText=""
             bsStyle={this.props.bsStyle}
             bsSize={this.props.size}
             glyph={"trash"}
@@ -16,7 +17,8 @@ export class ButtonPreviewDelete extends React.Component<ButtonProps, {}> {
             overrideText={this.props.overrideText}
             cssClassName={this.props.cssClassName + StyleConstants.PREVIEW_DELETE_ITEM_BUTTON}
             hideToolTip={true}
-        />;
+            showDefaultStyle={this.props.showDefaultStyle}
+            />;
     }
 }
 
