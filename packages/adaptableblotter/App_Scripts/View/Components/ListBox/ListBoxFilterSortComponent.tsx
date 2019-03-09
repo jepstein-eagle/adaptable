@@ -19,17 +19,18 @@ export class ListBoxFilterSortComponent extends React.Component<ListBoxFilterSor
                 <InputGroup>
                     <FormControl
                         type="text"
+                        bsSize={'small'}
                         value={this.props.FilterValue}
                         placeholder="Search"
                         onChange={(e) => this.handleChangeFilterValue(e)}
                         />
                     <InputGroup.Button>
-                        <Button onClick={() => this.clearFilter()}><Glyphicon glyph="remove" /></Button>
+                        <Button onClick={() => this.clearFilter()} bsSize={'small'}><Glyphicon glyph="remove" /></Button>
                     </InputGroup.Button>
                     <InputGroup.Button>
                         {this.props.SortOrder == SortOrder.Ascending ?
-                            <Button disabled={this.props.DisableSort} onClick={() => this.props.sortColumnValues()} ><Glyphicon glyph="sort-by-alphabet" /></Button> :
-                            <Button disabled={this.props.DisableSort} onClick={() => this.props.sortColumnValues()} ><Glyphicon glyph="sort-by-alphabet-alt" /></Button>
+                            <Button bsSize={'small'} disabled={this.props.DisableSort} onClick={() => this.props.sortColumnValues()} ><Glyphicon glyph="sort-by-alphabet" /></Button> :
+                            <Button bsSize={'small'} disabled={this.props.DisableSort} onClick={() => this.props.sortColumnValues()} ><Glyphicon glyph="sort-by-alphabet-alt" /></Button>
                         }
                     </InputGroup.Button>
                 </InputGroup>

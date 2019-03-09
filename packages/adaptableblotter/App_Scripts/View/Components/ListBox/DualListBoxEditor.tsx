@@ -221,7 +221,7 @@ export class DualListBoxEditor extends React.Component<DualListBoxEditorProps, D
 
         return (<div className={cssClassName}>
             <Col xs={4}>
-                <Panel header={this.props.HeaderAvailable} className="ab_no-padding-anywhere-panel" bsStyle="info">
+                <Panel header={this.props.HeaderAvailable} style={{padding:'0px', margin: '0px'}} className="ab_no-padding-anywhere-panel" bsStyle="info" bsSize='xsmall'>
                     <div>
                         {headerFirstListBox}
                         <ListGroup className="AvailableDropZone" style={listGroupAvailableStyle}

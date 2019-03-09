@@ -671,9 +671,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         */
         case ChartRedux.CHART_DEFINITION_SELECT: {
           let actionTyped = <ChartRedux.ChartDefinitionSelectAction>action
-       //   if (StringExtensions.IsNullOrEmpty(actionTyped.CurrentChartName)) {
+          if (StringExtensions.IsNullOrEmpty(actionTyped.CurrentChartName)) {
             middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden))
-       //   }
+          }
           let returnAction = next(action);
           return returnAction;
         }

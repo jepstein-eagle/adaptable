@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
@@ -6,7 +7,6 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
 import { ChartState, SystemState } from '../Redux/ActionsReducers/Interface/IState';
 import { StateChangedTrigger } from '../Utilities/Enums';
-import * as _ from 'lodash'
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { IChartDefinition, ICategoryChartDefinition } from "../Utilities/Interface/BlotterObjects/IChartDefinition";
@@ -42,7 +42,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
                 isChartRelatedStateChanged = true;
                 // if user has set display at startup to be true and there is a current chart then show it
                 if (this.blotter.BlotterOptions.chartOptions.displayOnStartUp && StringExtensions.IsNotNullOrEmpty(this.GetChartState().CurrentChartName)) {
-                     displayChartAtStartUp = true;
+                    displayChartAtStartUp = true;
                 }
             } else {
                 let chartStateDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName)
@@ -51,6 +51,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
                 if (this.doChartDefinitionChangesRequireDataUpdate(chartStateDefinition, storeStateDefinition)) {
                     isChartRelatedStateChanged = true;
                 }
+
             }
             this.ChartState = this.GetChartState();
         }
@@ -83,7 +84,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
                 this.publishStateChanged(StateChangedTrigger.Chart, this.ChartState)
             }
 
-            if(displayChartAtStartUp){
+            if (displayChartAtStartUp) {
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised));
                 this.setChartData();
             }

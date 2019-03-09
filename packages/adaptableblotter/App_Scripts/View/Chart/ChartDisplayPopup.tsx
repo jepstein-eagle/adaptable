@@ -69,6 +69,12 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         IgrDataChartAnnotationModule.register();
     }
 
+    componentWillReceiveProps(nextProps: ChartDisplayPopupProps, nextContext: any) {
+        if (nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name) {
+            this.state = ChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition as ICategoryChartDefinition, this.props.Columns);
+        }
+    }
+
     render() {
 
         let cssClassName: string = this.props.cssClassName + "__Charts";
@@ -518,84 +524,84 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                             </Row>
                                                                         </AdaptableBlotterForm>
                                                                         <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                                                        <HelpBlock>
-                                                                             <Row>
-                                                                                <Col xs={6}>
+                                                                            <HelpBlock>
+                                                                                <Row>
+                                                                                    <Col xs={6}>
 
                                                                                         <Checkbox onChange={(e) => this.onSetYAxisMinValueOptionChanged(e)}
                                                                                             checked={this.state.SetYAxisMinimumValue} >Labels Min</Checkbox>
 
-                                                                                </Col>
-                                                                                <Col xs={6}>
-                                                                                    {this.state.SetYAxisMinimumValue &&
-                                                                                        <FormControl
-                                                                                            bsSize={"small"} type="number"
-                                                                                            placeholder={"Input"}
-                                                                                            onChange={this.onYAxisMinValueChanged}
-                                                                                            value={this.state.ChartProperties.YAxisMinimumValue} />
-                                                                                    }
-                                                                                </Col>
+                                                                                    </Col>
+                                                                                    <Col xs={6}>
+                                                                                        {this.state.SetYAxisMinimumValue &&
+                                                                                            <FormControl
+                                                                                                bsSize={"small"} type="number"
+                                                                                                placeholder={"Input"}
+                                                                                                onChange={this.onYAxisMinValueChanged}
+                                                                                                value={this.state.ChartProperties.YAxisMinimumValue} />
+                                                                                        }
+                                                                                    </Col>
 
-                                                                            </Row>
+                                                                                </Row>
                                                                             </HelpBlock>
                                                                         </AdaptableBlotterForm>
                                                                         <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                                                        <HelpBlock>
-                                                                              <Row>
-                                                                                <Col xs={6}>
+                                                                            <HelpBlock>
+                                                                                <Row>
+                                                                                    <Col xs={6}>
 
                                                                                         <Checkbox onChange={(e) => this.onSetYAxisMaxValueOptionChanged(e)}
                                                                                             checked={this.state.SetYAxisMaximumValue} >Labels Max</Checkbox>
 
-                                                                                </Col>
-                                                                                <Col xs={6}>
-                                                                                    {this.state.SetYAxisMaximumValue &&
-                                                                                        <FormControl
-                                                                                            bsSize={"small"} type="number"
-                                                                                            placeholder={"Input"}
-                                                                                            onChange={this.onYAxisMaxValueChanged}
-                                                                                            value={this.state.ChartProperties.YAxisMaximumValue} />
-                                                                                    }
-                                                                                </Col>
-                                                                            </Row>
-                                                                             </HelpBlock>
+                                                                                    </Col>
+                                                                                    <Col xs={6}>
+                                                                                        {this.state.SetYAxisMaximumValue &&
+                                                                                            <FormControl
+                                                                                                bsSize={"small"} type="number"
+                                                                                                placeholder={"Input"}
+                                                                                                onChange={this.onYAxisMaxValueChanged}
+                                                                                                value={this.state.ChartProperties.YAxisMaximumValue} />
+                                                                                        }
+                                                                                    </Col>
+                                                                                </Row>
+                                                                            </HelpBlock>
                                                                         </AdaptableBlotterForm>
                                                                         <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                                                        <HelpBlock>
-                                                                              <Row>
-                                                                                <Col xs={6}>
+                                                                            <HelpBlock>
+                                                                                <Row>
+                                                                                    <Col xs={6}>
 
                                                                                         <Checkbox onChange={(e) => this.onSetYAxisIntervalValueOptionChanged(e)}
                                                                                             checked={this.state.ChartProperties.YAxisIntervalCustom} >Labels Interval</Checkbox>
 
-                                                                                </Col>
-                                                                                <Col xs={6}>
-                                                                                    {this.state.ChartProperties.YAxisIntervalCustom &&
-                                                                                        <FormControl
-                                                                                            bsSize={"small"} type="number"
-                                                                                            placeholder={"Input"}
-                                                                                            onChange={this.onYAxisIntervalValueChanged}
-                                                                                            value={this.state.ChartProperties.YAxisIntervalValue} />
-                                                                                    }
-                                                                                </Col>
-                                                                            </Row>
-                                                                             </HelpBlock>
+                                                                                    </Col>
+                                                                                    <Col xs={6}>
+                                                                                        {this.state.ChartProperties.YAxisIntervalCustom &&
+                                                                                            <FormControl
+                                                                                                bsSize={"small"} type="number"
+                                                                                                placeholder={"Input"}
+                                                                                                onChange={this.onYAxisIntervalValueChanged}
+                                                                                                value={this.state.ChartProperties.YAxisIntervalValue} />
+                                                                                        }
+                                                                                    </Col>
+                                                                                </Row>
+                                                                            </HelpBlock>
                                                                         </AdaptableBlotterForm>
                                                                         <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                                                         <HelpBlock>
-                                                                            <Row>
-                                                                                <Col xs={6}>
+                                                                            <HelpBlock>
+                                                                                <Row>
+                                                                                    <Col xs={6}>
                                                                                         <Checkbox onChange={(e) => this.onSetYAxisLabelColorOptionChanged(e)}
                                                                                             checked={this.state.SetYAxisLabelColor} >Labels Color</Checkbox>
-                                                                                </Col>
-                                                                                <Col xs={6}>
-                                                                                    {this.state.SetYAxisLabelColor &&
-                                                                                        <ColorPicker ColorPalette={this.props.ColorPalette}
-                                                                                            value={this.state.ChartProperties.YAxisLabelColor}
-                                                                                            onChange={(x) => this.onYAxisLabelColorChange(x)} />
-                                                                                    }
-                                                                                </Col>
-                                                                            </Row>
+                                                                                    </Col>
+                                                                                    <Col xs={6}>
+                                                                                        {this.state.SetYAxisLabelColor &&
+                                                                                            <ColorPicker ColorPalette={this.props.ColorPalette}
+                                                                                                value={this.state.ChartProperties.YAxisLabelColor}
+                                                                                                onChange={(x) => this.onYAxisLabelColorChange(x)} />
+                                                                                        }
+                                                                                    </Col>
+                                                                                </Row>
                                                                             </HelpBlock>
                                                                         </AdaptableBlotterForm>
 
@@ -618,20 +624,20 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                             </Row>
                                                                         </AdaptableBlotterForm>
                                                                         <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                                                          <HelpBlock>
-                                                                            <Row>
-                                                                                <Col xs={6}>
+                                                                            <HelpBlock>
+                                                                                <Row>
+                                                                                    <Col xs={6}>
                                                                                         <Checkbox onChange={(e) => this.onSetYAxisTitleColorOptionChanged(e)}
                                                                                             checked={this.state.SetYAxisTitleColor} >Title Color</Checkbox>
-                                                                                 </Col>
-                                                                                <Col xs={6}>
-                                                                                    {this.state.SetYAxisTitleColor &&
-                                                                                        <ColorPicker ColorPalette={this.props.ColorPalette}
-                                                                                            value={this.state.ChartProperties.YAxisTitleColor}
-                                                                                            onChange={(x) => this.onYAxisTitleColorChange(x)} />
-                                                                                    }
-                                                                                </Col>
-                                                                            </Row>
+                                                                                    </Col>
+                                                                                    <Col xs={6}>
+                                                                                        {this.state.SetYAxisTitleColor &&
+                                                                                            <ColorPicker ColorPalette={this.props.ColorPalette}
+                                                                                                value={this.state.ChartProperties.YAxisTitleColor}
+                                                                                                onChange={(x) => this.onYAxisTitleColorChange(x)} />
+                                                                                        }
+                                                                                    </Col>
+                                                                                </Row>
                                                                             </HelpBlock>
                                                                         </AdaptableBlotterForm>
                                                                     </div>
@@ -695,41 +701,41 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                             </Row>
                                                                         </AdaptableBlotterForm>
                                                                         <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                                                          <HelpBlock>
-                                                                            <Row>
-                                                                                <Col xs={6}>
-                                                                                         <Checkbox onChange={(e) => this.onSetXAxisLabelColorOptionChanged(e)}
+                                                                            <HelpBlock>
+                                                                                <Row>
+                                                                                    <Col xs={6}>
+                                                                                        <Checkbox onChange={(e) => this.onSetXAxisLabelColorOptionChanged(e)}
                                                                                             checked={this.state.SetXAxisLabelColor} >Labels Color</Checkbox>
-                                                                                </Col>
-                                                                                <Col xs={6}>
-                                                                                    {this.state.SetXAxisLabelColor &&
-                                                                                        <ColorPicker ColorPalette={this.props.ColorPalette}
-                                                                                            value={this.state.ChartProperties.XAxisLabelColor}
-                                                                                            onChange={(x) => this.onXAxisLabelColorChange(x)} />
-                                                                                    }
-                                                                                </Col>
-                                                                            </Row>
+                                                                                    </Col>
+                                                                                    <Col xs={6}>
+                                                                                        {this.state.SetXAxisLabelColor &&
+                                                                                            <ColorPicker ColorPalette={this.props.ColorPalette}
+                                                                                                value={this.state.ChartProperties.XAxisLabelColor}
+                                                                                                onChange={(x) => this.onXAxisLabelColorChange(x)} />
+                                                                                        }
+                                                                                    </Col>
+                                                                                </Row>
                                                                             </HelpBlock>
                                                                         </AdaptableBlotterForm>
 
                                                                         <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                                                          <HelpBlock>
+                                                                            <HelpBlock>
                                                                                 <Row>
-                                                                                  <Col xs={6}>
-                                                                                          <Checkbox onChange={(e) => this.onSetXAxisIntervalValueOptionChanged(e)}
-                                                                                              checked={this.state.ChartProperties.XAxisIntervalCustom} >Labels Interval</Checkbox>
-                                                                                  </Col>
-                                                                                  <Col xs={6}>
-                                                                                      {this.state.ChartProperties.XAxisIntervalCustom &&
-                                                                                          <FormControl
-                                                                                              bsSize={"small"} type="number"
-                                                                                              placeholder={"Input"}
-                                                                                              onChange={this.onXAxisIntervalValueChanged}
-                                                                                              value={this.state.ChartProperties.XAxisIntervalValue} />
-                                                                                      }
-                                                                                  </Col>
-                                                                              </Row>
-                                                                             </HelpBlock>
+                                                                                    <Col xs={6}>
+                                                                                        <Checkbox onChange={(e) => this.onSetXAxisIntervalValueOptionChanged(e)}
+                                                                                            checked={this.state.ChartProperties.XAxisIntervalCustom} >Labels Interval</Checkbox>
+                                                                                    </Col>
+                                                                                    <Col xs={6}>
+                                                                                        {this.state.ChartProperties.XAxisIntervalCustom &&
+                                                                                            <FormControl
+                                                                                                bsSize={"small"} type="number"
+                                                                                                placeholder={"Input"}
+                                                                                                onChange={this.onXAxisIntervalValueChanged}
+                                                                                                value={this.state.ChartProperties.XAxisIntervalValue} />
+                                                                                        }
+                                                                                    </Col>
+                                                                                </Row>
+                                                                            </HelpBlock>
                                                                         </AdaptableBlotterForm>
 
                                                                         <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
@@ -751,17 +757,17 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                                                             </Row>
                                                                         </AdaptableBlotterForm>
                                                                         <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                                                          <HelpBlock>
-                                                                            <Row>
-                                                                                <Col xs={6}>
+                                                                            <HelpBlock>
+                                                                                <Row>
+                                                                                    <Col xs={6}>
                                                                                         <Checkbox onChange={(e) => this.onSetXAxisTitleColorOptionChanged(e)} checked={this.state.SetXAxisTitleColor} >Title Color</Checkbox>
-                                                                                 </Col>
-                                                                                <Col xs={6}>
-                                                                                    {this.state.SetXAxisTitleColor &&
-                                                                                        <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.ChartProperties.XAxisTitleColor} onChange={(x) => this.onXAxisTitleColorChange(x)} />
-                                                                                    }
-                                                                                </Col>
-                                                                            </Row>
+                                                                                    </Col>
+                                                                                    <Col xs={6}>
+                                                                                        {this.state.SetXAxisTitleColor &&
+                                                                                            <ColorPicker ColorPalette={this.props.ColorPalette} value={this.state.ChartProperties.XAxisTitleColor} onChange={(x) => this.onXAxisTitleColorChange(x)} />
+                                                                                        }
+                                                                                    </Col>
+                                                                                </Row>
                                                                             </HelpBlock>
                                                                         </AdaptableBlotterForm>
 
@@ -1003,7 +1009,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             args.background = color;
             args.leaderBrush = "#d8d8d8";
             args.textColor = "white";
-         }
+        }
     }
 
     public seriesAdded(sender: any, args: any) {
@@ -1011,7 +1017,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
         if (series.valueMemberPath &&
             series.valueMemberPath !== "") {
             this.seriesColors.set(series.valueMemberPath, args.series.actualBrush);
-         }
+        }
     }
 
     onEditChart(): void {
@@ -1265,25 +1271,25 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     }
 
     private onSetYAxisIntervalValueOptionChanged(event: React.FormEvent<any>) {
-      let e = event.target as HTMLInputElement;
-      let chartProps: ICategoryChartProperties = this.state.ChartProperties;
-      chartProps.YAxisIntervalCustom = e.checked;
-      if (!e.checked) {
-          // set YAxisIntervalValue to undefined so it is auto calculated by the chart
-          chartProps.YAxisIntervalValue = undefined;
-      }
-      this.updateChartProperties(chartProps);
-  }
-  private onSetXAxisIntervalValueOptionChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    let chartProps: ICategoryChartProperties = this.state.ChartProperties;
-    chartProps.XAxisIntervalCustom = e.checked;
-    if (!e.checked) {
-        // set XAxisIntervalValue to undefined so it is auto calculated by the chart
-        chartProps.XAxisIntervalValue = undefined;
+        let e = event.target as HTMLInputElement;
+        let chartProps: ICategoryChartProperties = this.state.ChartProperties;
+        chartProps.YAxisIntervalCustom = e.checked;
+        if (!e.checked) {
+            // set YAxisIntervalValue to undefined so it is auto calculated by the chart
+            chartProps.YAxisIntervalValue = undefined;
+        }
+        this.updateChartProperties(chartProps);
     }
-    this.updateChartProperties(chartProps);
-}
+    private onSetXAxisIntervalValueOptionChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        let chartProps: ICategoryChartProperties = this.state.ChartProperties;
+        chartProps.XAxisIntervalCustom = e.checked;
+        if (!e.checked) {
+            // set XAxisIntervalValue to undefined so it is auto calculated by the chart
+            chartProps.XAxisIntervalValue = undefined;
+        }
+        this.updateChartProperties(chartProps);
+    }
 
     private onSetYAxisLabelColorOptionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
