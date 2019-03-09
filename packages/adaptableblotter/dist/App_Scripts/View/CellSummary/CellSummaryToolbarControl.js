@@ -49,17 +49,17 @@ class CellSummaryToolbarControlComponent extends React.Component {
         let content = React.createElement("span", null,
             React.createElement("div", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(react_bootstrap_1.InputGroup, null,
-                    React.createElement(react_bootstrap_1.DropdownButton, { style: { marginRight: "3px", width: "75px" }, title: this.props.CellSummaryOperation, id: "CellSummary_Operation", bsSize: "small", componentClass: react_bootstrap_1.InputGroup.Button },
+                    React.createElement(react_bootstrap_1.DropdownButton, { style: { marginRight: "3px", width: "75px" }, title: this.props.CellSummaryOperation, id: "CellSummary_Operation", bsSize: this.props.DashboardSize, componentClass: react_bootstrap_1.InputGroup.Button },
                         operationMenuItems,
                         operationOptionalMenuItems),
                     this.props.CellSummary != null &&
                         React.createElement("span", null,
-                            React.createElement(react_bootstrap_1.ControlLabel, { style: { marginTop: "5px", marginLeft: "3px" } },
+                            React.createElement(react_bootstrap_1.ControlLabel, { style: { marginLeft: "3px" } },
                                 this.getOperationValue(),
                                 " "),
                             ' ',
                             this.props.CellSummary != null && this.props.CellSummary.Count > 0 &&
-                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Cell Summary", bodyText: [cellSummaryPopover], tooltipText: "Show Cell Summary", useButton: true, triggerAction: "click", popoverMinWidth: 300 })))));
+                                React.createElement(AdaptablePopover_1.AdaptablePopover, { showDefaultStyle: this.props.UseSingleColourForButtons, size: this.props.DashboardSize, cssClassName: cssClassName, headerText: "Cell Summary", bodyText: [cellSummaryPopover], tooltipText: "Show Cell Summary", useButton: true, triggerAction: "click", popoverMinWidth: 300 })))));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.CellSummaryStrategyName, glyphicon: StrategyConstants.CellSummaryGlyph, onClose: () => this.props.onClose(StrategyConstants.CellSummaryStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectionChanged() {

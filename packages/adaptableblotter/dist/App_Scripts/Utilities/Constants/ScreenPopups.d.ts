@@ -22,7 +22,6 @@ export declare const ExportPopup: string;
 export declare const FlashingCellsPopup: string;
 export declare const FormatColumnPopup: string;
 export declare const FreeTextColumnPopup: string;
-export declare const HomeButtonsPopup: string;
 export declare const LayoutPopup: string;
 export declare const PlusMinusPopup: string;
 export declare const CellSummaryPopup: string;

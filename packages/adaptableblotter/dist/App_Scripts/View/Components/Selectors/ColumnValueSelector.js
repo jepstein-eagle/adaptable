@@ -35,7 +35,7 @@ class ColumnValueSelector extends React.Component {
             }
             sortedColumnValues = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnDisplayValuePairs, "RawValue");
         }
-        return React.createElement(react_bootstrap_typeahead_1.Typeahead, { ref: "typeahead", bsSize: this.props.bsSize, emptyLabel: "", placeholder: placeholderText, labelKey: "DisplayValue", multiple: false, selected: [selectedValue], onChange: (selected) => { this.onColumnChange(selected); }, options: sortedColumnValues, disabled: this.props.disabled, allowNew: allowNew, newSelectionPrefix: "new value: ", filterBy: ["DisplayValue"] });
+        return React.createElement(react_bootstrap_typeahead_1.Typeahead, { ref: "typeahead", bsSize: 'sm', emptyLabel: "", placeholder: placeholderText, labelKey: "DisplayValue", multiple: false, selected: [selectedValue], onChange: (selected) => { this.onColumnChange(selected); }, options: sortedColumnValues, disabled: this.props.disabled, allowNew: allowNew, newSelectionPrefix: "new value: ", filterBy: ["DisplayValue"] });
     }
     onColumnChange(selected) {
         if (ArrayExtensions_1.ArrayExtensions.IsEmpty(selected) && StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
@@ -56,3 +56,8 @@ class ColumnValueSelector extends React.Component {
     }
 }
 exports.ColumnValueSelector = ColumnValueSelector;
+let smallFormControlStyle = {
+    'fontSize': 'xsmall',
+    'height': '22px',
+    'width': '70px'
+};

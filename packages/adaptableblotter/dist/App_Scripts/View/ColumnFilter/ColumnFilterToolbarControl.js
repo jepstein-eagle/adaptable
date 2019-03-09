@@ -35,13 +35,13 @@ class ColumnFilterToolbarControlComponent extends React.Component {
                 ' ',
                 ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) &&
                     React.createElement("span", null,
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "", bodyText: [activeFiltersPanel], tooltipText: "Show Filter Details", useButton: true, triggerAction: "click", popoverMinWidth: 400 }),
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { showDefaultStyle: this.props.UseSingleColourForButtons, size: this.props.DashboardSize, cssClassName: cssClassName, headerText: "", bodyText: [activeFiltersPanel], tooltipText: "Show Filter Details", useButton: true, triggerAction: "click", popoverMinWidth: 400 }),
                         ' ',
-                        React.createElement(ButtonClear_1.ButtonClear, { onClick: () => this.onClearFilters(), bsStyle: "primary", cssClassName: cssClassName, size: "small", overrideTooltip: "Clear Column Filters", DisplayMode: "Text", overrideDisableButton: this.props.ColumnFilters.length == 0, AccessLevel: this.props.AccessLevel })),
+                        React.createElement(ButtonClear_1.ButtonClear, { onClick: () => this.onClearFilters(), bsStyle: "primary", cssClassName: cssClassName, size: this.props.DashboardSize, overrideTooltip: "Clear Column Filters", DisplayMode: "Text", overrideDisableButton: this.props.ColumnFilters.length == 0, AccessLevel: this.props.AccessLevel, showDefaultStyle: this.props.UseSingleColourForButtons })),
                 this.props.IsFloatingFilterActive ?
-                    React.createElement(ButtonHide_1.ButtonHide, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onHideFloatingFilterBar(), size: "small", overrideTooltip: "Hide Floating Filter", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel, overrideDisableButton: !this.props.Blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter })
+                    React.createElement(ButtonHide_1.ButtonHide, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onHideFloatingFilterBar(), size: this.props.DashboardSize, overrideTooltip: "Hide Floating Filter", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel, overrideDisableButton: !this.props.Blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter, showDefaultStyle: this.props.UseSingleColourForButtons })
                     :
-                        React.createElement(ButtonShow_1.ButtonShow, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onShowFloatingFilterBar(), size: "small", overrideTooltip: "Show Floating Filter", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel, overrideDisableButton: !this.props.Blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter })));
+                        React.createElement(ButtonShow_1.ButtonShow, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onShowFloatingFilterBar(), size: this.props.DashboardSize, overrideTooltip: "Show Floating Filter", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel, overrideDisableButton: !this.props.Blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter, showDefaultStyle: this.props.UseSingleColourForButtons })));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.ColumnFilterStrategyName, glyphicon: StrategyConstants.ColumnFilterGlyph, onClose: () => this.props.onClose(StrategyConstants.ColumnFilterStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onClearFilters() {
@@ -62,14 +62,16 @@ class ColumnFilterToolbarControlComponent extends React.Component {
         this.props.onShowPrompt(prompt);
     }
     getStyleForLabel() {
-        return (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters)) ? StyleConstants_1.SUCCESS_BSSTYLE : StyleConstants_1.DEFAULT_BSSTYLE;
+        return (this.props.UseSingleColourForButtons == false && ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters)) ?
+            StyleConstants_1.SUCCESS_BSSTYLE :
+            StyleConstants_1.DEFAULT_BSSTYLE;
     }
 }
 function mapStateToProps(state, ownProps) {
     return {
         ColumnFilters: state.ColumnFilter.ColumnFilters,
         Entitlements: state.Entitlements.FunctionEntitlements,
-        IsFloatingFilterActive: state.Grid.IsFloatingFilterActive
+        IsFloatingFilterActive: state.Grid.IsFloatingFilterActive,
     };
 }
 function mapDispatchToProps(dispatch) {

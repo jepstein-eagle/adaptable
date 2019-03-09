@@ -23,6 +23,10 @@ const DASHBOARD_SHOW_TOOLBARS_DROPDOWN = 'DASHBOARD_SHOW_TOOLBARS_DROPDOWN';
 const DASHBOARD_HIDE_TOOLBARS_DROPDOWN = 'DASHBOARD_HIDE_TOOLBARS_DROPDOWN';
 const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
 const DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE = 'DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE';
+const DASHBOARD_USE_SINGLE_COLOUR_FOR_BUTTONS = 'DASHBOARD_USE_SINGLE_COLOUR_FOR_BUTTONS';
+const DASHBOARD_USE_MULTIPLE_COLOUR_FOR_BUTTONS = 'DASHBOARD_USE_MULTIPLE_COLOUR_FOR_BUTTONS';
+const DASHBOARD_USE_EXTRA_SMALL_BUTTONS = 'DASHBOARD_USE_EXTRA_SMALL_BUTTONS';
+const DASHBOARD_USE_DEFAULT_SIZE_BUTTONS = 'DASHBOARD_USE_DEFAULT_SIZE_BUTTONS';
 exports.DashboardSetAvailableToolbars = (StrategyIds) => ({
     type: DASHBOARD_SET_AVAILABLE_TOOLBARS,
     StrategyIds
@@ -94,6 +98,18 @@ exports.DashboardSetApplicationToolbarTitle = (Title) => ({
     type: DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE,
     Title
 });
+exports.DashboardUseSingleColourForButtons = () => ({
+    type: DASHBOARD_USE_SINGLE_COLOUR_FOR_BUTTONS,
+});
+exports.DashboardUseMultipleColourForButtons = () => ({
+    type: DASHBOARD_USE_MULTIPLE_COLOUR_FOR_BUTTONS,
+});
+exports.DashboardUseExtraSmallButtons = () => ({
+    type: DASHBOARD_USE_EXTRA_SMALL_BUTTONS,
+});
+exports.DashboardUseDefaultSizeButtons = () => ({
+    type: DASHBOARD_USE_DEFAULT_SIZE_BUTTONS,
+});
 const initialDashboardState = {
     AvailableToolbars: [
         StrategyConstants.AdvancedSearchStrategyId,
@@ -132,7 +148,9 @@ const initialDashboardState = {
     ShowColumnsDropdown: true,
     ShowToolbarsDropdown: true,
     HomeToolbarTitle: "",
-    ApplicationToolbarTitle: ""
+    ApplicationToolbarTitle: "",
+    UseSingleColourForButtons: false,
+    UseExtraSmallButtons: false,
 };
 exports.DashboardReducer = (state = initialDashboardState, action) => {
     let index;
@@ -215,6 +233,18 @@ exports.DashboardReducer = (state = initialDashboardState, action) => {
         case DASHBOARD_SET_APPLICATION_TOOLBAR_TITLE: {
             let actionTyped = action;
             return Object.assign({}, state, { ApplicationToolbarTitle: actionTyped.Title });
+        }
+        case DASHBOARD_USE_SINGLE_COLOUR_FOR_BUTTONS: {
+            return Object.assign({}, state, { UseSingleColourForButtons: true });
+        }
+        case DASHBOARD_USE_MULTIPLE_COLOUR_FOR_BUTTONS: {
+            return Object.assign({}, state, { UseSingleColourForButtons: false });
+        }
+        case DASHBOARD_USE_EXTRA_SMALL_BUTTONS: {
+            return Object.assign({}, state, { UseExtraSmallButtons: true });
+        }
+        case DASHBOARD_USE_DEFAULT_SIZE_BUTTONS: {
+            return Object.assign({}, state, { UseExtraSmallButtons: false });
         }
         default:
             return state;

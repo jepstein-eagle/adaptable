@@ -19,7 +19,7 @@ var StringExtensions;
     }
     StringExtensions.IsNotEmpty = IsNotEmpty;
     function IsNullOrEmpty(stringToCheck) {
-        return IsNull(stringToCheck) || StringExtensions.IsEmpty(stringToCheck);
+        return IsNull(stringToCheck) || IsEmpty(stringToCheck);
     }
     StringExtensions.IsNullOrEmpty = IsNullOrEmpty;
     function IsNotNullOrEmpty(stringToCheck) {

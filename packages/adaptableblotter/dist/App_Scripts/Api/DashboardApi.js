@@ -66,5 +66,17 @@ class DashboardApi extends ApiBase_1.ApiBase {
     SetApplicationToolbarTitle(title) {
         this.dispatchAction(DashboardRedux.DashboardSetApplicationToolbarTitle(title));
     }
+    UseSingleColourForButtons() {
+        this.dispatchAction(DashboardRedux.DashboardUseSingleColourForButtons());
+    }
+    UseMultipleColourForButtons() {
+        this.dispatchAction(DashboardRedux.DashboardUseMultipleColourForButtons());
+    }
+    UseExtraSmallButtons() {
+        this.dispatchAction(DashboardRedux.DashboardUseExtraSmallButtons());
+    }
+    UseDefaultSizeButtons() {
+        this.dispatchAction(DashboardRedux.DashboardUseDefaultSizeButtons());
+    }
 }
 exports.DashboardApi = DashboardApi;

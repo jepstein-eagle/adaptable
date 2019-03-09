@@ -18,5 +18,9 @@ export interface IDashboardApi {
     HideColumnsDropdown(): void;
     SetHomeToolbarTitle(title: string): void;
     SetApplicationToolbarTitle(title: string): void;
+    UseSingleColourForButtons(): void;
+    UseMultipleColourForButtons(): void;
+    UseExtraSmallButtons(): void;
+    UseDefaultSizeButtons(): void;
     Minimise(): void;
 }

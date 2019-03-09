@@ -24,7 +24,6 @@ exports.ExportPopup = "ExportPopup";
 exports.FlashingCellsPopup = "FlashingCellsPopup";
 exports.FormatColumnPopup = "FormatColumnPopup";
 exports.FreeTextColumnPopup = "FreeTextColumnPopup";
-exports.HomeButtonsPopup = "HomeButtonsPopup";
 exports.LayoutPopup = "LayoutPopup";
 exports.PlusMinusPopup = "PlusMinusPopup";
 exports.CellSummaryPopup = "CellSummaryPopup";

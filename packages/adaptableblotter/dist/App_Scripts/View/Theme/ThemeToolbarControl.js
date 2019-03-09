@@ -19,7 +19,7 @@ class ThemeToolbarControlComponent extends React.Component {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onSelectTheme(search) }, search);
         });
         let content = React.createElement("div", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
-            React.createElement(react_bootstrap_1.DropdownButton, { style: { minWidth: "100px" }, className: cssClassName, bsSize: "small", bsStyle: "default", title: this.props.CurrentTheme, id: "themeDropDown" }, themes));
+            React.createElement(react_bootstrap_1.DropdownButton, { style: { minWidth: "100px" }, className: cssClassName, bsSize: this.props.DashboardSize, bsStyle: "default", title: this.props.CurrentTheme, id: "themeDropDown" }, themes));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.ThemeStrategyName, glyphicon: StrategyConstants.ThemeGlyph, onClose: () => this.props.onClose(StrategyConstants.ThemeStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectTheme(theme) {

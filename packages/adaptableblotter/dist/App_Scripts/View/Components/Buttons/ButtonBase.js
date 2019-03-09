@@ -43,7 +43,8 @@ class ButtonBase extends React.Component {
                 ' ',
                 React.createElement(react_bootstrap_1.Glyphicon, { glyph: this.props.glyph }));
         }
-        let button = React.createElement(react_bootstrap_1.Button, { style: this.props.style, className: this.props.cssClassName, bsStyle: this.props.bsStyle, disabled: isDisabled, bsSize: this.props.bsSize, onClick: () => this.props.onClick(), onMouseDown: e => e.preventDefault() }, content);
+        let bsStyle = (this.props.showDefaultStyle && this.props.showDefaultStyle == true) ? 'default' : this.props.bsStyle;
+        let button = React.createElement(react_bootstrap_1.Button, { style: this.props.style, className: this.props.cssClassName, bsStyle: bsStyle, disabled: isDisabled, bsSize: this.props.bsSize, onClick: () => this.props.onClick(), onMouseDown: e => e.preventDefault() }, content);
         let buttonwithtooltip = React.createElement(react_bootstrap_1.OverlayTrigger, { overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                 " ",
                 tooltip) }, button);
@@ -59,6 +60,7 @@ ButtonBase.defaultProps = {
     DisplayMode: "Glyph+Text",
     transformGlyph: false,
     cssClassName: "btn",
-    AccessLevel: Enums_1.AccessLevel.Full
+    AccessLevel: Enums_1.AccessLevel.Full,
+    showDefaultStyle: false
 };
 exports.ButtonBase = ButtonBase;

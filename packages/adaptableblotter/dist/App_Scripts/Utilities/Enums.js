@@ -268,3 +268,8 @@ var LicenceType;
     LicenceType["Standard"] = "Standard";
     LicenceType["Enterprise"] = "Enterprise";
 })(LicenceType = exports.LicenceType || (exports.LicenceType = {}));
+var DashboardSize;
+(function (DashboardSize) {
+    DashboardSize["Small"] = "small";
+    DashboardSize["XSmall"] = "xsmall";
+})(DashboardSize = exports.DashboardSize || (exports.DashboardSize = {}));

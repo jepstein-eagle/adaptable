@@ -1,3 +1,4 @@
+/// <reference types="react-bootstrap" />
 import * as React from "react";
 import { MessageType } from '../Utilities/Enums';
 export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
@@ -9,6 +10,8 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
     useButton?: boolean;
     tooltipText?: string;
     popoverMinWidth?: number;
+    size?: ReactBootstrap.Sizes;
+    showDefaultStyle?: boolean;
 }
 export declare class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}> {
     render(): JSX.Element;

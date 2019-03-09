@@ -44,6 +44,7 @@ class SmartEditToolbarControlComponent extends React.Component {
         let statusColour = this.getStatusColour();
         let cssClassName = this.props.cssClassName + "__SmartEdit";
         let selectedColumn = (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)) ? ColumnHelper_1.ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns) : null;
+        let formControlStyle = (this.props.DashboardSize == 'xsmall') ? smallFormControlStyle : standardFormControlStyle;
         let previewPanel = React.createElement(PreviewResultsPanel_1.PreviewResultsPanel, { cssClassName: cssClassName, UpdateValue: this.props.SmartEditValue, PreviewInfo: this.props.PreviewInfo, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SelectedColumn: selectedColumn, ShowPanel: true, ShowHeader: false });
         let operationMenuItems = EnumExtensions_1.EnumExtensions.getNames(Enums_1.MathOperation).filter(e => e != Enums_1.MathOperation.Replace).map((mathOperation, index) => {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: "index", onClick: () => this.props.onSmartEditOperationChange(mathOperation) }, mathOperation);
@@ -51,13 +52,13 @@ class SmartEditToolbarControlComponent extends React.Component {
         let content = React.createElement("span", null,
             React.createElement("div", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly || !this.props.IsValidSelection ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(react_bootstrap_1.InputGroup, null,
-                    React.createElement(react_bootstrap_1.DropdownButton, { style: { marginRight: "3px", width: "75px" }, title: this.props.MathOperation, id: "SmartEdit_Operation", bsSize: "small", componentClass: react_bootstrap_1.InputGroup.Button }, operationMenuItems),
-                    React.createElement(react_bootstrap_1.FormControl, { value: this.props.SmartEditValue.toString(), style: { width: "70px" }, type: "number", placeholder: "Enter a Number", bsSize: "small", step: "any", onChange: (e) => this.onSmartEditValueChange(e) })),
+                    React.createElement(react_bootstrap_1.DropdownButton, { style: { marginRight: "3px", width: "75px" }, title: this.props.MathOperation, id: "SmartEdit_Operation", bsSize: this.props.DashboardSize, componentClass: react_bootstrap_1.InputGroup.Button }, operationMenuItems),
+                    React.createElement(react_bootstrap_1.FormControl, { value: this.props.SmartEditValue.toString(), style: formControlStyle, type: "number", placeholder: "Enter a Number", bsSize: this.props.DashboardSize, step: "any", onChange: (e) => this.onSmartEditValueChange(e) })),
                 this.props.IsValidSelection &&
-                    React.createElement(ButtonApply_1.ButtonApply, { cssClassName: cssClassName, style: { marginLeft: "3px" }, onClick: () => this.onApplyClick(), size: "small", glyph: "ok", bsStyle: UIHelper_1.UIHelper.getStyleNameByStatusColour(statusColour), overrideTooltip: "Apply Smart Edit", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                    React.createElement(ButtonApply_1.ButtonApply, { cssClassName: cssClassName, style: { marginLeft: "3px" }, onClick: () => this.onApplyClick(), size: this.props.DashboardSize, glyph: "ok", bsStyle: UIHelper_1.UIHelper.getStyleNameByStatusColour(statusColour), overrideTooltip: "Apply Smart Edit", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel, showDefaultStyle: this.props.UseSingleColourForButtons }),
                 this.props.IsValidSelection &&
                     React.createElement("span", { style: { marginLeft: "3px" } },
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Preview Results", tooltipText: "Preview Results", bodyText: [previewPanel], MessageType: UIHelper_1.UIHelper.getMessageTypeByStatusColour(statusColour), useButton: true, triggerAction: "click" }))));
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { showDefaultStyle: this.props.UseSingleColourForButtons, size: this.props.DashboardSize, cssClassName: cssClassName, headerText: "Preview Results", tooltipText: "Preview Results", bodyText: [previewPanel], MessageType: UIHelper_1.UIHelper.getMessageTypeByStatusColour(statusColour), useButton: true, triggerAction: "click" }))));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.SmartEditStrategyName, glyphicon: StrategyConstants.SmartEditGlyph, onClose: () => this.props.onClose(StrategyConstants.SmartEditStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSmartEditValueChange(event) {
@@ -125,3 +126,11 @@ function mapDispatchToProps(dispatch) {
     };
 }
 exports.SmartEditToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(SmartEditToolbarControlComponent);
+let smallFormControlStyle = {
+    'fontSize': 'xsmall',
+    'height': '22px',
+    'width': '70px'
+};
+let standardFormControlStyle = {
+    'width': '70px'
+};

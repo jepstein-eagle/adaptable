@@ -21,6 +21,7 @@ class DashboardComponent extends React.Component {
         let showBlotterName = "Show " + blotterName + " Dashboard";
         let hiddenEntitlements = this.props.EntitlementsState.FunctionEntitlements.filter(e => e.AccessLevel == "Hidden");
         let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(vt => ArrayExtensions_1.ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)); //.filter(dc => dc.IsVisible);
+        let dashboardSize = this.props.DashboardState.UseExtraSmallButtons ? Enums_1.DashboardSize.XSmall : Enums_1.DashboardSize.Small;
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
             let accessLevel = StrategyHelper_1.StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
             if (accessLevel != Enums_1.AccessLevel.Hidden) {
@@ -34,7 +35,9 @@ class DashboardComponent extends React.Component {
                         ColorPalette: this.props.ColorPalette,
                         GridSorts: this.props.GridSorts,
                         cssClassName: cssClassName,
-                        AccessLevel: accessLevel
+                        AccessLevel: accessLevel,
+                        DashboardSize: dashboardSize,
+                        UseSingleColourForButtons: this.props.DashboardState.UseSingleColourForButtons
                     });
                     return React.createElement(react_bootstrap_1.Nav, { key: control, style: { marginRight: "5px", marginTop: "3px", marginBottom: "3px" } }, dashboardElememt);
                 }

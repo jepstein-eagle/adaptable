@@ -15,6 +15,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
     glyph?: string;
     hideToolTip?: boolean;
     AccessLevel?: AccessLevel;
+    showDefaultStyle?: boolean;
 }
 export interface ButtonBaseProps extends ButtonProps {
     ToolTipAndText: string;

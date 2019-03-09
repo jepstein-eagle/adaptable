@@ -225,3 +225,7 @@ export declare enum LicenceType {
     Standard = "Standard",
     Enterprise = "Enterprise"
 }
+export declare enum DashboardSize {
+    Small = "small",
+    XSmall = "xsmall"
+}

@@ -30,7 +30,6 @@ const ExportToolbarControl_1 = require("./Export/ExportToolbarControl");
 const TeamSharingPopup_1 = require("./TeamSharing/TeamSharingPopup");
 const IPushPullLogin_1 = require("./Export/IPushPullLogin");
 const HomeToolbarControl_1 = require("./Home/HomeToolbarControl");
-const HomeButtonsPopup_1 = require("./Home/HomeButtonsPopup");
 const ApplicationPopup_1 = require("./Application/ApplicationPopup");
 const DashboardPopup_1 = require("./Dashboard/DashboardPopup");
 const DataManagementPopup_1 = require("./DataManagement/DataManagementPopup");
@@ -72,7 +71,6 @@ exports.AdaptableViewFactory = {
     FlashingCellsPopup: FlashingCellsPopup_1.FlashingCellsPopup,
     FormatColumnPopup: FormatColumnPopup_1.FormatColumnPopup,
     FreeTextColumnPopup: FreeTextColumnPopup_1.FreeTextColumnPopup,
-    HomeButtonsPopup: HomeButtonsPopup_1.HomeButtonsPopup,
     IPushPullLogin: IPushPullLogin_1.IPushPullLogin,
     IPushPullDomainPageSelector: IPushPullDomainPageSelector_1.IPushPullDomainPageSelector,
     LayoutPopup: LayoutPopup_1.LayoutPopup,

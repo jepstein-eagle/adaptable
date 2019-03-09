@@ -5,7 +5,7 @@ const ButtonBase_1 = require("./ButtonBase");
 const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 class ButtonNew extends React.Component {
     render() {
-        return React.createElement(ButtonBase_1.ButtonBase, { ToolTipAndText: "New", bsStyle: 'info', bsSize: this.props.size, glyph: "plus", onClick: () => this.props.onClick(), overrideDisableButton: this.props.overrideDisableButton, overrideTooltip: this.props.overrideTooltip, style: this.props.style, DisplayMode: this.props.DisplayMode, overrideText: this.props.overrideText, cssClassName: this.props.cssClassName + StyleConstants.NEW_BUTTON, hideToolTip: this.props.hideToolTip });
+        return React.createElement(ButtonBase_1.ButtonBase, { ToolTipAndText: "New", bsStyle: 'info', bsSize: this.props.size, glyph: "plus", onClick: () => this.props.onClick(), overrideDisableButton: this.props.overrideDisableButton, overrideTooltip: this.props.overrideTooltip, style: this.props.style, DisplayMode: this.props.DisplayMode, overrideText: this.props.overrideText, cssClassName: this.props.cssClassName + StyleConstants.NEW_BUTTON, hideToolTip: this.props.hideToolTip, showDefaultStyle: this.props.showDefaultStyle });
     }
 }
 exports.ButtonNew = ButtonNew;

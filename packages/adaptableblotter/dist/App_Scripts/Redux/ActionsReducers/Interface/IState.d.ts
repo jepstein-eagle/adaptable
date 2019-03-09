@@ -155,6 +155,8 @@ export interface DashboardState extends IUserState {
     ShowToolbarsDropdown: boolean;
     HomeToolbarTitle: string;
     ApplicationToolbarTitle: string;
+    UseSingleColourForButtons: boolean;
+    UseExtraSmallButtons: boolean;
 }
 export interface DataSourceState extends IUserState {
     DataSources: string[];

@@ -46,8 +46,8 @@ class BulkUpdateToolbarControlComponent extends React.Component {
         // we dont want to show the panel in the form but will need to appear in a popup....
         let cssClassName = this.props.cssClassName + "__bulkupdate";
         let activeButton = this.state.Disabled ?
-            React.createElement(react_bootstrap_1.Button, { style: { marginRight: "3px" }, onClick: () => this.onDisabledChanged(), bsStyle: "default", bsSize: "small" }, "Off")
-            : React.createElement(react_bootstrap_1.Button, { style: { marginRight: "3px" }, onClick: () => this.onDisabledChanged(), bsStyle: "primary", bsSize: "small" }, "On");
+            React.createElement(react_bootstrap_1.Button, { style: { marginRight: "3px" }, onClick: () => this.onDisabledChanged(), bsStyle: "default", bsSize: this.props.DashboardSize }, "Off")
+            : React.createElement(react_bootstrap_1.Button, { style: { marginRight: "3px" }, onClick: () => this.onDisabledChanged(), bsStyle: "primary", bsSize: this.props.DashboardSize }, "On");
         let selectedColumn = (this.props.PreviewInfo && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PreviewInfo.ColumnId)) ?
             ColumnHelper_1.ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns) :
             null;
@@ -56,12 +56,12 @@ class BulkUpdateToolbarControlComponent extends React.Component {
             React.createElement("div", { className: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : "" },
                 React.createElement(react_bootstrap_1.InputGroup, null,
                     React.createElement(react_bootstrap_1.InputGroup.Button, null, activeButton),
-                    React.createElement(ColumnValueSelector_1.ColumnValueSelector, { style: { width: "120px" }, cssClassName: cssClassName, disabled: !this.props.IsValidSelection, bsSize: "small", SelectedColumnValue: this.props.BulkUpdateValue, SelectedColumn: selectedColumn, Blotter: this.props.Blotter, onColumnValueChange: columns => this.onColumnValueSelectedChanged(columns) })),
+                    React.createElement(ColumnValueSelector_1.ColumnValueSelector, { style: { width: "120px", height: '10px' }, cssClassName: cssClassName, disabled: !this.props.IsValidSelection, bsSize: "small", SelectedColumnValue: this.props.BulkUpdateValue, SelectedColumn: selectedColumn, Blotter: this.props.Blotter, onColumnValueChange: columns => this.onColumnValueSelectedChanged(columns) })),
                 this.props.IsValidSelection && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
-                    React.createElement(ButtonApply_1.ButtonApply, { cssClassName: cssClassName, style: { marginLeft: "3px" }, onClick: () => this.onApplyClick(), size: "small", glyph: "ok", bsStyle: UIHelper_1.UIHelper.getStyleNameByStatusColour(statusColour), overrideTooltip: "Apply Bulk Update", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }),
+                    React.createElement(ButtonApply_1.ButtonApply, { cssClassName: cssClassName, style: { marginLeft: "3px" }, onClick: () => this.onApplyClick(), size: this.props.DashboardSize, glyph: "ok", bsStyle: UIHelper_1.UIHelper.getStyleNameByStatusColour(statusColour), overrideTooltip: "Apply Bulk Update", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) || (this.props.PreviewInfo != null && this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel, showDefaultStyle: this.props.UseSingleColourForButtons }),
                 this.props.IsValidSelection && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
                     React.createElement("span", { style: { marginLeft: "3px" } },
-                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Preview Results", bodyText: [previewPanel], MessageType: UIHelper_1.UIHelper.getMessageTypeByStatusColour(statusColour), useButton: true, triggerAction: "click" }))));
+                        React.createElement(AdaptablePopover_1.AdaptablePopover, { showDefaultStyle: this.props.UseSingleColourForButtons, size: this.props.DashboardSize, cssClassName: cssClassName, headerText: "Preview Results", bodyText: [previewPanel], MessageType: UIHelper_1.UIHelper.getMessageTypeByStatusColour(statusColour), useButton: true, triggerAction: "click" }))));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.BulkUpdateStrategyName, glyphicon: StrategyConstants.BulkUpdateGlyph, onClose: () => this.props.onClose(StrategyConstants.BulkUpdateStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onColumnValueSelectedChanged(selectedColumnValue) {

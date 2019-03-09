@@ -9,12 +9,18 @@ class AdaptableBlotterFormControlTextClear extends React.Component {
     render() {
         let size = (this.props.bsSize) ? this.props.bsSize : 'sm';
         let cssClassName = this.props.cssClassName + StyleConstants.TEXT_ENTRY_FORM;
+        let style = (size == 'xs' || size == 'xsmall') ? smallFormControlStyle : this.props.style;
         return React.createElement("span", null,
             React.createElement(react_bootstrap_1.InputGroup, null,
-                React.createElement(react_bootstrap_1.FormControl, { className: cssClassName, autoFocus: this.props.autoFocus, bsSize: size, style: this.props.style, type: "text", placeholder: this.props.placeholder, value: this.props.value, onChange: (x) => this.props.OnTextChange(x.target.value) }),
+                React.createElement(react_bootstrap_1.FormControl, { className: cssClassName, autoFocus: this.props.autoFocus, bsSize: size, style: style, type: "text", placeholder: this.props.placeholder, value: this.props.value, onChange: (x) => this.props.OnTextChange(x.target.value) }),
                 StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.value.toString()) &&
                     React.createElement(react_bootstrap_1.InputGroup.Button, null,
                         React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.props.OnTextChange(""), size: size, overrideTooltip: "Clear", DisplayMode: "Glyph" }))));
     }
 }
 exports.AdaptableBlotterFormControlTextClear = AdaptableBlotterFormControlTextClear;
+let smallFormControlStyle = {
+    'fontSize': 'xsmall',
+    'height': '22px',
+    'width': '150px'
+};

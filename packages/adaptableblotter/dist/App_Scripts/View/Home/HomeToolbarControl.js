@@ -84,18 +84,18 @@ class HomeToolbarControlComponent extends React.Component {
         let statusButton = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "systemstatus", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                 " ",
                 "System Status") },
-            React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: UIHelper_1.UIHelper.getGlyphForSystemStatusButton(this.props.SystemStatus.StatusColour), cssClassName: cssClassName, bsStyle: UIHelper_1.UIHelper.getStyleForSystemStatusButton(this.props.SystemStatus.StatusColour), DisplayMode: "Glyph", bsSize: "small", ToolTipAndText: "Status: " + this.props.SystemStatus.StatusColour, overrideDisableButton: false, onClick: () => this.onClickStatus(), AccessLevel: Enums_1.AccessLevel.Full }));
+            React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: UIHelper_1.UIHelper.getGlyphForSystemStatusButton(this.props.SystemStatus.StatusColour), cssClassName: cssClassName, bsStyle: UIHelper_1.UIHelper.getStyleForSystemStatusButton(this.props.SystemStatus.StatusColour), DisplayMode: "Glyph", bsSize: this.props.DashboardSize, ToolTipAndText: "Status: " + this.props.SystemStatus.StatusColour, overrideDisableButton: false, onClick: () => this.onClickStatus(), AccessLevel: Enums_1.AccessLevel.Full }));
         // about button
         let aboutButton = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "about", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                 " ",
                 "About") },
-            React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: "info-sign", cssClassName: cssClassName, bsStyle: "default", DisplayMode: "Glyph", bsSize: "small", ToolTipAndText: "About", overrideDisableButton: false, onClick: () => this.onClickAbout(), AccessLevel: Enums_1.AccessLevel.Full }));
+            React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: "info-sign", cssClassName: cssClassName, bsStyle: "default", DisplayMode: "Glyph", bsSize: this.props.DashboardSize, ToolTipAndText: "About", overrideDisableButton: false, onClick: () => this.onClickAbout(), AccessLevel: Enums_1.AccessLevel.Full }));
         // functions dropdown
-        let functionsDropdown = React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: "small", title: functionsGlyph, key: "dropdown-functions", id: "dropdown-functions" }, menuItems);
+        let functionsDropdown = React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: this.props.DashboardSize, title: functionsGlyph, key: "dropdown-functions", id: "dropdown-functions" }, menuItems);
         // columns dropdown
-        let columnsDropDown = React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: "small", title: colsGlyph, key: "dropdown-cols", id: "dropdown-cols" }, colItems);
+        let columnsDropDown = React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: this.props.DashboardSize, title: colsGlyph, key: "dropdown-cols", id: "dropdown-cols" }, colItems);
         // toolbars dropdown
-        let toolbarsDropDown = React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: "small", title: toolbarsGlyph, key: "dropdown-toolbars", id: "dropdown-toolbars" }, toolbarItems);
+        let toolbarsDropDown = React.createElement(react_bootstrap_1.DropdownButton, { bsStyle: "default", className: cssDropdownClassName, bsSize: this.props.DashboardSize, title: toolbarsGlyph, key: "dropdown-toolbars", id: "dropdown-toolbars" }, toolbarItems);
         // shortcuts
         let shortcutsArray = this.props.DashboardState.VisibleButtons;
         let shortcuts;
@@ -106,7 +106,7 @@ class HomeToolbarControlComponent extends React.Component {
                     return React.createElement(react_bootstrap_1.OverlayTrigger, { key: x, overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                             " ",
                             menuItem.Label) },
-                        React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: menuItem.GlyphIcon, cssClassName: cssClassName, bsStyle: "default", DisplayMode: "Glyph", bsSize: "small", ToolTipAndText: menuItem.Label, overrideDisableButton: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.onClick(menuItem), AccessLevel: Enums_1.AccessLevel.Full }));
+                        React.createElement(ButtonDashboard_1.ButtonDashboard, { glyph: menuItem.GlyphIcon, cssClassName: cssClassName, bsStyle: "default", DisplayMode: "Glyph", bsSize: this.props.DashboardSize, ToolTipAndText: menuItem.Label, overrideDisableButton: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.onClick(menuItem), AccessLevel: Enums_1.AccessLevel.Full }));
                 }
             });
         }
@@ -206,13 +206,14 @@ function mapStateToProps(state, ownProps) {
         DashboardState: state.Dashboard,
         Columns: state.Grid.Columns,
         SystemStatus: state.System.SystemStatus,
+        DashboardSize: state.Dashboard.UseExtraSmallButtons ? Enums_1.DashboardSize.XSmall : Enums_1.DashboardSize.Small
     };
 }
 function mapDispatchToProps(dispatch) {
     return {
         onClick: (action) => dispatch(action),
         onClose: (dashboardControl) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
-        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.HomeStrategyId, ScreenPopups.HomeButtonsPopup)),
+        onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.HomeStrategyId, ScreenPopups.DashboardPopup)),
         onNewColumnListOrder: (VisibleColumnList) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
         onSetToolbarVisibility: (strategyIds) => dispatch(DashboardRedux.DashboardSetToolbars(strategyIds)),

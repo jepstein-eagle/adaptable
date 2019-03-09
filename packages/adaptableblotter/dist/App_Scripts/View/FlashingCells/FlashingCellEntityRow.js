@@ -8,9 +8,6 @@ const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 class FlashingCellEntityRow extends React.Component {
     render() {
         let flashingCell = this.props.AdaptableBlotterObject;
-        //we could have the typeahead combobox with freetext and the correct items in the list
-        //but I don't think we should allow users to enter a value....
-        //I'm only managing the case where the duration is not one of the predefined ones to be nicely displayed in the UI
         let durations = this.props.FlashingCellDurations.map((flashingCellDuration) => {
             return React.createElement("option", { key: flashingCellDuration, value: flashingCellDuration }, this.getFriendlyFlashingDuration(flashingCellDuration));
         });

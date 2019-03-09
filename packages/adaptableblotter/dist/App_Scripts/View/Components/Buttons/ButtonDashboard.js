@@ -6,7 +6,7 @@ const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 const Enums_1 = require("../../../Utilities/Enums");
 class ButtonDashboard extends React.Component {
     render() {
-        return React.createElement(ButtonBase_1.ButtonBase, { bsStyle: this.props.bsStyle, bsSize: this.props.bsSize, glyph: this.props.glyph, onClick: () => this.props.onClick(), overrideDisableButton: this.props.overrideDisableButton, overrideTooltip: this.props.overrideTooltip, style: this.props.style, DisplayMode: this.props.DisplayMode, overrideText: this.props.overrideText, ToolTipAndText: this.props.ToolTipAndText, cssClassName: this.props.cssClassName + StyleConstants.DASHBOARD_BUTTON, AccessLevel: Enums_1.AccessLevel.Full });
+        return React.createElement(ButtonBase_1.ButtonBase, { bsStyle: this.props.bsStyle, bsSize: this.props.bsSize, glyph: this.props.glyph, onClick: () => this.props.onClick(), overrideDisableButton: this.props.overrideDisableButton, overrideTooltip: this.props.overrideTooltip, style: this.props.style, DisplayMode: this.props.DisplayMode, overrideText: this.props.overrideText, ToolTipAndText: this.props.ToolTipAndText, cssClassName: this.props.cssClassName + StyleConstants.DASHBOARD_BUTTON, AccessLevel: Enums_1.AccessLevel.Full, showDefaultStyle: this.props.showDefaultStyle });
     }
 }
 exports.ButtonDashboard = ButtonDashboard;

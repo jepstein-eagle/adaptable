@@ -29,19 +29,21 @@ class AlertToolbarControlComponent extends React.Component {
         let cssClassName = this.props.cssClassName + "__Alert";
         let alertsPanel = React.createElement(AlertsPanel_1.AlertsPanel, { cssClassName: cssClassName, Alerts: this.props.Alerts, ShowPanel: true, ShowHeader: false, onClearAlert: this.props.onDeleteAlert, onRender: () => this.setState({ ShowMessage: false }), onClearAllAlerts: this.props.onDeleteAllAlert });
         let collapsedText = this.props.Alerts.length == 0 ?
-            "No Alerts" :
+            "0 Alerts" :
             this.props.Alerts.length == 1 ?
                 "1 Alert" :
                 this.props.Alerts.length + " Alerts";
+        let formControlStyle = (this.props.DashboardSize == 'xsmall') ? smallFormControlStyle : standardFormControlStyle;
+        let labelStyle = (this.props.UseSingleColourForButtons) ? 'default' : 'success';
         let content = React.createElement("span", null,
-            React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", style: { width: "80px" }, value: collapsedText, disabled: true, type: "string" }),
+            React.createElement(react_bootstrap_1.FormControl, { bsSize: this.props.DashboardSize, style: formControlStyle, value: collapsedText, disabled: true, type: "string" }),
             ' ',
             this.state.ShowMessage &&
-                React.createElement(react_bootstrap_1.Label, { bsStyle: "success" }, "New"),
+                React.createElement(react_bootstrap_1.Label, { bsStyle: labelStyle }, "New"),
             ' ',
             this.props.Alerts.length > 0 &&
                 React.createElement("span", { style: { marginLeft: "3px" } },
-                    React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "", tooltipText: "Alerts", bodyText: [alertsPanel], MessageType: this.getMessageType(), useButton: true, triggerAction: "click" })));
+                    React.createElement(AdaptablePopover_1.AdaptablePopover, { showDefaultStyle: this.props.UseSingleColourForButtons, size: this.props.DashboardSize, cssClassName: cssClassName, headerText: "", tooltipText: "Alerts", bodyText: [alertsPanel], MessageType: this.getMessageType(), useButton: true, triggerAction: "click" })));
         return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.AlertStrategyName, glyphicon: StrategyConstants.AlertGlyph, onClose: () => this.props.onClose(StrategyConstants.AlertStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     getMessageType() {
@@ -69,3 +71,11 @@ function mapDispatchToProps(dispatch) {
     };
 }
 exports.AlertToolbarControl = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(AlertToolbarControlComponent);
+let smallFormControlStyle = {
+    'fontSize': 'xsmall',
+    'height': '22px',
+    'width': '80px'
+};
+let standardFormControlStyle = {
+    'width': '80px'
+};

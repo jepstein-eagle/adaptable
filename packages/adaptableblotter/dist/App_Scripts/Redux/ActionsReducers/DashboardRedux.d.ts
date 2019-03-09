@@ -55,6 +55,14 @@ export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
 export interface DashboardSetApplicationToolbarTitleAction extends Redux.Action {
     Title: string;
 }
+export interface DashboardUseSingleColourForButtonsAction extends Redux.Action {
+}
+export interface DashboardUseMultipleColourForButtonsAction extends Redux.Action {
+}
+export interface DashboardUseExtraSmallButtonsAction extends Redux.Action {
+}
+export interface DashboardUseDefaultSizeButtonsAction extends Redux.Action {
+}
 export declare const DashboardSetAvailableToolbars: (StrategyIds: string[]) => DashboardSetAvailableToolbarsAction;
 export declare const DashboardSetToolbars: (StrategyIds: string[]) => DashboardSetToolbarsAction;
 export declare const DashboardShowToolbar: (StrategyId: string) => DashboardShowToolbarAction;
@@ -75,4 +83,8 @@ export declare const DashboardShowToolbarsDropdown: () => DashboardShowToolbarsD
 export declare const DashboardHideToolbarsDropdown: () => DashboardHideToolbarsDropdownAction;
 export declare const DashboardSetHomeToolbarTitle: (Title: string) => DashboardSetHomeToolbarTitleAction;
 export declare const DashboardSetApplicationToolbarTitle: (Title: string) => DashboardSetHomeToolbarTitleAction;
+export declare const DashboardUseSingleColourForButtons: () => DashboardUseSingleColourForButtonsAction;
+export declare const DashboardUseMultipleColourForButtons: () => DashboardUseMultipleColourForButtonsAction;
+export declare const DashboardUseExtraSmallButtons: () => DashboardUseExtraSmallButtonsAction;
+export declare const DashboardUseDefaultSizeButtons: () => DashboardUseDefaultSizeButtonsAction;
 export declare const DashboardReducer: Redux.Reducer<DashboardState>;

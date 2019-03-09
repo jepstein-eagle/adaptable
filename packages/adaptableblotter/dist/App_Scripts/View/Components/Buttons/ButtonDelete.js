@@ -8,7 +8,7 @@ const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 const Enums_1 = require("../../../Utilities/Enums");
 class ButtonDeleteComponent extends React.Component {
     render() {
-        return React.createElement(ButtonBase_1.ButtonBase, { ToolTipAndText: "Delete", bsStyle: StyleConstants.DANGER_BSSTYLE, bsSize: this.props.size, glyph: "trash", onClick: () => this.onClick(), overrideDisableButton: this.props.overrideDisableButton, overrideTooltip: this.props.overrideTooltip, style: this.props.style, DisplayMode: this.props.DisplayMode, overrideText: this.props.overrideText, cssClassName: this.props.cssClassName + StyleConstants.DELETE_BUTTON });
+        return React.createElement(ButtonBase_1.ButtonBase, { ToolTipAndText: "Delete", bsStyle: StyleConstants.DANGER_BSSTYLE, bsSize: this.props.size, glyph: "trash", onClick: () => this.onClick(), overrideDisableButton: this.props.overrideDisableButton, overrideTooltip: this.props.overrideTooltip, style: this.props.style, DisplayMode: this.props.DisplayMode, overrideText: this.props.overrideText, cssClassName: this.props.cssClassName + StyleConstants.DELETE_BUTTON, showDefaultStyle: this.props.showDefaultStyle });
     }
     onClick() {
         if (this.props.ConfirmAction) {
