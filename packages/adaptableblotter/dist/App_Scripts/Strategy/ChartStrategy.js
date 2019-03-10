@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const _ = require("lodash");
 const AdaptableStrategyBase_1 = require("./AdaptableStrategyBase");
 const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
 const SystemRedux = require("../Redux/ActionsReducers/SystemRedux");
 const Enums_1 = require("../Utilities/Enums");
-const _ = require("lodash");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const ChartEnums_1 = require("../Utilities/ChartEnums");

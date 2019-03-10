@@ -63,6 +63,11 @@ class ChartDisplayPopupComponent extends React.Component {
         igr_category_chart_module_1.IgrCategoryChartModule.register();
         igr_data_chart_annotation_module_1.IgrDataChartAnnotationModule.register();
     }
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name) {
+            this.state = ChartUIHelper_1.ChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, this.props.Columns);
+        }
+    }
     render() {
         let cssClassName = this.props.cssClassName + "__Charts";
         let closeButton = (this.props.ShowModal) ?

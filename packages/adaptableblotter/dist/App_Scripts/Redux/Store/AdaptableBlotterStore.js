@@ -539,9 +539,9 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 */
                 case ChartRedux.CHART_DEFINITION_SELECT: {
                     let actionTyped = action;
-                    //   if (StringExtensions.IsNullOrEmpty(actionTyped.CurrentChartName)) {
-                    middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartEnums_1.ChartVisibility.Hidden));
-                    //   }
+                    if (StringExtensions_1.StringExtensions.IsNullOrEmpty(actionTyped.CurrentChartName)) {
+                        middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartEnums_1.ChartVisibility.Hidden));
+                    }
                     let returnAction = next(action);
                     return returnAction;
                 }

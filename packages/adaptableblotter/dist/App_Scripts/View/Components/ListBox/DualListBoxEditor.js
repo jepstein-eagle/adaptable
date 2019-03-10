@@ -132,7 +132,7 @@ class DualListBoxEditor extends React.Component {
         let listGroupSelectedStyle = this.getListGroupSelectedStyle(displaySize);
         return (React.createElement("div", { className: cssClassName },
             React.createElement(react_bootstrap_1.Col, { xs: 4 },
-                React.createElement(react_bootstrap_1.Panel, { header: this.props.HeaderAvailable, className: "ab_no-padding-anywhere-panel", bsStyle: "info" },
+                React.createElement(react_bootstrap_1.Panel, { header: this.props.HeaderAvailable, style: { padding: '0px', margin: '0px' }, className: "ab_no-padding-anywhere-panel", bsStyle: "info", bsSize: 'xsmall' },
                     React.createElement("div", null,
                         headerFirstListBox,
                         React.createElement(react_bootstrap_1.ListGroup, { className: "AvailableDropZone", style: listGroupAvailableStyle, onDragEnter: (event) => this.DragEnterAvailable(event), onDragOver: (event) => this.DragOverAvailable(event), onDragLeave: (event) => this.DragLeaveAvailable(event) }, availableElements)))),
