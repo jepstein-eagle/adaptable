@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter-angular-aggrid-test",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
