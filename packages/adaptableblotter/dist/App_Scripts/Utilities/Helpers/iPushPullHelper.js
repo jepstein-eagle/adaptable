@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const LoggingHelper_1 = require("./LoggingHelper");
-const ipushpull = require("ipushpull-js");
+//import * as ipushpull from 'ipushpull-js'
 var iPushPullHelper;
 (function (iPushPullHelper) {
     let ServiceStatus;
@@ -17,9 +17,10 @@ var iPushPullHelper;
     var pages = new Map();
     // creates the iPushPullApp object using blotterOptions ippconfig
     function init(iPPConfig) {
-        if (iPushPullApp == null) {
-            iPushPullApp = ipushpull.create(iPPConfig);
-        }
+        // taking out ipushpull for the moment as we cannot load it without issues
+        //  if (iPushPullApp == null) {
+        //     iPushPullApp = ipushpull.create(iPPConfig);
+        //    }
     }
     iPushPullHelper.init = init;
     // checks if we have loaded iPushPullproperly
