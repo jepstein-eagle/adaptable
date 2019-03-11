@@ -1,6 +1,6 @@
 {
 	"name": "adaptableblotter-react",
-	"version": "3.2.6",
+	"version": "3.2.7-beta.4+97d7fb65",
 	"description": "",
 	"keywords": [],
 	"main": "dist/index.umd.js",
@@ -116,5 +116,5 @@
 		"react": "^16.4.2",
 		"react-dom": "^16.4.2"
 	},
-	"gitHead": "d07ab1a66a3ad200cbc8f16ab00e6d49194d5a3b"
+	"gitHead": "97d7fb6554ba7f475b7b481b42db0971f756adc4"
 }
