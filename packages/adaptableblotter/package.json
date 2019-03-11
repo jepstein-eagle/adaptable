@@ -32,7 +32,6 @@
     "igniteui-react-charts": "^16.6.5",
     "igniteui-react-core": "^16.6.5",
     "increase-memory-limit": "^1.0.6",
-    "ipushpull-js": "^1.0.0",
     "isomorphic-fetch": "^2.2.1",
     "json-loader": "^0.5.7",
     "lodash": "^4.17.10",

@@ -1,7 +1,7 @@
 import { IPPDomain } from "../Interface/Reports/IPPDomain";
 import { IPPStyle } from "../Interface/Reports/IPPStyle";
 import { LoggingHelper } from "./LoggingHelper";
-import * as ipushpull from 'ipushpull-js'
+//import * as ipushpull from 'ipushpull-js'
 
 export module iPushPullHelper {
   
@@ -19,9 +19,10 @@ export module iPushPullHelper {
 
     // creates the iPushPullApp object using blotterOptions ippconfig
     export function init(iPPConfig?: any): void {
-        if (iPushPullApp == null) {
-             iPushPullApp = ipushpull.create(iPPConfig);
-        }
+     // taking out ipushpull for the moment as we cannot load it without issues
+        //  if (iPushPullApp == null) {
+        //     iPushPullApp = ipushpull.create(iPPConfig);
+    //    }
     }
 
     // checks if we have loaded iPushPullproperly
