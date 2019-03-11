@@ -36,6 +36,7 @@ export class AppComponent {
     vendorGrid: this.gridOptions,
     userName: 'demo user',
     blotterId: 'angular wrapper',
+    licenceKey: 'Community',
     containerOptions: {
       adaptableBlotterContainer: 'adaptableBlotter'
     }

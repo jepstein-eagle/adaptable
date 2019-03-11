@@ -29,6 +29,7 @@ export class AppAgGridComponent {
     vendorGrid: this.gridOptions,
     userName: 'demo user',
     blotterId: 'AgGrid Wrapper',
+    licenceKey: 'Community',
     containerOptions: {
       adaptableBlotterContainer: 'adaptableBlotter'
     }
