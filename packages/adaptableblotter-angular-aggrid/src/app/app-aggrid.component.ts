@@ -11,7 +11,7 @@ import { IAdaptableBlotterOptions } from 'adaptableblotter-angular-aggrid';
     <adaptable-blotter-aggrid
       [adaptableBlotterOptions]="blotterOptions"
       [gridOptions]="gridOptions"
-      agTheme= "blue">
+      agTheme= "balham">
     </adaptable-blotter-aggrid>
   </div>
   `
