@@ -78,44 +78,42 @@ class DashboardPopupComponent extends React.Component<DashboardPopupComponentPro
         let availableValues = this.props.MenuState.MenuItems.filter(x => x.IsVisible && selectedValues.indexOf(x.Label) == -1).map(x => x.Label)
 
         let individualHomeToolbarOptions = <Panel header="General Options" bsStyle="primary" bsSize='small'>
-            <AdaptableBlotterForm horizontal>
-                <FormGroup controlId="formInlineName">
-                    <Col xs={12} className="ab_medium_margin">
-                        <Checkbox onChange={(e) => this.onShowFunctionsDropdownChanged(e)}
-                            checked={this.props.DashboardState.ShowFunctionsDropdown} > Show Functions Dropdown </Checkbox>
-                    </Col>
-                    <Col xs={12} className="ab_medium_margin">
-                        <Checkbox onChange={(e) => this.onShowColumnsDropdownChanged(e)}
-                            checked={this.props.DashboardState.ShowColumnsDropdown} > Show Columns Dropdown</Checkbox>
-                    </Col>
-                    <Col xs={12} className="ab_medium_margin">
-                        <Checkbox onChange={(e) => this.onShowToolbarsDropdownChanged(e)}
-                            checked={this.props.DashboardState.ShowToolbarsDropdown} > Show Toolbars Dropdown </Checkbox>
-                    </Col>
-                    <Col xs={12} className="ab_medium_margin">
-                        <Checkbox onChange={(e) => this.onShowSystemStatusButtonChanged(e)}
-                            checked={this.props.DashboardState.ShowSystemStatusButton} > Show System Status Button </Checkbox>
-                    </Col>
-                    <Col xs={12} className="ab_medium_margin">
-                        <Checkbox onChange={(e) => this.onShowAboutButtonChanged(e)}
-                            checked={this.props.DashboardState.ShowAboutButton} > Show About Button </Checkbox>
-                    </Col>
-                    <Col xs={12} className="ab_medium_margin">
-                        <Checkbox onChange={(e) => this.onUseSingleColourForButtonsChanged(e)}
-                            checked={this.props.DashboardState.UseSingleColourForButtons} > Use Single Colour for All Dashboard Buttons </Checkbox>
-                    </Col>
-                    <Col xs={12} className="ab_medium_margin">
-                        <Checkbox onChange={(e) => this.onUseExtraSmallButtonsChanged(e)}
-                            checked={this.props.DashboardState.UseExtraSmallButtons} > Use Small Size Buttons </Checkbox>
-                    </Col>
-                    <Col xs={12} className="ab_medium_margin">
-                        <Form inline>Dashboard Zoom Factor:
+            <FormGroup controlId="formInlineName">
+                <Col xs={12} >
+                    <Checkbox onChange={(e) => this.onShowFunctionsDropdownChanged(e)}
+                        checked={this.props.DashboardState.ShowFunctionsDropdown} > Show Functions Dropdown </Checkbox>
+                </Col>
+                <Col xs={12} >
+                    <Checkbox onChange={(e) => this.onShowColumnsDropdownChanged(e)}
+                        checked={this.props.DashboardState.ShowColumnsDropdown} > Show Columns Dropdown</Checkbox>
+                </Col>
+                <Col xs={12} >
+                    <Checkbox onChange={(e) => this.onShowToolbarsDropdownChanged(e)}
+                        checked={this.props.DashboardState.ShowToolbarsDropdown} > Show Toolbars Dropdown </Checkbox>
+                </Col>
+                <Col xs={12} >
+                    <Checkbox onChange={(e) => this.onShowSystemStatusButtonChanged(e)}
+                        checked={this.props.DashboardState.ShowSystemStatusButton} > Show System Status Button </Checkbox>
+                </Col>
+                <Col xs={12} >
+                    <Checkbox onChange={(e) => this.onShowAboutButtonChanged(e)}
+                        checked={this.props.DashboardState.ShowAboutButton} > Show About Button </Checkbox>
+                </Col>
+                <Col xs={12} >
+                    <Checkbox onChange={(e) => this.onUseSingleColourForButtonsChanged(e)}
+                        checked={this.props.DashboardState.UseSingleColourForButtons} > Use Single Colour for All Dashboard Buttons </Checkbox>
+                </Col>
+                <Col xs={12} >
+                    <Checkbox onChange={(e) => this.onUseExtraSmallButtonsChanged(e)}
+                        checked={this.props.DashboardState.UseExtraSmallButtons} > Use Small Size Buttons </Checkbox>
+                </Col>
+                <Col xs={12} >
+                    <Form inline>Dashboard Zoom Factor:
                     {' '}
-                            <FormControl value={this.state.EditedZoomFactor.toString()} bsSize={'small'} type="number" min="0.5" step="0.05" max="1" placeholder="Enter a Number" onChange={(e) => this.onSetFactorChange(e)} />
-                        </Form>
-                    </Col>
-                </FormGroup>
-            </AdaptableBlotterForm>
+                        <FormControl value={this.state.EditedZoomFactor.toString()} bsSize={'small'} type="number" min="0.5" step="0.05" max="1" placeholder="Enter a Number" onChange={(e) => this.onSetFactorChange(e)} />
+                    </Form>
+                </Col>
+            </FormGroup>
         </Panel>;
 
         return <div className={cssClassName}>

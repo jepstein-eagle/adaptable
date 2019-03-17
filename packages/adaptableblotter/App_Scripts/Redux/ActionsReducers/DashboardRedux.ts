@@ -260,7 +260,7 @@ const initialDashboardState: DashboardState = {
         StrategyConstants.ConditionalStyleStrategyId,
         StrategyConstants.TeamSharingStrategyId
     ],
-    Zoom: 1,
+    Zoom: 0.9   ,
     DashboardVisibility: Visibility.Visible,
     ShowSystemStatusButton: true,
     ShowAboutButton: true,
@@ -269,7 +269,7 @@ const initialDashboardState: DashboardState = {
     ShowToolbarsDropdown: true,
     HomeToolbarTitle: "",
     ApplicationToolbarTitle: "",
-    UseSingleColourForButtons: false,
+    UseSingleColourForButtons: true,
     UseExtraSmallButtons: false,
 }
 
