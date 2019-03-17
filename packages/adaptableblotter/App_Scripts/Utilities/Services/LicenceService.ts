@@ -26,6 +26,11 @@ export class LicenceService implements ILicenceService {
 
         let licenceKey: string = this.blotter.BlotterOptions.licenceKey;
 
+        // check if demo site - if so return Enterprise
+        if (this.isDemoSite()) {
+            return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Enterprise, true, LicenceUserType.EndUser);
+        }
+
         // if key is empty return Community
         if (StringExtensions.IsNullOrEmpty(licenceKey)) {
             return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Community, true, LicenceUserType.EndUser);
@@ -51,7 +56,7 @@ export class LicenceService implements ILicenceService {
 
         // last lettter has to be eitehr 'u' or 'e'
         let lastLetter: string = firstPartAlphaNumeric.substr(firstPartAlphaNumeric.length - 1);
-        if(lastLetter!= 'u' && lastLetter != 'e'){
+        if (lastLetter != 'u' && lastLetter != 'e') {
             return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Community, true, LicenceUserType.EndUser);
         }
 
@@ -77,7 +82,7 @@ export class LicenceService implements ILicenceService {
         let standardIdAlphaNumeric: string = licenceKeyArray[1];
         if (!this.isCorrectLength(standardIdAlphaNumeric, 9)) {
             return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Community, true, LicenceUserType.EndUser);
-         }
+        }
         if (StringExtensions.NotIncludes(standardIdAlphaNumeric, 'a') || StringExtensions.NotIncludes(standardIdAlphaNumeric, 'e')) {
             return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Community, true, LicenceUserType.EndUser);
         }
@@ -97,7 +102,7 @@ export class LicenceService implements ILicenceService {
         let isStandardIdValid: boolean = this.isPrimeNumber(standardIdNumber);
         if (!isStandardIdValid) {
             return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Community, true, LicenceUserType.EndUser);
-         }
+        }
 
         // enterprise licence - allows saving and loading of state of all items (including charts)
         // the whole key should be 10 characters and contain an 'c' and an 'f' and 3 numbers; if any of that fails, return Standard
@@ -180,10 +185,14 @@ export class LicenceService implements ILicenceService {
     }
 
     private getLicenceUserType(lastLetter: string): LicenceUserType {
-        // check if last letter is 'u'
-        console.log("domain name" + window.location.hostname);
-      //  let lastLetter: string = stringToCheck.substr(stringToCheck.length - 1);
-        return (lastLetter == 'u')? LicenceUserType.Universal: LicenceUserType.EndUser;
+         return (lastLetter == 'u') ? LicenceUserType.Universal : LicenceUserType.EndUser;
     }
+
+    private isDemoSite(): boolean {
+        return (window.location.hostname == 'demo.adaptableblotter.com');
+    }
+
+
+
 
 }
