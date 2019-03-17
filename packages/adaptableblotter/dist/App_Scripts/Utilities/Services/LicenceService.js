@@ -17,6 +17,10 @@ class LicenceService {
     }
     setLicenceInfo() {
         let licenceKey = this.blotter.BlotterOptions.licenceKey;
+        // check if demo site - if so return Enterprise
+        if (this.isDemoSite()) {
+            return ObjectFactory_1.ObjectFactory.CreateLicenceInfo(Enums_1.LicenceScopeType.Enterprise, true, Enums_1.LicenceUserType.EndUser);
+        }
         // if key is empty return Community
         if (StringExtensions_1.StringExtensions.IsNullOrEmpty(licenceKey)) {
             return ObjectFactory_1.ObjectFactory.CreateLicenceInfo(Enums_1.LicenceScopeType.Community, true, Enums_1.LicenceUserType.EndUser);
@@ -142,10 +146,10 @@ class LicenceService {
         return expiryDate > new Date();
     }
     getLicenceUserType(lastLetter) {
-        // check if last letter is 'u'
-        console.log("domain name" + window.location.hostname);
-        //  let lastLetter: string = stringToCheck.substr(stringToCheck.length - 1);
         return (lastLetter == 'u') ? Enums_1.LicenceUserType.Universal : Enums_1.LicenceUserType.EndUser;
+    }
+    isDemoSite() {
+        return (window.location.hostname == 'demo.adaptableblotter.com');
     }
 }
 exports.LicenceService = LicenceService;

@@ -10,4 +10,5 @@ export declare class LicenceService implements ILicenceService {
     private isCorrectLength;
     private checkDate;
     private getLicenceUserType;
+    private isDemoSite;
 }
