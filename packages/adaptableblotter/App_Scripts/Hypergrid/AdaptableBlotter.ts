@@ -167,7 +167,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => { let column = this.getHypergridColumn(columnId); return this.valOrFunc(record, column) });
         this.FreeTextColumnService = new FreeTextColumnService(this);
         this.LicenceService = new LicenceService(this);
-        Helper.CheckLicenceKey(this.LicenceService.LicenceType);
+        BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 

@@ -243,7 +243,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
 
-        Helper.CheckLicenceKey(this.LicenceService.LicenceType);
+        BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
@@ -665,7 +665,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         }
 
-        let row = this.gridOptions.api.getModel().getRow(0)
+        let model = this.gridOptions.api.getModel();
+        if(model==null){
+            LoggingHelper.LogAdaptableBlotterWarning('No model so returning type "Unknown" for Column: "' + column.getColId() + '"')
+            return DataType.Unknown;
+        }
+
+        let row = model.getRow(0);
 
         if (row == null) { // possible that there will be no data.
             LoggingHelper.LogAdaptableBlotterWarning('No data in grid so returning type "Unknown" for Column: "' + column.getColId() + '"')
@@ -673,7 +679,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         //if it's a group we need the content of the group
         if (row.group) {
-            row = row.childrenAfterGroup[0]
+            let childNodes: RowNode[] = row.childrenAfterGroup;
+            if(ArrayExtensions.IsNullOrEmpty(childNodes)){
+                LoggingHelper.LogAdaptableBlotterWarning('No data in grid so returning type "Unknown" for Column: "' + column.getColId() + '"')
+                return DataType.Unknown;    
+            }
+            row = childNodes[0];
         }
         let value = this.gridOptions.api.getValue(column, row)
         let dataType: DataType

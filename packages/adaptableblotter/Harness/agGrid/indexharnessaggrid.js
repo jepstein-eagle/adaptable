@@ -20,11 +20,17 @@ function clearQuickSearchViaAPI() {
 function getCommunityKey() {
   return 'AB Licence Key';
 }
-function getStandardKey() {
-  return 'xs2543-as6b8ejw3-e94syjze8a';
+function getValidStandardKey() {
+  return 'sta5834u-as6b8ejw3-e94syjze8a';
 }
-function getEnterpriseKey() {
-  return 'rbc001-yt5a4evp1-r1oq9nclf1';
+function getValidEnterpriseKey() {
+  return 'ent5834u-yt5a4evp1-r1oq9nclf1';
+}
+function getInvalidStandardKey() {
+  return 'sta5831u-as6b8ejw3-e94syjze8a';
+}
+function getInvalidEnterpriseKey() {
+  return 'ent5831u-yt5a4evp1-r1oq9nclf1';
 }
 function getColumns() {
   this.gridOptions.api.setColumnDefs(getTradeSchema());
@@ -124,10 +130,12 @@ function InitTradeBlotter() {
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
       //   licenceKey: getCommunityKey(),
-      //    licenceKey: getStandardKey(),
-      licenceKey: getEnterpriseKey(),
+        licenceKey: getValidStandardKey(),
+      //    licenceKey: getValidEnterpriseKey(),
+      //licenceKey: getInvalidStandardKey(),
+      //  licenceKey: getInvalidEnterpriseKey(),
 
-      //   predefinedConfig: myJson,
+      predefinedConfig: myJson,
 
       auditOptions: {
         //     auditCellEdits: true,
@@ -316,6 +324,7 @@ function getTradeSchema() {
     editable: true,
     // valueFormatter: notionalFormatter,
     cellClass: 'number-cell',
+    type: 'abColDefNumber',
     filter: false
   });
   schema.push({
@@ -324,7 +333,8 @@ function getTradeSchema() {
     editable: true,
     enableRowGroup: true,
     filter: true,
-    sortable: true
+    sortable: true,
+    type: 'abColDefString',
   });
 
   schema.push({
@@ -332,6 +342,7 @@ function getTradeSchema() {
     field: 'changeOnYear',
     filter: true,
     editable: true,
+    type: 'abColDefNumber',
   });
   schema.push({
     headerName: 'Currency',
@@ -339,6 +350,7 @@ function getTradeSchema() {
     //   editable: false,
     enableRowGroup: true,
     filter: 'agTextColumnFilter',
+    type: 'abColDefString',
   });
   schema.push({
     headerName: 'Status',
@@ -346,6 +358,7 @@ function getTradeSchema() {
     editable: true,
     filter: true,
     enableRowGroup: true,
+    type: 'abColDefString',
   });
   schema.push({
     headerName: 'B/O Spread',
@@ -355,6 +368,7 @@ function getTradeSchema() {
     editable: true,
     filter: true,
     cellClass: 'number-cell',
+    type: 'abColDefNumber',
   });
   schema.push({
     headerName: 'Price',
@@ -365,6 +379,7 @@ function getTradeSchema() {
     cellClass: 'number-cell',
     enableRowGroup: true,
     filter: 'agNumberColumnFilter',
+    type: 'abColDefNumber',
   });
   schema.push({
     headerName: 'Country',
@@ -372,6 +387,7 @@ function getTradeSchema() {
     editable: true,
     filter: true,
     enableRowGroup: true,
+    type: 'abColDefString',
   });
   schema.push({
     headerName: 'Ask',
@@ -379,6 +395,7 @@ function getTradeSchema() {
     columnGroupShow: 'closed',
     filter: true,
     cellClass: 'number-cell',
+    type: 'abColDefNumber',
   });
   schema.push({
     headerName: 'DV01',
@@ -386,6 +403,7 @@ function getTradeSchema() {
     columnGroupShow: 'closed',
     filter: true,
     cellClass: 'number-cell',
+    type: 'abColDefNumber',
   });
   schema.push({
     headerName: 'Bid',
@@ -393,6 +411,7 @@ function getTradeSchema() {
     columnGroupShow: 'closed',
     filter: true,
     cellClass: 'number-cell',
+    type: 'abColDefNumber',
   });
 
   schema.push({
@@ -400,12 +419,14 @@ function getTradeSchema() {
     field: 'bloombergAsk',
     columnGroupShow: 'closed',
     cellClass: 'number-cell',
+    type: 'abColDefNumber',
   });
   schema.push({
     headerName: 'Bbg Bid',
     field: 'bloombergBid',
     columnGroupShow: 'closed',
     cellClass: 'number-cell',
+    type: 'abColDefNumber',
   });
   schema.push({
     headerName: 'Moodys',
@@ -413,6 +434,7 @@ function getTradeSchema() {
     editable: true,
     filter: true,
     filter: 'text',
+    type: 'abColDefString',
   });
   schema.push({
     headerName: 'Trade Date',
@@ -424,6 +446,7 @@ function getTradeSchema() {
     valueParser: dateParseragGrid,
     valueFormatter: shortDateFormatteragGrid,
     filter: 'agDateColumnFilter',
+    type: 'abColDefDate',
   });
   schema.push({
     headerName: 'SandP',
@@ -431,6 +454,7 @@ function getTradeSchema() {
     editable: true,
     sortable: true,
     filter: 'text',
+    type: 'abColDefString',
   });
   schema.push({
     headerName: 'Settlement Date',
@@ -441,11 +465,13 @@ function getTradeSchema() {
     },
     valueParser: dateParseragGrid,
     valueFormatter: shortDateFormatteragGrid,
+    type: 'abColDefDate',
   });
   schema.push({
     headerName: 'Last Updated By',
     field: 'lastUpdatedBy',
     enableRowGroup: true,
+    type: 'abColDefString',
   });
   schema.push({
     headerName: 'Last Updated',
@@ -456,20 +482,25 @@ function getTradeSchema() {
     },
     valueParser: dateParseragGrid,
     valueFormatter: shortDateFormatteragGrid,
+    type: 'abColDefDate',
   });
   schema.push({
     headerName: 'Pct Change',
     field: 'percentChange',
     editable: true,
     filter: 'text',
+    type: 'abColDefNumber',
     //  type: "numericColumn"
+    type: 'abColDefNumber',
   });
   schema.push({
     headerName: 'Desk No.',
     field: 'deskId',
     editable: true,
+    type: 'abColDefNumber',
     // cellRenderer: percentCellRenderer,
     enableRowGroup: true,
+    type: 'abColDefString',
   });
   return schema;
 }

@@ -221,7 +221,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       engineReduxStorage = createEngineRemote(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
     }
     else {
-      engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceType);
+      engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
     }
 
     // engine with migrate is where we manage the bits that we dont want to persist, but need to keep in the store
@@ -255,7 +255,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 
     //here we use our own merger function which is derived from redux simple merger
     // we now use a different Merge function based on the licence type to ensure that state is only loaded if user has access
-    switch (blotter.LicenceService.LicenceType) {
+    switch (blotter.LicenceService.LicenceInfo.LicenceType) {
       case LicenceType.Community:
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateCommunityLicence);
         break;

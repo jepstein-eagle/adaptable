@@ -4,6 +4,8 @@ import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { LicenceType } from '../Enums';
+import { ILicenceInfo } from '../Interface/ILicenceInfo';
 
 export module BlotterHelper {
 
@@ -37,6 +39,36 @@ export module BlotterHelper {
             && blotterOptions.configServerOptions.enableConfigServer == true;
     }
 
+    export function CheckLicenceKey(licenceInfo: ILicenceInfo): void {
+        switch (licenceInfo.LicenceType) {
+            case LicenceType.Community:
+                let licenceMessage: string = '\n';
+                licenceMessage += '***********************************************************************************\n'
+                licenceMessage += '************************** Adaptable Blotter License ******************************\n'
+                licenceMessage += '********************* This is an evaluation / community licence *******************\n'
+                licenceMessage += '************ It contains full functionality but you cannot load state *************\n'
+                licenceMessage += '********* Please contact sales@adaptabletools.com for upgrade information *********\n'
+                licenceMessage += '***********************************************************************************\n'
+                LoggingHelper.LogError(licenceMessage);
+                break;
+
+            case LicenceType.Standard:
+                if (licenceInfo.IsLicenceInDate) {
+                    LoggingHelper.LogAdaptableBlotterSuccess(" Licence Type: Standard")
+                } else {
+                    LoggingHelper.LogAdaptableBlotterWarning(" This Standard licence is Out of date!!!")
+                }
+                break;
+            case LicenceType.Enterprise:
+                if (licenceInfo.IsLicenceInDate) {
+                    LoggingHelper.LogAdaptableBlotterSuccess(" Licence Type: Enterprise")
+                } else {
+                    LoggingHelper.LogAdaptableBlotterWarning(" This Enterprise Licence is Out of date!!!")
+                }
+                break;
+        }
+
+    }
 
 
 }
