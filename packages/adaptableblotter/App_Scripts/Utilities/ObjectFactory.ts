@@ -20,7 +20,7 @@ import { IAdvancedSearch } from "./Interface/BlotterObjects/IAdvancedSearch";
 import { ICategoryChartDefinition } from "./Interface/BlotterObjects/IChartDefinition";
 import { IAlertDefinition } from "./Interface/BlotterObjects/IAlertDefinition";
 import { IRange } from "./Interface/Expression/IRange";
-import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ActionMode, LicenceType } from './Enums';
+import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ActionMode, LicenceScopeType, LicenceUserType } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { ColumnHelper } from './Helpers/ColumnHelper';
@@ -35,11 +35,11 @@ import { ILicenceInfo } from './Interface/ILicenceInfo';
 
 export module ObjectFactory {
 
-    export function CreateLicenceInfo(licenceType: LicenceType, isLicenceInDate: boolean, isUniversalLicence: boolean): ILicenceInfo {
+    export function CreateLicenceInfo(licenceType: LicenceScopeType, isLicenceInDate: boolean, licenceUserType: LicenceUserType): ILicenceInfo {
         return {
-            LicenceType: licenceType,
+            LicenceScopeType: licenceType,
             IsLicenceInDate: isLicenceInDate,
-            IsUniversalLicence: isUniversalLicence
+            LicenceUserType: licenceUserType
         }
     }
 

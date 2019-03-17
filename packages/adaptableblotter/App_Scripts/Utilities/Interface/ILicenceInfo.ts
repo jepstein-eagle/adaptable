@@ -1,8 +1,8 @@
-import { LicenceType } from "../Enums";
+import { LicenceScopeType, LicenceUserType } from "../Enums";
 
 // used in layouts to save which is the current sorted column
 export interface ILicenceInfo {
-  LicenceType: LicenceType;
+  LicenceScopeType: LicenceScopeType;
   IsLicenceInDate: boolean;
-  IsUniversalLicence: boolean;
+  LicenceUserType: LicenceUserType;
 }

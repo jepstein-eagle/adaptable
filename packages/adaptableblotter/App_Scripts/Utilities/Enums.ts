@@ -271,10 +271,15 @@ export enum FilterOnDataChangeOptions {
     Throttle = 'Throttle'
 }
 
-export enum LicenceType {
+export enum LicenceScopeType {
     Community = 'Community',
     Standard = 'Standard',
     Enterprise = 'Enterprise'
+}
+
+export enum LicenceUserType {
+    EndUser = 'End User',
+    Universal = 'Universal'
 }
 
 export enum DashboardSize {

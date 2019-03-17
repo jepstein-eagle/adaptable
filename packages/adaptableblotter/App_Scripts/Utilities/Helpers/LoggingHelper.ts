@@ -48,6 +48,15 @@ export module LoggingHelper {
             console.error("Adaptable Blotter Error: " + message)
         }
     }
+    
+    export function LogWarning(message: string, ...optionalParams: any[]): void {
+        if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
+            console.warn(message, optionalParams)
+        } else {
+            console.warn(message)
+        }
+    }
+
     export function LogError(message: string, ...optionalParams: any[]): void {
         if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
             console.error(message, optionalParams)

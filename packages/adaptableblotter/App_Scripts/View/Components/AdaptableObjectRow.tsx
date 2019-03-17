@@ -23,13 +23,10 @@ export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps,
         });
 
         return <div className={cssClassName}>
-            <li
+            <li style={{ padding: '5px' }}
                 className="list-group-item"
-                onClick={() => {
-                    // no implementation: not sure if this is actually needed...
-                }}
             >
-                <Row style={{ display: "flex", alignItems: "center", overflowY: 'visible' }}>
+                <Row style={{ display: "flex", alignItems: "center", overflowY: 'visible', padding: '0px', margin:'0px' }}>
                     {colItems}
                 </Row>
             </li>

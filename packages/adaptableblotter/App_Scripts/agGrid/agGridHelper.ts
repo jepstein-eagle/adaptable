@@ -2,8 +2,6 @@ import { ICellRendererFunc, ICellRendererParams, ColDef, GridOptions, SideBarDef
 import { StringExtensions } from "../Utilities/Extensions/StringExtensions";
 import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
 import { ArrayExtensions } from "../Utilities/Extensions/ArrayExtensions";
-import { LoggingHelper } from "../Utilities/Helpers/LoggingHelper";
-import { LicenceType } from "../Utilities/Enums";
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy 

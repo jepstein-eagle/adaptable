@@ -1,4 +1,4 @@
-import { ExportDestination, MathOperation, MessageType, LicenceType } from '../../Utilities/Enums';
+import { ExportDestination, MathOperation, MessageType, LicenceScopeType } from '../../Utilities/Enums';
 import * as Redux from "redux";
 import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
@@ -255,14 +255,14 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 
     //here we use our own merger function which is derived from redux simple merger
     // we now use a different Merge function based on the licence type to ensure that state is only loaded if user has access
-    switch (blotter.LicenceService.LicenceInfo.LicenceType) {
-      case LicenceType.Community:
+    switch (blotter.LicenceService.LicenceInfo.LicenceScopeType) {
+      case LicenceScopeType.Community:
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateCommunityLicence);
         break;
-      case LicenceType.Standard:
+      case LicenceScopeType.Standard:
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateStandardLicence);
         break;
-      case LicenceType.Enterprise:
+      case LicenceScopeType.Enterprise:
         reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateEnterpriseLicence);
         break;
     }

@@ -285,10 +285,11 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
             let sorts = state.Grid.GridSorts.map(gs => {
                 return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ": " + gs.SortOrder   
             })
+            let licenceInDate: string = (this.props.AdaptableBlotter.LicenceService.LicenceInfo.IsLicenceInDate)? "In Date" : "Expired";
             returnRows.push(this.createColItem(colItems, "Vendor Grid", this.props.AdaptableBlotter.VendorGridName));
             returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "3.3"));
-            returnRows.push(this.createColItem(colItems, "Licence In Date", this.props.AdaptableBlotter.LicenceService.LicenceInfo.IsLicenceInDate));
-            returnRows.push(this.createColItem(colItems, "Licence Type", this.props.AdaptableBlotter.LicenceService.LicenceInfo.LicenceType));
+            returnRows.push(this.createColItem(colItems, "Licence Key", this.props.AdaptableBlotter.BlotterOptions.licenceKey + " (" + licenceInDate + ")"));
+            returnRows.push(this.createColItem(colItems, "Licence Type", this.props.AdaptableBlotter.LicenceService.LicenceInfo.LicenceScopeType + " (" + this.props.AdaptableBlotter.LicenceService.LicenceInfo.LicenceUserType + ")"));
             returnRows.push(this.createColItem(colItems, "Sorted Columns", ArrayExtensions.IsNotNullOrEmpty(sorts) ? sorts.join("; ") : "None"));
             returnRows.push(this.createColItem(colItems, "Column Filters", columnFilterDescription));
             returnRows.push(this.createColItem(colItems, "All Rows", this.props.AdaptableBlotter.getRowCount()));
@@ -313,8 +314,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
             returnRows.push(this.createColItem(colItems, "userName", options.userName, "Current user of the Adaptable Blotter"));
             returnRows.push(this.createColItem(colItems, "primaryKey", options.primaryKey, "Unique column in the grid (useful for cell identification purposes)"));
          //   returnRows.push(this.createColItem(colItems, "predefinedConfig", options.predefinedConfig, "Configuration properties and objects set at design-time"));
-            returnRows.push(this.createColItem(colItems, "licenceKey", options.licenceKey, "The licence key for this version of the Adaptable Blotter"));
-  
+        
         }
         return returnRows;
     }

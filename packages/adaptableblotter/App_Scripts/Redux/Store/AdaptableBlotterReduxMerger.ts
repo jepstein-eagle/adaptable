@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { LicenceType } from '../../Utilities/Enums';
+import { LicenceScopeType } from '../../Utilities/Enums';
 import { ILicenceInfo } from '../../Utilities/Interface/ILicenceInfo';
 
 function customizer(objValue: any, srcValue: any) {
@@ -13,12 +13,12 @@ function customizer(objValue: any, srcValue: any) {
 
 // Works out which Merge function to use (for prdedefined config) based on Licence Type
 export function MergeStateFunctionChooser(oldState: any, newState: any, licenceInfo: ILicenceInfo) {
-  switch (licenceInfo.LicenceType) {
-    case LicenceType.Community:
+  switch (licenceInfo.LicenceScopeType) {
+    case LicenceScopeType.Community:
       return MergeStateCommunityLicence(oldState, newState);
-    case LicenceType.Standard:
+    case LicenceScopeType.Standard:
       return MergeStateStandardLicence(oldState, newState);
-    case LicenceType.Enterprise:
+    case LicenceScopeType.Enterprise:
       return MergeStateEnterpriseLicence(oldState, newState);
   }
 }

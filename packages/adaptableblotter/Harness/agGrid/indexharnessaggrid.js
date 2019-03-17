@@ -20,18 +20,7 @@ function clearQuickSearchViaAPI() {
 function getCommunityKey() {
   return 'AB Licence Key';
 }
-function getValidStandardKey() {
-  return 'sta5834u-as6b8ejw3-e94syjze8a';
-}
-function getValidEnterpriseKey() {
-  return 'ent5834u-yt5a4evp1-r1oq9nclf1';
-}
-function getInvalidStandardKey() {
-  return 'sta5831u-as6b8ejw3-e94syjze8a';
-}
-function getInvalidEnterpriseKey() {
-  return 'ent5831u-yt5a4evp1-r1oq9nclf1';
-}
+
 function getColumns() {
   this.gridOptions.api.setColumnDefs(getTradeSchema());
 }
@@ -129,8 +118,8 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
-      //   licenceKey: getCommunityKey(),
-        licenceKey: getValidStandardKey(),
+        licenceKey: getCommunityKey(),
+      //  licenceKey: getValidStandardKey(),
       //    licenceKey: getValidEnterpriseKey(),
       //licenceKey: getInvalidStandardKey(),
       //  licenceKey: getInvalidEnterpriseKey(),

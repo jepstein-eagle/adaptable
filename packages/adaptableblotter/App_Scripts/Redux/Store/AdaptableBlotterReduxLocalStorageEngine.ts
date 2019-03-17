@@ -4,7 +4,6 @@ import { MergeStateFunctionChooser } from './AdaptableBlotterReduxMerger'
 import { Helper } from '../../Utilities/Helpers/Helper'
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { LicenceType } from '../../Utilities/Enums';
 import { ILicenceInfo } from '../../Utilities/Interface/ILicenceInfo';
 
 const checkStatus = (response: Response) => {
