@@ -1,11 +1,13 @@
 import { ILicenceService } from './Interface/ILicenceService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { LicenceType } from '../Enums';
+import { ILicenceInfo } from '../Interface/ILicenceInfo';
 export declare class LicenceService implements ILicenceService {
     private blotter;
     constructor(blotter: IAdaptableBlotter);
-    LicenceType: LicenceType;
-    private setLicenceType;
+    LicenceInfo: ILicenceInfo;
+    private setLicenceInfo;
     private isPrimeNumber;
     private isCorrectLength;
+    private checkDate;
+    private getLicenceUserType;
 }

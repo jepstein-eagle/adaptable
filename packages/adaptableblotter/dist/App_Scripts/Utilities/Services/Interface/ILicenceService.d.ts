@@ -1,4 +1,4 @@
-import { LicenceType } from "../../Enums";
+import { ILicenceInfo } from "../../Interface/ILicenceInfo";
 export interface ILicenceService {
-    LicenceType: LicenceType;
+    LicenceInfo: ILicenceInfo;
 }

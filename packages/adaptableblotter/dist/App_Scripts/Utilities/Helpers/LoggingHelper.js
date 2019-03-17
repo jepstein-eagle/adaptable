@@ -57,6 +57,15 @@ var LoggingHelper;
         }
     }
     LoggingHelper.LogAdaptableBlotterError = LogAdaptableBlotterError;
+    function LogWarning(message, ...optionalParams) {
+        if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
+            console.warn(message, optionalParams);
+        }
+        else {
+            console.warn(message);
+        }
+    }
+    LoggingHelper.LogWarning = LogWarning;
     function LogError(message, ...optionalParams) {
         if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
             console.error(message, optionalParams);

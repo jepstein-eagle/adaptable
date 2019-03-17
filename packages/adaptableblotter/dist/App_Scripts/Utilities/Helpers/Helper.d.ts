@@ -1,4 +1,3 @@
-import { LicenceType } from '../Enums';
 export declare module Helper {
     function getStringRepresentionFromKey(event: KeyboardEvent | any): string;
     function cloneObject(obj: any): any;
@@ -15,5 +14,4 @@ export declare module Helper {
     function RoundNumber(numberToRound: any, decimalPlaces: number): number;
     function RoundNumberTo4dp(numberToRound: any): number;
     function RoundValueIfNumeric(numberToRound: any, decimalPlaces: number): any;
-    function CheckLicenceKey(licenceType: LicenceType): void;
 }

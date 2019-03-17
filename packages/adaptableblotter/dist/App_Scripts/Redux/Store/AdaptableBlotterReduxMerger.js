@@ -11,13 +11,13 @@ function customizer(objValue, srcValue) {
     }
 }
 // Works out which Merge function to use (for prdedefined config) based on Licence Type
-function MergeStateFunctionChooser(oldState, newState, licenceType) {
-    switch (licenceType) {
-        case Enums_1.LicenceType.Community:
+function MergeStateFunctionChooser(oldState, newState, licenceInfo) {
+    switch (licenceInfo.LicenceScopeType) {
+        case Enums_1.LicenceScopeType.Community:
             return MergeStateCommunityLicence(oldState, newState);
-        case Enums_1.LicenceType.Standard:
+        case Enums_1.LicenceScopeType.Standard:
             return MergeStateStandardLicence(oldState, newState);
-        case Enums_1.LicenceType.Enterprise:
+        case Enums_1.LicenceScopeType.Enterprise:
             return MergeStateEnterpriseLicence(oldState, newState);
     }
 }

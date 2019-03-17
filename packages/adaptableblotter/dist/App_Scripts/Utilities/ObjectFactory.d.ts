@@ -20,13 +20,15 @@ import { IAdvancedSearch } from "./Interface/BlotterObjects/IAdvancedSearch";
 import { ICategoryChartDefinition } from "./Interface/BlotterObjects/IChartDefinition";
 import { IAlertDefinition } from "./Interface/BlotterObjects/IAlertDefinition";
 import { IRange } from "./Interface/Expression/IRange";
-import { LeafExpressionOperator, RangeOperandType, ActionMode } from './Enums';
+import { LeafExpressionOperator, RangeOperandType, ActionMode, LicenceScopeType, LicenceUserType } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { ICellSummmary } from "./Interface/SelectedCell/ICellSummmary";
 import { Expression } from '../Utilities/Expression';
 import { IVendorGridInfo } from "./Interface/IVendorGridInfo";
+import { ILicenceInfo } from './Interface/ILicenceInfo';
 export declare module ObjectFactory {
+    function CreateLicenceInfo(licenceType: LicenceScopeType, isLicenceInDate: boolean, licenceUserType: LicenceUserType): ILicenceInfo;
     function CreateEmptyCustomSort(): ICustomSort;
     function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition;
     function CreateEmptyCalculatedColumn(): ICalculatedColumn;

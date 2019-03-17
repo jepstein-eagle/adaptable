@@ -6,7 +6,6 @@ const DashboardRedux = require("../../Redux/ActionsReducers/DashboardRedux");
 const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const DualListBoxEditor_1 = require("../Components/ListBox/DualListBoxEditor");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
 const react_bootstrap_1 = require("react-bootstrap");
 var DashboardConfigView;
 (function (DashboardConfigView) {
@@ -38,27 +37,26 @@ class DashboardPopupComponent extends React.Component {
         });
         let availableValues = this.props.MenuState.MenuItems.filter(x => x.IsVisible && selectedValues.indexOf(x.Label) == -1).map(x => x.Label);
         let individualHomeToolbarOptions = React.createElement(react_bootstrap_1.Panel, { header: "General Options", bsStyle: "primary", bsSize: 'small' },
-            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true },
-                React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineName" },
-                    React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_medium_margin" },
-                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onShowFunctionsDropdownChanged(e), checked: this.props.DashboardState.ShowFunctionsDropdown }, " Show Functions Dropdown ")),
-                    React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_medium_margin" },
-                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onShowColumnsDropdownChanged(e), checked: this.props.DashboardState.ShowColumnsDropdown }, " Show Columns Dropdown")),
-                    React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_medium_margin" },
-                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onShowToolbarsDropdownChanged(e), checked: this.props.DashboardState.ShowToolbarsDropdown }, " Show Toolbars Dropdown ")),
-                    React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_medium_margin" },
-                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onShowSystemStatusButtonChanged(e), checked: this.props.DashboardState.ShowSystemStatusButton }, " Show System Status Button ")),
-                    React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_medium_margin" },
-                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onShowAboutButtonChanged(e), checked: this.props.DashboardState.ShowAboutButton }, " Show About Button ")),
-                    React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_medium_margin" },
-                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onUseSingleColourForButtonsChanged(e), checked: this.props.DashboardState.UseSingleColourForButtons }, " Use Single Colour for All Dashboard Buttons ")),
-                    React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_medium_margin" },
-                        React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onUseExtraSmallButtonsChanged(e), checked: this.props.DashboardState.UseExtraSmallButtons }, " Use Small Size Buttons ")),
-                    React.createElement(react_bootstrap_1.Col, { xs: 12, className: "ab_medium_margin" },
-                        React.createElement(react_bootstrap_1.Form, { inline: true },
-                            "Dashboard Zoom Factor:",
-                            ' ',
-                            React.createElement(react_bootstrap_1.FormControl, { value: this.state.EditedZoomFactor.toString(), bsSize: 'small', type: "number", min: "0.5", step: "0.05", max: "1", placeholder: "Enter a Number", onChange: (e) => this.onSetFactorChange(e) }))))));
+            React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineName" },
+                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                    React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onShowFunctionsDropdownChanged(e), checked: this.props.DashboardState.ShowFunctionsDropdown }, " Show Functions Dropdown ")),
+                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                    React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onShowColumnsDropdownChanged(e), checked: this.props.DashboardState.ShowColumnsDropdown }, " Show Columns Dropdown")),
+                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                    React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onShowToolbarsDropdownChanged(e), checked: this.props.DashboardState.ShowToolbarsDropdown }, " Show Toolbars Dropdown ")),
+                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                    React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onShowSystemStatusButtonChanged(e), checked: this.props.DashboardState.ShowSystemStatusButton }, " Show System Status Button ")),
+                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                    React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onShowAboutButtonChanged(e), checked: this.props.DashboardState.ShowAboutButton }, " Show About Button ")),
+                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                    React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onUseSingleColourForButtonsChanged(e), checked: this.props.DashboardState.UseSingleColourForButtons }, " Use Single Colour for All Dashboard Buttons ")),
+                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                    React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onUseExtraSmallButtonsChanged(e), checked: this.props.DashboardState.UseExtraSmallButtons }, " Use Small Size Buttons ")),
+                React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                    React.createElement(react_bootstrap_1.Form, { inline: true },
+                        "Dashboard Zoom Factor:",
+                        ' ',
+                        React.createElement(react_bootstrap_1.FormControl, { value: this.state.EditedZoomFactor.toString(), bsSize: 'small', type: "number", min: "0.5", step: "0.05", max: "1", placeholder: "Enter a Number", onChange: (e) => this.onSetFactorChange(e) })))));
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Dashboard Configuration", bsStyle: "primary", glyphicon: StrategyConstants.DashboardGlyph, className: "ab_main_popup" },
                 React.createElement(react_bootstrap_1.Row, { style: { marginBottom: '10px' } },

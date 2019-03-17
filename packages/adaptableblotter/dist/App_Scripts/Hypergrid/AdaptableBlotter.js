@@ -64,7 +64,6 @@ const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelpe
 const ChartStrategy_1 = require("../Strategy/ChartStrategy");
 const GeneralConstants_1 = require("../Utilities/Constants/GeneralConstants");
 const LicenceService_1 = require("../Utilities/Services/LicenceService");
-const Helper_1 = require("../Utilities/Helpers/Helper");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -112,7 +111,7 @@ class AdaptableBlotter {
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService_1.CalculatedColumnExpressionService(this, (columnId, record) => { let column = this.getHypergridColumn(columnId); return this.valOrFunc(record, column); });
         this.FreeTextColumnService = new FreeTextColumnService_1.FreeTextColumnService(this);
         this.LicenceService = new LicenceService_1.LicenceService(this);
-        Helper_1.Helper.CheckLicenceKey(this.LicenceService.LicenceType);
+        BlotterHelper_1.BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
         this.AdaptableBlotterStore = new AdaptableBlotterStore_1.AdaptableBlotterStore(this);
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'

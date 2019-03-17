@@ -13,10 +13,8 @@ class AdaptableObjectRow extends React.Component {
                 React.createElement("span", { style: { fontSize: fontSize } }, colItem.Content));
         });
         return React.createElement("div", { className: cssClassName },
-            React.createElement("li", { className: "list-group-item", onClick: () => {
-                    // no implementation: not sure if this is actually needed...
-                } },
-                React.createElement(react_bootstrap_1.Row, { style: { display: "flex", alignItems: "center", overflowY: 'visible' } }, colItems)));
+            React.createElement("li", { style: { padding: '5px' }, className: "list-group-item" },
+                React.createElement(react_bootstrap_1.Row, { style: { display: "flex", alignItems: "center", overflowY: 'visible', padding: '0px', margin: '0px' } }, colItems)));
     }
 }
 exports.AdaptableObjectRow = AdaptableObjectRow;

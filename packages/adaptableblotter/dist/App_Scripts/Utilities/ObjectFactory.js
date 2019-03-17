@@ -8,6 +8,14 @@ const GeneralConstants_1 = require("./Constants/GeneralConstants");
 const DefaultCategoryChartProperties_1 = require("./Defaults/DefaultCategoryChartProperties");
 var ObjectFactory;
 (function (ObjectFactory) {
+    function CreateLicenceInfo(licenceType, isLicenceInDate, licenceUserType) {
+        return {
+            LicenceScopeType: licenceType,
+            IsLicenceInDate: isLicenceInDate,
+            LicenceUserType: licenceUserType
+        };
+    }
+    ObjectFactory.CreateLicenceInfo = CreateLicenceInfo;
     function CreateEmptyCustomSort() {
         return { ColumnId: GeneralConstants_1.EMPTY_STRING, SortedValues: [] };
     }

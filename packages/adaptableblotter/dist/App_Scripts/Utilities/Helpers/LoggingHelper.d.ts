@@ -5,5 +5,6 @@ export declare module LoggingHelper {
     function LogAdaptableBlotterSuccess(message: string, ...optionalParams: any[]): void;
     function LogAdaptableBlotterWarning(message: string, ...optionalParams: any[]): void;
     function LogAdaptableBlotterError(message: string, ...optionalParams: any[]): void;
+    function LogWarning(message: string, ...optionalParams: any[]): void;
     function LogError(message: string, ...optionalParams: any[]): void;
 }

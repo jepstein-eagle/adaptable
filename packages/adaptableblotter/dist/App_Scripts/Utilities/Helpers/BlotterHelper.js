@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const DefaultAdaptableBlotterOptions_1 = require("../Defaults/DefaultAdaptableBlotterOptions");
 const ColumnHelper_1 = require("./ColumnHelper");
 const LoggingHelper_1 = require("./LoggingHelper");
+const Enums_1 = require("../Enums");
 var BlotterHelper;
 (function (BlotterHelper) {
     function AssignBlotterOptions(blotterOptions) {
@@ -36,4 +37,35 @@ var BlotterHelper;
             && blotterOptions.configServerOptions.enableConfigServer == true;
     }
     BlotterHelper.IsConfigServerEnabled = IsConfigServerEnabled;
+    function CheckLicenceKey(licenceInfo) {
+        let universalOrEndUser = " (" + licenceInfo.LicenceUserType + ");";
+        switch (licenceInfo.LicenceScopeType) {
+            case Enums_1.LicenceScopeType.Community:
+                let licenceMessage = '\n';
+                licenceMessage += '***********************************************************************************\n';
+                licenceMessage += '************************** Adaptable Blotter License ******************************\n';
+                licenceMessage += '********************* This is an evaluation / community licence *******************\n';
+                licenceMessage += '************ It contains full functionality but you cannot load state *************\n';
+                licenceMessage += '********* Please contact sales@adaptabletools.com for upgrade information *********\n';
+                licenceMessage += '***********************************************************************************\n';
+                LoggingHelper_1.LoggingHelper.LogError(licenceMessage);
+                break;
+            case Enums_1.LicenceScopeType.Standard:
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Standard" + universalOrEndUser);
+                break;
+            case Enums_1.LicenceScopeType.Enterprise:
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Enterprise" + universalOrEndUser);
+                break;
+        }
+        if (!licenceInfo.IsLicenceInDate) {
+            let licenceMessage = '\n';
+            licenceMessage += '***********************************************************************************\n';
+            licenceMessage += '************************** Adaptable Blotter License ******************************\n';
+            licenceMessage += '************************* This licence is out of date *****************************\n';
+            licenceMessage += '******** Please contact sales@adaptabletools.com for to renew your licence ********\n';
+            licenceMessage += '***********************************************************************************\n';
+            LoggingHelper_1.LoggingHelper.LogError(licenceMessage);
+        }
+    }
+    BlotterHelper.CheckLicenceKey = CheckLicenceKey;
 })(BlotterHelper = exports.BlotterHelper || (exports.BlotterHelper = {}));

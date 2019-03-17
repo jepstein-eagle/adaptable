@@ -140,7 +140,7 @@ const initialDashboardState = {
         StrategyConstants.ConditionalStyleStrategyId,
         StrategyConstants.TeamSharingStrategyId
     ],
-    Zoom: 1,
+    Zoom: 0.9,
     DashboardVisibility: Enums_1.Visibility.Visible,
     ShowSystemStatusButton: true,
     ShowAboutButton: true,
@@ -149,7 +149,7 @@ const initialDashboardState = {
     ShowToolbarsDropdown: true,
     HomeToolbarTitle: "",
     ApplicationToolbarTitle: "",
-    UseSingleColourForButtons: false,
+    UseSingleColourForButtons: true,
     UseExtraSmallButtons: false,
 };
 exports.DashboardReducer = (state = initialDashboardState, action) => {

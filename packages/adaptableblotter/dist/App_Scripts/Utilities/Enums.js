@@ -262,12 +262,17 @@ var FilterOnDataChangeOptions;
     FilterOnDataChangeOptions["Never"] = "Never";
     FilterOnDataChangeOptions["Throttle"] = "Throttle";
 })(FilterOnDataChangeOptions = exports.FilterOnDataChangeOptions || (exports.FilterOnDataChangeOptions = {}));
-var LicenceType;
-(function (LicenceType) {
-    LicenceType["Community"] = "Community";
-    LicenceType["Standard"] = "Standard";
-    LicenceType["Enterprise"] = "Enterprise";
-})(LicenceType = exports.LicenceType || (exports.LicenceType = {}));
+var LicenceScopeType;
+(function (LicenceScopeType) {
+    LicenceScopeType["Community"] = "Community";
+    LicenceScopeType["Standard"] = "Standard";
+    LicenceScopeType["Enterprise"] = "Enterprise";
+})(LicenceScopeType = exports.LicenceScopeType || (exports.LicenceScopeType = {}));
+var LicenceUserType;
+(function (LicenceUserType) {
+    LicenceUserType["EndUser"] = "End User";
+    LicenceUserType["Universal"] = "Universal";
+})(LicenceUserType = exports.LicenceUserType || (exports.LicenceUserType = {}));
 var DashboardSize;
 (function (DashboardSize) {
     DashboardSize["Small"] = "small";

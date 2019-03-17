@@ -13,10 +13,10 @@ const checkStatus = (response) => {
     throw error;
 };
 class AdaptableBlotterReduxLocalStorageEngine {
-    constructor(key, predefinedConfig, licenceType) {
+    constructor(key, predefinedConfig, licenceInfo) {
         this.key = key;
         this.predefinedConfig = predefinedConfig;
-        this.licenceType = licenceType;
+        this.licenceInfo = licenceInfo;
     }
     load() {
         const jsonState = localStorage.getItem(this.key);
@@ -26,13 +26,13 @@ class AdaptableBlotterReduxLocalStorageEngine {
             return fetch(this.predefinedConfig)
                 .then(checkStatus)
                 .then(response => response.json())
-                .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceType))
+                .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceInfo))
                 .catch(err => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(err));
         }
         else if (this.predefinedConfig != null) {
             // we have config as an object so need to merge that
             return new Promise((resolve) => resolve(this.predefinedConfig))
-                .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceType))
+                .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceInfo))
                 .catch(err => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(err));
         }
         else {
@@ -54,7 +54,7 @@ class AdaptableBlotterReduxLocalStorageEngine {
 function rejectWithMessage(error) {
     return Promise.reject(error.message);
 }
-function createEngine(key, predefinedConfig, licenceType) {
-    return new AdaptableBlotterReduxLocalStorageEngine(key, predefinedConfig, licenceType);
+function createEngine(key, predefinedConfig, licenceInfo) {
+    return new AdaptableBlotterReduxLocalStorageEngine(key, predefinedConfig, licenceInfo);
 }
 exports.createEngine = createEngine;

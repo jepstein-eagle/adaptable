@@ -220,10 +220,14 @@ export declare enum FilterOnDataChangeOptions {
     Never = "Never",
     Throttle = "Throttle"
 }
-export declare enum LicenceType {
+export declare enum LicenceScopeType {
     Community = "Community",
     Standard = "Standard",
     Enterprise = "Enterprise"
+}
+export declare enum LicenceUserType {
+    EndUser = "End User",
+    Universal = "Universal"
 }
 export declare enum DashboardSize {
     Small = "small",

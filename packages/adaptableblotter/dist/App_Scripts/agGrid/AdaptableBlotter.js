@@ -168,7 +168,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy_1.CellSummaryStrategy(this));
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         iPushPullHelper_1.iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
-        Helper_1.Helper.CheckLicenceKey(this.LicenceService.LicenceType);
+        BlotterHelper_1.BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
@@ -526,14 +526,24 @@ class AdaptableBlotter {
                 }
             }
         }
-        let row = this.gridOptions.api.getModel().getRow(0);
+        let model = this.gridOptions.api.getModel();
+        if (model == null) {
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning('No model so returning type "Unknown" for Column: "' + column.getColId() + '"');
+            return Enums_1.DataType.Unknown;
+        }
+        let row = model.getRow(0);
         if (row == null) { // possible that there will be no data.
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning('No data in grid so returning type "Unknown" for Column: "' + column.getColId() + '"');
             return Enums_1.DataType.Unknown;
         }
         //if it's a group we need the content of the group
         if (row.group) {
-            row = row.childrenAfterGroup[0];
+            let childNodes = row.childrenAfterGroup;
+            if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(childNodes)) {
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning('No data in grid so returning type "Unknown" for Column: "' + column.getColId() + '"');
+                return Enums_1.DataType.Unknown;
+            }
+            row = childNodes[0];
         }
         let value = this.gridOptions.api.getValue(column, row);
         let dataType;
