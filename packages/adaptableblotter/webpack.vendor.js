@@ -20,7 +20,7 @@ module.exports = {
                 'json-loader',
                 'lodash',
                 'mathjs',
-              //  'node-schedule',
+                'node-schedule',
                 'prop-types',
                 'react',
                 'react-bootstrap',
