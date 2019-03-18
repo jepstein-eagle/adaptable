@@ -166,7 +166,7 @@ function InitTradeBlotter() {
       iPushPullConfig: {
         api_key: 'CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP',
         api_secret: 'xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj',
-        api_url: 'https://test.ipushpull.com/api/1.0',
+        api_url: 'https://www.ipushpull.com/api/1.0',
         hsts: false,
       },
 
