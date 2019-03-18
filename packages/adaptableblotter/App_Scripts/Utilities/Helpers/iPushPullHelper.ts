@@ -1,10 +1,11 @@
 import { IPPDomain } from "../Interface/Reports/IPPDomain";
 import { IPPStyle } from "../Interface/Reports/IPPStyle";
 import { LoggingHelper } from "./LoggingHelper";
-//import * as ipushpull from 'ipushpull-js'
+import { IPageService } from 'ipushpull-js/dist/Page/Page';
+import ipushpull, { ICreate } from 'ipushpull-js/dist/index'
 
 export module iPushPullHelper {
-  
+
     export enum ServiceStatus {
         Unknown = "Unknown",
         Disconnected = "Disconnected",
@@ -13,32 +14,35 @@ export module iPushPullHelper {
     }
 
     export var IPPStatus: ServiceStatus = ServiceStatus.Unknown
-    let iPushPullApp: any;//angular.IModule
-     // presumably this will be given a definition file in due course which would be great;
-    var pages: Map<string, any> = new Map();
+    let ipp: ICreate;
+    let pages: Map<string, any> = new Map();
 
     // creates the iPushPullApp object using blotterOptions ippconfig
     export function init(iPPConfig?: any): void {
-     // taking out ipushpull for the moment as we cannot load it without issues
-        //  if (iPushPullApp == null) {
-        //     iPushPullApp = ipushpull.create(iPPConfig);
-    //    }
+        if (ipp == null) {
+            if (iPPConfig != null) {
+                ipp = ipushpull.Create(iPPConfig);
+                if (ipp == undefined) {
+                    LoggingHelper.LogAdaptableBlotterWarning("Could not instantiate iPushPull")
+                }
+            }
+        }
     }
 
     // checks if we have loaded iPushPullproperly
     export function isIPushPullLoaded() {
-        return iPushPullApp != null;  // remove this if we want to go back to old version
+        return ipp != null;  // remove this if we want to go back to old version
     }
 
     // Logs in to iPushpull
     export function Login(login: string, password: string): Promise<any> {
         return new Promise<string>((resolve: any, reject: any) => {
-            iPushPullApp.auth.on(iPushPullApp.auth.EVENT_LOGGED_IN, function () {
+            ipp.auth.on(ipp.auth.EVENT_LOGGED_IN, function () {
                 IPPStatus = ServiceStatus.Connected;
                 resolve();
             });
 
-            iPushPullApp.auth.login(login, password).catch((err: any) => {
+            ipp.auth.login(login, password).catch((err: any) => {
                 IPPStatus = ServiceStatus.Error;
                 reject(err.message)
             });
@@ -48,7 +52,7 @@ export module iPushPullHelper {
     // Retrieves domain pages from iPushPull
     export function GetDomainPages(clientId: string): Promise<IPPDomain[]> {
         return new Promise<IPPDomain[]>((resolve: any, reject: any) => {
-              iPushPullApp.api.getDomainsAndPages(clientId)
+            ipp.api.getDomainsAndPages(clientId)
                 .then((x: any) => {
                     let result: IPPDomain[] = x.data.domains.map((domain: any) => {
                         return {
@@ -67,10 +71,11 @@ export module iPushPullHelper {
         })
     }
 
-   
+
     export function LoadPage(folderIPP: string, pageIPP: string): Promise<any> {
+        let myIpp: any = ipp
         return new Promise<any>((resolve: any, reject: any) => {
-              let page = new iPushPullApp.page(pageIPP, folderIPP)
+            let page: IPageService = new myIpp.Page(pageIPP, folderIPP);
 
             page.on(page.EVENT_NEW_CONTENT, function (data: any) {
                 LoggingHelper.LogAdaptableBlotterInfo("Page Ready : " + pageIPP)
@@ -119,7 +124,7 @@ export module iPushPullHelper {
                             "font-size": style.Header.headerFontSize,
                             "font-style": style.Header.headerFontStyle,
                             "font-weight": style.Header.headerFontWeight,
-                            "height": String(style.Header.height/3) + "px",
+                            "height": String(style.Header.height / 3) + "px",
                             "text-align": col.textAlign,
                             "vertical-align": "middle",
                             "white-space": "nowrap",
