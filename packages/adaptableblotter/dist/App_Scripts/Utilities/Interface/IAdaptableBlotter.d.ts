@@ -2,7 +2,7 @@ import { DistinctCriteriaPairValue } from '../Enums';
 import { ICellInfo } from "./ICellInfo";
 import { IVendorGridInfo } from "./IVendorGridInfo";
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore';
-import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
+import { IRawValueDisplayValuePair, IValueTotalCount } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
 import { IGridSort } from "./IGridSort";
@@ -63,6 +63,7 @@ export interface IAdaptableBlotter {
     getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
     getRecordIsSatisfiedFunctionFromRecord(record: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
     getDisplayValueFromRawValue(columnId: string, rawValue: any): any;
+    getColumnValueTotalCount(columnId: string): IValueTotalCount[];
     setValue(cellInfo: ICellInfo): void;
     setValueBatch(batchValues: ICellInfo[]): void;
     cancelEdit(): any;

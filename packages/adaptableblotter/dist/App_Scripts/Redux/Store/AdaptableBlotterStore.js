@@ -42,6 +42,7 @@ const ColumnCategoryRedux = require("../ActionsReducers/ColumnCategoryRedux");
 const DashboardRedux = require("../ActionsReducers/DashboardRedux");
 const CellValidationRedux = require("../ActionsReducers/CellValidationRedux");
 const PercentBarRedux = require("../ActionsReducers/PercentBarRedux");
+const PieChartRedux = require("../ActionsReducers/PieChartRedux");
 const EntitlementsRedux = require("../ActionsReducers/EntitlementsRedux");
 const CellSummaryRedux = require("../ActionsReducers/CellSummaryRedux");
 const TeamSharingRedux = require("../ActionsReducers/TeamSharingRedux");
@@ -87,6 +88,7 @@ const rootReducer = Redux.combineReducers({
     FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
     Layout: LayoutRedux.LayoutReducer,
     PercentBar: PercentBarRedux.PercentBarReducer,
+    PieChart: PieChartRedux.PieChartReducer,
     PlusMinus: PlusMinusRedux.PlusMinusReducer,
     QuickSearch: QuickSearchRedux.QuickSearchReducer,
     CellSummary: CellSummaryRedux.CellSummaryReducer,

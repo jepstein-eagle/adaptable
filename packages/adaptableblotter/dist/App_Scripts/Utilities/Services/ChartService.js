@@ -84,5 +84,14 @@ class ChartService {
         }
         return xAxisColValues;
     }
+    BuildPieChartData(columnId) {
+        let valueTotalCounts = this.blotter.getColumnValueTotalCount(columnId);
+        let returnData = [];
+        valueTotalCounts.forEach(t => {
+            let returnItem = { ColumnCount: t.Count, ColumnValue: t.Value };
+            returnData.push(returnItem);
+        });
+        return returnData;
+    }
 }
 exports.ChartService = ChartService;

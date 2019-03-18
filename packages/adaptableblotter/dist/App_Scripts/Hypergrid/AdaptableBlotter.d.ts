@@ -5,7 +5,7 @@ import { EventDispatcher } from '../Utilities/EventDispatcher';
 import { DataType, DistinctCriteriaPairValue } from '../Utilities/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IPPStyle } from "../Utilities/Interface/Reports/IPPStyle";
-import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
+import { IRawValueDisplayValuePair, IValueTotalCount } from '../View/UIInterfaces';
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
 import { IColumn } from '../Utilities/Interface/IColumn';
@@ -95,6 +95,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     removeCustomSort(columnId: string): void;
     ReindexAndRepaint(): void;
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
+    getColumnValueTotalCount(columnId: string): IValueTotalCount[];
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: any, columnId: string): any;
     getDisplayValueFromRawValue(colId: string, rawValue: any): any;

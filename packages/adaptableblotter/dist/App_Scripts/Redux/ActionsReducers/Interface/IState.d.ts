@@ -33,6 +33,7 @@ import { IPreviewInfo } from '../../../Utilities/Interface/IPreview';
 import { IMenuItem, IContextMenu } from '../../../Utilities/Interface/IMenu';
 import { IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPopup, IAboutPopup, IAdaptableAlert } from '../../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../../Utilities/ChartEnums';
+import { IPieChart } from "../../../Utilities/Interface/BlotterObjects/IPieChart";
 export interface IState {
 }
 /**
@@ -184,6 +185,9 @@ export interface LayoutState extends IUserState {
 }
 export interface PercentBarState extends IUserState {
     PercentBars: IPercentBar[];
+}
+export interface PieChartState extends IUserState {
+    PieCharts: IPieChart[];
 }
 export interface PlusMinusState extends IUserState {
     PlusMinusRules: IPlusMinusRule[];

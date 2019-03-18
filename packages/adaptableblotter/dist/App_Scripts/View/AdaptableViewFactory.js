@@ -47,6 +47,7 @@ const ChartDisplayPopup_1 = require("./Chart/ChartDisplayPopup");
 const ChartToolbarControl_1 = require("./Chart/ChartToolbarControl");
 const FreeTextColumnPopup_1 = require("./FreeTextColumn/FreeTextColumnPopup");
 const PercentBarPopup_1 = require("./PercentBar/PercentBarPopup");
+const PieChartPopup_1 = require("./PieChart/PieChartPopup");
 const CellSummaryPopup_1 = require("./CellSummary/CellSummaryPopup");
 const CellSummaryToolbarControl_1 = require("./CellSummary/CellSummaryToolbarControl");
 exports.AdaptableViewFactory = {
@@ -56,7 +57,6 @@ exports.AdaptableViewFactory = {
     BulkUpdatePopup: BulkUpdatePopup_1.BulkUpdatePopup,
     CalculatedColumnPopup: CalculatedColumnPopup_1.CalculatedColumnPopup,
     CalendarsPopup: CalendarsPopup_1.CalendarsPopup,
-    PercentBarPopup: PercentBarPopup_1.PercentBarPopup,
     CellValidationPopup: CellValidationPopup_1.CellValidationPopup,
     ChartPopup: ChartPopup_1.ChartPopup,
     ColumnChooserPopup: ColumnChooserPopup_1.ColumnChooserPopup,
@@ -75,6 +75,8 @@ exports.AdaptableViewFactory = {
     IPushPullDomainPageSelector: IPushPullDomainPageSelector_1.IPushPullDomainPageSelector,
     LayoutPopup: LayoutPopup_1.LayoutPopup,
     ColumnCategoryPopup: ColumnCategoryPopup_1.ColumnCategoryPopup,
+    PercentBarPopup: PercentBarPopup_1.PercentBarPopup,
+    PieChartPopup: PieChartPopup_1.PieChartPopup,
     PlusMinusPopup: PlusMinusPopup_1.PlusMinusPopup,
     QuickSearchPopup: QuickSearchPopup_1.QuickSearchPopup,
     CellSummaryPopup: CellSummaryPopup_1.CellSummaryPopup,

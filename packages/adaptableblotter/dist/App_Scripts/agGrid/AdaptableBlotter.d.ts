@@ -23,7 +23,7 @@ import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalcul
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
-import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
+import { IRawValueDisplayValuePair, IValueTotalCount } from '../View/UIInterfaces';
 import { Grid, RowNode } from "ag-grid-community";
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IEvent } from '../Utilities/Interface/IEvent';
@@ -108,6 +108,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     setCustomSort(columnId: string, comparer: Function): void;
     removeCustomSort(columnId: string): void;
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
+    getColumnValueTotalCount(columnId: string): IValueTotalCount[];
     private useRawValueForColumn;
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: RowNode, columnId: string): string;

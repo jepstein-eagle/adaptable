@@ -625,6 +625,9 @@ class AdaptableBlotter {
         }
         return Array.from(returnMap.values());
     }
+    getColumnValueTotalCount(columnId) {
+        return null;
+    }
     getDisplayValue(id, columnId) {
         let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id);
         return this.getDisplayValueFromRecord(row, columnId);

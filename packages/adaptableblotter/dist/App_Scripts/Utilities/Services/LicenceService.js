@@ -40,9 +40,9 @@ class LicenceService {
         if (!this.isCorrectLength(firstPartAlphaNumeric, 8)) {
             return ObjectFactory_1.ObjectFactory.CreateLicenceInfo(Enums_1.LicenceScopeType.Community, true, Enums_1.LicenceUserType.EndUser);
         }
-        // last lettter has to be eitehr 'u' or 'e'
+        // last lettter has to be either 't' or 'u' or 'e'
         let lastLetter = firstPartAlphaNumeric.substr(firstPartAlphaNumeric.length - 1);
-        if (lastLetter != 'u' && lastLetter != 'e') {
+        if (lastLetter != 'u' && lastLetter != 'e' && lastLetter != 't') {
             return ObjectFactory_1.ObjectFactory.CreateLicenceInfo(Enums_1.LicenceScopeType.Community, true, Enums_1.LicenceUserType.EndUser);
         }
         // has to be 4 numbers only
@@ -137,16 +137,23 @@ class LicenceService {
             return false;
         }
         let yearNumber = highYearNumber - 15;
-        if (yearNumber < 19 || yearNumber > 20) {
+        if (yearNumber < 19 || yearNumber > 23) {
             return false;
         }
-        let expiryYear = (yearNumber == 19) ? 2019 : 2020;
+        let expiryYear = yearNumber + 2000;
         // make expiry date first day of following month (note: month ordinal in javascript)
         let expiryDate = new Date(expiryYear, monthNumber, 1);
         return expiryDate > new Date();
     }
     getLicenceUserType(lastLetter) {
-        return (lastLetter == 'u') ? Enums_1.LicenceUserType.Universal : Enums_1.LicenceUserType.EndUser;
+        switch (lastLetter) {
+            case 'u':
+                return Enums_1.LicenceUserType.Universal;
+            case 'e':
+                return Enums_1.LicenceUserType.EndUser;
+            case 't':
+                return Enums_1.LicenceUserType.Team;
+        }
     }
     isDemoSite() {
         return (window.location.hostname == 'demo.adaptableblotter.com');

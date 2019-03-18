@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const LoggingHelper_1 = require("./LoggingHelper");
-//import * as ipushpull from 'ipushpull-js'
+const ipushpull_js_1 = require("ipushpull-js");
 var iPushPullHelper;
 (function (iPushPullHelper) {
     let ServiceStatus;
@@ -12,30 +12,33 @@ var iPushPullHelper;
         ServiceStatus["Error"] = "Error";
     })(ServiceStatus = iPushPullHelper.ServiceStatus || (iPushPullHelper.ServiceStatus = {}));
     iPushPullHelper.IPPStatus = ServiceStatus.Unknown;
-    let iPushPullApp; //angular.IModule
-    // presumably this will be given a definition file in due course which would be great;
-    var pages = new Map();
+    let ipp;
+    let pages = new Map();
     // creates the iPushPullApp object using blotterOptions ippconfig
     function init(iPPConfig) {
-        // taking out ipushpull for the moment as we cannot load it without issues
-        //  if (iPushPullApp == null) {
-        //     iPushPullApp = ipushpull.create(iPPConfig);
-        //    }
+        if (ipp == null) {
+            if (iPPConfig != null) {
+                ipp = ipushpull_js_1.default.Create(iPPConfig);
+                if (ipp == undefined) {
+                    LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("Could not instantiate iPushPull");
+                }
+            }
+        }
     }
     iPushPullHelper.init = init;
     // checks if we have loaded iPushPullproperly
     function isIPushPullLoaded() {
-        return iPushPullApp != null; // remove this if we want to go back to old version
+        return ipp != null; // remove this if we want to go back to old version
     }
     iPushPullHelper.isIPushPullLoaded = isIPushPullLoaded;
     // Logs in to iPushpull
     function Login(login, password) {
         return new Promise((resolve, reject) => {
-            iPushPullApp.auth.on(iPushPullApp.auth.EVENT_LOGGED_IN, function () {
+            ipp.auth.on(ipp.auth.EVENT_LOGGED_IN, function () {
                 iPushPullHelper.IPPStatus = ServiceStatus.Connected;
                 resolve();
             });
-            iPushPullApp.auth.login(login, password).catch((err) => {
+            ipp.auth.login(login, password).catch((err) => {
                 iPushPullHelper.IPPStatus = ServiceStatus.Error;
                 reject(err.message);
             });
@@ -45,7 +48,7 @@ var iPushPullHelper;
     // Retrieves domain pages from iPushPull
     function GetDomainPages(clientId) {
         return new Promise((resolve, reject) => {
-            iPushPullApp.api.getDomainsAndPages(clientId)
+            ipp.api.getDomainsAndPages(clientId)
                 .then((x) => {
                 let result = x.data.domains.map((domain) => {
                     return {
@@ -65,8 +68,9 @@ var iPushPullHelper;
     }
     iPushPullHelper.GetDomainPages = GetDomainPages;
     function LoadPage(folderIPP, pageIPP) {
+        let myIpp = ipp;
         return new Promise((resolve, reject) => {
-            let page = new iPushPullApp.page(pageIPP, folderIPP);
+            let page = new myIpp.Page(pageIPP, folderIPP);
             page.on(page.EVENT_NEW_CONTENT, function (data) {
                 LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Page Ready : " + pageIPP);
                 pages.set(pageIPP, page);

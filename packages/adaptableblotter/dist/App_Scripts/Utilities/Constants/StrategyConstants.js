@@ -26,6 +26,7 @@ exports.FreeTextColumnStrategyId = "FreeTextColumn";
 exports.HomeStrategyId = "Home";
 exports.LayoutStrategyId = "Layout";
 exports.PercentBarStrategyId = "PercentBar";
+exports.PieChartStrategyId = "PieChart";
 exports.PlusMinusStrategyId = "PlusMinus";
 exports.QuickSearchStrategyId = "QuickSearch";
 exports.SelectColumnStrategyId = "SelectColumn";
@@ -59,6 +60,7 @@ exports.FormatColumnStrategyName = "Format Column";
 exports.FreeTextColumnStrategyName = "Free Text Column";
 exports.LayoutStrategyName = "Layout";
 exports.PercentBarStrategyName = "Percent Bar";
+exports.PieChartStrategyName = "Pie Chart";
 exports.PlusMinusStrategyName = "Plus Minus";
 exports.QuickSearchStrategyName = "Quick Search";
 exports.SelectColumnStrategyName = "Select Column";
@@ -93,6 +95,7 @@ exports.FreeTextColumnGlyph = "comment";
 exports.FunctionsGlyph = "home";
 exports.LayoutGlyph = "th";
 exports.PercentBarGlyph = "transfer";
+exports.PieChartGlyph = "adjust";
 exports.PlusMinusGlyph = "plus-sign";
 exports.QuickSearchGlyph = "eye-open";
 exports.SelectColumnGlyph = "compressed";
@@ -149,6 +152,8 @@ function getIdForStrategyName(strategyName) {
             return exports.LayoutStrategyId;
         case exports.PercentBarStrategyName:
             return exports.PercentBarStrategyId;
+        case exports.PieChartStrategyName:
+            return exports.PieChartStrategyId;
         case exports.PlusMinusStrategyName:
             return exports.PlusMinusStrategyId;
         case exports.QuickSearchStrategyName:
@@ -218,6 +223,8 @@ function getNameForStrategyId(strategyID) {
             return exports.LayoutStrategyName;
         case exports.PercentBarStrategyId:
             return exports.PercentBarStrategyName;
+        case exports.PieChartStrategyId:
+            return exports.PieChartStrategyName;
         case exports.PlusMinusStrategyId:
             return exports.PlusMinusStrategyName;
         case exports.QuickSearchStrategyId:
@@ -283,6 +290,8 @@ function getGhyphiconForStrategyId(strategyID) {
             return exports.LayoutGlyph;
         case exports.PercentBarStrategyId:
             return exports.PercentBarGlyph;
+        case exports.PieChartStrategyId:
+            return exports.PieChartGlyph;
         case exports.PlusMinusStrategyId:
             return exports.PlusMinusGlyph;
         case exports.QuickSearchStrategyId:

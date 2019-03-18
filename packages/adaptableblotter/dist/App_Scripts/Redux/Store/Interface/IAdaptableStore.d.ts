@@ -14,7 +14,6 @@ export interface AdaptableBlotterState {
     BulkUpdate: AdaptableBlotterStates.BulkUpdateState;
     CalculatedColumn: AdaptableBlotterStates.CalculatedColumnState;
     Calendar: AdaptableBlotterStates.CalendarState;
-    PercentBar: AdaptableBlotterStates.PercentBarState;
     CellValidation: AdaptableBlotterStates.CellValidationState;
     Chart: AdaptableBlotterStates.ChartState;
     ColumnFilter: AdaptableBlotterStates.ColumnFilterState;
@@ -28,6 +27,8 @@ export interface AdaptableBlotterState {
     FreeTextColumn: AdaptableBlotterStates.FreeTextColumnState;
     Layout: AdaptableBlotterStates.LayoutState;
     ColumnCategory: AdaptableBlotterStates.ColumnCategoryState;
+    PercentBar: AdaptableBlotterStates.PercentBarState;
+    PieChart: AdaptableBlotterStates.PieChartState;
     PlusMinus: AdaptableBlotterStates.PlusMinusState;
     QuickSearch: AdaptableBlotterStates.QuickSearchState;
     CellSummary: AdaptableBlotterStates.CellSummaryState;

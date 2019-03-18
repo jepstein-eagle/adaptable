@@ -69,6 +69,7 @@ const DataManagementStrategy_1 = require("../Strategy/DataManagementStrategy");
 const ExportStrategy_1 = require("../Strategy/ExportStrategy");
 const LayoutStrategy_1 = require("../Strategy/LayoutStrategy");
 const PlusMinusStrategy_1 = require("../Strategy/PlusMinusStrategy");
+const PieChartStrategy_1 = require("../Strategy/PieChartStrategy");
 const SmartEditStrategy_1 = require("../Strategy/SmartEditStrategy");
 const ShortcutStrategy_1 = require("../Strategy/ShortcutStrategy");
 const TeamSharingStrategy_1 = require("../Strategy/TeamSharingStrategy");
@@ -140,7 +141,6 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(this));
         this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(this));
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(this));
-        this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy_1.PercentBarStrategy(this));
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(this));
         this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy_1.ChartStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(this));
@@ -158,6 +158,8 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy_1.HomeStrategy(this));
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
         this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy_1.ColumnCategoryStrategy(this));
+        this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy_1.PercentBarStrategy(this));
+        this.Strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy_1.PieChartStrategy(this));
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategyagGrid_1.QuickSearchStrategyagGrid(this));
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
@@ -768,6 +770,28 @@ class AdaptableBlotter {
             });
         }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
+    }
+    getColumnValueTotalCount(columnId) {
+        let returnValues = [];
+        let useRawValue = this.useRawValueForColumn(columnId);
+        this.gridOptions.api.forEachNode(rowNode => {
+            //we do not return the values of the aggregates when in grouping mode
+            //otherwise they wxould appear in the filter dropdown etc....
+            if (!rowNode.group) {
+                let rawValue = this.gridOptions.api.getValue(columnId, rowNode);
+                let displayValue = (useRawValue) ?
+                    Helper_1.Helper.StringifyValue(rawValue) :
+                    this.getDisplayValueFromRecord(rowNode, columnId);
+                let existingItem = returnValues.find(rv => rv.Value == displayValue);
+                if (existingItem) {
+                    existingItem.Count++;
+                }
+                else {
+                    returnValues.push({ Value: displayValue, Count: 0 });
+                }
+            }
+        });
+        return returnValues;
     }
     useRawValueForColumn(columnId) {
         // will add more in due course I'm sure but for now only percent bar columns return false...
