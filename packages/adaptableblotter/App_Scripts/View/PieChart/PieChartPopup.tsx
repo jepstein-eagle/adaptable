@@ -2,29 +2,18 @@ import * as React from "react";
 import * as Redux from "redux";
 import * as _ from 'lodash'
 import { connect } from 'react-redux';
-import { FormControl, ControlLabel, Panel, FormGroup, Col, Checkbox, Row } from 'react-bootstrap';
-import { LeafExpressionOperator, DisplayAction, MessageType, SelectionMode } from '../../Utilities/Enums'
+import { ControlLabel, FormGroup, Col, Row, Radio } from 'react-bootstrap';
+import { SelectionMode } from '../../Utilities/Enums'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import * as PieChartRedux from '../../Redux/ActionsReducers/PieChartRedux'
-import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { ColorPicker } from '../ColorPicker';
-import { AdaptablePopover } from '../AdaptablePopover';
-import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { IStyle } from "../../Utilities/Interface/IStyle";
-import { QUICK_SEARCH_DEFAULT_BACK_COLOR, QUICK_SEARCH_DEFAULT_FORE_COLOR } from "../../Utilities/Constants/GeneralConstants";
 import { PieChartComponent } from "./PieChartComponent";
-import { IValueTotalCount } from "../UIInterfaces";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { ObjectFactory } from "../../Utilities/ObjectFactory";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { IColumn } from "../../Utilities/Interface/IColumn";
-import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {
     PieChartText: string;
@@ -33,7 +22,7 @@ interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupCompone
 
 interface PieChartPopupState {
     SelectedColumnId: string
-    //   ShowSelector: boolean
+    ShowVisibleOnly: boolean
 }
 
 class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChartPopupState> {
@@ -41,7 +30,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     constructor(props: PieChartPopupProps) {
         super(props);
         this.state = {
-            SelectedColumnId: ""
+            SelectedColumnId: "", ShowVisibleOnly: false
         }
     }
 
@@ -49,34 +38,25 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     componentDidMount() {
 
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-            //   let column = ColumnHelper.getColumnFromId(this.props.PopupParams, this.props.Columns);
             this.setState({ SelectedColumnId: this.props.PopupParams })
         }
-
-
     }
-
-
-
 
     render() {
         let cssClassName: string = this.props.cssClassName + "__PieChart";
 
         let infoBody: any[] = ["Run a simple text search across all visible cells in the Blotter.", <br />, <br />, "Use Quick Search Options to set search operator, behaviour and back colour (all automatically saved).", <br />, <br />, "For a more powerful, multi-column, saveable search with a wide range of options, use ", <i>Advanced Search</i>, "."]
 
-
         let pieChartData: any[] = (StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)) ?
-            this.props.Blotter.ChartService.BuildPieChartData(this.state.SelectedColumnId)
+            this.props.Blotter.ChartService.BuildPieChartData(this.state.SelectedColumnId, this.state.ShowVisibleOnly)
             :
             []
-
-
 
         return <div className={cssClassName}>
             <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.PieChartStrategyName} bsStyle="primary" glyphicon={StrategyConstants.PieChartGlyph} infoBody={infoBody}>
 
                 <AdaptableBlotterForm horizontal>
-                    <FormGroup controlId="searchName">
+                    <FormGroup controlId="pieChartSettings">
                         <Row>
                             <Col xs={2} componentClass={ControlLabel}>Column: </Col>
 
@@ -87,6 +67,13 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                                     SelectionMode={SelectionMode.Single} />
                             </Col>
                             <Col xs={2}>{' '} </Col>
+                        </Row>
+                        <Row style={{ marginBottom: '10px' }}>
+                            <Col xs={2} />
+                            <Col xs={10} >
+                                <Radio inline value="AllRows" checked={this.state.ShowVisibleOnly == false} onChange={(e) => this.onShowGridPropertiesChanged(e)}>All Rows</Radio>
+                                <Radio inline value="VisibleRowsOnly" checked={this.state.ShowVisibleOnly == true} onChange={(e) => this.onShowGridPropertiesChanged(e)}>Visible Rows Only</Radio>
+                            </Col>
                         </Row>
                     </FormGroup>
 
@@ -99,8 +86,8 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                         PieData={pieChartData}
                         LabelMember={"ColumnValue"}
                         ValueMember={"ColumnCount"}
-                        Width={450}
-                        Height={450}
+                        Width={400}
+                        Height={400}
                     />
                 }
 
@@ -113,9 +100,12 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         this.setState({ SelectedColumnId: columns.length > 0 ? columns[0].ColumnId : null })
     }
 
+    private onShowGridPropertiesChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ ShowVisibleOnly: (e.value == "VisibleRowsOnly") } as PieChartPopupState)
+    }
+
 }
-
-
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
@@ -124,7 +114,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
+function mapDispatchToProps() {
     return {
 
     };

@@ -945,29 +945,39 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
     }
 
-    public getColumnValueTotalCount(columnId: string): IValueTotalCount[] {
+    public getColumnValueTotalCountAllRows(columnId: string): IValueTotalCount[] {
         let returnValues: IValueTotalCount[] = [];
         let useRawValue: boolean = this.useRawValueForColumn(columnId);
         this.gridOptions.api.forEachNode(rowNode => {
-            //we do not return the values of the aggregates when in grouping mode
-            //otherwise they wxould appear in the filter dropdown etc....
-            if (!rowNode.group) {
-                let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
-                let displayValue: string = (useRawValue) ?
-                    Helper.StringifyValue(rawValue) :
-                    this.getDisplayValueFromRecord(rowNode, columnId);
-
-                let existingItem = returnValues.find(rv => rv.Value == displayValue);
-                if (existingItem) {
-                    existingItem.Count++;
-                } else {
-                    returnValues.push({ Value: displayValue, Count: 0 })
-                }
-
-            }
+            this.getValueTotalFromNode(columnId, rowNode, useRawValue, returnValues);
         })
-
         return returnValues;
+    }
+
+    public getColumnValueTotalCountVisibleRows(columnId: string): IValueTotalCount[] {
+        let returnValues: IValueTotalCount[] = [];
+        let useRawValue: boolean = this.useRawValueForColumn(columnId);
+        this.gridOptions.api.forEachNodeAfterFilter(rowNode => {
+            this.getValueTotalFromNode(columnId, rowNode, useRawValue, returnValues);
+        })
+        return returnValues;
+    }
+
+    private getValueTotalFromNode(columnId: string, rowNode: RowNode, useRawValue: boolean, returnValues: IValueTotalCount[]):void{
+        if (!rowNode.group) {
+            let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
+            let displayValue: string = (useRawValue) ?
+                Helper.StringifyValue(rawValue) :
+                this.getDisplayValueFromRecord(rowNode, columnId);
+
+            let existingItem = returnValues.find(rv => rv.Value == displayValue);
+            if (existingItem) {
+                existingItem.Count++;
+            } else {
+                returnValues.push({ Value: displayValue, Count: 0 })
+            }
+
+        }
     }
 
     private useRawValueForColumn(columnId: string): boolean {

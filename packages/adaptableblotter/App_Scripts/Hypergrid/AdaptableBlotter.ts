@@ -764,7 +764,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return Array.from(returnMap.values())
     }
 
-    public  getColumnValueTotalCount(columnId: string): IValueTotalCount[] {
+    public  getColumnValueTotalCountAllRows(columnId: string): IValueTotalCount[] {
+        return null;
+    }
+    public  getColumnValueTotalCountVisibleRows(columnId: string): IValueTotalCount[] {
         return null;
     }
 

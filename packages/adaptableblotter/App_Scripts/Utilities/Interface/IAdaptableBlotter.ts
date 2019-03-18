@@ -81,7 +81,8 @@ export interface IAdaptableBlotter {
     getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any
     getRecordIsSatisfiedFunctionFromRecord(record: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any
     getDisplayValueFromRawValue(columnId: string, rawValue: any): any
-    getColumnValueTotalCount(columnId: string): IValueTotalCount[]
+    getColumnValueTotalCountAllRows(columnId: string): IValueTotalCount[]
+    getColumnValueTotalCountVisibleRows(columnId: string): IValueTotalCount[]
    
 
     // editing related

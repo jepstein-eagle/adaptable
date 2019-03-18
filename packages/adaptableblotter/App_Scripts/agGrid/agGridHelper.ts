@@ -1,7 +1,9 @@
-import { ICellRendererFunc, ICellRendererParams, ColDef, GridOptions, SideBarDef, ToolPanelDef } from "ag-grid-community";
+import { ICellRendererFunc, ICellRendererParams, ColDef, GridOptions, SideBarDef, ToolPanelDef, RowNode } from "ag-grid-community";
 import { StringExtensions } from "../Utilities/Extensions/StringExtensions";
 import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
 import { ArrayExtensions } from "../Utilities/Extensions/ArrayExtensions";
+import { IValueTotalCount } from "../View/UIInterfaces";
+import { Helper } from "../Utilities/Helpers/Helper";
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy 
@@ -158,4 +160,5 @@ export module agGridHelper {
         };
     }
 
+    
 }

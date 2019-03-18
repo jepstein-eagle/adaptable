@@ -104,8 +104,11 @@ export class ChartService implements IChartService {
         return xAxisColValues;
     }
 
-    public BuildPieChartData(columnId: string): any[] {
-        let valueTotalCounts: IValueTotalCount[] = this.blotter.getColumnValueTotalCount(columnId);
+    public BuildPieChartData(columnId: string, visibleRowsOnly: boolean): any[] {
+        let valueTotalCounts: IValueTotalCount[] = (visibleRowsOnly)?
+         this.blotter.getColumnValueTotalCountVisibleRows(columnId)
+         :
+         this.blotter.getColumnValueTotalCountAllRows(columnId);
 
         let returnData: any[] = []
 
