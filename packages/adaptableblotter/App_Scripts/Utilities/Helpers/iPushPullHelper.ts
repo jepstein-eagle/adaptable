@@ -21,7 +21,7 @@ export module iPushPullHelper {
     export function init(iPPConfig?: any): void {
         if (ipp == null) {
             if (iPPConfig != null) {
-                ipp = ipushpull.Create(iPPConfig);
+                ipp = new ipushpull.Create(iPPConfig);
                 if (ipp == undefined) {
                     LoggingHelper.LogAdaptableBlotterWarning("Could not instantiate iPushPull")
                 }
