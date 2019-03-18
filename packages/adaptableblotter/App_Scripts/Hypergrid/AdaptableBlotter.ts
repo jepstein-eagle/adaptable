@@ -35,7 +35,7 @@ import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IPPStyle } from "../Utilities/Interface/Reports/IPPStyle";
-import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
+import { IRawValueDisplayValuePair, IValueTotalCount } from '../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
@@ -762,6 +762,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         return Array.from(returnMap.values())
+    }
+
+    public  getColumnValueTotalCount(columnId: string): IValueTotalCount[] {
+        return null;
     }
 
     public getDisplayValue(id: any, columnId: string): string {

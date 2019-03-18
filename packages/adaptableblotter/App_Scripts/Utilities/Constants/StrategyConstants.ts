@@ -25,6 +25,7 @@ export const FreeTextColumnStrategyId: string = "FreeTextColumn"
 export const HomeStrategyId: string = "Home"
 export const LayoutStrategyId: string = "Layout"
 export const PercentBarStrategyId: string = "PercentBar"
+export const PieChartStrategyId: string = "PieChart"
 export const PlusMinusStrategyId: string = "PlusMinus"
 export const QuickSearchStrategyId: string = "QuickSearch"
 export const SelectColumnStrategyId: string = "SelectColumn"
@@ -59,6 +60,7 @@ export const FormatColumnStrategyName: string = "Format Column"
 export const FreeTextColumnStrategyName: string = "Free Text Column"
 export const LayoutStrategyName: string = "Layout"
 export const PercentBarStrategyName: string = "Percent Bar"
+export const PieChartStrategyName: string = "Pie Chart"
 export const PlusMinusStrategyName: string = "Plus Minus"
 export const QuickSearchStrategyName: string = "Quick Search"
 export const SelectColumnStrategyName: string = "Select Column"
@@ -94,6 +96,7 @@ export const FreeTextColumnGlyph: string = "comment"
 export const FunctionsGlyph: string = "home"
 export const LayoutGlyph: string = "th"
 export const PercentBarGlyph: string = "transfer"
+export const PieChartGlyph: string = "adjust"
 export const PlusMinusGlyph: string = "plus-sign"
 export const QuickSearchGlyph: string = "eye-open"
 export const SelectColumnGlyph: string = "compressed"
@@ -151,6 +154,8 @@ export function getIdForStrategyName(strategyName: string) {
             return LayoutStrategyId
         case PercentBarStrategyName:
             return PercentBarStrategyId
+        case PieChartStrategyName:
+            return PieChartStrategyId
         case PlusMinusStrategyName:
             return PlusMinusStrategyId
         case QuickSearchStrategyName:
@@ -221,6 +226,8 @@ export function getNameForStrategyId(strategyID: string) {
             return LayoutStrategyName
         case PercentBarStrategyId:
             return PercentBarStrategyName
+        case PieChartStrategyId:
+            return PieChartStrategyName
         case PlusMinusStrategyId:
             return PlusMinusStrategyName
         case QuickSearchStrategyId:
@@ -286,6 +293,8 @@ export function getGhyphiconForStrategyId(strategyID: string) {
             return LayoutGlyph
         case PercentBarStrategyId:
             return PercentBarGlyph
+        case PieChartStrategyId:
+            return PieChartGlyph
         case PlusMinusStrategyId:
             return PlusMinusGlyph
         case QuickSearchStrategyId:

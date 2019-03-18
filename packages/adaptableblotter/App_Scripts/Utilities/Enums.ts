@@ -187,7 +187,6 @@ export enum StateChangedTrigger {
     CalculatedColumn = "CalculatedColumn",
     Calendar = "Calendar",
     CellValidation = "CellValidation",
-    PercentBar = "PercentBar",
     Chart = "Chart",
     ColumnFilter = "ColumnFilter",
     ConditionalStyle = "ConditionalStyle",
@@ -200,6 +199,8 @@ export enum StateChangedTrigger {
     FreeTextColumn = "FreeTextColumn",
     Layout = "Layout",
     ColumnCategory = "ColumnCategory",
+    PercentBar = "PercentBar",
+    PieChart = "PieChart",
     PlusMinus = "PlusMinus",
     QuickSearch = "QuickSearch",
     CellSummary = "CellSummary",
@@ -279,6 +280,7 @@ export enum LicenceScopeType {
 
 export enum LicenceUserType {
     EndUser = 'End User',
+    Team = 'Team',
     Universal = 'Universal'
 }
 

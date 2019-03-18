@@ -10,7 +10,7 @@ import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumnInfoStrategy {
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.ColumnInfoStrategyId, blotter)
-      }
+    }
 
     protected addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyConstants.ColumnInfoStrategyName, ScreenPopups.ColumnInfoPopup, StrategyConstants.ColumnInfoGlyph);
@@ -19,10 +19,10 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     public addContextMenuItem(column: IColumn): void {
         if (this.canCreateContextMenuItem(column, this.blotter)) {
             this.createContextMenuItemShowPopup(
-            StrategyConstants.ColumnInfoStrategyName,
-            ScreenPopups.ColumnInfoPopup,
-            StrategyConstants.ColumnInfoGlyph,
-            column.ColumnId)
+                StrategyConstants.ColumnInfoStrategyName,
+                ScreenPopups.ColumnInfoPopup,
+                StrategyConstants.ColumnInfoGlyph,
+                column.ColumnId)
+        }
     }
-}
 }

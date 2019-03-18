@@ -3,7 +3,7 @@ import { IGridSort } from "./IGridSort";
 import { ICustomSort } from "./BlotterObjects/ICustomSort";
 import { IColumnFilter } from "./BlotterObjects/IColumnFilter";
 import { IAdvancedSearch } from "./BlotterObjects/IAdvancedSearch";
-import { IAdaptableAlert} from "./IMessage";
+import { IAdaptableAlert } from "./IMessage";
 
 
 export interface IFDC3Schema {
@@ -47,9 +47,9 @@ export interface ISearchEventData extends IEventData {
 
 export interface IStateChangedInfo {
   stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
-  'PercentBar' | 'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
-  'Export' | 'FlashingCell' | 'FormatColumn' | 'FreeTextColumn' | 'Layout' | 'ColumnCategory' |'PlusMinus' | 'QuickSearch' | 'CellSummary' |
-  'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter';
+  'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
+  'Export' | 'FlashingCell' | 'FormatColumn' | 'FreeTextColumn' | 'Layout' | 'ColumnCategory' | 'PieChart' |
+  'PercentBar' | 'PlusMinus' | 'QuickSearch' | 'CellSummary' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter';
   userState: IUserState;
 }
 

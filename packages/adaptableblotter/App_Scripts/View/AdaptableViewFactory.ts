@@ -46,6 +46,7 @@ import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 import { ChartToolbarControl } from './Chart/ChartToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
 import { PercentBarPopup } from './PercentBar/PercentBarPopup';
+import { PieChartPopup } from './PieChart/PieChartPopup';
 import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
 import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
 
@@ -56,7 +57,6 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   BulkUpdatePopup: BulkUpdatePopup,
   CalculatedColumnPopup: CalculatedColumnPopup,
   CalendarsPopup: CalendarsPopup,
-  PercentBarPopup: PercentBarPopup,
   CellValidationPopup: CellValidationPopup,
   ChartPopup: ChartPopup,
   ColumnChooserPopup: ColumnChooserPopup,
@@ -75,6 +75,8 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   IPushPullDomainPageSelector: IPushPullDomainPageSelector,
   LayoutPopup: LayoutPopup,
   ColumnCategoryPopup: ColumnCategoryPopup,
+  PercentBarPopup: PercentBarPopup,
+  PieChartPopup: PieChartPopup,
   PlusMinusPopup: PlusMinusPopup,
   QuickSearchPopup: QuickSearchPopup,
   CellSummaryPopup: CellSummaryPopup,

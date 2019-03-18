@@ -41,6 +41,7 @@ import * as ColumnCategoryRedux from '../ActionsReducers/ColumnCategoryRedux'
 import * as DashboardRedux from '../ActionsReducers/DashboardRedux'
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux'
 import * as PercentBarRedux from '../ActionsReducers/PercentBarRedux'
+import * as PieChartRedux from '../ActionsReducers/PieChartRedux'
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux'
 import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux'
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux'
@@ -117,6 +118,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
   Layout: LayoutRedux.LayoutReducer,
   PercentBar: PercentBarRedux.PercentBarReducer,
+  PieChart: PieChartRedux.PieChartReducer,
   PlusMinus: PlusMinusRedux.PlusMinusReducer,
   QuickSearch: QuickSearchRedux.QuickSearchReducer,
   CellSummary: CellSummaryRedux.CellSummaryReducer,

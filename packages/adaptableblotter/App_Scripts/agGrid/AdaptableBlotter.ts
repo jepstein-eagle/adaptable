@@ -73,7 +73,7 @@ import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
 import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
-import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
+import { IRawValueDisplayValuePair, IValueTotalCount } from '../View/UIInterfaces';
 // Helpers
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
@@ -109,6 +109,7 @@ import { DataManagementStrategy } from '../Strategy/DataManagementStrategy';
 import { ExportStrategy } from '../Strategy/ExportStrategy';
 import { LayoutStrategy } from '../Strategy/LayoutStrategy';
 import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy';
+import { PieChartStrategy } from '../Strategy/PieChartStrategy';
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy';
 import { ShortcutStrategy } from '../Strategy/ShortcutStrategy';
 import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy';
@@ -213,7 +214,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
         this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
         this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
-        this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(this))
         this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
         this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
@@ -231,6 +231,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
         this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy(this))
+        this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(this))
+        this.Strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy(this))
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
@@ -288,10 +290,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             LoggingHelper.LogAdaptableBlotterError('You must provide an element id in `containerOptions.vendorContainer`');
             return false;
         }
-        
+
         if (this.BlotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
 
-             this.gridOptions.sideBar = this.gridOptions.sideBar || {};
+            this.gridOptions.sideBar = this.gridOptions.sideBar || {};
             this.gridOptions.components = this.gridOptions.components || {};
             // https://www.ag-grid.com/javascript-grid-side-bar/
 
@@ -486,7 +488,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
-                this.createFloatingFilterWrapper(vendorColumn);
+            this.createFloatingFilterWrapper(vendorColumn);
         }
     }
 
@@ -666,7 +668,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         let model = this.gridOptions.api.getModel();
-        if(model==null){
+        if (model == null) {
             LoggingHelper.LogAdaptableBlotterWarning('No model so returning type "Unknown" for Column: "' + column.getColId() + '"')
             return DataType.Unknown;
         }
@@ -680,9 +682,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //if it's a group we need the content of the group
         if (row.group) {
             let childNodes: RowNode[] = row.childrenAfterGroup;
-            if(ArrayExtensions.IsNullOrEmpty(childNodes)){
+            if (ArrayExtensions.IsNullOrEmpty(childNodes)) {
                 LoggingHelper.LogAdaptableBlotterWarning('No data in grid so returning type "Unknown" for Column: "' + column.getColId() + '"')
-                return DataType.Unknown;    
+                return DataType.Unknown;
             }
             row = childNodes[0];
         }
@@ -941,6 +943,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
         }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
+    }
+
+    public getColumnValueTotalCount(columnId: string): IValueTotalCount[] {
+        let returnValues: IValueTotalCount[] = [];
+        let useRawValue: boolean = this.useRawValueForColumn(columnId);
+        this.gridOptions.api.forEachNode(rowNode => {
+            //we do not return the values of the aggregates when in grouping mode
+            //otherwise they wxould appear in the filter dropdown etc....
+            if (!rowNode.group) {
+                let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
+                let displayValue: string = (useRawValue) ?
+                    Helper.StringifyValue(rawValue) :
+                    this.getDisplayValueFromRecord(rowNode, columnId);
+
+                let existingItem = returnValues.find(rv => rv.Value == displayValue);
+                if (existingItem) {
+                    existingItem.Count++;
+                } else {
+                    returnValues.push({ Value: displayValue, Count: 0 })
+                }
+
+            }
+        })
+
+        return returnValues;
     }
 
     private useRawValueForColumn(columnId: string): boolean {

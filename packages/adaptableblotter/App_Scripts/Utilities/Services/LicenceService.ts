@@ -54,9 +54,9 @@ export class LicenceService implements ILicenceService {
             return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Community, true, LicenceUserType.EndUser);
         }
 
-        // last lettter has to be eitehr 'u' or 'e'
+        // last lettter has to be either 't' or 'u' or 'e'
         let lastLetter: string = firstPartAlphaNumeric.substr(firstPartAlphaNumeric.length - 1);
-        if (lastLetter != 'u' && lastLetter != 'e') {
+        if (lastLetter != 'u' && lastLetter != 'e'&& lastLetter != 't') {
             return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Community, true, LicenceUserType.EndUser);
         }
 
@@ -172,11 +172,11 @@ export class LicenceService implements ILicenceService {
             return false;
         }
         let yearNumber = highYearNumber - 15;
-        if (yearNumber < 19 || yearNumber > 20) {
+        if (yearNumber < 19 || yearNumber > 23) {
             return false;
         }
 
-        let expiryYear: number = (yearNumber == 19) ? 2019 : 2020;
+        let expiryYear: number = yearNumber + 2000;
 
         // make expiry date first day of following month (note: month ordinal in javascript)
         let expiryDate: Date = new Date(expiryYear, monthNumber, 1);
@@ -185,7 +185,14 @@ export class LicenceService implements ILicenceService {
     }
 
     private getLicenceUserType(lastLetter: string): LicenceUserType {
-         return (lastLetter == 'u') ? LicenceUserType.Universal : LicenceUserType.EndUser;
+        switch (lastLetter) {
+            case 'u':
+                return LicenceUserType.Universal;
+            case 'e':
+                return LicenceUserType.EndUser;
+            case 't':
+                return LicenceUserType.Team;
+        }
     }
 
     private isDemoSite(): boolean {

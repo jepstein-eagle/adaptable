@@ -33,7 +33,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(100);
+    return dataGen.getTrades(50);
   }
   return dataGen.getFtseData(199);
 }
@@ -71,6 +71,7 @@ function InitTradeBlotter() {
     enableRangeSelection: true,
     floatingFilter: true,
     suppressColumnVirtualisation: false,
+    suppressMenuHide: true,
     //  sideBar: undefined, // this puts in filters and columns by default
 
     sideBar: {
@@ -118,7 +119,7 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
-        licenceKey: getCommunityKey(),
+      licenceKey: getCommunityKey(),
       //  licenceKey: getValidStandardKey(),
       //    licenceKey: getValidEnterpriseKey(),
       //licenceKey: getInvalidStandardKey(),
@@ -338,6 +339,7 @@ function getTradeSchema() {
     field: 'currency',
     //   editable: false,
     enableRowGroup: true,
+    sortable: true,
     filter: 'agTextColumnFilter',
     type: 'abColDefString',
   });
@@ -346,6 +348,7 @@ function getTradeSchema() {
     field: 'status',
     editable: true,
     filter: true,
+    sortable: true,
     enableRowGroup: true,
     type: 'abColDefString',
   });
@@ -375,6 +378,7 @@ function getTradeSchema() {
     field: 'country',
     editable: true,
     filter: true,
+    sortable: true,
     enableRowGroup: true,
     type: 'abColDefString',
   });

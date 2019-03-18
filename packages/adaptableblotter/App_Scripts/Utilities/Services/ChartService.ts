@@ -12,6 +12,7 @@ import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { AxisTotal } from '../ChartEnums';
 import { Helper } from '../Helpers/Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';
+import { IValueTotalCount } from '../../View/UIInterfaces';
 
 /*
 Class that buils the chart - probably needs some refactoring but working for the time being.
@@ -23,14 +24,14 @@ export class ChartService implements IChartService {
     constructor(private blotter: IAdaptableBlotter) {
     }
 
-    public BuildCategoryChartData(chartDefinition: ICategoryChartDefinition , columns: IColumn[]): any {
+    public BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): any {
 
         // NOTE this method is need only when we using Segmented column(s) otherwise,
         // you can assign chart.dataSource to the whole data (e.g. whatever the grid is displaying)
         // and then set chart.includedProperties to array of strings that contain selected data columns:
         // xAxisColumnName and all yAxisColumnNames, e.g. "Trade Date", "Trade Price", "Trade Volume"
 
-         let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns)
+        let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns)
         let xAxisColValues: string[] = this.getXAxisColumnValues(chartDefinition, columns);
 
         //TODO save yAxisColumnNames in chartDefinition so we can populate getCalloutTypeOptions()
@@ -43,18 +44,18 @@ export class ChartService implements IChartService {
             let showAverageTotal: boolean = (chartDefinition.YAxisTotal == AxisTotal.Average);
             let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
 
-                  chartDefinition.YAxisColumnIds.forEach(colID => {
-                    let total = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal);
-                    let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
-                    if (yAxisColumnNames.indexOf(colName) < 0) {
-                        yAxisColumnNames.push(colName);
-                    }
-                    chartItem[colName] = total;
-                })
-             return chartItem
+            chartDefinition.YAxisColumnIds.forEach(colID => {
+                let total = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal);
+                let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
+                if (yAxisColumnNames.indexOf(colName) < 0) {
+                    yAxisColumnNames.push(colName);
+                }
+                chartItem[colName] = total;
+            })
+            return chartItem
         })
 
-       return chartData;
+        return chartData;
     }
 
     private buildTotal(yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[], showAverageTotal: boolean): number {
@@ -103,5 +104,15 @@ export class ChartService implements IChartService {
         return xAxisColValues;
     }
 
-    
+    public BuildPieChartData(columnId: string): any[] {
+        let valueTotalCounts: IValueTotalCount[] = this.blotter.getColumnValueTotalCount(columnId);
+
+        let returnData: any[] = []
+
+        valueTotalCounts.forEach(t => {
+            let returnItem: any = { ColumnCount: t.Count, ColumnValue: t.Value }
+            returnData.push(returnItem);
+        })
+        return returnData;
+    }
 }
