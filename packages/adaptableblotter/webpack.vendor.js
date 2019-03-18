@@ -15,7 +15,7 @@ module.exports = {
                 'igniteui-react-charts/ES2015/igr-pie-chart-module',
                 'igniteui-react-charts/ES2015/igr-pie-chart-core-module',
                 'igniteui-react-charts/ES2015/igr-data-chart-annotation-module',
-              //  'ipushpull-js',
+                'ipushpull-js',
                 'isomorphic-fetch',
                 'json-loader',
                 'lodash',

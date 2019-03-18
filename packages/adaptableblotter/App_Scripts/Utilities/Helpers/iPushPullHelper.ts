@@ -2,7 +2,7 @@ import { IPPDomain } from "../Interface/Reports/IPPDomain";
 import { IPPStyle } from "../Interface/Reports/IPPStyle";
 import { LoggingHelper } from "./LoggingHelper";
 import { IPageService } from 'ipushpull-js/dist/Page/Page';
-import ipushpull, { ICreate } from 'ipushpull-js/dist/index'
+import ipushpull, { ICreate } from 'ipushpull-js'
 
 export module iPushPullHelper {
 
