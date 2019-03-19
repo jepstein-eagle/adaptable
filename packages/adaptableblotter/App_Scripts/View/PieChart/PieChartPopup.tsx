@@ -91,7 +91,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
         let infoBody: any[] = ["See the count for each distinct value in the column as pie chart.", <br />, <br />, "There is an option to view as doughnut and to set the 'Others' threshold."]
 
-        let chartSize: string = '475px'
+        let chartSize: string = '450px'
 
 
         let chartBlock = <div>{this.state.ShowAsDoughnut ?
@@ -130,6 +130,13 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 sliceClick={(s, e) => this.onSliceClick(s, e)}
             />
         }
+          {StringExtensions.IsNotNullOrEmpty(this.state.CurrentColumnValue) &&
+                <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px' }} >
+                    <FormGroup controlId="formSelectedColumnValue" >
+                        <ControlLabel style={{ fontSize: 'small' }}>{this.state.CurrentColumnValue} ({this.state.CurrentColumnCount})</ControlLabel>
+                    </FormGroup>
+                </Row>
+            }
         </div>
 
 
@@ -181,13 +188,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                     </FormControl>
                 </FormGroup>
             </Row>
-            {StringExtensions.IsNotNullOrEmpty(this.state.CurrentColumnValue) &&
-                <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px' }} >
-                    <FormGroup controlId="formSelectedColumnValue" >
-                        <ControlLabel style={{ fontSize: 'small' }}>{this.state.CurrentColumnValue} ({this.state.CurrentColumnCount})</ControlLabel>
-                    </FormGroup>
-                </Row>
-            }
+          
             {this.state.ShowAsDoughnut ?
                 <div className="doughnutLegend">
                     <IgrItemLegend ref={this.onDoughnutLegendRef} />
