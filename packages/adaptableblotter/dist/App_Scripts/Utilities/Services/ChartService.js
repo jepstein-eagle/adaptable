@@ -84,8 +84,11 @@ class ChartService {
         }
         return xAxisColValues;
     }
-    BuildPieChartData(columnId) {
-        let valueTotalCounts = this.blotter.getColumnValueTotalCount(columnId);
+    BuildPieChartData(columnId, visibleRowsOnly) {
+        let valueTotalCounts = (visibleRowsOnly) ?
+            this.blotter.getColumnValueTotalCountVisibleRows(columnId)
+            :
+                this.blotter.getColumnValueTotalCountAllRows(columnId);
         let returnData = [];
         valueTotalCounts.forEach(t => {
             let returnItem = { ColumnCount: t.Count, ColumnValue: t.Value };

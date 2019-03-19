@@ -280,3 +280,8 @@ var DashboardSize;
     DashboardSize["Small"] = "small";
     DashboardSize["XSmall"] = "xsmall";
 })(DashboardSize = exports.DashboardSize || (exports.DashboardSize = {}));
+var PieChartOthersCategoryType;
+(function (PieChartOthersCategoryType) {
+    PieChartOthersCategoryType["Number"] = "Number";
+    PieChartOthersCategoryType["Percent"] = "Percent";
+})(PieChartOthersCategoryType = exports.PieChartOthersCategoryType || (exports.PieChartOthersCategoryType = {}));

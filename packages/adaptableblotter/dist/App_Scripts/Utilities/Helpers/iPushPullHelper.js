@@ -18,7 +18,7 @@ var iPushPullHelper;
     function init(iPPConfig) {
         if (ipp == null) {
             if (iPPConfig != null) {
-                ipp = ipushpull_js_1.default.Create(iPPConfig);
+                ipp = new ipushpull_js_1.default.Create(iPPConfig);
                 if (ipp == undefined) {
                     LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("Could not instantiate iPushPull");
                 }

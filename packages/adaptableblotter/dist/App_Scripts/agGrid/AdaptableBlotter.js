@@ -771,27 +771,36 @@ class AdaptableBlotter {
         }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
     }
-    getColumnValueTotalCount(columnId) {
+    getColumnValueTotalCountAllRows(columnId) {
         let returnValues = [];
         let useRawValue = this.useRawValueForColumn(columnId);
         this.gridOptions.api.forEachNode(rowNode => {
-            //we do not return the values of the aggregates when in grouping mode
-            //otherwise they wxould appear in the filter dropdown etc....
-            if (!rowNode.group) {
-                let rawValue = this.gridOptions.api.getValue(columnId, rowNode);
-                let displayValue = (useRawValue) ?
-                    Helper_1.Helper.StringifyValue(rawValue) :
-                    this.getDisplayValueFromRecord(rowNode, columnId);
-                let existingItem = returnValues.find(rv => rv.Value == displayValue);
-                if (existingItem) {
-                    existingItem.Count++;
-                }
-                else {
-                    returnValues.push({ Value: displayValue, Count: 0 });
-                }
-            }
+            this.getValueTotalFromNode(columnId, rowNode, useRawValue, returnValues);
         });
         return returnValues;
+    }
+    getColumnValueTotalCountVisibleRows(columnId) {
+        let returnValues = [];
+        let useRawValue = this.useRawValueForColumn(columnId);
+        this.gridOptions.api.forEachNodeAfterFilter(rowNode => {
+            this.getValueTotalFromNode(columnId, rowNode, useRawValue, returnValues);
+        });
+        return returnValues;
+    }
+    getValueTotalFromNode(columnId, rowNode, useRawValue, returnValues) {
+        if (!rowNode.group) {
+            let rawValue = this.gridOptions.api.getValue(columnId, rowNode);
+            let displayValue = (useRawValue) ?
+                Helper_1.Helper.StringifyValue(rawValue) :
+                this.getDisplayValueFromRecord(rowNode, columnId);
+            let existingItem = returnValues.find(rv => rv.Value == displayValue);
+            if (existingItem) {
+                existingItem.Count++;
+            }
+            else {
+                returnValues.push({ Value: displayValue, Count: 1 });
+            }
+        }
     }
     useRawValueForColumn(columnId) {
         // will add more in due course I'm sure but for now only percent bar columns return false...

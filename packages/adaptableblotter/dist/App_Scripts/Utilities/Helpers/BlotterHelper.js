@@ -45,7 +45,7 @@ var BlotterHelper;
                 licenceMessage += '***********************************************************************************\n';
                 licenceMessage += '************************** Adaptable Blotter License ******************************\n';
                 licenceMessage += '********************* This is an evaluation / community licence *******************\n';
-                licenceMessage += '************ It contains full functionality but you cannot load state *************\n';
+                licenceMessage += '******** It contains full functionality - but you cannot load or save state *******\n';
                 licenceMessage += '********* Please contact sales@adaptabletools.com for upgrade information *********\n';
                 licenceMessage += '***********************************************************************************\n';
                 LoggingHelper_1.LoggingHelper.LogError(licenceMessage);

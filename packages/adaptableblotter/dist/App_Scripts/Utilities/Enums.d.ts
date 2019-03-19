@@ -235,3 +235,7 @@ export declare enum DashboardSize {
     Small = "small",
     XSmall = "xsmall"
 }
+export declare enum PieChartOthersCategoryType {
+    Number = "Number",
+    Percent = "Percent"
+}

@@ -2,5 +2,5 @@ import { ICategoryChartDefinition } from "../../Interface/BlotterObjects/IChartD
 import { IColumn } from "../../Interface/IColumn";
 export interface IChartService {
     BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): any;
-    BuildPieChartData(columnId: string): any[];
+    BuildPieChartData(columnId: string, visibleRowsOnly: boolean): any[];
 }

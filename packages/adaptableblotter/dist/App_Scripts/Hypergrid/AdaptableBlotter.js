@@ -64,6 +64,7 @@ const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelpe
 const ChartStrategy_1 = require("../Strategy/ChartStrategy");
 const GeneralConstants_1 = require("../Utilities/Constants/GeneralConstants");
 const LicenceService_1 = require("../Utilities/Services/LicenceService");
+const PieChartStrategy_1 = require("../Strategy/PieChartStrategy");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -138,6 +139,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyHypergrid_1.FormatColumnStrategyHypergrid(this));
         this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy_1.FreeTextColumnStrategy(this));
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(this));
+        this.Strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy_1.PieChartStrategy(this));
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
         //   this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
@@ -625,8 +627,33 @@ class AdaptableBlotter {
         }
         return Array.from(returnMap.values());
     }
-    getColumnValueTotalCount(columnId) {
-        return null;
+    getColumnValueTotalCountAllRows(columnId) {
+        let returnValues = [];
+        let data = this.hyperGrid.behavior.dataModel.getData();
+        for (var index = 0; index < data.length; index++) {
+            var element = data[index];
+            this.getValueTotalFromNode(columnId, element, returnValues);
+        }
+        return returnValues;
+    }
+    getColumnValueTotalCountVisibleRows(columnId) {
+        let returnValues = [];
+        let data = this.hyperGrid.behavior.dataModel.getIndexedData();
+        for (var index = 0; index < data.length; index++) {
+            var element = data[index];
+            this.getValueTotalFromNode(columnId, element, returnValues);
+        }
+        return returnValues;
+    }
+    getValueTotalFromNode(columnId, element, returnValues) {
+        let displayValue = this.getDisplayValueFromRecord(element, columnId);
+        let existingItem = returnValues.find(rv => rv.Value == displayValue);
+        if (existingItem) {
+            existingItem.Count++;
+        }
+        else {
+            returnValues.push({ Value: displayValue, Count: 1 });
+        }
     }
     getDisplayValue(id, columnId) {
         let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id);
