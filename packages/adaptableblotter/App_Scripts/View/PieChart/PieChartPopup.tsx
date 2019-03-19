@@ -44,7 +44,6 @@ interface PieChartPopupState {
     CurrentColumnCount: number;
     CurrentColumnValue: string;
     ShowAsDoughnut: boolean;
-    IsPieChartSettingsVisible: boolean
 }
 
 class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChartPopupState> {
@@ -66,8 +65,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             CurrentColumnCount: 0,
             CurrentColumnValue: "",
             ShowAsDoughnut: false,
-            IsPieChartSettingsVisible: false
-        }
+         }
 
         IgrPieChartModule.register();
         IgrDoughnutChartModule.register();
@@ -93,33 +91,9 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
         let infoBody: any[] = ["See the count for each distinct value in the column as pie chart.", <br />, <br />, "There is an option to view as doughnut and to set the 'Others' threshold."]
 
-        let chartSize: string = (this.state.IsPieChartSettingsVisible) ? '350px' : '500px'
+        let chartSize: string =  '475px'
 
-        let openChartSettingsButton =
-            <ButtonGeneral
-                cssClassName={cssClassName}
-                style={{ marginRight: '20px' }}
-                onClick={() => this.onShowPieChartSettings()}
-                bsStyle={INFO_BSSTYLE}
-                size={"small"}
-                DisplayMode="Text"
-                hideToolTip={true}
-                overrideText={'Show Chart Settings'}
-            />
-
-        let closeChartSettingsButton =
-            <ButtonClose
-                cssClassName={cssClassName}
-                onClick={() => this.onHidePieChartSettings()}
-                bsStyle={DEFAULT_BSSTYLE}
-                size={"xs"}
-                DisplayMode="Glyph"
-                hideToolTip={false}
-                overrideTooltip={"Close Chart Settings"}
-            />
-
-
-        let legendBlock = <div>
+             let legendBlock = <div>
             <Panel header={"Legend"} style={{
                 'overflowY': 'auto',
                 'overflowX': 'hidden',
@@ -178,8 +152,8 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         </div>
 
 
-        let settingsBlock = <PanelWithButton bsSize={"xs"} bsStyle={INFO_BSSTYLE} headerText={"Settings"} cssClassName={cssClassName}
-            button={closeChartSettingsButton}  >
+        let settingsBlock = <Panel bsSize={"xs"} bsStyle={INFO_BSSTYLE} header={"Settings"} 
+             >
             <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px', marginTop: '0px' }} >
                 <HelpBlock style={{ fontSize: 'small', marginBottom: '0px' }}>
                     <Checkbox
@@ -231,7 +205,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                     </FormGroup>
                 </Row>
             }
-        </PanelWithButton>
+        </Panel>
 
 
 
@@ -253,12 +227,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                                     SelectionMode={SelectionMode.Single} />
                             </Col>
                             <Col xs={3}>
-                                {StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId) && this.state.IsPieChartSettingsVisible == false &&
-                                    <div className="pull-right" >
-                                        {openChartSettingsButton}
-                                    </div>
-                                }
-                            </Col>
+                                  </Col>
                         </Row>
 
                     </FormGroup>
@@ -266,30 +235,17 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 </AdaptableBlotterForm>
                 {StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId) &&
                     <div>
-                        {this.state.IsPieChartSettingsVisible ?
-
-                            <Row style={{ marginTop: '20px' }}>
-                                <Col xs={3} >
+                                  <Row>
+                                <Col xs={4} >
                                     {legendBlock}
-                                </Col>
-                                <Col xs={6} >
-                                    {chartBlock}
-                                </Col>
-                                <Col xs={3}  >
                                     {settingsBlock}
                                 </Col>
-                            </Row>
-                            :
-                            <Row>
-                                <Col xs={3} >
-                                    {legendBlock}
-                                </Col>
-                                <Col xs={9} >
+                                <Col xs={8} >
                                     {chartBlock}
                                 </Col>
 
                             </Row>
-                        }
+                        
                     </div>
                 }
             </PanelWithImage>
@@ -307,14 +263,6 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     }
 
 
-
-    onShowPieChartSettings() {
-        this.setState({ IsPieChartSettingsVisible: true, } as PieChartPopupState)
-    }
-
-    onHidePieChartSettings() {
-        this.setState({ IsPieChartSettingsVisible: false, } as PieChartPopupState)
-    }
 
     public onDoughnutChartRef(doughnutChart: IgrDoughnutChart) {
         this.doughnutChart = doughnutChart;
