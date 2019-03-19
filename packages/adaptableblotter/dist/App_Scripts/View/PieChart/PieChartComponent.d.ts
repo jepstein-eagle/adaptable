@@ -1,6 +1,8 @@
 import * as React from "react";
+import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
 import { PieChartOthersCategoryType } from "../../Utilities/Enums";
-import { IgrPieChartBase, IIgrPieChartBaseProps } from "igniteui-react-charts/ES2015/igr-pie-chart-base";
+import { IgrItemLegend } from 'igniteui-react-charts/ES2015/igr-item-legend';
+import { IgrDoughnutChart } from 'igniteui-react-charts/ES2015/igr-doughnut-chart';
 import { SliceClickEventArgs } from "igniteui-react-charts/ES2015/igr-slice-click-event-args";
 export interface PieChartProps extends React.ClassAttributes<PieChartComponent> {
     PieData: any;
@@ -18,14 +20,26 @@ export interface PieChartState {
     OthersCategoryThreshold: number;
     CurrentColumnCount: number;
     CurrentColumnValue: string;
+    ShowAsDoughnut: boolean;
+    IsPieChartSettingsVisible: boolean;
 }
 export declare class PieChartComponent extends React.Component<PieChartProps, PieChartState> {
-    private chart;
+    doughnutChart: IgrDoughnutChart;
+    pieChart: IgrPieChart;
+    doughnutlegend: IgrItemLegend;
+    pieChartlegend: IgrItemLegend;
     constructor(props: PieChartProps);
     render(): JSX.Element;
+    onShowPieChartSettings(): void;
+    onHidePieChartSettings(): void;
+    onDoughnutChartRef(doughnutChart: IgrDoughnutChart): void;
+    onPieChartRef(pieChart: IgrPieChart): void;
+    onDoughnutLegendRef(legend: IgrItemLegend): void;
+    onPieChartLegendRef(legend: IgrItemLegend): void;
     private getPieChartOthersCategoryTypeOptions;
     private onOthersCategoryThresholdChanged;
+    private onShowDoughnutChanged;
     private onRowVisibilityChanged;
     private onOthersCategoryTypeChanged;
-    onSliceClick(s: IgrPieChartBase<IIgrPieChartBaseProps>, e: SliceClickEventArgs): void;
+    onSliceClick(s: any, e: SliceClickEventArgs): void;
 }

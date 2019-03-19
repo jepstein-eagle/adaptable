@@ -13,7 +13,7 @@ class PieChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     }
     addContextMenuItem(column) {
         if (this.canCreateContextMenuItem(column, this.blotter)) {
-            this.createContextMenuItemShowPopup(StrategyConstants.PieChartStrategyName, ScreenPopups.PieChartPopup, StrategyConstants.PieChartGlyph, column.ColumnId);
+            this.createContextMenuItemShowPopup('See as Pie Chart', ScreenPopups.PieChartPopup, StrategyConstants.PieChartGlyph, column.ColumnId);
         }
     }
     InitState() {
