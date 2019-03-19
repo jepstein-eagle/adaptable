@@ -107,7 +107,7 @@ export class PieChartComponent extends React.Component<PieChartProps, PieChartSt
                             </HelpBlock>
                         </Row>
                         <Row style={{ marginLeft: '0px', marginRight: '10px', marginBottom: '0px' }} >
-                            <HelpBlock style={{ fontSize: 'small', marginBottom: '0px' }}>
+                            <HelpBlock style={{ fontSize: 'small', marginBottom: '10px' }}>
                                 <Checkbox
                                     onChange={(e) => this.onRowVisibilityChanged(e)}
                                     checked={this.state.ShowVisibleRowsOnly} >Visible Rows Only</Checkbox>
