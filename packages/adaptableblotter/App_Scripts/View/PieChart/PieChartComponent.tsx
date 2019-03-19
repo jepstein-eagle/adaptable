@@ -3,9 +3,6 @@ import { FormGroup, FormControl, Row, Col, Panel, Checkbox, HelpBlock, ControlLa
 import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
 import { IgrPieChartModule } from 'igniteui-react-charts/ES2015/igr-pie-chart-module';
 import { PieChartOthersCategoryType } from "../../Utilities/Enums";
-import { IgrPieChartBase, IIgrPieChartBaseProps } from "igniteui-react-charts/ES2015/igr-pie-chart-base";
-import { IgrItemLegendModule } from 'igniteui-react-charts/ES2015/igr-item-legend-module';
-import { IgrItemLegend } from 'igniteui-react-charts/ES2015/igr-item-legend';
 import { IgrDoughnutChartModule } from 'igniteui-react-charts/ES2015/igr-doughnut-chart-module';
 import { IgrDoughnutChart } from 'igniteui-react-charts/ES2015/igr-doughnut-chart';
 import { IgrRingSeriesModule } from 'igniteui-react-charts/ES2015/igr-ring-series-module';
@@ -67,8 +64,8 @@ export class PieChartComponent extends React.Component<PieChartProps, PieChartSt
                             dataSource={this.props.PieData}
                             labelMemberPath={this.props.LabelMember}
                             valueMemberPath={this.props.ValueMember}
-                            width={this.props.Width + "px"}
-                            height={this.props.Height + "px"}
+                            width={"450px"}
+                            height={"450px"}
                             legendLabelMemberPath="Label"
                             othersCategoryThreshold={this.state.OthersCategoryThreshold}
                             othersCategoryType={this.state.PieChartOthersCategoryType}
@@ -79,7 +76,7 @@ export class PieChartComponent extends React.Component<PieChartProps, PieChartSt
                         />
                         :
                         <IgrDoughnutChart
-                            height={this.props.Height + "px"}
+                            height={"475px"}
                             allowSliceSelection="true"
                             allowSliceExplosion="true"
                             sliceClick={(s, e) => this.onSliceClick(s, e)}

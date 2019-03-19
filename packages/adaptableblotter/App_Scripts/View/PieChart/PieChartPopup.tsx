@@ -71,8 +71,8 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                                     PieData={pieChartData}
                                     LabelMember={"ColumnValue"}
                                     ValueMember={"ColumnCount"}
-                                    Width={450}
-                                    Height={450}
+                                    Width={500}
+                                    Height={500}
                                     ShowVisibleRows={this.state.ShowVisibleRowsOnly}
                                     showAllClick={() => this.onShowAllClick()}
                                     showVisibleClick={() => this.onShowVisibleClick()}
