@@ -65,7 +65,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             CurrentColumnCount: 0,
             CurrentColumnValue: "",
             ShowAsDoughnut: false,
-         }
+        }
 
         IgrPieChartModule.register();
         IgrDoughnutChartModule.register();
@@ -91,9 +91,9 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
         let infoBody: any[] = ["See the count for each distinct value in the column as pie chart.", <br />, <br />, "There is an option to view as doughnut and to set the 'Others' threshold."]
 
-        let chartSize: string =  '475px'
+        let chartSize: string = '475px'
 
-            
+
         let chartBlock = <div>{this.state.ShowAsDoughnut ?
             <IgrDoughnutChart
                 height={chartSize}
@@ -133,28 +133,27 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         </div>
 
 
-        let settingsBlock = <Panel bsSize={"xs"} bsStyle={INFO_BSSTYLE} header={"Settings"}      style={{
+        let settingsBlock = <Panel  bsSize={"xs"} bsStyle={DEFAULT_BSSTYLE} header={"Settings"} style={{
             'overflowY': 'auto',
             'overflowX': 'hidden',
-            maxHeight: '500px',
+            height: '470px',
             padding: '0px',
-            margin: '0px'
+            margin: '0px',
+            marginTop: '10px',
+            marginRight: '0px',
+            fontSize: 'small'
         }}>
-            <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px', marginTop: '0px' }} >
-                <HelpBlock style={{ fontSize: 'small', marginBottom: '0px' }}>
-                    <Checkbox
+            <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px', marginTop: '0px', padding:'0px' }} >
+                <HelpBlock style={{ fontSize: 'small', margin:'0px'}}>
+                    <Checkbox style={{ fontSize: 'small', marginBottom: '0px' , marginTop:'0px'}}
                         onChange={(e) => this.onShowDoughnutChanged(e)}
                         checked={this.state.ShowAsDoughnut} >Doughnut View</Checkbox>
                 </HelpBlock>
-            </Row>
-            <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px' }} >
                 <HelpBlock style={{ fontSize: 'small', marginBottom: '10px' }}>
                     <Checkbox
                         onChange={(e) => this.onRowVisibilityChanged(e)}
                         checked={this.state.ShowVisibleRowsOnly} >Visible Rows</Checkbox>
                 </HelpBlock>
-            </Row>
-            <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px' }} >
                 <FormGroup controlId="formOthersThreshold" >
                     <HelpBlock style={{ fontSize: 'small' }}>Others Threshold
                 {' '}
@@ -167,8 +166,6 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                         value={this.state.OthersCategoryThreshold} />
 
                 </FormGroup>
-            </Row>
-            <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px' }} >
                 <FormGroup controlId="formOthersType" >
                     <HelpBlock style={{ fontSize: 'small' }}>'Others' Type
                     {' '}
@@ -192,14 +189,14 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 </Row>
             }
             {this.state.ShowAsDoughnut ?
-                    <div className="doughnutLegend">
-                        <IgrItemLegend ref={this.onDoughnutLegendRef} />
-                    </div>
-                    :
-                    <div className="pieChartLegend">
-                        <IgrItemLegend ref={this.onPieChartLegendRef} />
-                    </div>
-                }
+                <div className="doughnutLegend">
+                    <IgrItemLegend ref={this.onDoughnutLegendRef} />
+                </div>
+                :
+                <div className="pieChartLegend">
+                    <IgrItemLegend ref={this.onPieChartLegendRef} />
+                </div>
+            }
         </Panel>
 
 
@@ -222,7 +219,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                                     SelectionMode={SelectionMode.Single} />
                             </Col>
                             <Col xs={3}>
-                                  </Col>
+                            </Col>
                         </Row>
 
                     </FormGroup>
@@ -230,16 +227,14 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 </AdaptableBlotterForm>
                 {StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId) &&
                     <div>
-                                  <Row>
-                                <Col xs={4} >
-                                     {settingsBlock}
-                                </Col>
-                                <Col xs={8} >
-                                    {chartBlock}
-                                </Col>
-
-                            </Row>
-                        
+                        <Row>
+                            <Col xs={8} >
+                                {chartBlock}
+                            </Col>
+                            <Col xs={4} >
+                                {settingsBlock}
+                            </Col>
+                        </Row>
                     </div>
                 }
             </PanelWithImage>
@@ -260,14 +255,14 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
     public onDoughnutChartRef(doughnutChart: IgrDoughnutChart) {
         this.doughnutChart = doughnutChart;
-        if (this.doughnutlegend) {
+        if (this.doughnutlegend && this.doughnutChart) {
             this.doughnutChart.actualSeries[0].legend = this.doughnutlegend;
         }
     }
 
     public onPieChartRef(pieChart: IgrPieChart) {
         this.pieChart = pieChart;
-        if (this.pieChartlegend) {
+        if (this.pieChartlegend  && this.pieChart) {
             this.pieChart.legend = this.pieChartlegend;
         }
     }
