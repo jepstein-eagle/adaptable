@@ -96,6 +96,7 @@ import { HALF_SECOND } from '../Utilities/Constants/GeneralConstants';
 import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
 import { LicenceService } from '../Utilities/Services/LicenceService';
 import { Helper } from '../Utilities/Helpers/Helper';
+import { PieChartStrategy } from '../Strategy/PieChartStrategy';
 
 
 //icon to indicate toggle state
@@ -131,7 +132,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public LicenceService: ILicenceService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public FreeTextColumnService: IFreeTextColumnService
- 
+
     public BlotterOptions: IAdaptableBlotterOptions
     public VendorGridName: any
     public EmbedColumnMenu: boolean;
@@ -157,7 +158,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.EmbedColumnMenu = false;
         this.hasFloatingFilter = true;
 
-       
+
         // create the services
         this.CalendarService = new CalendarService(this);
         this.DataService = new DataService(this);
@@ -197,6 +198,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyHypergrid(this))
         this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
         this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
+        this.Strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy(this))
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(this))
         //   this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
@@ -222,7 +224,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
 
-       
+
 
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
@@ -764,12 +766,36 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return Array.from(returnMap.values())
     }
 
-    public  getColumnValueTotalCountAllRows(columnId: string): IValueTotalCount[] {
-        return null;
+    public getColumnValueTotalCountAllRows(columnId: string): IValueTotalCount[] {
+        let returnValues: IValueTotalCount[] = [];
+        let data = this.hyperGrid.behavior.dataModel.getData()
+        for (var index = 0; index < data.length; index++) {
+            var element = data[index]
+            this.getValueTotalFromNode(columnId, element, returnValues);
+        }
+        return returnValues;
     }
-    public  getColumnValueTotalCountVisibleRows(columnId: string): IValueTotalCount[] {
-        return null;
+
+    public getColumnValueTotalCountVisibleRows(columnId: string): IValueTotalCount[] {
+        let returnValues: IValueTotalCount[] = [];
+        let data = this.hyperGrid.behavior.dataModel.getIndexedData()
+        for (var index = 0; index < data.length; index++) {
+            var element = data[index]
+            this.getValueTotalFromNode(columnId, element, returnValues);
+        }
+        return returnValues;
     }
+
+    private getValueTotalFromNode(columnId: string, element: any, returnValues: IValueTotalCount[]): void {
+        let displayValue = this.getDisplayValueFromRecord(element, columnId)
+        let existingItem = returnValues.find(rv => rv.Value == displayValue);
+        if (existingItem) {
+            existingItem.Count++;
+        } else {
+            returnValues.push({ Value: displayValue, Count: 1 })
+        }
+    }
+  
 
     public getDisplayValue(id: any, columnId: string): string {
         let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id)
