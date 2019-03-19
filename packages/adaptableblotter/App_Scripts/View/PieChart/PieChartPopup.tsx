@@ -93,26 +93,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
         let chartSize: string =  '475px'
 
-             let legendBlock = <div>
-            <Panel header={"Legend"} style={{
-                'overflowY': 'auto',
-                'overflowX': 'hidden',
-                'height': '450px',
-                padding: '0px',
-                margin: '0px'
-            }}>
-                {this.state.ShowAsDoughnut ?
-                    <div className="doughnutLegend">
-                        <IgrItemLegend ref={this.onDoughnutLegendRef} />
-                    </div>
-                    :
-                    <div className="pieChartLegend">
-                        <IgrItemLegend ref={this.onPieChartLegendRef} />
-                    </div>
-                }
-            </Panel>
-        </div>
-
+            
         let chartBlock = <div>{this.state.ShowAsDoughnut ?
             <IgrDoughnutChart
                 height={chartSize}
@@ -152,8 +133,13 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         </div>
 
 
-        let settingsBlock = <Panel bsSize={"xs"} bsStyle={INFO_BSSTYLE} header={"Settings"} 
-             >
+        let settingsBlock = <Panel bsSize={"xs"} bsStyle={INFO_BSSTYLE} header={"Settings"}      style={{
+            'overflowY': 'auto',
+            'overflowX': 'hidden',
+            maxHeight: '500px',
+            padding: '0px',
+            margin: '0px'
+        }}>
             <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px', marginTop: '0px' }} >
                 <HelpBlock style={{ fontSize: 'small', marginBottom: '0px' }}>
                     <Checkbox
@@ -170,7 +156,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             </Row>
             <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px' }} >
                 <FormGroup controlId="formOthersThreshold" >
-                    <HelpBlock style={{ fontSize: 'small' }}>Others From
+                    <HelpBlock style={{ fontSize: 'small' }}>Others Threshold
                 {' '}
                         <AdaptablePopover cssClassName={cssClassName} headerText={"Pie Chart: Others Threshold"} bodyText={["Items with value less than or equal to the Threshold will be assigned to the “Others” category."]} />
                     </HelpBlock>
@@ -205,6 +191,15 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                     </FormGroup>
                 </Row>
             }
+            {this.state.ShowAsDoughnut ?
+                    <div className="doughnutLegend">
+                        <IgrItemLegend ref={this.onDoughnutLegendRef} />
+                    </div>
+                    :
+                    <div className="pieChartLegend">
+                        <IgrItemLegend ref={this.onPieChartLegendRef} />
+                    </div>
+                }
         </Panel>
 
 
@@ -237,8 +232,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                     <div>
                                   <Row>
                                 <Col xs={4} >
-                                    {legendBlock}
-                                    {settingsBlock}
+                                     {settingsBlock}
                                 </Col>
                                 <Col xs={8} >
                                     {chartBlock}
