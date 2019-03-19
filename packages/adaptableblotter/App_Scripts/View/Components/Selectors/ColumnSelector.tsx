@@ -21,7 +21,7 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
 }
 
 export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
-   // _typeahead: any;
+    // _typeahead: any;
 
     componentWillReceiveProps(nextProps: ColumnSelectorProps, nextContext: any) {
         //if there was a selected column and parent unset the column we then clear the component 
@@ -64,8 +64,7 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
                         cssClassName={cssClassName}
                         onClick={() => this.onClearButton()}
                         overrideTooltip="Clear Column"
-                        overrideDisableButton={isEmptySelectedColumnIds}
-                         DisplayMode="Glyph" />
+                        DisplayMode="Glyph" />
                 </InputGroup.Button>
             </InputGroup>
 
@@ -75,9 +74,9 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
 
     onClearButton() {
         this.props.onColumnChange([]);
-       // if (this._typeahead != null) {
-            (this.refs.typeahead as any).getInstance().clear()
-      //  }
+        // if (this._typeahead != null) {
+        (this.refs.typeahead as any).getInstance().clear()
+        //  }
     }
 
     onColumnChange(selected: IColumn[], isEmptySelection: boolean) {

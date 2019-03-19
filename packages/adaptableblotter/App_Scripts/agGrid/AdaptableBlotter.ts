@@ -963,7 +963,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return returnValues;
     }
 
-    private getValueTotalFromNode(columnId: string, rowNode: RowNode, useRawValue: boolean, returnValues: IValueTotalCount[]):void{
+    private getValueTotalFromNode(columnId: string, rowNode: RowNode, useRawValue: boolean, returnValues: IValueTotalCount[]): void {
         if (!rowNode.group) {
             let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
             let displayValue: string = (useRawValue) ?
@@ -974,7 +974,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             if (existingItem) {
                 existingItem.Count++;
             } else {
-                returnValues.push({ Value: displayValue, Count: 0 })
+                returnValues.push({ Value: displayValue, Count: 1 })
             }
 
         }

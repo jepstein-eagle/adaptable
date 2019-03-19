@@ -288,3 +288,9 @@ export enum DashboardSize {
     Small = 'small',
     XSmall = 'xsmall'
 }
+
+
+export enum  PieChartOthersCategoryType {
+    Number = 'Number',
+    Percent = 'Percent'
+}
