@@ -2,17 +2,13 @@ import * as React from "react";
 import { connect } from 'react-redux';
 import { ControlLabel, FormGroup, Col, Row, Panel, HelpBlock, Checkbox, FormControl } from 'react-bootstrap';
 import { SelectionMode, PieChartOthersCategoryType } from '../../Utilities/Enums'
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableBlotterForm } from "../Components/Forms/AdaptableBlotterForm";
-import { PieChartComponent } from "./PieChartComponent";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { ColumnSelector } from "../Components/Selectors/ColumnSelector";
 import { IColumn } from "../../Utilities/Interface/IColumn";
-import { IgrPieChartBase, IIgrPieChartBaseProps } from "igniteui-react-charts/ES2015/igr-pie-chart-base";
 import { IgrItemLegendModule } from 'igniteui-react-charts/ES2015/igr-item-legend-module';
 import { IgrItemLegend } from 'igniteui-react-charts/ES2015/igr-item-legend';
 import { IgrDoughnutChartModule } from 'igniteui-react-charts/ES2015/igr-doughnut-chart-module';
@@ -22,12 +18,9 @@ import { IgrRingSeries } from 'igniteui-react-charts/ES2015/igr-ring-series';
 import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
 import { IgrPieChartModule } from 'igniteui-react-charts/ES2015/igr-pie-chart-module';
 import { SliceClickEventArgs } from "igniteui-react-charts/ES2015/igr-slice-click-event-args";
-import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
-import { ButtonGeneral } from "../Components/Buttons/ButtonGeneral";
-import { INFO_BSSTYLE, DEFAULT_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
-import { ButtonClose } from "../Components/Buttons/ButtonClose";
-import { PanelWithButton } from "../Components/Panels/PanelWithButton";
+import { DEFAULT_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 import { AdaptablePopover } from "../AdaptablePopover";
+import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {
@@ -100,7 +93,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 width={chartSize}
                 allowSliceSelection="true"
                 allowSliceExplosion="true"
-                sliceClick={(s, e) => this.onSliceClick(s, e)}
+                sliceClick={(s, e) => this.onSliceClick(e)}
                 ref={this.onDoughnutChartRef}
             >
                 <IgrRingSeries
@@ -127,10 +120,10 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 othersCategoryType={this.state.PieChartOthersCategoryType}
                 othersCategoryText="Others"
                 selectionMode="single"
-                sliceClick={(s, e) => this.onSliceClick(s, e)}
+                sliceClick={(s, e) => this.onSliceClick(e)}
             />
         }
-          {StringExtensions.IsNotNullOrEmpty(this.state.CurrentColumnValue) &&
+            {StringExtensions.IsNotNullOrEmpty(this.state.CurrentColumnValue) &&
                 <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px' }} >
                     <FormGroup controlId="formSelectedColumnValue" >
                         <ControlLabel style={{ fontSize: 'small' }}>{this.state.CurrentColumnValue} ({this.state.CurrentColumnCount})</ControlLabel>
@@ -140,55 +133,45 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         </div>
 
 
-        let settingsBlock = <Panel  bsSize={"xs"} bsStyle={DEFAULT_BSSTYLE} header={"Settings"} style={{
+        let settingsBlock = <Panel bsSize={"xs"} bsStyle={DEFAULT_BSSTYLE} header={"Settings"} style={{
             'overflowY': 'auto',
             'overflowX': 'hidden',
-            height: '470px',
+            height: '465px',
             padding: '0px',
             margin: '0px',
-            marginTop: '10px',
+            marginTop: '20px',
             marginRight: '0px',
             fontSize: 'small'
         }}>
-            <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px', marginTop: '0px', padding:'0px' }} >
-                <HelpBlock style={{ fontSize: 'small', margin:'0px'}}>
-                    <Checkbox style={{ fontSize: 'small', marginBottom: '0px' , marginTop:'0px'}}
+            <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px', marginTop: '0px', padding: '0px' }} >
+                <HelpBlock style={{ fontSize: 'small', margin: '0px' }}>
+                    <Checkbox style={{ fontSize: 'small', marginBottom: '0px', marginTop: '0px' }}
                         onChange={(e) => this.onShowDoughnutChanged(e)}
                         checked={this.state.ShowAsDoughnut} >Doughnut View</Checkbox>
                 </HelpBlock>
-                <HelpBlock style={{ fontSize: 'small', marginBottom: '10px' }}>
-                    <Checkbox
+                <HelpBlock style={{ fontSize: 'small', margin: '0px' }}>
+                    <Checkbox style={{ fontSize: 'small', marginBottom: '0px', marginTop: '0px' }}
                         onChange={(e) => this.onRowVisibilityChanged(e)}
-                        checked={this.state.ShowVisibleRowsOnly} >Visible Rows</Checkbox>
+                        checked={this.state.ShowVisibleRowsOnly} >Visible Rows Only</Checkbox>
                 </HelpBlock>
-                <FormGroup controlId="formOthersThreshold" >
-                    <HelpBlock style={{ fontSize: 'small' }}>Others Threshold
-                {' '}
-                        <AdaptablePopover cssClassName={cssClassName} headerText={"Pie Chart: Others Threshold"} bodyText={["Items with value less than or equal to the Threshold will be assigned to the “Others” category."]} />
-                    </HelpBlock>
-                    <FormControl
-                        bsSize={"small"} type="number"
-                        placeholder={"Input"}
-                        onChange={this.onOthersCategoryThresholdChanged}
-                        value={this.state.OthersCategoryThreshold} />
+                <HelpBlock style={{ fontSize: 'small' }}>Others Threshold
+                        {' '}
+                    <AdaptablePopover cssClassName={cssClassName} headerText={"Pie Chart: Others Threshold"} bodyText={["Items with value less than or equal to the Threshold will be assigned to the “Others” category.  Choose whether this will be interpreted as a percentage or as a value."]} />
+                </HelpBlock>
+                <FormControl
+                    bsSize={"small"} type="number"
+                    placeholder={"Input"}
+                    onChange={this.onOthersCategoryThresholdChanged}
+                    value={this.state.OthersCategoryThreshold} />
 
-                </FormGroup>
-                <FormGroup controlId="formOthersType" >
-                    <HelpBlock style={{ fontSize: 'small' }}>'Others' Type
-                    {' '}
-                        <AdaptablePopover cssClassName={cssClassName} headerText={"Pie Chart: Others Type"} bodyText={["Choose whether the 'Others' threshold will be interpreted as a percentage or as a value."]} />
-                    </HelpBlock>
-                    <FormControl
-                        bsSize={"small"}
-                        componentClass="select"
-                        placeholder="select"
-                        value={this.state.PieChartOthersCategoryType}
-                        onChange={(x) => this.onOthersCategoryTypeChanged(x)} >
-                        {this.getPieChartOthersCategoryTypeOptions()}
-                    </FormControl>
-                </FormGroup>
+                <HelpBlock style={{ fontSize: 'small' }}>
+                    <Checkbox style={{ fontSize: 'small', marginBottom: '0px', marginTop: '0px' }}
+                        onChange={(e) => this.onThresholdAsPercentChanged(e)}
+                        checked={this.state.PieChartOthersCategoryType == PieChartOthersCategoryType.Percent} >'Others' Threshold as %
+                   </Checkbox>
+                </HelpBlock>
             </Row>
-          
+
             {this.state.ShowAsDoughnut ?
                 <div className="doughnutLegend">
                     <IgrItemLegend ref={this.onDoughnutLegendRef} />
@@ -199,10 +182,6 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 </div>
             }
         </Panel>
-
-
-
-
 
 
         return <div className={cssClassName}>
@@ -263,7 +242,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
     public onPieChartRef(pieChart: IgrPieChart) {
         this.pieChart = pieChart;
-        if (this.pieChartlegend  && this.pieChart) {
+        if (this.pieChartlegend && this.pieChart) {
             this.pieChart.legend = this.pieChartlegend;
         }
     }
@@ -282,13 +261,6 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         }
     }
 
-    private getPieChartOthersCategoryTypeOptions(): JSX.Element[] {
-        let options = EnumExtensions.getNames(PieChartOthersCategoryType).map((enumName) => {
-            let name = enumName.toString();
-            return <option key={name} value={name}>{name}</option>
-        })
-        return options;
-    }
 
     private onOthersCategoryThresholdChanged = (e: any) => {
         this.setState({ OthersCategoryThreshold: e.target.value } as PieChartPopupState)
@@ -305,13 +277,13 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         this.setState({ ShowVisibleRowsOnly: e.checked, PieChartData: pieChartData, CurrentColumnCount: 0, CurrentColumnValue: '' } as PieChartPopupState);
     }
 
-    private onOthersCategoryTypeChanged(event: React.FormEvent<any>) {
+    private onThresholdAsPercentChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ PieChartOthersCategoryType: e.value } as PieChartPopupState)
+        let pieChartOthersCategoryType: PieChartOthersCategoryType = (e.checked) ? PieChartOthersCategoryType.Percent : PieChartOthersCategoryType.Number;
+        this.setState({ PieChartOthersCategoryType: pieChartOthersCategoryType } as PieChartPopupState);
     }
 
-
-    public onSliceClick(s: any, e: SliceClickEventArgs): void {
+    public onSliceClick(e: SliceClickEventArgs): void {
 
         e.isExploded = !e.isExploded;
         e.isSelected = !e.isSelected
