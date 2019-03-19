@@ -74,7 +74,7 @@ export class PieChartComponent extends React.Component<PieChartProps, PieChartSt
 
         let cssClassName: string = 'todo'//this.props.cssClassName + PieChartConstants.PieChart_COMPONENT
 
-        let chartSize: string = (this.state.IsPieChartSettingsVisible)? '400px' : '400px'
+        let chartSize: string = (this.state.IsPieChartSettingsVisible) ? '300px' : '500px'
 
 
         let openChartSettingsButton =
@@ -100,15 +100,23 @@ export class PieChartComponent extends React.Component<PieChartProps, PieChartSt
                 overrideTooltip={"Close Chart Settings"}
             />
 
-        let legendBlock = <div> {this.state.ShowAsDoughnut ?
-            <div className="doughnutLegend">
-                <IgrItemLegend ref={this.onDoughnutLegendRef} />
-            </div>
-            :
-            <div className="pieChartLegend">
-                <IgrItemLegend ref={this.onPieChartLegendRef} />
-            </div>
-        }</div>
+        let legendBlock = <div>
+            <Panel style={{
+                'overflowY': 'auto',
+                'overflowX': 'hidden',
+                'height': '450px'
+            }}>
+                {this.state.ShowAsDoughnut ?
+                    <div className="doughnutLegend">
+                        <IgrItemLegend ref={this.onDoughnutLegendRef} />
+                    </div>
+                    :
+                    <div className="pieChartLegend">
+                        <IgrItemLegend ref={this.onPieChartLegendRef} />
+                    </div>
+                }
+            </Panel>
+        </div>
 
         let chartBlock = <div>{this.state.ShowAsDoughnut ?
             <IgrDoughnutChart
@@ -149,7 +157,7 @@ export class PieChartComponent extends React.Component<PieChartProps, PieChartSt
         </div>
 
         let settingsBlock = <PanelWithButton bsSize={"xs"} bsStyle={INFO_BSSTYLE} headerText={"Settings"} cssClassName={cssClassName}
-            button={closeChartSettingsButton} style={{marginRight: '30px'}} >
+            button={closeChartSettingsButton} style={{ marginRight: '30px' }} >
             <Row style={{ marginLeft: '0px', marginRight: '10px', marginBottom: '0px', marginTop: '0px' }} >
                 <HelpBlock style={{ fontSize: 'small', marginBottom: '0px' }}>
                     <Checkbox
@@ -205,23 +213,23 @@ export class PieChartComponent extends React.Component<PieChartProps, PieChartSt
         return <div className={cssClassName} style={{ marginBottom: '0px', marginLeft: '5px' }}>
 
             {this.state.IsPieChartSettingsVisible == false &&
-                     <Row style={{marginTop: '5px'}}>
-                        <Col xs={12} >
-                            <div className="pull-right" >
-                                {openChartSettingsButton}
-                            </div>
-                        </Col>
-                    </Row>
+                <Row style={{ marginTop: '5px' }}>
+                    <Col xs={12} >
+                        <div className="pull-right" >
+                            {openChartSettingsButton}
+                        </div>
+                    </Col>
+                </Row>
 
-             }
+            }
 
             {this.state.IsPieChartSettingsVisible ?
 
                 <Row style={{ marginLeft: '10px' }}>
-                    <Col xs={2} style={{ marginTop: '20px' }} >
+                    <Col xs={3} style={{ marginTop: '20px' }} >
                         {legendBlock}
                     </Col>
-                    <Col xs={6} >
+                    <Col xs={5} >
                         {chartBlock}
                     </Col>
                     <Col xs={4} style={{ marginTop: '20px' }} >
@@ -230,10 +238,10 @@ export class PieChartComponent extends React.Component<PieChartProps, PieChartSt
                 </Row>
                 :
                 <Row style={{ marginLeft: '10px' }}>
-                    <Col xs={2} style={{ marginTop: '20px' }} >
+                    <Col xs={3} style={{ marginTop: '20px' }} >
                         {legendBlock}
                     </Col>
-                    <Col xs={10} >
+                    <Col xs={9} >
                         {chartBlock}
                     </Col>
 
