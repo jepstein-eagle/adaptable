@@ -19,6 +19,8 @@ module.exports = {
                 'igniteui-react-charts/ES2015/igr-doughnut-chart',
                 'igniteui-react-charts/ES2015/igr-ring-series-module',
                 'igniteui-react-charts/ES2015/igr-ring-series',
+                'igniteui-react-charts/ES2015/igr-item-legend-module',
+                'igniteui-react-charts/ES2015/igr-item-legend',
                 'ipushpull-js',
                 'isomorphic-fetch',
                 'json-loader',

@@ -15,7 +15,6 @@ import { IColumn } from "../../Utilities/Interface/IColumn";
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {
     PieChartText: string;
-
 }
 
 interface PieChartPopupState {
@@ -35,7 +34,6 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
 
     componentDidMount() {
-
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
             this.setState({ SelectedColumnId: this.props.PopupParams })
         }
@@ -81,9 +79,6 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                                 />
                             </Row>
                         }
-
-
-
                     </FormGroup>
 
                 </AdaptableBlotterForm>
@@ -106,14 +101,11 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
-
-
     };
 }
 
 function mapDispatchToProps() {
     return {
-
     };
 }
 

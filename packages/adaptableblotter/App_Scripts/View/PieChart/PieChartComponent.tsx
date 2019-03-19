@@ -4,7 +4,8 @@ import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
 import { IgrPieChartModule } from 'igniteui-react-charts/ES2015/igr-pie-chart-module';
 import { PieChartOthersCategoryType } from "../../Utilities/Enums";
 import { IgrPieChartBase, IIgrPieChartBaseProps } from "igniteui-react-charts/ES2015/igr-pie-chart-base";
-
+import { IgrItemLegendModule } from 'igniteui-react-charts/ES2015/igr-item-legend-module';
+import { IgrItemLegend } from 'igniteui-react-charts/ES2015/igr-item-legend';
 import { IgrDoughnutChartModule } from 'igniteui-react-charts/ES2015/igr-doughnut-chart-module';
 import { IgrDoughnutChart } from 'igniteui-react-charts/ES2015/igr-doughnut-chart';
 import { IgrRingSeriesModule } from 'igniteui-react-charts/ES2015/igr-ring-series-module';
