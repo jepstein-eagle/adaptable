@@ -15,6 +15,10 @@ module.exports = {
                 'igniteui-react-charts/ES2015/igr-pie-chart-module',
                 'igniteui-react-charts/ES2015/igr-pie-chart-core-module',
                 'igniteui-react-charts/ES2015/igr-data-chart-annotation-module',
+                'igniteui-react-charts/ES2015/igr-doughnut-chart-module',
+                'igniteui-react-charts/ES2015/igr-doughnut-chart',
+                'igniteui-react-charts/ES2015/igr-ring-series-module',
+                'igniteui-react-charts/ES2015/igr-ring-series',
                 'ipushpull-js',
                 'isomorphic-fetch',
                 'json-loader',
@@ -70,8 +74,8 @@ module.exports = {
                     path.resolve(__dirname, "node_modules/igniteui-react-charts")
                 ],
             },
-            {include: /\.json$/, loaders: ["json-loader"]}
+            { include: /\.json$/, loaders: ["json-loader"] }
         ],
-        
+
     }
 };

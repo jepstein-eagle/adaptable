@@ -73,14 +73,17 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                                     PieData={pieChartData}
                                     LabelMember={"ColumnValue"}
                                     ValueMember={"ColumnCount"}
-                                    Width={475}
-                                    Height={475}
+                                    Width={450}
+                                    Height={450}
                                     ShowVisibleRows={this.state.ShowVisibleRowsOnly}
                                     showAllClick={() => this.onShowAllClick()}
                                     showVisibleClick={() => this.onShowVisibleClick()}
                                 />
                             </Row>
                         }
+
+
+
                     </FormGroup>
 
                 </AdaptableBlotterForm>
