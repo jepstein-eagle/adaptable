@@ -76,7 +76,8 @@
 			"Export",
 			"QuickSearch",
 			"SmartEdit",
-			"Layout"
+			"Layout",
+			"DataSource"
 		],
 		"VisibleButtons": [
 			"About",

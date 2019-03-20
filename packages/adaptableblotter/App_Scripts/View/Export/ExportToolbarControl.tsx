@@ -37,6 +37,7 @@ interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupPro
     onReportStopLive: (Report: string, exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => SystemRedux.ReportStopLiveAction;
     Columns: IColumn[],
     Reports: IReport[];
+    SystemReports: IReport[];
     CurrentReport: string;
     LiveReports: ILiveReport[];
 
@@ -46,14 +47,16 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
 
     render(): any {
         const selectReportString: string = "Select a Report"
+        let allReports: IReport[] = this.props.SystemReports.concat(this.props.Reports);
+
         let cssClassName: string = this.props.cssClassName + "__export";
-        let savedReport: IReport = this.props.Reports.find(s => s.Name == this.props.CurrentReport);
+        let savedReport: IReport = allReports.find(s => s.Name == this.props.CurrentReport);
         let savedReportIndex = this.props.Reports.findIndex(s => s.Name == this.props.CurrentReport);
 
         let currentReportId = StringExtensions.IsNullOrEmpty(this.props.CurrentReport) ?
             selectReportString : this.props.CurrentReport
 
-        let availableReports: any[] = this.props.Reports.filter(s => s.Name != this.props.CurrentReport).map((report, index) => {
+        let availableReports: any[] = allReports.filter(s => s.Name != this.props.CurrentReport).map((report, index) => {
             return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedReportChanged(report.Name)}>{report.Name}</MenuItem>
         })
 
@@ -90,7 +93,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
 
             <InputGroup>
                 <DropdownButton
-                    disabled={availableReports.length == 0}
+                    disabled={allReports.length == 0}
                     style={{ minWidth: "120px" }}
                     className={cssClassName}
                     bsSize={this.props.DashboardSize}
@@ -189,6 +192,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         CurrentReport: state.Export.CurrentReport,
         Reports: state.Export.Reports,
+        SystemReports: state.Export.SystemReports,
         LiveReports: state.System.CurrentLiveReports,
     };
 }

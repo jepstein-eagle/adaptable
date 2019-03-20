@@ -3,7 +3,7 @@ import { ExportDestination } from '../../Utilities/Enums';
 import * as Redux from 'redux'
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
-import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
+import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const EXPORT_APPLY = 'EXPORT_APPLY';
 export const IPP_LOGIN = 'IPP_LOGIN';
@@ -68,15 +68,16 @@ export const IPPLogin = (Login: string, Password: string): IPPLoginAction => ({
 })
 
 const initialExportState: ExportState = {
-     Reports: ReportHelper.CreateSystemReports(),
+    SystemReports: ReportHelper.CreateSystemReports(),
+    Reports: EMPTY_ARRAY,
     CurrentReport: EMPTY_STRING,
-    }
+}
 
 export const ExportReducer: Redux.Reducer<ExportState> = (state: ExportState = initialExportState, action: Redux.Action): ExportState => {
     switch (action.type) {
-         case REPORT_SELECT:
+        case REPORT_SELECT:
             return Object.assign({}, state, { CurrentReport: (<ReportSelectAction>action).SelectedReport })
-          case REPORT_ADD_UPDATE: {
+        case REPORT_ADD_UPDATE: {
             let Reports: IReport[] = [].concat(state.Reports);
 
             let actionTypedAddUpdate = (<ReportAddUpdateAction>action)

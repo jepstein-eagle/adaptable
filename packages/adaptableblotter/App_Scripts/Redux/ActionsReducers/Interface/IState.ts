@@ -209,6 +209,7 @@ export interface DataSourceState extends IUserState {
 export interface ExportState extends IUserState {
     CurrentReport: string;
     Reports: IReport[];
+    SystemReports: IReport[];
 }
 
 export interface FlashingCellState extends IUserState {
