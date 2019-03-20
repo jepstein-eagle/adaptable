@@ -69,6 +69,7 @@ export interface SystemState extends ISystemState {
     ChartVisibility: ChartVisibility;
     CalculatedColumnErrorMessage: string;
     IPPDomainsPages: IPPDomain[];
+    SystemReports: IReport[];
     ReportErrorMessage: string;
 }
 
@@ -209,7 +210,7 @@ export interface DataSourceState extends IUserState {
 export interface ExportState extends IUserState {
     CurrentReport: string;
     Reports: IReport[];
-    SystemReports: IReport[];
+  
 }
 
 export interface FlashingCellState extends IUserState {

@@ -9,6 +9,7 @@ import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../Utilities/ChartEnums';
 import { EMPTY_ARRAY, SYSTEM_DEFAULT_CHART_VISIBILITY, EMPTY_STRING, SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR } from '../../Utilities/Constants/GeneralConstants';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -231,6 +232,7 @@ const initialSystemState: SystemState = {
     ChartVisibility: SYSTEM_DEFAULT_CHART_VISIBILITY,
     CalculatedColumnErrorMessage: EMPTY_STRING,
     IPPDomainsPages: EMPTY_ARRAY,
+    SystemReports: ReportHelper.CreateSystemReports(),
     ReportErrorMessage: EMPTY_STRING
 }
 

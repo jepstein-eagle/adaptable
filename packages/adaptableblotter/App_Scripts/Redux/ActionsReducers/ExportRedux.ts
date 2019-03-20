@@ -68,7 +68,7 @@ export const IPPLogin = (Login: string, Password: string): IPPLoginAction => ({
 })
 
 const initialExportState: ExportState = {
-    SystemReports: ReportHelper.CreateSystemReports(),
+   
     Reports: EMPTY_ARRAY,
     CurrentReport: EMPTY_STRING,
 }

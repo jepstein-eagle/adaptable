@@ -30,6 +30,7 @@ import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],
+    SystemReports: IReport[],
     LiveReports: ILiveReport[];
     CurrentReport: string,
     onApplyExport: (value: string, exportDestination: ExportDestination) => ExportRedux.ExportApplyAction;
@@ -70,7 +71,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             { Content: "", Size: 3 },
         ]
 
-        let Reports = this.props.Reports.map((Report: IReport, index) => {
+        let Reports = this.props.SystemReports.concat(this.props.Reports).map((Report: IReport, index) => {
             return <ReportEntityRow
                 cssClassName={cssClassName}
                 AdaptableBlotterObject={Report}
@@ -168,6 +169,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         Reports: state.Export.Reports,
+        SystemReports: state.System.SystemReports,
         CurrentReport: state.Export.CurrentReport,
         LiveReports: state.System.CurrentLiveReports,
     };
