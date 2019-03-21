@@ -89,7 +89,6 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         // TODO we should get 2 columns: valueColumnId and groupColumnId from PopupParams
         const column = this.props.PopupParams;
         if (StringExtensions.IsNotNullOrEmpty(column)) {
-            console.log("componentDidMount ");
             this.updateDataSource(null, column);
         }
     }
