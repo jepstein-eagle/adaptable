@@ -65,6 +65,14 @@ export enum ToolTipType {
     None = 'None'
 }
 
+export enum PieChartLabelPositions {
+  BestFit = 'BestFit',
+  Center = 'Center',
+  InsideEnd = 'InsideEnd',
+  OutsideEnd = 'OutsideEnd',
+  None = 'None'
+}
+
 export enum AxisAngle {
     Horizontal = 'Horizontal',
     Diagonal = 'Diagonal',
