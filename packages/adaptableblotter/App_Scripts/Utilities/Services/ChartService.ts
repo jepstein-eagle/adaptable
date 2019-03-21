@@ -12,7 +12,6 @@ import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { AxisTotal } from '../ChartEnums';
 import { Helper } from '../Helpers/Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IValueTotalCount } from '../../View/UIInterfaces';
 
 /*
 Class that buils the chart - probably needs some refactoring but working for the time being.
@@ -124,17 +123,8 @@ export class ChartService implements IChartService {
           this.blotter.forAllRecordsDo((row) => {
             let group = this.blotter.getRawValueFromRecord(row, labelColumnId);
             let value = this.blotter.getRawValueFromRecord(row, valueColumnId);
-            let count: number;
+            let count: number=(isValueColumnNumeric)? parseFloat(value): 1
             
-            if (!isValueColumnNumeric) {
-              count = 1;
-              // TODO decided if we should group by 2 columns but label will be long (add this as an option?)
-              // if (group != value) {
-              //     group =  group + " + " + value;
-              // }
-            } else {
-              count = parseFloat(value);
-            }
        
             if (dataCounter.has(group)) {
               dataCounter.set(group, dataCounter.get(group) + count);
@@ -145,14 +135,14 @@ export class ChartService implements IChartService {
           });
         } else if (hasValueColumn) {
           let i = 0;
-          isGroupingColumns =  ColumnHelper.getColumnDataTypeFromColumnId(valueColumnId, columns) == DataType.Number;
-
+          let  isValueColumnNumeric : boolean =  ColumnHelper.getColumnDataTypeFromColumnId(valueColumnId, columns) == DataType.Number;
+          isGroupingColumns = !isValueColumnNumeric;
           this.blotter.forAllRecordsDo((row) => {
             // we have only valueColumnId so let check if it numeric or non-numeric cell values
             let cellValue = this.blotter.getRawValueFromRecord(row, valueColumnId);
            
-            let group = isGroupingColumns ? cellValue : i;
-            let count = isGroupingColumns ? 1 : parseFloat(cellValue);
+            let group = isValueColumnNumeric ? i: cellValue ;
+            let count = isValueColumnNumeric ? parseFloat(cellValue): 1;
             if (dataCounter.has(group)) {
               dataCounter.set(group, dataCounter.get(group) + count);
             } else {
@@ -162,13 +152,24 @@ export class ChartService implements IChartService {
             i++;
           });
         } else if (hasLabelColumn) {
+        
+        
+           
           let i = 0;
-          isGroupingColumns =  ColumnHelper.getColumnDataTypeFromColumnId(labelColumnId, columns) == DataType.Number;
-          this.blotter.forAllRecordsDo((row) => {
+          console.log('label only')
+          
+          
+          
+	           
+          let  isLabelColumnNumeric : boolean  =  ColumnHelper.getColumnDataTypeFromColumnId(labelColumnId, columns) == DataType.Number;
+          isGroupingColumns = !isLabelColumnNumeric;
+           this.blotter.forAllRecordsDo((row) => {
             // we have only labelColumnId so let check if it numeric or non-numeric cell values
             let cellValue = this.blotter.getRawValueFromRecord(row, labelColumnId);
-            let group = isGroupingColumns ? cellValue : i;
-            let count = isGroupingColumns ? 1 : parseFloat(cellValue);
+            let group = isLabelColumnNumeric ? i: cellValue ;
+            let count = isLabelColumnNumeric ? parseFloat(cellValue): 1;
+
+
             if (dataCounter.has(group)) {
               dataCounter.set(group, dataCounter.get(group) + count);
             } else {

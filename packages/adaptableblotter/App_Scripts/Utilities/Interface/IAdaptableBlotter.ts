@@ -2,7 +2,7 @@ import { DistinctCriteriaPairValue } from '../Enums'
 import { ICellInfo } from "./ICellInfo";
 import { IVendorGridInfo } from "./IVendorGridInfo";
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore'
-import { IRawValueDisplayValuePair, IValueTotalCount } from '../../View/UIInterfaces';
+import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
 import { IGridSort } from "./IGridSort";

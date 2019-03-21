@@ -90,7 +90,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         const column = this.props.PopupParams;
         if (StringExtensions.IsNotNullOrEmpty(column)) {
             console.log("componentDidMount ");
-            this.updateDataSource(column, column);
+            this.updateDataSource(null, column);
         }
     }
 
@@ -121,11 +121,10 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         const elements: JSX.Element[] = [];
         elements.push(
             <AdaptableBlotterForm key="DataGroupColumnSelector" horizontal>
-                <FormGroup controlId="pieChartSettings" style={{ marginBottom: '0px' }}>
+                <FormGroup controlId="pieChartSettings" style={{ marginBottom: '10px' }}>
                     <Row>
-                        <Col xs={1}>{' '} </Col>
-                        <Col xs={3}><ControlLabel>Select Label Column</ControlLabel></Col>
-                        <Col xs={5} >
+                        <Col xs={5}>{' '}<ControlLabel>{' '}Select Label Column</ControlLabel></Col>
+                        <Col xs={7} >
                             <ColumnSelector cssClassName={cssClassName}
                                 SelectedColumnIds={[this.state.DataLabelColumnId]}
                                 SelectionMode={SelectionMode.Single}
@@ -133,7 +132,6 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                                 ColumnList={this.props.Columns}
                                 onColumnChange={columns => this.onDataGroupColumnChanged(columns)} />
                         </Col>
-                        <Col xs={3}></Col>
                     </Row>
                 </FormGroup>
             </AdaptableBlotterForm>);
@@ -141,9 +139,8 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             <AdaptableBlotterForm key="DataValueColumnSelector" horizontal>
                 <FormGroup controlId="pieChartSettings" style={{ marginBottom: '0px' }}>
                     <Row>
-                        <Col xs={1}>{' '} </Col>
-                        <Col xs={3}><ControlLabel>Select Value Column</ControlLabel></Col>
-                        <Col xs={5} >
+                        <Col xs={5}>{' '}<ControlLabel>{' '}Select Value Column</ControlLabel></Col>
+                        <Col xs={7} >
                             <ColumnSelector cssClassName={cssClassName}
                                 SelectedColumnIds={[this.state.DataValueColumnId]}
                                 SelectionMode={SelectionMode.Single}
@@ -151,7 +148,6 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                                 ColumnList={this.props.Columns}
                                 onColumnChange={columns => this.onDataValueColumnChanged(columns)} />
                         </Col>
-                        <Col xs={3}></Col>
                     </Row>
                 </FormGroup>
             </AdaptableBlotterForm>);
@@ -161,6 +157,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         return StringExtensions.IsNotNullOrEmpty(this.state.DataValueColumnId) ||
             StringExtensions.IsNotNullOrEmpty(this.state.DataLabelColumnId);
     }
+
     public brushesEven: string[] = ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47"];
     public brushesOdd: string[] = ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47", "#795548"];
 
@@ -226,10 +223,10 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         let settingsBlock = <Panel bsSize={"xs"} bsStyle={DEFAULT_BSSTYLE} header={"Settings"} style={{
             'overflowY': 'auto',
             'overflowX': 'hidden',
-            height: '465px',
+            height: '520px',
             padding: '0px',
             margin: '0px',
-            marginTop: '20px',
+            marginTop: '0px',
             marginRight: '0px',
             fontSize: 'small'
         }}>
@@ -312,20 +309,26 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 infoBody={infoBody}
                 bsStyle="primary" >
 
-                {this.renderDataSelectors(cssClassName)}
+                <div>
+                    <Row>
+                        <Col xs={8} >
+                            {this.renderDataSelectors(cssClassName)}
+                            {this.hasValidDataSelection() &&
+                                <div>
+                                    {chartBlock}
+                                </div>
+                            }
+                        </Col>
+                        <Col xs={4} >
+                            {this.hasValidDataSelection() &&
+                                <div>
+                                    {settingsBlock}
+                                </div>
+                            }
+                        </Col>
+                    </Row>
+                </div>
 
-                {this.hasValidDataSelection() &&
-                    <div>
-                        <Row>
-                            <Col xs={8} >
-                                {chartBlock}
-                            </Col>
-                            <Col xs={4} >
-                                {settingsBlock}
-                            </Col>
-                        </Row>
-                    </div>
-                }
             </PanelWithImage>
         </div>
     }
