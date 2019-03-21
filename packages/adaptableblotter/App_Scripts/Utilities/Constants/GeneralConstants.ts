@@ -22,6 +22,9 @@ export const HALF_SECOND: number = 500;
 export const DEFAULT_DARK_GREEN_COLOR: string = '#008000';
 export const DEFAULT_DARK_RED_COLOR: string = '#FF0000';
 
+export const YEAR_ADD : number = 1985;
+export const MONTH_ADD : number = 47;
+
 /*
 Redux / State Defaults
 Try to put all our Redux / State defaults here and ONLY reference from here - avoid magic numbers / strings.  

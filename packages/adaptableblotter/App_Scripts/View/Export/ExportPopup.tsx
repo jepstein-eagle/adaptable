@@ -28,8 +28,6 @@ import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
 import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
 import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
-import * as NodeSchedule from 'node-schedule';
-import { IAdaptableAlert } from "../../Utilities/Interface/IMessage";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],
@@ -64,26 +62,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
 
        // let exportAction: Redux.Action =ExportRedux.ExportApply("All Data", ExportDestination.CSV);
-        let alertToShow: IAdaptableAlert= {
-            Header: "Test Schedule",
-            Msg: "This alert has worked",
-            MessageType: MessageType.Success
-          }
-          let showAlertAsPopup : boolean= true;
-
-          let alertParams: any[]=[]
-
-       // let alertAction: Redux.Action =PopupRedux.PopupShowAlert(alertToShow)
-      
-        var date = new Date(2019, 2, 20, 17, 46, 0);
-
-       // let alert
-
-             var d = NodeSchedule.scheduleJob(date, () =>{
-                 this.props.Blotter.ScheduleService.RunScheduleAlert(alertToShow, showAlertAsPopup);
-                 this.props.Blotter.ScheduleService.RunScheduleReport("All Data", ExportDestination.CSV);
-             }
-        )
+       
 
 
         let cssClassName: string = this.props.cssClassName + "__export";

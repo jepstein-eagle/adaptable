@@ -120,13 +120,13 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
-        licenceKey: getCommunityKey(),
+      //  licenceKey: getCommunityKey(),
       //  licenceKey: getValidStandardKey(),
       //    licenceKey: getValidEnterpriseKey(),
       //licenceKey: getInvalidStandardKey(),
       //  licenceKey: getInvalidEnterpriseKey(),
-      //  predefinedConfig: reportJson,
-
+        //  predefinedConfig: reportJson,
+      
       auditOptions: {
         //     auditCellEdits: true,
         //  auditFunctionEvents: true,

@@ -2,10 +2,6 @@
 var adaptableblotter
 var trades
 var quickSearchText
-
-function getEnterpriseKey() {
-    return 'xs2543-as6b8esw3-e94fyjzc7a';
-  }
   
 function capitalize(string) {
     return (/[a-z]/.test(string) ? string : string.toLowerCase())
@@ -111,8 +107,8 @@ function InitBlotter() {
         primaryKey: "tradeId", // pk for blotter - required
         userName: "demo user", // name of current user
         blotterId: "demo blotter 2.5", // id for blotter
-        licenceKey: getEnterpriseKey(),
-         predefinedConfig: categoryJson,
+      
+        predefinedConfig: categoryJson,
 
         auditLogOptions: {
             auditCellEdits: true,

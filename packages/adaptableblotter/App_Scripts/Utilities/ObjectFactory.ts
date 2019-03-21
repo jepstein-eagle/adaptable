@@ -35,11 +35,12 @@ import { ILicenceInfo } from './Interface/ILicenceInfo';
 
 export module ObjectFactory {
 
-    export function CreateLicenceInfo(licenceType: LicenceScopeType, isLicenceInDate: boolean, licenceUserType: LicenceUserType): ILicenceInfo {
+    export function CreateLicenceInfo(licenceType: LicenceScopeType, isLicenceInDate: boolean, licenceUserType: LicenceUserType, expiryDate: Date): ILicenceInfo {
         return {
             LicenceScopeType: licenceType,
             IsLicenceInDate: isLicenceInDate,
-            LicenceUserType: licenceUserType
+            LicenceUserType: licenceUserType,
+            ExpiryDate: expiryDate
         }
     }
 

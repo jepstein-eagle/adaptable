@@ -40,7 +40,8 @@ export module BlotterHelper {
     }
 
     export function CheckLicenceKey(licenceInfo: ILicenceInfo): void {
-        let universalOrEndUser: string =  " (" + licenceInfo.LicenceUserType + ");"
+        let universalOrEndUser: string =  " (" + licenceInfo.LicenceUserType + "). "
+        let expiryDate: string = 'Expires: ' + licenceInfo.ExpiryDate.toLocaleDateString();
         switch (licenceInfo.LicenceScopeType) {
             case LicenceScopeType.Community:
                 let licenceMessage: string = '\n';
@@ -54,10 +55,10 @@ export module BlotterHelper {
                 break;
 
             case LicenceScopeType.Standard:
-                LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Standard" + universalOrEndUser);
+                LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Standard" + universalOrEndUser + expiryDate);
                 break;
             case LicenceScopeType.Enterprise:
-                LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Enterprise" + universalOrEndUser);
+                LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Enterprise" + universalOrEndUser+ expiryDate);
                 break;
         }
         if (!licenceInfo.IsLicenceInDate) {
