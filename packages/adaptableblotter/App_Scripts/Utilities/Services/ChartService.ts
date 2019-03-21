@@ -104,18 +104,118 @@ export class ChartService implements IChartService {
         return xAxisColValues;
     }
 
-    public BuildPieChartData(columnId: string, visibleRowsOnly: boolean): any[] {
-        let valueTotalCounts: IValueTotalCount[] = (visibleRowsOnly)?
-         this.blotter.getColumnValueTotalCountVisibleRows(columnId)
-         :
-         this.blotter.getColumnValueTotalCountAllRows(columnId);
+    public BuildPieChartData(valueColumnId: string, labelColumnId: string): any[] {
 
-        let returnData: any[] = []
+        let dataCounter = new Map<any, number>();
+        // let dataValueTotal = 0;
 
-        valueTotalCounts.forEach(t => {
-            let returnItem: any = { ColumnCount: t.Count, ColumnValue: t.Value }
-            returnData.push(returnItem);
-        })
-        return returnData;
+        let hasLabelColumn = StringExtensions.IsNotNullOrEmpty(labelColumnId);
+        let hasValueColumn = StringExtensions.IsNotNullOrEmpty(valueColumnId);
+
+        console.log("BuildPieChartData labelColumn " + hasLabelColumn + " valueColumn " + hasValueColumn);
+
+        let isGroupingColumns = false;
+        let valueTotal = 0;
+
+        if (hasLabelColumn && hasValueColumn) {
+          this.blotter.forAllRecordsDo((row) => {
+            let group = this.blotter.getRawValueFromRecord(row, labelColumnId);
+            let value = this.blotter.getRawValueFromRecord(row, valueColumnId);
+            let count: number;
+            isGroupingColumns = true;
+            if (isNaN(value)) {
+              count = 1;
+              // TODO decided if we should group by 2 columns but label will be long (add this as an option?)
+              // if (group != value) {
+              //     group =  group + " + " + value;
+              // }
+            } else {
+              count = parseFloat(value);
+            }
+            // let count = isNaN(value) ? 1 : parseFloat(value);
+            if (dataCounter.has(group)) {
+              dataCounter.set(group, dataCounter.get(group) + count);
+            } else {
+              dataCounter.set(group, count);
+            }
+            valueTotal += count;
+          });
+        } else if (hasValueColumn) {
+          let i = 0;
+          this.blotter.forAllRecordsDo((row) => {
+            // we have only valueColumnId so let check if it numeric or non-numeric cell values
+            let cell = this.blotter.getRawValueFromRecord(row, valueColumnId);
+            isGroupingColumns = isNaN(cell);
+            let group = isGroupingColumns ? cell : i;
+            let count = isGroupingColumns ? 1 : parseFloat(cell);
+            if (dataCounter.has(group)) {
+              dataCounter.set(group, dataCounter.get(group) + count);
+            } else {
+              dataCounter.set(group, count);
+            }
+            valueTotal += count;
+            i++;
+          });
+        } else if (hasLabelColumn) {
+          let i = 0;
+          this.blotter.forAllRecordsDo((row) => {
+            // we have only labelColumnId so let check if it numeric or non-numeric cell values
+            let cell = this.blotter.getRawValueFromRecord(row, labelColumnId);
+            isGroupingColumns = isNaN(cell);
+            let group = isGroupingColumns ? cell : i;
+            let count = isGroupingColumns ? 1 : parseFloat(cell);
+            if (dataCounter.has(group)) {
+              dataCounter.set(group, dataCounter.get(group) + count);
+            } else {
+              dataCounter.set(group, count);
+            }
+            valueTotal += count;
+            i++;
+          });
+        }
+
+        console.log("BuildPieChartData dataCounter " + dataCounter.keys.length);
+        let dataItems: any[] = [];
+        dataCounter.forEach((value, name) => {
+          let item: any = { };
+          item.Name = name;
+          item.Value = Math.round(value * 10) / 10;
+          // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
+          item.Ratio = Math.round(value / valueTotal * 1000) / 10;
+          if (isGroupingColumns) {
+            item.ValueAndName = this.toShort(item.Value) + " : " + name;
+            item.RatioAndName = item.Ratio.toFixed(1) + "%" + " : " + name;
+          } else {
+            item.ValueAndName = name;
+            item.RatioAndName = name;
+          }
+          dataItems.push(item);
+        });
+
+        console.log("BuildPieChartData dataItems " + dataItems.length);
+
+        dataItems = dataItems.sort(this.orderAscending);
+        return dataItems;
     }
+
+    //TODO add this to string extension?
+    public toShort(largeValue: number): string {
+      let str: string = "";
+      if (largeValue >= 1000000000) {
+          str = (largeValue / 1000000000).toFixed(1) + "B";
+      } else if (largeValue >= 1000000) {
+          str = (largeValue / 1000000).toFixed(1) + "M";
+      } else if (largeValue >= 1000) {
+          str = (largeValue / 1000).toFixed(1) + "K";
+      } else {
+        str = largeValue.toString();
+      }
+      return str;
+    }
+
+    public orderAscending(a: any, b: any) {
+      if (a.Value > b.Value) { return -1; }
+      if (a.Value < b.Value) { return 1; }
+      return 0;
+  }
 }
