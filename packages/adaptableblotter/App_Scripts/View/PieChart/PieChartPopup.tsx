@@ -130,6 +130,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                         <ColumnSelector cssClassName={cssClassName}
                         SelectedColumnIds={[this.state.DataLabelColumnId]}
                         SelectionMode={SelectionMode.Single}
+                        placeHolder={"Select a string column"}
                         ColumnList={this.props.Columns}
                         onColumnChange={columns => this.onDataGroupColumnChanged(columns)} />
                     </Col>
@@ -148,6 +149,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                         <ColumnSelector cssClassName={cssClassName}
                         SelectedColumnIds={[this.state.DataValueColumnId]}
                         SelectionMode={SelectionMode.Single}
+                        placeHolder={"Select a numeric column"}
                         ColumnList={this.props.Columns}
                         onColumnChange={columns => this.onDataValueColumnChanged(columns)}/>
                     </Col>

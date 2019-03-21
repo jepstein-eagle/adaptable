@@ -18,6 +18,7 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     className?: string,
     bsSize?: 'large' | 'lg' | 'small' | 'sm';
     cssClassName: string
+    placeHolder?: string
 }
 
 export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
@@ -39,7 +40,11 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
         let sortedColumns = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, this.props.ColumnList, "FriendlyName")
         let selectedColumnIds = this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x))
         let selectedColums: IColumn[] = this.props.ColumnList.filter(x => selectedColumnIds.find(c => c == x.ColumnId))
-        let placeHolder: string = (this.props.SelectionMode == SelectionMode.Single) ? "Select a column" : "Select columns"
+
+        let placeHolder: string = (StringExtensions.IsNotNullOrEmpty(this.props.placeHolder)) ?
+            this.props.placeHolder.toString()
+            :
+            (this.props.SelectionMode == SelectionMode.Single) ? "Select a column" : "Select columns"
 
         // let size: any = (this.props.bsSize) ? this.props.bsSize : 'large';
 
