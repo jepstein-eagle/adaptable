@@ -97,6 +97,8 @@ import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService
 import { LicenceService } from '../Utilities/Services/LicenceService';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { PieChartStrategy } from '../Strategy/PieChartStrategy';
+import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
+import { ScheduleService } from '../Utilities/Services/ScheduleService';
 
 
 //icon to indicate toggle state
@@ -132,6 +134,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public LicenceService: ILicenceService
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public FreeTextColumnService: IFreeTextColumnService
+    public ScheduleService: IScheduleService
 
     public BlotterOptions: IAdaptableBlotterOptions
     public VendorGridName: any
@@ -168,6 +171,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => { let column = this.getHypergridColumn(columnId); return this.valOrFunc(record, column) });
         this.FreeTextColumnService = new FreeTextColumnService(this);
         this.LicenceService = new LicenceService(this);
+        this.ScheduleService = new ScheduleService(this);
+        
         BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);

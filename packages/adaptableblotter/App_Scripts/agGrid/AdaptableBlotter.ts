@@ -131,6 +131,8 @@ import { LicenceService } from '../Utilities/Services/LicenceService';
 import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableBlotterToolPanel';
 import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdaptableBlotterToolPanelContext';
 import 'ag-grid-enterprise';
+import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
+import { ScheduleService } from '../Utilities/Services/ScheduleService';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -149,6 +151,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public CalculatedColumnExpressionService: ICalculatedColumnExpressionService
     public FreeTextColumnService: IFreeTextColumnService
     public LicenceService: ILicenceService
+    public ScheduleService: IScheduleService
 
     private _calculatedColumnPathMap: Map<string, string[]> = new Map()
 
@@ -185,8 +188,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.StyleService = new StyleService(this);
         this.ChartService = new ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService(this);
-
-
+this.ScheduleService = new ScheduleService(this);
 
         const isGridInstantiated = this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
 

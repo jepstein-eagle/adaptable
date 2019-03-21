@@ -41,7 +41,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
 
         colItems[0].Content = report.Name
         colItems[1].Content = ReportHelper.GetReportColumnsDescription(report, this.props.Columns)
-        colItems[2].Content = ReportHelper.GetReportExpressionDescription(report, this.props.Columns, this.props.UserFilters)
+        colItems[2].Content = ReportHelper.GetReportExpressionDescription(report, this.props.Columns)
 
         let exportButton = <OverlayTrigger overlay={<Tooltip id="tooltipButton" > {"Export Report"}</Tooltip >}>
             <DropdownButton

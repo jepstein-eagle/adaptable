@@ -34,7 +34,7 @@ export module ReportHelper {
         }
     }
 
-    export function GetReportExpressionDescription(Report: IReport, cols: IColumn[], userFilters: IUserFilter[]): string {
+    export function GetReportExpressionDescription(Report: IReport, cols: IColumn[]): string {
         if (IsSystemReport(Report)) {
             if (Report.Name == ALL_DATA_REPORT) {
                 return "[All Blotter Data]";

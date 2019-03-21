@@ -9,14 +9,9 @@ import { IAlertApi } from './Interface/IAlertApi';
 
 export class AlertApi extends ApiBase implements IAlertApi {
 
-  public Show(alertHeader: string, alertMessage: string, MessageType: "Success" | "Info" | "Warning" | "Error", showAsPopup: boolean): void {
+  public ShowAlert(alertToShow: IAdaptableAlert, showAsPopup: boolean): void {
     let maxAlerts: number = this.getState().Alert.MaxAlertsInStore;
-    let MessageTypeEnum = MessageType as MessageType;
-    let alertToShow: IAdaptableAlert= {
-      Header: alertHeader,
-      Msg: alertMessage,
-      MessageType: MessageTypeEnum
-    }
+
     this.dispatchAction(SystemRedux.SystemAlertAdd(alertToShow, maxAlerts))
     if (showAsPopup) {
       if (StringExtensions.IsNotNullOrEmpty(this.getState().Alert.AlertPopupDiv)) {
@@ -30,7 +25,16 @@ export class AlertApi extends ApiBase implements IAlertApi {
       }
     }
     this.blotter.AlertFired.Dispatch(this.blotter, { alert: alertToShow });
-    LoggingHelper.LogAlert(alertHeader + ": " + alertMessage, MessageTypeEnum)
+    LoggingHelper.LogAlert(alertToShow.Header + ": " + alertToShow.Msg, alertToShow.MessageType)
+  }
+  public Show(alertHeader: string, alertMessage: string, MessageType: "Success" | "Info" | "Warning" | "Error", showAsPopup: boolean): void {
+    let MessageTypeEnum = MessageType as MessageType;
+    let alertToShow: IAdaptableAlert = {
+      Header: alertHeader,
+      Msg: alertMessage,
+      MessageType: MessageTypeEnum
+    }
+    this.ShowAlert(alertToShow, showAsPopup);
   }
 
   public ShowInfo(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {

@@ -1,12 +1,13 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import {  HelpBlock } from 'react-bootstrap';
+import { HelpBlock, Alert } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
-import { ExportDestination, ReportColumnScope, AccessLevel, ReportRowScope } from '../../Utilities/Enums'
+import { ExportDestination, ReportColumnScope, AccessLevel, ReportRowScope, MessageType } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -27,6 +28,8 @@ import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
 import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
 import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import * as NodeSchedule from 'node-schedule';
+import { IAdaptableAlert } from "../../Utilities/Interface/IMessage";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],
@@ -58,6 +61,31 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     }
 
     render() {
+
+
+       // let exportAction: Redux.Action =ExportRedux.ExportApply("All Data", ExportDestination.CSV);
+        let alertToShow: IAdaptableAlert= {
+            Header: "Test Schedule",
+            Msg: "This alert has worked",
+            MessageType: MessageType.Success
+          }
+          let showAlertAsPopup : boolean= true;
+
+          let alertParams: any[]=[]
+
+       // let alertAction: Redux.Action =PopupRedux.PopupShowAlert(alertToShow)
+      
+        var date = new Date(2019, 2, 20, 17, 46, 0);
+
+       // let alert
+
+             var d = NodeSchedule.scheduleJob(date, () =>{
+                 this.props.Blotter.ScheduleService.RunScheduleAlert(alertToShow, showAlertAsPopup);
+                 this.props.Blotter.ScheduleService.RunScheduleReport("All Data", ExportDestination.CSV);
+             }
+        )
+
+
         let cssClassName: string = this.props.cssClassName + "__export";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__export";
 
@@ -103,7 +131,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
                 {Reports.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Reports} allowOverflow={false} />
-              :
+                    :
                     <HelpBlock >Click 'New' to create a new Report.  A Report is named group of columns and Unique values..</HelpBlock>
                 }
 
@@ -126,6 +154,8 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             </PanelWithButton>
         </div>
     }
+
+ 
 
     onCloseWizard() {
         this.props.onClearPopupParams()

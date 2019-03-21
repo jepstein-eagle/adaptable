@@ -60,7 +60,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             this.throttledRecomputeAndSendLiveExcelEvent()
         })
         this.blotter.onSelectedCellsChanged().Subscribe((sender, event) => {
-            if (ArrayExtensions.IsNotNullOrEmpty( this.CurrentLiveReports)) {
+            if (ArrayExtensions.IsNotNullOrEmpty(this.CurrentLiveReports)) {
                 let liveReport = this.CurrentLiveReports.find(x => x.Report == ReportHelper.SELECTED_CELLS_REPORT)
                 if (liveReport) {
                     this.throttledRecomputeAndSendLiveExcelEvent()
@@ -79,8 +79,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             this.throttledRecomputeAndSendLiveExcelEvent()
             return
         }
-        if (ArrayExtensions.IsNotNullOrEmpty( this.CurrentLiveReports)) {
-             this.isSendingData = true
+        if (ArrayExtensions.IsNotNullOrEmpty(this.CurrentLiveReports)) {
+            this.isSendingData = true
             let ippStyle = this.blotter.getIPPStyle()
             let promises: Promise<any>[] = []
             this.CurrentLiveReports.forEach(cle => {
@@ -250,7 +250,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 */
 
     private getReport(ReportName: string): IReport {
-        return this.ExportState.Reports.find(r => r.Name == ReportName);
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().System.SystemReports.concat(this.ExportState.Reports).find(r => r.Name == ReportName);
     }
 
 

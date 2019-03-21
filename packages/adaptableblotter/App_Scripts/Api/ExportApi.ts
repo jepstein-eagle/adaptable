@@ -12,7 +12,7 @@ export class ExportApi extends ApiBase implements IExportApi {
   }
 
   public GetAllReports(): IReport[] {
-    return this.getState().Export.Reports;
+    return this.getState().System.SystemReports.concat(this.getState().Export.Reports);
   }
 
   public GetAllLiveReports(): ILiveReport[] {
@@ -22,7 +22,7 @@ export class ExportApi extends ApiBase implements IExportApi {
   public SendReport(reportName: string, destination: ExportDestination): void {
     let report: IReport = this.GetAllReports().find(r => r.Name == reportName);
     if (this.checkItemExists(report, reportName, "Report")) {
-      this.dispatchAction(ExportRedux.ExportApply(reportName, destination))
+       this.dispatchAction(ExportRedux.ExportApply(reportName, destination))
     }
   }
 
