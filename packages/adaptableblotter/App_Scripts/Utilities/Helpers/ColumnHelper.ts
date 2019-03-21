@@ -14,6 +14,10 @@ export module ColumnHelper {
         return columnId == "ag-Grid-AutoColumn"
     }
 
+    export function isNumericColumn(column: IColumn): boolean {
+        return column.DataType == DataType.Number;
+    }
+
     export function getColumnDataTypeFromColumnId(columnId: string, columns: IColumn[]): DataType {
         return columns.find(c => c.ColumnId == columnId).DataType;
     }

@@ -73,7 +73,7 @@ import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
 import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
-import { IRawValueDisplayValuePair, IValueTotalCount } from '../View/UIInterfaces';
+import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
@@ -947,42 +947,7 @@ this.ScheduleService = new ScheduleService(this);
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
     }
 
-    public getColumnValueTotalCountAllRows(columnId: string): IValueTotalCount[] {
-        let returnValues: IValueTotalCount[] = [];
-        let useRawValue: boolean = this.useRawValueForColumn(columnId);
-        this.gridOptions.api.forEachNode(rowNode => {
-            this.getValueTotalFromNode(columnId, rowNode, useRawValue, returnValues);
-        })
-        return returnValues;
-    }
-
-    public getColumnValueTotalCountVisibleRows(columnId: string): IValueTotalCount[] {
-        let returnValues: IValueTotalCount[] = [];
-        let useRawValue: boolean = this.useRawValueForColumn(columnId);
-        this.gridOptions.api.forEachNodeAfterFilter(rowNode => {
-            this.getValueTotalFromNode(columnId, rowNode, useRawValue, returnValues);
-        })
-        return returnValues;
-    }
-
-    private getValueTotalFromNode(columnId: string, rowNode: RowNode, useRawValue: boolean, returnValues: IValueTotalCount[]): void {
-        if (!rowNode.group) {
-            let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
-            let displayValue: string = (useRawValue) ?
-                Helper.StringifyValue(rawValue) :
-                this.getDisplayValueFromRecord(rowNode, columnId);
-
-            let existingItem = returnValues.find(rv => rv.Value == displayValue);
-            if (existingItem) {
-                existingItem.Count++;
-            } else {
-                returnValues.push({ Value: displayValue, Count: 1 })
-            }
-
-        }
-    }
-
-    private useRawValueForColumn(columnId: string): boolean {
+      private useRawValueForColumn(columnId: string): boolean {
         // will add more in due course I'm sure but for now only percent bar columns return false...
         if (ArrayExtensions.IsEmpty(this.getState().PercentBar.PercentBars)) {
             return false;

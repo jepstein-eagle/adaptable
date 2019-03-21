@@ -35,7 +35,7 @@ import { CustomSortDataSource } from './CustomSortDataSource'
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IPPStyle } from "../Utilities/Interface/Reports/IPPStyle";
-import { IRawValueDisplayValuePair, IValueTotalCount } from '../View/UIInterfaces';
+import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
@@ -771,35 +771,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return Array.from(returnMap.values())
     }
 
-    public getColumnValueTotalCountAllRows(columnId: string): IValueTotalCount[] {
-        let returnValues: IValueTotalCount[] = [];
-        let data = this.hyperGrid.behavior.dataModel.getData()
-        for (var index = 0; index < data.length; index++) {
-            var element = data[index]
-            this.getValueTotalFromNode(columnId, element, returnValues);
-        }
-        return returnValues;
-    }
-
-    public getColumnValueTotalCountVisibleRows(columnId: string): IValueTotalCount[] {
-        let returnValues: IValueTotalCount[] = [];
-        let data = this.hyperGrid.behavior.dataModel.getIndexedData()
-        for (var index = 0; index < data.length; index++) {
-            var element = data[index]
-            this.getValueTotalFromNode(columnId, element, returnValues);
-        }
-        return returnValues;
-    }
-
-    private getValueTotalFromNode(columnId: string, element: any, returnValues: IValueTotalCount[]): void {
-        let displayValue = this.getDisplayValueFromRecord(element, columnId)
-        let existingItem = returnValues.find(rv => rv.Value == displayValue);
-        if (existingItem) {
-            existingItem.Count++;
-        } else {
-            returnValues.push({ Value: displayValue, Count: 1 })
-        }
-    }
   
 
     public getDisplayValue(id: any, columnId: string): string {

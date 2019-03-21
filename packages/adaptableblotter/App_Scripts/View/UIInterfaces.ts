@@ -14,11 +14,6 @@ export interface IColItem {
     Content: any;
 }
 
-export interface IValueTotalCount {
-    Value: any,
-    Count: number
-}
-
 export interface FreeTextStoredValue {
     PrimaryKey: any,
     FreeText: any

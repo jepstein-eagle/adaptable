@@ -4,7 +4,7 @@ import { IChartDefinition, ICategoryChartDefinition } from "../Interface/Blotter
 import { IColumnValueExpression } from "../Interface/Expression/IColumnValueExpression";
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
-import { DistinctCriteriaPairValue } from '../Enums';
+import { DistinctCriteriaPairValue, DataType } from '../Enums';
 import { IKeyValuePair } from "../Interface/IKeyValuePair";
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { Expression } from '../../Utilities/Expression';
@@ -108,6 +108,7 @@ export class ChartService implements IChartService {
 
         let dataCounter = new Map<any, number>();
         // let dataValueTotal = 0;
+        let columns: IColumn[]= this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
 
         let hasLabelColumn = StringExtensions.IsNotNullOrEmpty(labelColumnId);
         let hasValueColumn = StringExtensions.IsNotNullOrEmpty(valueColumnId);
@@ -118,12 +119,14 @@ export class ChartService implements IChartService {
         let valueTotal = 0;
 
         if (hasLabelColumn && hasValueColumn) {
+          isGroupingColumns = true;
+          let  isValueColumnNumeric : boolean= ColumnHelper.getColumnDataTypeFromColumnId(valueColumnId, columns) == DataType.Number;
           this.blotter.forAllRecordsDo((row) => {
             let group = this.blotter.getRawValueFromRecord(row, labelColumnId);
             let value = this.blotter.getRawValueFromRecord(row, valueColumnId);
             let count: number;
-            isGroupingColumns = true;
-            if (isNaN(value)) {
+            
+            if (!isValueColumnNumeric) {
               count = 1;
               // TODO decided if we should group by 2 columns but label will be long (add this as an option?)
               // if (group != value) {
@@ -132,7 +135,7 @@ export class ChartService implements IChartService {
             } else {
               count = parseFloat(value);
             }
-            // let count = isNaN(value) ? 1 : parseFloat(value);
+       
             if (dataCounter.has(group)) {
               dataCounter.set(group, dataCounter.get(group) + count);
             } else {
@@ -142,12 +145,14 @@ export class ChartService implements IChartService {
           });
         } else if (hasValueColumn) {
           let i = 0;
+          isGroupingColumns =  ColumnHelper.getColumnDataTypeFromColumnId(valueColumnId, columns) == DataType.Number;
+
           this.blotter.forAllRecordsDo((row) => {
             // we have only valueColumnId so let check if it numeric or non-numeric cell values
-            let cell = this.blotter.getRawValueFromRecord(row, valueColumnId);
-            isGroupingColumns = isNaN(cell);
-            let group = isGroupingColumns ? cell : i;
-            let count = isGroupingColumns ? 1 : parseFloat(cell);
+            let cellValue = this.blotter.getRawValueFromRecord(row, valueColumnId);
+           
+            let group = isGroupingColumns ? cellValue : i;
+            let count = isGroupingColumns ? 1 : parseFloat(cellValue);
             if (dataCounter.has(group)) {
               dataCounter.set(group, dataCounter.get(group) + count);
             } else {
@@ -158,12 +163,12 @@ export class ChartService implements IChartService {
           });
         } else if (hasLabelColumn) {
           let i = 0;
+          isGroupingColumns =  ColumnHelper.getColumnDataTypeFromColumnId(labelColumnId, columns) == DataType.Number;
           this.blotter.forAllRecordsDo((row) => {
             // we have only labelColumnId so let check if it numeric or non-numeric cell values
-            let cell = this.blotter.getRawValueFromRecord(row, labelColumnId);
-            isGroupingColumns = isNaN(cell);
-            let group = isGroupingColumns ? cell : i;
-            let count = isGroupingColumns ? 1 : parseFloat(cell);
+            let cellValue = this.blotter.getRawValueFromRecord(row, labelColumnId);
+            let group = isGroupingColumns ? cellValue : i;
+            let count = isGroupingColumns ? 1 : parseFloat(cellValue);
             if (dataCounter.has(group)) {
               dataCounter.set(group, dataCounter.get(group) + count);
             } else {
@@ -179,7 +184,7 @@ export class ChartService implements IChartService {
         dataCounter.forEach((value, name) => {
           let item: any = { };
           item.Name = name;
-          item.Value = Math.round(value * 10) / 10;
+          item.Value = Helper.RoundNumber(value, 1);// Math.round(value * 10) / 10;
           // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
           item.Ratio = Math.round(value / valueTotal * 1000) / 10;
           if (isGroupingColumns) {
