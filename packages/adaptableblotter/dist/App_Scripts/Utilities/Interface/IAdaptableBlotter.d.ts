@@ -2,7 +2,7 @@ import { DistinctCriteriaPairValue } from '../Enums';
 import { ICellInfo } from "./ICellInfo";
 import { IVendorGridInfo } from "./IVendorGridInfo";
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore';
-import { IRawValueDisplayValuePair, IValueTotalCount } from '../../View/UIInterfaces';
+import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 import { EventDispatcher } from '../EventDispatcher';
 import { IGridSort } from "./IGridSort";
@@ -22,6 +22,7 @@ import { IPPStyle } from "./Reports/IPPStyle";
 import { IEvent } from './IEvent';
 import { IAdaptableStrategyCollection } from '../../Strategy/Interface/IStrategy';
 import { ILicenceService } from '../Services/Interface/ILicenceService';
+import { IScheduleService } from '../Services/Interface/IScheduleService';
 /**
  *  The only interface for the AdaptableBlotter
  *  Contains all the properties and methods that each implemenation must include
@@ -41,6 +42,7 @@ export interface IAdaptableBlotter {
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
     ChartService: IChartService;
     LicenceService: ILicenceService;
+    ScheduleService: IScheduleService;
     onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any>;
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
@@ -63,8 +65,6 @@ export interface IAdaptableBlotter {
     getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
     getRecordIsSatisfiedFunctionFromRecord(record: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
     getDisplayValueFromRawValue(columnId: string, rawValue: any): any;
-    getColumnValueTotalCountAllRows(columnId: string): IValueTotalCount[];
-    getColumnValueTotalCountVisibleRows(columnId: string): IValueTotalCount[];
     setValue(cellInfo: ICellInfo): void;
     setValueBatch(batchValues: ICellInfo[]): void;
     cancelEdit(): any;

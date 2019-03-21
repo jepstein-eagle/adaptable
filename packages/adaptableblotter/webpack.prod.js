@@ -39,9 +39,9 @@ module.exports = {
         new CopyWebpackPlugin([{
             from: 'App_Scripts/Styles',
             to: 'App_Scripts/Styles',
-            ignore: [ '*.ts' ],
+            ignore: ['*.ts'],
         }]),
-      ],
+    ],
     module: {
         loaders: [
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
@@ -49,11 +49,14 @@ module.exports = {
             {
                 test: /\.ts(x?)$/, loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime!ts-loader',
             },
+            {
+                include: /\.json$/, loaders: ["json-loader"]
+            },
             // JW: added this section on 2/8/18 to mimic what we do in webpack.vendor.js. but not sure if that is right.
             {
                 test: /\.js(x?)$/, loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime',
                 include: [
-                   path.resolve(__dirname, "node_modules/igniteui-react-core"),
+                    path.resolve(__dirname, "node_modules/igniteui-react-core"),
                     path.resolve(__dirname, "node_modules/igniteui-react-charts")
                 ],
             },

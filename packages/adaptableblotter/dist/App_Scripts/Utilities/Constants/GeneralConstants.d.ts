@@ -16,6 +16,8 @@ export declare const EMPTY_ARRAY: any[];
 export declare const HALF_SECOND: number;
 export declare const DEFAULT_DARK_GREEN_COLOR: string;
 export declare const DEFAULT_DARK_RED_COLOR: string;
+export declare const YEAR_ADD: number;
+export declare const MONTH_ADD: number;
 export declare const ALERT_DEFAULT_MAX_ALERTS_IN_STORE: number;
 export declare const CALENDAR_DEFAULT_CURRENT_CALENDER: string;
 export declare const CHART_DEFAULT_REFRESH_RATE: number;

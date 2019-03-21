@@ -9,6 +9,7 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
     className?: string;
     bsSize?: 'large' | 'lg' | 'small' | 'sm';
     cssClassName: string;
+    placeHolder?: string;
 }
 export declare class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
     componentWillReceiveProps(nextProps: ColumnSelectorProps, nextContext: any): void;

@@ -5,7 +5,7 @@ import { EventDispatcher } from '../Utilities/EventDispatcher';
 import { DataType, DistinctCriteriaPairValue } from '../Utilities/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IPPStyle } from "../Utilities/Interface/Reports/IPPStyle";
-import { IRawValueDisplayValuePair, IValueTotalCount } from '../View/UIInterfaces';
+import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
 import { IColumn } from '../Utilities/Interface/IColumn';
@@ -26,6 +26,7 @@ import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTex
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
+import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
     Strategies: IAdaptableStrategyCollection;
@@ -38,6 +39,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     LicenceService: ILicenceService;
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
     FreeTextColumnService: IFreeTextColumnService;
+    ScheduleService: IScheduleService;
     BlotterOptions: IAdaptableBlotterOptions;
     VendorGridName: any;
     EmbedColumnMenu: boolean;
@@ -95,9 +97,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     removeCustomSort(columnId: string): void;
     ReindexAndRepaint(): void;
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
-    getColumnValueTotalCountAllRows(columnId: string): IValueTotalCount[];
-    getColumnValueTotalCountVisibleRows(columnId: string): IValueTotalCount[];
-    private getValueTotalFromNode;
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: any, columnId: string): any;
     getDisplayValueFromRawValue(colId: string, rawValue: any): any;

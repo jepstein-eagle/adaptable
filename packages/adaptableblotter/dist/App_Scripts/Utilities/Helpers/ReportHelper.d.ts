@@ -1,5 +1,4 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { IUserFilter } from "../Interface/BlotterObjects/IUserFilter";
 import { IReport } from "../Interface/BlotterObjects/IReport";
 import { IColumn } from '../Interface/IColumn';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
@@ -9,7 +8,7 @@ export declare module ReportHelper {
     const SELECTED_CELLS_REPORT = "Selected Cells";
     function IsSystemReport(Report: IReport): boolean;
     function GetReportColumnsDescription(Report: IReport, cols: IColumn[]): string;
-    function GetReportExpressionDescription(Report: IReport, cols: IColumn[], userFilters: IUserFilter[]): string;
+    function GetReportExpressionDescription(Report: IReport, cols: IColumn[]): string;
     function ConvertReportToArray(blotter: IAdaptableBlotter, Report: IReport): IStrategyActionReturn<any[]>;
     function CreateSystemReports(): Array<IReport>;
 }

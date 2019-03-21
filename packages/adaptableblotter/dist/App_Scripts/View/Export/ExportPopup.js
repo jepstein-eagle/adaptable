@@ -36,6 +36,7 @@ class ExportPopupComponent extends React.Component {
         }
     }
     render() {
+        // let exportAction: Redux.Action =ExportRedux.ExportApply("All Data", ExportDestination.CSV);
         let cssClassName = this.props.cssClassName + "__export";
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__export";
         let infoBody = ["Create a 'Report' (or use a predefined one) and then export it to specified location.", React.createElement("br", null), React.createElement("br", null)];
@@ -46,7 +47,7 @@ class ExportPopupComponent extends React.Component {
             { Content: "Export", Size: 1 },
             { Content: "", Size: 3 },
         ];
-        let Reports = this.props.Reports.map((Report, index) => {
+        let Reports = this.props.SystemReports.concat(this.props.Reports).map((Report, index) => {
             return React.createElement(ReportEntityRow_1.ReportEntityRow, { cssClassName: cssClassName, AdaptableBlotterObject: Report, key: index, colItems: colItems, Index: index, Columns: this.props.Columns, IsLast: index == this.props.Reports.length - 1, UserFilters: this.props.UserFilters, LiveReports: this.props.LiveReports, onShare: () => this.props.onShare(Report), TeamSharingActivated: this.props.TeamSharingActivated, onExport: (exportDestination) => this.onApplyExport(Report.Name, exportDestination), onReportStopLive: (exportDestination) => this.props.onReportStopLive(Report.Name, exportDestination), onEdit: (index, Report) => this.onEdit(index, Report), onDeleteConfirm: ExportRedux.ReportDelete(index) });
         });
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Report", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
@@ -95,6 +96,7 @@ class ExportPopupComponent extends React.Component {
 function mapStateToProps(state, ownProps) {
     return {
         Reports: state.Export.Reports,
+        SystemReports: state.System.SystemReports,
         CurrentReport: state.Export.CurrentReport,
         LiveReports: state.System.CurrentLiveReports,
     };

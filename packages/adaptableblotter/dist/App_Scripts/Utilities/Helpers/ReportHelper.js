@@ -24,7 +24,7 @@ var ReportHelper;
         }
     }
     ReportHelper.GetReportColumnsDescription = GetReportColumnsDescription;
-    function GetReportExpressionDescription(Report, cols, userFilters) {
+    function GetReportExpressionDescription(Report, cols) {
         if (IsSystemReport(Report)) {
             if (Report.Name == ReportHelper.ALL_DATA_REPORT) {
                 return "[All Blotter Data]";

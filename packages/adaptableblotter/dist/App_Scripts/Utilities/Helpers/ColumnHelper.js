@@ -12,6 +12,10 @@ var ColumnHelper;
         return columnId == "ag-Grid-AutoColumn";
     }
     ColumnHelper.isSpecialColumn = isSpecialColumn;
+    function isNumericColumn(column) {
+        return column.DataType == Enums_1.DataType.Number;
+    }
+    ColumnHelper.isNumericColumn = isNumericColumn;
     function getColumnDataTypeFromColumnId(columnId, columns) {
         return columns.find(c => c.ColumnId == columnId).DataType;
     }
@@ -109,10 +113,39 @@ var ColumnHelper;
         }
     }
     ColumnHelper.getColumnFromName = getColumnFromName;
+    function getColumnsOfType(columns, dataType) {
+        switch (dataType) {
+            case Enums_1.DataType.All:
+                return columns;
+            case Enums_1.DataType.Boolean:
+                return this.getBooleanColumns(columns, Enums_1.DataType.Boolean);
+            case Enums_1.DataType.Date:
+                return this.getBooleanColumns(columns, Enums_1.DataType.Date);
+            case Enums_1.DataType.Number:
+                return this.getBooleanColumns(columns, Enums_1.DataType.Number);
+            case Enums_1.DataType.String:
+                return this.getBooleanColumns(columns, Enums_1.DataType.String);
+            default:
+                return columns;
+        }
+    }
+    ColumnHelper.getColumnsOfType = getColumnsOfType;
     function getNumericColumns(columns) {
         return columns.filter(c => c.DataType == Enums_1.DataType.Number);
     }
     ColumnHelper.getNumericColumns = getNumericColumns;
+    function getStringColumns(columns) {
+        return columns.filter(c => c.DataType == Enums_1.DataType.String);
+    }
+    ColumnHelper.getStringColumns = getStringColumns;
+    function getDateColumns(columns) {
+        return columns.filter(c => c.DataType == Enums_1.DataType.Date);
+    }
+    ColumnHelper.getDateColumns = getDateColumns;
+    function getBooleanColumns(columns) {
+        return columns.filter(c => c.DataType == Enums_1.DataType.Boolean);
+    }
+    ColumnHelper.getBooleanColumns = getBooleanColumns;
     function getColumnCategoryFromColumnCategories(columnId, ColumnCategoryns) {
         let returnValue = "";
         ColumnCategoryns.forEach(c => {

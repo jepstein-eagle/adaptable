@@ -38,7 +38,8 @@ var BlotterHelper;
     }
     BlotterHelper.IsConfigServerEnabled = IsConfigServerEnabled;
     function CheckLicenceKey(licenceInfo) {
-        let universalOrEndUser = " (" + licenceInfo.LicenceUserType + ");";
+        let universalOrEndUser = " (" + licenceInfo.LicenceUserType + "). ";
+        let expiryDate = 'Expires: ' + licenceInfo.ExpiryDate.toLocaleDateString();
         switch (licenceInfo.LicenceScopeType) {
             case Enums_1.LicenceScopeType.Community:
                 let licenceMessage = '\n';
@@ -51,10 +52,10 @@ var BlotterHelper;
                 LoggingHelper_1.LoggingHelper.LogError(licenceMessage);
                 break;
             case Enums_1.LicenceScopeType.Standard:
-                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Standard" + universalOrEndUser);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Standard" + universalOrEndUser + expiryDate);
                 break;
             case Enums_1.LicenceScopeType.Enterprise:
-                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Enterprise" + universalOrEndUser);
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Enterprise" + universalOrEndUser + expiryDate);
                 break;
         }
         if (!licenceInfo.IsLicenceInDate) {

@@ -24,12 +24,13 @@ const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
 class ExportToolbarControlComponent extends React.Component {
     render() {
         const selectReportString = "Select a Report";
+        let allReports = this.props.SystemReports.concat(this.props.Reports);
         let cssClassName = this.props.cssClassName + "__export";
-        let savedReport = this.props.Reports.find(s => s.Name == this.props.CurrentReport);
+        let savedReport = allReports.find(s => s.Name == this.props.CurrentReport);
         let savedReportIndex = this.props.Reports.findIndex(s => s.Name == this.props.CurrentReport);
         let currentReportId = StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentReport) ?
             selectReportString : this.props.CurrentReport;
-        let availableReports = this.props.Reports.filter(s => s.Name != this.props.CurrentReport).map((report, index) => {
+        let availableReports = allReports.filter(s => s.Name != this.props.CurrentReport).map((report, index) => {
             return React.createElement(react_bootstrap_1.MenuItem, { key: index, eventKey: index, onClick: () => this.onSelectedReportChanged(report.Name) }, report.Name);
         });
         let csvMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.props.onApplyExport(currentReportId, Enums_1.ExportDestination.CSV), key: "csv" }, "CSV");
@@ -69,7 +70,7 @@ class ExportToolbarControlComponent extends React.Component {
             React.createElement(react_bootstrap_1.Glyphicon, { glyph: StrategyConstants.ExportGlyph }));
         let content = React.createElement("span", null,
             React.createElement(react_bootstrap_1.InputGroup, null,
-                React.createElement(react_bootstrap_1.DropdownButton, { disabled: availableReports.length == 0, style: { minWidth: "120px" }, className: cssClassName, bsSize: this.props.DashboardSize, bsStyle: "default", title: currentReportId, id: "report" }, availableReports),
+                React.createElement(react_bootstrap_1.DropdownButton, { disabled: allReports.length == 0, style: { minWidth: "120px" }, className: cssClassName, bsSize: this.props.DashboardSize, bsStyle: "default", title: currentReportId, id: "report" }, availableReports),
                 currentReportId != selectReportString &&
                     React.createElement(react_bootstrap_1.InputGroup.Button, null,
                         React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedReportChanged(""), size: this.props.DashboardSize, overrideTooltip: "Clear Report", overrideDisableButton: currentReportId == selectReportString, DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel, showDefaultStyle: this.props.UseSingleColourForButtons }))),
@@ -92,6 +93,7 @@ function mapStateToProps(state, ownProps) {
     return {
         CurrentReport: state.Export.CurrentReport,
         Reports: state.Export.Reports,
+        SystemReports: state.System.SystemReports,
         LiveReports: state.System.CurrentLiveReports,
     };
 }

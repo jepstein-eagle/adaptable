@@ -86,6 +86,7 @@ const CalculatedColumnHelper_1 = require("../Utilities/Helpers/CalculatedColumnH
 const LicenceService_1 = require("../Utilities/Services/LicenceService");
 const AdaptableBlotterToolPanel_1 = require("../View/Components/ToolPanel/AdaptableBlotterToolPanel");
 require("ag-grid-enterprise");
+const ScheduleService_1 = require("../Utilities/Services/ScheduleService");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this._calculatedColumnPathMap = new Map();
@@ -121,6 +122,7 @@ class AdaptableBlotter {
         this.StyleService = new StyleService_1.StyleService(this);
         this.ChartService = new ChartService_1.ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService_1.FreeTextColumnService(this);
+        this.ScheduleService = new ScheduleService_1.ScheduleService(this);
         const isGridInstantiated = this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
         if (!isGridInstantiated) {
             const instantiateResult = this.instantiateAgGrid();
@@ -770,37 +772,6 @@ class AdaptableBlotter {
             });
         }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
-    }
-    getColumnValueTotalCountAllRows(columnId) {
-        let returnValues = [];
-        let useRawValue = this.useRawValueForColumn(columnId);
-        this.gridOptions.api.forEachNode(rowNode => {
-            this.getValueTotalFromNode(columnId, rowNode, useRawValue, returnValues);
-        });
-        return returnValues;
-    }
-    getColumnValueTotalCountVisibleRows(columnId) {
-        let returnValues = [];
-        let useRawValue = this.useRawValueForColumn(columnId);
-        this.gridOptions.api.forEachNodeAfterFilter(rowNode => {
-            this.getValueTotalFromNode(columnId, rowNode, useRawValue, returnValues);
-        });
-        return returnValues;
-    }
-    getValueTotalFromNode(columnId, rowNode, useRawValue, returnValues) {
-        if (!rowNode.group) {
-            let rawValue = this.gridOptions.api.getValue(columnId, rowNode);
-            let displayValue = (useRawValue) ?
-                Helper_1.Helper.StringifyValue(rawValue) :
-                this.getDisplayValueFromRecord(rowNode, columnId);
-            let existingItem = returnValues.find(rv => rv.Value == displayValue);
-            if (existingItem) {
-                existingItem.Count++;
-            }
-            else {
-                returnValues.push({ Value: displayValue, Count: 1 });
-            }
-        }
     }
     useRawValueForColumn(columnId) {
         // will add more in due course I'm sure but for now only percent bar columns return false...

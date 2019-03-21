@@ -53,6 +53,13 @@ export declare enum ToolTipType {
     Category = "Category",
     None = "None"
 }
+export declare enum PieChartLabelPositions {
+    BestFit = "BestFit",
+    Center = "Center",
+    InsideEnd = "InsideEnd",
+    OutsideEnd = "OutsideEnd",
+    None = "None"
+}
 export declare enum AxisAngle {
     Horizontal = "Horizontal",
     Diagonal = "Diagonal",

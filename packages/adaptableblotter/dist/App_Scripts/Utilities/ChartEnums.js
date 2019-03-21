@@ -66,6 +66,14 @@ var ToolTipType;
     ToolTipType["Category"] = "Category";
     ToolTipType["None"] = "None";
 })(ToolTipType = exports.ToolTipType || (exports.ToolTipType = {}));
+var PieChartLabelPositions;
+(function (PieChartLabelPositions) {
+    PieChartLabelPositions["BestFit"] = "BestFit";
+    PieChartLabelPositions["Center"] = "Center";
+    PieChartLabelPositions["InsideEnd"] = "InsideEnd";
+    PieChartLabelPositions["OutsideEnd"] = "OutsideEnd";
+    PieChartLabelPositions["None"] = "None";
+})(PieChartLabelPositions = exports.PieChartLabelPositions || (exports.PieChartLabelPositions = {}));
 var AxisAngle;
 (function (AxisAngle) {
     AxisAngle["Horizontal"] = "Horizontal";

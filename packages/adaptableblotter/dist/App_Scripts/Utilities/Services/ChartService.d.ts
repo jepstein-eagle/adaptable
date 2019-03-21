@@ -8,5 +8,7 @@ export declare class ChartService implements IChartService {
     BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): any;
     private buildTotal;
     private getXAxisColumnValues;
-    BuildPieChartData(columnId: string, visibleRowsOnly: boolean): any[];
+    BuildPieChartData(valueColumnId: string, labelColumnId: string): any[];
+    toShort(largeValue: number): string;
+    orderAscending(a: any, b: any): 1 | -1 | 0;
 }

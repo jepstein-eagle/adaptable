@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const CalendarHelper_1 = require("../../Utilities/Helpers/CalendarHelper");
 const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
+const ReportHelper_1 = require("../../Utilities/Helpers/ReportHelper");
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
 This allows us to keep the other reducers pure in terms of everything persists
@@ -118,6 +119,7 @@ const initialSystemState = {
     ChartVisibility: GeneralConstants_1.SYSTEM_DEFAULT_CHART_VISIBILITY,
     CalculatedColumnErrorMessage: GeneralConstants_1.EMPTY_STRING,
     IPPDomainsPages: GeneralConstants_1.EMPTY_ARRAY,
+    SystemReports: ReportHelper_1.ReportHelper.CreateSystemReports(),
     ReportErrorMessage: GeneralConstants_1.EMPTY_STRING
 };
 exports.SystemReducer = (state = initialSystemState, action) => {

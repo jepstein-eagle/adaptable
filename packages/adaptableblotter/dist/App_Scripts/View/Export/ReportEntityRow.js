@@ -36,7 +36,7 @@ class ReportEntityRow extends React.Component {
         let colItems = [].concat(this.props.colItems);
         colItems[0].Content = report.Name;
         colItems[1].Content = ReportHelper_1.ReportHelper.GetReportColumnsDescription(report, this.props.Columns);
-        colItems[2].Content = ReportHelper_1.ReportHelper.GetReportExpressionDescription(report, this.props.Columns, this.props.UserFilters);
+        colItems[2].Content = ReportHelper_1.ReportHelper.GetReportExpressionDescription(report, this.props.Columns);
         let exportButton = React.createElement(react_bootstrap_1.OverlayTrigger, { overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                 " ",
                 "Export Report") },

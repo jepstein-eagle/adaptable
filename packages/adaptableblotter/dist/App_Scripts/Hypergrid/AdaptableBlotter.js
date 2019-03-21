@@ -65,6 +65,7 @@ const ChartStrategy_1 = require("../Strategy/ChartStrategy");
 const GeneralConstants_1 = require("../Utilities/Constants/GeneralConstants");
 const LicenceService_1 = require("../Utilities/Services/LicenceService");
 const PieChartStrategy_1 = require("../Strategy/PieChartStrategy");
+const ScheduleService_1 = require("../Utilities/Services/ScheduleService");
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
 const DOWNWARDS_BLACK_ARROW = '\u25bc'; // aka '▼'
@@ -112,6 +113,7 @@ class AdaptableBlotter {
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService_1.CalculatedColumnExpressionService(this, (columnId, record) => { let column = this.getHypergridColumn(columnId); return this.valOrFunc(record, column); });
         this.FreeTextColumnService = new FreeTextColumnService_1.FreeTextColumnService(this);
         this.LicenceService = new LicenceService_1.LicenceService(this);
+        this.ScheduleService = new ScheduleService_1.ScheduleService(this);
         BlotterHelper_1.BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
         this.AdaptableBlotterStore = new AdaptableBlotterStore_1.AdaptableBlotterStore(this);
         //we build the list of strategies
@@ -626,34 +628,6 @@ class AdaptableBlotter {
             }
         }
         return Array.from(returnMap.values());
-    }
-    getColumnValueTotalCountAllRows(columnId) {
-        let returnValues = [];
-        let data = this.hyperGrid.behavior.dataModel.getData();
-        for (var index = 0; index < data.length; index++) {
-            var element = data[index];
-            this.getValueTotalFromNode(columnId, element, returnValues);
-        }
-        return returnValues;
-    }
-    getColumnValueTotalCountVisibleRows(columnId) {
-        let returnValues = [];
-        let data = this.hyperGrid.behavior.dataModel.getIndexedData();
-        for (var index = 0; index < data.length; index++) {
-            var element = data[index];
-            this.getValueTotalFromNode(columnId, element, returnValues);
-        }
-        return returnValues;
-    }
-    getValueTotalFromNode(columnId, element, returnValues) {
-        let displayValue = this.getDisplayValueFromRecord(element, columnId);
-        let existingItem = returnValues.find(rv => rv.Value == displayValue);
-        if (existingItem) {
-            existingItem.Count++;
-        }
-        else {
-            returnValues.push({ Value: displayValue, Count: 1 });
-        }
     }
     getDisplayValue(id, columnId) {
         let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id);

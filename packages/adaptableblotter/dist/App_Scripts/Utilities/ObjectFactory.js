@@ -8,11 +8,12 @@ const GeneralConstants_1 = require("./Constants/GeneralConstants");
 const DefaultCategoryChartProperties_1 = require("./Defaults/DefaultCategoryChartProperties");
 var ObjectFactory;
 (function (ObjectFactory) {
-    function CreateLicenceInfo(licenceType, isLicenceInDate, licenceUserType) {
+    function CreateLicenceInfo(licenceType, isLicenceInDate, licenceUserType, expiryDate) {
         return {
             LicenceScopeType: licenceType,
             IsLicenceInDate: isLicenceInDate,
-            LicenceUserType: licenceUserType
+            LicenceUserType: licenceUserType,
+            ExpiryDate: expiryDate
         };
     }
     ObjectFactory.CreateLicenceInfo = CreateLicenceInfo;

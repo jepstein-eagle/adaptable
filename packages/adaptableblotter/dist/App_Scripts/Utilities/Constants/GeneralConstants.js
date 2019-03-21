@@ -18,6 +18,8 @@ exports.EMPTY_ARRAY = [];
 exports.HALF_SECOND = 500;
 exports.DEFAULT_DARK_GREEN_COLOR = '#008000';
 exports.DEFAULT_DARK_RED_COLOR = '#FF0000';
+exports.YEAR_ADD = 1985;
+exports.MONTH_ADD = 47;
 /*
 Redux / State Defaults
 Try to put all our Redux / State defaults here and ONLY reference from here - avoid magic numbers / strings.

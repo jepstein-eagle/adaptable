@@ -13,7 +13,7 @@ class ReportSummaryWizard extends React.Component {
         let keyValuePairs = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Columns", Value: ReportHelper_1.ReportHelper.GetReportColumnsDescription(this.props.Data, this.props.Columns) },
-            { Key: "Rows", Value: ReportHelper_1.ReportHelper.GetReportExpressionDescription(this.props.Data, this.props.Columns, this.props.UserFilters) }
+            { Key: "Rows", Value: ReportHelper_1.ReportHelper.GetReportExpressionDescription(this.props.Data, this.props.Columns) }
         ];
         let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyConstants.ExportStrategyName });
         return React.createElement("div", { className: cssClassName }, summaryPage);

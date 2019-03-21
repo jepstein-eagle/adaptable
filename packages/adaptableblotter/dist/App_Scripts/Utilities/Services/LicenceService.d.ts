@@ -6,9 +6,11 @@ export declare class LicenceService implements ILicenceService {
     constructor(blotter: IAdaptableBlotter);
     LicenceInfo: ILicenceInfo;
     private setLicenceInfo;
+    private CreateCommunityLicence;
     private isPrimeNumber;
     private isCorrectLength;
-    private checkDate;
+    private getExpiryDate;
+    private isExpiryDateValid;
     private getLicenceUserType;
     private isDemoSite;
 }

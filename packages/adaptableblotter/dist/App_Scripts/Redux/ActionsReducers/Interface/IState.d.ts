@@ -61,6 +61,7 @@ export interface SystemState extends ISystemState {
     ChartVisibility: ChartVisibility;
     CalculatedColumnErrorMessage: string;
     IPPDomainsPages: IPPDomain[];
+    SystemReports: IReport[];
     ReportErrorMessage: string;
 }
 export interface GridState extends ISystemState {

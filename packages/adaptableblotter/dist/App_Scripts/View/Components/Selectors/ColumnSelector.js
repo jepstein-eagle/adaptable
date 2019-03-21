@@ -24,7 +24,10 @@ class ColumnSelector extends React.Component {
         let sortedColumns = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, this.props.ColumnList, "FriendlyName");
         let selectedColumnIds = this.props.SelectedColumnIds.filter(x => StringExtensions_1.StringExtensions.IsNotNullOrEmpty(x));
         let selectedColums = this.props.ColumnList.filter(x => selectedColumnIds.find(c => c == x.ColumnId));
-        let placeHolder = (this.props.SelectionMode == Enums_1.SelectionMode.Single) ? "Select a column" : "Select columns";
+        let placeHolder = (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.placeHolder)) ?
+            this.props.placeHolder.toString()
+            :
+                (this.props.SelectionMode == Enums_1.SelectionMode.Single) ? "Select a column" : "Select columns";
         // let size: any = (this.props.bsSize) ? this.props.bsSize : 'large';
         let isEmptySelectedColumnIds = this.props.SelectedColumnIds.filter(x => StringExtensions_1.StringExtensions.IsNotNullOrEmpty(x)).length == 0;
         return React.createElement("div", { className: cssClassName },

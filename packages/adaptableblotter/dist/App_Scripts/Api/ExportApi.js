@@ -7,7 +7,7 @@ class ExportApi extends ApiBase_1.ApiBase {
         return this.getState().Export.CurrentReport;
     }
     GetAllReports() {
-        return this.getState().Export.Reports;
+        return this.getState().System.SystemReports.concat(this.getState().Export.Reports);
     }
     GetAllLiveReports() {
         return this.getState().System.CurrentLiveReports;

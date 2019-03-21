@@ -23,12 +23,13 @@ import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalcul
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
-import { IRawValueDisplayValuePair, IValueTotalCount } from '../View/UIInterfaces';
+import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { Grid, RowNode } from "ag-grid-community";
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
 import 'ag-grid-enterprise';
+import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
     Strategies: IAdaptableStrategyCollection;
@@ -44,6 +45,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
     FreeTextColumnService: IFreeTextColumnService;
     LicenceService: ILicenceService;
+    ScheduleService: IScheduleService;
     private _calculatedColumnPathMap;
     private abContainerElement;
     private gridOptions;
@@ -108,9 +110,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     setCustomSort(columnId: string, comparer: Function): void;
     removeCustomSort(columnId: string): void;
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
-    getColumnValueTotalCountAllRows(columnId: string): IValueTotalCount[];
-    getColumnValueTotalCountVisibleRows(columnId: string): IValueTotalCount[];
-    private getValueTotalFromNode;
     private useRawValueForColumn;
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: RowNode, columnId: string): string;

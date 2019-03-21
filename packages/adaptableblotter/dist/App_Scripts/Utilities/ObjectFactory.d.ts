@@ -28,7 +28,7 @@ import { Expression } from '../Utilities/Expression';
 import { IVendorGridInfo } from "./Interface/IVendorGridInfo";
 import { ILicenceInfo } from './Interface/ILicenceInfo';
 export declare module ObjectFactory {
-    function CreateLicenceInfo(licenceType: LicenceScopeType, isLicenceInDate: boolean, licenceUserType: LicenceUserType): ILicenceInfo;
+    function CreateLicenceInfo(licenceType: LicenceScopeType, isLicenceInDate: boolean, licenceUserType: LicenceUserType, expiryDate: Date): ILicenceInfo;
     function CreateEmptyCustomSort(): ICustomSort;
     function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition;
     function CreateEmptyCalculatedColumn(): ICalculatedColumn;
