@@ -103,68 +103,66 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
     public SliceValueOptions: string[] = ["Value", "Ratio"];
     public SliceLabelOptions: string[] = ["Value", "ValueAndName",
-                                          "Ratio", "RatioAndName", "Name", ];
+        "Ratio", "RatioAndName", "Name",];
     getOptionsForSliceLabelsMapping(): JSX.Element[] {
-      let optionElements = this.SliceLabelOptions.map((v) => {
-          return <option key={v} value={v}>{v}</option>
-      })
-      return optionElements;
+        let optionElements = this.SliceLabelOptions.map((v) => {
+            return <option key={v} value={v}>{v}</option>
+        })
+        return optionElements;
     }
     getOptionsForSliceValuesMapping(): JSX.Element[] {
-      let optionElements = this.SliceValueOptions.map((v) => {
-          return <option key={v} value={v}>{v}</option>
-      })
-      return optionElements;
+        let optionElements = this.SliceValueOptions.map((v) => {
+            return <option key={v} value={v}>{v}</option>
+        })
+        return optionElements;
     }
 
     renderDataSelectors(cssClassName: string): JSX.Element[] {
-      const elements: JSX.Element[] = [];
-      elements.push(
-        <AdaptableBlotterForm key="DataGroupColumnSelector" horizontal>
-            <FormGroup controlId="pieChartSettings" style={{ marginBottom: '0px' }}>
-                <Row>
-                    <Col xs={1}>{' '} </Col>
-                    <Col xs={3}><ControlLabel>Select Label Column</ControlLabel></Col>
-                    <Col xs={5} >
-                    {/* TODO find out why this setting does not work: placeholder="Select a string column" */}
-                        <ColumnSelector cssClassName={cssClassName}
-                        SelectedColumnIds={[this.state.DataLabelColumnId]}
-                        SelectionMode={SelectionMode.Single}
-                        placeHolder={"Select a string column"}
-                        ColumnList={this.props.Columns}
-                        onColumnChange={columns => this.onDataGroupColumnChanged(columns)} />
-                    </Col>
-                    <Col xs={3}></Col>
-                </Row>
-            </FormGroup>
-        </AdaptableBlotterForm>);
-      elements.push(
-        <AdaptableBlotterForm key="DataValueColumnSelector" horizontal>
-            <FormGroup controlId="pieChartSettings" style={{ marginBottom: '0px' }}>
-                <Row>
-                    <Col xs={1}>{' '} </Col>
-                    <Col xs={3}><ControlLabel>Select Value Column</ControlLabel></Col>
-                    <Col xs={5} >
-                  {/* TODO find out why this setting does not work: placeholder="Select a numeric column" */}
-                        <ColumnSelector cssClassName={cssClassName}
-                        SelectedColumnIds={[this.state.DataValueColumnId]}
-                        SelectionMode={SelectionMode.Single}
-                        placeHolder={"Select a numeric column"}
-                        ColumnList={this.props.Columns}
-                        onColumnChange={columns => this.onDataValueColumnChanged(columns)}/>
-                    </Col>
-                    <Col xs={3}></Col>
-                </Row>
-            </FormGroup>
-        </AdaptableBlotterForm>);
-      return elements;
+        const elements: JSX.Element[] = [];
+        elements.push(
+            <AdaptableBlotterForm key="DataGroupColumnSelector" horizontal>
+                <FormGroup controlId="pieChartSettings" style={{ marginBottom: '0px' }}>
+                    <Row>
+                        <Col xs={1}>{' '} </Col>
+                        <Col xs={3}><ControlLabel>Select Label Column</ControlLabel></Col>
+                        <Col xs={5} >
+                            <ColumnSelector cssClassName={cssClassName}
+                                SelectedColumnIds={[this.state.DataLabelColumnId]}
+                                SelectionMode={SelectionMode.Single}
+                                placeHolder={"Select a string column"}
+                                ColumnList={this.props.Columns}
+                                onColumnChange={columns => this.onDataGroupColumnChanged(columns)} />
+                        </Col>
+                        <Col xs={3}></Col>
+                    </Row>
+                </FormGroup>
+            </AdaptableBlotterForm>);
+        elements.push(
+            <AdaptableBlotterForm key="DataValueColumnSelector" horizontal>
+                <FormGroup controlId="pieChartSettings" style={{ marginBottom: '0px' }}>
+                    <Row>
+                        <Col xs={1}>{' '} </Col>
+                        <Col xs={3}><ControlLabel>Select Value Column</ControlLabel></Col>
+                        <Col xs={5} >
+                            <ColumnSelector cssClassName={cssClassName}
+                                SelectedColumnIds={[this.state.DataValueColumnId]}
+                                SelectionMode={SelectionMode.Single}
+                                placeHolder={"Select a numeric column"}
+                                ColumnList={this.props.Columns}
+                                onColumnChange={columns => this.onDataValueColumnChanged(columns)} />
+                        </Col>
+                        <Col xs={3}></Col>
+                    </Row>
+                </FormGroup>
+            </AdaptableBlotterForm>);
+        return elements;
     }
     hasValidDataSelection(): boolean {
-      return StringExtensions.IsNotNullOrEmpty(this.state.DataValueColumnId) ||
-             StringExtensions.IsNotNullOrEmpty(this.state.DataLabelColumnId);
+        return StringExtensions.IsNotNullOrEmpty(this.state.DataValueColumnId) ||
+            StringExtensions.IsNotNullOrEmpty(this.state.DataLabelColumnId);
     }
-    public brushesEven: string[] = ["#7446B9","#9FB328","#F96232","#2E9CA6","#DC3F76","#FF9800","#3F51B5","#439C47"];
-    public brushesOdd: string[]  = ["#7446B9","#9FB328","#F96232","#2E9CA6","#DC3F76","#FF9800","#3F51B5","#439C47","#795548"];
+    public brushesEven: string[] = ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47"];
+    public brushesOdd: string[] = ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47", "#795548"];
 
     render() {
         let cssClassName: string = this.props.cssClassName + "__PieChart";
@@ -191,7 +189,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                     othersCategoryText="Others"
                     brushes={this.state.SliceBrushes}
                     outlines={this.state.SliceBrushes}
-                    radiusFactor={0.8}/>
+                    radiusFactor={0.8} />
             </IgrDoughnutChart>
             :
             <IgrPieChart
@@ -268,18 +266,18 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
                 <HelpBlock style={{ fontSize: 'small' }}>Labels Position:{' '}</HelpBlock>
                 <FormControl
-                  bsSize={"small"} componentClass="select" placeholder="select"
-                  value={this.state.SliceLabelsPosition}
-                  onChange={(x) => this.onSliceLabelsPositionChanged(x)} >
-                  {this.getOptionsForLabelsPosition()}
+                    bsSize={"small"} componentClass="select" placeholder="select"
+                    value={this.state.SliceLabelsPosition}
+                    onChange={(x) => this.onSliceLabelsPositionChanged(x)} >
+                    {this.getOptionsForLabelsPosition()}
                 </FormControl>
 
                 <HelpBlock style={{ fontSize: 'small' }}>Labels Content:{' '}</HelpBlock>
                 <FormControl
-                  bsSize={"small"} componentClass="select" placeholder="select"
-                  value={this.state.SliceLabelsMapping}
-                  onChange={(x) => this.onSliceLabelsMappingChanged(x)} >
-                  {this.getOptionsForSliceLabelsMapping()}
+                    bsSize={"small"} componentClass="select" placeholder="select"
+                    value={this.state.SliceLabelsMapping}
+                    onChange={(x) => this.onSliceLabelsMappingChanged(x)} >
+                    {this.getOptionsForSliceLabelsMapping()}
                 </FormControl>
 
                 {/* this is not really needed unless we add calculation of
@@ -309,10 +307,10 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
         return <div className={cssClassName}>
             <PanelWithImage cssClassName={cssClassName}
-            header={StrategyConstants.PieChartStrategyName}
-            glyphicon={StrategyConstants.PieChartGlyph}
-            infoBody={infoBody}
-            bsStyle="primary" >
+                header={StrategyConstants.PieChartStrategyName}
+                glyphicon={StrategyConstants.PieChartGlyph}
+                infoBody={infoBody}
+                bsStyle="primary" >
 
                 {this.renderDataSelectors(cssClassName)}
 
@@ -333,33 +331,33 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     }
 
     private onDataValueColumnChanged(columns: IColumn[]) {
-      let valueColumn: string = null;
-      let labelColumn = this.state.DataLabelColumnId;
-      if (columns.length > 0) {
-        valueColumn = columns[0].ColumnId;
-      }
-      this.updateDataSource(valueColumn, labelColumn);
+        let valueColumn: string = null;
+        let labelColumn = this.state.DataLabelColumnId;
+        if (columns.length > 0) {
+            valueColumn = columns[0].ColumnId;
+        }
+        this.updateDataSource(valueColumn, labelColumn);
     }
 
     private onDataGroupColumnChanged(columns: IColumn[]) {
-      let valueColumn = this.state.DataValueColumnId;
-      let labelColumn: string = null;
-      if (columns.length > 0) {
-        labelColumn = columns[0].ColumnId;
-      }
-      this.updateDataSource(valueColumn, labelColumn);
+        let valueColumn = this.state.DataValueColumnId;
+        let labelColumn: string = null;
+        if (columns.length > 0) {
+            labelColumn = columns[0].ColumnId;
+        }
+        this.updateDataSource(valueColumn, labelColumn);
     }
 
     private updateDataSource(valueColumn: string, labelColumn: string) {
-      let dataSource = this.props.Blotter.ChartService.BuildPieChartData(valueColumn, labelColumn);
-      console.log("onDataChanged " + dataSource.length + " " + valueColumn + " " + labelColumn);
-      this.setState({
-        DataValueColumnId: valueColumn,
-        DataLabelColumnId: labelColumn,
-        DataSource: dataSource,
-        // making sure the first and last slice do not have the same brush
-        SliceBrushes: dataSource.length % 2 == 0 ? this.brushesOdd : this.brushesEven
-      });
+        let dataSource = this.props.Blotter.ChartService.BuildPieChartData(valueColumn, labelColumn);
+        console.log("onDataChanged " + dataSource.length + " " + valueColumn + " " + labelColumn);
+        this.setState({
+            DataValueColumnId: valueColumn,
+            DataLabelColumnId: labelColumn,
+            DataSource: dataSource,
+            // making sure the first and last slice do not have the same brush
+            SliceBrushes: dataSource.length % 2 == 0 ? this.brushesOdd : this.brushesEven
+        });
     }
 
     public onDoughnutChartRef(doughnutChart: IgrDoughnutChart) {
@@ -400,9 +398,9 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     }
 
     // private onRowVisibilityChanged(event: React.FormEvent<any>) {
-        // let e = event.target as HTMLInputElement;
-        // let data = this.getDataSource(this.state.DataValueColumnId, this.state.DataLabelColumnId, e.checked);
-        // this.setState({ ShowVisibleRowsOnly: e.checked, DataSource: data, CurrentColumnCount: 0, CurrentColumnValue: '' } as PieChartPopupState);
+    // let e = event.target as HTMLInputElement;
+    // let data = this.getDataSource(this.state.DataValueColumnId, this.state.DataLabelColumnId, e.checked);
+    // this.setState({ ShowVisibleRowsOnly: e.checked, DataSource: data, CurrentColumnCount: 0, CurrentColumnValue: '' } as PieChartPopupState);
     // }
 
     private onThresholdAsPercentChanged(event: React.FormEvent<any>) {
@@ -424,16 +422,16 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     }
 
     onSliceLabelsPositionChanged(event: React.FormEvent<any>) {
-      let e = event.target as HTMLInputElement;
-      this.setState({ SliceLabelsPosition: e.value } as PieChartPopupState);
+        let e = event.target as HTMLInputElement;
+        this.setState({ SliceLabelsPosition: e.value } as PieChartPopupState);
     }
     onSliceLabelsMappingChanged(event: React.FormEvent<any>) {
-      let e = event.target as HTMLInputElement;
-      this.setState({ SliceLabelsMapping: e.value } as PieChartPopupState);
+        let e = event.target as HTMLInputElement;
+        this.setState({ SliceLabelsMapping: e.value } as PieChartPopupState);
     }
     onSliceValuesMappingChanged(event: React.FormEvent<any>) {
-      let e = event.target as HTMLInputElement;
-      this.setState({ SliceValuesMapping: e.value } as PieChartPopupState);
+        let e = event.target as HTMLInputElement;
+        this.setState({ SliceValuesMapping: e.value } as PieChartPopupState);
     }
 }
 

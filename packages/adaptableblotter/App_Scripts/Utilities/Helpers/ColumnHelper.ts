@@ -108,8 +108,38 @@ export module ColumnHelper {
 
     }
 
+    export function getColumnsOfType(columns: IColumn[], dataType: DataType): IColumn[] {
+        switch (dataType) {
+            case DataType.All:
+                return columns;
+            case DataType.Boolean:
+                return this.getBooleanColumns(columns, DataType.Boolean);
+            case DataType.Date:
+                return this.getBooleanColumns(columns, DataType.Date);
+            case DataType.Number:
+                return this.getBooleanColumns(columns, DataType.Number);
+            case DataType.String:
+                return this.getBooleanColumns(columns, DataType.String);
+            default:
+                return columns;
+        }
+
+    }
+
     export function getNumericColumns(columns: IColumn[]): IColumn[] {
         return columns.filter(c => c.DataType == DataType.Number)
+    }
+
+    export function getStringColumns(columns: IColumn[]): IColumn[] {
+        return columns.filter(c => c.DataType == DataType.String)
+    }
+
+    export function getDateColumns(columns: IColumn[]): IColumn[] {
+        return columns.filter(c => c.DataType == DataType.Date)
+    }
+
+    export function getBooleanColumns(columns: IColumn[]): IColumn[] {
+        return columns.filter(c => c.DataType == DataType.Boolean)
     }
 
     export function getColumnCategoryFromColumnCategories(columnId: string, ColumnCategoryns: IColumnCategory[]): string {
@@ -126,7 +156,7 @@ export module ColumnHelper {
     }
 
     export function getSortableColumns(columns: IColumn[]): IColumn[] {
-       return columns.filter(c=>c.Sortable);
+        return columns.filter(c => c.Sortable);
     }
 
     function LogMissingColumnWarning(columnId: string): void {
