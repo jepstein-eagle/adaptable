@@ -29,7 +29,7 @@ export class LicenceService implements ILicenceService {
 
         // check if demo site - if so return Enterprise
         if (this.isDemoSite()) {
-            return this.CreateCommunityLicence();
+            return this.CreateEnterpriseLicence();
         }
 
         // if key is empty return Community
@@ -140,6 +140,10 @@ export class LicenceService implements ILicenceService {
 
     private CreateCommunityLicence(): ILicenceInfo {
         return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Community, true, LicenceUserType.EndUser, new Date());
+    }
+
+    private CreateEnterpriseLicence(): ILicenceInfo {
+        return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Enterprise, true, LicenceUserType.EndUser, new Date(2020, 11, 31));
     }
 
     private isPrimeNumber(num: number): boolean {
