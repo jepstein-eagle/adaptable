@@ -20,7 +20,7 @@ class LicenceService {
         let licenceKey = this.blotter.BlotterOptions.licenceKey;
         // check if demo site - if so return Enterprise
         if (this.isDemoSite()) {
-            return this.CreateCommunityLicence();
+            return this.CreateEnterpriseLicence();
         }
         // if key is empty return Community
         if (StringExtensions_1.StringExtensions.IsNullOrEmpty(licenceKey)) {
@@ -111,6 +111,9 @@ class LicenceService {
     }
     CreateCommunityLicence() {
         return ObjectFactory_1.ObjectFactory.CreateLicenceInfo(Enums_1.LicenceScopeType.Community, true, Enums_1.LicenceUserType.EndUser, new Date());
+    }
+    CreateEnterpriseLicence() {
+        return ObjectFactory_1.ObjectFactory.CreateLicenceInfo(Enums_1.LicenceScopeType.Enterprise, true, Enums_1.LicenceUserType.EndUser, new Date(2020, 11, 31));
     }
     isPrimeNumber(num) {
         for (let i = 2, s = Math.sqrt(num); i <= s; i++) {

@@ -7,6 +7,7 @@ export declare class LicenceService implements ILicenceService {
     LicenceInfo: ILicenceInfo;
     private setLicenceInfo;
     private CreateCommunityLicence;
+    private CreateEnterpriseLicence;
     private isPrimeNumber;
     private isCorrectLength;
     private getExpiryDate;
