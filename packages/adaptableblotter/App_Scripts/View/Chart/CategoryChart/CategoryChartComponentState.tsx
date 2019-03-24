@@ -1,11 +1,12 @@
-import { IChartDefinition, IChartProperties, ICategoryChartProperties } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, IChartProperties, ICategoryChartProperties } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 
 // dont normally do this but Component was getting so bid and unwieldy...
 
-export interface CategoryChartDisplayPopupState {
+
+
+export interface CategoryChartComponentState {
     // Global
     IsChartSettingsVisible: boolean;
-    EditedChartDefinition: IChartDefinition;
     ChartProperties: ICategoryChartProperties;
     // General
     IsGeneralMinimised: boolean;

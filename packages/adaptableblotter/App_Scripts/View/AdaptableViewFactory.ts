@@ -42,13 +42,13 @@ import { DataSourceToolbarControl } from './DataSource/DataSourceToolbarControl'
 import { AlertPopup } from './Alert/AlertPopup';
 import { AlertToolbarControl } from './Alert/AlertToolbarControl';
 import { ChartPopup } from './Chart/ChartPopup';
-import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 import { ChartToolbarControl } from './Chart/ChartToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
 import { PercentBarPopup } from './PercentBar/PercentBarPopup';
 import { PieChartPopup } from './PieChart/PieChartPopup';
 import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
 import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
+import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup: AdvancedSearchPopup,

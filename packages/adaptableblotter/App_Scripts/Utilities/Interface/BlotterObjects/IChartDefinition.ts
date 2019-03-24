@@ -1,6 +1,6 @@
 import { Expression } from '../../Expression';
 import { IAdaptableBlotterObject } from './IAdaptableBlotterObject';
-import { ChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment } from '../../ChartEnums';
+import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType } from '../../ChartEnums';
 
 // not too sure at the moment how we will break up these objects as we add data series, financial, pie, doughnut etc.
 // trying to make it as flexible as possible though I suspeect some stuff will break as we go forward...
@@ -9,13 +9,15 @@ export interface IChartDefinition extends IAdaptableBlotterObject {
   Name: string;
   Description: string;
   ChartProperties: IChartProperties
+  ChartType: ChartType
  }
 
 export interface IChartProperties extends IAdaptableBlotterObject {
   // still empty at this stage
  }
 
-
+ export interface IPieChartDefinition extends IChartDefinition {
+ }
 
 export interface ICategoryChartDefinition extends IChartDefinition {
   YAxisColumnIds: string[];
@@ -32,7 +34,7 @@ export interface ICalloutProperties {
 
 export interface ICategoryChartProperties extends IChartProperties{
   // General
-  ChartType?: ChartType;
+  CategoryChartType?: CategoryChartType;
  SeriesThickness?: number; // and bind it to
 
   MarkerType?: string; // using a string because chart expects a string or an array of MarkerType enums

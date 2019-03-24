@@ -7,6 +7,13 @@ export enum ChartVisibility {
 }
 
 export enum ChartType {
+    CategoryChart = 'CategoryChart',
+    PieChart = 'PieChart',
+    Data='Data'
+}
+
+
+export enum CategoryChartType {
     Column = 'Column',
     Area = 'Area',
     Line = 'Line',

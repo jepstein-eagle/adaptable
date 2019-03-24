@@ -1,24 +1,24 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
-import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
+import { AdaptableWizardStepProps, AdaptableWizardStep } from "../../../Wizard/Interface/IAdaptableWizard";
+import { ICategoryChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { StringExtensions } from "../../../../Utilities/Extensions/StringExtensions";
+import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from "react-bootstrap";
+import { AdaptableBlotterForm } from "../../../Components/Forms/AdaptableBlotterForm";
+import { ArrayExtensions } from "../../../../Utilities/Extensions/ArrayExtensions";
+import { ExpressionHelper } from "../../../../Utilities/Helpers/ExpressionHelper";
 
-export interface ChartSettingsWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
+export interface CategoryChartSettingsWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
     ChartNames: string[]
 }
 
-export interface ChartSettingsWizardState {
+export interface CategoryChartSettingsWizardState {
     Name: string,
     Description: string,
     ErrorMessage: string
 }
 
-export class ChartSettingsWizard extends React.Component<ChartSettingsWizardProps, ChartSettingsWizardState> implements AdaptableWizardStep {
-    constructor(props: ChartSettingsWizardProps) {
+export class CategoryChartSettingsWizard extends React.Component<CategoryChartSettingsWizardProps, CategoryChartSettingsWizardState> implements AdaptableWizardStep {
+    constructor(props: CategoryChartSettingsWizardProps) {
         super(props)
         this.state = {
             Name: props.Data.Name,
@@ -66,12 +66,12 @@ export class ChartSettingsWizard extends React.Component<ChartSettingsWizardProp
         this.setState({
             Name: e.value,
             ErrorMessage: ArrayExtensions.ContainsItem(this.props.ChartNames, e.value) ? "A Chart Definition already exists with that name" : null
-        } as ChartSettingsWizardState, () => this.props.UpdateGoBackState())
+        } as CategoryChartSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
     onChartDescriptionChange(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ Description: e.value, } as ChartSettingsWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ Description: e.value, } as CategoryChartSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
 

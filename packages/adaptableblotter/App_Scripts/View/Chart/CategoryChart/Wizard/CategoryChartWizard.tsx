@@ -1,19 +1,19 @@
 import * as React from "react";
-import { AdaptableWizard } from '../../Wizard/AdaptableWizard'
-import { ChartYAxisWizard } from './ChartYAxisWizard'
-import { ChartSummaryWizard } from './ChartSummaryWizard'
-import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
-import { ChartXAxisWizard } from "./ChartXAxisWizard";
-import { ChartSettingsWizard } from "./ChartSettingsWizard";
-import { ChartXAxisExpressionWizard } from "./ChartXAxisExpressionWizard";
-import { ExpressionMode } from "../../../Utilities/Enums";
+import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants'
+import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../../Wizard/Interface/IAdaptableWizard";
+import { ICategoryChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { AdaptableWizard } from "../../../Wizard/AdaptableWizard";
+import { CategoryChartYAxisWizard } from "./CategoryChartYAxisWizard";
+import { CategoryChartXAxisWizard } from "./CategoryChartXAxisWizard";
+import { CategoryChartXAxisExpressionWizard } from "./CategoryChartXAxisExpressionWizard";
+import { ExpressionMode } from "../../../../Utilities/Enums";
+import { CategoryChartSummaryWizard } from "./CategoryChartSummaryWizard";
+import { CategoryChartSettingsWizard } from "./CategoryChartSettingsWizard";
 
-export interface ChartWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ChartWizard> {
+export interface CategoryChartWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CategoryChartWizard> {
 }
 
-export class ChartWizard extends React.Component<ChartWizardProps, {}> {
+export class CategoryChartWizard extends React.Component<CategoryChartWizardProps, {}> {
 
     render() {
         let chartDefinitions: ICategoryChartDefinition[] = this.props.ConfigEntities as ICategoryChartDefinition[]
@@ -29,27 +29,27 @@ export class ChartWizard extends React.Component<ChartWizardProps, {}> {
                     {
                         StepName: "Y Axis",
                         Index: 0,
-                        Element: <ChartYAxisWizard />
+                        Element: <CategoryChartYAxisWizard />
                     },
                     {
                         StepName: "X Axis",
                         Index: 1,
-                        Element: <ChartXAxisWizard />
+                        Element: <CategoryChartXAxisWizard />
                     },
                     {
                         StepName: "X Axis",
                         Index: 2,
-                        Element: <ChartXAxisExpressionWizard Columns={this.props.Columns} UserFilters={this.props.UserFilters} SystemFilters={this.props.SystemFilters} ExpressionMode={ExpressionMode.SingleColumn} />
+                        Element: <CategoryChartXAxisExpressionWizard Columns={this.props.Columns} UserFilters={this.props.UserFilters} SystemFilters={this.props.SystemFilters} ExpressionMode={ExpressionMode.SingleColumn} />
                     },
                          {
                         StepName: "Settings",
                         Index: 5,
-                        Element: <ChartSettingsWizard ChartNames={chartNames} />,
+                        Element: <CategoryChartSettingsWizard ChartNames={chartNames} />,
                     },
                     {
                         StepName: "Summary",
                         Index: 6,
-                        Element: <ChartSummaryWizard />
+                        Element: <CategoryChartSummaryWizard />
                     },
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject}

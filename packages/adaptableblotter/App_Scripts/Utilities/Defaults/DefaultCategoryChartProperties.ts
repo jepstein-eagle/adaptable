@@ -1,12 +1,12 @@
 import {
-  ChartType, CrosshairDisplayMode, ToolTipType,
+  CategoryChartType, CrosshairDisplayMode, ToolTipType,
   AxisLabelsLocation, LabelVisibility, HorizontalAlignment, AxisAngle, AxisScale
 } from '../ChartEnums';
 import { ICategoryChartProperties } from '../Interface/BlotterObjects/IChartDefinition';
 
 export const DefaultCategoryChartProperties: ICategoryChartProperties = {
   // General
-  ChartType: ChartType.Line, // changed to line because it work better with a lot of data points
+  CategoryChartType: CategoryChartType.Line, // changed to line because it work better with a lot of data points
   // jw: changed back to column as I *think* that is what our users want but genuinely unsure...
   SeriesThickness: 1,
   // added special Default enum to resolve marker type based on chart type. Do not use enums for this property

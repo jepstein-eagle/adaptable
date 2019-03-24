@@ -1,29 +1,28 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, Col, Panel, Row, Radio, HelpBlock } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IChartDefinition, ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
-import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
-import { SelectionMode } from "../../../Utilities/Enums";
-import { IColumn } from "../../../Utilities/Interface/IColumn";
-import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { IAdaptableBlotter } from "../../../Utilities/Interface/IAdaptableBlotter";
-import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
-import { Expression } from "../../../Utilities/Expression";
+import { AdaptableWizardStepProps, AdaptableWizardStep } from "../../../Wizard/Interface/IAdaptableWizard";
+import { ICategoryChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { Expression } from "../../../../Utilities/Expression";
+import { ExpressionHelper } from "../../../../Utilities/Helpers/ExpressionHelper";
+import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from "react-bootstrap";
+import { AdaptableBlotterForm } from "../../../Components/Forms/AdaptableBlotterForm";
+import { ColumnSelector } from "../../../Components/Selectors/ColumnSelector";
+import { SelectionMode } from "../../../../Utilities/Enums";
+import { IColumn } from "../../../../Utilities/Interface/IColumn";
+import { ArrayExtensions } from "../../../../Utilities/Extensions/ArrayExtensions";
+import { StringExtensions } from "../../../../Utilities/Extensions/StringExtensions";
 
-export interface ChartXAxisWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
+export interface CategoryChartXAxisWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
     //  ChartDefinitions: IChartDefinition[]
 }
 
-export interface ChartXAxisWizardState {
+export interface CategoryChartXAxisWizardState {
     XAxisColumnId: string,
     UseAllXAsisColumnValues: boolean,
     XAxisExpression: Expression
 }
 
-export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, ChartXAxisWizardState> implements AdaptableWizardStep {
-    constructor(props: ChartXAxisWizardProps) {
+export class CategoryChartXAxisWizard extends React.Component<CategoryChartXAxisWizardProps, CategoryChartXAxisWizardState> implements AdaptableWizardStep {
+    constructor(props: CategoryChartXAxisWizardProps) {
         super(props)
         this.state = {
             XAxisColumnId: props.Data.XAxisColumnId,
@@ -75,7 +74,7 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
     private onUseAllColumnValuesChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let showAll: boolean = e.value == "All"
-        this.setState({ UseAllXAsisColumnValues: showAll } as ChartXAxisWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ UseAllXAsisColumnValues: showAll } as CategoryChartXAxisWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onXAxisColumnChanged(columns: IColumn[]) {
@@ -83,7 +82,7 @@ export class ChartXAxisWizard extends React.Component<ChartXAxisWizardProps, Cha
         this.setState({
             XAxisColumnId: isColumn ? columns[0].ColumnId : "",
             UseAllXAsisColumnValues: true,
-        } as ChartXAxisWizardState, () => this.props.UpdateGoBackState())
+        } as CategoryChartXAxisWizardState, () => this.props.UpdateGoBackState())
     }
 
 

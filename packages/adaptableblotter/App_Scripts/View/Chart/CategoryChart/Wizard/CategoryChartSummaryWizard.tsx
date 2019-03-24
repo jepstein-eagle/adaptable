@@ -1,19 +1,19 @@
 import * as React from "react";
-import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
-import { IChartDefinition, ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
-import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
-import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
-import { Expression } from "../../../Utilities/Expression";
-import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
+import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants'
+import { AdaptableWizardStepProps, AdaptableWizardStep } from "../../../Wizard/Interface/IAdaptableWizard";
+import { ICategoryChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ColumnHelper } from "../../../../Utilities/Helpers/ColumnHelper";
+import { IKeyValuePair } from "../../../../Utilities/Interface/IKeyValuePair";
+import { WizardSummaryPage } from "../../../Components/WizardSummaryPage";
+import { Expression } from "../../../../Utilities/Expression";
+import { ExpressionHelper } from "../../../../Utilities/Helpers/ExpressionHelper";
 
 
-export interface ChartSummaryWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
+export interface CategoryChartSummaryWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
 }
 
-export class ChartSummaryWizard extends React.Component<ChartSummaryWizardProps, {}> implements AdaptableWizardStep {
-    constructor(props: ChartSummaryWizardProps) {
+export class CategoryChartSummaryWizard extends React.Component<CategoryChartSummaryWizardProps, {}> implements AdaptableWizardStep {
+    constructor(props: CategoryChartSummaryWizardProps) {
         super(props);
     }
     render(): any {

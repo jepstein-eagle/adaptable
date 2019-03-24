@@ -1,24 +1,24 @@
 import * as React from "react";
-import { ControlLabel, FormGroup, Col, Panel, Row, Radio, HelpBlock } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { IChartDefinition, ICategoryChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
-import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
-import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
-import { AxisTotal } from "../../../Utilities/ChartEnums";
-import { AdaptablePopover } from "../../AdaptablePopover";
-import { DualListBoxEditor, DisplaySize } from "../../Components/ListBox/DualListBoxEditor";
+import { AdaptableWizardStepProps, AdaptableWizardStep } from "../../../Wizard/Interface/IAdaptableWizard";
+import { ICategoryChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { AxisTotal } from "../../../../Utilities/ChartEnums";
+import { ColumnHelper } from "../../../../Utilities/Helpers/ColumnHelper";
+import { ArrayExtensions } from "../../../../Utilities/Extensions/ArrayExtensions";
+import { Panel, FormGroup, Row, Col, ControlLabel, Radio } from "react-bootstrap";
+import { AdaptableBlotterForm } from "../../../Components/Forms/AdaptableBlotterForm";
+import { AdaptablePopover } from "../../../AdaptablePopover";
+import { DualListBoxEditor, DisplaySize } from "../../../Components/ListBox/DualListBoxEditor";
 
-export interface ChartYAxisWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
+export interface CategoryChartYAxisWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
 }
 
-export interface ChartYAxisWizardState {
+export interface CategoryChartYAxisWizardState {
     YAxisColumnIds: string[],
     YAxisTotal: AxisTotal,
 }
 
-export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, ChartYAxisWizardState> implements AdaptableWizardStep {
-    constructor(props: ChartYAxisWizardProps) {
+export class CategoryChartYAxisWizard extends React.Component<CategoryChartYAxisWizardProps, CategoryChartYAxisWizardState> implements AdaptableWizardStep {
+    constructor(props: CategoryChartYAxisWizardProps) {
         super(props)
         this.state = {
             YAxisColumnIds: props.Data.YAxisColumnIds,
@@ -70,13 +70,13 @@ export class ChartYAxisWizard extends React.Component<ChartYAxisWizardProps, Cha
 
     OnSelectedValuesChange(newValues: Array<string>) {
         let yAxisColumnIds = ColumnHelper.getColumnIdsFromFriendlyNames(newValues, this.props.Columns)
-        this.setState({ YAxisColumnIds: yAxisColumnIds } as ChartYAxisWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ YAxisColumnIds: yAxisColumnIds } as CategoryChartYAxisWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onYAisTotalChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let axisTotal: AxisTotal = (e.value == "Sum") ? AxisTotal.Sum : AxisTotal.Average;
-        this.setState({ YAxisTotal: axisTotal } as ChartYAxisWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ YAxisTotal: axisTotal } as CategoryChartYAxisWizardState, () => this.props.UpdateGoBackState())
     }
 
     public canNext(): boolean {

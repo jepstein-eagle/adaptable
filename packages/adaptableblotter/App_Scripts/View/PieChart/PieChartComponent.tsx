@@ -1,3 +1,6 @@
+
+
+/*
 import * as React from "react";
 import { FormGroup, FormControl, Row, Col, Panel, Checkbox, HelpBlock, ControlLabel, Form } from 'react-bootstrap';
 import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
@@ -341,3 +344,4 @@ export class PieChartComponent extends React.Component<PieChartProps, PieChartSt
 
 
 
+*/

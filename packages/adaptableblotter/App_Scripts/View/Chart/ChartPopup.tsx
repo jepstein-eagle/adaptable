@@ -12,7 +12,6 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ChartEntityRow } from './ChartEntityRow'
-import { ChartWizard } from './Wizard/ChartWizard'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
@@ -24,6 +23,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
 import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ChartVisibility } from "../../Utilities/ChartEnums";
+import { CategoryChartWizard } from "./CategoryChart/Wizard/CategoryChartWizard";
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
@@ -100,7 +100,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 }
 
                 {this.state.EditedAdaptableBlotterObject &&
-                    <ChartWizard
+                    <CategoryChartWizard
                         cssClassName={cssWizardClassName}
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IChartDefinition}
                         ConfigEntities={this.props.ChartDefinitions}
