@@ -27,6 +27,7 @@ class PieChartPopupComponent extends React.Component {
         this.SliceValueOptions = ["Value", "Ratio"];
         this.SliceLabelOptions = ["Value", "ValueAndName",
             "Ratio", "RatioAndName", "Name",];
+        this.SliceSorByOptions = ["Value Descending", "Value Ascending", "Name Descending", "Name Ascending",];
         this.brushesEven = ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47"];
         this.brushesOdd = ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47", "#795548"];
         this.onOthersCategoryThresholdChanged = (e) => {
@@ -37,12 +38,14 @@ class PieChartPopupComponent extends React.Component {
             DataLabelColumnId: "",
             DataSource: null,
             OthersCategoryType: Enums_1.PieChartOthersCategoryType.Percent,
-            OthersCategoryThreshold: 0,
+            OthersCategoryThreshold: 2,
             CurrentColumnCount: 0,
             CurrentColumnValue: "",
             ShowAsDoughnut: false,
             SliceValuesMapping: "Value",
             SliceLabelsMapping: "Name",
+            SliceLegendMapping: "ValueAndName",
+            SliceSortByColumn: "Value Descending",
             SliceLabelsPosition: "OutsideEnd",
             SliceBrushes: this.brushesEven,
         };
@@ -80,26 +83,34 @@ class PieChartPopupComponent extends React.Component {
         });
         return optionElements;
     }
+    getOptionsForSliceSortOrders() {
+        let optionElements = this.SliceSorByOptions.map((v) => {
+            return React.createElement("option", { key: v, value: v }, v);
+        });
+        return optionElements;
+    }
     renderDataSelectors(cssClassName) {
         const elements = [];
         elements.push(React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { key: "DataGroupColumnSelector", horizontal: true },
             React.createElement(react_bootstrap_1.FormGroup, { controlId: "pieChartSettings", style: { marginBottom: '10px' } },
                 React.createElement(react_bootstrap_1.Row, null,
-                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
+                    React.createElement(react_bootstrap_1.Col, { xs: 1 }, ' '),
+                    React.createElement(react_bootstrap_1.Col, { xs: 4 },
                         ' ',
                         React.createElement(react_bootstrap_1.ControlLabel, null,
                             ' ',
-                            "Select Label Column")),
+                            "Label Column")),
                     React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                        React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.DataLabelColumnId], SelectionMode: Enums_1.SelectionMode.Single, placeHolder: "Select a string column", ColumnList: this.props.Columns, onColumnChange: columns => this.onDataGroupColumnChanged(columns) }))))));
+                        React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.DataLabelColumnId], SelectionMode: Enums_1.SelectionMode.Single, placeHolder: "Select any column", ColumnList: this.props.Columns, onColumnChange: columns => this.onDataGroupColumnChanged(columns) }))))));
         elements.push(React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { key: "DataValueColumnSelector", horizontal: true },
             React.createElement(react_bootstrap_1.FormGroup, { controlId: "pieChartSettings", style: { marginBottom: '0px' } },
                 React.createElement(react_bootstrap_1.Row, null,
-                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
+                    React.createElement(react_bootstrap_1.Col, { xs: 1 }, ' '),
+                    React.createElement(react_bootstrap_1.Col, { xs: 4 },
                         ' ',
                         React.createElement(react_bootstrap_1.ControlLabel, null,
                             ' ',
-                            "Select Value Column")),
+                            " Value Column")),
                     React.createElement(react_bootstrap_1.Col, { xs: 7 },
                         React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.DataValueColumnId], SelectionMode: Enums_1.SelectionMode.Single, placeHolder: "Select a numeric column", ColumnList: this.props.Columns, onColumnChange: columns => this.onDataValueColumnChanged(columns) }))))));
         return elements;
@@ -114,10 +125,12 @@ class PieChartPopupComponent extends React.Component {
         let chartSize = '450px';
         let chartBlock = React.createElement("div", null,
             this.state.ShowAsDoughnut ?
-                React.createElement(igr_doughnut_chart_1.IgrDoughnutChart, { height: chartSize, width: chartSize, allowSliceSelection: "true", allowSliceExplosion: "true", sliceClick: (s, e) => this.onSliceClick(e), ref: this.onDoughnutChartRef },
-                    React.createElement(igr_ring_series_1.IgrRingSeries, { name: "ring1", dataSource: this.state.DataSource, labelsPosition: this.state.SliceLabelsPosition, labelMemberPath: this.state.SliceLabelsMapping, valueMemberPath: this.state.SliceValuesMapping, legendLabelMemberPath: "ValueAndName", othersCategoryThreshold: this.state.OthersCategoryThreshold, othersCategoryType: this.state.OthersCategoryType, othersCategoryText: "Others", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: 0.8 }))
+                React.createElement(igr_doughnut_chart_1.IgrDoughnutChart, { height: chartSize, width: chartSize, allowSliceSelection: "true", allowSliceExplosion: "true", 
+                    // sliceClick={(s, e) => this.onSliceClick(e)}
+                    ref: this.onDoughnutChartRef },
+                    React.createElement(igr_ring_series_1.IgrRingSeries, { name: "ring1", dataSource: this.state.DataSource, labelsPosition: this.state.SliceLabelsPosition, labelMemberPath: this.state.SliceLabelsMapping, valueMemberPath: this.state.SliceValuesMapping, legendLabelMemberPath: this.state.SliceLegendMapping, othersCategoryThreshold: this.state.OthersCategoryThreshold, othersCategoryType: this.state.OthersCategoryType, othersCategoryText: "Others", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: 0.6 }))
                 :
-                    React.createElement(igr_pie_chart_1.IgrPieChart, { ref: this.onPieChartRef, dataSource: this.state.DataSource, labelsPosition: this.state.SliceLabelsPosition, labelMemberPath: this.state.SliceLabelsMapping, valueMemberPath: this.state.SliceValuesMapping, legendLabelMemberPath: "ValueAndName", width: chartSize, height: chartSize, othersCategoryThreshold: this.state.OthersCategoryThreshold, othersCategoryType: this.state.OthersCategoryType, othersCategoryText: "Others", othersCategoryFill: "#9A9A9A", othersCategoryStroke: "#9A9A9A", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: 0.7, selectionMode: "single", sliceClick: (s, e) => this.onSliceClick(e) }),
+                    React.createElement(igr_pie_chart_1.IgrPieChart, { ref: this.onPieChartRef, dataSource: this.state.DataSource, labelsPosition: this.state.SliceLabelsPosition, labelMemberPath: this.state.SliceLabelsMapping, valueMemberPath: this.state.SliceValuesMapping, legendLabelMemberPath: this.state.SliceLegendMapping, width: chartSize, height: chartSize, othersCategoryThreshold: this.state.OthersCategoryThreshold, othersCategoryType: this.state.OthersCategoryType, othersCategoryText: "Others", othersCategoryFill: "#9A9A9A", othersCategoryStroke: "#9A9A9A", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: 0.6, selectionMode: "single", sliceClick: (s, e) => this.onSliceClick(e) }),
             StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.CurrentColumnValue) &&
                 React.createElement(react_bootstrap_1.Row, { style: { marginLeft: '0px', marginRight: '0px', marginBottom: '0px' } },
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "formSelectedColumnValue" },
@@ -154,6 +167,10 @@ class PieChartPopupComponent extends React.Component {
                     "Labels Content:",
                     ' '),
                 React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.SliceLabelsMapping, onChange: (x) => this.onSliceLabelsMappingChanged(x) }, this.getOptionsForSliceLabelsMapping()),
+                React.createElement(react_bootstrap_1.HelpBlock, { style: { fontSize: 'small' } },
+                    "Slices Sort By:",
+                    ' '),
+                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.SliceSortByColumn, onChange: (x) => this.onSliceSortByColumnChanged(x) }, this.getOptionsForSliceSortOrders()),
                 React.createElement(react_bootstrap_1.HelpBlock, { style: { fontSize: 'small' } },
                     " ",
                     ' ')),
@@ -192,6 +209,7 @@ class PieChartPopupComponent extends React.Component {
     }
     updateDataSource(valueColumn, labelColumn) {
         let dataSource = this.props.Blotter.ChartService.BuildPieChartData(valueColumn, labelColumn);
+        dataSource = this.sortDataSource(this.state.SliceSortByColumn, dataSource);
         console.log("onDataChanged " + dataSource.length + " " + valueColumn + " " + labelColumn);
         this.setState({
             DataValueColumnId: valueColumn,
@@ -200,6 +218,65 @@ class PieChartPopupComponent extends React.Component {
             // making sure the first and last slice do not have the same brush
             SliceBrushes: dataSource.length % 2 == 0 ? this.brushesOdd : this.brushesEven
         });
+    }
+    sortDataSource(sortByColumn, oldData) {
+        if (oldData == null || oldData.length == 0) {
+            return [];
+        }
+        let newData = [...oldData];
+        if (sortByColumn == "Value Descending") {
+            newData.sort(this.sortByValueDescending);
+        }
+        else if (sortByColumn == "Value Ascending") {
+            newData.sort(this.sortByValueAscending);
+        }
+        else if (sortByColumn == "Name Descending") {
+            newData.sort(this.sortByNameDescending);
+        }
+        else if (sortByColumn == "Name Ascending") {
+            newData.sort(this.sortByNameAscending);
+        }
+        return newData;
+    }
+    sortByNameAscending(a, b) {
+        let nameA = a.Name.toLowerCase();
+        let nameB = b.Name.toLowerCase();
+        if (nameA > nameB) {
+            return 1;
+        }
+        if (nameA < nameB) {
+            return -1;
+        }
+        return 0;
+    }
+    sortByNameDescending(a, b) {
+        let nameA = a.Name.toLowerCase();
+        let nameB = b.Name.toLowerCase();
+        if (nameA > nameB) {
+            return -1;
+        }
+        if (nameA < nameB) {
+            return 1;
+        }
+        return 0;
+    }
+    sortByValueAscending(a, b) {
+        if (a.Value > b.Value) {
+            return 1;
+        }
+        if (a.Value < b.Value) {
+            return -1;
+        }
+        return 0;
+    }
+    sortByValueDescending(a, b) {
+        if (a.Value > b.Value) {
+            return -1;
+        }
+        if (a.Value < b.Value) {
+            return 1;
+        }
+        return 0;
     }
     onDoughnutChartRef(doughnutChart) {
         this.doughnutChart = doughnutChart;
@@ -245,7 +322,7 @@ class PieChartPopupComponent extends React.Component {
         e.isSelected = !e.isSelected;
         const ds = e.dataContext;
         if (e.isExploded) {
-            this.setState({ CurrentColumnCount: ds.ColumnCount, CurrentColumnValue: ds.ColumnValue });
+            this.setState({ CurrentColumnCount: ds.Value, CurrentColumnValue: ds.Name });
         }
         else {
             this.setState({ CurrentColumnCount: 0, CurrentColumnValue: '' });
@@ -257,11 +334,20 @@ class PieChartPopupComponent extends React.Component {
     }
     onSliceLabelsMappingChanged(event) {
         let e = event.target;
-        this.setState({ SliceLabelsMapping: e.value });
+        let labelMapping = e.value;
+        let legendMapping = labelMapping.includes("Ratio") ? "RatioAndName" : "ValueAndName";
+        this.setState({ SliceLabelsMapping: labelMapping, SliceLegendMapping: legendMapping });
     }
     onSliceValuesMappingChanged(event) {
         let e = event.target;
         this.setState({ SliceValuesMapping: e.value });
+    }
+    onSliceSortByColumnChanged(event) {
+        let e = event.target;
+        let sortColumn = e.value;
+        let oldData = this.state.DataSource;
+        let newData = this.sortDataSource(sortColumn, oldData);
+        this.setState({ DataSource: newData, SliceSortByColumn: sortColumn });
     }
 }
 function mapStateToProps(state, ownProps) {

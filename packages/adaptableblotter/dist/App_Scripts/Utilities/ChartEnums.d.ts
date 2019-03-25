@@ -4,6 +4,11 @@ export declare enum ChartVisibility {
     Hidden = "Hidden"
 }
 export declare enum ChartType {
+    CategoryChart = "CategoryChart",
+    PieChart = "PieChart",
+    Data = "Data"
+}
+export declare enum CategoryChartType {
     Column = "Column",
     Area = "Area",
     Line = "Line",

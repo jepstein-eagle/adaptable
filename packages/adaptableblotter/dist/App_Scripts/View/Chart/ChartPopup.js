@@ -11,7 +11,6 @@ const StrategyConstants = require("../../Utilities/Constants/StrategyConstants")
 const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ChartEntityRow_1 = require("./ChartEntityRow");
-const ChartWizard_1 = require("./Wizard/ChartWizard");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
 const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
@@ -19,6 +18,7 @@ const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollec
 const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ChartEnums_1 = require("../../Utilities/ChartEnums");
+const CategoryChartWizard_1 = require("./CategoryChart/Wizard/CategoryChartWizard");
 class ChartPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -56,7 +56,7 @@ class ChartPopupComponent extends React.Component {
                     :
                         React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to create a new Chart."),
                 this.state.EditedAdaptableBlotterObject &&
-                    React.createElement(ChartWizard_1.ChartWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: this.props.ChartDefinitions, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
+                    React.createElement(CategoryChartWizard_1.CategoryChartWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: this.props.ChartDefinitions, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }
     onShowChart(chartName) {
         this.props.onSelectChartDefinition(chartName);

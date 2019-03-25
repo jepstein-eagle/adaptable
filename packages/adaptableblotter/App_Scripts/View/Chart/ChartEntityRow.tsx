@@ -21,7 +21,8 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
        
         colItems[0].Content = Chart.Name
         colItems[1].Content = Chart.Description
-        colItems[2].Content = <ButtonShowChart
+        colItems[2].Content = Chart.ChartType
+        colItems[3].Content = <ButtonShowChart
             key={"key:" + Chart.Name}
             style={{ marginLeft: "2px" }}
             cssClassName={this.props.cssClassName}
@@ -31,7 +32,7 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
             DisplayMode="Glyph" 
             AccessLevel={this.props.AccessLevel}
             />
-        colItems[3].Content = <EntityListActionButtons
+        colItems[4].Content = <EntityListActionButtons
             cssClassName={this.props.cssClassName}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
             editClick={() => this.props.onEdit(this.props.Index, Chart)}

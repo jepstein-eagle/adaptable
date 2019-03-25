@@ -1,6 +1,6 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IChartDefinition, ICategoryChartDefinition } from "../Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition } from "../Interface/BlotterObjects/IChartDefinition";
 import { IColumnValueExpression } from "../Interface/Expression/IColumnValueExpression";
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
@@ -103,13 +103,13 @@ export class ChartService implements IChartService {
         return xAxisColValues;
     }
 
-    public BuildPieChartData(valueColumnId: string, labelColumnId: string): any[] {
+    public BuildPieChartData(chartDefinition:IPieChartDefinition): any[] {
 
         let dataCounter = new Map<any, number>();
         let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
 
-        let hasLabelColumn = StringExtensions.IsNotNullOrEmpty(labelColumnId);
-        let hasValueColumn = StringExtensions.IsNotNullOrEmpty(valueColumnId);
+        let hasLabelColumn = StringExtensions.IsNotNullOrEmpty(chartDefinition.LabelColumnId);
+        let hasValueColumn = StringExtensions.IsNotNullOrEmpty(chartDefinition.ValueColumnId);
 
         console.log("BuildPieChartData label " + hasLabelColumn + " value " + hasValueColumn);
 
@@ -119,13 +119,13 @@ export class ChartService implements IChartService {
         if (hasLabelColumn && hasValueColumn) {
           isGroupingColumns = true;
 
-          let valueColumnType = ColumnHelper.getColumnDataTypeFromColumnId(valueColumnId, columns);
+          let valueColumnType = ColumnHelper.getColumnDataTypeFromColumnId(chartDefinition.ValueColumnId, columns);
           let valueColumnIsNumeric : boolean = valueColumnType == DataType.Number;
-          let labelColumnType = ColumnHelper.getColumnDataTypeFromColumnId(labelColumnId, columns);
+          let labelColumnType = ColumnHelper.getColumnDataTypeFromColumnId(chartDefinition.LabelColumnId, columns);
           let labelColumnIsNumeric : boolean = labelColumnType == DataType.Number;
           this.blotter.forAllRecordsDo((row) => {
-            let labelCell = this.blotter.getRawValueFromRecord(row, labelColumnId);
-            let valueCell = this.blotter.getRawValueFromRecord(row, valueColumnId);
+            let labelCell = this.blotter.getRawValueFromRecord(row, chartDefinition.LabelColumnId);
+            let valueCell = this.blotter.getRawValueFromRecord(row, chartDefinition.ValueColumnId);
 
             let group: string = "";
             let count: number = 0;
@@ -160,11 +160,11 @@ export class ChartService implements IChartService {
         } else if (hasValueColumn) {
           let i = 0;
           // we have only valueColumnId so let's check if it has numeric or non-numeric cell values
-          let columnType = ColumnHelper.getColumnDataTypeFromColumnId(valueColumnId, columns);
+          let columnType = ColumnHelper.getColumnDataTypeFromColumnId(chartDefinition.ValueColumnId, columns);
           let columnIsNumeric : boolean = columnType == DataType.Number;
           isGroupingColumns = !columnIsNumeric;
           this.blotter.forAllRecordsDo((row) => {
-            let cellValue = this.blotter.getRawValueFromRecord(row, valueColumnId);
+            let cellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.ValueColumnId);
             let group = columnIsNumeric ? i: cellValue;
             let count = columnIsNumeric ? parseFloat(cellValue): 1;
             if (dataCounter.has(group)) {
@@ -179,11 +179,11 @@ export class ChartService implements IChartService {
 
           let i = 0;
           // we have only labelColumnId so let's check if it has numeric or non-numeric cell values
-          let columnType = ColumnHelper.getColumnDataTypeFromColumnId(labelColumnId, columns);
+          let columnType = ColumnHelper.getColumnDataTypeFromColumnId(chartDefinition.LabelColumnId, columns);
           let columnIsNumeric : boolean = columnType == DataType.Number;
           isGroupingColumns = !columnIsNumeric;
           this.blotter.forAllRecordsDo((row) => {
-            let cellValue = this.blotter.getRawValueFromRecord(row, labelColumnId);
+            let cellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.LabelColumnId);
             let group = columnIsNumeric ? i: cellValue;
             let count = columnIsNumeric ? parseFloat(cellValue): 1;
 

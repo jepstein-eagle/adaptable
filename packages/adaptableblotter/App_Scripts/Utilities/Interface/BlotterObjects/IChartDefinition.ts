@@ -17,6 +17,8 @@ export interface IChartProperties extends IAdaptableBlotterObject {
  }
 
  export interface IPieChartDefinition extends IChartDefinition {
+  LabelColumnId: string;
+  ValueColumnId: string
  }
 
 export interface ICategoryChartDefinition extends IChartDefinition {

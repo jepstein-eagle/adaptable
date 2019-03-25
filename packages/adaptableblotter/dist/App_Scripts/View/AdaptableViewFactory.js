@@ -43,13 +43,13 @@ const DataSourceToolbarControl_1 = require("./DataSource/DataSourceToolbarContro
 const AlertPopup_1 = require("./Alert/AlertPopup");
 const AlertToolbarControl_1 = require("./Alert/AlertToolbarControl");
 const ChartPopup_1 = require("./Chart/ChartPopup");
-const ChartDisplayPopup_1 = require("./Chart/ChartDisplayPopup");
 const ChartToolbarControl_1 = require("./Chart/ChartToolbarControl");
 const FreeTextColumnPopup_1 = require("./FreeTextColumn/FreeTextColumnPopup");
 const PercentBarPopup_1 = require("./PercentBar/PercentBarPopup");
 const PieChartPopup_1 = require("./PieChart/PieChartPopup");
 const CellSummaryPopup_1 = require("./CellSummary/CellSummaryPopup");
 const CellSummaryToolbarControl_1 = require("./CellSummary/CellSummaryToolbarControl");
+const ChartDisplayPopup_1 = require("./Chart/ChartDisplayPopup");
 exports.AdaptableViewFactory = {
     AdvancedSearchPopup: AdvancedSearchPopup_1.AdvancedSearchPopup,
     AlertPopup: AlertPopup_1.AlertPopup,

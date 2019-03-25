@@ -17,7 +17,7 @@ import { IColumnFilter } from "./Interface/BlotterObjects/IColumnFilter";
 import { ICellValidationRule } from "./Interface/BlotterObjects/ICellValidationRule";
 import { ICalculatedColumn } from "./Interface/BlotterObjects/ICalculatedColumn";
 import { IAdvancedSearch } from "./Interface/BlotterObjects/IAdvancedSearch";
-import { ICategoryChartDefinition } from "./Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, IPieChartDefinition } from "./Interface/BlotterObjects/IChartDefinition";
 import { IAlertDefinition } from "./Interface/BlotterObjects/IAlertDefinition";
 import { IRange } from "./Interface/Expression/IRange";
 import { LeafExpressionOperator, RangeOperandType, ActionMode, LicenceScopeType, LicenceUserType } from './Enums';
@@ -30,6 +30,7 @@ import { ILicenceInfo } from './Interface/ILicenceInfo';
 export declare module ObjectFactory {
     function CreateLicenceInfo(licenceType: LicenceScopeType, isLicenceInDate: boolean, licenceUserType: LicenceUserType, expiryDate: Date): ILicenceInfo;
     function CreateEmptyCustomSort(): ICustomSort;
+    function CreateEmptyPieChartDefinition(): IPieChartDefinition;
     function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition;
     function CreateEmptyCalculatedColumn(): ICalculatedColumn;
     function CreateEmptyPlusMinusRule(): IPlusMinusRule;

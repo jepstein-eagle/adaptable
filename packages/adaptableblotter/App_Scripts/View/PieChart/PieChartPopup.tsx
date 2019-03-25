@@ -24,14 +24,16 @@ import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableSto
 
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { PieChartLabelPositions } from "../../Utilities/ChartEnums";
+import { IPieChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ObjectFactory } from "../../Utilities/ObjectFactory";
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {
     PieChartText: string;
 }
 
 interface PieChartPopupState {
-    DataValueColumnId: string;
-    DataLabelColumnId: string;
+    PieChartDefinition: IPieChartDefinition
+
     DataSource: any;
     // ShowVisibleRowsOnly: boolean;
 
@@ -59,8 +61,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     constructor(props: PieChartPopupProps) {
         super(props);
         this.state = {
-            DataValueColumnId: "",
-            DataLabelColumnId: "",
+            PieChartDefinition: ObjectFactory.CreateEmptyPieChartDefinition(),
             DataSource: null,
 
             OthersCategoryType: PieChartOthersCategoryType.Percent,
@@ -92,6 +93,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         // TODO we should get 2 columns: valueColumnId and groupColumnId from PopupParams
         const column = this.props.PopupParams;
         if (StringExtensions.IsNotNullOrEmpty(column)) {
+
             this.updateDataSource(null, column);
         }
     }
@@ -137,7 +139,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                         <Col xs={4}>{' '}<ControlLabel>{' '}Label Column</ControlLabel></Col>
                         <Col xs={7} >
                             <ColumnSelector cssClassName={cssClassName}
-                                SelectedColumnIds={[this.state.DataLabelColumnId]}
+                                SelectedColumnIds={[this.state.PieChartDefinition.LabelColumnId]}
                                 SelectionMode={SelectionMode.Single}
                                 placeHolder={"Select any column"}
                                 ColumnList={this.props.Columns}
@@ -154,7 +156,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                         <Col xs={4}>{' '}<ControlLabel>{' '} Value Column</ControlLabel></Col>
                         <Col xs={7} >
                             <ColumnSelector cssClassName={cssClassName}
-                                SelectedColumnIds={[this.state.DataValueColumnId]}
+                                SelectedColumnIds={[this.state.PieChartDefinition.ValueColumnId]}
                                 SelectionMode={SelectionMode.Single}
                                 placeHolder={"Select a numeric column"}
                                 ColumnList={this.props.Columns}
@@ -166,8 +168,8 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         return elements;
     }
     hasValidDataSelection(): boolean {
-        return StringExtensions.IsNotNullOrEmpty(this.state.DataValueColumnId) ||
-            StringExtensions.IsNotNullOrEmpty(this.state.DataLabelColumnId);
+        return StringExtensions.IsNotNullOrEmpty(this.state.PieChartDefinition.ValueColumnId) ||
+            StringExtensions.IsNotNullOrEmpty(this.state.PieChartDefinition.LabelColumnId);
     }
 
     public brushesEven: string[] = ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47"];
@@ -355,7 +357,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
     private onDataValueColumnChanged(columns: IColumn[]) {
         let valueColumn: string = null;
-        let labelColumn = this.state.DataLabelColumnId;
+        let labelColumn = this.state.PieChartDefinition.LabelColumnId;
         if (columns.length > 0) {
             valueColumn = columns[0].ColumnId;
         }
@@ -363,7 +365,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     }
 
     private onDataGroupColumnChanged(columns: IColumn[]) {
-        let valueColumn = this.state.DataValueColumnId;
+        let valueColumn = this.state.PieChartDefinition.ValueColumnId;
         let labelColumn: string = null;
         if (columns.length > 0) {
             labelColumn = columns[0].ColumnId;
@@ -372,14 +374,17 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     }
 
     private updateDataSource(valueColumn: string, labelColumn: string) {
-        let dataSource = this.props.Blotter.ChartService.BuildPieChartData(valueColumn, labelColumn);
+        let pieChartDefinition: IPieChartDefinition = this.state.PieChartDefinition;
+        pieChartDefinition.LabelColumnId = labelColumn;
+        pieChartDefinition.ValueColumnId = valueColumn;
+
+        let dataSource = this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition);
 
         dataSource = this.sortDataSource(this.state.SliceSortByColumn, dataSource);
 
         console.log("onDataChanged " + dataSource.length + " " + valueColumn + " " + labelColumn);
         this.setState({
-            DataValueColumnId: valueColumn,
-            DataLabelColumnId: labelColumn,
+            PieChartDefinition: pieChartDefinition,
             DataSource: dataSource,
             // making sure the first and last slice do not have the same brush
             SliceBrushes: dataSource.length % 2 == 0 ? this.brushesOdd : this.brushesEven
@@ -387,45 +392,45 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     }
 
     public sortDataSource(sortByColumn: string, oldData: any[]): any[] {
-      if (oldData == null || oldData.length == 0) {
-          return [];
-      }
-      let newData = [...oldData];
-      if (sortByColumn == "Value Descending") {
-        newData.sort(this.sortByValueDescending);
-      } else if (sortByColumn == "Value Ascending") {
-        newData.sort(this.sortByValueAscending);
-      } else if (sortByColumn == "Name Descending") {
-        newData.sort(this.sortByNameDescending);
-      } else if (sortByColumn == "Name Ascending") {
-        newData.sort(this.sortByNameAscending);
-      }
-      return newData;
+        if (oldData == null || oldData.length == 0) {
+            return [];
+        }
+        let newData = [...oldData];
+        if (sortByColumn == "Value Descending") {
+            newData.sort(this.sortByValueDescending);
+        } else if (sortByColumn == "Value Ascending") {
+            newData.sort(this.sortByValueAscending);
+        } else if (sortByColumn == "Name Descending") {
+            newData.sort(this.sortByNameDescending);
+        } else if (sortByColumn == "Name Ascending") {
+            newData.sort(this.sortByNameAscending);
+        }
+        return newData;
     }
 
-    public sortByNameAscending(a: any, b: any) : number {
-      let nameA = a.Name.toLowerCase();
-      let nameB = b.Name.toLowerCase();
-      if (nameA > nameB) { return 1; }
-      if (nameA < nameB) { return -1; }
-      return 0;
+    public sortByNameAscending(a: any, b: any): number {
+        let nameA = a.Name.toLowerCase();
+        let nameB = b.Name.toLowerCase();
+        if (nameA > nameB) { return 1; }
+        if (nameA < nameB) { return -1; }
+        return 0;
     }
-    public sortByNameDescending(a: any, b: any) : number {
-      let nameA = a.Name.toLowerCase();
-      let nameB = b.Name.toLowerCase();
-      if (nameA > nameB) { return -1; }
-      if (nameA < nameB) { return 1; }
-      return 0;
+    public sortByNameDescending(a: any, b: any): number {
+        let nameA = a.Name.toLowerCase();
+        let nameB = b.Name.toLowerCase();
+        if (nameA > nameB) { return -1; }
+        if (nameA < nameB) { return 1; }
+        return 0;
     }
-    public sortByValueAscending(a: any, b: any) : number {
-      if (a.Value > b.Value) { return 1; }
-      if (a.Value < b.Value) { return -1; }
-      return 0;
+    public sortByValueAscending(a: any, b: any): number {
+        if (a.Value > b.Value) { return 1; }
+        if (a.Value < b.Value) { return -1; }
+        return 0;
     }
-    public sortByValueDescending(a: any, b: any) : number {
-      if (a.Value > b.Value) { return -1; }
-      if (a.Value < b.Value) { return 1; }
-      return 0;
+    public sortByValueDescending(a: any, b: any): number {
+        if (a.Value > b.Value) { return -1; }
+        if (a.Value < b.Value) { return 1; }
+        return 0;
     }
 
     public onDoughnutChartRef(doughnutChart: IgrDoughnutChart) {

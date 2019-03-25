@@ -7,14 +7,13 @@ import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
-import { Helper } from '../../Utilities/Helpers/Helper';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
-import { SortOrder, AccessLevel, DashboardSize } from '../../Utilities/Enums';
-import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
+import { SortOrder, AccessLevel } from '../../Utilities/Enums';
+import { InputGroup, DropdownButton, MenuItem, OverlayTrigger, Tooltip, Glyphicon } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
@@ -22,15 +21,16 @@ import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
 import { ChartVisibility } from "../../Utilities/ChartEnums";
 import { ButtonDelete } from "../Components/Buttons/ButtonDelete";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { DEFAULT_BSSTYLE, INFO_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 
 
 interface ChartToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ChartToolbarControlComponent> {
     ChartDefinitions: IChartDefinition[]
     CurrentChartDefinition: IChartDefinition
- 
+
     onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction;
-    onNewChartDefinition: () => PopupRedux.PopupShowScreenAction;
-    onEditChartDefinition: () => PopupRedux.PopupShowScreenAction;
+    onNewChartDefinition: (popupParams: string) => PopupRedux.PopupShowScreenAction;
+    onEditChartDefinition: (popupParams: string) => PopupRedux.PopupShowScreenAction;
     onShowChart: () => SystemRedux.ChartSetChartVisibiityAction;
 }
 
@@ -50,12 +50,22 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
             return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedChartDefinitionChanged(chartDefinition.Name)} >{chartDefinition.Name}</MenuItem>
         })
 
+        const plusGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Create New Chart Definition"}</Tooltip >}>
+            <Glyphicon glyph={'plus'} />
+        </OverlayTrigger>
+
+        let categoryChartMenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.props.onNewChartDefinition("New | CategoryChart")} key={"categoryChart"}>{"Category Chart"}</MenuItem>
+        let pieChartMenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.props.onNewChartDefinition("New | PieChart")} key={"pieChart"}>{"Pie Chart"}</MenuItem>
+
+
+        let dropdownStyle: string = (this.props.UseSingleColourForButtons) ? DEFAULT_BSSTYLE : INFO_BSSTYLE
+
 
         let content = <span>
 
             <InputGroup>
                 <DropdownButton disabled={availablechartDefinitions.length == 0} style={{ minWidth: "120px" }}
-                    className={cssClassName}    bsSize={this.props.DashboardSize}                     bsStyle={"default"} title={currentChartDefinitionName} id="Chart" componentClass={InputGroup.Button}>
+                    className={cssClassName} bsSize={this.props.DashboardSize} bsStyle={"default"} title={currentChartDefinitionName} id="Chart" componentClass={InputGroup.Button}>
                     {availablechartDefinitions}
                 </DropdownButton>
                 {currentChartDefinitionName != selectChartString &&
@@ -79,32 +89,36 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                     style={{ marginLeft: "2px" }}
                     cssClassName={cssClassName} onClick={() => this.onShowChart()}
                     size={this.props.DashboardSize}
-                        overrideTooltip="Show Chart"
+                    overrideTooltip="Show Chart"
                     overrideDisableButton={currentChartDefinitionName == selectChartString}
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
                     showDefaultStyle={this.props.UseSingleColourForButtons}
-                    />
-                <ButtonNew
-                    style={{ marginLeft: "2px" }}
-                    cssClassName={cssClassName} onClick={() => this.props.onNewChartDefinition()}
-                    size={this.props.DashboardSize}
-                    overrideTooltip="Create New Chart Definition"
-                    DisplayMode="Glyph"
-                    AccessLevel={this.props.AccessLevel}
-                    showDefaultStyle={this.props.UseSingleColourForButtons}
-                    />
+                />
+                <DropdownButton
+                    style={{ marginLeft: "5px" }}
+                    bsSize={this.props.DashboardSize}
+                    bsStyle={dropdownStyle}
+                    title={plusGlyph}
+                    id="chartDropdown"
+                >
+                    {categoryChartMenuItem}
+                    {pieChartMenuItem}
 
+                </DropdownButton>
+
+               
                 <ButtonEdit
                     style={{ marginLeft: "2px" }}
-                    cssClassName={cssClassName} onClick={() => this.props.onEditChartDefinition()}
+                    cssClassName={cssClassName} 
+                    onClick={() => this.props.onEditChartDefinition("Edit | CategoryChart")}
                     size={this.props.DashboardSize}
-                       overrideTooltip="Edit Chart Definition"
+                    overrideTooltip="Edit Chart Definition"
                     overrideDisableButton={currentChartDefinitionName == selectChartString}
                     DisplayMode="Glyph"
                     AccessLevel={this.props.AccessLevel}
                     showDefaultStyle={this.props.UseSingleColourForButtons}
-                    />
+                />
 
                 <ButtonDelete
                     style={{ marginLeft: "2px" }}
@@ -118,7 +132,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
                     ConfirmationTitle={"Delete Chart"}
                     AccessLevel={this.props.AccessLevel}
                     showDefaultStyle={this.props.UseSingleColourForButtons}
-                    />
+                />
             </span>
         </span>
 
@@ -129,7 +143,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
     }
 
     onSelectedChartDefinitionChanged(chartDefinitionName: string) {
-       this.props.onSelectChartDefinition(chartDefinitionName);
+        this.props.onSelectChartDefinition(chartDefinitionName);
     }
 
     onShowChart() {
@@ -137,19 +151,19 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
     }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableBlotterState) {
     return {
         CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Name == state.Chart.CurrentChartName),
         ChartDefinitions: state.Chart.ChartDefinitions,
-       
+
     };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onSelectChartDefinition: (chartDefinition: string) => dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
-        onNewChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, "New")),
-        onEditChartDefinition: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, "Edit")),
+        onNewChartDefinition: (popupParams: string) => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, popupParams)),
+        onEditChartDefinition: (popupParams: string) => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup, popupParams)),
         onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup))

@@ -51,10 +51,12 @@ export module ObjectFactory {
 
     export function CreateEmptyPieChartDefinition(): IPieChartDefinition {
         return {
-            Name: 'Hello',
-            Description: 'World',
+            Name: EMPTY_STRING,
+            Description: EMPTY_STRING,
             ChartProperties: null,
-            ChartType: ChartType.PieChart
+            ChartType: ChartType.PieChart,
+            LabelColumnId:'country',
+            ValueColumnId:''
         }
     }
     export function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition {
@@ -66,7 +68,7 @@ export module ObjectFactory {
             XAxisColumnId: EMPTY_STRING,
             XAxisExpression: ExpressionHelper.CreateEmptyExpression(),
             ChartProperties: DefaultCategoryChartProperties,
-            ChartType: ChartType.PieChart
+            ChartType: ChartType.CategoryChart
         }
     }
 

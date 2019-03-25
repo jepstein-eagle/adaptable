@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import {  HelpBlock } from 'react-bootstrap';
+import { HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -22,8 +22,9 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
 import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
-import { ChartVisibility } from "../../Utilities/ChartEnums";
+import { ChartVisibility, ChartType } from "../../Utilities/ChartEnums";
 import { CategoryChartWizard } from "./CategoryChart/Wizard/CategoryChartWizard";
+import { PieChartWizard } from "./PieChart/Wizard/PieChartWizard";
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
@@ -43,13 +44,21 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     componentDidMount() {
         if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
 
-            if (this.props.PopupParams == "New") {
-                this.onNew()
+            if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
+                let arrayParams = this.props.PopupParams.split("|")
+                let action: string = arrayParams[0].trim();
+                let chartType: ChartType = arrayParams[1].trim() as ChartType; // todo: use the enum...
+
+                if (action == "New") {
+                    this.onNew(chartType)
+                }
+                if (this.props.PopupParams == "Edit") {
+                    let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Name == this.props.CurrentChartDefinition.Name)
+                    this.onEdit(index, this.props.CurrentChartDefinition)
+                }
             }
-            if (this.props.PopupParams == "Edit") {
-                let index: number = this.props.ChartDefinitions.findIndex(cd => cd.Name == this.props.CurrentChartDefinition.Name)
-                this.onEdit(index, this.props.CurrentChartDefinition)
-            }
+
+
         }
     }
 
@@ -60,8 +69,9 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
         let infoBody: any[] = ["Create Charts to view your grid data visually."]
 
         let colItems: IColItem[] = [
-            { Content: "Title", Size: 4 },
-            { Content: "Subtitle", Size: 4 },
+            { Content: "Title", Size: 3 },
+            { Content: "Subtitle", Size: 3 },
+            { Content: "Type", Size: 2 },
             { Content: "Show", Size: 1 },
             { Content: "", Size: 3 },
         ]
@@ -82,12 +92,15 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
             />
         });
 
-        let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
+        let newButton = <ButtonNew cssClassName={cssClassName}
+            onClick={() => this.onNew(ChartType.CategoryChart)}  // wrong, wrong, wrong
             overrideTooltip="Create Chart Definition"
             DisplayMode="Glyph+Text"
             size={"small"}
             AccessLevel={this.props.AccessLevel}
         />
+
+        let editedChartDefinition = this.state.EditedAdaptableBlotterObject as IChartDefinition;
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ChartStrategyName} className="ab_main_popup" infoBody={infoBody}
@@ -95,26 +108,46 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
                 {Charts.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Charts} />
-              :
+                    :
                     <HelpBlock >Click 'New' to create a new Chart.</HelpBlock>
                 }
 
                 {this.state.EditedAdaptableBlotterObject &&
-                    <CategoryChartWizard
-                        cssClassName={cssWizardClassName}
-                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IChartDefinition}
-                        ConfigEntities={this.props.ChartDefinitions}
-                        ModalContainer={this.props.ModalContainer}
-                        Columns={this.props.Columns}
-                        UserFilters={this.props.UserFilters}
-                        SystemFilters={this.props.SystemFilters}
-                        Blotter={this.props.Blotter}
-                        WizardStartIndex={this.state.WizardStartIndex}
-                        onCloseWizard={() => this.onCloseWizard()}
-                        onFinishWizard={() => this.onFinishWizard()}
-                        canFinishWizard={() => this.canFinishWizard()}
-                    />
+                    <div>
+                        {editedChartDefinition.ChartType == ChartType.CategoryChart ?
+                            <CategoryChartWizard
+                                cssClassName={cssWizardClassName}
+                                EditedAdaptableBlotterObject={editedChartDefinition}
+                                ConfigEntities={this.props.ChartDefinitions}
+                                ModalContainer={this.props.ModalContainer}
+                                Columns={this.props.Columns}
+                                UserFilters={this.props.UserFilters}
+                                SystemFilters={this.props.SystemFilters}
+                                Blotter={this.props.Blotter}
+                                WizardStartIndex={this.state.WizardStartIndex}
+                                onCloseWizard={() => this.onCloseWizard()}
+                                onFinishWizard={() => this.onFinishWizard()}
+                                canFinishWizard={() => this.canFinishWizard()}
+                            />
+                            :
+                            <PieChartWizard
+                                cssClassName={cssClassName}
+                                EditedAdaptableBlotterObject={editedChartDefinition}
+                                ConfigEntities={this.props.ChartDefinitions}
+                                ModalContainer={this.props.ModalContainer}
+                                Columns={this.props.Columns}
+                                UserFilters={this.props.UserFilters}
+                                SystemFilters={this.props.SystemFilters}
+                                Blotter={this.props.Blotter}
+                                WizardStartIndex={0}
+                                onCloseWizard={() => this.onCloseWizard()}
+                                onFinishWizard={() => this.onFinishWizard()}
+                                canFinishWizard={() => this.canFinishWizard()}
+                            />
+                        }
+                    </div>
                 }
+
             </PanelWithButton>
         </div>
     }
@@ -130,9 +163,12 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
         this.setState({ EditedAdaptableBlotterObject: Helper.cloneObject(Chart), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: index });
     }
 
-    onNew() {
-       let emptyChartDefinition :IChartDefinition = ObjectFactory.CreateEmptyCategoryChartDefinition();
-         this.setState({ EditedAdaptableBlotterObject: emptyChartDefinition , WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
+    onNew(chartType: ChartType) {
+        alert(chartType)
+        let emptyChartDefinition: IChartDefinition = (chartType == ChartType.CategoryChart) ?
+            ObjectFactory.CreateEmptyCategoryChartDefinition() :
+            ObjectFactory.CreateEmptyPieChartDefinition();
+        this.setState({ EditedAdaptableBlotterObject: emptyChartDefinition, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
     onCloseWizard() {
@@ -141,7 +177,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     }
 
     onFinishWizard() {
-      //  alert("wizard finished")
+        //  alert("wizard finished")
         let index: number = this.state.EditedAdaptableBlotterObjectIndex;
         let clonedObject: IChartDefinition = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
         this.props.onAddUpdateChartDefinition(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
@@ -166,7 +202,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     return {
         ChartDefinitions: state.Chart.ChartDefinitions,
-        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c=>c.Name == state.Chart.CurrentChartName),
+        CurrentChartDefinition: state.Chart.ChartDefinitions.find(c => c.Name == state.Chart.CurrentChartName),
     };
 }
 

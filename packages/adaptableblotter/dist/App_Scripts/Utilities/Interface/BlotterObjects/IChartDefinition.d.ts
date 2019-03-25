@@ -1,12 +1,15 @@
 import { Expression } from '../../Expression';
 import { IAdaptableBlotterObject } from './IAdaptableBlotterObject';
-import { ChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment } from '../../ChartEnums';
+import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType } from '../../ChartEnums';
 export interface IChartDefinition extends IAdaptableBlotterObject {
     Name: string;
     Description: string;
     ChartProperties: IChartProperties;
+    ChartType: ChartType;
 }
 export interface IChartProperties extends IAdaptableBlotterObject {
+}
+export interface IPieChartDefinition extends IChartDefinition {
 }
 export interface ICategoryChartDefinition extends IChartDefinition {
     YAxisColumnIds: string[];
@@ -19,7 +22,7 @@ export interface ICalloutProperties {
     Interval?: number;
 }
 export interface ICategoryChartProperties extends IChartProperties {
-    ChartType?: ChartType;
+    CategoryChartType?: CategoryChartType;
     SeriesThickness?: number;
     MarkerType?: string;
     CalloutsType?: string;

@@ -289,6 +289,8 @@ export const SystemReducer: Redux.Reducer<SystemState> = (state: SystemState = i
 
         // Chart Actions
         case CHART_SET_CHART_DATA:
+        console.log("here")
+        console.log( (<ChartSetChartDataAction>action).chartData)
             return Object.assign({}, state, { ChartData: (<ChartSetChartDataAction>action).chartData })
 
         case CHART_SET_CHART_VISIBILITY:

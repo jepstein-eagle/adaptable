@@ -87,20 +87,47 @@ class ChartService {
     }
     BuildPieChartData(valueColumnId, labelColumnId) {
         let dataCounter = new Map();
-        // let dataValueTotal = 0;
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let hasLabelColumn = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(labelColumnId);
         let hasValueColumn = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(valueColumnId);
-        console.log("BuildPieChartData labelColumn " + hasLabelColumn + " valueColumn " + hasValueColumn);
+        console.log("BuildPieChartData label " + hasLabelColumn + " value " + hasValueColumn);
         let isGroupingColumns = false;
         let valueTotal = 0;
         if (hasLabelColumn && hasValueColumn) {
             isGroupingColumns = true;
-            let isValueColumnNumeric = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(valueColumnId, columns) == Enums_1.DataType.Number;
+            let valueColumnType = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(valueColumnId, columns);
+            let valueColumnIsNumeric = valueColumnType == Enums_1.DataType.Number;
+            let labelColumnType = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(labelColumnId, columns);
+            let labelColumnIsNumeric = labelColumnType == Enums_1.DataType.Number;
             this.blotter.forAllRecordsDo((row) => {
-                let group = this.blotter.getRawValueFromRecord(row, labelColumnId);
-                let value = this.blotter.getRawValueFromRecord(row, valueColumnId);
-                let count = (isValueColumnNumeric) ? parseFloat(value) : 1;
+                let labelCell = this.blotter.getRawValueFromRecord(row, labelColumnId);
+                let valueCell = this.blotter.getRawValueFromRecord(row, valueColumnId);
+                let group = "";
+                let count = 0;
+                if (valueColumnIsNumeric && labelColumnIsNumeric) {
+                    // counting sum of both value and label columns
+                    count = parseFloat(valueCell) + parseFloat(labelCell);
+                    group = labelCell;
+                }
+                else if (valueColumnIsNumeric && !labelColumnIsNumeric) {
+                    count = parseFloat(valueCell);
+                    group = labelCell;
+                }
+                else if (!valueColumnIsNumeric && labelColumnIsNumeric) {
+                    count = parseFloat(labelCell);
+                    group = valueCell;
+                }
+                else if (!valueColumnIsNumeric && !labelColumnIsNumeric) {
+                    // counting instances of both value and label columns
+                    count = 1;
+                    // checking for selected 2 the same columns
+                    if (labelCell == valueCell) {
+                        group = labelCell;
+                    }
+                    else {
+                        group = this.abbreviateStr(labelCell + " " + valueCell);
+                    }
+                }
                 if (dataCounter.has(group)) {
                     dataCounter.set(group, dataCounter.get(group) + count);
                 }
@@ -112,13 +139,14 @@ class ChartService {
         }
         else if (hasValueColumn) {
             let i = 0;
-            let isValueColumnNumeric = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(valueColumnId, columns) == Enums_1.DataType.Number;
-            isGroupingColumns = !isValueColumnNumeric;
+            // we have only valueColumnId so let's check if it has numeric or non-numeric cell values
+            let columnType = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(valueColumnId, columns);
+            let columnIsNumeric = columnType == Enums_1.DataType.Number;
+            isGroupingColumns = !columnIsNumeric;
             this.blotter.forAllRecordsDo((row) => {
-                // we have only valueColumnId so let check if it numeric or non-numeric cell values
                 let cellValue = this.blotter.getRawValueFromRecord(row, valueColumnId);
-                let group = isValueColumnNumeric ? i : cellValue;
-                let count = isValueColumnNumeric ? parseFloat(cellValue) : 1;
+                let group = columnIsNumeric ? i : cellValue;
+                let count = columnIsNumeric ? parseFloat(cellValue) : 1;
                 if (dataCounter.has(group)) {
                     dataCounter.set(group, dataCounter.get(group) + count);
                 }
@@ -131,14 +159,14 @@ class ChartService {
         }
         else if (hasLabelColumn) {
             let i = 0;
-            console.log('label only');
-            let isLabelColumnNumeric = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(labelColumnId, columns) == Enums_1.DataType.Number;
-            isGroupingColumns = !isLabelColumnNumeric;
+            // we have only labelColumnId so let's check if it has numeric or non-numeric cell values
+            let columnType = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(labelColumnId, columns);
+            let columnIsNumeric = columnType == Enums_1.DataType.Number;
+            isGroupingColumns = !columnIsNumeric;
             this.blotter.forAllRecordsDo((row) => {
-                // we have only labelColumnId so let check if it numeric or non-numeric cell values
                 let cellValue = this.blotter.getRawValueFromRecord(row, labelColumnId);
-                let group = isLabelColumnNumeric ? i : cellValue;
-                let count = isLabelColumnNumeric ? parseFloat(cellValue) : 1;
+                let group = columnIsNumeric ? i : cellValue;
+                let count = columnIsNumeric ? parseFloat(cellValue) : 1;
                 if (dataCounter.has(group)) {
                     dataCounter.set(group, dataCounter.get(group) + count);
                 }
@@ -153,26 +181,33 @@ class ChartService {
         let dataItems = [];
         dataCounter.forEach((value, name) => {
             let item = {};
-            item.Name = name;
-            item.Value = Helper_1.Helper.RoundNumber(value, 1); // Math.round(value * 10) / 10;
+            item.Name = name.toString();
+            item.Value = Helper_1.Helper.RoundNumber(value, 1);
             // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
             item.Ratio = Math.round(value / valueTotal * 1000) / 10;
             if (isGroupingColumns) {
-                item.ValueAndName = this.toShort(item.Value) + " : " + name;
-                item.RatioAndName = item.Ratio.toFixed(1) + "%" + " : " + name;
+                item.ValueAndName = this.abbreviateNum(item.Value) + " - " + item.Name;
+                item.RatioAndName = item.Ratio.toFixed(0) + " - " + item.Name;
             }
             else {
-                item.ValueAndName = name;
-                item.RatioAndName = name;
+                item.ValueAndName = item.Name;
+                item.RatioAndName = item.Name;
             }
+            // ensure strings are not to long for slice labels and legend items
+            item.ValueAndName = this.abbreviateStr(item.ValueAndName);
+            item.RatioAndName = this.abbreviateStr(item.RatioAndName);
+            item.Name = this.abbreviateStr(item.Name);
             dataItems.push(item);
         });
         console.log("BuildPieChartData dataItems " + dataItems.length);
-        dataItems = dataItems.sort(this.orderAscending);
         return dataItems;
     }
-    //TODO add this to string extension?
-    toShort(largeValue) {
+    abbreviateStr(str, maxLength) {
+        if (maxLength === undefined)
+            maxLength = 18;
+        return str.length < maxLength ? str : str.substr(0, maxLength) + "...";
+    }
+    abbreviateNum(largeValue) {
         let str = "";
         if (largeValue >= 1000000000) {
             str = (largeValue / 1000000000).toFixed(1) + "B";
@@ -187,15 +222,6 @@ class ChartService {
             str = largeValue.toString();
         }
         return str;
-    }
-    orderAscending(a, b) {
-        if (a.Value > b.Value) {
-            return -1;
-        }
-        if (a.Value < b.Value) {
-            return 1;
-        }
-        return 0;
     }
 }
 exports.ChartService = ChartService;

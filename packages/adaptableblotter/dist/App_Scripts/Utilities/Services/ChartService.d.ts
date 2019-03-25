@@ -9,6 +9,6 @@ export declare class ChartService implements IChartService {
     private buildTotal;
     private getXAxisColumnValues;
     BuildPieChartData(valueColumnId: string, labelColumnId: string): any[];
-    toShort(largeValue: number): string;
-    orderAscending(a: any, b: any): 1 | -1 | 0;
+    abbreviateStr(str: string, maxLength?: number): string;
+    abbreviateNum(largeValue: number): string;
 }

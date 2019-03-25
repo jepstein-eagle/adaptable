@@ -19,11 +19,8 @@ import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { CategoryChartComponent } from "./CategoryChart/CategoryChartComponent";
 import { PieChartComponent } from "./PieChart/PieChartComponent";
+import { PieChartWizard } from "./PieChart/Wizard/PieChartWizard";
 
-/*
-This is really only going to be for Category Charts.
-As we add other chart types we will need to rethink this and some of the assumptions
-*/
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
     ChartDefinitions: IChartDefinition[];
     CurrentChartDefinition: IChartDefinition;
@@ -33,15 +30,11 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
     onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction,
     onSetChartVisibility: (chartVisibility: ChartVisibility) => SystemRedux.ChartSetChartVisibiityAction
-    // this we need to get from the child
     onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => ChartRedux.ChartPropertiesUpdateAction,
-
 }
 
 export interface ChartDisplayPopupState {
-    // Global
     EditedChartDefinition: IChartDefinition;
-
 }
 
 class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps, ChartDisplayPopupState> {
@@ -112,11 +105,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                     hideToolTip={true}
                 />
 
-
-        // this is how we decide whether to show the chart...
-        // let chartElement = (this.props.ChartVisibility == ChartVisibility.Maximised && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
-
-
         return <span className={cssClassName}>
             <PanelWithImageThreeButtons
                 cssClassName={cssClassName}
@@ -156,20 +144,40 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
             </PanelWithImageThreeButtons>
 
             {this.state.EditedChartDefinition &&
-                <CategoryChartWizard
-                    cssClassName={cssClassName}
-                    EditedAdaptableBlotterObject={this.state.EditedChartDefinition}
-                    ConfigEntities={this.props.ChartDefinitions}
-                    ModalContainer={this.props.ModalContainer}
-                    Columns={this.props.Columns}
-                    UserFilters={this.props.UserFilters}
-                    SystemFilters={this.props.SystemFilters}
-                    Blotter={this.props.Blotter}
-                    WizardStartIndex={0}
-                    onCloseWizard={() => this.onCloseWizard()}
-                    onFinishWizard={() => this.onFinishWizard()}
-                    canFinishWizard={() => this.canFinishWizard()}
-                />
+                <div>
+                    {this.state.EditedChartDefinition.ChartType == ChartType.CategoryChart ?
+                        <CategoryChartWizard
+                            cssClassName={cssClassName}
+                            EditedAdaptableBlotterObject={this.state.EditedChartDefinition}
+                            ConfigEntities={this.props.ChartDefinitions}
+                            ModalContainer={this.props.ModalContainer}
+                            Columns={this.props.Columns}
+                            UserFilters={this.props.UserFilters}
+                            SystemFilters={this.props.SystemFilters}
+                            Blotter={this.props.Blotter}
+                            WizardStartIndex={0}
+                            onCloseWizard={() => this.onCloseWizard()}
+                            onFinishWizard={() => this.onFinishWizard()}
+                            canFinishWizard={() => this.canFinishWizard()}
+                        />
+                        :
+                        <PieChartWizard
+                            cssClassName={cssClassName}
+                            EditedAdaptableBlotterObject={this.state.EditedChartDefinition}
+                            ConfigEntities={this.props.ChartDefinitions}
+                            ModalContainer={this.props.ModalContainer}
+                            Columns={this.props.Columns}
+                            UserFilters={this.props.UserFilters}
+                            SystemFilters={this.props.SystemFilters}
+                            Blotter={this.props.Blotter}
+                            WizardStartIndex={0}
+                            onCloseWizard={() => this.onCloseWizard()}
+                            onFinishWizard={() => this.onFinishWizard()}
+                            canFinishWizard={() => this.canFinishWizard()}
+                        />
+
+                    }
+                </div>
             }
 
         </span>
@@ -186,9 +194,6 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
     onChartMaximised() {
         this.props.onSetChartVisibility(ChartVisibility.Maximised);
     }
-
-
-
 
     onCloseWizard() {
         this.setState({ EditedChartDefinition: null });

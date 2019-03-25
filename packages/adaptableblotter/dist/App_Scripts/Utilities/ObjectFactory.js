@@ -6,6 +6,7 @@ const ColumnHelper_1 = require("./Helpers/ColumnHelper");
 const CellValidationHelper_1 = require("./Helpers/CellValidationHelper");
 const GeneralConstants_1 = require("./Constants/GeneralConstants");
 const DefaultCategoryChartProperties_1 = require("./Defaults/DefaultCategoryChartProperties");
+const ChartEnums_1 = require("./ChartEnums");
 var ObjectFactory;
 (function (ObjectFactory) {
     function CreateLicenceInfo(licenceType, isLicenceInDate, licenceUserType, expiryDate) {
@@ -21,6 +22,15 @@ var ObjectFactory;
         return { ColumnId: GeneralConstants_1.EMPTY_STRING, SortedValues: [] };
     }
     ObjectFactory.CreateEmptyCustomSort = CreateEmptyCustomSort;
+    function CreateEmptyPieChartDefinition() {
+        return {
+            Name: 'Hello',
+            Description: 'World',
+            ChartProperties: null,
+            ChartType: ChartEnums_1.ChartType.PieChart
+        };
+    }
+    ObjectFactory.CreateEmptyPieChartDefinition = CreateEmptyPieChartDefinition;
     function CreateEmptyCategoryChartDefinition() {
         return {
             Name: GeneralConstants_1.EMPTY_STRING,
@@ -29,7 +39,8 @@ var ObjectFactory;
             YAxisTotal: GeneralConstants_1.CHART_DEFAULT_YAXIS_TOTAL,
             XAxisColumnId: GeneralConstants_1.EMPTY_STRING,
             XAxisExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
-            ChartProperties: DefaultCategoryChartProperties_1.DefaultCategoryChartProperties
+            ChartProperties: DefaultCategoryChartProperties_1.DefaultCategoryChartProperties,
+            ChartType: ChartEnums_1.ChartType.PieChart
         };
     }
     ObjectFactory.CreateEmptyCategoryChartDefinition = CreateEmptyCategoryChartDefinition;

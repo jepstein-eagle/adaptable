@@ -9,16 +9,22 @@ var ChartVisibility;
 })(ChartVisibility = exports.ChartVisibility || (exports.ChartVisibility = {}));
 var ChartType;
 (function (ChartType) {
-    ChartType["Column"] = "Column";
-    ChartType["Area"] = "Area";
-    ChartType["Line"] = "Line";
-    ChartType["Point"] = "Point";
-    ChartType["Spline"] = "Spline";
-    ChartType["SplineArea"] = "SplineArea";
-    ChartType["StepArea"] = "StepArea";
-    ChartType["StepLine"] = "StepLine";
-    ChartType["Waterfall"] = "Waterfall";
+    ChartType["CategoryChart"] = "CategoryChart";
+    ChartType["PieChart"] = "PieChart";
+    ChartType["Data"] = "Data";
 })(ChartType = exports.ChartType || (exports.ChartType = {}));
+var CategoryChartType;
+(function (CategoryChartType) {
+    CategoryChartType["Column"] = "Column";
+    CategoryChartType["Area"] = "Area";
+    CategoryChartType["Line"] = "Line";
+    CategoryChartType["Point"] = "Point";
+    CategoryChartType["Spline"] = "Spline";
+    CategoryChartType["SplineArea"] = "SplineArea";
+    CategoryChartType["StepArea"] = "StepArea";
+    CategoryChartType["StepLine"] = "StepLine";
+    CategoryChartType["Waterfall"] = "Waterfall";
+})(CategoryChartType = exports.CategoryChartType || (exports.CategoryChartType = {}));
 var CrosshairDisplayMode;
 (function (CrosshairDisplayMode) {
     CrosshairDisplayMode["None"] = "None";

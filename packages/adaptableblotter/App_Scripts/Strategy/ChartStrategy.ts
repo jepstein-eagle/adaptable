@@ -9,9 +9,9 @@ import { ChartState, SystemState } from '../Redux/ActionsReducers/Interface/ISta
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
-import { IChartDefinition, ICategoryChartDefinition } from "../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition } from "../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { ChartVisibility } from '../Utilities/ChartEnums';
+import { ChartVisibility, ChartType } from '../Utilities/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../Utilities/Interface/IColumn';
 
@@ -92,29 +92,42 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
 
     private doChartDefinitionChangesRequireDataUpdate(cd1: IChartDefinition, cd2: IChartDefinition): boolean {
-        // slightly nonsensical for now but iwll change as more charts are added I think...
-        let a = cd1 as ICategoryChartDefinition;
-        let b = cd2 as ICategoryChartDefinition;
+        if (cd1 == null && cd2 !== null) {
+            return true;
+        }
+        if (cd2 == null && cd1 !== null) {
+            return true;
+        }
+        if (cd1 == null && cd2 == null) {
+            return false;
+        }
 
-        if (a == null && b !== null) {
-            return true;
+        if (cd1.ChartType == ChartType.CategoryChart) {
+            return this.doCategoryChartDefinitionChangesRequireDataUpdate(cd1 as ICategoryChartDefinition, cd2 as ICategoryChartDefinition);
         }
-        if (b == null && a !== null) {
-            return true;
+        if (cd1.ChartType == ChartType.PieChart) {
+            return this.doPieChartDefinitionChangesRequireDataUpdate(cd1 as IPieChartDefinition, cd2 as IPieChartDefinition);
         }
+    }
 
-        if (a.XAxisColumnId != b.XAxisColumnId) {
+    private doCategoryChartDefinitionChangesRequireDataUpdate(cd1: ICategoryChartDefinition, cd2: ICategoryChartDefinition): boolean {
+        if (cd1.XAxisColumnId != cd2.XAxisColumnId) {
             return true;
         }
-        if (ArrayExtensions.areArraysNotEqual(a.YAxisColumnIds, b.YAxisColumnIds)) {
+        if (ArrayExtensions.areArraysNotEqual(cd1.YAxisColumnIds, cd2.YAxisColumnIds)) {
             return true;
         }
-        if (a.YAxisTotal != b.YAxisTotal) {
+        if (cd1.YAxisTotal != cd2.YAxisTotal) {
             return true;
         }
-        if (ExpressionHelper.ConvertExpressionToString(a.XAxisExpression, this.GetColumnState()) != ExpressionHelper.ConvertExpressionToString(b.XAxisExpression, this.GetColumnState())) {
+        if (ExpressionHelper.ConvertExpressionToString(cd1.XAxisExpression, this.GetColumnState()) != ExpressionHelper.ConvertExpressionToString(cd2.XAxisExpression, this.GetColumnState())) {
             return true;
         }
+        return false;
+    }
+
+    private doPieChartDefinitionChangesRequireDataUpdate(cd1: IPieChartDefinition, cd2: IPieChartDefinition): boolean {
+
         return false;
     }
 
@@ -132,14 +145,20 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private setChartData() {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let chartDefinition: ICategoryChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName) as ICategoryChartDefinition
+        let chartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
         if (chartDefinition) {
-            let chartData: any = this.blotter.ChartService.BuildCategoryChartData(chartDefinition, columns);
+            let chartData: any;
+            if (chartDefinition.ChartType == ChartType.CategoryChart) {
+                chartData = this.blotter.ChartService.BuildCategoryChartData(chartDefinition as ICategoryChartDefinition, columns);
+            } else if (chartDefinition.ChartType == ChartType.PieChart) {
+                chartData = this.blotter.ChartService.BuildPieChartData(chartDefinition as IPieChartDefinition);
+                console.log(chartData);
+            }
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
         }
     }
 
-    private clearChartData() {
+    private clearChartData() {          
         if (this.GetSystemState().ChartData != null) {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(null));
         }
