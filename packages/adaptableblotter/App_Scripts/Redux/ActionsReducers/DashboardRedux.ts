@@ -228,17 +228,17 @@ export const DashboardUseDefaultSizeButtons = (): DashboardUseDefaultSizeButtons
 const initialDashboardState: DashboardState = {
     AvailableToolbars: [
         StrategyConstants.AdvancedSearchStrategyId,
-        StrategyConstants.QuickSearchStrategyId,
-        StrategyConstants.LayoutStrategyId,
-        StrategyConstants.ExportStrategyId,
+        StrategyConstants.AlertStrategyId,
+        StrategyConstants.ApplicationStrategyId,
+        StrategyConstants.BulkUpdateStrategyId,
+        StrategyConstants.CellSummaryStrategyId,
+        StrategyConstants.ChartStrategyId,
         StrategyConstants.ColumnFilterStrategyId,
         StrategyConstants.DataSourceStrategyId,
-        StrategyConstants.BulkUpdateStrategyId,
+        StrategyConstants.ExportStrategyId,
+        StrategyConstants.LayoutStrategyId,
         StrategyConstants.SmartEditStrategyId,
-        StrategyConstants.CellSummaryStrategyId,
-        StrategyConstants.ApplicationStrategyId,
-        StrategyConstants.AlertStrategyId,
-        StrategyConstants.ChartStrategyId,
+        StrategyConstants.QuickSearchStrategyId,
         StrategyConstants.ThemeStrategyId
     ],
     VisibleToolbars: [

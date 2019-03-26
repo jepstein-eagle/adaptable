@@ -134,7 +134,7 @@ export class ChartService implements IChartService {
           group = primaryCellValue;
         } else {
           count = 1;
-          group = this.abbreviateStr(primaryCellValue + " " + secondaryCellValue);
+          group = StringExtensions.abbreviateString(primaryCellValue + " " + secondaryCellValue, 30);
         }
 
         if (dataCounter.has(group)) {

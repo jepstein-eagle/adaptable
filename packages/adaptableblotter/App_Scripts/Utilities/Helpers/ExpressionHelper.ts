@@ -179,8 +179,8 @@ export module ExpressionHelper {
         }
         if (columnValueExpression !== undefined &&
             columnValueExpression.ColumnDisplayValues !== undefined &&
-            columnValueExpression.ColumnDisplayValues.length > 0 ) {
-              returnValue += " In (" + columnValueExpression.ColumnDisplayValues.join(", ") + ")"
+            columnValueExpression.ColumnDisplayValues.length > 0) {
+            returnValue += " In (" + columnValueExpression.ColumnDisplayValues.join(", ") + ")"
         }
         return returnValue;
     }
@@ -516,6 +516,8 @@ export module ExpressionHelper {
                 break;
             case DataType.Object:
             case DataType.String:
+                // might not be a string so make sure
+                rangeEvaluation.newValue = String(rangeEvaluation.newValue);
                 if (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) {
                     rangeEvaluation.newValue = StringExtensions.ToLowerCase(rangeEvaluation.newValue);
                 }

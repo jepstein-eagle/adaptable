@@ -162,8 +162,8 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
             dataSource={this.props.ChartData}
             labelsPosition={this.state.SliceLabelsPosition}
             radiusFactor={0.6}
-            labelMemberPath={"Name"}
-            valueMemberPath={"Value"}
+            labelMemberPath={this.state.SliceLabelsMapping}
+            valueMemberPath={this.state.SliceValuesMapping}
             legendLabelMemberPath={this.state.SliceLegendMapping}
             width={'800px'}
             height={'800px'}

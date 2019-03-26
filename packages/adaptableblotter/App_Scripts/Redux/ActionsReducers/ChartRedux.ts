@@ -55,7 +55,7 @@ export const ChartDefinitionSelect = (CurrentChartName: string): ChartDefinition
 })
 
 const initialChartState: ChartState = {
-    ChartDefinitions: [ObjectFactory.CreateEmptyPieChartDefinition()],
+    ChartDefinitions: [],
     CurrentChartName: EMPTY_STRING,
     RefreshRate: CHART_DEFAULT_REFRESH_RATE
 }

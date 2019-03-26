@@ -33,7 +33,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(50);
+    return dataGen.getTrades(200);
   }
   return dataGen.getFtseData(199);
 }
@@ -125,7 +125,7 @@ function InitTradeBlotter() {
       //    licenceKey: getValidEnterpriseKey(),
       //licenceKey: getInvalidStandardKey(),
         licenceKey: 'abc5834u-yt5a4evp1-r1oq9nclf1',
-          predefinedConfig: myJson,
+     //     predefinedConfig: myJson,
       
       auditOptions: {
         //     auditCellEdits: true,
@@ -490,7 +490,7 @@ function getTradeSchema() {
     headerName: 'Desk No.',
     field: 'deskId',
     editable: true,
-    type: 'abColDefNumber',
+ //   type: 'abColDefNumber',
     // cellRenderer: percentCellRenderer,
     enableRowGroup: true,
     type: 'abColDefString',

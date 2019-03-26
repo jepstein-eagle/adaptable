@@ -18,40 +18,44 @@ export module PieChartUIHelper {
       IsChartSettingsVisible: true,
 
       SliceLegendMapping: "ValueAndName",
-
-      // General
       IsGeneralMinimised: false,
-
-
-      // Misc
       IsMiscMinimised: true,
-
       OthersCategoryThreshold: 0,
       OthersCategoryType: PieChartOthersCategoryType.Number,
       SliceLabelsPosition: "OutsideEnd",
 
-     SliceValuesMapping: "Value",
+      SliceValuesMapping: "Value",
       SliceLabelsMapping: "Name",
- //     SliceLegendMapping: "ValueAndName",
-  //    SliceSortByColumn: "Value Descending",
-     }
+      //     SliceLegendMapping: "ValueAndName",
+      //    SliceSortByColumn: "Value Descending",
+    }
 
   }
 
   export function setDefaultChartDisplayPopupState(): PieChartComponentState {
     let defaultState = {
+      IsChartSettingsVisible: true,
+
+      SliceLegendMapping: "ValueAndName",
       IsGeneralMinimised: false,
       IsMiscMinimised: true,
+      OthersCategoryThreshold: 0,
+      OthersCategoryType: PieChartOthersCategoryType.Number,
+      SliceLabelsPosition: "OutsideEnd",
+
+      SliceValuesMapping: "Value",
+      SliceLabelsMapping: "Name",
+
     } as PieChartComponentState;
     return defaultState;
   }
 
 
- export function getOptionsForLabelsPosition(): JSX.Element[] {
+  export function getOptionsForLabelsPosition(): JSX.Element[] {
     let optionElements = EnumExtensions.getNames(PieChartLabelPositions).map((v) => {
-        return <option key={v} value={v}>{v as PieChartLabelPositions}</option>
+      return <option key={v} value={v}>{v as PieChartLabelPositions}</option>
     })
     return optionElements;
-}
+  }
 
 }
