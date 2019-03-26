@@ -31,7 +31,7 @@ import { CellValidationHelper } from './Helpers/CellValidationHelper';
 import { EMPTY_STRING, CHART_DEFAULT_YAXIS_TOTAL, PLUS_MINUS_DEFAULT_NUDGE_VALUE, ALERT_DEFAULT_OPERATOR, ALERT_DEFAULT_RANGE_OPERAND_TYPE, ALERT_DEFAULT_MESSAGE_TYPE, ALERT_DEFAULT_SHOW_AS_POPUP, DEFAULT_DARK_GREEN_COLOR, DEFAULT_DARK_RED_COLOR } from './Constants/GeneralConstants';
 import { DefaultCategoryChartProperties } from './Defaults/DefaultCategoryChartProperties';
 import { ILicenceInfo } from './Interface/ILicenceInfo';
-import { ChartType } from './ChartEnums';
+import { ChartType, SecondaryColumnOperation } from './ChartEnums';
 
 
 export module ObjectFactory {
@@ -55,8 +55,9 @@ export module ObjectFactory {
             Description: EMPTY_STRING,
             ChartProperties: null,
             ChartType: ChartType.PieChart,
-            LabelColumnId:'country',
-            ValueColumnId:''
+            PrimaryColumnId:EMPTY_STRING,
+            SecondaryColumnId: null,
+            SecondaryColumnOperation: SecondaryColumnOperation.Sum
         }
     }
     export function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition {

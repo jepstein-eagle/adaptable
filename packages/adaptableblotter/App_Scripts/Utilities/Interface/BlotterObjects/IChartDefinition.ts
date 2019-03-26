@@ -1,6 +1,6 @@
 import { Expression } from '../../Expression';
 import { IAdaptableBlotterObject } from './IAdaptableBlotterObject';
-import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType } from '../../ChartEnums';
+import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation } from '../../ChartEnums';
 
 // not too sure at the moment how we will break up these objects as we add data series, financial, pie, doughnut etc.
 // trying to make it as flexible as possible though I suspeect some stuff will break as we go forward...
@@ -10,23 +10,27 @@ export interface IChartDefinition extends IAdaptableBlotterObject {
   Description: string;
   ChartProperties: IChartProperties
   ChartType: ChartType
- }
+}
 
 export interface IChartProperties extends IAdaptableBlotterObject {
   // still empty at this stage
- }
+}
 
- export interface IPieChartDefinition extends IChartDefinition {
-  LabelColumnId: string;
-  ValueColumnId: string
- }
+export interface IPieChartDefinition extends IChartDefinition {
+  PrimaryColumnId: string;
+  SecondaryColumnId: string
+  SecondaryColumnOperation: SecondaryColumnOperation
+}
 
 export interface ICategoryChartDefinition extends IChartDefinition {
   YAxisColumnIds: string[];
   YAxisTotal: 'Sum' | 'Average';
   XAxisColumnId: string;
   XAxisExpression: Expression;
- // ChartProperties: ICategoryChartProperties;
+  // ChartProperties: ICategoryChartProperties;
+}
+
+export interface IPieChartProperties extends IChartProperties {
 }
 
 export interface ICalloutProperties {
@@ -34,10 +38,10 @@ export interface ICalloutProperties {
   Interval?: number;
 }
 
-export interface ICategoryChartProperties extends IChartProperties{
+export interface ICategoryChartProperties extends IChartProperties {
   // General
   CategoryChartType?: CategoryChartType;
- SeriesThickness?: number; // and bind it to
+  SeriesThickness?: number; // and bind it to
 
   MarkerType?: string; // using a string because chart expects a string or an array of MarkerType enums
 

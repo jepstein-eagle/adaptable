@@ -1,10 +1,12 @@
 import * as React from "react";
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../../Wizard/Interface/IAdaptableWizard";
-import { IPieChartDefinition, IChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { AdaptableWizard } from "../../../Wizard/AdaptableWizard";
 import { PieChartSettingsWizard } from "./PieChartSettingsWizard";
 import { PieChartSummaryWizard } from "./PieChartSummaryWizard";
+import { PieChartPrimaryColumnWizard } from "./PieChartPrimaryColumnWizard";
+import { PieChartSecondaryColumnWizard } from "./PieChartSecondaryColumnWizard";
 
 export interface PieChartWizardProps extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<PieChartWizard> {
 }
@@ -22,14 +24,24 @@ export class PieChartWizard extends React.Component<PieChartWizardProps, {}> {
                 Blotter={this.props.Blotter}
                 Columns={this.props.Columns}
                 Steps={[
-                           {
-                        StepName: "Settings",
+                    {
+                        StepName: "Primary",
                         Index: 0,
+                        Element: <PieChartPrimaryColumnWizard />,
+                    },
+                    {
+                        StepName: "Secondary",
+                        Index: 1,
+                        Element: <PieChartSecondaryColumnWizard />,
+                    },
+                    {
+                        StepName: "Settings",
+                        Index: 2,
                         Element: <PieChartSettingsWizard ChartNames={chartNames} />,
                     },
                     {
                         StepName: "Summary",
-                        Index: 1,
+                        Index: 3,
                         Element: <PieChartSummaryWizard />
                     },
                 ]}

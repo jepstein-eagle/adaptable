@@ -28,7 +28,6 @@ import { IPieChartDefinition } from "../../Utilities/Interface/BlotterObjects/IC
 import { ObjectFactory } from "../../Utilities/ObjectFactory";
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {
-    PieChartText: string;
 }
 
 interface PieChartPopupState {
@@ -139,7 +138,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                         <Col xs={4}>{' '}<ControlLabel>{' '}Label Column</ControlLabel></Col>
                         <Col xs={7} >
                             <ColumnSelector cssClassName={cssClassName}
-                                SelectedColumnIds={[this.state.PieChartDefinition.LabelColumnId]}
+                                SelectedColumnIds={[this.state.PieChartDefinition.PrimaryColumnId]}
                                 SelectionMode={SelectionMode.Single}
                                 placeHolder={"Select any column"}
                                 ColumnList={this.props.Columns}
@@ -156,7 +155,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                         <Col xs={4}>{' '}<ControlLabel>{' '} Value Column</ControlLabel></Col>
                         <Col xs={7} >
                             <ColumnSelector cssClassName={cssClassName}
-                                SelectedColumnIds={[this.state.PieChartDefinition.ValueColumnId]}
+                                SelectedColumnIds={[this.state.PieChartDefinition.SecondaryColumnId]}
                                 SelectionMode={SelectionMode.Single}
                                 placeHolder={"Select a numeric column"}
                                 ColumnList={this.props.Columns}
@@ -168,8 +167,8 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         return elements;
     }
     hasValidDataSelection(): boolean {
-        return StringExtensions.IsNotNullOrEmpty(this.state.PieChartDefinition.ValueColumnId) ||
-            StringExtensions.IsNotNullOrEmpty(this.state.PieChartDefinition.LabelColumnId);
+        return StringExtensions.IsNotNullOrEmpty(this.state.PieChartDefinition.SecondaryColumnId) ||
+            StringExtensions.IsNotNullOrEmpty(this.state.PieChartDefinition.PrimaryColumnId);
     }
 
     public brushesEven: string[] = ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47"];
@@ -357,7 +356,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
     private onDataValueColumnChanged(columns: IColumn[]) {
         let valueColumn: string = null;
-        let labelColumn = this.state.PieChartDefinition.LabelColumnId;
+        let labelColumn = this.state.PieChartDefinition.PrimaryColumnId;
         if (columns.length > 0) {
             valueColumn = columns[0].ColumnId;
         }
@@ -365,7 +364,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     }
 
     private onDataGroupColumnChanged(columns: IColumn[]) {
-        let valueColumn = this.state.PieChartDefinition.ValueColumnId;
+        let valueColumn = this.state.PieChartDefinition.SecondaryColumnId;
         let labelColumn: string = null;
         if (columns.length > 0) {
             labelColumn = columns[0].ColumnId;
@@ -375,8 +374,8 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
     private updateDataSource(valueColumn: string, labelColumn: string) {
         let pieChartDefinition: IPieChartDefinition = this.state.PieChartDefinition;
-        pieChartDefinition.LabelColumnId = labelColumn;
-        pieChartDefinition.ValueColumnId = valueColumn;
+        pieChartDefinition.PrimaryColumnId = labelColumn;
+        pieChartDefinition.SecondaryColumnId = valueColumn;
 
         let dataSource = this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition);
 

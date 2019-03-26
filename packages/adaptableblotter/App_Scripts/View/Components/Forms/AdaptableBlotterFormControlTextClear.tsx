@@ -29,7 +29,6 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<Adapta
                     value={this.props.value}
                     onChange={(x) => this.props.OnTextChange((x.target as HTMLInputElement).value)} />
 
-                {StringExtensions.IsNotNullOrEmpty(this.props.value.toString()) &&
                     <InputGroup.Button>
                         <ButtonClear
                             bsStyle={"default"}
@@ -37,9 +36,9 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<Adapta
                             onClick={() => this.props.OnTextChange("")}
                             size={size}
                             overrideTooltip="Clear"
+                            overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.value.toString())}
                             DisplayMode="Glyph" />
                     </InputGroup.Button>
-                }
             </InputGroup>
 
 

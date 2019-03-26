@@ -48,7 +48,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
 
     componentWillReceiveProps(nextProps: ChartDisplayPopupProps, nextContext: any) {
         if (nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name) {
-            this.state = { EditedChartDefinition: null };
+            this.setState({ EditedChartDefinition: null });
         }
     }
 
@@ -135,7 +135,7 @@ class ChartDisplayPopupComponent extends React.Component<ChartDisplayPopupProps,
                                 //   ColorPalette={this.props.ColorPalette}
                                 //   Columns={this.props.Columns}
                                 cssClassName={this.props.cssClassName}
-                            //  onUpdateChartProperties={(chartTitle, chartProperties)=> this.props.onUpdateChartProperties(chartTitle, chartProperties)}
+                              onUpdateChartProperties={(chartTitle, chartProperties)=> this.props.onUpdateChartProperties(chartTitle, chartProperties)}
                             />
                         }
                     </div>

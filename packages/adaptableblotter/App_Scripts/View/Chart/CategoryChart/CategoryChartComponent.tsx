@@ -57,15 +57,14 @@ export class CategoryChartComponent extends React.Component<CategoryChartCompone
 
     componentWillReceiveProps(nextProps: CategoryChartComponentProps, nextContext: any) {
         if (nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name) {
-            this.state = CategoryChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition as ICategoryChartDefinition, this.props.Columns);
+            this.setState(CategoryChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition as ICategoryChartDefinition, this.props.Columns) as CategoryChartComponentState);
+       
         }
     }
 
     render() {
 
         let cssClassName: string = this.props.cssClassName + "__CategoryCharts";
-
-
 
         let showGeneralPropertiesButton =
             this.state.IsGeneralMinimised ?

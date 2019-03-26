@@ -6,8 +6,7 @@ import { ICategoryChartProperties } from '../Interface/BlotterObjects/IChartDefi
 
 export const DefaultCategoryChartProperties: ICategoryChartProperties = {
   // General
-  CategoryChartType: CategoryChartType.Line, // changed to line because it work better with a lot of data points
-  // jw: changed back to column as I *think* that is what our users want but genuinely unsure...
+  CategoryChartType: CategoryChartType.Line, 
   SeriesThickness: 1,
   // added special Default enum to resolve marker type based on chart type. Do not use enums for this property
   MarkerType: "Default",

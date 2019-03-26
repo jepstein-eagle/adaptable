@@ -112,3 +112,8 @@ export enum CalloutsType {
     // note populate getCalloutTypeOptions() with names of non-numeric data columns
     // to add more callout types
 }
+
+export enum SecondaryColumnOperation {
+    Sum = 'Sum',
+    Count = 'Count',
+}

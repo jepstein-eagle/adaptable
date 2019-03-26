@@ -5,8 +5,7 @@ import { IPieChartDefinition } from "../../../../Utilities/Interface/BlotterObje
 import { ColumnHelper } from "../../../../Utilities/Helpers/ColumnHelper";
 import { IKeyValuePair } from "../../../../Utilities/Interface/IKeyValuePair";
 import { WizardSummaryPage } from "../../../Components/WizardSummaryPage";
-import { Expression } from "../../../../Utilities/Expression";
-import { ExpressionHelper } from "../../../../Utilities/Helpers/ExpressionHelper";
+import { StringExtensions } from "../../../../Utilities/Extensions/StringExtensions";
 
 
 export interface PieChartSummaryWizardProps extends AdaptableWizardStepProps<IPieChartDefinition> {
@@ -18,11 +17,23 @@ export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizard
     }
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
-      
+
+        let primaryColumnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.PrimaryColumnId, this.props.Columns)
+        let seondaryColumnFriendlyName: string = StringExtensions.IsNullOrEmpty(this.props.Data.SecondaryColumnId) ?
+            '[None]' :
+            ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.SecondaryColumnId, this.props.Columns)
+
+        let seondaryColumnOperation: string = StringExtensions.IsNullOrEmpty(this.props.Data.SecondaryColumnId) ?
+            '' :
+            this.props.Data.SecondaryColumnOperation
+
         let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Description", Value: this.props.Data.Description },
-          ]
+            { Key: "Primary Column", Value: primaryColumnFriendlyName },
+            { Key: "Secondary Column", Value: seondaryColumnFriendlyName },
+            { Key: "Operation", Value: seondaryColumnOperation },
+        ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.ChartStrategyName} />
         return <div className={cssClassName}>
@@ -30,13 +41,6 @@ export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizard
         </div>
     }
 
-    private getExpressionString(expression: Expression): string {
-        if (ExpressionHelper.IsEmptyExpression(expression)) {
-            return "[All Column Values]"
-        } else {
-            return ExpressionHelper.ConvertExpressionToString(expression, this.props.Columns, false)
-        }
-    }
 
     public canNext(): boolean { return true }
     public canBack(): boolean { return true; }
