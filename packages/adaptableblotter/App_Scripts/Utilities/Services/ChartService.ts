@@ -175,9 +175,9 @@ export class ChartService implements IChartService {
         item.RatioAndName = item.Name;
       }
       // ensure strings are not to long for slice labels and legend items
-      item.ValueAndName = this.abbreviateStr(item.ValueAndName);
-      item.RatioAndName = this.abbreviateStr(item.RatioAndName);
-      item.Name = this.abbreviateStr(item.Name);
+      item.ValueAndName = StringExtensions.abbreviateString(item.ValueAndName, 30);
+      item.RatioAndName = StringExtensions.abbreviateString(item.RatioAndName, 30);
+      item.Name = StringExtensions.abbreviateString(item.Name, 30);
 
       dataItems.push(item);
     });
@@ -187,12 +187,6 @@ export class ChartService implements IChartService {
     return dataItems;
   }
 
-  public abbreviateStr(str: string, maxLength?: number) {
-    if (maxLength === undefined) {
-      maxLength = 18;
-    }
-    return str.length < maxLength ? str : str.substr(0, maxLength) + "...";
-  }
 
   public abbreviateNum(largeValue: number): string {
     let str: string = "";

@@ -57,7 +57,7 @@ export module ObjectFactory {
             ChartType: ChartType.PieChart,
             PrimaryColumnId:EMPTY_STRING,
             SecondaryColumnId: null,
-            SecondaryColumnOperation: SecondaryColumnOperation.Sum
+            SecondaryColumnOperation: SecondaryColumnOperation.Count
         }
     }
     export function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition {

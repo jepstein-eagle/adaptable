@@ -503,6 +503,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         let legendMapping = labelMapping.includes("Ratio") ? "RatioAndName" : "ValueAndName";
         this.setState({ SliceLabelsMapping: labelMapping, SliceLegendMapping: legendMapping } as PieChartPopupState);
     }
+    
     onSliceValuesMappingChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ SliceValuesMapping: e.value } as PieChartPopupState);

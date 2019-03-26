@@ -45,4 +45,8 @@ export module StringExtensions {
     return !Includes(stringToCheck, valueToCheck)
   }
 
+  export function abbreviateString(stringToAbbreviate: string, maxLength: number) {
+     return stringToAbbreviate.length < maxLength ? stringToAbbreviate : stringToAbbreviate.substr(0, maxLength) + "...";
+  }
+
 }

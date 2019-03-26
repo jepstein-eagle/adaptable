@@ -128,6 +128,15 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private doPieChartDefinitionChangesRequireDataUpdate(cd1: IPieChartDefinition, cd2: IPieChartDefinition): boolean {
 
+        if (cd1.PrimaryColumnId != cd2.PrimaryColumnId) {
+            return true;
+        }
+        if (cd1.SecondaryColumnId != cd2.SecondaryColumnId) {
+            return true;
+        }
+        if (cd1.SecondaryColumnOperation != cd2.SecondaryColumnOperation) {
+            return true;
+        }
         return false;
     }
 
