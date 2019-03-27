@@ -10,7 +10,7 @@ export interface IAlertApi {
   * @param showAsPopup TDetermines whether the Alert appears in the middle of the screen or in the Alerts tab.
    */
   Show(alertHeader: string, alertMessage: string, MessageType: "Success" | "Info" | "Warning" | "Error", showAsPopup: boolean): void
-  ShowAlert(alertToShow: IAdaptableAlert, showAsPopup: boolean): void
+  ShowAlert(alertToShow: IAdaptableAlert): void
   ShowInfo(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
   ShowSuccess(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
   ShowWarning(alertHeader: string, alertMessage: string, showAsPopup: boolean): void

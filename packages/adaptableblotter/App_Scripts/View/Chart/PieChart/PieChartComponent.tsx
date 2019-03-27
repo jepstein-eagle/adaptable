@@ -23,10 +23,9 @@ import { PanelWithTwoButtons } from "../../Components/Panels/PanelWithTwoButtons
 import { PanelWithButton } from "../../Components/Panels/PanelWithButton";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
 import { CategoryChartUIHelper } from "../CategoryChart/CategoryChartUIHelper";
-import { CategoryChartType, LabelVisibility, CrosshairDisplayMode, PieChartLabelPosition, SliceLabelOption, SliceSortOption } from "../../../Utilities/ChartEnums";
+import { CategoryChartType, LabelVisibility, CrosshairDisplayMode, PieChartLabelPosition, SliceLabelOption, SliceSortOption, PieChartOthersCategoryType } from "../../../Utilities/ChartEnums";
 import { ColorPicker } from "../../ColorPicker";
 import { AdaptablePopover } from "../../AdaptablePopover";
-import { PieChartOthersCategoryType } from "../../../Utilities/Enums";
 import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
 
 

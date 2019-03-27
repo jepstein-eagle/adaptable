@@ -1,7 +1,5 @@
-import { ExportDestination } from "../../Enums";
-import { IAdaptableAlert } from "../../Interface/IMessage";
+import {  ISchedule } from "../../Interface/BlotterObjects/ISchedule";
 
 export interface IScheduleService {
-  RunScheduleReport(reportName: string, exportDestination: ExportDestination): void
-  RunScheduleAlert(alertToShow: IAdaptableAlert, showAlertAsPopup: boolean): void
+  AddSchedule(schedule: ISchedule):void;
 }

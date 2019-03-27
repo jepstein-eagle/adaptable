@@ -1,6 +1,5 @@
 import { IPieChartProperties } from '../Interface/BlotterObjects/IChartDefinition';
-import { PieChartOthersCategoryType } from '../Enums';
-import { PieChartLabelPosition, SliceLabelOption, SliceSortOption } from '../ChartEnums';
+import { PieChartLabelPosition, SliceLabelOption, SliceSortOption, PieChartOthersCategoryType } from '../ChartEnums';
 
 export const DefaultPieChartProperties: IPieChartProperties = {
     OthersCategoryThreshold: 2,

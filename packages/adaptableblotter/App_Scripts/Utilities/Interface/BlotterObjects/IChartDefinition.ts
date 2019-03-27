@@ -1,7 +1,6 @@
 import { Expression } from '../../Expression';
 import { IAdaptableBlotterObject } from './IAdaptableBlotterObject';
-import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation, PieChartLabelPosition, SliceLabelOption, SliceSortOption } from '../../ChartEnums';
-import { PieChartOthersCategoryType } from '../../Enums';
+import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation, PieChartLabelPosition, SliceLabelOption, SliceSortOption, PieChartOthersCategoryType } from '../../ChartEnums';
 
 // not too sure at the moment how we will break up these objects as we add data series, financial, pie, doughnut etc.
 // trying to make it as flexible as possible though I suspeect some stuff will break as we go forward...

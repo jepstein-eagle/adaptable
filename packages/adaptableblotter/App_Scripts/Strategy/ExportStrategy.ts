@@ -17,7 +17,6 @@ import { IReport } from "../Utilities/Interface/BlotterObjects/IReport";
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IAdaptableAlert } from '../Utilities/Interface/IMessage';
-import * as NodeSchedule from 'node-schedule';
 
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
@@ -72,21 +71,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         })
 
 
-        let alertToShow: IAdaptableAlert= {
-            Header: "Test Schedule",
-            Msg: "This alert has worked",
-            MessageType: MessageType.Success
-          }
-          let showAlertAsPopup : boolean= true;
-
-         var date = new Date(2019, 2, 21, 19, 48, 0);
-
-             var d = NodeSchedule.scheduleJob(date, () =>{
-                 this.blotter.ScheduleService.RunScheduleAlert(alertToShow, showAlertAsPopup);
-                 this.blotter.ScheduleService.RunScheduleReport("All Data", ExportDestination.CSV);
-             }
-        )
-
+       
         
     }
 
