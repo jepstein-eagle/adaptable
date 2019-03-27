@@ -33,6 +33,7 @@ import * as DataSourceRedux from '../ActionsReducers/DataSourceRedux'
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
 import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
 import * as SystemFilterRedux from '../ActionsReducers/SystemFilterRedux'
+import * as SchedulerRedux from '../ActionsReducers/ScheduleRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux'
 import * as FreeTextColumnRedux from '../ActionsReducers/FreeTextColumnRedux'
@@ -125,6 +126,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   Shortcut: ShortcutRedux.ShortcutReducer,
   SmartEdit: SmartEditRedux.SmartEditReducer,
   SystemFilter: SystemFilterRedux.SystemFilterReducer,
+  Schedule: SchedulerRedux.ScheduleReducer,
   TeamSharing: TeamSharingRedux.TeamSharingReducer,
   Theme: ThemeRedux.ThemeReducer,
   UserFilter: UserFilterRedux.UserFilterReducer,
@@ -303,7 +305,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             //for now i'm still initializing the AB even if loading state has failed....
             //we may revisit that later
             this.TheStore.dispatch(InitState())
-            this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configuration", Msg: "Error loading your configuration:" + e, MessageType: MessageType.Error }))
+            this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configuration", Msg: "Error loading your configuration:" + e, MessageType: MessageType.Error, ShowAsPopup: true  }))
           })
   }
 }
@@ -980,10 +982,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
             if (xhr.readyState == 4) {
               if (xhr.status != 200) {
                 LoggingHelper.LogAdaptableBlotterError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
-                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: MessageType.Error }));
+                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: MessageType.Error,  ShowAsPopup: true  }));
               }
               else {
-                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Shared Successfully", MessageType: MessageType.Info }));
+                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Shared Successfully", MessageType: MessageType.Info , ShowAsPopup: true }));
               }
             }
           }
@@ -1140,11 +1142,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           }
           else if (importAction) {
             middlewareAPI.dispatch(importAction)
-            middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", MessageType: MessageType.Info }))
+            middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", MessageType: MessageType.Info, ShowAsPopup: true  }))
           }
           else {
             LoggingHelper.LogAdaptableBlotterError("Unknown item type", actionTyped.Entity)
-            middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import", MessageType: MessageType.Error }))
+            middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import", MessageType: MessageType.Error, ShowAsPopup: true  }))
           }
           return returnAction;
         }

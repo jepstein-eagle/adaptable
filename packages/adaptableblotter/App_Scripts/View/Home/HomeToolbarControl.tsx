@@ -203,7 +203,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                     Msg: StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
                         this.props.SystemStatus.StatusMessage :
                         "No issues",
-                    MessageType: MessageType.Success
+                    MessageType: MessageType.Success,
+                   ShowAsPopup: true 
                 }
                 this.props.onShowStatusMessage(success)
                 return;
@@ -211,7 +212,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 let info: IAdaptableAlert = {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
-                    MessageType: MessageType.Info
+                    MessageType: MessageType.Info,
+                    ShowAsPopup: true 
                 }
                 this.props.onShowStatusMessage(info)
                 return;
@@ -219,7 +221,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 let warning: IAdaptableAlert = {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
-                    MessageType: MessageType.Warning
+                    MessageType: MessageType.Warning,
+                    ShowAsPopup: true 
                 }
                 this.props.onShowStatusMessage(warning)
                 return;
@@ -227,7 +230,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
                 let error: IAdaptableAlert = {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
-                    MessageType: MessageType.Error
+                    MessageType: MessageType.Error,
+                    ShowAsPopup: true 
                 }
                 this.props.onShowStatusMessage(error)
                 return;

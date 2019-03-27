@@ -9,11 +9,11 @@ import { IAlertApi } from './Interface/IAlertApi';
 
 export class AlertApi extends ApiBase implements IAlertApi {
 
-  public ShowAlert(alertToShow: IAdaptableAlert, showAsPopup: boolean): void {
+  public ShowAlert(alertToShow: IAdaptableAlert): void {
     let maxAlerts: number = this.getState().Alert.MaxAlertsInStore;
 
     this.dispatchAction(SystemRedux.SystemAlertAdd(alertToShow, maxAlerts))
-    if (showAsPopup) {
+    if (alertToShow.ShowAsPopup) {
       if (StringExtensions.IsNotNullOrEmpty(this.getState().Alert.AlertPopupDiv)) {
         let alertString: string = alertToShow.Header + ": " + alertToShow.Msg
         let alertDiv = document.getElementById(this.getState().Alert.AlertPopupDiv);
@@ -32,9 +32,10 @@ export class AlertApi extends ApiBase implements IAlertApi {
     let alertToShow: IAdaptableAlert = {
       Header: alertHeader,
       Msg: alertMessage,
-      MessageType: MessageTypeEnum
+      MessageType: MessageTypeEnum,
+      ShowAsPopup: showAsPopup
     }
-    this.ShowAlert(alertToShow, showAsPopup);
+    this.ShowAlert(alertToShow);
   }
 
   public ShowInfo(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {

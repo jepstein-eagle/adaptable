@@ -163,8 +163,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
                 chartData = this.blotter.ChartService.BuildCategoryChartData(chartDefinition as ICategoryChartDefinition, columns);
             } else if (chartDefinition.ChartType == ChartType.PieChart) {
                 chartData = this.blotter.ChartService.BuildPieChartData(chartDefinition as IPieChartDefinition);
-                console.log(chartData);
-            }
+             }
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
         }
     }

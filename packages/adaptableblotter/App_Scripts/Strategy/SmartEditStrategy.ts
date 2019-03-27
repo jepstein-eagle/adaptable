@@ -46,7 +46,8 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 Alert: {
                     Header: "Smart Edit Error",
                     Msg: "No cells are selected.\nPlease select some cells.",
-                    MessageType: MessageType.Error
+                    MessageType: MessageType.Error,
+                    ShowAsPopup: true 
                 }
             }
         }
@@ -56,7 +57,8 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 Alert: {
                     Header: "Smart Edit Error",
                     Msg: "Smart Edit only supports single column edit.\nPlease adjust cell selection.",
-                    MessageType: MessageType.Error
+                    MessageType: MessageType.Error,
+                    ShowAsPopup: true 
                 }
             }
         }
@@ -66,7 +68,8 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 Alert: {
                     Header: "Smart Edit Error",
                     Msg: "Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection.",
-                    MessageType: MessageType.Error
+                    MessageType: MessageType.Error,
+                    ShowAsPopup: true 
                 }
             }
         }
@@ -75,7 +78,8 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
                 Alert: {
                     Header: "Smart Edit Error",
                     Msg: "Smart Edit is not permitted on readonly columns.\nPlease adjust the cell selection.",
-                    MessageType: MessageType.Error
+                    MessageType: MessageType.Error,
+                    ShowAsPopup: true 
                 }
             }
 

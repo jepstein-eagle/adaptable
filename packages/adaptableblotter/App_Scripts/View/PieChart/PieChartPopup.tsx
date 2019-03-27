@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from 'react-redux';
 import { ControlLabel, FormGroup, Col, Row, Panel, HelpBlock, Checkbox, FormControl } from 'react-bootstrap';
-import { SelectionMode, PieChartOthersCategoryType } from '../../Utilities/Enums'
+import { SelectionMode } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
@@ -25,7 +25,7 @@ import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableSto
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import { IPieChartDefinition, IPieChartDataItem } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ObjectFactory } from "../../Utilities/ObjectFactory";
-import { PieChartLabelPosition, SliceSortOption } from "../../Utilities/ChartEnums";
+import { PieChartLabelPosition, SliceSortOption, PieChartOthersCategoryType } from "../../Utilities/ChartEnums";
 import { PieChartUIHelper } from "../Chart/PieChart/PieChartUIHelper";
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {

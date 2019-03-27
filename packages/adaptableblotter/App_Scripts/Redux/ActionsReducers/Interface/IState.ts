@@ -34,6 +34,7 @@ import { IMenuItem, IContextMenu } from '../../../Utilities/Interface/IMenu';
 import { IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPopup, IAboutPopup, IAdaptableAlert } from '../../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../../Utilities/ChartEnums';
 import { IPieChart } from "../../../Utilities/Interface/BlotterObjects/IPieChart";
+import { ISchedule } from "../../../Utilities/Interface/BlotterObjects/ISchedule";
 
 // Base interface
 export interface IState {
@@ -175,7 +176,7 @@ export interface ColumnCategoryState extends IUserState {
 
 export interface ColumnFilterState extends IUserState {
     ColumnFilters: IColumnFilter[];
-}
+}   
 
 export interface ConditionalStyleState extends IUserState {
     ConditionalStyles: IConditionalStyle[];
@@ -210,7 +211,7 @@ export interface DataSourceState extends IUserState {
 export interface ExportState extends IUserState {
     CurrentReport: string;
     Reports: IReport[];
-  
+
 }
 
 export interface FlashingCellState extends IUserState {
@@ -251,6 +252,9 @@ export interface QuickSearchState extends IUserState {
     Style: IStyle;
 }
 
+export interface ScheduleState extends IUserState {
+    Schedules: ISchedule[];
+}
 
 
 export interface ShortcutState extends IUserState {

@@ -49,7 +49,7 @@ export interface IStateChangedInfo {
   stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
   'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
   'Export' | 'FlashingCell' | 'FormatColumn' | 'FreeTextColumn' | 'Layout' | 'ColumnCategory' | 'PieChart' |
-  'PercentBar' | 'PlusMinus' | 'QuickSearch' | 'CellSummary' | 'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter';
+  'PercentBar' | 'PlusMinus' | 'QuickSearch' | 'CellSummary' | 'Shortcut' | 'SmartEdit' |'Schedule'| 'Theme' | 'UserFilter';
   userState: IUserState;
 }
 

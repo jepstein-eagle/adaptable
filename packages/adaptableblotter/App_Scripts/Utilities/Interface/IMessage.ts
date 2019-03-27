@@ -5,7 +5,8 @@ import { MessageType } from '../../Utilities/Enums';
 export interface IAdaptableAlert {
     Header: string,
     Msg: string;
-    MessageType: MessageType
+    MessageType: MessageType;
+    ShowAsPopup: boolean;
 }
 
 export interface IUIConfirmation {

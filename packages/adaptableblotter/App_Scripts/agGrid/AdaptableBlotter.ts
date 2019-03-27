@@ -133,6 +133,7 @@ import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdapt
 import 'ag-grid-enterprise';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
+import { ScheduleStrategy } from '../Strategy/ScheduleStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -188,7 +189,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.StyleService = new StyleService(this);
         this.ChartService = new ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService(this);
-this.ScheduleService = new ScheduleService(this);
+        this.ScheduleService = new ScheduleService(this);
 
         const isGridInstantiated = this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
 
@@ -244,6 +245,7 @@ this.ScheduleService = new ScheduleService(this);
         this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(this))
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
+        this.Strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(this))
 
         iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
 
@@ -947,7 +949,7 @@ this.ScheduleService = new ScheduleService(this);
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
     }
 
-      private useRawValueForColumn(columnId: string): boolean {
+    private useRawValueForColumn(columnId: string): boolean {
         // will add more in due course I'm sure but for now only percent bar columns return false...
         if (ArrayExtensions.IsEmpty(this.getState().PercentBar.PercentBars)) {
             return false;

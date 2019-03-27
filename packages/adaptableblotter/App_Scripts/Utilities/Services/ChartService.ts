@@ -113,7 +113,7 @@ export class ChartService implements IChartService {
     }
     let hasSecondaryColumn = StringExtensions.IsNotNullOrEmpty(chartDefinition.SecondaryColumnId);
 
-    console.log("BuildPieChartData:  Primary Column " + hasPrimaryColumn + " Secondary Column " + hasSecondaryColumn);
+  //  console.log("BuildPieChartData:  Primary Column " + hasPrimaryColumn + " Secondary Column " + hasSecondaryColumn);
 
     let valueTotal: number = 0;
 
@@ -133,7 +133,7 @@ export class ChartService implements IChartService {
       });
     }
 
-    console.log("BuildPieChartData dataCounter " + dataCounter.keys.length);
+ //   console.log("BuildPieChartData dataCounter " + dataCounter.keys.length);
     let dataItems: IPieChartDataItem[] = [];
     dataCounter.forEach((value, name) => {
       let pieChartDataItem: IPieChartDataItem = {
@@ -153,8 +153,9 @@ export class ChartService implements IChartService {
       dataItems.push(pieChartDataItem);
     });
 
-    console.log("BuildPieChartData dataItems " + dataItems.length);
-    console.log("dataItems " + dataItems);
+ //   console.log("BuildPieChartData dataItems " + dataItems.length);
+ //   console.log("dataItems ");
+ //   console.log(dataItems);
 
     return dataItems;
   }
@@ -179,7 +180,6 @@ export class ChartService implements IChartService {
       dataCounter.set(group, count);
     }
     valueTotal += count;
-    console.log('value total' + valueTotal);
     return valueTotal;
   }
 
@@ -191,8 +191,6 @@ export class ChartService implements IChartService {
       dataCounter.set(cellValue, 1);
     }
     valueTotal += 1;
-
-    console.log('value total' + valueTotal);
     return valueTotal;
   }
 
