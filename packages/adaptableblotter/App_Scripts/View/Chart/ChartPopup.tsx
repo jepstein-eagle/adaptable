@@ -164,7 +164,6 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     }
 
     onNew(chartType: ChartType) {
-        alert(chartType)
         let emptyChartDefinition: IChartDefinition = (chartType == ChartType.CategoryChart) ?
             ObjectFactory.CreateEmptyCategoryChartDefinition() :
             ObjectFactory.CreateEmptyPieChartDefinition();
@@ -177,8 +176,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     }
 
     onFinishWizard() {
-        //  alert("wizard finished")
-        let index: number = this.state.EditedAdaptableBlotterObjectIndex;
+       let index: number = this.state.EditedAdaptableBlotterObjectIndex;
         let clonedObject: IChartDefinition = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
         this.props.onAddUpdateChartDefinition(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });

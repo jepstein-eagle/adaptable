@@ -588,7 +588,6 @@ export module ExpressionHelper {
                 }
                 return String(rangeEvaluation.newValue).indexOf(rangeEvaluation.operand1) < 0;
             case LeafExpressionOperator.StartsWith:
-                // alert("new value: " + rangeEvaluation.newValue)
                 if (rangeEvaluation.newValue == undefined) {
                     return false;
                 }
