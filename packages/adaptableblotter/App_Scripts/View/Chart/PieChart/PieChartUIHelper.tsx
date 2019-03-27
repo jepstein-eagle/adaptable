@@ -1,33 +1,31 @@
-import { IPieChartDefinition, IPieChartProperties } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IPieChartDefinition, IPieChartProperties, IPieChartDataItem } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { PieChartComponentState } from "./PieChartComponentState";
-import { PieChartOthersCategoryType } from "../../../Utilities/Enums";
-import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
-import { PieChartLabelPositions } from "../../../Utilities/ChartEnums";
-import React from "react";
+import { SliceSortOption } from "../../../Utilities/ChartEnums";
 
 
 /* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
 */
 export module PieChartUIHelper {
 
-  export function setChartDisplayPopupState(chartDefinition: IPieChartDefinition): PieChartComponentState {
-    let categoryChartProperties: IPieChartProperties = chartDefinition.ChartProperties as IPieChartProperties
+  export function getbrushesEven(): string[] {
+    return ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47"];
+  }
 
+
+  export function getbrushesOdd(): string[] {
+    return ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47", "#795548"];
+  }
+
+
+  export function setChartDisplayPopupState(chartDefinition: IPieChartDefinition, dataSource: IPieChartDataItem[]): PieChartComponentState {
+    let pieChartProperties: IPieChartProperties = chartDefinition.ChartProperties as IPieChartProperties
     return {
-      ChartProperties: categoryChartProperties,
+      DataSource: dataSource,
+      ChartProperties: pieChartProperties,
       IsChartSettingsVisible: true,
-
-      SliceLegendMapping: "ValueAndName",
       IsGeneralMinimised: false,
-      IsMiscMinimised: true,
-      OthersCategoryThreshold: 0,
-      OthersCategoryType: PieChartOthersCategoryType.Number,
-      SliceLabelsPosition: "OutsideEnd",
-
-      SliceValuesMapping: "Value",
-      SliceLabelsMapping: "Name",
-      //     SliceLegendMapping: "ValueAndName",
-      //    SliceSortByColumn: "Value Descending",
+      SliceSortOption: SliceSortOption.None,
+      SliceBrushes: dataSource.length % 2 == 0 ? getbrushesOdd() : getbrushesEven(),
     }
 
   }
@@ -35,27 +33,61 @@ export module PieChartUIHelper {
   export function setDefaultChartDisplayPopupState(): PieChartComponentState {
     let defaultState = {
       IsChartSettingsVisible: true,
-
-      SliceLegendMapping: "ValueAndName",
       IsGeneralMinimised: false,
-      IsMiscMinimised: true,
-      OthersCategoryThreshold: 0,
-      OthersCategoryType: PieChartOthersCategoryType.Number,
-      SliceLabelsPosition: "OutsideEnd",
-
-      SliceValuesMapping: "Value",
-      SliceLabelsMapping: "Name",
+      SliceSortOption: SliceSortOption.None,
 
     } as PieChartComponentState;
     return defaultState;
   }
 
 
-  export function getOptionsForLabelsPosition(): JSX.Element[] {
-    let optionElements = EnumExtensions.getNames(PieChartLabelPositions).map((v) => {
-      return <option key={v} value={v}>{v as PieChartLabelPositions}</option>
-    })
-    return optionElements;
+  export function sortDataSource(sliceSortOption: SliceSortOption, oldData: IPieChartDataItem[]): IPieChartDataItem[] {
+    if (oldData == null || oldData.length == 0) {
+      return [];
+    }
+    let newData: IPieChartDataItem[] = [...oldData];
+    switch (sliceSortOption) {
+      case SliceSortOption.ValueAscending:
+        newData.sort(sortByValueAscending);
+        break;
+      case SliceSortOption.ValueDescending:
+        newData.sort(sortByValueDescending);
+        break;
+      case SliceSortOption.NameAscending:
+        newData.sort(sortByNameAscending);
+        break;
+      case SliceSortOption.NameDescending:
+        newData.sort(sortByNameDescending);
+        break;
+    }
+    return newData;
+  }
+
+  export function sortByNameAscending(a: IPieChartDataItem, b: IPieChartDataItem): number {
+    let nameA = a.Name.toLowerCase();
+    let nameB = b.Name.toLowerCase();
+    if (nameA > nameB) { return 1; }
+    if (nameA < nameB) { return -1; }
+    return 0;
+  }
+  export function sortByNameDescending(a: IPieChartDataItem, b: IPieChartDataItem): number {
+    let nameA = a.Name.toLowerCase();
+    let nameB = b.Name.toLowerCase();
+    if (nameA > nameB) { return -1; }
+    if (nameA < nameB) { return 1; }
+    return 0;
+  }
+
+  export function sortByValueAscending(a: IPieChartDataItem, b: IPieChartDataItem): number {
+    if (a.Value > b.Value) { return 1; }
+    if (a.Value < b.Value) { return -1; }
+    return 0;
+  }
+
+  export function sortByValueDescending(a: IPieChartDataItem, b: IPieChartDataItem): number {
+    if (a.Value > b.Value) { return -1; }
+    if (a.Value < b.Value) { return 1; }
+    return 0;
   }
 
 }

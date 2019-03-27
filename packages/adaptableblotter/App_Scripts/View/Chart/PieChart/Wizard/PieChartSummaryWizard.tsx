@@ -27,12 +27,15 @@ export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizard
             '' :
             this.props.Data.SecondaryColumnOperation
 
+            let rowsDescription: string = this.props.Data.VisibleRowsOnly? 'Visible Rows': 'All Rows'
+
         let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Description", Value: this.props.Data.Description },
             { Key: "Primary Column", Value: primaryColumnFriendlyName },
             { Key: "Secondary Column", Value: seondaryColumnFriendlyName },
             { Key: "Operation", Value: seondaryColumnOperation },
+            { Key: "Rows in Chart", Value: rowsDescription },
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.ChartStrategyName} />

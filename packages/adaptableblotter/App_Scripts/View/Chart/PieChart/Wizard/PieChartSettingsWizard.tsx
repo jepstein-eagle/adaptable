@@ -2,10 +2,9 @@ import * as React from "react";
 import { AdaptableWizardStepProps, AdaptableWizardStep } from "../../../Wizard/Interface/IAdaptableWizard";
 import { IPieChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { StringExtensions } from "../../../../Utilities/Extensions/StringExtensions";
-import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from "react-bootstrap";
+import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Radio } from "react-bootstrap";
 import { AdaptableBlotterForm } from "../../../Components/Forms/AdaptableBlotterForm";
 import { ArrayExtensions } from "../../../../Utilities/Extensions/ArrayExtensions";
-import { ExpressionHelper } from "../../../../Utilities/Helpers/ExpressionHelper";
 
 export interface PieChartSettingsWizardProps extends AdaptableWizardStepProps<IPieChartDefinition> {
     ChartNames: string[]
@@ -14,6 +13,7 @@ export interface PieChartSettingsWizardProps extends AdaptableWizardStepProps<IP
 export interface PieChartSettingsWizardState {
     Name: string,
     Description: string,
+    VisibleRowsOnly: boolean,
     ErrorMessage: string
 }
 
@@ -23,6 +23,7 @@ export class PieChartSettingsWizard extends React.Component<PieChartSettingsWiza
         this.state = {
             Name: props.Data.Name,
             Description: props.Data.Description,
+            VisibleRowsOnly: props.Data.VisibleRowsOnly,
             ErrorMessage: null
         }
     }
@@ -54,7 +55,13 @@ export class PieChartSettingsWizard extends React.Component<PieChartSettingsWiza
                             </FormGroup>
                         </Col>
                     </FormGroup>
-
+                    <FormGroup controlId="chartDataVisible">
+                        <Col xs={3} componentClass={ControlLabel}>Rows In Chart:</Col>
+                        <Col xs={7}>
+                            <Radio inline value="Visible" checked={this.state.VisibleRowsOnly == true} onChange={(e) => this.onSecondaryColumnOperationChanged(e)}>Visible Rows Only</Radio>
+                            <Radio inline value="All" checked={this.state.VisibleRowsOnly == false} onChange={(e) => this.onSecondaryColumnOperationChanged(e)}>All Rows In Grid</Radio>
+                        </Col>
+                    </FormGroup>
 
                 </AdaptableBlotterForm>
             </Panel>
@@ -74,8 +81,10 @@ export class PieChartSettingsWizard extends React.Component<PieChartSettingsWiza
         this.setState({ Description: e.value, } as PieChartSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-
-
+    private onSecondaryColumnOperationChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ VisibleRowsOnly: e.value == "Visible" } as PieChartSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
 
     public canNext(): boolean {
         return StringExtensions.IsNotEmpty(this.state.Name) && StringExtensions.IsNullOrEmpty(this.state.ErrorMessage);
@@ -86,6 +95,7 @@ export class PieChartSettingsWizard extends React.Component<PieChartSettingsWiza
     public Next(): void {
         this.props.Data.Name = this.state.Name
         this.props.Data.Description = this.state.Description
+        this.props.Data.VisibleRowsOnly = this.state.VisibleRowsOnly
     }
     public Back(): void {
         // todo

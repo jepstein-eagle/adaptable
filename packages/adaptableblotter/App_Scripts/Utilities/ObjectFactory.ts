@@ -32,6 +32,7 @@ import { EMPTY_STRING, CHART_DEFAULT_YAXIS_TOTAL, PLUS_MINUS_DEFAULT_NUDGE_VALUE
 import { DefaultCategoryChartProperties } from './Defaults/DefaultCategoryChartProperties';
 import { ILicenceInfo } from './Interface/ILicenceInfo';
 import { ChartType, SecondaryColumnOperation } from './ChartEnums';
+import { DefaultPieChartProperties } from './Defaults/DefaultPieChartProperties';
 
 
 export module ObjectFactory {
@@ -53,11 +54,12 @@ export module ObjectFactory {
         return {
             Name: EMPTY_STRING,
             Description: EMPTY_STRING,
-            ChartProperties: null,
-            ChartType: ChartType.PieChart,
-            PrimaryColumnId:EMPTY_STRING,
+            PrimaryColumnId: EMPTY_STRING,
             SecondaryColumnId: null,
-            SecondaryColumnOperation: SecondaryColumnOperation.Count
+            SecondaryColumnOperation: SecondaryColumnOperation.Count,
+            ChartProperties: DefaultPieChartProperties,
+            ChartType: ChartType.PieChart,
+            VisibleRowsOnly: true
         }
     }
     export function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition {

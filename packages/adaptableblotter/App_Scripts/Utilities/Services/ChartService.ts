@@ -1,6 +1,6 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition } from "../Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition, IPieChartDataItem } from "../Interface/BlotterObjects/IChartDefinition";
 import { IColumnValueExpression } from "../Interface/Expression/IColumnValueExpression";
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
@@ -44,7 +44,7 @@ export class ChartService implements IChartService {
       let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
 
       chartDefinition.YAxisColumnIds.forEach(colID => {
-        let total = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal);
+        let total = this.buildYAxisTotal(colID, [xAxisKVP], columns, showAverageTotal);
         let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
         if (yAxisColumnNames.indexOf(colName) < 0) {
           yAxisColumnNames.push(colName);
@@ -57,7 +57,7 @@ export class ChartService implements IChartService {
     return chartData;
   }
 
-  private buildTotal(yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[], showAverageTotal: boolean): number {
+  private buildYAxisTotal(yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[], showAverageTotal: boolean): number {
     let columnValueExpressions: IColumnValueExpression[] = kvps.map(kvp => {
       return {
         ColumnId: kvp.Key,
@@ -103,7 +103,7 @@ export class ChartService implements IChartService {
     return xAxisColValues;
   }
 
-  public BuildPieChartData(chartDefinition: IPieChartDefinition): any[] {
+  public BuildPieChartData(chartDefinition: IPieChartDefinition): IPieChartDataItem[] {
 
     let dataCounter = new Map<any, number>();
 
@@ -115,76 +115,85 @@ export class ChartService implements IChartService {
 
     console.log("BuildPieChartData:  Primary Column " + hasPrimaryColumn + " Secondary Column " + hasSecondaryColumn);
 
-    let isGroupingColumns = false;
-    let valueTotal = 0;
+    let valueTotal: number = 0;
 
-    // get the data for when both primary and secondary are set
-    if (hasSecondaryColumn) {
-
-      isGroupingColumns = true; // not quite sure what this does...
-
-      this.blotter.forAllRecordsDo((row) => {
-        let primaryCellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.PrimaryColumnId);
-        let secondaryCellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.SecondaryColumnId);
-
-        let group: string = "";
-        let count: number = 0;
-        if (chartDefinition.SecondaryColumnOperation == SecondaryColumnOperation.Sum) {
-          count = parseFloat(secondaryCellValue) //+ parseFloat(primaryCellValue);
-          group = primaryCellValue;
-        } else {
-          count = 1;
-          group = StringExtensions.abbreviateString(primaryCellValue + " " + secondaryCellValue, 30);
-        }
-
-        if (dataCounter.has(group)) {
-          dataCounter.set(group, dataCounter.get(group) + count);
-        } else {
-          dataCounter.set(group, count);
-        }
-        valueTotal += count;
+    if (chartDefinition.VisibleRowsOnly) {
+      this.blotter.forAllVisibleRecordsDo((row) => {
+        valueTotal = (hasSecondaryColumn) ?
+          this.getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
+          :
+          this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
       });
-
     } else {
-      // this is changed and its much simpler.  We always just get a count of the primary column distinct values
       this.blotter.forAllRecordsDo((row) => {
-        let cellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.PrimaryColumnId);
-
-        if (dataCounter.has(cellValue)) {
-          dataCounter.set(cellValue, dataCounter.get(cellValue) + 1);
-        } else {
-          dataCounter.set(cellValue, 1);
-        }
-        valueTotal += 1;
+        valueTotal = (hasSecondaryColumn) ?
+          this.getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
+          :
+          this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
       });
     }
 
     console.log("BuildPieChartData dataCounter " + dataCounter.keys.length);
-    let dataItems: any[] = [];
+    let dataItems: IPieChartDataItem[] = [];
     dataCounter.forEach((value, name) => {
-      let item: any = {};
-      item.Name = name.toString();
-      item.Value = Helper.RoundNumber(value, 1);
-      // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
-      item.Ratio = Math.round(value / valueTotal * 1000) / 10;
-      if (isGroupingColumns) {
-        item.ValueAndName = this.abbreviateNum(item.Value) + " - " + item.Name;
-        item.RatioAndName = item.Ratio.toFixed(0) + " - " + item.Name;
-      } else {
-        item.ValueAndName = item.Name;
-        item.RatioAndName = item.Name;
+      let pieChartDataItem: IPieChartDataItem = {
+        Name: name.toString(),
+        Value: Helper.RoundNumber(value, 1),
+        // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
+        Ratio: Math.round(value / valueTotal * 1000) / 10
       }
-      // ensure strings are not to long for slice labels and legend items
-      item.ValueAndName = StringExtensions.abbreviateString(item.ValueAndName, 30);
-      item.RatioAndName = StringExtensions.abbreviateString(item.RatioAndName, 30);
-      item.Name = StringExtensions.abbreviateString(item.Name, 30);
 
-      dataItems.push(item);
+      pieChartDataItem.ValueAndName = this.abbreviateNum(pieChartDataItem.Value) + " - " + pieChartDataItem.Name;
+      pieChartDataItem.RatioAndName = pieChartDataItem.Ratio.toFixed(0) + " - " + pieChartDataItem.Name;
+
+      pieChartDataItem.ValueAndName = StringExtensions.abbreviateString(pieChartDataItem.ValueAndName, 50);
+      pieChartDataItem.RatioAndName = StringExtensions.abbreviateString(pieChartDataItem.RatioAndName, 50);
+      pieChartDataItem.Name = StringExtensions.abbreviateString(pieChartDataItem.Name, 50);
+
+      dataItems.push(pieChartDataItem);
     });
 
     console.log("BuildPieChartData dataItems " + dataItems.length);
+    console.log("dataItems " + dataItems);
 
     return dataItems;
+  }
+
+  private getGroupValueTotalForRow(row: any, chartDefinition: IPieChartDefinition, dataCounter: Map<any, number>, valueTotal: number): number {
+    let primaryCellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.PrimaryColumnId);
+    let secondaryCellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.SecondaryColumnId);
+
+    let group: string = "";
+    let count: number = 0;
+    if (chartDefinition.SecondaryColumnOperation == SecondaryColumnOperation.Sum) {
+      count = parseFloat(secondaryCellValue) //+ parseFloat(primaryCellValue);
+      group = primaryCellValue;
+    } else {
+      count = 1;
+      group = StringExtensions.abbreviateString(primaryCellValue + " " + secondaryCellValue, 50);
+    }
+
+    if (dataCounter.has(group)) {
+      dataCounter.set(group, dataCounter.get(group) + count);
+    } else {
+      dataCounter.set(group, count);
+    }
+    valueTotal += count;
+    console.log('value total' + valueTotal);
+    return valueTotal;
+  }
+
+  private getSingleValueTotalForRow(row: any, chartDefinition: IPieChartDefinition, dataCounter: Map<any, number>, valueTotal: number): number {
+    let cellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.PrimaryColumnId);
+    if (dataCounter.has(cellValue)) {
+      dataCounter.set(cellValue, dataCounter.get(cellValue) + 1);
+    } else {
+      dataCounter.set(cellValue, 1);
+    }
+    valueTotal += 1;
+
+    console.log('value total' + valueTotal);
+    return valueTotal;
   }
 
 

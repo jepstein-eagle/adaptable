@@ -72,7 +72,7 @@ export enum ToolTipType {
     None = 'None'
 }
 
-export enum PieChartLabelPositions {
+export enum PieChartLabelPosition {
   BestFit = 'BestFit',
   Center = 'Center',
   InsideEnd = 'InsideEnd',
@@ -117,3 +117,19 @@ export enum SecondaryColumnOperation {
     Sum = 'Sum',
     Count = 'Count',
 }
+export enum SliceLabelOption {
+      Value = 'Value',
+    ValueAndName = 'ValueAndName',
+    Ratio = 'Ratio',
+    RatioAndName = 'RatioAndName',
+    Name = 'Name',
+}
+export enum SliceSortOption {
+    None = 'None',
+    ValueDescending = 'Value Descending',
+    ValueAscending = 'Value Ascending',
+    NameDescending = 'Name Descending',
+    NameAscending= 'Name Ascending',
+}
+
+

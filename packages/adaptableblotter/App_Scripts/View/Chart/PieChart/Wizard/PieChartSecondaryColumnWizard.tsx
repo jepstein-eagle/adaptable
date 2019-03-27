@@ -4,10 +4,12 @@ import { IPieChartDefinition } from "../../../../Utilities/Interface/BlotterObje
 import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from "react-bootstrap";
 import { AdaptableBlotterForm } from "../../../Components/Forms/AdaptableBlotterForm";
 import { ColumnSelector } from "../../../Components/Selectors/ColumnSelector";
-import { SelectionMode } from "../../../../Utilities/Enums";
+import { SelectionMode, DataType } from "../../../../Utilities/Enums";
 import { IColumn } from "../../../../Utilities/Interface/IColumn";
 import { ArrayExtensions } from "../../../../Utilities/Extensions/ArrayExtensions";
 import { SecondaryColumnOperation } from "../../../../Utilities/ChartEnums";
+import { StringExtensions } from "../../../../Utilities/Extensions/StringExtensions";
+import { ColumnHelper } from "../../../../Utilities/Helpers/ColumnHelper";
 
 export interface PieChartSecondaryColumnWizardProps extends AdaptableWizardStepProps<IPieChartDefinition> {
     //  ChartDefinitions: IChartDefinition[]
@@ -29,6 +31,9 @@ export class PieChartSecondaryColumnWizard extends React.Component<PieChartSecon
 
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-settings"
+        let secondaryColumnDataType: DataType = StringExtensions.IsNotNullOrEmpty(this.state.SecondaryColumnId)?
+        ColumnHelper.getColumnDataTypeFromColumnId(this.state.SecondaryColumnId, this.props.Columns):
+        DataType.Unknown;
 
         return <div className={cssClassName}>
             <Panel header="Secondary Column" bsStyle="primary">
@@ -38,8 +43,7 @@ export class PieChartSecondaryColumnWizard extends React.Component<PieChartSecon
                         <Row>
                             <Col xs={1} />
                             <Col xs={10}>
-                                <HelpBlock>Select a Secondary Column for the Pie Chart.<br /><br/>
-                                    Choose whether to show a count for these values or to sum them (latter option is only available for numeric columns)</HelpBlock>
+                                <HelpBlock>Select a Secondary Column for the Pie Chart.</HelpBlock>
                             </Col>
                             <Col xs={1} />
                         </Row>
@@ -54,14 +58,25 @@ export class PieChartSecondaryColumnWizard extends React.Component<PieChartSecon
                                     SelectionMode={SelectionMode.Single} />
                             </Col>
                         </Row>
-                        <Row>
-                            <Col xs={4} componentClass={ControlLabel}>Summary Type:</Col>
-                            <Col xs={6} >
-                                <Radio inline value="Count" checked={this.state.SecondaryColumnOperation == SecondaryColumnOperation.Count} onChange={(e) => this.onSecondaryColumnOperationChanged(e)}>Count</Radio>
-                                <Radio inline value="Sum" checked={this.state.SecondaryColumnOperation == SecondaryColumnOperation.Sum} onChange={(e) => this.onSecondaryColumnOperationChanged(e)}>Sum</Radio>
-                            </Col>
-                        </Row>
-
+                        {StringExtensions.IsNotNullOrEmpty(this.state.SecondaryColumnId) &&secondaryColumnDataType== DataType.Number &&
+                            <div>
+                                <br/>
+                                <Row>
+                                    <Col xs={1} />
+                                    <Col xs={10}>
+                                        <HelpBlock>Choose whether to show a count for these values or to sum them</HelpBlock>
+                                    </Col>
+                                    <Col xs={1} />
+                                </Row>
+                                <Row>
+                                    <Col xs={4} componentClass={ControlLabel}>Summary Type:</Col>
+                                    <Col xs={6} >
+                                        <Radio inline value="Count" checked={this.state.SecondaryColumnOperation == SecondaryColumnOperation.Count} onChange={(e) => this.onSecondaryColumnOperationChanged(e)}>Count</Radio>
+                                        <Radio inline value="Sum" checked={this.state.SecondaryColumnOperation == SecondaryColumnOperation.Sum} onChange={(e) => this.onSecondaryColumnOperationChanged(e)}>Sum</Radio>
+                                    </Col>
+                                </Row>
+                            </div>
+                        }
                     </FormGroup>
                 </AdaptableBlotterForm>
             </Panel>
@@ -72,13 +87,13 @@ export class PieChartSecondaryColumnWizard extends React.Component<PieChartSecon
     private onSecondaryColumnOperationChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ SecondaryColumnOperation: e.value as SecondaryColumnOperation } as PieChartSecondaryColumnWizardState, () => this.props.UpdateGoBackState())
-
     }
 
     private onSecondaryColumnChanged(columns: IColumn[]) {
         let isColumn: boolean = ArrayExtensions.IsNotNullOrEmpty(columns)
         this.setState({
             SecondaryColumnId: isColumn ? columns[0].ColumnId : "",
+            SecondaryColumnOperation: SecondaryColumnOperation.Count // always make it count unless they set it explicitly
         } as PieChartSecondaryColumnWizardState, () => this.props.UpdateGoBackState())
     }
 

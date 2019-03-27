@@ -52,7 +52,7 @@ export class PercentBarSummaryComponent extends React.Component<PercentBarSummar
                 key={StrategyConstants.PercentBarStrategyName}
                 cssClassName={this.props.cssClassName}
                 StrategyId={StrategyConstants.PercentBarStrategyId}
-                StrategySummary={"No Percnt Bar"}
+                StrategySummary={"No Percent Bar"}
                 onNew={() => this.onNew()}
                 NewButtonTooltip={StrategyConstants.PercentBarStrategyName}
                 AccessLevel={this.props.AccessLevel}

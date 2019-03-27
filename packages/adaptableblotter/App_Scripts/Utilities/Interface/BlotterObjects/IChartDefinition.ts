@@ -1,6 +1,7 @@
 import { Expression } from '../../Expression';
 import { IAdaptableBlotterObject } from './IAdaptableBlotterObject';
-import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation } from '../../ChartEnums';
+import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation, PieChartLabelPosition, SliceLabelOption, SliceSortOption } from '../../ChartEnums';
+import { PieChartOthersCategoryType } from '../../Enums';
 
 // not too sure at the moment how we will break up these objects as we add data series, financial, pie, doughnut etc.
 // trying to make it as flexible as possible though I suspeect some stuff will break as we go forward...
@@ -19,7 +20,8 @@ export interface IChartProperties extends IAdaptableBlotterObject {
 export interface IPieChartDefinition extends IChartDefinition {
   PrimaryColumnId: string;
   SecondaryColumnId: string
-  SecondaryColumnOperation: SecondaryColumnOperation
+  SecondaryColumnOperation: SecondaryColumnOperation;
+  VisibleRowsOnly: boolean
 }
 
 export interface ICategoryChartDefinition extends IChartDefinition {
@@ -31,6 +33,15 @@ export interface ICategoryChartDefinition extends IChartDefinition {
 }
 
 export interface IPieChartProperties extends IChartProperties {
+  OthersCategoryThreshold: number;
+  OthersCategoryType: PieChartOthersCategoryType;
+
+  PieChartLabelPosition: PieChartLabelPosition; 
+  SliceLabelsMapping: SliceLabelOption;
+  SliceValuesMapping: SliceLabelOption;
+  SliceLegendMapping: SliceLabelOption;
+  ShowAsDoughnut: boolean;
+
 }
 
 export interface ICalloutProperties {
@@ -86,4 +97,13 @@ export interface ICategoryChartProperties extends IChartProperties {
   EnableSeriesHighlighting?: boolean;
   EnableCategoryHighlighting?: boolean;
   EnableItemHighlighting?: boolean;
+}
+
+
+export interface IPieChartDataItem {
+  Name: string;
+  Value: any; // ?? number?
+  Ratio: number;
+  ValueAndName? : string;
+  RatioAndName?: string
 }

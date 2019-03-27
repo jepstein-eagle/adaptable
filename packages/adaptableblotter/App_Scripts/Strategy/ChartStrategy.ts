@@ -127,7 +127,6 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
 
     private doPieChartDefinitionChangesRequireDataUpdate(cd1: IPieChartDefinition, cd2: IPieChartDefinition): boolean {
-
         if (cd1.PrimaryColumnId != cd2.PrimaryColumnId) {
             return true;
         }
@@ -135,6 +134,9 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             return true;
         }
         if (cd1.SecondaryColumnOperation != cd2.SecondaryColumnOperation) {
+            return true;
+        }
+        if (cd1.VisibleRowsOnly != cd2.VisibleRowsOnly) {
             return true;
         }
         return false;
@@ -167,7 +169,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         }
     }
 
-    private clearChartData() {          
+    private clearChartData() {
         if (this.GetSystemState().ChartData != null) {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(null));
         }

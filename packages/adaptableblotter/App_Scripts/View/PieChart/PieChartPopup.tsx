@@ -23,9 +23,10 @@ import { AdaptablePopover } from "../AdaptablePopover";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
-import { PieChartLabelPositions } from "../../Utilities/ChartEnums";
-import { IPieChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IPieChartDefinition, IPieChartDataItem } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ObjectFactory } from "../../Utilities/ObjectFactory";
+import { PieChartLabelPosition, SliceSortOption } from "../../Utilities/ChartEnums";
+import { PieChartUIHelper } from "../Chart/PieChart/PieChartUIHelper";
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {
 }
@@ -34,19 +35,16 @@ interface PieChartPopupState {
     PieChartDefinition: IPieChartDefinition
 
     DataSource: any;
-    // ShowVisibleRowsOnly: boolean;
-
+   
     OthersCategoryType: PieChartOthersCategoryType;
     OthersCategoryThreshold: number;
-    CurrentColumnCount: number;
-    CurrentColumnValue: string;
     ShowAsDoughnut: boolean;
 
     SliceLabelsPosition: string;
     SliceLabelsMapping: string;
     SliceLegendMapping: string;
     SliceValuesMapping: string;
-    SliceSortByColumn: string;
+    SliceSortOption: SliceSortOption;
     SliceBrushes: string[];
 }
 
@@ -65,16 +63,14 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
             OthersCategoryType: PieChartOthersCategoryType.Percent,
             OthersCategoryThreshold: 2,
-            CurrentColumnCount: 0,
-            CurrentColumnValue: "",
             ShowAsDoughnut: false,
 
             SliceValuesMapping: "Value",
             SliceLabelsMapping: "Name",
             SliceLegendMapping: "ValueAndName",
-            SliceSortByColumn: "Value Descending",
+            SliceSortOption: SliceSortOption.ValueDescending,
             SliceLabelsPosition: "OutsideEnd",
-            SliceBrushes: this.brushesEven,
+            SliceBrushes: PieChartUIHelper.getbrushesEven(),
         }
 
         IgrPieChartModule.register();
@@ -89,17 +85,15 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     }
 
     componentDidMount() {
-        // TODO we should get 2 columns: valueColumnId and groupColumnId from PopupParams
-        const column = this.props.PopupParams;
+         const column = this.props.PopupParams;
         if (StringExtensions.IsNotNullOrEmpty(column)) {
-
             this.updateDataSource(null, column);
         }
     }
 
     getOptionsForLabelsPosition(): JSX.Element[] {
-        let optionElements = EnumExtensions.getNames(PieChartLabelPositions).map((v) => {
-            return <option key={v} value={v}>{v as PieChartLabelPositions}</option>
+        let optionElements = EnumExtensions.getNames(PieChartLabelPosition).map((v) => {
+            return <option key={v} value={v}>{v as PieChartLabelPosition}</option>
         })
         return optionElements;
     }
@@ -128,55 +122,17 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         return optionElements;
     }
 
-    renderDataSelectors(cssClassName: string): JSX.Element[] {
-        const elements: JSX.Element[] = [];
-        elements.push(
-            <AdaptableBlotterForm key="DataGroupColumnSelector" horizontal>
-                <FormGroup controlId="pieChartSettings" style={{ marginBottom: '10px' }}>
-                    <Row>
-                        <Col xs={1}>{' '}</Col>
-                        <Col xs={4}>{' '}<ControlLabel>{' '}Label Column</ControlLabel></Col>
-                        <Col xs={7} >
-                            <ColumnSelector cssClassName={cssClassName}
-                                SelectedColumnIds={[this.state.PieChartDefinition.PrimaryColumnId]}
-                                SelectionMode={SelectionMode.Single}
-                                placeHolder={"Select any column"}
-                                ColumnList={this.props.Columns}
-                                onColumnChange={columns => this.onDataGroupColumnChanged(columns)} />
-                        </Col>
-                    </Row>
-                </FormGroup>
-            </AdaptableBlotterForm>);
-        elements.push(
-            <AdaptableBlotterForm key="DataValueColumnSelector" horizontal>
-                <FormGroup controlId="pieChartSettings" style={{ marginBottom: '0px' }}>
-                    <Row>
-                        <Col xs={1}>{' '}</Col>
-                        <Col xs={4}>{' '}<ControlLabel>{' '} Value Column</ControlLabel></Col>
-                        <Col xs={7} >
-                            <ColumnSelector cssClassName={cssClassName}
-                                SelectedColumnIds={[this.state.PieChartDefinition.SecondaryColumnId]}
-                                SelectionMode={SelectionMode.Single}
-                                placeHolder={"Select a numeric column"}
-                                ColumnList={this.props.Columns}
-                                onColumnChange={columns => this.onDataValueColumnChanged(columns)} />
-                        </Col>
-                    </Row>
-                </FormGroup>
-            </AdaptableBlotterForm>);
-        return elements;
-    }
+    
+    
     hasValidDataSelection(): boolean {
         return StringExtensions.IsNotNullOrEmpty(this.state.PieChartDefinition.SecondaryColumnId) ||
             StringExtensions.IsNotNullOrEmpty(this.state.PieChartDefinition.PrimaryColumnId);
     }
 
-    public brushesEven: string[] = ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47"];
-    public brushesOdd: string[] = ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47", "#795548"];
-
+  
     render() {
         let cssClassName: string = this.props.cssClassName + "__PieChart";
-        let infoBody: any[] = ["See the count for each distinct value in the column as pie chart.", <br />, <br />, "There is an option to view as doughnut and to set the 'Others' threshold."]
+        let infoBody: any[] = ["See the count for each distinct visible value in the column as pie chart.", <br />, <br />, "There is an option to view as doughnut and to set the 'Others' threshold."]
         let chartSize: string = '450px'
 
         let chartBlock = <div>{this.state.ShowAsDoughnut ?
@@ -185,7 +141,6 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 width={chartSize}
                 allowSliceSelection="true"
                 allowSliceExplosion="true"
-                // sliceClick={(s, e) => this.onSliceClick(e)}
                 ref={this.onDoughnutChartRef}>
                 <IgrRingSeries
                     name="ring1"
@@ -220,17 +175,10 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 outlines={this.state.SliceBrushes}
                 radiusFactor={0.6}
                 selectionMode="single"
-                sliceClick={(s, e) => this.onSliceClick(e)}
+                //sliceClick={(s, e) => this.onSliceClick(e)}
             />}
 
-            {/* UI for selected slice */}
-            {StringExtensions.IsNotNullOrEmpty(this.state.CurrentColumnValue) &&
-                <Row style={{ marginLeft: '0px', marginRight: '0px', marginBottom: '0px' }} >
-                    <FormGroup controlId="formSelectedColumnValue" >
-                        <ControlLabel style={{ fontSize: 'small' }}>{this.state.CurrentColumnValue} ({this.state.CurrentColumnCount})</ControlLabel>
-                    </FormGroup>
-                </Row>
-            }
+           
         </div>
 
         let settingsBlock = <Panel bsSize={"xs"} bsStyle={DEFAULT_BSSTYLE} header={"Settings"} style={{
@@ -250,13 +198,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                         checked={this.state.ShowAsDoughnut} >Doughnut View</Checkbox>
                 </HelpBlock>
 
-                {/* TODO do we really need ShowVisibleRowsOnly? */}
-                {/* <HelpBlock style={{ fontSize: 'small', margin: '0px' }}>
-                    <Checkbox style={{ fontSize: 'small', marginBottom: '0px', marginTop: '0px' }}
-                        onChange={(e) => this.onRowVisibilityChanged(e)}
-                        checked={this.state.ShowVisibleRowsOnly} >Visible Rows Only</Checkbox>
-                </HelpBlock> */}
-
+              
                 <HelpBlock style={{ fontSize: 'small' }}>Others Threshold
                         {' '}
                     <AdaptablePopover cssClassName={cssClassName} headerText={"Pie Chart: Others Threshold"} bodyText={["Items with value less than or equal to the Threshold will be assigned to the “Others” category.  Choose whether this will be interpreted as a percentage or as a value."]} />
@@ -293,7 +235,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 <HelpBlock style={{ fontSize: 'small' }}>Slices Sort By:{' '}</HelpBlock>
                 <FormControl
                     bsSize={"small"} componentClass="select" placeholder="select"
-                    value={this.state.SliceSortByColumn}
+                    value={this.state.SliceSortOption}
                     onChange={(x) => this.onSliceSortByColumnChanged(x)} >
                     {this.getOptionsForSliceSortOrders()}
                 </FormControl>
@@ -333,7 +275,21 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 <div>
                     <Row>
                         <Col xs={8} >
-                            {this.renderDataSelectors(cssClassName)}
+                            <AdaptableBlotterForm key="DataGroupColumnSelector" horizontal>
+                                <FormGroup controlId="pieChartSettings" style={{ marginBottom: '10px' }}>
+                                    <Row>
+                                        <Col xs={1}>{' '}</Col>
+                                        <Col xs={4}>{' '}<ControlLabel>{' '}Primary Column</ControlLabel></Col>
+                                        <Col xs={7} >
+                                            <ColumnSelector cssClassName={cssClassName}
+                                                SelectedColumnIds={[this.state.PieChartDefinition.PrimaryColumnId]}
+                                                SelectionMode={SelectionMode.Single}
+                                                ColumnList={this.props.Columns}
+                                                onColumnChange={columns => this.onDataGroupColumnChanged(columns)} />
+                                        </Col>
+                                    </Row>
+                                </FormGroup>
+                            </AdaptableBlotterForm>
                             {this.hasValidDataSelection() &&
                                 <div>
                                     {chartBlock}
@@ -377,60 +333,20 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         pieChartDefinition.PrimaryColumnId = labelColumn;
         pieChartDefinition.SecondaryColumnId = valueColumn;
 
-        let dataSource = this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition);
+        let dataSource: IPieChartDataItem[] = this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition);
 
-        dataSource = this.sortDataSource(this.state.SliceSortByColumn, dataSource);
+        dataSource = PieChartUIHelper.sortDataSource(this.state.SliceSortOption, dataSource);
 
         console.log("onDataChanged " + dataSource.length + " " + valueColumn + " " + labelColumn);
         this.setState({
             PieChartDefinition: pieChartDefinition,
             DataSource: dataSource,
             // making sure the first and last slice do not have the same brush
-            SliceBrushes: dataSource.length % 2 == 0 ? this.brushesOdd : this.brushesEven
+            SliceBrushes: dataSource.length % 2 == 0 ? PieChartUIHelper.getbrushesOdd() : PieChartUIHelper.getbrushesEven()
         });
     }
 
-    public sortDataSource(sortByColumn: string, oldData: any[]): any[] {
-        if (oldData == null || oldData.length == 0) {
-            return [];
-        }
-        let newData = [...oldData];
-        if (sortByColumn == "Value Descending") {
-            newData.sort(this.sortByValueDescending);
-        } else if (sortByColumn == "Value Ascending") {
-            newData.sort(this.sortByValueAscending);
-        } else if (sortByColumn == "Name Descending") {
-            newData.sort(this.sortByNameDescending);
-        } else if (sortByColumn == "Name Ascending") {
-            newData.sort(this.sortByNameAscending);
-        }
-        return newData;
-    }
-
-    public sortByNameAscending(a: any, b: any): number {
-        let nameA = a.Name.toLowerCase();
-        let nameB = b.Name.toLowerCase();
-        if (nameA > nameB) { return 1; }
-        if (nameA < nameB) { return -1; }
-        return 0;
-    }
-    public sortByNameDescending(a: any, b: any): number {
-        let nameA = a.Name.toLowerCase();
-        let nameB = b.Name.toLowerCase();
-        if (nameA > nameB) { return -1; }
-        if (nameA < nameB) { return 1; }
-        return 0;
-    }
-    public sortByValueAscending(a: any, b: any): number {
-        if (a.Value > b.Value) { return 1; }
-        if (a.Value < b.Value) { return -1; }
-        return 0;
-    }
-    public sortByValueDescending(a: any, b: any): number {
-        if (a.Value > b.Value) { return -1; }
-        if (a.Value < b.Value) { return 1; }
-        return 0;
-    }
+   
 
     public onDoughnutChartRef(doughnutChart: IgrDoughnutChart) {
         this.doughnutChart = doughnutChart;
@@ -466,14 +382,10 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
     private onShowDoughnutChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ ShowAsDoughnut: e.checked, CurrentColumnCount: 0, CurrentColumnValue: '' } as PieChartPopupState);
+        this.setState({ ShowAsDoughnut: e.checked} as PieChartPopupState);
     }
 
-    // private onRowVisibilityChanged(event: React.FormEvent<any>) {
-    // let e = event.target as HTMLInputElement;
-    // let data = this.getDataSource(this.state.DataValueColumnId, this.state.DataLabelColumnId, e.checked);
-    // this.setState({ ShowVisibleRowsOnly: e.checked, DataSource: data, CurrentColumnCount: 0, CurrentColumnValue: '' } as PieChartPopupState);
-    // }
+  
 
     private onThresholdAsPercentChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
@@ -481,17 +393,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         this.setState({ OthersCategoryType: mode } as PieChartPopupState);
     }
 
-    public onSliceClick(e: SliceClickEventArgs): void {
-        console.log("onSliceClick " + e);
-        e.isExploded = !e.isExploded;
-        e.isSelected = !e.isSelected
-        const ds = e.dataContext;
-        if (e.isExploded) {
-            this.setState({ CurrentColumnCount: ds.Value, CurrentColumnValue: ds.Name } as PieChartPopupState);
-        } else {
-            this.setState({ CurrentColumnCount: 0, CurrentColumnValue: '' } as PieChartPopupState);
-        }
-    }
+
 
     onSliceLabelsPositionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
@@ -503,7 +405,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         let legendMapping = labelMapping.includes("Ratio") ? "RatioAndName" : "ValueAndName";
         this.setState({ SliceLabelsMapping: labelMapping, SliceLegendMapping: legendMapping } as PieChartPopupState);
     }
-    
+
     onSliceValuesMappingChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ SliceValuesMapping: e.value } as PieChartPopupState);
@@ -511,10 +413,10 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
     onSliceSortByColumnChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let sortColumn = e.value;
+        let sliceSortOption: SliceSortOption = e.value as SliceSortOption;
         let oldData = this.state.DataSource;
-        let newData = this.sortDataSource(sortColumn, oldData);
-        this.setState({ DataSource: newData, SliceSortByColumn: sortColumn });
+        let newData = PieChartUIHelper.sortDataSource(sliceSortOption, oldData);
+        this.setState({ DataSource: newData, SliceSortOption: sliceSortOption });
     }
 
 }
