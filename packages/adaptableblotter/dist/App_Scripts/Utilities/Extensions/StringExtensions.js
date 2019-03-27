@@ -46,4 +46,8 @@ var StringExtensions;
         return !Includes(stringToCheck, valueToCheck);
     }
     StringExtensions.NotIncludes = NotIncludes;
+    function abbreviateString(stringToAbbreviate, maxLength) {
+        return stringToAbbreviate.length < maxLength ? stringToAbbreviate : stringToAbbreviate.substr(0, maxLength) + "...";
+    }
+    StringExtensions.abbreviateString = abbreviateString;
 })(StringExtensions = exports.StringExtensions || (exports.StringExtensions = {}));

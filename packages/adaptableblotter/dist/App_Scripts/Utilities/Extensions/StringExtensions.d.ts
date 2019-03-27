@@ -10,4 +10,5 @@ export declare module StringExtensions {
     function ToLowerCase(stringToCheck: string): string;
     function Includes(stringToCheck: string, valueToCheck: string): boolean;
     function NotIncludes(stringToCheck: string, valueToCheck: string): boolean;
+    function abbreviateString(stringToAbbreviate: string, maxLength: number): string;
 }

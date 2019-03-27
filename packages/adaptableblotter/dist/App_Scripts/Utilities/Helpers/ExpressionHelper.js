@@ -467,6 +467,8 @@ var ExpressionHelper;
                 break;
             case Enums_1.DataType.Object:
             case Enums_1.DataType.String:
+                // might not be a string so make sure
+                rangeEvaluation.newValue = String(rangeEvaluation.newValue);
                 if (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) {
                     rangeEvaluation.newValue = StringExtensions_1.StringExtensions.ToLowerCase(rangeEvaluation.newValue);
                 }
@@ -537,7 +539,6 @@ var ExpressionHelper;
                 }
                 return String(rangeEvaluation.newValue).indexOf(rangeEvaluation.operand1) < 0;
             case Enums_1.LeafExpressionOperator.StartsWith:
-                // alert("new value: " + rangeEvaluation.newValue)
                 if (rangeEvaluation.newValue == undefined) {
                     return false;
                 }

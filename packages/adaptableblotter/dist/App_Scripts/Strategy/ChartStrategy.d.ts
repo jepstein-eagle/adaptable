@@ -10,6 +10,8 @@ export declare class ChartStrategy extends AdaptableStrategyBase implements ICha
     protected addPopupMenuItem(): void;
     protected InitState(): void;
     private doChartDefinitionChangesRequireDataUpdate;
+    private doCategoryChartDefinitionChangesRequireDataUpdate;
+    private doPieChartDefinitionChangesRequireDataUpdate;
     protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo): void;
     private setChartData;
     private clearChartData;

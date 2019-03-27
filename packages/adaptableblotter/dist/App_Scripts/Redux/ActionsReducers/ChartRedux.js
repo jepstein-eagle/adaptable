@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
-const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 exports.CHART_DEFINITION_ADD_UPDATE = 'CHART_DEFINITION_ADD_UPDATE';
 exports.CHART_PROPERTIES_UPDATE = 'CHART_PROPERTIES_UPDATE';
 exports.CHART_DEFINITION_EDIT = 'CHART_DEFINITION_EDIT';
@@ -26,7 +25,7 @@ exports.ChartDefinitionSelect = (CurrentChartName) => ({
     CurrentChartName
 });
 const initialChartState = {
-    ChartDefinitions: [ObjectFactory_1.ObjectFactory.CreateEmptyPieChartDefinition()],
+    ChartDefinitions: [],
     CurrentChartName: GeneralConstants_1.EMPTY_STRING,
     RefreshRate: GeneralConstants_1.CHART_DEFAULT_REFRESH_RATE
 };

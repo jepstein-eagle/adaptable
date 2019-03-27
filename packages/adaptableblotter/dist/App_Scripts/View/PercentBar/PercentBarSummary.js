@@ -26,7 +26,7 @@ class PercentBarSummaryComponent extends React.Component {
         let noPercentBar = percentBar == null;
         let percentBarRow;
         if (noPercentBar) {
-            percentBarRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyConstants.PercentBarStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.PercentBarStrategyId, StrategySummary: "No Percnt Bar", onNew: () => this.onNew(), NewButtonTooltip: StrategyConstants.PercentBarStrategyName, AccessLevel: this.props.AccessLevel });
+            percentBarRow = React.createElement(StrategyHeader_1.StrategyHeader, { key: StrategyConstants.PercentBarStrategyName, cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.PercentBarStrategyId, StrategySummary: "No Percent Bar", onNew: () => this.onNew(), NewButtonTooltip: StrategyConstants.PercentBarStrategyName, AccessLevel: this.props.AccessLevel });
         }
         else {
             percentBarRow = React.createElement(StrategyDetail_1.StrategyDetail, { key: StrategyConstants.PercentBarStrategyName, cssClassName: this.props.cssClassName, Item1: React.createElement(StrategyProfile_1.StrategyProfile, { cssClassName: this.props.cssClassName, StrategyId: StrategyConstants.PercentBarStrategyId }), Item2: "Percent Bar set", ConfigEnity: percentBar, showShare: this.props.TeamSharingActivated, EntityType: StrategyConstants.PercentBarStrategyName, onEdit: () => this.onEdit(percentBarIndex, percentBar), onShare: () => this.props.onShare(percentBar), onDelete: PercentBarRedux.PercentBarDelete(percentBarIndex), showBold: true });

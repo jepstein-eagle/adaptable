@@ -72,14 +72,14 @@ var ToolTipType;
     ToolTipType["Category"] = "Category";
     ToolTipType["None"] = "None";
 })(ToolTipType = exports.ToolTipType || (exports.ToolTipType = {}));
-var PieChartLabelPositions;
-(function (PieChartLabelPositions) {
-    PieChartLabelPositions["BestFit"] = "BestFit";
-    PieChartLabelPositions["Center"] = "Center";
-    PieChartLabelPositions["InsideEnd"] = "InsideEnd";
-    PieChartLabelPositions["OutsideEnd"] = "OutsideEnd";
-    PieChartLabelPositions["None"] = "None";
-})(PieChartLabelPositions = exports.PieChartLabelPositions || (exports.PieChartLabelPositions = {}));
+var PieChartLabelPosition;
+(function (PieChartLabelPosition) {
+    PieChartLabelPosition["BestFit"] = "BestFit";
+    PieChartLabelPosition["Center"] = "Center";
+    PieChartLabelPosition["InsideEnd"] = "InsideEnd";
+    PieChartLabelPosition["OutsideEnd"] = "OutsideEnd";
+    PieChartLabelPosition["None"] = "None";
+})(PieChartLabelPosition = exports.PieChartLabelPosition || (exports.PieChartLabelPosition = {}));
 var AxisAngle;
 (function (AxisAngle) {
     AxisAngle["Horizontal"] = "Horizontal";
@@ -113,3 +113,24 @@ var CalloutsType;
     // note populate getCalloutTypeOptions() with names of non-numeric data columns
     // to add more callout types
 })(CalloutsType = exports.CalloutsType || (exports.CalloutsType = {}));
+var SecondaryColumnOperation;
+(function (SecondaryColumnOperation) {
+    SecondaryColumnOperation["Sum"] = "Sum";
+    SecondaryColumnOperation["Count"] = "Count";
+})(SecondaryColumnOperation = exports.SecondaryColumnOperation || (exports.SecondaryColumnOperation = {}));
+var SliceLabelOption;
+(function (SliceLabelOption) {
+    SliceLabelOption["Value"] = "Value";
+    SliceLabelOption["ValueAndName"] = "ValueAndName";
+    SliceLabelOption["Ratio"] = "Ratio";
+    SliceLabelOption["RatioAndName"] = "RatioAndName";
+    SliceLabelOption["Name"] = "Name";
+})(SliceLabelOption = exports.SliceLabelOption || (exports.SliceLabelOption = {}));
+var SliceSortOption;
+(function (SliceSortOption) {
+    SliceSortOption["None"] = "None";
+    SliceSortOption["ValueDescending"] = "Value Descending";
+    SliceSortOption["ValueAscending"] = "Value Ascending";
+    SliceSortOption["NameDescending"] = "Name Descending";
+    SliceSortOption["NameAscending"] = "Name Ascending";
+})(SliceSortOption = exports.SliceSortOption || (exports.SliceSortOption = {}));

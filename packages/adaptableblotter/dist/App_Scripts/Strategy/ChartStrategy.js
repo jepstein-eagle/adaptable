@@ -72,25 +72,48 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     doChartDefinitionChangesRequireDataUpdate(cd1, cd2) {
-        // slightly nonsensical for now but iwll change as more charts are added I think...
-        let a = cd1;
-        let b = cd2;
-        if (a == null && b !== null) {
+        if (cd1 == null && cd2 !== null) {
             return true;
         }
-        if (b == null && a !== null) {
+        if (cd2 == null && cd1 !== null) {
             return true;
         }
-        if (a.XAxisColumnId != b.XAxisColumnId) {
+        if (cd1 == null && cd2 == null) {
+            return false;
+        }
+        if (cd1.ChartType == ChartEnums_1.ChartType.CategoryChart) {
+            return this.doCategoryChartDefinitionChangesRequireDataUpdate(cd1, cd2);
+        }
+        if (cd1.ChartType == ChartEnums_1.ChartType.PieChart) {
+            return this.doPieChartDefinitionChangesRequireDataUpdate(cd1, cd2);
+        }
+    }
+    doCategoryChartDefinitionChangesRequireDataUpdate(cd1, cd2) {
+        if (cd1.XAxisColumnId != cd2.XAxisColumnId) {
             return true;
         }
-        if (ArrayExtensions_1.ArrayExtensions.areArraysNotEqual(a.YAxisColumnIds, b.YAxisColumnIds)) {
+        if (ArrayExtensions_1.ArrayExtensions.areArraysNotEqual(cd1.YAxisColumnIds, cd2.YAxisColumnIds)) {
             return true;
         }
-        if (a.YAxisTotal != b.YAxisTotal) {
+        if (cd1.YAxisTotal != cd2.YAxisTotal) {
             return true;
         }
-        if (ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(a.XAxisExpression, this.GetColumnState()) != ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(b.XAxisExpression, this.GetColumnState())) {
+        if (ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(cd1.XAxisExpression, this.GetColumnState()) != ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(cd2.XAxisExpression, this.GetColumnState())) {
+            return true;
+        }
+        return false;
+    }
+    doPieChartDefinitionChangesRequireDataUpdate(cd1, cd2) {
+        if (cd1.PrimaryColumnId != cd2.PrimaryColumnId) {
+            return true;
+        }
+        if (cd1.SecondaryColumnId != cd2.SecondaryColumnId) {
+            return true;
+        }
+        if (cd1.SecondaryColumnOperation != cd2.SecondaryColumnOperation) {
+            return true;
+        }
+        if (cd1.VisibleRowsOnly != cd2.VisibleRowsOnly) {
             return true;
         }
         return false;
@@ -110,7 +133,13 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let chartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
         if (chartDefinition) {
-            let chartData = this.blotter.ChartService.BuildCategoryChartData(chartDefinition, columns);
+            let chartData;
+            if (chartDefinition.ChartType == ChartEnums_1.ChartType.CategoryChart) {
+                chartData = this.blotter.ChartService.BuildCategoryChartData(chartDefinition, columns);
+            }
+            else if (chartDefinition.ChartType == ChartEnums_1.ChartType.PieChart) {
+                chartData = this.blotter.ChartService.BuildPieChartData(chartDefinition);
+            }
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
         }
     }
