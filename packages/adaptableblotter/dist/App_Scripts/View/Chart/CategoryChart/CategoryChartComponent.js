@@ -57,7 +57,7 @@ class CategoryChartComponent extends React.Component {
     }
     componentWillReceiveProps(nextProps, nextContext) {
         if (nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name) {
-            this.state = CategoryChartUIHelper_1.CategoryChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, this.props.Columns);
+            this.setState(CategoryChartUIHelper_1.CategoryChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, this.props.Columns));
         }
     }
     render() {

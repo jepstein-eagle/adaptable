@@ -1,6 +1,7 @@
 import { Expression } from '../../Expression';
 import { IAdaptableBlotterObject } from './IAdaptableBlotterObject';
-import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType } from '../../ChartEnums';
+import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation, PieChartLabelPosition, SliceLabelOption } from '../../ChartEnums';
+import { PieChartOthersCategoryType } from '../../Enums';
 export interface IChartDefinition extends IAdaptableBlotterObject {
     Name: string;
     Description: string;
@@ -10,12 +11,25 @@ export interface IChartDefinition extends IAdaptableBlotterObject {
 export interface IChartProperties extends IAdaptableBlotterObject {
 }
 export interface IPieChartDefinition extends IChartDefinition {
+    PrimaryColumnId: string;
+    SecondaryColumnId: string;
+    SecondaryColumnOperation: SecondaryColumnOperation;
+    VisibleRowsOnly: boolean;
 }
 export interface ICategoryChartDefinition extends IChartDefinition {
     YAxisColumnIds: string[];
     YAxisTotal: 'Sum' | 'Average';
     XAxisColumnId: string;
     XAxisExpression: Expression;
+}
+export interface IPieChartProperties extends IChartProperties {
+    OthersCategoryThreshold: number;
+    OthersCategoryType: PieChartOthersCategoryType;
+    PieChartLabelPosition: PieChartLabelPosition;
+    SliceLabelsMapping: SliceLabelOption;
+    SliceValuesMapping: SliceLabelOption;
+    SliceLegendMapping: SliceLabelOption;
+    ShowAsDoughnut: boolean;
 }
 export interface ICalloutProperties {
     Type: string;
@@ -62,4 +76,11 @@ export interface ICategoryChartProperties extends IChartProperties {
     EnableSeriesHighlighting?: boolean;
     EnableCategoryHighlighting?: boolean;
     EnableItemHighlighting?: boolean;
+}
+export interface IPieChartDataItem {
+    Name: string;
+    Value: any;
+    Ratio: number;
+    ValueAndName?: string;
+    RatioAndName?: string;
 }

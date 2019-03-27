@@ -4,7 +4,6 @@ const ChartEnums_1 = require("../ChartEnums");
 exports.DefaultCategoryChartProperties = {
     // General
     CategoryChartType: ChartEnums_1.CategoryChartType.Line,
-    // jw: changed back to column as I *think* that is what our users want but genuinely unsure...
     SeriesThickness: 1,
     // added special Default enum to resolve marker type based on chart type. Do not use enums for this property
     MarkerType: "Default",

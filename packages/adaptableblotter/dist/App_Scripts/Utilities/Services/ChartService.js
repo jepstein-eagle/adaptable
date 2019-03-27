@@ -31,7 +31,7 @@ class ChartService {
             let showAverageTotal = (chartDefinition.YAxisTotal == ChartEnums_1.AxisTotal.Average);
             let xAxisKVP = { Key: chartDefinition.XAxisColumnId, Value: cv };
             chartDefinition.YAxisColumnIds.forEach(colID => {
-                let total = this.buildTotal(colID, [xAxisKVP], columns, showAverageTotal);
+                let total = this.buildYAxisTotal(colID, [xAxisKVP], columns, showAverageTotal);
                 let colName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
                 if (yAxisColumnNames.indexOf(colName) < 0) {
                     yAxisColumnNames.push(colName);
@@ -42,7 +42,7 @@ class ChartService {
         });
         return chartData;
     }
-    buildTotal(yAxisColumn, kvps, columns, showAverageTotal) {
+    buildYAxisTotal(yAxisColumn, kvps, columns, showAverageTotal) {
         let columnValueExpressions = kvps.map(kvp => {
             return {
                 ColumnId: kvp.Key,
@@ -85,127 +85,85 @@ class ChartService {
         }
         return xAxisColValues;
     }
-    BuildPieChartData(valueColumnId, labelColumnId) {
+    BuildPieChartData(chartDefinition) {
         let dataCounter = new Map();
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let hasLabelColumn = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(labelColumnId);
-        let hasValueColumn = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(valueColumnId);
-        console.log("BuildPieChartData label " + hasLabelColumn + " value " + hasValueColumn);
-        let isGroupingColumns = false;
+        let hasPrimaryColumn = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(chartDefinition.PrimaryColumnId);
+        if (!hasPrimaryColumn) {
+            return null; // should never happen but from now on you have to have a primary column...
+        }
+        let hasSecondaryColumn = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(chartDefinition.SecondaryColumnId);
+        console.log("BuildPieChartData:  Primary Column " + hasPrimaryColumn + " Secondary Column " + hasSecondaryColumn);
         let valueTotal = 0;
-        if (hasLabelColumn && hasValueColumn) {
-            isGroupingColumns = true;
-            let valueColumnType = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(valueColumnId, columns);
-            let valueColumnIsNumeric = valueColumnType == Enums_1.DataType.Number;
-            let labelColumnType = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(labelColumnId, columns);
-            let labelColumnIsNumeric = labelColumnType == Enums_1.DataType.Number;
-            this.blotter.forAllRecordsDo((row) => {
-                let labelCell = this.blotter.getRawValueFromRecord(row, labelColumnId);
-                let valueCell = this.blotter.getRawValueFromRecord(row, valueColumnId);
-                let group = "";
-                let count = 0;
-                if (valueColumnIsNumeric && labelColumnIsNumeric) {
-                    // counting sum of both value and label columns
-                    count = parseFloat(valueCell) + parseFloat(labelCell);
-                    group = labelCell;
-                }
-                else if (valueColumnIsNumeric && !labelColumnIsNumeric) {
-                    count = parseFloat(valueCell);
-                    group = labelCell;
-                }
-                else if (!valueColumnIsNumeric && labelColumnIsNumeric) {
-                    count = parseFloat(labelCell);
-                    group = valueCell;
-                }
-                else if (!valueColumnIsNumeric && !labelColumnIsNumeric) {
-                    // counting instances of both value and label columns
-                    count = 1;
-                    // checking for selected 2 the same columns
-                    if (labelCell == valueCell) {
-                        group = labelCell;
-                    }
-                    else {
-                        group = this.abbreviateStr(labelCell + " " + valueCell);
-                    }
-                }
-                if (dataCounter.has(group)) {
-                    dataCounter.set(group, dataCounter.get(group) + count);
-                }
-                else {
-                    dataCounter.set(group, count);
-                }
-                valueTotal += count;
+        if (chartDefinition.VisibleRowsOnly) {
+            this.blotter.forAllVisibleRecordsDo((row) => {
+                valueTotal = (hasSecondaryColumn) ?
+                    this.getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
+                    :
+                        this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
             });
         }
-        else if (hasValueColumn) {
-            let i = 0;
-            // we have only valueColumnId so let's check if it has numeric or non-numeric cell values
-            let columnType = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(valueColumnId, columns);
-            let columnIsNumeric = columnType == Enums_1.DataType.Number;
-            isGroupingColumns = !columnIsNumeric;
+        else {
             this.blotter.forAllRecordsDo((row) => {
-                let cellValue = this.blotter.getRawValueFromRecord(row, valueColumnId);
-                let group = columnIsNumeric ? i : cellValue;
-                let count = columnIsNumeric ? parseFloat(cellValue) : 1;
-                if (dataCounter.has(group)) {
-                    dataCounter.set(group, dataCounter.get(group) + count);
-                }
-                else {
-                    dataCounter.set(group, count);
-                }
-                valueTotal += count;
-                i++;
-            });
-        }
-        else if (hasLabelColumn) {
-            let i = 0;
-            // we have only labelColumnId so let's check if it has numeric or non-numeric cell values
-            let columnType = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(labelColumnId, columns);
-            let columnIsNumeric = columnType == Enums_1.DataType.Number;
-            isGroupingColumns = !columnIsNumeric;
-            this.blotter.forAllRecordsDo((row) => {
-                let cellValue = this.blotter.getRawValueFromRecord(row, labelColumnId);
-                let group = columnIsNumeric ? i : cellValue;
-                let count = columnIsNumeric ? parseFloat(cellValue) : 1;
-                if (dataCounter.has(group)) {
-                    dataCounter.set(group, dataCounter.get(group) + count);
-                }
-                else {
-                    dataCounter.set(group, count);
-                }
-                valueTotal += count;
-                i++;
+                valueTotal = (hasSecondaryColumn) ?
+                    this.getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
+                    :
+                        this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
             });
         }
         console.log("BuildPieChartData dataCounter " + dataCounter.keys.length);
         let dataItems = [];
         dataCounter.forEach((value, name) => {
-            let item = {};
-            item.Name = name.toString();
-            item.Value = Helper_1.Helper.RoundNumber(value, 1);
-            // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
-            item.Ratio = Math.round(value / valueTotal * 1000) / 10;
-            if (isGroupingColumns) {
-                item.ValueAndName = this.abbreviateNum(item.Value) + " - " + item.Name;
-                item.RatioAndName = item.Ratio.toFixed(0) + " - " + item.Name;
-            }
-            else {
-                item.ValueAndName = item.Name;
-                item.RatioAndName = item.Name;
-            }
-            // ensure strings are not to long for slice labels and legend items
-            item.ValueAndName = this.abbreviateStr(item.ValueAndName);
-            item.RatioAndName = this.abbreviateStr(item.RatioAndName);
-            item.Name = this.abbreviateStr(item.Name);
-            dataItems.push(item);
+            let pieChartDataItem = {
+                Name: name.toString(),
+                Value: Helper_1.Helper.RoundNumber(value, 1),
+                // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
+                Ratio: Math.round(value / valueTotal * 1000) / 10
+            };
+            pieChartDataItem.ValueAndName = this.abbreviateNum(pieChartDataItem.Value) + " - " + pieChartDataItem.Name;
+            pieChartDataItem.RatioAndName = pieChartDataItem.Ratio.toFixed(0) + " - " + pieChartDataItem.Name;
+            pieChartDataItem.ValueAndName = StringExtensions_1.StringExtensions.abbreviateString(pieChartDataItem.ValueAndName, 50);
+            pieChartDataItem.RatioAndName = StringExtensions_1.StringExtensions.abbreviateString(pieChartDataItem.RatioAndName, 50);
+            pieChartDataItem.Name = StringExtensions_1.StringExtensions.abbreviateString(pieChartDataItem.Name, 50);
+            dataItems.push(pieChartDataItem);
         });
         console.log("BuildPieChartData dataItems " + dataItems.length);
+        console.log("dataItems " + dataItems);
         return dataItems;
     }
-    abbreviateStr(str, maxLength) {
-        if (maxLength === undefined)
-            maxLength = 18;
-        return str.length < maxLength ? str : str.substr(0, maxLength) + "...";
+    getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal) {
+        let primaryCellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.PrimaryColumnId);
+        let secondaryCellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.SecondaryColumnId);
+        let group = "";
+        let count = 0;
+        if (chartDefinition.SecondaryColumnOperation == ChartEnums_1.SecondaryColumnOperation.Sum) {
+            count = parseFloat(secondaryCellValue); //+ parseFloat(primaryCellValue);
+            group = primaryCellValue;
+        }
+        else {
+            count = 1;
+            group = StringExtensions_1.StringExtensions.abbreviateString(primaryCellValue + " " + secondaryCellValue, 50);
+        }
+        if (dataCounter.has(group)) {
+            dataCounter.set(group, dataCounter.get(group) + count);
+        }
+        else {
+            dataCounter.set(group, count);
+        }
+        valueTotal += count;
+        console.log('value total' + valueTotal);
+        return valueTotal;
+    }
+    getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal) {
+        let cellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.PrimaryColumnId);
+        if (dataCounter.has(cellValue)) {
+            dataCounter.set(cellValue, dataCounter.get(cellValue) + 1);
+        }
+        else {
+            dataCounter.set(cellValue, 1);
+        }
+        valueTotal += 1;
+        console.log('value total' + valueTotal);
+        return valueTotal;
     }
     abbreviateNum(largeValue) {
         let str = "";

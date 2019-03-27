@@ -7,6 +7,7 @@ const CellValidationHelper_1 = require("./Helpers/CellValidationHelper");
 const GeneralConstants_1 = require("./Constants/GeneralConstants");
 const DefaultCategoryChartProperties_1 = require("./Defaults/DefaultCategoryChartProperties");
 const ChartEnums_1 = require("./ChartEnums");
+const DefaultPieChartProperties_1 = require("./Defaults/DefaultPieChartProperties");
 var ObjectFactory;
 (function (ObjectFactory) {
     function CreateLicenceInfo(licenceType, isLicenceInDate, licenceUserType, expiryDate) {
@@ -24,10 +25,14 @@ var ObjectFactory;
     ObjectFactory.CreateEmptyCustomSort = CreateEmptyCustomSort;
     function CreateEmptyPieChartDefinition() {
         return {
-            Name: 'Hello',
-            Description: 'World',
-            ChartProperties: null,
-            ChartType: ChartEnums_1.ChartType.PieChart
+            Name: GeneralConstants_1.EMPTY_STRING,
+            Description: GeneralConstants_1.EMPTY_STRING,
+            PrimaryColumnId: GeneralConstants_1.EMPTY_STRING,
+            SecondaryColumnId: null,
+            SecondaryColumnOperation: ChartEnums_1.SecondaryColumnOperation.Count,
+            ChartProperties: DefaultPieChartProperties_1.DefaultPieChartProperties,
+            ChartType: ChartEnums_1.ChartType.PieChart,
+            VisibleRowsOnly: true
         };
     }
     ObjectFactory.CreateEmptyPieChartDefinition = CreateEmptyPieChartDefinition;
@@ -40,7 +45,7 @@ var ObjectFactory;
             XAxisColumnId: GeneralConstants_1.EMPTY_STRING,
             XAxisExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
             ChartProperties: DefaultCategoryChartProperties_1.DefaultCategoryChartProperties,
-            ChartType: ChartEnums_1.ChartType.PieChart
+            ChartType: ChartEnums_1.ChartType.CategoryChart
         };
     }
     ObjectFactory.CreateEmptyCategoryChartDefinition = CreateEmptyCategoryChartDefinition;

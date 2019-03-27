@@ -19,6 +19,7 @@ const UIHelper_1 = require("../UIHelper");
 const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ChartEnums_1 = require("../../Utilities/ChartEnums");
 const CategoryChartWizard_1 = require("./CategoryChart/Wizard/CategoryChartWizard");
+const PieChartWizard_1 = require("./PieChart/Wizard/PieChartWizard");
 class ChartPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -26,12 +27,17 @@ class ChartPopupComponent extends React.Component {
     }
     componentDidMount() {
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
-            if (this.props.PopupParams == "New") {
-                this.onNew();
-            }
-            if (this.props.PopupParams == "Edit") {
-                let index = this.props.ChartDefinitions.findIndex(cd => cd.Name == this.props.CurrentChartDefinition.Name);
-                this.onEdit(index, this.props.CurrentChartDefinition);
+            if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
+                let arrayParams = this.props.PopupParams.split("|");
+                let action = arrayParams[0].trim();
+                let chartType = arrayParams[1].trim(); // todo: use the enum...
+                if (action == "New") {
+                    this.onNew(chartType);
+                }
+                if (this.props.PopupParams == "Edit") {
+                    let index = this.props.ChartDefinitions.findIndex(cd => cd.Name == this.props.CurrentChartDefinition.Name);
+                    this.onEdit(index, this.props.CurrentChartDefinition);
+                }
             }
         }
     }
@@ -40,15 +46,17 @@ class ChartPopupComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__Chart";
         let infoBody = ["Create Charts to view your grid data visually."];
         let colItems = [
-            { Content: "Title", Size: 4 },
-            { Content: "Subtitle", Size: 4 },
+            { Content: "Title", Size: 3 },
+            { Content: "Subtitle", Size: 3 },
+            { Content: "Type", Size: 2 },
             { Content: "Show", Size: 1 },
             { Content: "", Size: 3 },
         ];
         let Charts = this.props.ChartDefinitions.map((Chart, index) => {
             return React.createElement(ChartEntityRow_1.ChartEntityRow, { cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: Chart, key: Chart.Name, Index: index, onEdit: (index, Chart) => this.onEdit(index, Chart), TeamSharingActivated: this.props.TeamSharingActivated, onShare: () => this.props.onShare(Chart), onDeleteConfirm: ChartRedux.ChartDefinitionDelete(Chart), onShowChart: (chartName) => this.onShowChart(chartName), AccessLevel: this.props.AccessLevel });
         });
-        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(), overrideTooltip: "Create Chart Definition", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
+        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(ChartEnums_1.ChartType.CategoryChart), overrideTooltip: "Create Chart Definition", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
+        let editedChartDefinition = this.state.EditedAdaptableBlotterObject;
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.ChartStrategyName, className: "ab_main_popup", infoBody: infoBody, button: newButton, bsStyle: "primary", glyphicon: StrategyConstants.ChartGlyph },
                 Charts.length > 0 ?
@@ -56,7 +64,10 @@ class ChartPopupComponent extends React.Component {
                     :
                         React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to create a new Chart."),
                 this.state.EditedAdaptableBlotterObject &&
-                    React.createElement(CategoryChartWizard_1.CategoryChartWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: this.props.ChartDefinitions, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
+                    React.createElement("div", null, editedChartDefinition.ChartType == ChartEnums_1.ChartType.CategoryChart ?
+                        React.createElement(CategoryChartWizard_1.CategoryChartWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: editedChartDefinition, ConfigEntities: this.props.ChartDefinitions, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })
+                        :
+                            React.createElement(PieChartWizard_1.PieChartWizard, { cssClassName: cssClassName, EditedAdaptableBlotterObject: editedChartDefinition, ConfigEntities: this.props.ChartDefinitions, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: 0, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() }))));
     }
     onShowChart(chartName) {
         this.props.onSelectChartDefinition(chartName);
@@ -66,8 +77,10 @@ class ChartPopupComponent extends React.Component {
         //so we dont mutate original object
         this.setState({ EditedAdaptableBlotterObject: Helper_1.Helper.cloneObject(Chart), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: index });
     }
-    onNew() {
-        let emptyChartDefinition = ObjectFactory_1.ObjectFactory.CreateEmptyCategoryChartDefinition();
+    onNew(chartType) {
+        let emptyChartDefinition = (chartType == ChartEnums_1.ChartType.CategoryChart) ?
+            ObjectFactory_1.ObjectFactory.CreateEmptyCategoryChartDefinition() :
+            ObjectFactory_1.ObjectFactory.CreateEmptyPieChartDefinition();
         this.setState({ EditedAdaptableBlotterObject: emptyChartDefinition, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
     }
     onCloseWizard() {
@@ -75,7 +88,6 @@ class ChartPopupComponent extends React.Component {
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
     onFinishWizard() {
-        //  alert("wizard finished")
         let index = this.state.EditedAdaptableBlotterObjectIndex;
         let clonedObject = Helper_1.Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
         this.props.onAddUpdateChartDefinition(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);

@@ -58,7 +58,7 @@ export declare enum ToolTipType {
     Category = "Category",
     None = "None"
 }
-export declare enum PieChartLabelPositions {
+export declare enum PieChartLabelPosition {
     BestFit = "BestFit",
     Center = "Center",
     InsideEnd = "InsideEnd",
@@ -91,4 +91,22 @@ export declare enum CalloutsType {
     DataPoints = "Data Points",
     DataChangesInValues = "Data Changes",
     DataChangesInPercentage = "Data Changes (%)"
+}
+export declare enum SecondaryColumnOperation {
+    Sum = "Sum",
+    Count = "Count"
+}
+export declare enum SliceLabelOption {
+    Value = "Value",
+    ValueAndName = "ValueAndName",
+    Ratio = "Ratio",
+    RatioAndName = "RatioAndName",
+    Name = "Name"
+}
+export declare enum SliceSortOption {
+    None = "None",
+    ValueDescending = "Value Descending",
+    ValueAscending = "Value Ascending",
+    NameDescending = "Name Descending",
+    NameAscending = "Name Ascending"
 }

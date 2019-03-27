@@ -17,6 +17,7 @@ const SystemRedux = require("../../Redux/ActionsReducers/SystemRedux");
 const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
 const CategoryChartComponent_1 = require("./CategoryChart/CategoryChartComponent");
 const PieChartComponent_1 = require("./PieChart/PieChartComponent");
+const PieChartWizard_1 = require("./PieChart/Wizard/PieChartWizard");
 class ChartDisplayPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -24,7 +25,7 @@ class ChartDisplayPopupComponent extends React.Component {
     }
     componentWillReceiveProps(nextProps, nextContext) {
         if (nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name) {
-            this.state = { EditedChartDefinition: null };
+            this.setState({ EditedChartDefinition: null });
         }
     }
     render() {
@@ -43,8 +44,6 @@ class ChartDisplayPopupComponent extends React.Component {
                 React.createElement(ButtonMaximise_1.ButtonMaximise, { cssClassName: cssClassName, onClick: () => this.onChartMaximised(), bsStyle: StyleConstants_1.PRIMARY_BSSTYLE, size: "small", DisplayMode: "Glyph", hideToolTip: true })
                 :
                     React.createElement(ButtonMinimise_1.ButtonMinimise, { cssClassName: cssClassName, onClick: () => this.onChartMinimised(), bsStyle: StyleConstants_1.PRIMARY_BSSTYLE, size: "small", DisplayMode: "Glyph", hideToolTip: true });
-        // this is how we decide whether to show the chart...
-        // let chartElement = (this.props.ChartVisibility == ChartVisibility.Maximised && this.props.ChartData != null && this.props.CurrentChartDefinition != null) ?
         return React.createElement("span", { className: cssClassName },
             React.createElement(PanelWithIImageThreeButtons_1.PanelWithImageThreeButtons, { cssClassName: cssClassName, header: StrategyConstants.ChartStrategyName, bsStyle: StyleConstants_1.PRIMARY_BSSTYLE, style: { marginRight: '30px' }, glyphicon: StrategyConstants.ChartGlyph, secondButton: closeButton, firstButton: editButton, thirdButton: minmaxButton }, this.props.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised && this.props.ChartData != null && this.props.CurrentChartDefinition != null &&
                 React.createElement("div", null, currentChartType == ChartEnums_1.ChartType.CategoryChart ?
@@ -53,9 +52,12 @@ class ChartDisplayPopupComponent extends React.Component {
                         React.createElement(PieChartComponent_1.PieChartComponent, { CurrentChartDefinition: this.props.CurrentChartDefinition, ChartData: this.props.ChartData, 
                             //   ColorPalette={this.props.ColorPalette}
                             //   Columns={this.props.Columns}
-                            cssClassName: this.props.cssClassName }))),
+                            cssClassName: this.props.cssClassName, onUpdateChartProperties: (chartTitle, chartProperties) => this.props.onUpdateChartProperties(chartTitle, chartProperties) }))),
             this.state.EditedChartDefinition &&
-                React.createElement(CategoryChartWizard_1.CategoryChartWizard, { cssClassName: cssClassName, EditedAdaptableBlotterObject: this.state.EditedChartDefinition, ConfigEntities: this.props.ChartDefinitions, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: 0, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() }));
+                React.createElement("div", null, this.state.EditedChartDefinition.ChartType == ChartEnums_1.ChartType.CategoryChart ?
+                    React.createElement(CategoryChartWizard_1.CategoryChartWizard, { cssClassName: cssClassName, EditedAdaptableBlotterObject: this.state.EditedChartDefinition, ConfigEntities: this.props.ChartDefinitions, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: 0, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })
+                    :
+                        React.createElement(PieChartWizard_1.PieChartWizard, { cssClassName: cssClassName, EditedAdaptableBlotterObject: this.state.EditedChartDefinition, ConfigEntities: this.props.ChartDefinitions, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: 0, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }
     onEditChart() {
         this.setState({ EditedChartDefinition: Helper_1.Helper.cloneObject(this.props.CurrentChartDefinition) });
