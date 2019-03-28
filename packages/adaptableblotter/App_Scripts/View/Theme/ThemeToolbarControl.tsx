@@ -47,7 +47,7 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
             </DropdownButton>
         </div>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.ThemeStrategyName} glyphicon={StrategyConstants.ThemeGlyph} onClose={() => this.props.onClose(StrategyConstants.ThemeStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} useDefaultPanelStyle={this.props.UseSingleColourForButtons} headerText={StrategyConstants.ThemeStrategyName} glyphicon={StrategyConstants.ThemeGlyph} onClose={() => this.props.onClose(StrategyConstants.ThemeStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }

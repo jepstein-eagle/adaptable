@@ -163,7 +163,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         }
 
 
-        return <PanelDashboard cssClassName={cssClassName} showCloseButton={false} showMinimiseButton={true} onMinimise={() => this.props.onSetDashboardVisibility(Visibility.Minimised)}
+        return <PanelDashboard cssClassName={cssClassName} useDefaultPanelStyle={this.props.UseSingleColourForButtons} showCloseButton={false} showMinimiseButton={true} onMinimise={() => this.props.onSetDashboardVisibility(Visibility.Minimised)}
             headerText={toolbarTitle} glyphicon={"home"} showGlyphIcon={false}
             onClose={() => this.props.onClose(StrategyConstants.HomeStrategyId)} onConfigure={() => this.props.onConfigure()}>
 

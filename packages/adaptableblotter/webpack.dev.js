@@ -44,7 +44,7 @@ module.exports = {
         libraryTarget: 'umd'
     },
      // Turn on sourcemaps
-    devtool: 'source-map',
+ //   devtool: 'source-map',
 
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.

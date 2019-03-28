@@ -111,7 +111,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<AdvancedSear
         </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.AdvancedSearchStrategyName} glyphicon={StrategyConstants.AdvancedSearchGlyph} onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} useDefaultPanelStyle={this.props.UseSingleColourForButtons} headerText={StrategyConstants.AdvancedSearchStrategyName} glyphicon={StrategyConstants.AdvancedSearchGlyph} onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }

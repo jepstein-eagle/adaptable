@@ -33,7 +33,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(200);
+    return dataGen.getTrades(5000);
   }
   return dataGen.getFtseData(199);
 }
@@ -124,7 +124,7 @@ function InitTradeBlotter() {
       //  licenceKey: getValidStandardKey(),
       //    licenceKey: getValidEnterpriseKey(),
       //licenceKey: getInvalidStandardKey(),
-      //     predefinedConfig: myJson,
+    //    predefinedConfig: reportJson,
       
       auditOptions: {
         //     auditCellEdits: true,
@@ -766,6 +766,20 @@ let myJson = {
 
 
 let reportJson = {
+  Layout: {
+		CurrentLayout: "Citi Price",
+		Layouts: [
+			{
+				Columns: [
+					"ask",
+					"bid",
+					"bidOfferSpread"
+				],
+				GridSorts: [],
+			Name: "Citi Price"
+			}
+		]
+  },
   Export: {
     CurrentReport: "test",
     Reports: [

@@ -178,7 +178,7 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             </span>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.ExportStrategyName} glyphicon={StrategyConstants.ExportGlyph} onClose={() => this.props.onClose(StrategyConstants.ExportStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} useDefaultPanelStyle={this.props.UseSingleColourForButtons} headerText={StrategyConstants.ExportStrategyName} glyphicon={StrategyConstants.ExportGlyph} onClose={() => this.props.onClose(StrategyConstants.ExportStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }

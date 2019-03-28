@@ -116,7 +116,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
             </div>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.ColumnFilterStrategyName} glyphicon={StrategyConstants.ColumnFilterGlyph} onClose={() => this.props.onClose(StrategyConstants.ColumnFilterStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} useDefaultPanelStyle={this.props.UseSingleColourForButtons} headerText={StrategyConstants.ColumnFilterStrategyName} glyphicon={StrategyConstants.ColumnFilterGlyph} onClose={() => this.props.onClose(StrategyConstants.ColumnFilterStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }

@@ -122,7 +122,7 @@ class LayoutToolbarControlComponent extends React.Component<LayoutToolbarControl
             </span>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.LayoutStrategyName} glyphicon={StrategyConstants.LayoutGlyph} onClose={() => this.props.onClose(StrategyConstants.LayoutStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} useDefaultPanelStyle={this.props.UseSingleColourForButtons} headerText={StrategyConstants.LayoutStrategyName} glyphicon={StrategyConstants.LayoutGlyph} onClose={() => this.props.onClose(StrategyConstants.LayoutStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }

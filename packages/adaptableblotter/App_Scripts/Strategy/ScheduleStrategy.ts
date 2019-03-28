@@ -7,7 +7,7 @@ import { ScheduleState } from '../Redux/ActionsReducers/Interface/IState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { StateChangedTrigger, ExportDestination, ScheduleType, MessageType } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { IReportScheduleItem, IScheduleItem, ISchedule, IAlertScheduleItem, IScheduleTime } from '../Utilities/Interface/BlotterObjects/ISchedule';
+import { IReportScheduleItem, IScheduleItem, ISchedule, IAlertScheduleItem, IScheduleTime, IScheduleRule } from '../Utilities/Interface/BlotterObjects/ISchedule';
 import { IAdaptableAlert } from '../Utilities/Interface/IMessage';
 
 export class ScheduleStrategy extends AdaptableStrategyBase implements IScheduleStrategy {
@@ -30,11 +30,15 @@ export class ScheduleStrategy extends AdaptableStrategyBase implements ISchedule
         if (this.ScheduleState != this.blotter.AdaptableBlotterStore.TheStore.getState().Schedule) {
 
             // just trying one out...
+
+            let scheduleRule: IScheduleRule ={
+                DayOfWeek:5,
+                Hour: 14,
+                Minute: 53
+            }
            
             let scheduleTime: IScheduleTime={
-                DayOfWeek: 3,
-                Hour: 17,
-                Minute: 55
+               RecurringDate: scheduleRule
             }
 
             let alertScheduleItem: IAlertScheduleItem = {
@@ -64,7 +68,7 @@ export class ScheduleStrategy extends AdaptableStrategyBase implements ISchedule
 
 
         //    this.blotter.ScheduleService.AddSchedule(reportSchedule);
-        //    this.blotter.ScheduleService.AddSchedule(alertSchedule);
+            this.blotter.ScheduleService.AddSchedule(alertSchedule);
 
             this.ScheduleState = this.blotter.AdaptableBlotterStore.TheStore.getState().Schedule;
 

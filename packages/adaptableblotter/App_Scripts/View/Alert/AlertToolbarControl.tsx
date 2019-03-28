@@ -69,7 +69,7 @@ class AlertToolbarControlComponent extends React.Component<AlertToolbarControlPr
                 let formControlStyle: any = (this.props.DashboardSize == 'xsmall') ? smallFormControlStyle: standardFormControlStyle;
 
      let labelStyle =  (this.props.UseSingleColourForButtons)? 'default': 'success';
-
+    
         let content = <span>
 
             <FormControl bsSize={this.props.DashboardSize} style={formControlStyle} value={collapsedText} disabled={true} type="string" />
@@ -86,7 +86,7 @@ class AlertToolbarControlComponent extends React.Component<AlertToolbarControlPr
         </span>
 
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.AlertStrategyName} glyphicon={StrategyConstants.AlertGlyph} onClose={() => this.props.onClose(StrategyConstants.AlertStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} useDefaultPanelStyle={this.props.UseSingleColourForButtons} headerText={StrategyConstants.AlertStrategyName} glyphicon={StrategyConstants.AlertGlyph} onClose={() => this.props.onClose(StrategyConstants.AlertStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }

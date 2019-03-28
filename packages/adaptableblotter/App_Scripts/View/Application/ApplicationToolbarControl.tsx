@@ -26,7 +26,7 @@ class ApplicationToolbarControlComponent extends React.Component<ApplicationTool
             StrategyConstants.ApplicationStrategyName
             let minHeight = (this.props.DashboardSize == DashboardSize.XSmall)? '22px': '30px'
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={headerText} glyphicon={StrategyConstants.ApplicationGlyph} onClose={() => this.props.onClose(StrategyConstants.ApplicationStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} useDefaultPanelStyle={this.props.UseSingleColourForButtons} headerText={headerText} glyphicon={StrategyConstants.ApplicationGlyph} onClose={() => this.props.onClose(StrategyConstants.ApplicationStrategyId)} onConfigure={() => this.props.onConfigure()}>
             <div className="ApplicationToolBarContents" style={{ minHeight: minHeight }}>
 
             </div>

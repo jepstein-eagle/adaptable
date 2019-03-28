@@ -134,7 +134,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
             </div>
         </span>
 
-        return <PanelDashboard cssClassName={cssClassName} headerText={StrategyConstants.BulkUpdateStrategyName} glyphicon={StrategyConstants.BulkUpdateGlyph} onClose={() => this.props.onClose(StrategyConstants.BulkUpdateStrategyId)} onConfigure={() => this.props.onConfigure()}>
+        return <PanelDashboard cssClassName={cssClassName} useDefaultPanelStyle={this.props.UseSingleColourForButtons} headerText={StrategyConstants.BulkUpdateStrategyName} glyphicon={StrategyConstants.BulkUpdateGlyph} onClose={() => this.props.onClose(StrategyConstants.BulkUpdateStrategyId)} onConfigure={() => this.props.onConfigure()}>
             {content}
         </PanelDashboard>
     }
