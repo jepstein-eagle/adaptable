@@ -7,12 +7,12 @@ import { SliceSortOption } from "../../../Utilities/ChartEnums";
 */
 export module PieChartUIHelper {
 
-  export function getbrushesEven(): string[] {
+  export function getBrushesEven(): string[] {
     return ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47"];
   }
 
 
-  export function getbrushesOdd(): string[] {
+  export function getBrushesOdd(): string[] {
     return ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47", "#795548"];
   }
 
@@ -25,7 +25,7 @@ export module PieChartUIHelper {
       IsChartSettingsVisible: true,
       IsGeneralMinimised: false,
       SliceSortOption: SliceSortOption.None,
-      SliceBrushes: dataSource.length % 2 == 0 ? getbrushesOdd() : getbrushesEven(),
+      SliceBrushes: dataSource.length % 2 == 0 ? getBrushesOdd() : getBrushesEven(),
     }
 
   }
