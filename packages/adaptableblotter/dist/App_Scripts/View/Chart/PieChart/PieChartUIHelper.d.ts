@@ -2,8 +2,8 @@ import { IPieChartDefinition, IPieChartDataItem } from "../../../Utilities/Inter
 import { PieChartComponentState } from "./PieChartComponentState";
 import { SliceSortOption } from "../../../Utilities/ChartEnums";
 export declare module PieChartUIHelper {
-    function getbrushesEven(): string[];
-    function getbrushesOdd(): string[];
+    function getBrushesEven(): string[];
+    function getBrushesOdd(): string[];
     function setChartDisplayPopupState(chartDefinition: IPieChartDefinition, dataSource: IPieChartDataItem[]): PieChartComponentState;
     function setDefaultChartDisplayPopupState(): PieChartComponentState;
     function sortDataSource(sliceSortOption: SliceSortOption, oldData: IPieChartDataItem[]): IPieChartDataItem[];

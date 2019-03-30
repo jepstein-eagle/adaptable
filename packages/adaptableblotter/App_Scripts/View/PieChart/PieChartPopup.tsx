@@ -35,7 +35,7 @@ interface PieChartPopupState {
     PieChartDefinition: IPieChartDefinition
 
     DataSource: any;
-   
+
     OthersCategoryType: PieChartOthersCategoryType;
     OthersCategoryThreshold: number;
     ShowAsDoughnut: boolean;
@@ -70,7 +70,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             SliceLegendMapping: "ValueAndName",
             SliceSortOption: SliceSortOption.ValueDescending,
             SliceLabelsPosition: "OutsideEnd",
-            SliceBrushes: PieChartUIHelper.getbrushesEven(),
+            SliceBrushes: PieChartUIHelper.getBrushesEven(),
         }
 
         IgrPieChartModule.register();
@@ -122,14 +122,14 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         return optionElements;
     }
 
-    
-    
+
+
     hasValidDataSelection(): boolean {
         return StringExtensions.IsNotNullOrEmpty(this.state.PieChartDefinition.SecondaryColumnId) ||
             StringExtensions.IsNotNullOrEmpty(this.state.PieChartDefinition.PrimaryColumnId);
     }
 
-  
+
     render() {
         let cssClassName: string = this.props.cssClassName + "__PieChart";
         let infoBody: any[] = ["See the count for each distinct visible value in the column as pie chart.", <br />, <br />, "There is an option to view as doughnut and to set the 'Others' threshold."]
@@ -178,7 +178,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 //sliceClick={(s, e) => this.onSliceClick(e)}
             />}
 
-           
+
         </div>
 
         let settingsBlock = <Panel bsSize={"xs"} bsStyle={DEFAULT_BSSTYLE} header={"Settings"} style={{
@@ -198,7 +198,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                         checked={this.state.ShowAsDoughnut} >Doughnut View</Checkbox>
                 </HelpBlock>
 
-              
+
                 <HelpBlock style={{ fontSize: 'small' }}>Others Threshold
                         {' '}
                     <AdaptablePopover cssClassName={cssClassName} headerText={"Pie Chart: Others Threshold"} bodyText={["Items with value less than or equal to the Threshold will be assigned to the “Others” category.  Choose whether this will be interpreted as a percentage or as a value."]} />
@@ -342,11 +342,11 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             PieChartDefinition: pieChartDefinition,
             DataSource: dataSource,
             // making sure the first and last slice do not have the same brush
-            SliceBrushes: dataSource.length % 2 == 0 ? PieChartUIHelper.getbrushesOdd() : PieChartUIHelper.getbrushesEven()
+            SliceBrushes: dataSource.length % 2 == 0 ? PieChartUIHelper.getBrushesOdd() : PieChartUIHelper.getBrushesEven()
         });
     }
 
-   
+
 
     public onDoughnutChartRef(doughnutChart: IgrDoughnutChart) {
         this.doughnutChart = doughnutChart;
@@ -385,7 +385,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         this.setState({ ShowAsDoughnut: e.checked} as PieChartPopupState);
     }
 
-  
+
 
     private onThresholdAsPercentChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
