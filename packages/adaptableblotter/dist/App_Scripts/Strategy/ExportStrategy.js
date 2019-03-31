@@ -13,7 +13,6 @@ const _ = require("lodash");
 const iPushPullHelper_1 = require("../Utilities/Helpers/iPushPullHelper");
 const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
-const NodeSchedule = require("node-schedule");
 class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.ExportStrategyId, blotter);
@@ -52,17 +51,6 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     this.throttledRecomputeAndSendLiveExcelEvent();
                 }
             }
-        });
-        let alertToShow = {
-            Header: "Test Schedule",
-            Msg: "This alert has worked",
-            MessageType: Enums_1.MessageType.Success
-        };
-        let showAlertAsPopup = true;
-        var date = new Date(2019, 2, 21, 19, 48, 0);
-        var d = NodeSchedule.scheduleJob(date, () => {
-            this.blotter.ScheduleService.RunScheduleAlert(alertToShow, showAlertAsPopup);
-            this.blotter.ScheduleService.RunScheduleReport("All Data", Enums_1.ExportDestination.CSV);
         });
     }
     addPopupMenuItem() {

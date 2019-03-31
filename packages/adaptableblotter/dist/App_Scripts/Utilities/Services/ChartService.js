@@ -92,7 +92,6 @@ class ChartService {
             return null; // should never happen but from now on you have to have a primary column...
         }
         let hasSecondaryColumn = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(chartDefinition.SecondaryColumnId);
-        console.log("BuildPieChartData:  Primary Column " + hasPrimaryColumn + " Secondary Column " + hasSecondaryColumn);
         let valueTotal = 0;
         if (chartDefinition.VisibleRowsOnly) {
             this.blotter.forAllVisibleRecordsDo((row) => {
@@ -110,24 +109,84 @@ class ChartService {
                         this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
             });
         }
-        console.log("BuildPieChartData dataCounter " + dataCounter.keys.length);
+        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columnType = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(chartDefinition.PrimaryColumnId, columns);
+        let columnIsNumeric = columnType == Enums_1.DataType.Number;
+        let columnName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.PrimaryColumnId, columns);
         let dataItems = [];
-        dataCounter.forEach((value, name) => {
-            let pieChartDataItem = {
-                Name: name.toString(),
-                Value: Helper_1.Helper.RoundNumber(value, 1),
-                // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
-                Ratio: Math.round(value / valueTotal * 1000) / 10
-            };
-            pieChartDataItem.ValueAndName = this.abbreviateNum(pieChartDataItem.Value) + " - " + pieChartDataItem.Name;
-            pieChartDataItem.RatioAndName = pieChartDataItem.Ratio.toFixed(0) + " - " + pieChartDataItem.Name;
-            pieChartDataItem.ValueAndName = StringExtensions_1.StringExtensions.abbreviateString(pieChartDataItem.ValueAndName, 50);
-            pieChartDataItem.RatioAndName = StringExtensions_1.StringExtensions.abbreviateString(pieChartDataItem.RatioAndName, 50);
-            pieChartDataItem.Name = StringExtensions_1.StringExtensions.abbreviateString(pieChartDataItem.Name, 50);
-            dataItems.push(pieChartDataItem);
-        });
-        console.log("BuildPieChartData dataItems " + dataItems.length);
-        console.log("dataItems " + dataItems);
+        if (dataCounter.size <= 15 || !columnIsNumeric) {
+            // just a few values/slices so they should easily fit in pie chart with
+            dataCounter.forEach((value, name) => {
+                let sliceItem = {
+                    Name: name.toString(),
+                    Value: Helper_1.Helper.RoundNumber(value, 1),
+                    // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
+                    Ratio: Math.round(value / valueTotal * 1000) / 10
+                };
+                sliceItem.ValueAndName = this.abbreviateNum(sliceItem.Value) + " - " + sliceItem.Name;
+                sliceItem.RatioAndName = sliceItem.Ratio.toFixed(0) + " - " + sliceItem.Name;
+                sliceItem.ValueAndName = StringExtensions_1.StringExtensions.abbreviateString(sliceItem.ValueAndName, 50);
+                sliceItem.RatioAndName = StringExtensions_1.StringExtensions.abbreviateString(sliceItem.RatioAndName, 50);
+                sliceItem.Name = StringExtensions_1.StringExtensions.abbreviateString(sliceItem.Name, 50);
+                dataItems.push(sliceItem);
+            });
+        }
+        else {
+            // too many data values/slices to fit in pie chart so we need to group them into ranges
+            let dataMinValue = Number.MAX_VALUE;
+            let dataMaxValue = Number.MIN_VALUE;
+            // getting min and max values
+            dataCounter.forEach((id, value) => {
+                dataMinValue = Math.min(value, dataMinValue);
+                dataMaxValue = Math.max(value, dataMaxValue);
+            });
+            // calculating nice/round range interval/divisions
+            let dataValueGroups = 20;
+            let dataValueRange = dataMaxValue - dataMinValue;
+            let dataValueMultiplier = 1;
+            if (dataValueRange < 10) {
+                dataValueMultiplier = 100; // for very small values (e.g. B/O Spread column)
+            }
+            let dataRangeInterval = dataValueRange * dataValueMultiplier / dataValueGroups;
+            let dataRangeDivisions = Math.floor((dataRangeInterval / 10) + 1) * 10;
+            let dataRanges = new Map();
+            // grouping all data values into ranges by checking which range a value belongs to
+            dataCounter.forEach((id, value) => {
+                let rangeKey = Math.floor(value * dataValueMultiplier / dataRangeDivisions);
+                if (dataRanges.has(rangeKey)) {
+                    let range = dataRanges.get(rangeKey);
+                    range.values.push(value);
+                    ;
+                    dataRanges.set(rangeKey, range);
+                }
+                else {
+                    let rangeMin = (rangeKey / dataValueMultiplier * dataRangeDivisions);
+                    let rangeMax = (rangeKey + 1) / dataValueMultiplier * dataRangeDivisions;
+                    let range = { min: rangeMin, max: rangeMax, values: [value] };
+                    if (dataValueMultiplier > 1) {
+                        range.min = rangeMin.toFixed(1);
+                        range.max = rangeMax.toFixed(1);
+                    }
+                    dataRanges.set(rangeKey, range);
+                }
+            });
+            console.log("ChartService grouped data items into " + dataRanges.size + " ranges of " + dataRangeDivisions);
+            // finally we can generate slice items based on data ranges
+            dataRanges.forEach((range, key) => {
+                let sliceItem = {
+                    Name: "[" + range.min + " to " + range.max + "]",
+                    Value: range.values.length,
+                    // calculating ratio of number of values in this range to total number of all data rows and rounded to 1 decimal place
+                    Ratio: Math.round(range.values.length / dataCounter.size * 1000) / 10
+                };
+                sliceItem.ValueAndName = sliceItem.Value + " - " + sliceItem.Name;
+                sliceItem.RatioAndName = sliceItem.Ratio.toFixed(0) + " - " + sliceItem.Name;
+                sliceItem.ValueAndName = StringExtensions_1.StringExtensions.abbreviateString(sliceItem.ValueAndName, 50);
+                sliceItem.RatioAndName = StringExtensions_1.StringExtensions.abbreviateString(sliceItem.RatioAndName, 50);
+                sliceItem.Name = StringExtensions_1.StringExtensions.abbreviateString(sliceItem.Name, 50);
+                dataItems.push(sliceItem);
+            });
+        }
         return dataItems;
     }
     getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal) {
@@ -150,7 +209,6 @@ class ChartService {
             dataCounter.set(group, count);
         }
         valueTotal += count;
-        console.log('value total' + valueTotal);
         return valueTotal;
     }
     getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal) {
@@ -162,7 +220,6 @@ class ChartService {
             dataCounter.set(cellValue, 1);
         }
         valueTotal += 1;
-        console.log('value total' + valueTotal);
         return valueTotal;
     }
     abbreviateNum(largeValue) {

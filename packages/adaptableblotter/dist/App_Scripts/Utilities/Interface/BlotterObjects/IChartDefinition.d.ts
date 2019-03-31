@@ -1,7 +1,6 @@
 import { Expression } from '../../Expression';
 import { IAdaptableBlotterObject } from './IAdaptableBlotterObject';
-import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation, PieChartLabelPosition, SliceLabelOption } from '../../ChartEnums';
-import { PieChartOthersCategoryType } from '../../Enums';
+import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation, PieChartLabelPosition, SliceLabelOption, PieChartOthersCategoryType } from '../../ChartEnums';
 export interface IChartDefinition extends IAdaptableBlotterObject {
     Name: string;
     Description: string;

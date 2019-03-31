@@ -31,4 +31,5 @@ export declare const SmartEditPopup: string;
 export declare const TeamSharingPopup: string;
 export declare const ThemePopup: string;
 export declare const QuickSearchPopup: string;
+export declare const SchedulePopup: string;
 export declare const UserFilterPopup: string;

@@ -62,7 +62,7 @@ class BulkUpdateToolbarControlComponent extends React.Component {
                 this.props.IsValidSelection && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
                     React.createElement("span", { style: { marginLeft: "3px" } },
                         React.createElement(AdaptablePopover_1.AdaptablePopover, { showDefaultStyle: this.props.UseSingleColourForButtons, size: this.props.DashboardSize, cssClassName: cssClassName, headerText: "Preview Results", bodyText: [previewPanel], MessageType: UIHelper_1.UIHelper.getMessageTypeByStatusColour(statusColour), useButton: true, triggerAction: "click" }))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.BulkUpdateStrategyName, glyphicon: StrategyConstants.BulkUpdateGlyph, onClose: () => this.props.onClose(StrategyConstants.BulkUpdateStrategyId), onConfigure: () => this.props.onConfigure() }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, useDefaultPanelStyle: this.props.UseSingleColourForButtons, headerText: StrategyConstants.BulkUpdateStrategyName, glyphicon: StrategyConstants.BulkUpdateGlyph, onClose: () => this.props.onClose(StrategyConstants.BulkUpdateStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onColumnValueSelectedChanged(selectedColumnValue) {
         this.props.onBulkUpdateValueChange(selectedColumnValue);

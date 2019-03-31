@@ -47,7 +47,11 @@ class DashboardComponent extends React.Component {
             }
         });
         let homeToolbar = AdaptableViewFactory_1.AdaptableDashboardPermanentToolbarFactory.get(StrategyConstants.HomeStrategyId);
-        let homeToolbarElement = React.createElement(react_bootstrap_1.Nav, { key: "home", style: { marginRight: "5px", marginTop: "3px", marginBottom: "3px" } }, React.createElement(homeToolbar, { cssClassName: cssClassName, Blotter: this.props.Blotter }));
+        let homeToolbarElement = React.createElement(react_bootstrap_1.Nav, { key: "home", style: { marginRight: "5px", marginTop: "3px", marginBottom: "3px" } }, React.createElement(homeToolbar, {
+            cssClassName: cssClassName,
+            Blotter: this.props.Blotter,
+            UseSingleColourForButtons: this.props.DashboardState.UseSingleColourForButtons
+        }));
         return React.createElement("div", { className: cssBaseClassName }, this.props.DashboardState.DashboardVisibility != Enums_1.Visibility.Hidden &&
             React.createElement("div", { className: "ab_no_margin" }, this.props.DashboardState.DashboardVisibility == Enums_1.Visibility.Minimised ?
                 React.createElement(react_bootstrap_1.ButtonToolbar, { bsSize: "small", bsStyle: "primary", className: "ab_no_padding_no_margin" },

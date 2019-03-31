@@ -7,10 +7,10 @@ const Enums_1 = require("../Utilities/Enums");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
 class AlertApi extends ApiBase_1.ApiBase {
-    ShowAlert(alertToShow, showAsPopup) {
+    ShowAlert(alertToShow) {
         let maxAlerts = this.getState().Alert.MaxAlertsInStore;
         this.dispatchAction(SystemRedux.SystemAlertAdd(alertToShow, maxAlerts));
-        if (showAsPopup) {
+        if (alertToShow.ShowAsPopup) {
             if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.getState().Alert.AlertPopupDiv)) {
                 let alertString = alertToShow.Header + ": " + alertToShow.Msg;
                 let alertDiv = document.getElementById(this.getState().Alert.AlertPopupDiv);
@@ -30,9 +30,10 @@ class AlertApi extends ApiBase_1.ApiBase {
         let alertToShow = {
             Header: alertHeader,
             Msg: alertMessage,
-            MessageType: MessageTypeEnum
+            MessageType: MessageTypeEnum,
+            ShowAsPopup: showAsPopup
         };
-        this.ShowAlert(alertToShow, showAsPopup);
+        this.ShowAlert(alertToShow);
     }
     ShowInfo(alertHeader, alertMessage, showAsPopup) {
         this.Show(alertHeader, alertMessage, Enums_1.MessageType.Info, showAsPopup);

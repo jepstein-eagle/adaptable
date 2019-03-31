@@ -60,7 +60,7 @@ class CellSummaryToolbarControlComponent extends React.Component {
                             ' ',
                             this.props.CellSummary != null && this.props.CellSummary.Count > 0 &&
                                 React.createElement(AdaptablePopover_1.AdaptablePopover, { showDefaultStyle: this.props.UseSingleColourForButtons, size: this.props.DashboardSize, cssClassName: cssClassName, headerText: "Cell Summary", bodyText: [cellSummaryPopover], tooltipText: "Show Cell Summary", useButton: true, triggerAction: "click", popoverMinWidth: 300 })))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.CellSummaryStrategyName, glyphicon: StrategyConstants.CellSummaryGlyph, onClose: () => this.props.onClose(StrategyConstants.CellSummaryStrategyId), onConfigure: () => this.props.onConfigure() }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, useDefaultPanelStyle: this.props.UseSingleColourForButtons, headerText: StrategyConstants.CellSummaryStrategyName, glyphicon: StrategyConstants.CellSummaryGlyph, onClose: () => this.props.onClose(StrategyConstants.CellSummaryStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectionChanged() {
         this.props.onCreateCellSummary();

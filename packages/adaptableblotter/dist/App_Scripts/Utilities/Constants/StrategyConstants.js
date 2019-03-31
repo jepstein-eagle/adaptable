@@ -29,6 +29,7 @@ exports.PercentBarStrategyId = "PercentBar";
 exports.PieChartStrategyId = "PieChart";
 exports.PlusMinusStrategyId = "PlusMinus";
 exports.QuickSearchStrategyId = "QuickSearch";
+exports.ScheduleStrategyId = "Schedule";
 exports.SelectColumnStrategyId = "SelectColumn";
 exports.ShortcutStrategyId = "Shortcut";
 exports.SmartEditStrategyId = "SmartEdit";
@@ -63,6 +64,7 @@ exports.PercentBarStrategyName = "Percent Bar";
 exports.PieChartStrategyName = "Pie Chart";
 exports.PlusMinusStrategyName = "Plus Minus";
 exports.QuickSearchStrategyName = "Quick Search";
+exports.ScheduleStrategyName = "Schedule";
 exports.SelectColumnStrategyName = "Select Column";
 exports.ShortcutStrategyName = "Shortcut";
 exports.SmartEditStrategyName = "Smart Edit";
@@ -98,6 +100,7 @@ exports.PercentBarGlyph = "transfer";
 exports.PieChartGlyph = "adjust";
 exports.PlusMinusGlyph = "plus-sign";
 exports.QuickSearchGlyph = "eye-open";
+exports.ScheduleGlyph = "eye-open";
 exports.SelectColumnGlyph = "compressed";
 exports.ShortcutGlyph = "road";
 exports.SmartEditGlyph = "pencil";
@@ -158,6 +161,8 @@ function getIdForStrategyName(strategyName) {
             return exports.PlusMinusStrategyId;
         case exports.QuickSearchStrategyName:
             return exports.QuickSearchStrategyId;
+        case exports.ScheduleStrategyName:
+            return exports.ScheduleStrategyId;
         case exports.SelectColumnStrategyName:
             return exports.SelectColumnStrategyId;
         case exports.CellSummaryStrategyName:
@@ -229,7 +234,9 @@ function getNameForStrategyId(strategyID) {
             return exports.PlusMinusStrategyName;
         case exports.QuickSearchStrategyId:
             return exports.QuickSearchStrategyName;
-        case exports.SelectColumnStrategyId:
+        case exports.QuickSearchStrategyId:
+            return exports.ScheduleStrategyName;
+        case exports.ScheduleStrategyId:
             return exports.SelectColumnStrategyName;
         case exports.CellSummaryStrategyId:
             return exports.CellSummaryStrategyName;
@@ -296,6 +303,8 @@ function getGhyphiconForStrategyId(strategyID) {
             return exports.PlusMinusGlyph;
         case exports.QuickSearchStrategyId:
             return exports.QuickSearchGlyph;
+        case exports.ScheduleStrategyId:
+            return exports.ScheduleGlyph;
         case exports.ShortcutStrategyId:
             return exports.ShortcutGlyph;
         case exports.SelectColumnStrategyId:

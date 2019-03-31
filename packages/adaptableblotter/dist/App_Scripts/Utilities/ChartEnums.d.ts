@@ -110,3 +110,7 @@ export declare enum SliceSortOption {
     NameDescending = "Name Descending",
     NameAscending = "Name Ascending"
 }
+export declare enum PieChartOthersCategoryType {
+    Number = "Number",
+    Percent = "Percent"
+}

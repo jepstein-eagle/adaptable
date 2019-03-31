@@ -6,12 +6,12 @@ export interface PanelDashboardProps extends PanelProps {
     onClose: () => void;
     onConfigure: () => void;
     onMinimise?: () => void;
-    panelStyle?: string;
     showCloseButton?: boolean;
     showConfigureButton?: boolean;
     showMinimiseButton?: boolean;
     showGlyphIcon?: boolean;
     cssClassName: string;
+    useDefaultPanelStyle?: boolean;
 }
 export declare class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     static defaultProps: PanelDashboardProps;

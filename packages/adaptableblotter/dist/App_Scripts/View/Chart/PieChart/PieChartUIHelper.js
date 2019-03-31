@@ -5,14 +5,14 @@ const ChartEnums_1 = require("../../../Utilities/ChartEnums");
 */
 var PieChartUIHelper;
 (function (PieChartUIHelper) {
-    function getbrushesEven() {
+    function getBrushesEven() {
         return ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47"];
     }
-    PieChartUIHelper.getbrushesEven = getbrushesEven;
-    function getbrushesOdd() {
+    PieChartUIHelper.getBrushesEven = getBrushesEven;
+    function getBrushesOdd() {
         return ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47", "#795548"];
     }
-    PieChartUIHelper.getbrushesOdd = getbrushesOdd;
+    PieChartUIHelper.getBrushesOdd = getBrushesOdd;
     function setChartDisplayPopupState(chartDefinition, dataSource) {
         let pieChartProperties = chartDefinition.ChartProperties;
         return {
@@ -21,7 +21,7 @@ var PieChartUIHelper;
             IsChartSettingsVisible: true,
             IsGeneralMinimised: false,
             SliceSortOption: ChartEnums_1.SliceSortOption.None,
-            SliceBrushes: dataSource.length % 2 == 0 ? getbrushesOdd() : getbrushesEven(),
+            SliceBrushes: dataSource.length % 2 == 0 ? getBrushesOdd() : getBrushesEven(),
         };
     }
     PieChartUIHelper.setChartDisplayPopupState = setChartDisplayPopupState;

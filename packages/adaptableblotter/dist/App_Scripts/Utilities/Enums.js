@@ -200,6 +200,7 @@ var StateChangedTrigger;
     StateChangedTrigger["PieChart"] = "PieChart";
     StateChangedTrigger["PlusMinus"] = "PlusMinus";
     StateChangedTrigger["QuickSearch"] = "QuickSearch";
+    StateChangedTrigger["Schedule"] = "Schedule";
     StateChangedTrigger["CellSummary"] = "CellSummary";
     StateChangedTrigger["Shortcut"] = "Shortcut";
     StateChangedTrigger["SmartEdit"] = "SmartEdit";
@@ -280,8 +281,8 @@ var DashboardSize;
     DashboardSize["Small"] = "small";
     DashboardSize["XSmall"] = "xsmall";
 })(DashboardSize = exports.DashboardSize || (exports.DashboardSize = {}));
-var PieChartOthersCategoryType;
-(function (PieChartOthersCategoryType) {
-    PieChartOthersCategoryType["Number"] = "Number";
-    PieChartOthersCategoryType["Percent"] = "Percent";
-})(PieChartOthersCategoryType = exports.PieChartOthersCategoryType || (exports.PieChartOthersCategoryType = {}));
+var ScheduleType;
+(function (ScheduleType) {
+    ScheduleType["Report"] = "Report";
+    ScheduleType["Alert"] = "Alert";
+})(ScheduleType = exports.ScheduleType || (exports.ScheduleType = {}));

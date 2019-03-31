@@ -36,15 +36,15 @@ class PieChartPopupComponent extends React.Component {
         this.state = {
             PieChartDefinition: ObjectFactory_1.ObjectFactory.CreateEmptyPieChartDefinition(),
             DataSource: null,
-            OthersCategoryType: Enums_1.PieChartOthersCategoryType.Percent,
+            OthersCategoryType: ChartEnums_1.PieChartOthersCategoryType.Percent,
             OthersCategoryThreshold: 2,
             ShowAsDoughnut: false,
             SliceValuesMapping: "Value",
             SliceLabelsMapping: "Name",
             SliceLegendMapping: "ValueAndName",
             SliceSortOption: ChartEnums_1.SliceSortOption.ValueDescending,
-            SliceLabelsPosition: "OutsideEnd",
-            SliceBrushes: PieChartUIHelper_1.PieChartUIHelper.getbrushesEven(),
+            SliceLabelsPosition: ChartEnums_1.PieChartLabelPosition.BestFit,
+            SliceBrushes: PieChartUIHelper_1.PieChartUIHelper.getBrushesEven(),
         };
         igr_pie_chart_module_1.IgrPieChartModule.register();
         igr_doughnut_chart_module_1.IgrDoughnutChartModule.register();
@@ -93,11 +93,12 @@ class PieChartPopupComponent extends React.Component {
         let cssClassName = this.props.cssClassName + "__PieChart";
         let infoBody = ["See the count for each distinct visible value in the column as pie chart.", React.createElement("br", null), React.createElement("br", null), "There is an option to view as doughnut and to set the 'Others' threshold."];
         let chartSize = '450px';
+        let radiusFactor = 0.8;
         let chartBlock = React.createElement("div", null, this.state.ShowAsDoughnut ?
             React.createElement(igr_doughnut_chart_1.IgrDoughnutChart, { height: chartSize, width: chartSize, allowSliceSelection: "true", allowSliceExplosion: "true", ref: this.onDoughnutChartRef },
-                React.createElement(igr_ring_series_1.IgrRingSeries, { name: "ring1", dataSource: this.state.DataSource, labelsPosition: this.state.SliceLabelsPosition, labelMemberPath: this.state.SliceLabelsMapping, valueMemberPath: this.state.SliceValuesMapping, legendLabelMemberPath: this.state.SliceLegendMapping, othersCategoryThreshold: this.state.OthersCategoryThreshold, othersCategoryType: this.state.OthersCategoryType, othersCategoryText: "Others", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: 0.6 }))
+                React.createElement(igr_ring_series_1.IgrRingSeries, { name: "ring1", dataSource: this.state.DataSource, labelsPosition: this.state.SliceLabelsPosition, labelMemberPath: this.state.SliceLabelsMapping, valueMemberPath: this.state.SliceValuesMapping, legendLabelMemberPath: this.state.SliceLegendMapping, othersCategoryThreshold: this.state.OthersCategoryThreshold, othersCategoryType: this.state.OthersCategoryType, othersCategoryText: "Others", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: radiusFactor }))
             :
-                React.createElement(igr_pie_chart_1.IgrPieChart, { ref: this.onPieChartRef, dataSource: this.state.DataSource, labelsPosition: this.state.SliceLabelsPosition, labelMemberPath: this.state.SliceLabelsMapping, valueMemberPath: this.state.SliceValuesMapping, legendLabelMemberPath: this.state.SliceLegendMapping, width: chartSize, height: chartSize, othersCategoryThreshold: this.state.OthersCategoryThreshold, othersCategoryType: this.state.OthersCategoryType, othersCategoryText: "Others", othersCategoryFill: "#9A9A9A", othersCategoryStroke: "#9A9A9A", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: 0.6, selectionMode: "single" }));
+                React.createElement(igr_pie_chart_1.IgrPieChart, { ref: this.onPieChartRef, dataSource: this.state.DataSource, labelsPosition: this.state.SliceLabelsPosition, labelMemberPath: this.state.SliceLabelsMapping, valueMemberPath: this.state.SliceValuesMapping, legendLabelMemberPath: this.state.SliceLegendMapping, width: chartSize, height: chartSize, othersCategoryThreshold: this.state.OthersCategoryThreshold, othersCategoryType: this.state.OthersCategoryType, othersCategoryText: "Others", othersCategoryFill: "#9A9A9A", othersCategoryStroke: "#9A9A9A", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: radiusFactor, selectionMode: "single" }));
         let settingsBlock = React.createElement(react_bootstrap_1.Panel, { bsSize: "xs", bsStyle: StyleConstants_1.DEFAULT_BSSTYLE, header: "Settings", style: {
                 'overflowY': 'auto',
                 'overflowX': 'hidden',
@@ -117,7 +118,7 @@ class PieChartPopupComponent extends React.Component {
                     React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Pie Chart: Others Threshold", bodyText: ["Items with value less than or equal to the Threshold will be assigned to the “Others” category.  Choose whether this will be interpreted as a percentage or as a value."] })),
                 React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "number", min: "0", step: "1", placeholder: "Input", onChange: this.onOthersCategoryThresholdChanged, value: this.state.OthersCategoryThreshold }),
                 React.createElement(react_bootstrap_1.HelpBlock, { style: { fontSize: 'small' } },
-                    React.createElement(react_bootstrap_1.Checkbox, { style: { fontSize: 'small', marginBottom: '0px', marginTop: '0px' }, onChange: (e) => this.onThresholdAsPercentChanged(e), checked: this.state.OthersCategoryType == Enums_1.PieChartOthersCategoryType.Percent }, "Others Threshold %")),
+                    React.createElement(react_bootstrap_1.Checkbox, { style: { fontSize: 'small', marginBottom: '0px', marginTop: '0px' }, onChange: (e) => this.onThresholdAsPercentChanged(e), checked: this.state.OthersCategoryType == ChartEnums_1.PieChartOthersCategoryType.Percent }, "Others Threshold %")),
                 React.createElement(react_bootstrap_1.HelpBlock, { style: { fontSize: 'small' } },
                     "Labels Position:",
                     ' '),
@@ -152,7 +153,7 @@ class PieChartPopupComponent extends React.Component {
                                             ' ',
                                             React.createElement(react_bootstrap_1.ControlLabel, null,
                                                 ' ',
-                                                "Primary Column")),
+                                                "Selected Column")),
                                         React.createElement(react_bootstrap_1.Col, { xs: 7 },
                                             React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.PieChartDefinition.PrimaryColumnId], SelectionMode: Enums_1.SelectionMode.Single, ColumnList: this.props.Columns, onColumnChange: columns => this.onDataGroupColumnChanged(columns) }))))),
                             this.hasValidDataSelection() &&
@@ -187,7 +188,7 @@ class PieChartPopupComponent extends React.Component {
             PieChartDefinition: pieChartDefinition,
             DataSource: dataSource,
             // making sure the first and last slice do not have the same brush
-            SliceBrushes: dataSource.length % 2 == 0 ? PieChartUIHelper_1.PieChartUIHelper.getbrushesOdd() : PieChartUIHelper_1.PieChartUIHelper.getbrushesEven()
+            SliceBrushes: dataSource.length % 2 == 0 ? PieChartUIHelper_1.PieChartUIHelper.getBrushesOdd() : PieChartUIHelper_1.PieChartUIHelper.getBrushesEven()
         });
     }
     onDoughnutChartRef(doughnutChart) {
@@ -220,7 +221,7 @@ class PieChartPopupComponent extends React.Component {
     }
     onThresholdAsPercentChanged(event) {
         let e = event.target;
-        let mode = (e.checked) ? Enums_1.PieChartOthersCategoryType.Percent : Enums_1.PieChartOthersCategoryType.Number;
+        let mode = (e.checked) ? ChartEnums_1.PieChartOthersCategoryType.Percent : ChartEnums_1.PieChartOthersCategoryType.Number;
         this.setState({ OthersCategoryType: mode });
     }
     onSliceLabelsPositionChanged(event) {

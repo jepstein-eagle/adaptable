@@ -87,6 +87,7 @@ const LicenceService_1 = require("../Utilities/Services/LicenceService");
 const AdaptableBlotterToolPanel_1 = require("../View/Components/ToolPanel/AdaptableBlotterToolPanel");
 require("ag-grid-enterprise");
 const ScheduleService_1 = require("../Utilities/Services/ScheduleService");
+const ScheduleStrategy_1 = require("../Strategy/ScheduleStrategy");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this._calculatedColumnPathMap = new Map();
@@ -171,6 +172,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy_1.SelectColumnStrategy(this));
         this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy_1.CellSummaryStrategy(this));
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
+        this.Strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy_1.ScheduleStrategy(this));
         iPushPullHelper_1.iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
         BlotterHelper_1.BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
         this.AdaptableBlotterStore.Load

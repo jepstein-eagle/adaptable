@@ -134,3 +134,8 @@ var SliceSortOption;
     SliceSortOption["NameDescending"] = "Name Descending";
     SliceSortOption["NameAscending"] = "Name Ascending";
 })(SliceSortOption = exports.SliceSortOption || (exports.SliceSortOption = {}));
+var PieChartOthersCategoryType;
+(function (PieChartOthersCategoryType) {
+    PieChartOthersCategoryType["Number"] = "Number";
+    PieChartOthersCategoryType["Percent"] = "Percent";
+})(PieChartOthersCategoryType = exports.PieChartOthersCategoryType || (exports.PieChartOthersCategoryType = {}));

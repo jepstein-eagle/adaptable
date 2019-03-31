@@ -25,7 +25,7 @@ class DataSourceToolbarControlComponent extends React.Component {
                 React.createElement(react_bootstrap_1.DropdownButton, { disabled: availableSearches.length == 0, style: { minWidth: "140px" }, className: cssClassName, bsSize: this.props.DashboardSize, bsStyle: "default", title: currentDataSource, id: "DataSource", componentClass: react_bootstrap_1.InputGroup.Button }, availableSearches),
                 React.createElement(react_bootstrap_1.InputGroup.Button, null,
                     React.createElement(ButtonClear_1.ButtonClear, { bsStyle: "default", cssClassName: cssClassName, onClick: () => this.onSelectedDataSourceChanged(""), size: this.props.DashboardSize, overrideTooltip: "Clear Search", overrideDisableButton: StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel }))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.DataSourceStrategyName, glyphicon: StrategyConstants.DataSourceGlyph, onClose: () => this.props.onClose(StrategyConstants.DataSourceStrategyId), onConfigure: () => this.props.onConfigure() }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, useDefaultPanelStyle: this.props.UseSingleColourForButtons, headerText: StrategyConstants.DataSourceStrategyName, glyphicon: StrategyConstants.DataSourceGlyph, onClose: () => this.props.onClose(StrategyConstants.DataSourceStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSelectedDataSourceChanged(searchName) {
         this.props.onSelectDataSource(searchName);

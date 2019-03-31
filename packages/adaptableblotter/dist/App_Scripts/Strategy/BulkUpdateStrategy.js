@@ -31,7 +31,8 @@ class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 Alert: {
                     Header: "Bulk Update Error",
                     Msg: "No cells are selected.\nPlease select some cells.",
-                    MessageType: Enums_1.MessageType.Error
+                    MessageType: Enums_1.MessageType.Error,
+                    ShowAsPopup: true
                 }
             };
         }
@@ -40,7 +41,8 @@ class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 Alert: {
                     Header: "Bulk Update Error",
                     Msg: "Bulk Update only supports single column edit.\nPlease adjust cell selection.",
-                    MessageType: Enums_1.MessageType.Error
+                    MessageType: Enums_1.MessageType.Error,
+                    ShowAsPopup: true
                 }
             };
         }
@@ -49,7 +51,8 @@ class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 Alert: {
                     Header: "Bulk Update Error",
                     Msg: "Bulk Update is not permitted on readonly columns.\nPlease adjust the cell selection.",
-                    MessageType: Enums_1.MessageType.Error
+                    MessageType: Enums_1.MessageType.Error,
+                    ShowAsPopup: true
                 }
             };
         }

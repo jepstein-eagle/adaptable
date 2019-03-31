@@ -34,6 +34,7 @@ import { IMenuItem, IContextMenu } from '../../../Utilities/Interface/IMenu';
 import { IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPopup, IAboutPopup, IAdaptableAlert } from '../../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../../Utilities/ChartEnums';
 import { IPieChart } from "../../../Utilities/Interface/BlotterObjects/IPieChart";
+import { ISchedule } from "../../../Utilities/Interface/BlotterObjects/ISchedule";
 export interface IState {
 }
 /**
@@ -197,6 +198,9 @@ export interface QuickSearchState extends IUserState {
     QuickSearchText: string;
     DisplayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
     Style: IStyle;
+}
+export interface ScheduleState extends IUserState {
+    Schedules: ISchedule[];
 }
 export interface ShortcutState extends IUserState {
     Shortcuts: IShortcut[];

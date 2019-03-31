@@ -30,7 +30,8 @@ class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 Alert: {
                     Header: "Smart Edit Error",
                     Msg: "No cells are selected.\nPlease select some cells.",
-                    MessageType: Enums_1.MessageType.Error
+                    MessageType: Enums_1.MessageType.Error,
+                    ShowAsPopup: true
                 }
             };
         }
@@ -39,7 +40,8 @@ class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 Alert: {
                     Header: "Smart Edit Error",
                     Msg: "Smart Edit only supports single column edit.\nPlease adjust cell selection.",
-                    MessageType: Enums_1.MessageType.Error
+                    MessageType: Enums_1.MessageType.Error,
+                    ShowAsPopup: true
                 }
             };
         }
@@ -48,7 +50,8 @@ class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 Alert: {
                     Header: "Smart Edit Error",
                     Msg: "Smart Edit only supports editing of numeric columns.\nPlease adjust the cell selection.",
-                    MessageType: Enums_1.MessageType.Error
+                    MessageType: Enums_1.MessageType.Error,
+                    ShowAsPopup: true
                 }
             };
         }
@@ -57,7 +60,8 @@ class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 Alert: {
                     Header: "Smart Edit Error",
                     Msg: "Smart Edit is not permitted on readonly columns.\nPlease adjust the cell selection.",
-                    MessageType: Enums_1.MessageType.Error
+                    MessageType: Enums_1.MessageType.Error,
+                    ShowAsPopup: true
                 }
             };
         }

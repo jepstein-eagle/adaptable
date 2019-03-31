@@ -16,7 +16,7 @@ class ApplicationToolbarControlComponent extends React.Component {
             this.props.ApplicationToolbarTitle :
             StrategyConstants.ApplicationStrategyName;
         let minHeight = (this.props.DashboardSize == Enums_1.DashboardSize.XSmall) ? '22px' : '30px';
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: headerText, glyphicon: StrategyConstants.ApplicationGlyph, onClose: () => this.props.onClose(StrategyConstants.ApplicationStrategyId), onConfigure: () => this.props.onConfigure() },
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, useDefaultPanelStyle: this.props.UseSingleColourForButtons, headerText: headerText, glyphicon: StrategyConstants.ApplicationGlyph, onClose: () => this.props.onClose(StrategyConstants.ApplicationStrategyId), onConfigure: () => this.props.onConfigure() },
             React.createElement("div", { className: "ApplicationToolBarContents", style: { minHeight: minHeight } }));
     }
 }

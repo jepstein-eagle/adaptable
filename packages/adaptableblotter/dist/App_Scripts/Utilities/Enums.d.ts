@@ -167,6 +167,7 @@ export declare enum StateChangedTrigger {
     PieChart = "PieChart",
     PlusMinus = "PlusMinus",
     QuickSearch = "QuickSearch",
+    Schedule = "Schedule",
     CellSummary = "CellSummary",
     Shortcut = "Shortcut",
     SmartEdit = "SmartEdit",
@@ -235,7 +236,7 @@ export declare enum DashboardSize {
     Small = "small",
     XSmall = "xsmall"
 }
-export declare enum PieChartOthersCategoryType {
-    Number = "Number",
-    Percent = "Percent"
+export declare enum ScheduleType {
+    Report = "Report",
+    Alert = "Alert"
 }

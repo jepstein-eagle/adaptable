@@ -44,7 +44,7 @@ class AlertToolbarControlComponent extends React.Component {
             this.props.Alerts.length > 0 &&
                 React.createElement("span", { style: { marginLeft: "3px" } },
                     React.createElement(AdaptablePopover_1.AdaptablePopover, { showDefaultStyle: this.props.UseSingleColourForButtons, size: this.props.DashboardSize, cssClassName: cssClassName, headerText: "", tooltipText: "Alerts", bodyText: [alertsPanel], MessageType: this.getMessageType(), useButton: true, triggerAction: "click" })));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.AlertStrategyName, glyphicon: StrategyConstants.AlertGlyph, onClose: () => this.props.onClose(StrategyConstants.AlertStrategyId), onConfigure: () => this.props.onConfigure() }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, useDefaultPanelStyle: this.props.UseSingleColourForButtons, headerText: StrategyConstants.AlertStrategyName, glyphicon: StrategyConstants.AlertGlyph, onClose: () => this.props.onClose(StrategyConstants.AlertStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     getMessageType() {
         if (this.props.Alerts.find(a => a.MessageType == Enums_1.MessageType.Error) != null) {

@@ -13,26 +13,27 @@ const ButtonMinimise_1 = require("../Buttons/ButtonMinimise");
 class PanelDashboard extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.DASHBOARD_PANEL;
+        let panelStyle = (this.props.useDefaultPanelStyle) ? StyleConstants.DEFAULT_BSSTYLE : StyleConstants.PRIMARY_BSSTYLE;
         let header = React.createElement("span", null,
-            React.createElement(react_bootstrap_1.Label, { bsStyle: this.props.panelStyle, style: { verticalAlign: "middle", marginRight: "10px", padding: "0px" } },
+            React.createElement("span", { style: { verticalAlign: "middle", marginRight: "10px", padding: "0px", fontSize: 'xsmall' } },
                 this.props.showMinimiseButton &&
                     React.createElement("span", null,
-                        React.createElement(ButtonMinimise_1.ButtonMinimise, { cssClassName: cssClassName, size: "xs", bsStyle: "primary", DisplayMode: "Glyph", style: { float: "left", marginLeft: "0px", marginRight: "20px" }, onClick: () => this.props.onMinimise() }),
+                        React.createElement(ButtonMinimise_1.ButtonMinimise, { cssClassName: cssClassName, size: "xs", bsStyle: panelStyle, DisplayMode: "Glyph", style: { float: "left", marginLeft: "0px", marginRight: "20px" }, onClick: () => this.props.onMinimise() }),
                         ' ',
                         ' '),
                 this.props.showGlyphIcon &&
-                    React.createElement(react_bootstrap_1.Glyphicon, { glyph: this.props.glyphicon }),
+                    React.createElement(react_bootstrap_1.Glyphicon, { style: { fontSize: 'small' }, glyph: this.props.glyphicon }),
                 ' ',
-                this.props.headerText),
+                React.createElement("span", { style: { fontSize: 'small' } }, this.props.headerText)),
             ' ',
             " ",
             ' ',
             this.props.showCloseButton &&
-                React.createElement(ButtonClose_1.ButtonClose, { cssClassName: cssClassName, overrideTooltip: "Close " + this.props.headerText, size: 'xs', bsStyle: "primary", DisplayMode: "Glyph", style: { float: "right", marginLeft: "0px", marginRight: "0px" }, onClick: () => this.props.onClose() }),
+                React.createElement(ButtonClose_1.ButtonClose, { cssClassName: cssClassName, overrideTooltip: "Close " + this.props.headerText, size: 'xs', bsStyle: panelStyle, DisplayMode: "Glyph", style: { float: "right", marginLeft: "0px", marginRight: "0px" }, onClick: () => this.props.onClose() }),
             this.props.showConfigureButton &&
-                React.createElement(ButtonConfigure_1.ButtonConfigure, { cssClassName: cssClassName, overrideTooltip: "Configure " + this.props.headerText, size: 'xs', bsStyle: "primary", DisplayMode: "Glyph", style: { float: "right", marginLeft: "0px", marginRight: "0px" }, onClick: () => this.props.onConfigure() }));
+                React.createElement(ButtonConfigure_1.ButtonConfigure, { cssClassName: cssClassName, overrideTooltip: "Configure " + this.props.headerText, size: 'xs', bsStyle: panelStyle, DisplayMode: "Glyph", style: { float: "right", marginLeft: "0px", marginRight: "0px" }, onClick: () => this.props.onConfigure() }));
         return React.createElement("div", { className: cssClassName },
-            React.createElement(react_bootstrap_1.Panel, { className: "ab_small-padding-panel ab-panel-header-dashboard", header: header, bsStyle: this.props.panelStyle, style: this.props.style },
+            React.createElement(react_bootstrap_1.Panel, { className: "ab_small-padding-panel ab-panel-header-dashboard", header: header, bsStyle: panelStyle, style: this.props.style },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true }, this.props.children)));
     }
 }
@@ -40,7 +41,7 @@ PanelDashboard.defaultProps = {
     showCloseButton: true,
     showConfigureButton: true,
     showMinimiseButton: false,
-    panelStyle: "primary",
+    useDefaultPanelStyle: true,
     headerText: "Function",
     glyphicon: "home",
     onClose: null,

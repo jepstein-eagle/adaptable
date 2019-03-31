@@ -117,7 +117,7 @@ class HomeToolbarControlComponent extends React.Component {
                 toolbarTitle = "Blotter ";
             }
         }
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, showCloseButton: false, showMinimiseButton: true, onMinimise: () => this.props.onSetDashboardVisibility(Enums_1.Visibility.Minimised), headerText: toolbarTitle, glyphicon: "home", showGlyphIcon: false, onClose: () => this.props.onClose(StrategyConstants.HomeStrategyId), onConfigure: () => this.props.onConfigure() },
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, useDefaultPanelStyle: this.props.UseSingleColourForButtons, showCloseButton: false, showMinimiseButton: true, onMinimise: () => this.props.onSetDashboardVisibility(Enums_1.Visibility.Minimised), headerText: toolbarTitle, glyphicon: "home", showGlyphIcon: false, onClose: () => this.props.onClose(StrategyConstants.HomeStrategyId), onConfigure: () => this.props.onConfigure() },
             this.props.DashboardState.ShowFunctionsDropdown &&
                 functionsDropdown,
             this.props.DashboardState.ShowSystemStatusButton &&
@@ -142,7 +142,8 @@ class HomeToolbarControlComponent extends React.Component {
                     Msg: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.SystemStatus.StatusMessage) ?
                         this.props.SystemStatus.StatusMessage :
                         "No issues",
-                    MessageType: Enums_1.MessageType.Success
+                    MessageType: Enums_1.MessageType.Success,
+                    ShowAsPopup: true
                 };
                 this.props.onShowStatusMessage(success);
                 return;
@@ -150,7 +151,8 @@ class HomeToolbarControlComponent extends React.Component {
                 let info = {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
-                    MessageType: Enums_1.MessageType.Info
+                    MessageType: Enums_1.MessageType.Info,
+                    ShowAsPopup: true
                 };
                 this.props.onShowStatusMessage(info);
                 return;
@@ -158,7 +160,8 @@ class HomeToolbarControlComponent extends React.Component {
                 let warning = {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
-                    MessageType: Enums_1.MessageType.Warning
+                    MessageType: Enums_1.MessageType.Warning,
+                    ShowAsPopup: true
                 };
                 this.props.onShowStatusMessage(warning);
                 return;
@@ -166,7 +169,8 @@ class HomeToolbarControlComponent extends React.Component {
                 let error = {
                     Header: "System Status",
                     Msg: this.props.SystemStatus.StatusMessage,
-                    MessageType: Enums_1.MessageType.Error
+                    MessageType: Enums_1.MessageType.Error,
+                    ShowAsPopup: true
                 };
                 this.props.onShowStatusMessage(error);
                 return;

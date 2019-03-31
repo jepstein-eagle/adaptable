@@ -34,6 +34,7 @@ const DataSourceRedux = require("../ActionsReducers/DataSourceRedux");
 const ColumnFilterRedux = require("../ActionsReducers/ColumnFilterRedux");
 const UserFilterRedux = require("../ActionsReducers/UserFilterRedux");
 const SystemFilterRedux = require("../ActionsReducers/SystemFilterRedux");
+const SchedulerRedux = require("../ActionsReducers/ScheduleRedux");
 const ThemeRedux = require("../ActionsReducers/ThemeRedux");
 const FormatColumnRedux = require("../ActionsReducers/FormatColumnRedux");
 const FreeTextColumnRedux = require("../ActionsReducers/FreeTextColumnRedux");
@@ -95,6 +96,7 @@ const rootReducer = Redux.combineReducers({
     Shortcut: ShortcutRedux.ShortcutReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
     SystemFilter: SystemFilterRedux.SystemFilterReducer,
+    Schedule: SchedulerRedux.ScheduleReducer,
     TeamSharing: TeamSharingRedux.TeamSharingReducer,
     Theme: ThemeRedux.ThemeReducer,
     UserFilter: UserFilterRedux.UserFilterReducer,
@@ -240,7 +242,7 @@ class AdaptableBlotterStore {
                 //for now i'm still initializing the AB even if loading state has failed....
                 //we may revisit that later
                 this.TheStore.dispatch(exports.InitState());
-                this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configuration", Msg: "Error loading your configuration:" + e, MessageType: Enums_1.MessageType.Error }));
+                this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configuration", Msg: "Error loading your configuration:" + e, MessageType: Enums_1.MessageType.Error, ShowAsPopup: true }));
             });
     }
 }
@@ -820,10 +822,10 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         if (xhr.readyState == 4) {
                             if (xhr.status != 200) {
                                 LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
-                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: Enums_1.MessageType.Error }));
+                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: Enums_1.MessageType.Error, ShowAsPopup: true }));
                             }
                             else {
-                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Shared Successfully", MessageType: Enums_1.MessageType.Info }));
+                                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Shared Successfully", MessageType: Enums_1.MessageType.Info, ShowAsPopup: true }));
                             }
                         }
                     };
@@ -982,11 +984,11 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     }
                     else if (importAction) {
                         middlewareAPI.dispatch(importAction);
-                        middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", MessageType: Enums_1.MessageType.Info }));
+                        middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", MessageType: Enums_1.MessageType.Info, ShowAsPopup: true }));
                     }
                     else {
                         LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Unknown item type", actionTyped.Entity);
-                        middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import", MessageType: Enums_1.MessageType.Error }));
+                        middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import", MessageType: Enums_1.MessageType.Error, ShowAsPopup: true }));
                     }
                     return returnAction;
                 }

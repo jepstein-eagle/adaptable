@@ -23,7 +23,6 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
 import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
-import { TestDragEditor } from "./TestDragEditor";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 interface CalculatedColumnPopupProps extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {

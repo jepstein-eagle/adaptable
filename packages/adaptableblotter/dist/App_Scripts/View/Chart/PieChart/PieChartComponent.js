@@ -23,7 +23,6 @@ const PanelWithButton_1 = require("../../Components/Panels/PanelWithButton");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
 const ChartEnums_1 = require("../../../Utilities/ChartEnums");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
-const Enums_1 = require("../../../Utilities/Enums");
 const EnumExtensions_1 = require("../../../Utilities/Extensions/EnumExtensions");
 class PieChartComponent extends React.Component {
     constructor(props) {
@@ -56,11 +55,14 @@ class PieChartComponent extends React.Component {
         let closeChartSettingsButton = React.createElement(ButtonClose_1.ButtonClose, { cssClassName: cssClassName, onClick: () => this.onHideChartSettings(), bsStyle: StyleConstants_1.DEFAULT_BSSTYLE, size: "xs", DisplayMode: "Glyph", hideToolTip: false, overrideTooltip: "Close Chart Settings" });
         let openChartSettingsButton = React.createElement(ButtonGeneral_1.ButtonGeneral, { cssClassName: cssClassName, style: { marginRight: '20px' }, onClick: () => this.onShowChartSettings(), bsStyle: StyleConstants_1.INFO_BSSTYLE, size: "small", DisplayMode: "Text", hideToolTip: true, overrideText: 'Show Chart Settings' });
         let setDefaultsButton = React.createElement(ButtonGeneral_1.ButtonGeneral, { cssClassName: cssClassName, onClick: () => this.onSetPropertyDefaults(), bsStyle: StyleConstants_1.DEFAULT_BSSTYLE, DisplayMode: "Text", size: "small", hideToolTip: true, overrideText: 'Reset Defaults' });
-        let chartElement = (this.state.ChartProperties.ShowAsDoughnut) ?
-            React.createElement(igr_doughnut_chart_1.IgrDoughnutChart, { width: '700px', height: '700px', allowSliceSelection: "true", allowSliceExplosion: "true", sliceClick: (s, e) => this.onSliceClick(e), ref: this.onDoughnutChartRef },
-                React.createElement(igr_ring_series_1.IgrRingSeries, { name: "ring1", dataSource: this.state.DataSource, labelMemberPath: this.state.ChartProperties.SliceLabelsMapping, valueMemberPath: this.state.ChartProperties.SliceValuesMapping, legendLabelMemberPath: this.state.ChartProperties.SliceLegendMapping, othersCategoryThreshold: this.state.ChartProperties.OthersCategoryThreshold, othersCategoryType: this.state.ChartProperties.OthersCategoryType, othersCategoryText: "Others", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: 0.6 }))
+        let chart = (this.state.ChartProperties.ShowAsDoughnut) ?
+            React.createElement(igr_doughnut_chart_1.IgrDoughnutChart, { width: '100%', height: '100%', allowSliceSelection: "true", allowSliceExplosion: "true", sliceClick: (s, e) => this.onSliceClick(e), ref: this.onDoughnutChartRef },
+                React.createElement(igr_ring_series_1.IgrRingSeries, { name: "ring1", dataSource: this.state.DataSource, labelMemberPath: this.state.ChartProperties.SliceLabelsMapping, labelsPosition: this.state.ChartProperties.PieChartLabelPosition, valueMemberPath: this.state.ChartProperties.SliceValuesMapping, legendLabelMemberPath: this.state.ChartProperties.SliceLegendMapping, othersCategoryThreshold: this.state.ChartProperties.OthersCategoryThreshold, othersCategoryType: this.state.ChartProperties.OthersCategoryType, othersCategoryText: "Others", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: 0.8 }))
             :
-                React.createElement(igr_pie_chart_1.IgrPieChart, { ref: this.onPieChartRef, dataSource: this.state.DataSource, labelsPosition: this.state.ChartProperties.PieChartLabelPosition, width: '700px', height: '700px', radiusFactor: 0.6, labelMemberPath: this.state.ChartProperties.SliceLabelsMapping, valueMemberPath: this.state.ChartProperties.SliceValuesMapping, legendLabelMemberPath: this.state.ChartProperties.SliceLegendMapping, othersCategoryThreshold: this.state.ChartProperties.OthersCategoryThreshold, othersCategoryType: this.state.ChartProperties.OthersCategoryType, othersCategoryText: "Others", othersCategoryFill: "#9A9A9A", othersCategoryStroke: "#9A9A9A", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, selectionMode: "single", sliceClick: (s, e) => this.onSliceClick(e) });
+                React.createElement(igr_pie_chart_1.IgrPieChart, { ref: this.onPieChartRef, dataSource: this.state.DataSource, labelsPosition: this.state.ChartProperties.PieChartLabelPosition, width: '100%', height: '100%', radiusFactor: 0.8, labelMemberPath: this.state.ChartProperties.SliceLabelsMapping, valueMemberPath: this.state.ChartProperties.SliceValuesMapping, legendLabelMemberPath: this.state.ChartProperties.SliceLegendMapping, othersCategoryThreshold: this.state.ChartProperties.OthersCategoryThreshold, othersCategoryType: this.state.ChartProperties.OthersCategoryType, othersCategoryText: "Others", othersCategoryFill: "#9A9A9A", othersCategoryStroke: "#9A9A9A", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, selectionMode: "single", sliceClick: (s, e) => this.onSliceClick(e) });
+        let chartElement = (this.props.ChartData != null) ?
+            chart :
+            null;
         let legendPanel = React.createElement(react_bootstrap_1.Panel, { bsSize: "xs", header: "Legend", style: { marginTop: '2px' } },
             React.createElement("div", { className: "pieChartLegend" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
@@ -75,65 +77,72 @@ class PieChartComponent extends React.Component {
                     :
                         React.createElement("div", { className: "pieChartLegend" },
                             React.createElement(igr_item_legend_1.IgrItemLegend, { ref: this.onPieChartLegendRef }))));
-        return React.createElement("span", { className: cssClassName },
-            this.state.IsChartSettingsVisible == false &&
-                React.createElement(react_bootstrap_1.Row, null,
-                    React.createElement(react_bootstrap_1.Col, { xs: 12 },
-                        React.createElement("div", { className: "pull-right" }, openChartSettingsButton))),
-            this.state.IsChartSettingsVisible ?
-                React.createElement(react_bootstrap_1.Table, null,
+        let sidePanel = React.createElement(PanelWithTwoButtons_1.PanelWithTwoButtons, { bsSize: "xs", bsStyle: StyleConstants_1.INFO_BSSTYLE, headerText: "Chart Settings", cssClassName: cssClassName, firstButton: closeChartSettingsButton, secondButton: setDefaultsButton, style: {
+                'overflowY': 'auto',
+                'overflowX': 'hidden',
+                maxHeight: '700px',
+                padding: '0px',
+                margin: '0px',
+                marginTop: '0px',
+                marginBottom: '0px',
+                marginRight: '0px',
+                fontSize: 'small'
+            } },
+            React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "wrench", bsSize: "xs", headerText: "General", cssClassName: cssClassName, button: showGeneralPropertiesButton, style: { marginTop: '2px' } }, this.state.IsGeneralMinimised == false &&
+                React.createElement("span", null,
+                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                        React.createElement(react_bootstrap_1.Row, null,
+                            React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                                React.createElement(react_bootstrap_1.HelpBlock, { style: { fontSize: 'small', margin: '0px' } },
+                                    React.createElement(react_bootstrap_1.Checkbox, { style: { fontSize: 'small', marginBottom: '0px', marginTop: '0px' }, onChange: (e) => this.onPieOrDoughnutViewChanged(e), checked: this.state.ChartProperties.ShowAsDoughnut }, "Show as 'Doughnut'"))))),
+                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                        React.createElement(react_bootstrap_1.Row, null,
+                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
+                                React.createElement(react_bootstrap_1.HelpBlock, null, "Others Band")),
+                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
+                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "number", min: "0", step: "1", placeholder: "Input", onChange: this.onOthersCategoryThresholdChanged, value: this.state.ChartProperties.OthersCategoryThreshold })),
+                            React.createElement(react_bootstrap_1.Col, { xs: 2 },
+                                React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Pie Chart: Others Threshold", bodyText: ["Items with value less than or equal to the Threshold will be assigned to the “Others” category.  Choose whether this will be interpreted as a percentage or as a value."] })))),
+                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                        React.createElement(react_bootstrap_1.Row, null,
+                            React.createElement(react_bootstrap_1.Col, { xs: 12 },
+                                React.createElement(react_bootstrap_1.HelpBlock, null,
+                                    React.createElement(react_bootstrap_1.Checkbox, { style: { fontSize: 'small', marginBottom: '0px', marginTop: '0px' }, onChange: (e) => this.onThresholdAsPercentChanged(e), checked: this.state.ChartProperties.OthersCategoryType == ChartEnums_1.PieChartOthersCategoryType.Percent }, "Others Band As %"))))),
+                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                        React.createElement(react_bootstrap_1.Row, null,
+                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
+                                React.createElement(react_bootstrap_1.HelpBlock, null, "Labels Position")),
+                            React.createElement(react_bootstrap_1.Col, { xs: 7 },
+                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.PieChartLabelPosition, onChange: (x) => this.onSliceLabelsPositionChanged(x) }, this.getOptionsForLabelsPosition())))),
+                    React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
+                        React.createElement(react_bootstrap_1.Row, null,
+                            React.createElement(react_bootstrap_1.Col, { xs: 5 },
+                                React.createElement(react_bootstrap_1.HelpBlock, null, "Labels Content")),
+                            React.createElement(react_bootstrap_1.Col, { xs: 7 },
+                                React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.SliceLabelsMapping, onChange: (x) => this.onSliceLabelsMappingChanged(x) }, this.getOptionsForSliceLabelsMapping())))))),
+            legendPanel);
+        return React.createElement("span", { className: cssClassName }, this.props.ChartData != null &&
+            React.createElement("div", null, this.state.IsChartSettingsVisible ?
+                React.createElement(react_bootstrap_1.Table, { style: { height: '670px', border: 'none', borderCollapse: 'separate' } },
+                    React.createElement("thead", null,
+                        React.createElement("tr", null,
+                            React.createElement("th", null, this.props.CurrentChartDefinition.Name),
+                            React.createElement("th", null))),
                     React.createElement("tbody", null,
                         React.createElement("tr", null,
-                            React.createElement("td", null, this.props.ChartData != null &&
-                                chartElement),
-                            React.createElement("td", { style: { width: '370px', marginRight: '10px' } },
-                                React.createElement(PanelWithTwoButtons_1.PanelWithTwoButtons, { bsSize: "xs", bsStyle: StyleConstants_1.INFO_BSSTYLE, headerText: "Chart Settings", cssClassName: cssClassName, firstButton: closeChartSettingsButton, secondButton: setDefaultsButton, style: {
-                                        'overflowY': 'auto',
-                                        'overflowX': 'hidden',
-                                        padding: '0px',
-                                        margin: '0px',
-                                        marginTop: '0px',
-                                        marginRight: '0px',
-                                        fontSize: 'small'
-                                    } },
-                                    React.createElement(PanelWithButton_1.PanelWithButton, { glyphicon: "wrench", bsSize: "xs", headerText: "General", cssClassName: cssClassName, button: showGeneralPropertiesButton, style: { marginTop: '2px' } }, this.state.IsGeneralMinimised == false &&
-                                        React.createElement("div", null,
-                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
-                                                React.createElement(react_bootstrap_1.Row, null,
-                                                    React.createElement(react_bootstrap_1.Col, { xs: 12 },
-                                                        React.createElement(react_bootstrap_1.HelpBlock, { style: { fontSize: 'small', margin: '0px' } },
-                                                            React.createElement(react_bootstrap_1.Checkbox, { style: { fontSize: 'small', marginBottom: '0px', marginTop: '0px' }, onChange: (e) => this.onPieOrDoughnutViewChanged(e), checked: this.state.ChartProperties.ShowAsDoughnut }, "Show as 'Doughnut'"))))),
-                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
-                                                React.createElement(react_bootstrap_1.Row, null,
-                                                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                        React.createElement(react_bootstrap_1.HelpBlock, null, "Others Threshold")),
-                                                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "number", min: "0", step: "1", placeholder: "Input", onChange: this.onOthersCategoryThresholdChanged, value: this.state.ChartProperties.OthersCategoryThreshold })),
-                                                    React.createElement(react_bootstrap_1.Col, { xs: 2 },
-                                                        React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Pie Chart: Others Threshold", bodyText: ["Items with value less than or equal to the Threshold will be assigned to the “Others” category.  Choose whether this will be interpreted as a percentage or as a value."] })))),
-                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
-                                                React.createElement(react_bootstrap_1.Row, null,
-                                                    React.createElement(react_bootstrap_1.Col, { xs: 12 },
-                                                        React.createElement(react_bootstrap_1.HelpBlock, null,
-                                                            React.createElement(react_bootstrap_1.Checkbox, { style: { fontSize: 'small', marginBottom: '0px', marginTop: '0px' }, onChange: (e) => this.onThresholdAsPercentChanged(e), checked: this.state.ChartProperties.OthersCategoryType == Enums_1.PieChartOthersCategoryType.Percent }, "Others Threshold As %"))))),
-                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
-                                                React.createElement(react_bootstrap_1.Row, null,
-                                                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                        React.createElement(react_bootstrap_1.HelpBlock, null, "Labels Position")),
-                                                    React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.PieChartLabelPosition, onChange: (x) => this.onSliceLabelsPositionChanged(x) }, this.getOptionsForLabelsPosition())))),
-                                            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
-                                                React.createElement(react_bootstrap_1.Row, null,
-                                                    React.createElement(react_bootstrap_1.Col, { xs: 5 },
-                                                        React.createElement(react_bootstrap_1.HelpBlock, null, "Labels Content")),
-                                                    React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                                                        React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: this.state.ChartProperties.SliceLabelsMapping, onChange: (x) => this.onSliceLabelsMappingChanged(x) }, this.getOptionsForSliceLabelsMapping())))))),
-                                    legendPanel)))))
+                            React.createElement("td", null, chartElement),
+                            React.createElement("td", { style: { width: '340px', marginRight: '10px' } }, sidePanel))))
                 :
-                    React.createElement("span", { style: { margin: '0px' } },
-                        this.props.ChartData != null &&
-                            chartElement,
-                        React.createElement("span", null, "Hello world")));
+                    React.createElement(react_bootstrap_1.Table, { style: { height: '670px', border: 'none', borderCollapse: 'separate' } },
+                        React.createElement("thead", null,
+                            React.createElement("tr", null,
+                                React.createElement("th", null, this.props.CurrentChartDefinition.Name),
+                                React.createElement("th", null,
+                                    " ",
+                                    React.createElement("div", { className: "pull-right" }, openChartSettingsButton)))),
+                        React.createElement("tbody", null,
+                            React.createElement("tr", null,
+                                React.createElement("td", { colSpan: 2 }, chartElement))))));
     }
     onDoughnutChartRef(doughnutChart) {
         this.doughnutChart = doughnutChart;
@@ -191,7 +200,7 @@ class PieChartComponent extends React.Component {
     onThresholdAsPercentChanged(event) {
         let e = event.target;
         let chartProperties = this.state.ChartProperties;
-        chartProperties.OthersCategoryType = (e.checked) ? Enums_1.PieChartOthersCategoryType.Percent : Enums_1.PieChartOthersCategoryType.Number;
+        chartProperties.OthersCategoryType = (e.checked) ? ChartEnums_1.PieChartOthersCategoryType.Percent : ChartEnums_1.PieChartOthersCategoryType.Number;
         this.updateChartProperties(chartProperties);
     }
     onSliceLabelsPositionChanged(event) {

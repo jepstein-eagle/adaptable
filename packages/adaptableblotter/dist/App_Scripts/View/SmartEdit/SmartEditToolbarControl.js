@@ -59,7 +59,7 @@ class SmartEditToolbarControlComponent extends React.Component {
                 this.props.IsValidSelection &&
                     React.createElement("span", { style: { marginLeft: "3px" } },
                         React.createElement(AdaptablePopover_1.AdaptablePopover, { showDefaultStyle: this.props.UseSingleColourForButtons, size: this.props.DashboardSize, cssClassName: cssClassName, headerText: "Preview Results", tooltipText: "Preview Results", bodyText: [previewPanel], MessageType: UIHelper_1.UIHelper.getMessageTypeByStatusColour(statusColour), useButton: true, triggerAction: "click" }))));
-        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, headerText: StrategyConstants.SmartEditStrategyName, glyphicon: StrategyConstants.SmartEditGlyph, onClose: () => this.props.onClose(StrategyConstants.SmartEditStrategyId), onConfigure: () => this.props.onConfigure() }, content);
+        return React.createElement(PanelDashboard_1.PanelDashboard, { cssClassName: cssClassName, useDefaultPanelStyle: this.props.UseSingleColourForButtons, headerText: StrategyConstants.SmartEditStrategyName, glyphicon: StrategyConstants.SmartEditGlyph, onClose: () => this.props.onClose(StrategyConstants.SmartEditStrategyId), onConfigure: () => this.props.onConfigure() }, content);
     }
     onSmartEditValueChange(event) {
         const e = event.target;

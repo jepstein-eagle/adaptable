@@ -50,6 +50,7 @@ const PieChartPopup_1 = require("./PieChart/PieChartPopup");
 const CellSummaryPopup_1 = require("./CellSummary/CellSummaryPopup");
 const CellSummaryToolbarControl_1 = require("./CellSummary/CellSummaryToolbarControl");
 const ChartDisplayPopup_1 = require("./Chart/ChartDisplayPopup");
+const SchedulePopup_1 = require("./Schedule/SchedulePopup");
 exports.AdaptableViewFactory = {
     AdvancedSearchPopup: AdvancedSearchPopup_1.AdvancedSearchPopup,
     AlertPopup: AlertPopup_1.AlertPopup,
@@ -79,6 +80,7 @@ exports.AdaptableViewFactory = {
     PieChartPopup: PieChartPopup_1.PieChartPopup,
     PlusMinusPopup: PlusMinusPopup_1.PlusMinusPopup,
     QuickSearchPopup: QuickSearchPopup_1.QuickSearchPopup,
+    SchedulePopup: SchedulePopup_1.SchedulePopup,
     CellSummaryPopup: CellSummaryPopup_1.CellSummaryPopup,
     SmartEditPopup: SmartEditPopup_1.SmartEditPopup,
     ShortcutPopup: ShortcutPopup_1.ShortcutPopup,
