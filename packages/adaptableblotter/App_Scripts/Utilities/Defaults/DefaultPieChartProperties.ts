@@ -5,7 +5,7 @@ export const DefaultPieChartProperties: IPieChartProperties = {
     OthersCategoryThreshold: 2,
     OthersCategoryType: PieChartOthersCategoryType.Percent,
 
-    PieChartLabelPosition: PieChartLabelPosition.OutsideEnd,
+    PieChartLabelPosition: PieChartLabelPosition.BestFit,
     SliceValuesMapping: SliceLabelOption.Value,
     SliceLabelsMapping: SliceLabelOption.Name,
     SliceLegendMapping: SliceLabelOption.ValueAndName,

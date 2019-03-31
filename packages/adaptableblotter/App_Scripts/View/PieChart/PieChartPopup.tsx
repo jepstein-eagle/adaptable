@@ -69,7 +69,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             SliceLabelsMapping: "Name",
             SliceLegendMapping: "ValueAndName",
             SliceSortOption: SliceSortOption.ValueDescending,
-            SliceLabelsPosition: "OutsideEnd",
+            SliceLabelsPosition: PieChartLabelPosition.BestFit,
             SliceBrushes: PieChartUIHelper.getBrushesEven(),
         }
 
@@ -134,6 +134,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         let cssClassName: string = this.props.cssClassName + "__PieChart";
         let infoBody: any[] = ["See the count for each distinct visible value in the column as pie chart.", <br />, <br />, "There is an option to view as doughnut and to set the 'Others' threshold."]
         let chartSize: string = '450px'
+        let radiusFactor: number = 0.8
 
         let chartBlock = <div>{this.state.ShowAsDoughnut ?
             <IgrDoughnutChart
@@ -154,7 +155,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                     othersCategoryText="Others"
                     brushes={this.state.SliceBrushes}
                     outlines={this.state.SliceBrushes}
-                    radiusFactor={0.6} />
+                    radiusFactor={radiusFactor} />
             </IgrDoughnutChart>
             :
             <IgrPieChart
@@ -173,7 +174,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 othersCategoryStroke="#9A9A9A"
                 brushes={this.state.SliceBrushes}
                 outlines={this.state.SliceBrushes}
-                radiusFactor={0.6}
+                radiusFactor={radiusFactor}
                 selectionMode="single"
                 //sliceClick={(s, e) => this.onSliceClick(e)}
             />}
@@ -279,7 +280,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                                 <FormGroup controlId="pieChartSettings" style={{ marginBottom: '10px' }}>
                                     <Row>
                                         <Col xs={1}>{' '}</Col>
-                                        <Col xs={4}>{' '}<ControlLabel>{' '}Primary Column</ControlLabel></Col>
+                                        <Col xs={4}>{' '}<ControlLabel>{' '}Selected Column</ControlLabel></Col>
                                         <Col xs={7} >
                                             <ColumnSelector cssClassName={cssClassName}
                                                 SelectedColumnIds={[this.state.PieChartDefinition.PrimaryColumnId]}
