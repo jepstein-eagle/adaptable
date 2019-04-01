@@ -18,7 +18,7 @@ class PanelDashboard extends React.Component {
             React.createElement("span", { style: { verticalAlign: "middle", marginRight: "10px", padding: "0px", fontSize: 'xsmall' } },
                 this.props.showMinimiseButton &&
                     React.createElement("span", null,
-                        React.createElement(ButtonMinimise_1.ButtonMinimise, { cssClassName: cssClassName, size: "xs", bsStyle: panelStyle, DisplayMode: "Glyph", style: { float: "left", marginLeft: "0px", marginRight: "20px" }, onClick: () => this.props.onMinimise() }),
+                        React.createElement(ButtonMinimise_1.ButtonMinimise, { cssClassName: cssClassName, size: "xs", bsStyle: panelStyle, DisplayMode: "Glyph", style: { float: "left", marginLeft: "0px", marginRight: "20px", border: '0px', background: 'none', borderRadius: '0px', boxShadow: 'none' }, onClick: () => this.props.onMinimise() }),
                         ' ',
                         ' '),
                 this.props.showGlyphIcon &&
@@ -29,9 +29,9 @@ class PanelDashboard extends React.Component {
             " ",
             ' ',
             this.props.showCloseButton &&
-                React.createElement(ButtonClose_1.ButtonClose, { cssClassName: cssClassName, overrideTooltip: "Close " + this.props.headerText, size: 'xs', bsStyle: panelStyle, DisplayMode: "Glyph", style: { float: "right", marginLeft: "0px", marginRight: "0px" }, onClick: () => this.props.onClose() }),
+                React.createElement(ButtonClose_1.ButtonClose, { cssClassName: cssClassName, overrideTooltip: "Close " + this.props.headerText, size: 'xs', bsStyle: panelStyle, DisplayMode: "Glyph", style: { float: "right", marginLeft: "0px", marginRight: "0px", border: '0px', background: 'none', borderRadius: '0px', boxShadow: 'none' }, onClick: () => this.props.onClose() }),
             this.props.showConfigureButton &&
-                React.createElement(ButtonConfigure_1.ButtonConfigure, { cssClassName: cssClassName, overrideTooltip: "Configure " + this.props.headerText, size: 'xs', bsStyle: panelStyle, DisplayMode: "Glyph", style: { float: "right", marginLeft: "0px", marginRight: "0px" }, onClick: () => this.props.onConfigure() }));
+                React.createElement(ButtonConfigure_1.ButtonConfigure, { cssClassName: cssClassName, overrideTooltip: "Configure " + this.props.headerText, size: 'xs', bsStyle: panelStyle, DisplayMode: "Glyph", style: { float: "right", marginLeft: "0px", marginRight: "0px", border: '0px', background: 'none', borderRadius: '0px', boxShadow: 'none' }, onClick: () => this.props.onConfigure() }));
         return React.createElement("div", { className: cssClassName },
             React.createElement(react_bootstrap_1.Panel, { className: "ab_small-padding-panel ab-panel-header-dashboard", header: header, bsStyle: panelStyle, style: this.props.style },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true }, this.props.children)));

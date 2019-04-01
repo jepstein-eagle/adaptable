@@ -20,6 +20,7 @@ const StyleConstants = require("../../Utilities/Constants/StyleConstants");
 const ChartEnums_1 = require("../../Utilities/ChartEnums");
 const CategoryChartWizard_1 = require("./CategoryChart/Wizard/CategoryChartWizard");
 const PieChartWizard_1 = require("./PieChart/Wizard/PieChartWizard");
+const Enums_1 = require("../../Utilities/Enums");
 class ChartPopupComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -55,14 +56,32 @@ class ChartPopupComponent extends React.Component {
         let Charts = this.props.ChartDefinitions.map((Chart, index) => {
             return React.createElement(ChartEntityRow_1.ChartEntityRow, { cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: Chart, key: Chart.Name, Index: index, onEdit: (index, Chart) => this.onEdit(index, Chart), TeamSharingActivated: this.props.TeamSharingActivated, onShare: () => this.props.onShare(Chart), onDeleteConfirm: ChartRedux.ChartDefinitionDelete(Chart), onShowChart: (chartName) => this.onShowChart(chartName), AccessLevel: this.props.AccessLevel });
         });
+        let categoryChartMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.onNew(ChartEnums_1.ChartType.CategoryChart), key: "categoryChart" }, "Category Chart");
+        let pieChartMenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.onNew(ChartEnums_1.ChartType.PieChart), key: "pieChart" }, "Pie Chart");
+        // we need to make this a button type...
+        const plusGlyph = React.createElement(react_bootstrap_1.OverlayTrigger, { key: "exportOverlay", overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
+                " ",
+                "Create New Chart Definition") },
+            React.createElement("span", null,
+                React.createElement(react_bootstrap_1.Glyphicon, { glyph: 'plus' }),
+                ' ',
+                'New',
+                " "));
+        let dropdownButton = React.createElement(react_bootstrap_1.DropdownButton, { style: { marginLeft: "5px" }, bsSize: 'small', bsStyle: StyleConstants.INFO_BSSTYLE, title: plusGlyph, id: "chartDropdown" },
+            categoryChartMenuItem,
+            pieChartMenuItem);
         let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(ChartEnums_1.ChartType.CategoryChart), overrideTooltip: "Create Chart Definition", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         let editedChartDefinition = this.state.EditedAdaptableBlotterObject;
         return React.createElement("div", { className: cssClassName },
-            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.ChartStrategyName, className: "ab_main_popup", infoBody: infoBody, button: newButton, bsStyle: "primary", glyphicon: StrategyConstants.ChartGlyph },
+            React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.ChartStrategyName, className: "ab_main_popup", infoBody: infoBody, button: dropdownButton, bsStyle: "primary", glyphicon: StrategyConstants.ChartGlyph },
                 Charts.length > 0 ?
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: Charts })
                     :
-                        React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to create a new Chart."),
+                        React.createElement(react_bootstrap_1.HelpBlock, null,
+                            "Click 'New' to create a new Chart.",
+                            React.createElement("br", null),
+                            "Choose between Category and Pie Chart.",
+                            React.createElement("br", null)),
                 this.state.EditedAdaptableBlotterObject &&
                     React.createElement("div", null, editedChartDefinition.ChartType == ChartEnums_1.ChartType.CategoryChart ?
                         React.createElement(CategoryChartWizard_1.CategoryChartWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: editedChartDefinition, ConfigEntities: this.props.ChartDefinitions, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })
