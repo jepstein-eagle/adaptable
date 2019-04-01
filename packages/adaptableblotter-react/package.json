@@ -115,6 +115,9 @@
 		"mathjs": "^5.1.1",
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6"
-	},
+    },
+    "scripts": {
+        "build": "node --max-old-space-size=8192 node_modules/rollup/bin/rollup -c rollup.config.ts"
+    },
 	"gitHead": "daea4bbb41b9224540adb640f79ff58341734c35"
 }
