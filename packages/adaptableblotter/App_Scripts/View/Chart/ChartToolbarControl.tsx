@@ -50,9 +50,9 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
             return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedChartDefinitionChanged(chartDefinition.Name)} >{chartDefinition.Name}</MenuItem>
         })
 
-        const plusGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Create New Chart Definition"}</Tooltip >}>
-            <Glyphicon glyph={'plus'} />
-        </OverlayTrigger>
+            const plusGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Create New Chart Definition"}</Tooltip >}>
+                <Glyphicon glyph={'plus'} />
+            </OverlayTrigger>
 
         let categoryChartMenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.props.onNewChartDefinition("New | CategoryChart")} key={"categoryChart"}>{"Category Chart"}</MenuItem>
         let pieChartMenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.props.onNewChartDefinition("New | PieChart")} key={"pieChart"}>{"Pie Chart"}</MenuItem>

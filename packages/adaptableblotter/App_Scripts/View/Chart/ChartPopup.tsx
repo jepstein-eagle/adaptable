@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
+import { HelpBlock, DropdownButton, OverlayTrigger, Tooltip, Glyphicon, MenuItem } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
@@ -25,6 +25,7 @@ import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChar
 import { ChartVisibility, ChartType } from "../../Utilities/ChartEnums";
 import { CategoryChartWizard } from "./CategoryChart/Wizard/CategoryChartWizard";
 import { PieChartWizard } from "./PieChart/Wizard/PieChartWizard";
+import { AccessLevel } from "../../Utilities/Enums";
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,
@@ -92,6 +93,27 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
             />
         });
 
+        let categoryChartMenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.onNew(ChartType.CategoryChart)} key={"categoryChart"}>{"Category Chart"}</MenuItem>
+        let pieChartMenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.onNew(ChartType.PieChart)} key={"pieChart"}>{"Pie Chart"}</MenuItem>
+
+        // we need to make this a button type...
+        const plusGlyph: any = <OverlayTrigger key={"exportOverlay"} overlay={<Tooltip id="tooltipButton" > {"Create New Chart Definition"}</Tooltip >}>
+           <span><Glyphicon glyph={'plus'} />{' '}{'New'} </span> 
+        </OverlayTrigger>
+
+
+    let dropdownButton =    <DropdownButton
+        style={{ marginLeft: "5px" }}
+        bsSize={'small'}
+        bsStyle={StyleConstants.INFO_BSSTYLE}
+        title={plusGlyph}
+        id="chartDropdown"
+    >
+        {categoryChartMenuItem}
+        {pieChartMenuItem}
+
+    </DropdownButton>
+
         let newButton = <ButtonNew cssClassName={cssClassName}
             onClick={() => this.onNew(ChartType.CategoryChart)}  // wrong, wrong, wrong
             overrideTooltip="Create Chart Definition"
@@ -104,12 +126,15 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ChartStrategyName} className="ab_main_popup" infoBody={infoBody}
-                button={newButton} bsStyle="primary" glyphicon={StrategyConstants.ChartGlyph}>
+                button={dropdownButton} bsStyle="primary" glyphicon={StrategyConstants.ChartGlyph}>
 
                 {Charts.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Charts} />
                     :
-                    <HelpBlock >Click 'New' to create a new Chart.</HelpBlock>
+                    <HelpBlock >
+                        Click 'New' to create a new Chart.<br/>
+                       Choose between Category and Pie Chart.<br/>
+                    </HelpBlock>
                 }
 
                 {this.state.EditedAdaptableBlotterObject &&

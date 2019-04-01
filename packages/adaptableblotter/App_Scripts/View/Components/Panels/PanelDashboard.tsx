@@ -18,7 +18,7 @@ export interface PanelDashboardProps extends PanelProps {
     showMinimiseButton?: boolean
     showGlyphIcon?: boolean
     cssClassName: string
-    useDefaultPanelStyle? : boolean;
+    useDefaultPanelStyle?: boolean;
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you 
@@ -42,30 +42,30 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     render() {
         let cssClassName = this.props.cssClassName + StyleConstants.DASHBOARD_PANEL
 
-        let panelStyle = (this.props.useDefaultPanelStyle) ? StyleConstants.DEFAULT_BSSTYLE: StyleConstants.PRIMARY_BSSTYLE
+        let panelStyle = (this.props.useDefaultPanelStyle) ? StyleConstants.DEFAULT_BSSTYLE : StyleConstants.PRIMARY_BSSTYLE
 
         let header = <span>
-            < span style={{ verticalAlign: "middle", marginRight: "10px", padding: "0px", fontSize:'xsmall' }} >
+            < span style={{ verticalAlign: "middle", marginRight: "10px", padding: "0px", fontSize: 'xsmall' }} >
                 {this.props.showMinimiseButton &&
                     <span>
-                        <ButtonMinimise cssClassName={cssClassName} size={"xs"} bsStyle={panelStyle} DisplayMode={"Glyph"} style={{ float: "left", marginLeft: "0px", marginRight: "20px" }} onClick={() => this.props.onMinimise()} />
+                        <ButtonMinimise cssClassName={cssClassName} size={"xs"} bsStyle={panelStyle} DisplayMode={"Glyph"} style={{ float: "left", marginLeft: "0px", marginRight: "20px", border: '0px', background: 'none', borderRadius: '0px', boxShadow: 'none' }} onClick={() => this.props.onMinimise()} />
                         {' '}{' '}
                     </span>
                 }
                 {this.props.showGlyphIcon &&
-                    <Glyphicon style={{fontSize: 'small'}} glyph={this.props.glyphicon} />
+                    <Glyphicon style={{ fontSize: 'small' }} glyph={this.props.glyphicon} />
                 }
                 {' '}
-                < span style={{ fontSize:'small' }} >
-                  {this.props.headerText}
-                  </ span>
+                < span style={{ fontSize: 'small' }} >
+                    {this.props.headerText}
+                </ span>
             </span>
             {' '} {' '}
             {this.props.showCloseButton &&
-                <ButtonClose cssClassName={cssClassName} overrideTooltip={"Close " + this.props.headerText} size='xs' bsStyle={panelStyle} DisplayMode={"Glyph"} style={{ float: "right", marginLeft: "0px", marginRight: "0px" }} onClick={() => this.props.onClose()} />
+                <ButtonClose cssClassName={cssClassName} overrideTooltip={"Close " + this.props.headerText} size='xs' bsStyle={panelStyle} DisplayMode={"Glyph"} style={{ float: "right", marginLeft: "0px", marginRight: "0px", border: '0px', background: 'none', borderRadius: '0px', boxShadow: 'none' }} onClick={() => this.props.onClose()} />
             }
             {this.props.showConfigureButton &&
-                <ButtonConfigure cssClassName={cssClassName} overrideTooltip={"Configure " + this.props.headerText} size='xs' bsStyle={panelStyle} DisplayMode={"Glyph"} style={{ float: "right", marginLeft: "0px", marginRight: "0px" }} onClick={() => this.props.onConfigure()} />
+                <ButtonConfigure cssClassName={cssClassName} overrideTooltip={"Configure " + this.props.headerText} size='xs' bsStyle={panelStyle} DisplayMode={"Glyph"} style={{ float: "right", marginLeft: "0px", marginRight: "0px", border: '0px', background: 'none', borderRadius: '0px', boxShadow: 'none' }} onClick={() => this.props.onConfigure()} />
             }
         </span>
         return <div className={cssClassName}>
