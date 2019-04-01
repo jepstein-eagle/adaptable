@@ -188,6 +188,9 @@ export class ChartService implements IChartService {
             if (dataValueMultiplier > 1) {
               range.min = rangeMin.toFixed(1);
               range.max = rangeMax.toFixed(1);
+            } else {
+              range.min = this.abbreviateNum(rangeMin);
+              range.max = this.abbreviateNum(rangeMax);
             }
             dataRanges.set(rangeKey, range);
           }
