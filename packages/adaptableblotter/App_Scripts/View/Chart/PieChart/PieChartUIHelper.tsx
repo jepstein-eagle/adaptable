@@ -2,7 +2,6 @@ import { IPieChartDefinition, IPieChartProperties, IPieChartDataItem } from "../
 import { PieChartComponentState } from "./PieChartComponentState";
 import { SliceSortOption } from "../../../Utilities/ChartEnums";
 
-
 /* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
 */
 export module PieChartUIHelper {
@@ -11,11 +10,9 @@ export module PieChartUIHelper {
     return ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47"];
   }
 
-
   export function getBrushesOdd(): string[] {
     return ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47", "#795548"];
   }
-
 
   export function setChartDisplayPopupState(chartDefinition: IPieChartDefinition, dataSource: IPieChartDataItem[]): PieChartComponentState {
     let pieChartProperties: IPieChartProperties = chartDefinition.ChartProperties as IPieChartProperties
@@ -24,22 +21,20 @@ export module PieChartUIHelper {
       ChartProperties: pieChartProperties,
       IsChartSettingsVisible: true,
       IsGeneralMinimised: false,
-      SliceSortOption: SliceSortOption.None,
+      SliceSortOption: SliceSortOption.ValueDescending,
       SliceBrushes: dataSource.length % 2 == 0 ? getBrushesOdd() : getBrushesEven(),
     }
-
   }
 
   export function setDefaultChartDisplayPopupState(): PieChartComponentState {
     let defaultState = {
       IsChartSettingsVisible: true,
       IsGeneralMinimised: false,
-      SliceSortOption: SliceSortOption.None,
+      SliceSortOption: SliceSortOption.ValueDescending,
 
     } as PieChartComponentState;
     return defaultState;
   }
-
 
   export function sortDataSource(sliceSortOption: SliceSortOption, oldData: IPieChartDataItem[]): IPieChartDataItem[] {
     if (oldData == null || oldData.length == 0) {
@@ -70,6 +65,7 @@ export module PieChartUIHelper {
     if (nameA < nameB) { return -1; }
     return 0;
   }
+
   export function sortByNameDescending(a: IPieChartDataItem, b: IPieChartDataItem): number {
     let nameA = a.Name.toLowerCase();
     let nameB = b.Name.toLowerCase();

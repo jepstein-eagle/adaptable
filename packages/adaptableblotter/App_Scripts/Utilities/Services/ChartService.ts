@@ -175,21 +175,25 @@ export class ChartService implements IChartService {
       let dataRanges = new Map<number, any>();
       // grouping all data values into ranges by checking which range a value belongs to
       dataCounter.forEach((id, value) => {
-        let rangeKey = Math.floor(value * dataValueMultiplier / dataRangeDivisions);
-        if (dataRanges.has(rangeKey)) {
-          let range = dataRanges.get(rangeKey);
-          range.values.push(value);;
-          dataRanges.set(rangeKey, range);
-        } else {
-          let rangeMin: any = (rangeKey / dataValueMultiplier * dataRangeDivisions);
-          let rangeMax: any = (rangeKey + 1) / dataValueMultiplier * dataRangeDivisions;
+          let rangeKey = Math.floor(value * dataValueMultiplier / dataRangeDivisions);
+          if (dataRanges.has(rangeKey)) {
+            let range = dataRanges.get(rangeKey);
+            range.values.push(value);;
+            dataRanges.set(rangeKey, range);
+          } else {
+            let rangeMin: any = (rangeKey / dataValueMultiplier * dataRangeDivisions);
+            let rangeMax: any = (rangeKey + 1) / dataValueMultiplier * dataRangeDivisions;
 
-          let range = { min: rangeMin, max: rangeMax, values: [value] }
-          if (dataValueMultiplier > 1) {
-            range.min = rangeMin.toFixed(1);
-            range.max = rangeMax.toFixed(1);
-          }
-          dataRanges.set(rangeKey, range);
+            let range = { min: rangeMin, max: rangeMax, values: [value]}
+            if (dataValueMultiplier > 1) {
+              range.min = rangeMin.toFixed(1);
+              range.max = rangeMax.toFixed(1);
+            } else {
+              range.min = NumberExtensions.abbreviateNumber(rangeMin);
+              range.max = NumberExtensions.abbreviateNumber(rangeMax);
+            }
+            dataRanges.set(rangeKey, range);
+          
         }
       });
       console.log("ChartService grouped data items into " + dataRanges.size + " ranges of " + dataRangeDivisions)
