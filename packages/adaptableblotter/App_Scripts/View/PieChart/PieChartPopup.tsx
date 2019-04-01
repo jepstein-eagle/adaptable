@@ -386,15 +386,11 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         this.setState({ ShowAsDoughnut: e.checked} as PieChartPopupState);
     }
 
-
-
     private onThresholdAsPercentChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let mode = (e.checked) ? PieChartOthersCategoryType.Percent : PieChartOthersCategoryType.Number;
-        this.setState({ OthersCategoryType: mode } as PieChartPopupState);
+        let othersCategoryType: PieChartOthersCategoryType = (e.checked) ? PieChartOthersCategoryType.Percent : PieChartOthersCategoryType.Number;
+        this.setState({ OthersCategoryType: othersCategoryType } as PieChartPopupState);
     }
-
-
 
     onSliceLabelsPositionChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;

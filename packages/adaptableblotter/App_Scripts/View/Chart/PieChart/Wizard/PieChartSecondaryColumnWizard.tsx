@@ -31,9 +31,9 @@ export class PieChartSecondaryColumnWizard extends React.Component<PieChartSecon
 
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-settings"
-        let secondaryColumnDataType: DataType = StringExtensions.IsNotNullOrEmpty(this.state.SecondaryColumnId)?
-        ColumnHelper.getColumnDataTypeFromColumnId(this.state.SecondaryColumnId, this.props.Columns):
-        DataType.Unknown;
+        let secondaryColumnDataType: DataType = StringExtensions.IsNotNullOrEmpty(this.state.SecondaryColumnId) ?
+            ColumnHelper.getColumnDataTypeFromColumnId(this.state.SecondaryColumnId, this.props.Columns) :
+            DataType.Unknown;
 
         return <div className={cssClassName}>
             <Panel header="Secondary Column" bsStyle="primary">
@@ -58,9 +58,9 @@ export class PieChartSecondaryColumnWizard extends React.Component<PieChartSecon
                                     SelectionMode={SelectionMode.Single} />
                             </Col>
                         </Row>
-                        {StringExtensions.IsNotNullOrEmpty(this.state.SecondaryColumnId) &&secondaryColumnDataType== DataType.Number &&
+                        {StringExtensions.IsNotNullOrEmpty(this.state.SecondaryColumnId) && secondaryColumnDataType == DataType.Number &&
                             <div>
-                                <br/>
+                                <br />
                                 <Row>
                                     <Col xs={1} />
                                     <Col xs={10}>
@@ -91,9 +91,15 @@ export class PieChartSecondaryColumnWizard extends React.Component<PieChartSecon
 
     private onSecondaryColumnChanged(columns: IColumn[]) {
         let isColumn: boolean = ArrayExtensions.IsNotNullOrEmpty(columns)
+        let secondaryColumnOperation: SecondaryColumnOperation = SecondaryColumnOperation.Count;
+        if (isColumn) {
+            if (columns[0].DataType == DataType.Number) {
+                secondaryColumnOperation = SecondaryColumnOperation.Sum;
+            }
+        }
         this.setState({
             SecondaryColumnId: isColumn ? columns[0].ColumnId : "",
-            SecondaryColumnOperation: SecondaryColumnOperation.Count // always make it count unless they set it explicitly
+            SecondaryColumnOperation: secondaryColumnOperation 
         } as PieChartSecondaryColumnWizardState, () => this.props.UpdateGoBackState())
     }
 

@@ -139,7 +139,7 @@ export class ChartService implements IChartService {
 
     let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
     // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
-    let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition, columns, hasSecondaryColumn);
+    let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition, columns);
 
      // if we don't use ranges but there are too many slices then we return an error
     if(!useRanges && dataCounter.size > this.blotter.BlotterOptions.chartOptions.pieChartMaxItems){
@@ -229,17 +229,13 @@ export class ChartService implements IChartService {
   return pieChartDataItem;
   }
 
-  private shouldUseRange(dataCounter : Map<any, number>, chartDefinition: IPieChartDefinition, columns: IColumn[], hasSecondaryColumn: boolean): boolean{
+  private shouldUseRange(dataCounter : Map<any, number>, chartDefinition: IPieChartDefinition, columns: IColumn[]): boolean{
    let returnValue: boolean = false;
     if(dataCounter.size > 15){
       let primaryColumn = ColumnHelper.getColumnFromId(chartDefinition.PrimaryColumnId, columns);
       let primaryColumnIsNumeric: boolean = ColumnHelper.isNumericColumn(primaryColumn);
-      let secondaryColumnIsNumeric: boolean = false;
-      if(hasSecondaryColumn){
-        let secondaryColumn = ColumnHelper.getColumnFromId(chartDefinition.SecondaryColumnId, columns);
-         secondaryColumnIsNumeric = ColumnHelper.isNumericColumn(secondaryColumn);
-      }
-       returnValue = (primaryColumnIsNumeric||secondaryColumnIsNumeric);
+     
+       returnValue = (primaryColumnIsNumeric);
     }
     return returnValue;
   }
