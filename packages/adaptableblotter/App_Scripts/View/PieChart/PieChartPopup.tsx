@@ -132,7 +132,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
     render() {
         let cssClassName: string = this.props.cssClassName + "__PieChart";
-        let infoBody: any[] = ["See the count for each distinct visible value in the column as pie chart.", <br />, <br />, "There is an option to view as doughnut and to set the 'Others' threshold."]
+        let infoBody: any[] = ["See the count for each distinct visible value in the column as pie chart.", <br />, "There are options to view as doughnut, set the 'Others' threshold (and type) and manage labels."]
         let chartSize: string = '450px'
         let radiusFactor: number = 0.8
 

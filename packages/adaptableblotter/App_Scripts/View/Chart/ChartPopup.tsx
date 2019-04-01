@@ -70,8 +70,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
         let infoBody: any[] = ["Create Charts to view your grid data visually."]
 
         let colItems: IColItem[] = [
-            { Content: "Title", Size: 3 },
-            { Content: "Subtitle", Size: 3 },
+            { Content: "Name", Size: 3 },
+            { Content: "Description", Size: 3 },
             { Content: "Type", Size: 2 },
             { Content: "Show", Size: 1 },
             { Content: "", Size: 3 },

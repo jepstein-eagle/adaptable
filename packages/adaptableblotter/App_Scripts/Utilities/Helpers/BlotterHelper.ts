@@ -18,6 +18,7 @@ export module BlotterHelper {
         returnBlotterOptions.queryOptions = Object.assign({}, DefaultAdaptableBlotterOptions.queryOptions, blotterOptions.queryOptions)
         returnBlotterOptions.containerOptions = Object.assign({}, DefaultAdaptableBlotterOptions.containerOptions, blotterOptions.containerOptions)
         returnBlotterOptions.generalOptions = Object.assign({}, DefaultAdaptableBlotterOptions.generalOptions, blotterOptions.generalOptions)
+        returnBlotterOptions.chartOptions = Object.assign({}, DefaultAdaptableBlotterOptions.chartOptions, blotterOptions.chartOptions)
         return returnBlotterOptions;
     }
 

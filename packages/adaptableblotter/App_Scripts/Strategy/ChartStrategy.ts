@@ -146,10 +146,25 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId: string = dataChangedInfo.ColumnId;
-            let currentChartDefinition: ICategoryChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName) as ICategoryChartDefinition
-            if (ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
-                currentChartDefinition.XAxisColumnId == columnChangedId) {
-                this.throttleSetChartData();
+            if (StringExtensions.IsNotNullOrEmpty(columnChangedId)) {
+                let currentChartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
+                switch (currentChartDefinition.ChartType) {
+                    case ChartType.CategoryChart:
+                        let categoryChartDefinition: ICategoryChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName) as ICategoryChartDefinition
+                        if (ArrayExtensions.ContainsItem(categoryChartDefinition.YAxisColumnIds, columnChangedId) || categoryChartDefinition.XAxisColumnId == columnChangedId) {
+                            this.throttleSetChartData();
+                        }
+                        break;
+
+                    case ChartType.PieChart:
+                        let pieChartDefinition: IPieChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName) as IPieChartDefinition
+                        if (pieChartDefinition.PrimaryColumnId == columnChangedId || pieChartDefinition.SecondaryColumnId == columnChangedId) {
+                            this.throttleSetChartData();
+                        }
+                        break;
+                }
+
+
             }
         }
     }

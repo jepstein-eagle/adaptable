@@ -36,7 +36,7 @@ function getSchema(data) {
 
 function InitBlotter() {
     var dataGen = new harness.DataGenerator();
-    trades = dataGen.getTrades(5000);
+    trades = dataGen.getTrades(20);
     var gridOptions = { data: trades, schema: getSchema(trades) };
     var vendorGrid = new fin.Hypergrid('#grid', gridOptions);
      dataGen.startTickingDataHypergrid(vendorGrid)
@@ -107,7 +107,7 @@ function InitBlotter() {
         primaryKey: "tradeId", // pk for blotter - required
         userName: "demo user", // name of current user
         blotterId: "demo blotter 2.5", // id for blotter
-      
+        licenceKey: 'abc5834u-yt5a4evp1-r1oq9nclf1',
         predefinedConfig: categoryJson,
 
         auditLogOptions: {

@@ -12,6 +12,8 @@ import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { AxisTotal, SecondaryColumnOperation } from '../ChartEnums';
 import { Helper } from '../Helpers/Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';
+import { LoggingHelper } from '../Helpers/LoggingHelper';
+import { NumberExtensions } from '../Extensions/NumberExtensions';
 
 /*
 Class that buils the chart - probably needs some refactoring but working for the time being.
@@ -107,10 +109,11 @@ export class ChartService implements IChartService {
 
     let dataCounter = new Map<any, number>();
 
-    let hasPrimaryColumn = StringExtensions.IsNotNullOrEmpty(chartDefinition.PrimaryColumnId);
-    if (!hasPrimaryColumn) {
-      return null; // should never happen but from now on you have to have a primary column...
+    if (StringExtensions.IsNullOrEmpty(chartDefinition.PrimaryColumnId)) {
+      LoggingHelper.LogAdaptableBlotterError("Cannot create pie chart as no Primary Column set.")
+      return null;
     }
+
     let hasSecondaryColumn = StringExtensions.IsNotNullOrEmpty(chartDefinition.SecondaryColumnId);
 
     let valueTotal: number = 0;
@@ -130,26 +133,23 @@ export class ChartService implements IChartService {
           this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal)
       });
     }
-    let columns: IColumn[]= this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-    let columnType = ColumnHelper.getColumnDataTypeFromColumnId(chartDefinition.PrimaryColumnId, columns);
-    let columnIsNumeric = columnType == DataType.Number;
-    let columnName = ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.PrimaryColumnId, columns);
 
+    console.log(dataCounter);
     let dataItems: IPieChartDataItem[] = [];
-    if (dataCounter.size <= 15 || !columnIsNumeric) {
-      // just a few values/slices so they should easily fit in pie chart with
+
+    let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+    // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
+    let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition, columns, hasSecondaryColumn);
+
+     // if we don't use ranges but there are too many slices then we return an error
+    if(!useRanges && dataCounter.size > this.blotter.BlotterOptions.chartOptions.pieChartMaxItems){
+      LoggingHelper.LogAdaptableBlotterError("Cannot create pie chart as it contains too many items.")
+      return null;
+    }
+
+     if (!useRanges) {
       dataCounter.forEach((value, name) => {
-        let sliceItem: IPieChartDataItem = {
-          Name: name.toString(),
-          Value: Helper.RoundNumber(value, 1),
-          // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
-          Ratio: Math.round(value / valueTotal * 1000) / 10
-        }
-        sliceItem.ValueAndName = this.abbreviateNum(sliceItem.Value) + " - " + sliceItem.Name;
-        sliceItem.RatioAndName = sliceItem.Ratio.toFixed(0) + " - " + sliceItem.Name;
-        sliceItem.ValueAndName = StringExtensions.abbreviateString(sliceItem.ValueAndName, 50);
-        sliceItem.RatioAndName = StringExtensions.abbreviateString(sliceItem.RatioAndName, 50);
-        sliceItem.Name = StringExtensions.abbreviateString(sliceItem.Name, 50);
+        let sliceItem: IPieChartDataItem = this.createNonRangeDataItem(value, name, valueTotal);
         dataItems.push(sliceItem);
       });
     } else {
@@ -167,30 +167,30 @@ export class ChartService implements IChartService {
 
       let dataValueMultiplier = 1;
       if (dataValueRange < 10) {
-          dataValueMultiplier = 100; // for very small values (e.g. B/O Spread column)
+        dataValueMultiplier = 100; // for very small values (e.g. B/O Spread column)
       }
       let dataRangeInterval = dataValueRange * dataValueMultiplier / dataValueGroups;
-      let dataRangeDivisions = Math.floor((dataRangeInterval / 10) + 1 ) * 10;
+      let dataRangeDivisions = Math.floor((dataRangeInterval / 10) + 1) * 10;
 
       let dataRanges = new Map<number, any>();
       // grouping all data values into ranges by checking which range a value belongs to
       dataCounter.forEach((id, value) => {
-          let rangeKey = Math.floor(value * dataValueMultiplier / dataRangeDivisions);
-          if (dataRanges.has(rangeKey)) {
-            let range = dataRanges.get(rangeKey);
-            range.values.push(value);;
-            dataRanges.set(rangeKey, range);
-          } else {
-            let rangeMin: any = (rangeKey / dataValueMultiplier * dataRangeDivisions);
-            let rangeMax: any = (rangeKey + 1) / dataValueMultiplier * dataRangeDivisions;
+        let rangeKey = Math.floor(value * dataValueMultiplier / dataRangeDivisions);
+        if (dataRanges.has(rangeKey)) {
+          let range = dataRanges.get(rangeKey);
+          range.values.push(value);;
+          dataRanges.set(rangeKey, range);
+        } else {
+          let rangeMin: any = (rangeKey / dataValueMultiplier * dataRangeDivisions);
+          let rangeMax: any = (rangeKey + 1) / dataValueMultiplier * dataRangeDivisions;
 
-            let range = { min: rangeMin, max: rangeMax, values: [value]}
-            if (dataValueMultiplier > 1) {
-              range.min = rangeMin.toFixed(1);
-              range.max = rangeMax.toFixed(1);
-            }
-            dataRanges.set(rangeKey, range);
+          let range = { min: rangeMin, max: rangeMax, values: [value] }
+          if (dataValueMultiplier > 1) {
+            range.min = rangeMin.toFixed(1);
+            range.max = rangeMax.toFixed(1);
           }
+          dataRanges.set(rangeKey, range);
+        }
       });
       console.log("ChartService grouped data items into " + dataRanges.size + " ranges of " + dataRangeDivisions)
       // finally we can generate slice items based on data ranges
@@ -211,6 +211,37 @@ export class ChartService implements IChartService {
     }
 
     return dataItems;
+  }
+
+  private createNonRangeDataItem(value: number, name: any, valueTotal: number): IPieChartDataItem{
+    let pieChartDataItem: IPieChartDataItem = {
+      Name: name.toString(),
+      Value: Helper.RoundNumber(value, 1),
+      // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
+      Ratio: Math.round(value / valueTotal * 1000) / 10
+    }
+    pieChartDataItem.ValueAndName = NumberExtensions.abbreviateNumber(pieChartDataItem.Value) + " - " + pieChartDataItem.Name;
+    pieChartDataItem.RatioAndName = pieChartDataItem.Ratio.toFixed(0) + " - " + pieChartDataItem.Name;
+    pieChartDataItem.ValueAndName = StringExtensions.abbreviateString(pieChartDataItem.ValueAndName, 50);
+    pieChartDataItem.RatioAndName = StringExtensions.abbreviateString(pieChartDataItem.RatioAndName, 50);
+    pieChartDataItem.Name = StringExtensions.abbreviateString(pieChartDataItem.Name, 50);
+
+  return pieChartDataItem;
+  }
+
+  private shouldUseRange(dataCounter : Map<any, number>, chartDefinition: IPieChartDefinition, columns: IColumn[], hasSecondaryColumn: boolean): boolean{
+   let returnValue: boolean = false;
+    if(dataCounter.size > 15){
+      let primaryColumn = ColumnHelper.getColumnFromId(chartDefinition.PrimaryColumnId, columns);
+      let primaryColumnIsNumeric: boolean = ColumnHelper.isNumericColumn(primaryColumn);
+      let secondaryColumnIsNumeric: boolean = false;
+      if(hasSecondaryColumn){
+        let secondaryColumn = ColumnHelper.getColumnFromId(chartDefinition.SecondaryColumnId, columns);
+         secondaryColumnIsNumeric = ColumnHelper.isNumericColumn(secondaryColumn);
+      }
+       returnValue = (primaryColumnIsNumeric||secondaryColumnIsNumeric);
+    }
+    return returnValue;
   }
 
   private getGroupValueTotalForRow(row: any, chartDefinition: IPieChartDefinition, dataCounter: Map<any, number>, valueTotal: number): number {
@@ -248,18 +279,6 @@ export class ChartService implements IChartService {
   }
 
 
-  public abbreviateNum(largeValue: number): string {
-    let str: string = "";
-    if (largeValue >= 1000000000) {
-      str = (largeValue / 1000000000).toFixed(1) + "B";
-    } else if (largeValue >= 1000000) {
-      str = (largeValue / 1000000).toFixed(1) + "M";
-    } else if (largeValue >= 1000) {
-      str = (largeValue / 1000).toFixed(1) + "K";
-    } else {
-      str = largeValue.toString();
-    }
-    return str;
-  }
+
 
 }

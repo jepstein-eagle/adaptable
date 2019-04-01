@@ -33,7 +33,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(5000);
+    return dataGen.getTrades(100);
   }
   return dataGen.getFtseData(199);
 }
@@ -125,7 +125,7 @@ function InitTradeBlotter() {
       //    licenceKey: getValidEnterpriseKey(),
       //licenceKey: getInvalidStandardKey(),
     //    predefinedConfig: reportJson,
-      
+    licenceKey: 'abc5834u-yt5a4evp1-r1oq9nclf1',
       auditOptions: {
         //     auditCellEdits: true,
         //  auditFunctionEvents: true,
@@ -158,6 +158,7 @@ function InitTradeBlotter() {
       chartOptions: {
         displayOnStartUp: true,
         showModal: false,
+       // pieChartMaxItems: 100
       },
       generalOptions: {
         // serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
