@@ -28,49 +28,15 @@ export class ScheduleStrategy extends AdaptableStrategyBase implements ISchedule
 
     protected InitState() {
         if (this.ScheduleState != this.blotter.AdaptableBlotterStore.TheStore.getState().Schedule) {
-
-            // just trying one out...
-
-            let scheduleRule: IScheduleRule ={
-                DayOfWeek:5,
-                Hour: 14,
-                Minute: 53
-            }
-           
-            let scheduleTime: IScheduleTime={
-               RecurringDate: scheduleRule
-            }
-
-            let alertScheduleItem: IAlertScheduleItem = {
-                Alert: {
-
-                    Header: "Test Schedule",
-                    Msg: "This alert has worked",
-                    MessageType: MessageType.Success,
-                    ShowAsPopup: true
-                }
-            }
-
-            let reportSchedule: ISchedule = {
-                ScheduleItem: {
-                    Name: "All Data",
-                    ExportDestination: ExportDestination.CSV
-                },
-                ScheduleTime: scheduleTime,
-                ScheduleType: ScheduleType.Report
-            }
-
-            let alertSchedule: ISchedule = {
-                ScheduleItem: alertScheduleItem,
-                ScheduleTime: scheduleTime,
-                ScheduleType: ScheduleType.Alert
-            }
-
-
-        //    this.blotter.ScheduleService.AddSchedule(reportSchedule);
-            this.blotter.ScheduleService.AddSchedule(alertSchedule);
-
+          // this is wrong... (should do the store do it?). it will add every change :(F
+          this.blotter.AdaptableBlotterStore.TheStore.getState().Schedule.Schedules.forEach(s => {
+            this.blotter.ScheduleService.AddSchedule(s);
+        })
             this.ScheduleState = this.blotter.AdaptableBlotterStore.TheStore.getState().Schedule;
+
+           
+
+
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Schedule, this.ScheduleState)

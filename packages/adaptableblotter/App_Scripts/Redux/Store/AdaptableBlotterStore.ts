@@ -33,7 +33,7 @@ import * as DataSourceRedux from '../ActionsReducers/DataSourceRedux'
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux'
 import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux'
 import * as SystemFilterRedux from '../ActionsReducers/SystemFilterRedux'
-import * as SchedulerRedux from '../ActionsReducers/ScheduleRedux'
+import * as ScheduleRedux from '../ActionsReducers/ScheduleRedux'
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux'
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux'
 import * as FreeTextColumnRedux from '../ActionsReducers/FreeTextColumnRedux'
@@ -126,7 +126,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   Shortcut: ShortcutRedux.ShortcutReducer,
   SmartEdit: SmartEditRedux.SmartEditReducer,
   SystemFilter: SystemFilterRedux.SystemFilterReducer,
-  Schedule: SchedulerRedux.ScheduleReducer,
+  Schedule: ScheduleRedux.ScheduleReducer,
   TeamSharing: TeamSharingRedux.TeamSharingReducer,
   Theme: ThemeRedux.ThemeReducer,
   UserFilter: UserFilterRedux.UserFilterReducer,

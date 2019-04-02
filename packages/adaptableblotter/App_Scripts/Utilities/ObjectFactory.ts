@@ -20,7 +20,7 @@ import { IAdvancedSearch } from "./Interface/BlotterObjects/IAdvancedSearch";
 import { ICategoryChartDefinition, IPieChartDefinition } from "./Interface/BlotterObjects/IChartDefinition";
 import { IAlertDefinition } from "./Interface/BlotterObjects/IAlertDefinition";
 import { IRange } from "./Interface/Expression/IRange";
-import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ActionMode, LicenceScopeType, LicenceUserType } from './Enums';
+import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ActionMode, LicenceScopeType, LicenceUserType, ScheduleType, ExportDestination } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { ColumnHelper } from './Helpers/ColumnHelper';
@@ -33,6 +33,7 @@ import { DefaultCategoryChartProperties } from './Defaults/DefaultCategoryChartP
 import { ILicenceInfo } from './Interface/ILicenceInfo';
 import { ChartType, SecondaryColumnOperation } from './ChartEnums';
 import { DefaultPieChartProperties } from './Defaults/DefaultPieChartProperties';
+import { ISchedule, IScheduleRule, IScheduleTime, IAlertScheduleItem } from './Interface/BlotterObjects/ISchedule';
 
 
 export module ObjectFactory {
@@ -48,6 +49,48 @@ export module ObjectFactory {
 
     export function CreateEmptyCustomSort(): ICustomSort {
         return { ColumnId: EMPTY_STRING, SortedValues: [] }
+    }
+
+
+    export function CreateTestSchedule(): ISchedule{
+        let scheduleRule: IScheduleRule ={
+            DayOfWeek:2,
+            Hour: 9,
+            Minute: 6
+        }
+       
+        let scheduleTime: IScheduleTime={
+           RecurringDate: scheduleRule
+        }
+
+        let reportSchedule: ISchedule = {
+            ScheduleItem: {
+                Name: "All Data",
+                ExportDestination: ExportDestination.CSV
+            },
+            ScheduleTime: scheduleTime,
+            ScheduleType: ScheduleType.Report
+        }
+
+
+        let alertScheduleItem: IAlertScheduleItem = {
+            Alert: {
+
+                Header: "Test Schedule",
+                Msg: "This alert has worked",
+                MessageType: MessageType.Success,
+                ShowAsPopup: true
+            }
+        }
+
+         let alertSchedule: ISchedule = {
+            ScheduleItem: alertScheduleItem,
+            ScheduleTime: scheduleTime,
+            ScheduleType: ScheduleType.Alert
+        }
+console.log(alertSchedule);
+        return alertSchedule;
+
     }
 
     export function CreateEmptyPieChartDefinition(): IPieChartDefinition {
