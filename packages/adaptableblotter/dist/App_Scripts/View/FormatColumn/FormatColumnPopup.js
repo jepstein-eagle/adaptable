@@ -40,9 +40,9 @@ class FormatColumnPopupComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__formatcolumn";
         let infoBody = ["Format a column so it styles with the colours and font properties that you provide.", React.createElement("br", null), React.createElement("br", null), "Unlike Conditional Styles the column is ", React.createElement("b", null, "always"), " formatted as set and is not dependent on a rule being met."];
         let colItems = [
-            { Content: "Column", Size: 3 },
-            { Content: "Format Style", Size: 5 },
-            { Content: "", Size: 3 },
+            { Content: "Column", Size: 4 },
+            { Content: "Format Style", Size: 6 },
+            { Content: "", Size: 2 },
         ];
         let FormatColumns = this.props.FormatColumns.map((formatColumn, index) => {
             return React.createElement(FormatColumnEntityRow_1.FormatColumnEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: formatColumn, Columns: this.props.Columns, UserFilters: null, Index: index, onEdit: () => this.onEdit(formatColumn), onShare: () => this.props.onShare(formatColumn), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: FormatColumnRedux.FormatColumnDelete(formatColumn) });

@@ -10,6 +10,7 @@ const StrategyConstants = require("../../Utilities/Constants/StrategyConstants")
 const Enums_1 = require("../../Utilities/Enums");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
 const CellValidationHelper_1 = require("../../Utilities/Helpers/CellValidationHelper");
+const EntityRowItem_1 = require("../Components/EntityRowItem");
 class CellValidationEntityRow extends React.Component {
     render() {
         let cellValidation = this.props.AdaptableBlotterObject;
@@ -17,8 +18,8 @@ class CellValidationEntityRow extends React.Component {
             return React.createElement("option", { key: validationMode, value: validationMode }, validationMode);
         });
         let colItems = [].concat(this.props.colItems);
-        colItems[0].Content = this.getColumnandRule(cellValidation);
-        colItems[1].Content = this.setExpressionDescription(cellValidation);
+        colItems[0].Content = React.createElement(EntityRowItem_1.EntityRowItem, { Content: this.getColumnandRule(cellValidation) });
+        colItems[1].Content = React.createElement(EntityRowItem_1.EntityRowItem, { Content: this.setExpressionDescription(cellValidation) });
         colItems[2].Content =
             React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", componentClass: "select", placeholder: "select", value: cellValidation.ActionMode, onChange: (x) => this.onActionModeChanged(this.props.Index, x) }, ActionModeTypes);
         colItems[3].Content = React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, ConfirmDeleteAction: this.props.onDeleteConfirm, showShare: this.props.TeamSharingActivated, editClick: () => this.props.onEdit(this.props.Index, cellValidation), shareClick: () => this.props.onShare(), overrideDisableEdit: !this.props.Column, EntityType: StrategyConstants.CellValidationStrategyName });

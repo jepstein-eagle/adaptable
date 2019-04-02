@@ -41,16 +41,14 @@ class AdvancedSearchPopupComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__advancedsearch";
         let infoBody = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.", React.createElement("br", null), React.createElement("br", null),
             "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard."];
-        let contentSize = (this.props.TeamSharingActivated) ? 6 : 7;
-        let buttonSize = (this.props.TeamSharingActivated) ? 3 : 2;
         let noExistingObjectText = "You have no Advanced Searches.";
         let startWizardText = (this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly) ? "" :
             " Click 'New' to start the Advanced Search Wizard to create a new Advanced Search.";
         let colItems = [
             { Content: "Current", Size: 1 },
             { Content: "Name", Size: 2 },
-            { Content: "Query", Size: contentSize },
-            { Content: "", Size: buttonSize },
+            { Content: "Query", Size: 7 },
+            { Content: "", Size: 2 },
         ];
         let advancedSearchRows = this.props.AdvancedSearches.map((advancedSearch, index) => {
             return React.createElement(AdvancedSearchEntityRow_1.AdvancedSearchEntityRow, { cssClassName: cssClassName, key: index, colItems: colItems, IsCurrentAdvancedSearch: advancedSearch.Name == this.props.CurrentAdvancedSearchName, AdaptableBlotterObject: advancedSearch, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: (index, advancedSearch) => this.onEdit(index, advancedSearch), onShare: () => this.props.onShare(advancedSearch), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch), onSelect: () => this.props.onSelectAdvancedSearch(advancedSearch.Name) });

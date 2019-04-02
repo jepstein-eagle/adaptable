@@ -122,10 +122,22 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId = dataChangedInfo.ColumnId;
-            let currentChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
-            if (ArrayExtensions_1.ArrayExtensions.ContainsItem(currentChartDefinition.YAxisColumnIds, columnChangedId) ||
-                currentChartDefinition.XAxisColumnId == columnChangedId) {
-                this.throttleSetChartData();
+            if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(columnChangedId)) {
+                let currentChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
+                switch (currentChartDefinition.ChartType) {
+                    case ChartEnums_1.ChartType.CategoryChart:
+                        let categoryChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
+                        if (ArrayExtensions_1.ArrayExtensions.ContainsItem(categoryChartDefinition.YAxisColumnIds, columnChangedId) || categoryChartDefinition.XAxisColumnId == columnChangedId) {
+                            this.throttleSetChartData();
+                        }
+                        break;
+                    case ChartEnums_1.ChartType.PieChart:
+                        let pieChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
+                        if (pieChartDefinition.PrimaryColumnId == columnChangedId || pieChartDefinition.SecondaryColumnId == columnChangedId) {
+                            this.throttleSetChartData();
+                        }
+                        break;
+                }
             }
         }
     }

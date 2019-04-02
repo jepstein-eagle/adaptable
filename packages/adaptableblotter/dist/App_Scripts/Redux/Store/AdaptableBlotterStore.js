@@ -34,7 +34,7 @@ const DataSourceRedux = require("../ActionsReducers/DataSourceRedux");
 const ColumnFilterRedux = require("../ActionsReducers/ColumnFilterRedux");
 const UserFilterRedux = require("../ActionsReducers/UserFilterRedux");
 const SystemFilterRedux = require("../ActionsReducers/SystemFilterRedux");
-const SchedulerRedux = require("../ActionsReducers/ScheduleRedux");
+const ScheduleRedux = require("../ActionsReducers/ScheduleRedux");
 const ThemeRedux = require("../ActionsReducers/ThemeRedux");
 const FormatColumnRedux = require("../ActionsReducers/FormatColumnRedux");
 const FreeTextColumnRedux = require("../ActionsReducers/FreeTextColumnRedux");
@@ -96,7 +96,7 @@ const rootReducer = Redux.combineReducers({
     Shortcut: ShortcutRedux.ShortcutReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
     SystemFilter: SystemFilterRedux.SystemFilterReducer,
-    Schedule: SchedulerRedux.ScheduleReducer,
+    Schedule: ScheduleRedux.ScheduleReducer,
     TeamSharing: TeamSharingRedux.TeamSharingReducer,
     Theme: ThemeRedux.ThemeReducer,
     UserFilter: UserFilterRedux.UserFilterReducer,
@@ -548,6 +548,18 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     }
                     let returnAction = next(action);
                     return returnAction;
+                }
+                /**
+                * Use Case: User sets chart visibility to Maximised (probably from the Chart popup by showing a chart)
+                * Action:  Close all popups (so that user goes directly to the chart)
+                */
+                case SystemRedux.CHART_SET_CHART_VISIBILITY: {
+                    // need some logic...but
+                    let actionTyped = action;
+                    if (actionTyped.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised) {
+                        middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+                    }
+                    return next(action);
                 }
                 /*******************
                 * LAYOUT ACTIONS

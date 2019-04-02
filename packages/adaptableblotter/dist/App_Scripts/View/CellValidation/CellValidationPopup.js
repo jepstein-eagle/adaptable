@@ -41,9 +41,9 @@ class CellValidationPopupComponent extends React.Component {
             "Rules can disallow all edits for a specified column, or only those that fail to meet specified criteria.", React.createElement("br", null), React.createElement("br", null),
             "When a rule is broken, you can choose whether to prevent the edit outright, or allow it after a warning is displayed."];
         let colItems = [
-            { Content: "Validation Rule", Size: 4 },
+            { Content: "Validation Rule", Size: 5 },
             { Content: "Expression", Size: 3 },
-            { Content: "Action", Size: 3 },
+            { Content: "Action", Size: 2 },
             { Content: "", Size: 2 },
         ];
         let CellValidationItems = this.props.CellValidations.map((x, index) => {

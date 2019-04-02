@@ -5,6 +5,8 @@ export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepPr
 }
 export interface PercentBarSelectColumnWizardState {
     ColumnId: string;
+    MinValue: number;
+    MaxValue: number;
 }
 export declare class PercentBarSelectColumnWizard extends React.Component<PercentBarSelectColumnWizardProps, PercentBarSelectColumnWizardState> implements AdaptableWizardStep {
     constructor(props: PercentBarSelectColumnWizardProps);

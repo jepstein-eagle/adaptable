@@ -255,28 +255,28 @@ var ExpressionHelper;
                     return "After ";
                 }
                 else {
-                    return "Greater Than ";
+                    return "> ";
                 }
             case Enums_1.LeafExpressionOperator.LessThan:
                 if (dataType == Enums_1.DataType.Date) {
                     return "Before ";
                 }
                 else {
-                    return "Less Than ";
+                    return "< ";
                 }
             case Enums_1.LeafExpressionOperator.GreaterThanOrEqual:
                 if (dataType == Enums_1.DataType.Date) {
                     return "After or On ";
                 }
                 else {
-                    return "Greater Than or Equals ";
+                    return ">= ";
                 }
             case Enums_1.LeafExpressionOperator.LessThanOrEqual:
                 if (dataType == Enums_1.DataType.Date) {
                     return "Before or On ";
                 }
                 else {
-                    return "Less Than or Equals ";
+                    return "<= ";
                 }
             case Enums_1.LeafExpressionOperator.Between:
                 return " Between ";
@@ -287,9 +287,9 @@ var ExpressionHelper;
             case Enums_1.LeafExpressionOperator.IsNegative:
                 return "Is Negative ";
             case Enums_1.LeafExpressionOperator.ValueChange:
-                return "Change In Value Greater Than ";
+                return "Change In Value > ";
             case Enums_1.LeafExpressionOperator.PercentChange:
-                return "% Change Is Greater Than ";
+                return "% Change > ";
             case Enums_1.LeafExpressionOperator.IsNotNumber:
                 return "Is Not Number ";
             case Enums_1.LeafExpressionOperator.IsTrue:

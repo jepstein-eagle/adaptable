@@ -9,7 +9,8 @@ export declare class ChartService implements IChartService {
     private buildYAxisTotal;
     private getXAxisColumnValues;
     BuildPieChartData(chartDefinition: IPieChartDefinition): IPieChartDataItem[];
+    private createNonRangeDataItem;
+    private shouldUseRange;
     private getGroupValueTotalForRow;
     private getSingleValueTotalForRow;
-    abbreviateNum(largeValue: number): string;
 }

@@ -34,8 +34,8 @@ class ColumnCategoryPopupComponent extends React.Component {
             "They are also used in Column Chooser to make it easier to find and manage large column sets."];
         let colItems = [
             { Content: "Categry", Size: 2 },
-            { Content: "Columns", Size: 7 },
-            { Content: "", Size: 3 },
+            { Content: "Columns", Size: 8 },
+            { Content: "", Size: 2 },
         ];
         let ColumnCategoryRows = this.props.ColumnCategorys.map((x, index) => {
             return React.createElement(ColumnCategoryEntityRow_1.ColumnCategoryEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: x, Columns: this.props.Columns, UserFilters: this.props.UserFilters, Index: index, onEdit: (index, x) => this.onEdit(index, x), onShare: () => this.props.onShare(x), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: ColumnCategoryRedux.ColumnCategoryDelete(x) });
@@ -46,7 +46,7 @@ class ColumnCategoryPopupComponent extends React.Component {
                 ColumnCategoryRows.length > 0 ?
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: ColumnCategoryRows })
                     :
-                        React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to start creating ColumnCategorys."),
+                        React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to start creating Column Categories."),
                 this.state.EditedAdaptableBlotterObject != null &&
                     React.createElement(ColumnCategoryWizard_1.ColumnCategoryWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: this.props.ColumnCategorys, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, ColumnCategorys: this.props.ColumnCategorys, Blotter: this.props.Blotter, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }

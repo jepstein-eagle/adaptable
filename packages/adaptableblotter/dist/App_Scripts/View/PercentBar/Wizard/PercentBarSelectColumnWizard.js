@@ -11,6 +11,8 @@ class PercentBarSelectColumnWizard extends React.Component {
         super(props);
         this.state = {
             ColumnId: this.props.Data.ColumnId,
+            MinValue: this.props.Data.MinValue,
+            MaxValue: this.props.Data.MaxValue,
         };
     }
     render() {
@@ -20,7 +22,17 @@ class PercentBarSelectColumnWizard extends React.Component {
                 React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.ColumnId], ColumnList: ColumnHelper_1.ColumnHelper.getNumericColumns(this.props.Columns), onColumnChange: columns => this.onColumnSelectedChanged(columns), SelectionMode: Enums_1.SelectionMode.Single })));
     }
     onColumnSelectedChanged(columns) {
-        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" }, () => this.props.UpdateGoBackState());
+        if (columns.length > 0) {
+            let distinctColumnsValues = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, Enums_1.DistinctCriteriaPairValue.RawValue).map(pair => {
+                return pair.RawValue;
+            });
+            let minValue = Math.min(...distinctColumnsValues);
+            let maxValue = Math.max(...distinctColumnsValues);
+            this.setState({ ColumnId: columns[0].ColumnId, MinValue: minValue, MaxValue: maxValue }, () => this.props.UpdateGoBackState());
+        }
+        else {
+            this.setState({ ColumnId: "" }, () => this.props.UpdateGoBackState());
+        }
     }
     canNext() {
         return (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.ColumnId));
@@ -28,6 +40,8 @@ class PercentBarSelectColumnWizard extends React.Component {
     canBack() { return true; }
     Next() {
         this.props.Data.ColumnId = this.state.ColumnId;
+        this.props.Data.MinValue = this.state.MinValue;
+        this.props.Data.MaxValue = this.state.MaxValue;
     }
     Back() {
     }

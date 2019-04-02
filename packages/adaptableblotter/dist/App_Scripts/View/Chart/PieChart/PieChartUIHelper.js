@@ -20,7 +20,7 @@ var PieChartUIHelper;
             ChartProperties: pieChartProperties,
             IsChartSettingsVisible: true,
             IsGeneralMinimised: false,
-            SliceSortOption: ChartEnums_1.SliceSortOption.None,
+            SliceSortOption: ChartEnums_1.SliceSortOption.ValueDescending,
             SliceBrushes: dataSource.length % 2 == 0 ? getBrushesOdd() : getBrushesEven(),
         };
     }
@@ -29,7 +29,7 @@ var PieChartUIHelper;
         let defaultState = {
             IsChartSettingsVisible: true,
             IsGeneralMinimised: false,
-            SliceSortOption: ChartEnums_1.SliceSortOption.None,
+            SliceSortOption: ChartEnums_1.SliceSortOption.ValueDescending,
         };
         return defaultState;
     }

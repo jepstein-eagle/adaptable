@@ -29,8 +29,8 @@ EntityListActionButtons.defaultProps = {
     EntityType: "",
     cssClassName: "",
     AccessLevel: Enums_1.AccessLevel.Full,
-    editSize: "small",
-    deleteSize: 'small',
-    shareSize: 'small',
+    editSize: "xsmall",
+    deleteSize: 'xsmall',
+    shareSize: 'xsmall',
 };
 exports.EntityListActionButtons = EntityListActionButtons;

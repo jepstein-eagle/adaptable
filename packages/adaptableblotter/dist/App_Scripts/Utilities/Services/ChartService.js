@@ -7,6 +7,8 @@ const ExpressionHelper_1 = require("../Helpers/ExpressionHelper");
 const ChartEnums_1 = require("../ChartEnums");
 const Helper_1 = require("../Helpers/Helper");
 const StringExtensions_1 = require("../Extensions/StringExtensions");
+const LoggingHelper_1 = require("../Helpers/LoggingHelper");
+const NumberExtensions_1 = require("../Extensions/NumberExtensions");
 /*
 Class that buils the chart - probably needs some refactoring but working for the time being.
 Makes use of Expressions to get the data required.
@@ -87,9 +89,9 @@ class ChartService {
     }
     BuildPieChartData(chartDefinition) {
         let dataCounter = new Map();
-        let hasPrimaryColumn = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(chartDefinition.PrimaryColumnId);
-        if (!hasPrimaryColumn) {
-            return null; // should never happen but from now on you have to have a primary column...
+        if (StringExtensions_1.StringExtensions.IsNullOrEmpty(chartDefinition.PrimaryColumnId)) {
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Cannot create pie chart as no Primary Column set.");
+            return null;
         }
         let hasSecondaryColumn = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(chartDefinition.SecondaryColumnId);
         let valueTotal = 0;
@@ -109,25 +111,19 @@ class ChartService {
                         this.getSingleValueTotalForRow(row, chartDefinition, dataCounter, valueTotal);
             });
         }
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let columnType = ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(chartDefinition.PrimaryColumnId, columns);
-        let columnIsNumeric = columnType == Enums_1.DataType.Number;
-        let columnName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.PrimaryColumnId, columns);
+        console.log(dataCounter);
         let dataItems = [];
-        if (dataCounter.size <= 15 || !columnIsNumeric) {
-            // just a few values/slices so they should easily fit in pie chart with
+        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
+        let useRanges = this.shouldUseRange(dataCounter, chartDefinition, columns);
+        // if we don't use ranges but there are too many slices then we return an error
+        if (!useRanges && dataCounter.size > this.blotter.BlotterOptions.chartOptions.pieChartMaxItems) {
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Cannot create pie chart as it contains too many items.");
+            return null;
+        }
+        if (!useRanges) {
             dataCounter.forEach((value, name) => {
-                let sliceItem = {
-                    Name: name.toString(),
-                    Value: Helper_1.Helper.RoundNumber(value, 1),
-                    // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
-                    Ratio: Math.round(value / valueTotal * 1000) / 10
-                };
-                sliceItem.ValueAndName = this.abbreviateNum(sliceItem.Value) + " - " + sliceItem.Name;
-                sliceItem.RatioAndName = sliceItem.Ratio.toFixed(0) + " - " + sliceItem.Name;
-                sliceItem.ValueAndName = StringExtensions_1.StringExtensions.abbreviateString(sliceItem.ValueAndName, 50);
-                sliceItem.RatioAndName = StringExtensions_1.StringExtensions.abbreviateString(sliceItem.RatioAndName, 50);
-                sliceItem.Name = StringExtensions_1.StringExtensions.abbreviateString(sliceItem.Name, 50);
+                let sliceItem = this.createNonRangeDataItem(value, name, valueTotal);
                 dataItems.push(sliceItem);
             });
         }
@@ -167,6 +163,10 @@ class ChartService {
                         range.min = rangeMin.toFixed(1);
                         range.max = rangeMax.toFixed(1);
                     }
+                    else {
+                        range.min = NumberExtensions_1.NumberExtensions.abbreviateNumber(rangeMin);
+                        range.max = NumberExtensions_1.NumberExtensions.abbreviateNumber(rangeMax);
+                    }
                     dataRanges.set(rangeKey, range);
                 }
             });
@@ -188,6 +188,29 @@ class ChartService {
             });
         }
         return dataItems;
+    }
+    createNonRangeDataItem(value, name, valueTotal) {
+        let pieChartDataItem = {
+            Name: name.toString(),
+            Value: Helper_1.Helper.RoundNumber(value, 1),
+            // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
+            Ratio: Math.round(value / valueTotal * 1000) / 10
+        };
+        pieChartDataItem.ValueAndName = NumberExtensions_1.NumberExtensions.abbreviateNumber(pieChartDataItem.Value) + " - " + pieChartDataItem.Name;
+        pieChartDataItem.RatioAndName = pieChartDataItem.Ratio.toFixed(0) + " - " + pieChartDataItem.Name;
+        pieChartDataItem.ValueAndName = StringExtensions_1.StringExtensions.abbreviateString(pieChartDataItem.ValueAndName, 50);
+        pieChartDataItem.RatioAndName = StringExtensions_1.StringExtensions.abbreviateString(pieChartDataItem.RatioAndName, 50);
+        pieChartDataItem.Name = StringExtensions_1.StringExtensions.abbreviateString(pieChartDataItem.Name, 50);
+        return pieChartDataItem;
+    }
+    shouldUseRange(dataCounter, chartDefinition, columns) {
+        let returnValue = false;
+        if (dataCounter.size > 15) {
+            let primaryColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(chartDefinition.PrimaryColumnId, columns);
+            let primaryColumnIsNumeric = ColumnHelper_1.ColumnHelper.isNumericColumn(primaryColumn);
+            returnValue = (primaryColumnIsNumeric);
+        }
+        return returnValue;
     }
     getGroupValueTotalForRow(row, chartDefinition, dataCounter, valueTotal) {
         let primaryCellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.PrimaryColumnId);
@@ -221,22 +244,6 @@ class ChartService {
         }
         valueTotal += 1;
         return valueTotal;
-    }
-    abbreviateNum(largeValue) {
-        let str = "";
-        if (largeValue >= 1000000000) {
-            str = (largeValue / 1000000000).toFixed(1) + "B";
-        }
-        else if (largeValue >= 1000000) {
-            str = (largeValue / 1000000).toFixed(1) + "M";
-        }
-        else if (largeValue >= 1000) {
-            str = (largeValue / 1000).toFixed(1) + "K";
-        }
-        else {
-            str = largeValue.toString();
-        }
-        return str;
     }
 }
 exports.ChartService = ChartService;

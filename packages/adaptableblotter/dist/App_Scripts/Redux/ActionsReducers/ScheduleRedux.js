@@ -1,61 +1,43 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
-/*
-export const FORMAT_COLUMN_ADD = 'FORMAT_COLUMN_ADD';
-export const FORMAT_COLUMN_EDIT = 'FORMAT_COLUMN_EDIT';
-export const FORMAT_COLUMN_DELETE = 'FORMAT_COLUMN_DELETE';
-
-export interface SchedulerAddAction extends Redux.Action {
-    Scheduler: IScheduler
-}
-
-export interface SchedulerEditAction extends Redux.Action {
-    Scheduler: IScheduler
-}
-
-export interface SchedulerDeleteAction extends Redux.Action {
-    Scheduler: IScheduler
-}
-
-export const SchedulerAdd = (Scheduler: IScheduler): SchedulerAddAction => ({
-    type: FORMAT_COLUMN_ADD,
-    Scheduler
-})
-
-export const SchedulerEdit = (Scheduler: IScheduler): SchedulerEditAction => ({
-    type: FORMAT_COLUMN_EDIT,
-    Scheduler
-})
-export const SchedulerDelete = (Scheduler: IScheduler): SchedulerDeleteAction => ({
-    type: FORMAT_COLUMN_DELETE,
-    Scheduler
-})
-*/
+exports.SCHEDULE_ADD = 'SCHEDULE_ADD';
+exports.SCHEDULE_EDIT = 'SCHEDULE_EDIT';
+exports.SCHEDULE_DELETE = 'SCHEDULE_DELETE';
+exports.ScheduleAdd = (schedule) => ({
+    type: exports.SCHEDULE_ADD,
+    schedule
+});
+exports.ScheduleEdit = (index, schedule) => ({
+    type: exports.SCHEDULE_EDIT,
+    index,
+    schedule
+});
+exports.ScheduleDelete = (index, schedule) => ({
+    type: exports.SCHEDULE_DELETE,
+    index,
+    schedule
+});
 const initialScheduleState = {
     Schedules: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.ScheduleReducer = (state = initialScheduleState, action) => {
-    //  let Schedulers: IScheduler[]
+    let schedules;
     switch (action.type) {
-        /*
-        case FORMAT_COLUMN_ADD:
-            Schedulers = [].concat(state.Schedulers);
-            Schedulers.push((<SchedulerAddAction>action).Scheduler);
-            return Object.assign({}, state, { Schedulers: Schedulers });
-
-        case FORMAT_COLUMN_EDIT: {
-            Schedulers = [].concat(state.Schedulers);
-            let index = Schedulers.findIndex(x => x.ColumnId == (<SchedulerAddAction>action).Scheduler.ColumnId)
-            Schedulers[index] = (<SchedulerAddAction>action).Scheduler;
-            return Object.assign({}, state, { Schedulers: Schedulers });
+        case exports.SCHEDULE_ADD:
+            schedules = [].concat(state.Schedules);
+            schedules.push(action.schedule);
+            return Object.assign({}, state, { Schedules: schedules });
+        case exports.SCHEDULE_EDIT: {
+            schedules = [].concat(state.Schedules);
+            let actionTyped = action;
+            schedules[actionTyped.index] = action.schedule;
+            return Object.assign({}, state, { Schedules: schedules });
         }
-        case FORMAT_COLUMN_DELETE:
-            Schedulers = [].concat(state.Schedulers);
-            let index = Schedulers.findIndex(x => x.ColumnId == (<SchedulerDeleteAction>action).Scheduler.ColumnId)
-            Schedulers.splice(index, 1);
-            return Object.assign({}, state, { Schedulers: Schedulers });
-            */
+        case exports.SCHEDULE_DELETE:
+            schedules = [].concat(state.Schedules);
+            schedules.splice(action.index, 1);
+            return Object.assign({}, state, { Schedules: schedules });
         default:
             return state;
     }

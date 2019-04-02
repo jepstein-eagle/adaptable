@@ -55,9 +55,15 @@ class PieChartSecondaryColumnWizard extends React.Component {
     }
     onSecondaryColumnChanged(columns) {
         let isColumn = ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(columns);
+        let secondaryColumnOperation = ChartEnums_1.SecondaryColumnOperation.Count;
+        if (isColumn) {
+            if (columns[0].DataType == Enums_1.DataType.Number) {
+                secondaryColumnOperation = ChartEnums_1.SecondaryColumnOperation.Sum;
+            }
+        }
         this.setState({
             SecondaryColumnId: isColumn ? columns[0].ColumnId : "",
-            SecondaryColumnOperation: ChartEnums_1.SecondaryColumnOperation.Count // always make it count unless they set it explicitly
+            SecondaryColumnOperation: secondaryColumnOperation
         }, () => this.props.UpdateGoBackState());
     }
     canNext() {

@@ -7,4 +7,5 @@ export interface ChartEntityRowProps extends SharedEntityRowProps<ChartEntityRow
 }
 export declare class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
     render(): any;
+    private getChartType;
 }

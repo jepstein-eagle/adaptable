@@ -5,6 +5,7 @@ const react_bootstrap_1 = require("react-bootstrap");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const ColorPicker_1 = require("../ColorPicker");
 const ColumnHelper_1 = require("../../Utilities/Helpers/ColumnHelper");
+const EntityRowItem_1 = require("../Components/EntityRowItem");
 class FlashingCellEntityRow extends React.Component {
     render() {
         let flashingCell = this.props.AdaptableBlotterObject;
@@ -20,11 +21,11 @@ class FlashingCellEntityRow extends React.Component {
             return null;
         }
         let colItems = [].concat(this.props.colItems);
-        colItems[0].Content = React.createElement(react_bootstrap_1.Checkbox, { disabled: isDisabled, onChange: () => this.props.onSelect(flashingCell), checked: flashingCell.IsLive });
-        colItems[1].Content = column.FriendlyName;
-        colItems[2].Content = React.createElement(react_bootstrap_1.FormControl, { disabled: isDisabled, componentClass: "select", value: flashingCell.FlashingCellDuration, onChange: (x) => this.onActionChange(x) }, durations);
-        colItems[3].Content = React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, disabled: isDisabled, value: flashingCell.UpColor, onChange: (x) => this.onUpColorChange(x) });
-        colItems[4].Content = React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, disabled: isDisabled, value: flashingCell.DownColor, onChange: (x) => this.onDownColorChange(x) });
+        colItems[0].Content = React.createElement(EntityRowItem_1.EntityRowItem, { Content: React.createElement(react_bootstrap_1.Checkbox, { disabled: isDisabled, onChange: () => this.props.onSelect(flashingCell), checked: flashingCell.IsLive }) });
+        colItems[1].Content = React.createElement(EntityRowItem_1.EntityRowItem, { Content: column.FriendlyName });
+        colItems[2].Content = React.createElement(react_bootstrap_1.FormControl, { bsSize: 'small', disabled: isDisabled, componentClass: "select", value: flashingCell.FlashingCellDuration, onChange: (x) => this.onActionChange(x) }, durations);
+        colItems[3].Content = React.createElement(EntityRowItem_1.EntityRowItem, { Content: React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, disabled: isDisabled, value: flashingCell.UpColor, onChange: (x) => this.onUpColorChange(x) }) });
+        colItems[4].Content = React.createElement(EntityRowItem_1.EntityRowItem, { Content: React.createElement(ColorPicker_1.ColorPicker, { ColorPalette: this.props.ColorPalette, disabled: isDisabled, value: flashingCell.DownColor, onChange: (x) => this.onDownColorChange(x) }) });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });
     }
     onActionChange(event) {

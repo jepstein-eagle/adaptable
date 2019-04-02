@@ -8,28 +8,29 @@ const Enums_2 = require("../../Utilities/Enums");
 const EntityListActionButtons_1 = require("../Components/Buttons/EntityListActionButtons");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const AdaptableBlotterForm_1 = require("../Components/Forms/AdaptableBlotterForm");
+const EntityRowItem_1 = require("../Components/EntityRowItem");
 class ShortcutEntityRow extends React.Component {
     render() {
         let shortcut = this.props.AdaptableBlotterObject;
         let colItems = [].concat(this.props.colItems);
-        colItems[0].Content = shortcut.ColumnType == Enums_1.DataType.Date ? "Date" : "Numeric";
+        colItems[0].Content = React.createElement(EntityRowItem_1.EntityRowItem, { Content: shortcut.ColumnType == Enums_1.DataType.Date ? "Date" : "Numeric" });
         colItems[1].Content =
-            React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true, key: shortcut.ShortcutKey },
-                React.createElement(react_bootstrap_1.FormGroup, { controlId: shortcut.ShortcutKey },
-                    React.createElement(react_bootstrap_1.FormControl, { componentClass: "select", value: shortcut.ShortcutKey, onChange: (x) => this.onKeySelectChange(x) }, this.props.AvailableKeys.map(x => {
-                        return React.createElement("option", { value: x, key: x }, x);
-                    }))));
+            React.createElement(EntityRowItem_1.EntityRowItem, { Content: React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { inline: true, key: shortcut.ShortcutKey },
+                    React.createElement(react_bootstrap_1.FormGroup, { controlId: shortcut.ShortcutKey },
+                        React.createElement(react_bootstrap_1.FormControl, { bsSize: 'small', componentClass: "select", value: shortcut.ShortcutKey, onChange: (x) => this.onKeySelectChange(x) }, this.props.AvailableKeys.map(x => {
+                            return React.createElement("option", { value: x, key: x }, x);
+                        })))) });
         colItems[2].Content =
-            shortcut.ColumnType == Enums_1.DataType.Date ?
-                "Replace Cell"
-                :
-                    React.createElement(react_bootstrap_1.FormControl, { componentClass: "select", value: shortcut.ShortcutOperation, onChange: (x) => this.onActionChange(x) }, this.props.AvailableActions.map((shortcutOperation) => {
-                        return React.createElement("option", { key: Enums_2.MathOperation[shortcutOperation], value: shortcutOperation }, Enums_2.MathOperation[shortcutOperation]);
-                    }));
+            React.createElement(EntityRowItem_1.EntityRowItem, { Content: shortcut.ColumnType == Enums_1.DataType.Date ?
+                    "Replace Cell"
+                    :
+                        React.createElement(react_bootstrap_1.FormControl, { componentClass: "select", bsSize: 'small', value: shortcut.ShortcutOperation, onChange: (x) => this.onActionChange(x) }, this.props.AvailableActions.map((shortcutOperation) => {
+                            return React.createElement("option", { key: Enums_2.MathOperation[shortcutOperation], value: shortcutOperation }, Enums_2.MathOperation[shortcutOperation]);
+                        })) });
         colItems[3].Content =
-            shortcut.IsDynamic ?
-                shortcut.ShortcutResult :
-                React.createElement(react_bootstrap_1.FormControl, { type: shortcut.ColumnType == Enums_1.DataType.Date ? "date" : "number", placeholder: "Shortcut Result", onChange: (e) => this.onResultChange(e), value: shortcut.ShortcutResult });
+            React.createElement(EntityRowItem_1.EntityRowItem, { Content: shortcut.IsDynamic ?
+                    shortcut.ShortcutResult :
+                    React.createElement(react_bootstrap_1.FormControl, { bsSize: 'small', type: shortcut.ColumnType == Enums_1.DataType.Date ? "date" : "number", placeholder: "Shortcut Result", onChange: (e) => this.onResultChange(e), value: shortcut.ShortcutResult }) });
         colItems[4].Content =
             React.createElement(EntityListActionButtons_1.EntityListActionButtons, { cssClassName: this.props.cssClassName, showEdit: false, shareClick: () => this.props.onShare(), showShare: this.props.TeamSharingActivated, ConfirmDeleteAction: this.props.onDeleteConfirm, EntityType: StrategyConstants.ShortcutStrategyName });
         return React.createElement(AdaptableObjectRow_1.AdaptableObjectRow, { cssClassName: this.props.cssClassName, colItems: colItems });

@@ -18,38 +18,11 @@ class ScheduleStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     }
     InitState() {
         if (this.ScheduleState != this.blotter.AdaptableBlotterStore.TheStore.getState().Schedule) {
-            // just trying one out...
-            let scheduleRule = {
-                DayOfWeek: 5,
-                Hour: 14,
-                Minute: 53
-            };
-            let scheduleTime = {
-                RecurringDate: scheduleRule
-            };
-            let alertScheduleItem = {
-                Alert: {
-                    Header: "Test Schedule",
-                    Msg: "This alert has worked",
-                    MessageType: Enums_1.MessageType.Success,
-                    ShowAsPopup: true
-                }
-            };
-            let reportSchedule = {
-                ScheduleItem: {
-                    Name: "All Data",
-                    ExportDestination: Enums_1.ExportDestination.CSV
-                },
-                ScheduleTime: scheduleTime,
-                ScheduleType: Enums_1.ScheduleType.Report
-            };
-            let alertSchedule = {
-                ScheduleItem: alertScheduleItem,
-                ScheduleTime: scheduleTime,
-                ScheduleType: Enums_1.ScheduleType.Alert
-            };
-            //    this.blotter.ScheduleService.AddSchedule(reportSchedule);
-            this.blotter.ScheduleService.AddSchedule(alertSchedule);
+            // just clear all jobs and recreate - simplest thing to do...
+            this.blotter.ScheduleService.ClearAllJobs();
+            this.blotter.AdaptableBlotterStore.TheStore.getState().Schedule.Schedules.forEach(s => {
+                this.blotter.ScheduleService.AddSchedule(s);
+            });
             this.ScheduleState = this.blotter.AdaptableBlotterStore.TheStore.getState().Schedule;
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Schedule, this.ScheduleState);

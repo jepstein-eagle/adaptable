@@ -21,6 +21,7 @@ class DashboardComponent extends React.Component {
         let showBlotterName = "Show " + blotterName + " Dashboard";
         let hiddenEntitlements = this.props.EntitlementsState.FunctionEntitlements.filter(e => e.AccessLevel == "Hidden");
         let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(vt => ArrayExtensions_1.ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)); //.filter(dc => dc.IsVisible);
+        let style = (this.props.DashboardState.UseSingleColourForButtons) ? StyleConstants.DEFAULT_BSSTYLE : StyleConstants.PRIMARY_BSSTYLE;
         let dashboardSize = this.props.DashboardState.UseExtraSmallButtons ? Enums_1.DashboardSize.XSmall : Enums_1.DashboardSize.Small;
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
             let accessLevel = StrategyHelper_1.StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.EntitlementsState.FunctionEntitlements, control);
@@ -54,11 +55,11 @@ class DashboardComponent extends React.Component {
         }));
         return React.createElement("div", { className: cssBaseClassName }, this.props.DashboardState.DashboardVisibility != Enums_1.Visibility.Hidden &&
             React.createElement("div", { className: "ab_no_margin" }, this.props.DashboardState.DashboardVisibility == Enums_1.Visibility.Minimised ?
-                React.createElement(react_bootstrap_1.ButtonToolbar, { bsSize: "small", bsStyle: "primary", className: "ab_no_padding_no_margin" },
+                React.createElement(react_bootstrap_1.ButtonToolbar, { bsSize: "small", bsStyle: style, className: "ab_no_padding_no_margin" },
                     React.createElement(react_bootstrap_1.OverlayTrigger, { overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipShowButton" },
                             showBlotterName,
                             " ") },
-                        React.createElement(react_bootstrap_1.Button, { bsSize: "small", bsStyle: "primary", onClick: () => this.props.onSetDashboardVisibility(Enums_1.Visibility.Visible) },
+                        React.createElement(react_bootstrap_1.Button, { bsSize: "small", bsStyle: style, onClick: () => this.props.onSetDashboardVisibility(Enums_1.Visibility.Visible) },
                             blotterName,
                             " ",
                             React.createElement(react_bootstrap_1.Glyphicon, { glyph: "chevron-down" }))))

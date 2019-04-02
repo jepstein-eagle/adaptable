@@ -36,7 +36,7 @@ class DashboardPopupComponent extends React.Component {
             return StrategyConstants.getNameForStrategyId(vt);
         });
         let availableValues = this.props.MenuState.MenuItems.filter(x => x.IsVisible && selectedValues.indexOf(x.Label) == -1).map(x => x.Label);
-        let individualHomeToolbarOptions = React.createElement(react_bootstrap_1.Panel, { header: "General Options", bsStyle: "primary", bsSize: 'small' },
+        let individualHomeToolbarOptions = React.createElement("div", null,
             React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineName" },
                 React.createElement(react_bootstrap_1.Col, { xs: 12 },
                     React.createElement(react_bootstrap_1.Checkbox, { onChange: (e) => this.onShowFunctionsDropdownChanged(e), checked: this.props.DashboardState.ShowFunctionsDropdown }, " Show Functions Dropdown ")),

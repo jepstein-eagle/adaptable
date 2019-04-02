@@ -18,7 +18,7 @@ class ColorPicker extends React.Component {
         let ABcolorChoicesOptions = ColorPalette.map(x => React.createElement("option", { key: x }, x));
         let ABcolorChoices = React.createElement("datalist", { id: 'ABcolorChoices' }, ABcolorChoicesOptions);
         return React.createElement("div", { className: "ColorPicker" },
-            React.createElement(react_bootstrap_1.FormControl, Object.assign({}, restProps, { type: "color", style: { width: '70px' }, list: 'ABcolorChoices' })),
+            React.createElement(react_bootstrap_1.FormControl, Object.assign({}, restProps, { type: "color", bsSize: 'small', style: { width: '70px' }, list: 'ABcolorChoices' })),
             ABcolorChoices);
     }
 }

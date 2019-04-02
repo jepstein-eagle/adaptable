@@ -36,9 +36,9 @@ class FreeTextColumnPopupComponent extends React.Component {
         let infoBody = ["A FreeText Column is one where you can insert any values you wish (e.g.comments).", React.createElement("br", null), React.createElement("br", null), "These values are stored with your settings and not with the rest of the data in the grid."];
         let colItems = [
             { Content: "Column", Size: 3 },
-            { Content: "Default Value", Size: 3 },
+            { Content: "Default Value", Size: 4 },
             { Content: "No. Stored Value", Size: 3 },
-            { Content: "", Size: 3 },
+            { Content: "", Size: 2 },
         ];
         let freeTextColumns = this.props.FreeTextColumns.map((FreeTextColumn, index) => {
             return React.createElement(FreeTextColumnEntityRow_1.FreeTextColumnEntityRow, { key: index, cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: FreeTextColumn, Columns: this.props.Columns, UserFilters: null, Index: index, onEdit: () => this.onEdit(index, FreeTextColumn), onShare: () => this.props.onShare(FreeTextColumn), TeamSharingActivated: this.props.TeamSharingActivated, onDeleteConfirm: FreeTextColumnRedux.FreeTextColumnDelete(FreeTextColumn) });

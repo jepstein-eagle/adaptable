@@ -47,11 +47,11 @@ class ChartPopupComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__Chart";
         let infoBody = ["Create Charts to view your grid data visually."];
         let colItems = [
-            { Content: "Title", Size: 3 },
-            { Content: "Subtitle", Size: 3 },
+            { Content: "Name", Size: 3 },
+            { Content: "Description", Size: 4 },
             { Content: "Type", Size: 2 },
             { Content: "Show", Size: 1 },
-            { Content: "", Size: 3 },
+            { Content: "", Size: 2 },
         ];
         let Charts = this.props.ChartDefinitions.map((Chart, index) => {
             return React.createElement(ChartEntityRow_1.ChartEntityRow, { cssClassName: cssClassName, colItems: colItems, AdaptableBlotterObject: Chart, key: Chart.Name, Index: index, onEdit: (index, Chart) => this.onEdit(index, Chart), TeamSharingActivated: this.props.TeamSharingActivated, onShare: () => this.props.onShare(Chart), onDeleteConfirm: ChartRedux.ChartDefinitionDelete(Chart), onShowChart: (chartName) => this.onShowChart(chartName), AccessLevel: this.props.AccessLevel });

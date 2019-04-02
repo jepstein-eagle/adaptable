@@ -41,11 +41,11 @@ class ExportPopupComponent extends React.Component {
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__export";
         let infoBody = ["Create a 'Report' (or use a predefined one) and then export it to specified location.", React.createElement("br", null), React.createElement("br", null)];
         let colItems = [
-            { Content: "Report", Size: 2 },
+            { Content: "Report", Size: 3 },
             { Content: "Columns", Size: 3 },
-            { Content: "Query Details", Size: 4 },
+            { Content: "Query Details", Size: 3 },
             { Content: "Export", Size: 1 },
-            { Content: "", Size: 3 },
+            { Content: "", Size: 2 },
         ];
         let Reports = this.props.SystemReports.concat(this.props.Reports).map((Report, index) => {
             return React.createElement(ReportEntityRow_1.ReportEntityRow, { cssClassName: cssClassName, AdaptableBlotterObject: Report, key: index, colItems: colItems, Index: index, Columns: this.props.Columns, IsLast: index == this.props.Reports.length - 1, UserFilters: this.props.UserFilters, LiveReports: this.props.LiveReports, onShare: () => this.props.onShare(Report), TeamSharingActivated: this.props.TeamSharingActivated, onExport: (exportDestination) => this.onApplyExport(Report.Name, exportDestination), onReportStopLive: (exportDestination) => this.props.onReportStopLive(Report.Name, exportDestination), onEdit: (index, Report) => this.onEdit(index, Report), onDeleteConfirm: ExportRedux.ReportDelete(index) });

@@ -15,6 +15,7 @@ var BlotterHelper;
         returnBlotterOptions.queryOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions.queryOptions, blotterOptions.queryOptions);
         returnBlotterOptions.containerOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions.containerOptions, blotterOptions.containerOptions);
         returnBlotterOptions.generalOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions.generalOptions, blotterOptions.generalOptions);
+        returnBlotterOptions.chartOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions.chartOptions, blotterOptions.chartOptions);
         return returnBlotterOptions;
     }
     BlotterHelper.AssignBlotterOptions = AssignBlotterOptions;

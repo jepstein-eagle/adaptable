@@ -52,6 +52,7 @@ exports.DefaultAdaptableBlotterOptions = {
     chartOptions: {
         displayOnStartUp: false,
         showModal: false,
+        pieChartMaxItems: 50
     },
     generalOptions: {
         useDefaultVendorGridThemes: true,

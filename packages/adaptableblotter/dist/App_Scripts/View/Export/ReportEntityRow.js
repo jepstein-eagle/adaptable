@@ -9,6 +9,7 @@ const OpenfinHelper_1 = require("../../Utilities/Helpers/OpenfinHelper");
 const iPushPullHelper_1 = require("../../Utilities/Helpers/iPushPullHelper");
 const AdaptableObjectRow_1 = require("../Components/AdaptableObjectRow");
 const StrategyConstants = require("../../Utilities/Constants/StrategyConstants");
+const EntityRowItem_1 = require("../Components/EntityRowItem");
 class ReportEntityRow extends React.Component {
     render() {
         let report = this.props.AdaptableBlotterObject;
@@ -34,13 +35,13 @@ class ReportEntityRow extends React.Component {
         // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
         let isSystemReport = ReportHelper_1.ReportHelper.IsSystemReport(report);
         let colItems = [].concat(this.props.colItems);
-        colItems[0].Content = report.Name;
-        colItems[1].Content = ReportHelper_1.ReportHelper.GetReportColumnsDescription(report, this.props.Columns);
-        colItems[2].Content = ReportHelper_1.ReportHelper.GetReportExpressionDescription(report, this.props.Columns);
+        colItems[0].Content = React.createElement(EntityRowItem_1.EntityRowItem, { Content: report.Name });
+        colItems[1].Content = React.createElement(EntityRowItem_1.EntityRowItem, { Content: ReportHelper_1.ReportHelper.GetReportColumnsDescription(report, this.props.Columns) });
+        colItems[2].Content = React.createElement(EntityRowItem_1.EntityRowItem, { Content: ReportHelper_1.ReportHelper.GetReportExpressionDescription(report, this.props.Columns) });
         let exportButton = React.createElement(react_bootstrap_1.OverlayTrigger, { overlay: React.createElement(react_bootstrap_1.Tooltip, { id: "tooltipButton" },
                 " ",
                 "Export Report") },
-            React.createElement(react_bootstrap_1.DropdownButton, { bsSize: "small", bsStyle: "default", title: exportGlyph, key: report.Name, id: report.Name },
+            React.createElement(react_bootstrap_1.DropdownButton, { bsSize: "xsmall", bsStyle: "default", title: exportGlyph, key: report.Name, id: report.Name },
                 csvMenuItem,
                 clipboardMenuItem,
                 OpenfinHelper_1.OpenfinHelper.isRunningInOpenfin() && OpenfinHelper_1.OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem,

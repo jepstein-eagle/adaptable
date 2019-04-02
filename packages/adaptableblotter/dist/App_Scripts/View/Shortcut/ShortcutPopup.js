@@ -30,9 +30,9 @@ class ShortcutPopupComponent extends React.Component {
             "Date shortcuts replace the contents of the cell with a new date value."];
         let colItems = [
             { Content: "Columns", Size: 2 },
-            { Content: "Key", Size: 2 },
+            { Content: "Key", Size: 1 },
             { Content: "Operation", Size: 3 },
-            { Content: "Value", Size: 3 },
+            { Content: "Value", Size: 4 },
             { Content: "", Size: 2 },
         ];
         const shortcutOperationList = [Enums_2.MathOperation.Add, Enums_2.MathOperation.Subtract, Enums_2.MathOperation.Multiply, Enums_2.MathOperation.Divide];

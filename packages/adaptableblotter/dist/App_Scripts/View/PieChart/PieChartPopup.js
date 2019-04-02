@@ -91,7 +91,7 @@ class PieChartPopupComponent extends React.Component {
     }
     render() {
         let cssClassName = this.props.cssClassName + "__PieChart";
-        let infoBody = ["See the count for each distinct visible value in the column as pie chart.", React.createElement("br", null), React.createElement("br", null), "There is an option to view as doughnut and to set the 'Others' threshold."];
+        let infoBody = ["See the count for each distinct visible value in the column as pie chart.", React.createElement("br", null), "There are options to view as doughnut, set the 'Others' threshold (and type) and manage labels."];
         let chartSize = '450px';
         let radiusFactor = 0.8;
         let chartBlock = React.createElement("div", null, this.state.ShowAsDoughnut ?
@@ -221,8 +221,8 @@ class PieChartPopupComponent extends React.Component {
     }
     onThresholdAsPercentChanged(event) {
         let e = event.target;
-        let mode = (e.checked) ? ChartEnums_1.PieChartOthersCategoryType.Percent : ChartEnums_1.PieChartOthersCategoryType.Number;
-        this.setState({ OthersCategoryType: mode });
+        let othersCategoryType = (e.checked) ? ChartEnums_1.PieChartOthersCategoryType.Percent : ChartEnums_1.PieChartOthersCategoryType.Number;
+        this.setState({ OthersCategoryType: othersCategoryType });
     }
     onSliceLabelsPositionChanged(event) {
         let e = event.target;
