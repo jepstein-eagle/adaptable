@@ -28,15 +28,14 @@ export class ScheduleStrategy extends AdaptableStrategyBase implements ISchedule
 
     protected InitState() {
         if (this.ScheduleState != this.blotter.AdaptableBlotterStore.TheStore.getState().Schedule) {
-          // this is wrong... (should do the store do it?). it will add every change :(F
+          
+            // just clear all jobs and recreate - simplest thing to do...
+            this.blotter.ScheduleService.ClearAllJobs();
+
           this.blotter.AdaptableBlotterStore.TheStore.getState().Schedule.Schedules.forEach(s => {
             this.blotter.ScheduleService.AddSchedule(s);
         })
             this.ScheduleState = this.blotter.AdaptableBlotterStore.TheStore.getState().Schedule;
-
-           
-
-
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Schedule, this.ScheduleState)

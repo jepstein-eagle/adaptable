@@ -52,46 +52,7 @@ export module ObjectFactory {
     }
 
 
-    export function CreateTestSchedule(): ISchedule{
-        let scheduleRule: IScheduleRule ={
-            DayOfWeek:2,
-            Hour: 9,
-            Minute: 6
-        }
-       
-        let scheduleTime: IScheduleTime={
-           RecurringDate: scheduleRule
-        }
-
-        let reportSchedule: ISchedule = {
-            ScheduleItem: {
-                Name: "All Data",
-                ExportDestination: ExportDestination.CSV
-            },
-            ScheduleTime: scheduleTime,
-            ScheduleType: ScheduleType.Report
-        }
-
-
-        let alertScheduleItem: IAlertScheduleItem = {
-            Alert: {
-
-                Header: "Test Schedule",
-                Msg: "This alert has worked",
-                MessageType: MessageType.Success,
-                ShowAsPopup: true
-            }
-        }
-
-         let alertSchedule: ISchedule = {
-            ScheduleItem: alertScheduleItem,
-            ScheduleTime: scheduleTime,
-            ScheduleType: ScheduleType.Alert
-        }
-console.log(alertSchedule);
-        return alertSchedule;
-
-    }
+   
 
     export function CreateEmptyPieChartDefinition(): IPieChartDefinition {
         return {
