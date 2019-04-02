@@ -60,9 +60,6 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
         let infoBody: any[] = ["Build multi-column named searches by creating a Query - which will contain a selection of column values, filters and ranges.", <br />, <br />,
             "Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard."]
 
-        let contentSize = (this.props.TeamSharingActivated) ? 6 : 7
-        let buttonSize = (this.props.TeamSharingActivated) ? 3 : 2
-
         let noExistingObjectText = "You have no Advanced Searches.";
         let startWizardText = (this.props.AccessLevel == AccessLevel.ReadOnly) ? "" :
             " Click 'New' to start the Advanced Search Wizard to create a new Advanced Search.";
@@ -71,8 +68,8 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
         let colItems: IColItem[] = [
             { Content: "Current", Size: 1 },
             { Content: "Name", Size: 2 },
-            { Content: "Query", Size: contentSize },
-            { Content: "", Size: buttonSize },
+            { Content: "Query", Size: 7 },
+            { Content: "", Size: 2 },
         ]
 
         let advancedSearchRows = this.props.AdvancedSearches.map((advancedSearch: IAdvancedSearch, index) => {

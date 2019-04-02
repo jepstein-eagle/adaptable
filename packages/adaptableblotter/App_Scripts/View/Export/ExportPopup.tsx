@@ -71,11 +71,11 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         let infoBody: any[] = ["Create a 'Report' (or use a predefined one) and then export it to specified location.", <br />, <br />]
 
         let colItems: IColItem[] = [
-            { Content: "Report", Size: 2 },
+            { Content: "Report", Size: 3 },
             { Content: "Columns", Size: 3 },
-            { Content: "Query Details", Size: 4 },
+            { Content: "Query Details", Size: 3 },
             { Content: "Export", Size: 1 },
-            { Content: "", Size: 3 },
+            { Content: "", Size: 2 },
         ]
 
         let Reports = this.props.SystemReports.concat(this.props.Reports).map((Report: IReport, index) => {

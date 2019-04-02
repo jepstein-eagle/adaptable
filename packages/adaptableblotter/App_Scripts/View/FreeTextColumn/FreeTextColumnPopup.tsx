@@ -55,9 +55,9 @@ class FreeTextColumnPopupComponent extends React.Component<FreeTextColumnPopupPr
 
         let colItems: IColItem[] = [
             { Content: "Column", Size: 3 },
-            { Content: "Default Value", Size: 3 },
-            { Content: "No. Stored Value", Size: 3 },
-            { Content: "", Size: 3 },
+            { Content: "Default Value", Size: 4 },
+            { Content: "No. Stored Value", Size: 3},
+            { Content: "", Size: 2 },
         ]
         let freeTextColumns = this.props.FreeTextColumns.map((FreeTextColumn: IFreeTextColumn, index) => {
             return <FreeTextColumnEntityRow

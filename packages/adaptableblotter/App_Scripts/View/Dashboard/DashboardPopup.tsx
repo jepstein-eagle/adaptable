@@ -77,7 +77,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupComponentPro
 
         let availableValues = this.props.MenuState.MenuItems.filter(x => x.IsVisible && selectedValues.indexOf(x.Label) == -1).map(x => x.Label)
 
-        let individualHomeToolbarOptions = <Panel header="General Options" bsStyle="primary" bsSize='small'>
+        let individualHomeToolbarOptions = <div >
             <FormGroup controlId="formInlineName">
                 <Col xs={12} >
                     <Checkbox onChange={(e) => this.onShowFunctionsDropdownChanged(e)}
@@ -114,7 +114,7 @@ class DashboardPopupComponent extends React.Component<DashboardPopupComponentPro
                     </Form>
                 </Col>
             </FormGroup>
-        </Panel>;
+        </div>;
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText="Dashboard Configuration" bsStyle="primary" glyphicon={StrategyConstants.DashboardGlyph} className="ab_main_popup">

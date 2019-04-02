@@ -59,9 +59,9 @@ class FormatColumnPopupComponent extends React.Component<FormatColumnPopupProps,
         let infoBody: any[] = ["Format a column so it styles with the colours and font properties that you provide.", <br />, <br />, "Unlike Conditional Styles the column is ", <b>always</b>, " formatted as set and is not dependent on a rule being met."]
 
         let colItems: IColItem[] = [
-            { Content: "Column", Size: 3 },
-            { Content: "Format Style", Size: 5 },
-            { Content: "", Size: 3 },
+            { Content: "Column", Size: 4 },
+            { Content: "Format Style", Size: 6 },
+            { Content: "", Size: 2 },
         ]
         let FormatColumns = this.props.FormatColumns.map((formatColumn: IFormatColumn, index) => {
             return <FormatColumnEntityRow

@@ -9,6 +9,7 @@ import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowP
 import { IColItem } from "../UIInterfaces";
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import { IShortcut } from "../../Utilities/Interface/BlotterObjects/IShortcut";
+import { EntityRowItem } from "../Components/EntityRowItem";
 
 export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEntityRow> {
     onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;
@@ -24,40 +25,48 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
         let shortcut: IShortcut = this.props.AdaptableBlotterObject as IShortcut;
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content = shortcut.ColumnType == DataType.Date ? "Date" : "Numeric"
+        colItems[0].Content =  <EntityRowItem Content={ shortcut.ColumnType == DataType.Date ? "Date" : "Numeric" } />;
 
         colItems[1].Content =
+        <EntityRowItem Content={
             <AdaptableBlotterForm inline key={shortcut.ShortcutKey}>
                 <FormGroup controlId={shortcut.ShortcutKey}>
-                    <FormControl componentClass="select" value={shortcut.ShortcutKey} onChange={(x) => this.onKeySelectChange(x)} >
+                    <FormControl bsSize={'small'} componentClass="select" value={shortcut.ShortcutKey} onChange={(x) => this.onKeySelectChange(x)} >
                         {this.props.AvailableKeys.map(x => {
                             return <option value={x} key={x}>{x}</option>
                         })}
                     </FormControl>
                 </FormGroup>
             </AdaptableBlotterForm>
+        } />;
 
         colItems[2].Content =
-            shortcut.ColumnType == DataType.Date ?
+        <EntityRowItem Content={
+               shortcut.ColumnType == DataType.Date ?
+           
                 "Replace Cell"
                 :
-                <FormControl componentClass="select" value={shortcut.ShortcutOperation} onChange={(x) => this.onActionChange(x)} >
+                <FormControl componentClass="select" bsSize={'small'} value={shortcut.ShortcutOperation} onChange={(x) => this.onActionChange(x)} >
                     {
                         this.props.AvailableActions.map((shortcutOperation: MathOperation) => {
                             return <option key={MathOperation[shortcutOperation]} value={shortcutOperation}>{MathOperation[shortcutOperation]}</option>
                         })
                     }
                 </FormControl>
+            } />;
 
-        colItems[3].Content =
+        colItems[3].Content = 
+        <EntityRowItem Content={
             shortcut.IsDynamic ?
                 shortcut.ShortcutResult :
                 <FormControl
-                    type={shortcut.ColumnType == DataType.Date ? "date" : "number"}
+                bsSize={'small'}
+                type={shortcut.ColumnType == DataType.Date ? "date" : "number"}
                     placeholder="Shortcut Result"
                     onChange={(e) => this.onResultChange(e)}
                     value={shortcut.ShortcutResult}
                 />
+        }/>;
         colItems[4].Content =
             <EntityListActionButtons
                 cssClassName={this.props.cssClassName}

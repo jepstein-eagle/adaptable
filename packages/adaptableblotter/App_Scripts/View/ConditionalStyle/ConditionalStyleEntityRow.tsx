@@ -10,6 +10,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { IColItem } from "../UIInterfaces";
 import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { EntityRowItem } from "../Components/EntityRowItem";
 
 export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpressionRowProps<ConditionalStyleEntityRow>, {}> {
 
@@ -20,9 +21,9 @@ export class ConditionalStyleEntityRow extends React.Component<SharedEntityExpre
          
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content =this.getScope(conditionalStyle);
-        colItems[1].Content = <StyleVisualItem Style={conditionalStyle.Style} />
-        colItems[2].Content = ExpressionHelper.ConvertExpressionToString(conditionalStyle.Expression, this.props.Columns)
+        colItems[0].Content = <EntityRowItem Content={ this.getScope(conditionalStyle)} />
+        colItems[1].Content = <EntityRowItem Content={ <StyleVisualItem Style={conditionalStyle.Style} />} />
+        colItems[2].Content = <EntityRowItem Content={ ExpressionHelper.ConvertExpressionToString(conditionalStyle.Expression, this.props.Columns)} />
         let buttons: any = <EntityListActionButtons
             cssClassName={this.props.cssClassName}
             editClick={() => this.props.onEdit(this.props.Index, conditionalStyle)}

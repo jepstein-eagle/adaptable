@@ -8,6 +8,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { IColItem } from "../UIInterfaces";
 import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { EntityRowItem } from "../Components/EntityRowItem";
 
 export class UserFilterEntityRow extends React.Component<SharedEntityExpressionRowProps<UserFilterEntityRow>, {}> {
 
@@ -16,9 +17,9 @@ export class UserFilterEntityRow extends React.Component<SharedEntityExpressionR
 
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content = userFilter.Name
-        colItems[1].Content = ColumnHelper.getFriendlyNameFromColumnId(userFilter.ColumnId, this.props.Columns)
-        colItems[2].Content = ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Columns)
+        colItems[0].Content =  <EntityRowItem Content={ userFilter.Name } />;
+        colItems[1].Content =  <EntityRowItem Content={ ColumnHelper.getFriendlyNameFromColumnId(userFilter.ColumnId, this.props.Columns) } />;
+        colItems[2].Content =  <EntityRowItem Content={ ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Columns) } />;
         colItems[3].Content = <EntityListActionButtons
             cssClassName={this.props.cssClassName}
             editClick={() => this.props.onEdit(this.props.Index, userFilter)}

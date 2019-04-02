@@ -305,7 +305,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
             //for now i'm still initializing the AB even if loading state has failed....
             //we may revisit that later
             this.TheStore.dispatch(InitState())
-            this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configuration", Msg: "Error loading your configuration:" + e, MessageType: MessageType.Error, ShowAsPopup: true  }))
+            this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configuration", Msg: "Error loading your configuration:" + e, MessageType: MessageType.Error, ShowAsPopup: true }))
           })
   }
 }
@@ -682,6 +682,19 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return returnAction;
         }
 
+        /**
+        * Use Case: User sets chart visibility to Maximised (probably from the Chart popup by showing a chart)
+        * Action:  Close all popups (so that user goes directly to the chart)
+        */
+        case SystemRedux.CHART_SET_CHART_VISIBILITY: {
+          // need some logic...but
+          let actionTyped = <SystemRedux.ChartSetChartVisibiityAction>action;
+          if (actionTyped.ChartVisibility == ChartVisibility.Maximised) {
+            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+          }
+          return next(action);
+        }
+
 
         /*******************
         * LAYOUT ACTIONS
@@ -913,6 +926,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return next(action);
         }
 
+       
+
         case ExportRedux.IPP_LOGIN: {
           let actionTyped = <ExportRedux.IPPLoginAction>action;
           iPushPullHelper.Login(actionTyped.Login, actionTyped.Password).then(() => {
@@ -982,10 +997,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
             if (xhr.readyState == 4) {
               if (xhr.status != 200) {
                 LoggingHelper.LogAdaptableBlotterError("TeamSharing share error : " + xhr.statusText, actionTyped.Entity);
-                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: MessageType.Error,  ShowAsPopup: true  }));
+                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error", Msg: "Couldn't share item: " + xhr.statusText, MessageType: MessageType.Error, ShowAsPopup: true }));
               }
               else {
-                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Shared Successfully", MessageType: MessageType.Info , ShowAsPopup: true }));
+                middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Shared Successfully", MessageType: MessageType.Info, ShowAsPopup: true }));
               }
             }
           }
@@ -1142,11 +1157,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           }
           else if (importAction) {
             middlewareAPI.dispatch(importAction)
-            middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", MessageType: MessageType.Info, ShowAsPopup: true  }))
+            middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing", Msg: "Item Successfully Imported", MessageType: MessageType.Info, ShowAsPopup: true }))
           }
           else {
             LoggingHelper.LogAdaptableBlotterError("Unknown item type", actionTyped.Entity)
-            middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import", MessageType: MessageType.Error, ShowAsPopup: true  }))
+            middlewareAPI.dispatch(PopupRedux.PopupShowAlert({ Header: "Team Sharing Error:", Msg: "Item not recognized. Cannot import", MessageType: MessageType.Error, ShowAsPopup: true }))
           }
           return returnAction;
         }

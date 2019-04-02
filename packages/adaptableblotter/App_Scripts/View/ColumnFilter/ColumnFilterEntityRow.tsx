@@ -10,10 +10,11 @@ import { ButtonSave } from "../Components/Buttons/ButtonSave";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { AccessLevel } from "../../Utilities/Enums";
 import { DANGER_BSSTYLE, DEFAULT_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
+import { EntityRowItem } from "../Components/EntityRowItem";
 
 export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow> extends ExpressionEntityRowProps<AdvancedSearchEntityRow> {
     onClear: (columnFilter: IColumnFilter) => void;
-    onSaveColumnFilterasUserFilter:(columnFilter:IColumnFilter)=> void;
+    onSaveColumnFilterasUserFilter: (columnFilter: IColumnFilter) => void;
     ColumnFilter: IColumnFilter;
     AccessLevel: AccessLevel
 }
@@ -22,25 +23,25 @@ export class ColumnFilterEntityRow extends React.Component<ColumnFilterEntityRow
 
     render(): any {
         let colItems: IColItem[] = [].concat(this.props.colItems)
-        colItems[0].Content = ColumnHelper.getFriendlyNameFromColumnId(this.props.ColumnFilter.ColumnId, this.props.Columns)
-        colItems[1].Content = ExpressionHelper.ConvertExpressionToString(this.props.ColumnFilter.Filter, this.props.Columns)
+        colItems[0].Content = <EntityRowItem Content={ColumnHelper.getFriendlyNameFromColumnId(this.props.ColumnFilter.ColumnId, this.props.Columns)} />
+        colItems[1].Content = <EntityRowItem Content={ExpressionHelper.ConvertExpressionToString(this.props.ColumnFilter.Filter, this.props.Columns)} />
         colItems[2].Content = <span>
             <ButtonSave cssClassName={this.props.cssClassName} onClick={() => this.props.onSaveColumnFilterasUserFilter(this.props.ColumnFilter)}
                 overrideTooltip="Save as User Filter"
                 bsStyle={"primary"}
                 DisplayMode="Glyph"
-                size={"small"}
-                overrideDisableButton={this.props.ColumnFilter == null || ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilter.Filter.FilterExpressions) } 
+                size={"xsmall"}
+                overrideDisableButton={this.props.ColumnFilter == null || ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilter.Filter.FilterExpressions)}
                 AccessLevel={this.props.AccessLevel}
-                />
+            />
             {' '}
             <ButtonClear cssClassName={this.props.cssClassName} onClick={() => this.props.onClear(this.props.ColumnFilter)} overrideTooltip="Clear Column Filter"
                 bsStyle={DEFAULT_BSSTYLE}
                 DisplayMode="Glyph"
-                size={"small"}
-                overrideDisableButton={this.props.ColumnFilter == null} 
+                size={"xsmall"}
+                overrideDisableButton={this.props.ColumnFilter == null}
                 AccessLevel={this.props.AccessLevel}
-                />
+            />
         </span>
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} key={this.props.Index} />

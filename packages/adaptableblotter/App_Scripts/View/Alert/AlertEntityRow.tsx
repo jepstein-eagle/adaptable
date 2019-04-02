@@ -12,6 +12,7 @@ import { FormControl } from 'react-bootstrap';
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AlertHelper } from "../../Utilities/Helpers/AlertHelper";
+import { EntityRowItem } from "../Components/EntityRowItem";
 
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
@@ -29,12 +30,12 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
 
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content = this.getColumnandRule(alert)
+        colItems[0].Content = <EntityRowItem Content={this.getColumnandRule(alert)} />
         colItems[1].Content =
-           <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={alert.MessageType} onChange={(x) => this.onMessageTypeChanged(this.props.Index, x)} >
+            <FormControl bsSize={"small"} componentClass="select" placeholder="select" value={alert.MessageType} onChange={(x) => this.onMessageTypeChanged(this.props.Index, x)} >
                 {MessageTypes}
-            </FormControl> 
-        colItems[2].Content = this.setExpressionDescription(alert)
+            </FormControl>
+        colItems[2].Content = <EntityRowItem Content={this.setExpressionDescription(alert)} />
         colItems[3].Content = <EntityListActionButtons
             cssClassName={this.props.cssClassName}
             ConfirmDeleteAction={this.props.onDeleteConfirm}

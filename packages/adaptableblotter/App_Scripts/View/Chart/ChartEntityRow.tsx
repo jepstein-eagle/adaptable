@@ -7,6 +7,8 @@ import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowP
 import { IChartDefinition, ICategoryChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ButtonShowChart } from "../Components/Buttons/ButtonShowChart";
 import { AccessLevel } from "../../Utilities/Enums";
+import { EntityRowItem } from "../Components/EntityRowItem";
+import { ChartType } from "../../Utilities/ChartEnums";
 
 export interface ChartEntityRowProps extends SharedEntityRowProps<ChartEntityRow> {
     onShowChart: (chart: string) => void;
@@ -18,20 +20,20 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
         // assuming only category charts for now - silly assumption to make in due course...
         let Chart: ICategoryChartDefinition = this.props.AdaptableBlotterObject as ICategoryChartDefinition;
         let colItems: IColItem[] = [].concat(this.props.colItems);
-       
-        colItems[0].Content = Chart.Name
-        colItems[1].Content = Chart.Description
-        colItems[2].Content = Chart.ChartType
+
+        colItems[0].Content = <EntityRowItem Content={Chart.Name} />
+        colItems[1].Content = <EntityRowItem Content={Chart.Description} />
+        colItems[2].Content = <EntityRowItem Content={this.getChartType(Chart.ChartType)} />
         colItems[3].Content = <ButtonShowChart
             key={"key:" + Chart.Name}
             style={{ marginLeft: "2px" }}
             cssClassName={this.props.cssClassName}
             onClick={() => this.props.onShowChart(Chart.Name)}
-            size={"small"}
+            size={"xsmall"}
             overrideTooltip="Show Chart"
-            DisplayMode="Glyph" 
+            DisplayMode="Glyph"
             AccessLevel={this.props.AccessLevel}
-            />
+        />
         colItems[4].Content = <EntityListActionButtons
             cssClassName={this.props.cssClassName}
             ConfirmDeleteAction={this.props.onDeleteConfirm}
@@ -40,7 +42,17 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
             showShare={this.props.TeamSharingActivated}
             overrideDisableEdit={null}
             EntityType={StrategyConstants.ChartStrategyName} />
-         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
+        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
+    }
+
+    private getChartType(chartType: ChartType): string {
+        switch (chartType) {
+            case ChartType.CategoryChart:
+                return 'Category Chart';
+            case ChartType.PieChart:
+                return 'Pie Chart';
+        }
     }
 
 }
+

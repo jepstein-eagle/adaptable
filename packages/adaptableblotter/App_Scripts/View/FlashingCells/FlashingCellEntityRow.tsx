@@ -6,6 +6,7 @@ import { ColorPicker } from '../ColorPicker';
 import { IColItem } from "../UIInterfaces";
 import { IFlashingCell } from "../../Utilities/Interface/BlotterObjects/IFlashingCell";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { EntityRowItem } from "../Components/EntityRowItem";
 
 
 export interface FlashingCellEntityRowProps extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {
@@ -21,7 +22,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
     render(): any {
         let flashingCell: IFlashingCell = this.props.AdaptableBlotterObject as IFlashingCell;
 
-           let durations = this.props.FlashingCellDurations.map((flashingCellDuration) => {
+        let durations = this.props.FlashingCellDurations.map((flashingCellDuration) => {
             return <option key={flashingCellDuration} value={flashingCellDuration}>{this.getFriendlyFlashingDuration(flashingCellDuration)}</option>
         })
         if (!this.props.FlashingCellDurations.find(x => x == flashingCell.FlashingCellDuration)) {
@@ -36,13 +37,13 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
 
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content = <Checkbox disabled={isDisabled} onChange={() => this.props.onSelect(flashingCell)} checked={flashingCell.IsLive}></Checkbox>
-        colItems[1].Content = column.FriendlyName
-        colItems[2].Content = <FormControl disabled={isDisabled} componentClass="select" value={flashingCell.FlashingCellDuration} onChange={(x) => this.onActionChange(x)} >
+        colItems[0].Content = <EntityRowItem Content={ <Checkbox disabled={isDisabled} onChange={() => this.props.onSelect(flashingCell)} checked={flashingCell.IsLive}></Checkbox>} />
+        colItems[1].Content = <EntityRowItem Content={column.FriendlyName} />
+        colItems[2].Content = <FormControl bsSize={'small'} disabled={isDisabled} componentClass="select" value={flashingCell.FlashingCellDuration} onChange={(x) => this.onActionChange(x)} >
             {durations}
         </FormControl>
-        colItems[3].Content = <ColorPicker ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.UpColor} onChange={(x) => this.onUpColorChange(x)} />
-        colItems[4].Content = <ColorPicker   ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.DownColor} onChange={(x) => this.onDownColorChange(x)} />
+        colItems[3].Content = <EntityRowItem Content={<ColorPicker ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.UpColor} onChange={(x) => this.onUpColorChange(x)} />} />
+        colItems[4].Content = <EntityRowItem Content={<ColorPicker ColorPalette={this.props.ColorPalette} disabled={isDisabled} value={flashingCell.DownColor} onChange={(x) => this.onDownColorChange(x)} />} />
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems}
         />
     }

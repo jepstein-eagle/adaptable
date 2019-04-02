@@ -7,6 +7,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
 import { IAdvancedSearch } from "../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
+import { EntityRowItem } from "../Components/EntityRowItem";
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow> extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {
     IsCurrentAdvancedSearch: boolean;
@@ -21,9 +22,9 @@ export class AdvancedSearchEntityRow extends React.Component<AdvancedSearchEntit
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = <Radio style={{ padding: "0px", margin: "0px" }} onChange={() => this.props.onSelect(advancedSearch)} checked={this.props.IsCurrentAdvancedSearch} />
-        colItems[1].Content = advancedSearch.Name;
-        colItems[2].Content = ExpressionHelper.ConvertExpressionToString(advancedSearch.Expression, this.props.Columns)
-
+        colItems[1].Content =  <EntityRowItem Content={advancedSearch.Name} />;
+        colItems[2].Content = <EntityRowItem Content={ExpressionHelper.ConvertExpressionToString(advancedSearch.Expression, this.props.Columns)} />
+       
         let buttons: any = <EntityListActionButtons
             cssClassName={this.props.cssClassName}
             ConfirmDeleteAction={this.props.onDeleteConfirm}

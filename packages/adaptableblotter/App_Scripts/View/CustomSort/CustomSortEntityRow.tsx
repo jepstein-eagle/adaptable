@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Helper } from '../../Utilities/Helpers/Helper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
@@ -7,6 +6,7 @@ import { IColItem } from "../UIInterfaces";
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ICustomSort } from "../../Utilities/Interface/BlotterObjects/ICustomSort";
+import { EntityRowItem } from "../Components/EntityRowItem";
 
 export interface CustomSortEntityRowProps extends SharedEntityRowProps<CustomSortEntityRow> {
     ColumnLabel: string
@@ -17,17 +17,17 @@ export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProp
         let customSort: ICustomSort = this.props.AdaptableBlotterObject as ICustomSort;
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content = this.props.ColumnLabel
-        colItems[1].Content = customSort.SortedValues.join(', ')
+        colItems[0].Content = <EntityRowItem Content={this.props.ColumnLabel} />
+        colItems[1].Content = <EntityRowItem Content={customSort.SortedValues.join(', ')} />
         colItems[2].Content = <EntityListActionButtons
-        cssClassName={this.props.cssClassName}
-         ConfirmDeleteAction={this.props.onDeleteConfirm}
+            cssClassName={this.props.cssClassName}
+            ConfirmDeleteAction={this.props.onDeleteConfirm}
             editClick={() => this.props.onEdit(this.props.Index, customSort)}
             shareClick={() => this.props.onShare()}
             showShare={this.props.TeamSharingActivated}
             overrideDisableEdit={this.props.ColumnLabel.includes(GeneralConstants.MISSING_COLUMN)}
             EntityType={StrategyConstants.CustomSortStrategyName} />
-     
+
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
     }
 

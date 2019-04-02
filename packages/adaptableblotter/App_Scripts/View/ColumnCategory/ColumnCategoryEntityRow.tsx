@@ -6,6 +6,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from "../UIInterfaces";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
 import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
+import { EntityRowItem } from "../Components/EntityRowItem";
 
 
 export interface ColumnCategoryEntityRowProps<ColumnCategoryEntityRow> extends SharedEntityExpressionRowProps<ColumnCategoryEntityRow> {
@@ -19,8 +20,8 @@ export class ColumnCategoryEntityRow extends React.Component<ColumnCategoryEntit
         let colItems: IColItem[] = [].concat(this.props.colItems);
         let columnNames: string[] = ColumnCategory.ColumnIds.map(ci => { return ColumnHelper.getFriendlyNameFromColumnId(ci, this.props.Columns) });
 
-        colItems[0].Content = ColumnCategory.ColumnCategoryId;
-        colItems[1].Content = columnNames.join(', ')
+        colItems[0].Content = <EntityRowItem Content={ColumnCategory.ColumnCategoryId} />
+        colItems[1].Content = <EntityRowItem Content={columnNames.join(', ')} />
 
         let buttons: any = <EntityListActionButtons
             cssClassName={this.props.cssClassName}

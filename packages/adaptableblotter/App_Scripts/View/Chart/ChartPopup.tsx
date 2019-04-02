@@ -71,10 +71,10 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
         let colItems: IColItem[] = [
             { Content: "Name", Size: 3 },
-            { Content: "Description", Size: 3 },
+            { Content: "Description", Size: 4 },
             { Content: "Type", Size: 2 },
             { Content: "Show", Size: 1 },
-            { Content: "", Size: 3 },
+            { Content: "", Size: 2 },
         ]
 
         let Charts = this.props.ChartDefinitions.map((Chart: IChartDefinition, index) => {

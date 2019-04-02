@@ -34,6 +34,8 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         let hiddenEntitlements: IEntitlement[] = this.props.EntitlementsState.FunctionEntitlements.filter(e => e.AccessLevel == "Hidden");
         let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(vt => ArrayExtensions.NotContainsItem(hiddenEntitlements, vt));//.filter(dc => dc.IsVisible);
 
+        let style: string = (this.props.DashboardState.UseSingleColourForButtons)? StyleConstants.DEFAULT_BSSTYLE: StyleConstants.PRIMARY_BSSTYLE;
+
         let dashboardSize: DashboardSize = this.props.DashboardState.UseExtraSmallButtons ? DashboardSize.XSmall : DashboardSize.Small;
 
         let visibleDashboardElements = visibleDashboardControls.map((control, idx) => {
@@ -79,9 +81,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                 <div className="ab_no_margin">
                     {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ?
 
-                        <ButtonToolbar bsSize={"small"} bsStyle={"primary"} className="ab_no_padding_no_margin" >
+                        <ButtonToolbar bsSize={"small"} bsStyle={style} className="ab_no_padding_no_margin" >
                             <OverlayTrigger overlay={<Tooltip id="tooltipShowButton">{showBlotterName} </Tooltip>}>
-                                <Button bsSize={"small"} bsStyle={"primary"} onClick={() => this.props.onSetDashboardVisibility(Visibility.Visible)}>
+                                <Button bsSize={"small"} bsStyle={style} onClick={() => this.props.onSetDashboardVisibility(Visibility.Visible)}>
                                     {blotterName} <Glyphicon glyph={"chevron-down"} />
                                 </Button>
                             </OverlayTrigger>

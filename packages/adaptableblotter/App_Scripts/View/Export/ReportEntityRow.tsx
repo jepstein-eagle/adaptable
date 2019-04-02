@@ -11,6 +11,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { IColItem } from "../UIInterfaces";
 import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import { EntityRowItem } from "../Components/EntityRowItem";
 
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
     IsLast: boolean
@@ -39,13 +40,13 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
 
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content = report.Name
-        colItems[1].Content = ReportHelper.GetReportColumnsDescription(report, this.props.Columns)
-        colItems[2].Content = ReportHelper.GetReportExpressionDescription(report, this.props.Columns)
+        colItems[0].Content = <EntityRowItem Content={report.Name} />
+        colItems[1].Content = <EntityRowItem Content={ReportHelper.GetReportColumnsDescription(report, this.props.Columns)} />
+        colItems[2].Content = <EntityRowItem Content={ReportHelper.GetReportExpressionDescription(report, this.props.Columns)} />
 
         let exportButton = <OverlayTrigger overlay={<Tooltip id="tooltipButton" > {"Export Report"}</Tooltip >}>
             <DropdownButton
-                bsSize={"small"}
+                bsSize={"xsmall"}
                 bsStyle={"default"}
                 title={exportGlyph}
                 key={report.Name}

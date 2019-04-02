@@ -41,9 +41,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         EntityType: "",
         cssClassName: "",
         AccessLevel: AccessLevel.Full,
-        editSize: "small",
-        deleteSize: 'small',
-        shareSize: 'small',
+        editSize: "xsmall",
+        deleteSize: 'xsmall',
+        shareSize: 'xsmall',
     };
     render() {
         return <ButtonToolbar className={this.props.cssClassName + StyleConstants.BUTTON_TOOLBAR} bsSize={"small"} style={{ margin: "0px", padding: "0px" }}>

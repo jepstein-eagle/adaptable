@@ -7,6 +7,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { CalculatedColumnHelper } from "../../Utilities/Helpers/CalculatedColumnHelper";
 import { IColumn } from "../../Utilities/Interface/IColumn";
+import { EntityRowItem } from "../Components/EntityRowItem";
 
 interface CalculatedColumnEntityRowProps<CalculatedColumnEntityRow> extends SharedEntityRowProps<CalculatedColumnEntityRow> {
     Columns: IColumn[]
@@ -19,8 +20,8 @@ export class CalculatedColumnEntityRow extends React.Component<CalculatedColumnE
 
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content = calculatedColumn.ColumnId
-        colItems[1].Content = CalculatedColumnHelper.GetExpressionString(calculatedColumn.ColumnExpression, this.props.Columns)
+        colItems[0].Content = <EntityRowItem Content={ calculatedColumn.ColumnId} />
+        colItems[1].Content = <EntityRowItem Content={ CalculatedColumnHelper.GetExpressionString(calculatedColumn.ColumnExpression, this.props.Columns)} />
 
         let buttons: any = <EntityListActionButtons
             cssClassName={this.props.cssClassName}

@@ -11,6 +11,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColItem } from "../UIInterfaces";
 import { IPlusMinusRule } from "../../Utilities/Interface/BlotterObjects/IPlusMinusRule";
 import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
+import { EntityRowItem } from "../Components/EntityRowItem";
 
 export interface PlusMinusEntityRowProps extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
     Column: IColumn
@@ -22,9 +23,9 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
         let x: IPlusMinusRule = this.props.AdaptableBlotterObject as IPlusMinusRule
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content = ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, this.props.Column)
-        colItems[1].Content = <FormControl value={x.NudgeValue.toString()} type="number" placeholder="Enter a Number" onChange={(e) => this.props.onColumnDefaultNudgeValueChange(this.props.Index, e)} />
-        colItems[2].Content = this.wrapExpressionDescription(x)
+        colItems[0].Content = <EntityRowItem Content={ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, this.props.Column)} />;
+        colItems[1].Content = <EntityRowItem Content={<FormControl value={x.NudgeValue.toString()} bsSize={"small"} type="number" placeholder="Enter a Number" onChange={(e) => this.props.onColumnDefaultNudgeValueChange(this.props.Index, e)} />} />;
+        colItems[2].Content = <EntityRowItem Content={this.wrapExpressionDescription(x)} />;
 
         let buttons: any = <EntityListActionButtons
             cssClassName={this.props.cssClassName}
@@ -37,9 +38,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
         colItems[3].Content = buttons
 
         return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
-
     }
-
 
     private wrapExpressionDescription(PlusMinusRule: IPlusMinusRule): string {
         return (PlusMinusRule.IsDefaultNudge) ? "[Default Column Nudge Value]" : ExpressionHelper.ConvertExpressionToString(PlusMinusRule.Expression, this.props.Columns);

@@ -3,16 +3,18 @@ import { Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SelectionMode } from '../../../Utilities/Enums';
+import { SelectionMode, DistinctCriteriaPairValue } from '../../../Utilities/Enums';
 import { ColumnSelector } from "../../Components/Selectors/ColumnSelector";
 import { IPercentBar } from "../../../Utilities/Interface/BlotterObjects/IPercentBar";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 
 
 export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepProps<IPercentBar> {
-   }
+}
 export interface PercentBarSelectColumnWizardState {
-    ColumnId: string
+    ColumnId: string;
+    MinValue: number;
+    MaxValue: number;
 }
 
 export class PercentBarSelectColumnWizard extends React.Component<PercentBarSelectColumnWizardProps, PercentBarSelectColumnWizardState> implements AdaptableWizardStep {
@@ -20,6 +22,8 @@ export class PercentBarSelectColumnWizard extends React.Component<PercentBarSele
         super(props)
         this.state = {
             ColumnId: this.props.Data.ColumnId,
+            MinValue: this.props.Data.MinValue,
+            MaxValue: this.props.Data.MaxValue,
         }
     }
 
@@ -37,7 +41,16 @@ export class PercentBarSelectColumnWizard extends React.Component<PercentBarSele
     }
 
     private onColumnSelectedChanged(columns: IColumn[]) {
-        this.setState({ ColumnId: columns.length > 0 ? columns[0].ColumnId : "" } as PercentBarSelectColumnWizardState, () => this.props.UpdateGoBackState())
+        if (columns.length > 0) {
+            let distinctColumnsValues: number[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, DistinctCriteriaPairValue.RawValue).map(pair => {
+                return pair.RawValue
+            });
+            let minValue = Math.min(...distinctColumnsValues);
+            let maxValue = Math.max(...distinctColumnsValues);
+            this.setState({ ColumnId: columns[0].ColumnId, MinValue: minValue, MaxValue: maxValue } as PercentBarSelectColumnWizardState, () => this.props.UpdateGoBackState())
+        } else {
+            this.setState({ ColumnId: "" } as PercentBarSelectColumnWizardState, () => this.props.UpdateGoBackState())
+        }
     }
 
     public canNext(): boolean {
@@ -47,6 +60,8 @@ export class PercentBarSelectColumnWizard extends React.Component<PercentBarSele
     public canBack(): boolean { return true; }
     public Next(): void {
         this.props.Data.ColumnId = this.state.ColumnId;
+        this.props.Data.MinValue = this.state.MinValue
+        this.props.Data.MaxValue = this.state.MaxValue;
     }
 
     public Back(): void {  //todo
@@ -57,5 +72,5 @@ export class PercentBarSelectColumnWizard extends React.Component<PercentBarSele
     public GetIndexStepDecrement() {
         return 1;
     }
-   
+
 }

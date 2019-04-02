@@ -51,8 +51,8 @@ class ColumnCategoryPopupComponent extends React.Component<ColumnCategoryPopupPr
 
         let colItems: IColItem[] = [
             { Content: "Categry", Size: 2 },
-            { Content: "Columns", Size: 7 },
-            { Content: "", Size: 3 },
+            { Content: "Columns", Size: 8 },
+            { Content: "", Size: 2 },
         ]
 
         let ColumnCategoryRows = this.props.ColumnCategorys.map((x, index) => {
@@ -85,7 +85,7 @@ class ColumnCategoryPopupComponent extends React.Component<ColumnCategoryPopupPr
                 {ColumnCategoryRows.length > 0 ?
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={ColumnCategoryRows} />
                     :
-                    <HelpBlock>Click 'New' to start creating ColumnCategorys.</HelpBlock>
+                    <HelpBlock>Click 'New' to start creating Column Categories.</HelpBlock>
                 }
 
                 {this.state.EditedAdaptableBlotterObject != null &&
