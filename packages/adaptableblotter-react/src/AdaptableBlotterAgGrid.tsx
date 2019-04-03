@@ -1,24 +1,24 @@
 ﻿import * as React from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import { GridOptions } from 'ag-grid-community'
-import AdaptableBlotterReact from './AdaptableBlotterReact'
+import AdaptableBlotter from './AdaptableBlotter'
 import { IAdaptableBlotterOptions } from 'adaptableblotter/types';
 
-export interface AdaptableBlotterAgGridReactProps extends React.ClassAttributes<AdaptableBlotterAgGridReact> {
+export interface AdaptableBlotterAgGridProps extends React.ClassAttributes<AdaptableBlotterAgGrid> {
   AdaptableBlotterOptions: IAdaptableBlotterOptions
   GridOptions: GridOptions
   agTheme?: 'balham' | 'balham-dark' | 'material' | 'fresh' | 'dark' | 'blue' | 'bootstrap'
   agDivStyle?: any
 }
 
-export interface AdaptableBlotterAgGridReactState extends React.ClassAttributes<AdaptableBlotterAgGridReact> {
+export interface AdaptableBlotterAgGridState extends React.ClassAttributes<AdaptableBlotterAgGrid> {
   AdaptableBlotterOptions: IAdaptableBlotterOptions
   GridOptions: GridOptions
 }
 
-export default class AdaptableBlotterAgGridReact extends React.Component<
-  AdaptableBlotterAgGridReactProps,
-  AdaptableBlotterAgGridReactState
+export default class AdaptableBlotterAgGrid extends React.Component<
+  AdaptableBlotterAgGridProps,
+  AdaptableBlotterAgGridState
 > {
   componentWillMount() {
     this.state = {
@@ -34,7 +34,7 @@ export default class AdaptableBlotterAgGridReact extends React.Component<
       : { width: '100%', height: '90%', position: 'absolute', margin: '0px' }
     return (
       <div id="adaptableBlotter-react">
-        <AdaptableBlotterReact
+        <AdaptableBlotter
           AdaptableBlotterOptions={this.state.AdaptableBlotterOptions}
           VendorGridName="agGrid"
         />

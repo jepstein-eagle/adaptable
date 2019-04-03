@@ -4,18 +4,18 @@ import { IAdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter/ty
 
 // This is the main React Wrapper
 // It simply takes an IAdaptableBlotterOptions object and instantiates the appropriate instance of the Adaptable Blotter
-export interface AdaptableBlotterReactProps extends React.ClassAttributes<AdaptableBlotterReact> {
+export interface AdaptableBlotterProps extends React.ClassAttributes<AdaptableBlotter> {
   AdaptableBlotterOptions: IAdaptableBlotterOptions
   VendorGridName: 'agGrid' | 'Hypergrid'
 }
 
-export interface AdaptableBlotterReactState extends React.ClassAttributes<AdaptableBlotterReact> {
+export interface AdaptableBlotterState extends React.ClassAttributes<AdaptableBlotter> {
   AdaptableBlotter: IAdaptableBlotter
 }
 
-export default class AdaptableBlotterReact extends React.Component<
-AdaptableBlotterReactProps,
-AdaptableBlotterReactState
+export default class AdaptableBlotter extends React.Component<
+AdaptableBlotterProps,
+AdaptableBlotterState
   > {
   componentWillMount() {
     const { AdaptableBlotterOptions, VendorGridName } = this.props;
