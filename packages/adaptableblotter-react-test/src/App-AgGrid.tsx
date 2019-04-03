@@ -46,7 +46,13 @@ export default class App extends React.Component<{}, AppState> {
       primaryKey: "tradeId",
       vendorGrid: gridOptions,
       userName: "AgGrid Wrapper user",
-      blotterId: "AgGrid Wrapper"
+      blotterId: "AgGrid Wrapper",
+      containerOptions: {
+        adaptableBlotterContainer: "adaptableBlotter",
+        vendorContainer: "grid",
+        modalContainer: null,
+        chartContainer: null,
+      },
     };
   }
 

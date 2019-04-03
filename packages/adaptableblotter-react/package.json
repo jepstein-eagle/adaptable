@@ -108,8 +108,8 @@
 	},
 	"dependencies": {
 		"adaptableblotter": "^3.3.2",
-		"ag-grid-community": "^20.1.0",
-		"ag-grid-enterprise": "^20.1.0",
+		"ag-grid-community": "^20.2.0",
+		"ag-grid-enterprise": "^20.2.0",
 		"ag-grid-react": "^20.2.0"
 	},
 	"peerDependencies": {

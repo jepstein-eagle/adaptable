@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "adaptableblotter-react": "^3.2.6",
-    "ag-grid-community": "^20.1.0",
-    "ag-grid-enterprise": "^20.1.0",
+    "ag-grid-community": "^20.2.0",
+    "ag-grid-enterprise": "^20.2.0",
     "ag-grid-react": "^20.2.0",
     "autoprefixer": "7.1.6",
     "babel-jest": "^22.1.0",

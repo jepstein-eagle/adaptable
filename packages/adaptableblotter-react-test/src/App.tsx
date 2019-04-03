@@ -29,7 +29,13 @@ export default class App extends React.Component<{}, AppState> {
         primaryKey: "tradeId",
         vendorGrid: gridOptions,
         userName: "Blotter Wrapper user",
-        blotterId: "Adaptable Blotter Wrapper"
+        blotterId: "Adaptable Blotter Wrapper",
+        containerOptions: {
+         adaptableBlotterContainer: "adaptableBlotter",
+          vendorContainer: "grid",
+          modalContainer: null,
+          chartContainer: null,
+        },
       },
       rowData: new DataGenerator().getTrades(15000),
       columnDefs: new ReactHarnessHelper().getTradeSchema()
