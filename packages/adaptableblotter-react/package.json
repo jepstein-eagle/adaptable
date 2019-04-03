@@ -114,8 +114,8 @@
 	},
 	"peerDependencies": {
 		"mathjs": "^5.1.1",
-		"react": "^16.8.6",
-		"react-dom": "^16.8.6"
+		"react": "^16.4.2",
+		"react-dom": "^16.4.2"
 	},
 	"gitHead": "daea4bbb41b9224540adb640f79ff58341734c35"
 }
