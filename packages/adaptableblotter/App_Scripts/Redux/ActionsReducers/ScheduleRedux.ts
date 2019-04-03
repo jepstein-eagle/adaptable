@@ -18,8 +18,7 @@ export interface ScheduleEditAction extends Redux.Action {
 }
 
 export interface ScheduleDeleteAction extends Redux.Action {
-    index: number,
-    schedule: ISchedule
+    index: number
 }
 
 export const ScheduleAdd = (schedule: ISchedule): ScheduleAddAction => ({
@@ -32,10 +31,9 @@ export const ScheduleEdit = (index: number, schedule: ISchedule): ScheduleEditAc
     index,
     schedule
 })
-export const ScheduleDelete = (index: number, schedule: ISchedule): ScheduleDeleteAction => ({
+export const ScheduleDelete = (index: number): ScheduleDeleteAction => ({
     type: SCHEDULE_DELETE,
-    index,
-    schedule
+    index
 })
 
 

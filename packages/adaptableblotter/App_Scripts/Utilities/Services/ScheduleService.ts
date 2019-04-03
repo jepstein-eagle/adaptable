@@ -1,9 +1,11 @@
 import { IScheduleService } from "./Interface/IScheduleService";
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import * as NodeSchedule from 'node-schedule';
-import { ISchedule, IAlertScheduleItem, IReportScheduleItem } from "../Interface/BlotterObjects/ISchedule";
+import { ISchedule, IAlertScheduleItem, IReportScheduleItem, IRecurringDate } from "../Interface/BlotterObjects/ISchedule";
 import { ScheduleType } from "../Enums";
 import { DateTimeFormat } from "igniteui-react-core/ES2015/culture";
+import { DateExtensions } from "../Extensions/DateExtensions";
+import { ArrayExtensions } from "../Extensions/ArrayExtensions";
 
 export class ScheduleService implements IScheduleService {
 
@@ -18,10 +20,19 @@ export class ScheduleService implements IScheduleService {
         if (schedule.ScheduleTime.OneOffDate != null) {
             date = schedule.ScheduleTime.OneOffDate;
         } else {
-            date = new Date(2019, 3, 2, schedule.ScheduleTime.RecurringDate.Hour, schedule.ScheduleTime.RecurringDate.Minute, 0);
+            let scheduleRule: IRecurringDate = schedule.ScheduleTime.RecurringDate;
+            if (scheduleRule != null) { // unlikely but possible
+                let currentDate = new Date();
+                  // check that the day of the week is correct ?
+                if (ArrayExtensions.ContainsItem(scheduleRule.DaysOfWeek, currentDate.getDay())) {
+                    let currentDate = new Date();
+                    date = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDay(), schedule.ScheduleTime.RecurringDate.Hour, schedule.ScheduleTime.RecurringDate.Minute, 0);
+                }
+            }
         }
 
-        if (date != null) {
+        // add check for whether date in the past
+        if (date != null && DateExtensions.IsDateInFuture(date)) {
             switch (schedule.ScheduleType) {
                 case ScheduleType.Alert:
                     this.scheduleAlert(date, schedule);
@@ -43,7 +54,7 @@ export class ScheduleService implements IScheduleService {
                 j.cancel();
             }
         })
-this.jobs=[]
+        this.jobs = []
         console.log("after")
         console.log(this.jobs)
     }

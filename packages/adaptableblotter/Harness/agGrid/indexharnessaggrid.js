@@ -63,7 +63,7 @@ function InitTradeBlotter() {
   const dataGen = new harness.DataGenerator();
   trades = getRowsForGrid(dataGen);
 
- 
+
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
   gridOptions = {
@@ -124,8 +124,7 @@ function InitTradeBlotter() {
       //  licenceKey: getValidStandardKey(),
       //    licenceKey: getValidEnterpriseKey(),
       //licenceKey: getInvalidStandardKey(),
-    //    predefinedConfig: reportJson,
-    licenceKey: 'abc5834u-yt5a4evp1-r1oq9nclf1',
+      //    predefinedConfig: reportJson,
       auditOptions: {
         //     auditCellEdits: true,
         //  auditFunctionEvents: true,
@@ -158,7 +157,7 @@ function InitTradeBlotter() {
       chartOptions: {
         displayOnStartUp: true,
         showModal: false,
-       // pieChartMaxItems: 100
+        // pieChartMaxItems: 100
       },
       generalOptions: {
         // serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
@@ -490,7 +489,7 @@ function getTradeSchema() {
     headerName: 'Desk No.',
     field: 'deskId',
     editable: true,
- //   type: 'abColDefNumber',
+    //   type: 'abColDefNumber',
     // cellRenderer: percentCellRenderer,
     enableRowGroup: true,
     type: 'abColDefString',
@@ -768,18 +767,18 @@ let myJson = {
 
 let reportJson = {
   Layout: {
-		CurrentLayout: "Citi Price",
-		Layouts: [
-			{
-				Columns: [
-					"ask",
-					"bid",
-					"bidOfferSpread"
-				],
-				GridSorts: [],
-			Name: "Citi Price"
-			}
-		]
+    CurrentLayout: "Citi Price",
+    Layouts: [
+      {
+        Columns: [
+          "ask",
+          "bid",
+          "bidOfferSpread"
+        ],
+        GridSorts: [],
+        Name: "Citi Price"
+      }
+    ]
   },
   Export: {
     CurrentReport: "test",

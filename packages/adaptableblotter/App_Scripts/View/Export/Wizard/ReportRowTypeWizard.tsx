@@ -83,6 +83,7 @@ export class ReportRowTypeWizard extends React.Component<ReportRowTypeWizardProp
     }
 
     public GetIndexStepDecrement() {
+        console.log(this.props.Data.ReportColumnScope)
         return (this.props.Data.ReportColumnScope == ReportColumnScope.BespokeColumns) ? 1 : 2;
     }
 

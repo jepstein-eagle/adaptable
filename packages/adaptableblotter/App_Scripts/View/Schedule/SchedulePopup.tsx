@@ -9,12 +9,12 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { AccessLevel, ExportDestination, ScheduleType, MessageType } from "../../Utilities/Enums";
-import { ISchedule, IScheduleRule, IScheduleTime, IAlertScheduleItem } from "../../Utilities/Interface/BlotterObjects/ISchedule";
+import { ISchedule, IScheduleTime, IAlertScheduleItem, IRecurringDate } from "../../Utilities/Interface/BlotterObjects/ISchedule";
 import { ObjectFactory } from "../../Utilities/ObjectFactory";
 
 interface SchedulePopupProps extends StrategyViewPopupProps<SchedulePopupComponent> {
     onAddSchedule: (schedule: ISchedule) => ScheduleRedux.ScheduleAddAction,
-   
+   onDeleteSchedule: (index: number) => ScheduleRedux.ScheduleDeleteAction;
 }
 
 interface SchedulePopupState {
@@ -57,6 +57,15 @@ class SchedulePopupComponent extends React.Component<SchedulePopupProps, Schedul
         AccessLevel={AccessLevel.Full}
         />
 
+        let deleteButton = <ButtonClear cssClassName={cssClassName} onClick={() => this.onDelete()}
+        bsStyle={"default"}
+        overrideText={"Clear Alert"}
+        overrideTooltip="Delete Alert"
+        DisplayMode="Text"
+        size={"small"} 
+        AccessLevel={AccessLevel.Full}
+        />
+
 
         return <div className={cssClassName}>
             <PanelWithImage cssClassName={cssClassName} header={StrategyConstants.ScheduleStrategyName} bsStyle="primary" glyphicon={StrategyConstants.ScheduleGlyph} infoBody={infoBody}>
@@ -64,6 +73,7 @@ class SchedulePopupComponent extends React.Component<SchedulePopupProps, Schedul
                 <span>Schedules here...</span>
                 {clearButton1}
                 {clearButton2}
+                {deleteButton}
 
             </PanelWithImage>
         </div>
@@ -80,15 +90,21 @@ class SchedulePopupComponent extends React.Component<SchedulePopupProps, Schedul
        this.props.onAddSchedule(schedule);
     }
 
+    onDelete() {
+       this.props.onDeleteSchedule(0);
+    }
+
     private CreateTestSchedule1(): ISchedule{
-        let scheduleRule: IScheduleRule ={
-            DayOfWeek:2,
-            Hour: 22,
-            Minute: 12
+        let recurringDate: IRecurringDate ={
+            DaysOfWeek:[3],
+            Hour: 16,
+            Minute: 47
         }
+
+        let newDate: Date = new Date();
        
         let scheduleTime: IScheduleTime={
-           RecurringDate: scheduleRule
+           RecurringDate: recurringDate
         }
 
         let alertScheduleItem: IAlertScheduleItem = {
@@ -111,14 +127,14 @@ class SchedulePopupComponent extends React.Component<SchedulePopupProps, Schedul
 
     }
     private CreateTestSchedule2(): ISchedule{
-        let scheduleRule: IScheduleRule ={
-            DayOfWeek:2,
-            Hour: 21,
-            Minute: 45
+        let recurringDate: IRecurringDate ={
+            DaysOfWeek:[3],
+            Hour: 16,
+            Minute: 48
         }
        
         let scheduleTime: IScheduleTime={
-           RecurringDate: scheduleRule
+           RecurringDate: recurringDate
         }
 
         let reportSchedule: ISchedule = {
@@ -149,6 +165,7 @@ function mapStateToProps() {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddSchedule: (schedule: ISchedule) => dispatch(ScheduleRedux.ScheduleAdd(schedule)),
+        onDeleteSchedule: (index: number) => dispatch(ScheduleRedux.ScheduleDelete(index)),
     };
 }
 

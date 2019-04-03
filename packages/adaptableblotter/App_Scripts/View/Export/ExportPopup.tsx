@@ -109,7 +109,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ExportStrategyName} bsStyle="primary" glyphicon={StrategyConstants.ExportGlyph} infoBody={infoBody} button={newButton} >
 
                 {Reports.length > 0 ?
-                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Reports} allowOverflow={false} />
+                    <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Reports} allowOverflow={true} />
                     :
                     <HelpBlock >Click 'New' to create a new Report.  A Report is named group of columns and Unique values..</HelpBlock>
                 }

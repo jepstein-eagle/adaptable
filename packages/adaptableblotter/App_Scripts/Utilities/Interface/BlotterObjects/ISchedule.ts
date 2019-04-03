@@ -11,19 +11,17 @@ export interface ISchedule extends IAdaptableBlotterObject {
 export interface IScheduleTime {
   // needs work... has to be either a one off date or a recurrence rule
   OneOffDate?: Date,
-  RecurringDate?: IScheduleRule,
-
+  RecurringDate?: IRecurringDate,
 }
 
-export interface IScheduleRule {
-  // not quite right but...
-  DayOfWeek: number // weekday? monday?
+export interface IRecurringDate {
+  // can make cleverer over time if need be...
+  DaysOfWeek: number[] 
   Hour: number;
   Minute: number;
 }
 
 export interface IScheduleItem {
-
 }
 
 export interface IReportScheduleItem extends IScheduleItem {

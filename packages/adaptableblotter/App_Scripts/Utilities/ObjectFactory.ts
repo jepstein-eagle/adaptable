@@ -33,7 +33,6 @@ import { DefaultCategoryChartProperties } from './Defaults/DefaultCategoryChartP
 import { ILicenceInfo } from './Interface/ILicenceInfo';
 import { ChartType, SecondaryColumnOperation } from './ChartEnums';
 import { DefaultPieChartProperties } from './Defaults/DefaultPieChartProperties';
-import { ISchedule, IScheduleRule, IScheduleTime, IAlertScheduleItem } from './Interface/BlotterObjects/ISchedule';
 
 
 export module ObjectFactory {

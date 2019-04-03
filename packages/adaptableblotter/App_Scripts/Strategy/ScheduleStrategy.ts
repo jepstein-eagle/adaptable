@@ -4,11 +4,8 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { IScheduleStrategy } from './Interface/IScheduleStrategy'
 import { ScheduleState } from '../Redux/ActionsReducers/Interface/IState';
-import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { StateChangedTrigger, ExportDestination, ScheduleType, MessageType } from '../Utilities/Enums';
+import { StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { IReportScheduleItem, IScheduleItem, ISchedule, IAlertScheduleItem, IScheduleTime, IScheduleRule } from '../Utilities/Interface/BlotterObjects/ISchedule';
-import { IAdaptableAlert } from '../Utilities/Interface/IMessage';
 
 export class ScheduleStrategy extends AdaptableStrategyBase implements IScheduleStrategy {
     protected ScheduleState: ScheduleState
