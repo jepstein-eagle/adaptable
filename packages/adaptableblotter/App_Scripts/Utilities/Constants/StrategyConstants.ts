@@ -5,7 +5,7 @@ export const AlertStrategyId: string = "Alert"
 export const ApplicationStrategyId: string = "Application"
 export const BulkUpdateStrategyId: string = "BulkUpdate"
 export const CalculatedColumnStrategyId: string = "CalculatedColumn"
-export const CalendarStrategyId: string = "Calendar"
+export const CalendarStrategyId: string = "Calendar"    
 export const CellSummaryStrategyId: string = "CellSummary"
 export const CellValidationStrategyId: string = "CellValidation"
 export const ChartStrategyId: string = "Chart"
@@ -28,7 +28,7 @@ export const PercentBarStrategyId: string = "PercentBar"
 export const PieChartStrategyId: string = "PieChart"
 export const PlusMinusStrategyId: string = "PlusMinus"
 export const QuickSearchStrategyId: string = "QuickSearch"
-export const ScheduleStrategyId: string = "Schedule"
+export const ReminderStrategyId: string = "Reminder"
 export const SelectColumnStrategyId: string = "SelectColumn"
 export const ShortcutStrategyId: string = "Shortcut"
 export const SmartEditStrategyId: string = "SmartEdit"
@@ -64,7 +64,7 @@ export const PercentBarStrategyName: string = "Percent Bar"
 export const PieChartStrategyName: string = "Pie Chart"
 export const PlusMinusStrategyName: string = "Plus Minus"
 export const QuickSearchStrategyName: string = "Quick Search"
-export const ScheduleStrategyName: string = "Schedule"
+export const ReminderStrategyName: string = "Reminder"
 export const SelectColumnStrategyName: string = "Select Column"
 export const ShortcutStrategyName: string = "Shortcut"
 export const SmartEditStrategyName: string = "Smart Edit"
@@ -101,7 +101,7 @@ export const PercentBarGlyph: string = "transfer"
 export const PieChartGlyph: string = "adjust"
 export const PlusMinusGlyph: string = "plus-sign"
 export const QuickSearchGlyph: string = "eye-open"
-export const ScheduleGlyph: string = "bell"
+export const ReminderGlyph: string = "bell"
 export const SelectColumnGlyph: string = "compressed"
 export const ShortcutGlyph: string = "road"
 export const SmartEditGlyph: string = "pencil"
@@ -163,8 +163,8 @@ export function getIdForStrategyName(strategyName: string) {
             return PlusMinusStrategyId
         case QuickSearchStrategyName:
             return QuickSearchStrategyId
-        case ScheduleStrategyName:
-            return ScheduleStrategyId
+        case ReminderStrategyName:
+            return ReminderStrategyId
         case SelectColumnStrategyName:
             return SelectColumnStrategyId;
         case CellSummaryStrategyName:
@@ -238,8 +238,8 @@ export function getNameForStrategyId(strategyID: string) {
         case QuickSearchStrategyId:
             return QuickSearchStrategyName
         case QuickSearchStrategyId:
-            return ScheduleStrategyName
-        case ScheduleStrategyId:
+            return ReminderStrategyName
+        case ReminderStrategyId:
             return SelectColumnStrategyName;
         case CellSummaryStrategyId:
             return CellSummaryStrategyName;
@@ -306,8 +306,8 @@ export function getGhyphiconForStrategyId(strategyID: string) {
             return PlusMinusGlyph
         case QuickSearchStrategyId:
             return QuickSearchGlyph
-        case ScheduleStrategyId:
-            return ScheduleGlyph
+        case ReminderStrategyId:
+            return ReminderGlyph
         case ShortcutStrategyId:
             return ShortcutGlyph
         case SelectColumnStrategyId:

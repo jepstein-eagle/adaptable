@@ -49,7 +49,7 @@ import { PieChartPopup } from './PieChart/PieChartPopup';
 import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
 import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
 import { ChartDisplayPopup } from './Chart/ChartDisplayPopup';
-import { SchedulePopup } from './Schedule/SchedulePopup';
+import { ReminderPopup } from './Reminder/ReminderPopup';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup: AdvancedSearchPopup,
@@ -80,7 +80,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   PieChartPopup: PieChartPopup,
   PlusMinusPopup: PlusMinusPopup,
   QuickSearchPopup: QuickSearchPopup,
-  SchedulePopup: SchedulePopup,
+  ReminderPopup: ReminderPopup,
   CellSummaryPopup: CellSummaryPopup,
   SmartEditPopup: SmartEditPopup,
   ShortcutPopup: ShortcutPopup,

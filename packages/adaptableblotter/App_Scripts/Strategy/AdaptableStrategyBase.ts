@@ -14,6 +14,8 @@ import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
+import { IDataSource } from '../Utilities/Interface/BlotterObjects/IDataSource';
+
 
 
 export abstract class AdaptableStrategyBase implements IStrategy {
@@ -162,12 +164,12 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void {
         let state: AdaptableBlotterState = this.blotter.AdaptableBlotterStore.TheStore.getState();
 
-        let dataSource: string = state.DataSource.DataSources.find(ds => ds == state.DataSource.CurrentDataSource)
+        let dataSource: IDataSource = state.DataSource.DataSources.find(ds => ds.Name == state.DataSource.CurrentDataSource);
         let advancedSearch: IAdvancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch);
 
         // lets get the searchstate
         let blotterSearchState: IBlotterSearchState = {
-            dataSource: StringExtensions.IsNotNullOrEmpty(dataSource) ? dataSource : "",
+            dataSource: dataSource == null ? null : dataSource,
             advancedSearch: advancedSearch == null ? null : advancedSearch,
             quickSearch: state.QuickSearch.QuickSearchText,
             columnFilters: state.ColumnFilter.ColumnFilters

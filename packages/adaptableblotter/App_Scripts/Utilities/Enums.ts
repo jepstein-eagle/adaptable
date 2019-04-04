@@ -203,7 +203,7 @@ export enum StateChangedTrigger {
     PieChart = "PieChart",
     PlusMinus = "PlusMinus",
     QuickSearch = "QuickSearch",
-    Schedule = "Schedule",
+    Reminder = "Reminder",
     CellSummary = "CellSummary",
     Shortcut = "Shortcut",
     SmartEdit = "SmartEdit",
@@ -290,7 +290,4 @@ export enum DashboardSize {
     XSmall = 'xsmall'
 }
 
-export enum  ScheduleType {
-    Report = 'Report',
-    Alert = 'Alert'
-}
+

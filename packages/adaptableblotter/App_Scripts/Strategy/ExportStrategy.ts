@@ -5,7 +5,7 @@ import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import { IExportStrategy } from './Interface/IExportStrategy'
 import { ILiveReport } from "../Utilities/Interface/Reports/ILiveReport";
-import { ExportDestination, MessageType, StateChangedTrigger } from '../Utilities/Enums';
+import { ExportDestination, StateChangedTrigger } from '../Utilities/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ReportHelper } from '../Utilities/Helpers/ReportHelper';
@@ -13,10 +13,9 @@ import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash'
 import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
-import { IReport } from "../Utilities/Interface/BlotterObjects/IReport";
+import { IReport, IAutoExport } from "../Utilities/Interface/BlotterObjects/IReport";
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { IAdaptableAlert } from '../Utilities/Interface/IMessage';
 
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
@@ -32,7 +31,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         super(StrategyConstants.ExportStrategyId, blotter)
 
 
-        OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
+        OpenfinHelper.OnExcelDisconnected().Subscribe(() => {
             LoggingHelper.LogAdaptableBlotterInfo("Excel closed stopping all Live Excel");
             this.CurrentLiveReports.forEach(cle => {
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(
@@ -55,13 +54,13 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(
                 SystemRedux.ReportStartLive(liveReport.Report, workbookSavedEvent.NewName, ExportDestination.OpenfinExcel));
         })
-        this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, event) => {
+        this.blotter.DataService.OnDataSourceChanged().Subscribe(() => {
             this.throttledRecomputeAndSendLiveExcelEvent()
         })
-        this.blotter.onRefresh().Subscribe((sender, event) => {
+        this.blotter.onRefresh().Subscribe(() => {
             this.throttledRecomputeAndSendLiveExcelEvent()
         })
-        this.blotter.onSelectedCellsChanged().Subscribe((sender, event) => {
+        this.blotter.onSelectedCellsChanged().Subscribe(() => {
             if (ArrayExtensions.IsNotNullOrEmpty(this.CurrentLiveReports)) {
                 let liveReport = this.CurrentLiveReports.find(x => x.Report == ReportHelper.SELECTED_CELLS_REPORT)
                 if (liveReport) {
@@ -71,8 +70,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         })
 
 
-       
-        
+
+
     }
 
     protected addPopupMenuItem() {
@@ -262,6 +261,20 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
     protected InitState() {
         if (this.ExportState != this.blotter.AdaptableBlotterStore.TheStore.getState().Export) {
+
+            // schedule - not quite right but we will get there...
+            // not worked out how to decide destination
+
+
+            // just clear all jobs and recreate - simplest thing to do...
+            this.blotter.ScheduleService.ClearAllExportJobs();
+
+            
+            this.blotter.AdaptableBlotterStore.TheStore.getState().Export.AutoExports.forEach((ae: IAutoExport) => {
+                      this.blotter.ScheduleService.AddReportSchedule(ae);
+            })
+
+
             this.ExportState = this.blotter.AdaptableBlotterStore.TheStore.getState().Export;
 
             if (this.blotter.isInitialised) {

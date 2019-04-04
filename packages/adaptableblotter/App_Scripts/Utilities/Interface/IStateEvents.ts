@@ -4,6 +4,8 @@ import { ICustomSort } from "./BlotterObjects/ICustomSort";
 import { IColumnFilter } from "./BlotterObjects/IColumnFilter";
 import { IAdvancedSearch } from "./BlotterObjects/IAdvancedSearch";
 import { IAdaptableAlert } from "./IMessage";
+import { IDataChangedInfo } from "../../Api/Interface/IDataChangedInfo";
+import { IDataSource } from "./BlotterObjects/IDataSource";
 
 
 export interface IFDC3Schema {
@@ -49,7 +51,7 @@ export interface IStateChangedInfo {
   stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
   'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
   'Export' | 'FlashingCell' | 'FormatColumn' | 'FreeTextColumn' | 'Layout' | 'ColumnCategory' | 'PieChart' |
-  'PercentBar' | 'PlusMinus' | 'QuickSearch' | 'CellSummary' | 'Shortcut' | 'SmartEdit' |'Schedule'| 'Theme' | 'UserFilter';
+  'PercentBar' | 'PlusMinus' | 'QuickSearch' | 'CellSummary' | 'Shortcut' | 'SmartEdit' |'Reminder'| 'Theme' | 'UserFilter';
   userState: IUserState;
 }
 
@@ -82,9 +84,9 @@ export interface ISearchChangedInfo {
  */
 export interface IBlotterSearchState {
   /**
-   * Current Static Search (if any selected)
+   * Current Static Data Source (if any selected)
    */
-  dataSource: string;
+  dataSource: IDataSource;
 
   /**
    * Current Advanced Search (if any selected)

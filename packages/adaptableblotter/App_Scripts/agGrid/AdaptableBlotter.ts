@@ -133,7 +133,7 @@ import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdapt
 import 'ag-grid-enterprise';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
-import { ScheduleStrategy } from '../Strategy/ScheduleStrategy';
+import { ReminderStrategy } from '../Strategy/ReminderStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -245,7 +245,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(this))
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
-        this.Strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(this))
+        this.Strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(this))
 
         iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
 

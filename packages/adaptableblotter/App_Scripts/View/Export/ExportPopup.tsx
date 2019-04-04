@@ -13,7 +13,6 @@ import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ReportEntityRow } from './ReportEntityRow'
-import { ReportWizard } from './Wizard/ReportWizard'
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
@@ -26,8 +25,10 @@ import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
 import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
-import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
+import { IReport, IAutoExport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
+import { ReportWizard } from "./ReportWizard/ReportWizard";
+import { AutoExportWizard } from "./AutoExportWizard/AutoExportWizard";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],
@@ -130,6 +131,22 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                         canFinishWizard={() => this.canFinishWizard()}
                     />
                 }
+
+
+<AutoExportWizard
+                        cssClassName={cssWizardClassName}
+                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IAutoExport}
+                        ModalContainer={this.props.ModalContainer}
+                        ConfigEntities={this.props.Reports}
+                        Columns={this.props.Columns}
+                        UserFilters={this.props.UserFilters}
+                        SystemFilters={this.props.SystemFilters}
+                        Blotter={this.props.Blotter}
+                        WizardStartIndex={this.state.WizardStartIndex}
+                        onCloseWizard={() => this.onCloseWizard()}
+                        onFinishWizard={() => this.onFinishWizard()}
+                        canFinishWizard={() => this.canFinishWizard()}
+                    />
             </PanelWithButton>
         </div>
     }

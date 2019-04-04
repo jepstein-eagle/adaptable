@@ -7,4 +7,5 @@ export interface IExportApi {
   GetAllReports(): IReport[];
   GetAllLiveReports(): ILiveReport[];
   SendReport(reportName: string, destination: ExportDestination): void;
+ // ExportReport(adaptableExport: IAdaptableExport): void;
 }

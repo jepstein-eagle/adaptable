@@ -4,6 +4,7 @@ import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'rea
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+import { ReportRowScope } from "../../../Utilities/Enums";
 
 export interface ReportSettingsWizardProps extends AdaptableWizardStepProps<IReport> {
     Reports: IReport[]
@@ -61,7 +62,7 @@ export class ReportSettingsWizard extends React.Component<ReportSettingsWizardPr
         return 1;
     }
     public GetIndexStepDecrement(){
-        return 1;
+        return (this.props.Data.ReportRowScope == ReportRowScope.ExpressionRows) ? 1 : 2;
     }
    
 }

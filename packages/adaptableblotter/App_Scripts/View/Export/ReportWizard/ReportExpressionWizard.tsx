@@ -20,7 +20,7 @@ export class ReportExpressionWizard extends ExpressionBuilderPage implements Ada
     }
 
     public GetIndexStepDecrement(){
-        return (this.props2.Data.ReportColumnScope== ReportColumnScope.BespokeColumns)? 1: 2;
+        return  1;
     }
    
 }

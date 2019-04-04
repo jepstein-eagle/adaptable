@@ -14,7 +14,7 @@ import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFi
 import { IUserTheme } from "../../../Utilities/Interface/BlotterObjects/IUserTheme";
 import { IPercentBar } from "../../../Utilities/Interface/BlotterObjects/IPercentBar";
 import { IFreeTextColumn } from "../../../Utilities/Interface/BlotterObjects/IFreeTextColumn";
-import { IReport } from "../../../Utilities/Interface/BlotterObjects/IReport";
+import { IReport, IAutoExport } from "../../../Utilities/Interface/BlotterObjects/IReport";
 import { IFlashingCell } from "../../../Utilities/Interface/BlotterObjects/IFlashingCell";
 import { ICustomSort } from "../../../Utilities/Interface/BlotterObjects/ICustomSort";
 import { IConditionalStyle } from "../../../Utilities/Interface/BlotterObjects/IConditionalStyle";
@@ -34,7 +34,7 @@ import { IMenuItem, IContextMenu } from '../../../Utilities/Interface/IMenu';
 import { IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPopup, IAboutPopup, IAdaptableAlert } from '../../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../../Utilities/ChartEnums';
 import { IPieChart } from "../../../Utilities/Interface/BlotterObjects/IPieChart";
-import { ISchedule } from "../../../Utilities/Interface/BlotterObjects/ISchedule";
+import { IReminder } from "../../../Utilities/Interface/BlotterObjects/IReminder";
 import { IDataSource } from "../../../Utilities/Interface/BlotterObjects/IDataSource";
 
 // Base interface
@@ -212,7 +212,7 @@ export interface DataSourceState extends IUserState {
 export interface ExportState extends IUserState {
     CurrentReport: string;
     Reports: IReport[];
-
+    AutoExports: IAutoExport[];
 }
 
 export interface FlashingCellState extends IUserState {
@@ -253,8 +253,8 @@ export interface QuickSearchState extends IUserState {
     Style: IStyle;
 }
 
-export interface ScheduleState extends IUserState {
-    Schedules: ISchedule[];
+export interface ReminderState extends IUserState {
+    Reminders: IReminder[];
 }
 
 

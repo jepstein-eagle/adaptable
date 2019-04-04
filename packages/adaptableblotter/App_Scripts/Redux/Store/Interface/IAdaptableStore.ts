@@ -44,7 +44,7 @@ export interface AdaptableBlotterState {
     TeamSharing: AdaptableBlotterStates.TeamSharingState;
     Theme: AdaptableBlotterStates.ThemeState;
     UserFilter: AdaptableBlotterStates.UserFilterState;
-    Schedule: AdaptableBlotterStates.ScheduleState;
+    Reminder: AdaptableBlotterStates.ReminderState;
 }
 
 export interface IAdaptableBlotterStore {

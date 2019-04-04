@@ -20,7 +20,7 @@ import { IAdvancedSearch } from "./Interface/BlotterObjects/IAdvancedSearch";
 import { ICategoryChartDefinition, IPieChartDefinition } from "./Interface/BlotterObjects/IChartDefinition";
 import { IAlertDefinition } from "./Interface/BlotterObjects/IAlertDefinition";
 import { IRange } from "./Interface/Expression/IRange";
-import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ActionMode, LicenceScopeType, LicenceUserType, ScheduleType, ExportDestination } from './Enums';
+import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ActionMode, LicenceScopeType, LicenceUserType } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { ColumnHelper } from './Helpers/ColumnHelper';
@@ -56,8 +56,6 @@ export module ObjectFactory {
         return { Name: EMPTY_STRING, Description: EMPTY_STRING }
     }
 
-
-   
 
     export function CreateEmptyPieChartDefinition(): IPieChartDefinition {
         return {
