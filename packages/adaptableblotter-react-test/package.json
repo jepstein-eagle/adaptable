@@ -3,7 +3,7 @@
   "version": "0.4.7",
   "private": true,
   "dependencies": {
-    "adaptableblotter-react": "^3.2.6",
+    "adaptableblotter-react": "^3.2.7",
     "ag-grid-community": "^20.1.0",
     "ag-grid-enterprise": "^20.1.0",
     "ag-grid-react": "^20.1.0",
