@@ -298,25 +298,25 @@ export module ExpressionHelper {
                 if (dataType == DataType.Date) {
                     return "After "
                 } else {
-                    return "> "
+                    return "Greater Than "
                 }
             case LeafExpressionOperator.LessThan:
                 if (dataType == DataType.Date) {
                     return "Before "
                 } else {
-                    return "< "
+                    return "Less Than "
                 }
             case LeafExpressionOperator.GreaterThanOrEqual:
                 if (dataType == DataType.Date) {
                     return "After or On "
                 } else {
-                    return ">= "
+                    return "Greater Than or Equals "
                 }
             case LeafExpressionOperator.LessThanOrEqual:
                 if (dataType == DataType.Date) {
                     return "Before or On "
                 } else {
-                    return "<= "
+                    return "Less Than or Equals "
                 }
             case LeafExpressionOperator.Between:
                 return " Between "

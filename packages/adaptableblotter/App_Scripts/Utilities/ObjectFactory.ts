@@ -33,6 +33,7 @@ import { DefaultCategoryChartProperties } from './Defaults/DefaultCategoryChartP
 import { ILicenceInfo } from './Interface/ILicenceInfo';
 import { ChartType, SecondaryColumnOperation } from './ChartEnums';
 import { DefaultPieChartProperties } from './Defaults/DefaultPieChartProperties';
+import { IDataSource } from './Interface/BlotterObjects/IDataSource';
 
 
 export module ObjectFactory {
@@ -48,6 +49,11 @@ export module ObjectFactory {
 
     export function CreateEmptyCustomSort(): ICustomSort {
         return { ColumnId: EMPTY_STRING, SortedValues: [] }
+    }
+
+
+    export function CreateEmptyDataSource(): IDataSource {
+        return { Name: EMPTY_STRING, Description: EMPTY_STRING }
     }
 
 

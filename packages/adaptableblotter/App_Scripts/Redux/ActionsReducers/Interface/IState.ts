@@ -35,6 +35,7 @@ import { IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPo
 import { ChartVisibility } from '../../../Utilities/ChartEnums';
 import { IPieChart } from "../../../Utilities/Interface/BlotterObjects/IPieChart";
 import { ISchedule } from "../../../Utilities/Interface/BlotterObjects/ISchedule";
+import { IDataSource } from "../../../Utilities/Interface/BlotterObjects/IDataSource";
 
 // Base interface
 export interface IState {
@@ -204,7 +205,7 @@ export interface DashboardState extends IUserState {
 }
 
 export interface DataSourceState extends IUserState {
-    DataSources: string[];
+    DataSources: IDataSource[];
     CurrentDataSource: string;
 }
 

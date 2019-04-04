@@ -13,12 +13,13 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups'
 import { InputGroup, DropdownButton, MenuItem } from "react-bootstrap";
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
 import { DashboardSize } from "../../Utilities/Enums";
+import { IDataSource } from "../../Utilities/Interface/BlotterObjects/IDataSource";
 
 
 interface DataSourceToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<DataSourceToolbarControlComponent> {
     CurrentDataSource: string;
-    DataSources: string[];
- 
+    DataSources: IDataSource[];
+
     onSelectDataSource: (DataSourceName: string) => DataSourceRedux.DataSourceSelectAction;
 }
 
@@ -32,15 +33,15 @@ class DataSourceToolbarControlComponent extends React.Component<DataSourceToolba
         let currentDataSource = StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource) ?
             selectDataSourceString : this.props.CurrentDataSource
 
-        let availableSearches: any[] = this.props.DataSources.filter(s => s != this.props.CurrentDataSource).map((dataSource, index) => {
-            return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedDataSourceChanged(dataSource)} >{dataSource}</MenuItem>
+        let availableDataSources: any[] = this.props.DataSources.filter(s => s.Name != this.props.CurrentDataSource).map((dataSource, index) => {
+            return <MenuItem key={index} eventKey={index} onClick={() => this.onSelectedDataSourceChanged(dataSource.Name)} >{dataSource.Name}</MenuItem>
         })
         let content = <span>
 
             <InputGroup>
-                <DropdownButton disabled={availableSearches.length == 0} style={{ minWidth: "140px" }}
+                <DropdownButton disabled={availableDataSources.length == 0} style={{ minWidth: "140px" }}
                     className={cssClassName} bsSize={this.props.DashboardSize} bsStyle={"default"} title={currentDataSource} id="DataSource" componentClass={InputGroup.Button}>
-                    {availableSearches}
+                    {availableDataSources}
                 </DropdownButton>
                 <InputGroup.Button>
                     <ButtonClear

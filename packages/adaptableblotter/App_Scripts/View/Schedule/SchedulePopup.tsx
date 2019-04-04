@@ -101,15 +101,12 @@ class SchedulePopupComponent extends React.Component<SchedulePopupProps, Schedul
             Minute: 47
         }
 
-        let newDate: Date = new Date();
-       
-        let scheduleTime: IScheduleTime={
+       let scheduleTime: IScheduleTime={
            RecurringDate: recurringDate
         }
 
         let alertScheduleItem: IAlertScheduleItem = {
             Alert: {
-
                 Header: "Test Schedule",
                 Msg: "This alert has worked",
                 MessageType: MessageType.Success,
@@ -122,7 +119,6 @@ class SchedulePopupComponent extends React.Component<SchedulePopupProps, Schedul
             ScheduleTime: scheduleTime,
             ScheduleType: ScheduleType.Alert
         }
-//console.log(alertSchedule);
         return alertSchedule;
 
     }
@@ -145,11 +141,6 @@ class SchedulePopupComponent extends React.Component<SchedulePopupProps, Schedul
             ScheduleTime: scheduleTime,
             ScheduleType: ScheduleType.Report
         }
-
-
-       
-       
-//console.log(alertSchedule);
         return reportSchedule;
 
     }

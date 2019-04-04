@@ -124,7 +124,8 @@ function InitTradeBlotter() {
       //  licenceKey: getValidStandardKey(),
       //    licenceKey: getValidEnterpriseKey(),
       //licenceKey: getInvalidStandardKey(),
-      //    predefinedConfig: reportJson,
+      licenceKey: 'abc5834u-yt5a4evp1-r1oq9nclf1',
+      predefinedConfig: dataSourceJson,
       auditOptions: {
         //     auditCellEdits: true,
         //  auditFunctionEvents: true,
@@ -789,6 +790,21 @@ let reportJson = {
         Name: "test",
         ReportColumnScope: "AllColumns",
         ReportRowScope: "AllRows"
+      }
+    ]
+  }
+};
+let dataSourceJson = {
+  DataSource: {
+    CurrentDataSource: "Big",
+    DataSources: [
+      {
+        Name: "Big",
+        Description: "A very big data source",
+      },
+      {
+        Name: "Small",
+        Description: "A tiny data source",
       }
     ]
   }
