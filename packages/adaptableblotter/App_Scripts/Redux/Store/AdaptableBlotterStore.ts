@@ -1135,7 +1135,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
             case StrategyConstants.ExportStrategyId: {
               let report = actionTyped.Entity as IReport
               let idx = middlewareAPI.getState().Export.Reports.findIndex(x => x.Name == report.Name)
-              if (idx > -1) {
+               if (idx > -1) {
                 overwriteConfirmation = true
               }
               importAction = ExportRedux.ReportAddUpdate(idx, report)

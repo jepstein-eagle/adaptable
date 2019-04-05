@@ -3,6 +3,7 @@ import { ExportDestination } from '../../Utilities/Enums';
 import * as Redux from 'redux'
 import { IReport, IAutoExport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { AlertGlyph } from '../../Utilities/Constants/StrategyConstants';
 
 export const EXPORT_APPLY = 'EXPORT_APPLY';
 export const IPP_LOGIN = 'IPP_LOGIN';
@@ -89,7 +90,7 @@ export const ExportReducer: Redux.Reducer<ExportState> = (state: ExportState = i
             let Reports: IReport[] = [].concat(state.Reports);
 
             let actionTypedAddUpdate = (<ReportAddUpdateAction>action)
-             if (actionTypedAddUpdate.Index >= 0) {  // it exists
+            if (actionTypedAddUpdate.Index >= 0) {  // it exists
                 Reports[actionTypedAddUpdate.Index] = actionTypedAddUpdate.Report
             } else {
                 Reports.push(actionTypedAddUpdate.Report)

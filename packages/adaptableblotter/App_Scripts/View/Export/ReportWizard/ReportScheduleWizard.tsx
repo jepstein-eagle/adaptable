@@ -66,7 +66,7 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
                 <Checkbox className={cssClassName + "__checkbox"} inline checked={this.state.HasAutoExport == true} onChange={(e) => this.onHasAutoExportChanged(e)}>Create a Schedule</Checkbox>
 
                 {this.state.HasAutoExport == true &&
-                    <div style={{ marginTop: '10px' }}>
+                    <div style={{ marginTop: '30px' }}>
                         <FormGroup controlId="frmDestination">
                             <Row>
                                 <Col xs={3}>
