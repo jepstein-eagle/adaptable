@@ -1,13 +1,14 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { IUserFilter } from "../Interface/BlotterObjects/IUserFilter";
-import { IReport } from "../Interface/BlotterObjects/IReport";
+import { IReport, IAutoExport } from "../Interface/BlotterObjects/IReport";
 import { ExpressionHelper } from './ExpressionHelper';
 import { Expression } from '../../Utilities/Expression';
 import { ISelectedCellInfo } from "../Interface/SelectedCell/ISelectedCellInfo";
 import { ISelectedCell } from "../Interface/SelectedCell/ISelectedCell";
 import { IColumn } from '../Interface/IColumn';
-import { ReportColumnScope, MessageType, ReportRowScope } from '../Enums';
+import { ReportColumnScope, MessageType, ReportRowScope, DayOfWeek } from '../Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 
 
 export module ReportHelper {
@@ -55,6 +56,28 @@ export module ReportHelper {
                     return ExpressionHelper.ConvertExpressionToString(Report.Expression, cols)
             }
         }
+    }
+
+
+    export function GetReportScheduleDescription(autoExport: IAutoExport): string {
+        if (autoExport == null) {
+            return '[No Schedule]';
+        }
+
+        let dateString: string
+        if (autoExport.Schedule.OneOffDate == null) {
+            if ((ArrayExtensions.ContainsItem(autoExport.Schedule.DaysOfWeek, DayOfWeek.Monday) && ArrayExtensions.ContainsItem(autoExport.Schedule.DaysOfWeek, DayOfWeek.Friday))) {
+                dateString = 'Weekdays'
+            } else {
+                let names: string[] = autoExport.Schedule.DaysOfWeek.map(d => {
+                    return DayOfWeek[d]
+                })
+                dateString = ArrayExtensions.CreateCommaSeparatedString(names)
+            }
+        } else {
+            dateString = new Date(autoExport.Schedule.OneOffDate).toDateString();
+        }
+        return dateString + ' at ' + autoExport.Schedule.Hour + ':' + autoExport.Schedule.Minute + ' (' + autoExport.ExportDestination + ')';
     }
 
     export function ConvertReportToArray(blotter: IAdaptableBlotter, Report: IReport): IStrategyActionReturn<any[]> {
@@ -129,7 +152,7 @@ export module ReportHelper {
                     }
                     for (var cvPair of keyValuePair[1]) {
                         if (!colNames.find(x => x == ReportColumns.find(c => c.ColumnId == cvPair.columnId).FriendlyName)) {
-                            return { ActionReturn: [], Alert: { Header: "Report Error", Msg: "Selected cells report should have the same set of columns", MessageType: MessageType.Error, ShowAsPopup: true  } };
+                            return { ActionReturn: [], Alert: { Header: "Report Error", Msg: "Selected cells report should have the same set of columns", MessageType: MessageType.Error, ShowAsPopup: true } };
                         }
                         //we want the displayValue now
                         values.push(blotter.getDisplayValue(keyValuePair[0], cvPair.columnId));

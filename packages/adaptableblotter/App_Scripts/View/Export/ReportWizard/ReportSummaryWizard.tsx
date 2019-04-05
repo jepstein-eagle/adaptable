@@ -22,7 +22,8 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
         let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Columns", Value: ReportHelper.GetReportColumnsDescription(this.props.Data, this.props.Columns) },
-            { Key: "Rows", Value: ReportHelper.GetReportExpressionDescription(this.props.Data, this.props.Columns) }
+            { Key: "Rows", Value: ReportHelper.GetReportExpressionDescription(this.props.Data, this.props.Columns) },
+            { Key: "Schedule", Value: ReportHelper.GetReportScheduleDescription(this.props.Data.AutoExport) }
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.ExportStrategyName} />

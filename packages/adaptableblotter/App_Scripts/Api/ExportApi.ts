@@ -20,8 +20,7 @@ export class ExportApi extends ApiBase implements IExportApi {
   }
 
   public SendReport(reportName: string, destination: ExportDestination): void {
-    alert("hello world")
-    let report: IReport = this.GetAllReports().find(r => r.Name == reportName);
+     let report: IReport = this.GetAllReports().find(r => r.Name == reportName);
     if (this.checkItemExists(report, reportName, "Report")) {
       this.dispatchAction(ExportRedux.ExportApply(reportName, destination))
     }

@@ -3,23 +3,20 @@ import * as Redux from "redux";
 import * as _ from 'lodash'
 import { connect } from 'react-redux';
 import * as ReminderRedux from '../../Redux/ActionsReducers/ReminderRedux'
-import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { ButtonClear } from "../Components/Buttons/ButtonClear";
-import { AccessLevel, MessageType, ExportDestination } from "../../Utilities/Enums";
+import { AccessLevel, MessageType, ExportDestination, DayOfWeek } from "../../Utilities/Enums";
 import { IReminder } from "../../Utilities/Interface/BlotterObjects/IReminder";
-import { ISchedule, IRecurringDate } from "../../Utilities/Interface/BlotterObjects/ISchedule";
+import { ISchedule } from "../../Utilities/Interface/BlotterObjects/ISchedule";
 import { IAdaptableAlert } from "../../Utilities/Interface/IMessage";
-import { IReport, IAutoExport } from "../../Utilities/Interface/BlotterObjects/IReport";
-import { ReportHelper } from "../../Utilities/Helpers/ReportHelper";
+import { IAutoExport } from "../../Utilities/Interface/BlotterObjects/IReport";
 
 interface ReminderPopupProps extends StrategyViewPopupProps<ReminderPopupComponent> {
     onAddReminder: (Reminder: IReminder) => ReminderRedux.ReminderAddAction,
-    onAddAutoExport: (index: number, autoExport: IAutoExport) => ExportRedux.AutoExportAddUpdateAction,
-    onDeleteReminder: (index: number) => ReminderRedux.ReminderDeleteAction;
+     onDeleteReminder: (index: number) => ReminderRedux.ReminderDeleteAction;
 }
 
 interface ReminderPopupState {
@@ -93,23 +90,15 @@ class ReminderPopupComponent extends React.Component<ReminderPopupProps, Reminde
 
 
     addExport() {
-        let recurringDate: IRecurringDate = {
-            DaysOfWeek: [4],
-            Hour: 21,
-            Minute: 2
-        }
-
+       
         let schedule: ISchedule = {
-            RecurringDate: recurringDate
+            Hour: 21,
+            Minute: 2,
+            DaysOfWeek: [DayOfWeek.Friday, DayOfWeek.Tuesday],
         }
 
-        let autoExport: IAutoExport = {
-            Schedule: schedule,
-            Name: ReportHelper.ALL_DATA_REPORT,
-            ExportDestination: ExportDestination.CSV
-        }
 
-        this.props.onAddAutoExport(-1, autoExport);
+      //  this.props.onAddAutoExport(-1, autoExport);
 
         //   this.props.Blotter.ScheduleService.AddReportSchedule(schedule, reportSchedule);
     }
@@ -126,15 +115,10 @@ class ReminderPopupComponent extends React.Component<ReminderPopupProps, Reminde
             MessageType: MessageType.Success,
             ShowAsPopup: true
         }
-
-        let recurringDate: IRecurringDate = {
+  let schedule: ISchedule = {
             DaysOfWeek: [4],
             Hour: 20,
             Minute: 58
-        }
-
-        let schedule: ISchedule = {
-            RecurringDate: recurringDate
         }
 
         let reminder: IReminder = {
@@ -158,8 +142,7 @@ function mapStateToProps() {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
         onAddReminder: (Reminder: IReminder) => dispatch(ReminderRedux.ReminderAdd(Reminder)),
-        onAddAutoExport: (index: number, autoExport: IAutoExport) => dispatch(ExportRedux.AutoExportAddUpdate(index, autoExport)),
-        onDeleteReminder: (index: number) => dispatch(ReminderRedux.ReminderDelete(index)),
+         onDeleteReminder: (index: number) => dispatch(ReminderRedux.ReminderDelete(index)),
     };
 }
 

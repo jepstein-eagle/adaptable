@@ -269,9 +269,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             // just clear all jobs and recreate - simplest thing to do...
             this.blotter.ScheduleService.ClearAllExportJobs();
 
-            
-            this.blotter.AdaptableBlotterStore.TheStore.getState().Export.AutoExports.forEach((ae: IAutoExport) => {
-                      this.blotter.ScheduleService.AddReportSchedule(ae);
+
+            this.blotter.AdaptableBlotterStore.TheStore.getState().Export.Reports.forEach((report: IReport) => {
+                if (report.AutoExport) {
+                    this.blotter.ScheduleService.AddReportSchedule(report);
+                }
             })
 
 

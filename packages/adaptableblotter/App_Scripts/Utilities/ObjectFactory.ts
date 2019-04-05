@@ -9,7 +9,7 @@ import { IShortcut } from "./Interface/BlotterObjects/IShortcut";
 import { IUserFilter } from "./Interface/BlotterObjects/IUserFilter";
 import { IPercentBar } from "./Interface/BlotterObjects/IPercentBar";
 import { IFreeTextColumn } from "./Interface/BlotterObjects/IFreeTextColumn";
-import { IReport } from "./Interface/BlotterObjects/IReport";
+import { IReport, IAutoExport } from "./Interface/BlotterObjects/IReport";
 import { IFlashingCell } from "./Interface/BlotterObjects/IFlashingCell";
 import { ICustomSort } from "./Interface/BlotterObjects/ICustomSort";
 import { IConditionalStyle } from "./Interface/BlotterObjects/IConditionalStyle";
@@ -20,7 +20,7 @@ import { IAdvancedSearch } from "./Interface/BlotterObjects/IAdvancedSearch";
 import { ICategoryChartDefinition, IPieChartDefinition } from "./Interface/BlotterObjects/IChartDefinition";
 import { IAlertDefinition } from "./Interface/BlotterObjects/IAlertDefinition";
 import { IRange } from "./Interface/Expression/IRange";
-import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ActionMode, LicenceScopeType, LicenceUserType } from './Enums';
+import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ActionMode, LicenceScopeType, LicenceUserType, ExportDestination } from './Enums';
 import { IColumn } from './Interface/IColumn';
 import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
 import { ColumnHelper } from './Helpers/ColumnHelper';
@@ -34,6 +34,7 @@ import { ILicenceInfo } from './Interface/ILicenceInfo';
 import { ChartType, SecondaryColumnOperation } from './ChartEnums';
 import { DefaultPieChartProperties } from './Defaults/DefaultPieChartProperties';
 import { IDataSource } from './Interface/BlotterObjects/IDataSource';
+import { ISchedule } from './Interface/BlotterObjects/ISchedule';
 
 
 export module ObjectFactory {
@@ -198,6 +199,23 @@ export module ObjectFactory {
         };
     }
 
+
+    export function CreateEmptyAutoExport(): IAutoExport{
+        return {
+            ExportDestination: ExportDestination.CSV,
+            Schedule: CreateEmptySchedule()
+        }
+    }
+
+    export function CreateEmptySchedule(): ISchedule{
+        return {
+            // todo: base of tommorrow?
+            OneOffDate: null,
+            DaysOfWeek: [],
+            Hour: 17,
+            Minute: 0
+        }
+    }
 
     export function CreateEmptyShortcut(): IShortcut {
         return {

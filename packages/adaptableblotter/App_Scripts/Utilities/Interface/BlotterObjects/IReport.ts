@@ -9,11 +9,11 @@ export interface IReport extends IAdaptableBlotterObject {
   ReportRowScope: 'AllRows' | 'VisibleRows' | 'SelectedRows' | 'ExpressionRows';
   ColumnIds: string[];
   Expression: Expression;
+  AutoExport? : IAutoExport
 }
 
 
 export interface IAutoExport extends IAdaptableBlotterObject {
   Schedule: ISchedule,
-  Name: string;
   ExportDestination: ExportDestination;
 } 

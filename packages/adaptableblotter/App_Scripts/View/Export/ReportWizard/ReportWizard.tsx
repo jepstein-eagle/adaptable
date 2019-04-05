@@ -9,6 +9,7 @@ import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wiz
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
 import { IReport } from "../../../Utilities/Interface/BlotterObjects/IReport";
 import { ReportRowTypeWizard } from "./ReportRowTypeWizard";
+import { ReportScheduleWizard } from "./ReportScheduleWizard";
 
 export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpressionAdaptableWizardProps<ReportWizard>, {}> {
 
@@ -50,8 +51,13 @@ export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpress
                         Element:   <ReportSettingsWizard  Reports={this.props.ConfigEntities as IReport[]} />,
                     },
                     {
-                        StepName: "Summary",
+                        StepName: "Schedule",
                         Index: 5,
+                        Element:  <ReportScheduleWizard  />
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 6,
                         Element:  <ReportSummaryWizard UserFilters={this.props.UserFilters} />
                     }
                 ]}

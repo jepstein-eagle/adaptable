@@ -1,10 +1,10 @@
 import { IScheduleService } from "./Interface/IScheduleService";
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import * as NodeSchedule from 'node-schedule';
-import { ISchedule, IRecurringDate } from "../Interface/BlotterObjects/ISchedule";
+import { ISchedule } from "../Interface/BlotterObjects/ISchedule";
 import { ArrayExtensions } from "../Extensions/ArrayExtensions";
 import { DateExtensions } from "../Extensions/DateExtensions";
-import { IAutoExport } from "../Interface/BlotterObjects/IReport";
+import { IAutoExport, IReport } from "../Interface/BlotterObjects/IReport";
 import { IReminder } from "../Interface/BlotterObjects/IReminder";
 
 export class ScheduleService implements IScheduleService {
@@ -17,7 +17,7 @@ export class ScheduleService implements IScheduleService {
         this.exportJobs = [];
     }
 
-    public AddAlertSchedule( reminder: IReminder): void {
+    public AddAlertSchedule(reminder: IReminder): void {
         let date: Date = this.getDate(reminder.Schedule);
         if (date != null) {
             var alertJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
@@ -29,40 +29,36 @@ export class ScheduleService implements IScheduleService {
         }
     }
 
-    public AddReportSchedule(autoExport: IAutoExport): void {
-        let date: Date = this.getDate(autoExport.Schedule);
-        if (date != null) {
-            var exportJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
-                this.blotter.api.exportApi.SendReport(autoExport.Name, autoExport.ExportDestination);
-
-            })
-            this.exportJobs.push(exportJob);
-            console.log('after adding alert job')
-            console.log(this.exportJobs)
+    public AddReportSchedule(report: IReport): void {
+        if (report.AutoExport) {
+            let date: Date = this.getDate(report.AutoExport.Schedule);
+            if (date != null) {
+                var exportJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
+                    this.blotter.api.exportApi.SendReport(report.Name, report.AutoExport.ExportDestination);
+                })
+                this.exportJobs.push(exportJob);
+                console.log('after adding report job')
+                console.log(this.exportJobs)
+            }
         }
     }
 
     private getDate(schedule: ISchedule): Date {
-
         let date: Date = null;
         if (schedule.OneOffDate != null) {
-            date = schedule.OneOffDate;
+            let newDate: Date = new Date(schedule.OneOffDate);
+            date = new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDay(), schedule.Hour, schedule.Minute);
         } else {
-            let scheduleRule: IRecurringDate = schedule.RecurringDate;
-            if (scheduleRule != null) { // unlikely but possible
+            let currentDate = new Date();
+            if (ArrayExtensions.ContainsItem(schedule.DaysOfWeek, currentDate.getDay())) {
                 let currentDate = new Date();
-                // check that the day of the week is correct ?
-                if (ArrayExtensions.ContainsItem(scheduleRule.DaysOfWeek, currentDate.getDay())) {
-                    let currentDate = new Date();
-                    date = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDay(), schedule.RecurringDate.Hour, schedule.RecurringDate.Minute, 0);
-                }
+                date = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDay(), schedule.Hour, schedule.Minute, 0);
             }
         }
 
         // add check for whether date in the past
         if (date != null && DateExtensions.IsDateInFuture(date)) {
             return date;
-
         }
         return null;
     }

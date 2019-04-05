@@ -9,8 +9,6 @@ export const IPP_LOGIN = 'IPP_LOGIN';
 export const REPORT_SELECT = 'REPORT_SELECT';
 export const REPORT_ADD_UPDATE = 'REPORT_ADD_UPDATE';
 export const REPORT_DELETE = 'REPORT_DELETE';
-export const AUTOEXPORT_ADD_UPDATE = 'AUTOEXPORT_ADD_UPDATE';
-export const AUTOEXPORT_DELETE = 'AUTOEXPORT_DELETE';
 
 export interface ExportApplyAction extends Redux.Action {
     Report: string;
@@ -62,16 +60,6 @@ export const ReportDelete = (Index: number): ReportDeleteAction => ({
     Index
 })
 
-export const AutoExportAddUpdate = (Index: number, AutoExport: IAutoExport): AutoExportAddUpdateAction => ({
-    type: AUTOEXPORT_ADD_UPDATE,
-    Index,
-    AutoExport
-})
-
-export const AutoExportDelete = (Index: number): AutoExportDeleteAction => ({
-    type: AUTOEXPORT_DELETE,
-    Index
-})
 
 
 export const ExportApply = (Report: string, ExportDestination: ExportDestination, Folder?: string, Page?: string): ExportApplyAction => ({
@@ -90,8 +78,7 @@ export const IPPLogin = (Login: string, Password: string): IPPLoginAction => ({
 
 const initialExportState: ExportState = {
     Reports: EMPTY_ARRAY,
-    CurrentReport: EMPTY_STRING,
-    AutoExports: EMPTY_ARRAY
+    CurrentReport: EMPTY_STRING
 }
 
 export const ExportReducer: Redux.Reducer<ExportState> = (state: ExportState = initialExportState, action: Redux.Action): ExportState => {
@@ -102,7 +89,7 @@ export const ExportReducer: Redux.Reducer<ExportState> = (state: ExportState = i
             let Reports: IReport[] = [].concat(state.Reports);
 
             let actionTypedAddUpdate = (<ReportAddUpdateAction>action)
-            if (actionTypedAddUpdate.Index != -1) {  // it exists
+             if (actionTypedAddUpdate.Index >= 0) {  // it exists
                 Reports[actionTypedAddUpdate.Index] = actionTypedAddUpdate.Report
             } else {
                 Reports.push(actionTypedAddUpdate.Report)
@@ -116,28 +103,7 @@ export const ExportReducer: Redux.Reducer<ExportState> = (state: ExportState = i
             Reports.splice(actionTypedDelete.Index, 1);
             return Object.assign({}, state, { Reports: Reports, CurrentReport: "" })
         }
-        case AUTOEXPORT_ADD_UPDATE: {
-            let autoExports: IAutoExport[] = [].concat(state.AutoExports);
-            console.log("current exorports")
-            console.log(autoExports);
-            let actionTypedAddUpdate = (<AutoExportAddUpdateAction>action)
-            console.log("the thing")
-            console.log(actionTypedAddUpdate.AutoExport)
 
-            if (actionTypedAddUpdate.Index != -1) {  // it exists
-                autoExports[actionTypedAddUpdate.Index] = actionTypedAddUpdate.AutoExport
-            } else {
-                autoExports.push(actionTypedAddUpdate.AutoExport)
-            }
-            return Object.assign({}, state, { AutoExports: autoExports, });
-        }
-        case AUTOEXPORT_DELETE: {
-            let autoExports: IAutoExport[] = [].concat(state.Reports);
-
-            let actionTypedDelete = (<AutoExportDeleteAction>action)
-            autoExports.splice(actionTypedDelete.Index, 1);
-            return Object.assign({}, state, { AutoExports: autoExports })
-        }
         default:
             return state
     }

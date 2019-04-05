@@ -28,7 +28,6 @@ import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObject
 import { IReport, IAutoExport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { ReportWizard } from "./ReportWizard/ReportWizard";
-import { AutoExportWizard } from "./AutoExportWizard/AutoExportWizard";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],
@@ -79,23 +78,22 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             { Content: "", Size: 2 },
         ]
 
-        let Reports = this.props.SystemReports.concat(this.props.Reports).map((Report: IReport, index) => {
-            return <ReportEntityRow
+        let Reports = this.props.SystemReports.concat(this.props.Reports).map((report: IReport, index) => {
+             return <ReportEntityRow
                 cssClassName={cssClassName}
-                AdaptableBlotterObject={Report}
+                AdaptableBlotterObject={report}
                 key={index}
                 colItems={colItems}
                 Index={index}
                 Columns={this.props.Columns}
-                IsLast={index == this.props.Reports.length - 1}
                 UserFilters={this.props.UserFilters}
                 LiveReports={this.props.LiveReports}
-                onShare={() => this.props.onShare(Report)}
+                onShare={() => this.props.onShare(report)}
                 TeamSharingActivated={this.props.TeamSharingActivated}
-                onExport={(exportDestination) => this.onApplyExport(Report.Name, exportDestination)}
-                onReportStopLive={(exportDestination) => this.props.onReportStopLive(Report.Name, exportDestination)}
+                onExport={(exportDestination) => this.onApplyExport(report.Name, exportDestination)}
+                onReportStopLive={(exportDestination) => this.props.onReportStopLive(report.Name, exportDestination)}
                 onEdit={(index, Report) => this.onEdit(index, Report as IReport)}
-                onDeleteConfirm={ExportRedux.ReportDelete(index)}
+                onDeleteConfirm={ExportRedux.ReportDelete(index - this.props.SystemReports.length)}
             />
         });
 
@@ -133,20 +131,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
                 }
 
 
-<AutoExportWizard
-                        cssClassName={cssWizardClassName}
-                        EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IAutoExport}
-                        ModalContainer={this.props.ModalContainer}
-                        ConfigEntities={this.props.Reports}
-                        Columns={this.props.Columns}
-                        UserFilters={this.props.UserFilters}
-                        SystemFilters={this.props.SystemFilters}
-                        Blotter={this.props.Blotter}
-                        WizardStartIndex={this.state.WizardStartIndex}
-                        onCloseWizard={() => this.onCloseWizard()}
-                        onFinishWizard={() => this.onFinishWizard()}
-                        canFinishWizard={() => this.canFinishWizard()}
-                    />
+
             </PanelWithButton>
         </div>
     }
@@ -160,7 +145,8 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
     onFinishWizard() {
         let Report: IReport = this.state.EditedAdaptableBlotterObject as IReport;
-        this.props.onAddUpdateReport(this.state.EditedAdaptableBlotterObjectIndex, Report)
+        let reportIndex = (this.state.EditedAdaptableBlotterObjectIndex - this.props.SystemReports.length);
+        this.props.onAddUpdateReport(reportIndex, Report)
         this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
     }
 

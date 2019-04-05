@@ -189,4 +189,10 @@ export module ArrayExtensions {
         }, {});
     }
 
+    export function CreateCommaSeparatedString(values: any[]): string {
+       return  values.join(", ")
+
+    }
+
+   
 }

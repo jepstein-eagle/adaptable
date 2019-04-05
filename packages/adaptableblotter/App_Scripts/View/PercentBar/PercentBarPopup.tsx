@@ -49,8 +49,7 @@ class PercentBarPopupComponent extends React.Component<PercentBarPopupProps, Edi
                 let distinctColumnsValues: number[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columnId, DistinctCriteriaPairValue.RawValue).map(pair => {
                     return pair.RawValue
                 });
-                console.log(distinctColumnsValues);
-                let newPercentRender: IPercentBar = ObjectFactory.CreateEmptyPercentBar()
+                 let newPercentRender: IPercentBar = ObjectFactory.CreateEmptyPercentBar()
                 newPercentRender.ColumnId = columnId;
                 newPercentRender.MinValue = Math.min(...distinctColumnsValues);
                 newPercentRender.MaxValue = Math.max(...distinctColumnsValues);

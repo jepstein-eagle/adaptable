@@ -338,7 +338,6 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
         dataSource = PieChartUIHelper.sortDataSource(this.state.SliceSortOption, dataSource);
 
-        console.log("onDataChanged " + dataSource.length + " " + valueColumn + " " + labelColumn);
         this.setState({
             PieChartDefinition: pieChartDefinition,
             DataSource: dataSource,

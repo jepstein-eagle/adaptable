@@ -14,8 +14,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { EntityRowItem } from "../Components/EntityRowItem";
 
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
-    IsLast: boolean
-    LiveReports: ILiveReport[]
+     LiveReports: ILiveReport[]
     onExport: (exportDestination: ExportDestination) => void;
     onReportStopLive: (exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull) => void,
 }
