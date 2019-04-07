@@ -46,19 +46,19 @@ export class ReportWizard extends React.Component<IAdaptableBlotterObjectExpress
                         />,
                     },
                     {
-                        StepName: "Settings",
+                        StepName: "Schedule",
                         Index: 4,
-                        Element:   <ReportSettingsWizard  Reports={this.props.ConfigEntities as IReport[]} />,
+                        Element: <ReportScheduleWizard />
                     },
                     {
-                        StepName: "Schedule",
+                        StepName: "Settings",
                         Index: 5,
-                        Element:  <ReportScheduleWizard  />
+                        Element: <ReportSettingsWizard Reports={this.props.ConfigEntities as IReport[]} />,
                     },
                     {
                         StepName: "Summary",
                         Index: 6,
-                        Element:  <ReportSummaryWizard UserFilters={this.props.UserFilters} />
+                        Element: <ReportSummaryWizard UserFilters={this.props.UserFilters} />
                     }
                 ]}
                 Data={this.props.EditedAdaptableBlotterObject as IReport}

@@ -10,7 +10,7 @@ import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
 import { UIHelper } from "../../UIHelper";
 
 export interface ReportSummaryWizardProps extends AdaptableWizardStepProps<IReport> {
-     UserFilters: IUserFilter[]
+    UserFilters: IUserFilter[]
 }
 
 export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProps, {}> implements AdaptableWizardStep {
@@ -20,13 +20,15 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
     render(): any {
         let cssClassName: string = this.props.cssClassName + "-summary"
 
-        let scheduleDescription = ' (' + UIHelper.GetScheduleDescription(this.props.Data.AutoExport.Schedule)  + ')';
+        let scheduleDescription = this.props.Data.AutoExport ?
+            ' (' + UIHelper.GetScheduleDescription(this.props.Data.AutoExport.Schedule) + ')' :
+            'None'
 
         let keyValuePairs: IKeyValuePair[] = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Columns", Value: ReportHelper.GetReportColumnsDescription(this.props.Data, this.props.Columns) },
             { Key: "Rows", Value: ReportHelper.GetReportExpressionDescription(this.props.Data, this.props.Columns) },
-            { Key: "Schedule", Value:  scheduleDescription  }
+            { Key: "Schedule", Value: scheduleDescription }
         ]
 
         let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.ExportStrategyName} />
@@ -49,6 +51,6 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
     public GetIndexStepDecrement() {
         return 1;
     }
-   
+
 }
 
