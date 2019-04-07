@@ -8,7 +8,7 @@ import { IgrRingSeries } from 'igniteui-react-charts/ES2015/igr-ring-series';
 import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
 import { IgrPieChartModule } from 'igniteui-react-charts/ES2015/igr-pie-chart-module';
 import { SliceClickEventArgs } from "igniteui-react-charts/ES2015/igr-slice-click-event-args";
-import { ICategoryChartDefinition, IChartProperties, IPieChartDefinition, IPieChartProperties, IPieChartDataItem } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartProperties, IPieChartDefinition, IPieChartProperties, IPieChartDataItem } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { PieChartUIHelper } from "./PieChartUIHelper";
 import { PieChartComponentState } from "./PieChartComponentState";
 import { ButtonMaximise } from "../../Components/Buttons/ButtonMaximise";
@@ -18,13 +18,11 @@ import { ButtonClose } from "../../Components/Buttons/ButtonClose";
 import { ButtonGeneral } from "../../Components/Buttons/ButtonGeneral";
 import { Helper } from "../../../Utilities/Helpers/Helper";
 import { DefaultPieChartProperties } from "../../../Utilities/Defaults/DefaultPieChartProperties";
-import { Row, Col, Table, HelpBlock, FormControl, Checkbox, Panel, Radio } from "react-bootstrap";
+import { Row, Col, Table, HelpBlock, FormControl, Checkbox, Panel } from "react-bootstrap";
 import { PanelWithTwoButtons } from "../../Components/Panels/PanelWithTwoButtons";
 import { PanelWithButton } from "../../Components/Panels/PanelWithButton";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { CategoryChartUIHelper } from "../CategoryChart/CategoryChartUIHelper";
-import { CategoryChartType, LabelVisibility, CrosshairDisplayMode, PieChartLabelPosition, SliceLabelOption, SliceSortOption, PieChartOthersCategoryType } from "../../../Utilities/ChartEnums";
-import { ColorPicker } from "../../ColorPicker";
+import { PieChartLabelPosition, SliceLabelOption, SliceSortOption, PieChartOthersCategoryType } from "../../../Utilities/ChartEnums";
 import { AdaptablePopover } from "../../AdaptablePopover";
 import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
@@ -489,7 +487,6 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
         console.log("onSliceClick " + e);
         e.isExploded = !e.isExploded;
         e.isSelected = !e.isSelected
-        const ds = e.dataContext;
         if (e.isExploded) {
             //    this.setState({ CurrentColumnCount: ds.Value, CurrentColumnValue: ds.Name } as PieChartComponentState);
         } else {
