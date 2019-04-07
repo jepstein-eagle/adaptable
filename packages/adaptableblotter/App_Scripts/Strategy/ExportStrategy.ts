@@ -29,7 +29,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.ExportStrategyId, blotter)
-
+        this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded(blotter))
 
         OpenfinHelper.OnExcelDisconnected().Subscribe(() => {
             LoggingHelper.LogAdaptableBlotterInfo("Excel closed stopping all Live Excel");
@@ -68,10 +68,10 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 }
             }
         })
+    }
 
-
-
-
+    private handleGridReloaded(blotter: IAdaptableBlotter) {
+        this.scheduleReports();
     }
 
     protected addPopupMenuItem() {
@@ -262,19 +262,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     protected InitState() {
         if (this.ExportState != this.blotter.AdaptableBlotterStore.TheStore.getState().Export) {
 
-            // schedule - not quite right but we will get there...
-            // not worked out how to decide destination
-
-
-            // just clear all jobs and recreate - simplest thing to do...
-            this.blotter.ScheduleService.ClearAllExportJobs();
-
-
-            this.blotter.AdaptableBlotterStore.TheStore.getState().Export.Reports.forEach((report: IReport) => {
-                if (report.AutoExport) {
-                    this.blotter.ScheduleService.AddReportSchedule(report);
-                }
-            })
+            this.scheduleReports();
 
 
             this.ExportState = this.blotter.AdaptableBlotterStore.TheStore.getState().Export;
@@ -287,6 +275,17 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         if (this.CurrentLiveReports != this.blotter.AdaptableBlotterStore.TheStore.getState().System.CurrentLiveReports) {
             this.CurrentLiveReports = this.blotter.AdaptableBlotterStore.TheStore.getState().System.CurrentLiveReports;
         }
+    }
+
+    private scheduleReports(): void {
+        // just clear all jobs and recreate - simplest thing to do...
+        this.blotter.ScheduleService.ClearAllExportJobs();
+
+        this.blotter.AdaptableBlotterStore.TheStore.getState().Export.Reports.forEach((report: IReport) => {
+            if (report.AutoExport) {
+                this.blotter.ScheduleService.AddReportSchedule(report);
+            }
+        })
     }
 
 }

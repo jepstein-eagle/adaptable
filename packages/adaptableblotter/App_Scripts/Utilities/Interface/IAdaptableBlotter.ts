@@ -56,6 +56,7 @@ export interface IAdaptableBlotter {
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
+    onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
 
     // not sure if this is right but putting the events here
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>
@@ -66,6 +67,7 @@ export interface IAdaptableBlotter {
     // General
     createMenu(): void
     setGridData(dataSource: any): void
+    reloadGrid(): void
 
     // cell / column selection
     getActiveCell(): ICellInfo

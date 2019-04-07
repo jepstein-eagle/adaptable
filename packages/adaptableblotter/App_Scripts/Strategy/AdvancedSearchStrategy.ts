@@ -7,10 +7,13 @@ import { AdvancedSearchState, GridState } from '../Redux/ActionsReducers/Interfa
 import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAdvancedSearchStrategy {
+
     private AdvancedSearchState: AdvancedSearchState
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.AdvancedSearchStrategyId, blotter)
+        this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded())
+
     }
 
     protected addPopupMenuItem() {
@@ -33,6 +36,10 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
                 this.publishStateChanged(StateChangedTrigger.AdvancedSearch, this.AdvancedSearchState)
             }
         }
+    }
+
+    private handleGridReloaded(): void {
+        this.blotter.applyGridFiltering();
     }
 
     private GetAdvancedSearchState(): AdvancedSearchState {

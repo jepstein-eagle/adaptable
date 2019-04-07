@@ -373,6 +373,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onRefresh;
     }
 
+    private _onGridReloaded: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    public onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onGridReloaded;
+    }
+
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
     public StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>();
     public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
@@ -389,6 +394,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         })
         this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
+
+    public reloadGrid(): void {
+        this._onGridReloaded.Dispatch(this, this);
+    }
+    
 
     public getPrimaryKeyValueFromRecord(record: any): any {
         return record[this.BlotterOptions.primaryKey]

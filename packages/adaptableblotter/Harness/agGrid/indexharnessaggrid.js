@@ -124,7 +124,7 @@ function InitTradeBlotter() {
       //  licenceKey: getValidStandardKey(),
       //    licenceKey: getValidEnterpriseKey(),
       //licenceKey: getInvalidStandardKey(),
-       predefinedConfig: dataSourceJson,
+      predefinedConfig: dataSourceJson,
       auditOptions: {
         //     auditCellEdits: true,
         //  auditFunctionEvents: true,
@@ -219,8 +219,8 @@ function listenToSearchChange(searchChangedArgs) {
 }
 
 function listenToAlertFired(alertFiredArgs) {
- // console.log('from Harness');
- // console.log(alertFiredArgs.alert);
+  // console.log('from Harness');
+  // console.log(alertFiredArgs.alert);
 }
 
 function getValuesForColumn(columnName) {

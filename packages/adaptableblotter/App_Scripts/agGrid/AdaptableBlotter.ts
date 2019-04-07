@@ -385,11 +385,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onRefresh;
     }
 
+    private _onGridReloaded: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    public onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onGridReloaded;
+    }
+
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
     public StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>();
     public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
     public AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs> = new EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>();
 
+
+    public reloadGrid(): void {
+        this._onGridReloaded.Dispatch(this, this);
+    }
 
     public applyGridFiltering() {
         this.gridOptions.api.onFilterChanged()

@@ -15,10 +15,23 @@ export class ScheduleService implements IScheduleService {
     constructor(private blotter: IAdaptableBlotter) {
         this.alertJobs = [];
         this.exportJobs = [];
+
+        let reloadSchedule: ISchedule = {
+            Hour: 0,
+            Minute: 1,
+            DaysOfWeek: [0, 1, 2, 3, 4, 5, 6]
+        }
+
+        let date: Date = this.getDateFromSchedule(reloadSchedule);
+        if (date != null) {
+            var refreshGridJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
+                 this.blotter.reloadGrid();
+            })
+        }
     }
 
-    public AddAlertSchedule(reminder: IReminder): void {
-        let date: Date = this.getDate(reminder.Schedule);
+    public AddReminderSchedule(reminder: IReminder): void {
+        let date: Date = this.getDateFromSchedule(reminder.Schedule);
         if (date != null) {
             var alertJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
                 this.blotter.api.alertApi.ShowAlert(reminder.Alert);
@@ -29,7 +42,7 @@ export class ScheduleService implements IScheduleService {
 
     public AddReportSchedule(report: IReport): void {
         if (report.AutoExport) {
-            let date: Date = this.getDate(report.AutoExport.Schedule);
+            let date: Date = this.getDateFromSchedule(report.AutoExport.Schedule);
             if (date != null) {
                 var exportJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
                     this.blotter.api.exportApi.SendReport(report.Name, report.AutoExport.ExportDestination);
@@ -39,7 +52,8 @@ export class ScheduleService implements IScheduleService {
         }
     }
 
-    private getDate(schedule: ISchedule): Date {
+
+    private getDateFromSchedule(schedule: ISchedule): Date {
         let date: Date = null;
         if (schedule.OneOffDate != null) {
             date = new Date(schedule.OneOffDate);
@@ -68,7 +82,7 @@ export class ScheduleService implements IScheduleService {
                 j.cancel();
             }
         })
-        this.alertJobs = []
+        this.alertJobs = [];
     }
 
     public ClearAllExportJobs(): void {
@@ -77,7 +91,7 @@ export class ScheduleService implements IScheduleService {
                 j.cancel();
             }
         })
-        this.exportJobs = []
+        this.exportJobs = [];
     }
 
 }

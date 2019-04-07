@@ -1,11 +1,17 @@
 import { IUserState, AdvancedSearchState, AlertState, BulkUpdateState, CalculatedColumnState, CalendarState, CellValidationState, ChartState, ColumnFilterState, ConditionalStyleState, CustomSortState, DashboardState, DataSourceState, ExportState, FlashingCellState, FormatColumnState, LayoutState, PlusMinusState, QuickSearchState, ShortcutState, SmartEditState, ThemeState, UserFilterState, CellSummaryState } from '../Redux/ActionsReducers/Interface/IState';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import { ResetUserData, LoadState } from '../Redux/Store/AdaptableBlotterStore';
+import { ResetUserData, LoadState, InitState } from '../Redux/Store/AdaptableBlotterStore';
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { ApiBase } from './ApiBase';
 import { IConfigApi } from './Interface/IConfigApi';
 
 export class ConfigApi extends ApiBase implements IConfigApi {
+
+
+
+   public configInit(): void {
+     this.dispatchAction(InitState())
+  }
 
    public configClear(): void {
     //this doesnt work but should!
