@@ -2,7 +2,7 @@ import { IReminder } from "../../../Utilities/Interface/BlotterObjects/IReminder
 import * as React from "react";
 import { Panel, FormControl, Checkbox, FormGroup, Radio, Col, ControlLabel, Row } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { DayOfWeek } from "../../../Utilities/Enums";
+import { DayOfWeek, StateChangedTrigger } from "../../../Utilities/Enums";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { ISchedule } from "../../../Utilities/Interface/BlotterObjects/ISchedule";
 
@@ -29,7 +29,7 @@ export class ReminderScheduleWizard extends React.Component<ReminderScheduleWiza
             Hour: this.props.Data.Schedule.Hour,
             Minute: this.props.Data.Schedule.Minute,
             DaysOfWeek: this.props.Data.Schedule.DaysOfWeek,
-            OneOffDate: this.props.Data.Schedule.OneOffDate,
+            OneOffDate: this.props.Data.Schedule.OneOffDate? this.props.Data.Schedule.OneOffDate: new Date(),
         }
     }
     render(): any {
@@ -164,12 +164,14 @@ export class ReminderScheduleWizard extends React.Component<ReminderScheduleWiza
         this.setState({ Minute: Number(e.value) } as ReminderScheduleWizardState, () => this.props.UpdateGoBackState())
     }
 
-
-
     public canNext(): boolean {
-
+        if (this.state.Hour == null || this.state.Minute == null) {
+            return false;
+        }
+        if (this.state.OneOffDate == null && ArrayExtensions.IsEmpty(this.state.DaysOfWeek)) {
+            return false;
+        }
         return true;
-
     }
 
     public canBack(): boolean { return true; }

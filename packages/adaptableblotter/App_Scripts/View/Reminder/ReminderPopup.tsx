@@ -6,23 +6,21 @@ import * as ReminderRedux from '../../Redux/ActionsReducers/ReminderRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
-import {  HelpBlock } from 'react-bootstrap';
+import { HelpBlock } from 'react-bootstrap';
 import { ReminderEntityRow } from './ReminderEntityRow'
 import { ReminderWizard } from './Wizard/ReminderWizard'
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
-import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
 import { IReminder } from "../../Utilities/Interface/BlotterObjects/IReminder";
+import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 
 interface ReminderPopupProps extends StrategyViewPopupProps<ReminderPopupComponent> {
     Reminders: IReminder[]
@@ -39,13 +37,13 @@ class ReminderPopupComponent extends React.Component<ReminderPopupProps, Editabl
         this.state = UIHelper.getEmptyConfigState();
     }
 
-    
+
     render() {
         let cssClassName: string = this.props.cssClassName + "__Reminder";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__Reminder";
 
-        let infoBody: any[] = ["Conditional Styles enable columns and rows to be given distinct styles according to user rules.", <br />, <br />,
-            "Styles include selection of fore and back colours, and font properties."]
+        let infoBody: any[] = ["Reminders are alerts that you set by schdedule.", <br />, <br />,
+            "You can choose to show the alert on a given date or on a recurring basis."]
 
         let colItems: IColItem[] = [
             { Content: "Message", Size: 4 },
@@ -69,7 +67,7 @@ class ReminderPopupComponent extends React.Component<ReminderPopupProps, Editabl
         });
 
         let newButton = <ButtonNew cssClassName={cssClassName} onClick={() => this.onNew()}
-            overrideTooltip="Create Conditional Style"
+            overrideTooltip="Create Reminder"
             DisplayMode="Glyph+Text"
             size={"small"}
             AccessLevel={this.props.AccessLevel}
@@ -79,8 +77,8 @@ class ReminderPopupComponent extends React.Component<ReminderPopupProps, Editabl
             <PanelWithButton headerText={StrategyConstants.ReminderStrategyName} button={newButton} bsStyle={StyleConstants.PRIMARY_BSSTYLE} cssClassName={cssClassName} glyphicon={StrategyConstants.ReminderGlyph} infoBody={infoBody}>
 
                 {this.props.Reminders.length == 0 ?
-                    <HelpBlock>Click 'New' to create a new conditional style to be applied at row or column level when a rule set by you is met.</HelpBlock>
-               :
+                    <HelpBlock>Click 'New' to create a new Reminder that will trigger an alert according to a schedule set by you.</HelpBlock>
+                    :
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={Reminders} />
                 }
 
@@ -90,7 +88,7 @@ class ReminderPopupComponent extends React.Component<ReminderPopupProps, Editabl
                         EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IReminder}
                         ConfigEntities={null}
                         ModalContainer={this.props.ModalContainer}
-                          Columns={this.props.Columns}
+                        Columns={this.props.Columns}
                         UserFilters={this.props.UserFilters}
                         SystemFilters={this.props.SystemFilters}
                         Blotter={this.props.Blotter}
@@ -108,8 +106,8 @@ class ReminderPopupComponent extends React.Component<ReminderPopupProps, Editabl
         this.setState({ EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyReminder(), WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1 });
     }
 
-    onEdit(index: number, condition: IReminder) {
-        let clonedObject: IReminder = Helper.cloneObject(condition);
+    onEdit(index: number, reminder: IReminder) {
+        let clonedObject: IReminder = Helper.cloneObject(reminder);
         this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: index });
     }
 
@@ -130,7 +128,16 @@ class ReminderPopupComponent extends React.Component<ReminderPopupProps, Editabl
 
     canFinishWizard() {
         let reminder = this.state.EditedAdaptableBlotterObject as IReminder
-      // TODO
+        if (reminder.Alert == null && reminder.Schedule == null) {
+            return false;
+        }
+
+        if (reminder.Schedule.Hour == null || reminder.Schedule.Minute == null) {
+            return false;
+        }
+        if (reminder.Schedule.OneOffDate == null && ArrayExtensions.IsEmpty(reminder.Schedule.DaysOfWeek)) {
+            return false;   
+        }
         return true;
     }
 }

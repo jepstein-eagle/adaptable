@@ -219,8 +219,8 @@ function listenToSearchChange(searchChangedArgs) {
 }
 
 function listenToAlertFired(alertFiredArgs) {
-  console.log('from Harness');
-  console.log(alertFiredArgs.alert);
+ // console.log('from Harness');
+ // console.log(alertFiredArgs.alert);
 }
 
 function getValuesForColumn(columnName) {

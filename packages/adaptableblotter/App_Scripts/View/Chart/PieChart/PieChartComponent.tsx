@@ -484,7 +484,7 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
     }
 
     onSliceClick(e: SliceClickEventArgs): void {
-        console.log("onSliceClick " + e);
+    //    console.log("onSliceClick " + e);
         e.isExploded = !e.isExploded;
         e.isSelected = !e.isSelected
         if (e.isExploded) {

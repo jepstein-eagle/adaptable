@@ -52,14 +52,14 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         if (this.props.PopupParams == "Edit") {
             let selectedReport: IReport = this.props.Reports.find(a => a.Name == this.props.CurrentReport);
             let selectedReportIndex = this.props.Reports.findIndex(a => a.Name == this.props.CurrentReport);
-             this.onEdit(selectedReportIndex, selectedReport)
+            this.onEdit(selectedReportIndex, selectedReport)
         }
     }
 
     render() {
 
 
-      let cssClassName: string = this.props.cssClassName + "__export";
+        let cssClassName: string = this.props.cssClassName + "__export";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__export";
 
         let infoBody: any[] = ["Create a 'Report' (or use a predefined one) and then export it to specified location.", <br />, <br />]
@@ -73,7 +73,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         ]
 
         let Reports = this.props.SystemReports.concat(this.props.Reports).map((report: IReport, index) => {
-           let reportIndex = index - this.props.SystemReports.length;
+            let reportIndex = index - this.props.SystemReports.length;
             return <ReportEntityRow
                 cssClassName={cssClassName}
                 AdaptableBlotterObject={report}
@@ -131,7 +131,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         </div>
     }
 
- 
+
 
     onCloseWizard() {
         this.props.onClearPopupParams()
@@ -154,6 +154,14 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         }
         if (report.ReportColumnScope == ReportColumnScope.BespokeColumns && ArrayExtensions.IsNullOrEmpty(report.ColumnIds)) {
             return false;
+        }
+        if (report.AutoExport != null) {
+             if (report.AutoExport.Schedule.Hour == null || report.AutoExport.Schedule.Minute == null) {
+                return false;
+            }
+            if (report.AutoExport.Schedule.OneOffDate == null && ArrayExtensions.IsEmpty(report.AutoExport.Schedule.DaysOfWeek)) {
+                return false;
+            }
         }
         return true;
     }

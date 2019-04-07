@@ -21,7 +21,7 @@ export interface ReportScheduleWizardState {
     DaysOfWeek: DayOfWeek[],
     OneOffDate: any,
     ExportDestination: ExportDestination,
-    
+
 }
 
 export class ReportScheduleWizard extends React.Component<ReportScheduleWizardProps, ReportScheduleWizardState> implements AdaptableWizardStep {
@@ -124,7 +124,7 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
                                 <Col xs={6}>
                                     <Radio inline value="recurring" checked={this.state.IsRecurringDate == true} onChange={(e) => this.onRecurringDateChanged(e)}>Recurring Days</Radio>
                                     <Radio inline value="oneoff" checked={this.state.IsRecurringDate == false} onChange={(e) => this.onRecurringDateChanged(e)}>One Off Date</Radio>
-                                  </Col>
+                                </Col>
                             </Row>
                         </FormGroup>
 
@@ -158,12 +158,7 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
                                     </Col>
                                 </Row>
                             </FormGroup>
-
-                            
-
                         }
-
-
                     </div>
                 }
             </Panel>
@@ -194,7 +189,7 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
 
     private onOneOffDateChanged = (event: React.FormEvent<any>) => {
         let e = event.target as HTMLInputElement;
-         this.setState({ OneOffDate: e.value } as ReportScheduleWizardState, () => this.props.UpdateGoBackState())
+        this.setState({ OneOffDate: e.value } as ReportScheduleWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onRecurringDateChanged(event: React.FormEvent<any>) {
@@ -221,7 +216,13 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
 
     public canNext(): boolean {
         if (this.state.HasAutoExport) {
-            return true; // TODO: do some checks ?
+            if (this.state.Hour == null || this.state.Minute == null) {
+                return false;
+            }
+            if (this.state.OneOffDate == null && ArrayExtensions.IsEmpty(this.state.DaysOfWeek)) {
+                return false;
+            }
+            return true;
         } else {
             return true;
         }
