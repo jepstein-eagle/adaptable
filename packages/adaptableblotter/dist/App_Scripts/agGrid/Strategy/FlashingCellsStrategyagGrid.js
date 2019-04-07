@@ -30,9 +30,6 @@ class FlashingCellStrategyagGrid extends FlashingCellsStrategy_1.FlashingCellsSt
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node);
                         let rowNode = params.node;
                         let test = theBlotter.BlotterOptions.vendorGrid;
-                        //   test.api.disp
-                        // need to find way of seeing if row is visilbe
-                        //    test.api.row
                         let key = primaryKey + col.ColumnId + "up";
                         let currentFlashTimer = currentFlashing.get(key);
                         if (currentFlashTimer) {
@@ -40,7 +37,6 @@ class FlashingCellStrategyagGrid extends FlashingCellsStrategy_1.FlashingCellsSt
                         }
                         let oldValue = theBlotter.DataService.GetPreviousColumnValue(col.ColumnId, primaryKey, params.value, IDataService_1.ChangeDirection.Up);
                         if (oldValue && params.value > oldValue) {
-                            //        console.log("tick up for " + primaryKey)
                             if (currentFlashTimer) {
                                 window.clearTimeout(currentFlashTimer);
                             }
@@ -64,7 +60,6 @@ class FlashingCellStrategyagGrid extends FlashingCellsStrategy_1.FlashingCellsSt
                         }
                         let oldValue = theBlotter.DataService.GetPreviousColumnValue(col.ColumnId, primaryKey, params.value, IDataService_1.ChangeDirection.Down);
                         if (oldValue && params.value < oldValue) {
-                            //      console.log("tick down for primarykey: " + primaryKey)
                             if (currentFlashTimer) {
                                 window.clearTimeout(currentFlashTimer);
                             }

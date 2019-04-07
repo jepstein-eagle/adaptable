@@ -34,7 +34,7 @@ const DataSourceRedux = require("../ActionsReducers/DataSourceRedux");
 const ColumnFilterRedux = require("../ActionsReducers/ColumnFilterRedux");
 const UserFilterRedux = require("../ActionsReducers/UserFilterRedux");
 const SystemFilterRedux = require("../ActionsReducers/SystemFilterRedux");
-const ScheduleRedux = require("../ActionsReducers/ScheduleRedux");
+const ReminderRedux = require("../ActionsReducers/ReminderRedux");
 const ThemeRedux = require("../ActionsReducers/ThemeRedux");
 const FormatColumnRedux = require("../ActionsReducers/FormatColumnRedux");
 const FreeTextColumnRedux = require("../ActionsReducers/FreeTextColumnRedux");
@@ -96,7 +96,7 @@ const rootReducer = Redux.combineReducers({
     Shortcut: ShortcutRedux.ShortcutReducer,
     SmartEdit: SmartEditRedux.SmartEditReducer,
     SystemFilter: SystemFilterRedux.SystemFilterReducer,
-    Schedule: ScheduleRedux.ScheduleReducer,
+    Reminder: ReminderRedux.ReminderReducer,
     TeamSharing: TeamSharingRedux.TeamSharingReducer,
     Theme: ThemeRedux.ThemeReducer,
     UserFilter: UserFilterRedux.UserFilterReducer,

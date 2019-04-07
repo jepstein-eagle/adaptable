@@ -4,6 +4,7 @@ const React = require("react");
 const react_bootstrap_1 = require("react-bootstrap");
 const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterForm");
+const Enums_1 = require("../../../Utilities/Enums");
 class ReportSettingsWizard extends React.Component {
     constructor(props) {
         super(props);
@@ -44,7 +45,7 @@ class ReportSettingsWizard extends React.Component {
         return 1;
     }
     GetIndexStepDecrement() {
-        return 1;
+        return (this.props.Data.ReportRowScope == Enums_1.ReportRowScope.ExpressionRows) ? 1 : 2;
     }
 }
 exports.ReportSettingsWizard = ReportSettingsWizard;

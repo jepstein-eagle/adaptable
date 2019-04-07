@@ -167,7 +167,7 @@ export declare enum StateChangedTrigger {
     PieChart = "PieChart",
     PlusMinus = "PlusMinus",
     QuickSearch = "QuickSearch",
-    Schedule = "Schedule",
+    Reminder = "Reminder",
     CellSummary = "CellSummary",
     Shortcut = "Shortcut",
     SmartEdit = "SmartEdit",
@@ -236,7 +236,12 @@ export declare enum DashboardSize {
     Small = "small",
     XSmall = "xsmall"
 }
-export declare enum ScheduleType {
-    Report = "Report",
-    Alert = "Alert"
+export declare enum DayOfWeek {
+    Sunday = 0,
+    Monday = 1,
+    Tuesday = 2,
+    Wednesday = 3,
+    Thursday = 4,
+    Friday = 5,
+    Saturday = 6
 }

@@ -19,7 +19,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.isSendingData = false;
         this.workAroundOpenfinExcelDataDimension = new Map();
         this.throttledRecomputeAndSendLiveExcelEvent = _.throttle(() => this.sendNewDataToLiveExcel(), 2000);
-        OpenfinHelper_1.OpenfinHelper.OnExcelDisconnected().Subscribe((sender, event) => {
+        OpenfinHelper_1.OpenfinHelper.OnExcelDisconnected().Subscribe(() => {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Excel closed stopping all Live Excel");
             this.CurrentLiveReports.forEach(cle => {
                 this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.OpenfinExcel));
@@ -38,13 +38,13 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(liveReport.Report, Enums_1.ExportDestination.OpenfinExcel));
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStartLive(liveReport.Report, workbookSavedEvent.NewName, Enums_1.ExportDestination.OpenfinExcel));
         });
-        this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, event) => {
+        this.blotter.DataService.OnDataSourceChanged().Subscribe(() => {
             this.throttledRecomputeAndSendLiveExcelEvent();
         });
-        this.blotter.onRefresh().Subscribe((sender, event) => {
+        this.blotter.onRefresh().Subscribe(() => {
             this.throttledRecomputeAndSendLiveExcelEvent();
         });
-        this.blotter.onSelectedCellsChanged().Subscribe((sender, event) => {
+        this.blotter.onSelectedCellsChanged().Subscribe(() => {
             if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.CurrentLiveReports)) {
                 let liveReport = this.CurrentLiveReports.find(x => x.Report == ReportHelper_1.ReportHelper.SELECTED_CELLS_REPORT);
                 if (liveReport) {
@@ -222,6 +222,15 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     }
     InitState() {
         if (this.ExportState != this.blotter.AdaptableBlotterStore.TheStore.getState().Export) {
+            // schedule - not quite right but we will get there...
+            // not worked out how to decide destination
+            // just clear all jobs and recreate - simplest thing to do...
+            this.blotter.ScheduleService.ClearAllExportJobs();
+            this.blotter.AdaptableBlotterStore.TheStore.getState().Export.Reports.forEach((report) => {
+                if (report.AutoExport) {
+                    this.blotter.ScheduleService.AddReportSchedule(report);
+                }
+            });
             this.ExportState = this.blotter.AdaptableBlotterStore.TheStore.getState().Export;
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Export, this.ExportState);

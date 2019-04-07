@@ -1,5 +1,8 @@
-import { ISchedule } from "../../Interface/BlotterObjects/ISchedule";
+import { IReport } from "../../Interface/BlotterObjects/IReport";
+import { IReminder } from "../../Interface/BlotterObjects/IReminder";
 export interface IScheduleService {
-    AddSchedule(schedule: ISchedule): void;
-    ClearAllJobs(): void;
+    AddAlertSchedule(reminder: IReminder): void;
+    AddReportSchedule(report: IReport): void;
+    ClearAllAlertJobs(): void;
+    ClearAllExportJobs(): void;
 }

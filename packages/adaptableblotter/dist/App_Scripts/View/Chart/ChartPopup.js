@@ -12,7 +12,6 @@ const Helper_1 = require("../../Utilities/Helpers/Helper");
 const ObjectFactory_1 = require("../../Utilities/ObjectFactory");
 const ChartEntityRow_1 = require("./ChartEntityRow");
 const PanelWithButton_1 = require("../Components/Panels/PanelWithButton");
-const ButtonNew_1 = require("../Components/Buttons/ButtonNew");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const AdaptableObjectCollection_1 = require("../Components/AdaptableObjectCollection");
 const UIHelper_1 = require("../UIHelper");
@@ -48,8 +47,8 @@ class ChartPopupComponent extends React.Component {
         let infoBody = ["Create Charts to view your grid data visually."];
         let colItems = [
             { Content: "Name", Size: 3 },
-            { Content: "Description", Size: 4 },
-            { Content: "Type", Size: 2 },
+            { Content: "Description", Size: 3 },
+            { Content: "Type", Size: 3 },
             { Content: "Show", Size: 1 },
             { Content: "", Size: 2 },
         ];
@@ -67,10 +66,9 @@ class ChartPopupComponent extends React.Component {
                 ' ',
                 'New',
                 " "));
-        let dropdownButton = React.createElement(react_bootstrap_1.DropdownButton, { style: { marginLeft: "5px" }, bsSize: 'small', bsStyle: StyleConstants.INFO_BSSTYLE, title: plusGlyph, id: "chartDropdown" },
+        let dropdownButton = React.createElement(react_bootstrap_1.DropdownButton, { style: { float: 'right', marginRight: '0px' }, bsSize: 'small', bsStyle: StyleConstants.INFO_BSSTYLE, title: plusGlyph, id: "chartDropdown" },
             categoryChartMenuItem,
             pieChartMenuItem);
-        let newButton = React.createElement(ButtonNew_1.ButtonNew, { cssClassName: cssClassName, onClick: () => this.onNew(ChartEnums_1.ChartType.CategoryChart), overrideTooltip: "Create Chart Definition", DisplayMode: "Glyph+Text", size: "small", AccessLevel: this.props.AccessLevel });
         let editedChartDefinition = this.state.EditedAdaptableBlotterObject;
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.ChartStrategyName, className: "ab_main_popup", infoBody: infoBody, button: dropdownButton, bsStyle: "primary", glyphicon: StrategyConstants.ChartGlyph },

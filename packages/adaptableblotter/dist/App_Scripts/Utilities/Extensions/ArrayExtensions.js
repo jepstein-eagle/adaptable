@@ -199,4 +199,8 @@ var ArrayExtensions;
         }, {});
     }
     ArrayExtensions.groupArrayBy = groupArrayBy;
+    function CreateCommaSeparatedString(values) {
+        return values.join(", ");
+    }
+    ArrayExtensions.CreateCommaSeparatedString = CreateCommaSeparatedString;
 })(ArrayExtensions = exports.ArrayExtensions || (exports.ArrayExtensions = {}));

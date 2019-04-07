@@ -255,28 +255,28 @@ var ExpressionHelper;
                     return "After ";
                 }
                 else {
-                    return "> ";
+                    return "Greater Than ";
                 }
             case Enums_1.LeafExpressionOperator.LessThan:
                 if (dataType == Enums_1.DataType.Date) {
                     return "Before ";
                 }
                 else {
-                    return "< ";
+                    return "Less Than ";
                 }
             case Enums_1.LeafExpressionOperator.GreaterThanOrEqual:
                 if (dataType == Enums_1.DataType.Date) {
                     return "After or On ";
                 }
                 else {
-                    return ">= ";
+                    return "Greater Than or Equals ";
                 }
             case Enums_1.LeafExpressionOperator.LessThanOrEqual:
                 if (dataType == Enums_1.DataType.Date) {
                     return "Before or On ";
                 }
                 else {
-                    return "<= ";
+                    return "Less Than or Equals ";
                 }
             case Enums_1.LeafExpressionOperator.Between:
                 return " Between ";

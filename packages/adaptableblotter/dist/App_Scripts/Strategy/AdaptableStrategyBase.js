@@ -107,11 +107,11 @@ class AdaptableStrategyBase {
     }
     publishSearchChanged(searchChangedTrigger) {
         let state = this.blotter.AdaptableBlotterStore.TheStore.getState();
-        let dataSource = state.DataSource.DataSources.find(ds => ds == state.DataSource.CurrentDataSource);
+        let dataSource = state.DataSource.DataSources.find(ds => ds.Name == state.DataSource.CurrentDataSource);
         let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch);
         // lets get the searchstate
         let blotterSearchState = {
-            dataSource: StringExtensions_1.StringExtensions.IsNotNullOrEmpty(dataSource) ? dataSource : "",
+            dataSource: dataSource == null ? null : dataSource,
             advancedSearch: advancedSearch == null ? null : advancedSearch,
             quickSearch: state.QuickSearch.QuickSearchText,
             columnFilters: state.ColumnFilter.ColumnFilters

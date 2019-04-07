@@ -183,7 +183,6 @@ class PieChartPopupComponent extends React.Component {
         pieChartDefinition.SecondaryColumnId = valueColumn;
         let dataSource = this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition);
         dataSource = PieChartUIHelper_1.PieChartUIHelper.sortDataSource(this.state.SliceSortOption, dataSource);
-        console.log("onDataChanged " + dataSource.length + " " + valueColumn + " " + labelColumn);
         this.setState({
             PieChartDefinition: pieChartDefinition,
             DataSource: dataSource,

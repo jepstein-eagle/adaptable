@@ -4,6 +4,7 @@ const Enums_1 = require("../Utilities/Enums");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const StyleConstants_1 = require("../Utilities/Constants/StyleConstants");
 const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
+const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 var UIHelper;
 (function (UIHelper) {
     function getDefaultColors() {
@@ -198,4 +199,36 @@ var UIHelper;
         }
     }
     UIHelper.getGlyphForSystemStatusButton = getGlyphForSystemStatusButton;
+    function GetScheduleDescription(schedule) {
+        if (schedule == null) {
+            return '[No Schedule]';
+        }
+        let dateString;
+        if (schedule.OneOffDate == null) {
+            if ((ArrayExtensions_1.ArrayExtensions.ContainsItem(schedule.DaysOfWeek, Enums_1.DayOfWeek.Monday) &&
+                ArrayExtensions_1.ArrayExtensions.ContainsItem(schedule.DaysOfWeek, Enums_1.DayOfWeek.Tuesday) &&
+                ArrayExtensions_1.ArrayExtensions.ContainsItem(schedule.DaysOfWeek, Enums_1.DayOfWeek.Wednesday) &&
+                ArrayExtensions_1.ArrayExtensions.ContainsItem(schedule.DaysOfWeek, Enums_1.DayOfWeek.Thursday) &&
+                ArrayExtensions_1.ArrayExtensions.ContainsItem(schedule.DaysOfWeek, Enums_1.DayOfWeek.Friday))) {
+                if (ArrayExtensions_1.ArrayExtensions.ContainsItem(schedule.DaysOfWeek, Enums_1.DayOfWeek.Sunday) &&
+                    ArrayExtensions_1.ArrayExtensions.ContainsItem(schedule.DaysOfWeek, Enums_1.DayOfWeek.Saturday)) {
+                    dateString = 'Everyday';
+                }
+                else {
+                    dateString = 'Weekdays';
+                }
+            }
+            else {
+                let names = schedule.DaysOfWeek.sort().map(d => {
+                    return Enums_1.DayOfWeek[d];
+                });
+                dateString = ArrayExtensions_1.ArrayExtensions.CreateCommaSeparatedString(names);
+            }
+        }
+        else {
+            dateString = new Date(schedule.OneOffDate).toDateString();
+        }
+        return dateString + ' at ' + schedule.Hour + ':' + schedule.Minute;
+    }
+    UIHelper.GetScheduleDescription = GetScheduleDescription;
 })(UIHelper = exports.UIHelper || (exports.UIHelper = {}));

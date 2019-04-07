@@ -34,7 +34,8 @@ import { IMenuItem, IContextMenu } from '../../../Utilities/Interface/IMenu';
 import { IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPopup, IAboutPopup, IAdaptableAlert } from '../../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../../Utilities/ChartEnums';
 import { IPieChart } from "../../../Utilities/Interface/BlotterObjects/IPieChart";
-import { ISchedule } from "../../../Utilities/Interface/BlotterObjects/ISchedule";
+import { IReminder } from "../../../Utilities/Interface/BlotterObjects/IReminder";
+import { IDataSource } from "../../../Utilities/Interface/BlotterObjects/IDataSource";
 export interface IState {
 }
 /**
@@ -162,7 +163,7 @@ export interface DashboardState extends IUserState {
     UseExtraSmallButtons: boolean;
 }
 export interface DataSourceState extends IUserState {
-    DataSources: string[];
+    DataSources: IDataSource[];
     CurrentDataSource: string;
 }
 export interface ExportState extends IUserState {
@@ -199,8 +200,8 @@ export interface QuickSearchState extends IUserState {
     DisplayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
     Style: IStyle;
 }
-export interface ScheduleState extends IUserState {
-    Schedules: ISchedule[];
+export interface ReminderState extends IUserState {
+    Reminders: IReminder[];
 }
 export interface ShortcutState extends IUserState {
     Shortcuts: IShortcut[];

@@ -23,6 +23,10 @@ var ObjectFactory;
         return { ColumnId: GeneralConstants_1.EMPTY_STRING, SortedValues: [] };
     }
     ObjectFactory.CreateEmptyCustomSort = CreateEmptyCustomSort;
+    function CreateEmptyDataSource() {
+        return { Name: GeneralConstants_1.EMPTY_STRING, Description: GeneralConstants_1.EMPTY_STRING };
+    }
+    ObjectFactory.CreateEmptyDataSource = CreateEmptyDataSource;
     function CreateEmptyPieChartDefinition() {
         return {
             Name: GeneralConstants_1.EMPTY_STRING,
@@ -62,6 +66,15 @@ var ObjectFactory;
         };
     }
     ObjectFactory.CreateEmptyPlusMinusRule = CreateEmptyPlusMinusRule;
+    function CreateEmptyAlert() {
+        return {
+            Header: GeneralConstants_1.EMPTY_STRING,
+            Msg: GeneralConstants_1.EMPTY_STRING,
+            MessageType: Enums_1.MessageType.Info,
+            ShowAsPopup: GeneralConstants_1.ALERT_DEFAULT_SHOW_AS_POPUP
+        };
+    }
+    ObjectFactory.CreateEmptyAlert = CreateEmptyAlert;
     function CreateEmptyAlertDefinition() {
         return {
             ColumnId: GeneralConstants_1.EMPTY_STRING,
@@ -165,6 +178,30 @@ var ObjectFactory;
         };
     }
     ObjectFactory.CreateDefaultFlashingCell = CreateDefaultFlashingCell;
+    function CreateEmptyReminder() {
+        return {
+            Alert: CreateEmptyAlert(),
+            Schedule: CreateEmptySchedule()
+        };
+    }
+    ObjectFactory.CreateEmptyReminder = CreateEmptyReminder;
+    function CreateEmptyAutoExport() {
+        return {
+            ExportDestination: Enums_1.ExportDestination.CSV,
+            Schedule: CreateEmptySchedule()
+        };
+    }
+    ObjectFactory.CreateEmptyAutoExport = CreateEmptyAutoExport;
+    function CreateEmptySchedule() {
+        return {
+            // todo: base of tommorrow?
+            OneOffDate: null,
+            DaysOfWeek: [],
+            Hour: 17,
+            Minute: 0
+        };
+    }
+    ObjectFactory.CreateEmptySchedule = CreateEmptySchedule;
     function CreateEmptyShortcut() {
         return {
             ShortcutKey: null,

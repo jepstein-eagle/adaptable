@@ -100,7 +100,6 @@ class AuditLogService {
                     data: data ? this.convertToText(data) : null
                 }
             };
-            //   console.log(auditLogEntry);
             this.auditLogQueue.push(auditLogEntry);
         }
     }

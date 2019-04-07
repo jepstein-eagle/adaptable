@@ -4,6 +4,7 @@ import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/
 import { IStyle } from "../Utilities/Interface/IStyle";
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../Utilities/Expression';
+import { ISchedule } from '../Utilities/Interface/BlotterObjects/ISchedule';
 export declare module UIHelper {
     function getDefaultColors(): string[];
     function getEmptyConfigState(): EditableConfigEntityState;
@@ -21,4 +22,5 @@ export declare module UIHelper {
     function getStyleNameByMessageType(messageType: MessageType): string;
     function getStyleForSystemStatusButton(statusColour: StatusColour): string;
     function getGlyphForSystemStatusButton(statusColour: StatusColour): string;
+    function GetScheduleDescription(schedule: ISchedule): string;
 }

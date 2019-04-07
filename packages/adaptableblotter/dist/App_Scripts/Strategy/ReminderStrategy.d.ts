@@ -1,10 +1,10 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { IScheduleStrategy } from './Interface/IScheduleStrategy';
-import { ScheduleState } from '../Redux/ActionsReducers/Interface/IState';
+import { IReminderStrategy } from './Interface/IReminderStrategy';
+import { ReminderState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../Utilities/Interface/IColumn';
-export declare class ScheduleStrategy extends AdaptableStrategyBase implements IScheduleStrategy {
-    protected ScheduleState: ScheduleState;
+export declare class ReminderStrategy extends AdaptableStrategyBase implements IReminderStrategy {
+    protected ReminderState: ReminderState;
     constructor(blotter: IAdaptableBlotter);
     protected addPopupMenuItem(): void;
     addContextMenuItem(column: IColumn): void;

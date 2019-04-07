@@ -17,5 +17,5 @@ export declare class ReportSettingsWizard extends React.Component<ReportSettings
     Next(): void;
     Back(): void;
     GetIndexStepIncrement(): number;
-    GetIndexStepDecrement(): number;
+    GetIndexStepDecrement(): 1 | 2;
 }

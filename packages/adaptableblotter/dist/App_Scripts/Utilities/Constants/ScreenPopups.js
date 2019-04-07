@@ -33,5 +33,5 @@ exports.SmartEditPopup = "SmartEditPopup";
 exports.TeamSharingPopup = "TeamSharingPopup";
 exports.ThemePopup = "ThemePopup";
 exports.QuickSearchPopup = "QuickSearchPopup";
-exports.SchedulePopup = "SchedulePopup";
+exports.ReminderPopup = "ReminderPopup";
 exports.UserFilterPopup = "UserFilterPopup";

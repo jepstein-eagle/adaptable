@@ -1,62 +1,71 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const NodeSchedule = require("node-schedule");
-const Enums_1 = require("../Enums");
+const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
+const DateExtensions_1 = require("../Extensions/DateExtensions");
 class ScheduleService {
     constructor(blotter) {
         this.blotter = blotter;
-        this.jobs = [];
+        this.alertJobs = [];
+        this.exportJobs = [];
     }
-    AddSchedule(schedule) {
-        let date = null;
-        if (schedule.ScheduleTime.OneOffDate != null) {
-            date = schedule.ScheduleTime.OneOffDate;
-        }
-        else {
-            date = new Date(2019, 3, 2, schedule.ScheduleTime.RecurringDate.Hour, schedule.ScheduleTime.RecurringDate.Minute, 0);
-        }
+    AddAlertSchedule(reminder) {
+        let date = this.getDate(reminder.Schedule);
         if (date != null) {
-            switch (schedule.ScheduleType) {
-                case Enums_1.ScheduleType.Alert:
-                    this.scheduleAlert(date, schedule);
-                    break;
-                case Enums_1.ScheduleType.Report:
-                    this.scheduleReport(date, schedule);
-                    break;
+            var alertJob = NodeSchedule.scheduleJob(date, () => {
+                this.blotter.api.alertApi.ShowAlert(reminder.Alert);
+            });
+            this.alertJobs.push(alertJob);
+        }
+    }
+    AddReportSchedule(report) {
+        if (report.AutoExport) {
+            let date = this.getDate(report.AutoExport.Schedule);
+            if (date != null) {
+                var exportJob = NodeSchedule.scheduleJob(date, () => {
+                    this.blotter.api.exportApi.SendReport(report.Name, report.AutoExport.ExportDestination);
+                });
+                this.exportJobs.push(exportJob);
             }
         }
     }
-    ClearAllJobs() {
-        console.log("before");
-        console.log(this.jobs);
-        this.jobs.forEach(j => {
+    getDate(schedule) {
+        let date = null;
+        if (schedule.OneOffDate != null) {
+            date = new Date(schedule.OneOffDate);
+            date.setHours(schedule.Hour);
+            date.setMinutes(schedule.Minute);
+            date.setSeconds(0);
+        }
+        else {
+            date = new Date();
+            if (ArrayExtensions_1.ArrayExtensions.ContainsItem(schedule.DaysOfWeek, date.getDay())) {
+                date.setHours(schedule.Hour);
+                date.setMinutes(schedule.Minute);
+                date.setSeconds(0);
+            }
+        }
+        // add check for whether date in the past
+        if (date != null && DateExtensions_1.DateExtensions.IsDateInFuture(date)) {
+            return date;
+        }
+        return null;
+    }
+    ClearAllAlertJobs() {
+        this.alertJobs.forEach(j => {
             if (j != null) {
-                console.log("cancelling");
-                console.log(j);
                 j.cancel();
             }
         });
-        this.jobs = [];
-        console.log("after");
-        console.log(this.jobs);
+        this.alertJobs = [];
     }
-    scheduleAlert(date, schedule) {
-        var job = NodeSchedule.scheduleJob(date, () => {
-            let alertScheduleItem = schedule.ScheduleItem;
-            this.blotter.api.alertApi.ShowAlert(alertScheduleItem.Alert);
+    ClearAllExportJobs() {
+        this.exportJobs.forEach(j => {
+            if (j != null) {
+                j.cancel();
+            }
         });
-        this.jobs.push(job);
-        console.log('after adding alert job');
-        console.log(this.jobs);
-    }
-    scheduleReport(date, schedule) {
-        var job = NodeSchedule.scheduleJob(date, () => {
-            let reportcheduleItem = schedule.ScheduleItem;
-            this.blotter.api.exportApi.SendReport(reportcheduleItem.Name, reportcheduleItem.ExportDestination);
-        });
-        this.jobs.push(job);
-        console.log('after adding report job');
-        console.log(this.jobs);
+        this.exportJobs = [];
     }
 }
 exports.ScheduleService = ScheduleService;

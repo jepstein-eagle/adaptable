@@ -1,12 +1,15 @@
 import { IScheduleService } from "./Interface/IScheduleService";
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
-import { ISchedule } from "../Interface/BlotterObjects/ISchedule";
+import { IReport } from "../Interface/BlotterObjects/IReport";
+import { IReminder } from "../Interface/BlotterObjects/IReminder";
 export declare class ScheduleService implements IScheduleService {
     private blotter;
-    private jobs;
+    private alertJobs;
+    private exportJobs;
     constructor(blotter: IAdaptableBlotter);
-    AddSchedule(schedule: ISchedule): void;
-    ClearAllJobs(): void;
-    private scheduleAlert;
-    private scheduleReport;
+    AddAlertSchedule(reminder: IReminder): void;
+    AddReportSchedule(report: IReport): void;
+    private getDate;
+    ClearAllAlertJobs(): void;
+    ClearAllExportJobs(): void;
 }

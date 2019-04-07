@@ -24,6 +24,7 @@ const AdaptableBlotterForm_1 = require("../../Components/Forms/AdaptableBlotterF
 const ChartEnums_1 = require("../../../Utilities/ChartEnums");
 const AdaptablePopover_1 = require("../../AdaptablePopover");
 const EnumExtensions_1 = require("../../../Utilities/Extensions/EnumExtensions");
+const StringExtensions_1 = require("../../../Utilities/Extensions/StringExtensions");
 class PieChartComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -43,11 +44,17 @@ class PieChartComponent extends React.Component {
         this.onPieChartLegendRef = this.onPieChartLegendRef.bind(this);
     }
     componentWillReceiveProps(nextProps, nextContext) {
-        //  if (nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name) {
-        this.state = PieChartUIHelper_1.PieChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, nextProps.ChartData);
+        this.setState(PieChartUIHelper_1.PieChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, nextProps.ChartData));
     }
     render() {
         let cssClassName = this.props.cssClassName + "__PieCharts";
+        let chartTitle = this.props.CurrentChartDefinition.Name;
+        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.Description)) {
+            chartTitle += ' : ' + this.props.CurrentChartDefinition.Description;
+        }
+        let chartErrorMessage = (this.props.ChartData != null && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.ChartData[0].ErrorMessage)) ?
+            this.props.ChartData[0].ErrorMessage :
+            null;
         let showGeneralPropertiesButton = this.state.IsGeneralMinimised ?
             React.createElement(ButtonMaximise_1.ButtonMaximise, { cssClassName: cssClassName, onClick: () => this.onShowGeneralProperties(), bsStyle: StyleConstants_1.DEFAULT_BSSTYLE, size: "xs", DisplayMode: "Glyph", hideToolTip: false, overrideTooltip: "Show GeneralProperties" })
             :
@@ -60,9 +67,10 @@ class PieChartComponent extends React.Component {
                 React.createElement(igr_ring_series_1.IgrRingSeries, { name: "ring1", dataSource: this.state.DataSource, labelMemberPath: this.state.ChartProperties.SliceLabelsMapping, labelsPosition: this.state.ChartProperties.PieChartLabelPosition, valueMemberPath: this.state.ChartProperties.SliceValuesMapping, legendLabelMemberPath: this.state.ChartProperties.SliceLegendMapping, othersCategoryThreshold: this.state.ChartProperties.OthersCategoryThreshold, othersCategoryType: this.state.ChartProperties.OthersCategoryType, othersCategoryText: "Others", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: 0.8 }))
             :
                 React.createElement(igr_pie_chart_1.IgrPieChart, { ref: this.onPieChartRef, dataSource: this.state.DataSource, labelsPosition: this.state.ChartProperties.PieChartLabelPosition, width: '100%', height: '100%', radiusFactor: 0.8, labelMemberPath: this.state.ChartProperties.SliceLabelsMapping, valueMemberPath: this.state.ChartProperties.SliceValuesMapping, legendLabelMemberPath: this.state.ChartProperties.SliceLegendMapping, othersCategoryThreshold: this.state.ChartProperties.OthersCategoryThreshold, othersCategoryType: this.state.ChartProperties.OthersCategoryType, othersCategoryText: "Others", othersCategoryFill: "#9A9A9A", othersCategoryStroke: "#9A9A9A", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, selectionMode: "single", sliceClick: (s, e) => this.onSliceClick(e) });
-        let chartElement = (this.props.ChartData != null) ?
-            chart :
-            null;
+        let chartElement = (this.props.ChartData != null && chartErrorMessage == null) ?
+            chart
+            :
+                React.createElement("span", null, chartErrorMessage);
         let legendPanel = React.createElement(react_bootstrap_1.Panel, { bsSize: "xs", header: "Legend", style: { marginTop: '2px' } },
             React.createElement("div", { className: "pieChartLegend" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
@@ -126,7 +134,7 @@ class PieChartComponent extends React.Component {
                 React.createElement(react_bootstrap_1.Table, { style: { height: '670px', border: 'none', borderCollapse: 'separate' } },
                     React.createElement("thead", null,
                         React.createElement("tr", null,
-                            React.createElement("th", null, this.props.CurrentChartDefinition.Name),
+                            React.createElement("th", null, chartTitle),
                             React.createElement("th", null))),
                     React.createElement("tbody", null,
                         React.createElement("tr", null,
@@ -226,10 +234,9 @@ class PieChartComponent extends React.Component {
         this.setState({ SliceSortOption: sliceSortOption, DataSource: newData });
     }
     onSliceClick(e) {
-        console.log("onSliceClick " + e);
+        //    console.log("onSliceClick " + e);
         e.isExploded = !e.isExploded;
         e.isSelected = !e.isSelected;
-        const ds = e.dataContext;
         if (e.isExploded) {
             //    this.setState({ CurrentColumnCount: ds.Value, CurrentColumnValue: ds.Name } as PieChartComponentState);
         }

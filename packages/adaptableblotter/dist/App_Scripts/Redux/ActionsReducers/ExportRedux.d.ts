@@ -1,7 +1,7 @@
 import { ExportState } from './Interface/IState';
 import { ExportDestination } from '../../Utilities/Enums';
 import * as Redux from 'redux';
-import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
+import { IReport, IAutoExport } from "../../Utilities/Interface/BlotterObjects/IReport";
 export declare const EXPORT_APPLY = "EXPORT_APPLY";
 export declare const IPP_LOGIN = "IPP_LOGIN";
 export declare const REPORT_SELECT = "REPORT_SELECT";
@@ -25,6 +25,13 @@ export interface ReportAddUpdateAction extends Redux.Action {
     Report: IReport;
 }
 export interface ReportDeleteAction extends Redux.Action {
+    Index: number;
+}
+export interface AutoExportAddUpdateAction extends Redux.Action {
+    Index: number;
+    AutoExport: IAutoExport;
+}
+export interface AutoExportDeleteAction extends Redux.Action {
     Index: number;
 }
 export declare const ReportSelect: (SelectedReport: string) => ReportSelectAction;

@@ -22,4 +22,5 @@ export declare module ArrayExtensions {
     function sortArrayWithProperty(sortOrder: SortOrder, values: any[], sortProperty?: string): any[];
     function sortArray(values: any[], sortOrder?: SortOrder): any[];
     function groupArrayBy(array: Array<any>, prop: string): Array<any>;
+    function CreateCommaSeparatedString(values: any[]): string;
 }

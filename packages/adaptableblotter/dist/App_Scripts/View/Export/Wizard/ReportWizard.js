@@ -9,6 +9,7 @@ const ReportSettingsWizard_1 = require("./ReportSettingsWizard");
 const ReportSummaryWizard_1 = require("./ReportSummaryWizard");
 const StrategyConstants = require("../../../Utilities/Constants/StrategyConstants");
 const ReportRowTypeWizard_1 = require("./ReportRowTypeWizard");
+const ReportScheduleWizard_1 = require("./ReportScheduleWizard");
 class ReportWizard extends React.Component {
     render() {
         return React.createElement("div", { className: this.props.cssClassName },
@@ -39,8 +40,13 @@ class ReportWizard extends React.Component {
                         Element: React.createElement(ReportSettingsWizard_1.ReportSettingsWizard, { Reports: this.props.ConfigEntities }),
                     },
                     {
-                        StepName: "Summary",
+                        StepName: "Schedule",
                         Index: 5,
+                        Element: React.createElement(ReportScheduleWizard_1.ReportScheduleWizard, null)
+                    },
+                    {
+                        StepName: "Summary",
+                        Index: 6,
                         Element: React.createElement(ReportSummaryWizard_1.ReportSummaryWizard, { UserFilters: this.props.UserFilters })
                     }
                 ], Data: this.props.EditedAdaptableBlotterObject, StepStartIndex: this.props.WizardStartIndex, onHide: () => this.props.onCloseWizard(), onFinish: () => this.props.onFinishWizard(), canFinishWizard: () => this.props.canFinishWizard() }));

@@ -33,7 +33,7 @@ exports.IPPLogin = (Login, Password) => ({
 });
 const initialExportState = {
     Reports: GeneralConstants_1.EMPTY_ARRAY,
-    CurrentReport: GeneralConstants_1.EMPTY_STRING,
+    CurrentReport: GeneralConstants_1.EMPTY_STRING
 };
 exports.ExportReducer = (state = initialExportState, action) => {
     switch (action.type) {
@@ -42,7 +42,7 @@ exports.ExportReducer = (state = initialExportState, action) => {
         case exports.REPORT_ADD_UPDATE: {
             let Reports = [].concat(state.Reports);
             let actionTypedAddUpdate = action;
-            if (actionTypedAddUpdate.Index != -1) { // it exists
+            if (actionTypedAddUpdate.Index >= 0) { // it exists
                 Reports[actionTypedAddUpdate.Index] = actionTypedAddUpdate.Report;
             }
             else {

@@ -13,4 +13,5 @@ export declare class ChartService implements IChartService {
     private shouldUseRange;
     private getGroupValueTotalForRow;
     private getSingleValueTotalForRow;
+    private createPieChartErrorMessage;
 }
