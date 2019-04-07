@@ -50,7 +50,7 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
                 onHide={this.props.onCancel}
                 className={cssClassName}
                 container={modalContainer}
-                bsSize={"medium"}>
+                bsSize={"small"}>
                 <div className={cssClassName + StyleConstants.MODAL_BASE} >
                     <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
 

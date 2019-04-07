@@ -27,6 +27,7 @@ import { CategoryChartType, LabelVisibility, CrosshairDisplayMode, PieChartLabel
 import { ColorPicker } from "../../ColorPicker";
 import { AdaptablePopover } from "../../AdaptablePopover";
 import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
+import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 
 
 /*
@@ -67,14 +68,21 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
     }
 
     componentWillReceiveProps(nextProps: PieChartComponentProps, nextContext: any) {
-
-        //  if (nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name) {
-        this.state = PieChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, nextProps.ChartData);
+        this.setState(PieChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, nextProps.ChartData));
     }
 
     render() {
 
         let cssClassName: string = this.props.cssClassName + "__PieCharts";
+
+        let chartTitle: string = this.props.CurrentChartDefinition.Name;
+        if (StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.Description)) {
+            chartTitle += ' : ' + this.props.CurrentChartDefinition.Description;
+        }
+
+        let chartErrorMessage: string = (this.props.ChartData != null && StringExtensions.IsNotNullOrEmpty(this.props.ChartData[0].ErrorMessage)) ?
+            this.props.ChartData[0].ErrorMessage :
+            null
 
         let showGeneralPropertiesButton =
             this.state.IsGeneralMinimised ?
@@ -181,9 +189,11 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
             />
 
 
-        let chartElement = (this.props.ChartData != null) ?
-            chart :
-            null
+        let chartElement = (this.props.ChartData != null && chartErrorMessage == null) ?
+            chart
+            :
+            <span>{chartErrorMessage}</span>
+
 
         let legendPanel = <Panel
             bsSize={"xs"}
@@ -328,7 +338,7 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
                         <Table style={{ height: '670px', border: 'none', borderCollapse: 'separate' }}>
                             <thead>
                                 <tr>
-                                    <th>{this.props.CurrentChartDefinition.Name}</th>
+                                    <th>{chartTitle}</th>
                                     <th></th>
                                 </tr>
                             </thead>

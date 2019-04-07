@@ -110,8 +110,9 @@ export class ChartService implements IChartService {
     let dataCounter = new Map<any, number>();
 
     if (StringExtensions.IsNullOrEmpty(chartDefinition.PrimaryColumnId)) {
-      LoggingHelper.LogAdaptableBlotterError("Cannot create pie chart as no Primary Column set.")
-      return null;
+      let errorMessage: string = "Cannot create pie chart as no Primary Column set."
+      LoggingHelper.LogAdaptableBlotterError(errorMessage)
+      return this.createPieChartErrorMessage(errorMessage);
     }
 
     let hasSecondaryColumn = StringExtensions.IsNotNullOrEmpty(chartDefinition.SecondaryColumnId);
@@ -134,8 +135,7 @@ export class ChartService implements IChartService {
       });
     }
 
-    console.log(dataCounter);
-    let dataItems: IPieChartDataItem[] = [];
+     let dataItems: IPieChartDataItem[] = [];
 
     let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
     // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
@@ -143,8 +143,9 @@ export class ChartService implements IChartService {
 
      // if we don't use ranges but there are too many slices then we return an error
     if(!useRanges && dataCounter.size > this.blotter.BlotterOptions.chartOptions.pieChartMaxItems){
-      LoggingHelper.LogAdaptableBlotterError("Cannot create pie chart as it contains too many items.")
-      return null;
+      let errorMessage: string = "Cannot create pie chart as it contains too many items."
+      LoggingHelper.LogAdaptableBlotterError(errorMessage)
+      return this.createPieChartErrorMessage(errorMessage);
     }
 
      if (!useRanges) {
@@ -196,7 +197,7 @@ export class ChartService implements IChartService {
           
         }
       });
-      console.log("ChartService grouped data items into " + dataRanges.size + " ranges of " + dataRangeDivisions)
+   //   console.log("ChartService grouped data items into " + dataRanges.size + " ranges of " + dataRangeDivisions)
       // finally we can generate slice items based on data ranges
       dataRanges.forEach((range, key) => {
         let sliceItem: IPieChartDataItem = {
@@ -278,7 +279,17 @@ export class ChartService implements IChartService {
     return valueTotal;
   }
 
-
+private createPieChartErrorMessage(errorMessage: string):IPieChartDataItem[]{
+  return [
+    {
+      Name: null,
+      Value: null,
+      Ratio: null,
+      ErrorMessage: errorMessage
+    
+    }
+  ]
+}
 
 
 }

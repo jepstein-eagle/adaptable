@@ -71,8 +71,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
         let colItems: IColItem[] = [
             { Content: "Name", Size: 3 },
-            { Content: "Description", Size: 4 },
-            { Content: "Type", Size: 2 },
+            { Content: "Description", Size: 3 },
+            { Content: "Type", Size: 3 },
             { Content: "Show", Size: 1 },
             { Content: "", Size: 2 },
         ]
@@ -103,7 +103,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
 
     let dropdownButton =    <DropdownButton
-        style={{ marginLeft: "5px" }}
+        style={{ float: 'right', marginRight: '0px'}}
         bsSize={'small'}
         bsStyle={StyleConstants.INFO_BSSTYLE}
         title={plusGlyph}
@@ -114,15 +114,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
     </DropdownButton>
 
-        let newButton = <ButtonNew cssClassName={cssClassName}
-            onClick={() => this.onNew(ChartType.CategoryChart)}  // wrong, wrong, wrong
-            overrideTooltip="Create Chart Definition"
-            DisplayMode="Glyph+Text"
-            size={"small"}
-            AccessLevel={this.props.AccessLevel}
-        />
-
-        let editedChartDefinition = this.state.EditedAdaptableBlotterObject as IChartDefinition;
+       let editedChartDefinition = this.state.EditedAdaptableBlotterObject as IChartDefinition;
 
         return <div className={cssClassName}>
             <PanelWithButton cssClassName={cssClassName} headerText={StrategyConstants.ChartStrategyName} className="ab_main_popup" infoBody={infoBody}

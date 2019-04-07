@@ -59,26 +59,7 @@ export module ReportHelper {
     }
 
 
-    export function GetReportScheduleDescription(autoExport: IAutoExport): string {
-        if (autoExport == null) {
-            return '[No Schedule]';
-        }
-
-        let dateString: string
-        if (autoExport.Schedule.OneOffDate == null) {
-            if ((ArrayExtensions.ContainsItem(autoExport.Schedule.DaysOfWeek, DayOfWeek.Monday) && ArrayExtensions.ContainsItem(autoExport.Schedule.DaysOfWeek, DayOfWeek.Friday))) {
-                dateString = 'Weekdays'
-            } else {
-                let names: string[] = autoExport.Schedule.DaysOfWeek.map(d => {
-                    return DayOfWeek[d]
-                })
-                dateString = ArrayExtensions.CreateCommaSeparatedString(names)
-            }
-        } else {
-            dateString = new Date(autoExport.Schedule.OneOffDate).toDateString();
-        }
-        return dateString + ' at ' + autoExport.Schedule.Hour + ':' + autoExport.Schedule.Minute + ' (' + autoExport.ExportDestination + ')';
-    }
+   
 
     export function ConvertReportToArray(blotter: IAdaptableBlotter, Report: IReport): IStrategyActionReturn<any[]> {
         let ReportColumns: IColumn[] = [];

@@ -35,6 +35,8 @@ import { ChartType, SecondaryColumnOperation } from './ChartEnums';
 import { DefaultPieChartProperties } from './Defaults/DefaultPieChartProperties';
 import { IDataSource } from './Interface/BlotterObjects/IDataSource';
 import { ISchedule } from './Interface/BlotterObjects/ISchedule';
+import { IReminder } from './Interface/BlotterObjects/IReminder';
+import { IAdaptableAlert } from './Interface/IMessage';
 
 
 export module ObjectFactory {
@@ -93,6 +95,15 @@ export module ObjectFactory {
             IsDefaultNudge: false,
             NudgeValue: PLUS_MINUS_DEFAULT_NUDGE_VALUE,
             Expression: ExpressionHelper.CreateEmptyExpression()
+        }
+    }
+
+    export function CreateEmptyAlert(): IAdaptableAlert {
+        return {
+            Header: EMPTY_STRING,
+            Msg: EMPTY_STRING,
+            MessageType: MessageType.Info,
+            ShowAsPopup: ALERT_DEFAULT_SHOW_AS_POPUP
         }
     }
 
@@ -200,14 +211,21 @@ export module ObjectFactory {
     }
 
 
-    export function CreateEmptyAutoExport(): IAutoExport{
+    export function CreateEmptyReminder(): IReminder {
+        return {
+            Alert: CreateEmptyAlert(),
+            Schedule: CreateEmptySchedule()
+        }
+    }
+
+    export function CreateEmptyAutoExport(): IAutoExport {
         return {
             ExportDestination: ExportDestination.CSV,
             Schedule: CreateEmptySchedule()
         }
     }
 
-    export function CreateEmptySchedule(): ISchedule{
+    export function CreateEmptySchedule(): ISchedule {
         return {
             // todo: base of tommorrow?
             OneOffDate: null,

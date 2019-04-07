@@ -105,4 +105,5 @@ export interface IPieChartDataItem {
   Ratio: number;
   ValueAndName? : string;
   RatioAndName?: string
+  ErrorMessage? : string
 }

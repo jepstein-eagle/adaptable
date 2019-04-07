@@ -5,7 +5,6 @@ import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Inte
 import { ExportDestination, DayOfWeek } from "../../../Utilities/Enums";
 import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
 import { ObjectFactory } from "../../../Utilities/ObjectFactory";
-import { AdaptablePopover } from "../../AdaptablePopover";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
 import { ISchedule } from "../../../Utilities/Interface/BlotterObjects/ISchedule";
 
@@ -21,8 +20,8 @@ export interface ReportScheduleWizardState {
     Minute: number,
     DaysOfWeek: DayOfWeek[],
     OneOffDate: any,
-    ExportDestination: ExportDestination
-
+    ExportDestination: ExportDestination,
+    
 }
 
 export class ReportScheduleWizard extends React.Component<ReportScheduleWizardProps, ReportScheduleWizardState> implements AdaptableWizardStep {
@@ -36,8 +35,8 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
             Hour: autoExport.Schedule.Hour,
             Minute: autoExport.Schedule.Minute,
             DaysOfWeek: autoExport.Schedule.DaysOfWeek,
-            OneOffDate: (autoExport.Schedule.OneOffDate == null) ? null : autoExport.Schedule.OneOffDate,
-            ExportDestination: autoExport.ExportDestination
+            OneOffDate: (autoExport.Schedule.OneOffDate == null) ? new Date() : autoExport.Schedule.OneOffDate,
+            ExportDestination: autoExport.ExportDestination,
         }
     }
     render(): any {
@@ -55,7 +54,7 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
 
         let minutes: any[] = []
         let j: number
-        for (j = 0; j < 59; j++) {
+        for (j = 0; j < 60; j++) {
             minutes.push(<option key={j} value={j}>{j}</option>)
         }
 
@@ -67,6 +66,9 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
 
                 {this.state.HasAutoExport == true &&
                     <div style={{ marginTop: '30px' }}>
+
+
+
                         <FormGroup controlId="frmDestination">
                             <Row>
                                 <Col xs={3}>
@@ -122,9 +124,10 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
                                 <Col xs={6}>
                                     <Radio inline value="recurring" checked={this.state.IsRecurringDate == true} onChange={(e) => this.onRecurringDateChanged(e)}>Recurring Days</Radio>
                                     <Radio inline value="oneoff" checked={this.state.IsRecurringDate == false} onChange={(e) => this.onRecurringDateChanged(e)}>One Off Date</Radio>
-                                </Col>
+                                  </Col>
                             </Row>
                         </FormGroup>
+
 
 
                         {this.state.IsRecurringDate ?
@@ -136,7 +139,7 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
                                         <Checkbox className={cssClassName + "__checkbox"} inline value={DayOfWeek.Wednesday} checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Wednesday)} onChange={(e) => this.onDayChecked(e)}>Wednesday</Checkbox><br />
                                         <Checkbox className={cssClassName + "__checkbox"} inline value={DayOfWeek.Thursday} checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Thursday)} onChange={(e) => this.onDayChecked(e)}>Thursday</Checkbox><br />
                                         <Checkbox className={cssClassName + "__checkbox"} inline value={DayOfWeek.Friday} checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Friday)} onChange={(e) => this.onDayChecked(e)}>Friday</Checkbox><br />
-                                        <Checkbox className={cssClassName + "__checkbox"} inline value={DayOfWeek.Saturrday} checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Saturrday)} onChange={(e) => this.onDayChecked(e)}>Saturday</Checkbox><br />
+                                        <Checkbox className={cssClassName + "__checkbox"} inline value={DayOfWeek.Saturday} checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Saturday)} onChange={(e) => this.onDayChecked(e)}>Saturday</Checkbox><br />
                                         <Checkbox className={cssClassName + "__checkbox"} inline value={DayOfWeek.Sunday} checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Sunday)} onChange={(e) => this.onDayChecked(e)}>Sunday</Checkbox>
                                     </Panel>
                                 </Col>
@@ -155,6 +158,8 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
                                     </Col>
                                 </Row>
                             </FormGroup>
+
+                            
 
                         }
 
@@ -212,6 +217,7 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
         let e = event.target as HTMLInputElement;
         this.setState({ ExportDestination: e.value as ExportDestination } as ReportScheduleWizardState, () => this.props.UpdateGoBackState())
     }
+
 
     public canNext(): boolean {
         if (this.state.HasAutoExport) {

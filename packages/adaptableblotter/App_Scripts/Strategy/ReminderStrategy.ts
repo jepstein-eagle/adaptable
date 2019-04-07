@@ -26,11 +26,12 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
     protected InitState() {
         if (this.ReminderState != this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder) {
 
+
             // just clear all jobs and recreate - simplest thing to do...
             this.blotter.ScheduleService.ClearAllAlertJobs();
 
             this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder.Reminders.forEach(r => {
-                this.blotter.ScheduleService.AddAlertSchedule(r);
+                 this.blotter.ScheduleService.AddAlertSchedule(r);
             })
             this.ReminderState = this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder;
 

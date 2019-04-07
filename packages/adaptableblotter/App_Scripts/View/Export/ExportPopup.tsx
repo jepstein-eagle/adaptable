@@ -1,15 +1,13 @@
 import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
-import { HelpBlock, Alert } from 'react-bootstrap';
+import { HelpBlock } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux'
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
-import { ExportDestination, ReportColumnScope, AccessLevel, ReportRowScope, MessageType } from '../../Utilities/Enums'
+import { ExportDestination, ReportColumnScope, ReportRowScope } from '../../Utilities/Enums'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
-import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ReportEntityRow } from './ReportEntityRow'
@@ -25,9 +23,9 @@ import { ExpressionHelper } from "../../Utilities/Helpers/ExpressionHelper";
 import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
 import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
 import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
-import { IReport, IAutoExport } from "../../Utilities/Interface/BlotterObjects/IReport";
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
-import { ReportWizard } from "./ReportWizard/ReportWizard";
+import { ReportWizard } from "./Wizard/ReportWizard";
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
     Reports: IReport[],
@@ -174,7 +172,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableBlotterState) {
     return {
         Reports: state.Export.Reports,
         SystemReports: state.System.SystemReports,

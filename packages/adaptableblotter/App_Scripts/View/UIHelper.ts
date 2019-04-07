@@ -1,5 +1,5 @@
 import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState'
-import { DataType, FontWeight, FontStyle, StatusColour, MessageType } from '../Utilities/Enums';
+import { DataType, FontWeight, FontStyle, StatusColour, MessageType, DayOfWeek } from '../Utilities/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { IStyle } from "../Utilities/Interface/IStyle";
@@ -9,9 +9,11 @@ import { SUCCESS_BSSTYLE, WARNING_BSSTYLE, DANGER_BSSTYLE, INFO_BSSTYLE } from '
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import * as React from "react";
 import { Radio } from 'react-bootstrap';
+import { ISchedule } from '../Utilities/Interface/BlotterObjects/ISchedule';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 
 export module UIHelper {
- 
+
     export function getDefaultColors(): string[] {
         return [
             "#000000", //  {/* black */}
@@ -119,8 +121,8 @@ export module UIHelper {
     }
 
     export function isValidUserChartContainer(blotterOptions: IAdaptableBlotterOptions, document: Document): boolean {
-         if (StringExtensions.IsNotNullOrEmpty(blotterOptions.containerOptions.chartContainer)) { 
-           return (document.getElementById(blotterOptions.containerOptions.chartContainer)!= null);
+        if (StringExtensions.IsNotNullOrEmpty(blotterOptions.containerOptions.chartContainer)) {
+            return (document.getElementById(blotterOptions.containerOptions.chartContainer) != null);
         }
         return false;
     }
@@ -208,5 +210,35 @@ export module UIHelper {
         }
     }
 
-   
+    export function GetScheduleDescription(schedule: ISchedule): string {
+        if (schedule == null) {
+            return '[No Schedule]';
+        }
+
+        let dateString: string
+        if (schedule.OneOffDate == null) {
+            if ((ArrayExtensions.ContainsItem(schedule.DaysOfWeek, DayOfWeek.Monday) &&
+                ArrayExtensions.ContainsItem(schedule.DaysOfWeek, DayOfWeek.Tuesday) &&
+                ArrayExtensions.ContainsItem(schedule.DaysOfWeek, DayOfWeek.Wednesday) &&
+                ArrayExtensions.ContainsItem(schedule.DaysOfWeek, DayOfWeek.Thursday) &&
+                ArrayExtensions.ContainsItem(schedule.DaysOfWeek, DayOfWeek.Friday))) {
+                if (ArrayExtensions.ContainsItem(schedule.DaysOfWeek, DayOfWeek.Sunday) &&
+                    ArrayExtensions.ContainsItem(schedule.DaysOfWeek, DayOfWeek.Saturday)) {
+                    dateString = 'Everyday'
+                } else {
+                    dateString = 'Weekdays'
+                }
+            } else {
+                let names: string[] = schedule.DaysOfWeek.sort().map(d => {
+                    return DayOfWeek[d]
+                })
+                dateString = ArrayExtensions.CreateCommaSeparatedString(names)
+            }
+        } else {
+            dateString = new Date(schedule.OneOffDate).toDateString();
+        }
+        return dateString + ' at ' + schedule.Hour + ':' + schedule.Minute;
+    }
+
+
 }
