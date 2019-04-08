@@ -180,21 +180,13 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
       state.UserFilter.UserFilters = []
       state.SystemFilter.SystemFilters = []
       state.Grid = undefined
-      //     state.System = undefined
       state.Layout = undefined
-      //      state.Menu.ContextMenu = undefined
-      //      state.Menu.MenuItems = []
-      //      state.Menu = undefined
       state.PlusMinus = undefined
       state.QuickSearch = undefined
       state.Shortcut = undefined
       state.SmartEdit = undefined
       state.SelectedCells = undefined
-      //   state.TeamSharing = undefined
       state.Theme = undefined
-      //   state.UserInterface = undefined
-
-      //  state = undefined
       break;
     case LOAD_STATE:
       const { State } = <LoadStateAction>action;
@@ -221,15 +213,17 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     let engineWithMigrate: ReduxStorage.StorageEngine
     let engineReduxStorage: ReduxStorage.StorageEngine
 
+    // If the user has remote storage set then we use Remote Engine, otherwise we use Local Enginge
+    // We pass into the create method the blotterId, the config, and also the Licence Info
+    // the Lience Info is needed so we can determine whether or not to load state
     if (BlotterHelper.IsConfigServerEnabled(blotter.BlotterOptions) && StringExtensions.IsNotNullOrEmpty(blotter.BlotterOptions.configServerOptions.configServerUrl)) {
       engineReduxStorage = createEngineRemote(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
-    }
-    else {
+    } else {
       engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
     }
 
     // engine with migrate is where we manage the bits that we dont want to persist, but need to keep in the store
-    // perhaps would be better to have 2 stores - persistence store and in-memory store
+    // perhaps would be better to have 2 stores - persistence store and in-memory store - perhaps we are using the wrong storage mechanism?
     engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
     engineWithFilter = filter(engineWithMigrate, [], [
       // System State - Used ONLY Internally so no need to save
@@ -311,7 +305,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 }
 
 
-// this function checks for any differences in the state and sends it to audit logger
+// this function checks for any differences in the state and sends it to AUDIT LOGGER (for use in Audit Log)
 // we now allow users to differentiate between user and internal state so we check for both
 var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
   return function (next: Redux.Dispatch<AdaptableBlotterState>) {
@@ -354,6 +348,9 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
         case SystemRedux.BULK_UPDATE_SET_VALID_SELECTION:
         case SystemRedux.BULK_UPDATE_SET_PREVIEW:
 
+        case SystemRedux.CHART_SET_CHART_DATA:
+        case SystemRedux.CHART_SET_CHART_VISIBILITY:
+
         case GridRedux.GRID_SET_COLUMNS:
         case GridRedux.GRID_ADD_COLUMN:
         case GridRedux.GRID_HIDE_COLUMN:
@@ -385,10 +382,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
         case PopupRedux.POPUP_CANCEL_CONFIRMATION:
         case PopupRedux.POPUP_CLEAR_PARAM:
 
-        // do team sharing actions??
-
-        case SystemRedux.CHART_SET_CHART_DATA:
-        case SystemRedux.CHART_SET_CHART_VISIBILITY:
+          // do team sharing actions??
           if (adaptableBlotter.AuditLogService.IsAuditInternalStateChangesEnabled) {
             let oldState = middlewareAPI.getState()
             let ret = next(action);
@@ -528,7 +522,7 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
 }
 
 
-// this is the main function for dealing with events that we CANNOT deal with in strategies
+// this is the main function for dealing with Actions that we CANNOT deal with in strategies or dont make sense to.
 // only use this function where it makes sense to  - try to use the strategy to deal with appropriate state where possible
 // please document each use case where we have to use the Store
 var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
@@ -684,10 +678,9 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
 
         /**
         * Use Case: User sets chart visibility to Maximised (probably from the Chart popup by showing a chart)
-        * Action:  Close all popups (so that user goes directly to the chart)
+        * Action:  Close all popups (so that user directly sees the chart)
         */
         case SystemRedux.CHART_SET_CHART_VISIBILITY: {
-          // need some logic...but
           let actionTyped = <SystemRedux.ChartSetChartVisibiityAction>action;
           if (actionTyped.ChartVisibility == ChartVisibility.Maximised) {
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
@@ -926,7 +919,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return next(action);
         }
 
-       
+
 
         case ExportRedux.IPP_LOGIN: {
           let actionTyped = <ExportRedux.IPPLoginAction>action;
@@ -1135,7 +1128,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
             case StrategyConstants.ExportStrategyId: {
               let report = actionTyped.Entity as IReport
               let idx = middlewareAPI.getState().Export.Reports.findIndex(x => x.Name == report.Name)
-               if (idx > -1) {
+              if (idx > -1) {
                 overwriteConfirmation = true
               }
               importAction = ExportRedux.ReportAddUpdate(idx, report)
