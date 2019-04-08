@@ -119,8 +119,8 @@ class PercentBarPopupComponent extends React.Component<PercentBarPopupProps, Edi
                     <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={PercentBarItems} />
                  :
                     <div>
-                        <HelpBlock>Click 'New' to start creating s for valid cell edits.</HelpBlock>
-                        <HelpBlock>Edits that fail validation can be either prevented altogether or allowed (after over-riding a warning and providing a reason).</HelpBlock>
+                        <HelpBlock>Click 'New' to start creating Percent Bars.</HelpBlock>
+                        <HelpBlock>Visualise numeric columns as a bar (positive, negative or both) in order better to see their contents.</HelpBlock>
                     </div>
                 }
 

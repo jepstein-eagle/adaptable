@@ -67,8 +67,8 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
 
         let colItems: IColItem[] = [
             { Content: "Current", Size: 1 },
-            { Content: "Name", Size: 2 },
-            { Content: "Query", Size: 7 },
+            { Content: "Name", Size: 3 },
+            { Content: "Query", Size: 6 },
             { Content: "", Size: 2 },
         ]
 
@@ -112,7 +112,7 @@ class AdvancedSearchPopupComponent extends React.Component<AdvancedSearchPopupPr
                         <HelpBlock >{startWizardText}</HelpBlock>
                     </div>
                 }
-              
+
                 {this.state.EditedAdaptableBlotterObject != null &&
                     <AdvancedSearchWizard
                         cssClassName={cssWizardClassName}

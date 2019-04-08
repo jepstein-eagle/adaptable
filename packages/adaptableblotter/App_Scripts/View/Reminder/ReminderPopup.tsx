@@ -42,7 +42,7 @@ class ReminderPopupComponent extends React.Component<ReminderPopupProps, Editabl
         let cssClassName: string = this.props.cssClassName + "__Reminder";
         let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__Reminder";
 
-        let infoBody: any[] = ["Reminders are alerts that you set by schdedule.", <br />, <br />,
+        let infoBody: any[] = ["Reminders are alerts that you set by schdedule.", <br />,
             "You can choose to show the alert on a given date or on a recurring basis."]
 
         let colItems: IColItem[] = [

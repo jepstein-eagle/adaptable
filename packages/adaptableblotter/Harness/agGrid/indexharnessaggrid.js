@@ -33,7 +33,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(130);
+    return dataGen.getTrades(5000);
   }
   return dataGen.getFtseData(199);
 }
@@ -795,15 +795,15 @@ let reportJson = {
 };
 let dataSourceJson = {
   DataSource: {
-    CurrentDataSource: "Big",
+    CurrentDataSource: "Second",
     DataSources: [
       {
-        Name: "Big",
-        Description: "A very big data source",
+        Name: "First",
+        Description: "DataSource 1",
       },
       {
-        Name: "Small",
-        Description: "A tiny data source",
+        Name: "Second",
+        Description: "Datasource 2",
       }
     ]
   }
