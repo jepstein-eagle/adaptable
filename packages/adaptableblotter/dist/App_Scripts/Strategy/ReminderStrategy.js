@@ -7,27 +7,29 @@ const Enums_1 = require("../Utilities/Enums");
 class ReminderStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.ReminderStrategyId, blotter);
+        this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded());
     }
     addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyConstants.ReminderStrategyName, ScreenPopups.ReminderPopup, StrategyConstants.ReminderGlyph);
     }
-    addContextMenuItem(column) {
-        if (this.canCreateContextMenuItem(column, this.blotter)) {
-            // to do
-        }
-    }
     InitState() {
         if (this.ReminderState != this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder) {
-            // just clear all jobs and recreate - simplest thing to do...
-            this.blotter.ScheduleService.ClearAllAlertJobs();
-            this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder.Reminders.forEach(r => {
-                this.blotter.ScheduleService.AddAlertSchedule(r);
-            });
+            this.scheduleReminders();
             this.ReminderState = this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder;
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Reminder, this.ReminderState);
             }
         }
+    }
+    handleGridReloaded() {
+        this.scheduleReminders();
+    }
+    scheduleReminders() {
+        // just clear all jobs and recreate - simplest thing to do...
+        this.blotter.ScheduleService.ClearAllAlertJobs();
+        this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder.Reminders.forEach(r => {
+            this.blotter.ScheduleService.AddReminderSchedule(r);
+        });
     }
 }
 exports.ReminderStrategy = ReminderStrategy;

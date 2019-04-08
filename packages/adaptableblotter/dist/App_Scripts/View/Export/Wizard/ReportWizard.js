@@ -35,14 +35,14 @@ class ReportWizard extends React.Component {
                         Element: React.createElement(ReportExpressionWizard_1.ReportExpressionWizard, { UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters }),
                     },
                     {
-                        StepName: "Settings",
+                        StepName: "Schedule",
                         Index: 4,
-                        Element: React.createElement(ReportSettingsWizard_1.ReportSettingsWizard, { Reports: this.props.ConfigEntities }),
+                        Element: React.createElement(ReportScheduleWizard_1.ReportScheduleWizard, null)
                     },
                     {
-                        StepName: "Schedule",
+                        StepName: "Settings",
                         Index: 5,
-                        Element: React.createElement(ReportScheduleWizard_1.ReportScheduleWizard, null)
+                        Element: React.createElement(ReportSettingsWizard_1.ReportSettingsWizard, { Reports: this.props.ConfigEntities }),
                     },
                     {
                         StepName: "Summary",

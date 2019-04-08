@@ -46,8 +46,8 @@ class AdvancedSearchPopupComponent extends React.Component {
             " Click 'New' to start the Advanced Search Wizard to create a new Advanced Search.";
         let colItems = [
             { Content: "Current", Size: 1 },
-            { Content: "Name", Size: 2 },
-            { Content: "Query", Size: 7 },
+            { Content: "Name", Size: 3 },
+            { Content: "Query", Size: 6 },
             { Content: "", Size: 2 },
         ];
         let advancedSearchRows = this.props.AdvancedSearches.map((advancedSearch, index) => {

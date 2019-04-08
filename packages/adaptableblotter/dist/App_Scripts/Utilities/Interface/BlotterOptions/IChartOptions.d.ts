@@ -15,5 +15,5 @@ export interface IChartOptions {
      * The maximum number of items to show in a pie chart (for non numeric columns)
      * Defaults to 50.  If this number is too big then the pie chart will be difficult to read.
      */
-    pieChartMaxItems: number;
+    pieChartMaxItems?: number;
 }

@@ -7,9 +7,9 @@ export declare class ScheduleService implements IScheduleService {
     private alertJobs;
     private exportJobs;
     constructor(blotter: IAdaptableBlotter);
-    AddAlertSchedule(reminder: IReminder): void;
+    AddReminderSchedule(reminder: IReminder): void;
     AddReportSchedule(report: IReport): void;
-    private getDate;
+    private getDateFromSchedule;
     ClearAllAlertJobs(): void;
     ClearAllExportJobs(): void;
 }

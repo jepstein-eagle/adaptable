@@ -9,6 +9,7 @@ export declare class ExportStrategy extends AdaptableStrategyBase implements IEx
     private workAroundOpenfinExcelDataDimension;
     private throttledRecomputeAndSendLiveExcelEvent;
     constructor(blotter: IAdaptableBlotter);
+    private handleGridReloaded;
     protected addPopupMenuItem(): void;
     private sendNewDataToLiveExcel;
     Export(ReportName: string, exportDestination: ExportDestination, folder?: string, page?: string): void;
@@ -19,4 +20,5 @@ export declare class ExportStrategy extends AdaptableStrategyBase implements IEx
     private ConvertReporttoArray;
     private getReport;
     protected InitState(): void;
+    private scheduleReports;
 }

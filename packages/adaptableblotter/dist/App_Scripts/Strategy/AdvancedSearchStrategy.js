@@ -7,6 +7,7 @@ const Enums_1 = require("../Utilities/Enums");
 class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.AdvancedSearchStrategyId, blotter);
+        this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded());
     }
     addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyConstants.AdvancedSearchStrategyName, ScreenPopups.AdvancedSearchPopup, StrategyConstants.AdvancedSearchGlyph);
@@ -24,6 +25,9 @@ class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
                 this.publishStateChanged(Enums_1.StateChangedTrigger.AdvancedSearch, this.AdvancedSearchState);
             }
         }
+    }
+    handleGridReloaded() {
+        this.blotter.applyGridFiltering();
     }
     GetAdvancedSearchState() {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch;

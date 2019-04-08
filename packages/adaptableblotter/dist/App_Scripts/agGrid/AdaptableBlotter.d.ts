@@ -75,10 +75,13 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     private _onRefresh;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
+    private _onGridReloaded;
+    onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
     AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
+    reloadGrid(): void;
     applyGridFiltering(): void;
     clearGridFiltering(): void;
     clearColumnFiltering(columnIds: string[]): void;

@@ -11,7 +11,9 @@ class ReportSummaryWizard extends React.Component {
     }
     render() {
         let cssClassName = this.props.cssClassName + "-summary";
-        let scheduleDescription = ' (' + UIHelper_1.UIHelper.GetScheduleDescription(this.props.Data.AutoExport.Schedule) + ')';
+        let scheduleDescription = this.props.Data.AutoExport ?
+            ' (' + UIHelper_1.UIHelper.GetScheduleDescription(this.props.Data.AutoExport.Schedule) + ')' :
+            'None';
         let keyValuePairs = [
             { Key: "Name", Value: this.props.Data.Name },
             { Key: "Columns", Value: ReportHelper_1.ReportHelper.GetReportColumnsDescription(this.props.Data, this.props.Columns) },

@@ -47,12 +47,14 @@ export interface IAdaptableBlotter {
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
+    onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
     AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
     createMenu(): void;
     setGridData(dataSource: any): void;
+    reloadGrid(): void;
     getActiveCell(): ICellInfo;
     selectColumn(columnId: string): void;
     setColumnIntoStore(): void;

@@ -92,6 +92,7 @@ class AdaptableBlotter {
         this._onGridDataBound = new EventDispatcher_1.EventDispatcher();
         this._onSelectedCellsChanged = new EventDispatcher_1.EventDispatcher();
         this._onRefresh = new EventDispatcher_1.EventDispatcher();
+        this._onGridReloaded = new EventDispatcher_1.EventDispatcher();
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
         this.StateChanged = new EventDispatcher_1.EventDispatcher();
         this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
@@ -282,6 +283,9 @@ class AdaptableBlotter {
     onRefresh() {
         return this._onRefresh;
     }
+    onGridReloaded() {
+        return this._onGridReloaded;
+    }
     createMenu() {
         let menuItems = [];
         this.Strategies.forEach(x => {
@@ -291,6 +295,9 @@ class AdaptableBlotter {
             }
         });
         this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.SetMenuItems(menuItems));
+    }
+    reloadGrid() {
+        this._onGridReloaded.Dispatch(this, this);
     }
     getPrimaryKeyValueFromRecord(record) {
         return record[this.BlotterOptions.primaryKey];

@@ -67,8 +67,8 @@ class PercentBarPopupComponent extends React.Component {
                     React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: PercentBarItems })
                     :
                         React.createElement("div", null,
-                            React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to start creating s for valid cell edits."),
-                            React.createElement(react_bootstrap_1.HelpBlock, null, "Edits that fail validation can be either prevented altogether or allowed (after over-riding a warning and providing a reason).")),
+                            React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to start creating Percent Bars."),
+                            React.createElement(react_bootstrap_1.HelpBlock, null, "Visualise numeric columns as a bar (positive, negative or both) in order better to see their contents.")),
                 this.state.EditedAdaptableBlotterObject != null &&
                     React.createElement(PercentBarWizard_1.PercentBarWizard, { cssClassName: cssWizardClassName, EditedAdaptableBlotterObject: this.state.EditedAdaptableBlotterObject, ConfigEntities: null, Blotter: this.props.Blotter, ModalContainer: this.props.ModalContainer, Columns: this.props.Columns, ColorPalette: this.props.ColorPalette, UserFilters: this.props.UserFilters, SystemFilters: this.props.SystemFilters, WizardStartIndex: this.state.WizardStartIndex, onCloseWizard: () => this.onCloseWizard(), onFinishWizard: () => this.onFinishWizard(), canFinishWizard: () => this.canFinishWizard() })));
     }

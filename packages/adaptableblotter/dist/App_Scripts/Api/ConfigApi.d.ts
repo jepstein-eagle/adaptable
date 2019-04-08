@@ -3,6 +3,7 @@ import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
 import { ApiBase } from './ApiBase';
 import { IConfigApi } from './Interface/IConfigApi';
 export declare class ConfigApi extends ApiBase implements IConfigApi {
+    configInit(): void;
     configClear(): void;
     configDeleteLocalStorage(): void;
     configGetAllState(): AdaptableBlotterState;

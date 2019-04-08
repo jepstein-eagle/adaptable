@@ -24,7 +24,7 @@ class ReminderPopupComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__Reminder";
         let cssWizardClassName = StyleConstants.WIZARD_STRATEGY + "__Reminder";
-        let infoBody = ["Reminders are alerts that you set by schdedule.", React.createElement("br", null), React.createElement("br", null),
+        let infoBody = ["Reminders are alerts that you set by schdedule.", React.createElement("br", null),
             "You can choose to show the alert on a given date or on a recurring basis."];
         let colItems = [
             { Content: "Message", Size: 4 },

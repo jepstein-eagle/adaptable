@@ -6,5 +6,6 @@ export declare class AdvancedSearchStrategy extends AdaptableStrategyBase implem
     constructor(blotter: IAdaptableBlotter);
     protected addPopupMenuItem(): void;
     protected InitState(): void;
+    private handleGridReloaded;
     private GetAdvancedSearchState;
 }
