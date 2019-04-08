@@ -11,6 +11,7 @@ import * as React from "react";
 import { Radio } from 'react-bootstrap';
 import { ISchedule } from '../Utilities/Interface/BlotterObjects/ISchedule';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { number } from 'prop-types';
 
 export module UIHelper {
 
@@ -237,7 +238,16 @@ export module UIHelper {
         } else {
             dateString = new Date(schedule.OneOffDate).toDateString();
         }
-        return dateString + ' at ' + schedule.Hour + ':' + schedule.Minute;
+        return dateString + ' at ' + addLeadingZero(schedule.Hour) + ':' + addLeadingZero(schedule.Minute);
+    }
+
+    function addLeadingZero(item: number): string {
+        if (item < 10) {
+            return '0' + item.toString();
+        }
+        else {
+            return item.toString()
+        }
     }
 
 

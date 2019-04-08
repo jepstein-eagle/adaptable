@@ -2,7 +2,7 @@ import { IReport, IAutoExport } from "../../../Utilities/Interface/BlotterObject
 import * as React from "react";
 import { Panel, FormControl, Checkbox, FormGroup, Radio, Col, ControlLabel, Row } from 'react-bootstrap';
 import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { ExportDestination, DayOfWeek } from "../../../Utilities/Enums";
+import { ExportDestination, DayOfWeek, ReportRowScope } from "../../../Utilities/Enums";
 import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
 import { ObjectFactory } from "../../../Utilities/ObjectFactory";
 import { ArrayExtensions } from "../../../Utilities/Extensions/ArrayExtensions";
@@ -219,7 +219,10 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
             if (this.state.Hour == null || this.state.Minute == null) {
                 return false;
             }
-            if (this.state.OneOffDate == null && ArrayExtensions.IsEmpty(this.state.DaysOfWeek)) {
+            if (this.state.IsRecurringDate && ArrayExtensions.IsEmpty(this.state.DaysOfWeek)) {
+                return false;
+            }
+            if (!this.state.IsRecurringDate && this.state.OneOffDate == null) {
                 return false;
             }
             return true;
@@ -257,7 +260,7 @@ export class ReportScheduleWizard extends React.Component<ReportScheduleWizardPr
         return 1;
     }
     public GetIndexStepDecrement() {
-        return 1;
+        return (this.props.Data.ReportRowScope == ReportRowScope.ExpressionRows) ? 1 : 2;
     }
 
 }

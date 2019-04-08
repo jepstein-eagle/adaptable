@@ -62,7 +62,7 @@ export class ReportSettingsWizard extends React.Component<ReportSettingsWizardPr
         return 1;
     }
     public GetIndexStepDecrement(){
-        return (this.props.Data.ReportRowScope == ReportRowScope.ExpressionRows) ? 1 : 2;
+        return  1;
     }
    
 }

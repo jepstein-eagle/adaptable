@@ -168,7 +168,10 @@ export class ReminderScheduleWizard extends React.Component<ReminderScheduleWiza
         if (this.state.Hour == null || this.state.Minute == null) {
             return false;
         }
-        if (this.state.OneOffDate == null && ArrayExtensions.IsEmpty(this.state.DaysOfWeek)) {
+        if (this.state.IsRecurringDate && ArrayExtensions.IsEmpty(this.state.DaysOfWeek)) {
+            return false;
+        }
+        if (!this.state.IsRecurringDate && this.state.OneOffDate == null) {
             return false;
         }
         return true;
