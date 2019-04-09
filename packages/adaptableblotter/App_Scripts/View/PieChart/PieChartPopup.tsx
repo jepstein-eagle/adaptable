@@ -34,8 +34,8 @@ interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupCompone
 interface PieChartPopupState {
     PieChartDefinition: IPieChartDefinition
 
-    DataSource: IChartData;
-
+    ErrorMessage: string;
+    DataSource: IPieChartDataItem[];
     OthersCategoryType: PieChartOthersCategoryType;
     OthersCategoryThreshold: number;
     ShowAsDoughnut: boolean;
@@ -59,6 +59,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         super(props);
         this.state = {
             PieChartDefinition: ObjectFactory.CreateEmptyPieChartDefinition(),
+            ErrorMessage: null,
             DataSource: null,
 
             OthersCategoryType: PieChartOthersCategoryType.Percent,
@@ -136,9 +137,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         let chartSize: string = '450px'
         let radiusFactor: number = 0.8
 
-        let chartErrorMessage: string = (this.state.DataSource != null && StringExtensions.IsNotNullOrEmpty(this.state.DataSource.ErrorMessage)) ?
-            this.state.DataSource.ErrorMessage :
-            null
+
 
         let chartBlock = <div>{this.state.ShowAsDoughnut ?
             <IgrDoughnutChart
@@ -149,7 +148,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 ref={this.onDoughnutChartRef}>
                 <IgrRingSeries
                     name="ring1"
-                    dataSource={this.state.DataSource.Data}
+                    dataSource={this.state.DataSource}
                     labelsPosition={this.state.SliceLabelsPosition}
                     labelMemberPath={this.state.SliceLabelsMapping}
                     valueMemberPath={this.state.SliceValuesMapping}
@@ -164,7 +163,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             :
             <IgrPieChart
                 ref={this.onPieChartRef}
-                dataSource={this.state.DataSource.Data}
+                dataSource={this.state.DataSource}
                 labelsPosition={this.state.SliceLabelsPosition}
                 labelMemberPath={this.state.SliceLabelsMapping}
                 valueMemberPath={this.state.SliceValuesMapping}
@@ -297,10 +296,10 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                             </AdaptableBlotterForm>
                             {this.hasValidDataSelection() &&
                                 <div>
-                                    {chartErrorMessage == null ?
+                                    {this.state.ErrorMessage == null ?
                                         <span>{chartBlock}</span>
                                         :
-                                        <HelpBlock>{chartErrorMessage}</HelpBlock>
+                                        <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
                                     }
                                 </div>
                             }
@@ -342,20 +341,17 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         pieChartDefinition.PrimaryColumnId = labelColumn;
         pieChartDefinition.SecondaryColumnId = valueColumn;
 
-        let dataItems: IPieChartDataItem[] = this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition).Data;
-
-        dataItems = PieChartUIHelper.sortDataSource(this.state.SliceSortOption, dataItems);
-        let dataSource: IChartData={
-            Data: dataItems,
-            ErrorMessage: null
-        }
+      let chartData:IChartData=   this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition);
+         let dataSource: IPieChartDataItem[] =chartData.Data;
+         let errorMessage: string = chartData.ErrorMessage;
+        dataSource = PieChartUIHelper.sortDataSource(this.state.SliceSortOption, dataSource);
        
-
         this.setState({
             PieChartDefinition: pieChartDefinition,
             DataSource: dataSource,
+            ErrorMessage: errorMessage,
             // making sure the first and last slice do not have the same brush
-            SliceBrushes: dataSource.Data.length % 2 == 0 ? PieChartUIHelper.getBrushesOdd() : PieChartUIHelper.getBrushesEven()
+            SliceBrushes: dataSource.length % 2 == 0 ? PieChartUIHelper.getBrushesOdd() : PieChartUIHelper.getBrushesEven()
         });
     }
 
@@ -423,11 +419,9 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     onSliceSortByColumnChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let sliceSortOption: SliceSortOption = e.value as SliceSortOption;
-        let oldData = this.state.DataSource.Data;
-        let newData: IChartData ={
-            Data:  PieChartUIHelper.sortDataSource(sliceSortOption, oldData),
-            ErrorMessage: null
-        } 
+        let oldData = this.state.DataSource;
+        let newData: IPieChartDataItem[] =PieChartUIHelper.sortDataSource(sliceSortOption, oldData)
+           
         this.setState({ DataSource: newData, SliceSortOption: sliceSortOption });
     }
 

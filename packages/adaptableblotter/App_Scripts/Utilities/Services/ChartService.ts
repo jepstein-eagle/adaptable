@@ -4,7 +4,7 @@ import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition, IPieCh
 import { IColumnValueExpression } from "../Interface/Expression/IColumnValueExpression";
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
-import { DistinctCriteriaPairValue, DataType } from '../Enums';
+import { DistinctCriteriaPairValue, DataType, ConditionalStyleScope } from '../Enums';
 import { IKeyValuePair } from "../Interface/IKeyValuePair";
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { Expression } from '../../Utilities/Expression';
@@ -118,7 +118,6 @@ export class ChartService implements IChartService {
 
     if (StringExtensions.IsNullOrEmpty(chartDefinition.PrimaryColumnId)) {
       let errorMessage: string = "Cannot create pie chart as no Primary Column set."
-      LoggingHelper.LogAdaptableBlotterError(errorMessage)
       return {
         Data: [],
         ErrorMessage: errorMessage

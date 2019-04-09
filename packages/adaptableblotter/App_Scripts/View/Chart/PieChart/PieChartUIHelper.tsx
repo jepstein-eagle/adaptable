@@ -1,4 +1,4 @@
-import { IPieChartDefinition, IPieChartProperties, IPieChartDataItem } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IPieChartDefinition, IPieChartProperties, IPieChartDataItem, IChartData } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { PieChartComponentState } from "./PieChartComponentState";
 import { SliceSortOption } from "../../../Utilities/ChartEnums";
 
@@ -14,15 +14,16 @@ export module PieChartUIHelper {
     return ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47", "#795548"];
   }
 
-  export function setChartDisplayPopupState(chartDefinition: IPieChartDefinition, dataSource: IPieChartDataItem[]): PieChartComponentState {
+  export function setChartDisplayPopupState(chartDefinition: IPieChartDefinition, dataSource: IChartData): PieChartComponentState {
     let pieChartProperties: IPieChartProperties = chartDefinition.ChartProperties as IPieChartProperties
+    let data: IPieChartDataItem[] = (dataSource != null) ? dataSource.Data : []
     return {
-      DataSource: dataSource,
+      DataSource: data,
       ChartProperties: pieChartProperties,
       IsChartSettingsVisible: true,
       IsGeneralMinimised: false,
       SliceSortOption: SliceSortOption.ValueDescending,
-      SliceBrushes: dataSource.length % 2 == 0 ? getBrushesOdd() : getBrushesEven(),
+      SliceBrushes: data.length % 2 == 0 ? getBrushesOdd() : getBrushesEven(),
     }
   }
 

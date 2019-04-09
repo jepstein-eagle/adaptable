@@ -35,11 +35,9 @@ As we add other chart types we will need to rethink this and some of the assumpt
 interface PieChartComponentProps {
     cssClassName: string,
     CurrentChartDefinition: IPieChartDefinition;
-    ChartData:  IChartData;// IPieChartDataItem[];
+    ChartData:  IChartData;
     onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => void;
 }
-
-
 
 export class PieChartComponent extends React.Component<PieChartComponentProps, PieChartComponentState> {
 
@@ -51,8 +49,7 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
     constructor(props: PieChartComponentProps) {
         super(props);
 
-
-        this.state = PieChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition, this.props.ChartData.Data);
+        this.state = PieChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition, this.props.ChartData);
 
         IgrPieChartModule.register();
         IgrDoughnutChartModule.register();
@@ -66,7 +63,7 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
     }
 
     componentWillReceiveProps(nextProps: PieChartComponentProps, nextContext: any) {
-        this.setState(PieChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, nextProps.ChartData.Data));
+        this.setState(PieChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, nextProps.ChartData));
     }
 
     render() {

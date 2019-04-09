@@ -33,7 +33,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(1000);
+    return dataGen.getTrades(60);
   }
   return dataGen.getFtseData(199);
 }
