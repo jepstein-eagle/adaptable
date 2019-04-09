@@ -35,6 +35,7 @@ class PieChartPopupComponent extends React.Component {
         };
         this.state = {
             PieChartDefinition: ObjectFactory_1.ObjectFactory.CreateEmptyPieChartDefinition(),
+            ErrorMessage: null,
             DataSource: null,
             OthersCategoryType: ChartEnums_1.PieChartOthersCategoryType.Percent,
             OthersCategoryThreshold: 2,
@@ -94,14 +95,11 @@ class PieChartPopupComponent extends React.Component {
         let infoBody = ["See the count for each distinct visible value in the column as pie chart.", React.createElement("br", null), "There are options to view as doughnut, set the 'Others' threshold (and type) and manage labels."];
         let chartSize = '450px';
         let radiusFactor = 0.8;
-        let chartErrorMessage = (this.state.DataSource != null && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.state.DataSource.ErrorMessage)) ?
-            this.state.DataSource.ErrorMessage :
-            null;
         let chartBlock = React.createElement("div", null, this.state.ShowAsDoughnut ?
             React.createElement(igr_doughnut_chart_1.IgrDoughnutChart, { height: chartSize, width: chartSize, allowSliceSelection: "true", allowSliceExplosion: "true", ref: this.onDoughnutChartRef },
-                React.createElement(igr_ring_series_1.IgrRingSeries, { name: "ring1", dataSource: this.state.DataSource.Data, labelsPosition: this.state.SliceLabelsPosition, labelMemberPath: this.state.SliceLabelsMapping, valueMemberPath: this.state.SliceValuesMapping, legendLabelMemberPath: this.state.SliceLegendMapping, othersCategoryThreshold: this.state.OthersCategoryThreshold, othersCategoryType: this.state.OthersCategoryType, othersCategoryText: "Others", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: radiusFactor }))
+                React.createElement(igr_ring_series_1.IgrRingSeries, { name: "ring1", dataSource: this.state.DataSource, labelsPosition: this.state.SliceLabelsPosition, labelMemberPath: this.state.SliceLabelsMapping, valueMemberPath: this.state.SliceValuesMapping, legendLabelMemberPath: this.state.SliceLegendMapping, othersCategoryThreshold: this.state.OthersCategoryThreshold, othersCategoryType: this.state.OthersCategoryType, othersCategoryText: "Others", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: radiusFactor }))
             :
-                React.createElement(igr_pie_chart_1.IgrPieChart, { ref: this.onPieChartRef, dataSource: this.state.DataSource.Data, labelsPosition: this.state.SliceLabelsPosition, labelMemberPath: this.state.SliceLabelsMapping, valueMemberPath: this.state.SliceValuesMapping, legendLabelMemberPath: this.state.SliceLegendMapping, width: chartSize, height: chartSize, othersCategoryThreshold: this.state.OthersCategoryThreshold, othersCategoryType: this.state.OthersCategoryType, othersCategoryText: "Others", othersCategoryFill: "#9A9A9A", othersCategoryStroke: "#9A9A9A", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: radiusFactor, selectionMode: "single" }));
+                React.createElement(igr_pie_chart_1.IgrPieChart, { ref: this.onPieChartRef, dataSource: this.state.DataSource, labelsPosition: this.state.SliceLabelsPosition, labelMemberPath: this.state.SliceLabelsMapping, valueMemberPath: this.state.SliceValuesMapping, legendLabelMemberPath: this.state.SliceLegendMapping, width: chartSize, height: chartSize, othersCategoryThreshold: this.state.OthersCategoryThreshold, othersCategoryType: this.state.OthersCategoryType, othersCategoryText: "Others", othersCategoryFill: "#9A9A9A", othersCategoryStroke: "#9A9A9A", brushes: this.state.SliceBrushes, outlines: this.state.SliceBrushes, radiusFactor: radiusFactor, selectionMode: "single" }));
         let settingsBlock = React.createElement(react_bootstrap_1.Panel, { bsSize: "xs", bsStyle: StyleConstants_1.DEFAULT_BSSTYLE, header: "Settings", style: {
                 'overflowY': 'auto',
                 'overflowX': 'hidden',
@@ -160,10 +158,10 @@ class PieChartPopupComponent extends React.Component {
                                         React.createElement(react_bootstrap_1.Col, { xs: 7 },
                                             React.createElement(ColumnSelector_1.ColumnSelector, { cssClassName: cssClassName, SelectedColumnIds: [this.state.PieChartDefinition.PrimaryColumnId], SelectionMode: Enums_1.SelectionMode.Single, ColumnList: this.props.Columns, onColumnChange: columns => this.onDataGroupColumnChanged(columns) }))))),
                             this.hasValidDataSelection() &&
-                                React.createElement("div", null, chartErrorMessage == null ?
+                                React.createElement("div", null, this.state.ErrorMessage == null ?
                                     React.createElement("span", null, chartBlock)
                                     :
-                                        React.createElement(react_bootstrap_1.HelpBlock, null, chartErrorMessage))),
+                                        React.createElement(react_bootstrap_1.HelpBlock, null, this.state.ErrorMessage))),
                         React.createElement(react_bootstrap_1.Col, { xs: 4 }, this.hasValidDataSelection() &&
                             React.createElement("div", null, settingsBlock))))));
     }
@@ -187,17 +185,16 @@ class PieChartPopupComponent extends React.Component {
         let pieChartDefinition = this.state.PieChartDefinition;
         pieChartDefinition.PrimaryColumnId = labelColumn;
         pieChartDefinition.SecondaryColumnId = valueColumn;
-        let dataItems = this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition).Data;
-        dataItems = PieChartUIHelper_1.PieChartUIHelper.sortDataSource(this.state.SliceSortOption, dataItems);
-        let dataSource = {
-            Data: dataItems,
-            ErrorMessage: null
-        };
+        let chartData = this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition);
+        let dataSource = chartData.Data;
+        let errorMessage = chartData.ErrorMessage;
+        dataSource = PieChartUIHelper_1.PieChartUIHelper.sortDataSource(this.state.SliceSortOption, dataSource);
         this.setState({
             PieChartDefinition: pieChartDefinition,
             DataSource: dataSource,
+            ErrorMessage: errorMessage,
             // making sure the first and last slice do not have the same brush
-            SliceBrushes: dataSource.Data.length % 2 == 0 ? PieChartUIHelper_1.PieChartUIHelper.getBrushesOdd() : PieChartUIHelper_1.PieChartUIHelper.getBrushesEven()
+            SliceBrushes: dataSource.length % 2 == 0 ? PieChartUIHelper_1.PieChartUIHelper.getBrushesOdd() : PieChartUIHelper_1.PieChartUIHelper.getBrushesEven()
         });
     }
     onDoughnutChartRef(doughnutChart) {
@@ -250,11 +247,8 @@ class PieChartPopupComponent extends React.Component {
     onSliceSortByColumnChanged(event) {
         let e = event.target;
         let sliceSortOption = e.value;
-        let oldData = this.state.DataSource.Data;
-        let newData = {
-            Data: PieChartUIHelper_1.PieChartUIHelper.sortDataSource(sliceSortOption, oldData),
-            ErrorMessage: null
-        };
+        let oldData = this.state.DataSource;
+        let newData = PieChartUIHelper_1.PieChartUIHelper.sortDataSource(sliceSortOption, oldData);
         this.setState({ DataSource: newData, SliceSortOption: sliceSortOption });
     }
 }

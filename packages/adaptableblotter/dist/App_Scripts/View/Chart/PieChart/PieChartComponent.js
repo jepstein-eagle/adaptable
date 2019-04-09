@@ -33,7 +33,7 @@ class PieChartComponent extends React.Component {
             chartProperties.OthersCategoryThreshold = e.target.value;
             this.updateChartProperties(chartProperties);
         };
-        this.state = PieChartUIHelper_1.PieChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition, this.props.ChartData.Data);
+        this.state = PieChartUIHelper_1.PieChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition, this.props.ChartData);
         igr_pie_chart_module_1.IgrPieChartModule.register();
         igr_doughnut_chart_module_1.IgrDoughnutChartModule.register();
         igr_ring_series_module_1.IgrRingSeriesModule.register();
@@ -44,7 +44,7 @@ class PieChartComponent extends React.Component {
         this.onPieChartLegendRef = this.onPieChartLegendRef.bind(this);
     }
     componentWillReceiveProps(nextProps, nextContext) {
-        this.setState(PieChartUIHelper_1.PieChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, nextProps.ChartData.Data));
+        this.setState(PieChartUIHelper_1.PieChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, nextProps.ChartData));
     }
     render() {
         let cssClassName = this.props.cssClassName + "__PieCharts";

@@ -15,13 +15,14 @@ var PieChartUIHelper;
     PieChartUIHelper.getBrushesOdd = getBrushesOdd;
     function setChartDisplayPopupState(chartDefinition, dataSource) {
         let pieChartProperties = chartDefinition.ChartProperties;
+        let data = (dataSource != null) ? dataSource.Data : [];
         return {
-            DataSource: dataSource,
+            DataSource: data,
             ChartProperties: pieChartProperties,
             IsChartSettingsVisible: true,
             IsGeneralMinimised: false,
             SliceSortOption: ChartEnums_1.SliceSortOption.ValueDescending,
-            SliceBrushes: dataSource.length % 2 == 0 ? getBrushesOdd() : getBrushesEven(),
+            SliceBrushes: data.length % 2 == 0 ? getBrushesOdd() : getBrushesEven(),
         };
     }
     PieChartUIHelper.setChartDisplayPopupState = setChartDisplayPopupState;

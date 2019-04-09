@@ -96,7 +96,6 @@ class ChartService {
         let dataCounter = new Map();
         if (StringExtensions_1.StringExtensions.IsNullOrEmpty(chartDefinition.PrimaryColumnId)) {
             let errorMessage = "Cannot create pie chart as no Primary Column set.";
-            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(errorMessage);
             return {
                 Data: [],
                 ErrorMessage: errorMessage
