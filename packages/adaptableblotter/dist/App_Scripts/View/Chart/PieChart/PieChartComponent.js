@@ -33,7 +33,7 @@ class PieChartComponent extends React.Component {
             chartProperties.OthersCategoryThreshold = e.target.value;
             this.updateChartProperties(chartProperties);
         };
-        this.state = PieChartUIHelper_1.PieChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition, this.props.ChartData);
+        this.state = PieChartUIHelper_1.PieChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition, this.props.ChartData.Data);
         igr_pie_chart_module_1.IgrPieChartModule.register();
         igr_doughnut_chart_module_1.IgrDoughnutChartModule.register();
         igr_ring_series_module_1.IgrRingSeriesModule.register();
@@ -44,7 +44,7 @@ class PieChartComponent extends React.Component {
         this.onPieChartLegendRef = this.onPieChartLegendRef.bind(this);
     }
     componentWillReceiveProps(nextProps, nextContext) {
-        this.setState(PieChartUIHelper_1.PieChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, nextProps.ChartData));
+        this.setState(PieChartUIHelper_1.PieChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, nextProps.ChartData.Data));
     }
     render() {
         let cssClassName = this.props.cssClassName + "__PieCharts";
@@ -52,8 +52,8 @@ class PieChartComponent extends React.Component {
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.Description)) {
             chartTitle += ' : ' + this.props.CurrentChartDefinition.Description;
         }
-        let chartErrorMessage = (this.props.ChartData != null && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.ChartData[0].ErrorMessage)) ?
-            this.props.ChartData[0].ErrorMessage :
+        let chartErrorMessage = (this.props.ChartData != null && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.props.ChartData.ErrorMessage)) ?
+            this.props.ChartData.ErrorMessage :
             null;
         let showGeneralPropertiesButton = this.state.IsGeneralMinimised ?
             React.createElement(ButtonMaximise_1.ButtonMaximise, { cssClassName: cssClassName, onClick: () => this.onShowGeneralProperties(), bsStyle: StyleConstants_1.DEFAULT_BSSTYLE, size: "xs", DisplayMode: "Glyph", hideToolTip: false, overrideTooltip: "Show GeneralProperties" })
@@ -70,7 +70,7 @@ class PieChartComponent extends React.Component {
         let chartElement = (this.props.ChartData != null && chartErrorMessage == null) ?
             chart
             :
-                React.createElement("span", null, chartErrorMessage);
+                React.createElement(react_bootstrap_1.HelpBlock, null, chartErrorMessage);
         let legendPanel = React.createElement(react_bootstrap_1.Panel, { bsSize: "xs", header: "Legend", style: { marginTop: '2px' } },
             React.createElement("div", { className: "pieChartLegend" },
                 React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },

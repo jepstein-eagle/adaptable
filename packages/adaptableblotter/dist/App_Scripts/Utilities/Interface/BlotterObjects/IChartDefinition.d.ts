@@ -76,6 +76,10 @@ export interface ICategoryChartProperties extends IChartProperties {
     EnableCategoryHighlighting?: boolean;
     EnableItemHighlighting?: boolean;
 }
+export interface IChartData {
+    Data: any;
+    ErrorMessage: string;
+}
 export interface IPieChartDataItem {
     Name: string;
     Value: any;

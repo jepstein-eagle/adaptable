@@ -27,7 +27,7 @@ class ChartService {
         let xAxisColValues = this.getXAxisColumnValues(chartDefinition, columns);
         //TODO save yAxisColumnNames in chartDefinition so we can populate getCalloutTypeOptions()
         let yAxisColumnNames = [];
-        let chartData = xAxisColValues.map(cv => {
+        let returnData = xAxisColValues.map(cv => {
             let chartItem = new Object();
             chartItem[xAxisColumnName] = cv;
             let showAverageTotal = (chartDefinition.YAxisTotal == ChartEnums_1.AxisTotal.Average);
@@ -42,6 +42,11 @@ class ChartService {
             });
             return chartItem;
         });
+        // no error message built yet but need to add
+        let chartData = {
+            Data: returnData,
+            ErrorMessage: null
+        };
         return chartData;
     }
     buildYAxisTotal(yAxisColumn, kvps, columns, showAverageTotal) {
@@ -92,7 +97,10 @@ class ChartService {
         if (StringExtensions_1.StringExtensions.IsNullOrEmpty(chartDefinition.PrimaryColumnId)) {
             let errorMessage = "Cannot create pie chart as no Primary Column set.";
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(errorMessage);
-            return this.createPieChartErrorMessage(errorMessage);
+            return {
+                Data: [],
+                ErrorMessage: errorMessage
+            };
         }
         let hasSecondaryColumn = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(chartDefinition.SecondaryColumnId);
         let valueTotal = 0;
@@ -120,7 +128,10 @@ class ChartService {
         if (!useRanges && dataCounter.size > this.blotter.BlotterOptions.chartOptions.pieChartMaxItems) {
             let errorMessage = "Cannot create pie chart as it contains too many items.";
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(errorMessage);
-            return this.createPieChartErrorMessage(errorMessage);
+            return {
+                Data: [],
+                ErrorMessage: errorMessage
+            };
         }
         if (!useRanges) {
             dataCounter.forEach((value, name) => {
@@ -188,7 +199,10 @@ class ChartService {
                 dataItems.push(sliceItem);
             });
         }
-        return dataItems;
+        return {
+            Data: dataItems,
+            ErrorMessage: null
+        };
     }
     createNonRangeDataItem(value, name, valueTotal) {
         let pieChartDataItem = {
@@ -245,16 +259,6 @@ class ChartService {
         }
         valueTotal += 1;
         return valueTotal;
-    }
-    createPieChartErrorMessage(errorMessage) {
-        return [
-            {
-                Name: null,
-                Value: null,
-                Ratio: null,
-                ErrorMessage: errorMessage
-            }
-        ];
     }
 }
 exports.ChartService = ChartService;

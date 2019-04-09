@@ -89,7 +89,7 @@ class CategoryChartComponent extends React.Component {
         // data source
         , { 
             // data source
-            dataSource: this.props.ChartData, 
+            dataSource: this.props.ChartData.Data, 
             // chart type
             chartType: this.state.ChartProperties.CategoryChartType, markerTypes: CategoryChartUIHelper_1.CategoryChartUIHelper.getMarkerFromProps(this.state.ChartProperties), 
             // size
@@ -122,7 +122,7 @@ class CategoryChartComponent extends React.Component {
             // and showing controls for editing this value in Chart Settings UI under the General panel
             // thickness={this.state.ChartProperties.SeriesThickness}
             // callouts generated dynamiclly based on current data source and callout properties:
-            calloutsDataSource: CategoryChartUIHelper_1.CategoryChartUIHelper.getCalloutsData(this.props.ChartData, this.state.ChartProperties), calloutsVisible: true, calloutsXMemberPath: "CalloutsIndex", calloutsYMemberPath: "CalloutsValue", calloutsLabelMemberPath: "CalloutsLabel", calloutsContentMemberPath: "MemberPath", calloutStyleUpdating: this.calloutStyleUpdating, calloutStyleUpdatingEventEnabled: true, seriesAdded: this.seriesAdded, 
+            calloutsDataSource: CategoryChartUIHelper_1.CategoryChartUIHelper.getCalloutsData(this.props.ChartData.Data, this.state.ChartProperties), calloutsVisible: true, calloutsXMemberPath: "CalloutsIndex", calloutsYMemberPath: "CalloutsValue", calloutsLabelMemberPath: "CalloutsLabel", calloutsContentMemberPath: "MemberPath", calloutStyleUpdating: this.calloutStyleUpdating, calloutStyleUpdatingEventEnabled: true, seriesAdded: this.seriesAdded, 
             //xAxisInterval={1}
             xAxisLabelAngle: CategoryChartUIHelper_1.CategoryChartUIHelper.getAngleFromEnum(this.state.ChartProperties.XAxisAngle) });
         return React.createElement("span", { className: cssClassName },
@@ -138,7 +138,7 @@ class CategoryChartComponent extends React.Component {
                             React.createElement(react_bootstrap_1.Table, null,
                                 React.createElement("tbody", null,
                                     React.createElement("tr", null,
-                                        React.createElement("td", null, this.props.ChartData != null &&
+                                        React.createElement("td", null, this.props.ChartData.Data != null &&
                                             chartElement),
                                         React.createElement("td", { style: { width: '350px', marginRight: '15px' } },
                                             React.createElement(PanelWithTwoButtons_1.PanelWithTwoButtons, { bsSize: "xs", bsStyle: StyleConstants_1.INFO_BSSTYLE, headerText: "Chart Settings", cssClassName: cssClassName, firstButton: closeChartSettingsButton, secondButton: setDefaultsButton },
@@ -374,7 +374,7 @@ class CategoryChartComponent extends React.Component {
                                                                     React.createElement(react_bootstrap_1.Col, { xs: 6 },
                                                                         React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", placeholder: "Length (ms)", type: "number", onChange: this.onTransitionDurationChanged, value: this.state.ChartProperties.TransitionInDuration }))))))))))))
                         :
-                            React.createElement("div", null, this.props.ChartData != null &&
+                            React.createElement("div", null, this.props.ChartData.Data != null &&
                                 chartElement))));
     }
     calloutStyleUpdating(args) {

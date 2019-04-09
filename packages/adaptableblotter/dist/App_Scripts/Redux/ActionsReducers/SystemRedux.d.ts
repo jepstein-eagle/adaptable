@@ -6,6 +6,7 @@ import { ISystemStatus } from "../../Utilities/Interface/ISystemStatus";
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../Utilities/ChartEnums';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { IChartData } from '../../Utilities/Interface/BlotterObjects/IChartDefinition';
 export declare const SYSTEM_SET_HEALTH_STATUS = "SYSTEM_SET_HEALTH_STATUS";
 export declare const SYSTEM_CLEAR_HEALTH_STATUS = "SYSTEM_CLEAR_HEALTH_STATUS";
 export declare const SYSTEM_ALERT_ADD = "SYSTEM_ALERT_ADD";
@@ -67,7 +68,7 @@ export interface BulkUpdateSetValidSelectionAction extends Redux.Action {
     IsValidBulkUpdateSelection: boolean;
 }
 export interface ChartSetChartDataAction extends Redux.Action {
-    chartData: any;
+    chartData: IChartData;
 }
 export interface ChartSetChartVisibiityAction extends Redux.Action {
     ChartVisibility: ChartVisibility;
@@ -94,7 +95,7 @@ export declare const SmartEditSetPreview: (SmartEditPreviewInfo: IPreviewInfo) =
 export declare const BulkUpdateCheckCellSelection: () => BulkUpdateCheckCellSelectionAction;
 export declare const BulkUpdateSetValidSelection: (IsValidBulkUpdateSelection: boolean) => BulkUpdateSetValidSelectionAction;
 export declare const BulkUpdateSetPreview: (BulkUpdatePreviewInfo: IPreviewInfo) => BulkUpdateSetPreviewAction;
-export declare const ChartSetChartData: (chartData: any) => ChartSetChartDataAction;
+export declare const ChartSetChartData: (chartData: IChartData) => ChartSetChartDataAction;
 export declare const ChartSetChartVisibility: (ChartVisibility: ChartVisibility) => ChartSetChartVisibiityAction;
 export declare const CalculatedColumnSetErrorMessage: (ErrorMsg: string) => CalculatedColumnSetErrorMessageAction;
 export declare const SetIPPDomainPages: (IPPDomainsPages: IPPDomain[]) => SetIPPDomainPagesAction;

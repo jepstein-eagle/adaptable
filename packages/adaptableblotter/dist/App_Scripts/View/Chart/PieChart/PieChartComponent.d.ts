@@ -3,12 +3,12 @@ import { IgrItemLegend } from 'igniteui-react-charts/ES2015/igr-item-legend';
 import { IgrDoughnutChart } from 'igniteui-react-charts/ES2015/igr-doughnut-chart';
 import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
 import { SliceClickEventArgs } from "igniteui-react-charts/ES2015/igr-slice-click-event-args";
-import { IChartProperties, IPieChartDefinition, IPieChartDataItem } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartProperties, IPieChartDefinition, IChartData } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { PieChartComponentState } from "./PieChartComponentState";
 interface PieChartComponentProps {
     cssClassName: string;
     CurrentChartDefinition: IPieChartDefinition;
-    ChartData: IPieChartDataItem[];
+    ChartData: IChartData;
     onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => void;
 }
 export declare class PieChartComponent extends React.Component<PieChartComponentProps, PieChartComponentState> {

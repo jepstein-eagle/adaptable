@@ -1,10 +1,10 @@
 import * as React from "react";
-import { ICategoryChartDefinition, IChartProperties } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, IChartProperties, IChartData } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { CategoryChartComponentState } from "./CategoryChartComponentState";
 import { IColumn } from "../../../Utilities/Interface/IColumn";
 interface CategoryChartComponentProps {
     CurrentChartDefinition: ICategoryChartDefinition;
-    ChartData: any;
+    ChartData: IChartData;
     Columns: IColumn[];
     cssClassName: string;
     ColorPalette: string[];

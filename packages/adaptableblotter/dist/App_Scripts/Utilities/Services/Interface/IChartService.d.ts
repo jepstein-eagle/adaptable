@@ -1,6 +1,6 @@
-import { ICategoryChartDefinition, IPieChartDefinition, IPieChartDataItem } from "../../Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, IPieChartDefinition, IChartData } from "../../Interface/BlotterObjects/IChartDefinition";
 import { IColumn } from "../../Interface/IColumn";
 export interface IChartService {
-    BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): any;
-    BuildPieChartData(chartDefinition: IPieChartDefinition): IPieChartDataItem[];
+    BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): IChartData;
+    BuildPieChartData(chartDefinition: IPieChartDefinition): IChartData;
 }

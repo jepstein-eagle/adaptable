@@ -137,7 +137,10 @@ class ReportScheduleWizard extends React.Component {
             if (this.state.Hour == null || this.state.Minute == null) {
                 return false;
             }
-            if (this.state.OneOffDate == null && ArrayExtensions_1.ArrayExtensions.IsEmpty(this.state.DaysOfWeek)) {
+            if (this.state.IsRecurringDate && ArrayExtensions_1.ArrayExtensions.IsEmpty(this.state.DaysOfWeek)) {
+                return false;
+            }
+            if (!this.state.IsRecurringDate && this.state.OneOffDate == null) {
                 return false;
             }
             return true;
@@ -173,7 +176,7 @@ class ReportScheduleWizard extends React.Component {
         return 1;
     }
     GetIndexStepDecrement() {
-        return 1;
+        return (this.props.Data.ReportRowScope == Enums_1.ReportRowScope.ExpressionRows) ? 1 : 2;
     }
 }
 exports.ReportScheduleWizard = ReportScheduleWizard;

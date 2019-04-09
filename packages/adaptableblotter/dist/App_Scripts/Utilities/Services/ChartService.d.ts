@@ -1,17 +1,16 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { ICategoryChartDefinition, IPieChartDefinition, IPieChartDataItem } from "../Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, IPieChartDefinition, IChartData } from "../Interface/BlotterObjects/IChartDefinition";
 import { IColumn } from '../Interface/IColumn';
 export declare class ChartService implements IChartService {
     private blotter;
     constructor(blotter: IAdaptableBlotter);
-    BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): any;
+    BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): IChartData;
     private buildYAxisTotal;
     private getXAxisColumnValues;
-    BuildPieChartData(chartDefinition: IPieChartDefinition): IPieChartDataItem[];
+    BuildPieChartData(chartDefinition: IPieChartDefinition): IChartData;
     private createNonRangeDataItem;
     private shouldUseRange;
     private getGroupValueTotalForRow;
     private getSingleValueTotalForRow;
-    private createPieChartErrorMessage;
 }

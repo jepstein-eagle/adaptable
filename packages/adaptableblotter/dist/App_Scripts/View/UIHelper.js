@@ -228,7 +228,15 @@ var UIHelper;
         else {
             dateString = new Date(schedule.OneOffDate).toDateString();
         }
-        return dateString + ' at ' + schedule.Hour + ':' + schedule.Minute;
+        return dateString + ' at ' + addLeadingZero(schedule.Hour) + ':' + addLeadingZero(schedule.Minute);
     }
     UIHelper.GetScheduleDescription = GetScheduleDescription;
+    function addLeadingZero(item) {
+        if (item < 10) {
+            return '0' + item.toString();
+        }
+        else {
+            return item.toString();
+        }
+    }
 })(UIHelper = exports.UIHelper || (exports.UIHelper = {}));

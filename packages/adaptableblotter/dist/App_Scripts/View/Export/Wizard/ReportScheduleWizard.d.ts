@@ -28,5 +28,5 @@ export declare class ReportScheduleWizard extends React.Component<ReportSchedule
     Next(): void;
     Back(): void;
     GetIndexStepIncrement(): number;
-    GetIndexStepDecrement(): number;
+    GetIndexStepDecrement(): 1 | 2;
 }
