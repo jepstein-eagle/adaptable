@@ -10,6 +10,7 @@ import { ChartVisibility } from '../../Utilities/ChartEnums';
 import { EMPTY_ARRAY, SYSTEM_DEFAULT_CHART_VISIBILITY, EMPTY_STRING, SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR } from '../../Utilities/Constants/GeneralConstants';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
+import { IChartData } from '../../Utilities/Interface/BlotterObjects/IChartDefinition';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -107,7 +108,7 @@ export interface BulkUpdateSetValidSelectionAction extends Redux.Action {
 }
 
 export interface ChartSetChartDataAction extends Redux.Action {
-    chartData: any
+    chartData: IChartData
 }
 
 export interface ChartSetChartVisibiityAction extends Redux.Action {
@@ -192,7 +193,7 @@ export const BulkUpdateSetPreview = (BulkUpdatePreviewInfo: IPreviewInfo): BulkU
     BulkUpdatePreviewInfo
 })
 
-export const ChartSetChartData = (chartData: any): ChartSetChartDataAction => ({
+export const ChartSetChartData = (chartData: IChartData): ChartSetChartDataAction => ({
     type: CHART_SET_CHART_DATA,
     chartData
 })

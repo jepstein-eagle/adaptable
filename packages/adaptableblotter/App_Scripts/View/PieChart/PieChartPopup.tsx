@@ -23,7 +23,7 @@ import { AdaptablePopover } from "../AdaptablePopover";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
-import { IPieChartDefinition, IPieChartDataItem } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IPieChartDefinition, IPieChartDataItem, IChartData } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ObjectFactory } from "../../Utilities/ObjectFactory";
 import { PieChartLabelPosition, SliceSortOption, PieChartOthersCategoryType } from "../../Utilities/ChartEnums";
 import { PieChartUIHelper } from "../Chart/PieChart/PieChartUIHelper";
@@ -34,7 +34,7 @@ interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupCompone
 interface PieChartPopupState {
     PieChartDefinition: IPieChartDefinition
 
-    DataSource: any;
+    DataSource: IChartData;
 
     OthersCategoryType: PieChartOthersCategoryType;
     OthersCategoryThreshold: number;
@@ -85,7 +85,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     }
 
     componentDidMount() {
-         const column = this.props.PopupParams;
+        const column = this.props.PopupParams;
         if (StringExtensions.IsNotNullOrEmpty(column)) {
             this.updateDataSource(null, column);
         }
@@ -136,6 +136,10 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         let chartSize: string = '450px'
         let radiusFactor: number = 0.8
 
+        let chartErrorMessage: string = (this.state.DataSource != null && StringExtensions.IsNotNullOrEmpty(this.state.DataSource.ErrorMessage)) ?
+            this.state.DataSource.ErrorMessage :
+            null
+
         let chartBlock = <div>{this.state.ShowAsDoughnut ?
             <IgrDoughnutChart
                 height={chartSize}
@@ -145,7 +149,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 ref={this.onDoughnutChartRef}>
                 <IgrRingSeries
                     name="ring1"
-                    dataSource={this.state.DataSource}
+                    dataSource={this.state.DataSource.Data}
                     labelsPosition={this.state.SliceLabelsPosition}
                     labelMemberPath={this.state.SliceLabelsMapping}
                     valueMemberPath={this.state.SliceValuesMapping}
@@ -160,7 +164,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             :
             <IgrPieChart
                 ref={this.onPieChartRef}
-                dataSource={this.state.DataSource}
+                dataSource={this.state.DataSource.Data}
                 labelsPosition={this.state.SliceLabelsPosition}
                 labelMemberPath={this.state.SliceLabelsMapping}
                 valueMemberPath={this.state.SliceValuesMapping}
@@ -176,7 +180,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 outlines={this.state.SliceBrushes}
                 radiusFactor={radiusFactor}
                 selectionMode="single"
-                //sliceClick={(s, e) => this.onSliceClick(e)}
+            //sliceClick={(s, e) => this.onSliceClick(e)}
             />}
 
 
@@ -293,7 +297,11 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                             </AdaptableBlotterForm>
                             {this.hasValidDataSelection() &&
                                 <div>
-                                    {chartBlock}
+                                    {chartErrorMessage == null ?
+                                        <span>{chartBlock}</span>
+                                        :
+                                        <HelpBlock>{chartErrorMessage}</HelpBlock>
+                                    }
                                 </div>
                             }
                         </Col>
@@ -334,15 +342,20 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         pieChartDefinition.PrimaryColumnId = labelColumn;
         pieChartDefinition.SecondaryColumnId = valueColumn;
 
-        let dataSource: IPieChartDataItem[] = this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition);
+        let dataItems: IPieChartDataItem[] = this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition).Data;
 
-        dataSource = PieChartUIHelper.sortDataSource(this.state.SliceSortOption, dataSource);
+        dataItems = PieChartUIHelper.sortDataSource(this.state.SliceSortOption, dataItems);
+        let dataSource: IChartData={
+            Data: dataItems,
+            ErrorMessage: null
+        }
+       
 
         this.setState({
             PieChartDefinition: pieChartDefinition,
             DataSource: dataSource,
             // making sure the first and last slice do not have the same brush
-            SliceBrushes: dataSource.length % 2 == 0 ? PieChartUIHelper.getBrushesOdd() : PieChartUIHelper.getBrushesEven()
+            SliceBrushes: dataSource.Data.length % 2 == 0 ? PieChartUIHelper.getBrushesOdd() : PieChartUIHelper.getBrushesEven()
         });
     }
 
@@ -382,7 +395,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
     private onShowDoughnutChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        this.setState({ ShowAsDoughnut: e.checked} as PieChartPopupState);
+        this.setState({ ShowAsDoughnut: e.checked } as PieChartPopupState);
     }
 
     private onThresholdAsPercentChanged(event: React.FormEvent<any>) {
@@ -410,8 +423,11 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     onSliceSortByColumnChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let sliceSortOption: SliceSortOption = e.value as SliceSortOption;
-        let oldData = this.state.DataSource;
-        let newData = PieChartUIHelper.sortDataSource(sliceSortOption, oldData);
+        let oldData = this.state.DataSource.Data;
+        let newData: IChartData ={
+            Data:  PieChartUIHelper.sortDataSource(sliceSortOption, oldData),
+            ErrorMessage: null
+        } 
         this.setState({ DataSource: newData, SliceSortOption: sliceSortOption });
     }
 

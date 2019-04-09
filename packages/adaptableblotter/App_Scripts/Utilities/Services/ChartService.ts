@@ -1,6 +1,6 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition, IPieChartDataItem } from "../Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition, IPieChartDataItem, IChartData } from "../Interface/BlotterObjects/IChartDefinition";
 import { IColumnValueExpression } from "../Interface/Expression/IColumnValueExpression";
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
@@ -25,7 +25,7 @@ export class ChartService implements IChartService {
   constructor(private blotter: IAdaptableBlotter) {
   }
 
-  public BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): any {
+  public BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): IChartData {
 
     // NOTE this method is need only when we using Segmented column(s) otherwise,
     // you can assign chart.dataSource to the whole data (e.g. whatever the grid is displaying)
@@ -38,7 +38,8 @@ export class ChartService implements IChartService {
     //TODO save yAxisColumnNames in chartDefinition so we can populate getCalloutTypeOptions()
     let yAxisColumnNames: string[] = [];
 
-    let chartData: any = xAxisColValues.map(cv => {
+
+    let returnData: any = xAxisColValues.map(cv => {
       let chartItem: any = new Object()
 
       chartItem[xAxisColumnName] = cv
@@ -56,7 +57,13 @@ export class ChartService implements IChartService {
       return chartItem
     })
 
+    // no error message built yet but need to add
+    let chartData: IChartData = {
+      Data: returnData,
+      ErrorMessage: null
+    }
     return chartData;
+
   }
 
   private buildYAxisTotal(yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[], showAverageTotal: boolean): number {
@@ -105,14 +112,18 @@ export class ChartService implements IChartService {
     return xAxisColValues;
   }
 
-  public BuildPieChartData(chartDefinition: IPieChartDefinition): IPieChartDataItem[] {
+  public BuildPieChartData(chartDefinition: IPieChartDefinition): IChartData {
 
     let dataCounter = new Map<any, number>();
 
     if (StringExtensions.IsNullOrEmpty(chartDefinition.PrimaryColumnId)) {
       let errorMessage: string = "Cannot create pie chart as no Primary Column set."
       LoggingHelper.LogAdaptableBlotterError(errorMessage)
-      return this.createPieChartErrorMessage(errorMessage);
+      return {
+        Data: [],
+        ErrorMessage: errorMessage
+      }
+
     }
 
     let hasSecondaryColumn = StringExtensions.IsNotNullOrEmpty(chartDefinition.SecondaryColumnId);
@@ -135,20 +146,23 @@ export class ChartService implements IChartService {
       });
     }
 
-     let dataItems: IPieChartDataItem[] = [];
+    let dataItems: IPieChartDataItem[] = [];
 
     let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
     // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
     let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition, columns);
 
-     // if we don't use ranges but there are too many slices then we return an error
-    if(!useRanges && dataCounter.size > this.blotter.BlotterOptions.chartOptions.pieChartMaxItems){
+    // if we don't use ranges but there are too many slices then we return an error
+    if (!useRanges && dataCounter.size > this.blotter.BlotterOptions.chartOptions.pieChartMaxItems) {
       let errorMessage: string = "Cannot create pie chart as it contains too many items."
       LoggingHelper.LogAdaptableBlotterError(errorMessage)
-      return this.createPieChartErrorMessage(errorMessage);
+      return {
+        Data: [],
+        ErrorMessage: errorMessage
+      }
     }
 
-     if (!useRanges) {
+    if (!useRanges) {
       dataCounter.forEach((value, name) => {
         let sliceItem: IPieChartDataItem = this.createNonRangeDataItem(value, name, valueTotal);
         dataItems.push(sliceItem);
@@ -176,28 +190,28 @@ export class ChartService implements IChartService {
       let dataRanges = new Map<number, any>();
       // grouping all data values into ranges by checking which range a value belongs to
       dataCounter.forEach((id, value) => {
-          let rangeKey = Math.floor(value * dataValueMultiplier / dataRangeDivisions);
-          if (dataRanges.has(rangeKey)) {
-            let range = dataRanges.get(rangeKey);
-            range.values.push(value);;
-            dataRanges.set(rangeKey, range);
-          } else {
-            let rangeMin: any = (rangeKey / dataValueMultiplier * dataRangeDivisions);
-            let rangeMax: any = (rangeKey + 1) / dataValueMultiplier * dataRangeDivisions;
+        let rangeKey = Math.floor(value * dataValueMultiplier / dataRangeDivisions);
+        if (dataRanges.has(rangeKey)) {
+          let range = dataRanges.get(rangeKey);
+          range.values.push(value);;
+          dataRanges.set(rangeKey, range);
+        } else {
+          let rangeMin: any = (rangeKey / dataValueMultiplier * dataRangeDivisions);
+          let rangeMax: any = (rangeKey + 1) / dataValueMultiplier * dataRangeDivisions;
 
-            let range = { min: rangeMin, max: rangeMax, values: [value]}
-            if (dataValueMultiplier > 1) {
-              range.min = rangeMin.toFixed(1);
-              range.max = rangeMax.toFixed(1);
-            } else {
-              range.min = NumberExtensions.abbreviateNumber(rangeMin);
-              range.max = NumberExtensions.abbreviateNumber(rangeMax);
-            }
-            dataRanges.set(rangeKey, range);
-          
+          let range = { min: rangeMin, max: rangeMax, values: [value] }
+          if (dataValueMultiplier > 1) {
+            range.min = rangeMin.toFixed(1);
+            range.max = rangeMax.toFixed(1);
+          } else {
+            range.min = NumberExtensions.abbreviateNumber(rangeMin);
+            range.max = NumberExtensions.abbreviateNumber(rangeMax);
+          }
+          dataRanges.set(rangeKey, range);
+
         }
       });
-   //   console.log("ChartService grouped data items into " + dataRanges.size + " ranges of " + dataRangeDivisions)
+      //   console.log("ChartService grouped data items into " + dataRanges.size + " ranges of " + dataRangeDivisions)
       // finally we can generate slice items based on data ranges
       dataRanges.forEach((range, key) => {
         let sliceItem: IPieChartDataItem = {
@@ -214,11 +228,13 @@ export class ChartService implements IChartService {
         dataItems.push(sliceItem);
       });
     }
-
-    return dataItems;
+    return {
+      Data: dataItems,
+      ErrorMessage: null
+    }
   }
 
-  private createNonRangeDataItem(value: number, name: any, valueTotal: number): IPieChartDataItem{
+  private createNonRangeDataItem(value: number, name: any, valueTotal: number): IPieChartDataItem {
     let pieChartDataItem: IPieChartDataItem = {
       Name: name.toString(),
       Value: Helper.RoundNumber(value, 1),
@@ -231,16 +247,16 @@ export class ChartService implements IChartService {
     pieChartDataItem.RatioAndName = StringExtensions.abbreviateString(pieChartDataItem.RatioAndName, 50);
     pieChartDataItem.Name = StringExtensions.abbreviateString(pieChartDataItem.Name, 50);
 
-  return pieChartDataItem;
+    return pieChartDataItem;
   }
 
-  private shouldUseRange(dataCounter : Map<any, number>, chartDefinition: IPieChartDefinition, columns: IColumn[]): boolean{
-   let returnValue: boolean = false;
-    if(dataCounter.size > 15){
+  private shouldUseRange(dataCounter: Map<any, number>, chartDefinition: IPieChartDefinition, columns: IColumn[]): boolean {
+    let returnValue: boolean = false;
+    if (dataCounter.size > 15) {
       let primaryColumn = ColumnHelper.getColumnFromId(chartDefinition.PrimaryColumnId, columns);
       let primaryColumnIsNumeric: boolean = ColumnHelper.isNumericColumn(primaryColumn);
-     
-       returnValue = (primaryColumnIsNumeric);
+
+      returnValue = (primaryColumnIsNumeric);
     }
     return returnValue;
   }
@@ -279,17 +295,7 @@ export class ChartService implements IChartService {
     return valueTotal;
   }
 
-private createPieChartErrorMessage(errorMessage: string):IPieChartDataItem[]{
-  return [
-    {
-      Name: null,
-      Value: null,
-      Ratio: null,
-      ErrorMessage: errorMessage
-    
-    }
-  ]
-}
+
 
 
 }

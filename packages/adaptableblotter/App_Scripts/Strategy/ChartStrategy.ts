@@ -9,7 +9,7 @@ import { ChartState, SystemState } from '../Redux/ActionsReducers/Interface/ISta
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
-import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition } from "../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition, IChartData } from "../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ChartVisibility, ChartType } from '../Utilities/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
@@ -173,7 +173,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
         let chartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
         if (chartDefinition) {
-            let chartData: any;
+            let chartData: IChartData;
             if (chartDefinition.ChartType == ChartType.CategoryChart) {
                 chartData = this.blotter.ChartService.BuildCategoryChartData(chartDefinition as ICategoryChartDefinition, columns);
             } else if (chartDefinition.ChartType == ChartType.PieChart) {

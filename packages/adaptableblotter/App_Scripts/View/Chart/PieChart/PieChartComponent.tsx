@@ -8,7 +8,7 @@ import { IgrRingSeries } from 'igniteui-react-charts/ES2015/igr-ring-series';
 import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
 import { IgrPieChartModule } from 'igniteui-react-charts/ES2015/igr-pie-chart-module';
 import { SliceClickEventArgs } from "igniteui-react-charts/ES2015/igr-slice-click-event-args";
-import { IChartProperties, IPieChartDefinition, IPieChartProperties, IPieChartDataItem } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartProperties, IPieChartDefinition, IPieChartProperties, IPieChartDataItem, IChartData } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { PieChartUIHelper } from "./PieChartUIHelper";
 import { PieChartComponentState } from "./PieChartComponentState";
 import { ButtonMaximise } from "../../Components/Buttons/ButtonMaximise";
@@ -35,7 +35,7 @@ As we add other chart types we will need to rethink this and some of the assumpt
 interface PieChartComponentProps {
     cssClassName: string,
     CurrentChartDefinition: IPieChartDefinition;
-    ChartData: IPieChartDataItem[];
+    ChartData:  IChartData;// IPieChartDataItem[];
     onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => void;
 }
 
@@ -52,7 +52,7 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
         super(props);
 
 
-        this.state = PieChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition, this.props.ChartData);
+        this.state = PieChartUIHelper.setChartDisplayPopupState(this.props.CurrentChartDefinition, this.props.ChartData.Data);
 
         IgrPieChartModule.register();
         IgrDoughnutChartModule.register();
@@ -66,7 +66,7 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
     }
 
     componentWillReceiveProps(nextProps: PieChartComponentProps, nextContext: any) {
-        this.setState(PieChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, nextProps.ChartData));
+        this.setState(PieChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition, nextProps.ChartData.Data));
     }
 
     render() {
@@ -78,8 +78,8 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
             chartTitle += ' : ' + this.props.CurrentChartDefinition.Description;
         }
 
-        let chartErrorMessage: string = (this.props.ChartData != null && StringExtensions.IsNotNullOrEmpty(this.props.ChartData[0].ErrorMessage)) ?
-            this.props.ChartData[0].ErrorMessage :
+        let chartErrorMessage: string = (this.props.ChartData != null && StringExtensions.IsNotNullOrEmpty(this.props.ChartData.ErrorMessage)) ?
+            this.props.ChartData.ErrorMessage :
             null
 
         let showGeneralPropertiesButton =
@@ -190,7 +190,7 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
         let chartElement = (this.props.ChartData != null && chartErrorMessage == null) ?
             chart
             :
-            <span>{chartErrorMessage}</span>
+            <HelpBlock>{chartErrorMessage}</HelpBlock>
 
 
         let legendPanel = <Panel

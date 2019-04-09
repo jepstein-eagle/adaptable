@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Redux from "redux";
 import { connect } from 'react-redux';
 import { ChartDisplayPopupPropsBase } from "../Components/SharedProps/ChartDisplayPopupPropsBase";
-import { IChartDefinition, ICategoryChartDefinition, IChartProperties, IPieChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition, IChartProperties, IPieChartDefinition, IChartData } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { ChartVisibility, ChartType } from "../../Utilities/ChartEnums";
 import { ButtonClose } from "../Components/Buttons/ButtonClose";
 import { PRIMARY_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
@@ -24,7 +24,7 @@ import { PieChartWizard } from "./PieChart/Wizard/PieChartWizard";
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
     ChartDefinitions: IChartDefinition[];
     CurrentChartDefinition: IChartDefinition;
-    ChartData: any;
+    ChartData: IChartData;
     ChartVisibility: ChartVisibility;
 
     onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddUpdateAction,

@@ -1,8 +1,8 @@
-import { ICategoryChartDefinition, IPieChartDefinition, IPieChartDataItem } from "../../Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, IPieChartDefinition, IPieChartDataItem, IChartData } from "../../Interface/BlotterObjects/IChartDefinition";
 import { IColumn } from "../../Interface/IColumn";
 
 export interface IChartService {
-  BuildCategoryChartData(chartDefinition: ICategoryChartDefinition , columns: IColumn[]): any // to change
+  BuildCategoryChartData(chartDefinition: ICategoryChartDefinition , columns: IColumn[]): IChartData
 
-  BuildPieChartData(chartDefinition:IPieChartDefinition): IPieChartDataItem[] 
+  BuildPieChartData(chartDefinition:IPieChartDefinition): IChartData 
 }

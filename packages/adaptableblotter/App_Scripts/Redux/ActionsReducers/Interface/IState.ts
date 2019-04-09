@@ -23,7 +23,7 @@ import { ICellValidationRule } from "../../../Utilities/Interface/BlotterObjects
 import { ICalendar } from "../../../Utilities/Interface/BlotterObjects/ICalendar";
 import { ICalculatedColumn } from "../../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { IAdvancedSearch } from "../../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
-import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, IChartData } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { IAlertDefinition } from "../../../Utilities/Interface/BlotterObjects/IAlertDefinition";
 import { IPPDomain } from "../../../Utilities/Interface/Reports/IPPDomain";
 import { ILiveReport } from "../../../Utilities/Interface/Reports/ILiveReport";
@@ -67,7 +67,7 @@ export interface SystemState extends ISystemState {
     SmartEditPreviewInfo: IPreviewInfo;
     IsValidBulkUpdateSelection: boolean;
     BulkUpdatePreviewInfo: IPreviewInfo;
-    ChartData: any;
+    ChartData: IChartData;
     ChartVisibility: ChartVisibility;
     CalculatedColumnErrorMessage: string;
     IPPDomainsPages: IPPDomain[];

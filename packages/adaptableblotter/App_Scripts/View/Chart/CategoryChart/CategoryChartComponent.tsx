@@ -20,7 +20,7 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { ButtonGeneral } from "../../Components/Buttons/ButtonGeneral";
 import { DefaultCategoryChartProperties } from "../../../Utilities/Defaults/DefaultCategoryChartProperties";
 import { PanelWithTwoButtons } from "../../Components/Panels/PanelWithTwoButtons";
-import { ICategoryChartDefinition, ICategoryChartProperties, IChartProperties } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, ICategoryChartProperties, IChartProperties, IChartData } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { CategoryChartUIHelper } from "./CategoryChartUIHelper";
 import { CategoryChartComponentState } from "./CategoryChartComponentState";
 import { IColumn } from "../../../Utilities/Interface/IColumn";
@@ -32,7 +32,7 @@ As we add other chart types we will need to rethink this and some of the assumpt
 */
 interface CategoryChartComponentProps {
     CurrentChartDefinition: ICategoryChartDefinition;
-    ChartData: any;
+    ChartData: IChartData;
     Columns: IColumn[],
     cssClassName: string,
     ColorPalette: string[],
@@ -214,7 +214,7 @@ export class CategoryChartComponent extends React.Component<CategoryChartCompone
 
         let chartElement = <IgrCategoryChart
             // data source
-            dataSource={this.props.ChartData}
+            dataSource={this.props.ChartData.Data}
             // chart type
             chartType={this.state.ChartProperties.CategoryChartType}
             markerTypes={CategoryChartUIHelper.getMarkerFromProps(this.state.ChartProperties)}
@@ -282,7 +282,7 @@ export class CategoryChartComponent extends React.Component<CategoryChartCompone
             // thickness={this.state.ChartProperties.SeriesThickness}
 
             // callouts generated dynamiclly based on current data source and callout properties:
-            calloutsDataSource={CategoryChartUIHelper.getCalloutsData(this.props.ChartData, this.state.ChartProperties)}
+            calloutsDataSource={CategoryChartUIHelper.getCalloutsData(this.props.ChartData.Data, this.state.ChartProperties)}
             calloutsVisible={true}
             calloutsXMemberPath="CalloutsIndex"
             calloutsYMemberPath="CalloutsValue"
@@ -327,7 +327,7 @@ export class CategoryChartComponent extends React.Component<CategoryChartCompone
                                 <tbody>
                                     <tr>
                                         <td>
-                                            {this.props.ChartData != null &&
+                                            {this.props.ChartData.Data != null &&
                                                 chartElement
                                             }
                                         </td>
@@ -900,7 +900,7 @@ export class CategoryChartComponent extends React.Component<CategoryChartCompone
                         </Row>
                         :
                         <div>
-                            {this.props.ChartData != null &&
+                            {this.props.ChartData.Data != null &&
                                 chartElement
                             }
                         </div>
