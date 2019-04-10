@@ -14,6 +14,8 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.ChartStrategyId, blotter);
         this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText));
+        this.blotter.onSearchChanged().Subscribe(() => this.handleSearchChanged());
+        this.blotter.SearchedChanged.Subscribe(() => this.handleSearchChanged());
         let refreshRate = blotter.AdaptableBlotterStore.TheStore.getState().Chart.RefreshRate * 1000;
         this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
     }
@@ -32,7 +34,7 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 }
             }
             else {
-                let chartStateDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
+                let chartStateDefinition = this.GetCurrentChartDefinition();
                 let storeStateDefinition = this.GetChartState().ChartDefinitions.find(c => c.Name == this.GetChartState().CurrentChartName);
                 if (this.doChartDefinitionChangesRequireDataUpdate(chartStateDefinition, storeStateDefinition)) {
                     isChartRelatedStateChanged = true;
@@ -118,21 +120,34 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
         return false;
     }
+    handleSearchChanged() {
+        //   super.afterSearchChanged();
+        // I think we will always redraw a chart if its visible when a search has been applied as its relatively rare...
+        // might need to rethink if that is too OTT
+        if (this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)) {
+            if (this.blotter.isInitialised) {
+                let currentChartDefinition = this.GetCurrentChartDefinition();
+                if (currentChartDefinition.VisibleRowsOnly) {
+                    this.throttleSetChartData();
+                }
+            }
+        }
+    }
     handleDataSourceChanged(dataChangedInfo) {
         if (this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId = dataChangedInfo.ColumnId;
             if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(columnChangedId)) {
-                let currentChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
+                let currentChartDefinition = this.GetCurrentChartDefinition();
                 switch (currentChartDefinition.ChartType) {
                     case ChartEnums_1.ChartType.CategoryChart:
-                        let categoryChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
+                        let categoryChartDefinition = currentChartDefinition;
                         if (ArrayExtensions_1.ArrayExtensions.ContainsItem(categoryChartDefinition.YAxisColumnIds, columnChangedId) || categoryChartDefinition.XAxisColumnId == columnChangedId) {
                             this.throttleSetChartData();
                         }
                         break;
                     case ChartEnums_1.ChartType.PieChart:
-                        let pieChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
+                        let pieChartDefinition = currentChartDefinition;
                         if (pieChartDefinition.PrimaryColumnId == columnChangedId || pieChartDefinition.SecondaryColumnId == columnChangedId) {
                             this.throttleSetChartData();
                         }
@@ -143,7 +158,7 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     }
     setChartData() {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let chartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
+        let chartDefinition = this.GetCurrentChartDefinition();
         if (chartDefinition) {
             let chartData;
             if (chartDefinition.ChartType == ChartEnums_1.ChartType.CategoryChart) {
@@ -168,6 +183,12 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     }
     GetColumnState() {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+    }
+    GetColumnFilterState() {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter;
+    }
+    GetCurrentChartDefinition() {
+        return this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
     }
 }
 exports.ChartStrategy = ChartStrategy;

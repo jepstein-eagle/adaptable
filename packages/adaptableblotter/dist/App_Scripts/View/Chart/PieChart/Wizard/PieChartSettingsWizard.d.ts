@@ -15,7 +15,7 @@ export declare class PieChartSettingsWizard extends React.Component<PieChartSett
     render(): any;
     onChartNameChange(event: React.FormEvent<any>): void;
     onChartDescriptionChange(event: React.FormEvent<any>): void;
-    private onSecondaryColumnOperationChanged;
+    private onVisibleRowsChanged;
     canNext(): boolean;
     canBack(): boolean;
     Next(): void;

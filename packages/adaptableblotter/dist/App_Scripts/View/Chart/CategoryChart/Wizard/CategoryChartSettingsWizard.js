@@ -12,6 +12,7 @@ class CategoryChartSettingsWizard extends React.Component {
         this.state = {
             Name: props.Data.Name,
             Description: props.Data.Description,
+            VisibleRowsOnly: props.Data.VisibleRowsOnly,
             ErrorMessage: null
         };
     }
@@ -32,7 +33,12 @@ class CategoryChartSettingsWizard extends React.Component {
                         React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, "Description:"),
                         React.createElement(react_bootstrap_1.Col, { xs: 7 },
                             React.createElement(react_bootstrap_1.FormGroup, { controlId: "formInlineDescription", validationState: validationState },
-                                React.createElement(react_bootstrap_1.FormControl, { value: this.state.Description, type: "string", placeholder: "Enter description (optional)", onChange: (e) => this.onChartDescriptionChange(e) })))))));
+                                React.createElement(react_bootstrap_1.FormControl, { value: this.state.Description, type: "string", placeholder: "Enter description (optional)", onChange: (e) => this.onChartDescriptionChange(e) })))),
+                    React.createElement(react_bootstrap_1.FormGroup, { controlId: "chartDataVisible" },
+                        React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, "Rows In Chart:"),
+                        React.createElement(react_bootstrap_1.Col, { xs: 7 },
+                            React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Visible", checked: this.state.VisibleRowsOnly == true, onChange: (e) => this.onVisibleRowsChanged(e) }, "Visible Rows Only"),
+                            React.createElement(react_bootstrap_1.Radio, { inline: true, value: "All", checked: this.state.VisibleRowsOnly == false, onChange: (e) => this.onVisibleRowsChanged(e) }, "All Rows In Grid"))))));
     }
     onChartNameChange(event) {
         let e = event.target;
@@ -45,6 +51,10 @@ class CategoryChartSettingsWizard extends React.Component {
         let e = event.target;
         this.setState({ Description: e.value, }, () => this.props.UpdateGoBackState());
     }
+    onVisibleRowsChanged(event) {
+        let e = event.target;
+        this.setState({ VisibleRowsOnly: e.value == "Visible" }, () => this.props.UpdateGoBackState());
+    }
     canNext() {
         return StringExtensions_1.StringExtensions.IsNotEmpty(this.state.Name) && StringExtensions_1.StringExtensions.IsNullOrEmpty(this.state.ErrorMessage);
     }
@@ -52,6 +62,7 @@ class CategoryChartSettingsWizard extends React.Component {
     Next() {
         this.props.Data.Name = this.state.Name;
         this.props.Data.Description = this.state.Description;
+        this.props.Data.VisibleRowsOnly = this.state.VisibleRowsOnly;
     }
     Back() {
         // todo

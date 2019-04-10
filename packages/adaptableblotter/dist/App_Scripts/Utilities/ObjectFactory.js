@@ -49,7 +49,8 @@ var ObjectFactory;
             XAxisColumnId: GeneralConstants_1.EMPTY_STRING,
             XAxisExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
             ChartProperties: DefaultCategoryChartProperties_1.DefaultCategoryChartProperties,
-            ChartType: ChartEnums_1.ChartType.CategoryChart
+            ChartType: ChartEnums_1.ChartType.CategoryChart,
+            VisibleRowsOnly: true
         };
     }
     ObjectFactory.CreateEmptyCategoryChartDefinition = CreateEmptyCategoryChartDefinition;

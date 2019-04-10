@@ -8,6 +8,7 @@ export declare class ChartService implements IChartService {
     BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): IChartData;
     private buildYAxisTotal;
     private getXAxisColumnValues;
+    private addXAxisFromExpression;
     BuildPieChartData(chartDefinition: IPieChartDefinition): IChartData;
     private createNonRangeDataItem;
     private shouldUseRange;

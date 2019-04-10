@@ -6,6 +6,7 @@ export interface IChartDefinition extends IAdaptableBlotterObject {
     Description: string;
     ChartProperties: IChartProperties;
     ChartType: ChartType;
+    VisibleRowsOnly: boolean;
 }
 export interface IChartProperties extends IAdaptableBlotterObject {
 }
@@ -13,7 +14,6 @@ export interface IPieChartDefinition extends IChartDefinition {
     PrimaryColumnId: string;
     SecondaryColumnId: string;
     SecondaryColumnOperation: SecondaryColumnOperation;
-    VisibleRowsOnly: boolean;
 }
 export interface ICategoryChartDefinition extends IChartDefinition {
     YAxisColumnIds: string[];

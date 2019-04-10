@@ -93,6 +93,7 @@ class AdaptableBlotter {
         this._onSelectedCellsChanged = new EventDispatcher_1.EventDispatcher();
         this._onRefresh = new EventDispatcher_1.EventDispatcher();
         this._onGridReloaded = new EventDispatcher_1.EventDispatcher();
+        this._onSearchChanged = new EventDispatcher_1.EventDispatcher();
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
         this.StateChanged = new EventDispatcher_1.EventDispatcher();
         this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
@@ -192,8 +193,8 @@ class AdaptableBlotter {
             }
         }
         // create debounce methods that take a time based on user settings
-        this.throttleApplyGridFilteringUser = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
-        this.throttleApplyGridFilteringExternal = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
+        this.throttleOnDataChangedUser = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
+        this.throttleOnDataChangedExternal = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
     }
     getState() {
         return this.AdaptableBlotterStore.TheStore.getState();
@@ -286,6 +287,9 @@ class AdaptableBlotter {
     onGridReloaded() {
         return this._onGridReloaded;
     }
+    onSearchChanged() {
+        return this._onSearchChanged;
+    }
     createMenu() {
         let menuItems = [];
         this.Strategies.forEach(x => {
@@ -324,18 +328,18 @@ class AdaptableBlotter {
     }
     filterOnUserDataChange() {
         if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Always) {
-            this.applyGridFiltering();
+            this.applyDataChange();
         }
         else if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Throttle) {
-            this.throttleApplyGridFilteringUser();
+            this.throttleOnDataChangedUser();
         }
     }
     filterOnExternalDataChange() {
         if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Always) {
-            this.applyGridFiltering();
+            this.applyDataChange();
         }
         else if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Throttle) {
-            this.throttleApplyGridFilteringExternal();
+            this.throttleOnDataChangedExternal();
         }
     }
     //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
@@ -636,6 +640,40 @@ class AdaptableBlotter {
         }
         return Array.from(returnMap.values());
     }
+    getColumnValueDisplayValuePairDistinctListVisible(columnId, distinctCriteria) {
+        let returnMap = new Map();
+        // check if there are permitted column values for that column
+        let permittedValues = this.getState().UserInterface.PermittedColumnValues;
+        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
+        if (permittedValuesForColumn) {
+            permittedValuesForColumn.PermittedValues.forEach(pv => {
+                returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
+                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
+                    return Array.from(returnMap.values());
+                }
+            });
+        }
+        else {
+            let column = this.getHypergridColumn(columnId);
+            //We bypass the whole DataSource stuff as we need to get ALL the data
+            let data = this.hyperGrid.behavior.dataModel.getData();
+            for (var index = 0; index < data.length; index++) {
+                var element = data[index];
+                let displayString = this.getDisplayValueFromRecord(element, columnId);
+                let rawValue = this.valOrFunc(element, column);
+                if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.RawValue) {
+                    returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+                }
+                else if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.DisplayValue) {
+                    returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+                }
+                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
+                    return Array.from(returnMap.values());
+                }
+            }
+        }
+        return Array.from(returnMap.values());
+    }
     getDisplayValue(id, columnId) {
         let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id);
         return this.getDisplayValueFromRecord(row, columnId);
@@ -797,6 +835,11 @@ class AdaptableBlotter {
     }
     applyGridFiltering() {
         //which call onRefresh to refresh live excel updates
+        this.ReindexAndRepaint();
+        this._onRefresh.Dispatch(this, this);
+        this._onSearchChanged.Dispatch(this, this);
+    }
+    applyDataChange() {
         this.ReindexAndRepaint();
     }
     clearGridFiltering() {

@@ -51,8 +51,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private gridOptions;
     EmbedColumnMenu: boolean;
     isInitialised: boolean;
-    private throttleApplyGridFilteringUser;
-    private throttleApplyGridFilteringExternal;
+    private throttleOnDataChangedUser;
+    private throttleOnDataChangedExternal;
     hasFloatingFilter: boolean;
     grid: Grid;
     gridContainer: HTMLElement;
@@ -77,12 +77,15 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     private _onGridReloaded;
     onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
+    private _onSearchChanged;
+    onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
     AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
     reloadGrid(): void;
     applyGridFiltering(): void;
+    private applyDataChange;
     clearGridFiltering(): void;
     clearColumnFiltering(columnIds: string[]): void;
     hideFilterFormPopup: Function;
@@ -112,7 +115,9 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private isColumnFilterable;
     setCustomSort(columnId: string, comparer: Function): void;
     removeCustomSort(columnId: string): void;
+    getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
+    private addVDistinctValueFromNode;
     private useRawValueForColumn;
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: RowNode, columnId: string): string;

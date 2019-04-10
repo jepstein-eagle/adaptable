@@ -101,6 +101,7 @@ class AdaptableBlotter {
         this._onSelectedCellsChanged = new EventDispatcher_1.EventDispatcher();
         this._onRefresh = new EventDispatcher_1.EventDispatcher();
         this._onGridReloaded = new EventDispatcher_1.EventDispatcher();
+        this._onSearchChanged = new EventDispatcher_1.EventDispatcher();
         this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
         this.StateChanged = new EventDispatcher_1.EventDispatcher();
         this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
@@ -204,8 +205,8 @@ class AdaptableBlotter {
             }
         }
         // create debounce methods that take a time based on user settings
-        this.throttleApplyGridFilteringUser = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
-        this.throttleApplyGridFilteringExternal = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
+        this.throttleOnDataChangedUser = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
+        this.throttleOnDataChangedExternal = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
     }
     instantiateAgGrid() {
         let vendorContainer = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
@@ -248,18 +249,18 @@ class AdaptableBlotter {
     }
     filterOnUserDataChange() {
         if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Always) {
-            this.applyGridFiltering();
+            this.applyDataChange();
         }
         else if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Throttle) {
-            this.throttleApplyGridFilteringUser();
+            this.throttleOnDataChangedUser();
         }
     }
     filterOnExternalDataChange() {
         if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Always) {
-            this.applyGridFiltering();
+            this.applyDataChange();
         }
         else if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Throttle) {
-            this.throttleApplyGridFilteringExternal();
+            this.throttleOnDataChangedExternal();
         }
     }
     createFilterWrapper(col) {
@@ -286,10 +287,18 @@ class AdaptableBlotter {
     onGridReloaded() {
         return this._onGridReloaded;
     }
+    onSearchChanged() {
+        return this._onSearchChanged;
+    }
     reloadGrid() {
         this._onGridReloaded.Dispatch(this, this);
     }
     applyGridFiltering() {
+        this.gridOptions.api.onFilterChanged();
+        this._onSearchChanged.Dispatch(this, this);
+        this._onRefresh.Dispatch(this, this);
+    }
+    applyDataChange() {
         this.gridOptions.api.onFilterChanged();
         this._onRefresh.Dispatch(this, this);
     }
@@ -750,6 +759,31 @@ class AdaptableBlotter {
         }
         this.gridOptions.api.setSortModel(sortModel);
     }
+    getColumnValueDisplayValuePairDistinctListVisible(columnId, distinctCriteria) {
+        let returnMap = new Map();
+        // check if there are permitted column values for that column 
+        // NB.  this is currently a bug as we dont check for visibility :(
+        let permittedValues = this.getState().UserInterface.PermittedColumnValues;
+        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
+        if (permittedValuesForColumn) {
+            permittedValuesForColumn.PermittedValues.forEach(pv => {
+                returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
+            });
+        }
+        else { // get the distinct values for the column from the grid
+            //we use forEachNode as we want to get all data even the one filtered out...
+            let useRawValue = this.useRawValueForColumn(columnId);
+            var model = this.gridOptions.api.getModel();
+            let rowCount = model.getRowCount();
+            for (var i = 0; i < rowCount; i++) {
+                var rowNode = model.getRow(i);
+                //we do not return the values of the aggregates when in grouping mode
+                //otherwise they wxould appear in the filter dropdown etc....
+                this.addVDistinctValueFromNode(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
+            }
+        }
+        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
+    }
     getColumnValueDisplayValuePairDistinctList(columnId, distinctCriteria) {
         let returnMap = new Map();
         // check if there are permitted column values for that column
@@ -766,21 +800,24 @@ class AdaptableBlotter {
             this.gridOptions.api.forEachNode(rowNode => {
                 //we do not return the values of the aggregates when in grouping mode
                 //otherwise they wxould appear in the filter dropdown etc....
-                if (!rowNode.group) {
-                    let rawValue = this.gridOptions.api.getValue(columnId, rowNode);
-                    let displayValue = (useRawValue) ?
-                        Helper_1.Helper.StringifyValue(rawValue) :
-                        this.getDisplayValueFromRecord(rowNode, columnId);
-                    if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.RawValue) {
-                        returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayValue });
-                    }
-                    else if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.DisplayValue) {
-                        returnMap.set(displayValue, { RawValue: rawValue, DisplayValue: displayValue });
-                    }
-                }
+                this.addVDistinctValueFromNode(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
             });
         }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
+    }
+    addVDistinctValueFromNode(rowNode, columnId, useRawValue, distinctCriteria, returnMap) {
+        if (!rowNode.group) {
+            let rawValue = this.gridOptions.api.getValue(columnId, rowNode);
+            let displayValue = (useRawValue) ?
+                Helper_1.Helper.StringifyValue(rawValue) :
+                this.getDisplayValueFromRecord(rowNode, columnId);
+            if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.RawValue) {
+                returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayValue });
+            }
+            else if (distinctCriteria == Enums_1.DistinctCriteriaPairValue.DisplayValue) {
+                returnMap.set(displayValue, { RawValue: rawValue, DisplayValue: displayValue });
+            }
+        }
     }
     useRawValueForColumn(columnId) {
         // will add more in due course I'm sure but for now only percent bar columns return false...

@@ -48,6 +48,7 @@ export interface IAdaptableBlotter {
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
+    onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
@@ -61,6 +62,7 @@ export interface IAdaptableBlotter {
     setNewColumnListOrder(visibleColumnList: Array<IColumn>): void;
     getPrimaryKeyValueFromRecord(record: any): any;
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
+    getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: any, columnId: string): string;
     getRawValueFromRecord(row: any, columnId: string): any;

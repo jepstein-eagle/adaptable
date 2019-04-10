@@ -33,7 +33,7 @@ class ChartService {
             let showAverageTotal = (chartDefinition.YAxisTotal == ChartEnums_1.AxisTotal.Average);
             let xAxisKVP = { Key: chartDefinition.XAxisColumnId, Value: cv };
             chartDefinition.YAxisColumnIds.forEach(colID => {
-                let total = this.buildYAxisTotal(colID, [xAxisKVP], columns, showAverageTotal);
+                let total = this.buildYAxisTotal(chartDefinition, colID, [xAxisKVP], columns, showAverageTotal);
                 let colName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
                 if (yAxisColumnNames.indexOf(colName) < 0) {
                     yAxisColumnNames.push(colName);
@@ -49,7 +49,7 @@ class ChartService {
         };
         return chartData;
     }
-    buildYAxisTotal(yAxisColumn, kvps, columns, showAverageTotal) {
+    buildYAxisTotal(chartDefinition, yAxisColumn, kvps, columns, showAverageTotal) {
         let columnValueExpressions = kvps.map(kvp => {
             return {
                 ColumnId: kvp.Key,
@@ -64,13 +64,24 @@ class ChartService {
         };
         let finalTotal = 0;
         let returnedRecordCount = 0;
-        this.blotter.forAllRecordsDo((row) => {
-            if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(completedExpression, row, columns, this.blotter)) {
-                returnedRecordCount++;
-                let columnValue = this.blotter.getRawValueFromRecord(row, yAxisColumn);
-                finalTotal += Number(columnValue);
-            }
-        });
+        if (chartDefinition.VisibleRowsOnly) {
+            this.blotter.forAllVisibleRecordsDo((row) => {
+                if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(completedExpression, row, columns, this.blotter)) {
+                    returnedRecordCount++;
+                    let columnValue = this.blotter.getRawValueFromRecord(row, yAxisColumn);
+                    finalTotal += Number(columnValue);
+                }
+            });
+        }
+        else {
+            this.blotter.forAllRecordsDo((row) => {
+                if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(completedExpression, row, columns, this.blotter)) {
+                    returnedRecordCount++;
+                    let columnValue = this.blotter.getRawValueFromRecord(row, yAxisColumn);
+                    finalTotal += Number(columnValue);
+                }
+            });
+        }
         if (showAverageTotal) {
             finalTotal = (finalTotal / returnedRecordCount);
         }
@@ -80,17 +91,32 @@ class ChartService {
     getXAxisColumnValues(chartDefinition, columns) {
         let xAxisColValues = [];
         if (ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
-            xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue; });
+            if (chartDefinition.VisibleRowsOnly) {
+                xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctListVisible(chartDefinition.XAxisColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue; });
+            }
+            else {
+                xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue; });
+            }
         }
         else {
-            this.blotter.forAllRecordsDo((row) => {
-                if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XAxisExpression, row, columns, this.blotter)) {
-                    let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XAxisColumnId);
-                    ArrayExtensions_1.ArrayExtensions.AddItem(xAxisColValues, columnValue);
-                }
-            });
+            if (chartDefinition.VisibleRowsOnly) {
+                this.blotter.forAllVisibleRecordsDo((row) => {
+                    this.addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues);
+                });
+            }
+            else {
+                this.blotter.forAllRecordsDo((row) => {
+                    this.addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues);
+                });
+            }
         }
         return xAxisColValues;
+    }
+    addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues) {
+        if (ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XAxisExpression, row, columns, this.blotter)) {
+            let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XAxisColumnId);
+            ArrayExtensions_1.ArrayExtensions.AddItem(xAxisColValues, columnValue);
+        }
     }
     BuildPieChartData(chartDefinition) {
         let dataCounter = new Map();

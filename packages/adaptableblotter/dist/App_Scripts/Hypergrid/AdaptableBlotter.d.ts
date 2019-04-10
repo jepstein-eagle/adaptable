@@ -49,8 +49,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private hyperGrid;
     private filterContainer;
     isInitialised: boolean;
-    private throttleApplyGridFilteringUser;
-    private throttleApplyGridFilteringExternal;
+    private throttleOnDataChangedUser;
+    private throttleOnDataChangedExternal;
     hasFloatingFilter: boolean;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
     private getState;
@@ -69,6 +69,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     private _onGridReloaded;
     onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
+    private _onSearchChanged;
+    onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
@@ -100,6 +102,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     removeCustomSort(columnId: string): void;
     ReindexAndRepaint(): void;
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
+    getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: any, columnId: string): any;
     getDisplayValueFromRawValue(colId: string, rawValue: any): any;
@@ -111,6 +114,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     removeCellStyleHypergrid(rowIdentifierValue: any, columnId: string, style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch' | 'formatColumn'): void;
     removeAllCellStyleHypergrid(style: 'flash' | 'csColumn' | 'csRow' | 'QuickSearch' | 'formatColumn'): void;
     applyGridFiltering(): void;
+    private applyDataChange;
     clearGridFiltering(): void;
     clearColumnFiltering(columnIds: string[]): void;
     removeCalculatedColumnFromGrid(calculatedColumnID: string): void;

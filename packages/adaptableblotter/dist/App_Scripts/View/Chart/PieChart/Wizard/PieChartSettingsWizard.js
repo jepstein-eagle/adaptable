@@ -36,8 +36,8 @@ class PieChartSettingsWizard extends React.Component {
                     React.createElement(react_bootstrap_1.FormGroup, { controlId: "chartDataVisible" },
                         React.createElement(react_bootstrap_1.Col, { xs: 3, componentClass: react_bootstrap_1.ControlLabel }, "Rows In Chart:"),
                         React.createElement(react_bootstrap_1.Col, { xs: 7 },
-                            React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Visible", checked: this.state.VisibleRowsOnly == true, onChange: (e) => this.onSecondaryColumnOperationChanged(e) }, "Visible Rows Only"),
-                            React.createElement(react_bootstrap_1.Radio, { inline: true, value: "All", checked: this.state.VisibleRowsOnly == false, onChange: (e) => this.onSecondaryColumnOperationChanged(e) }, "All Rows In Grid"))))));
+                            React.createElement(react_bootstrap_1.Radio, { inline: true, value: "Visible", checked: this.state.VisibleRowsOnly == true, onChange: (e) => this.onVisibleRowsChanged(e) }, "Visible Rows Only"),
+                            React.createElement(react_bootstrap_1.Radio, { inline: true, value: "All", checked: this.state.VisibleRowsOnly == false, onChange: (e) => this.onVisibleRowsChanged(e) }, "All Rows In Grid"))))));
     }
     onChartNameChange(event) {
         let e = event.target;
@@ -50,7 +50,7 @@ class PieChartSettingsWizard extends React.Component {
         let e = event.target;
         this.setState({ Description: e.value, }, () => this.props.UpdateGoBackState());
     }
-    onSecondaryColumnOperationChanged(event) {
+    onVisibleRowsChanged(event) {
         let e = event.target;
         this.setState({ VisibleRowsOnly: e.value == "Visible" }, () => this.props.UpdateGoBackState());
     }
