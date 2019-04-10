@@ -160,8 +160,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private gridOptions: GridOptions
     public EmbedColumnMenu: boolean;
     public isInitialised: boolean
-    private throttleApplyGridFilteringUser: (() => void) & _.Cancelable;
-    private throttleApplyGridFilteringExternal: (() => void) & _.Cancelable;
+    private throttleOnDataChangedUser: (() => void) & _.Cancelable;
+    private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
     public hasFloatingFilter: boolean
 
     public grid: Grid
@@ -283,8 +283,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         // create debounce methods that take a time based on user settings
-        this.throttleApplyGridFilteringUser = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
-        this.throttleApplyGridFilteringExternal = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
+        this.throttleOnDataChangedUser = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
+        this.throttleOnDataChangedExternal = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
     }
 
 
@@ -338,17 +338,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private filterOnUserDataChange(): void {
         if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
-            this.applyGridFiltering();
+            this.applyDataChange();
         } else if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
-            this.throttleApplyGridFilteringUser();
+            this.throttleOnDataChangedUser();
         }
     }
 
     private filterOnExternalDataChange(): void {
         if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
-            this.applyGridFiltering();
+            this.applyDataChange();
         } else if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
-            this.throttleApplyGridFilteringExternal();
+            this.throttleOnDataChangedExternal();
         }
     }
 
@@ -390,17 +390,28 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onGridReloaded;
     }
 
+    private _onSearchChanged: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    public onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onSearchChanged;
+    }
+
+
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
     public StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>();
     public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
     public AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs> = new EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>();
-
 
     public reloadGrid(): void {
         this._onGridReloaded.Dispatch(this, this);
     }
 
     public applyGridFiltering() {
+        this.gridOptions.api.onFilterChanged()
+        this._onSearchChanged.Dispatch(this, this);
+       this._onRefresh.Dispatch(this, this);
+      }
+
+    private applyDataChange(){
         this.gridOptions.api.onFilterChanged()
         this._onRefresh.Dispatch(this, this);
     }
@@ -924,6 +935,36 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.setSortModel(sortModel)
     }
 
+    public getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
+
+        let returnMap = new Map<string, IRawValueDisplayValuePair>();
+
+        // check if there are permitted column values for that column 
+        // NB.  this is currently a bug as we dont check for visibility :(
+        let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
+        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
+        if (permittedValuesForColumn) {
+            permittedValuesForColumn.PermittedValues.forEach(pv => {
+                returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
+            })
+        } else { // get the distinct values for the column from the grid
+            //we use forEachNode as we want to get all data even the one filtered out...
+            let useRawValue: boolean = this.useRawValueForColumn(columnId);
+
+            var model = this.gridOptions.api.getModel();
+            let rowCount = model.getRowCount();
+          
+            for (var i = 0; i<rowCount; i++) {  
+              var rowNode: RowNode = model.getRow(i);
+                 //we do not return the values of the aggregates when in grouping mode
+                //otherwise they wxould appear in the filter dropdown etc....
+                this.addVDistinctValueFromNode(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
+            }
+        }
+        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
+    }
+
+
     public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
 
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
@@ -938,25 +979,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         } else { // get the distinct values for the column from the grid
             //we use forEachNode as we want to get all data even the one filtered out...
             let useRawValue: boolean = this.useRawValueForColumn(columnId);
-            this.gridOptions.api.forEachNode(rowNode => {
+
+                 this.gridOptions.api.forEachNode(rowNode => {
                 //we do not return the values of the aggregates when in grouping mode
                 //otherwise they wxould appear in the filter dropdown etc....
-                if (!rowNode.group) {
-                    let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
-                    let displayValue = (useRawValue) ?
-                        Helper.StringifyValue(rawValue) :
-                        this.getDisplayValueFromRecord(rowNode, columnId);
-                    if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-                        returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayValue });
-                    }
-                    else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
-                        returnMap.set(displayValue, { RawValue: rawValue, DisplayValue: displayValue });
-                    }
-                }
+                this.addVDistinctValueFromNode(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
             })
         }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
     }
+
+    private addVDistinctValueFromNode(rowNode: RowNode, columnId: string, useRawValue: boolean, distinctCriteria: DistinctCriteriaPairValue, returnMap : Map<string, IRawValueDisplayValuePair>):void{
+        if (!rowNode.group) {
+            let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
+            let displayValue = (useRawValue) ?
+                Helper.StringifyValue(rawValue) :
+                this.getDisplayValueFromRecord(rowNode, columnId);
+            if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+                returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayValue });
+            }
+            else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+                returnMap.set(displayValue, { RawValue: rawValue, DisplayValue: displayValue });
+            }
+        }
+    }
+
 
     private useRawValueForColumn(columnId: string): boolean {
         // will add more in due course I'm sure but for now only percent bar columns return false...

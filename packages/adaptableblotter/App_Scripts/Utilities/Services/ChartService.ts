@@ -47,7 +47,7 @@ export class ChartService implements IChartService {
       let xAxisKVP: IKeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv }
 
       chartDefinition.YAxisColumnIds.forEach(colID => {
-        let total = this.buildYAxisTotal(colID, [xAxisKVP], columns, showAverageTotal);
+        let total = this.buildYAxisTotal(chartDefinition, colID, [xAxisKVP], columns, showAverageTotal);
         let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
         if (yAxisColumnNames.indexOf(colName) < 0) {
           yAxisColumnNames.push(colName);
@@ -66,7 +66,7 @@ export class ChartService implements IChartService {
 
   }
 
-  private buildYAxisTotal(yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[], showAverageTotal: boolean): number {
+  private buildYAxisTotal(chartDefinition: IChartDefinition, yAxisColumn: string, kvps: IKeyValuePair[], columns: IColumn[], showAverageTotal: boolean): number {
     let columnValueExpressions: IColumnValueExpression[] = kvps.map(kvp => {
       return {
         ColumnId: kvp.Key,
@@ -83,33 +83,63 @@ export class ChartService implements IChartService {
 
     let finalTotal: number = 0;
     let returnedRecordCount: number = 0;
-    this.blotter.forAllRecordsDo((row) => {
-      if (ExpressionHelper.checkForExpressionFromRecord(completedExpression, row, columns, this.blotter)) {
-        returnedRecordCount++;
-        let columnValue = this.blotter.getRawValueFromRecord(row, yAxisColumn)
-        finalTotal += Number(columnValue)
-      }
-    })
+
+    if (chartDefinition.VisibleRowsOnly) {
+      this.blotter.forAllVisibleRecordsDo((row) => {
+        if (ExpressionHelper.checkForExpressionFromRecord(completedExpression, row, columns, this.blotter)) {
+          returnedRecordCount++;
+          let columnValue = this.blotter.getRawValueFromRecord(row, yAxisColumn)
+          finalTotal += Number(columnValue)
+        }
+      })
+    }else{
+      this.blotter.forAllRecordsDo((row) => {
+        if (ExpressionHelper.checkForExpressionFromRecord(completedExpression, row, columns, this.blotter)) {
+          returnedRecordCount++;
+          let columnValue = this.blotter.getRawValueFromRecord(row, yAxisColumn)
+          finalTotal += Number(columnValue)
+        }
+      })
+    }
+    
     if (showAverageTotal) {
       finalTotal = (finalTotal / returnedRecordCount)
     }
     return Helper.RoundNumberTo4dp(finalTotal);
   }
 
+
+
+
   // Gets the unique values in the (horizontal) X Axis column - either through an expression or getting the distinct values
   private getXAxisColumnValues(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): string[] {
     let xAxisColValues: string[] = [];
     if (ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
-      xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
+      if (chartDefinition.VisibleRowsOnly) {
+        xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctListVisible(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
+      } else {
+        xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
+      }
     } else {
-      this.blotter.forAllRecordsDo((row) => {
-        if (ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XAxisExpression, row, columns, this.blotter)) {
-          let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XAxisColumnId)
-          ArrayExtensions.AddItem(xAxisColValues, columnValue);
-        }
-      })
+      if (chartDefinition.VisibleRowsOnly) {
+        this.blotter.forAllVisibleRecordsDo((row) => {
+          this.addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues);
+        })
+      } else {
+        this.blotter.forAllRecordsDo((row) => {
+          this.addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues);
+        })
+      }
+
     }
     return xAxisColValues;
+  }
+
+  private addXAxisFromExpression(chartDefinition: ICategoryChartDefinition, columns: IColumn[], row: any, xAxisColValues: string[]): void {
+    if (ExpressionHelper.checkForExpressionFromRecord(chartDefinition.XAxisExpression, row, columns, this.blotter)) {
+      let columnValue = this.blotter.getDisplayValueFromRecord(row, chartDefinition.XAxisColumnId)
+      ArrayExtensions.AddItem(xAxisColValues, columnValue);
+    }
   }
 
   public BuildPieChartData(chartDefinition: IPieChartDefinition): IChartData {

@@ -81,7 +81,8 @@ export module ObjectFactory {
             XAxisColumnId: EMPTY_STRING,
             XAxisExpression: ExpressionHelper.CreateEmptyExpression(),
             ChartProperties: DefaultCategoryChartProperties,
-            ChartType: ChartType.CategoryChart
+            ChartType: ChartType.CategoryChart,
+            VisibleRowsOnly: true
         }
     }
 

@@ -7,7 +7,7 @@ export class QuickSearchStrategyagGrid extends QuickSearchStrategy implements IQ
         super(blotter)
     }
 
-    protected postSearch() {
+    protected afterStateChanged(): void {
         if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
             //TODO : This is probably temporary and is used to reevaluate the quicksearch CellClassRules
             this.blotter.redraw()

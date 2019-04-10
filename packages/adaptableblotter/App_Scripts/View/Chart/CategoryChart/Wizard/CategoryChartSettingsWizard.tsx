@@ -2,7 +2,7 @@ import * as React from "react";
 import { AdaptableWizardStepProps, AdaptableWizardStep } from "../../../Wizard/Interface/IAdaptableWizard";
 import { ICategoryChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
 import { StringExtensions } from "../../../../Utilities/Extensions/StringExtensions";
-import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from "react-bootstrap";
+import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Radio } from "react-bootstrap";
 import { AdaptableBlotterForm } from "../../../Components/Forms/AdaptableBlotterForm";
 import { ArrayExtensions } from "../../../../Utilities/Extensions/ArrayExtensions";
 import { ExpressionHelper } from "../../../../Utilities/Helpers/ExpressionHelper";
@@ -14,7 +14,8 @@ export interface CategoryChartSettingsWizardProps extends AdaptableWizardStepPro
 export interface CategoryChartSettingsWizardState {
     Name: string,
     Description: string,
-    ErrorMessage: string
+    ErrorMessage: string,
+    VisibleRowsOnly: boolean,
 }
 
 export class CategoryChartSettingsWizard extends React.Component<CategoryChartSettingsWizardProps, CategoryChartSettingsWizardState> implements AdaptableWizardStep {
@@ -23,6 +24,7 @@ export class CategoryChartSettingsWizard extends React.Component<CategoryChartSe
         this.state = {
             Name: props.Data.Name,
             Description: props.Data.Description,
+            VisibleRowsOnly: props.Data.VisibleRowsOnly,
             ErrorMessage: null
         }
     }
@@ -54,7 +56,13 @@ export class CategoryChartSettingsWizard extends React.Component<CategoryChartSe
                             </FormGroup>
                         </Col>
                     </FormGroup>
-
+                    <FormGroup controlId="chartDataVisible">
+                        <Col xs={3} componentClass={ControlLabel}>Rows In Chart:</Col>
+                        <Col xs={7}>
+                            <Radio inline value="Visible" checked={this.state.VisibleRowsOnly == true} onChange={(e) => this.onVisibleRowsChanged(e)}>Visible Rows Only</Radio>
+                            <Radio inline value="All" checked={this.state.VisibleRowsOnly == false} onChange={(e) => this.onVisibleRowsChanged(e)}>All Rows In Grid</Radio>
+                        </Col>
+                    </FormGroup>
 
                 </AdaptableBlotterForm>
             </Panel>
@@ -74,7 +82,10 @@ export class CategoryChartSettingsWizard extends React.Component<CategoryChartSe
         this.setState({ Description: e.value, } as CategoryChartSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-
+    private onVisibleRowsChanged(event: React.FormEvent<any>) {
+        let e = event.target as HTMLInputElement;
+        this.setState({ VisibleRowsOnly: e.value == "Visible" } as CategoryChartSettingsWizardState, () => this.props.UpdateGoBackState())
+    }
 
 
     public canNext(): boolean {
@@ -86,6 +97,7 @@ export class CategoryChartSettingsWizard extends React.Component<CategoryChartSe
     public Next(): void {
         this.props.Data.Name = this.state.Name
         this.props.Data.Description = this.state.Description
+        this.props.Data.VisibleRowsOnly = this.state.VisibleRowsOnly
     }
     public Back(): void {
         // todo

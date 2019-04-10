@@ -55,9 +55,10 @@ export interface IAdaptableBlotter {
     onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any>;
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
-    onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
-    onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; // needed to respond to grid databound which gets called every time we do an edit :()
-
+    onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; 
+    onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; 
+    onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; 
+   
     // not sure if this is right but putting the events here
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>
@@ -80,6 +81,7 @@ export interface IAdaptableBlotter {
     // getting records and keys
     getPrimaryKeyValueFromRecord(record: any): any
     getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
+    getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
     getDisplayValue(id: any, columnId: string): string
     getDisplayValueFromRecord(row: any, columnId: string): string
     getRawValueFromRecord(row: any, columnId: string): any
@@ -151,5 +153,7 @@ export interface IAdaptableBlotter {
     applyDarkTheme(): void
 
     redraw(): void
+
+
 
 }

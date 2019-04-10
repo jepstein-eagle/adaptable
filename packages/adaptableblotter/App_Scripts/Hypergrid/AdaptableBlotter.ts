@@ -95,7 +95,6 @@ import { ChartStrategy } from '../Strategy/ChartStrategy';
 import { HALF_SECOND } from '../Utilities/Constants/GeneralConstants';
 import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
 import { LicenceService } from '../Utilities/Services/LicenceService';
-import { Helper } from '../Utilities/Helpers/Helper';
 import { PieChartStrategy } from '../Strategy/PieChartStrategy';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
@@ -148,8 +147,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public isInitialised: boolean
 
-    private throttleApplyGridFilteringUser: (() => void) & _.Cancelable;
-    private throttleApplyGridFilteringExternal: (() => void) & _.Cancelable;
+    private throttleOnDataChangedUser: (() => void) & _.Cancelable;
+    private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
     public hasFloatingFilter: boolean
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
@@ -265,8 +264,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         // create debounce methods that take a time based on user settings
-        this.throttleApplyGridFilteringUser = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
-        this.throttleApplyGridFilteringExternal = _.throttle(this.applyGridFiltering, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
+        this.throttleOnDataChangedUser = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
+        this.throttleOnDataChangedExternal = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
 
     }
 
@@ -378,6 +377,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return this._onGridReloaded;
     }
 
+    private _onSearchChanged: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
+    public onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
+        return this._onSearchChanged;
+    }
+
     public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
     public StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>();
     public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
@@ -398,7 +402,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public reloadGrid(): void {
         this._onGridReloaded.Dispatch(this, this);
     }
-    
 
     public getPrimaryKeyValueFromRecord(record: any): any {
         return record[this.BlotterOptions.primaryKey]
@@ -434,17 +437,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private filterOnUserDataChange(): void {
         if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
-            this.applyGridFiltering();
+            this.applyDataChange();
         } else if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
-            this.throttleApplyGridFilteringUser();
+            this.throttleOnDataChangedUser();
         }
     }
 
     private filterOnExternalDataChange(): void {
         if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
-            this.applyGridFiltering();
+            this.applyDataChange();
         } else if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
-            this.throttleApplyGridFilteringExternal();
+            this.throttleOnDataChangedExternal();
         }
     }
 
@@ -781,6 +784,40 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return Array.from(returnMap.values())
     }
 
+    public getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
+        let returnMap = new Map<string, IRawValueDisplayValuePair>();
+        // check if there are permitted column values for that column
+        let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
+        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
+        if (permittedValuesForColumn) {
+            permittedValuesForColumn.PermittedValues.forEach(pv => {
+                returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
+                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
+                    return Array.from(returnMap.values())
+                }
+            })
+        } else {
+            let column = this.getHypergridColumn(columnId);
+            //We bypass the whole DataSource stuff as we need to get ALL the data
+            let data = this.hyperGrid.behavior.dataModel.getData()
+            for (var index = 0; index < data.length; index++) {
+                var element = data[index]
+                let displayString = this.getDisplayValueFromRecord(element, columnId)
+                let rawValue = this.valOrFunc(element, column)
+                if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+                    returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+                }
+                else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+                    returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+                }
+                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
+                    return Array.from(returnMap.values())
+                }
+            }
+        }
+        return Array.from(returnMap.values())
+    }
+
   
 
     public getDisplayValue(id: any, columnId: string): string {
@@ -959,7 +996,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public applyGridFiltering(): void {
         //which call onRefresh to refresh live excel updates
         this.ReindexAndRepaint()
+        this._onRefresh.Dispatch(this, this);
+        this._onSearchChanged.Dispatch(this, this);
     }
+
+    private applyDataChange(){
+        this.ReindexAndRepaint()
+    }
+
 
     public clearGridFiltering() {
         // todo

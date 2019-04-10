@@ -58,8 +58,8 @@ export class PieChartSettingsWizard extends React.Component<PieChartSettingsWiza
                     <FormGroup controlId="chartDataVisible">
                         <Col xs={3} componentClass={ControlLabel}>Rows In Chart:</Col>
                         <Col xs={7}>
-                            <Radio inline value="Visible" checked={this.state.VisibleRowsOnly == true} onChange={(e) => this.onSecondaryColumnOperationChanged(e)}>Visible Rows Only</Radio>
-                            <Radio inline value="All" checked={this.state.VisibleRowsOnly == false} onChange={(e) => this.onSecondaryColumnOperationChanged(e)}>All Rows In Grid</Radio>
+                            <Radio inline value="Visible" checked={this.state.VisibleRowsOnly == true} onChange={(e) => this.onVisibleRowsChanged(e)}>Visible Rows Only</Radio>
+                            <Radio inline value="All" checked={this.state.VisibleRowsOnly == false} onChange={(e) => this.onVisibleRowsChanged(e)}>All Rows In Grid</Radio>
                         </Col>
                     </FormGroup>
 
@@ -81,7 +81,7 @@ export class PieChartSettingsWizard extends React.Component<PieChartSettingsWiza
         this.setState({ Description: e.value, } as PieChartSettingsWizardState, () => this.props.UpdateGoBackState())
     }
 
-    private onSecondaryColumnOperationChanged(event: React.FormEvent<any>) {
+    private onVisibleRowsChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         this.setState({ VisibleRowsOnly: e.value == "Visible" } as PieChartSettingsWizardState, () => this.props.UpdateGoBackState())
     }

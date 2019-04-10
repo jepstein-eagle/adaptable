@@ -5,7 +5,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
-import { ChartState, SystemState } from '../Redux/ActionsReducers/Interface/IState';
+import { ChartState, SystemState, ColumnFilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
@@ -19,12 +19,15 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private ChartState: ChartState
     private SystemState: SystemState
+  //  private ColumnFilter: ColumnFilterState
     private throttleSetChartData: (() => void) & _.Cancelable;
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.ChartStrategyId, blotter)
 
         this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
+        this.blotter.onSearchChanged().Subscribe(() => this.handleSearchChanged())
+        this.blotter.SearchedChanged.Subscribe(()=>this.handleSearchChanged())
         let refreshRate = blotter.AdaptableBlotterStore.TheStore.getState().Chart.RefreshRate * 1000;
         this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
     }
@@ -45,7 +48,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
                     displayChartAtStartUp = true;
                 }
             } else {
-                let chartStateDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName)
+                let chartStateDefinition: IChartDefinition = this.GetCurrentChartDefinition();
                 let storeStateDefinition: IChartDefinition = this.GetChartState().ChartDefinitions.find(c => c.Name == this.GetChartState().CurrentChartName)
 
                 if (this.doChartDefinitionChangesRequireDataUpdate(chartStateDefinition, storeStateDefinition)) {
@@ -142,22 +145,37 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         return false;
     }
 
+    protected handleSearchChanged(): void {
+     //   super.afterSearchChanged();
+        // I think we will always redraw a chart if its visible when a search has been applied as its relatively rare...
+        // might need to rethink if that is too OTT
+         if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)) {
+            if (this.blotter.isInitialised) {
+                let currentChartDefinition: IChartDefinition = this.GetCurrentChartDefinition();
+                if (currentChartDefinition.VisibleRowsOnly) {
+                     this.throttleSetChartData();
+                }
+            }
+        }
+    }
+
+
     protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo): void {
         if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)) {
             // need to make sure that this is up to date always - not sure that it currently is
             let columnChangedId: string = dataChangedInfo.ColumnId;
             if (StringExtensions.IsNotNullOrEmpty(columnChangedId)) {
-                let currentChartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
-                switch (currentChartDefinition.ChartType) {
+                let currentChartDefinition: IChartDefinition = this.GetCurrentChartDefinition();
+                 switch (currentChartDefinition.ChartType) {
                     case ChartType.CategoryChart:
-                        let categoryChartDefinition: ICategoryChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName) as ICategoryChartDefinition
+                        let categoryChartDefinition: ICategoryChartDefinition = currentChartDefinition as ICategoryChartDefinition
                         if (ArrayExtensions.ContainsItem(categoryChartDefinition.YAxisColumnIds, columnChangedId) || categoryChartDefinition.XAxisColumnId == columnChangedId) {
                             this.throttleSetChartData();
                         }
                         break;
 
                     case ChartType.PieChart:
-                        let pieChartDefinition: IPieChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName) as IPieChartDefinition
+                        let pieChartDefinition: IPieChartDefinition = currentChartDefinition as IPieChartDefinition
                         if (pieChartDefinition.PrimaryColumnId == columnChangedId || pieChartDefinition.SecondaryColumnId == columnChangedId) {
                             this.throttleSetChartData();
                         }
@@ -171,7 +189,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private setChartData() {
         let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-        let chartDefinition: IChartDefinition = this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
+        let chartDefinition: IChartDefinition = this.GetCurrentChartDefinition();
         if (chartDefinition) {
             let chartData: IChartData;
             if (chartDefinition.ChartType == ChartType.CategoryChart) {
@@ -199,6 +217,14 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private GetColumnState(): IColumn[] {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+    }
+
+    private GetColumnFilterState(): ColumnFilterState {
+        return this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter;
+    }
+
+    private GetCurrentChartDefinition(): IChartDefinition{
+       return this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
     }
 
 }
