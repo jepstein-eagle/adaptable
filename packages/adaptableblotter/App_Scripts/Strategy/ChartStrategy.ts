@@ -19,7 +19,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private ChartState: ChartState
     private SystemState: SystemState
-  //  private ColumnFilter: ColumnFilterState
+    //  private ColumnFilter: ColumnFilterState
     private throttleSetChartData: (() => void) & _.Cancelable;
 
     constructor(blotter: IAdaptableBlotter) {
@@ -27,7 +27,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
         this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         this.blotter.onSearchChanged().Subscribe(() => this.handleSearchChanged())
-        this.blotter.SearchedChanged.Subscribe(()=>this.handleSearchChanged())
+        this.blotter.SearchedChanged.Subscribe(() => this.handleSearchChanged())
         let refreshRate = blotter.AdaptableBlotterStore.TheStore.getState().Chart.RefreshRate * 1000;
         this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
     }
@@ -146,14 +146,16 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
 
     protected handleSearchChanged(): void {
-     //   super.afterSearchChanged();
+        //   super.afterSearchChanged();
         // I think we will always redraw a chart if its visible when a search has been applied as its relatively rare...
         // might need to rethink if that is too OTT
-         if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)) {
-            if (this.blotter.isInitialised) {
-                let currentChartDefinition: IChartDefinition = this.GetCurrentChartDefinition();
-                if (currentChartDefinition.VisibleRowsOnly) {
-                     this.throttleSetChartData();
+        if (this.SystemState != null && this.ChartState != null) {
+            if (this.SystemState.ChartVisibility == ChartVisibility.Maximised && StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)) {
+                if (this.blotter.isInitialised) {
+                    let currentChartDefinition: IChartDefinition = this.GetCurrentChartDefinition();
+                    if (currentChartDefinition != null && currentChartDefinition.VisibleRowsOnly) {
+                        this.throttleSetChartData();
+                    }
                 }
             }
         }
@@ -166,7 +168,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             let columnChangedId: string = dataChangedInfo.ColumnId;
             if (StringExtensions.IsNotNullOrEmpty(columnChangedId)) {
                 let currentChartDefinition: IChartDefinition = this.GetCurrentChartDefinition();
-                 switch (currentChartDefinition.ChartType) {
+                switch (currentChartDefinition.ChartType) {
                     case ChartType.CategoryChart:
                         let categoryChartDefinition: ICategoryChartDefinition = currentChartDefinition as ICategoryChartDefinition
                         if (ArrayExtensions.ContainsItem(categoryChartDefinition.YAxisColumnIds, columnChangedId) || categoryChartDefinition.XAxisColumnId == columnChangedId) {
@@ -223,8 +225,8 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         return this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter;
     }
 
-    private GetCurrentChartDefinition(): IChartDefinition{
-       return this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
+    private GetCurrentChartDefinition(): IChartDefinition {
+        return this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
     }
 
 }
