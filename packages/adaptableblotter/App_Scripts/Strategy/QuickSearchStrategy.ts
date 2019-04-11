@@ -22,7 +22,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
             this.quickSearchState = this.GetQuickSearchState();
 
             this.blotter.applyGridFiltering();
-            this.postSearch();
+            this.blotter.redraw();
 
             if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
                 this.publishSearchChanged(SearchChangedTrigger.QuickSearch)
@@ -38,7 +38,5 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         return this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
     }
 
-    protected postSearch() {
-        // required only for ag-Grid to inherit - a better way possible?
-    }
+  
 }

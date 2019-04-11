@@ -119,7 +119,6 @@ import { ConditionalStyleStrategyagGrid } from './Strategy/ConditionalStyleStrat
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
 import { FormatColumnStrategyagGrid } from './Strategy/FormatColumnStrategyagGrid';
-import { QuickSearchStrategyagGrid } from './Strategy/QuickSearchStrategyagGrid';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
@@ -134,6 +133,7 @@ import 'ag-grid-enterprise';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { ReminderStrategy } from '../Strategy/ReminderStrategy';
+import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -237,7 +237,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(this))
         this.Strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy(this))
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
-        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategyagGrid(this))
+        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(this))
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))
@@ -408,10 +408,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public applyGridFiltering() {
         this.gridOptions.api.onFilterChanged()
         this._onSearchChanged.Dispatch(this, this);
-       this._onRefresh.Dispatch(this, this);
-      }
+        this._onRefresh.Dispatch(this, this);
+    }
 
-    private applyDataChange(){
+    private applyDataChange() {
         this.gridOptions.api.onFilterChanged()
         this._onRefresh.Dispatch(this, this);
     }
@@ -953,10 +953,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             var model = this.gridOptions.api.getModel();
             let rowCount = model.getRowCount();
-          
-            for (var i = 0; i<rowCount; i++) {  
-              var rowNode: RowNode = model.getRow(i);
-                 //we do not return the values of the aggregates when in grouping mode
+
+            for (var i = 0; i < rowCount; i++) {
+                var rowNode: RowNode = model.getRow(i);
+                //we do not return the values of the aggregates when in grouping mode
                 //otherwise they wxould appear in the filter dropdown etc....
                 this.addVDistinctValueFromNode(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
             }
@@ -980,7 +980,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //we use forEachNode as we want to get all data even the one filtered out...
             let useRawValue: boolean = this.useRawValueForColumn(columnId);
 
-                 this.gridOptions.api.forEachNode(rowNode => {
+            this.gridOptions.api.forEachNode(rowNode => {
                 //we do not return the values of the aggregates when in grouping mode
                 //otherwise they wxould appear in the filter dropdown etc....
                 this.addVDistinctValueFromNode(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
@@ -989,7 +989,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
     }
 
-    private addVDistinctValueFromNode(rowNode: RowNode, columnId: string, useRawValue: boolean, distinctCriteria: DistinctCriteriaPairValue, returnMap : Map<string, IRawValueDisplayValuePair>):void{
+    private addVDistinctValueFromNode(rowNode: RowNode, columnId: string, useRawValue: boolean, distinctCriteria: DistinctCriteriaPairValue, returnMap: Map<string, IRawValueDisplayValuePair>): void {
         if (!rowNode.group) {
             let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
             let displayValue = (useRawValue) ?

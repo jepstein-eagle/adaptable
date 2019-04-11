@@ -183,11 +183,21 @@ export class ChartService implements IChartService {
 
     // if we don't use ranges but there are too many slices then we return an error
     if (!useRanges && dataCounter.size > this.blotter.BlotterOptions.chartOptions.pieChartMaxItems) {
-      let errorMessage: string = "Cannot create pie chart as it contains too many items."
-      LoggingHelper.LogAdaptableBlotterError(errorMessage)
+      let message: string = "Cannot create pie chart as it contains too many items."
+      LoggingHelper.LogAdaptableBlotterWarning(message)
       return {
         Data: [],
-        ErrorMessage: errorMessage
+        ErrorMessage: message
+      }
+    }
+
+    // if nothing passes (possible if you have visible rows only)
+    if (dataCounter.size ==0) {
+      let message: string = "No data returned for Pie Chart."
+      LoggingHelper.LogAdaptableBlotterWarning(message)
+      return {
+        Data: [],
+        ErrorMessage: message
       }
     }
 
