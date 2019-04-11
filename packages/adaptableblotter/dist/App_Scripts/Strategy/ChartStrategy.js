@@ -83,6 +83,9 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (cd1 == null && cd2 == null) {
             return false;
         }
+        if (cd1.VisibleRowsOnly != cd2.VisibleRowsOnly) {
+            return true;
+        }
         if (cd1.ChartType == ChartEnums_1.ChartType.CategoryChart) {
             return this.doCategoryChartDefinitionChangesRequireDataUpdate(cd1, cd2);
         }
@@ -115,45 +118,47 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (cd1.SecondaryColumnOperation != cd2.SecondaryColumnOperation) {
             return true;
         }
-        if (cd1.VisibleRowsOnly != cd2.VisibleRowsOnly) {
-            return true;
-        }
         return false;
     }
     handleSearchChanged() {
-        //   super.afterSearchChanged();
-        // I think we will always redraw a chart if its visible when a search has been applied as its relatively rare...
+        // weÎ always redraw a chart if its visible when a search has been applied as its relatively rare...
         // might need to rethink if that is too OTT
-        if (this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)) {
-            if (this.blotter.isInitialised) {
+        if (this.isCurrentChartVisibiilityMaximised()) {
+            let currentChartDefinition = this.GetCurrentChartDefinition();
+            if (currentChartDefinition != null && currentChartDefinition.VisibleRowsOnly) {
+                this.throttleSetChartData();
+            }
+        }
+    }
+    handleDataSourceChanged(dataChangedInfo) {
+        if (this.isCurrentChartVisibiilityMaximised()) {
+            let columnChangedId = dataChangedInfo.ColumnId;
+            if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(columnChangedId)) {
                 let currentChartDefinition = this.GetCurrentChartDefinition();
-                if (currentChartDefinition.VisibleRowsOnly) {
+                if (this.isChartDataChanged(currentChartDefinition, columnChangedId)) {
                     this.throttleSetChartData();
                 }
             }
         }
     }
-    handleDataSourceChanged(dataChangedInfo) {
-        if (this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)) {
-            // need to make sure that this is up to date always - not sure that it currently is
-            let columnChangedId = dataChangedInfo.ColumnId;
-            if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(columnChangedId)) {
-                let currentChartDefinition = this.GetCurrentChartDefinition();
-                switch (currentChartDefinition.ChartType) {
-                    case ChartEnums_1.ChartType.CategoryChart:
-                        let categoryChartDefinition = currentChartDefinition;
-                        if (ArrayExtensions_1.ArrayExtensions.ContainsItem(categoryChartDefinition.YAxisColumnIds, columnChangedId) || categoryChartDefinition.XAxisColumnId == columnChangedId) {
-                            this.throttleSetChartData();
-                        }
-                        break;
-                    case ChartEnums_1.ChartType.PieChart:
-                        let pieChartDefinition = currentChartDefinition;
-                        if (pieChartDefinition.PrimaryColumnId == columnChangedId || pieChartDefinition.SecondaryColumnId == columnChangedId) {
-                            this.throttleSetChartData();
-                        }
-                        break;
-                }
-            }
+    isCurrentChartVisibiilityMaximised() {
+        return this.blotter.isInitialised &&
+            this.SystemState != null &&
+            this.ChartState != null &&
+            this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised &&
+            StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName);
+    }
+    isChartDataChanged(currentChartDefinition, columnChangedId) {
+        if (currentChartDefinition == null) {
+            return false;
+        }
+        switch (currentChartDefinition.ChartType) {
+            case ChartEnums_1.ChartType.CategoryChart:
+                let categoryChartDefinition = currentChartDefinition;
+                return (ArrayExtensions_1.ArrayExtensions.ContainsItem(categoryChartDefinition.YAxisColumnIds, columnChangedId) || categoryChartDefinition.XAxisColumnId == columnChangedId);
+            case ChartEnums_1.ChartType.PieChart:
+                let pieChartDefinition = currentChartDefinition;
+                return (pieChartDefinition.PrimaryColumnId == columnChangedId || pieChartDefinition.SecondaryColumnId == columnChangedId);
         }
     }
     setChartData() {
@@ -183,9 +188,6 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     }
     GetColumnState() {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-    }
-    GetColumnFilterState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter;
     }
     GetCurrentChartDefinition() {
         return this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);

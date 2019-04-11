@@ -14,11 +14,12 @@ export declare class ChartStrategy extends AdaptableStrategyBase implements ICha
     private doPieChartDefinitionChangesRequireDataUpdate;
     protected handleSearchChanged(): void;
     protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo): void;
+    private isCurrentChartVisibiilityMaximised;
+    private isChartDataChanged;
     private setChartData;
     private clearChartData;
     private GetSystemState;
     private GetChartState;
     private GetColumnState;
-    private GetColumnFilterState;
     private GetCurrentChartDefinition;
 }
