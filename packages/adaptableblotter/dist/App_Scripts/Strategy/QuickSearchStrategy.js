@@ -15,7 +15,7 @@ class QuickSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase 
         if (this.quickSearchState != this.GetQuickSearchState()) {
             this.quickSearchState = this.GetQuickSearchState();
             this.blotter.applyGridFiltering();
-            this.postSearch();
+            this.blotter.redraw();
             if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
                 this.publishSearchChanged(Enums_1.SearchChangedTrigger.QuickSearch);
             }
@@ -26,9 +26,6 @@ class QuickSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase 
     }
     GetQuickSearchState() {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
-    }
-    postSearch() {
-        // required only for ag-Grid to inherit - a better way possible?
     }
 }
 exports.QuickSearchStrategy = QuickSearchStrategy;

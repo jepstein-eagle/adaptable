@@ -8,5 +8,4 @@ export declare class QuickSearchStrategy extends AdaptableStrategyBase implement
     protected addPopupMenuItem(): void;
     protected InitState(): void;
     protected GetQuickSearchState(): QuickSearchState;
-    protected postSearch(): void;
 }

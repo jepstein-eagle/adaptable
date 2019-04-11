@@ -79,7 +79,6 @@ const ConditionalStyleStrategyagGrid_1 = require("./Strategy/ConditionalStyleStr
 const CustomSortStrategyagGrid_1 = require("./Strategy/CustomSortStrategyagGrid");
 const FlashingCellsStrategyagGrid_1 = require("./Strategy/FlashingCellsStrategyagGrid");
 const FormatColumnStrategyagGrid_1 = require("./Strategy/FormatColumnStrategyagGrid");
-const QuickSearchStrategyagGrid_1 = require("./Strategy/QuickSearchStrategyagGrid");
 const CellValidationHelper_1 = require("../Utilities/Helpers/CellValidationHelper");
 const agGridHelper_1 = require("./agGridHelper");
 const CalculatedColumnHelper_1 = require("../Utilities/Helpers/CalculatedColumnHelper");
@@ -88,6 +87,7 @@ const AdaptableBlotterToolPanel_1 = require("../View/Components/ToolPanel/Adapta
 require("ag-grid-enterprise");
 const ScheduleService_1 = require("../Utilities/Services/ScheduleService");
 const ReminderStrategy_1 = require("../Strategy/ReminderStrategy");
+const QuickSearchStrategy_1 = require("../Strategy/QuickSearchStrategy");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this._calculatedColumnPathMap = new Map();
@@ -166,7 +166,7 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy_1.PercentBarStrategy(this));
         this.Strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy_1.PieChartStrategy(this));
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
-        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategyagGrid_1.QuickSearchStrategyagGrid(this));
+        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
