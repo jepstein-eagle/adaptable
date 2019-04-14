@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter-angular-aggrid-test",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -23,7 +23,7 @@
     "@angular/platform-browser": "^6.1.7",
     "@angular/platform-browser-dynamic": "^6.1.7",
     "@angular/router": "^6.1.7",
-    "adaptableblotter": "^3.3.2",
+    "adaptableblotter": "^3.4.0",
     "ag-grid-angular": "^20.2.0",
     "ag-grid-community": "^20.2.0",
     "ag-grid-enterprise": "^20.2.0",
