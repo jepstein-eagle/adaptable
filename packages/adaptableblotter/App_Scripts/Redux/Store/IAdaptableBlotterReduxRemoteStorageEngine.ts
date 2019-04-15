@@ -2,7 +2,7 @@ import * as ReduxStorage from 'redux-storage'
 import * as fetch from 'isomorphic-fetch';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 
-interface IAdaptableBlotterReduxStorageClientEngine extends ReduxStorage.StorageEngine { }
+interface IAdaptableBlotterReduxRemoteStorageEngine extends ReduxStorage.StorageEngine { }
 
 const checkStatus = (response: Response) => {
   const error = new Error(response.statusText);
@@ -15,7 +15,7 @@ const checkStatus = (response: Response) => {
   throw error;
 };
 
-class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterReduxStorageClientEngine {
+class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterReduxRemoteStorageEngine {
   constructor(private url: string, private userName: string, private blotterId: string, private blotter: IAdaptableBlotter) {}
 
   load(): Promise<any> {

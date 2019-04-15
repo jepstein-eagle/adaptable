@@ -4,7 +4,7 @@ import * as ReduxStorage from 'redux-storage'
 import migrate from 'redux-storage-decorator-migrate'
 import * as DeepDiff from 'deep-diff'
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { createEngine as createEngineRemote } from './AdaptableBlotterReduxStorageClientEngine';
+import { createEngine as createEngineRemote } from './IAdaptableBlotterReduxRemoteStorageEngine';
 import { createEngine as createEngineLocal } from './AdaptableBlotterReduxLocalStorageEngine';
 import { MergeStateCommunityLicence, MergeStateStandardLicence, MergeStateEnterpriseLicence } from './AdaptableBlotterReduxMerger';
 import filter from 'redux-storage-decorator-filter'
@@ -142,6 +142,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
 const RESET_STATE = 'RESET_STATE';
 const INIT_STATE = 'INIT_STATE';
 const LOAD_STATE = 'LOAD_STATE';
+
 export interface ResetUserDataAction extends Redux.Action { }
 export interface InitStateAction extends Redux.Action { }
 export interface LoadStateAction extends Redux.Action {
@@ -201,7 +202,6 @@ const rootReducerWithResetManagement = (state: AdaptableBlotterState, action: Re
       });
       break;
   }
-
   return rootReducer(state, action)
 }
 
@@ -222,7 +222,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     // If the user has remote storage set then we use Remote Engine, otherwise we use Local Enginge
     // We pass into the create method the blotterId, the config, and also the Licence Info
     // the Lience Info is needed so we can determine whether or not to load state
-    if (BlotterHelper.IsConfigServerEnabled(blotter.BlotterOptions) && StringExtensions.IsNotNullOrEmpty(blotter.BlotterOptions.configServerOptions.configServerUrl)) {
+    if (BlotterHelper.IsConfigServerEnabled(blotter.BlotterOptions)) {
       engineReduxStorage = createEngineRemote(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
     } else {
       engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
@@ -238,7 +238,6 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       ConfigConstants.MENU,
       ConfigConstants.POPUP,
       ConfigConstants.TEAM_SHARING,
-      ConfigConstants.CHART_INTERNAL,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
       ConfigConstants.USER_INTERFACE,
       ConfigConstants.ENTITLEMENTS,
