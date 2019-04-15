@@ -90,15 +90,21 @@ import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
 import { IUIConfirmation, InputAction } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../Utilities/ChartEnums';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
+import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+
+/*
+This is the main store for the Adaptable Blotter
+We are currently using redux-storage which might not have been a wise choice compared to redux-persist, particularly for when we have state we dont want to persist
+*/
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
-  // System
+  //  Reducers for Non-Persisted State
   Popup: PopupRedux.ShowPopupReducer,
   Menu: MenuRedux.MenuReducer,
   System: SystemRedux.SystemReducer,
   Grid: GridRedux.GridReducer,
 
-  // User
+  // Reducers for Persisted State
   AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
   Alert: AlertRedux.AlertReducer,
   BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
@@ -226,7 +232,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     // perhaps would be better to have 2 stores - persistence store and in-memory store - perhaps we are using the wrong storage mechanism?
     engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
     engineWithFilter = filter(engineWithMigrate, [], [
-      // System State - Used ONLY Internally so no need to save
+      // Non Persisted State
       ConfigConstants.SYSTEM,
       ConfigConstants.GRID,
       ConfigConstants.MENU,
@@ -241,15 +247,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 
     //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
     //I think that is a part where we push a bit redux and should have two distinct stores....
-    middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter,
-      [MenuRedux.SET_MENUITEMS, GridRedux.GRID_SET_COLUMNS, ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER,
-      PopupRedux.POPUP_CLEAR_PARAM, PopupRedux.POPUP_CONFIRM_PROMPT,
-      PopupRedux.POPUP_CANCEL_CONFIRMATION, PopupRedux.POPUP_CONFIRM_CONFIRMATION, PopupRedux.POPUP_SHOW_CONFIRMATION,
-      PopupRedux.POPUP_SHOW_SCREEN, PopupRedux.POPUP_HIDE_SCREEN,
-      PopupRedux.POPUP_SHOW_PROMPT, PopupRedux.POPUP_HIDE_PROMPT,
-      PopupRedux.POPUP_SHOW_ALERT, PopupRedux.POPUP_HIDE_ALERT,
-      PopupRedux.POPUP_SHOW_LOADING, PopupRedux.POPUP_HIDE_LOADING
-      ]);
+    middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter, getNonPersistedReduxActions());
 
     //here we use our own merger function which is derived from redux simple merger
     // we now use a different Merge function based on the licence type to ensure that state is only loaded if user has access
@@ -305,6 +303,8 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 }
 
 
+
+
 // this function checks for any differences in the state and sends it to AUDIT LOGGER (for use in Audit Log)
 // we now allow users to differentiate between user and internal state so we check for both
 var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => function (middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
@@ -316,6 +316,21 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
         return next(action);
       }
 
+      // for system, grid, menu and popup state functions
+      // we audit state changes only if audit is set to log internal state
+      if (ArrayExtensions.ContainsItem(getNonPersistedReduxActions(), action.type)) {
+        if (adaptableBlotter.AuditLogService.IsAuditInternalStateChangesEnabled) {
+          let oldState = middlewareAPI.getState()
+          let ret = next(action);
+          let newState = middlewareAPI.getState()
+          let diff = DeepDiff.diff(oldState, newState)
+          adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff, action.type)
+          return ret
+        } else {
+          return next(action);
+        }
+      }
+
       // we have audit so look at the action to decide what to do
       switch (action.type) {
 
@@ -325,76 +340,6 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
         case INIT_STATE: {
           return next(action);
         }
-
-        // for system, grid, menu and popup state functions
-        // we audit state changes only if audit is set to log internal state
-        case SystemRedux.SYSTEM_SET_HEALTH_STATUS:
-        case SystemRedux.SYSTEM_CLEAR_HEALTH_STATUS:
-        case SystemRedux.SYSTEM_ALERT_ADD:
-        case SystemRedux.SYSTEM_ALERT_DELETE:
-        case SystemRedux.SYSTEM_ALERT_DELETE_ALL:
-
-        case SystemRedux.REPORT_START_LIVE:
-        case SystemRedux.REPORT_STOP_LIVE:
-        case SystemRedux.SET_IPP_DOMAIN_PAGES:
-        case SystemRedux.REPORT_SET_ERROR_MESSAGE:
-
-        case SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION:
-        case SystemRedux.SMARTEDIT_FETCH_PREVIEW:
-        case SystemRedux.SMARTEDIT_SET_VALID_SELECTION:
-        case SystemRedux.SMARTEDIT_SET_PREVIEW:
-
-        case SystemRedux.BULK_UPDATE_CHECK_CELL_SELECTION:
-        case SystemRedux.BULK_UPDATE_SET_VALID_SELECTION:
-        case SystemRedux.BULK_UPDATE_SET_PREVIEW:
-
-        case SystemRedux.CHART_SET_CHART_DATA:
-        case SystemRedux.CHART_SET_CHART_VISIBILITY:
-
-        case GridRedux.GRID_SET_COLUMNS:
-        case GridRedux.GRID_ADD_COLUMN:
-        case GridRedux.GRID_HIDE_COLUMN:
-        case GridRedux.GRID_SET_VALUE_LIKE_EDIT:
-        case GridRedux.GRID_SELECT_COLUMN:
-        case GridRedux.GRID_SET_SORT:
-        case GridRedux.GRID_SET_SELECTED_CELLS:
-        case GridRedux.GRID_CREATE_CELLS_SUMMARY:
-        case GridRedux.GRID_SET_CELLS_SUMMARY:
-
-        case MenuRedux.SET_MENUITEMS:
-        case MenuRedux.BUILD_COLUMN_CONTEXT_MENU:
-        case MenuRedux.ADD_ITEM_COLUMN_CONTEXT_MENU:
-        case MenuRedux.CLEAR_COLUMN_CONTEXT_MENU:
-
-        case PopupRedux.POPUP_SHOW_SCREEN:
-        case PopupRedux.POPUP_HIDE_SCREEN:
-        case PopupRedux.POPUP_SHOW_LOADING:
-        case PopupRedux.POPUP_HIDE_LOADING:
-        case PopupRedux.POPUP_SHOW_ABOUT:
-        case PopupRedux.POPUP_HIDE_ABOUT:
-        case PopupRedux.POPUP_SHOW_ALERT:
-        case PopupRedux.POPUP_HIDE_ALERT:
-        case PopupRedux.POPUP_SHOW_PROMPT:
-        case PopupRedux.POPUP_HIDE_PROMPT:
-        case PopupRedux.POPUP_CONFIRM_PROMPT:
-        case PopupRedux.POPUP_SHOW_CONFIRMATION:
-        case PopupRedux.POPUP_CONFIRM_CONFIRMATION:
-        case PopupRedux.POPUP_CANCEL_CONFIRMATION:
-        case PopupRedux.POPUP_CLEAR_PARAM:
-
-          // do team sharing actions??
-          if (adaptableBlotter.AuditLogService.IsAuditInternalStateChangesEnabled) {
-            let oldState = middlewareAPI.getState()
-            let ret = next(action);
-            let newState = middlewareAPI.getState()
-            let diff = DeepDiff.diff(oldState, newState)
-            adaptableBlotter.AuditLogService.AddStateChangeAuditLog(diff, action.type)
-            return ret
-          } else {
-            return next(action);
-          }
-
-
 
         // for all other functions we audit state changes if audit is set to log user state
         default: {
@@ -503,8 +448,6 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any => functi
           return next(action);
         }
         case UserFilterRedux.USER_FILTER_ADD_UPDATE: {
-          let actionTyped = <UserFilterRedux.UserFilterAddUpdateAction>action
-
           adaptableBlotter.AuditLogService.AddAdaptableBlotterFunctionLog(StrategyConstants.UserFilterStrategyId,
             action.type,
             "filters applied",
@@ -1287,4 +1230,63 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
       }
     }
   }
+}
+
+
+export function getNonPersistedReduxActions(): string[] {
+  return [
+    SystemRedux.SYSTEM_SET_HEALTH_STATUS,
+    SystemRedux.SYSTEM_CLEAR_HEALTH_STATUS,
+    SystemRedux.SYSTEM_ALERT_ADD,
+    SystemRedux.SYSTEM_ALERT_DELETE,
+    SystemRedux.SYSTEM_ALERT_DELETE_ALL,
+
+    SystemRedux.REPORT_START_LIVE,
+    SystemRedux.REPORT_STOP_LIVE,
+    SystemRedux.SET_IPP_DOMAIN_PAGES,
+    SystemRedux.REPORT_SET_ERROR_MESSAGE,
+
+    SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION,
+    SystemRedux.SMARTEDIT_FETCH_PREVIEW,
+    SystemRedux.SMARTEDIT_SET_VALID_SELECTION,
+    SystemRedux.SMARTEDIT_SET_PREVIEW,
+
+    SystemRedux.BULK_UPDATE_CHECK_CELL_SELECTION,
+    SystemRedux.BULK_UPDATE_SET_VALID_SELECTION,
+    SystemRedux.BULK_UPDATE_SET_PREVIEW,
+
+    SystemRedux.CHART_SET_CHART_DATA,
+    SystemRedux.CHART_SET_CHART_VISIBILITY,
+
+    GridRedux.GRID_SET_COLUMNS,
+    GridRedux.GRID_ADD_COLUMN,
+    GridRedux.GRID_HIDE_COLUMN,
+    GridRedux.GRID_SET_VALUE_LIKE_EDIT,
+    GridRedux.GRID_SELECT_COLUMN,
+    GridRedux.GRID_SET_SORT,
+    GridRedux.GRID_SET_SELECTED_CELLS,
+    GridRedux.GRID_CREATE_CELLS_SUMMARY,
+    GridRedux.GRID_SET_CELLS_SUMMARY,
+
+    MenuRedux.SET_MENUITEMS,
+    MenuRedux.BUILD_COLUMN_CONTEXT_MENU,
+    MenuRedux.ADD_ITEM_COLUMN_CONTEXT_MENU,
+    MenuRedux.CLEAR_COLUMN_CONTEXT_MENU,
+
+    PopupRedux.POPUP_SHOW_SCREEN,
+    PopupRedux.POPUP_HIDE_SCREEN,
+    PopupRedux.POPUP_SHOW_LOADING,
+    PopupRedux.POPUP_HIDE_LOADING,
+    PopupRedux.POPUP_SHOW_ABOUT,
+    PopupRedux.POPUP_HIDE_ABOUT,
+    PopupRedux.POPUP_SHOW_ALERT,
+    PopupRedux.POPUP_HIDE_ALERT,
+    PopupRedux.POPUP_SHOW_PROMPT,
+    PopupRedux.POPUP_HIDE_PROMPT,
+    PopupRedux.POPUP_CONFIRM_PROMPT,
+    PopupRedux.POPUP_SHOW_CONFIRMATION,
+    PopupRedux.POPUP_CONFIRM_CONFIRMATION,
+    PopupRedux.POPUP_CANCEL_CONFIRMATION,
+    PopupRedux.POPUP_CLEAR_PARAM,
+  ]
 }
