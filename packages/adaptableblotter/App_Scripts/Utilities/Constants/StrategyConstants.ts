@@ -29,7 +29,6 @@ export const PieChartStrategyId: string = "PieChart"
 export const PlusMinusStrategyId: string = "PlusMinus"
 export const QuickSearchStrategyId: string = "QuickSearch"
 export const ReminderStrategyId: string = "Reminder"
-export const SelectColumnStrategyId: string = "SelectColumn"
 export const ShortcutStrategyId: string = "Shortcut"
 export const SmartEditStrategyId: string = "SmartEdit"
 export const TeamSharingStrategyId: string = "TeamSharing"
@@ -65,7 +64,6 @@ export const PieChartStrategyName: string = "Pie Chart"
 export const PlusMinusStrategyName: string = "Plus Minus"
 export const QuickSearchStrategyName: string = "Quick Search"
 export const ReminderStrategyName: string = "Reminder"
-export const SelectColumnStrategyName: string = "Select Column"
 export const ShortcutStrategyName: string = "Shortcut"
 export const SmartEditStrategyName: string = "Smart Edit"
 export const TeamSharingStrategyName: string = "Team Sharing"
@@ -102,7 +100,6 @@ export const PieChartGlyph: string = "adjust"
 export const PlusMinusGlyph: string = "plus-sign"
 export const QuickSearchGlyph: string = "eye-open"
 export const ReminderGlyph: string = "bell"
-export const SelectColumnGlyph: string = "compressed"
 export const ShortcutGlyph: string = "road"
 export const SmartEditGlyph: string = "pencil"
 export const TeamSharingGlyph: string = "share"
@@ -165,9 +162,7 @@ export function getIdForStrategyName(strategyName: string) {
             return QuickSearchStrategyId
         case ReminderStrategyName:
             return ReminderStrategyId
-        case SelectColumnStrategyName:
-            return SelectColumnStrategyId;
-        case CellSummaryStrategyName:
+          case CellSummaryStrategyName:
             return CellSummaryStrategyId;
         case ShortcutStrategyName:
             return ShortcutStrategyId
@@ -240,7 +235,7 @@ export function getNameForStrategyId(strategyID: string) {
         case QuickSearchStrategyId:
             return ReminderStrategyName
         case ReminderStrategyId:
-            return SelectColumnStrategyName;
+            return ReminderStrategyName;
         case CellSummaryStrategyId:
             return CellSummaryStrategyName;
         case ShortcutStrategyId:
@@ -310,8 +305,6 @@ export function getGhyphiconForStrategyId(strategyID: string) {
             return ReminderGlyph
         case ShortcutStrategyId:
             return ShortcutGlyph
-        case SelectColumnStrategyId:
-            return SelectColumnGlyph
         case CellSummaryStrategyId:
             return CellSummaryGlyph
         case SmartEditStrategyId:

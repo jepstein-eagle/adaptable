@@ -100,11 +100,8 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
 
     // direct actions called by the context menu - invisible if strategy is hidden or readonly
-    createContextMenuItemReduxAction(Label: string,
-        GlyphIcon: string,
-        Action: Action): any {
+    createContextMenuItemReduxAction(Label: string, GlyphIcon: string, Action: Action): any {
         if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
-
             let menuItemShowPopup: MenuItemDoReduxAction = new MenuItemDoReduxAction(
                 Label,
                 this.Id,
@@ -134,15 +131,13 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         }
     }
 
-    addContextMenuItemToStore(menuItem: IMenuItem): void {
-        // check for duplicates here
-        let existingMenuItems = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.map(m => m.StrategyId)
-        if (!ArrayExtensions.ContainsItem(existingMenuItems, menuItem.StrategyId)) {
-            this.blotter.api.internalApi.ColumnContextMenuAddItem(menuItem);
-        }
+
+
+    private addContextMenuItemToStore(menuItem: IMenuItem): void {
+        this.blotter.api.internalApi.ColumnContextMenuAddItem(menuItem);
     }
 
-    
+
     canCreateContextMenuItem(column: IColumn, blotter: IAdaptableBlotter, functionType: string = ""): boolean {
         if (this.isReadOnlyStrategy()) {
             return false;

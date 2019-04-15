@@ -38,7 +38,6 @@ import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy'
 import { DashboardStrategy } from '../Strategy/DashboardStrategy'
 import { CalculatedColumnStrategy } from "../Strategy/CalculatedColumnStrategy";
-import { SelectColumnStrategy } from '../Strategy/SelectColumnStrategy';
 import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import { HomeStrategy } from '../Strategy/HomeStrategy';
@@ -242,8 +241,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
-        this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(this))
+         this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(this))
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(this))
 
