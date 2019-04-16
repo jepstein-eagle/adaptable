@@ -6,6 +6,7 @@ import { LoggingHelper } from './LoggingHelper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ILicenceInfo } from '../Interface/ILicenceInfo';
 import { LicenceScopeType } from '../Enums';
+import { StringExtensions } from '../Extensions/StringExtensions';
 
 export module BlotterHelper {
 
@@ -37,11 +38,12 @@ export module BlotterHelper {
     export function IsConfigServerEnabled(blotterOptions: IAdaptableBlotterOptions): boolean {
         return blotterOptions.configServerOptions != null
             && blotterOptions.configServerOptions.enableConfigServer != null
-            && blotterOptions.configServerOptions.enableConfigServer == true;
+            && blotterOptions.configServerOptions.enableConfigServer == true
+            && StringExtensions.IsNotNullOrEmpty(blotterOptions.configServerOptions.configServerUrl);
     }
 
     export function CheckLicenceKey(licenceInfo: ILicenceInfo): void {
-        let universalOrEndUser: string =  " (" + licenceInfo.LicenceUserType + "). "
+        let universalOrEndUser: string = " (" + licenceInfo.LicenceUserType + "). "
         let expiryDate: string = 'Expires: ' + licenceInfo.ExpiryDate.toLocaleDateString();
         switch (licenceInfo.LicenceScopeType) {
             case LicenceScopeType.Community:
@@ -59,7 +61,7 @@ export module BlotterHelper {
                 LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Standard" + universalOrEndUser + expiryDate);
                 break;
             case LicenceScopeType.Enterprise:
-                LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Enterprise" + universalOrEndUser+ expiryDate);
+                LoggingHelper.LogAdaptableBlotterInfo(" Licence Type: Enterprise" + universalOrEndUser + expiryDate);
                 break;
         }
         if (!licenceInfo.IsLicenceInDate) {

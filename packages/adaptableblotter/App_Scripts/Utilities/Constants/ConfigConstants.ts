@@ -8,5 +8,3 @@ export const BULK_UPDATE = "BulkUpdate"
 export const USER_INTERFACE = "UserInterface"
 export const ENTITLEMENTS = "Entitlements"
 export const APPLICATION = "Application"
-export const CHART_INTERNAL = "ChartInternal"
-
