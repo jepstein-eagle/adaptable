@@ -315,7 +315,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
         return next(action);
       }
 
-      // for system, grid, menu and popup state functions
+      // for non persisting actions (e.g. system, grid, menu and popup state functions)
       // we audit state changes only if audit is set to log internal state
       if (ArrayExtensions.ContainsItem(getNonPersistedReduxActions(), action.type)) {
         if (adaptableBlotter.AuditLogService.IsAuditInternalStateChangesEnabled) {
