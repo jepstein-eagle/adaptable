@@ -99,7 +99,8 @@ export enum ExportDestination {
     CSV = 'CSV',
     Clipboard = 'Clipboard',
     OpenfinExcel = 'OpenfinExcel',
-    iPushPull = 'iPushPull'
+    iPushPull = 'iPushPull',
+    Glue42 = 'Glue42',
 }
 
 export enum SortOrder {

@@ -133,6 +133,7 @@ import { IScheduleService } from '../Utilities/Services/Interface/IScheduleServi
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { ReminderStrategy } from '../Strategy/ReminderStrategy';
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy';
+import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -200,7 +201,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
 
-
+        iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
+        Glue42Helper.init();
 
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
 
@@ -245,7 +247,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(this))
 
-        iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
+       
+      
 
         BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
 

@@ -150,8 +150,7 @@ export module ReportHelper {
         let newRow: any[] = [];
         ReportColumns.forEach(col => {
             let columnValue: any = blotter.getDisplayValueFromRecord(row, col.ColumnId);
-            //  columnValue=Helper.StringifyValue(columnValue)
-            newRow.push(columnValue);
+             newRow.push(columnValue);
         })
         return newRow;
     }

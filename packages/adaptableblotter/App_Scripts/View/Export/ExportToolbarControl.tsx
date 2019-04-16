@@ -27,6 +27,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants'
 import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
 import { ReportHelper } from "../../Utilities/Helpers/ReportHelper";
 import { PRIMARY_BSSTYLE, DEFAULT_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
+import { Glue42Helper } from "../../Utilities/Helpers/Glue42Helper";
 
 
 interface ExportToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
@@ -77,6 +78,9 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
         else {
             iPushPullExcelMenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Sync with iPushPull"}</MenuItem>
         }
+
+        let glue42MenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.Glue42)} key={"Glue42"}> {"Export via Glue42"}</MenuItem>
+        
 
         let deleteMessage: string = "Are you sure you want to delete '";
         if (savedReport != null) {
@@ -137,6 +141,9 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
                     }
                     {
                         iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem
+                    }
+                    {
+                        Glue42Helper.isRunningGlue42() && glue42MenuItem
                     }
                 </DropdownButton>
 
