@@ -25,7 +25,7 @@ export module CalculatedColumnHelper {
             // check if its a column name
             let col: IColumn = ColumnHelper.getColumnFromId(columnId, columns, false);
             if (!col) { // no column so lets see if they are using FriendlyName
-                col = ColumnHelper.getColumnFromName(columnId, columns, false);
+                col = ColumnHelper.getColumnFromFriendlyName(columnId, columns, false);
                 if (col) {
                     columnNameList.push(columnId)
                 }

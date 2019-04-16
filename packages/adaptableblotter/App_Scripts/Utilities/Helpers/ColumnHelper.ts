@@ -95,7 +95,7 @@ export module ColumnHelper {
 
     }
 
-    export function getColumnFromName(columnName: string, columns: IColumn[], logWarning = true): IColumn {
+    export function getColumnFromFriendlyName(columnName: string, columns: IColumn[], logWarning = true): IColumn {
         // just return null if no columns rather than logging a warning - otherwise get lots at startup
         if (ArrayExtensions.IsNullOrEmpty(columns)) {
             return null;

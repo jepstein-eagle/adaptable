@@ -16,6 +16,8 @@ import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { IReport, IAutoExport } from "../Utilities/Interface/BlotterObjects/IReport";
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
+import { IColumn } from '../Utilities/Interface/IColumn';
 
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
@@ -68,6 +70,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 }
             }
         })
+
+
     }
 
     private handleGridReloaded(blotter: IAdaptableBlotter) {
@@ -98,7 +102,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                                 //and also is incorrrect as until we call setcells again we've lost all values in excel which might upset
                                 //some macros
                                 let previousDimension = this.workAroundOpenfinExcelDataDimension.get(cle.Report)
-                                let ReportAsArray: any[] = this.ConvertReporttoArray(cle.Report);
+                                let ReportAsArray: any[] = this.ConvertReportToArray(cle.Report);
                                 let newDimension = { x: ReportAsArray[0].length, y: ReportAsArray.length }
                                 if (previousDimension) {
                                     let missingNumberOfRows = previousDimension.y - newDimension.y
@@ -147,7 +151,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                     promises.push(
                         Promise.resolve().then(() => {
                             return new Promise<any>((resolve, reject) => {
-                                let ReportAsArray: any[] = this.ConvertReporttoArray(cle.Report);
+                                let ReportAsArray: any[] = this.ConvertReportToArray(cle.Report);
                                 if (ReportAsArray) {
                                     resolve(ReportAsArray);
                                 } else {
@@ -183,7 +187,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                 this.copyToClipboard(ReportName);
                 break;
             case ExportDestination.CSV:
-                this.convertReporttoCsv(ReportName);
+                this.convertReportToCsv(ReportName);
                 break;
             case ExportDestination.OpenfinExcel:
                 OpenfinHelper.initOpenFinExcel()//.then((workbook) => OpenfinHelper.addReportWorkSheet(workbook, ReportName))
@@ -200,10 +204,15 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
                 })
                 break;
+            case ExportDestination.Glue42:
+                let data: any[] = this.ConvertReportToArray(ReportName);
+                let gridColumns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+                Glue42Helper.exportData(data, gridColumns, this.blotter);
+                break;
         }
     }
 
-    private convertReporttoCsv(ReportName: string): void {
+    private convertReportToCsv(ReportName: string): void {
         let csvContent: string = this.createCSVContent(ReportName);
         if (csvContent) {
             let csvFileName: string = this.getReport(ReportName).Name + ".csv"
@@ -219,7 +228,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
 
     private createCSVContent(ReportName: string): string {
-        let ReportAsArray: any[] = this.ConvertReporttoArray(ReportName);
+        let ReportAsArray: any[] = this.ConvertReportToArray(ReportName);
         if (ReportAsArray) {
             return Helper.convertArrayToCsv(ReportAsArray, ",");
         }
@@ -227,7 +236,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
 
     private createTabularContent(ReportName: string): string {
-        let ReportAsArray: any[] = this.ConvertReporttoArray(ReportName);
+        let ReportAsArray: any[] = this.ConvertReportToArray(ReportName);
         if (ReportAsArray) {
             return Helper.convertArrayToCsv(ReportAsArray, "\t");
         }
@@ -235,7 +244,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
 
     // Converts a Report into an array of array - first array is the column names and subsequent arrays are the values
-    private ConvertReporttoArray(ReportName: string): any[] {
+    private ConvertReportToArray(ReportName: string): any[] {
         let ReportToConvert: IReport = this.getReport(ReportName);
         let actionReturnObj = ReportHelper.ConvertReportToArray(this.blotter, ReportToConvert);
         if (actionReturnObj.Alert) { // assume that the MessageType is error - if not then refactor
