@@ -202,7 +202,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
-        Glue42Helper.init();
+    //    Glue42Helper.init();
 
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
 
@@ -246,9 +246,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
          this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(this))
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(this))
-
-       
-      
 
         BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
 

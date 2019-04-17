@@ -141,7 +141,7 @@ export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, Ale
             case DataType.Boolean:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];
             case DataType.String:
-                return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.Contains, LeafExpressionOperator.NotContains, LeafExpressionOperator.StartsWith, LeafExpressionOperator.Regex, LeafExpressionOperator.NoDuplicates];
+                return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.Contains, LeafExpressionOperator.NotContains, LeafExpressionOperator.StartsWith, LeafExpressionOperator.Regex, LeafExpressionOperator.NoDuplicateValues, LeafExpressionOperator.ExistingValuesOnly];
             case DataType.Date:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.LessThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween];
             case DataType.Number:

@@ -49,7 +49,8 @@ export enum LeafExpressionOperator {
     IsNotNumber = 'IsNotNumber',
     IsTrue = 'IsTrue',
     IsFalse = 'IsFalse',
-    NoDuplicates = 'NoDuplicates',
+    NoDuplicateValues = 'NoDuplicateValues',
+    ExistingValuesOnly = 'ExistingValuesOnly',
     // Special
     PrimaryKeyDuplicate = "PrimaryKeyDuplicate"
 }

@@ -346,9 +346,10 @@ export module ExpressionHelper {
                 return "Ends With "
             case LeafExpressionOperator.Regex:
                 return "Matches Expression "
-            case LeafExpressionOperator.NoDuplicates:
-                return "No Duplicates "
-
+            case LeafExpressionOperator.NoDuplicateValues:
+                return "No Duplicate Values "
+            case LeafExpressionOperator.ExistingValuesOnly:
+                return "Existing Values Only "
         }
     }
 
@@ -597,10 +598,10 @@ export module ExpressionHelper {
             case LeafExpressionOperator.Regex:
                 let regex = new RegExp(rangeEvaluation.operand1)
                 return regex.test(rangeEvaluation.newValue);
-            case LeafExpressionOperator.NoDuplicates:
-                let displayValuePairs: IRawValueDisplayValuePair[] = blotter.getColumnValueDisplayValuePairDistinctList(rangeEvaluation.columnId, DistinctCriteriaPairValue.DisplayValue)
-                let existingItem = displayValuePairs.find(dv => dv.DisplayValue.toLowerCase() == rangeEvaluation.newValue);
-                return existingItem != null;
+            case LeafExpressionOperator.NoDuplicateValues:
+                return getExistingItem(blotter, rangeEvaluation) != null;
+            case LeafExpressionOperator.ExistingValuesOnly:
+                return getExistingItem(blotter, rangeEvaluation) == null;
         }
         return false;
     }
@@ -625,7 +626,14 @@ export module ExpressionHelper {
             && operator != LeafExpressionOperator.IsNotNumber
             && operator != LeafExpressionOperator.IsTrue
             && operator != LeafExpressionOperator.IsFalse
-            && operator != LeafExpressionOperator.NoDuplicates;
+            && operator != LeafExpressionOperator.NoDuplicateValues
+            && operator != LeafExpressionOperator.ExistingValuesOnly;
+    }
+
+    function getExistingItem(blotter: IAdaptableBlotter, rangeEvaluation: IRangeEvaluation): any {
+        let displayValuePairs: IRawValueDisplayValuePair[] = blotter.getColumnValueDisplayValuePairDistinctList(rangeEvaluation.columnId, DistinctCriteriaPairValue.DisplayValue)
+        let existingItem = displayValuePairs.find(dv => dv.DisplayValue.toLowerCase() == rangeEvaluation.newValue);
+        return existingItem;
     }
 
 

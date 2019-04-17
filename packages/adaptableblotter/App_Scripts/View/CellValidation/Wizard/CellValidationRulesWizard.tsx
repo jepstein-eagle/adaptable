@@ -90,7 +90,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
                     }
 
                     { /* if string then show a text control  */}
-                    {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && !this.checkOperator(LeafExpressionOperator.NoDuplicates)&&  ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns)== DataType.String &&
+                    {!this.checkOperator(LeafExpressionOperator.None) && !this.checkOperator(LeafExpressionOperator.Unknown) && !this.checkOperator(LeafExpressionOperator.NoDuplicateValues) && !this.checkOperator(LeafExpressionOperator.ExistingValuesOnly)&&  ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns)== DataType.String &&
                         <Col xs={5}>
                             <FormControl value={this.state.Operand1} type="string" placeholder="Enter a Value" onChange={(x) => this.onOperand1ValueChanged(x)} />
                         </Col>
@@ -137,7 +137,7 @@ export class CellValidationRulesWizard extends React.Component<CellValidationRul
             case DataType.Boolean:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];
             case DataType.String:
-                return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.Contains, LeafExpressionOperator.NotContains, LeafExpressionOperator.StartsWith, LeafExpressionOperator.Regex, LeafExpressionOperator.NoDuplicates];
+                return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.Contains, LeafExpressionOperator.NotContains, LeafExpressionOperator.StartsWith, LeafExpressionOperator.Regex, LeafExpressionOperator.NoDuplicateValues, LeafExpressionOperator.ExistingValuesOnly];
             case DataType.Date:
                 return [LeafExpressionOperator.Unknown, LeafExpressionOperator.Equals, LeafExpressionOperator.NotEquals, LeafExpressionOperator.GreaterThan, LeafExpressionOperator.LessThan, LeafExpressionOperator.Between, LeafExpressionOperator.NotBetween];
             case DataType.Number:
