@@ -21,6 +21,11 @@ export class ValidationService implements IValidationService {
     // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...
     public ValidateCellChanging(dataChangedEvent: IDataChangedInfo): ICellValidationRule[] {
         let failedWarningRules: ICellValidationRule[] = [];
+        // if the new value is the same as the old value then we can get out as we dont see it as an edit?
+        if (dataChangedEvent.OldValue == dataChangedEvent.NewValue) {
+            return failedWarningRules;
+        }
+
         // first check that if primary key change, the new value is unique
         if (dataChangedEvent.ColumnId == this.blotter.BlotterOptions.primaryKey) {
             if (this.blotter.BlotterOptions.generalOptions.preventDuplicatePrimaryKeyValues) {

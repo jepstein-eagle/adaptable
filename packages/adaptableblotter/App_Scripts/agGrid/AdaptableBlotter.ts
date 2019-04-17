@@ -202,7 +202,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
-    //    Glue42Helper.init();
+        //    Glue42Helper.init();
 
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
 
@@ -243,7 +243,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(this))
-         this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(this))
+        this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(this))
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
         this.Strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(this))
 
@@ -1414,61 +1414,67 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //TODO: check that it works when edit is popup. That's why I left the line below
             //editor.getGui().addEventListner("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
             this._currentEditor = editor;
+
+
+
             //if there was already an implementation set by the dev we keep the reference to it and execute it at the end
             let oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
             let isCancelAfterEnd = () => {
 
-                let dataChangedInfo: IDataChangedInfo = {
-                    OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
-                    NewValue: this._currentEditor.getValue(),
-                    ColumnId: params.column.getColId(),
-                    IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node),
-                    Record: null
-                }
-
-                let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedInfo);
-                if (failedRules.length > 0) {
-                    // first see if its an error = should only be one item in array if so
-                    if (failedRules[0].ActionMode == "Stop Edit") {
-                        let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                        this.api.alertApi.ShowError("Validation Error", errorMessage, true)
-                        return true;
+              
+                    let dataChangedInfo: IDataChangedInfo = {
+                        OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
+                        NewValue: this._currentEditor.getValue(),
+                        ColumnId: params.column.getColId(),
+                        IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node),
+                        Record: null
                     }
-                    else {
-                        let warningMessage: string = "";
-                        failedRules.forEach(f => {
-                            warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
-                        });
-                        let cellInfo: ICellInfo = {
-                            Id: dataChangedInfo.IdentifierValue,
-                            ColumnId: dataChangedInfo.ColumnId,
-                            Value: dataChangedInfo.NewValue
-                        };
 
-                        let confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node));
-                        let cancelAction: Redux.Action = null;
-                        let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
+                    let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedInfo);
+                    if (failedRules.length > 0) {
+                        // first see if its an error = should only be one item in array if so
+                        if (failedRules[0].ActionMode == "Stop Edit") {
+                            let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
+                            this.api.alertApi.ShowError("Validation Error", errorMessage, true)
+                            return true;
+                        }
+                        else {
+                            let warningMessage: string = "";
+                            failedRules.forEach(f => {
+                                warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
+                            });
+                            let cellInfo: ICellInfo = {
+                                Id: dataChangedInfo.IdentifierValue,
+                                ColumnId: dataChangedInfo.ColumnId,
+                                Value: dataChangedInfo.NewValue
+                            };
 
-                        this.dispatchAction(PopupRedux.PopupShowConfirmation(confirmation));
-                        //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
-                        return true;
+                            let confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node));
+                            let cancelAction: Redux.Action = null;
+                            let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
+
+                            this.dispatchAction(PopupRedux.PopupShowConfirmation(confirmation));
+                            //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+                            return true;
+                        }
+
                     }
-                }
-                let whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
-                if (!whatToReturn) {
+                    let whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
+                    if (!whatToReturn) {
 
-                    // audit the cell event if needed
-                    if (this.AuditLogService.IsAuditCellEditsEnabled) {
-                        this.AuditLogService.AddEditCellAuditLog(dataChangedInfo);
+                        // audit the cell event if needed
+                        if (this.AuditLogService.IsAuditCellEditsEnabled) {
+                            this.AuditLogService.AddEditCellAuditLog(dataChangedInfo);
+                        }
+                        // it might be a free text column so we need to update the values
+                        this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
+
+                        // do we need to also refresh calculated columns?
                     }
-                    // it might be a free text column so we need to update the values
-                    this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
-
-                    // do we need to also refresh calculated columns?
-                }
-                return whatToReturn;
-            };
-            this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
+                    return whatToReturn;
+                };
+                this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
+            
         });
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
 
