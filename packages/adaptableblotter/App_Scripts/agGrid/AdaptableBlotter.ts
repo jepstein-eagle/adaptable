@@ -294,7 +294,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         if (this.BlotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
-
+            LoggingHelper.LogAdaptableBlotterInfo("Adding Adaptable Blotter Tool Panel")
             this.gridOptions.sideBar = this.gridOptions.sideBar || {};
             this.gridOptions.components = this.gridOptions.components || {};
             // https://www.ag-grid.com/javascript-grid-side-bar/
@@ -1421,60 +1421,60 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
             let isCancelAfterEnd = () => {
 
-              
-                    let dataChangedInfo: IDataChangedInfo = {
-                        OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
-                        NewValue: this._currentEditor.getValue(),
-                        ColumnId: params.column.getColId(),
-                        IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node),
-                        Record: null
+
+                let dataChangedInfo: IDataChangedInfo = {
+                    OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
+                    NewValue: this._currentEditor.getValue(),
+                    ColumnId: params.column.getColId(),
+                    IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node),
+                    Record: null
+                }
+
+                let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedInfo);
+                if (failedRules.length > 0) {
+                    // first see if its an error = should only be one item in array if so
+                    if (failedRules[0].ActionMode == "Stop Edit") {
+                        let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
+                        this.api.alertApi.ShowError("Validation Error", errorMessage, true)
+                        return true;
+                    }
+                    else {
+                        let warningMessage: string = "";
+                        failedRules.forEach(f => {
+                            warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
+                        });
+                        let cellInfo: ICellInfo = {
+                            Id: dataChangedInfo.IdentifierValue,
+                            ColumnId: dataChangedInfo.ColumnId,
+                            Value: dataChangedInfo.NewValue
+                        };
+
+                        let confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node));
+                        let cancelAction: Redux.Action = null;
+                        let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
+
+                        this.dispatchAction(PopupRedux.PopupShowConfirmation(confirmation));
+                        //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
+                        return true;
                     }
 
-                    let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(dataChangedInfo);
-                    if (failedRules.length > 0) {
-                        // first see if its an error = should only be one item in array if so
-                        if (failedRules[0].ActionMode == "Stop Edit") {
-                            let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                            this.api.alertApi.ShowError("Validation Error", errorMessage, true)
-                            return true;
-                        }
-                        else {
-                            let warningMessage: string = "";
-                            failedRules.forEach(f => {
-                                warningMessage = warningMessage + ObjectFactory.CreateCellValidationMessage(f, this) + "\n";
-                            });
-                            let cellInfo: ICellInfo = {
-                                Id: dataChangedInfo.IdentifierValue,
-                                ColumnId: dataChangedInfo.ColumnId,
-                                Value: dataChangedInfo.NewValue
-                            };
+                }
+                let whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
+                if (!whatToReturn) {
 
-                            let confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(cellInfo, this.gridOptions.api.getValue(params.column.getColId(), params.node));
-                            let cancelAction: Redux.Action = null;
-                            let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
-
-                            this.dispatchAction(PopupRedux.PopupShowConfirmation(confirmation));
-                            //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
-                            return true;
-                        }
-
+                    // audit the cell event if needed
+                    if (this.AuditLogService.IsAuditCellEditsEnabled) {
+                        this.AuditLogService.AddEditCellAuditLog(dataChangedInfo);
                     }
-                    let whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
-                    if (!whatToReturn) {
+                    // it might be a free text column so we need to update the values
+                    this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
 
-                        // audit the cell event if needed
-                        if (this.AuditLogService.IsAuditCellEditsEnabled) {
-                            this.AuditLogService.AddEditCellAuditLog(dataChangedInfo);
-                        }
-                        // it might be a free text column so we need to update the values
-                        this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);
+                    // do we need to also refresh calculated columns?
+                }
+                return whatToReturn;
+            };
+            this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
 
-                        // do we need to also refresh calculated columns?
-                    }
-                    return whatToReturn;
-                };
-                this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
-            
         });
         this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
 
@@ -1941,7 +1941,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // add the filter header style if required
         if (this.BlotterOptions.filterOptions.indicateFilteredColumns == true) {
             var css = document.createElement("style");
-            css.id=this.BlotterOptions.blotterId + '_filtered-columns-style'; 
+            css.id = this.BlotterOptions.blotterId + '_filtered-columns-style';
             css.type = "text/css";
             css.innerHTML = ".ag-header-cell-filtered {  font-style: italic; font-weight: bolder;}";
             document.body.appendChild(css);
