@@ -13,7 +13,7 @@ class ExpressionBuilderUserFilter extends React.Component {
                 React.createElement("i", null, uf));
         });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(react_bootstrap_1.Panel, { className: "ab_no-padding-anywhere-panel", style: divStyle },
+            React.createElement(react_bootstrap_1.Panel, { className: "ab_no-padding-anywhere-panel ab_small-padding-panel-header", style: divStyle },
                 React.createElement(react_bootstrap_1.ListGroup, null,
                     systemFilterNames,
                     userFilterNames)));

@@ -12,7 +12,7 @@ class AdaptableObjectCollection extends React.Component {
         let className = (this.props.reducedPanel == true) ? "ab_object_list_item_small" : "ab_object_list_item";
         let bsSize = (this.props.bsSize) ? this.props.bsSize : "small";
         return React.createElement("div", { className: this.props.cssClassName + StyleConstants.ITEMS_TABLE },
-            React.createElement(PanelWithRow_1.PanelWithRow, { cssClassName: this.props.cssClassName, colItems: this.props.colItems, bsStyle: bsStyle, bsSize: bsSize }),
+            React.createElement(PanelWithRow_1.PanelWithRow, { className: "ab_no-padding-anywhere-panel ab_small-padding-panel-header", cssClassName: this.props.cssClassName, colItems: this.props.colItems, bsStyle: bsStyle, bsSize: bsSize }),
             React.createElement("div", { className: this.props.cssClassName + StyleConstants.ITEMS_TABLE_BODY },
                 React.createElement(react_bootstrap_1.ListGroup, { className: className, style: { overflowY: allowOverflow } }, this.props.items)));
     }

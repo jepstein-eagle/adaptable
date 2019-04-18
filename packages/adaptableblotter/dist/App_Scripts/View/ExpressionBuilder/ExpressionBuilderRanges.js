@@ -53,7 +53,7 @@ class ExpressionBuilderRanges extends React.Component {
                                         this.getOperand2FormControl(index, range)))));
         });
         return React.createElement("div", { className: cssClassName },
-            React.createElement(react_bootstrap_1.Panel, { className: "ab_no-padding-anywhere-panel", style: divStyle },
+            React.createElement(react_bootstrap_1.Panel, { className: "ab_no-padding-anywhere-panel ab_small-padding-panel-header", style: divStyle },
                 addButton,
                 rangesElement));
     }

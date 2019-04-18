@@ -17,22 +17,24 @@ var Glue42Helper;
 (function (Glue42Helper) {
     let glue42office; // =   Glue4Office();
     let excelAPIEntryPoint;
-    let isRunning = false;
     function init() {
         return __awaiter(this, void 0, void 0, function* () {
-            glue42office = yield Glue4Office();
-            if (glue42office != null) {
+            try {
+                glue42office = yield Glue4Office();
                 excelAPIEntryPoint = glue42office.excel;
-                // currently doesnt work as its async :(
-                isRunning = excelAPIEntryPoint != null;
+            }
+            catch (error) {
+                console.log(error);
             }
         });
     }
     Glue42Helper.init = init;
     function isRunningGlue42() {
-        // this method is getting called BEFORE the init returns so it retruns false even if init works
-        // so im changing this to always return true for the moment...
-        return true; // isRunning;
+        /**
+         * Checks if the glue4office.js file is referenced and if we are running inside of a Glue42 container.
+         * v2 will support browser.
+         */
+        return typeof window !== "undefined" && "glue42gd" in window && "Glue4Office" in window;
     }
     Glue42Helper.isRunningGlue42 = isRunningGlue42;
     function exportData(data, gridColumns, blotter) {
@@ -50,36 +52,35 @@ var Glue42Helper;
             };
             try {
                 console.log(sheetData);
-                const sheet = excelAPIEntryPoint.openSheet(sheetData).then((sheet) => {
-                    sheet.onChanged((data, errorCallback, doneCallback) => {
-                        let primaryKeyColumnFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(blotter.BlotterOptions.primaryKey, gridColumns);
-                        let cellInfos = [];
-                        const errors = [];
-                        for (let rowIndex = 0; rowIndex < data.length; rowIndex++) {
-                            let returnedRow = data[rowIndex];
-                            let sentRow = sentRows[rowIndex];
-                            for (let columnIndex = 0; columnIndex < exportColumns.length; columnIndex++) {
-                                let col = exportColumns[columnIndex];
-                                let returnedValue = returnedRow[col];
-                                let originalValue = sentRow[col];
-                                if (returnedValue != originalValue) {
-                                    let column = ColumnHelper_1.ColumnHelper.getColumnFromFriendlyName(col, gridColumns);
-                                    let primaryKeyValue = returnedRow[primaryKeyColumnFriendlyName];
-                                    if (isValidEdit(column, originalValue, returnedValue, primaryKeyValue, rowIndex, columnIndex, errors, gridColumns, blotter)) {
-                                        let cellInfo = {
-                                            Id: primaryKeyValue,
-                                            ColumnId: column.ColumnId,
-                                            Value: returnedValue
-                                        };
-                                        cellInfos.push(cellInfo);
-                                    }
-                                    sentRows[rowIndex][col] = returnedValue; // we always set (even if invalid) so dont update after future edits
+                const sheet = yield excelAPIEntryPoint.openSheet(sheetData);
+                sheet.onChanged((data, errorCallback, doneCallback) => {
+                    let primaryKeyColumnFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(blotter.BlotterOptions.primaryKey, gridColumns);
+                    let cellInfos = [];
+                    const errors = [];
+                    for (let rowIndex = 0; rowIndex < data.length; rowIndex++) {
+                        let returnedRow = data[rowIndex];
+                        let sentRow = sentRows[rowIndex];
+                        for (let columnIndex = 0; columnIndex < exportColumns.length; columnIndex++) {
+                            let col = exportColumns[columnIndex];
+                            let returnedValue = returnedRow[col];
+                            let originalValue = sentRow[col];
+                            if (returnedValue != originalValue) {
+                                let column = ColumnHelper_1.ColumnHelper.getColumnFromFriendlyName(col, gridColumns);
+                                let primaryKeyValue = returnedRow[primaryKeyColumnFriendlyName];
+                                if (isValidEdit(column, originalValue, returnedValue, primaryKeyValue, rowIndex, columnIndex, errors, gridColumns, blotter)) {
+                                    let cellInfo = {
+                                        Id: primaryKeyValue,
+                                        ColumnId: column.ColumnId,
+                                        Value: returnedValue
+                                    };
+                                    cellInfos.push(cellInfo);
                                 }
+                                sentRows[rowIndex][col] = returnedValue; // we always set (even if invalid) so dont update after future edits
                             }
                         }
-                        blotter.setValueBatch(cellInfos);
-                        ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(errors) ? doneCallback() : errorCallback(errors);
-                    });
+                    }
+                    blotter.setValueBatch(cellInfos);
+                    ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(errors) ? doneCallback() : errorCallback(errors);
                 });
             }
             catch (error) {

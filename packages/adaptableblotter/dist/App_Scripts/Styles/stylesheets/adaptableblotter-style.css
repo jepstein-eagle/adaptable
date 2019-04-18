@@ -77,8 +77,9 @@ button.placeholder:before {
   color: White;
 }
 
-.ab_small-padding-panel-heading > [class*='panel-heading'] {
+.ab_small-padding-panel-header > [class*='panel-heading'] {
   padding: 3px;
+  font-size: small;
 }
 
 .ab_no-padding-except-top-panel > [class*='panel-body'] {
@@ -104,15 +105,13 @@ button.placeholder:before {
     margin-bottom: 0px!important; 
 }
 
-
-
 .ab-panel-header-toolbar-settings > [class*='panel-heading'] {
-  padding: 2px;
+  padding: 3px;
+  zoom: 0.85;
 }
 
-
 .ab-panel-header-dashboard > [class*='panel-heading'] {
-	padding: 1px 10px;
+	padding: 1px 5px;
 }
 
 .ab_panel-with-button-reduce-header-padding > [class*='panel-heading'] {

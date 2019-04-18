@@ -132,7 +132,7 @@ class DualListBoxEditor extends React.Component {
         let listGroupSelectedStyle = this.getListGroupSelectedStyle(displaySize);
         return (React.createElement("div", { className: cssClassName },
             React.createElement(react_bootstrap_1.Col, { xs: 4 },
-                React.createElement(react_bootstrap_1.Panel, { header: this.props.HeaderAvailable, style: { padding: '0px', margin: '0px' }, className: "ab_no-padding-anywhere-panel", bsStyle: "info", bsSize: 'xsmall' },
+                React.createElement(react_bootstrap_1.Panel, { header: this.props.HeaderAvailable, style: { padding: '0px', margin: '0px' }, className: "ab_no-padding-anywhere-panel ab_small-padding-panel-header", bsStyle: "info", bsSize: 'xsmall' },
                     React.createElement("div", null,
                         headerFirstListBox,
                         React.createElement(react_bootstrap_1.ListGroup, { className: "AvailableDropZone", style: listGroupAvailableStyle, onDragEnter: (event) => this.DragEnterAvailable(event), onDragOver: (event) => this.DragOverAvailable(event), onDragLeave: (event) => this.DragLeaveAvailable(event) }, availableElements)))),
@@ -143,7 +143,7 @@ class DualListBoxEditor extends React.Component {
                     React.createElement(ButtonDirection_1.ButtonDirection, { cssClassName: cssClassName, overrideText: "Remove", style: { width: "110px", marginBottom: "10px" }, glyph: "step-backward", DisplayMode: "Glyph+Text", overrideDisableButton: this.state.UiSelectedSelectedValues.length == 0, onClick: () => this.Remove() }),
                     React.createElement(ButtonDirection_1.ButtonDirection, { cssClassName: cssClassName, overrideText: "Remove All", style: { width: "110px", marginBottom: "10px" }, DisplayMode: "Glyph+Text", glyph: "fast-backward", overrideDisableButton: this.state.SelectedValues.length == 0, onClick: () => this.RemoveAll() }))),
             React.createElement(react_bootstrap_1.Col, { xs: 4 },
-                React.createElement(react_bootstrap_1.Panel, { header: this.props.HeaderSelected, className: "ab_no-padding-anywhere-panel", bsStyle: "info" },
+                React.createElement(react_bootstrap_1.Panel, { header: this.props.HeaderSelected, className: "ab_no-padding-anywhere-panel ab_small-padding-panel-header", bsStyle: "info" },
                     React.createElement("div", null,
                         React.createElement(react_bootstrap_1.ListGroup, { style: listGroupSelectedStyle, className: "SelectedDropZone", onDragEnter: (event) => this.DragEnterSelected(event), onDragOver: (event) => this.DragOverSelected(event), onDragLeave: (event) => this.DragLeaveSelected(event) }, selectedElements)))),
             React.createElement(react_bootstrap_1.Col, { xs: 2, style: colButtonStyle },

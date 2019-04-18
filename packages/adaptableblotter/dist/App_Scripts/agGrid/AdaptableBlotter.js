@@ -87,6 +87,7 @@ require("ag-grid-enterprise");
 const ScheduleService_1 = require("../Utilities/Services/ScheduleService");
 const ReminderStrategy_1 = require("../Strategy/ReminderStrategy");
 const QuickSearchStrategy_1 = require("../Strategy/QuickSearchStrategy");
+const Glue42Helper_1 = require("../Utilities/Helpers/Glue42Helper");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
         this._calculatedColumnPathMap = new Map();
@@ -134,7 +135,9 @@ class AdaptableBlotter {
             }
         }
         iPushPullHelper_1.iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
-        //    Glue42Helper.init();
+        if (Glue42Helper_1.Glue42Helper.isRunningGlue42()) {
+            Glue42Helper_1.Glue42Helper.init();
+        }
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService_1.CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi_1.BlotterApi(this);
@@ -214,6 +217,7 @@ class AdaptableBlotter {
             return false;
         }
         if (this.BlotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Adding Adaptable Blotter Tool Panel");
             this.gridOptions.sideBar = this.gridOptions.sideBar || {};
             this.gridOptions.components = this.gridOptions.components || {};
             // https://www.ag-grid.com/javascript-grid-side-bar/
@@ -228,7 +232,7 @@ class AdaptableBlotter {
                     this.gridOptions.sideBar = agGridHelper_1.agGridHelper.createAdaptableBlotterSideBarDefs(false, true);
                 }
                 else if (sidebar === 'filters') {
-                    // Possibility 3: Sidebar is 'filters' (string) - meaning filters only so create just that   
+                    // Possibility 3: Sidebar is 'filters' (string) - meaning filters only so create just that
                     this.gridOptions.sideBar = agGridHelper_1.agGridHelper.createAdaptableBlotterSideBarDefs(true, false);
                 }
                 else {
@@ -760,7 +764,7 @@ class AdaptableBlotter {
     }
     getColumnValueDisplayValuePairDistinctListVisible(columnId, distinctCriteria) {
         let returnMap = new Map();
-        // check if there are permitted column values for that column 
+        // check if there are permitted column values for that column
         // NB.  this is currently a bug as we dont check for visibility :(
         let permittedValues = this.getState().UserInterface.PermittedColumnValues;
         let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
