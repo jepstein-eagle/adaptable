@@ -77,6 +77,10 @@ button.placeholder:before {
   color: White;
 }
 
+.ab_small-padding-panel-heading > [class*='panel-heading'] {
+  padding: 3px;
+}
+
 .ab_no-padding-except-top-panel > [class*='panel-body'] {
   padding-right:0;
 	padding-left: 0;
@@ -100,10 +104,12 @@ button.placeholder:before {
     margin-bottom: 0px!important; 
 }
 
+
+
 .ab-panel-header-toolbar-settings > [class*='panel-heading'] {
-  padding: 3px;
-  zoom: 0.85;
+  padding: 2px;
 }
+
 
 .ab-panel-header-dashboard > [class*='panel-heading'] {
 	padding: 1px 10px;

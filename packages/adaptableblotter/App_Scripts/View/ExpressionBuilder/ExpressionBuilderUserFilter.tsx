@@ -34,7 +34,7 @@ export class ExpressionBuilderUserFilter extends React.Component<ExpressionBuild
         })
 
         return <div className={cssClassName}>
-            <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
+            <Panel className="ab_no-padding-anywhere-panel ab_small-padding-panel-header" style={divStyle}>
                 <ListGroup  >
                     {systemFilterNames}
                     {userFilterNames}

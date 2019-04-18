@@ -31,7 +31,6 @@ export class ToolPanelSettingsPanel extends React.Component<ToolPanelSettingsPan
         return <Panel className="ab_small-padding-panel ab-panel-header-toolbar-settings" header={header} style={{ margin: '0px', padding: '0px' }} bsStyle={this.props.bsStyle} bsSize={'xsmall'} >
             {this.props.children}
         </Panel>
-
     }
 }
 

@@ -17,7 +17,7 @@ export class ExpressionBuilderColumnValues extends React.Component<ExpressionBui
     render() {
         let cssClassName: string = this.props.cssClassName + "__querycolumnvalues"
         return <div className={cssClassName}>
-            <Panel className="ab_no-padding-anywhere-panel" style={divStyle}>
+            <Panel className="ab_no-padding-anywhere-panel ab_small-padding-panel-header" style={divStyle}>
                 <SingleListBox Values={this.props.ColumnValues}
                     cssClassName={cssClassName}
                     UiSelectedValues={this.props.SelectedValues}

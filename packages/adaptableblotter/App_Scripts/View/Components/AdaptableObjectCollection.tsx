@@ -23,7 +23,7 @@ export class AdaptableObjectCollection extends React.Component<AdaptableObjectCo
         let className: string = (this.props.reducedPanel == true) ? "ab_object_list_item_small" : "ab_object_list_item"
         let bsSize: any = (this.props.bsSize) ? this.props.bsSize : "small"
         return <div className={this.props.cssClassName + StyleConstants.ITEMS_TABLE}>
-            <PanelWithRow cssClassName={this.props.cssClassName} colItems={this.props.colItems} bsStyle={bsStyle} bsSize={bsSize} />
+            <PanelWithRow className="ab_no-padding-anywhere-panel ab_small-padding-panel-header" cssClassName={this.props.cssClassName} colItems={this.props.colItems} bsStyle={bsStyle} bsSize={bsSize} />
             <div className={this.props.cssClassName + StyleConstants.ITEMS_TABLE_BODY}>
                 <ListGroup className={className} style={{ overflowY: allowOverflow }}>
                     {this.props.items}

@@ -201,8 +201,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
 
-        iPushPullHelper.init(this.BlotterOptions.iPushPullConfig)
-        //    Glue42Helper.init();
+        iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
+        Glue42Helper.init();
 
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
 
