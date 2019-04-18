@@ -100,8 +100,13 @@ button.placeholder:before {
     margin-bottom: 0px!important; 
 }
 
+.ab-panel-header-toolbar-settings > [class*='panel-heading'] {
+  padding: 3px;
+  zoom: 0.85;
+}
+
 .ab-panel-header-dashboard > [class*='panel-heading'] {
-	padding: 1px 15px;
+	padding: 1px 10px;
 }
 
 .ab_panel-with-button-reduce-header-padding > [class*='panel-heading'] {

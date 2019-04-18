@@ -11,7 +11,11 @@ import { render } from "react-dom";
 import { AdaptableBlotterFormControlTextClear } from "../Forms/AdaptableBlotterFormControlTextClear";
 import { ButtonMinimise } from "../Buttons/ButtonMinimise";
 import { ButtonMaximise } from "../Buttons/ButtonMaximise";
-import { Row, Table } from "react-bootstrap";
+import { Row, Table, Panel, Col } from "react-bootstrap";
+import { ButtonGeneral } from "../Buttons/ButtonGeneral";
+import { DEFAULT_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
+import { PanelWithButton } from "../Panels/PanelWithButton";
+import { ToolPanelSettingsPanel } from "../Panels/ToolPanelSettingsPanel";
 
 interface AdaptableBlotterToolPanelProps extends StrategyViewPopupProps<AdaptableBlotterToolPanelComponent> {
   QuickSearchText: string;
@@ -22,7 +26,8 @@ interface AdaptableBlotterToolPanelProps extends StrategyViewPopupProps<Adaptabl
 
 export interface AdaptableBlotterToolPanelState {
   EditedQuickSearchText: string;
-  QuickSearchShow: boolean;
+  QuickSearchShowPanel: boolean;
+  QuickSearchShowSettings: boolean;
 }
 
 class AdaptableBlotterToolPanelComponent extends React.Component<AdaptableBlotterToolPanelProps, AdaptableBlotterToolPanelState> {
@@ -30,7 +35,8 @@ class AdaptableBlotterToolPanelComponent extends React.Component<AdaptableBlotte
     super(props);
     this.state = {
       EditedQuickSearchText: this.props.QuickSearchText,
-      QuickSearchShow: false
+      QuickSearchShowPanel: false,
+      QuickSearchShowSettings: false
     }
     // we got agGrid api from props
     // console.log(this.props.api);
@@ -41,59 +47,92 @@ class AdaptableBlotterToolPanelComponent extends React.Component<AdaptableBlotte
 
   render(): any {
 
-    let minimiseButton = <ButtonMinimise
+    let minimiseQuickSearchButton = <ButtonMinimise
       cssClassName={''}
       size={"xs"}
-      bsStyle={'default'}
+      bsStyle={DEFAULT_BSSTYLE}
       DisplayMode={"Glyph"}
       hideToolTip={true}
       style={{ float: "left", marginLeft: "0px", marginRight: "20px", border: '0px', background: 'none', borderRadius: '0px', boxShadow: 'none' }}
       onClick={() => this.onMinimiseQuickSearch()} />
 
-    let maximiseButton = <ButtonMaximise
+    let maximiseQuickSearchButton = <ButtonMaximise
       cssClassName={''}
       size={"xs"}
-      bsStyle={'default'}
+      bsStyle={DEFAULT_BSSTYLE}
       DisplayMode={"Glyph"}
       hideToolTip={true}
       useHoirzontalChevron={true}
       style={{ float: "left", marginLeft: "0px", marginRight: "20px", border: '0px', background: 'none', borderRadius: '0px', boxShadow: 'none' }}
       onClick={() => this.onMaximiseQuickSearch()} />
 
+    let showGeneralSettingsButton =
+      this.state.QuickSearchShowSettings ?
+        <ButtonMinimise
+          cssClassName={''}
+          style={{ margin: '0px', padding: '0px' }}
+          onClick={() => this.onHideQuickSearchSettings()}
+          bsStyle={DEFAULT_BSSTYLE}
+          size={"xs"}
+          DisplayMode="Glyph"
+          hideToolTip={true}
+        />
+        :
+        <ButtonMaximise
+          cssClassName={''}
+          style={{ margin: '0px', padding: '0px' }}
+          onClick={() => this.onShowQuickSearchSettings()}
+          bsStyle={DEFAULT_BSSTYLE}
+          size={"xs"}
+          DisplayMode="Glyph"
+          hideToolTip={true}
+        />
+
+
+    let settingsPanel = <ToolPanelSettingsPanel button={showGeneralSettingsButton}  >
+      {this.state.QuickSearchShowSettings == true &&
+        <span>stuff here</span>
+      }
+    </ToolPanelSettingsPanel>
+
+
+
     return <div>
 
-      <span> Coming in Version 3.4</span><br />
-      <span> (April 2019)</span>
+      <span> Adaptable Blotter</span>
+      <br />
+      <br />
 
-
-      <Table>
-        <tbody>
-          <tr>
-            <td>
-              {this.state.QuickSearchShow ?
-                <span>{minimiseButton}</span>
-                :
-                <span>{maximiseButton}</span>
-              }
-            </td>
-            <td>Quick Search</td>
-          </tr>
-          {this.state.QuickSearchShow &&
-            <tr>
-              <td colSpan={2}>
+      <div >
+        {this.state.QuickSearchShowPanel ?
+          <div>
+            <Row>
+              <Col xs={12} >{minimiseQuickSearchButton}Quick Search</Col>
+            </Row>
+            <Row style={{ margin: '1px' }}>
+              <Col xs={12}>
                 <AdaptableBlotterFormControlTextClear
                   cssClassName={""}
-                  style={{ width: "135px" }}
                   bsSize={'sm'}
                   type="text"
                   placeholder="Search Text"
                   value={this.props.QuickSearchText}
                   OnTextChange={(x) => this.onUpdateQuickSearchText(x)} />
-              </td>
-            </tr>
-          }
-        </tbody>
-      </Table>
+              </Col>
+            </Row>
+            <Row style={{ margin: '2px', marginTop: '10px' }}>
+              <Col xs={12}> {settingsPanel}</Col>
+            </Row>
+
+          </div>
+          :
+          <Row>
+            <Col xs={12}>{maximiseQuickSearchButton}Quick Search</Col>
+          </Row>
+        }
+
+      </div>
+
     </div>
   }
 
@@ -103,11 +142,19 @@ class AdaptableBlotterToolPanelComponent extends React.Component<AdaptableBlotte
   }
 
   onMinimiseQuickSearch() {
-    this.setState({ QuickSearchShow: false })
+    this.setState({ QuickSearchShowPanel: false })
   }
 
   onMaximiseQuickSearch() {
-    this.setState({ QuickSearchShow: true })
+    this.setState({ QuickSearchShowPanel: true })
+  }
+
+  onShowQuickSearchSettings() {
+    this.setState({ QuickSearchShowSettings: true, })
+  }
+
+  onHideQuickSearchSettings() {
+    this.setState({ QuickSearchShowSettings: false, })
   }
 }
 
