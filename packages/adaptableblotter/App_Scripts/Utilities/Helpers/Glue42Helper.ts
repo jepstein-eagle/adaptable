@@ -25,25 +25,24 @@ export interface IGlue42ColumnInfo {
 }
 
 export module Glue42Helper {
-
     let glue42office: any;// =   Glue4Office();
     let excelAPIEntryPoint: any;
-    let isRunning: boolean = false;
 
     export async function init() {
-        glue42office = await Glue4Office();
-        if (glue42office != null) {
+        try {
+            glue42office = await Glue4Office();
             excelAPIEntryPoint = glue42office.excel;
-            // currently doesnt work as its async :(
-            isRunning = excelAPIEntryPoint != null;
-
+        } catch (error) {
+            console.log(error);
         }
     }
 
     export function isRunningGlue42(): boolean {
-        // this method is getting called BEFORE the init returns so it retruns false even if init works
-        // so im changing this to always return true for the moment...
-        return true;// isRunning;
+        /**
+         * Checks if the glue4office.js file is referenced and if we are running inside of a Glue42 container.
+         * v2 will support browser.
+         */
+        return typeof window !== "undefined" && "glue42gd" in window && "Glue4Office" in window;
     }
 
     export async function exportData(data: any[], gridColumns: IColumn[], blotter: IAdaptableBlotter) {
@@ -61,40 +60,39 @@ export module Glue42Helper {
         };
 
         try {
-            console.log(sheetData)
-            const sheet = excelAPIEntryPoint.openSheet(sheetData).then((sheet: any) => {
-                sheet.onChanged((data: any[], errorCallback: any, doneCallback: any) => {
-                    let primaryKeyColumnFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(blotter.BlotterOptions.primaryKey, gridColumns);
+            console.log(sheetData);
+            const sheet = await excelAPIEntryPoint.openSheet(sheetData);
+            sheet.onChanged((data: any[], errorCallback: any, doneCallback: any) => {
+                let primaryKeyColumnFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(blotter.BlotterOptions.primaryKey, gridColumns);
 
-                    let cellInfos: ICellInfo[] = [];
-                    const errors: IGlue42ExportError[] = [];
-                    for (let rowIndex = 0; rowIndex < data.length; rowIndex++) {
-                        let returnedRow: any = data[rowIndex];
-                        let sentRow: any = sentRows[rowIndex];
+                let cellInfos: ICellInfo[] = [];
+                const errors: IGlue42ExportError[] = [];
+                for (let rowIndex = 0; rowIndex < data.length; rowIndex++) {
+                    let returnedRow: any = data[rowIndex];
+                    let sentRow: any = sentRows[rowIndex];
 
-                        for (let columnIndex = 0; columnIndex < exportColumns.length; columnIndex++) {
-                            let col: any = exportColumns[columnIndex];
-                            let returnedValue = returnedRow[col];
-                            let originalValue = sentRow[col];
-                            if (returnedValue != originalValue) {
-                                let column: IColumn = ColumnHelper.getColumnFromFriendlyName(col, gridColumns)
-                                let primaryKeyValue: any = returnedRow[primaryKeyColumnFriendlyName];
-                                if (isValidEdit(column, originalValue, returnedValue, primaryKeyValue, rowIndex, columnIndex, errors, gridColumns, blotter)) {
-                                    let cellInfo: ICellInfo = {
-                                        Id: primaryKeyValue,
-                                        ColumnId: column.ColumnId,
-                                        Value: returnedValue
-                                    }
-                                    cellInfos.push(cellInfo)
+                    for (let columnIndex = 0; columnIndex < exportColumns.length; columnIndex++) {
+                        let col: any = exportColumns[columnIndex];
+                        let returnedValue = returnedRow[col];
+                        let originalValue = sentRow[col];
+                        if (returnedValue != originalValue) {
+                            let column: IColumn = ColumnHelper.getColumnFromFriendlyName(col, gridColumns)
+                            let primaryKeyValue: any = returnedRow[primaryKeyColumnFriendlyName];
+                            if (isValidEdit(column, originalValue, returnedValue, primaryKeyValue, rowIndex, columnIndex, errors, gridColumns, blotter)) {
+                                let cellInfo: ICellInfo = {
+                                    Id: primaryKeyValue,
+                                    ColumnId: column.ColumnId,
+                                    Value: returnedValue
                                 }
-                                sentRows[rowIndex][col] = returnedValue; // we always set (even if invalid) so dont update after future edits
+                                cellInfos.push(cellInfo)
                             }
+                            sentRows[rowIndex][col] = returnedValue; // we always set (even if invalid) so dont update after future edits
                         }
                     }
-                    blotter.setValueBatch(cellInfos);
-                    ArrayExtensions.IsNullOrEmpty(errors) ? doneCallback() : errorCallback(errors);
-                });
-            })
+                }
+                blotter.setValueBatch(cellInfos);
+                ArrayExtensions.IsNullOrEmpty(errors) ? doneCallback() : errorCallback(errors);
+            });
         } catch (error) {
             console.log(error);
         }
@@ -185,5 +183,3 @@ export module Glue42Helper {
     }
 
 }
-
-

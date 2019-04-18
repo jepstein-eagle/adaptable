@@ -202,7 +202,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
-        Glue42Helper.init();
+        if (Glue42Helper.isRunningGlue42()) {
+            Glue42Helper.init();
+        }
 
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
 
@@ -309,7 +311,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     // Possibility 2: Sidebar is 'columns' (string) - meaning column only so create just that
                     this.gridOptions.sideBar = agGridHelper.createAdaptableBlotterSideBarDefs(false, true);
                 } else if (sidebar === 'filters') {
-                    // Possibility 3: Sidebar is 'filters' (string) - meaning filters only so create just that   
+                    // Possibility 3: Sidebar is 'filters' (string) - meaning filters only so create just that
                     this.gridOptions.sideBar = agGridHelper.createAdaptableBlotterSideBarDefs(true, false);
                 } else {
                     // Possibilty 4: either no sidebar or created their own so just add Blotter Tool panel
@@ -937,7 +939,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
 
-        // check if there are permitted column values for that column 
+        // check if there are permitted column values for that column
         // NB.  this is currently a bug as we dont check for visibility :(
         let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
         let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
