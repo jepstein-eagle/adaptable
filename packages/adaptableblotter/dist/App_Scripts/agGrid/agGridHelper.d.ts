@@ -5,7 +5,9 @@ import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
  * So lets put some of the more obvious 'Helper' functions here
  */
 export declare module agGridHelper {
-    function createCellRendererFunc(pcr: IPercentBar): ICellRendererFunc;
+    function getLightThemeName(): string;
+    function getDarkThemeName(): string;
+    function createCellRendererFunc(pcr: IPercentBar, blotterId: string): ICellRendererFunc;
     function cleanValue(value: string): string;
     function getRenderedValue(percentBars: IPercentBar[], colDef: ColDef, valueToRender: any): any;
     function safeSetColDefs(colDefs: ColDef[], gridOptions: GridOptions): void;

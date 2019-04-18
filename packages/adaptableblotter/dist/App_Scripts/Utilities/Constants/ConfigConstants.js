@@ -10,4 +10,3 @@ exports.BULK_UPDATE = "BulkUpdate";
 exports.USER_INTERFACE = "UserInterface";
 exports.ENTITLEMENTS = "Entitlements";
 exports.APPLICATION = "Application";
-exports.CHART_INTERNAL = "ChartInternal";

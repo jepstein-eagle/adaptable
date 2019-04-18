@@ -16,14 +16,17 @@ class DataManagementPopupComponent extends React.Component {
     render() {
         let cssClassName = this.props.cssClassName + "__userDataManagement";
         let infoBody = ["Function that clears user config - for development use only."];
-        let clearButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: cssClassName, onClick: () => this.onClear(), bsStyle: "default", overrideText: "Clear User Data", overrideTooltip: "Clear User Data", DisplayMode: "Text", size: "large", AccessLevel: Enums_1.AccessLevel.Full });
+        let clearButton = React.createElement(ButtonClear_1.ButtonClear, { cssClassName: cssClassName, onClick: () => this.onClear(), bsStyle: "default", overrideText: "Clear User Data", overrideTooltip: "Clear User Data", DisplayMode: "Text", size: "small", AccessLevel: Enums_1.AccessLevel.Full });
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { headerText: StrategyConstants.DataManagementStrategyName, button: null, bsStyle: "primary", cssClassName: cssClassName, glyphicon: StrategyConstants.DataManagementGlyph, infoBody: infoBody },
                 React.createElement(react_bootstrap_1.HelpBlock, null,
                     "Click below to clear all current state.",
                     React.createElement("br", null),
                     React.createElement("br", null),
-                    "When you restart / refresh the Blotter any predefined config will be re-added."),
+                    "When you restart / refresh the Blotter any state that you have previously created will be lost and only the 'predefined config' will be re-added.",
+                    React.createElement("br", null),
+                    React.createElement("br", null),
+                    React.createElement("b", null, "This option only appears in non production builds.")),
                 clearButton));
     }
     onClear() {

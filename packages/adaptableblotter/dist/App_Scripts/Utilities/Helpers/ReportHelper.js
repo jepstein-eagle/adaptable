@@ -129,7 +129,6 @@ var ReportHelper;
         let newRow = [];
         ReportColumns.forEach(col => {
             let columnValue = blotter.getDisplayValueFromRecord(row, col.ColumnId);
-            //  columnValue=Helper.StringifyValue(columnValue)
             newRow.push(columnValue);
         });
         return newRow;

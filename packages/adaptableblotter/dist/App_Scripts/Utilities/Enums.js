@@ -49,7 +49,8 @@ var LeafExpressionOperator;
     LeafExpressionOperator["IsNotNumber"] = "IsNotNumber";
     LeafExpressionOperator["IsTrue"] = "IsTrue";
     LeafExpressionOperator["IsFalse"] = "IsFalse";
-    LeafExpressionOperator["NoDuplicates"] = "NoDuplicates";
+    LeafExpressionOperator["NoDuplicateValues"] = "NoDuplicateValues";
+    LeafExpressionOperator["ExistingValuesOnly"] = "ExistingValuesOnly";
     // Special
     LeafExpressionOperator["PrimaryKeyDuplicate"] = "PrimaryKeyDuplicate";
 })(LeafExpressionOperator = exports.LeafExpressionOperator || (exports.LeafExpressionOperator = {}));
@@ -98,6 +99,7 @@ var ExportDestination;
     ExportDestination["Clipboard"] = "Clipboard";
     ExportDestination["OpenfinExcel"] = "OpenfinExcel";
     ExportDestination["iPushPull"] = "iPushPull";
+    ExportDestination["Glue42"] = "Glue42";
 })(ExportDestination = exports.ExportDestination || (exports.ExportDestination = {}));
 var SortOrder;
 (function (SortOrder) {

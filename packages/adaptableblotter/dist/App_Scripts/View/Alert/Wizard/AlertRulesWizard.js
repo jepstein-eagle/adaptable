@@ -87,7 +87,7 @@ class AlertRulesWizard extends React.Component {
             case Enums_1.DataType.Boolean:
                 return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.IsTrue, Enums_1.LeafExpressionOperator.IsFalse];
             case Enums_1.DataType.String:
-                return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.Equals, Enums_1.LeafExpressionOperator.NotEquals, Enums_1.LeafExpressionOperator.Contains, Enums_1.LeafExpressionOperator.NotContains, Enums_1.LeafExpressionOperator.StartsWith, Enums_1.LeafExpressionOperator.Regex, Enums_1.LeafExpressionOperator.NoDuplicates];
+                return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.Equals, Enums_1.LeafExpressionOperator.NotEquals, Enums_1.LeafExpressionOperator.Contains, Enums_1.LeafExpressionOperator.NotContains, Enums_1.LeafExpressionOperator.StartsWith, Enums_1.LeafExpressionOperator.Regex, Enums_1.LeafExpressionOperator.NoDuplicateValues, Enums_1.LeafExpressionOperator.ExistingValuesOnly];
             case Enums_1.DataType.Date:
                 return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.Equals, Enums_1.LeafExpressionOperator.NotEquals, Enums_1.LeafExpressionOperator.GreaterThan, Enums_1.LeafExpressionOperator.LessThan, Enums_1.LeafExpressionOperator.Between, Enums_1.LeafExpressionOperator.NotBetween];
             case Enums_1.DataType.Number:

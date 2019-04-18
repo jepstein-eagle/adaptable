@@ -5,6 +5,7 @@ const StringExtensions_1 = require("../Extensions/StringExtensions");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 const ObjectFactory_1 = require("../ObjectFactory");
 const GeneralConstants_1 = require("../Constants/GeneralConstants");
+const BlotterHelper_1 = require("../Helpers/BlotterHelper");
 /*
 Class to manage licence keys.
 Checks if the User has:
@@ -19,7 +20,7 @@ class LicenceService {
     setLicenceInfo() {
         let licenceKey = this.blotter.BlotterOptions.licenceKey;
         // check if demo site - if so return Enterprise
-        if (this.isDemoSite()) {
+        if (BlotterHelper_1.BlotterHelper.IsDemoSite()) {
             return this.CreateEnterpriseLicence();
         }
         // if key is empty return Community
@@ -161,9 +162,6 @@ class LicenceService {
             case 't':
                 return Enums_1.LicenceUserType.Team;
         }
-    }
-    isDemoSite() {
-        return (window.location.hostname == 'demo.adaptableblotter.com');
     }
 }
 exports.LicenceService = LicenceService;

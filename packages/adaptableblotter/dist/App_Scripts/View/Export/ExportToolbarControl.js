@@ -21,6 +21,7 @@ const iPushPullHelper_1 = require("../../Utilities/Helpers/iPushPullHelper");
 const GeneralConstants = require("../../Utilities/Constants/GeneralConstants");
 const ReportHelper_1 = require("../../Utilities/Helpers/ReportHelper");
 const StyleConstants_1 = require("../../Utilities/Constants/StyleConstants");
+const Glue42Helper_1 = require("../../Utilities/Helpers/Glue42Helper");
 class ExportToolbarControlComponent extends React.Component {
     render() {
         const selectReportString = "Select a Report";
@@ -59,6 +60,9 @@ class ExportToolbarControlComponent extends React.Component {
                 " ",
                 "Start Sync with iPushPull");
         }
+        let glue42MenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.props.onApplyExport(currentReportId, Enums_1.ExportDestination.Glue42), key: "Glue42" },
+            " ",
+            "Export via Glue42");
         let deleteMessage = "Are you sure you want to delete '";
         if (savedReport != null) {
             deleteMessage = deleteMessage + savedReport.Name + "?";
@@ -79,7 +83,8 @@ class ExportToolbarControlComponent extends React.Component {
                     csvMenuItem,
                     clipboardMenuItem,
                     OpenfinHelper_1.OpenfinHelper.isRunningInOpenfin() && OpenfinHelper_1.OpenfinHelper.isExcelOpenfinLoaded() && openfinExcelMenuItem,
-                    iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem),
+                    iPushPullHelper_1.iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem,
+                    Glue42Helper_1.Glue42Helper.isRunningGlue42() && glue42MenuItem),
                 React.createElement(ButtonEdit_1.ButtonEdit, { style: { marginLeft: "2px" }, onClick: () => this.props.onEditReport(), cssClassName: cssClassName, size: this.props.DashboardSize, overrideTooltip: "Edit Report", overrideDisableButton: savedReport == null || ReportHelper_1.ReportHelper.IsSystemReport(savedReport), DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel, showDefaultStyle: this.props.UseSingleColourForButtons }),
                 React.createElement(ButtonNew_1.ButtonNew, { style: { marginLeft: "2px" }, cssClassName: cssClassName, onClick: () => this.props.onNewReport(), size: this.props.DashboardSize, overrideTooltip: "Create New Report", DisplayMode: "Glyph", AccessLevel: this.props.AccessLevel, showDefaultStyle: this.props.UseSingleColourForButtons }),
                 React.createElement(ButtonDelete_1.ButtonDelete, { style: { marginLeft: "2px" }, cssClassName: cssClassName, size: this.props.DashboardSize, overrideTooltip: "Delete Report", overrideDisableButton: savedReport == null || ReportHelper_1.ReportHelper.IsSystemReport(savedReport), DisplayMode: "Glyph", ConfirmAction: ExportRedux.ReportDelete(savedReportIndex), ConfirmationMsg: deleteMessage, ConfirmationTitle: "Delete Report", AccessLevel: this.props.AccessLevel, showDefaultStyle: this.props.UseSingleColourForButtons })));

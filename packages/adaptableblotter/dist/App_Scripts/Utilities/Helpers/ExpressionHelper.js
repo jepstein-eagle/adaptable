@@ -306,8 +306,10 @@ var ExpressionHelper;
                 return "Ends With ";
             case Enums_1.LeafExpressionOperator.Regex:
                 return "Matches Expression ";
-            case Enums_1.LeafExpressionOperator.NoDuplicates:
-                return "No Duplicates ";
+            case Enums_1.LeafExpressionOperator.NoDuplicateValues:
+                return "No Duplicate Values ";
+            case Enums_1.LeafExpressionOperator.ExistingValuesOnly:
+                return "Existing Values Only ";
         }
     }
     ExpressionHelper.OperatorToLongFriendlyString = OperatorToLongFriendlyString;
@@ -548,10 +550,10 @@ var ExpressionHelper;
             case Enums_1.LeafExpressionOperator.Regex:
                 let regex = new RegExp(rangeEvaluation.operand1);
                 return regex.test(rangeEvaluation.newValue);
-            case Enums_1.LeafExpressionOperator.NoDuplicates:
-                let displayValuePairs = blotter.getColumnValueDisplayValuePairDistinctList(rangeEvaluation.columnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
-                let existingItem = displayValuePairs.find(dv => dv.DisplayValue.toLowerCase() == rangeEvaluation.newValue);
-                return existingItem != null;
+            case Enums_1.LeafExpressionOperator.NoDuplicateValues:
+                return getExistingItem(blotter, rangeEvaluation) != null;
+            case Enums_1.LeafExpressionOperator.ExistingValuesOnly:
+                return getExistingItem(blotter, rangeEvaluation) == null;
         }
         return false;
     }
@@ -575,7 +577,13 @@ var ExpressionHelper;
             && operator != Enums_1.LeafExpressionOperator.IsNotNumber
             && operator != Enums_1.LeafExpressionOperator.IsTrue
             && operator != Enums_1.LeafExpressionOperator.IsFalse
-            && operator != Enums_1.LeafExpressionOperator.NoDuplicates;
+            && operator != Enums_1.LeafExpressionOperator.NoDuplicateValues
+            && operator != Enums_1.LeafExpressionOperator.ExistingValuesOnly;
     }
     ExpressionHelper.OperatorRequiresValue = OperatorRequiresValue;
+    function getExistingItem(blotter, rangeEvaluation) {
+        let displayValuePairs = blotter.getColumnValueDisplayValuePairDistinctList(rangeEvaluation.columnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+        let existingItem = displayValuePairs.find(dv => dv.DisplayValue.toLowerCase() == rangeEvaluation.newValue);
+        return existingItem;
+    }
 })(ExpressionHelper = exports.ExpressionHelper || (exports.ExpressionHelper = {}));

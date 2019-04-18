@@ -7,4 +7,3 @@ export declare const BULK_UPDATE = "BulkUpdate";
 export declare const USER_INTERFACE = "UserInterface";
 export declare const ENTITLEMENTS = "Entitlements";
 export declare const APPLICATION = "Application";
-export declare const CHART_INTERNAL = "ChartInternal";

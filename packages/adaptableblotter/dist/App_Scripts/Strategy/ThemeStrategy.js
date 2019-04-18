@@ -11,11 +11,12 @@ class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         super(StrategyConstants.ThemeStrategyId, blotter);
         // Create the <style> tag for shipped themes
         this.style = document.createElement("style");
-        this.style.id = `${blotter.BlotterOptions.containerOptions.adaptableBlotterContainer}-theme`;
+        this.style.id = blotter.BlotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.BlotterOptions.blotterId + '-theme';
         this.style.appendChild(document.createTextNode("")); // WebKit hack :(
         document.head.appendChild(this.style); // Adds the <style> element to the page
         // Create the theme link for predefined themes
         this.theme = document.createElement("link");
+        this.theme.id = blotter.BlotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.BlotterOptions.blotterId + '-link';
         this.theme.rel = "stylesheet";
         document.head.appendChild(this.theme);
     }

@@ -24,7 +24,7 @@ var CalculatedColumnHelper;
             // check if its a column name
             let col = ColumnHelper_1.ColumnHelper.getColumnFromId(columnId, columns, false);
             if (!col) { // no column so lets see if they are using FriendlyName
-                col = ColumnHelper_1.ColumnHelper.getColumnFromName(columnId, columns, false);
+                col = ColumnHelper_1.ColumnHelper.getColumnFromFriendlyName(columnId, columns, false);
                 if (col) {
                     columnNameList.push(columnId);
                 }

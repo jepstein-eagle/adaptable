@@ -1,5 +1,8 @@
 import * as React from "react";
 import { ButtonProps } from './ButtonBase';
-export declare class ButtonMaximise extends React.Component<ButtonProps, {}> {
+export interface MaximiseButtonProps extends ButtonProps {
+    useHoirzontalChevron?: boolean;
+}
+export declare class ButtonMaximise extends React.Component<MaximiseButtonProps, {}> {
     render(): JSX.Element;
 }

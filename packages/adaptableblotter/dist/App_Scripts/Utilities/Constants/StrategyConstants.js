@@ -30,7 +30,6 @@ exports.PieChartStrategyId = "PieChart";
 exports.PlusMinusStrategyId = "PlusMinus";
 exports.QuickSearchStrategyId = "QuickSearch";
 exports.ReminderStrategyId = "Reminder";
-exports.SelectColumnStrategyId = "SelectColumn";
 exports.ShortcutStrategyId = "Shortcut";
 exports.SmartEditStrategyId = "SmartEdit";
 exports.TeamSharingStrategyId = "TeamSharing";
@@ -65,7 +64,6 @@ exports.PieChartStrategyName = "Pie Chart";
 exports.PlusMinusStrategyName = "Plus Minus";
 exports.QuickSearchStrategyName = "Quick Search";
 exports.ReminderStrategyName = "Reminder";
-exports.SelectColumnStrategyName = "Select Column";
 exports.ShortcutStrategyName = "Shortcut";
 exports.SmartEditStrategyName = "Smart Edit";
 exports.TeamSharingStrategyName = "Team Sharing";
@@ -101,7 +99,6 @@ exports.PieChartGlyph = "adjust";
 exports.PlusMinusGlyph = "plus-sign";
 exports.QuickSearchGlyph = "eye-open";
 exports.ReminderGlyph = "bell";
-exports.SelectColumnGlyph = "compressed";
 exports.ShortcutGlyph = "road";
 exports.SmartEditGlyph = "pencil";
 exports.TeamSharingGlyph = "share";
@@ -163,8 +160,6 @@ function getIdForStrategyName(strategyName) {
             return exports.QuickSearchStrategyId;
         case exports.ReminderStrategyName:
             return exports.ReminderStrategyId;
-        case exports.SelectColumnStrategyName:
-            return exports.SelectColumnStrategyId;
         case exports.CellSummaryStrategyName:
             return exports.CellSummaryStrategyId;
         case exports.ShortcutStrategyName:
@@ -237,7 +232,7 @@ function getNameForStrategyId(strategyID) {
         case exports.QuickSearchStrategyId:
             return exports.ReminderStrategyName;
         case exports.ReminderStrategyId:
-            return exports.SelectColumnStrategyName;
+            return exports.ReminderStrategyName;
         case exports.CellSummaryStrategyId:
             return exports.CellSummaryStrategyName;
         case exports.ShortcutStrategyId:
@@ -307,8 +302,6 @@ function getGhyphiconForStrategyId(strategyID) {
             return exports.ReminderGlyph;
         case exports.ShortcutStrategyId:
             return exports.ShortcutGlyph;
-        case exports.SelectColumnStrategyId:
-            return exports.SelectColumnGlyph;
         case exports.CellSummaryStrategyId:
             return exports.CellSummaryGlyph;
         case exports.SmartEditStrategyId:

@@ -13,6 +13,7 @@ const _ = require("lodash");
 const iPushPullHelper_1 = require("../Utilities/Helpers/iPushPullHelper");
 const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
+const Glue42Helper_1 = require("../Utilities/Helpers/Glue42Helper");
 class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.ExportStrategyId, blotter);
@@ -79,7 +80,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                             //and also is incorrrect as until we call setcells again we've lost all values in excel which might upset
                             //some macros
                             let previousDimension = this.workAroundOpenfinExcelDataDimension.get(cle.Report);
-                            let ReportAsArray = this.ConvertReporttoArray(cle.Report);
+                            let ReportAsArray = this.ConvertReportToArray(cle.Report);
                             let newDimension = { x: ReportAsArray[0].length, y: ReportAsArray.length };
                             if (previousDimension) {
                                 let missingNumberOfRows = previousDimension.y - newDimension.y;
@@ -126,7 +127,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     }
                     promises.push(Promise.resolve().then(() => {
                         return new Promise((resolve, reject) => {
-                            let ReportAsArray = this.ConvertReporttoArray(cle.Report);
+                            let ReportAsArray = this.ConvertReportToArray(cle.Report);
                             if (ReportAsArray) {
                                 resolve(ReportAsArray);
                             }
@@ -159,7 +160,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 this.copyToClipboard(ReportName);
                 break;
             case Enums_1.ExportDestination.CSV:
-                this.convertReporttoCsv(ReportName);
+                this.convertReportToCsv(ReportName);
                 break;
             case Enums_1.ExportDestination.OpenfinExcel:
                 OpenfinHelper_1.OpenfinHelper.initOpenFinExcel() //.then((workbook) => OpenfinHelper.addReportWorkSheet(workbook, ReportName))
@@ -174,9 +175,14 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     setTimeout(() => { this.throttledRecomputeAndSendLiveExcelEvent(); }, 500);
                 });
                 break;
+            case Enums_1.ExportDestination.Glue42:
+                let data = this.ConvertReportToArray(ReportName);
+                let gridColumns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+                Glue42Helper_1.Glue42Helper.exportData(data, gridColumns, this.blotter);
+                break;
         }
     }
-    convertReporttoCsv(ReportName) {
+    convertReportToCsv(ReportName) {
         let csvContent = this.createCSVContent(ReportName);
         if (csvContent) {
             let csvFileName = this.getReport(ReportName).Name + ".csv";
@@ -190,21 +196,21 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     createCSVContent(ReportName) {
-        let ReportAsArray = this.ConvertReporttoArray(ReportName);
+        let ReportAsArray = this.ConvertReportToArray(ReportName);
         if (ReportAsArray) {
             return Helper_1.Helper.convertArrayToCsv(ReportAsArray, ",");
         }
         return null;
     }
     createTabularContent(ReportName) {
-        let ReportAsArray = this.ConvertReporttoArray(ReportName);
+        let ReportAsArray = this.ConvertReportToArray(ReportName);
         if (ReportAsArray) {
             return Helper_1.Helper.convertArrayToCsv(ReportAsArray, "\t");
         }
         return null;
     }
     // Converts a Report into an array of array - first array is the column names and subsequent arrays are the values
-    ConvertReporttoArray(ReportName) {
+    ConvertReportToArray(ReportName) {
         let ReportToConvert = this.getReport(ReportName);
         let actionReturnObj = ReportHelper_1.ReportHelper.ConvertReportToArray(this.blotter, ReportToConvert);
         if (actionReturnObj.Alert) { // assume that the MessageType is error - if not then refactor

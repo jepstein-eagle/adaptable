@@ -13,11 +13,11 @@ export declare class ExportStrategy extends AdaptableStrategyBase implements IEx
     protected addPopupMenuItem(): void;
     private sendNewDataToLiveExcel;
     Export(ReportName: string, exportDestination: ExportDestination, folder?: string, page?: string): void;
-    private convertReporttoCsv;
+    private convertReportToCsv;
     private copyToClipboard;
     private createCSVContent;
     private createTabularContent;
-    private ConvertReporttoArray;
+    private ConvertReportToArray;
     private getReport;
     protected InitState(): void;
     private scheduleReports;

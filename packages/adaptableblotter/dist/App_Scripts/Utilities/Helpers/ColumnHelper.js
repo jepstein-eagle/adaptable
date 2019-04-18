@@ -96,7 +96,7 @@ var ColumnHelper;
         }
     }
     ColumnHelper.getColumnFromId = getColumnFromId;
-    function getColumnFromName(columnName, columns, logWarning = true) {
+    function getColumnFromFriendlyName(columnName, columns, logWarning = true) {
         // just return null if no columns rather than logging a warning - otherwise get lots at startup
         if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(columns)) {
             return null;
@@ -112,7 +112,7 @@ var ColumnHelper;
             return null;
         }
     }
-    ColumnHelper.getColumnFromName = getColumnFromName;
+    ColumnHelper.getColumnFromFriendlyName = getColumnFromFriendlyName;
     function getColumnsOfType(columns, dataType) {
         switch (dataType) {
             case Enums_1.DataType.All:

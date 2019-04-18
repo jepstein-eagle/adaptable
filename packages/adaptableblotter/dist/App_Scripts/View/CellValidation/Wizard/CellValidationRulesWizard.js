@@ -52,7 +52,7 @@ class CellValidationRulesWizard extends React.Component {
                             React.createElement(react_bootstrap_1.FormControl, { type: "date", placeholder: "Enter Date", value: this.state.Operand1, onChange: (x) => this.onOperand1ValueChanged(x) }),
                             this.isBetweenOperator() &&
                                 React.createElement(react_bootstrap_1.FormControl, { value: this.state.Operand2, type: "date", placeholder: "Enter Date", onChange: (x) => this.onOperand2ValueChanged(x) })),
-                    !this.checkOperator(Enums_1.LeafExpressionOperator.None) && !this.checkOperator(Enums_1.LeafExpressionOperator.Unknown) && !this.checkOperator(Enums_1.LeafExpressionOperator.NoDuplicates) && ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns) == Enums_1.DataType.String &&
+                    !this.checkOperator(Enums_1.LeafExpressionOperator.None) && !this.checkOperator(Enums_1.LeafExpressionOperator.Unknown) && !this.checkOperator(Enums_1.LeafExpressionOperator.NoDuplicateValues) && !this.checkOperator(Enums_1.LeafExpressionOperator.ExistingValuesOnly) && ColumnHelper_1.ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns) == Enums_1.DataType.String &&
                         React.createElement(react_bootstrap_1.Col, { xs: 5 },
                             React.createElement(react_bootstrap_1.FormControl, { value: this.state.Operand1, type: "string", placeholder: "Enter a Value", onChange: (x) => this.onOperand1ValueChanged(x) })))));
     }
@@ -84,7 +84,7 @@ class CellValidationRulesWizard extends React.Component {
             case Enums_1.DataType.Boolean:
                 return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.IsTrue, Enums_1.LeafExpressionOperator.IsFalse];
             case Enums_1.DataType.String:
-                return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.Equals, Enums_1.LeafExpressionOperator.NotEquals, Enums_1.LeafExpressionOperator.Contains, Enums_1.LeafExpressionOperator.NotContains, Enums_1.LeafExpressionOperator.StartsWith, Enums_1.LeafExpressionOperator.Regex, Enums_1.LeafExpressionOperator.NoDuplicates];
+                return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.Equals, Enums_1.LeafExpressionOperator.NotEquals, Enums_1.LeafExpressionOperator.Contains, Enums_1.LeafExpressionOperator.NotContains, Enums_1.LeafExpressionOperator.StartsWith, Enums_1.LeafExpressionOperator.Regex, Enums_1.LeafExpressionOperator.NoDuplicateValues, Enums_1.LeafExpressionOperator.ExistingValuesOnly];
             case Enums_1.DataType.Date:
                 return [Enums_1.LeafExpressionOperator.Unknown, Enums_1.LeafExpressionOperator.Equals, Enums_1.LeafExpressionOperator.NotEquals, Enums_1.LeafExpressionOperator.GreaterThan, Enums_1.LeafExpressionOperator.LessThan, Enums_1.LeafExpressionOperator.Between, Enums_1.LeafExpressionOperator.NotBetween];
             case Enums_1.DataType.Number:

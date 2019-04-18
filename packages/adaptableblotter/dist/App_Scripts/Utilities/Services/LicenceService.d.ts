@@ -13,5 +13,4 @@ export declare class LicenceService implements ILicenceService {
     private getExpiryDate;
     private isExpiryDateValid;
     private getLicenceUserType;
-    private isDemoSite;
 }

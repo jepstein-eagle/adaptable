@@ -26,7 +26,6 @@ const BulkUpdateStrategy_1 = require("../Strategy/BulkUpdateStrategy");
 const ColumnInfoStrategy_1 = require("../Strategy/ColumnInfoStrategy");
 const DashboardStrategy_1 = require("../Strategy/DashboardStrategy");
 const CalculatedColumnStrategy_1 = require("../Strategy/CalculatedColumnStrategy");
-const SelectColumnStrategy_1 = require("../Strategy/SelectColumnStrategy");
 const CellSummaryStrategy_1 = require("../Strategy/CellSummaryStrategy");
 const DataSourceStrategy_1 = require("../Strategy/DataSourceStrategy");
 const HomeStrategy_1 = require("../Strategy/HomeStrategy");
@@ -134,6 +133,8 @@ class AdaptableBlotter {
                 return;
             }
         }
+        iPushPullHelper_1.iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
+        //    Glue42Helper.init();
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService_1.CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
         // get the api ready
         this.api = new BlotterApi_1.BlotterApi(this);
@@ -171,11 +172,9 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
         this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(this));
         this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy_1.ThemeStrategy(this));
-        this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy_1.SelectColumnStrategy(this));
         this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy_1.CellSummaryStrategy(this));
         this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(this));
         this.Strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy_1.ReminderStrategy(this));
-        iPushPullHelper_1.iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
         BlotterHelper_1.BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
         this.AdaptableBlotterStore.Load
             .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
@@ -1438,7 +1437,7 @@ class AdaptableBlotter {
     addPercentBar(pcr) {
         let renderedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns);
         if (renderedColumn) {
-            let cellRendererFunc = agGridHelper_1.agGridHelper.createCellRendererFunc(pcr);
+            let cellRendererFunc = agGridHelper_1.agGridHelper.createCellRendererFunc(pcr, this.BlotterOptions.blotterId);
             let vendorGridColumn = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
             vendorGridColumn.getColDef().cellRenderer = cellRendererFunc;
         }
@@ -1619,7 +1618,7 @@ class AdaptableBlotter {
         if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.containerOptions.vendorContainer)) {
             let container = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
             if (container != null) {
-                container.className = "ag-theme-balham";
+                container.className = agGridHelper_1.agGridHelper.getLightThemeName();
             }
         }
     }
@@ -1627,7 +1626,7 @@ class AdaptableBlotter {
         if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.containerOptions.vendorContainer)) {
             let container = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
             if (container != null) {
-                container.className = "ag-theme-balham-dark";
+                container.className = agGridHelper_1.agGridHelper.getDarkThemeName();
             }
         }
     }
@@ -1640,6 +1639,7 @@ class AdaptableBlotter {
         // add the filter header style if required
         if (this.BlotterOptions.filterOptions.indicateFilteredColumns == true) {
             var css = document.createElement("style");
+            css.id = this.BlotterOptions.blotterId + '_filtered-columns-style';
             css.type = "text/css";
             css.innerHTML = ".ag-header-cell-filtered {  font-style: italic; font-weight: bolder;}";
             document.body.appendChild(css);

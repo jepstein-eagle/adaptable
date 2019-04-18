@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Enums_1 = require("../Utilities/Enums");
-const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const MenuItem_1 = require("../Utilities/MenuItem");
 class AdaptableStrategyBase {
@@ -79,11 +78,7 @@ class AdaptableStrategyBase {
         }
     }
     addContextMenuItemToStore(menuItem) {
-        // check for duplicates here
-        let existingMenuItems = this.blotter.AdaptableBlotterStore.TheStore.getState().Menu.ContextMenu.Items.map(m => m.StrategyId);
-        if (!ArrayExtensions_1.ArrayExtensions.ContainsItem(existingMenuItems, menuItem.StrategyId)) {
-            this.blotter.api.internalApi.ColumnContextMenuAddItem(menuItem);
-        }
+        this.blotter.api.internalApi.ColumnContextMenuAddItem(menuItem);
     }
     canCreateContextMenuItem(column, blotter, functionType = "") {
         if (this.isReadOnlyStrategy()) {

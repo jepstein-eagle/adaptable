@@ -146,7 +146,6 @@ class AdaptableBlotter {
         this.Strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy_1.PieChartStrategy(this));
         this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(this));
         this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(this));
-        //   this.Strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(this))
         this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy_1.CellSummaryStrategy(this));
         this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(this));
         this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(this));
@@ -160,7 +159,7 @@ class AdaptableBlotter {
         }
         this.abContainerElement.innerHTML = "";
         this.filterContainer = this.abContainerElement.ownerDocument.createElement("div");
-        this.filterContainer.id = "filterContainer";
+        this.filterContainer.id = blotterOptions.blotterId + "_filterContainer";
         this.filterContainer.style.position = 'absolute';
         this.filterContainer.style.visibility = "hidden";
         this.abContainerElement.ownerDocument.body.appendChild(this.filterContainer);

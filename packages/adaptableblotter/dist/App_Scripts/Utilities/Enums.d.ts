@@ -39,7 +39,8 @@ export declare enum LeafExpressionOperator {
     IsNotNumber = "IsNotNumber",
     IsTrue = "IsTrue",
     IsFalse = "IsFalse",
-    NoDuplicates = "NoDuplicates",
+    NoDuplicateValues = "NoDuplicateValues",
+    ExistingValuesOnly = "ExistingValuesOnly",
     PrimaryKeyDuplicate = "PrimaryKeyDuplicate"
 }
 export declare enum MathOperation {
@@ -78,7 +79,8 @@ export declare enum ExportDestination {
     CSV = "CSV",
     Clipboard = "Clipboard",
     OpenfinExcel = "OpenfinExcel",
-    iPushPull = "iPushPull"
+    iPushPull = "iPushPull",
+    Glue42 = "Glue42"
 }
 export declare enum SortOrder {
     Unknown = "Unknown",

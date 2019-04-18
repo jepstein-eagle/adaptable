@@ -21,3 +21,4 @@ export declare class AdaptableBlotterStore implements IAdaptableBlotterStore {
     Load: PromiseLike<any>;
     constructor(blotter: IAdaptableBlotter);
 }
+export declare function getNonPersistedReduxActions(): string[];

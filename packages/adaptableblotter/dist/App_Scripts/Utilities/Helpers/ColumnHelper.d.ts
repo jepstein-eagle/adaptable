@@ -12,7 +12,7 @@ export declare module ColumnHelper {
     function getColumnIdsFromFriendlyNames(friendlyNames: string[], columns: IColumn[]): string[];
     function getColumnsFromFriendlyNames(friendlyNames: string[], columns: IColumn[]): IColumn[];
     function getColumnFromId(columnId: string, columns: IColumn[], logWarning?: boolean): IColumn;
-    function getColumnFromName(columnName: string, columns: IColumn[], logWarning?: boolean): IColumn;
+    function getColumnFromFriendlyName(columnName: string, columns: IColumn[], logWarning?: boolean): IColumn;
     function getColumnsOfType(columns: IColumn[], dataType: DataType): IColumn[];
     function getNumericColumns(columns: IColumn[]): IColumn[];
     function getStringColumns(columns: IColumn[]): IColumn[];

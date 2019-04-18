@@ -14,9 +14,17 @@ class HomeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         super(StrategyConstants.HomeStrategyId, blotter);
     }
     addContextMenuItem(column) {
+        if (this.canCreateContextMenuItem(column, this.blotter)) {
+            this.createContextMenuItemReduxAction("Hide Column", StrategyConstants.ColumnChooserGlyph, GridRedux.GridHideColumn(column.ColumnId));
+        }
         if (this.canCreateContextMenuItem(column, this.blotter, "floatingfilter")) {
             let isFilterActive = this.GridState.IsFloatingFilterActive;
             this.createContextMenuItemReduxAction(isFilterActive ? "Hide Floating Filter Bar" : "Show Floating Filter Bar", isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH, isFilterActive ? GridRedux.FloatingFilterBarHide() : GridRedux.FloatingilterBarShow());
+        }
+        if (this.blotter.isSelectable()) {
+            if (this.canCreateContextMenuItem(column, this.blotter)) {
+                this.createContextMenuItemReduxAction("Select Column", "compressed", GridRedux.GridSelectColumn(column.ColumnId));
+            }
         }
     }
     InitState() {

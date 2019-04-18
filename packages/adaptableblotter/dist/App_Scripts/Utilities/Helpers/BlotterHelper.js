@@ -4,8 +4,13 @@ const DefaultAdaptableBlotterOptions_1 = require("../Defaults/DefaultAdaptableBl
 const ColumnHelper_1 = require("./ColumnHelper");
 const LoggingHelper_1 = require("./LoggingHelper");
 const Enums_1 = require("../Enums");
+const StringExtensions_1 = require("../Extensions/StringExtensions");
 var BlotterHelper;
 (function (BlotterHelper) {
+    function IsDemoSite() {
+        return (window.location.hostname == 'demo.adaptableblotter.com');
+    }
+    BlotterHelper.IsDemoSite = IsDemoSite;
     function AssignBlotterOptions(blotterOptions) {
         let returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions, blotterOptions);
         returnBlotterOptions.auditOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions.auditOptions, blotterOptions.auditOptions);
@@ -35,7 +40,8 @@ var BlotterHelper;
     function IsConfigServerEnabled(blotterOptions) {
         return blotterOptions.configServerOptions != null
             && blotterOptions.configServerOptions.enableConfigServer != null
-            && blotterOptions.configServerOptions.enableConfigServer == true;
+            && blotterOptions.configServerOptions.enableConfigServer == true
+            && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(blotterOptions.configServerOptions.configServerUrl);
     }
     BlotterHelper.IsConfigServerEnabled = IsConfigServerEnabled;
     function CheckLicenceKey(licenceInfo) {

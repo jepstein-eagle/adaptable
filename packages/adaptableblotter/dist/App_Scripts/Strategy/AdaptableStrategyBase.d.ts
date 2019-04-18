@@ -23,7 +23,7 @@ export declare abstract class AdaptableStrategyBase implements IStrategy {
     createMenuItemShowPopup(Label: string, ComponentName: string, GlyphIcon: string, PopupParams?: string): void;
     createContextMenuItemReduxAction(Label: string, GlyphIcon: string, Action: Action): any;
     createContextMenuItemShowPopup(Label: string, ComponentName: string, GlyphIcon: string, PopupParams?: string): void;
-    addContextMenuItemToStore(menuItem: IMenuItem): void;
+    private addContextMenuItemToStore;
     canCreateContextMenuItem(column: IColumn, blotter: IAdaptableBlotter, functionType?: string): boolean;
     publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void;
     publishStateChanged(stateChangedTrigger: StateChangedTrigger, state: IUserState): void;
