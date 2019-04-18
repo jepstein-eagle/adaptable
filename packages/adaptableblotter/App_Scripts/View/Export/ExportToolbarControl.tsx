@@ -79,8 +79,8 @@ class ExportToolbarControlComponent extends React.Component<ExportToolbarControl
             iPushPullExcelMenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.iPushPull)} key={"IPPExcel"}> {"Start Sync with iPushPull"}</MenuItem>
         }
 
-        let glue42MenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.Glue42)} key={"Glue42"}> {"Export via Glue42"}</MenuItem>
-        
+        let glue42MenuItem = <MenuItem disabled={this.props.AccessLevel == AccessLevel.ReadOnly} onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.Glue42)} key={"Glue42"}> {"Export to Excel (via Glue42)"}</MenuItem>
+
 
         let deleteMessage: string = "Are you sure you want to delete '";
         if (savedReport != null) {
@@ -217,5 +217,3 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 }
 
 export let ExportToolbarControl = connect(mapStateToProps, mapDispatchToProps)(ExportToolbarControlComponent);
-
-
