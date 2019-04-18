@@ -10,9 +10,15 @@ import { ArrayExtensions } from "../Utilities/Extensions/ArrayExtensions";
 
 export module agGridHelper {
 
-   
+    export function getLightThemeName(): string {
+        return "ag-theme-balham";
+    }
 
-    export function createCellRendererFunc(pcr: IPercentBar): ICellRendererFunc {
+    export function getDarkThemeName(): string {
+        return "ag-theme-balham-dark";
+    }
+
+    export function createCellRendererFunc(pcr: IPercentBar, blotterId: string): ICellRendererFunc {
         let showNegatives: boolean = pcr.MinValue < 0;
         let showPositives: boolean = pcr.MaxValue > 0;
 
@@ -42,6 +48,7 @@ export module agGridHelper {
             eOuterDiv.className = 'ab_div-colour-render-div';
             if (pcr.ShowValue) {
                 let showValueBar = document.createElement('div');
+                showValueBar.id = 'ab_div-colour-render-text_' + blotterId + '_' + pcr.ColumnId;
                 showValueBar.className = 'ab_div-colour-render-text';
                 if (showNegatives && showPositives) {
                     showValueBar.style.paddingLeft = (isNegativeValue) ? '50%' : '20%'
@@ -57,11 +64,13 @@ export module agGridHelper {
 
                 let negativeDivBlankBar = document.createElement('div');
                 negativeDivBlankBar.className = 'ab_div-colour-render-bar';
+                negativeDivBlankBar.id = 'ab_div-colour-blank-bar_' + blotterId + '_' + pcr.ColumnId;
                 negativeDivBlankBar.style.width = (fullWidth - percentageNegativeValue) + '%';
                 eOuterDiv.appendChild(negativeDivBlankBar);
 
                 let negativeDivPercentBar = document.createElement('div');
                 negativeDivPercentBar.className = 'ab_div-colour-render-bar';
+                negativeDivBlankBar.id = 'ab_div-colour-negative-bar_' + blotterId + '_' + pcr.ColumnId;
                 negativeDivPercentBar.style.width = percentageNegativeValue + '%';
                 if (isNegativeValue) {
                     negativeDivPercentBar.style.backgroundColor = pcr.NegativeColor;
@@ -72,6 +81,7 @@ export module agGridHelper {
             if (showPositives) {
                 let positivePercentBarDiv = document.createElement('div');
                 positivePercentBarDiv.className = 'ab_div-colour-render-bar';
+                positivePercentBarDiv.id = 'ab_div-colour-positive-bar_' + blotterId + '_' + pcr.ColumnId;
                 positivePercentBarDiv.style.width = percentagePositiveValue + '%';
                 if (!isNegativeValue) {
                     positivePercentBarDiv.style.backgroundColor = pcr.PositiveColor;
@@ -149,7 +159,7 @@ export module agGridHelper {
     }
 
     export function createAdaptableBlotterToolPanel(): ToolPanelDef {
-        return{
+        return {
             id: 'adaptableBlotterToolPanel',
             labelDefault: 'Adaptable Blotter',
             labelKey: 'adaptableBlotterToolPanel',
@@ -158,5 +168,5 @@ export module agGridHelper {
         };
     }
 
-    
+
 }

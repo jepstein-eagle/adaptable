@@ -220,7 +220,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.abContainerElement.innerHTML = ""
 
         this.filterContainer = this.abContainerElement.ownerDocument.createElement("div")
-        this.filterContainer.id = "filterContainer"
+        this.filterContainer.id = blotterOptions.blotterId + "_filterContainer"
         this.filterContainer.style.position = 'absolute'
         this.filterContainer.style.visibility = "hidden"
         this.abContainerElement.ownerDocument.body.appendChild(this.filterContainer)

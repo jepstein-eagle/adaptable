@@ -16,15 +16,16 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.ThemeStrategyId, blotter)
 
-
         // Create the <style> tag for shipped themes
         this.style = document.createElement("style");
-        this.style.id = `${blotter.BlotterOptions.containerOptions.adaptableBlotterContainer}-theme`;
+        this.style.id = blotter.BlotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.BlotterOptions.blotterId + '-theme';
+
         this.style.appendChild(document.createTextNode(""));   // WebKit hack :(
         document.head.appendChild(this.style);  // Adds the <style> element to the page
 
         // Create the theme link for predefined themes
         this.theme = document.createElement("link");
+        this.theme.id = blotter.BlotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.BlotterOptions.blotterId + '-link';
         this.theme.rel = "stylesheet"
         document.head.appendChild(this.theme);
     }
@@ -36,11 +37,11 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     protected InitState() {
         if (this.ThemeState != this.blotter.AdaptableBlotterStore.TheStore.getState().Theme) {
             this.ThemeState = this.blotter.AdaptableBlotterStore.TheStore.getState().Theme
-           
+
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Theme, this.ThemeState)
             }
-           
+
             this.style.innerHTML = ""
             this.theme.href = ""
             switch (this.ThemeState.CurrentTheme) {
@@ -54,7 +55,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
                 case GeneralConstants.DARK_THEME:
                     this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
                     this.blotter.applyDarkTheme()
-                     break;
+                    break;
                 default:
                     let shippedTheme = this.ThemeState.SystemThemes.find(t => t == this.ThemeState.CurrentTheme)
                     // if its a system theme then use that..

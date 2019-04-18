@@ -16,6 +16,7 @@ import { ButtonGeneral } from "../Buttons/ButtonGeneral";
 import { DEFAULT_BSSTYLE } from "../../../Utilities/Constants/StyleConstants";
 import { PanelWithButton } from "../Panels/PanelWithButton";
 import { ToolPanelSettingsPanel } from "../Panels/ToolPanelSettingsPanel";
+import { gunzip } from "zlib";
 
 interface AdaptableBlotterToolPanelProps extends StrategyViewPopupProps<AdaptableBlotterToolPanelComponent> {
   QuickSearchText: string;
@@ -183,6 +184,7 @@ export const AdaptableBlotterToolPanelBuilder = (ctx: IAdaptableBlotterToolPanel
 
     public init(params?: IToolPanelParams): void {
       this.gui = document.createElement('div');
+      this.gui.id = 'adaptable-blotter-tool-panel_' + this.ctx.Blotter.BlotterOptions.blotterId;
       render(
         (<Provider store={this.ctx.Blotter.AdaptableBlotterStore.TheStore}>
           <ConnectedAdaptableBlotterToolPanel Blotter={this.ctx.Blotter} TeamSharingActivated={false} />

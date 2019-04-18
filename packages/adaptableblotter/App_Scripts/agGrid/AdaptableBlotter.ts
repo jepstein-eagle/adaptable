@@ -1705,7 +1705,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public addPercentBar(pcr: IPercentBar): void {
         let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns);
         if (renderedColumn) {
-            let cellRendererFunc: ICellRendererFunc = agGridHelper.createCellRendererFunc(pcr);
+            let cellRendererFunc: ICellRendererFunc = agGridHelper.createCellRendererFunc(pcr, this.BlotterOptions.blotterId);
             let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
             vendorGridColumn.getColDef().cellRenderer = cellRendererFunc;
         }
@@ -1916,7 +1916,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.containerOptions.vendorContainer)) {
             let container = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
             if (container != null) {
-                container.className = "ag-theme-balham";
+                container.className = agGridHelper.getLightThemeName();
             }
         }
     }
@@ -1925,7 +1925,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.containerOptions.vendorContainer)) {
             let container = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
             if (container != null) {
-                container.className = "ag-theme-balham-dark";
+                container.className = agGridHelper.getDarkThemeName();
             }
         }
     }
@@ -1941,6 +1941,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // add the filter header style if required
         if (this.BlotterOptions.filterOptions.indicateFilteredColumns == true) {
             var css = document.createElement("style");
+            css.id=this.BlotterOptions.blotterId + '_filtered-columns-style'; 
             css.type = "text/css";
             css.innerHTML = ".ag-header-cell-filtered {  font-style: italic; font-weight: bolder;}";
             document.body.appendChild(css);
