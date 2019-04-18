@@ -6,6 +6,7 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ILicenceInfo } from '../Interface/ILicenceInfo';
 import { ObjectFactory } from '../ObjectFactory';
 import { YEAR_ADD, MONTH_ADD } from '../Constants/GeneralConstants';
+import { BlotterHelper } from '../Helpers/BlotterHelper';
 
 /*
 Class to manage licence keys.  
@@ -28,7 +29,7 @@ export class LicenceService implements ILicenceService {
         let licenceKey: string = this.blotter.BlotterOptions.licenceKey;
 
         // check if demo site - if so return Enterprise
-        if (this.isDemoSite()) {
+        if (BlotterHelper.IsDemoSite()) {
             return this.CreateEnterpriseLicence();
         }
 
@@ -201,9 +202,7 @@ export class LicenceService implements ILicenceService {
         }
     }
 
-    private isDemoSite(): boolean {
-        return (window.location.hostname == 'demo.adaptableblotter.com');
-    }
+
 
 
 

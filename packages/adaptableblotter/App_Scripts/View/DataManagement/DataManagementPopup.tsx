@@ -31,14 +31,18 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
             overrideText={"Clear User Data"}
             overrideTooltip="Clear User Data"
             DisplayMode="Text"
-            size={"large"} 
+            size={"small"} 
             AccessLevel={AccessLevel.Full}
             />
 
         return <div className={cssClassName}>
             <PanelWithButton headerText={StrategyConstants.DataManagementStrategyName} button={null} bsStyle="primary" cssClassName={cssClassName} glyphicon={StrategyConstants.DataManagementGlyph} infoBody={infoBody}>
-                <HelpBlock>Click below to clear all current state.<br /><br />
-                    When you restart / refresh the Blotter any predefined config will be re-added.</HelpBlock>
+                <HelpBlock>Click below to clear all current state.
+                    <br /><br />
+                    When you restart / refresh the Blotter any state that you have previously created will be lost and only the 'predefined config' will be re-added.
+                    <br /><br />
+                    <b>This option only appears in non production builds.</b>
+                    </HelpBlock>
 
                 {clearButton}
 

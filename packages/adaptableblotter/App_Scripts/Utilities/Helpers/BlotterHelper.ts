@@ -10,6 +10,11 @@ import { StringExtensions } from '../Extensions/StringExtensions';
 
 export module BlotterHelper {
 
+
+    export function IsDemoSite(): boolean {
+        return (window.location.hostname == 'demo.adaptableblotter.com');
+    }
+
     export function AssignBlotterOptions(blotterOptions: IAdaptableBlotterOptions): IAdaptableBlotterOptions {
         let returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
         returnBlotterOptions.auditOptions = Object.assign({}, DefaultAdaptableBlotterOptions.auditOptions, blotterOptions.auditOptions)
