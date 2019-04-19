@@ -1,6 +1,6 @@
 import * as ReduxStorage from 'redux-storage'
 import * as fetch from 'isomorphic-fetch';
-import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
+import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 
 interface IAdaptableBlotterReduxRemoteStorageEngine extends ReduxStorage.StorageEngine { }
 
@@ -11,12 +11,11 @@ const checkStatus = (response: Response) => {
     return response;
   }
 
-  //error.response = response;
-  throw error;
+   throw error;
 };
 
 class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterReduxRemoteStorageEngine {
-  constructor(private url: string, private userName: string, private blotterId: string, private blotter: IAdaptableBlotter) {}
+  constructor(private url: string, private userName: string, private blotterId: string) {}
 
   load(): Promise<any> {
     let loadOptions = {
@@ -28,8 +27,7 @@ class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterRedux
     return fetch(this.url, loadOptions)
       .then(checkStatus)
       .then(response => response.json())
-      //.then(json => json.state)
-      .catch(error => Promise.reject(error.message));
+       .catch(error => Promise.reject(error.message));
   }
 
   save(state: any): Promise<any> {
@@ -45,13 +43,12 @@ class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterRedux
     };
 
     return fetch(this.url, saveOptions).then(checkStatus).catch(error => {
-      this.blotter.api.alertApi.ShowError("Cannot Save Config", error.message, true)
+      LoggingHelper.LogAdaptableBlotterError("Cannot Save Config: " + error.message)
       return Promise.reject("Cannot save config:" + error.message)
     });;
   }
 }
 
-//TODO: we shouldn't really pass the blotter instance here but I need this to be done quickly
-export function createEngine(url: string, userName: string, blotterId: string, blotter: IAdaptableBlotter): ReduxStorage.StorageEngine {
-  return new AdaptableBlotterReduxStorageClientEngine(url, userName, blotterId, blotter)
+export function createEngine(url: string, userName: string, blotterId: string): ReduxStorage.StorageEngine {
+  return new AdaptableBlotterReduxStorageClientEngine(url, userName, blotterId)
 }
