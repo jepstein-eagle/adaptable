@@ -155,6 +155,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ScheduleService: IScheduleService
 
     private _calculatedColumnPathMap: Map<string, string[]> = new Map()
+private useRowNodeLookUp: boolean;
 
     private abContainerElement: HTMLElement;
     private gridOptions: GridOptions
@@ -190,7 +191,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.ChartService = new ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService(this);
         this.ScheduleService = new ScheduleService(this);
-
+        
+        this.useRowNodeLookUp=agGridHelper.TrySetUpNodeIds(this.gridOptions, blotterOptions);
+        
         const isGridInstantiated = this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
 
         if (!isGridInstantiated) {
@@ -285,6 +288,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // create debounce methods that take a time based on user settings
         this.throttleOnDataChangedUser = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
         this.throttleOnDataChangedExternal = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
+
+     
+
     }
 
 
@@ -759,6 +765,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         let isUpdated: boolean = false;
+
+        let test: any = this.gridOptions.api.getRowNode(cellInfo.Id);
+        console.log('node')
+        console.log(test);
+
         this.gridOptions.api.getModel().forEachNode(rowNode => {
             if (!isUpdated && cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
                 let oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode)
@@ -792,55 +803,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
 
+        if (ArrayExtensions.IsNullOrEmpty(batchValues)) {
+            return;
+        }
+
         // using new method... (JW, 11/3/18)
         var dataChangedEvents: IDataChangedInfo[] = []
         let nodesToRefresh: RowNode[] = []
         let refreshColumnList: string[] = []
-        this.gridOptions.api.getModel().forEachNode((rowNode: RowNode) => {
-            let cellInfo: ICellInfo = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
-            if (cellInfo) {
-                let colId: string = cellInfo.ColumnId;
-                refreshColumnList.push(colId);
-                nodesToRefresh.push(rowNode);
 
-                ArrayExtensions.AddItem(refreshColumnList, colId);
-
-                let oldValue = this.gridOptions.api.getValue(colId, rowNode)
-
-                var data: any = rowNode.data;
-                data[colId] = cellInfo.Value;
-
-                let dataChangedEvent: IDataChangedInfo = {
-                    OldValue: oldValue,
-                    NewValue: cellInfo.Value,
-                    ColumnId: colId,
-                    IdentifierValue: cellInfo.Id,
-                    Record: null
+        // now two ways to do this - one using pk lookup and other using foreach on row node
+        if (this.useRowNodeLookUp) {
+            batchValues.forEach((cellInfo: ICellInfo)=>{
+                let rowNode: RowNode = this.gridOptions.api.getRowNode(cellInfo.Id);
+                 if (rowNode) {
+                    this.updateBatchValue(cellInfo, rowNode, nodesToRefresh, refreshColumnList, dataChangedEvents);
+                }else{
+                    alert("cannot find for: " + cellInfo.Id)
                 }
-                dataChangedEvents.push(dataChangedEvent)
-
-                // check if any calc columns need to refresh
-                let columnList = this._calculatedColumnPathMap.get(colId);
-                if (columnList) {
-                    columnList.forEach(calcColumn => {
-                        ArrayExtensions.AddItem(refreshColumnList, calcColumn);
-                    });
+            });
+        } else {
+            this.gridOptions.api.getModel().forEachNode((rowNode: RowNode) => {
+                let cellInfo: ICellInfo = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
+                if (cellInfo) {
+                    this.updateBatchValue(cellInfo, rowNode, nodesToRefresh, refreshColumnList, dataChangedEvents);
                 }
+            })
+        }
 
-                // see if we need to refresh any percent bars
-                this.getState().PercentBar.PercentBars.forEach(pb => {
-                    refreshColumnList.forEach(changedColId => {
-                        if (StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) && pb.MaxValueColumnId == changedColId) {
-                            ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-                        }
-                        if (StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) && pb.MinValueColumnId == changedColId) {
-                            ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-                        }
-                    })
-                })
-
-            }
-        })
         if (this.AuditLogService.IsAuditCellEditsEnabled) {
             this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
         }
@@ -851,6 +841,49 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.gridOptions.api.clearRangeSelection();
         nodesToRefresh.forEach(node => {
             this.refreshCells(node, refreshColumnList)
+        })
+    }
+
+
+    private updateBatchValue(cellInfo: ICellInfo, rowNode: RowNode, nodesToRefresh: RowNode[], refreshColumnList: string[], dataChangedEvents: IDataChangedInfo[]): void {
+        let colId: string = cellInfo.ColumnId;
+        refreshColumnList.push(colId);
+        nodesToRefresh.push(rowNode);
+
+        ArrayExtensions.AddItem(refreshColumnList, colId);
+
+        let oldValue = this.gridOptions.api.getValue(colId, rowNode)
+
+        var data: any = rowNode.data;
+        data[colId] = cellInfo.Value;
+
+        let dataChangedEvent: IDataChangedInfo = {
+            OldValue: oldValue,
+            NewValue: cellInfo.Value,
+            ColumnId: colId,
+            IdentifierValue: cellInfo.Id,
+            Record: null
+        }
+        dataChangedEvents.push(dataChangedEvent)
+
+        // check if any calc columns need to refresh
+        let columnList = this._calculatedColumnPathMap.get(colId);
+        if (columnList) {
+            columnList.forEach(calcColumn => {
+                ArrayExtensions.AddItem(refreshColumnList, calcColumn);
+            });
+        }
+
+        // see if we need to refresh any percent bars
+        this.getState().PercentBar.PercentBars.forEach(pb => {
+            refreshColumnList.forEach(changedColId => {
+                if (StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) && pb.MaxValueColumnId == changedColId) {
+                    ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                }
+                if (StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) && pb.MinValueColumnId == changedColId) {
+                    ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                }
+            })
         })
     }
 

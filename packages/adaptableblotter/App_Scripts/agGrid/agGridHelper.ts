@@ -2,10 +2,13 @@ import { ICellRendererFunc, ICellRendererParams, ColDef, GridOptions, SideBarDef
 import { StringExtensions } from "../Utilities/Extensions/StringExtensions";
 import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
 import { ArrayExtensions } from "../Utilities/Extensions/ArrayExtensions";
+import { IAdaptableBlotterOptions } from "../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions";
+import { string } from "prop-types";
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy 
  * So lets put some of the more obvious 'Helper' functions here
+ * This is a bit crap - it should take a GridOptions object...
  */
 
 export module agGridHelper {
@@ -16,6 +19,22 @@ export module agGridHelper {
 
     export function getDarkThemeName(): string {
         return "ag-theme-balham-dark";
+    }
+
+    export function TrySetUpNodeIds(gridOptions: GridOptions, blotterOptions: IAdaptableBlotterOptions): boolean {
+        // need some way of checking if running on client on server
+        // if on server then we return false
+
+        // if they have not set primary key then we get out
+        if (StringExtensions.IsNullOrEmpty(blotterOptions.primaryKey)) {
+            return false;
+        }
+
+        // otherwise lets set the Id so that it returns the primaryKey
+        gridOptions.getRowNodeId = function (data) {
+            return data[blotterOptions.primaryKey];
+        }
+        return true;
     }
 
     export function createCellRendererFunc(pcr: IPercentBar, blotterId: string): ICellRendererFunc {
