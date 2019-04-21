@@ -62,7 +62,7 @@ class ExportToolbarControlComponent extends React.Component {
         }
         let glue42MenuItem = React.createElement(react_bootstrap_1.MenuItem, { disabled: this.props.AccessLevel == Enums_1.AccessLevel.ReadOnly, onClick: () => this.props.onApplyExport(currentReportId, Enums_1.ExportDestination.Glue42), key: "Glue42" },
             " ",
-            "Export via Glue42");
+            "Export to Excel (via Glue42)");
         let deleteMessage = "Are you sure you want to delete '";
         if (savedReport != null) {
             deleteMessage = deleteMessage + savedReport.Name + "?";

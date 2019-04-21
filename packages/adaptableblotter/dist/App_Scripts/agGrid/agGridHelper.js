@@ -5,6 +5,7 @@ const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
  * So lets put some of the more obvious 'Helper' functions here
+ * This is a bit crap - it should take a GridOptions object...
  */
 var agGridHelper;
 (function (agGridHelper) {
@@ -16,6 +17,20 @@ var agGridHelper;
         return "ag-theme-balham-dark";
     }
     agGridHelper.getDarkThemeName = getDarkThemeName;
+    function TrySetUpNodeIds(gridOptions, blotterOptions) {
+        // need some way of checking if running on client on server
+        // if on server then we return false
+        // if they have not set primary key then we get out
+        if (StringExtensions_1.StringExtensions.IsNullOrEmpty(blotterOptions.primaryKey)) {
+            return false;
+        }
+        // otherwise lets set the Id so that it returns the primaryKey
+        gridOptions.getRowNodeId = function (data) {
+            return data[blotterOptions.primaryKey];
+        };
+        return true;
+    }
+    agGridHelper.TrySetUpNodeIds = TrySetUpNodeIds;
     function createCellRendererFunc(pcr, blotterId) {
         let showNegatives = pcr.MinValue < 0;
         let showPositives = pcr.MaxValue > 0;

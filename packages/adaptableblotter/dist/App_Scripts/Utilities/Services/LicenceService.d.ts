@@ -5,12 +5,12 @@ export declare class LicenceService implements ILicenceService {
     private blotter;
     constructor(blotter: IAdaptableBlotter);
     LicenceInfo: ILicenceInfo;
-    private setLicenceInfo;
-    private CreateCommunityLicence;
-    private CreateEnterpriseLicence;
-    private isPrimeNumber;
-    private isCorrectLength;
-    private getExpiryDate;
-    private isExpiryDateValid;
-    private getLicenceUserType;
+    private checkifRuningOnDemoSite;
+    private isEmptyArray;
+    private CheckIsDouble;
+    private getOriginalDate;
+    private CreateNewDateArray;
+    private isNewPrimeNumber;
+    private doubleFirstString;
+    private checkDate;
 }
