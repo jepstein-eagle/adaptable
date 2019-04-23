@@ -126,6 +126,7 @@ class AdaptableBlotter {
         this.ChartService = new ChartService_1.ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService_1.FreeTextColumnService(this);
         this.ScheduleService = new ScheduleService_1.ScheduleService(this);
+        this.useRowNodeLookUp = agGridHelper_1.agGridHelper.TrySetUpNodeIds(this.gridOptions, blotterOptions);
         const isGridInstantiated = this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
         if (!isGridInstantiated) {
             const instantiateResult = this.instantiateAgGrid();
@@ -614,6 +615,9 @@ class AdaptableBlotter {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         let isUpdated = false;
+        let test = this.gridOptions.api.getRowNode(cellInfo.Id);
+        console.log('node');
+        console.log(test);
         this.gridOptions.api.getModel().forEachNode(rowNode => {
             if (!isUpdated && cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
                 let oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode);
@@ -640,48 +644,33 @@ class AdaptableBlotter {
     setValueBatch(batchValues) {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
+        if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(batchValues)) {
+            return;
+        }
         // using new method... (JW, 11/3/18)
         var dataChangedEvents = [];
         let nodesToRefresh = [];
         let refreshColumnList = [];
-        this.gridOptions.api.getModel().forEachNode((rowNode) => {
-            let cellInfo = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode));
-            if (cellInfo) {
-                let colId = cellInfo.ColumnId;
-                refreshColumnList.push(colId);
-                nodesToRefresh.push(rowNode);
-                ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, colId);
-                let oldValue = this.gridOptions.api.getValue(colId, rowNode);
-                var data = rowNode.data;
-                data[colId] = cellInfo.Value;
-                let dataChangedEvent = {
-                    OldValue: oldValue,
-                    NewValue: cellInfo.Value,
-                    ColumnId: colId,
-                    IdentifierValue: cellInfo.Id,
-                    Record: null
-                };
-                dataChangedEvents.push(dataChangedEvent);
-                // check if any calc columns need to refresh
-                let columnList = this._calculatedColumnPathMap.get(colId);
-                if (columnList) {
-                    columnList.forEach(calcColumn => {
-                        ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, calcColumn);
-                    });
+        // now two ways to do this - one using pk lookup and other using foreach on row node
+        if (this.useRowNodeLookUp) {
+            batchValues.forEach((cellInfo) => {
+                let rowNode = this.gridOptions.api.getRowNode(cellInfo.Id);
+                if (rowNode) {
+                    this.updateBatchValue(cellInfo, rowNode, nodesToRefresh, refreshColumnList, dataChangedEvents);
                 }
-                // see if we need to refresh any percent bars
-                this.getState().PercentBar.PercentBars.forEach(pb => {
-                    refreshColumnList.forEach(changedColId => {
-                        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) && pb.MaxValueColumnId == changedColId) {
-                            ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-                        }
-                        if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) && pb.MinValueColumnId == changedColId) {
-                            ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-                        }
-                    });
-                });
-            }
-        });
+                else {
+                    alert("cannot find for: " + cellInfo.Id);
+                }
+            });
+        }
+        else {
+            this.gridOptions.api.getModel().forEachNode((rowNode) => {
+                let cellInfo = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode));
+                if (cellInfo) {
+                    this.updateBatchValue(cellInfo, rowNode, nodesToRefresh, refreshColumnList, dataChangedEvents);
+                }
+            });
+        }
         if (this.AuditLogService.IsAuditCellEditsEnabled) {
             this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
         }
@@ -691,6 +680,41 @@ class AdaptableBlotter {
         this.gridOptions.api.clearRangeSelection();
         nodesToRefresh.forEach(node => {
             this.refreshCells(node, refreshColumnList);
+        });
+    }
+    updateBatchValue(cellInfo, rowNode, nodesToRefresh, refreshColumnList, dataChangedEvents) {
+        let colId = cellInfo.ColumnId;
+        refreshColumnList.push(colId);
+        nodesToRefresh.push(rowNode);
+        ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, colId);
+        let oldValue = this.gridOptions.api.getValue(colId, rowNode);
+        var data = rowNode.data;
+        data[colId] = cellInfo.Value;
+        let dataChangedEvent = {
+            OldValue: oldValue,
+            NewValue: cellInfo.Value,
+            ColumnId: colId,
+            IdentifierValue: cellInfo.Id,
+            Record: null
+        };
+        dataChangedEvents.push(dataChangedEvent);
+        // check if any calc columns need to refresh
+        let columnList = this._calculatedColumnPathMap.get(colId);
+        if (columnList) {
+            columnList.forEach(calcColumn => {
+                ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, calcColumn);
+            });
+        }
+        // see if we need to refresh any percent bars
+        this.getState().PercentBar.PercentBars.forEach(pb => {
+            refreshColumnList.forEach(changedColId => {
+                if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) && pb.MaxValueColumnId == changedColId) {
+                    ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                }
+                if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) && pb.MinValueColumnId == changedColId) {
+                    ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+                }
+            });
         });
     }
     cancelEdit() {

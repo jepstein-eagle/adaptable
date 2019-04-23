@@ -177,7 +177,7 @@ class AdaptableBlotterStore {
         // We pass into the create method the blotterId, the config, and also the Licence Info
         // the Lience Info is needed so we can determine whether or not to load state
         if (BlotterHelper_1.BlotterHelper.IsConfigServerEnabled(blotter.BlotterOptions)) {
-            engineReduxStorage = IAdaptableBlotterReduxRemoteStorageEngine_1.createEngine(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
+            engineReduxStorage = IAdaptableBlotterReduxRemoteStorageEngine_1.createEngine(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId);
         }
         else {
             engineReduxStorage = AdaptableBlotterReduxLocalStorageEngine_1.createEngine(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);

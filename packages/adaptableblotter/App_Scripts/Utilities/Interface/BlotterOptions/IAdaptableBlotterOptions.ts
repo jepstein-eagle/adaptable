@@ -53,6 +53,11 @@ export interface IAdaptableBlotterOptions {
    * Also can set where popups are displayed relative to the page.
   */
   containerOptions?: IContainerOptions;
+
+  /**
+   * The key to be used for saving the grid store state in localstorage
+   */
+  localStorageKey?: string;
   /**
    * Options for mananging the Audit Log
    * Depending on your options, every keystroke, data change, user action etc. is logged

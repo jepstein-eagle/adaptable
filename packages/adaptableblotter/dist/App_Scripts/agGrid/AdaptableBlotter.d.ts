@@ -47,6 +47,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     LicenceService: ILicenceService;
     ScheduleService: IScheduleService;
     private _calculatedColumnPathMap;
+    private useRowNodeLookUp;
     private abContainerElement;
     private gridOptions;
     EmbedColumnMenu: boolean;
@@ -107,6 +108,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private getabColDefValue;
     setValue(cellInfo: ICellInfo): void;
     setValueBatch(batchValues: ICellInfo[]): void;
+    private updateBatchValue;
     cancelEdit(): void;
     getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;
     getRecordIsSatisfiedFunctionFromRecord(record: RowNode, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any;

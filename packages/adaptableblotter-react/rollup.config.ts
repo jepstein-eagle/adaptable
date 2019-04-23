@@ -63,7 +63,8 @@ export default {
           'createElement',
           'cloneElement'
         ],
-        '../adaptableblotter/node_modules/react-dom/index.js': ['render']
+        '../adaptableblotter/node_modules/react-dom/index.js': ['render'],
+        '../adaptableblotter/node_modules/react-redux/node_modules/react-is/index.js': ['isValidElementType'],
       },
       sourceMap: false
     }),

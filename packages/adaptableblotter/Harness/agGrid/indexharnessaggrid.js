@@ -123,8 +123,10 @@ function InitTradeBlotter() {
       //  licenceKey: getCommunityKey(),
       //  licenceKey: getValidStandardKey(),
       //    licenceKey: getValidEnterpriseKey(),
-      //licenceKey: getInvalidStandardKey(),
-       predefinedConfig: dataSourceJson,
+      // licenceKey: ,
+      // licenceKey: '',
+
+      predefinedConfig: dataSourceJson,
       auditOptions: {
         //     auditCellEdits: true,
         //  auditFunctionEvents: true,
@@ -137,13 +139,14 @@ function InitTradeBlotter() {
         vendorContainer: 'grid',
       },
       configServerOptions: {
-        enableConfigServer: false,
-        //  configServerUrl: "", //  'http://localhost:8080/adaptableblotter-config',
+        enableConfigServer: true,
+        configServerUrl: 'http://localhost:8080/adaptableblotter-config',
       },
       layoutOptions: {
         includeVendorStateInLayouts: true,
         autoSaveLayouts: true,
       },
+      localStorageKey: 'abcde',
       queryOptions: {
         //  ignoreCaseInQueries: false,
         // maxColumnValueItemsDisplayed: 5,

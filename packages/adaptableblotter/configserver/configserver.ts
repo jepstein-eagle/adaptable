@@ -24,7 +24,7 @@ if (process.argv.length <= 2) {
 }
 
 const arg: { configfolder: string } = (argList => {
-  let arg = { configfolder: "" }, a, opt, thisOpt, curOpt;
+  let arg: any = { configfolder: "" }, a, opt, thisOpt, curOpt: any;
   for (a = 0; a < argList.length; a++) {
     thisOpt = argList[a].trim();
     opt = thisOpt.replace(/^\-+/, '');
@@ -107,7 +107,9 @@ app.post('/adaptableblotter-config', function (req, res) {
     return res.sendStatus(403);
   }
   let filename = ABConfigFolder + username + "_" + adaptableblotter_id + ".abjson"
+
   fs.writeFileSync(filename, JSON.stringify(req.body));
+  res.json({ ok: true })
 })
 
 app.post('/adaptableblotter-teamsharing', function (req, res) {
@@ -134,7 +136,7 @@ app.get('/adaptableblotter-teamsharing', function (req, res) {
   res.status(200).send(JSON.stringify(entities))
 })
 
-function getFiles(srcpath) {
+function getFiles(srcpath: string) {
   return fs.readdirSync(srcpath).filter(function (file) {
     return fs.statSync(path.join(srcpath, file)).isFile();
   });
@@ -145,13 +147,13 @@ app.listen(3000, function () {
 })
 
 
-function customizer(objValue, srcValue) {
+function customizer(objValue: any, srcValue: any) {
   if (_.isArray(objValue)) {
     return objValue.concat(srcValue);
   }
 }
 
-function MergePredefinedWithUser(predefinedState, userState) {
+function MergePredefinedWithUser(predefinedState: any, userState: any) {
   const result = _.extend({}, predefinedState);
 
   for (const key in userState) {

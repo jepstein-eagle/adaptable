@@ -184,6 +184,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // set the licence first
         this.LicenceService = new LicenceService(this);
 
+        // the audit service needs to be created before the store
+        this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -191,7 +193,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.DataService = new DataService(this);
         this.ValidationService = new ValidationService(this);
-        this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
+
         this.StyleService = new StyleService(this);
         this.ChartService = new ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService(this);
