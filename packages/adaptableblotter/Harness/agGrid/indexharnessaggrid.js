@@ -124,7 +124,6 @@ function InitTradeBlotter() {
       //  licenceKey: getValidStandardKey(),
       //    licenceKey: getValidEnterpriseKey(),
       // licenceKey: ,
-      licenceKey: 'abc5834u-yt5a4evp1-r1oq9nclf1',
       // licenceKey: '',
 
       predefinedConfig: dataSourceJson,
