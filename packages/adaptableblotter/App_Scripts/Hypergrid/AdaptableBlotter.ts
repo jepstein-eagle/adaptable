@@ -171,7 +171,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.FreeTextColumnService = new FreeTextColumnService(this);
         this.LicenceService = new LicenceService(this);
         this.ScheduleService = new ScheduleService(this);
-        
+
         BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
 
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
@@ -749,7 +749,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this._onRefresh.Dispatch(this, this);
     }
 
-    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
+    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue, visibleRowsOnly: boolean): Array<IRawValueDisplayValuePair> {
+        // TODO: we are not checking visible rows only!
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
         // check if there are permitted column values for that column
         let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
@@ -762,62 +763,42 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             })
         } else {
+            let element;
             let column = this.getHypergridColumn(columnId);
-            //We bypass the whole DataSource stuff as we need to get ALL the data
-            let data = this.hyperGrid.behavior.dataModel.getData()
-            for (var index = 0; index < data.length; index++) {
-                var element = data[index]
-                let displayString = this.getDisplayValueFromRecord(element, columnId)
-                let rawValue = this.valOrFunc(element, column)
-                if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-                    returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+            if (visibleRowsOnly) {
+                let rowCount = this.hyperGrid.behavior.dataModel.dataSource.getRowCount()
+                for (var visibleindex = 0; visibleindex < rowCount; visibleindex++) {
+                    element = this.hyperGrid.behavior.dataModel.dataSource.getRow(visibleindex)
+                    this.addDistinctItem(element, columnId, column, distinctCriteria, returnMap)
+                    if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
+                        return Array.from(returnMap.values())
+                    }
                 }
-                else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
-                    returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
-                }
-                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
-                    return Array.from(returnMap.values())
+            } else {
+                let data = this.hyperGrid.behavior.dataModel.getData()
+                for (var allIndex = 0; allIndex < data.length; allIndex++) {
+                    element = data[allIndex]
+                    this.addDistinctItem(element, columnId, column, distinctCriteria, returnMap)
+                    if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
+                        return Array.from(returnMap.values())
+                    }
                 }
             }
         }
         return Array.from(returnMap.values())
     }
 
-    public getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
-        let returnMap = new Map<string, IRawValueDisplayValuePair>();
-        // check if there are permitted column values for that column
-        let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
-        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
-        if (permittedValuesForColumn) {
-            permittedValuesForColumn.PermittedValues.forEach(pv => {
-                returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
-                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
-                    return Array.from(returnMap.values())
-                }
-            })
-        } else {
-            let column = this.getHypergridColumn(columnId);
-            //We bypass the whole DataSource stuff as we need to get ALL the data
-            let data = this.hyperGrid.behavior.dataModel.getData()
-            for (var index = 0; index < data.length; index++) {
-                var element = data[index]
-                let displayString = this.getDisplayValueFromRecord(element, columnId)
-                let rawValue = this.valOrFunc(element, column)
-                if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-                    returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
-                }
-                else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
-                    returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
-                }
-                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
-                    return Array.from(returnMap.values())
-                }
-            }
+    private addDistinctItem(element: any, columnId: string, column: any, distinctCriteria: DistinctCriteriaPairValue, returnMap: Map<string, IRawValueDisplayValuePair>): void {
+        let displayString = this.getDisplayValueFromRecord(element, columnId)
+        let rawValue = this.valOrFunc(element, column)
+        if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+            returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
         }
-        return Array.from(returnMap.values())
+        else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+            returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+        }
     }
 
-  
 
     public getDisplayValue(id: any, columnId: string): string {
         let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id)
@@ -999,7 +980,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this._onSearchChanged.Dispatch(this, this);
     }
 
-    private applyDataChange(){
+    private applyDataChange() {
         this.ReindexAndRepaint()
     }
 

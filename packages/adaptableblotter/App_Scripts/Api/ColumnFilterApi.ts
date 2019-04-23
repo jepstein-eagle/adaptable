@@ -4,19 +4,26 @@ import { IUserFilter } from "../Utilities/Interface/BlotterObjects/IUserFilter";
 import { IColumnFilter } from "../Utilities/Interface/BlotterObjects/IColumnFilter";
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IColumnFilterApi } from './Interface/IColumnFilterApi';
+import { ColumnFilterState } from '../Redux/ActionsReducers/Interface/IState';
 
 
 
 export class ColumnFilterApi extends ApiBase implements IColumnFilterApi {
 
-     public Set(columnFilters: IColumnFilter[]): void {
+     
+  public GetState(): ColumnFilterState {
+    return this.getBlotterState().ColumnFilter;
+}
+
+
+public Set(columnFilters: IColumnFilter[]): void {
       columnFilters.forEach(cf => {
         this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(cf))
       })
     }
   
     public SetFromUserFilter(userFilter: string): void {
-      let existingUserFilter: IUserFilter = this.getState().UserFilter.UserFilters.find(uf => uf.Name == userFilter);
+      let existingUserFilter: IUserFilter = this.getBlotterState().UserFilter.UserFilters.find(uf => uf.Name == userFilter);
       if (this.checkItemExists(existingUserFilter, userFilter, "User Filter")) {
         let columnFilter: IColumnFilter = ObjectFactory.CreateColumnFilterFromUserFilter(existingUserFilter)
         this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter));
@@ -41,8 +48,8 @@ export class ColumnFilterApi extends ApiBase implements IColumnFilterApi {
       this.dispatchAction(ColumnFilterRedux.ColumnFilterClearAll());
     }
   
-    public GetCurrent(): IColumnFilter[] {
-      return this.getState().ColumnFilter.ColumnFilters;
+    public GetAll(): IColumnFilter[] {
+      return this.getBlotterState().ColumnFilter.ColumnFilters;
     }
 
 

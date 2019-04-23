@@ -19,7 +19,7 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
         }
         isFilterActive() {
             //make the small filter icon to appear when there is a filter
-            return blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == this.params.column.getColId()) > -1
+            return blotter.api.columnFilterApi.GetAll().findIndex(x => x.ColumnId == this.params.column.getColId()) > -1
         }
 
         doesFilterPass(params: IDoesFilterPassParams): boolean {
@@ -40,7 +40,7 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
         afterGuiAttached?(params?: { hidePopup?: Function }): void {
             //we always unmount first so the autofocus from the form works... in other grids we unmount when hidden
             ReactDOM.unmountComponentAtNode(this.filterContainer)
-            let column: IColumn  = ColumnHelper.getColumnFromId(this.column.getColId(), blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+            let column: IColumn  = ColumnHelper.getColumnFromId(this.column.getColId(), blotter.api.gridApi.getColumns());
             let filterContext: IColumnFilterContext = {
                 Column: column,
                 Blotter: blotter,

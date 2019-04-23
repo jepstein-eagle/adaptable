@@ -154,7 +154,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                 this.props.Blotter.BlotterOptions.queryOptions.getColumnValues(this.props.SelectedColumnId).
                     then(result => {
                         if (result == null) { // if nothing returned then default to normal
-                            columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue)
+                            columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue, false)
                             columnValuePairs = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                             this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                         } else { // get the distinct items and make sure within max items that can be displayed
@@ -172,7 +172,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<Expressi
                     });
             }
             else {
-                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue)
+                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, DistinctCriteriaPairValue.DisplayValue, false)
                 columnValuePairs = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                 this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
             }

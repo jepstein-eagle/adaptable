@@ -1,16 +1,13 @@
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IStrategy, } from './Interface/IStrategy';
 import { Action } from 'redux';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
 import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Utilities/Enums';
-import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IEntitlement } from "../Utilities/Interface/IEntitlement";
 import { IAdvancedSearch } from "../Utilities/Interface/BlotterObjects/IAdvancedSearch";
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
 import { IMenuItem } from '../Utilities/Interface/IMenu';

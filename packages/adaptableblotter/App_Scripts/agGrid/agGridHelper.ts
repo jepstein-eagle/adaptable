@@ -115,7 +115,7 @@ export module agGridHelper {
 
 
 
-    export function cleanValue(value: string): string {
+    export function getCleanValue(value: string): string {
         if (value == null || value == 'null') {
             return null;
         } else if (value == undefined || value == 'undefined') {
@@ -133,7 +133,7 @@ export module agGridHelper {
 
         let render: any = colDef.cellRenderer
         if (typeof render == "string") {
-            return agGridHelper.cleanValue(valueToRender)
+            return getCleanValue(valueToRender)
         }
         return render({ value: valueToRender }) || "";
     }

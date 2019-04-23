@@ -157,7 +157,6 @@ export module ExpressionHelper {
 
                     for (let range of columnRanges.Ranges) {
                         let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(range, getColumnValue(columnRanges.ColumnId), null, column, blotter, getOtherColumnValue)
-
                         isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation, blotter);
                         if (isColumnSatisfied) {
                             break;
@@ -420,7 +419,7 @@ export module ExpressionHelper {
     }
 
     export function IsExpressionValid(expression: Expression): boolean {
-        //nothing to check for ColumnValues.
+        //nothing to check for ColumnValues or Filters
         //we check that all ranges are properly populated
         return expression.RangeExpressions.every(x => {
             return x.Ranges.every(range => {
@@ -471,7 +470,7 @@ export module ExpressionHelper {
         return new Expression([], [], [])
     }
 
-    export function CreateEmptyRangeExpression(): IRange {
+    export function CreateEmptyRange(): IRange {
         return { Operator: LeafExpressionOperator.Unknown, Operand1: "", Operand2: "", Operand1Type: RangeOperandType.Value, Operand2Type: RangeOperandType.Value }
     }
 
@@ -631,7 +630,7 @@ export module ExpressionHelper {
     }
 
     function getExistingItem(blotter: IAdaptableBlotter, rangeEvaluation: IRangeEvaluation): any {
-        let displayValuePairs: IRawValueDisplayValuePair[] = blotter.getColumnValueDisplayValuePairDistinctList(rangeEvaluation.columnId, DistinctCriteriaPairValue.DisplayValue)
+        let displayValuePairs: IRawValueDisplayValuePair[] = blotter.getColumnValueDisplayValuePairDistinctList(rangeEvaluation.columnId, DistinctCriteriaPairValue.DisplayValue, false)
         let existingItem = displayValuePairs.find(dv => dv.DisplayValue.toLowerCase() == rangeEvaluation.newValue);
         return existingItem;
     }

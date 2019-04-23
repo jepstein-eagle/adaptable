@@ -8,7 +8,6 @@ import { ObjectFactory } from '../ObjectFactory';
 import { YEAR_ADD, MONTH_ADD } from '../Constants/GeneralConstants';
 import { BlotterHelper } from '../Helpers/BlotterHelper';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
-import { number } from 'prop-types';
 
 /*
 Checks if this is the demo site - if so then creates a dummy licence for demo purposes.
@@ -113,7 +112,7 @@ export class LicenceService implements ILicenceService {
         return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Community, true, LicenceUserType.EndUser, new Date());
     }
 
-    private CheckIsDouble(numberToCheck:any) {
+    private CheckIsDouble(numberToCheck: any) {
         return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Enterprise, true, LicenceUserType.EndUser, new Date(2020, 11, numberToCheck));
     }
 

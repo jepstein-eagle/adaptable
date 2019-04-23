@@ -2,11 +2,17 @@ import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux'
 import { ApiBase } from "./ApiBase";
 import { IShortcut } from "../Utilities/Interface/BlotterObjects/IShortcut";
 import { IShortcutApi } from './Interface/IShortcutApi';
+import { ShortcutState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class ShortcutApi extends ApiBase implements IShortcutApi {
 
-     public  GetAll(): IShortcut[] {
-      return this.getState().Shortcut.Shortcuts;
+    
+  public GetState(): ShortcutState {
+    return this.getBlotterState().Shortcut;
+}
+
+public  GetAll(): IShortcut[] {
+      return this.getBlotterState().Shortcut.Shortcuts;
     }
   
     public  Add(shortcut: IShortcut): void {

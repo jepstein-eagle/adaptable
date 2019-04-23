@@ -11,6 +11,9 @@ import { EMPTY_ARRAY, SYSTEM_DEFAULT_CHART_VISIBILITY, EMPTY_STRING, SYSTEM_DEFA
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 import { IChartData } from '../../Utilities/Interface/BlotterObjects/IChartDefinition';
+import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
+import { IRange } from '../../Utilities/Interface/Expression/IRange';
+import { Expression } from '../../Utilities/Expression';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -51,6 +54,13 @@ export const CHART_SET_CHART_VISIBILITY = 'CHART_SET_CHART_VISIBILITY';
 
 // Error Messages
 export const CALCULATEDCOLUMN_SET_ERROR_MESSAGE = 'CALCULATEDCOLUMN_SET_ERROR_MESSAGE';
+
+// Quick Search
+export const QUICK_SEARCH_SET_RANGE = 'QUICK_SEARCH_SET_RANGE';
+export const QUICK_SEARCH_CLEAR_RANGE = 'QUICK_SEARCH_CLEAR_RANGE';
+export const QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS = 'QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS';
+export const QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS = 'QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS';
+
 
 export interface SystemSetHealthStatusAction extends Redux.Action {
     SystemStatus: ISystemStatus;
@@ -123,8 +133,18 @@ export interface SetIPPDomainPagesAction extends Redux.Action {
     IPPDomainsPages: IPPDomain[];
 }
 
-export interface ReportSetErrorMessagection extends Redux.Action {
+export interface ReportSetErrorMessageAction extends Redux.Action {
     ErrorMessage: string
+}
+export interface QuickSearchSetRangeAction extends Redux.Action {
+    Range: IRange
+}
+export interface QuickSearchClearRangeAction extends Redux.Action {
+}
+export interface QuickSearchSetVisibleColumnExpressionsAction extends Redux.Action {
+    Expressions: Expression[]
+}
+export interface QuickSearchClearVisibleColumnExpressionsAction extends Redux.Action {
 }
 
 export const SystemSetHealthStatus = (SystemStatus: ISystemStatus): SystemSetHealthStatusAction => ({
@@ -215,9 +235,25 @@ export const SetIPPDomainPages = (IPPDomainsPages: IPPDomain[]): SetIPPDomainPag
     IPPDomainsPages
 })
 
-export const ReportSetErrorMessage = (ErrorMessage: string): ReportSetErrorMessagection => ({
+export const ReportSetErrorMessage = (ErrorMessage: string): ReportSetErrorMessageAction => ({
     type: REPORT_SET_ERROR_MESSAGE,
     ErrorMessage
+})
+export const QuickSearchSetRange = (Range:IRange): QuickSearchSetRangeAction => ({
+    type: QUICK_SEARCH_SET_RANGE,
+    Range
+})
+
+export const QuickSearchClearRange = (): QuickSearchClearRangeAction => ({
+    type: QUICK_SEARCH_CLEAR_RANGE
+})
+export const QuickSearchSetVisibleColumnExpressions = (Expressions: Expression[]): QuickSearchSetVisibleColumnExpressionsAction => ({
+    type: QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS,
+    Expressions
+})
+
+export const QuickSearchClearVisibleColumnExpressions = (): QuickSearchClearVisibleColumnExpressionsAction => ({
+    type: QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS
 })
 
 const initialSystemState: SystemState = {
@@ -234,7 +270,9 @@ const initialSystemState: SystemState = {
     CalculatedColumnErrorMessage: EMPTY_STRING,
     IPPDomainsPages: EMPTY_ARRAY,
     SystemReports: ReportHelper.CreateSystemReports(),
-    ReportErrorMessage: EMPTY_STRING
+    ReportErrorMessage: EMPTY_STRING,
+    QuickSearchRange: ExpressionHelper.CreateEmptyRange(),
+    QuickSearchVisibleColumnExpressions: EMPTY_ARRAY
 }
 
 export const SystemReducer: Redux.Reducer<SystemState> = (state: SystemState = initialSystemState, action: Redux.Action): SystemState => {
@@ -302,7 +340,19 @@ export const SystemReducer: Redux.Reducer<SystemState> = (state: SystemState = i
             return Object.assign({}, state, { IPPDomainsPages: (<SetIPPDomainPagesAction>action).IPPDomainsPages })
         }
         case REPORT_SET_ERROR_MESSAGE: {
-            return Object.assign({}, state, { ReportErrorMessage: (<ReportSetErrorMessagection>action).ErrorMessage })
+            return Object.assign({}, state, { ReportErrorMessage: (<ReportSetErrorMessageAction>action).ErrorMessage })
+        }
+        case QUICK_SEARCH_SET_RANGE: {
+            return Object.assign({}, state, { QuickSearchRange: (<QuickSearchSetRangeAction>action).Range })
+        }
+        case QUICK_SEARCH_CLEAR_RANGE: {
+            return Object.assign({}, state, { QuickSearchRange: ExpressionHelper.CreateEmptyRange()})
+        }
+        case QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS: {
+            return Object.assign({}, state, { QuickSearchVisibleColumnExpressions: (<QuickSearchSetVisibleColumnExpressionsAction>action).Expressions })
+        }
+        case QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS: {
+            return Object.assign({}, state, { QuickSearchVisibleColumnExpressions: EMPTY_ARRAY })
         }
 
         default:

@@ -33,8 +33,8 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
     }
 
     protected InitState() {
-        if (this.FormatColumnState != this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn) {
-            this.FormatColumnState = this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn;
+        if (this.FormatColumnState != this.blotter.api.formatColumnApi.GetState()) {
+            this.FormatColumnState = this.blotter.api.formatColumnApi.GetState();
 
             this.InitStyles();
 

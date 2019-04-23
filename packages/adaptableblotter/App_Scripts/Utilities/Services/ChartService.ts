@@ -92,7 +92,7 @@ export class ChartService implements IChartService {
           finalTotal += Number(columnValue)
         }
       })
-    }else{
+    } else {
       this.blotter.forAllRecordsDo((row) => {
         if (ExpressionHelper.checkForExpressionFromRecord(completedExpression, row, columns, this.blotter)) {
           returnedRecordCount++;
@@ -101,7 +101,7 @@ export class ChartService implements IChartService {
         }
       })
     }
-    
+
     if (showAverageTotal) {
       finalTotal = (finalTotal / returnedRecordCount)
     }
@@ -115,11 +115,7 @@ export class ChartService implements IChartService {
   private getXAxisColumnValues(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): string[] {
     let xAxisColValues: string[] = [];
     if (ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
-      if (chartDefinition.VisibleRowsOnly) {
-        xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctListVisible(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
-      } else {
-        xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
-      }
+      xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue, chartDefinition.VisibleRowsOnly).map(cv => { return cv.DisplayValue })
     } else {
       if (chartDefinition.VisibleRowsOnly) {
         this.blotter.forAllVisibleRecordsDo((row) => {
@@ -177,7 +173,7 @@ export class ChartService implements IChartService {
 
     let dataItems: IPieChartDataItem[] = [];
 
-    let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+    let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
     // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
     let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition, columns);
 
@@ -192,7 +188,7 @@ export class ChartService implements IChartService {
     }
 
     // if nothing passes (possible if you have visible rows only)
-    if (dataCounter.size ==0) {
+    if (dataCounter.size == 0) {
       let message: string = "No data returned for Pie Chart."
       LoggingHelper.LogAdaptableBlotterWarning(message)
       return {

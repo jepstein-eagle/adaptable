@@ -1,7 +1,8 @@
 import { ICustomSort } from "../../Utilities/Interface/BlotterObjects/ICustomSort";
+import { CustomSortState } from "../../Redux/ActionsReducers/Interface/IState";
 
 export interface ICustomSortApi {
-   
+  GetState(): CustomSortState;
   GetAll(): ICustomSort[]
   GetByColumn(column: string): ICustomSort
   Add(customSort: ICustomSort): void

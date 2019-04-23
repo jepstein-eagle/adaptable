@@ -63,7 +63,7 @@ export module ReportHelper {
 
     export function ConvertReportToArray(blotter: IAdaptableBlotter, Report: IReport): IStrategyActionReturn<any[]> {
         let ReportColumns: IColumn[] = [];
-        let gridColumns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let gridColumns: IColumn[] = blotter.api.gridApi.getColumns();
 
         // first get the cols depending on the Column Scope
         switch (Report.ReportColumnScope) {

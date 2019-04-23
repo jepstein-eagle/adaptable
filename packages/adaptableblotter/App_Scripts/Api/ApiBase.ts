@@ -21,7 +21,7 @@ export abstract class ApiBase {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(action)
     }
 
-    public getState(): AdaptableBlotterState {
+    public getBlotterState(): AdaptableBlotterState {
         return this.blotter.AdaptableBlotterStore.TheStore.getState()
     }
 }

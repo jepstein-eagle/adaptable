@@ -24,7 +24,7 @@ interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupC
     QuickSearchStyle: IStyle,
 
     onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction,
-    onSetSearchDisplayType: (DisplayAction: DisplayAction) => QuickSearchRedux.QuickSearchSetSearchDisplayAction
+    onSetSearchDisplayType: (DisplayAction: DisplayAction) => QuickSearchRedux.QuickSearchSetDisplayAction
     onSetStyle: (style: IStyle) => QuickSearchRedux.QuickSearchSetStyleAction
 }
 

@@ -20,6 +20,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.HomeStrategyId, blotter)
+        this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded())
     }
 
     public addContextMenuItem(column: IColumn): void {
@@ -71,6 +72,11 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
             }
             this.GridState = this.GetGridState();
         }
+    }
+
+    // useful for when grid reloads (e.g. at midnight);
+    private handleGridReloaded(): void {
+        this.blotter.applyGridFiltering();
     }
 
 

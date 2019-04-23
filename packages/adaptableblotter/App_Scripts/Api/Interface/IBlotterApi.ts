@@ -25,6 +25,11 @@ import { IThemeApi } from "./IThemeApi";
 import { IUserInterfaceApi } from "./IUserInterfaceApi";
 import { ICustomSortApi } from "./ICustomSortApi";
 import { IInternalApi } from "./IInternalApi";
+import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
+import { IConditionalStyleApi } from "./IConditionalStyleApi";
+import { IReminderApi } from "./IReminderApi";
+import { IFlashingCellApi } from "./IFlashingCellApi";
+import { ISystemApi } from "./ISystemApi";
 
 
 /**
@@ -41,20 +46,24 @@ export interface IBlotterApi {
   columnCategoryApi: IColumnCategoryApi;
   columnFilterApi: IColumnFilterApi
   configApi: IConfigApi;
+  conditionalStyleApi: IConditionalStyleApi;
   customSortApi: ICustomSortApi
   dashboardApi: IDashboardApi;
   dataSourceApi: IDataSourceApi;
   entitlementApi: IEntitlementApi;
   eventApi:IEventApi;
   exportApi: IExportApi;
+  flashingCellApi: IFlashingCellApi;
   formatColumnApi: IFormatColumnApi;
   freeTextColumnApi: IFreeTextColumnApi;
   gridApi: IGridApi;
   layoutApi: ILayoutApi;
   percentBarApi: IPercentBarApi;
+  reminderApi: IReminderApi;
   quickSearchApi: IQuickSearchApi;
   shortcutApi: IShortcutApi;
   smartEditApi: ISmartEditApi;
+  systemApi: ISystemApi;
   systemFilterApi: ISystemFilterApi;
   systemStatusApi: ISystemStatusApi;
   themeApi: IThemeApi;

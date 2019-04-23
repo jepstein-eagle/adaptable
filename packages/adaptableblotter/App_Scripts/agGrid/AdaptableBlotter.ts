@@ -14,6 +14,7 @@ import { IAdaptableBlotterStore, AdaptableBlotterState } from '../Redux/Store/In
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
+import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 // services
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
@@ -134,6 +135,7 @@ import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { ReminderStrategy } from '../Strategy/ReminderStrategy';
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
+import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -155,7 +157,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ScheduleService: IScheduleService
 
     private _calculatedColumnPathMap: Map<string, string[]> = new Map()
-private useRowNodeLookUp: boolean;
+    private useRowNodeLookUp: boolean;
 
     private abContainerElement: HTMLElement;
     private gridOptions: GridOptions
@@ -176,6 +178,9 @@ private useRowNodeLookUp: boolean;
         this.EmbedColumnMenu = true
         this.isInitialised = false;
         this.hasFloatingFilter = true;
+        // get the api ready
+        this.api = new BlotterApi(this);
+
         // set the licence first
         this.LicenceService = new LicenceService(this);
 
@@ -191,9 +196,9 @@ private useRowNodeLookUp: boolean;
         this.ChartService = new ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService(this);
         this.ScheduleService = new ScheduleService(this);
-        
-        this.useRowNodeLookUp=agGridHelper.TrySetUpNodeIds(this.gridOptions, blotterOptions);
-        
+
+        this.useRowNodeLookUp = agGridHelper.TrySetUpNodeIds(this.gridOptions, blotterOptions);
+
         const isGridInstantiated = this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
 
         if (!isGridInstantiated) {
@@ -211,9 +216,7 @@ private useRowNodeLookUp: boolean;
 
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
 
-        // get the api ready
-        this.api = new BlotterApi(this);
-
+        
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
         this.Strategies = new Map<string, IStrategy>();
@@ -288,9 +291,6 @@ private useRowNodeLookUp: boolean;
         // create debounce methods that take a time based on user settings
         this.throttleOnDataChangedUser = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
         this.throttleOnDataChangedExternal = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
-
-     
-
     }
 
 
@@ -474,7 +474,7 @@ private useRowNodeLookUp: boolean;
 
     public setColumnIntoStore() {
         let allColumns: IColumn[] = []
-        let existingColumns: IColumn[] = this.getState().Grid.Columns;
+        let existingColumns: IColumn[] = this.api.gridApi.getColumns();
         let vendorCols: Column[] = this.gridOptions.columnApi.getAllGridColumns()
         let quickSearchClassName = this.getQuickSearchClassName();
 
@@ -523,8 +523,8 @@ private useRowNodeLookUp: boolean;
     }
 
     private getQuickSearchClassName(): string {
-        let quickSearchClassName: string = StringExtensions.IsNotNullOrEmpty(this.getState().QuickSearch.Style.ClassName) ?
-            this.getState().QuickSearch.Style.ClassName :
+        let quickSearchClassName: string = StringExtensions.IsNotNullOrEmpty(this.api.quickSearchApi.GetStyle().ClassName) ?
+            this.api.quickSearchApi.GetStyle().ClassName :
             StyleHelper.CreateStyleName(StrategyConstants.QuickSearchStrategyId, this)
         return quickSearchClassName;
     }
@@ -534,8 +534,8 @@ private useRowNodeLookUp: boolean;
         let cellClassRules: any = {};
         cellClassRules[quickSearchClassName] = function (params: any) {
             let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
-            let quickSearchState = blotter.getState().QuickSearch;
-            if (StringExtensions.IsNotNullOrEmpty(blotter.getState().QuickSearch.QuickSearchText)
+            let quickSearchState = blotter.api.quickSearchApi.GetState();
+            if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
                 && (quickSearchState.DisplayAction == DisplayAction.HighlightCell
                     || quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)) {
 
@@ -624,7 +624,7 @@ private useRowNodeLookUp: boolean;
                 for (let column of rangeSelection.columns) {
                     let colId: string = column.getColId();
                     if (index == 0) {
-                        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(colId, this.getState().Grid.Columns);
+                        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(colId, this.api.gridApi.getColumns());
                         columns.push(selectedColumn);
                     }
 
@@ -662,7 +662,7 @@ private useRowNodeLookUp: boolean;
         }
 
         // get the column type if already in store (and not unknown)
-        let existingColumn: IColumn = ColumnHelper.getColumnFromId(column.getId(), this.getState().Grid.Columns);
+        let existingColumn: IColumn = ColumnHelper.getColumnFromId(column.getId(), this.api.gridApi.getColumns());
         if (existingColumn && existingColumn.DataType != DataType.Unknown) {
             return existingColumn.DataType;
         }
@@ -762,40 +762,44 @@ private useRowNodeLookUp: boolean;
 
 
     public setValue(cellInfo: ICellInfo): void {
-        //ag-grid doesn't support FindRow based on data
-        // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
-        let isUpdated: boolean = false;
-
-        let test: any = this.gridOptions.api.getRowNode(cellInfo.Id);
-        console.log('node')
-        console.log(test);
-
-        this.gridOptions.api.getModel().forEachNode(rowNode => {
-            if (!isUpdated && cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
-                let oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode)
-                rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value)
-                // change the  flag to make looping quicker - but would be nicer if could just break...
-                isUpdated = true;
-
-
-                let dataChangedEvent: IDataChangedInfo =
-                {
-                    OldValue: oldValue,
-                    NewValue: cellInfo.Value,
-                    ColumnId: cellInfo.ColumnId,
-                    IdentifierValue: cellInfo.Id,
-                    Record: null
-                }
-                if (this.AuditLogService.IsAuditCellEditsEnabled) {
-                    this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
-                }
-                this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent)
-
-                this.DataService.CreateDataChangedEvent(dataChangedEvent);
+        if (this.useRowNodeLookUp) {
+            let rowNode: RowNode = this.gridOptions.api.getRowNode(cellInfo.Id);
+            if (rowNode != null) {
+                this.updateValue(cellInfo, rowNode);
             }
-        })
+        } else {
+            let isUpdated: boolean = false;
+            // prefer not to use this method but if we do then at least we can prevent further lookups once we find
+            this.gridOptions.api.getModel().forEachNode(rowNode => {
+                if (!isUpdated) {
+                    if (cellInfo.Id == this.getPrimaryKeyValueFromRecord(rowNode)) {
+                        this.updateValue(cellInfo, rowNode);
+                        isUpdated = true;
+                    }
+                }
+            })
+        }
         this.filterOnUserDataChange();
         this.gridOptions.api.clearRangeSelection();
+    }
+
+    private updateValue(cellInfo: ICellInfo, rowNode: RowNode): void {
+        let oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode)
+        rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value)
+
+        let dataChangedEvent: IDataChangedInfo =
+        {
+            OldValue: oldValue,
+            NewValue: cellInfo.Value,
+            ColumnId: cellInfo.ColumnId,
+            IdentifierValue: cellInfo.Id,
+            Record: null
+        }
+        if (this.AuditLogService.IsAuditCellEditsEnabled) {
+            this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+        }
+        this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent)
+        this.DataService.CreateDataChangedEvent(dataChangedEvent);
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
@@ -807,26 +811,24 @@ private useRowNodeLookUp: boolean;
             return;
         }
 
-        // using new method... (JW, 11/3/18)
         var dataChangedEvents: IDataChangedInfo[] = []
         let nodesToRefresh: RowNode[] = []
         let refreshColumnList: string[] = []
+        let percentBars: IPercentBar[] = this.api.percentBarApi.GetAll();
 
         // now two ways to do this - one using pk lookup and other using foreach on row node
         if (this.useRowNodeLookUp) {
-            batchValues.forEach((cellInfo: ICellInfo)=>{
+            batchValues.forEach((cellInfo: ICellInfo) => {
                 let rowNode: RowNode = this.gridOptions.api.getRowNode(cellInfo.Id);
-                 if (rowNode) {
-                    this.updateBatchValue(cellInfo, rowNode, nodesToRefresh, refreshColumnList, dataChangedEvents);
-                }else{
-                    alert("cannot find for: " + cellInfo.Id)
+                if (rowNode) {
+                    this.updateBatchValue(cellInfo, rowNode, nodesToRefresh, refreshColumnList, dataChangedEvents, percentBars);
                 }
             });
         } else {
             this.gridOptions.api.getModel().forEachNode((rowNode: RowNode) => {
                 let cellInfo: ICellInfo = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
                 if (cellInfo) {
-                    this.updateBatchValue(cellInfo, rowNode, nodesToRefresh, refreshColumnList, dataChangedEvents);
+                    this.updateBatchValue(cellInfo, rowNode, nodesToRefresh, refreshColumnList, dataChangedEvents, percentBars);
                 }
             })
         }
@@ -844,8 +846,7 @@ private useRowNodeLookUp: boolean;
         })
     }
 
-
-    private updateBatchValue(cellInfo: ICellInfo, rowNode: RowNode, nodesToRefresh: RowNode[], refreshColumnList: string[], dataChangedEvents: IDataChangedInfo[]): void {
+    private updateBatchValue(cellInfo: ICellInfo, rowNode: RowNode, nodesToRefresh: RowNode[], refreshColumnList: string[], dataChangedEvents: IDataChangedInfo[], percentBars: IPercentBar[]): void {
         let colId: string = cellInfo.ColumnId;
         refreshColumnList.push(colId);
         nodesToRefresh.push(rowNode);
@@ -875,7 +876,7 @@ private useRowNodeLookUp: boolean;
         }
 
         // see if we need to refresh any percent bars
-        this.getState().PercentBar.PercentBars.forEach(pb => {
+        percentBars.forEach(pb => {
             refreshColumnList.forEach(changedColId => {
                 if (StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) && pb.MaxValueColumnId == changedColId) {
                     ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
@@ -893,15 +894,19 @@ private useRowNodeLookUp: boolean;
 
     public getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any {
         if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-            let rowNodeSearch: RowNode
-            //ag-grid doesn't support FindRow based on data
-            // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
-            this.gridOptions.api.getModel().forEachNode(rowNode => {
-                if (id == this.getPrimaryKeyValueFromRecord(rowNode)) {
-                    rowNodeSearch = rowNode
-                }
-            })
-            return (columnId: string) => { return this.gridOptions.api.getValue(columnId, rowNodeSearch); }
+            let rowNode: RowNode
+            if (this.useRowNodeLookUp) {
+                rowNode = this.gridOptions.api.getRowNode(id);
+            } else {
+                let foundRow: boolean = false;
+                this.gridOptions.api.getModel().forEachNode(node => {
+                    if (!foundRow && id == this.getPrimaryKeyValueFromRecord(node)) {
+                        rowNode = node
+                        foundRow = true;
+                    }
+                })
+            }
+            return (columnId: string) => { return this.gridOptions.api.getValue(columnId, rowNode); }
         }
         else {
             return (columnId: string) => { return this.getDisplayValue(id, columnId); }
@@ -915,8 +920,6 @@ private useRowNodeLookUp: boolean;
             return (columnId: string) => { return this.getDisplayValueFromRecord(record, columnId); }
         }
     }
-
-
 
     private isColumnReadonly(columnId: string): boolean {
         //same as hypergrid. we do not support the fact that some rows are editable and some are not
@@ -948,7 +951,6 @@ private useRowNodeLookUp: boolean;
     }
 
     public setCustomSort(columnId: string, comparer: Function): void {
-
         let sortModel = this.gridOptions.api.getSortModel()
         let columnDef = this.gridOptions.api.getColumnDef(columnId);
 
@@ -968,61 +970,35 @@ private useRowNodeLookUp: boolean;
         this.gridOptions.api.setSortModel(sortModel)
     }
 
-    public getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
-
+    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue, visibleRowsOnly: boolean): Array<IRawValueDisplayValuePair> {
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
 
         // check if there are permitted column values for that column
-        // NB.  this is currently a bug as we dont check for visibility :(
-        let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
-        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
+        // NB.  this is currently a bug as we dont check for visibility so if using permitted values then ALL are returned :(
+        let permittedValuesForColumn = this.api.userInterfaceApi.GetPermittedValuesForColumn(columnId)
         if (permittedValuesForColumn) {
             permittedValuesForColumn.PermittedValues.forEach(pv => {
                 returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
             })
-        } else { // get the distinct values for the column from the grid
-            //we use forEachNode as we want to get all data even the one filtered out...
+        } else {
             let useRawValue: boolean = this.useRawValueForColumn(columnId);
-
-            var model = this.gridOptions.api.getModel();
-            let rowCount = model.getRowCount();
-
-            for (var i = 0; i < rowCount; i++) {
-                var rowNode: RowNode = model.getRow(i);
-                //we do not return the values of the aggregates when in grouping mode
-                //otherwise they wxould appear in the filter dropdown etc....
-                this.addVDistinctValueFromNode(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
+            if (visibleRowsOnly) {
+                this.gridOptions.api.forEachNodeAfterFilter((rowNode: RowNode) => {
+                    this.addDistinctColumnValue(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
+                });
+            } else {
+                this.gridOptions.api.forEachNode(rowNode => {
+                    this.addDistinctColumnValue(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
+                })
             }
         }
         return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
     }
 
 
-    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
-
-        let returnMap = new Map<string, IRawValueDisplayValuePair>();
-
-        // check if there are permitted column values for that column
-        let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
-        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
-        if (permittedValuesForColumn) {
-            permittedValuesForColumn.PermittedValues.forEach(pv => {
-                returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
-            })
-        } else { // get the distinct values for the column from the grid
-            //we use forEachNode as we want to get all data even the one filtered out...
-            let useRawValue: boolean = this.useRawValueForColumn(columnId);
-
-            this.gridOptions.api.forEachNode(rowNode => {
-                //we do not return the values of the aggregates when in grouping mode
-                //otherwise they wxould appear in the filter dropdown etc....
-                this.addVDistinctValueFromNode(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
-            })
-        }
-        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
-    }
-
-    private addVDistinctValueFromNode(rowNode: RowNode, columnId: string, useRawValue: boolean, distinctCriteria: DistinctCriteriaPairValue, returnMap: Map<string, IRawValueDisplayValuePair>): void {
+    private addDistinctColumnValue(rowNode: RowNode, columnId: string, useRawValue: boolean, distinctCriteria: DistinctCriteriaPairValue, returnMap: Map<string, IRawValueDisplayValuePair>): void {
+        //we do not return the values of the aggregates when in grouping mode
+        //otherwise they wxould appear in the filter dropdown etc....
         if (!rowNode.group) {
             let rawValue = this.gridOptions.api.getValue(columnId, rowNode)
             let displayValue = (useRawValue) ?
@@ -1030,8 +1006,7 @@ private useRowNodeLookUp: boolean;
                 this.getDisplayValueFromRecord(rowNode, columnId);
             if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
                 returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayValue });
-            }
-            else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+            } else {
                 returnMap.set(displayValue, { RawValue: rawValue, DisplayValue: displayValue });
             }
         }
@@ -1040,23 +1015,31 @@ private useRowNodeLookUp: boolean;
 
     private useRawValueForColumn(columnId: string): boolean {
         // will add more in due course I'm sure but for now only percent bar columns return false...
-        if (ArrayExtensions.IsEmpty(this.getState().PercentBar.PercentBars)) {
+        let percentBars: IPercentBar[] = this.api.percentBarApi.GetAll();
+        if (ArrayExtensions.IsEmpty(percentBars)) {
             return false;
         }
-        return ArrayExtensions.ContainsItem(this.getState().PercentBar.PercentBars.map(pb => { return pb.ColumnId }), columnId);
+        return ArrayExtensions.ContainsItem(percentBars.map(pb => { return pb.ColumnId }), columnId);
     }
 
     public getDisplayValue(id: any, columnId: string): string {
         //ag-grid doesn't support FindRow based on data
         // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
+
         let returnValue: string
-        let foundRow: boolean = false;
-        this.gridOptions.api.getModel().forEachNode(rowNode => {
-            if (!foundRow && id == this.getPrimaryKeyValueFromRecord(rowNode)) {
-                returnValue = this.getDisplayValueFromRecord(rowNode, columnId);
-                foundRow = true;
-            }
-        })
+
+        if (this.useRowNodeLookUp) {
+            let rowNode: RowNode = this.gridOptions.api.getRowNode(id);
+            returnValue = this.getDisplayValueFromRecord(rowNode, columnId);
+        } else {
+            let foundRow: boolean = false;
+            this.gridOptions.api.getModel().forEachNode(rowNode => {
+                if (!foundRow && id == this.getPrimaryKeyValueFromRecord(rowNode)) {
+                    returnValue = this.getDisplayValueFromRecord(rowNode, columnId);
+                    foundRow = true;
+                }
+            })
+        }
         return returnValue
     }
 
@@ -1073,8 +1056,8 @@ private useRowNodeLookUp: boolean;
 
     public getDisplayValueFromRawValue(columnId: string, rawValue: any): any {
         let colDef = this.gridOptions.api.getColumnDef(columnId)
-        let column = this.gridOptions.columnApi.getAllColumns().find(c => c.getColId() == columnId)
         if (colDef.valueFormatter) {
+            let column = this.gridOptions.columnApi.getAllColumns().find(c => c.getColId() == columnId)
             let formatter = colDef.valueFormatter
             let params: ValueFormatterParams = {
                 value: rawValue,
@@ -1096,12 +1079,12 @@ private useRowNodeLookUp: boolean;
             return this.getRenderedValue(colDef, rawValue);
         }
         else {
-            return agGridHelper.cleanValue(rawValue);
+            return agGridHelper.getCleanValue(rawValue);
         }
     }
 
     private getRenderedValue(colDef: ColDef, valueToRender: any): string {
-        return agGridHelper.getRenderedValue(this.getState().PercentBar.PercentBars, colDef, valueToRender);
+        return agGridHelper.getRenderedValue(this.api.percentBarApi.GetAll(), colDef, valueToRender);
     }
 
 
@@ -1122,7 +1105,7 @@ private useRowNodeLookUp: boolean;
                 }
             }
             else if (type == "ConditionalStyle") {
-                let cssStyles: string[] = this.getState().ConditionalStyle.ConditionalStyles.map(c => c.Style.ClassName);
+                let cssStyles: string[] = this.api.conditionalStyleApi.GetAll().map(c => c.Style.ClassName);
                 for (let prop in localCellClassRules) {
                     if (prop.includes(StrategyConstants.ConditionalStyleStrategyId) || ArrayExtensions.ContainsItem(cssStyles, prop)) {
                         delete localCellClassRules[prop]
@@ -1188,7 +1171,7 @@ private useRowNodeLookUp: boolean;
         // first change the value getter in the coldefs - nothing else needs to change
         let colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
         let colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumn.ColumnId)
-        let cols: IColumn[] = this.getState().Grid.Columns;
+        let cols: IColumn[] = this.api.gridApi.getColumns();
         let cleanedExpression: string = CalculatedColumnHelper.CleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
 
         let newColDef: ColDef = colDefs[colDefIndex];
@@ -1236,7 +1219,7 @@ private useRowNodeLookUp: boolean;
         let venderCols = this.gridOptions.columnApi.getAllColumns()
         let colDefs: ColDef[] = venderCols.map(x => x.getColDef())
 
-        let cols: IColumn[] = this.getState().Grid.Columns;
+        let cols: IColumn[] = this.api.gridApi.getColumns();
         let cleanedExpression: string = CalculatedColumnHelper.CleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
 
         let newColDef: ColDef = {
@@ -1317,6 +1300,7 @@ private useRowNodeLookUp: boolean;
     }
 
     public getFirstRecord() {
+        // TODO: we can find a better way but its only used by Calccolumn on creation so not urgent
         let record: RowNode
         this.gridOptions.api.forEachNode(rowNode => {
             if (!rowNode.group) {
@@ -1352,7 +1336,7 @@ private useRowNodeLookUp: boolean;
                 headerFontStyle: headerColStyle.fontStyle,
                 headerFontWeight: headerColStyle.fontWeight,
                 height: Number(headerColStyle.height.replace("px", "")),
-                Columns: this.getState().Grid.Columns.map(col => {
+                Columns: this.api.gridApi.getColumns().map(col => {
                     let headerColumn: HTMLElement = document.querySelector(".ag-header-cell[col-id='" + col.ColumnId + "']") as HTMLElement
                     let headerColumnStyle = window.getComputedStyle(headerColumn || headerFirstCol, null)
                     return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px", "")), textAlign: headerColumnStyle.textAlign }
@@ -1367,7 +1351,7 @@ private useRowNodeLookUp: boolean;
                 fontStyle: firstRowStyle.fontStyle,
                 fontWeight: firstRowStyle.fontWeight,
                 height: Number(firstRowStyle.height.replace("px", "")),
-                Columns: this.getState().Grid.Columns.map(col => {
+                Columns: this.api.gridApi.getColumns().map(col => {
                     let cellElement: HTMLElement = document.querySelector(".ag-cell[col-id='" + col.ColumnId + "']") as HTMLElement
                     let headerColumnStyle = window.getComputedStyle(cellElement || firstRow, null)
                     return { columnFriendlyName: col.FriendlyName, width: Number(headerColumnStyle.width.replace("px", "")), textAlign: headerColumnStyle.textAlign }
@@ -1396,6 +1380,12 @@ private useRowNodeLookUp: boolean;
         // });
         //we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type
         //since there are many events and we want them to behave the same
+        this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_VISIBLE, (params: any) => {
+            if (params.visible) {
+                this.updateQuickSearchRangeVisibleColumn(params.column.colId);
+            }
+        })
+
         let columnEventsThatTriggersStateChange = [
             Events.EVENT_COLUMN_MOVED,
             Events.EVENT_GRID_COLUMNS_CHANGED,
@@ -1585,7 +1575,7 @@ private useRowNodeLookUp: boolean;
             }
 
             // see if we need to refresh any percent bars
-            this.getState().PercentBar.PercentBars.forEach(pb => {
+            this.api.percentBarApi.GetAll().forEach(pb => {
                 refreshColumnList.forEach(changedColId => {
                     if (StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) && pb.MaxValueColumnId == changedColId) {
                         ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
@@ -1627,8 +1617,7 @@ private useRowNodeLookUp: boolean;
         };
         let originaldoesExternalFilterPass = this.gridOptions.doesExternalFilterPass;
         this.gridOptions.doesExternalFilterPass = (node: RowNode) => {
-            let columns = this.getState().Grid.Columns;
-            let visibleCols = columns.filter(c => c.Visible);
+            let columns = this.api.gridApi.getColumns();
 
             //first we assess AdvancedSearch (if its running locally)
             if (this.BlotterOptions.generalOptions.serverSearchOption == 'None') {
@@ -1647,24 +1636,30 @@ private useRowNodeLookUp: boolean;
             }
             //we then assess filters
             if (this.BlotterOptions.generalOptions.serverSearchOption == 'None' || this.BlotterOptions.generalOptions.serverSearchOption == 'AdvancedSearch') {
-                let columnFilters: IColumnFilter[] = this.getState().ColumnFilter.ColumnFilters;
+                let columnFilters: IColumnFilter[] = this.api.columnFilterApi.GetAll();
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
                         if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, node, columns, this)) {
-                            // if (!ExpressionHelper.checkForExpression(columnFilter.Filter, rowId, columns, this)) {
                             return false;
                         }
                     }
                 }
                 //we next assess quicksearch
-                let quickSearchState = this.getState().QuickSearch;
+                let quickSearchState: QuickSearchState = this.api.quickSearchApi.GetState();
                 if (quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
-                    let range: IRange = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
-                    if (range != null) {
+                    if (StringExtensions.IsNullOrEmpty(quickSearchState.QuickSearchText)) {
+                        return true;
+                    }
+                    let quickSearchVisibleColumnExpresssions: Expression[] = this.getState().System.QuickSearchVisibleColumnExpressions;
+                    let quickSearchRange = this.getState().System.QuickSearchRange;
+                    if (quickSearchRange == null) { // might not have created so lets do it here
+                        quickSearchRange = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
+                    }
+                    if (quickSearchRange != null) {
+                        let visibleCols = columns.filter(c => c.Visible);
                         for (let column of visibleCols) {
-                            if (RangeHelper.IsColumnAppropriateForRange(range.Operator, column)) {
-                                let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, null, null, null, [range])
-
+                            let expression = quickSearchVisibleColumnExpresssions.find(exp => exp.RangeExpressions[0].ColumnId == column.ColumnId);
+                            if (expression) {
                                 if (ExpressionHelper.checkForExpressionFromRecord(expression, node, [column], this)) {
                                     return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
                                 }
@@ -1679,13 +1674,8 @@ private useRowNodeLookUp: boolean;
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
 
-
-
-
-
         // add any special renderers
-        let percentBars: IPercentBar[] = this.getState().PercentBar.PercentBars;
-        percentBars.forEach(pcr => {
+        this.api.percentBarApi.GetAll().forEach(pcr => {
             this.addPercentBar(pcr);
         });
 
@@ -1696,7 +1686,7 @@ private useRowNodeLookUp: boolean;
             let colId: string = params.column.getColId()
 
             this.dispatchAction(MenuRedux.ClearColumnContextMenu());
-            let column: IColumn = ColumnHelper.getColumnFromId(colId, this.getState().Grid.Columns);
+            let column: IColumn = ColumnHelper.getColumnFromId(colId, this.api.gridApi.getColumns());
             if (column != null) {
                 this.Strategies.forEach(s => {
                     s.addContextMenuItem(column)
@@ -1738,7 +1728,7 @@ private useRowNodeLookUp: boolean;
     }
 
     public addPercentBar(pcr: IPercentBar): void {
-        let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns);
+        let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.api.gridApi.getColumns());
         if (renderedColumn) {
             let cellRendererFunc: ICellRendererFunc = agGridHelper.createCellRendererFunc(pcr, this.BlotterOptions.blotterId);
             let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
@@ -1747,7 +1737,7 @@ private useRowNodeLookUp: boolean;
     }
 
     public removePercentBar(pcr: IPercentBar): void {
-        let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.getState().Grid.Columns)
+        let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.api.gridApi.getColumns())
         if (renderedColumn) {
             let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
             // note we dont get it from the original (but I guess it will be applied next time you run...)
@@ -1770,7 +1760,7 @@ private useRowNodeLookUp: boolean;
                     if (ColumnHelper.isSpecialColumn(sm.colId)) {
                         let groupedColumn: Column = this.gridOptions.columnApi.getAllColumns().find(c => c.isRowGroupActive() == true)
                         if (groupedColumn) {
-                            let customSort: ICustomSort = this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == groupedColumn.getColId());
+                            let customSort: ICustomSort = this.api.customSortApi.GetAll().find(cs => cs.ColumnId == groupedColumn.getColId());
                             if (customSort) {
                                 // check that not already applied
                                 if (!this.getState().Grid.GridSorts.find(gs => ColumnHelper.isSpecialColumn(gs.Column))) {
@@ -1837,9 +1827,29 @@ private useRowNodeLookUp: boolean;
         this.gridOptions.api.setRowData(dataSource)
     }
 
+    private updateQuickSearchRangeVisibleColumn(columnId: string): void {
+        if (this.isInitialised) {
+            let quickSearchState: QuickSearchState = this.api.quickSearchApi.GetState();
+            // only update if quick search is not highlight and is set - rare use case...
+            if (quickSearchState.DisplayAction != DisplayAction.HighlightCell && StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {
+                let quickSearchRange: IRange = this.getState().System.QuickSearchRange;
+                let column: IColumn = ColumnHelper.getColumnFromId(columnId, this.api.gridApi.getColumns());
+
+                if (quickSearchRange != null) {
+                    if (RangeHelper.IsColumnAppropriateForRange(quickSearchRange.Operator, column)) {
+                        let quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, null, null, null, [quickSearchRange])
+                        let quickSearchVisibleColumnExpressions: Expression[] = [].concat(this.getState().System.QuickSearchVisibleColumnExpressions)
+                        quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression)
+                        this.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchSetVisibleColumnExpressions(quickSearchVisibleColumnExpressions));
+                    }
+                }
+            }
+        }
+    }
+
     private checkColumnsDataTypeSet(): any {
         // check that we have no unknown columns - if we do then ok
-        let firstCol = this.getState().Grid.Columns[0];
+        let firstCol = this.api.gridApi.getColumns()[0];
         if (firstCol && firstCol.DataType == DataType.Unknown) {
             this.setColumnIntoStore();
         }
@@ -1968,10 +1978,10 @@ private useRowNodeLookUp: boolean;
     // Method called after we have rendered the grid
     // where we apply our stuff but also any ag-Grid props that we control
     private applyFinalRendering(): void {
-        let currentlayout = this.getState().Layout.CurrentLayout
+        let currentlayout: string = this.api.layoutApi.GetCurrentName();
 
         // Check that we have a primary key
-        BlotterHelper.CheckPrimaryKeyExists(this, this.getState().Grid.Columns);
+        BlotterHelper.CheckPrimaryKeyExists(this, this.api.gridApi.getColumns());
 
         // add the filter header style if required
         if (this.BlotterOptions.filterOptions.indicateFilteredColumns == true) {
@@ -1990,7 +2000,7 @@ private useRowNodeLookUp: boolean;
         }
 
         // if user layout and a percent bar sometimes the first few cells are pre-rendered so we frig it like this
-        if (this.getState().Layout.CurrentLayout != DEFAULT_LAYOUT && ArrayExtensions.IsNotNullOrEmpty(this.getState().PercentBar.PercentBars)) {
+        if (this.api.layoutApi.GetCurrentName() != DEFAULT_LAYOUT && ArrayExtensions.IsNotNullOrEmpty(this.api.percentBarApi.GetAll())) {
             this.api.layoutApi.Set(DEFAULT_LAYOUT);
         }
 

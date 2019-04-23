@@ -1,7 +1,8 @@
 import { IDataSource } from '../../Utilities/Interface/BlotterObjects/IDataSource';
+import { DataSourceState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export interface IDataSourceApi {
-
+  GetState(): DataSourceState;
   /**
   * Sets the DataSource
   * @param dataSource has to be an existing DataSource

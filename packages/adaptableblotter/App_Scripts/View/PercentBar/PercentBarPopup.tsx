@@ -46,7 +46,7 @@ class PercentBarPopupComponent extends React.Component<PercentBarPopupProps, Edi
             let arrayParams = this.props.PopupParams.split("|")
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
                 let columnId: string = arrayParams[1];
-                let distinctColumnsValues: number[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columnId, DistinctCriteriaPairValue.RawValue).map(pair => {
+                let distinctColumnsValues: number[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columnId, DistinctCriteriaPairValue.RawValue, false).map(pair => {
                     return pair.RawValue
                 });
                  let newPercentRender: IPercentBar = ObjectFactory.CreateEmptyPercentBar()

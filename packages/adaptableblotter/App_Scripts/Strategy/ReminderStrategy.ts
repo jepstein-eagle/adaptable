@@ -18,11 +18,11 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
     }
 
     protected InitState() {
-        if (this.ReminderState != this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder) {
+        if (this.ReminderState != this.blotter.api.reminderApi.GetState()) {
 
             this.scheduleReminders();
 
-            this.ReminderState = this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder;
+            this.ReminderState = this.blotter.api.reminderApi.GetState();
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Reminder, this.ReminderState)
@@ -38,7 +38,7 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
         // just clear all jobs and recreate - simplest thing to do...
         this.blotter.ScheduleService.ClearAllAlertJobs();
 
-        this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder.Reminders.forEach(r => {
+        this.blotter.api.reminderApi.GetAll().forEach(r => {
             this.blotter.ScheduleService.AddReminderSchedule(r);
         })
     }

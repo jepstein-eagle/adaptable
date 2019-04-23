@@ -3,15 +3,21 @@ import { ICustomSort } from "../Utilities/Interface/BlotterObjects/ICustomSort";
 import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux'
 import { ApiBase } from "./ApiBase";
 import { ICustomSortApi } from './Interface/ICustomSortApi';
+import { CustomSortState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class CustomSortApi extends ApiBase implements ICustomSortApi {
 
-  public GetAll(): ICustomSort[] {
-    return this.getState().CustomSort.CustomSorts;
+  
+  public GetState(): CustomSortState {
+    return this.getBlotterState().CustomSort;
+}
+
+public GetAll(): ICustomSort[] {
+    return this.getBlotterState().CustomSort.CustomSorts;
   }
 
   public GetByColumn(column: string): ICustomSort {
-    return this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == column);
+    return this.getBlotterState().CustomSort.CustomSorts.find(cs => cs.ColumnId == column);
   }
 
   public Add(customSort: ICustomSort): void {

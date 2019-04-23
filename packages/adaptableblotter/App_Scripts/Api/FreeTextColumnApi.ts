@@ -4,12 +4,18 @@ import { ApiBase } from "./ApiBase";
 import { IFreeTextColumnApi } from "./Interface/IFreeTextColumnApi";
 import { ObjectFactory } from "../Utilities/ObjectFactory";
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import { FreeTextColumnState } from "../Redux/ActionsReducers/Interface/IState";
 
 
 export class FreeTextColumnApi extends ApiBase implements IFreeTextColumnApi {
 
-  public GetAll(): IFreeTextColumn[] {
-    return this.getState().FreeTextColumn.FreeTextColumns;
+  
+  public GetState(): FreeTextColumnState {
+    return this.getBlotterState().FreeTextColumn;
+}
+
+public GetAll(): IFreeTextColumn[] {
+    return this.getBlotterState().FreeTextColumn.FreeTextColumns;
   }
 
   public Add(freeTextColumn: IFreeTextColumn): void {

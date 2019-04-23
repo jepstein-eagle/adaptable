@@ -247,7 +247,7 @@ export module ObjectFactory {
     }
 
     export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter): string {
-        let columns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns: IColumn[] = blotter.api.gridApi.getColumns();
         let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns)
         let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
             " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns) :

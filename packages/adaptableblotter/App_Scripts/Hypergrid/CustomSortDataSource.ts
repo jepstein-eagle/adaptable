@@ -16,7 +16,7 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
     blotter: blotter,
     // This function is called on every reIndex call if this object is in the pipelne
     apply: function () {
-        let gridSorts = blotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts
+        let gridSorts = blotter.api.gridApi.getGridSorts();
 
         if (ArrayExtensions.IsNullOrEmpty(gridSorts)) {
             this.clearIndex();
@@ -73,7 +73,7 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) => DataSourceIndex
         gridSorts.forEach((gridSort: IGridSort) => {
             let hypergridColumn = blotter.getHypergridColumn(gridSort.Column);
             hypergridColumns.push(hypergridColumn)
-            let customSort = blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts.find(x => x.ColumnId == gridSort.Column)
+            let customSort = blotter.api.customSortApi.GetAll().find(x => x.ColumnId == gridSort.Column)
             if (customSort) {
                 let direction: number = (gridSort.SortOrder === SortOrder.Ascending) ? 1 : -1
                 let formatter = blotter.getColumnFormatter(customSort.ColumnId)

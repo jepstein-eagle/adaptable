@@ -1,5 +1,5 @@
 export interface ISystemStatusApi {
-  // System Status
+  
   /**
    * Sets which coloured System Status button is displayed in the Home Toolbar
    * @param statusMessage The message to show when the button is clicked

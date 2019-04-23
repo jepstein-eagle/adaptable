@@ -15,7 +15,7 @@ export let FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) => {
             let colId = params.column.getColId()
             this.filterContainer = document.createElement("div")
             this.filterContainer.id = "floatingFilter_" + colId + "_" + blotter.BlotterOptions.blotterId;
-            let column: IColumn  = ColumnHelper.getColumnFromId(colId, blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+            let column: IColumn  = ColumnHelper.getColumnFromId(colId, blotter.api.gridApi.getColumns());
             let filterContext: IColumnFilterContext = {
                 Column:column,
                 Blotter: blotter,

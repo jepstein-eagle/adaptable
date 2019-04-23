@@ -4,19 +4,25 @@ import { IReport } from "../Utilities/Interface/BlotterObjects/IReport";
 import { ILiveReport } from "../Utilities/Interface/Reports/ILiveReport";
 import { ExportDestination } from "../Utilities/Enums";
 import { IExportApi } from './Interface/IExportApi';
+import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class ExportApi extends ApiBase implements IExportApi {
 
-  public GetCurrent(): string {
-    return this.getState().Export.CurrentReport;
+ 
+  public GetState(): ExportState {
+    return this.getBlotterState().Export;
+}
+
+public GetCurrent(): string {
+    return this.getBlotterState().Export.CurrentReport;
   }
 
   public GetAllReports(): IReport[] {
-    return this.getState().System.SystemReports.concat(this.getState().Export.Reports);
+    return this.getBlotterState().System.SystemReports.concat(this.getBlotterState().Export.Reports);
   }
 
   public GetAllLiveReports(): ILiveReport[] {
-    return this.getState().System.CurrentLiveReports;
+    return this.getBlotterState().System.CurrentLiveReports;
   }
 
   public SendReport(reportName: string, destination: ExportDestination): void {
