@@ -39,7 +39,7 @@ class FilterFormComponent extends React.Component {
                 this.props.Blotter.BlotterOptions.queryOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
                     if (result == null) { // if nothing returned then default to normal
-                        columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+                        columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue, false);
                         columnValuePairs = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
                         this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: Enums_1.DistinctCriteriaPairValue.DisplayValue });
                     }
@@ -63,7 +63,7 @@ class FilterFormComponent extends React.Component {
                 });
             }
             else {
-                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue, false);
                 columnValuePairs = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
                 this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: Enums_1.DistinctCriteriaPairValue.DisplayValue });
             }
@@ -81,7 +81,7 @@ class FilterFormComponent extends React.Component {
         let uiSelectedUserFilters = existingColumnFilter && existingColumnFilter.Filter.FilterExpressions.length > 0 ?
             existingColumnFilter.Filter.FilterExpressions[0].Filters : [];
         let uiSelectedRangeExpression = existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0 ?
-            existingColumnFilter.Filter.RangeExpressions[0].Ranges[0] : ExpressionHelper_1.ExpressionHelper.CreateEmptyRangeExpression();
+            existingColumnFilter.Filter.RangeExpressions[0].Ranges[0] : ExpressionHelper_1.ExpressionHelper.CreateEmptyRange();
         let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(this.props.CurrentColumn.DataType);
         let isEmptyFilter = uiSelectedColumnValues.length == 0 && uiSelectedUserFilters.length == 0 && ExpressionHelper_1.ExpressionHelper.IsEmptyRange(uiSelectedRangeExpression);
         let hasUserFilter = uiSelectedUserFilters.length > 0;

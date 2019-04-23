@@ -7,6 +7,8 @@ import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../Utilities/ChartEnums';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { IChartData } from '../../Utilities/Interface/BlotterObjects/IChartDefinition';
+import { IRange } from '../../Utilities/Interface/Expression/IRange';
+import { Expression } from '../../Utilities/Expression';
 export declare const SYSTEM_SET_HEALTH_STATUS = "SYSTEM_SET_HEALTH_STATUS";
 export declare const SYSTEM_CLEAR_HEALTH_STATUS = "SYSTEM_CLEAR_HEALTH_STATUS";
 export declare const SYSTEM_ALERT_ADD = "SYSTEM_ALERT_ADD";
@@ -26,6 +28,10 @@ export declare const BULK_UPDATE_SET_PREVIEW = "BULK_UPDATE_SET_PREVIEW";
 export declare const CHART_SET_CHART_DATA = "CHART_SET_CHART_DATA";
 export declare const CHART_SET_CHART_VISIBILITY = "CHART_SET_CHART_VISIBILITY";
 export declare const CALCULATEDCOLUMN_SET_ERROR_MESSAGE = "CALCULATEDCOLUMN_SET_ERROR_MESSAGE";
+export declare const QUICK_SEARCH_SET_RANGE = "QUICK_SEARCH_SET_RANGE";
+export declare const QUICK_SEARCH_CLEAR_RANGE = "QUICK_SEARCH_CLEAR_RANGE";
+export declare const QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS = "QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS";
+export declare const QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS = "QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS";
 export interface SystemSetHealthStatusAction extends Redux.Action {
     SystemStatus: ISystemStatus;
 }
@@ -79,8 +85,18 @@ export interface CalculatedColumnSetErrorMessageAction extends Redux.Action {
 export interface SetIPPDomainPagesAction extends Redux.Action {
     IPPDomainsPages: IPPDomain[];
 }
-export interface ReportSetErrorMessagection extends Redux.Action {
+export interface ReportSetErrorMessageAction extends Redux.Action {
     ErrorMessage: string;
+}
+export interface QuickSearchSetRangeAction extends Redux.Action {
+    Range: IRange;
+}
+export interface QuickSearchClearRangeAction extends Redux.Action {
+}
+export interface QuickSearchSetVisibleColumnExpressionsAction extends Redux.Action {
+    Expressions: Expression[];
+}
+export interface QuickSearchClearVisibleColumnExpressionsAction extends Redux.Action {
 }
 export declare const SystemSetHealthStatus: (SystemStatus: ISystemStatus) => SystemSetHealthStatusAction;
 export declare const SystemClearHealthStatus: () => SystemClearHealthStatusAction;
@@ -99,5 +115,9 @@ export declare const ChartSetChartData: (chartData: IChartData) => ChartSetChart
 export declare const ChartSetChartVisibility: (ChartVisibility: ChartVisibility) => ChartSetChartVisibiityAction;
 export declare const CalculatedColumnSetErrorMessage: (ErrorMsg: string) => CalculatedColumnSetErrorMessageAction;
 export declare const SetIPPDomainPages: (IPPDomainsPages: IPPDomain[]) => SetIPPDomainPagesAction;
-export declare const ReportSetErrorMessage: (ErrorMessage: string) => ReportSetErrorMessagection;
+export declare const ReportSetErrorMessage: (ErrorMessage: string) => ReportSetErrorMessageAction;
+export declare const QuickSearchSetRange: (Range: IRange) => QuickSearchSetRangeAction;
+export declare const QuickSearchClearRange: () => QuickSearchClearRangeAction;
+export declare const QuickSearchSetVisibleColumnExpressions: (Expressions: Expression[]) => QuickSearchSetVisibleColumnExpressionsAction;
+export declare const QuickSearchClearVisibleColumnExpressions: () => QuickSearchClearVisibleColumnExpressionsAction;
 export declare const SystemReducer: Redux.Reducer<SystemState>;

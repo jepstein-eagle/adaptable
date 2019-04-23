@@ -27,6 +27,10 @@ import { IThemeApi } from "./Interface/IThemeApi";
 import { IUserInterfaceApi } from "./Interface/IUserInterfaceApi";
 import { IAdaptableBlotter } from "../Utilities/Interface/IAdaptableBlotter";
 import { IInternalApi } from "./Interface/IInternalApi";
+import { IConditionalStyleApi } from "./Interface/IConditionalStyleApi";
+import { IReminderApi } from "./Interface/IReminderApi";
+import { IFlashingCellApi } from "./Interface/IFlashingCellApi";
+import { ISystemApi } from "./Interface/ISystemApi";
 export declare class BlotterApi implements IBlotterApi {
     protected blotter: IAdaptableBlotter;
     advancedSearchApi: IAdvancedSearchApi;
@@ -36,6 +40,7 @@ export declare class BlotterApi implements IBlotterApi {
     cellValidationApi: ICellValidationApi;
     columnCategoryApi: IColumnCategoryApi;
     columnFilterApi: IColumnFilterApi;
+    conditionalStyleApi: IConditionalStyleApi;
     configApi: IConfigApi;
     customSortApi: ICustomSortApi;
     dashboardApi: IDashboardApi;
@@ -43,6 +48,7 @@ export declare class BlotterApi implements IBlotterApi {
     entitlementApi: IEntitlementApi;
     eventApi: IEventApi;
     exportApi: IExportApi;
+    flashingCellApi: IFlashingCellApi;
     formatColumnApi: IFormatColumnApi;
     freeTextColumnApi: IFreeTextColumnApi;
     gridApi: IGridApi;
@@ -50,8 +56,10 @@ export declare class BlotterApi implements IBlotterApi {
     layoutApi: ILayoutApi;
     percentBarApi: IPercentBarApi;
     quickSearchApi: IQuickSearchApi;
+    reminderApi: IReminderApi;
     shortcutApi: IShortcutApi;
     smartEditApi: ISmartEditApi;
+    systemApi: ISystemApi;
     systemFilterApi: ISystemFilterApi;
     systemStatusApi: ISystemStatusApi;
     themeApi: IThemeApi;

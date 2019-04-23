@@ -36,6 +36,8 @@ import { ChartVisibility } from '../../../Utilities/ChartEnums';
 import { IPieChart } from "../../../Utilities/Interface/BlotterObjects/IPieChart";
 import { IReminder } from "../../../Utilities/Interface/BlotterObjects/IReminder";
 import { IDataSource } from "../../../Utilities/Interface/BlotterObjects/IDataSource";
+import { IRange } from "../../../Utilities/Interface/Expression/IRange";
+import { Expression } from "../../../Utilities/Expression";
 export interface IState {
 }
 /**
@@ -65,6 +67,8 @@ export interface SystemState extends ISystemState {
     IPPDomainsPages: IPPDomain[];
     SystemReports: IReport[];
     ReportErrorMessage: string;
+    QuickSearchRange: IRange;
+    QuickSearchVisibleColumnExpressions: Expression[];
 }
 export interface GridState extends ISystemState {
     Columns: IColumn[];

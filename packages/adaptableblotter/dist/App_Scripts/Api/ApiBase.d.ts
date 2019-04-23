@@ -6,5 +6,5 @@ export declare abstract class ApiBase {
     constructor(blotter: IAdaptableBlotter);
     checkItemExists(item: any, name: string, type: string): boolean;
     dispatchAction(action: Action): void;
-    getState(): AdaptableBlotterState;
+    getBlotterState(): AdaptableBlotterState;
 }

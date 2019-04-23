@@ -214,7 +214,7 @@ var ObjectFactory;
     }
     ObjectFactory.CreateEmptyShortcut = CreateEmptyShortcut;
     function CreateCellValidationMessage(CellValidation, blotter) {
-        let columns = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = blotter.api.gridApi.getColumns();
         let columnFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns);
         let expressionDescription = (ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
             " when " + ExpressionHelper_1.ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns) :

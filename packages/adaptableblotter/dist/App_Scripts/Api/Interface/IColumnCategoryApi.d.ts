@@ -1,5 +1,7 @@
 import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
+import { ColumnCategoryState } from "../../Redux/ActionsReducers/Interface/IState";
 export interface IColumnCategoryApi {
+    GetState(): ColumnCategoryState;
     GetAll(): IColumnCategory[];
     Add(columnCategory: IColumnCategory): void;
     Create(columnCategoryId: string, columns: string[]): void;

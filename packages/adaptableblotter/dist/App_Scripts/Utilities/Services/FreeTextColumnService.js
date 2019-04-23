@@ -27,14 +27,14 @@ class FreeTextColumnService {
         }
     }
     CheckIfDataChangingColumnIsFreeText(dataChangedEvent) {
-        let freeTextColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
+        let freeTextColumn = this.blotter.api.freeTextColumnApi.GetAll().find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
         if (freeTextColumn) {
             let freeTextStoredValue = { PrimaryKey: dataChangedEvent.IdentifierValue, FreeText: dataChangedEvent.NewValue };
             this.blotter.AdaptableBlotterStore.TheStore.dispatch(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, freeTextStoredValue));
         }
     }
     CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents) {
-        if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.blotter.AdaptableBlotterStore.TheStore.getState().FreeTextColumn.FreeTextColumns)) {
+        if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.freeTextColumnApi.GetAll())) {
             dataChangedEvents.forEach(dc => {
                 this.CheckIfDataChangingColumnIsFreeText(dc);
             });

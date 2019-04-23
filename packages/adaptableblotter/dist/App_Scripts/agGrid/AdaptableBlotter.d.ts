@@ -107,6 +107,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private getColumnDataType;
     private getabColDefValue;
     setValue(cellInfo: ICellInfo): void;
+    private updateValue;
     setValueBatch(batchValues: ICellInfo[]): void;
     private updateBatchValue;
     cancelEdit(): void;
@@ -117,9 +118,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private isColumnFilterable;
     setCustomSort(columnId: string, comparer: Function): void;
     removeCustomSort(columnId: string): void;
-    getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
-    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
-    private addVDistinctValueFromNode;
+    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue, visibleRowsOnly: boolean): Array<IRawValueDisplayValuePair>;
+    private addDistinctColumnValue;
     private useRawValueForColumn;
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: RowNode, columnId: string): string;
@@ -153,6 +153,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     selectColumn(columnId: string): void;
     setGridSort(gridSorts: IGridSort[]): void;
     setGridData(dataSource: any): void;
+    private updateQuickSearchRangeVisibleColumn;
     private checkColumnsDataTypeSet;
     getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo;
     setVendorGridState(vendorGridState: IVendorGridInfo): void;

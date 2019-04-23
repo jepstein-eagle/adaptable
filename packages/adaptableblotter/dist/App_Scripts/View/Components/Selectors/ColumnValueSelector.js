@@ -25,7 +25,7 @@ class ColumnValueSelector extends React.Component {
             placeholderText += " or enter free text";
         }
         if (this.props.SelectedColumn != null && this.props.Blotter != null && this.props.Blotter.getColumnValueDisplayValuePairDistinctList != null) {
-            let columnDisplayValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+            let columnDisplayValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue, false);
             if (StringExtensions_1.StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
                 selectedValue = "";
             }

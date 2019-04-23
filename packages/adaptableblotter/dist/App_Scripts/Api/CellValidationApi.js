@@ -3,8 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const CellValidationRedux = require("../Redux/ActionsReducers/CellValidationRedux");
 const ApiBase_1 = require("./ApiBase");
 class CellValidationApi extends ApiBase_1.ApiBase {
+    GetState() {
+        return this.getBlotterState().CellValidation;
+    }
     GetAll() {
-        return this.getState().CellValidation.CellValidations;
+        return this.getBlotterState().CellValidation.CellValidations;
     }
     Add(cellValidationRule) {
         this.dispatchAction(CellValidationRedux.CellValidationAddUpdate(-1, cellValidationRule));

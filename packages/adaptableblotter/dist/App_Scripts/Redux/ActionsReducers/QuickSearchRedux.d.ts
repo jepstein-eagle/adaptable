@@ -10,13 +10,13 @@ export interface QuickSearchApplyAction extends Redux.Action {
 }
 export interface QuickSearchClearAction extends Redux.Action {
 }
-export interface QuickSearchSetSearchDisplayAction extends Redux.Action {
+export interface QuickSearchSetDisplayAction extends Redux.Action {
     DisplayAction: DisplayAction;
 }
 export interface QuickSearchSetStyleAction extends Redux.Action {
     style: IStyle;
 }
 export declare const QuickSearchApply: (quickSearchText: string) => QuickSearchApplyAction;
-export declare const QuickSearchSetDisplay: (DisplayAction: DisplayAction) => QuickSearchSetSearchDisplayAction;
+export declare const QuickSearchSetDisplay: (DisplayAction: DisplayAction) => QuickSearchSetDisplayAction;
 export declare const QuickSearchSetStyle: (style: IStyle) => QuickSearchSetStyleAction;
 export declare const QuickSearchReducer: Redux.Reducer<QuickSearchState>;

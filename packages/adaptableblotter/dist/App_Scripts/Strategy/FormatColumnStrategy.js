@@ -21,8 +21,8 @@ class FormatColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase
         }
     }
     InitState() {
-        if (this.FormatColumnState != this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn) {
-            this.FormatColumnState = this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn;
+        if (this.FormatColumnState != this.blotter.api.formatColumnApi.GetState()) {
+            this.FormatColumnState = this.blotter.api.formatColumnApi.GetState();
             this.InitStyles();
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.FormatColumn, this.FormatColumnState);

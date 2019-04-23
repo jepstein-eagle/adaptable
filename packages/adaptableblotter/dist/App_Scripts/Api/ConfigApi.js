@@ -17,7 +17,7 @@ class ConfigApi extends ApiBase_1.ApiBase {
         window.location.reload();
     }
     configGetAllState() {
-        return this.getState();
+        return this.getBlotterState();
     }
     getUserStateKeys() {
         return ['AdvancedSearch', 'Alert', 'BulkUpdate', 'CalculatedColumn',
@@ -39,51 +39,51 @@ class ConfigApi extends ApiBase_1.ApiBase {
     configGetUserStateByFunction(functionName, returnJson = false) {
         switch (functionName) {
             case Enums_1.StateChangedTrigger.AdvancedSearch:
-                return (returnJson) ? JSON.stringify(this.getState().AdvancedSearch) : this.getState().AdvancedSearch;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().AdvancedSearch) : this.getBlotterState().AdvancedSearch;
             case Enums_1.StateChangedTrigger.Alert:
-                return (returnJson) ? JSON.stringify(this.getState().Alert) : this.getState().Alert;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().Alert) : this.getBlotterState().Alert;
             case Enums_1.StateChangedTrigger.BulkUpdate:
-                return (returnJson) ? JSON.stringify(this.getState().BulkUpdate) : this.getState().BulkUpdate;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().BulkUpdate) : this.getBlotterState().BulkUpdate;
             case Enums_1.StateChangedTrigger.CalculatedColumn:
-                return (returnJson) ? JSON.stringify(this.getState().CalculatedColumn) : this.getState().CalculatedColumn;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().CalculatedColumn) : this.getBlotterState().CalculatedColumn;
             case Enums_1.StateChangedTrigger.Calendar:
-                return (returnJson) ? JSON.stringify(this.getState().Calendar) : this.getState().Calendar;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().Calendar) : this.getBlotterState().Calendar;
             case Enums_1.StateChangedTrigger.CellValidation:
-                return (returnJson) ? JSON.stringify(this.getState().CellValidation) : this.getState().CellValidation;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().CellValidation) : this.getBlotterState().CellValidation;
             case Enums_1.StateChangedTrigger.Chart:
-                return (returnJson) ? JSON.stringify(this.getState().Chart) : this.getState().Chart;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().Chart) : this.getBlotterState().Chart;
             case Enums_1.StateChangedTrigger.ColumnFilter:
-                return (returnJson) ? JSON.stringify(this.getState().ColumnFilter) : this.getState().ColumnFilter;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().ColumnFilter) : this.getBlotterState().ColumnFilter;
             case Enums_1.StateChangedTrigger.ConditionalStyle:
-                return (returnJson) ? JSON.stringify(this.getState().ConditionalStyle) : this.getState().ConditionalStyle;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().ConditionalStyle) : this.getBlotterState().ConditionalStyle;
             case Enums_1.StateChangedTrigger.CustomSort:
-                return (returnJson) ? JSON.stringify(this.getState().CustomSort) : this.getState().CustomSort;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().CustomSort) : this.getBlotterState().CustomSort;
             case Enums_1.StateChangedTrigger.Dashboard:
-                return (returnJson) ? JSON.stringify(this.getState().Dashboard) : this.getState().Dashboard;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().Dashboard) : this.getBlotterState().Dashboard;
             case Enums_1.StateChangedTrigger.DataSource:
-                return (returnJson) ? JSON.stringify(this.getState().DataSource) : this.getState().DataSource;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().DataSource) : this.getBlotterState().DataSource;
             case Enums_1.StateChangedTrigger.Export:
-                return (returnJson) ? JSON.stringify(this.getState().Export) : this.getState().Export;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().Export) : this.getBlotterState().Export;
             case Enums_1.StateChangedTrigger.FlashingCell:
-                return (returnJson) ? JSON.stringify(this.getState().FlashingCell) : this.getState().FlashingCell;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().FlashingCell) : this.getBlotterState().FlashingCell;
             case Enums_1.StateChangedTrigger.FormatColumn:
-                return (returnJson) ? JSON.stringify(this.getState().FormatColumn) : this.getState().FormatColumn;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().FormatColumn) : this.getBlotterState().FormatColumn;
             case Enums_1.StateChangedTrigger.Layout:
-                return (returnJson) ? JSON.stringify(this.getState().Layout) : this.getState().Layout;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().Layout) : this.getBlotterState().Layout;
             case Enums_1.StateChangedTrigger.PlusMinus:
-                return (returnJson) ? JSON.stringify(this.getState().PlusMinus) : this.getState().PlusMinus;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().PlusMinus) : this.getBlotterState().PlusMinus;
             case Enums_1.StateChangedTrigger.QuickSearch:
-                return (returnJson) ? JSON.stringify(this.getState().QuickSearch) : this.getState().QuickSearch;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().QuickSearch) : this.getBlotterState().QuickSearch;
             case Enums_1.StateChangedTrigger.CellSummary:
-                return (returnJson) ? JSON.stringify(this.getState().SelectedCells) : this.getState().CellSummary;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().SelectedCells) : this.getBlotterState().CellSummary;
             case Enums_1.StateChangedTrigger.Shortcut:
-                return (returnJson) ? JSON.stringify(this.getState().Shortcut) : this.getState().Shortcut;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().Shortcut) : this.getBlotterState().Shortcut;
             case Enums_1.StateChangedTrigger.SmartEdit:
-                return (returnJson) ? JSON.stringify(this.getState().SmartEdit) : this.getState().SmartEdit;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().SmartEdit) : this.getBlotterState().SmartEdit;
             case Enums_1.StateChangedTrigger.Theme:
-                return (returnJson) ? JSON.stringify(this.getState().Theme) : this.getState().Theme;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().Theme) : this.getBlotterState().Theme;
             case Enums_1.StateChangedTrigger.UserFilter:
-                return (returnJson) ? JSON.stringify(this.getState().UserFilter) : this.getState().UserFilter;
+                return (returnJson) ? JSON.stringify(this.getBlotterState().UserFilter) : this.getBlotterState().UserFilter;
         }
     }
     configGetAdvancedSearchState(returnJson = false) {

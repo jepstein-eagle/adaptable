@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const fetch = require("isomorphic-fetch");
+const lodash = require("lodash");
 const LoggingHelper_1 = require("../../Utilities/Helpers/LoggingHelper");
+const DEBOUNCE_DELAY = 500;
 const checkStatus = (response) => {
     const error = new Error(response.statusText);
     if (response.status >= 200 && response.status < 300) {
@@ -9,11 +11,12 @@ const checkStatus = (response) => {
     }
     throw error;
 };
-class AdaptableBlotterReduxStorageClientEngine {
+class AdaptableBlotterRemoteStorageEngine {
     constructor(url, userName, blotterId) {
         this.url = url;
         this.userName = userName;
         this.blotterId = blotterId;
+        this.save = lodash.debounce(this.save, DEBOUNCE_DELAY);
     }
     load() {
         let loadOptions = {
@@ -46,6 +49,6 @@ class AdaptableBlotterReduxStorageClientEngine {
     }
 }
 function createEngine(url, userName, blotterId) {
-    return new AdaptableBlotterReduxStorageClientEngine(url, userName, blotterId);
+    return new AdaptableBlotterRemoteStorageEngine(url, userName, blotterId);
 }
 exports.createEngine = createEngine;

@@ -169,12 +169,10 @@ class AdaptableBlotterAbout extends React.Component {
     CreateGridInfo(colItems) {
         let returnRows = [];
         if (this.props.showAbout) {
-            //get state - do better?
-            let state = this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState();
-            let calcColumns = state.CalculatedColumn.CalculatedColumns.map(c => c.ColumnId);
-            let columns = state.Grid.Columns;
-            let columnFilterDescription = ColumnFilterHelper_1.ColumnFilterHelper.getColumnFiltersDescription(state.ColumnFilter.ColumnFilters, columns, this.props.AdaptableBlotter);
-            let sorts = state.Grid.GridSorts.map(gs => {
+            let calcColumns = this.props.AdaptableBlotter.api.calculatedColumnApi.GetAll().map(c => c.ColumnId);
+            let columns = this.props.AdaptableBlotter.api.gridApi.getColumns();
+            let columnFilterDescription = ColumnFilterHelper_1.ColumnFilterHelper.getColumnFiltersDescription(this.props.AdaptableBlotter.api.columnFilterApi.GetAll(), columns, this.props.AdaptableBlotter);
+            let sorts = this.props.AdaptableBlotter.api.gridApi.getGridSorts().map(gs => {
                 return ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ": " + gs.SortOrder;
             });
             let licenceInDate = (this.props.AdaptableBlotter.LicenceService.LicenceInfo.IsLicenceInDate) ? "In Date" : "Expired";

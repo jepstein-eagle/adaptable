@@ -21,7 +21,7 @@ class AdaptableBlotterChart extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE;
         let commonProps = {
-            Columns: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
+            Columns: this.props.AdaptableBlotter.api.gridApi.getColumns(),
             ModalContainer: this.state.chartContainer,
             cssClassName: cssClassName + StyleConstants.MODAL_BODY,
             onClose: this.props.onClose,
@@ -29,7 +29,7 @@ class AdaptableBlotterChart extends React.Component {
             Blotter: this.props.AdaptableBlotter,
             UserFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
             SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
-            ColumnFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters,
+            ColumnFilters: this.props.AdaptableBlotter.api.columnFilterApi.GetAll(),
             ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
             AccessLevel: this.state.accessLevel
         };

@@ -1,6 +1,8 @@
 import { ApiBase } from "./ApiBase";
 import { IDashboardApi } from './Interface/IDashboardApi';
+import { DashboardState } from '../Redux/ActionsReducers/Interface/IState';
 export declare class DashboardApi extends ApiBase implements IDashboardApi {
+    GetState(): DashboardState;
     SetAvailableToolbars(availableToolbars: string[]): void;
     SetVisibleToolbars(visibleToolbars: string[]): void;
     ShowToolbar(visibleToolbar: string): void;

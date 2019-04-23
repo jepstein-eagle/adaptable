@@ -3,11 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ThemeRedux = require("../Redux/ActionsReducers/ThemeRedux");
 const ApiBase_1 = require("./ApiBase");
 class ThemeApi extends ApiBase_1.ApiBase {
+    GetState() {
+        return this.getBlotterState().Theme;
+    }
     SetCurrent(theme) {
         this.dispatchAction(ThemeRedux.ThemeSelect(theme));
     }
     GetCurrent() {
-        return this.getState().Theme.CurrentTheme;
+        return this.getBlotterState().Theme.CurrentTheme;
     }
     SetSystemThemes(systemThemes) {
         this.dispatchAction(ThemeRedux.ThemeSetSystemThemes(systemThemes));
@@ -16,10 +19,10 @@ class ThemeApi extends ApiBase_1.ApiBase {
         this.dispatchAction(ThemeRedux.ThemeSetUserThemes(userThemes));
     }
     GetAllSystemTheme() {
-        return this.getState().Theme.SystemThemes;
+        return this.getBlotterState().Theme.SystemThemes;
     }
     GetAllUserTheme() {
-        return this.getState().Theme.UserThemes;
+        return this.getBlotterState().Theme.UserThemes;
     }
 }
 exports.ThemeApi = ThemeApi;

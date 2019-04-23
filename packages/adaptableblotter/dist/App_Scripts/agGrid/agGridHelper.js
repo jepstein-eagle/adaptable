@@ -98,7 +98,7 @@ var agGridHelper;
         return cellRendererFunc;
     }
     agGridHelper.createCellRendererFunc = createCellRendererFunc;
-    function cleanValue(value) {
+    function getCleanValue(value) {
         if (value == null || value == 'null') {
             return null;
         }
@@ -109,7 +109,7 @@ var agGridHelper;
             return String(value) || "";
         }
     }
-    agGridHelper.cleanValue = cleanValue;
+    agGridHelper.getCleanValue = getCleanValue;
     function getRenderedValue(percentBars, colDef, valueToRender) {
         let isRenderedColumn = ArrayExtensions_1.ArrayExtensions.ContainsItem(percentBars, colDef.field);
         if (isRenderedColumn) {
@@ -117,7 +117,7 @@ var agGridHelper;
         }
         let render = colDef.cellRenderer;
         if (typeof render == "string") {
-            return agGridHelper.cleanValue(valueToRender);
+            return getCleanValue(valueToRender);
         }
         return render({ value: valueToRender }) || "";
     }

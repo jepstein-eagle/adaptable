@@ -12,6 +12,7 @@ const LayoutHelper_1 = require("../Utilities/Helpers/LayoutHelper");
 class HomeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.HomeStrategyId, blotter);
+        this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded());
     }
     addContextMenuItem(column) {
         if (this.canCreateContextMenuItem(column, this.blotter)) {
@@ -43,6 +44,10 @@ class HomeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             }
             this.GridState = this.GetGridState();
         }
+    }
+    // useful for when grid reloads (e.g. at midnight);
+    handleGridReloaded() {
+        this.blotter.applyGridFiltering();
     }
     GetGridState() {
         return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid;

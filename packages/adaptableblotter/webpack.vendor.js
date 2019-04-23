@@ -34,11 +34,8 @@ module.exports = {
                 'react-dom',
                 'react-redux',
                 'redux',
-                'redux-devtools-extension',
-                'redux-storage',
-                'redux-storage-decorator-filter',
-                'redux-storage-decorator-migrate'
-            ]
+                'redux-devtools-extension'
+             ]
     },
 
     output: {

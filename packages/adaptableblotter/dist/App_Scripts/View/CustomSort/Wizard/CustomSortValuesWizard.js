@@ -9,7 +9,7 @@ class CustomSortValuesWizard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            ColumnValues: this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue),
+            ColumnValues: this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.Data.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue, false),
             SelectedValues: this.props.Data.SortedValues,
             IsEdit: this.props.Data.SortedValues.length > 0
         };

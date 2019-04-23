@@ -10,7 +10,7 @@ class CalculatedColumnExpressionService {
     }
     IsExpressionValid(expression) {
         try {
-            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let columns = this.blotter.api.gridApi.getColumns();
             let cleanedExpression = CalculatedColumnHelper_1.CalculatedColumnHelper.CleanExpressionColumnNames(expression, columns);
             let firstRecord = this.blotter.getFirstRecord();
             math.eval(cleanedExpression, {

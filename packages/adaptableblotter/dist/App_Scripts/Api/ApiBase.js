@@ -16,7 +16,7 @@ class ApiBase {
     dispatchAction(action) {
         this.blotter.AdaptableBlotterStore.TheStore.dispatch(action);
     }
-    getState() {
+    getBlotterState() {
         return this.blotter.AdaptableBlotterStore.TheStore.getState();
     }
 }

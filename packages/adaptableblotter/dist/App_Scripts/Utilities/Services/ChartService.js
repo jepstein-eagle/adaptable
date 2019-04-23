@@ -91,12 +91,7 @@ class ChartService {
     getXAxisColumnValues(chartDefinition, columns) {
         let xAxisColValues = [];
         if (ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
-            if (chartDefinition.VisibleRowsOnly) {
-                xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctListVisible(chartDefinition.XAxisColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue; });
-            }
-            else {
-                xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue; });
-            }
+            xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue, chartDefinition.VisibleRowsOnly).map(cv => { return cv.DisplayValue; });
         }
         else {
             if (chartDefinition.VisibleRowsOnly) {
@@ -146,7 +141,7 @@ class ChartService {
             });
         }
         let dataItems = [];
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = this.blotter.api.gridApi.getColumns();
         // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
         let useRanges = this.shouldUseRange(dataCounter, chartDefinition, columns);
         // if we don't use ranges but there are too many slices then we return an error

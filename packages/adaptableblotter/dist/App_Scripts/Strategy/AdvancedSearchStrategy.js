@@ -7,7 +7,6 @@ const Enums_1 = require("../Utilities/Enums");
 class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.AdvancedSearchStrategyId, blotter);
-        this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded());
     }
     addPopupMenuItem() {
         this.createMenuItemShowPopup(StrategyConstants.AdvancedSearchStrategyName, ScreenPopups.AdvancedSearchPopup, StrategyConstants.AdvancedSearchGlyph);
@@ -15,7 +14,7 @@ class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
     InitState() {
         if (this.AdvancedSearchState != this.GetAdvancedSearchState()) {
             this.AdvancedSearchState = this.GetAdvancedSearchState();
-            // this is re-applying grid filtering even if the change to the search state doesnt effect the current advanced search
+            // this is re-applying grid filtering even if the change to the advanced search state doesnt effect the current advanced search
             //  probably not an issue but might be worth revisiting ...
             this.blotter.applyGridFiltering();
             if (this.blotter.BlotterOptions.generalOptions.serverSearchOption != 'None') {
@@ -26,11 +25,8 @@ class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
             }
         }
     }
-    handleGridReloaded() {
-        this.blotter.applyGridFiltering();
-    }
     GetAdvancedSearchState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch;
+        return this.blotter.api.advancedSearchApi.GetState();
     }
 }
 exports.AdvancedSearchStrategy = AdvancedSearchStrategy;

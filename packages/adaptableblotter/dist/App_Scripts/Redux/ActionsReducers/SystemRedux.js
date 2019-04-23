@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const CalendarHelper_1 = require("../../Utilities/Helpers/CalendarHelper");
 const GeneralConstants_1 = require("../../Utilities/Constants/GeneralConstants");
 const ReportHelper_1 = require("../../Utilities/Helpers/ReportHelper");
+const ExpressionHelper_1 = require("../../Utilities/Helpers/ExpressionHelper");
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
 This allows us to keep the other reducers pure in terms of everything persists
@@ -34,6 +35,11 @@ exports.CHART_SET_CHART_DATA = 'CHART_SET_CHART_DATA';
 exports.CHART_SET_CHART_VISIBILITY = 'CHART_SET_CHART_VISIBILITY';
 // Error Messages
 exports.CALCULATEDCOLUMN_SET_ERROR_MESSAGE = 'CALCULATEDCOLUMN_SET_ERROR_MESSAGE';
+// Quick Search
+exports.QUICK_SEARCH_SET_RANGE = 'QUICK_SEARCH_SET_RANGE';
+exports.QUICK_SEARCH_CLEAR_RANGE = 'QUICK_SEARCH_CLEAR_RANGE';
+exports.QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS = 'QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS';
+exports.QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS = 'QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS';
 exports.SystemSetHealthStatus = (SystemStatus) => ({
     type: exports.SYSTEM_SET_HEALTH_STATUS,
     SystemStatus
@@ -106,6 +112,20 @@ exports.ReportSetErrorMessage = (ErrorMessage) => ({
     type: exports.REPORT_SET_ERROR_MESSAGE,
     ErrorMessage
 });
+exports.QuickSearchSetRange = (Range) => ({
+    type: exports.QUICK_SEARCH_SET_RANGE,
+    Range
+});
+exports.QuickSearchClearRange = () => ({
+    type: exports.QUICK_SEARCH_CLEAR_RANGE
+});
+exports.QuickSearchSetVisibleColumnExpressions = (Expressions) => ({
+    type: exports.QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS,
+    Expressions
+});
+exports.QuickSearchClearVisibleColumnExpressions = () => ({
+    type: exports.QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS
+});
 const initialSystemState = {
     SystemStatus: { StatusMessage: GeneralConstants_1.EMPTY_STRING, StatusColour: GeneralConstants_1.SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR },
     Alerts: GeneralConstants_1.EMPTY_ARRAY,
@@ -120,7 +140,9 @@ const initialSystemState = {
     CalculatedColumnErrorMessage: GeneralConstants_1.EMPTY_STRING,
     IPPDomainsPages: GeneralConstants_1.EMPTY_ARRAY,
     SystemReports: ReportHelper_1.ReportHelper.CreateSystemReports(),
-    ReportErrorMessage: GeneralConstants_1.EMPTY_STRING
+    ReportErrorMessage: GeneralConstants_1.EMPTY_STRING,
+    QuickSearchRange: ExpressionHelper_1.ExpressionHelper.CreateEmptyRange(),
+    QuickSearchVisibleColumnExpressions: GeneralConstants_1.EMPTY_ARRAY
 };
 exports.SystemReducer = (state = initialSystemState, action) => {
     let alerts;
@@ -185,6 +207,18 @@ exports.SystemReducer = (state = initialSystemState, action) => {
         }
         case exports.REPORT_SET_ERROR_MESSAGE: {
             return Object.assign({}, state, { ReportErrorMessage: action.ErrorMessage });
+        }
+        case exports.QUICK_SEARCH_SET_RANGE: {
+            return Object.assign({}, state, { QuickSearchRange: action.Range });
+        }
+        case exports.QUICK_SEARCH_CLEAR_RANGE: {
+            return Object.assign({}, state, { QuickSearchRange: ExpressionHelper_1.ExpressionHelper.CreateEmptyRange() });
+        }
+        case exports.QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS: {
+            return Object.assign({}, state, { QuickSearchVisibleColumnExpressions: action.Expressions });
+        }
+        case exports.QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS: {
+            return Object.assign({}, state, { QuickSearchVisibleColumnExpressions: GeneralConstants_1.EMPTY_ARRAY });
         }
         default:
             return state;

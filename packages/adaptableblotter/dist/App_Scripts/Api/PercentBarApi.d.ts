@@ -1,7 +1,9 @@
 import { ApiBase } from "./ApiBase";
 import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
 import { IPercentBarApi } from './Interface/IPercentBarApi';
+import { PercentBarState } from '../Redux/ActionsReducers/Interface/IState';
 export declare class PercentBarApi extends ApiBase implements IPercentBarApi {
+    GetState(): PercentBarState;
     GetAll(): IPercentBar[];
     GetByColumn(columnId: string): IPercentBar;
     Add(percentBar: IPercentBar): void;

@@ -19,9 +19,9 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
         // before we start we will clear any cell highlights that are the result of Quick Search - as we will apply that at the end if required
         this.clearColorQuickSearch();
         // Lets first get the 3 variables that indicate a filter/search is required
-        let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
-        let columnFilters = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
-        let quickSearchText = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText;
+        let currentSearchName = blotter.api.advancedSearchApi.GetCurrentName();
+        let columnFilters = blotter.api.columnFilterApi.GetAll();
+        let quickSearchText = blotter.api.quickSearchApi.GetValue();
         // If any of these 3 are set then we need to build the index and color the quick search; otherwise we should clear it
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName) || ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(columnFilters) || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(quickSearchText)) {
             this.buildIndex(this.filterTest);
@@ -36,7 +36,7 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
     Only rows that pass all 3 (i.e. Advanced Search, Column Filters, Quick Search) will return true
     */
     filterTest: function (r, rowObject) {
-        let columns = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = blotter.api.gridApi.getColumns();
         // if no columns then nothing to filter
         if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(columns)) {
             return true;
@@ -45,10 +45,10 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
         // first let's assess ADVANCED SEARCH 
         // Note: serverSearchOption has to be 'None' becasue any other value then they are performing search on the server and nothing for us to do
         if (serverSearchOption == 'None') {
-            let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
+            let currentSearchName = blotter.api.advancedSearchApi.GetCurrentName();
             if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                 // Get the actual Advanced Search object and check it exists
-                let currentSearch = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.AdvancedSearches.find(s => s.Name == currentSearchName);
+                let currentSearch = blotter.api.advancedSearchApi.GetAll().find(s => s.Name == currentSearchName);
                 if (currentSearch && currentSearch.Expression) {
                     // See if our record passes the Advanced Search Expression - using Expression Helper; if not then return false
                     if (!ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(currentSearch.Expression, rowObject, columns, blotter)) {
@@ -61,7 +61,7 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
         // NOTE: serverSearchOption has to be 'None' or 'AdvancedSearch' because any other value then they are checking filters on the server and nothing for us to do 
         if (serverSearchOption == 'None' || serverSearchOption == 'AdvancedSearch') {
             // Get the column filters
-            let columnFilters = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+            let columnFilters = blotter.api.columnFilterApi.GetAll();
             if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(columnFilters)) {
                 for (let columnFilter of columnFilters) {
                     if (columnFilter.Filter) {
@@ -73,7 +73,7 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
                 }
             }
             // finally, let's assess QUICK SEARCH
-            let quickSearchState = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+            let quickSearchState = blotter.api.quickSearchApi.GetState();
             // check that we have quick search running
             let range = RangeHelper_1.RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
             if (range != null) {
@@ -114,9 +114,9 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
     otherwise return the row count of the data source.
     */
     getRowCount: function () {
-        let currentSearchName = blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch;
-        let columnFilters = blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
-        let quickSearchText = blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch.QuickSearchText;
+        let currentSearchName = blotter.api.advancedSearchApi.GetCurrentName();
+        let columnFilters = blotter.api.columnFilterApi.GetAll();
+        let quickSearchText = blotter.api.quickSearchApi.GetValue();
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(currentSearchName) || ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(columnFilters) || StringExtensions_1.StringExtensions.IsNotNullOrEmpty(quickSearchText)) {
             return this.index.length;
         }

@@ -3,8 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const CalculatedColumnRedux = require("../Redux/ActionsReducers/CalculatedColumnRedux");
 const ApiBase_1 = require("./ApiBase");
 class CalculatedColumnApi extends ApiBase_1.ApiBase {
+    GetState() {
+        return this.getBlotterState().CalculatedColumn;
+    }
     GetAll() {
-        return this.getState().CalculatedColumn.CalculatedColumns;
+        return this.getBlotterState().CalculatedColumn.CalculatedColumns;
     }
     Add(calculatedColumn) {
         this.dispatchAction(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn));

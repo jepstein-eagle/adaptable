@@ -139,8 +139,8 @@ function InitTradeBlotter() {
         vendorContainer: 'grid',
       },
       configServerOptions: {
-        enableConfigServer: true,
-        configServerUrl: 'http://localhost:8080/adaptableblotter-config',
+     //   enableConfigServer: true,
+     //   configServerUrl: 'http://localhost:8080/adaptableblotter-config',
       },
       layoutOptions: {
         includeVendorStateInLayouts: true,

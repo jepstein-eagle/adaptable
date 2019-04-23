@@ -4,11 +4,14 @@ const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 const CustomSortRedux = require("../Redux/ActionsReducers/CustomSortRedux");
 const ApiBase_1 = require("./ApiBase");
 class CustomSortApi extends ApiBase_1.ApiBase {
+    GetState() {
+        return this.getBlotterState().CustomSort;
+    }
     GetAll() {
-        return this.getState().CustomSort.CustomSorts;
+        return this.getBlotterState().CustomSort.CustomSorts;
     }
     GetByColumn(column) {
-        return this.getState().CustomSort.CustomSorts.find(cs => cs.ColumnId == column);
+        return this.getBlotterState().CustomSort.CustomSorts.find(cs => cs.ColumnId == column);
     }
     Add(customSort) {
         this.dispatchAction(CustomSortRedux.CustomSortAdd(customSort));

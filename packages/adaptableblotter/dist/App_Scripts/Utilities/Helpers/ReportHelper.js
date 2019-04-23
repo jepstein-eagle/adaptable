@@ -52,7 +52,7 @@ var ReportHelper;
     ReportHelper.GetReportExpressionDescription = GetReportExpressionDescription;
     function ConvertReportToArray(blotter, Report) {
         let ReportColumns = [];
-        let gridColumns = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let gridColumns = blotter.api.gridApi.getColumns();
         // first get the cols depending on the Column Scope
         switch (Report.ReportColumnScope) {
             case Enums_1.ReportColumnScope.AllColumns:

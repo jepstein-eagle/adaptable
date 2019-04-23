@@ -101,8 +101,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     setCustomSort(columnId: string): void;
     removeCustomSort(columnId: string): void;
     ReindexAndRepaint(): void;
-    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
-    getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
+    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue, visibleRowsOnly: boolean): Array<IRawValueDisplayValuePair>;
+    private addDistinctItem;
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: any, columnId: string): any;
     getDisplayValueFromRawValue(colId: string, rawValue: any): any;

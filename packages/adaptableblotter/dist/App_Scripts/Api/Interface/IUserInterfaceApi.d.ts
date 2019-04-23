@@ -1,4 +1,7 @@
+import { IPermittedColumnValues } from "../../Utilities/Interface/IPermittedColumnValues";
+import { UserInterfaceState } from "../../Redux/ActionsReducers/Interface/IState";
 export interface IUserInterfaceApi {
+    GetState(): UserInterfaceState;
     SetColorPalette(colorPalette: string[]): void;
     /**
      *
@@ -18,4 +21,6 @@ export interface IUserInterfaceApi {
       * @param column
       */
     ClearColumnPermittedValues(column: string): void;
+    GetAllPermittedValues(): IPermittedColumnValues[];
+    GetPermittedValuesForColumn(columnId: string): IPermittedColumnValues;
 }

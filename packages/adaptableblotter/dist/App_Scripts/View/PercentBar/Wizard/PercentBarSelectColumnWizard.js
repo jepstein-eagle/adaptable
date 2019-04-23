@@ -23,7 +23,7 @@ class PercentBarSelectColumnWizard extends React.Component {
     }
     onColumnSelectedChanged(columns) {
         if (columns.length > 0) {
-            let distinctColumnsValues = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, Enums_1.DistinctCriteriaPairValue.RawValue).map(pair => {
+            let distinctColumnsValues = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columns[0].ColumnId, Enums_1.DistinctCriteriaPairValue.RawValue, false).map(pair => {
                 return pair.RawValue;
             });
             let minValue = Math.min(...distinctColumnsValues);

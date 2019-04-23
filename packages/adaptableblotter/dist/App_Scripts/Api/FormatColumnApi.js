@@ -3,9 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const FormatColumnRedux = require("../Redux/ActionsReducers/FormatColumnRedux");
 const ApiBase_1 = require("./ApiBase");
 class FormatColumnApi extends ApiBase_1.ApiBase {
-    // Format Column api methods
+    GetState() {
+        return this.getBlotterState().FormatColumn;
+    }
     GetAll() {
-        return this.getState().FormatColumn.FormatColumns;
+        return this.getBlotterState().FormatColumn.FormatColumns;
     }
     Add(column, style) {
         let formatColumn = { ColumnId: column, Style: style };

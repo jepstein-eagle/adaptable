@@ -4,6 +4,9 @@ const DashboardRedux = require("../Redux/ActionsReducers/DashboardRedux");
 const ApiBase_1 = require("./ApiBase");
 const Enums_1 = require("../Utilities/Enums");
 class DashboardApi extends ApiBase_1.ApiBase {
+    GetState() {
+        return this.getBlotterState().Dashboard;
+    }
     SetAvailableToolbars(availableToolbars) {
         this.dispatchAction(DashboardRedux.DashboardSetAvailableToolbars(availableToolbars));
     }

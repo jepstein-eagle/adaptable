@@ -60,9 +60,8 @@ class CalendarService {
     }
     // pretty sure this can be improved as pretty expensive - though rarely used to be honest
     isNotWorkingDay(dateToCheck) {
-        let calendarStore = this.blotter.AdaptableBlotterStore.TheStore.getState().Calendar;
-        let systemStore = this.blotter.AdaptableBlotterStore.TheStore.getState().System;
-        let currentHoliday = systemStore.AvailableCalendars.find(c => c.Name == calendarStore.CurrentCalendar);
+        let calendarStore = this.blotter.api.calendarApi.GetState();
+        let currentHoliday = this.blotter.api.systemApi.GetAvailableCalendars().find(c => c.Name == calendarStore.CurrentCalendar);
         for (var holiday of currentHoliday.CalendarEntries) {
             let holidayDate = new Date(holiday.HolidayDate);
             if (holidayDate.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0)) {

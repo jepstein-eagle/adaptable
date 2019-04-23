@@ -381,7 +381,7 @@ var ExpressionHelper;
     }
     ExpressionHelper.IsEmptyOrValidExpression = IsEmptyOrValidExpression;
     function IsExpressionValid(expression) {
-        //nothing to check for ColumnValues.
+        //nothing to check for ColumnValues or Filters
         //we check that all ranges are properly populated
         return expression.RangeExpressions.every(x => {
             return x.Ranges.every(range => {
@@ -420,10 +420,10 @@ var ExpressionHelper;
         return new Expression_1.Expression([], [], []);
     }
     ExpressionHelper.CreateEmptyExpression = CreateEmptyExpression;
-    function CreateEmptyRangeExpression() {
+    function CreateEmptyRange() {
         return { Operator: Enums_1.LeafExpressionOperator.Unknown, Operand1: "", Operand2: "", Operand1Type: Enums_1.RangeOperandType.Value, Operand2Type: Enums_1.RangeOperandType.Value };
     }
-    ExpressionHelper.CreateEmptyRangeExpression = CreateEmptyRangeExpression;
+    ExpressionHelper.CreateEmptyRange = CreateEmptyRange;
     function GetRangeEvaluation(rangeExpression, newValue, initialValue, column, blotter, getOtherColumnValue) {
         let rangeEvaluation = ObjectFactory_1.ObjectFactory.CreateRangeEvaluation(rangeExpression.Operator, rangeExpression.Operand1, rangeExpression.Operand2, newValue, initialValue, column.ColumnId);
         switch (column.DataType) {
@@ -582,7 +582,7 @@ var ExpressionHelper;
     }
     ExpressionHelper.OperatorRequiresValue = OperatorRequiresValue;
     function getExistingItem(blotter, rangeEvaluation) {
-        let displayValuePairs = blotter.getColumnValueDisplayValuePairDistinctList(rangeEvaluation.columnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+        let displayValuePairs = blotter.getColumnValueDisplayValuePairDistinctList(rangeEvaluation.columnId, Enums_1.DistinctCriteriaPairValue.DisplayValue, false);
         let existingItem = displayValuePairs.find(dv => dv.DisplayValue.toLowerCase() == rangeEvaluation.newValue);
         return existingItem;
     }

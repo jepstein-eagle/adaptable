@@ -112,7 +112,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                 this.props.Blotter.BlotterOptions.queryOptions.getColumnValues(this.props.SelectedColumnId).
                     then(result => {
                     if (result == null) { // if nothing returned then default to normal
-                        columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+                        columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue, false);
                         columnValuePairs = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
                         this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
                     }
@@ -131,7 +131,7 @@ class ExpressionBuilderConditionSelector extends React.Component {
                 });
             }
             else {
-                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue, false);
                 columnValuePairs = ArrayExtensions_1.ArrayExtensions.sortArrayWithProperty(Enums_1.SortOrder.Ascending, columnValuePairs, Enums_1.DistinctCriteriaPairValue[Enums_1.DistinctCriteriaPairValue.RawValue]);
                 this.setState({ ColumnRawValueDisplayValuePairs: columnValuePairs, ShowWaitingMessage: false, SelectedColumnId: this.props.SelectedColumnId });
             }

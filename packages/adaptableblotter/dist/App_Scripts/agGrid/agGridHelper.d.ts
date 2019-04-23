@@ -11,7 +11,7 @@ export declare module agGridHelper {
     function getDarkThemeName(): string;
     function TrySetUpNodeIds(gridOptions: GridOptions, blotterOptions: IAdaptableBlotterOptions): boolean;
     function createCellRendererFunc(pcr: IPercentBar, blotterId: string): ICellRendererFunc;
-    function cleanValue(value: string): string;
+    function getCleanValue(value: string): string;
     function getRenderedValue(percentBars: IPercentBar[], colDef: ColDef, valueToRender: any): any;
     function safeSetColDefs(colDefs: ColDef[], gridOptions: GridOptions): void;
     function createAdaptableBlotterSideBarDefs(showFilterPanel: boolean, showColumnsPanel: boolean): SideBarDef;

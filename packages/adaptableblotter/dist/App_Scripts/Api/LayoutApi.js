@@ -6,8 +6,11 @@ const ApiBase_1 = require("./ApiBase");
 const GeneralConstants_1 = require("../Utilities/Constants/GeneralConstants");
 const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 class LayoutApi extends ApiBase_1.ApiBase {
+    GetState() {
+        return this.getBlotterState().Layout;
+    }
     Set(layoutName) {
-        let layout = this.getState().Layout.Layouts.find(l => l.Name == layoutName);
+        let layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
         if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
             this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
         }
@@ -16,30 +19,30 @@ class LayoutApi extends ApiBase_1.ApiBase {
         this.dispatchAction(LayoutRedux.LayoutSelect(GeneralConstants_1.DEFAULT_LAYOUT));
     }
     GetCurrent() {
-        let layoutName = this.getState().Layout.CurrentLayout;
+        let layoutName = this.getBlotterState().Layout.CurrentLayout;
         return this.GetByName(layoutName);
     }
     GetCurrentName() {
-        return this.getState().Layout.CurrentLayout;
+        return this.getBlotterState().Layout.CurrentLayout;
     }
     GetByName(layoutName) {
-        let layout = this.getState().Layout.Layouts.find(l => l.Name == layoutName);
+        let layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
         if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
             return layout;
         }
     }
     GetAll() {
-        return this.getState().Layout.Layouts;
+        return this.getBlotterState().Layout.Layouts;
     }
     Save() {
-        let currentLayoutName = this.getState().Layout.CurrentLayout;
+        let currentLayoutName = this.getBlotterState().Layout.CurrentLayout;
         if (currentLayoutName != GeneralConstants_1.DEFAULT_LAYOUT) {
-            let currentLayoutObject = this.getState().Layout.Layouts.find(l => l.Name == currentLayoutName);
-            let currentLayoutIndex = this.getState().Layout.Layouts.findIndex(l => l.Name == currentLayoutName);
+            let currentLayoutObject = this.getBlotterState().Layout.Layouts.find(l => l.Name == currentLayoutName);
+            let currentLayoutIndex = this.getBlotterState().Layout.Layouts.findIndex(l => l.Name == currentLayoutName);
             if (currentLayoutIndex != -1) {
                 let gridState = (currentLayoutObject) ? currentLayoutObject.VendorGridInfo : null;
-                let visibleColumns = this.getState().Grid.Columns.filter(c => c.Visible);
-                let gridSorts = this.getState().Grid.GridSorts;
+                let visibleColumns = this.getBlotterState().Grid.Columns.filter(c => c.Visible);
+                let gridSorts = this.getBlotterState().Grid.GridSorts;
                 let layoutToSave = ObjectFactory_1.ObjectFactory.CreateLayout(visibleColumns, gridSorts, gridState, currentLayoutName);
                 this.dispatchAction(LayoutRedux.LayoutPreSave(currentLayoutIndex, layoutToSave));
             }
