@@ -155,7 +155,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ScheduleService: IScheduleService
 
     private _calculatedColumnPathMap: Map<string, string[]> = new Map()
-private useRowNodeLookUp: boolean;
+    private useRowNodeLookUp: boolean;
 
     private abContainerElement: HTMLElement;
     private gridOptions: GridOptions
@@ -179,6 +179,8 @@ private useRowNodeLookUp: boolean;
         // set the licence first
         this.LicenceService = new LicenceService(this);
 
+        // the audit service needs to be created before the store
+        this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         // create the store
         this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -186,14 +188,14 @@ private useRowNodeLookUp: boolean;
         this.CalendarService = new CalendarService(this);
         this.DataService = new DataService(this);
         this.ValidationService = new ValidationService(this);
-        this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
+
         this.StyleService = new StyleService(this);
         this.ChartService = new ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService(this);
         this.ScheduleService = new ScheduleService(this);
-        
-        this.useRowNodeLookUp=agGridHelper.TrySetUpNodeIds(this.gridOptions, blotterOptions);
-        
+
+        this.useRowNodeLookUp = agGridHelper.TrySetUpNodeIds(this.gridOptions, blotterOptions);
+
         const isGridInstantiated = this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
 
         if (!isGridInstantiated) {
@@ -289,7 +291,7 @@ private useRowNodeLookUp: boolean;
         this.throttleOnDataChangedUser = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
         this.throttleOnDataChangedExternal = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
 
-     
+
 
     }
 
@@ -814,11 +816,11 @@ private useRowNodeLookUp: boolean;
 
         // now two ways to do this - one using pk lookup and other using foreach on row node
         if (this.useRowNodeLookUp) {
-            batchValues.forEach((cellInfo: ICellInfo)=>{
+            batchValues.forEach((cellInfo: ICellInfo) => {
                 let rowNode: RowNode = this.gridOptions.api.getRowNode(cellInfo.Id);
-                 if (rowNode) {
+                if (rowNode) {
                     this.updateBatchValue(cellInfo, rowNode, nodesToRefresh, refreshColumnList, dataChangedEvents);
-                }else{
+                } else {
                     alert("cannot find for: " + cellInfo.Id)
                 }
             });

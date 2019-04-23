@@ -1,8 +1,9 @@
-import * as ReduxStorage from 'redux-storage'
 import * as fetch from 'isomorphic-fetch';
+import * as lodash from 'lodash'
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
+import IStorageEngine from './Interface/IStorageEngine';
 
-interface IAdaptableBlotterReduxRemoteStorageEngine extends ReduxStorage.StorageEngine { }
+const DEBOUNCE_DELAY = 500
 
 const checkStatus = (response: Response) => {
   const error = new Error(response.statusText);
@@ -11,11 +12,14 @@ const checkStatus = (response: Response) => {
     return response;
   }
 
-   throw error;
+  throw error;
 };
 
-class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterReduxRemoteStorageEngine {
-  constructor(private url: string, private userName: string, private blotterId: string) {}
+class AdaptableBlotterRemoteStorageEngine implements IStorageEngine {
+
+  constructor(private url: string, private userName: string, private blotterId: string) {
+    this.save = lodash.debounce(this.save, DEBOUNCE_DELAY)
+  }
 
   load(): Promise<any> {
     let loadOptions = {
@@ -27,7 +31,7 @@ class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterRedux
     return fetch(this.url, loadOptions)
       .then(checkStatus)
       .then(response => response.json())
-       .catch(error => Promise.reject(error.message));
+      .catch(error => Promise.reject(error.message));
   }
 
   save(state: any): Promise<any> {
@@ -49,6 +53,6 @@ class AdaptableBlotterReduxStorageClientEngine implements IAdaptableBlotterRedux
   }
 }
 
-export function createEngine(url: string, userName: string, blotterId: string): ReduxStorage.StorageEngine {
-  return new AdaptableBlotterReduxStorageClientEngine(url, userName, blotterId)
+export function createEngine(url: string, userName: string, blotterId: string): IStorageEngine {
+  return new AdaptableBlotterRemoteStorageEngine(url, userName, blotterId)
 }
