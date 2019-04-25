@@ -16,9 +16,9 @@ class FlashingCellStrategyagGrid extends FlashingCellsStrategy_1.FlashingCellsSt
         // dont handle 
     }
     InitState() {
-        if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell) {
-            this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
-            let numericColumns = ColumnHelper_1.ColumnHelper.getNumericColumns(this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+        if (this.FlashingCellState != this.blotter.adaptableBlotterStore.TheStore.getState().FlashingCell) {
+            this.FlashingCellState = this.blotter.adaptableBlotterStore.TheStore.getState().FlashingCell;
+            let numericColumns = ColumnHelper_1.ColumnHelper.getNumericColumns(this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns);
             let theBlotter = this.blotter;
             let currentFlashing = this.currentFlashing;
             numericColumns.forEach(col => {
@@ -28,8 +28,6 @@ class FlashingCellStrategyagGrid extends FlashingCellsStrategy_1.FlashingCellsSt
                 if (fc) {
                     cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function (params) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node);
-                        let rowNode = params.node;
-                        let test = theBlotter.BlotterOptions.vendorGrid;
                         let key = primaryKey + col.ColumnId + "up";
                         let currentFlashTimer = currentFlashing.get(key);
                         if (currentFlashTimer) {

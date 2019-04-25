@@ -16,7 +16,7 @@ export interface QuickSearchApplyAction extends Redux.Action {
 export interface QuickSearchClearAction extends Redux.Action {
 }
 
-export interface QuickSearchSetSearchDisplayAction extends Redux.Action {
+export interface QuickSearchSetDisplayAction extends Redux.Action {
     DisplayAction: DisplayAction
 }
 
@@ -31,7 +31,7 @@ export const QuickSearchApply = (quickSearchText: string): QuickSearchApplyActio
 
 
 
-export const QuickSearchSetDisplay = (DisplayAction: DisplayAction): QuickSearchSetSearchDisplayAction => ({
+export const QuickSearchSetDisplay = (DisplayAction: DisplayAction): QuickSearchSetDisplayAction => ({
     type: QUICK_SEARCH_SET_DISPLAY,
     DisplayAction
 })
@@ -43,10 +43,10 @@ export const QuickSearchSetStyle = (style: IStyle): QuickSearchSetStyleAction =>
 
 const initialQuickSearchState: QuickSearchState = {
     QuickSearchText: EMPTY_STRING,
-     DisplayAction: QUICK_SEARCH_DEFAULT_DISPLAY_ACTION,
+    DisplayAction: QUICK_SEARCH_DEFAULT_DISPLAY_ACTION,
     Style:
     {
-        BackColor: QUICK_SEARCH_DEFAULT_BACK_COLOR, 
+        BackColor: QUICK_SEARCH_DEFAULT_BACK_COLOR,
         ForeColor: QUICK_SEARCH_DEFAULT_FORE_COLOR,
     }
 }
@@ -55,8 +55,8 @@ export const QuickSearchReducer: Redux.Reducer<QuickSearchState> = (state: Quick
     switch (action.type) {
         case QUICK_SEARCH_APPLY:
             return Object.assign({}, state, { QuickSearchText: (<QuickSearchApplyAction>action).quickSearchText })
-         case QUICK_SEARCH_SET_DISPLAY:
-            return Object.assign({}, state, { DisplayAction: (<QuickSearchSetSearchDisplayAction>action).DisplayAction })
+        case QUICK_SEARCH_SET_DISPLAY:
+            return Object.assign({}, state, { DisplayAction: (<QuickSearchSetDisplayAction>action).DisplayAction })
         case QUICK_SEARCH_SET_STYLE:
             return Object.assign({}, state, { Style: (<QuickSearchSetStyleAction>action).style })
         default:

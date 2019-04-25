@@ -1,4 +1,4 @@
-import { ICategoryChartProperties } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartProperties } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 export interface CategoryChartComponentState {
     IsChartSettingsVisible: boolean;
     ChartProperties: ICategoryChartProperties;

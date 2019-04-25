@@ -19,10 +19,10 @@ class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy_1.Conditio
             let colList = ExpressionHelper_1.ExpressionHelper.GetColumnListFromExpression(x.Expression);
             if (colList.indexOf(dataChangedEvent.ColumnId) > -1) {
                 if (x.ConditionalStyleScope == Enums_1.ConditionalStyleScope.Row) {
-                    listOfColumns.push(...this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(c => c.ColumnId));
+                    listOfColumns.push(...this.blotter.api.gridApi.getColumns().map(c => c.ColumnId));
                 }
                 else if (x.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory) {
-                    let columnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == x.ColumnCategoryId);
+                    let columnCategory = this.blotter.api.columnCategoryApi.GetAll().find(lc => lc.ColumnCategoryId == x.ColumnCategoryId);
                     if (columnCategory) {
                         listOfColumns.push(...columnCategory.ColumnIds);
                     }
@@ -43,7 +43,7 @@ class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy_1.Conditio
         }
     }
     InitStyles() {
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = this.blotter.api.gridApi.getColumns();
         let theBlotter = this.blotter;
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0 && this.ConditionalStyleState != null && this.ConditionalStyleState.ConditionalStyles.length > 0) {
@@ -59,7 +59,7 @@ class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy_1.Conditio
                         };
                     }
                     else if (cs.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory) {
-                        let columnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
+                        let columnCategory = this.blotter.api.columnCategoryApi.GetAll().find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
                         if (columnCategory) {
                             if (ArrayExtensions_1.ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
                                 cellClassRules[styleName] = function (params) {

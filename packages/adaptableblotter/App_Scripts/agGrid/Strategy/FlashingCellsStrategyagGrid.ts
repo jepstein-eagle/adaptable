@@ -25,10 +25,10 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
     }
 
     protected InitState() {
-        if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell) {
-            this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
+        if (this.FlashingCellState != this.blotter.adaptableBlotterStore.TheStore.getState().FlashingCell) {
+            this.FlashingCellState = this.blotter.adaptableBlotterStore.TheStore.getState().FlashingCell;
 
-            let numericColumns = ColumnHelper.getNumericColumns(this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+            let numericColumns = ColumnHelper.getNumericColumns(this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns);
             let theBlotter = this.blotter as AdaptableBlotter
             let currentFlashing = this.currentFlashing
 
@@ -39,9 +39,6 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
                 if (fc) {
                     cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function (params: any) {
                         let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node)
-                        let rowNode: RowNode = params.node;
-                        let test: GridOptions = theBlotter.BlotterOptions.vendorGrid as GridOptions;
-                   
                         let key = primaryKey + col.ColumnId + "up";
                         let currentFlashTimer = currentFlashing.get(key)
                         if (currentFlashTimer) {
@@ -50,7 +47,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
 
                         let oldValue = theBlotter.DataService.GetPreviousColumnValue(col.ColumnId, primaryKey, params.value, ChangeDirection.Up);
                         if (oldValue && params.value > oldValue) {
-                             if (currentFlashTimer) {
+                            if (currentFlashTimer) {
                                 window.clearTimeout(currentFlashTimer)
                             }
                             let timer: number = window.setTimeout(() => {
@@ -82,7 +79,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
                                 theBlotter.refreshCells(params.node, [col.ColumnId])
                             }, fc.FlashingCellDuration)
                             currentFlashing.set(key, timer)
-                             return true
+                            return true
                         } else {
                             return false
                         }

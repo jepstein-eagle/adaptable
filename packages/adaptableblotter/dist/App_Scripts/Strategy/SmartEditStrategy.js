@@ -13,9 +13,9 @@ class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyConstants.SmartEditStrategyName, ScreenPopups.SmartEditPopup, StrategyConstants.SmartEditGlyph);
     }
     InitState() {
-        if (this.SmartEditState != this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit) {
-            this.SmartEditState = this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit;
-            if (this.blotter.isInitialised) {
+        if (this.SmartEditState != this.blotter.adaptableBlotterStore.TheStore.getState().SmartEdit) {
+            this.SmartEditState = this.blotter.adaptableBlotterStore.TheStore.getState().SmartEdit;
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.SmartEdit, this.SmartEditState);
             }
         }
@@ -24,7 +24,7 @@ class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.blotter.setValueBatch(newValues);
     }
     CheckCorrectCellSelection() {
-        let selectedCellInfo = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+        let selectedCellInfo = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
         if (selectedCellInfo == null || selectedCellInfo.Selection.size == 0) {
             return {
                 Alert: {
@@ -68,7 +68,7 @@ class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         return { ActionReturn: true };
     }
     BuildPreviewValues(smartEditValue, smartEditOperation) {
-        let selectedCells = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+        let selectedCells = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
         let previewResults = [];
         let columnId = selectedCells.Columns[0].ColumnId;
         for (let pair of selectedCells.Selection) {
@@ -109,7 +109,7 @@ class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         };
     }
     GetSmartEditState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().SmartEdit;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().SmartEdit;
     }
 }
 exports.SmartEditStrategy = SmartEditStrategy;

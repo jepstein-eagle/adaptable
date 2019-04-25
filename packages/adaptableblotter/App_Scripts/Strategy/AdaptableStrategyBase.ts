@@ -1,16 +1,13 @@
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IStrategy, } from './Interface/IStrategy';
 import { Action } from 'redux';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { IBlotterSearchState, IBlotterSortState, ISearchChangedEventArgs, ISearchChangedInfo, ISearchEventData, IStateChangedInfo, IStateEventData, IStateChangedEventArgs } from '../Utilities/Interface/IStateEvents';
 import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Utilities/Enums';
-import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IEntitlement } from "../Utilities/Interface/IEntitlement";
 import { IAdvancedSearch } from "../Utilities/Interface/BlotterObjects/IAdvancedSearch";
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { IUserState } from '../Redux/ActionsReducers/Interface/IState';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
@@ -22,9 +19,9 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     constructor(public Id: string, protected blotter: IAdaptableBlotter) {
     }
 
-    public InitializeWithRedux() {
+    public initializeWithRedux() {
         this.InitState();
-        this.blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
+        this.blotter.adaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
     public popupMenuItem: IMenuItem;
@@ -58,7 +55,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     }
 
     getStrategyEntitlement(): IEntitlement {
-        let state = this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
+        let state = this.blotter.adaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
         return state.find(x => x.FunctionName == this.Id)
     }
 
@@ -150,14 +147,14 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             } else if (functionType == "columnfilter") {
                 return column.Filterable
             } else if (functionType == "floatingfilter") {
-                return (blotter.hasFloatingFilter && blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter)
+                return (blotter.hasFloatingFilter && blotter.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter)
             }
         }
         return true;
     }
 
     publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void {
-        let state: AdaptableBlotterState = this.blotter.AdaptableBlotterStore.TheStore.getState();
+        let state: AdaptableBlotterState = this.blotter.adaptableBlotterStore.TheStore.getState();
 
         let dataSource: IDataSource = state.DataSource.DataSources.find(ds => ds.Name == state.DataSource.CurrentDataSource);
         let advancedSearch: IAdvancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch);

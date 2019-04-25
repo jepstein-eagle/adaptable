@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fetch = require("isomorphic-fetch");
 const AdaptableBlotterReduxMerger_1 = require("./AdaptableBlotterReduxMerger");
-const Helper_1 = require("../../Utilities/Helpers/Helper");
 const StringExtensions_1 = require("../../Utilities/Extensions/StringExtensions");
 const LoggingHelper_1 = require("../../Utilities/Helpers/LoggingHelper");
 const checkStatus = (response) => {
@@ -31,7 +30,7 @@ class AdaptableBlotterReduxLocalStorageEngine {
         }
         else if (this.predefinedConfig != null) {
             // we have config as an object so need to merge that
-            return new Promise((resolve) => resolve(this.predefinedConfig))
+            return Promise.resolve(this.predefinedConfig)
                 .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceInfo))
                 .catch(err => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(err));
         }
@@ -44,9 +43,7 @@ class AdaptableBlotterReduxLocalStorageEngine {
     }
     save(state) {
         return new Promise((resolve) => {
-            let clonedState = Helper_1.Helper.cloneObject(state);
-            const jsonState = JSON.stringify(clonedState /*, this.replacer*/);
-            localStorage.setItem(this.key, jsonState);
+            localStorage.setItem(this.key, JSON.stringify(state));
             resolve();
         }).catch(rejectWithMessage);
     }

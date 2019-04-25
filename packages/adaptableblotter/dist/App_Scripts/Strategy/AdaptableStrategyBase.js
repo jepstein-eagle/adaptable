@@ -8,9 +8,9 @@ class AdaptableStrategyBase {
         this.Id = Id;
         this.blotter = blotter;
     }
-    InitializeWithRedux() {
+    initializeWithRedux() {
         this.InitState();
-        this.blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState());
+        this.blotter.adaptableBlotterStore.TheStore.subscribe(() => this.InitState());
     }
     InitState() {
         // stff - check this works
@@ -34,7 +34,7 @@ class AdaptableStrategyBase {
         // base class implementation which is empty
     }
     getStrategyEntitlement() {
-        let state = this.blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
+        let state = this.blotter.adaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
         return state.find(x => x.FunctionName == this.Id);
     }
     isVisibleStrategy() {
@@ -95,13 +95,13 @@ class AdaptableStrategyBase {
                 return column.Filterable;
             }
             else if (functionType == "floatingfilter") {
-                return (blotter.hasFloatingFilter && blotter.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter);
+                return (blotter.hasFloatingFilter && blotter.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter);
             }
         }
         return true;
     }
     publishSearchChanged(searchChangedTrigger) {
-        let state = this.blotter.AdaptableBlotterStore.TheStore.getState();
+        let state = this.blotter.adaptableBlotterStore.TheStore.getState();
         let dataSource = state.DataSource.DataSources.find(ds => ds.Name == state.DataSource.CurrentDataSource);
         let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch);
         // lets get the searchstate

@@ -9,7 +9,7 @@ class DataManagementStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
         super(StrategyConstants.DataManagementStrategyId, blotter);
     }
     addPopupMenuItem() {
-        if ("production" == process.env.NODE_ENV && !BlotterHelper_1.BlotterHelper.IsDemoSite()) {
+        if ("production" == process.env.NODE_ENV && !BlotterHelper_1.BlotterHelper.isDemoSite()) {
             return;
         }
         this.createMenuItemShowPopup(StrategyConstants.DataManagementStrategyName, ScreenPopups.DataManagementPopup, StrategyConstants.DataManagementGlyph);

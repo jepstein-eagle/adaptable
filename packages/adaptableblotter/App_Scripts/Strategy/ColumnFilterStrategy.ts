@@ -37,11 +37,11 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
             this.columnFilterState = this.GetColumnFilterState();
 
             setTimeout(() => this.blotter.applyGridFiltering(), 5);
-            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
+            if (this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
                 this.publishSearchChanged(SearchChangedTrigger.ColumnFilter)
             }
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.ColumnFilter, this.columnFilterState)
             }
         }
@@ -49,6 +49,6 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     }
 
     private GetColumnFilterState(): IColumnFilter[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
     }
 }

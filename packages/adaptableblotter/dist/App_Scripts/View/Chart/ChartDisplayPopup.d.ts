@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 export interface ChartDisplayPopupState {
     EditedChartDefinition: IChartDefinition;
 }

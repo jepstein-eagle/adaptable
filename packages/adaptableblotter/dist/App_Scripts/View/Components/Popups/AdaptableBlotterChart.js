@@ -13,24 +13,24 @@ class AdaptableBlotterChart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            chartContainer: UIHelper_1.UIHelper.getChartContainer(this.props.AdaptableBlotter.BlotterOptions, document, this.props.showModal),
-            accessLevel: StrategyHelper_1.StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, StrategyConstants.ChartStrategyId),
-            isValidUserChartContainer: UIHelper_1.UIHelper.isValidUserChartContainer(this.props.AdaptableBlotter.BlotterOptions, document),
+            chartContainer: UIHelper_1.UIHelper.getChartContainer(this.props.AdaptableBlotter.blotterOptions, document, this.props.showModal),
+            accessLevel: StrategyHelper_1.StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, StrategyConstants.ChartStrategyId),
+            isValidUserChartContainer: UIHelper_1.UIHelper.isValidUserChartContainer(this.props.AdaptableBlotter.blotterOptions, document),
         };
     }
     render() {
         let cssClassName = StyleConstants.AB_STYLE;
         let commonProps = {
-            Columns: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
+            Columns: this.props.AdaptableBlotter.api.gridApi.getColumns(),
             ModalContainer: this.state.chartContainer,
             cssClassName: cssClassName + StyleConstants.MODAL_BODY,
             onClose: this.props.onClose,
             ShowModal: this.props.showModal,
             Blotter: this.props.AdaptableBlotter,
-            UserFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-            SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
-            ColumnFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters,
-            ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
+            UserFilters: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+            SystemFilters: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+            ColumnFilters: this.props.AdaptableBlotter.api.columnFilterApi.GetAll(),
+            ColorPalette: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
             AccessLevel: this.state.accessLevel
         };
         let bodyElement = AdaptableViewFactory_1.AdaptableViewFactory[ScreenPopups.ChartDisplayPopup];

@@ -6,6 +6,10 @@
         height: 88%
     }
 
+    .number-cell {
+      text-align: right;
+  }
+
     .styleBackBrown{
         background-color : rosybrown 
       }

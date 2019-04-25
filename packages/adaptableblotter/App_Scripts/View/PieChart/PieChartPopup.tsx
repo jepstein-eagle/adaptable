@@ -23,9 +23,11 @@ import { AdaptablePopover } from "../AdaptablePopover";
 import { AdaptableBlotterState } from "../../Redux/Store/Interface/IAdaptableStore";
 
 import { EnumExtensions } from "../../Utilities/Extensions/EnumExtensions";
-import { IPieChartDefinition, IPieChartDataItem, IChartData } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IPieChartDefinition } from "../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
+import { IChartData } from "../../Utilities/Interface/BlotterObjects/Charting/IChartData";
+import { IPieChartDataItem } from "../../Utilities/Interface/BlotterObjects/Charting/IPieChartDataItem";
 import { ObjectFactory } from "../../Utilities/ObjectFactory";
-import { PieChartLabelPosition, SliceSortOption, PieChartOthersCategoryType } from "../../Utilities/ChartEnums";
+import { PieChartLabelPosition, SliceSortOption, OthersCategoryType } from "../../Utilities/ChartEnums";
 import { PieChartUIHelper } from "../Chart/PieChart/PieChartUIHelper";
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {
@@ -36,7 +38,7 @@ interface PieChartPopupState {
 
     ErrorMessage: string;
     DataSource: IPieChartDataItem[];
-    OthersCategoryType: PieChartOthersCategoryType;
+    OthersCategoryType: OthersCategoryType;
     OthersCategoryThreshold: number;
     ShowAsDoughnut: boolean;
 
@@ -62,7 +64,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             ErrorMessage: null,
             DataSource: null,
 
-            OthersCategoryType: PieChartOthersCategoryType.Percent,
+            OthersCategoryType: OthersCategoryType.Percent,
             OthersCategoryThreshold: 2,
             ShowAsDoughnut: false,
 
@@ -216,7 +218,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 <HelpBlock style={{ fontSize: 'small' }}>
                     <Checkbox style={{ fontSize: 'small', marginBottom: '0px', marginTop: '0px' }}
                         onChange={(e) => this.onThresholdAsPercentChanged(e)}
-                        checked={this.state.OthersCategoryType == PieChartOthersCategoryType.Percent} >Others Threshold %
+                        checked={this.state.OthersCategoryType == OthersCategoryType.Percent} >Others Threshold %
                    </Checkbox>
                 </HelpBlock>
 
@@ -396,7 +398,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
     private onThresholdAsPercentChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let othersCategoryType: PieChartOthersCategoryType = (e.checked) ? PieChartOthersCategoryType.Percent : PieChartOthersCategoryType.Number;
+        let othersCategoryType: OthersCategoryType = (e.checked) ? OthersCategoryType.Percent : OthersCategoryType.Number;
         this.setState({ OthersCategoryType: othersCategoryType } as PieChartPopupState);
     }
 

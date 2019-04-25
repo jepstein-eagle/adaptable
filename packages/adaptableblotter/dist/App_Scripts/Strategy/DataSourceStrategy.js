@@ -15,13 +15,13 @@ class DataSourceStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (this.DataSourceState != this.GetDataSourceState()) {
             this.DataSourceState = this.GetDataSourceState();
             this.publishSearchChanged(Enums_1.SearchChangedTrigger.DataSource);
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.DataSource, this.DataSourceState);
             }
         }
     }
     GetDataSourceState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().DataSource;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().DataSource;
     }
 }
 exports.DataSourceStrategy = DataSourceStrategy;

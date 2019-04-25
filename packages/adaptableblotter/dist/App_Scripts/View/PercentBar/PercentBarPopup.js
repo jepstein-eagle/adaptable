@@ -27,7 +27,7 @@ class PercentBarPopupComponent extends React.Component {
             let arrayParams = this.props.PopupParams.split("|");
             if (arrayParams.length == 2 && arrayParams[0] == "New") {
                 let columnId = arrayParams[1];
-                let distinctColumnsValues = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columnId, Enums_1.DistinctCriteriaPairValue.RawValue).map(pair => {
+                let distinctColumnsValues = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(columnId, Enums_1.DistinctCriteriaPairValue.RawValue, false).map(pair => {
                     return pair.RawValue;
                 });
                 let newPercentRender = ObjectFactory_1.ObjectFactory.CreateEmptyPercentBar();

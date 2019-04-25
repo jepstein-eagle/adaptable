@@ -7,11 +7,11 @@ const Enums_1 = require("../Enums");
 const StringExtensions_1 = require("../Extensions/StringExtensions");
 var BlotterHelper;
 (function (BlotterHelper) {
-    function IsDemoSite() {
+    function isDemoSite() {
         return (window.location.hostname == 'demo.adaptableblotter.com');
     }
-    BlotterHelper.IsDemoSite = IsDemoSite;
-    function AssignBlotterOptions(blotterOptions) {
+    BlotterHelper.isDemoSite = isDemoSite;
+    function assignBlotterOptions(blotterOptions) {
         let returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions, blotterOptions);
         returnBlotterOptions.auditOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions.auditOptions, blotterOptions.auditOptions);
         returnBlotterOptions.configServerOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions.configServerOptions, blotterOptions.configServerOptions);
@@ -23,28 +23,30 @@ var BlotterHelper;
         returnBlotterOptions.chartOptions = Object.assign({}, DefaultAdaptableBlotterOptions_1.DefaultAdaptableBlotterOptions.chartOptions, blotterOptions.chartOptions);
         return returnBlotterOptions;
     }
-    BlotterHelper.AssignBlotterOptions = AssignBlotterOptions;
-    function CheckPrimaryKeyExists(blotter, columns) {
-        let pkColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(blotter.BlotterOptions.primaryKey, columns);
+    BlotterHelper.assignBlotterOptions = assignBlotterOptions;
+    function isValidPrimaryKey(blotter, columns) {
+        let pkColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(blotter.blotterOptions.primaryKey, columns);
         if (pkColumn == null) {
-            let errorMessage = "The PK Column '" + blotter.BlotterOptions.primaryKey + "' does not exist.  This will affect many functions in the Adaptable Blotter.";
-            if (blotter.BlotterOptions.generalOptions.showMissingPrimaryKeyWarning == true) { // show an alert if that is the option  
+            let errorMessage = "The PK Column '" + blotter.blotterOptions.primaryKey + "' does not exist.  This will affect many functions in the Adaptable Blotter.";
+            if (blotter.blotterOptions.generalOptions.showMissingPrimaryKeyWarning == true) { // show an alert if that is the option  
                 blotter.api.alertApi.ShowError("No Primary Key", errorMessage, true);
             }
             else { // otherwise just log it
                 LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(errorMessage);
             }
+            return false;
         }
+        return true;
     }
-    BlotterHelper.CheckPrimaryKeyExists = CheckPrimaryKeyExists;
-    function IsConfigServerEnabled(blotterOptions) {
+    BlotterHelper.isValidPrimaryKey = isValidPrimaryKey;
+    function isConfigServerEnabled(blotterOptions) {
         return blotterOptions.configServerOptions != null
             && blotterOptions.configServerOptions.enableConfigServer != null
             && blotterOptions.configServerOptions.enableConfigServer == true
             && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(blotterOptions.configServerOptions.configServerUrl);
     }
-    BlotterHelper.IsConfigServerEnabled = IsConfigServerEnabled;
-    function CheckLicenceKey(licenceInfo) {
+    BlotterHelper.isConfigServerEnabled = isConfigServerEnabled;
+    function checkLicenceKey(licenceInfo) {
         let universalOrEndUser = " (" + licenceInfo.LicenceUserType + "). ";
         let expiryDate = 'Expires: ' + licenceInfo.ExpiryDate.toLocaleDateString();
         switch (licenceInfo.LicenceScopeType) {
@@ -75,5 +77,5 @@ var BlotterHelper;
             LoggingHelper_1.LoggingHelper.LogError(licenceMessage);
         }
     }
-    BlotterHelper.CheckLicenceKey = CheckLicenceKey;
+    BlotterHelper.checkLicenceKey = checkLicenceKey;
 })(BlotterHelper = exports.BlotterHelper || (exports.BlotterHelper = {}));

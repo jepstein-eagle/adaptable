@@ -23,9 +23,9 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy imp
             let colList = ExpressionHelper.GetColumnListFromExpression(x.Expression)
             if (colList.indexOf(dataChangedEvent.ColumnId) > -1) {
                 if (x.ConditionalStyleScope == ConditionalStyleScope.Row) {
-                    listOfColumns.push(...this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(c => c.ColumnId))
+                    listOfColumns.push(...this.blotter.api.gridApi.getColumns().map(c => c.ColumnId))
                 } else if (x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                    let columnCategory: IColumnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == x.ColumnCategoryId)
+                    let columnCategory: IColumnCategory = this.blotter.api.columnCategoryApi.GetAll().find(lc => lc.ColumnCategoryId == x.ColumnCategoryId)
                     if (columnCategory) {
                         listOfColumns.push(...columnCategory.ColumnIds);
                     }
@@ -49,7 +49,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy imp
 
     public InitStyles(): void {
 
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = this.blotter.api.gridApi.getColumns();
         let theBlotter = this.blotter as AdaptableBlotter
 
         // adding this check as things can get mixed up during 'clean user data'
@@ -68,7 +68,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy imp
                             return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
                         }
                     } else if (cs.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                        let columnCategory: IColumnCategory= this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId)
+                        let columnCategory: IColumnCategory= this.blotter.api.columnCategoryApi.GetAll().find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId)
                         if (columnCategory) {
                             if (ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
                                 cellClassRules[styleName] = function (params: any) {

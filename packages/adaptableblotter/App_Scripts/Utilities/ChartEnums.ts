@@ -1,4 +1,4 @@
-// Chart Enums
+// General enums for all charts
 
 export enum ChartVisibility {
     Maximised = 'Maximised',
@@ -9,10 +9,11 @@ export enum ChartVisibility {
 export enum ChartType {
     CategoryChart = 'CategoryChart',
     PieChart = 'PieChart',
-    Data='Data'
+    Data = 'Data'
 }
 
 
+// Catategory Charts
 export enum CategoryChartType {
     Column = 'Column',
     Area = 'Area',
@@ -72,13 +73,6 @@ export enum ToolTipType {
     None = 'None'
 }
 
-export enum PieChartLabelPosition {
-  BestFit = 'BestFit',
-  Center = 'Center',
-  InsideEnd = 'InsideEnd',
-  OutsideEnd = 'OutsideEnd',
-  None = 'None'
-}
 
 export enum AxisAngle {
     Horizontal = 'Horizontal',
@@ -113,12 +107,22 @@ export enum CalloutsType {
     // to add more callout types
 }
 
+
+// Pie Charts
+export enum PieChartLabelPosition {
+    BestFit = 'BestFit',
+    Center = 'Center',
+    InsideEnd = 'InsideEnd',
+    OutsideEnd = 'OutsideEnd',
+    None = 'None'
+}
+
 export enum SecondaryColumnOperation {
     Sum = 'Sum',
     Count = 'Count',
 }
 export enum SliceLabelOption {
-      Value = 'Value',
+    Value = 'Value',
     ValueAndName = 'ValueAndName',
     Ratio = 'Ratio',
     RatioAndName = 'RatioAndName',
@@ -129,10 +133,10 @@ export enum SliceSortOption {
     ValueDescending = 'Value Descending',
     ValueAscending = 'Value Ascending',
     NameDescending = 'Name Descending',
-    NameAscending= 'Name Ascending',
+    NameAscending = 'Name Ascending',
 }
 
-export enum  PieChartOthersCategoryType {
+export enum OthersCategoryType {
     Number = 'Number',
     Percent = 'Percent'
 }

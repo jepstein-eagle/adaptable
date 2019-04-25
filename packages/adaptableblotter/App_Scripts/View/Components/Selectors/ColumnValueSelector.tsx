@@ -39,7 +39,7 @@ export class    ColumnValueSelector extends React.Component<ColumnValueSelectorP
         }
 
         if (this.props.SelectedColumn != null && this.props.Blotter !=null && this.props.Blotter.getColumnValueDisplayValuePairDistinctList!= null) {
-            let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue)
+            let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.SelectedColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue, false)
 
             if (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
                 selectedValue = "";

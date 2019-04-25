@@ -23,7 +23,6 @@ import { IEvent } from './IEvent';
 import { IAdaptableStrategyCollection } from '../../Strategy/Interface/IStrategy';
 import { ILicenceService } from '../Services/Interface/ILicenceService';
 import { IScheduleService } from '../Services/Interface/IScheduleService';
-import { ScheduleService } from '../Services/ScheduleService';
 
 /**
  *  The only interface for the AdaptableBlotter  
@@ -32,14 +31,14 @@ import { ScheduleService } from '../Services/ScheduleService';
 export interface IAdaptableBlotter {
    
     api: IBlotterApi
-    BlotterOptions: IAdaptableBlotterOptions
+    blotterOptions: IAdaptableBlotterOptions
 
-    AdaptableBlotterStore: IAdaptableBlotterStore;
-    Strategies: IAdaptableStrategyCollection
+    adaptableBlotterStore: IAdaptableBlotterStore;
+    strategies: IAdaptableStrategyCollection
 
     VendorGridName: 'agGrid' | 'Hypergrid';
     EmbedColumnMenu: boolean
-    isInitialised: boolean
+    IsInitialised: boolean
 
     // Services
     CalendarService: ICalendarService
@@ -51,7 +50,7 @@ export interface IAdaptableBlotter {
     LicenceService: ILicenceService
     ScheduleService: IScheduleService
 
-    // Grid Events
+    // Grid Events - used internally
     onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any>;
     onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
@@ -59,7 +58,7 @@ export interface IAdaptableBlotter {
     onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; 
     onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>; 
    
-    // not sure if this is right but putting the events here
+    // external events - but do they need to be here or should they be only on the api?
     SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>
     StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>
     ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
@@ -80,8 +79,7 @@ export interface IAdaptableBlotter {
   
     // getting records and keys
     getPrimaryKeyValueFromRecord(record: any): any
-    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
-    getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>
+    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue, visibleRowsOnly: boolean): Array<IRawValueDisplayValuePair>
     getDisplayValue(id: any, columnId: string): string
     getDisplayValueFromRecord(row: any, columnId: string): string
     getRawValueFromRecord(row: any, columnId: string): any
@@ -153,7 +151,4 @@ export interface IAdaptableBlotter {
     applyDarkTheme(): void
 
     redraw(): void
-
-
-
 }

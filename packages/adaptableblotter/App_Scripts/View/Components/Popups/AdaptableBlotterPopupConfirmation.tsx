@@ -41,7 +41,7 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<Adaptable
         let header: string = this.props.Header;
         let glyph: string = UIHelper.getGlyphByMessageType(this.props.MessageType);
 
-        let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+        let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.blotterOptions, document);
         let cssClassName: string = StyleConstants.POPUP_PROMPT
 
 

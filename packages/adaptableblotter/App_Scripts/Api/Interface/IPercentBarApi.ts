@@ -1,5 +1,7 @@
 import { IPercentBar } from "../../Utilities/Interface/BlotterObjects/IPercentBar";
+import { PercentBarState } from "../../Redux/ActionsReducers/Interface/IState";
 export interface IPercentBarApi {
+  GetState(): PercentBarState;
   GetAll(): IPercentBar[];
   GetByColumn(columnId: string): IPercentBar;
   Add(percentBar: IPercentBar): void;

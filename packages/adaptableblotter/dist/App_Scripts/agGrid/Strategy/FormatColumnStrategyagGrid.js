@@ -10,7 +10,7 @@ class FormatColumnStrategyagGrid extends FormatColumnStrategy_1.FormatColumnStra
         this.blotterBypass = blotterBypass;
     }
     InitStyles() {
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
         let theBlotter = this.blotter;
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0 && this.FormatColumnState.FormatColumns.length > 0) {

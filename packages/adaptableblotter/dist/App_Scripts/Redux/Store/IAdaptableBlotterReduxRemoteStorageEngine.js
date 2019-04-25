@@ -1,20 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const fetch = require("isomorphic-fetch");
+const lodash = require("lodash");
+const LoggingHelper_1 = require("../../Utilities/Helpers/LoggingHelper");
+const DEBOUNCE_DELAY = 500;
 const checkStatus = (response) => {
     const error = new Error(response.statusText);
     if (response.status >= 200 && response.status < 300) {
         return response;
     }
-    //error.response = response;
     throw error;
 };
-class AdaptableBlotterReduxStorageClientEngine {
-    constructor(url, userName, blotterId, blotter) {
+class AdaptableBlotterRemoteStorageEngine {
+    constructor(url, userName, blotterId) {
         this.url = url;
         this.userName = userName;
         this.blotterId = blotterId;
-        this.blotter = blotter;
+        this.save = lodash.debounce(this.save, DEBOUNCE_DELAY);
     }
     load() {
         let loadOptions = {
@@ -26,7 +28,6 @@ class AdaptableBlotterReduxStorageClientEngine {
         return fetch(this.url, loadOptions)
             .then(checkStatus)
             .then(response => response.json())
-            //.then(json => json.state)
             .catch(error => Promise.reject(error.message));
     }
     save(state) {
@@ -41,14 +42,13 @@ class AdaptableBlotterReduxStorageClientEngine {
             },
         };
         return fetch(this.url, saveOptions).then(checkStatus).catch(error => {
-            this.blotter.api.alertApi.ShowError("Cannot Save Config", error.message, true);
+            LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError("Cannot Save Config: " + error.message);
             return Promise.reject("Cannot save config:" + error.message);
         });
         ;
     }
 }
-//TODO: we shouldn't really pass the blotter instance here but I need this to be done quickly
-function createEngine(url, userName, blotterId, blotter) {
-    return new AdaptableBlotterReduxStorageClientEngine(url, userName, blotterId, blotter);
+function createEngine(url, userName, blotterId) {
+    return new AdaptableBlotterRemoteStorageEngine(url, userName, blotterId);
 }
 exports.createEngine = createEngine;

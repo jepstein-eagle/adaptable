@@ -3,10 +3,15 @@ import { DisplayAction } from "../Utilities/Enums";
 import * as QuickSearchRedux from '../Redux/ActionsReducers/QuickSearchRedux'
 import { ApiBase } from "./ApiBase";
 import { IQuickSearchApi } from "./Interface/IQuickSearchApi";
+import { QuickSearchState } from "../Redux/ActionsReducers/Interface/IState";
 
 export class QuickSearchApi extends ApiBase implements IQuickSearchApi {
 
-   public Apply(quickSearchText: string): void {
+    public GetState(): QuickSearchState {
+        return this.getBlotterState().QuickSearch;
+    }
+
+    public Apply(quickSearchText: string): void {
         this.dispatchAction(QuickSearchRedux.QuickSearchApply(quickSearchText))
     }
 
@@ -15,7 +20,11 @@ export class QuickSearchApi extends ApiBase implements IQuickSearchApi {
     }
 
     public GetValue(): string {
-        return this.getState().QuickSearch.QuickSearchText;
+        return this.getBlotterState().QuickSearch.QuickSearchText;
+    }
+    
+    public GetStyle(): IStyle {
+        return this.getBlotterState().QuickSearch.Style;
     }
 
     public SetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void {

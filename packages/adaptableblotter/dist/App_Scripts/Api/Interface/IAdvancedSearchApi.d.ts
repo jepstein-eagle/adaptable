@@ -1,5 +1,7 @@
 import { IAdvancedSearch } from "../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
+import { AdvancedSearchState } from "../../Redux/ActionsReducers/Interface/IState";
 export interface IAdvancedSearchApi {
+    GetState(): AdvancedSearchState;
     /**
      * Sets Advanced Search
      * @param advancedSearchName
@@ -17,6 +19,7 @@ export interface IAdvancedSearchApi {
     Edit(advancedSearchName: string, advancedSearch: IAdvancedSearch): void;
     Delete(advancedSearchName: string): void;
     GetCurrent(): IAdvancedSearch;
+    GetCurrentName(): string;
     GetByName(advancedSearchName: string): IAdvancedSearch;
     GetAll(): IAdvancedSearch[];
 }

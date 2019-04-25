@@ -1,5 +1,7 @@
+import { DashboardState } from "../../Redux/ActionsReducers/Interface/IState";
 
 export interface IDashboardApi {
+    GetState(): DashboardState;
     SetAvailableToolbars(availableToolbars: string[]): void;
     SetVisibleToolbars(visibleToolbars: string[]): void;
     ShowToolbar(visibleToolbar: string): void;

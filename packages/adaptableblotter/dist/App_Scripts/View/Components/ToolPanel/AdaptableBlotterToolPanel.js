@@ -90,8 +90,8 @@ exports.AdaptableBlotterToolPanelBuilder = (ctx) => class AdaptableBlotterToolPa
     }
     init(params) {
         this.gui = document.createElement('div');
-        this.gui.id = 'adaptable-blotter-tool-panel_' + this.ctx.Blotter.BlotterOptions.blotterId;
-        react_dom_1.render((React.createElement(react_redux_1.Provider, { store: this.ctx.Blotter.AdaptableBlotterStore.TheStore },
+        this.gui.id = 'adaptable-blotter-tool-panel_' + this.ctx.Blotter.blotterOptions.blotterId;
+        react_dom_1.render((React.createElement(react_redux_1.Provider, { store: this.ctx.Blotter.adaptableBlotterStore.TheStore },
             React.createElement(exports.ConnectedAdaptableBlotterToolPanel, { Blotter: this.ctx.Blotter, TeamSharingActivated: false }))), this.gui);
         if (params && params.api) {
             params.api.addEventListener('modelUpdated', (newModel) => {

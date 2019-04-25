@@ -12,22 +12,22 @@ const UIHelper_1 = require("../../UIHelper");
 class AdaptableBlotterPopup extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE;
-        let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.Blotter.BlotterOptions, document);
-        let accessLevel = StrategyHelper_1.StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, this.props.ComponentStrategy);
+        let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.Blotter.blotterOptions, document);
+        let accessLevel = StrategyHelper_1.StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.Blotter.adaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, this.props.ComponentStrategy);
         if (this.props.ComponentName) {
             let bodyElement = AdaptableViewFactory_1.AdaptableViewFactory[this.props.ComponentName];
             //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
             let commonProps = {
                 PopupParams: this.props.PopupParams,
                 onClearPopupParams: () => this.props.onClearPopupParams(),
-                TeamSharingActivated: BlotterHelper_1.BlotterHelper.IsConfigServerEnabled(this.props.Blotter.BlotterOptions),
-                Columns: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns,
-                UserFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-                SystemFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
-                ColumnFilters: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters,
+                TeamSharingActivated: BlotterHelper_1.BlotterHelper.isConfigServerEnabled(this.props.Blotter.blotterOptions),
+                Columns: this.props.Blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns,
+                UserFilters: this.props.Blotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+                SystemFilters: this.props.Blotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+                ColumnFilters: this.props.Blotter.adaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters,
                 ModalContainer: modalContainer,
-                ColorPalette: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
-                GridSorts: this.props.Blotter.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts,
+                ColorPalette: this.props.Blotter.adaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
+                GridSorts: this.props.Blotter.adaptableBlotterStore.TheStore.getState().Grid.GridSorts,
                 cssClassName: cssClassName + StyleConstants.MODAL_BODY,
                 AccessLevel: accessLevel,
                 Blotter: this.props.Blotter

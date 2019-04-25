@@ -10,7 +10,7 @@ export declare abstract class AdaptableStrategyBase implements IStrategy {
     Id: string;
     protected blotter: IAdaptableBlotter;
     constructor(Id: string, blotter: IAdaptableBlotter);
-    InitializeWithRedux(): void;
+    initializeWithRedux(): void;
     popupMenuItem: IMenuItem;
     protected InitState(): void;
     getPopupMenuItem(): IMenuItem;

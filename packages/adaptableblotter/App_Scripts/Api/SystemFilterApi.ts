@@ -4,9 +4,14 @@ import { ApiBase } from "./ApiBase";
 import { IUserFilter } from "../Utilities/Interface/BlotterObjects/IUserFilter";
 import { FilterHelper } from '../Utilities/Helpers/FilterHelper';
 import { ISystemFilterApi } from './Interface/ISystemFilterApi';
+import { SystemFilterState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class SystemFilterApi extends ApiBase implements ISystemFilterApi {
 
+
+  public GetState(): SystemFilterState {
+    return this.getBlotterState().SystemFilter;
+}
 
   public userFilterSet(userFilters: IUserFilter[]): void {
     userFilters.forEach(uf => {
@@ -23,7 +28,7 @@ export class SystemFilterApi extends ApiBase implements ISystemFilterApi {
   }
 
   public GetCurrent(): string[] {
-    return this.getState().SystemFilter.SystemFilters;
+    return this.getBlotterState().SystemFilter.SystemFilters;
   }
 
   public GetAll(): string[] {

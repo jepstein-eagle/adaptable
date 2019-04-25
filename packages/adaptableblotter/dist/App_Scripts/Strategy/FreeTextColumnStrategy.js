@@ -19,9 +19,9 @@ class FreeTextColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
         }
     }
     InitState() {
-        if (this.FreeTextColumnState != this.blotter.AdaptableBlotterStore.TheStore.getState().FreeTextColumn) {
-            this.FreeTextColumnState = this.blotter.AdaptableBlotterStore.TheStore.getState().FreeTextColumn;
-            if (this.blotter.isInitialised) {
+        if (this.FreeTextColumnState != this.blotter.adaptableBlotterStore.TheStore.getState().FreeTextColumn) {
+            this.FreeTextColumnState = this.blotter.adaptableBlotterStore.TheStore.getState().FreeTextColumn;
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.FreeTextColumn, this.FreeTextColumnState);
             }
         }

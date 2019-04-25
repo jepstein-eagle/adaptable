@@ -1,4 +1,6 @@
-import { IPieChartDefinition, IPieChartDataItem, IChartData } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IPieChartDefinition } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
+import { IChartData } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartData";
+import { IPieChartDataItem } from "../../../Utilities/Interface/BlotterObjects/Charting/IPieChartDataItem";
 import { PieChartComponentState } from "./PieChartComponentState";
 import { SliceSortOption } from "../../../Utilities/ChartEnums";
 export declare module PieChartUIHelper {

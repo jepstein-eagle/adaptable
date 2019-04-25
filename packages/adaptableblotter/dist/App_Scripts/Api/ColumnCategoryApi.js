@@ -3,8 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ColumnCategoryRedux = require("../Redux/ActionsReducers/ColumnCategoryRedux");
 const ApiBase_1 = require("./ApiBase");
 class ColumnCategoryApi extends ApiBase_1.ApiBase {
+    GetState() {
+        return this.getBlotterState().ColumnCategory;
+    }
     GetAll() {
-        return this.getState().ColumnCategory.ColumnCategories;
+        return this.getBlotterState().ColumnCategory.ColumnCategories;
     }
     Add(columnCategory) {
         this.dispatchAction(ColumnCategoryRedux.ColumnCategoryAdd(columnCategory));

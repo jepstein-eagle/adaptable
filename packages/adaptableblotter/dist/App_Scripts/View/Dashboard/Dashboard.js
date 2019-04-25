@@ -16,7 +16,7 @@ class DashboardComponent extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD;
         let cssBaseClassName = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD_BASE;
-        let optionsBlotterName = this.props.Blotter.BlotterOptions.blotterId;
+        let optionsBlotterName = this.props.Blotter.blotterOptions.blotterId;
         let blotterName = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
         let showBlotterName = "Show " + blotterName + " Dashboard";
         let hiddenEntitlements = this.props.EntitlementsState.FunctionEntitlements.filter(e => e.AccessLevel == "Hidden");

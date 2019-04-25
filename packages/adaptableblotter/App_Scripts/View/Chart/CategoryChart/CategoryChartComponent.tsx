@@ -20,7 +20,8 @@ import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterFor
 import { ButtonGeneral } from "../../Components/Buttons/ButtonGeneral";
 import { DefaultCategoryChartProperties } from "../../../Utilities/Defaults/DefaultCategoryChartProperties";
 import { PanelWithTwoButtons } from "../../Components/Panels/PanelWithTwoButtons";
-import { ICategoryChartDefinition, ICategoryChartProperties, IChartProperties, IChartData } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, ICategoryChartProperties, IChartProperties } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
+import { IChartData } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartData";
 import { CategoryChartUIHelper } from "./CategoryChartUIHelper";
 import { CategoryChartComponentState } from "./CategoryChartComponentState";
 import { IColumn } from "../../../Utilities/Interface/IColumn";

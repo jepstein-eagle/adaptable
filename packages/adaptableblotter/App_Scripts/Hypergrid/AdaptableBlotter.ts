@@ -122,8 +122,8 @@ const getFilterIcon = (state: boolean) => {
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public api: IBlotterApi
-    public Strategies: IAdaptableStrategyCollection
-    public AdaptableBlotterStore: IAdaptableBlotterStore
+    public strategies: IAdaptableStrategyCollection
+    public adaptableBlotterStore: IAdaptableBlotterStore
 
     public CalendarService: ICalendarService
     public DataService: IDataService
@@ -135,7 +135,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public FreeTextColumnService: IFreeTextColumnService
     public ScheduleService: IScheduleService
 
-    public BlotterOptions: IAdaptableBlotterOptions
+    public blotterOptions: IAdaptableBlotterOptions
     public VendorGridName: any
     public EmbedColumnMenu: boolean;
 
@@ -145,7 +145,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private hyperGrid: any
     private filterContainer: HTMLDivElement
 
-    public isInitialised: boolean
+    public IsInitialised: boolean
 
     private throttleOnDataChangedUser: (() => void) & _.Cancelable;
     private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
@@ -153,68 +153,69 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we init with defaults then overrides with options passed in the constructor
-        this.BlotterOptions = BlotterHelper.AssignBlotterOptions(blotterOptions);
+        this.blotterOptions = BlotterHelper.assignBlotterOptions(blotterOptions);
 
-        this.hyperGrid = this.BlotterOptions.vendorGrid;
+        this.hyperGrid = this.blotterOptions.vendorGrid;
         this.VendorGridName = 'Hypergrid';
         this.EmbedColumnMenu = false;
         this.hasFloatingFilter = true;
 
+        // Create licencing
+        this.LicenceService = new LicenceService(this);
+        BlotterHelper.checkLicenceKey(this.LicenceService.LicenceInfo);
+
+        // the audit service needs to be created before the store
+        this.AuditLogService = new AuditLogService(this, this.blotterOptions);
+        // create the store
+        this.adaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
         this.CalendarService = new CalendarService(this);
         this.DataService = new DataService(this);
         this.ValidationService = new ValidationService(this);
-        this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
         this.ChartService = new ChartService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => { let column = this.getHypergridColumn(columnId); return this.valOrFunc(record, column) });
         this.FreeTextColumnService = new FreeTextColumnService(this);
-        this.LicenceService = new LicenceService(this);
         this.ScheduleService = new ScheduleService(this);
-        
-        BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
-
-        this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
-
 
         //we build the list of strategies
         //maybe we don't need to have a map and just an array is fine..... dunno'
-        this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(this))
-        this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
-        this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
-        this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
-        this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
-        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
-        this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy(this))
-        this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
-        this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
-        this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
-        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleStrategyHypergrid(this))
-        this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy(this))
-        this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(this))
-        this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy(this))
-        this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(this))
-        this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(this))
-        this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
-        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsStrategyHypergrid(this))
-        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyHypergrid(this))
-        this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
-        this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
-        this.Strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy(this))
-        this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
-        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(this))
-        this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(this))
-        this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
-        this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
-        this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))
-        this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
+        this.strategies = new Map<string, IStrategy>();
+        this.strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
+        this.strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(this))
+        this.strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
+        this.strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
+        this.strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
+        this.strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
+        this.strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
+        this.strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy(this))
+        this.strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
+        this.strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
+        this.strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
+        this.strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleStrategyHypergrid(this))
+        this.strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy(this))
+        this.strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(this))
+        this.strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy(this))
+        this.strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(this))
+        this.strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(this))
+        this.strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
+        this.strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsStrategyHypergrid(this))
+        this.strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyHypergrid(this))
+        this.strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
+        this.strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
+        this.strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy(this))
+        this.strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
+        this.strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(this))
+        this.strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(this))
+        this.strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
+        this.strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
+        this.strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))
+        this.strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(this))
+        this.strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
 
-        this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
+        this.abContainerElement = document.getElementById(this.blotterOptions.containerOptions.adaptableBlotterContainer);
         if (this.abContainerElement == null) {
-            LoggingHelper.LogAdaptableBlotterError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
+            LoggingHelper.LogAdaptableBlotterError("There is no Div called " + this.blotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
             return;
         }
         this.abContainerElement.innerHTML = ""
@@ -225,17 +226,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.filterContainer.style.visibility = "hidden"
         this.abContainerElement.ownerDocument.body.appendChild(this.filterContainer)
 
-        iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
+        iPushPullHelper.init(this.blotterOptions.iPushPullConfig);
 
-
-
-        this.AdaptableBlotterStore.Load
-            .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
+        this.adaptableBlotterStore.Load
+            .then(() => this.strategies.forEach(strat => strat.initializeWithRedux()),
                 (e) => {
                     LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
                     //for now i'm still initializing the strategies even if loading state has failed.... 
                     //we may revisit that later
-                    this.Strategies.forEach(strat => strat.InitializeWithRedux())
+                    this.strategies.forEach(strat => strat.initializeWithRedux())
                 })
             .then(
                 () => this.initInternalGridLogic(),
@@ -246,11 +245,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.initInternalGridLogic()
                 })
             .then(() => {
-                let currentlayout = this.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
-                this.AdaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
-                BlotterHelper.CheckPrimaryKeyExists(this, this.getState().Grid.Columns);
-                this.isInitialised = true
-                this.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
+                let currentlayout = this.adaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
+                this.adaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
+                BlotterHelper.isValidPrimaryKey(this, this.getState().Grid.Columns);
+                this.IsInitialised = true
+                this.adaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
             })
 
         // get the api ready
@@ -263,13 +262,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         // create debounce methods that take a time based on user settings
-        this.throttleOnDataChangedUser = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
-        this.throttleOnDataChangedExternal = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
+        this.throttleOnDataChangedUser = _.throttle(this.applyDataChange, this.blotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
+        this.throttleOnDataChangedExternal = _.throttle(this.applyDataChange, this.blotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
 
     }
 
     private getState(): AdaptableBlotterState {
-        return this.AdaptableBlotterStore.TheStore.getState()
+        return this.adaptableBlotterStore.TheStore.getState()
     }
 
     private buildFontCSSShorthand(fontCssShortHand: string, newStyle: IStyle): string {
@@ -325,7 +324,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 Filterable: existingColumn ? existingColumn.Filterable : this.isColumnFilterable(x.name)
             }
         });
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
+        this.adaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetColumnsAction>(GridRedux.GridSetColumns(activeColumns.concat(hiddenColumns)));
 
         this.debouncedFilterGrid();
     }
@@ -389,13 +388,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public createMenu() {
         let menuItems: IMenuItem[] = [];
-        this.Strategies.forEach(x => {
+        this.strategies.forEach(x => {
             let menuItem = x.getPopupMenuItem()
             if (menuItem != null) {
                 menuItems.push(menuItem);
             }
         })
-        this.AdaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
+        this.adaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(MenuRedux.SetMenuItems(menuItems));
     }
 
     public reloadGrid(): void {
@@ -403,7 +402,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getPrimaryKeyValueFromRecord(record: any): any {
-        return record[this.BlotterOptions.primaryKey]
+        return record[this.blotterOptions.primaryKey]
     }
 
     public gridHasCurrentEditValue(): boolean {
@@ -435,17 +434,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     debouncedFilterGrid = _.debounce(() => this.applyGridFiltering(), HALF_SECOND);
 
     private filterOnUserDataChange(): void {
-        if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
+        if (this.blotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
             this.applyDataChange();
-        } else if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
+        } else if (this.blotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
             this.throttleOnDataChangedUser();
         }
     }
 
     private filterOnExternalDataChange(): void {
-        if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
+        if (this.blotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
             this.applyDataChange();
-        } else if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
+        } else if (this.blotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
             this.throttleOnDataChangedExternal();
         }
     }
@@ -460,7 +459,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             //we don't use firstSelectedCell and lastSelectedCell as they keep the order of the click. i.e. firstcell can be below lastcell....
             for (let columnIndex = rectangle.origin.x; columnIndex <= rectangle.origin.x + rectangle.width; columnIndex++) {
                 let column = this.hyperGrid.behavior.getActiveColumns()[columnIndex]
-                let selectedColumn: IColumn = ColumnHelper.getColumnFromId(column.name, this.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+                let selectedColumn: IColumn = ColumnHelper.getColumnFromId(column.name, this.adaptableBlotterStore.TheStore.getState().Grid.Columns);
                 columns.push(selectedColumn)
                 for (let rowIndex = rectangle.origin.y; rowIndex <= rectangle.origin.y + rectangle.height; rowIndex++) {
                     let row = this.hyperGrid.behavior.dataModel.dataSource.getRow(rowIndex)
@@ -480,7 +479,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         let selectedCells: ISelectedCellInfo = { Columns: columns, Selection: selectionMap }
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
+        this.adaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(GridRedux.GridSetSelectedCells(selectedCells));
         this._onSelectedCellsChanged.Dispatch(this, this)
     }
 
@@ -577,7 +576,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //if(this.gridHasCurrentEditValue() && this.getPrimaryKeyValueFromRecord(this.hyperGrid.cellEditor.row) == id)
         this.cancelEdit()
 
-        let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, cellInfo.Id)
+        let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, cellInfo.Id)
 
         let oldValue = row[cellInfo.ColumnId]
         row[cellInfo.ColumnId] = cellInfo.Value;
@@ -604,7 +603,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //no need to have a batch mode so far.... we'll see in the future performance
         let dataChangedEvents: IDataChangedInfo[] = []
         for (let element of batchValues) {
-            let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, element.Id)
+            let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, element.Id)
             let oldValue = row[element.ColumnId]
             row[element.ColumnId] = element.Value
 
@@ -656,7 +655,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getRecordIsSatisfiedFunction(id: any, distinctCriteria: DistinctCriteriaPairValue): (columnId: string) => any {
         if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-            let record = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id);
+            let record = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, id);
             return (columnId: string) => {
                 let column = this.getHypergridColumn(columnId);
                 return this.valOrFunc(record, column);
@@ -729,7 +728,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public setCustomSort(columnId: string): void {
         //nothing to do except the reindex so the CustomSortSource does it's job if needed
-        let gridSort: IGridSort = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts.find(x => x.Column == columnId);
+        let gridSort: IGridSort = this.adaptableBlotterStore.TheStore.getState().Grid.GridSorts.find(x => x.Column == columnId);
         if (gridSort) {
             this.ReindexAndRepaint()
         }
@@ -737,7 +736,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public removeCustomSort(columnId: string): void {
         //nothing to do except the reindex so the CustomSortSource does it's job if needed
-        let gridSort: IGridSort = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts.find(x => x.Column == columnId);
+        let gridSort: IGridSort = this.adaptableBlotterStore.TheStore.getState().Grid.GridSorts.find(x => x.Column == columnId);
         if (gridSort) {
             this.ReindexAndRepaint()
         }
@@ -749,7 +748,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this._onRefresh.Dispatch(this, this);
     }
 
-    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
+    public getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue, visibleRowsOnly: boolean): Array<IRawValueDisplayValuePair> {
+        // TODO: we are not checking visible rows only!
         let returnMap = new Map<string, IRawValueDisplayValuePair>();
         // check if there are permitted column values for that column
         let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
@@ -757,70 +757,50 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         if (permittedValuesForColumn) {
             permittedValuesForColumn.PermittedValues.forEach(pv => {
                 returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
-                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
+                if (returnMap.size == this.blotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
                     return Array.from(returnMap.values())
                 }
             })
         } else {
+            let element;
             let column = this.getHypergridColumn(columnId);
-            //We bypass the whole DataSource stuff as we need to get ALL the data
-            let data = this.hyperGrid.behavior.dataModel.getData()
-            for (var index = 0; index < data.length; index++) {
-                var element = data[index]
-                let displayString = this.getDisplayValueFromRecord(element, columnId)
-                let rawValue = this.valOrFunc(element, column)
-                if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-                    returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
+            if (visibleRowsOnly) {
+                let rowCount = this.hyperGrid.behavior.dataModel.dataSource.getRowCount()
+                for (var visibleindex = 0; visibleindex < rowCount; visibleindex++) {
+                    element = this.hyperGrid.behavior.dataModel.dataSource.getRow(visibleindex)
+                    this.addDistinctItem(element, columnId, column, distinctCriteria, returnMap)
+                    if (returnMap.size == this.blotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
+                        return Array.from(returnMap.values())
+                    }
                 }
-                else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
-                    returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
-                }
-                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
-                    return Array.from(returnMap.values())
+            } else {
+                let data = this.hyperGrid.behavior.dataModel.getData()
+                for (var allIndex = 0; allIndex < data.length; allIndex++) {
+                    element = data[allIndex]
+                    this.addDistinctItem(element, columnId, column, distinctCriteria, returnMap)
+                    if (returnMap.size == this.blotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
+                        return Array.from(returnMap.values())
+                    }
                 }
             }
         }
         return Array.from(returnMap.values())
     }
 
-    public getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair> {
-        let returnMap = new Map<string, IRawValueDisplayValuePair>();
-        // check if there are permitted column values for that column
-        let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface.PermittedColumnValues
-        let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
-        if (permittedValuesForColumn) {
-            permittedValuesForColumn.PermittedValues.forEach(pv => {
-                returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
-                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
-                    return Array.from(returnMap.values())
-                }
-            })
-        } else {
-            let column = this.getHypergridColumn(columnId);
-            //We bypass the whole DataSource stuff as we need to get ALL the data
-            let data = this.hyperGrid.behavior.dataModel.getData()
-            for (var index = 0; index < data.length; index++) {
-                var element = data[index]
-                let displayString = this.getDisplayValueFromRecord(element, columnId)
-                let rawValue = this.valOrFunc(element, column)
-                if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-                    returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
-                }
-                else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
-                    returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
-                }
-                if (returnMap.size == this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed) {
-                    return Array.from(returnMap.values())
-                }
-            }
+    private addDistinctItem(element: any, columnId: string, column: any, distinctCriteria: DistinctCriteriaPairValue, returnMap: Map<string, IRawValueDisplayValuePair>): void {
+        let displayString = this.getDisplayValueFromRecord(element, columnId)
+        let rawValue = this.valOrFunc(element, column)
+        if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
+            returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayString });
         }
-        return Array.from(returnMap.values())
+        else if (distinctCriteria == DistinctCriteriaPairValue.DisplayValue) {
+            returnMap.set(displayString, { RawValue: rawValue, DisplayValue: displayString });
+        }
     }
 
-  
 
     public getDisplayValue(id: any, columnId: string): string {
-        let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.BlotterOptions.primaryKey, id)
+        let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(this.blotterOptions.primaryKey, id)
         return this.getDisplayValueFromRecord(row, columnId)
     }
 
@@ -906,7 +886,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             cellStyleHypergridColumns = new Map()
             this.cellStyleHypergridMap.set(rowIdentifierValue, cellStyleHypergridColumns)
         }
-        for (let column of this.AdaptableBlotterStore.TheStore.getState().Grid.Columns) {
+        for (let column of this.adaptableBlotterStore.TheStore.getState().Grid.Columns) {
             let cellStyleHypergrid = cellStyleHypergridColumns.get(column.ColumnId)
             if (!cellStyleHypergrid) {
                 cellStyleHypergrid = {}
@@ -927,8 +907,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // let rowIndex = this.hyperGrid.behavior.dataModel.dataSource.getProperty('foundRowIndex')
         // return rowIndex
         let rowIndex = this.hyperGrid.behavior.dataModel.getIndexedData().findIndex((x: any) => {
-            if (x && x.hasOwnProperty(this.BlotterOptions.primaryKey)) {
-                return x[this.BlotterOptions.primaryKey] == rowIdentifierValue
+            if (x && x.hasOwnProperty(this.blotterOptions.primaryKey)) {
+                return x[this.blotterOptions.primaryKey] == rowIdentifierValue
             }
             return false
         })
@@ -999,7 +979,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this._onSearchChanged.Dispatch(this, this);
     }
 
-    private applyDataChange(){
+    private applyDataChange() {
         this.ReindexAndRepaint()
     }
 
@@ -1164,7 +1144,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 headerFontStyle: headerFontStyle.fontStyle,
                 headerFontWeight: headerFontStyle.fontWeight,
                 height: this.hyperGrid.properties.defaultRowHeight,
-                Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
+                Columns: this.adaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
                     let colHypergrid = this.getHypergridColumn(col.ColumnId)
                     return { columnFriendlyName: col.FriendlyName, width: colHypergrid.getWidth(), textAlign: colHypergrid.properties.columnHeader.halign }
                 })
@@ -1178,7 +1158,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 fontStyle: fontStyle.fontStyle,
                 fontWeight: fontStyle.fontWeight,
                 height: this.hyperGrid.properties.defaultRowHeight,
-                Columns: this.AdaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
+                Columns: this.adaptableBlotterStore.TheStore.getState().Grid.Columns.map(col => {
                     let colHypergrid = this.getHypergridColumn(col.ColumnId)
                     return { columnFriendlyName: col.FriendlyName, width: colHypergrid.getWidth(), textAlign: colHypergrid.properties.halign }
                 })
@@ -1218,11 +1198,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let headerBounds = this.hyperGrid.getBoundsOfCell({ x: scrolledX, y: y });
                 let mouseCoordinate = e.detail.primitiveEvent.primitiveEvent.detail.mouse;
                 let iconPadding = this.hyperGrid.properties.iconPadding;
-                let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
+                let filterIndex = this.adaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == e.detail.primitiveEvent.column.name);
                 let filterIconWidth = getFilterIcon(filterIndex >= 0).width;
                 if (mouseCoordinate.x > (headerBounds.corner.x - filterIconWidth - iconPadding)) {
                     let filterContext: IColumnFilterContext = {
-                        Column: ColumnHelper.getColumnFromId(e.detail.primitiveEvent.column.name, this.AdaptableBlotterStore.TheStore.getState().Grid.Columns),
+                        Column: ColumnHelper.getColumnFromId(e.detail.primitiveEvent.column.name, this.adaptableBlotterStore.TheStore.getState().Grid.Columns),
                         Blotter: this,
                         ShowCloseButton: true,
                     };
@@ -1230,15 +1210,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     this.filterContainer.style.top = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px';
                     this.filterContainer.style.left = e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px';
                     // we know get the context menu here as well as they both go in there
-                    // this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.detail.primitiveEvent.column.name));
+                    // this.adaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.detail.primitiveEvent.column.name));
 
                     let colId: string = e.detail.primitiveEvent.column.name
-                    //   this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(params.column.getColId()));
-                    this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.ClearColumnContextMenu());
+                    //   this.adaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(params.column.getColId()));
+                    this.adaptableBlotterStore.TheStore.dispatch(MenuRedux.ClearColumnContextMenu());
 
                     let column: IColumn = ColumnHelper.getColumnFromId(colId, this.getState().Grid.Columns);
                     if (column != null) {
-                        this.Strategies.forEach(s => {
+                        this.strategies.forEach(s => {
                             s.addContextMenuItem(column)
                         })
                     }
@@ -1250,7 +1230,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         });
         //   this.hyperGrid.addEventListener("fin-context-menu", (e: any) => {
         //        if (e.detail.primitiveEvent.isHeaderCell) {
-        //             this.AdaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.detail.primitiveEvent.column.name, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY));
+        //             this.adaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.detail.primitiveEvent.column.name, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY));
         //         }
         //     });
         this.hyperGrid.addEventListener("fin-before-cell-edit", (event: any) => {
@@ -1296,7 +1276,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     let confirmAction: Redux.Action = GridRedux.GridSetValueLikeEdit(cellInfo, (row)[dataChangedEvent.ColumnId]);
                     let cancelAction: Redux.Action = null;
                     let confirmation: IUIConfirmation = CellValidationHelper.createCellValidationUIConfirmation(confirmAction, cancelAction, warningMessage);
-                    this.AdaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
+                    this.adaptableBlotterStore.TheStore.dispatch<PopupRedux.PopupShowConfirmationAction>(PopupRedux.PopupShowConfirmation(confirmation));
                     //we prevent the save and depending on the user choice we will set the value to the edited value in the middleware
                     event.preventDefault();
                 }
@@ -1322,7 +1302,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.hyperGrid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
             var icon = '';
 
-            let gridSorts: IGridSort[] = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
+            let gridSorts: IGridSort[] = this.adaptableBlotterStore.TheStore.getState().Grid.GridSorts;
             let cols: any[] = this.hyperGrid.behavior.getActiveColumns();
             gridSorts.forEach((gs: IGridSort, index: number) => {
                 let foundCol = cols.find(c => c.name == gs.Column)
@@ -1347,7 +1327,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     originalGetCellReturn = originGetCell.call(this.hyperGrid.behavior.dataModel, config, declaredRendererName)
                 }
                 if (config.isHeaderRow && !config.isHandleColumn) {
-                    let filterIndex = this.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
+                    let filterIndex = this.adaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.findIndex(x => x.ColumnId == config.name);
                     config.value = [null, config.value, getFilterIcon(filterIndex >= 0)];
                 }
                 if (config.isDataRow && config.dataRow) {
@@ -1515,7 +1495,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public onSortSaved(gridColumnIndex: number) {
 
-        let currentGridSorts: IGridSort[] = this.AdaptableBlotterStore.TheStore.getState().Grid.GridSorts;
+        let currentGridSorts: IGridSort[] = this.adaptableBlotterStore.TheStore.getState().Grid.GridSorts;
         let newGridSorts: IGridSort[] = [].concat(currentGridSorts)
 
         let column = this.hyperGrid.behavior.getActiveColumns()[gridColumnIndex].name
@@ -1537,7 +1517,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
 
-        this.AdaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(newGridSorts));
+        this.adaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(GridRedux.GridSetSort(newGridSorts));
         this.hyperGrid.behavior.reindex();
     }
 
@@ -1589,14 +1569,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public applyLightTheme(): void {
-        if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes) {
+        if (this.blotterOptions.generalOptions.useDefaultVendorGridThemes) {
             this.hyperGrid.addProperties(HypergridThemes.getLightTheme());
             this.applyAlternateRowStyle();
         }
     }
 
     public applyDarkTheme(): void {
-        if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes) {
+        if (this.blotterOptions.generalOptions.useDefaultVendorGridThemes) {
             this.hyperGrid.addProperties(HypergridThemes.getDarkTheme());
             this.applyAlternateRowStyle();
         }

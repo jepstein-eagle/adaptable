@@ -66,3 +66,24 @@ function MergeState(oldState, newState, nonMergableKeys) {
     return result;
 }
 exports.MergeState = MergeState;
+const LICENSE_MERGER_MAP = {
+    [Enums_1.LicenceScopeType.Community]: MergeStateCommunityLicence,
+    [Enums_1.LicenceScopeType.Standard]: MergeStateStandardLicence,
+    [Enums_1.LicenceScopeType.Enterprise]: MergeStateEnterpriseLicence
+};
+exports.licenseMergeReducer = (rootReducer, licenceInfo, LOAD_STATE_TYPE) => {
+    let finalReducer = rootReducer;
+    const filterMergeStateByLicense = LICENSE_MERGER_MAP[licenceInfo.LicenceScopeType];
+    if (filterMergeStateByLicense) {
+        finalReducer = (state, action) => {
+            if (action.type === LOAD_STATE_TYPE) {
+                state = filterMergeStateByLicense(state, action.State);
+                // put this new state on the action, since the root reducer further copies
+                // keys from action.State to the new state
+                action.State = state;
+            }
+            return rootReducer(state, action);
+        };
+    }
+    return finalReducer;
+};

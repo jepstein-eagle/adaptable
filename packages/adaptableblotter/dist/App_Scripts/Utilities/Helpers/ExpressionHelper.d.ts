@@ -31,7 +31,7 @@ export declare module ExpressionHelper {
     function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean;
     function checkForExpressionFromRecord(Expression: Expression, record: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean;
     function CreateEmptyExpression(): Expression;
-    function CreateEmptyRangeExpression(): IRange;
+    function CreateEmptyRange(): IRange;
     function GetRangeEvaluation(rangeExpression: IRange, newValue: any, initialValue: any, column: IColumn, blotter: IAdaptableBlotter, getOtherColumnValue: (columnId: string) => any): IRangeEvaluation;
     function TestRangeEvaluation(rangeEvaluation: IRangeEvaluation, blotter: IAdaptableBlotter): boolean;
     function ExpressionContainsFilter(expression: Expression, filter: IUserFilter): boolean;

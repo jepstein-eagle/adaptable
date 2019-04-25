@@ -13,10 +13,10 @@ class ReminderStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyConstants.ReminderStrategyName, ScreenPopups.ReminderPopup, StrategyConstants.ReminderGlyph);
     }
     InitState() {
-        if (this.ReminderState != this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder) {
+        if (this.ReminderState != this.blotter.api.reminderApi.GetState()) {
             this.scheduleReminders();
-            this.ReminderState = this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder;
-            if (this.blotter.isInitialised) {
+            this.ReminderState = this.blotter.api.reminderApi.GetState();
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Reminder, this.ReminderState);
             }
         }
@@ -27,7 +27,7 @@ class ReminderStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     scheduleReminders() {
         // just clear all jobs and recreate - simplest thing to do...
         this.blotter.ScheduleService.ClearAllAlertJobs();
-        this.blotter.AdaptableBlotterStore.TheStore.getState().Reminder.Reminders.forEach(r => {
+        this.blotter.api.reminderApi.GetAll().forEach(r => {
             this.blotter.ScheduleService.AddReminderSchedule(r);
         });
     }

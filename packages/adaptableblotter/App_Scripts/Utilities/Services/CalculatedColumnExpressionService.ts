@@ -3,7 +3,7 @@ import * as math from 'mathjs'
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import { CalculatedColumnHelper } from "../Helpers/CalculatedColumnHelper";
-import { Helper } from "../Helpers/Helper";
+import { IColumn } from "../Interface/IColumn";
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
     constructor(private blotter: IAdaptableBlotter, private colFunctionValue: (columnId: string, record: any) => any) {
@@ -11,8 +11,8 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
     IsExpressionValid(expression: string): { IsValid: Boolean, ErrorMsg?: string } {
         try {
-            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-            let cleanedExpression: string = CalculatedColumnHelper.CleanExpressionColumnNames(expression, columns);
+            let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
+            let cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(expression, columns);
             let firstRecord = this.blotter.getFirstRecord();
             math.eval(cleanedExpression, {
                 Col: (columnId: string) => {

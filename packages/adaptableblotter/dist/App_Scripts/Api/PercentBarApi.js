@@ -3,11 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PercentBarRedux = require("../Redux/ActionsReducers/PercentBarRedux");
 const ApiBase_1 = require("./ApiBase");
 class PercentBarApi extends ApiBase_1.ApiBase {
+    GetState() {
+        return this.getBlotterState().PercentBar;
+    }
     GetAll() {
-        return this.getState().PercentBar.PercentBars;
+        return this.getBlotterState().PercentBar.PercentBars;
     }
     GetByColumn(columnId) {
-        let percentBar = this.getState().PercentBar.PercentBars.find(pcb => pcb.ColumnId == columnId);
+        let percentBar = this.getBlotterState().PercentBar.PercentBars.find(pcb => pcb.ColumnId == columnId);
         return percentBar;
     }
     Add(percentBar) {

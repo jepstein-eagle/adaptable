@@ -18,6 +18,7 @@ import { PanelWithButton } from "../Panels/PanelWithButton";
 import { ButtonMaximise } from "../Buttons/ButtonMaximise";
 import { ButtonMinimise } from "../Buttons/ButtonMinimise";
 import { AdaptablePopover } from "../../AdaptablePopover";
+import { IGridSort } from "../../../Utilities/Interface/IGridSort";
 
 interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlotterAbout> {
     AdaptableBlotter: IAdaptableBlotter
@@ -63,7 +64,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
         }
     }
     render() {
-        let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+        let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.blotterOptions, document);
 
         let gridPropertiesColItems: IColItem[] = [
             { Content: "Property", Size: 5 },
@@ -276,19 +277,16 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
 
         let returnRows: IColItem[][] = []
         if (this.props.showAbout) {
-            //get state - do better?
-            let state: AdaptableBlotterState = this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState()
-
-            let calcColumns: string[] = state.CalculatedColumn.CalculatedColumns.map(c => c.ColumnId)
-            let columns: IColumn[] = state.Grid.Columns
-            let columnFilterDescription: string = ColumnFilterHelper.getColumnFiltersDescription(state.ColumnFilter.ColumnFilters, columns, this.props.AdaptableBlotter)
-            let sorts = state.Grid.GridSorts.map(gs => {
-                return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ": " + gs.SortOrder   
+            let calcColumns: string[] = this.props.AdaptableBlotter.api.calculatedColumnApi.GetAll().map(c => c.ColumnId)
+            let columns: IColumn[] = this.props.AdaptableBlotter.api.gridApi.getColumns();
+            let columnFilterDescription: string = ColumnFilterHelper.getColumnFiltersDescription(this.props.AdaptableBlotter.api.columnFilterApi.GetAll(), columns, this.props.AdaptableBlotter)
+            let sorts: any = this.props.AdaptableBlotter.api.gridApi.getGridSorts().map(gs => {
+                return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ": " + gs.SortOrder
             })
-            let licenceInDate: string = (this.props.AdaptableBlotter.LicenceService.LicenceInfo.IsLicenceInDate)? "In Date" : "Expired";
+            let licenceInDate: string = (this.props.AdaptableBlotter.LicenceService.LicenceInfo.IsLicenceInDate) ? "In Date" : "Expired";
             returnRows.push(this.createColItem(colItems, "Vendor Grid", this.props.AdaptableBlotter.VendorGridName));
             returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "3.3"));
-            returnRows.push(this.createColItem(colItems, "Licence Key", this.props.AdaptableBlotter.BlotterOptions.licenceKey + " (" + licenceInDate + ")"));
+            returnRows.push(this.createColItem(colItems, "Licence Key", this.props.AdaptableBlotter.blotterOptions.licenceKey + " (" + licenceInDate + ")"));
             returnRows.push(this.createColItem(colItems, "Licence Type", this.props.AdaptableBlotter.LicenceService.LicenceInfo.LicenceScopeType + " (" + this.props.AdaptableBlotter.LicenceService.LicenceInfo.LicenceUserType + ")"));
             returnRows.push(this.createColItem(colItems, "Sorted Columns", ArrayExtensions.IsNotNullOrEmpty(sorts) ? sorts.join("; ") : "None"));
             returnRows.push(this.createColItem(colItems, "Column Filters", columnFilterDescription));
@@ -307,14 +305,14 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
 
         let returnRows: IColItem[][] = []
         if (this.props.showAbout) {
-            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.BlotterOptions;
+            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
             // base options
             returnRows.push(this.createColItem(colItems, "blotterId", options.blotterId, "Identifier for this instance of the Adaptable Blotter"));
             returnRows.push(this.createColItem(colItems, "userName", options.userName, "Current user of the Adaptable Blotter"));
             returnRows.push(this.createColItem(colItems, "primaryKey", options.primaryKey, "Unique column in the grid (useful for cell identification purposes)"));
-         //   returnRows.push(this.createColItem(colItems, "predefinedConfig", options.predefinedConfig, "Configuration properties and objects set at design-time"));
-        
+            //   returnRows.push(this.createColItem(colItems, "predefinedConfig", options.predefinedConfig, "Configuration properties and objects set at design-time"));
+
         }
         return returnRows;
     }
@@ -323,7 +321,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
 
         let returnRows: IColItem[][] = []
         if (this.props.showAbout) {
-            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.BlotterOptions;
+            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
             returnRows.push(this.createColItem(colItems, "adaptableBlotterContainer", options.containerOptions.adaptableBlotterContainer, "Id of <div> element which contains the Blotter"));
             returnRows.push(this.createColItem(colItems, "vendorContainer", options.containerOptions.vendorContainer, "Id of <div> element which contains the underlying grid"));
             returnRows.push(this.createColItem(colItems, "modalContainer", (options.containerOptions.modalContainer) ? options.containerOptions.modalContainer : "None", "Id of <div> element where popups appear.  If set to 'None' then they appear in the middle of the screen."));
@@ -336,7 +334,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
 
         let returnRows: IColItem[][] = []
         if (this.props.showAbout) {
-            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.BlotterOptions;
+            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
             returnRows.push(this.createColItem(colItems, "auditCellEdits", (options.auditOptions.auditCellEdits == true) ? "Yes" : "No", " Whether to audit cell edits.  These include any edits made to the data in the grid but not outside (e.g. not a ticking stream)"));
             returnRows.push(this.createColItem(colItems, "auditFunctionEvents", (options.auditOptions.auditFunctionEvents == true) ? "Yes" : "No", " Whether to audit function events in the Blotter (e.g. 'Advanced Search Selected', 'Smart Edit Applied' etc.)"))
@@ -353,7 +351,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
 
         let returnRows: IColItem[][] = []
         if (this.props.showAbout) {
-            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.BlotterOptions;
+            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
             returnRows.push(this.createColItem(colItems, "enableConfigServer", (options.configServerOptions.enableConfigServer == true) ? "Yes" : "No", "If enabled Config Server store State in the remote location specified in the 'configServerUrl' property (rather than the default of using local storage)."));
             returnRows.push(this.createColItem(colItems, "configServerUrl", (options.configServerOptions.configServerUrl), "Location of Config Server that persists the user state and gives it back on demand (only used if enableConfigServer is true)."))
@@ -365,12 +363,12 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
 
         let returnRows: IColItem[][] = []
         if (this.props.showAbout) {
-            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.BlotterOptions;
+            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
             returnRows.push(this.createColItem(colItems, "maxColumnValueItemsDisplayed", (options.queryOptions.maxColumnValueItemsDisplayed), "No. of items to display in column value listboxes when building queries - useful when datasource is very large"));
             returnRows.push(this.createColItem(colItems, "columnValuesOnlyInQueries", (options.queryOptions.columnValuesOnlyInQueries == true) ? "Yes" : "No", " Whether query builder includes just ColumnValues, or should also include Filters and Ranges."))
             returnRows.push(this.createColItem(colItems, "ignoreCaseInQueries", (options.queryOptions.ignoreCaseInQueries == true) ? "Yes" : "No", "Whether case is ignored when running queries (on text columns)"))
-            returnRows.push(this.createColItem(colItems, "getColumnValues", (options.queryOptions.getColumnValues !=null)? "Function Exists": "", "Function that is run when getting list of column values (run by user on their server)."))
+            returnRows.push(this.createColItem(colItems, "getColumnValues", (options.queryOptions.getColumnValues != null) ? "Function Exists" : "", "Function that is run when getting list of column values (run by user on their server)."))
         }
         return returnRows;
     }
@@ -379,7 +377,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
 
         let returnRows: IColItem[][] = []
         if (this.props.showAbout) {
-            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.BlotterOptions;
+            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
             returnRows.push(this.createColItem(colItems, "includeVendorStateInLayouts", (options.layoutOptions.includeVendorStateInLayouts == true) ? "Yes" : "No", "Whether layouts include vendor grid related state."))
             returnRows.push(this.createColItem(colItems, "autoSaveLayouts", (options.layoutOptions.autoSaveLayouts == true) ? "Yes" : "No", "Whether layouts save as soon as column order or sorts change."))
@@ -391,7 +389,7 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
 
         let returnRows: IColItem[][] = []
         if (this.props.showAbout) {
-            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.BlotterOptions;
+            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
             returnRows.push(this.createColItem(colItems, "indicateFilteredColumns", (options.filterOptions.indicateFilteredColumns == true) ? "Yes" : "No", "Whether the font in the Column header for filtered columns is bold and italicised."))
             returnRows.push(this.createColItem(colItems, "useAdaptableBlotterFilterForm", (options.filterOptions.useAdaptableBlotterFilterForm == true) ? "Yes" : "No", "If using the Adaptable Blotter filter form in column menu (or that provided by the vendor grid)."))
@@ -404,9 +402,9 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
 
         let returnRows: IColItem[][] = []
         if (this.props.showAbout) {
-            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.BlotterOptions;
+            let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
-            returnRows.push(this.createColItem(colItems, "serverSearchOption", (options.generalOptions.serverSearchOption) , "Which searching and filtering options, if any, are taking place on the server."))
+            returnRows.push(this.createColItem(colItems, "serverSearchOption", (options.generalOptions.serverSearchOption), "Which searching and filtering options, if any, are taking place on the server."))
             returnRows.push(this.createColItem(colItems, "useDefaultVendorGridThemes", (options.generalOptions.useDefaultVendorGridThemes == true) ? "Yes" : "No", "Whether the default theme(s) for the vendor grid are being used)."))
             returnRows.push(this.createColItem(colItems, "showMissingPrimaryKeyWarning", (options.generalOptions.showMissingPrimaryKeyWarning == true) ? "Yes" : "No", "Whether a warning is shown if the primary key column does not actually exist."))
             returnRows.push(this.createColItem(colItems, "preventDuplicatePrimaryKeyValues", (options.generalOptions.preventDuplicatePrimaryKeyValues == true) ? "Yes" : "No", "Whether a duplicate value can be entered into the primary key column."))

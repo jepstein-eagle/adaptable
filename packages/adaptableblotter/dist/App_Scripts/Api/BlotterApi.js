@@ -27,6 +27,9 @@ const SystemStatusApi_1 = require("./SystemStatusApi");
 const ThemeApi_1 = require("./ThemeApi");
 const UserInterfaceApi_1 = require("./UserInterfaceApi");
 const InternalApi_1 = require("./InternalApi");
+const ConditionalStyleApi_1 = require("./ConditionalStyleApi");
+const ReminderApi_1 = require("./ReminderApi");
+const FlashingCellApi_1 = require("./FlashingCellApi");
 class BlotterApi {
     constructor(blotter) {
         this.blotter = blotter;
@@ -37,6 +40,7 @@ class BlotterApi {
         this.cellValidationApi = new CellValidationApi_1.CellValidationApi(blotter);
         this.columnCategoryApi = new ColumnCategoryApi_1.ColumnCategoryApi(blotter);
         this.columnFilterApi = new ColumnFilterApi_1.ColumnFilterApi(blotter);
+        this.conditionalStyleApi = new ConditionalStyleApi_1.ConditionalStyleApi(blotter);
         this.configApi = new ConfigApi_1.ConfigApi(blotter);
         this.customSortApi = new CustomSortApi_1.CustomSortApi(blotter);
         this.dashboardApi = new DashboardApi_1.DashboardApi(blotter);
@@ -44,6 +48,7 @@ class BlotterApi {
         this.entitlementApi = new EntitlementApi_1.EntitlementApi(blotter);
         this.eventApi = new EventApi_1.EventApi(blotter);
         this.exportApi = new ExportApi_1.ExportApi(blotter);
+        this.flashingCellApi = new FlashingCellApi_1.FlashingCellApi(blotter);
         this.formatColumnApi = new FormatColumnApi_1.FormatColumnApi(blotter);
         this.freeTextColumnApi = new FreeTextColumnApi_1.FreeTextColumnApi(blotter);
         this.gridApi = new GridApi_1.GridApi(blotter);
@@ -51,6 +56,7 @@ class BlotterApi {
         this.layoutApi = new LayoutApi_1.LayoutApi(blotter);
         this.percentBarApi = new PercentBarApi_1.PercentBarApi(blotter);
         this.quickSearchApi = new QuickSearchApi_1.QuickSearchApi(blotter);
+        this.reminderApi = new ReminderApi_1.ReminderApi(blotter);
         this.shortcutApi = new ShortcutApi_1.ShortcutApi(blotter);
         this.smartEditApi = new SmartEditApi_1.SmartEditApi(blotter);
         this.systemFilterApi = new SystemFilterApi_1.SystemFilterApi(blotter);

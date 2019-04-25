@@ -1,6 +1,6 @@
-import { Expression } from '../../Expression';
-import { IAdaptableBlotterObject } from './IAdaptableBlotterObject';
-import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation, PieChartLabelPosition, SliceLabelOption, SliceSortOption, PieChartOthersCategoryType } from '../../ChartEnums';
+import { Expression } from '../../../Expression';
+import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
+import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation, PieChartLabelPosition, SliceLabelOption, OthersCategoryType } from '../../../ChartEnums';
 
 // not too sure at the moment how we will break up these objects as we add data series, financial, pie, doughnut etc.
 // trying to make it as flexible as possible though I suspeect some stuff will break as we go forward...
@@ -19,9 +19,8 @@ export interface IChartProperties extends IAdaptableBlotterObject {
 
 export interface IPieChartDefinition extends IChartDefinition {
   PrimaryColumnId: string;
-  SecondaryColumnId: string
-  SecondaryColumnOperation: SecondaryColumnOperation;
- 
+  SecondaryColumnId: string;
+  SecondaryColumnOperation: 'Sum'|'Count';
 }
 
 export interface ICategoryChartDefinition extends IChartDefinition {
@@ -32,20 +31,13 @@ export interface ICategoryChartDefinition extends IChartDefinition {
  }
 
 export interface IPieChartProperties extends IChartProperties {
-  OthersCategoryThreshold: number;
-  OthersCategoryType: PieChartOthersCategoryType;
-
-  PieChartLabelPosition: PieChartLabelPosition; 
-  SliceLabelsMapping: SliceLabelOption;
-  SliceValuesMapping: SliceLabelOption;
-  SliceLegendMapping: SliceLabelOption;
-  ShowAsDoughnut: boolean;
-
-}
-
-export interface ICalloutProperties {
-  Type: string;
-  Interval?: number;
+  OthersCategoryThreshold?: number;
+  OthersCategoryType?: OthersCategoryType;
+  PieChartLabelPosition?: PieChartLabelPosition; 
+  SliceLabelsMapping?: SliceLabelOption;
+  SliceValuesMapping?: SliceLabelOption;
+  SliceLegendMapping?: SliceLabelOption;
+  ShowAsDoughnut?: boolean;
 }
 
 export interface ICategoryChartProperties extends IChartProperties {
@@ -56,13 +48,13 @@ export interface ICategoryChartProperties extends IChartProperties {
   MarkerType?: string; // using a string because chart expects a string or an array of MarkerType enums
 
   CalloutsType?: string; // using string because we need add non-numeric properties from data source in getCalloutTypeOptions()
-  CalloutsInterval: number; // this controls how many callouts
+  CalloutsInterval?: number; // this controls how many callouts
   // Annotations:
   EnableFinalValueAnnotations?: boolean;
   CrosshairDisplayMode?: CrosshairDisplayMode;
   CrosshairSnapToData?: boolean;
   CrosshairAnnotationEnabled?: boolean;
-  ToolTipType: ToolTipType;
+  ToolTipType?: ToolTipType;
   // Y Axis
   YAxisLabelLocation?: AxisLabelsLocation;
   YAxisLabelVisibility?: LabelVisibility;
@@ -96,19 +88,4 @@ export interface ICategoryChartProperties extends IChartProperties {
   EnableSeriesHighlighting?: boolean;
   EnableCategoryHighlighting?: boolean;
   EnableItemHighlighting?: boolean;
-}
-
-export interface IChartData{
-  Data: any,
-  ErrorMessage: string
-}
-
-
-export interface IPieChartDataItem {
-  Name: string;
-  Value: any; // ?? number?
-  Ratio: number;
-  ValueAndName? : string;
-  RatioAndName?: string
-  ErrorMessage? : string
 }

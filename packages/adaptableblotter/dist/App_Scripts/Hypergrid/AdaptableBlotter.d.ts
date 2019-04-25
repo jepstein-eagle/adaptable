@@ -29,8 +29,8 @@ import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
-    Strategies: IAdaptableStrategyCollection;
-    AdaptableBlotterStore: IAdaptableBlotterStore;
+    strategies: IAdaptableStrategyCollection;
+    adaptableBlotterStore: IAdaptableBlotterStore;
     CalendarService: ICalendarService;
     DataService: IDataService;
     ValidationService: IValidationService;
@@ -40,7 +40,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
     FreeTextColumnService: IFreeTextColumnService;
     ScheduleService: IScheduleService;
-    BlotterOptions: IAdaptableBlotterOptions;
+    blotterOptions: IAdaptableBlotterOptions;
     VendorGridName: any;
     EmbedColumnMenu: boolean;
     private cellStyleHypergridMap;
@@ -48,7 +48,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private abContainerElement;
     private hyperGrid;
     private filterContainer;
-    isInitialised: boolean;
+    IsInitialised: boolean;
     private throttleOnDataChangedUser;
     private throttleOnDataChangedExternal;
     hasFloatingFilter: boolean;
@@ -101,8 +101,8 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     setCustomSort(columnId: string): void;
     removeCustomSort(columnId: string): void;
     ReindexAndRepaint(): void;
-    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
-    getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
+    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue, visibleRowsOnly: boolean): Array<IRawValueDisplayValuePair>;
+    private addDistinctItem;
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: any, columnId: string): any;
     getDisplayValueFromRawValue(colId: string, rawValue: any): any;

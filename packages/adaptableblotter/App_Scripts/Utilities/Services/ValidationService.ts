@@ -27,10 +27,10 @@ export class ValidationService implements IValidationService {
         }
 
         // first check that if primary key change, the new value is unique
-        if (dataChangedEvent.ColumnId == this.blotter.BlotterOptions.primaryKey) {
-            if (this.blotter.BlotterOptions.generalOptions.preventDuplicatePrimaryKeyValues) {
+        if (dataChangedEvent.ColumnId == this.blotter.blotterOptions.primaryKey) {
+            if (this.blotter.blotterOptions.generalOptions.preventDuplicatePrimaryKeyValues) {
                 if (dataChangedEvent.OldValue != dataChangedEvent.NewValue) {
-                    let displayValuePair: IRawValueDisplayValuePair[] = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, DistinctCriteriaPairValue.DisplayValue)
+                    let displayValuePair: IRawValueDisplayValuePair[] = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, DistinctCriteriaPairValue.DisplayValue, false)
                     let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);
                     if (existingItem) {
                         let range = ObjectFactory.CreateRange(LeafExpressionOperator.PrimaryKeyDuplicate, dataChangedEvent.ColumnId, null, RangeOperandType.Column, null)
@@ -44,7 +44,7 @@ export class ValidationService implements IValidationService {
         let editingRules = this.GetCellValidationState().CellValidations.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
 
         if (ArrayExtensions.IsEmpty(failedWarningRules) && ArrayExtensions.IsNotEmpty(editingRules)) {
-            let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
 
             // first check the rules which have expressions
             let expressionRules: ICellValidationRule[] = editingRules.filter(r => ExpressionHelper.IsNotEmptyExpression(r.Expression));
@@ -103,7 +103,7 @@ export class ValidationService implements IValidationService {
     }
 
     private GetCellValidationState(): CellValidationState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().CellValidation;
+        return this.blotter.api.cellValidationApi.GetState();
     }
 
     private logAuditValidationEvent(action: string, info: string, data?: any): void {

@@ -12,9 +12,9 @@ class ColumnCategoryStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
         this.createMenuItemShowPopup(StrategyConstants.ColumnCategoryStrategyName, ScreenPopups.ColumnCategoryPopup, StrategyConstants.ColumnCategoryGlyph);
     }
     InitState() {
-        if (this.ColumnCategoryState != this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory) {
-            this.ColumnCategoryState = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory;
-            if (this.blotter.isInitialised) {
+        if (this.ColumnCategoryState != this.blotter.adaptableBlotterStore.TheStore.getState().ColumnCategory) {
+            this.ColumnCategoryState = this.blotter.adaptableBlotterStore.TheStore.getState().ColumnCategory;
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.ColumnCategory, this.ColumnCategoryState);
             }
         }

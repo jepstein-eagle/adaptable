@@ -54,7 +54,7 @@ var Glue42Helper;
                 console.log(sheetData);
                 const sheet = yield excelAPIEntryPoint.openSheet(sheetData);
                 sheet.onChanged((data, errorCallback, doneCallback) => {
-                    let primaryKeyColumnFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(blotter.BlotterOptions.primaryKey, gridColumns);
+                    let primaryKeyColumnFriendlyName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(blotter.blotterOptions.primaryKey, gridColumns);
                     let cellInfos = [];
                     const errors = [];
                     for (let rowIndex = 0; rowIndex < data.length; rowIndex++) {

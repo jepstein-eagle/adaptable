@@ -6,17 +6,22 @@ import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { IAdaptableAlert } from '../Utilities/Interface/IMessage';
 import { IAlertApi } from './Interface/IAlertApi';
+import { AlertState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class AlertApi extends ApiBase implements IAlertApi {
 
-  public ShowAlert(alertToShow: IAdaptableAlert): void {
-    let maxAlerts: number = this.getState().Alert.MaxAlertsInStore;
+  public GetState(): AlertState {
+    return this.getBlotterState().Alert;
+}
+
+public ShowAlert(alertToShow: IAdaptableAlert): void {
+    let maxAlerts: number = this.getBlotterState().Alert.MaxAlertsInStore;
 
     this.dispatchAction(SystemRedux.SystemAlertAdd(alertToShow, maxAlerts))
     if (alertToShow.ShowAsPopup) {
-      if (StringExtensions.IsNotNullOrEmpty(this.getState().Alert.AlertPopupDiv)) {
+      if (StringExtensions.IsNotNullOrEmpty(this.getBlotterState().Alert.AlertPopupDiv)) {
         let alertString: string = alertToShow.Header + ": " + alertToShow.Msg
-        let alertDiv = document.getElementById(this.getState().Alert.AlertPopupDiv);
+        let alertDiv = document.getElementById(this.getBlotterState().Alert.AlertPopupDiv);
         if (alertDiv) {
           alertDiv.innerHTML = alertString;
         }

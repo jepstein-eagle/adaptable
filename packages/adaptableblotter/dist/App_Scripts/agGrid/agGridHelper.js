@@ -2,9 +2,45 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
+const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
+const AlertStrategy_1 = require("../Strategy/AlertStrategy");
+const AdvancedSearchStrategy_1 = require("../Strategy/AdvancedSearchStrategy");
+const ApplicationStrategy_1 = require("../Strategy/ApplicationStrategy");
+const BulkUpdateStrategy_1 = require("../Strategy/BulkUpdateStrategy");
+const CalculatedColumnStrategy_1 = require("../Strategy/CalculatedColumnStrategy");
+const CalendarStrategy_1 = require("../Strategy/CalendarStrategy");
+const CellValidationStrategy_1 = require("../Strategy/CellValidationStrategy");
+const ChartStrategy_1 = require("../Strategy/ChartStrategy");
+const ColumnChooserStrategy_1 = require("../Strategy/ColumnChooserStrategy");
+const ColumnFilterStrategy_1 = require("../Strategy/ColumnFilterStrategy");
+const ColumnInfoStrategy_1 = require("../Strategy/ColumnInfoStrategy");
+const ConditionalStyleStrategyagGrid_1 = require("./Strategy/ConditionalStyleStrategyagGrid");
+const CustomSortStrategyagGrid_1 = require("./Strategy/CustomSortStrategyagGrid");
+const DashboardStrategy_1 = require("../Strategy/DashboardStrategy");
+const DataManagementStrategy_1 = require("../Strategy/DataManagementStrategy");
+const DataSourceStrategy_1 = require("../Strategy/DataSourceStrategy");
+const ExportStrategy_1 = require("../Strategy/ExportStrategy");
+const FlashingCellsStrategyagGrid_1 = require("./Strategy/FlashingCellsStrategyagGrid");
+const FormatColumnStrategyagGrid_1 = require("./Strategy/FormatColumnStrategyagGrid");
+const FreeTextColumnStrategy_1 = require("../Strategy/FreeTextColumnStrategy");
+const HomeStrategy_1 = require("../Strategy/HomeStrategy");
+const LayoutStrategy_1 = require("../Strategy/LayoutStrategy");
+const ColumnCategoryStrategy_1 = require("../Strategy/ColumnCategoryStrategy");
+const PercentBarStrategy_1 = require("../Strategy/PercentBarStrategy");
+const PieChartStrategy_1 = require("../Strategy/PieChartStrategy");
+const PlusMinusStrategy_1 = require("../Strategy/PlusMinusStrategy");
+const QuickSearchStrategy_1 = require("../Strategy/QuickSearchStrategy");
+const SmartEditStrategy_1 = require("../Strategy/SmartEditStrategy");
+const ShortcutStrategy_1 = require("../Strategy/ShortcutStrategy");
+const TeamSharingStrategy_1 = require("../Strategy/TeamSharingStrategy");
+const ThemeStrategy_1 = require("../Strategy/ThemeStrategy");
+const CellSummaryStrategy_1 = require("../Strategy/CellSummaryStrategy");
+const UserFilterStrategy_1 = require("../Strategy/UserFilterStrategy");
+const ReminderStrategy_1 = require("../Strategy/ReminderStrategy");
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
  * So lets put some of the more obvious 'Helper' functions here
+ * This is a bit crap - it should take a GridOptions object...
  */
 var agGridHelper;
 (function (agGridHelper) {
@@ -16,6 +52,58 @@ var agGridHelper;
         return "ag-theme-balham-dark";
     }
     agGridHelper.getDarkThemeName = getDarkThemeName;
+    function setUpStrategies(blotter) {
+        let strategies = new Map();
+        strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy_1.AlertStrategy(blotter));
+        strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(blotter));
+        strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy_1.ApplicationStrategy(blotter));
+        strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy_1.BulkUpdateStrategy(blotter));
+        strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy_1.CalculatedColumnStrategy(blotter));
+        strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy_1.CalendarStrategy(blotter));
+        strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy_1.CellValidationStrategy(blotter));
+        strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy_1.ChartStrategy(blotter));
+        strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy_1.ColumnChooserStrategy(blotter));
+        strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy_1.ColumnFilterStrategy(blotter));
+        strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy_1.ColumnInfoStrategy(blotter));
+        strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleStrategyagGrid_1.ConditionalStyleStrategyagGrid(blotter));
+        strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategyagGrid_1.CustomSortStrategyagGrid(blotter));
+        strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy_1.DashboardStrategy(blotter));
+        strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy_1.DataManagementStrategy(blotter));
+        strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy_1.DataSourceStrategy(blotter));
+        strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy_1.ExportStrategy(blotter));
+        strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellsStrategyagGrid_1.FlashingCellStrategyagGrid(blotter));
+        strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyagGrid_1.FormatColumnStrategyagGrid(blotter));
+        strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy_1.FreeTextColumnStrategy(blotter));
+        strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy_1.HomeStrategy(blotter));
+        strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy_1.LayoutStrategy(blotter));
+        strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy_1.ColumnCategoryStrategy(blotter));
+        strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy_1.PercentBarStrategy(blotter));
+        strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy_1.PieChartStrategy(blotter));
+        strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy_1.PlusMinusStrategy(blotter));
+        strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy_1.QuickSearchStrategy(blotter));
+        strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy_1.SmartEditStrategy(blotter));
+        strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy_1.ShortcutStrategy(blotter));
+        strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy_1.TeamSharingStrategy(blotter));
+        strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy_1.ThemeStrategy(blotter));
+        strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy_1.CellSummaryStrategy(blotter));
+        strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy_1.UserFilterStrategy(blotter));
+        strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy_1.ReminderStrategy(blotter));
+        return strategies;
+    }
+    agGridHelper.setUpStrategies = setUpStrategies;
+    function TrySetUpNodeIds(gridOptions, blotterOptions, isValidPrimaryKey) {
+        if (!isValidPrimaryKey) { // if no valid pk then always false
+            return false;
+        }
+        // need some way of checking if running on client on server
+        // if on server then we return false
+        // otherwise lets set the Id so that it returns the primaryKey
+        gridOptions.getRowNodeId = function (data) {
+            return data[blotterOptions.primaryKey];
+        };
+        return true;
+    }
+    agGridHelper.TrySetUpNodeIds = TrySetUpNodeIds;
     function createCellRendererFunc(pcr, blotterId) {
         let showNegatives = pcr.MinValue < 0;
         let showPositives = pcr.MaxValue > 0;
@@ -83,7 +171,7 @@ var agGridHelper;
         return cellRendererFunc;
     }
     agGridHelper.createCellRendererFunc = createCellRendererFunc;
-    function cleanValue(value) {
+    function getCleanValue(value) {
         if (value == null || value == 'null') {
             return null;
         }
@@ -94,7 +182,7 @@ var agGridHelper;
             return String(value) || "";
         }
     }
-    agGridHelper.cleanValue = cleanValue;
+    agGridHelper.getCleanValue = getCleanValue;
     function getRenderedValue(percentBars, colDef, valueToRender) {
         let isRenderedColumn = ArrayExtensions_1.ArrayExtensions.ContainsItem(percentBars, colDef.field);
         if (isRenderedColumn) {
@@ -102,7 +190,7 @@ var agGridHelper;
         }
         let render = colDef.cellRenderer;
         if (typeof render == "string") {
-            return agGridHelper.cleanValue(valueToRender);
+            return getCleanValue(valueToRender);
         }
         return render({ value: valueToRender }) || "";
     }

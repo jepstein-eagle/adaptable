@@ -247,7 +247,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let FloatingFilterForm = connect(mapStateToProps, mapDispatchToProps)(FloatingFilterFormComponent);
 
-export const FloatingFilterFormReact = (FilterContext: IColumnFilterContext) => <Provider store={FilterContext.Blotter.AdaptableBlotterStore.TheStore}>
+export const FloatingFilterFormReact = (FilterContext: IColumnFilterContext) => <Provider store={FilterContext.Blotter.adaptableBlotterStore.TheStore}>
     <FloatingFilterForm
         Blotter={FilterContext.Blotter}
         CurrentColumn={FilterContext.Column}

@@ -9,7 +9,8 @@ import { ChartState, SystemState, ColumnFilterState } from '../Redux/ActionsRedu
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
-import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition, IChartData } from "../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition } from "../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
+import { IChartData } from "../Utilities/Interface/BlotterObjects/Charting/IChartData";
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ChartVisibility, ChartType } from '../Utilities/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
@@ -28,7 +29,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         this.blotter.onSearchChanged().Subscribe(() => this.handleSearchChanged())
         this.blotter.SearchedChanged.Subscribe(() => this.handleSearchChanged())
-        let refreshRate = blotter.AdaptableBlotterStore.TheStore.getState().Chart.RefreshRate * 1000;
+        let refreshRate = blotter.adaptableBlotterStore.TheStore.getState().Chart.RefreshRate * 1000;
         this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
     }
 
@@ -44,7 +45,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             if (this.ChartState == null) {
                 isChartRelatedStateChanged = true;
                 // if user has set display at startup to be true and there is a current chart then show it
-                if (this.blotter.BlotterOptions.chartOptions.displayOnStartUp && StringExtensions.IsNotNullOrEmpty(this.GetChartState().CurrentChartName)) {
+                if (this.blotter.blotterOptions.chartOptions.displayOnStartUp && StringExtensions.IsNotNullOrEmpty(this.GetChartState().CurrentChartName)) {
                     displayChartAtStartUp = true;
                 }
             } else {
@@ -67,7 +68,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
                     isChartRelatedStateChanged = true;
                 }
             }
-            this.SystemState = this.blotter.AdaptableBlotterStore.TheStore.getState().System;
+            this.SystemState = this.blotter.adaptableBlotterStore.TheStore.getState().System;
         }
 
         if (isChartRelatedStateChanged) {
@@ -80,15 +81,15 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             }
 
             if (this.ChartState.CurrentChartName == null && this.SystemState.ChartVisibility == ChartVisibility.Maximised) {
-                this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden));
+                this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden));
             }
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Chart, this.ChartState)
             }
 
             if (displayChartAtStartUp) {
-                this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised));
+                this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised));
                 this.setChartData();
             }
         }
@@ -172,7 +173,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
 
     private isCurrentChartVisibiilityMaximised(): boolean {
-        return this.blotter.isInitialised &&
+        return this.blotter.IsInitialised &&
             this.SystemState != null &&
             this.ChartState != null &&
             this.SystemState.ChartVisibility == ChartVisibility.Maximised &&
@@ -195,7 +196,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
 
     private setChartData() {
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
         let chartDefinition: IChartDefinition = this.GetCurrentChartDefinition();
         if (chartDefinition) {
             let chartData: IChartData;
@@ -204,26 +205,26 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             } else if (chartDefinition.ChartType == ChartType.PieChart) {
                 chartData = this.blotter.ChartService.BuildPieChartData(chartDefinition as IPieChartDefinition);
             }
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
+            this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
         }
     }
 
     private clearChartData() {
         if (this.GetSystemState().ChartData != null) {
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(null));
+            this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(null));
         }
     }
 
     private GetSystemState(): SystemState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().System;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().System;
     }
 
     private GetChartState(): ChartState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Chart;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().Chart;
     }
 
     private GetColumnState(): IColumn[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
     }
 
     private GetCurrentChartDefinition(): IChartDefinition {

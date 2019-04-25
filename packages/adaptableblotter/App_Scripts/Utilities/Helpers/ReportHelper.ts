@@ -63,7 +63,7 @@ export module ReportHelper {
 
     export function ConvertReportToArray(blotter: IAdaptableBlotter, Report: IReport): IStrategyActionReturn<any[]> {
         let ReportColumns: IColumn[] = [];
-        let gridColumns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let gridColumns: IColumn[] = blotter.api.gridApi.getColumns();
 
         // first get the cols depending on the Column Scope
         switch (Report.ReportColumnScope) {
@@ -74,7 +74,7 @@ export module ReportHelper {
                 ReportColumns = gridColumns.filter(c => c.Visible);
                 break;
             case ReportColumnScope.SelectedColumns:
-                let selectedCells: ISelectedCellInfo = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+                let selectedCells: ISelectedCellInfo = blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
 
                 if (selectedCells.Selection.size == 0) {
                     // some way of saying we cannot export anything
@@ -124,7 +124,7 @@ export module ReportHelper {
                 break;
 
             case ReportRowScope.SelectedRows:
-                let selectedCells: ISelectedCellInfo = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+                let selectedCells: ISelectedCellInfo = blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
                 let colNames: string[] = ReportColumns.map(c => c.FriendlyName);
                 for (var keyValuePair of selectedCells.Selection) {
                     let values: any[] = []

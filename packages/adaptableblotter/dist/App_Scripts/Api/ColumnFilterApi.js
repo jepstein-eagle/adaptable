@@ -4,13 +4,16 @@ const ColumnFilterRedux = require("../Redux/ActionsReducers/ColumnFilterRedux");
 const ApiBase_1 = require("./ApiBase");
 const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 class ColumnFilterApi extends ApiBase_1.ApiBase {
+    GetState() {
+        return this.getBlotterState().ColumnFilter;
+    }
     Set(columnFilters) {
         columnFilters.forEach(cf => {
             this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(cf));
         });
     }
     SetFromUserFilter(userFilter) {
-        let existingUserFilter = this.getState().UserFilter.UserFilters.find(uf => uf.Name == userFilter);
+        let existingUserFilter = this.getBlotterState().UserFilter.UserFilters.find(uf => uf.Name == userFilter);
         if (this.checkItemExists(existingUserFilter, userFilter, "User Filter")) {
             let columnFilter = ObjectFactory_1.ObjectFactory.CreateColumnFilterFromUserFilter(existingUserFilter);
             this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter));
@@ -30,8 +33,8 @@ class ColumnFilterApi extends ApiBase_1.ApiBase {
     ClearAll() {
         this.dispatchAction(ColumnFilterRedux.ColumnFilterClearAll());
     }
-    GetCurrent() {
-        return this.getState().ColumnFilter.ColumnFilters;
+    GetAll() {
+        return this.getBlotterState().ColumnFilter.ColumnFilters;
     }
 }
 exports.ColumnFilterApi = ColumnFilterApi;

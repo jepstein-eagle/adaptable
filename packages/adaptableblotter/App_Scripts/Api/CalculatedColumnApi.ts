@@ -2,14 +2,19 @@ import * as CalculatedColumnRedux from '../Redux/ActionsReducers/CalculatedColum
 import { ApiBase } from "./ApiBase";
 import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { ICalculatedColumnApi } from './Interface/ICalculatedColumnApi';
+import { CalculatedColumnState } from '../Redux/ActionsReducers/Interface/IState';
 
 
 
 export class CalculatedColumnApi extends ApiBase implements ICalculatedColumnApi {
 
  
+  public GetState(): CalculatedColumnState {
+    return this.getBlotterState().CalculatedColumn;
+}
+
   public GetAll(): ICalculatedColumn[] {
-    return this.getState().CalculatedColumn.CalculatedColumns;
+    return this.getBlotterState().CalculatedColumn.CalculatedColumns;
   }
 
   public Add(calculatedColumn: ICalculatedColumn): void {

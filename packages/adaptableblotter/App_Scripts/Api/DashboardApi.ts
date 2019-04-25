@@ -2,11 +2,17 @@ import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux'
 import { ApiBase } from "./ApiBase";
 import { Visibility } from '../Utilities/Enums';
 import { IDashboardApi } from './Interface/IDashboardApi';
+import { DashboardState } from '../Redux/ActionsReducers/Interface/IState';
 
 
 export class DashboardApi extends ApiBase implements IDashboardApi {
 
-    public SetAvailableToolbars(availableToolbars: string[]): void {
+   
+  public GetState(): DashboardState {
+    return this.getBlotterState().Dashboard;
+}
+
+public SetAvailableToolbars(availableToolbars: string[]): void {
         this.dispatchAction(DashboardRedux.DashboardSetAvailableToolbars(availableToolbars))
     }
 

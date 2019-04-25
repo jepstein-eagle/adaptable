@@ -8,5 +8,6 @@ export declare class HomeStrategy extends AdaptableStrategyBase implements IHome
     constructor(blotter: IAdaptableBlotter);
     addContextMenuItem(column: IColumn): void;
     protected InitState(): void;
+    private handleGridReloaded;
     private GetGridState;
 }

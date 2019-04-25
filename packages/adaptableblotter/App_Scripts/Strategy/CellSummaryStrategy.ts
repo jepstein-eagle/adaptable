@@ -24,10 +24,10 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     }
 
     protected InitState() {
-        if (this.CellSummaryState != this.blotter.AdaptableBlotterStore.TheStore.getState().CellSummary) {
-            this.CellSummaryState = this.blotter.AdaptableBlotterStore.TheStore.getState().CellSummary;
+        if (this.CellSummaryState != this.blotter.adaptableBlotterStore.TheStore.getState().CellSummary) {
+            this.CellSummaryState = this.blotter.adaptableBlotterStore.TheStore.getState().CellSummary;
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.CellSummary, this.CellSummaryState)
             }
         }

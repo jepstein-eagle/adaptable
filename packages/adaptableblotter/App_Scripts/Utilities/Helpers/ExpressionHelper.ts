@@ -157,7 +157,6 @@ export module ExpressionHelper {
 
                     for (let range of columnRanges.Ranges) {
                         let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(range, getColumnValue(columnRanges.ColumnId), null, column, blotter, getOtherColumnValue)
-
                         isColumnSatisfied = ExpressionHelper.TestRangeEvaluation(rangeEvaluation, blotter);
                         if (isColumnSatisfied) {
                             break;
@@ -420,7 +419,7 @@ export module ExpressionHelper {
     }
 
     export function IsExpressionValid(expression: Expression): boolean {
-        //nothing to check for ColumnValues.
+        //nothing to check for ColumnValues or Filters
         //we check that all ranges are properly populated
         return expression.RangeExpressions.every(x => {
             return x.Ranges.every(range => {
@@ -448,8 +447,8 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.DisplayValue), // this value
             blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue),  // other column value
             columns,
-            blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-            blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+            blotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+            blotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
             blotter
         );
     }
@@ -461,8 +460,8 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.DisplayValue),  // this value
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.RawValue), // other column value
             columns,
-            blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-            blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+            blotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+            blotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
             blotter
         );
     }
@@ -471,7 +470,7 @@ export module ExpressionHelper {
         return new Expression([], [], [])
     }
 
-    export function CreateEmptyRangeExpression(): IRange {
+    export function CreateEmptyRange(): IRange {
         return { Operator: LeafExpressionOperator.Unknown, Operand1: "", Operand2: "", Operand1Type: RangeOperandType.Value, Operand2Type: RangeOperandType.Value }
     }
 
@@ -519,19 +518,19 @@ export module ExpressionHelper {
             case DataType.String:
                 // might not be a string so make sure
                 rangeEvaluation.newValue = String(rangeEvaluation.newValue);
-                if (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) {
+                if (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) {
                     rangeEvaluation.newValue = StringExtensions.ToLowerCase(rangeEvaluation.newValue);
                 }
                 rangeEvaluation.operand1 = rangeExpression.Operand1Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
                     (rangeExpression.Operand1 == null) ? null :
-                        (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) ?
+                        (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) ?
                             StringExtensions.ToLowerCase(rangeExpression.Operand1) :
                             rangeExpression.Operand1;
                 rangeEvaluation.operand2 = rangeExpression.Operand2Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
                     (rangeExpression.Operand2 == null) ? null :
-                        (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) ?
+                        (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) ?
                             StringExtensions.ToLowerCase(rangeExpression.Operand2) :
                             rangeExpression.Operand2;
                 break;
@@ -631,7 +630,7 @@ export module ExpressionHelper {
     }
 
     function getExistingItem(blotter: IAdaptableBlotter, rangeEvaluation: IRangeEvaluation): any {
-        let displayValuePairs: IRawValueDisplayValuePair[] = blotter.getColumnValueDisplayValuePairDistinctList(rangeEvaluation.columnId, DistinctCriteriaPairValue.DisplayValue)
+        let displayValuePairs: IRawValueDisplayValuePair[] = blotter.getColumnValueDisplayValuePairDistinctList(rangeEvaluation.columnId, DistinctCriteriaPairValue.DisplayValue, false)
         let existingItem = displayValuePairs.find(dv => dv.DisplayValue.toLowerCase() == rangeEvaluation.newValue);
         return existingItem;
     }

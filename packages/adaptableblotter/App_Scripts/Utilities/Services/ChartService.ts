@@ -1,6 +1,8 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition, IPieChartDataItem, IChartData } from "../Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition } from "../Interface/BlotterObjects/Charting/IChartDefinition";
+import { IChartData } from "../Interface/BlotterObjects/Charting/IChartData";
+import { IPieChartDataItem } from "../Interface/BlotterObjects/Charting/IPieChartDataItem";
 import { IColumnValueExpression } from "../Interface/Expression/IColumnValueExpression";
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
@@ -92,7 +94,7 @@ export class ChartService implements IChartService {
           finalTotal += Number(columnValue)
         }
       })
-    }else{
+    } else {
       this.blotter.forAllRecordsDo((row) => {
         if (ExpressionHelper.checkForExpressionFromRecord(completedExpression, row, columns, this.blotter)) {
           returnedRecordCount++;
@@ -101,7 +103,7 @@ export class ChartService implements IChartService {
         }
       })
     }
-    
+
     if (showAverageTotal) {
       finalTotal = (finalTotal / returnedRecordCount)
     }
@@ -115,11 +117,7 @@ export class ChartService implements IChartService {
   private getXAxisColumnValues(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): string[] {
     let xAxisColValues: string[] = [];
     if (ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
-      if (chartDefinition.VisibleRowsOnly) {
-        xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctListVisible(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
-      } else {
-        xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue).map(cv => { return cv.DisplayValue })
-      }
+      xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue, chartDefinition.VisibleRowsOnly).map(cv => { return cv.DisplayValue })
     } else {
       if (chartDefinition.VisibleRowsOnly) {
         this.blotter.forAllVisibleRecordsDo((row) => {
@@ -177,12 +175,12 @@ export class ChartService implements IChartService {
 
     let dataItems: IPieChartDataItem[] = [];
 
-    let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+    let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
     // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
     let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition, columns);
 
     // if we don't use ranges but there are too many slices then we return an error
-    if (!useRanges && dataCounter.size > this.blotter.BlotterOptions.chartOptions.pieChartMaxItems) {
+    if (!useRanges && dataCounter.size > this.blotter.blotterOptions.chartOptions.pieChartMaxItems) {
       let message: string = "Cannot create pie chart as it contains too many items."
       LoggingHelper.LogAdaptableBlotterWarning(message)
       return {
@@ -192,7 +190,7 @@ export class ChartService implements IChartService {
     }
 
     // if nothing passes (possible if you have visible rows only)
-    if (dataCounter.size ==0) {
+    if (dataCounter.size == 0) {
       let message: string = "No data returned for Pie Chart."
       LoggingHelper.LogAdaptableBlotterWarning(message)
       return {

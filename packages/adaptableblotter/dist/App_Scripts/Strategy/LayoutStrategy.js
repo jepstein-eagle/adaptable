@@ -12,9 +12,9 @@ class LayoutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyConstants.LayoutStrategyName, ScreenPopups.LayoutPopup, StrategyConstants.LayoutGlyph);
     }
     InitState() {
-        if (this.LayoutState != this.blotter.AdaptableBlotterStore.TheStore.getState().Layout) {
-            this.LayoutState = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout;
-            if (this.blotter.isInitialised) {
+        if (this.LayoutState != this.blotter.adaptableBlotterStore.TheStore.getState().Layout) {
+            this.LayoutState = this.blotter.adaptableBlotterStore.TheStore.getState().Layout;
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Layout, this.LayoutState);
             }
         }

@@ -13,7 +13,7 @@ class CalculatedColumnSummaryWizard extends React.Component {
         let cssClassName = this.props.cssClassName + "-summary";
         let keyValuePairs = [
             { Key: "Name", Value: this.props.Data.ColumnId },
-            { Key: "Expression", Value: CalculatedColumnHelper_1.CalculatedColumnHelper.GetExpressionString(this.props.Data.ColumnExpression, this.props.Columns) }
+            { Key: "Expression", Value: CalculatedColumnHelper_1.CalculatedColumnHelper.getExpressionString(this.props.Data.ColumnExpression, this.props.Columns) }
         ];
         let summaryPage = React.createElement(WizardSummaryPage_1.WizardSummaryPage, { cssClassName: cssClassName, KeyValuePairs: keyValuePairs, header: StrategyConstants.CalculatedColumnStrategyName });
         return React.createElement("div", { className: cssClassName }, summaryPage);

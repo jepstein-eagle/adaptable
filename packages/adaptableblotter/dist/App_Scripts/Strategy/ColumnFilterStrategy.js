@@ -24,16 +24,16 @@ class ColumnFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase
         if (this.columnFilterState != this.GetColumnFilterState()) {
             this.columnFilterState = this.GetColumnFilterState();
             setTimeout(() => this.blotter.applyGridFiltering(), 5);
-            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
+            if (this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
                 this.publishSearchChanged(Enums_1.SearchChangedTrigger.ColumnFilter);
             }
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.ColumnFilter, this.columnFilterState);
             }
         }
     }
     GetColumnFilterState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
     }
 }
 exports.ColumnFilterStrategy = ColumnFilterStrategy;

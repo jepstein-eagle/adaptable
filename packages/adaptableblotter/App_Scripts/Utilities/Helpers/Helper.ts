@@ -128,12 +128,6 @@ export module Helper {
         return !IsInputNullOrEmpty(itemToCheck);
     }
 
-    export function ReadFileContents(fileName: string): string {
-        // let contents: string = fs.readFileSync(fileName, { encoding: 'utf8' })
-        return fileName;
-
-    }
-
 
     export function areObjectsEqual(obj1: any, obj2: any) {
         // if both are null return true

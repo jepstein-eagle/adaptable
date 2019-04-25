@@ -18,7 +18,7 @@ export class StyleService {
     constructor(private blotter: IAdaptableBlotter) {
         // Create the <style> tag
         this.style = document.createElement("style");
-        this.style.id = blotter.BlotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.BlotterOptions.blotterId +'-style';
+        this.style.id = blotter.blotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.blotterOptions.blotterId +'-style';
         // WebKit hack :(
         this.style.appendChild(document.createTextNode(""));
         // Add the <style> element to the page
@@ -26,19 +26,19 @@ export class StyleService {
 
         this.sheet = <CSSStyleSheet>this.style.sheet
         this.InitState();
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState())
+        blotter.adaptableBlotterStore.TheStore.subscribe(() => this.InitState())
     }
 
     InitState() {
 
-        if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell
-            || this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle
-            || this.QuickSearchState != this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
-            || this.FormatColumnState != this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn) {
-            this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
-            this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle
-            this.FormatColumnState = this.blotter.AdaptableBlotterStore.TheStore.getState().FormatColumn
-            this.QuickSearchState = this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch
+        if (this.FlashingCellState != this.blotter.api.flashingCellApi.GetState()
+            || this.ConditionalStyleState != this.blotter.api.conditionalStyleApi.GetState()
+            || this.QuickSearchState != this.blotter.api.quickSearchApi.GetState()
+            || this.FormatColumnState != this.blotter.api.formatColumnApi.GetState()) {
+            this.FlashingCellState = this.blotter.api.flashingCellApi.GetState();
+            this.ConditionalStyleState = this.blotter.api.conditionalStyleApi.GetState();
+            this.FormatColumnState = this.blotter.api.formatColumnApi.GetState();
+            this.QuickSearchState = this.blotter.api.quickSearchApi.GetState();
             this.clearCSSRules()
 
             // Format Column

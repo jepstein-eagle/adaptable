@@ -1,6 +1,6 @@
-import { Expression } from '../../Expression';
-import { IAdaptableBlotterObject } from './IAdaptableBlotterObject';
-import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation, PieChartLabelPosition, SliceLabelOption, PieChartOthersCategoryType } from '../../ChartEnums';
+import { Expression } from '../../../Expression';
+import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
+import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, PieChartLabelPosition, SliceLabelOption, OthersCategoryType } from '../../../ChartEnums';
 export interface IChartDefinition extends IAdaptableBlotterObject {
     Name: string;
     Description: string;
@@ -13,7 +13,7 @@ export interface IChartProperties extends IAdaptableBlotterObject {
 export interface IPieChartDefinition extends IChartDefinition {
     PrimaryColumnId: string;
     SecondaryColumnId: string;
-    SecondaryColumnOperation: SecondaryColumnOperation;
+    SecondaryColumnOperation: 'Sum' | 'Count';
 }
 export interface ICategoryChartDefinition extends IChartDefinition {
     YAxisColumnIds: string[];
@@ -22,29 +22,25 @@ export interface ICategoryChartDefinition extends IChartDefinition {
     XAxisExpression: Expression;
 }
 export interface IPieChartProperties extends IChartProperties {
-    OthersCategoryThreshold: number;
-    OthersCategoryType: PieChartOthersCategoryType;
-    PieChartLabelPosition: PieChartLabelPosition;
-    SliceLabelsMapping: SliceLabelOption;
-    SliceValuesMapping: SliceLabelOption;
-    SliceLegendMapping: SliceLabelOption;
-    ShowAsDoughnut: boolean;
-}
-export interface ICalloutProperties {
-    Type: string;
-    Interval?: number;
+    OthersCategoryThreshold?: number;
+    OthersCategoryType?: OthersCategoryType;
+    PieChartLabelPosition?: PieChartLabelPosition;
+    SliceLabelsMapping?: SliceLabelOption;
+    SliceValuesMapping?: SliceLabelOption;
+    SliceLegendMapping?: SliceLabelOption;
+    ShowAsDoughnut?: boolean;
 }
 export interface ICategoryChartProperties extends IChartProperties {
     CategoryChartType?: CategoryChartType;
     SeriesThickness?: number;
     MarkerType?: string;
     CalloutsType?: string;
-    CalloutsInterval: number;
+    CalloutsInterval?: number;
     EnableFinalValueAnnotations?: boolean;
     CrosshairDisplayMode?: CrosshairDisplayMode;
     CrosshairSnapToData?: boolean;
     CrosshairAnnotationEnabled?: boolean;
-    ToolTipType: ToolTipType;
+    ToolTipType?: ToolTipType;
     YAxisLabelLocation?: AxisLabelsLocation;
     YAxisLabelVisibility?: LabelVisibility;
     YAxisLabelScale?: AxisScale;
@@ -75,16 +71,4 @@ export interface ICategoryChartProperties extends IChartProperties {
     EnableSeriesHighlighting?: boolean;
     EnableCategoryHighlighting?: boolean;
     EnableItemHighlighting?: boolean;
-}
-export interface IChartData {
-    Data: any;
-    ErrorMessage: string;
-}
-export interface IPieChartDataItem {
-    Name: string;
-    Value: any;
-    Ratio: number;
-    ValueAndName?: string;
-    RatioAndName?: string;
-    ErrorMessage?: string;
 }

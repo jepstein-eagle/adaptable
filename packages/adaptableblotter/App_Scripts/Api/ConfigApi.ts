@@ -20,12 +20,12 @@ export class ConfigApi extends ApiBase implements IConfigApi {
 
   public configDeleteLocalStorage(): void {
     //   a horrible rough and ready method which clears local storage and refreshes but is not nice.
-    localStorage.removeItem(this.blotter.BlotterOptions.blotterId);
+    localStorage.removeItem(this.blotter.blotterOptions.blotterId);
     window.location.reload();
   }
 
   public configGetAllState(): AdaptableBlotterState {
-    return this.getState()
+    return this.getBlotterState()
   }
 
   private getUserStateKeys() {
@@ -54,51 +54,51 @@ export class ConfigApi extends ApiBase implements IConfigApi {
     'Shortcut' | 'SmartEdit' | 'Theme' | 'UserFilter', returnJson: boolean = false): IUserState {
     switch (functionName as StateChangedTrigger) {
       case StateChangedTrigger.AdvancedSearch:
-        return (returnJson) ? JSON.stringify(this.getState().AdvancedSearch) : this.getState().AdvancedSearch
+        return (returnJson) ? JSON.stringify(this.getBlotterState().AdvancedSearch) : this.getBlotterState().AdvancedSearch
       case StateChangedTrigger.Alert:
-        return (returnJson) ? JSON.stringify(this.getState().Alert) : this.getState().Alert
+        return (returnJson) ? JSON.stringify(this.getBlotterState().Alert) : this.getBlotterState().Alert
       case StateChangedTrigger.BulkUpdate:
-        return (returnJson) ? JSON.stringify(this.getState().BulkUpdate) : this.getState().BulkUpdate
+        return (returnJson) ? JSON.stringify(this.getBlotterState().BulkUpdate) : this.getBlotterState().BulkUpdate
       case StateChangedTrigger.CalculatedColumn:
-        return (returnJson) ? JSON.stringify(this.getState().CalculatedColumn) : this.getState().CalculatedColumn
+        return (returnJson) ? JSON.stringify(this.getBlotterState().CalculatedColumn) : this.getBlotterState().CalculatedColumn
       case StateChangedTrigger.Calendar:
-        return (returnJson) ? JSON.stringify(this.getState().Calendar) : this.getState().Calendar
+        return (returnJson) ? JSON.stringify(this.getBlotterState().Calendar) : this.getBlotterState().Calendar
       case StateChangedTrigger.CellValidation:
-        return (returnJson) ? JSON.stringify(this.getState().CellValidation) : this.getState().CellValidation
+        return (returnJson) ? JSON.stringify(this.getBlotterState().CellValidation) : this.getBlotterState().CellValidation
       case StateChangedTrigger.Chart:
-        return (returnJson) ? JSON.stringify(this.getState().Chart) : this.getState().Chart
+        return (returnJson) ? JSON.stringify(this.getBlotterState().Chart) : this.getBlotterState().Chart
       case StateChangedTrigger.ColumnFilter:
-        return (returnJson) ? JSON.stringify(this.getState().ColumnFilter) : this.getState().ColumnFilter
+        return (returnJson) ? JSON.stringify(this.getBlotterState().ColumnFilter) : this.getBlotterState().ColumnFilter
       case StateChangedTrigger.ConditionalStyle:
-        return (returnJson) ? JSON.stringify(this.getState().ConditionalStyle) : this.getState().ConditionalStyle
+        return (returnJson) ? JSON.stringify(this.getBlotterState().ConditionalStyle) : this.getBlotterState().ConditionalStyle
       case StateChangedTrigger.CustomSort:
-        return (returnJson) ? JSON.stringify(this.getState().CustomSort) : this.getState().CustomSort
+        return (returnJson) ? JSON.stringify(this.getBlotterState().CustomSort) : this.getBlotterState().CustomSort
       case StateChangedTrigger.Dashboard:
-        return (returnJson) ? JSON.stringify(this.getState().Dashboard) : this.getState().Dashboard
+        return (returnJson) ? JSON.stringify(this.getBlotterState().Dashboard) : this.getBlotterState().Dashboard
       case StateChangedTrigger.DataSource:
-        return (returnJson) ? JSON.stringify(this.getState().DataSource) : this.getState().DataSource
+        return (returnJson) ? JSON.stringify(this.getBlotterState().DataSource) : this.getBlotterState().DataSource
       case StateChangedTrigger.Export:
-        return (returnJson) ? JSON.stringify(this.getState().Export) : this.getState().Export
+        return (returnJson) ? JSON.stringify(this.getBlotterState().Export) : this.getBlotterState().Export
       case StateChangedTrigger.FlashingCell:
-        return (returnJson) ? JSON.stringify(this.getState().FlashingCell) : this.getState().FlashingCell
+        return (returnJson) ? JSON.stringify(this.getBlotterState().FlashingCell) : this.getBlotterState().FlashingCell
       case StateChangedTrigger.FormatColumn:
-        return (returnJson) ? JSON.stringify(this.getState().FormatColumn) : this.getState().FormatColumn
+        return (returnJson) ? JSON.stringify(this.getBlotterState().FormatColumn) : this.getBlotterState().FormatColumn
       case StateChangedTrigger.Layout:
-        return (returnJson) ? JSON.stringify(this.getState().Layout) : this.getState().Layout
+        return (returnJson) ? JSON.stringify(this.getBlotterState().Layout) : this.getBlotterState().Layout
       case StateChangedTrigger.PlusMinus:
-        return (returnJson) ? JSON.stringify(this.getState().PlusMinus) : this.getState().PlusMinus
+        return (returnJson) ? JSON.stringify(this.getBlotterState().PlusMinus) : this.getBlotterState().PlusMinus
       case StateChangedTrigger.QuickSearch:
-        return (returnJson) ? JSON.stringify(this.getState().QuickSearch) : this.getState().QuickSearch
+        return (returnJson) ? JSON.stringify(this.getBlotterState().QuickSearch) : this.getBlotterState().QuickSearch
       case StateChangedTrigger.CellSummary:
-        return (returnJson) ? JSON.stringify(this.getState().SelectedCells) : this.getState().CellSummary
+        return (returnJson) ? JSON.stringify(this.getBlotterState().SelectedCells) : this.getBlotterState().CellSummary
       case StateChangedTrigger.Shortcut:
-        return (returnJson) ? JSON.stringify(this.getState().Shortcut) : this.getState().Shortcut
+        return (returnJson) ? JSON.stringify(this.getBlotterState().Shortcut) : this.getBlotterState().Shortcut
       case StateChangedTrigger.SmartEdit:
-        return (returnJson) ? JSON.stringify(this.getState().SmartEdit) : this.getState().SmartEdit
+        return (returnJson) ? JSON.stringify(this.getBlotterState().SmartEdit) : this.getBlotterState().SmartEdit
       case StateChangedTrigger.Theme:
-        return (returnJson) ? JSON.stringify(this.getState().Theme) : this.getState().Theme
+        return (returnJson) ? JSON.stringify(this.getBlotterState().Theme) : this.getBlotterState().Theme
       case StateChangedTrigger.UserFilter:
-        return (returnJson) ? JSON.stringify(this.getState().UserFilter) : this.getState().UserFilter
+        return (returnJson) ? JSON.stringify(this.getBlotterState().UserFilter) : this.getBlotterState().UserFilter
     }
   }
 

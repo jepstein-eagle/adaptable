@@ -54,6 +54,13 @@ import { ThemeApi } from "./ThemeApi";
 import { UserInterfaceApi } from "./UserInterfaceApi";
 import { IInternalApi } from "./Interface/IInternalApi";
 import { InternalApi } from "./InternalApi";
+import { IConditionalStyleApi } from "./Interface/IConditionalStyleApi";
+import { ConditionalStyleApi } from "./ConditionalStyleApi";
+import { IReminderApi } from "./Interface/IReminderApi";
+import { ReminderApi } from "./ReminderApi";
+import { IFlashingCellApi } from "./Interface/IFlashingCellApi";
+import { FlashingCellApi } from "./FlashingCellApi";
+import { ISystemApi } from "./Interface/ISystemApi";
 
 
 
@@ -66,6 +73,7 @@ export class BlotterApi implements IBlotterApi {
   public cellValidationApi: ICellValidationApi;
   public columnCategoryApi: IColumnCategoryApi;
   public columnFilterApi: IColumnFilterApi;
+  public conditionalStyleApi: IConditionalStyleApi;
   public configApi: IConfigApi;
   public customSortApi: ICustomSortApi;
   public dashboardApi: IDashboardApi;
@@ -73,6 +81,7 @@ export class BlotterApi implements IBlotterApi {
   public entitlementApi: IEntitlementApi;
   public eventApi: IEventApi;
   public exportApi: IExportApi;
+  public flashingCellApi: IFlashingCellApi;
   public formatColumnApi: IFormatColumnApi;
   public freeTextColumnApi: IFreeTextColumnApi;
   public gridApi: IGridApi
@@ -80,8 +89,10 @@ export class BlotterApi implements IBlotterApi {
   public layoutApi: ILayoutApi;
   public percentBarApi: IPercentBarApi;
   public quickSearchApi: IQuickSearchApi;
+  public reminderApi: IReminderApi;
   public shortcutApi: IShortcutApi;
   public smartEditApi: ISmartEditApi;
+  public systemApi: ISystemApi;
   public systemFilterApi: ISystemFilterApi;
   public systemStatusApi: ISystemStatusApi;
   public themeApi: IThemeApi;
@@ -96,6 +107,7 @@ export class BlotterApi implements IBlotterApi {
     this.cellValidationApi = new CellValidationApi(blotter);
     this.columnCategoryApi = new ColumnCategoryApi(blotter);
     this.columnFilterApi = new ColumnFilterApi(blotter);
+    this.conditionalStyleApi = new ConditionalStyleApi(blotter);
     this.configApi = new ConfigApi(blotter);
     this.customSortApi = new CustomSortApi(blotter);
     this.dashboardApi = new DashboardApi(blotter);
@@ -103,6 +115,7 @@ export class BlotterApi implements IBlotterApi {
     this.entitlementApi = new EntitlementApi(blotter);
     this.eventApi = new EventApi(blotter);
     this.exportApi = new ExportApi(blotter);
+    this.flashingCellApi = new FlashingCellApi(blotter);
     this.formatColumnApi = new FormatColumnApi(blotter);
     this.freeTextColumnApi = new FreeTextColumnApi(blotter);
     this.gridApi = new GridApi(blotter);
@@ -110,6 +123,7 @@ export class BlotterApi implements IBlotterApi {
     this.layoutApi = new LayoutApi(blotter);
     this.percentBarApi = new PercentBarApi(blotter);
     this.quickSearchApi = new QuickSearchApi(blotter);
+    this.reminderApi = new ReminderApi(blotter);
     this.shortcutApi = new ShortcutApi(blotter);
     this.smartEditApi = new SmartEditApi(blotter);
     this.systemFilterApi = new SystemFilterApi(blotter);

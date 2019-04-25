@@ -34,10 +34,10 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     protected InitState() {
-        if (this.ShortcutState != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut) {
-            this.ShortcutState = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut;
+        if (this.ShortcutState != this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut) {
+            this.ShortcutState = this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut;
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Shortcut, this.ShortcutState)
             }
         }
@@ -47,7 +47,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         if (this.ShortcutState.Shortcuts && ArrayExtensions.IsEmpty(this.ShortcutState.Shortcuts)) { return; }
         let activeCell: ICellInfo = this.blotter.getActiveCell();
         if (!activeCell) { return; }
-        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns);
         if (activeCell && !selectedColumn.ReadOnly) {
             let columnDataType: DataType = selectedColumn.DataType;
             let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);

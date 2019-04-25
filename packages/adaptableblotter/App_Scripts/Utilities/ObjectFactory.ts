@@ -17,7 +17,7 @@ import { IColumnFilter } from "./Interface/BlotterObjects/IColumnFilter";
 import { ICellValidationRule } from "./Interface/BlotterObjects/ICellValidationRule";
 import { ICalculatedColumn } from "./Interface/BlotterObjects/ICalculatedColumn";
 import { IAdvancedSearch } from "./Interface/BlotterObjects/IAdvancedSearch";
-import { ICategoryChartDefinition, IPieChartDefinition } from "./Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, IPieChartDefinition } from "./Interface/BlotterObjects/Charting/IChartDefinition";
 import { IAlertDefinition } from "./Interface/BlotterObjects/IAlertDefinition";
 import { IRange } from "./Interface/Expression/IRange";
 import { LeafExpressionOperator, SortOrder, ReportColumnScope, ReportRowScope, MathOperation, DataType, ConditionalStyleScope, FontStyle, FontWeight, RangeOperandType, MessageType, ActionMode, LicenceScopeType, LicenceUserType, ExportDestination } from './Enums';
@@ -247,7 +247,7 @@ export module ObjectFactory {
     }
 
     export function CreateCellValidationMessage(CellValidation: ICellValidationRule, blotter: IAdaptableBlotter): string {
-        let columns: IColumn[] = blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns: IColumn[] = blotter.api.gridApi.getColumns();
         let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(CellValidation.ColumnId, columns)
         let expressionDescription: string = (ExpressionHelper.IsNotEmptyExpression(CellValidation.Expression)) ?
             " when " + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns) :

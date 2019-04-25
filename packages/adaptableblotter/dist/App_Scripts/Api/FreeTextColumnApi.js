@@ -5,8 +5,11 @@ const ApiBase_1 = require("./ApiBase");
 const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 class FreeTextColumnApi extends ApiBase_1.ApiBase {
+    GetState() {
+        return this.getBlotterState().FreeTextColumn;
+    }
     GetAll() {
-        return this.getState().FreeTextColumn.FreeTextColumns;
+        return this.getBlotterState().FreeTextColumn.FreeTextColumns;
     }
     Add(freeTextColumn) {
         this.dispatchAction(FreeTextColumnRedux.FreeTextColumnAdd(freeTextColumn));

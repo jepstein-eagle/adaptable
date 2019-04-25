@@ -23,7 +23,8 @@ import { ICellValidationRule } from "../../../Utilities/Interface/BlotterObjects
 import { ICalendar } from "../../../Utilities/Interface/BlotterObjects/ICalendar";
 import { ICalculatedColumn } from "../../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { IAdvancedSearch } from "../../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
-import { IChartDefinition, IChartData } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
+import { IChartData } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartData";
 import { IAlertDefinition } from "../../../Utilities/Interface/BlotterObjects/IAlertDefinition";
 import { IPPDomain } from "../../../Utilities/Interface/Reports/IPPDomain";
 import { ILiveReport } from "../../../Utilities/Interface/Reports/ILiveReport";
@@ -33,9 +34,10 @@ import { IPreviewInfo } from '../../../Utilities/Interface/IPreview';
 import { IMenuItem, IContextMenu } from '../../../Utilities/Interface/IMenu';
 import { IScreenPopup, IAlertPopup, IConfirmationPopup, IPromptPopup, ILoadingPopup, IAboutPopup, IAdaptableAlert } from '../../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../../Utilities/ChartEnums';
-import { IPieChart } from "../../../Utilities/Interface/BlotterObjects/IPieChart";
 import { IReminder } from "../../../Utilities/Interface/BlotterObjects/IReminder";
 import { IDataSource } from "../../../Utilities/Interface/BlotterObjects/IDataSource";
+import { IRange } from "../../../Utilities/Interface/Expression/IRange";
+import { Expression } from "../../../Utilities/Expression";
 export interface IState {
 }
 /**
@@ -65,6 +67,8 @@ export interface SystemState extends ISystemState {
     IPPDomainsPages: IPPDomain[];
     SystemReports: IReport[];
     ReportErrorMessage: string;
+    QuickSearchRange: IRange;
+    QuickSearchVisibleColumnExpressions: Expression[];
 }
 export interface GridState extends ISystemState {
     Columns: IColumn[];
@@ -190,7 +194,7 @@ export interface PercentBarState extends IUserState {
     PercentBars: IPercentBar[];
 }
 export interface PieChartState extends IUserState {
-    PieCharts: IPieChart[];
+    PieCharts: any[];
 }
 export interface PlusMinusState extends IUserState {
     PlusMinusRules: IPlusMinusRule[];

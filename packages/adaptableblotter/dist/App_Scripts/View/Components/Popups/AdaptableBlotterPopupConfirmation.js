@@ -18,7 +18,7 @@ class AdaptableBlotterPopupConfirmation extends React.Component {
         let style = UIHelper_1.UIHelper.getStyleNameByMessageType(this.props.MessageType);
         let header = this.props.Header;
         let glyph = UIHelper_1.UIHelper.getGlyphByMessageType(this.props.MessageType);
-        let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+        let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.blotterOptions, document);
         let cssClassName = StyleConstants.POPUP_PROMPT;
         return this.props.ShowPopup && React.createElement("div", { className: StyleConstants.POPUP_PROMPT },
             React.createElement(react_bootstrap_1.Modal, { show: this.props.ShowPopup, onHide: this.props.onCancel, className: cssClassName, container: modalContainer, bsSize: "small" },

@@ -33,15 +33,15 @@ export class FreeTextColumnService implements IFreeTextColumnService {
     }
 
     CheckIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedInfo): void {
-        let freeTextColumn: IFreeTextColumn = this.blotter.AdaptableBlotterStore.TheStore.getState().FreeTextColumn.FreeTextColumns.find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
+        let freeTextColumn: IFreeTextColumn = this.blotter.api.freeTextColumnApi.GetAll().find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
         if (freeTextColumn) {
             let freeTextStoredValue: FreeTextStoredValue = { PrimaryKey: dataChangedEvent.IdentifierValue, FreeText: dataChangedEvent.NewValue }
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch<FreeTextColumnRedux.FreeTextColumnAddEditStoredValueAction>(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, freeTextStoredValue));
+            this.blotter.adaptableBlotterStore.TheStore.dispatch<FreeTextColumnRedux.FreeTextColumnAddEditStoredValueAction>(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, freeTextStoredValue));
         }
     }
 
     CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents: IDataChangedInfo[]): void {
-        if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.AdaptableBlotterStore.TheStore.getState().FreeTextColumn.FreeTextColumns)) {
+        if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.freeTextColumnApi.GetAll())) {
             dataChangedEvents.forEach(dc => {
                 this.CheckIfDataChangingColumnIsFreeText(dc);
             })

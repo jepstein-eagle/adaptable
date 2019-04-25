@@ -29,12 +29,12 @@ import { IScheduleService } from '../Services/Interface/IScheduleService';
  */
 export interface IAdaptableBlotter {
     api: IBlotterApi;
-    BlotterOptions: IAdaptableBlotterOptions;
-    AdaptableBlotterStore: IAdaptableBlotterStore;
-    Strategies: IAdaptableStrategyCollection;
+    blotterOptions: IAdaptableBlotterOptions;
+    adaptableBlotterStore: IAdaptableBlotterStore;
+    strategies: IAdaptableStrategyCollection;
     VendorGridName: 'agGrid' | 'Hypergrid';
     EmbedColumnMenu: boolean;
-    isInitialised: boolean;
+    IsInitialised: boolean;
     CalendarService: ICalendarService;
     DataService: IDataService;
     ValidationService: IValidationService;
@@ -61,8 +61,7 @@ export interface IAdaptableBlotter {
     setColumnIntoStore(): void;
     setNewColumnListOrder(visibleColumnList: Array<IColumn>): void;
     getPrimaryKeyValueFromRecord(record: any): any;
-    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
-    getColumnValueDisplayValuePairDistinctListVisible(columnId: string, distinctCriteria: DistinctCriteriaPairValue): Array<IRawValueDisplayValuePair>;
+    getColumnValueDisplayValuePairDistinctList(columnId: string, distinctCriteria: DistinctCriteriaPairValue, visibleRowsOnly: boolean): Array<IRawValueDisplayValuePair>;
     getDisplayValue(id: any, columnId: string): string;
     getDisplayValueFromRecord(row: any, columnId: string): string;
     getRawValueFromRecord(row: any, columnId: string): any;

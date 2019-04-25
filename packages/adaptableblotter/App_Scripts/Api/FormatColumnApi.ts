@@ -4,12 +4,17 @@ import { IFormatColumn } from "../Utilities/Interface/BlotterObjects/IFormatColu
 import * as FormatColumnRedux from '../Redux/ActionsReducers/FormatColumnRedux'
 import { ApiBase } from "./ApiBase";
 import { IFormatColumnApi } from './Interface/IFormatColumnApi';
+import { FormatColumnState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class FormatColumnApi extends ApiBase implements IFormatColumnApi {
 
-  // Format Column api methods
-  public GetAll(): IFormatColumn[] {
-    return this.getState().FormatColumn.FormatColumns;
+  
+  public GetState(): FormatColumnState {
+    return this.getBlotterState().FormatColumn;
+}
+
+public GetAll(): IFormatColumn[] {
+    return this.getBlotterState().FormatColumn.FormatColumns;
   }
 
   public Add(column: string, style: IStyle): void {

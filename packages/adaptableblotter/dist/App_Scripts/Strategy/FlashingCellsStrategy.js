@@ -19,7 +19,7 @@ class FlashingCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
     addContextMenuItem(column) {
         if (this.canCreateContextMenuItem(column, this.blotter)) {
             if (column.DataType == Enums_1.DataType.Number) {
-                if (this.blotter.AdaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == column.ColumnId) == null) {
+                if (this.blotter.adaptableBlotterStore.TheStore.getState().CalculatedColumn.CalculatedColumns.find(c => c.ColumnId == column.ColumnId) == null) {
                     let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == column.ColumnId);
                     if (flashingCell && flashingCell.IsLive) {
                         this.createContextMenuItemReduxAction("Turn Flashing Cell Off", StrategyConstants.FlashingCellGlyph, FlashingCellsRedux.FlashingCellSelect(flashingCell));
@@ -35,9 +35,9 @@ class FlashingCellsStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBas
         }
     }
     InitState() {
-        if (this.FlashingCellState != this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell) {
-            this.FlashingCellState = this.blotter.AdaptableBlotterStore.TheStore.getState().FlashingCell;
-            if (this.blotter.isInitialised) {
+        if (this.FlashingCellState != this.blotter.adaptableBlotterStore.TheStore.getState().FlashingCell) {
+            this.FlashingCellState = this.blotter.adaptableBlotterStore.TheStore.getState().FlashingCell;
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.FlashingCell, this.FlashingCellState);
             }
         }

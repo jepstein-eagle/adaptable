@@ -3,6 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const QuickSearchRedux = require("../Redux/ActionsReducers/QuickSearchRedux");
 const ApiBase_1 = require("./ApiBase");
 class QuickSearchApi extends ApiBase_1.ApiBase {
+    GetState() {
+        return this.getBlotterState().QuickSearch;
+    }
     Apply(quickSearchText) {
         this.dispatchAction(QuickSearchRedux.QuickSearchApply(quickSearchText));
     }
@@ -10,7 +13,10 @@ class QuickSearchApi extends ApiBase_1.ApiBase {
         this.dispatchAction(QuickSearchRedux.QuickSearchApply(""));
     }
     GetValue() {
-        return this.getState().QuickSearch.QuickSearchText;
+        return this.getBlotterState().QuickSearch.QuickSearchText;
+    }
+    GetStyle() {
+        return this.getBlotterState().QuickSearch.Style;
     }
     SetDisplayAction(displayAction) {
         this.dispatchAction(QuickSearchRedux.QuickSearchSetDisplay(displayAction));

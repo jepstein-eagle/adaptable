@@ -63,7 +63,7 @@ export module Glue42Helper {
             console.log(sheetData);
             const sheet = await excelAPIEntryPoint.openSheet(sheetData);
             sheet.onChanged((data: any[], errorCallback: any, doneCallback: any) => {
-                let primaryKeyColumnFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(blotter.BlotterOptions.primaryKey, gridColumns);
+                let primaryKeyColumnFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(blotter.blotterOptions.primaryKey, gridColumns);
 
                 let cellInfos: ICellInfo[] = [];
                 const errors: IGlue42ExportError[] = [];

@@ -20,6 +20,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.HomeStrategyId, blotter)
+        this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded())
     }
 
     public addContextMenuItem(column: IColumn): void {
@@ -56,7 +57,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
         if (!ArrayExtensions.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {
             this.GridSorts = this.GetGridState().GridSorts
 
-            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == "AllSearchandSort") {
+            if (this.blotter.blotterOptions.generalOptions.serverSearchOption == "AllSearchandSort") {
                 this.publishSearchChanged(SearchChangedTrigger.Sort)
             }
         }
@@ -73,9 +74,14 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
         }
     }
 
+    // useful for when grid reloads (e.g. at midnight);
+    private handleGridReloaded(): void {
+        this.blotter.applyGridFiltering();
+    }
+
 
     private GetGridState(): GridState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().Grid;
     }
 
 }

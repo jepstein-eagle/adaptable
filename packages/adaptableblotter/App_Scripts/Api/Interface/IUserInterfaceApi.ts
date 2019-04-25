@@ -1,5 +1,9 @@
+import { IPermittedColumnValues } from "../../Utilities/Interface/IPermittedColumnValues";
+import { UserInterfaceState } from "../../Redux/ActionsReducers/Interface/IState";
+
 export interface IUserInterfaceApi {
-  SetColorPalette(colorPalette: string[]): void;
+  GetState(): UserInterfaceState;
+   SetColorPalette(colorPalette: string[]): void;
   /**
    *
    * @param styleClassNames Make sure that you provide a Css Style of the same name in your css.
@@ -18,4 +22,8 @@ export interface IUserInterfaceApi {
     * @param column
     */
   ClearColumnPermittedValues(column: string): void;
+
+  GetAllPermittedValues(): IPermittedColumnValues[];
+  
+  GetPermittedValuesForColumn(columnId: string): IPermittedColumnValues;
 }

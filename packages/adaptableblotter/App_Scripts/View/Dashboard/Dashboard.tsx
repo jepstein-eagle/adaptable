@@ -28,7 +28,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         let cssClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD
         let cssBaseClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD_BASE
 
-        let optionsBlotterName: string = this.props.Blotter.BlotterOptions.blotterId;
+        let optionsBlotterName: string = this.props.Blotter.blotterOptions.blotterId;
         let blotterName: string = (optionsBlotterName == GeneralConstants.USER_NAME) ? "Blotter " : optionsBlotterName;
         let showBlotterName: string = "Show " + blotterName + " Dashboard"
         let hiddenEntitlements: IEntitlement[] = this.props.EntitlementsState.FunctionEntitlements.filter(e => e.AccessLevel == "Hidden");
@@ -76,7 +76,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             )}
         </Nav>
 
-        return <div className={cssBaseClassName}>
+        return <div  className={cssBaseClassName}>
             {this.props.DashboardState.DashboardVisibility != Visibility.Hidden &&
                 <div className="ab_no_margin">
                     {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ?

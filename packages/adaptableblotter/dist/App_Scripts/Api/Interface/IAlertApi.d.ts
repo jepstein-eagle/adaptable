@@ -1,5 +1,7 @@
 import { IAdaptableAlert } from "../../Utilities/Interface/IMessage";
+import { AlertState } from "../../Redux/ActionsReducers/Interface/IState";
 export interface IAlertApi {
+    GetState(): AlertState;
     /**
      *
     * @param alertHeader Title to appear in the popup

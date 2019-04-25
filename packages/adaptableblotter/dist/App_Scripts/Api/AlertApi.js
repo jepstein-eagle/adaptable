@@ -7,13 +7,16 @@ const Enums_1 = require("../Utilities/Enums");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
 class AlertApi extends ApiBase_1.ApiBase {
+    GetState() {
+        return this.getBlotterState().Alert;
+    }
     ShowAlert(alertToShow) {
-        let maxAlerts = this.getState().Alert.MaxAlertsInStore;
+        let maxAlerts = this.getBlotterState().Alert.MaxAlertsInStore;
         this.dispatchAction(SystemRedux.SystemAlertAdd(alertToShow, maxAlerts));
         if (alertToShow.ShowAsPopup) {
-            if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.getState().Alert.AlertPopupDiv)) {
+            if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.getBlotterState().Alert.AlertPopupDiv)) {
                 let alertString = alertToShow.Header + ": " + alertToShow.Msg;
-                let alertDiv = document.getElementById(this.getState().Alert.AlertPopupDiv);
+                let alertDiv = document.getElementById(this.getBlotterState().Alert.AlertPopupDiv);
                 if (alertDiv) {
                     alertDiv.innerHTML = alertString;
                 }

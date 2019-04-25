@@ -3,9 +3,9 @@ import { IColumn } from '../Interface/IColumn';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ILicenceInfo } from '../Interface/ILicenceInfo';
 export declare module BlotterHelper {
-    function IsDemoSite(): boolean;
-    function AssignBlotterOptions(blotterOptions: IAdaptableBlotterOptions): IAdaptableBlotterOptions;
-    function CheckPrimaryKeyExists(blotter: IAdaptableBlotter, columns: IColumn[]): void;
-    function IsConfigServerEnabled(blotterOptions: IAdaptableBlotterOptions): boolean;
-    function CheckLicenceKey(licenceInfo: ILicenceInfo): void;
+    function isDemoSite(): boolean;
+    function assignBlotterOptions(blotterOptions: IAdaptableBlotterOptions): IAdaptableBlotterOptions;
+    function isValidPrimaryKey(blotter: IAdaptableBlotter, columns: IColumn[]): boolean;
+    function isConfigServerEnabled(blotterOptions: IAdaptableBlotterOptions): boolean;
+    function checkLicenceKey(licenceInfo: ILicenceInfo): void;
 }

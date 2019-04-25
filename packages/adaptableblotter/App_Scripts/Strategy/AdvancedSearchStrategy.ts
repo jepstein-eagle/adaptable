@@ -12,8 +12,6 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
 
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.AdvancedSearchStrategyId, blotter)
-        this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded())
-
     }
 
     protected addPopupMenuItem() {
@@ -24,26 +22,24 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
         if (this.AdvancedSearchState != this.GetAdvancedSearchState()) {
             this.AdvancedSearchState = this.GetAdvancedSearchState();
 
-            // this is re-applying grid filtering even if the change to the search state doesnt effect the current advanced search
+            // this is re-applying grid filtering even if the change to the advanced search state doesnt effect the current advanced search
             //  probably not an issue but might be worth revisiting ...
             this.blotter.applyGridFiltering()
 
-            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption != 'None') {
+            if (this.blotter.blotterOptions.generalOptions.serverSearchOption != 'None') {
                 this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch)
             }
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.AdvancedSearch, this.AdvancedSearchState)
             }
         }
     }
 
-    private handleGridReloaded(): void {
-        this.blotter.applyGridFiltering();
-    }
+
 
     private GetAdvancedSearchState(): AdvancedSearchState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch;
+        return this.blotter.api.advancedSearchApi.GetState();
     }
 
 

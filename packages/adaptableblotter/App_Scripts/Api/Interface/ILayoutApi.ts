@@ -1,6 +1,8 @@
 import { ILayout } from "../../Utilities/Interface/BlotterObjects/ILayout";
+import { LayoutState } from "../../Redux/ActionsReducers/Interface/IState";
 export interface ILayoutApi {
-    /**
+    GetState(): LayoutState;
+     /**
      * Selects the layout
      * @param layoutName has to be an existing layout
      */

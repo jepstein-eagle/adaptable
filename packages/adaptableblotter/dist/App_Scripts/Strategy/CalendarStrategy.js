@@ -12,9 +12,9 @@ class CalendarStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyConstants.CalendarStrategyName, ScreenPopups.CalendarsPopup, StrategyConstants.CalendarGlyph);
     }
     InitState() {
-        if (this.CalendarState != this.blotter.AdaptableBlotterStore.TheStore.getState().Calendar) {
-            this.CalendarState = this.blotter.AdaptableBlotterStore.TheStore.getState().Calendar;
-            if (this.blotter.isInitialised) {
+        if (this.CalendarState != this.blotter.adaptableBlotterStore.TheStore.getState().Calendar) {
+            this.CalendarState = this.blotter.adaptableBlotterStore.TheStore.getState().Calendar;
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Calendar, this.CalendarState);
             }
         }

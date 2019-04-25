@@ -1,13 +1,10 @@
 import { ExportDestination, MathOperation, MessageType, LicenceScopeType } from '../../Utilities/Enums';
 import * as Redux from "redux";
-import * as ReduxStorage from 'redux-storage'
-import migrate from 'redux-storage-decorator-migrate'
 import * as DeepDiff from 'deep-diff'
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createEngine as createEngineRemote } from './IAdaptableBlotterReduxRemoteStorageEngine';
 import { createEngine as createEngineLocal } from './AdaptableBlotterReduxLocalStorageEngine';
-import { MergeStateCommunityLicence, MergeStateStandardLicence, MergeStateEnterpriseLicence } from './AdaptableBlotterReduxMerger';
-import filter from 'redux-storage-decorator-filter'
+import { licenseMergeReducer } from './AdaptableBlotterReduxMerger';
 
 import * as MenuRedux from '../ActionsReducers/MenuRedux'
 import * as PopupRedux from '../ActionsReducers/PopupRedux'
@@ -91,10 +88,10 @@ import { IUIConfirmation, InputAction } from '../../Utilities/Interface/IMessage
 import { ChartVisibility } from '../../Utilities/ChartEnums';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import IStorageEngine from './Interface/IStorageEngine';
 
 /*
 This is the main store for the Adaptable Blotter
-We are currently using redux-storage which might not have been a wise choice compared to redux-persist, particularly for when we have state we dont want to persist
 */
 
 const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<AdaptableBlotterState>({
@@ -142,6 +139,15 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
 const RESET_STATE = 'RESET_STATE';
 const INIT_STATE = 'INIT_STATE';
 const LOAD_STATE = 'LOAD_STATE';
+
+
+const NON_PERSIST_ACTIONS: { [key: string]: boolean } = {
+  [LOAD_STATE]: true,
+  '@@INIT': true,
+  '@@redux/init': true,
+  [INIT_STATE]: true,
+  [RESET_STATE]: true
+}
 
 export interface ResetUserDataAction extends Redux.Action { }
 export interface InitStateAction extends Redux.Action { }
@@ -212,26 +218,19 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
   public TheStore: Redux.Store<AdaptableBlotterState>
   public Load: PromiseLike<any>
   constructor(blotter: IAdaptableBlotter) {
-    let middlewareReduxStorage: Redux.Middleware
-    let reducerWithStorage: Redux.Reducer<AdaptableBlotterState>
-    let loadStorage: ReduxStorage.Loader<AdaptableBlotterState>
-    let engineWithFilter: ReduxStorage.StorageEngine
-    let engineWithMigrate: ReduxStorage.StorageEngine
-    let engineReduxStorage: ReduxStorage.StorageEngine
+
+    let storageEngine: IStorageEngine
 
     // If the user has remote storage set then we use Remote Engine, otherwise we use Local Enginge
     // We pass into the create method the blotterId, the config, and also the Licence Info
     // the Lience Info is needed so we can determine whether or not to load state
-    if (BlotterHelper.IsConfigServerEnabled(blotter.BlotterOptions)) {
-      engineReduxStorage = createEngineRemote(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId, blotter);
+    if (BlotterHelper.isConfigServerEnabled(blotter.blotterOptions)) {
+      storageEngine = createEngineRemote(blotter.blotterOptions.configServerOptions.configServerUrl, blotter.blotterOptions.userName, blotter.blotterOptions.blotterId);
     } else {
-      engineReduxStorage = createEngineLocal(blotter.BlotterOptions.blotterId, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
+      storageEngine = createEngineLocal(blotter.blotterOptions.localStorageKey, blotter.blotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
     }
 
-    // engine with migrate is where we manage the bits that we dont want to persist, but need to keep in the store
-    // perhaps would be better to have 2 stores - persistence store and in-memory store - perhaps we are using the wrong storage mechanism?
-    engineWithMigrate = migrate(engineReduxStorage, 0, "AdaptableStoreVersion", []/*[someExampleMigration]*/)
-    engineWithFilter = filter(engineWithMigrate, [], [
+    const nonPersistentReduxKeys = [
       // Non Persisted State
       ConfigConstants.SYSTEM,
       ConfigConstants.GRID,
@@ -242,27 +241,10 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       ConfigConstants.USER_INTERFACE,
       ConfigConstants.ENTITLEMENTS,
       ConfigConstants.APPLICATION,
-    ]);
+    ]
 
-    //we prevent the save to happen on few actions since they do not change the part of the state that is persisted.
-    //I think that is a part where we push a bit redux and should have two distinct stores....
-    middlewareReduxStorage = ReduxStorage.createMiddleware(engineWithFilter, getNonPersistedReduxActions());
+    let rootReducer = licenseMergeReducer(rootReducerWithResetManagement, blotter.LicenceService.LicenceInfo, LOAD_STATE)
 
-    //here we use our own merger function which is derived from redux simple merger
-    // we now use a different Merge function based on the licence type to ensure that state is only loaded if user has access
-    switch (blotter.LicenceService.LicenceInfo.LicenceScopeType) {
-      case LicenceScopeType.Community:
-        reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateCommunityLicence);
-        break;
-      case LicenceScopeType.Standard:
-        reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateStandardLicence);
-        break;
-      case LicenceScopeType.Enterprise:
-        reducerWithStorage = ReduxStorage.reducer<AdaptableBlotterState>(rootReducerWithResetManagement, MergeStateEnterpriseLicence);
-        break;
-    }
-
-    loadStorage = ReduxStorage.createLoader(engineWithFilter);
     let composeEnhancers
     if ("production" != process.env.NODE_ENV) {
       composeEnhancers = composeWithDevTools({
@@ -273,31 +255,51 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       composeEnhancers = (x: any) => x
     }
 
+    const persistedReducer = (state: AdaptableBlotterState, action: Redux.Action) => {
+
+      const init = state === undefined
+      const newState = rootReducer(state, action)
+
+      const shouldPersist = !NON_PERSIST_ACTIONS[action.type] && !init
+      if (shouldPersist) {
+        const storageState = { ...newState }
+
+        nonPersistentReduxKeys.forEach(key => {
+          delete storageState[key]
+        })
+
+        storageEngine.save(storageState)
+      }
+
+      return newState
+    }
+
     //TODO: need to check if we want the storage to be done before or after
     //we enrich the state with the AB middleware
     this.TheStore = Redux.createStore<AdaptableBlotterState>(
-      reducerWithStorage,
+      persistedReducer,
       composeEnhancers(Redux.applyMiddleware(
         diffStateAuditMiddleware(blotter),
         adaptableBlotterMiddleware(blotter),
-        middlewareReduxStorage,
         functionLogMiddleware(blotter),
-
       ))
     );
-    //We start to build the state once everything is instantiated... I dont like that. Need to change
-    this.Load =
-      //We load the previous saved session. Redux is pretty awesome in its simplicity!
-      loadStorage(this.TheStore)
-        .then(
-          () => this.TheStore.dispatch(InitState()),
-          (e) => {
-            LoggingHelper.LogAdaptableBlotterError('Failed to load previous adaptable blotter state : ', e);
-            //for now i'm still initializing the AB even if loading state has failed....
-            //we may revisit that later
-            this.TheStore.dispatch(InitState())
-            this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configuration", Msg: "Error loading your configuration:" + e, MessageType: MessageType.Error, ShowAsPopup: true }))
-          })
+
+
+    this.Load = storageEngine.load()
+      .then((storedState) => {
+        if (storedState) {
+          this.TheStore.dispatch(LoadState(storedState))
+        }
+      }).then(
+        () => this.TheStore.dispatch(InitState()),
+        (e) => {
+          LoggingHelper.LogAdaptableBlotterError('Failed to load previous adaptable blotter state : ', e);
+          //for now i'm still initializing the AB even if loading state has failed....
+          //we may revisit that later
+          this.TheStore.dispatch(InitState())
+          this.TheStore.dispatch(PopupRedux.PopupShowAlert({ Header: "Configuration", Msg: "Error loading your configuration:" + e, MessageType: MessageType.Error, ShowAsPopup: true }))
+        })
   }
 }
 
@@ -334,7 +336,6 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any => fun
       switch (action.type) {
 
         // for some octions we never audit even if its turned on
-        case ReduxStorage.SAVE:
         case RESET_STATE:
         case INIT_STATE: {
           return next(action);
@@ -694,7 +695,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
          * Action (4): Set the Preview Values (this will populate the preview screen)
          */
         case SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
-          let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
+          let SmartEditStrategy = <ISmartEditStrategy>(blotter.strategies.get(StrategyConstants.SmartEditStrategyId));
           let state = middlewareAPI.getState();
           let returnAction = next(action);
           let apiReturn: IStrategyActionReturn<boolean> = SmartEditStrategy.CheckCorrectCellSelection();
@@ -729,7 +730,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           //so our state is up to date which allow us not to care about the data within each different action
           let returnAction = next(action);
 
-          let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
+          let SmartEditStrategy = <ISmartEditStrategy>(blotter.strategies.get(StrategyConstants.SmartEditStrategyId));
           let state = middlewareAPI.getState();
           let apiReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation as MathOperation);
           middlewareAPI.dispatch(SystemRedux.SmartEditSetPreview(apiReturn));
@@ -742,7 +743,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         * Action (2):  Sends these new values to the Smart Edit Strategy (which will, in turn, apply them to the Blotter)
         */
         case SmartEditRedux.SMARTEDIT_APPLY: {
-          let SmartEditStrategy = <ISmartEditStrategy>(blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
+          let SmartEditStrategy = <ISmartEditStrategy>(blotter.strategies.get(StrategyConstants.SmartEditStrategyId));
           let actionTyped = <SmartEditRedux.SmartEditApplyAction>action;
           let thePreview = middlewareAPI.getState().System.SmartEditPreviewInfo
           let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
@@ -756,7 +757,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         * BULK UPDATE ACTIONS
         *******************/
         case SystemRedux.BULK_UPDATE_CHECK_CELL_SELECTION: {
-          let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
+          let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.strategies.get(StrategyConstants.BulkUpdateStrategyId));
           let state = middlewareAPI.getState();
           let returnAction = next(action);
           let apiReturn = BulkUpdateStrategy.CheckCorrectCellSelection();
@@ -785,7 +786,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           //so our state is up to date which allow us not to care about the data within each different action
           let returnAction = next(action);
 
-          let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
+          let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.strategies.get(StrategyConstants.BulkUpdateStrategyId));
           let state = middlewareAPI.getState();
 
           let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
@@ -794,7 +795,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         }
 
         case BulkUpdateRedux.BULK_UPDATE_APPLY: {
-          let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
+          let BulkUpdateStrategy = <IBulkUpdateStrategy>(blotter.strategies.get(StrategyConstants.BulkUpdateStrategyId));
           let actionTyped = <BulkUpdateRedux.BulkUpdateApplyAction>action;
           let thePreview = middlewareAPI.getState().System.BulkUpdatePreviewInfo
           let newValues = PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings)
@@ -808,7 +809,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
        *******************/
 
         case PlusMinusRedux.PLUSMINUS_APPLY: {
-          let plusMinusStrategy = <IPlusMinusStrategy>(blotter.Strategies.get(StrategyConstants.PlusMinusStrategyId));
+          let plusMinusStrategy = <IPlusMinusStrategy>(blotter.strategies.get(StrategyConstants.PlusMinusStrategyId));
           let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action
           plusMinusStrategy.ApplyPlusMinus(actionTyped.KeyEventString, actionTyped.CellInfos);
           middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
@@ -825,7 +826,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
          */
 
         case ShortcutRedux.SHORTCUT_APPLY: {
-          let shortcutStrategy = <IShortcutStrategy>(blotter.Strategies.get(StrategyConstants.ShortcutStrategyId));
+          let shortcutStrategy = <IShortcutStrategy>(blotter.strategies.get(StrategyConstants.ShortcutStrategyId));
           let actionTyped = <ShortcutRedux.ShortcutApplyAction>action
           shortcutStrategy.ApplyShortcut(actionTyped.CellInfo, actionTyped.NewValue);
           return next(action);
@@ -836,13 +837,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
         *******************/
 
         case ExportRedux.EXPORT_APPLY: {
-          let exportStrategy = <IExportStrategy>(blotter.Strategies.get(StrategyConstants.ExportStrategyId));
+          let exportStrategy = <IExportStrategy>(blotter.strategies.get(StrategyConstants.ExportStrategyId));
           let actionTyped = <ExportRedux.ExportApplyAction>action;
           if (actionTyped.ExportDestination == ExportDestination.iPushPull && iPushPullHelper.IPPStatus != iPushPullHelper.ServiceStatus.Connected) {
             middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullLogin", actionTyped.Report))
           }
           else if (actionTyped.ExportDestination == ExportDestination.iPushPull && !actionTyped.Folder) {
-            iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
+            iPushPullHelper.GetDomainPages(blotter.blotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
               middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages))
               middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""))
             }).catch((err: any) => {
@@ -869,7 +870,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
             let report = middlewareAPI.getState().Popup.ScreenPopup.Params
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen())
             middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""))
-            iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
+            iPushPullHelper.GetDomainPages(blotter.blotterOptions.iPushPullConfig.api_key).then((domainpages: IPPDomain[]) => {
               middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages))
               middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""))
             }).catch((error: any) => {
@@ -944,8 +945,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           xhr.setRequestHeader("Content-type", "application/json");
           let obj: ISharedEntity = {
             entity: actionTyped.Entity,
-            user: blotter.BlotterOptions.userName,
-            blotter_id: blotter.BlotterOptions.blotterId,
+            user: blotter.blotterOptions.userName,
+            blotter_id: blotter.blotterOptions.blotterId,
             strategy: actionTyped.Strategy,
             timestamp: new Date()
           }
@@ -1123,7 +1124,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return next(action);
         }
         case GridRedux.GRID_CREATE_CELLS_SUMMARY: {
-          let SelectedCellsStrategy = <ICellSummaryStrategy>(blotter.Strategies.get(StrategyConstants.CellSummaryStrategyId));
+          let SelectedCellsStrategy = <ICellSummaryStrategy>(blotter.strategies.get(StrategyConstants.CellSummaryStrategyId));
           let returnAction = next(action);
           let selectedCellInfo = middlewareAPI.getState().Grid.SelectedCellInfo
           let apiSummaryReturn: ICellSummmary = SelectedCellsStrategy.CreateCellSummary(selectedCellInfo);

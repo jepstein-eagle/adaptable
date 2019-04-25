@@ -35,23 +35,23 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
             this.userFilters = this.GetUserFilterState();
 
             setTimeout(() => this.blotter.applyGridFiltering(), 5);
-            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption != 'None') {
+            if (this.blotter.blotterOptions.generalOptions.serverSearchOption != 'None') {
                 // we cannot stop all extraneous publishing (e.g. we publish if the changed user filter is NOT being used)
                 // but we can at least ensure that we only publish IF there are live searches or column filters
-                if (StringExtensions.IsNotNullOrEmpty(this.blotter.AdaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch)
-                    || this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.length > 0) {
+                if (StringExtensions.IsNotNullOrEmpty(this.blotter.adaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch)
+                    || this.blotter.adaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.length > 0) {
                     this.publishSearchChanged(SearchChangedTrigger.UserFilter)
                 }
             }
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.UserFilter, this.userFilters)
             }
         }
     }
 
     private GetUserFilterState(): IUserFilter[] {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
     }
 }
 

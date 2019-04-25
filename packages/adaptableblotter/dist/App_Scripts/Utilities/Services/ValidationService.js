@@ -18,10 +18,10 @@ class ValidationService {
             return failedWarningRules;
         }
         // first check that if primary key change, the new value is unique
-        if (dataChangedEvent.ColumnId == this.blotter.BlotterOptions.primaryKey) {
-            if (this.blotter.BlotterOptions.generalOptions.preventDuplicatePrimaryKeyValues) {
+        if (dataChangedEvent.ColumnId == this.blotter.blotterOptions.primaryKey) {
+            if (this.blotter.blotterOptions.generalOptions.preventDuplicatePrimaryKeyValues) {
                 if (dataChangedEvent.OldValue != dataChangedEvent.NewValue) {
-                    let displayValuePair = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue);
+                    let displayValuePair = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue, false);
                     let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);
                     if (existingItem) {
                         let range = ObjectFactory_1.ObjectFactory.CreateRange(Enums_1.LeafExpressionOperator.PrimaryKeyDuplicate, dataChangedEvent.ColumnId, null, Enums_1.RangeOperandType.Column, null);
@@ -33,7 +33,7 @@ class ValidationService {
         }
         let editingRules = this.GetCellValidationState().CellValidations.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
         if (ArrayExtensions_1.ArrayExtensions.IsEmpty(failedWarningRules) && ArrayExtensions_1.ArrayExtensions.IsNotEmpty(editingRules)) {
-            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let columns = this.blotter.api.gridApi.getColumns();
             // first check the rules which have expressions
             let expressionRules = editingRules.filter(r => ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(r.Expression));
             if (expressionRules.length > 0) {
@@ -88,7 +88,7 @@ class ValidationService {
         return ExpressionHelper_1.ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter);
     }
     GetCellValidationState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().CellValidation;
+        return this.blotter.api.cellValidationApi.GetState();
     }
     logAuditValidationEvent(action, info, data) {
         if (this.blotter.AuditLogService.IsAuditFunctionEventsEnabled) {

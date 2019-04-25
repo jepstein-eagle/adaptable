@@ -19,9 +19,9 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyConstants.ShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyConstants.ShortcutGlyph);
     }
     InitState() {
-        if (this.ShortcutState != this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut) {
-            this.ShortcutState = this.blotter.AdaptableBlotterStore.TheStore.getState().Shortcut;
-            if (this.blotter.isInitialised) {
+        if (this.ShortcutState != this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut) {
+            this.ShortcutState = this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut;
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Shortcut, this.ShortcutState);
             }
         }
@@ -34,7 +34,7 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (!activeCell) {
             return;
         }
-        let selectedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+        let selectedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns);
         if (activeCell && !selectedColumn.ReadOnly) {
             let columnDataType = selectedColumn.DataType;
             let keyEventString = Helper_1.Helper.getStringRepresentionFromKey(keyEvent);

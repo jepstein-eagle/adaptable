@@ -2,15 +2,21 @@ import * as PercentBarRedux from '../Redux/ActionsReducers/PercentBarRedux'
 import { ApiBase } from "./ApiBase";
 import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
 import { IPercentBarApi } from './Interface/IPercentBarApi';
+import { PercentBarState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class PercentBarApi extends ApiBase implements IPercentBarApi {
 
- public GetAll(): IPercentBar[] {
-    return this.getState().PercentBar.PercentBars;
+ 
+  public GetState(): PercentBarState {
+    return this.getBlotterState().PercentBar;
+}
+
+public GetAll(): IPercentBar[] {
+    return this.getBlotterState().PercentBar.PercentBars;
   }
 
   public GetByColumn(columnId: string): IPercentBar {
-    let percentBar: IPercentBar = this.getState().PercentBar.PercentBars.find(pcb => pcb.ColumnId == columnId);
+    let percentBar: IPercentBar = this.getBlotterState().PercentBar.PercentBars.find(pcb => pcb.ColumnId == columnId);
     return percentBar;
   }
 

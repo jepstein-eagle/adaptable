@@ -21,10 +21,10 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
     }
 
     protected InitState() {
-        if (this.LayoutState != this.blotter.AdaptableBlotterStore.TheStore.getState().Layout) {
-            this.LayoutState = this.blotter.AdaptableBlotterStore.TheStore.getState().Layout;
+        if (this.LayoutState != this.blotter.adaptableBlotterStore.TheStore.getState().Layout) {
+            this.LayoutState = this.blotter.adaptableBlotterStore.TheStore.getState().Layout;
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Layout, this.LayoutState)
             }
         }
