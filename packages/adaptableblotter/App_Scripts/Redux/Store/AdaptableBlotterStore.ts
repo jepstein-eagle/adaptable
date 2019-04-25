@@ -221,15 +221,13 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 
     let storageEngine: IStorageEngine
 
-    const storageKey: string = blotter.BlotterOptions.localStorageKey || 'adaptable-blotter-grid-state'
-
     // If the user has remote storage set then we use Remote Engine, otherwise we use Local Enginge
     // We pass into the create method the blotterId, the config, and also the Licence Info
     // the Lience Info is needed so we can determine whether or not to load state
     if (BlotterHelper.IsConfigServerEnabled(blotter.BlotterOptions)) {
       storageEngine = createEngineRemote(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId);
     } else {
-      storageEngine = createEngineLocal(storageKey, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
+      storageEngine = createEngineLocal(blotter.BlotterOptions.localStorageKey, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
     }
 
     const nonPersistentReduxKeys = [
