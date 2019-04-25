@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStepProps, AdaptableWizardStep } from "../../../Wizard/Interface/IAdaptableWizard";
-import { IPieChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IPieChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 export interface PieChartSettingsWizardProps extends AdaptableWizardStepProps<IPieChartDefinition> {
     ChartNames: string[];
 }

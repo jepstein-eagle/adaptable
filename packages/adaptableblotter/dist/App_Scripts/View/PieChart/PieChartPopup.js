@@ -37,7 +37,7 @@ class PieChartPopupComponent extends React.Component {
             PieChartDefinition: ObjectFactory_1.ObjectFactory.CreateEmptyPieChartDefinition(),
             ErrorMessage: null,
             DataSource: null,
-            OthersCategoryType: ChartEnums_1.PieChartOthersCategoryType.Percent,
+            OthersCategoryType: ChartEnums_1.OthersCategoryType.Percent,
             OthersCategoryThreshold: 2,
             ShowAsDoughnut: false,
             SliceValuesMapping: "Value",
@@ -119,7 +119,7 @@ class PieChartPopupComponent extends React.Component {
                     React.createElement(AdaptablePopover_1.AdaptablePopover, { cssClassName: cssClassName, headerText: "Pie Chart: Others Threshold", bodyText: ["Items with value less than or equal to the Threshold will be assigned to the “Others” category.  Choose whether this will be interpreted as a percentage or as a value."] })),
                 React.createElement(react_bootstrap_1.FormControl, { bsSize: "small", type: "number", min: "0", step: "1", placeholder: "Input", onChange: this.onOthersCategoryThresholdChanged, value: this.state.OthersCategoryThreshold }),
                 React.createElement(react_bootstrap_1.HelpBlock, { style: { fontSize: 'small' } },
-                    React.createElement(react_bootstrap_1.Checkbox, { style: { fontSize: 'small', marginBottom: '0px', marginTop: '0px' }, onChange: (e) => this.onThresholdAsPercentChanged(e), checked: this.state.OthersCategoryType == ChartEnums_1.PieChartOthersCategoryType.Percent }, "Others Threshold %")),
+                    React.createElement(react_bootstrap_1.Checkbox, { style: { fontSize: 'small', marginBottom: '0px', marginTop: '0px' }, onChange: (e) => this.onThresholdAsPercentChanged(e), checked: this.state.OthersCategoryType == ChartEnums_1.OthersCategoryType.Percent }, "Others Threshold %")),
                 React.createElement(react_bootstrap_1.HelpBlock, { style: { fontSize: 'small' } },
                     "Labels Position:",
                     ' '),
@@ -227,7 +227,7 @@ class PieChartPopupComponent extends React.Component {
     }
     onThresholdAsPercentChanged(event) {
         let e = event.target;
-        let othersCategoryType = (e.checked) ? ChartEnums_1.PieChartOthersCategoryType.Percent : ChartEnums_1.PieChartOthersCategoryType.Number;
+        let othersCategoryType = (e.checked) ? ChartEnums_1.OthersCategoryType.Percent : ChartEnums_1.OthersCategoryType.Number;
         this.setState({ OthersCategoryType: othersCategoryType });
     }
     onSliceLabelsPositionChanged(event) {

@@ -91,7 +91,7 @@ const QuickSearchStrategy_1 = require("../Strategy/QuickSearchStrategy");
 const Glue42Helper_1 = require("../Utilities/Helpers/Glue42Helper");
 class AdaptableBlotter {
     constructor(blotterOptions, renderGrid = true) {
-        this._calculatedColumnPathMap = new Map();
+        this.calculatedColumnPathMap = new Map();
         // debounced methods
         this.debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), GeneralConstants_1.HALF_SECOND);
         this.debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), GeneralConstants_1.HALF_SECOND);
@@ -131,11 +131,13 @@ class AdaptableBlotter {
         this.FreeTextColumnService = new FreeTextColumnService_1.FreeTextColumnService(this);
         this.ScheduleService = new ScheduleService_1.ScheduleService(this);
         this.useRowNodeLookUp = agGridHelper_1.agGridHelper.TrySetUpNodeIds(this.gridOptions, blotterOptions);
+        // we prefer the grid to be NOT instantiated so that we can do it
         const isGridInstantiated = this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
         if (!isGridInstantiated) {
             const instantiateResult = this.instantiateAgGrid();
             if (!instantiateResult) {
                 // we have no grid, we can't do anything
+                LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError('Unable to set up ag-Grid');
                 return;
             }
         }
@@ -219,6 +221,7 @@ class AdaptableBlotter {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError('You must provide an element id in `containerOptions.vendorContainer`');
             return false;
         }
+        // Create Adaptable Blotter Tool Panel
         if (this.BlotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Adding Adaptable Blotter Tool Panel");
             this.gridOptions.sideBar = this.gridOptions.sideBar || {};
@@ -239,7 +242,7 @@ class AdaptableBlotter {
                     this.gridOptions.sideBar = agGridHelper_1.agGridHelper.createAdaptableBlotterSideBarDefs(true, false);
                 }
                 else {
-                    // Possibilty 4: either no sidebar or created their own so just add Blotter Tool panel
+                    // Possibilty 4: either no sidebar or they created their own; in either case, should add Blotter Tool panel
                     const sidebarDef = this.gridOptions.sideBar;
                     if (sidebarDef) {
                         sidebarDef.toolPanels = sidebarDef.toolPanels || [];
@@ -250,6 +253,7 @@ class AdaptableBlotter {
                 this.gridOptions.components.adaptableBlotterToolPanel = AdaptableBlotterToolPanel_1.AdaptableBlotterToolPanelBuilder(toolpanelContext);
             }
         }
+        // now create the grid itself
         this.grid = new ag_grid_community_1.Grid(vendorContainer, this.gridOptions);
         return true;
     }
@@ -706,7 +710,7 @@ class AdaptableBlotter {
         };
         dataChangedEvents.push(dataChangedEvent);
         // check if any calc columns need to refresh
-        let columnList = this._calculatedColumnPathMap.get(colId);
+        let columnList = this.calculatedColumnPathMap.get(colId);
         if (columnList) {
             columnList.forEach(calcColumn => {
                 ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, calcColumn);
@@ -988,7 +992,7 @@ class AdaptableBlotter {
         colDefs[colDefIndex] = newColDef;
         agGridHelper_1.agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
         // for column list its an itnernal map only so we can first delete
-        for (let columnList of this._calculatedColumnPathMap.values()) {
+        for (let columnList of this.calculatedColumnPathMap.values()) {
             let index = columnList.indexOf(calculatedColumn.ColumnId);
             if (index > -1) {
                 columnList.splice(index, 1);
@@ -997,10 +1001,10 @@ class AdaptableBlotter {
         // and then add
         let columnList = CalculatedColumnHelper_1.CalculatedColumnHelper.GetColumnListFromExpression(cleanedExpression);
         for (let column of columnList) {
-            let childrenColumnList = this._calculatedColumnPathMap.get(column);
+            let childrenColumnList = this.calculatedColumnPathMap.get(column);
             if (!childrenColumnList) {
                 childrenColumnList = [];
-                this._calculatedColumnPathMap.set(column, childrenColumnList);
+                this.calculatedColumnPathMap.set(column, childrenColumnList);
             }
             childrenColumnList.push(calculatedColumn.ColumnId);
         }
@@ -1012,7 +1016,7 @@ class AdaptableBlotter {
             colDefs.splice(colDefIndex, 1);
             agGridHelper_1.agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
         }
-        for (let columnList of this._calculatedColumnPathMap.values()) {
+        for (let columnList of this.calculatedColumnPathMap.values()) {
             let index = columnList.indexOf(calculatedColumnID);
             if (index > -1) {
                 columnList.splice(index, 1);
@@ -1038,10 +1042,10 @@ class AdaptableBlotter {
         agGridHelper_1.agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
         let columnList = CalculatedColumnHelper_1.CalculatedColumnHelper.GetColumnListFromExpression(cleanedExpression);
         for (let column of columnList) {
-            let childrenColumnList = this._calculatedColumnPathMap.get(column);
+            let childrenColumnList = this.calculatedColumnPathMap.get(column);
             if (!childrenColumnList) {
                 childrenColumnList = [];
-                this._calculatedColumnPathMap.set(column, childrenColumnList);
+                this.calculatedColumnPathMap.set(column, childrenColumnList);
             }
             childrenColumnList.push(calculatedColumn.ColumnId);
         }
@@ -1318,7 +1322,7 @@ class AdaptableBlotter {
             //so we manually raise.
             //https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
             let refreshColumnList = [colId];
-            let columnList = this._calculatedColumnPathMap.get(colId);
+            let columnList = this.calculatedColumnPathMap.get(colId);
             if (columnList) {
                 columnList.forEach(columnId => {
                     let dataChangedInfo = {
@@ -1478,7 +1482,12 @@ class AdaptableBlotter {
         if (renderedColumn) {
             let cellRendererFunc = agGridHelper_1.agGridHelper.createCellRendererFunc(pcr, this.BlotterOptions.blotterId);
             let vendorGridColumn = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
-            vendorGridColumn.getColDef().cellRenderer = cellRendererFunc;
+            let coldDef = vendorGridColumn.getColDef();
+            coldDef.cellRenderer = cellRendererFunc;
+            // change the style from number-cell temporarily?
+            if (coldDef.cellClass == 'number-cell') {
+                coldDef.cellClass = 'number-cell-changed';
+            }
         }
     }
     removePercentBar(pcr) {
@@ -1487,6 +1496,12 @@ class AdaptableBlotter {
             let vendorGridColumn = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
             // note we dont get it from the original (but I guess it will be applied next time you run...)
             vendorGridColumn.getColDef().cellRenderer = null;
+            let coldDef = vendorGridColumn.getColDef();
+            coldDef.cellRenderer = null;
+            // change the style back if it was changed by us
+            if (coldDef.cellClass == 'number-cell-changed') {
+                coldDef.cellClass = 'number-cell';
+            }
         }
     }
     editPercentBar(pcr) {

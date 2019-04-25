@@ -1,5 +1,6 @@
 import * as React from "react";
-import { ICategoryChartDefinition, IChartProperties, IChartData } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, IChartProperties } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
+import { IChartData } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartData";
 import { CategoryChartComponentState } from "./CategoryChartComponentState";
 import { IColumn } from "../../../Utilities/Interface/IColumn";
 interface CategoryChartComponentProps {

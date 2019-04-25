@@ -5,12 +5,13 @@ const ChartEnums_1 = require("../../../Utilities/ChartEnums");
 const EnumExtensions_1 = require("../../../Utilities/Extensions/EnumExtensions");
 const React = require("react");
 const ColumnHelper_1 = require("../../../Utilities/Helpers/ColumnHelper");
+const DefaultCategoryChartProperties_1 = require("../../../Utilities/Defaults/DefaultCategoryChartProperties");
 /* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
 */
 var CategoryChartUIHelper;
 (function (CategoryChartUIHelper) {
     function setChartDisplayPopupState(chartDefinition, columns) {
-        let categoryChartProperties = chartDefinition.ChartProperties;
+        let categoryChartProperties = Object.assign({}, DefaultCategoryChartProperties_1.DefaultCategoryChartProperties, chartDefinition.ChartProperties);
         return {
             ChartProperties: categoryChartProperties,
             IsChartSettingsVisible: false,

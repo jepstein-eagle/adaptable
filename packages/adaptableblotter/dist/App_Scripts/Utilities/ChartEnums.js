@@ -1,5 +1,5 @@
 "use strict";
-// Chart Enums
+// General enums for all charts
 Object.defineProperty(exports, "__esModule", { value: true });
 var ChartVisibility;
 (function (ChartVisibility) {
@@ -13,6 +13,7 @@ var ChartType;
     ChartType["PieChart"] = "PieChart";
     ChartType["Data"] = "Data";
 })(ChartType = exports.ChartType || (exports.ChartType = {}));
+// Catategory Charts
 var CategoryChartType;
 (function (CategoryChartType) {
     CategoryChartType["Column"] = "Column";
@@ -72,14 +73,6 @@ var ToolTipType;
     ToolTipType["Category"] = "Category";
     ToolTipType["None"] = "None";
 })(ToolTipType = exports.ToolTipType || (exports.ToolTipType = {}));
-var PieChartLabelPosition;
-(function (PieChartLabelPosition) {
-    PieChartLabelPosition["BestFit"] = "BestFit";
-    PieChartLabelPosition["Center"] = "Center";
-    PieChartLabelPosition["InsideEnd"] = "InsideEnd";
-    PieChartLabelPosition["OutsideEnd"] = "OutsideEnd";
-    PieChartLabelPosition["None"] = "None";
-})(PieChartLabelPosition = exports.PieChartLabelPosition || (exports.PieChartLabelPosition = {}));
 var AxisAngle;
 (function (AxisAngle) {
     AxisAngle["Horizontal"] = "Horizontal";
@@ -113,6 +106,15 @@ var CalloutsType;
     // note populate getCalloutTypeOptions() with names of non-numeric data columns
     // to add more callout types
 })(CalloutsType = exports.CalloutsType || (exports.CalloutsType = {}));
+// Pie Charts
+var PieChartLabelPosition;
+(function (PieChartLabelPosition) {
+    PieChartLabelPosition["BestFit"] = "BestFit";
+    PieChartLabelPosition["Center"] = "Center";
+    PieChartLabelPosition["InsideEnd"] = "InsideEnd";
+    PieChartLabelPosition["OutsideEnd"] = "OutsideEnd";
+    PieChartLabelPosition["None"] = "None";
+})(PieChartLabelPosition = exports.PieChartLabelPosition || (exports.PieChartLabelPosition = {}));
 var SecondaryColumnOperation;
 (function (SecondaryColumnOperation) {
     SecondaryColumnOperation["Sum"] = "Sum";
@@ -134,8 +136,8 @@ var SliceSortOption;
     SliceSortOption["NameDescending"] = "Name Descending";
     SliceSortOption["NameAscending"] = "Name Ascending";
 })(SliceSortOption = exports.SliceSortOption || (exports.SliceSortOption = {}));
-var PieChartOthersCategoryType;
-(function (PieChartOthersCategoryType) {
-    PieChartOthersCategoryType["Number"] = "Number";
-    PieChartOthersCategoryType["Percent"] = "Percent";
-})(PieChartOthersCategoryType = exports.PieChartOthersCategoryType || (exports.PieChartOthersCategoryType = {}));
+var OthersCategoryType;
+(function (OthersCategoryType) {
+    OthersCategoryType["Number"] = "Number";
+    OthersCategoryType["Percent"] = "Percent";
+})(OthersCategoryType = exports.OthersCategoryType || (exports.OthersCategoryType = {}));

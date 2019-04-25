@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { ICategoryChartDefinition, ICategoryChartProperties } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, ICategoryChartProperties } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 import { AxisAngle } from "../../../Utilities/ChartEnums";
 import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { CategoryChartComponentState } from "./CategoryChartComponentState";

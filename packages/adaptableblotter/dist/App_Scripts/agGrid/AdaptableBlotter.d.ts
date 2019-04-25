@@ -46,11 +46,11 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     FreeTextColumnService: IFreeTextColumnService;
     LicenceService: ILicenceService;
     ScheduleService: IScheduleService;
-    private _calculatedColumnPathMap;
+    EmbedColumnMenu: boolean;
+    private calculatedColumnPathMap;
     private useRowNodeLookUp;
     private abContainerElement;
     private gridOptions;
-    EmbedColumnMenu: boolean;
     isInitialised: boolean;
     private throttleOnDataChangedUser;
     private throttleOnDataChangedExternal;

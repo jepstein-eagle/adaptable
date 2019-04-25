@@ -6,7 +6,7 @@ import { ISystemStatus } from "../../Utilities/Interface/ISystemStatus";
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../Utilities/ChartEnums';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { IChartData } from '../../Utilities/Interface/BlotterObjects/IChartDefinition';
+import { IChartData } from "../../Utilities/Interface/BlotterObjects/Charting/IChartData";
 import { IRange } from '../../Utilities/Interface/Expression/IRange';
 import { Expression } from '../../Utilities/Expression';
 export declare const SYSTEM_SET_HEALTH_STATUS = "SYSTEM_SET_HEALTH_STATUS";

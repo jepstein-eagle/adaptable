@@ -109,6 +109,7 @@ const LOAD_STATE = 'LOAD_STATE';
 const NON_PERSIST_ACTIONS = {
     [LOAD_STATE]: true,
     '@@INIT': true,
+    '@@redux/init': true,
     [INIT_STATE]: true,
     [RESET_STATE]: true
 };
@@ -170,7 +171,6 @@ const configServerTeamSharingUrl = "/adaptableblotter-teamsharing";
 class AdaptableBlotterStore {
     constructor(blotter) {
         let storageEngine;
-        const storageKey = blotter.BlotterOptions.localStorageKey || 'adaptable-blotter-grid-state';
         // If the user has remote storage set then we use Remote Engine, otherwise we use Local Enginge
         // We pass into the create method the blotterId, the config, and also the Licence Info
         // the Lience Info is needed so we can determine whether or not to load state
@@ -178,7 +178,7 @@ class AdaptableBlotterStore {
             storageEngine = IAdaptableBlotterReduxRemoteStorageEngine_1.createEngine(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId);
         }
         else {
-            storageEngine = AdaptableBlotterReduxLocalStorageEngine_1.createEngine(storageKey, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
+            storageEngine = AdaptableBlotterReduxLocalStorageEngine_1.createEngine(blotter.BlotterOptions.localStorageKey, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
         }
         const nonPersistentReduxKeys = [
             // Non Persisted State
@@ -203,8 +203,9 @@ class AdaptableBlotterStore {
             composeEnhancers = (x) => x;
         }
         const persistedReducer = (state, action) => {
+            const init = state === undefined;
             const newState = rootReducer(state, action);
-            const shouldPersist = !NON_PERSIST_ACTIONS[action.type];
+            const shouldPersist = !NON_PERSIST_ACTIONS[action.type] && !init;
             if (shouldPersist) {
                 const storageState = Object.assign({}, newState);
                 nonPersistentReduxKeys.forEach(key => {

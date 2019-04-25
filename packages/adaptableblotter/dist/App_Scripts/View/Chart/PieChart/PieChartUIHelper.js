@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ChartEnums_1 = require("../../../Utilities/ChartEnums");
+const DefaultPieChartProperties_1 = require("../../../Utilities/Defaults/DefaultPieChartProperties");
 /* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
 */
 var PieChartUIHelper;
@@ -14,7 +15,7 @@ var PieChartUIHelper;
     }
     PieChartUIHelper.getBrushesOdd = getBrushesOdd;
     function setChartDisplayPopupState(chartDefinition, dataSource) {
-        let pieChartProperties = chartDefinition.ChartProperties;
+        let pieChartProperties = Object.assign({}, DefaultPieChartProperties_1.DefaultPieChartProperties, chartDefinition.ChartProperties);
         let data = (dataSource != null) ? dataSource.Data : [];
         return {
             DataSource: data,

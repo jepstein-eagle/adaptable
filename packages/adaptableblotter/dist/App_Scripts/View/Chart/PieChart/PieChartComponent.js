@@ -115,7 +115,7 @@ class PieChartComponent extends React.Component {
                         React.createElement(react_bootstrap_1.Row, null,
                             React.createElement(react_bootstrap_1.Col, { xs: 12 },
                                 React.createElement(react_bootstrap_1.HelpBlock, null,
-                                    React.createElement(react_bootstrap_1.Checkbox, { style: { fontSize: 'small', marginBottom: '0px', marginTop: '0px' }, onChange: (e) => this.onThresholdAsPercentChanged(e), checked: this.state.ChartProperties.OthersCategoryType == ChartEnums_1.PieChartOthersCategoryType.Percent }, "Others Band As %"))))),
+                                    React.createElement(react_bootstrap_1.Checkbox, { style: { fontSize: 'small', marginBottom: '0px', marginTop: '0px' }, onChange: (e) => this.onThresholdAsPercentChanged(e), checked: this.state.ChartProperties.OthersCategoryType == ChartEnums_1.OthersCategoryType.Percent }, "Others Band As %"))))),
                     React.createElement(AdaptableBlotterForm_1.AdaptableBlotterForm, { horizontal: true, style: { marginTop: '0px' } },
                         React.createElement(react_bootstrap_1.Row, null,
                             React.createElement(react_bootstrap_1.Col, { xs: 5 },
@@ -208,7 +208,7 @@ class PieChartComponent extends React.Component {
     onThresholdAsPercentChanged(event) {
         let e = event.target;
         let chartProperties = this.state.ChartProperties;
-        chartProperties.OthersCategoryType = (e.checked) ? ChartEnums_1.PieChartOthersCategoryType.Percent : ChartEnums_1.PieChartOthersCategoryType.Number;
+        chartProperties.OthersCategoryType = (e.checked) ? ChartEnums_1.OthersCategoryType.Percent : ChartEnums_1.OthersCategoryType.Number;
         this.updateChartProperties(chartProperties);
     }
     onSliceLabelsPositionChanged(event) {

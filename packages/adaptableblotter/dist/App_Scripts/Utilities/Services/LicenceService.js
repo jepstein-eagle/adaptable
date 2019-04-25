@@ -76,14 +76,14 @@ class LicenceService {
         let isPrimeNumber = this.isNewPrimeNumber(isValidDateAsNumericStrig);
         let nullExpiryDate = this.doubleFirstString(isPrimeNumber);
         let latestDate = this.checkDate(todaysDate);
-        let initialExpiryDate = myPrimeNumber[2];
+        let initialExpiryDate = yesterdayDate[2];
         if (!this.CreateNewDateArray(initialExpiryDate, 10)) {
             return ObjectFactory_1.ObjectFactory.CreateLicenceInfo(Enums_1.LicenceScopeType.Standard, nullExpiryDate, latestDate, isPrimeNumber);
         }
         if (StringExtensions_1.StringExtensions.NotIncludes(initialExpiryDate, 'c') || StringExtensions_1.StringExtensions.NotIncludes(initialExpiryDate, 'f')) {
             return ObjectFactory_1.ObjectFactory.CreateLicenceInfo(Enums_1.LicenceScopeType.Standard, nullExpiryDate, latestDate, isPrimeNumber);
         }
-        let isAlternativeDate = this.getOriginalDate(139);
+        let isAlternativeDate = (initialExpiryDate.length == 7);
         if (isAlternativeDate == true) {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("This licence is not valid for the Demo Site");
             return null;

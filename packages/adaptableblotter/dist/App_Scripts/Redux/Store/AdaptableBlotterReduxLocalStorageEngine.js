@@ -30,7 +30,7 @@ class AdaptableBlotterReduxLocalStorageEngine {
         }
         else if (this.predefinedConfig != null) {
             // we have config as an object so need to merge that
-            return new Promise((resolve) => resolve(this.predefinedConfig))
+            return Promise.resolve(this.predefinedConfig)
                 .then(parsedPredefinedState => AdaptableBlotterReduxMerger_1.MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceInfo))
                 .catch(err => LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError(err));
         }
