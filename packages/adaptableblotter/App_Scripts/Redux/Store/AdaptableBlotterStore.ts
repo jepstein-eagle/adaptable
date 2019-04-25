@@ -144,6 +144,7 @@ const LOAD_STATE = 'LOAD_STATE';
 const NON_PERSIST_ACTIONS: { [key: string]: boolean } = {
   [LOAD_STATE]: true,
   '@@INIT': true,
+  '@@redux/init': true,
   [INIT_STATE]: true,
   [RESET_STATE]: true
 }
@@ -258,9 +259,10 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 
     const persistedReducer = (state: AdaptableBlotterState, action: Redux.Action) => {
 
+      const init = state === undefined
       const newState = rootReducer(state, action)
 
-      const shouldPersist = !NON_PERSIST_ACTIONS[action.type]
+      const shouldPersist = !NON_PERSIST_ACTIONS[action.type] && !init
       if (shouldPersist) {
         const storageState = { ...newState }
 
