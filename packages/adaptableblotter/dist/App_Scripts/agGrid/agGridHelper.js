@@ -173,7 +173,7 @@ var agGridHelper;
     agGridHelper.createCellRendererFunc = createCellRendererFunc;
     function getCleanValue(value) {
         if (value == null || value == 'null') {
-            return null;
+            return undefined;
         }
         else if (value == undefined || value == 'undefined') {
             return undefined;

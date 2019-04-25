@@ -741,7 +741,7 @@ class AdaptableBlotter {
         // check if there are permitted column values for that column
         // NB.  this is currently a bug as we dont check for visibility so if using permitted values then ALL are returned :(
         let permittedValuesForColumn = this.api.userInterfaceApi.GetPermittedValuesForColumn(columnId);
-        if (permittedValuesForColumn) {
+        if (permittedValuesForColumn != undefined) {
             permittedValuesForColumn.PermittedValues.forEach(pv => {
                 returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
             });
