@@ -31,7 +31,7 @@ class HomeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (!ArrayExtensions_1.ArrayExtensions.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {
             this.GridSorts = this.GetGridState().GridSorts;
-            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == "AllSearchandSort") {
+            if (this.blotter.blotterOptions.generalOptions.serverSearchOption == "AllSearchandSort") {
                 this.publishSearchChanged(Enums_1.SearchChangedTrigger.Sort);
             }
         }
@@ -50,7 +50,7 @@ class HomeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.blotter.applyGridFiltering();
     }
     GetGridState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().Grid;
     }
 }
 exports.HomeStrategy = HomeStrategy;

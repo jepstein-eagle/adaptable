@@ -12,7 +12,7 @@ class TeamSharingStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase 
         this.createMenuItemShowPopup(StrategyConstants.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyConstants.TeamSharingGlyph);
     }
     hasPopupMenu() {
-        return BlotterHelper_1.BlotterHelper.IsConfigServerEnabled(this.blotter.BlotterOptions);
+        return BlotterHelper_1.BlotterHelper.isConfigServerEnabled(this.blotter.blotterOptions);
     }
     InitState() {
         //nothing 

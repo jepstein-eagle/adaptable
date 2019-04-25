@@ -24,7 +24,7 @@ class FormatColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase
         if (this.FormatColumnState != this.blotter.api.formatColumnApi.GetState()) {
             this.FormatColumnState = this.blotter.api.formatColumnApi.GetState();
             this.InitStyles();
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.FormatColumn, this.FormatColumnState);
             }
         }

@@ -37,7 +37,7 @@ class HomeToolbarControlComponent extends React.Component {
                 "Toolbars") },
             React.createElement(react_bootstrap_1.Glyphicon, { glyph: "align-justify" }));
         // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
-        let strategyKeys = [...this.props.Blotter.Strategies.keys()];
+        let strategyKeys = [...this.props.Blotter.strategies.keys()];
         let allowedMenuItems = this.props.MenuState.MenuItems.filter(x => x.IsVisible &&
             ArrayExtensions_1.ArrayExtensions.NotContainsItem(strategyKeys, x));
         // function menu items
@@ -112,7 +112,7 @@ class HomeToolbarControlComponent extends React.Component {
         }
         let toolbarTitle = this.props.DashboardState.HomeToolbarTitle;
         if (StringExtensions_1.StringExtensions.IsNullOrEmpty(toolbarTitle)) {
-            toolbarTitle = this.props.Blotter.BlotterOptions.blotterId;
+            toolbarTitle = this.props.Blotter.blotterOptions.blotterId;
             if (toolbarTitle == GeneralConstants.USER_NAME) {
                 toolbarTitle = "Blotter ";
             }

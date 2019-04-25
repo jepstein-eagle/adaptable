@@ -35,10 +35,10 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
 
 
     protected InitState() {
-        if (this.DashboardState != this.blotter.AdaptableBlotterStore.TheStore.getState().Dashboard) {
-             this.DashboardState = this.blotter.AdaptableBlotterStore.TheStore.getState().Dashboard;
+        if (this.DashboardState != this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard) {
+             this.DashboardState = this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard;
            
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Dashboard, this.DashboardState)
             }
         }
@@ -46,7 +46,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
 
 
     private GetDashboardState(): DashboardState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Dashboard;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard;
     }
 
 }

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ColumnHelper_1 = require("./ColumnHelper");
 var CalculatedColumnHelper;
 (function (CalculatedColumnHelper) {
-    function GetColumnListFromExpression(expression) {
+    function getColumnListFromExpression(expression) {
         let columnList = [];
         let regEx = /\b(?:Col\(")([a-zA-Z0-9 ]+)(?:"\))/g;
         let match = regEx.exec(expression);
@@ -13,8 +13,8 @@ var CalculatedColumnHelper;
         }
         return columnList;
     }
-    CalculatedColumnHelper.GetColumnListFromExpression = GetColumnListFromExpression;
-    function CleanExpressionColumnNames(expression, columns) {
+    CalculatedColumnHelper.getColumnListFromExpression = getColumnListFromExpression;
+    function cleanExpressionColumnNames(expression, columns) {
         let newExpression = expression;
         let columnNameList = [];
         let regEx = /\b(?:Col\(")([a-zA-Z0-9 ]+)(?:"\))/g;
@@ -39,10 +39,10 @@ var CalculatedColumnHelper;
         });
         return newExpression;
     }
-    CalculatedColumnHelper.CleanExpressionColumnNames = CleanExpressionColumnNames;
-    function GetExpressionString(expression, columns) {
-        let cleanExpression = CleanExpressionColumnNames(expression, columns);
-        let columnIds = GetColumnListFromExpression(cleanExpression);
+    CalculatedColumnHelper.cleanExpressionColumnNames = cleanExpressionColumnNames;
+    function getExpressionString(expression, columns) {
+        let cleanExpression = cleanExpressionColumnNames(expression, columns);
+        let columnIds = getColumnListFromExpression(cleanExpression);
         columnIds.forEach(c => {
             let stringToReplace = 'Col("' + c + '")';
             let columnFriendName = ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(c, columns);
@@ -51,5 +51,5 @@ var CalculatedColumnHelper;
         });
         return cleanExpression;
     }
-    CalculatedColumnHelper.GetExpressionString = GetExpressionString;
+    CalculatedColumnHelper.getExpressionString = getExpressionString;
 })(CalculatedColumnHelper = exports.CalculatedColumnHelper || (exports.CalculatedColumnHelper = {}));

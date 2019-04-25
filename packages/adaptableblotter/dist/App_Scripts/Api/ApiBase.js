@@ -14,10 +14,10 @@ class ApiBase {
         return true;
     }
     dispatchAction(action) {
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(action);
+        this.blotter.adaptableBlotterStore.TheStore.dispatch(action);
     }
     getBlotterState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState();
+        return this.blotter.adaptableBlotterStore.TheStore.getState();
     }
 }
 exports.ApiBase = ApiBase;

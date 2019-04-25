@@ -6,7 +6,7 @@ export interface IStrategy {
     Id: string
     getPopupMenuItem(): IMenuItem
     getStrategyEntitlement(): IEntitlement
-    InitializeWithRedux(): void
+    initializeWithRedux(): void
     addContextMenuItem(column: IColumn): void
 }
 export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {

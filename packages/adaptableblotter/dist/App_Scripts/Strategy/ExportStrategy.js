@@ -24,21 +24,21 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         OpenfinHelper_1.OpenfinHelper.OnExcelDisconnected().Subscribe(() => {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Excel closed stopping all Live Excel");
             this.CurrentLiveReports.forEach(cle => {
-                this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.OpenfinExcel));
+                this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.OpenfinExcel));
             });
         });
         OpenfinHelper_1.OpenfinHelper.OnWorkbookDisconnected().Subscribe((sender, workbook) => {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Workbook closed:" + workbook.name + ", Stopping Openfin Live Excel");
             let liveReport = this.CurrentLiveReports.find(x => x.WorkbookName == workbook.name);
             if (liveReport) {
-                this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(liveReport.Report, Enums_1.ExportDestination.OpenfinExcel));
+                this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(liveReport.Report, Enums_1.ExportDestination.OpenfinExcel));
             }
         });
         OpenfinHelper_1.OpenfinHelper.OnWorkbookSaved().Subscribe((sender, workbookSavedEvent) => {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Workbook Saved", workbookSavedEvent);
             let liveReport = this.CurrentLiveReports.find(x => x.WorkbookName == workbookSavedEvent.OldName);
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(liveReport.Report, Enums_1.ExportDestination.OpenfinExcel));
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStartLive(liveReport.Report, workbookSavedEvent.NewName, Enums_1.ExportDestination.OpenfinExcel));
+            this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(liveReport.Report, Enums_1.ExportDestination.OpenfinExcel));
+            this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStartLive(liveReport.Report, workbookSavedEvent.NewName, Enums_1.ExportDestination.OpenfinExcel));
         });
         this.blotter.DataService.OnDataSourceChanged().Subscribe(() => {
             this.throttledRecomputeAndSendLiveExcelEvent();
@@ -116,7 +116,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     })
                         .catch((reason) => {
                         LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("Live Excel failed to send data for [" + cle.Report + "]", reason);
-                        this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.OpenfinExcel));
+                        this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.OpenfinExcel));
                         this.blotter.api.alertApi.ShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true);
                     }));
                 }
@@ -140,7 +140,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     })
                         .catch((reason) => {
                         LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("Live Excel failed to send data for [" + cle.Report + "]", reason);
-                        this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.iPushPull));
+                        this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.iPushPull));
                         this.blotter.api.alertApi.ShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true);
                     }));
                 }
@@ -165,7 +165,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             case Enums_1.ExportDestination.OpenfinExcel:
                 OpenfinHelper_1.OpenfinHelper.initOpenFinExcel() //.then((workbook) => OpenfinHelper.addReportWorkSheet(workbook, ReportName))
                     .then((workbookName) => {
-                    this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStartLive(ReportName, workbookName, Enums_1.ExportDestination.OpenfinExcel));
+                    this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStartLive(ReportName, workbookName, Enums_1.ExportDestination.OpenfinExcel));
                     setTimeout(() => { this.throttledRecomputeAndSendLiveExcelEvent(); }, 500);
                 });
                 break;
@@ -177,7 +177,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 break;
             case Enums_1.ExportDestination.Glue42:
                 let data = this.ConvertReportToArray(ReportName);
-                let gridColumns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+                let gridColumns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
                 Glue42Helper_1.Glue42Helper.exportData(data, gridColumns, this.blotter);
                 break;
         }
@@ -214,38 +214,38 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         let ReportToConvert = this.getReport(ReportName);
         let actionReturnObj = ReportHelper_1.ReportHelper.ConvertReportToArray(this.blotter, ReportToConvert);
         if (actionReturnObj.Alert) { // assume that the MessageType is error - if not then refactor
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowAlert(actionReturnObj.Alert));
+            this.blotter.adaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupShowAlert(actionReturnObj.Alert));
             return null;
         }
         return actionReturnObj.ActionReturn;
     }
     /*
     private getColsForReport(Report: IReport): IColumn[] {
-        let allCols: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let allCols: IColumn[] = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
         return (Report.ReportColumnScope == ReportColumnScope.AllColumns) ?
             allCols :
             Report.Columns.map(c => allCols.find(col => col.ColumnId == c));
     }
 */
     getReport(ReportName) {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().System.SystemReports.concat(this.ExportState.Reports).find(r => r.Name == ReportName);
+        return this.blotter.adaptableBlotterStore.TheStore.getState().System.SystemReports.concat(this.ExportState.Reports).find(r => r.Name == ReportName);
     }
     InitState() {
-        if (this.ExportState != this.blotter.AdaptableBlotterStore.TheStore.getState().Export) {
+        if (this.ExportState != this.blotter.adaptableBlotterStore.TheStore.getState().Export) {
             this.scheduleReports();
-            this.ExportState = this.blotter.AdaptableBlotterStore.TheStore.getState().Export;
-            if (this.blotter.isInitialised) {
+            this.ExportState = this.blotter.adaptableBlotterStore.TheStore.getState().Export;
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Export, this.ExportState);
             }
         }
-        if (this.CurrentLiveReports != this.blotter.AdaptableBlotterStore.TheStore.getState().System.CurrentLiveReports) {
-            this.CurrentLiveReports = this.blotter.AdaptableBlotterStore.TheStore.getState().System.CurrentLiveReports;
+        if (this.CurrentLiveReports != this.blotter.adaptableBlotterStore.TheStore.getState().System.CurrentLiveReports) {
+            this.CurrentLiveReports = this.blotter.adaptableBlotterStore.TheStore.getState().System.CurrentLiveReports;
         }
     }
     scheduleReports() {
         // just clear all jobs and recreate - simplest thing to do...
         this.blotter.ScheduleService.ClearAllExportJobs();
-        this.blotter.AdaptableBlotterStore.TheStore.getState().Export.Reports.forEach((report) => {
+        this.blotter.adaptableBlotterStore.TheStore.getState().Export.Reports.forEach((report) => {
             if (report.AutoExport) {
                 this.blotter.ScheduleService.AddReportSchedule(report);
             }

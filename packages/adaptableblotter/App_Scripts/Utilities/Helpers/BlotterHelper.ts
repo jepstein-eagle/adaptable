@@ -11,11 +11,11 @@ import { StringExtensions } from '../Extensions/StringExtensions';
 export module BlotterHelper {
 
 
-    export function IsDemoSite(): boolean {
+    export function isDemoSite(): boolean {
         return (window.location.hostname == 'demo.adaptableblotter.com');
     }
 
-    export function AssignBlotterOptions(blotterOptions: IAdaptableBlotterOptions): IAdaptableBlotterOptions {
+    export function assignBlotterOptions(blotterOptions: IAdaptableBlotterOptions): IAdaptableBlotterOptions {
         let returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
         returnBlotterOptions.auditOptions = Object.assign({}, DefaultAdaptableBlotterOptions.auditOptions, blotterOptions.auditOptions)
         returnBlotterOptions.configServerOptions = Object.assign({}, DefaultAdaptableBlotterOptions.configServerOptions, blotterOptions.configServerOptions)
@@ -28,26 +28,29 @@ export module BlotterHelper {
         return returnBlotterOptions;
     }
 
-    export function CheckPrimaryKeyExists(blotter: IAdaptableBlotter, columns: IColumn[]): void {
-        let pkColumn: IColumn = ColumnHelper.getColumnFromId(blotter.BlotterOptions.primaryKey, columns);
+    export function isValidPrimaryKey(blotter: IAdaptableBlotter, columns: IColumn[]): boolean {
+        let pkColumn: IColumn = ColumnHelper.getColumnFromId(blotter.blotterOptions.primaryKey, columns);
+      
         if (pkColumn == null) {
-            let errorMessage: string = "The PK Column '" + blotter.BlotterOptions.primaryKey + "' does not exist.  This will affect many functions in the Adaptable Blotter."
-            if (blotter.BlotterOptions.generalOptions.showMissingPrimaryKeyWarning == true) { // show an alert if that is the option  
+            let errorMessage: string = "The PK Column '" + blotter.blotterOptions.primaryKey + "' does not exist.  This will affect many functions in the Adaptable Blotter."
+            if (blotter.blotterOptions.generalOptions.showMissingPrimaryKeyWarning == true) { // show an alert if that is the option  
                 blotter.api.alertApi.ShowError("No Primary Key", errorMessage, true)
             } else { // otherwise just log it
                 LoggingHelper.LogAdaptableBlotterError(errorMessage);
             }
+            return false;
         }
+        return true;
     }
 
-    export function IsConfigServerEnabled(blotterOptions: IAdaptableBlotterOptions): boolean {
+    export function isConfigServerEnabled(blotterOptions: IAdaptableBlotterOptions): boolean {
         return blotterOptions.configServerOptions != null
             && blotterOptions.configServerOptions.enableConfigServer != null
             && blotterOptions.configServerOptions.enableConfigServer == true
             && StringExtensions.IsNotNullOrEmpty(blotterOptions.configServerOptions.configServerUrl);
     }
 
-    export function CheckLicenceKey(licenceInfo: ILicenceInfo): void {
+    export function checkLicenceKey(licenceInfo: ILicenceInfo): void {
         let universalOrEndUser: string = " (" + licenceInfo.LicenceUserType + "). "
         let expiryDate: string = 'Expires: ' + licenceInfo.ExpiryDate.toLocaleDateString();
         switch (licenceInfo.LicenceScopeType) {

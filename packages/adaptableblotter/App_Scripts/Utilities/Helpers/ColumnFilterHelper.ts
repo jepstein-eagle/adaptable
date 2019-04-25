@@ -9,7 +9,7 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 export module ColumnFilterHelper {
 
 
-    export function ConvertColumnFiltersToKVPArray(columnFilters: IColumnFilter[], columns: IColumn[]): IKeyValuePair[] {
+    export function convertColumnFiltersToKVPArray(columnFilters: IColumnFilter[], columns: IColumn[]): IKeyValuePair[] {
         let infoBody: IKeyValuePair[] = []
         columnFilters.forEach(x => {
             let column: IColumn = ColumnHelper.getColumnFromId(x.ColumnId, columns);
@@ -25,7 +25,7 @@ export module ColumnFilterHelper {
         if (ArrayExtensions.IsNullOrEmpty(columnFilters)) {
             return "No Column Filter Active"
         }
-        let stringarr: string[] = ColumnFilterHelper.ConvertColumnFiltersToKVPArray(columnFilters, columns).map(kvp => {
+        let stringarr: string[] = ColumnFilterHelper.convertColumnFiltersToKVPArray(columnFilters, columns).map(kvp => {
             return kvp.Key + ": " + kvp.Value
         })
         return stringarr.join("; ")

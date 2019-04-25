@@ -184,9 +184,9 @@ export const AdaptableBlotterToolPanelBuilder = (ctx: IAdaptableBlotterToolPanel
 
     public init(params?: IToolPanelParams): void {
       this.gui = document.createElement('div');
-      this.gui.id = 'adaptable-blotter-tool-panel_' + this.ctx.Blotter.BlotterOptions.blotterId;
+      this.gui.id = 'adaptable-blotter-tool-panel_' + this.ctx.Blotter.blotterOptions.blotterId;
       render(
-        (<Provider store={this.ctx.Blotter.AdaptableBlotterStore.TheStore}>
+        (<Provider store={this.ctx.Blotter.adaptableBlotterStore.TheStore}>
           <ConnectedAdaptableBlotterToolPanel Blotter={this.ctx.Blotter} TeamSharingActivated={false} />
         </Provider>),
         this.gui

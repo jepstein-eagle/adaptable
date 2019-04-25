@@ -34,9 +34,9 @@ class FilterFormComponent extends React.Component {
     componentWillMount() {
         if (this.props.CurrentColumn.DataType != Enums_1.DataType.Boolean) {
             let columnValuePairs = [];
-            if (this.props.Blotter.BlotterOptions.queryOptions.getColumnValues != null) {
+            if (this.props.Blotter.blotterOptions.queryOptions.getColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
-                this.props.Blotter.BlotterOptions.queryOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
+                this.props.Blotter.blotterOptions.queryOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
                     if (result == null) { // if nothing returned then default to normal
                         columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue, false);
@@ -44,7 +44,7 @@ class FilterFormComponent extends React.Component {
                         this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: Enums_1.DistinctCriteriaPairValue.DisplayValue });
                     }
                     else { // get the distinct items and make sure within max items that can be displayed
-                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
+                        let distinctItems = ArrayExtensions_1.ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed);
                         distinctItems.forEach(distinctItem => {
                             let displayValue = (result.DistinctCriteriaPairValue == Enums_1.DistinctCriteriaPairValue.DisplayValue) ?
                                 this.props.Blotter.getDisplayValueFromRawValue(this.props.CurrentColumn.ColumnId, distinctItem) :
@@ -204,7 +204,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 exports.FilterForm = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);
-exports.FilterFormReact = (FilterContext) => React.createElement(react_redux_1.Provider, { store: FilterContext.Blotter.AdaptableBlotterStore.TheStore },
+exports.FilterFormReact = (FilterContext) => React.createElement(react_redux_1.Provider, { store: FilterContext.Blotter.adaptableBlotterStore.TheStore },
     React.createElement(exports.FilterForm, { Blotter: FilterContext.Blotter, CurrentColumn: FilterContext.Column, TeamSharingActivated: false, EmbedColumnMenu: FilterContext.Blotter.EmbedColumnMenu, ShowCloseButton: FilterContext.ShowCloseButton }));
 let panelStyle = {
     width: '235px'

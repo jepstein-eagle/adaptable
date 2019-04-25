@@ -145,7 +145,7 @@ class ChartService {
         // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
         let useRanges = this.shouldUseRange(dataCounter, chartDefinition, columns);
         // if we don't use ranges but there are too many slices then we return an error
-        if (!useRanges && dataCounter.size > this.blotter.BlotterOptions.chartOptions.pieChartMaxItems) {
+        if (!useRanges && dataCounter.size > this.blotter.blotterOptions.chartOptions.pieChartMaxItems) {
             let message = "Cannot create pie chart as it contains too many items.";
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning(message);
             return {

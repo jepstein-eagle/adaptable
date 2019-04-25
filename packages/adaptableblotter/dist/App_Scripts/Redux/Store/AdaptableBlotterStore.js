@@ -174,11 +174,11 @@ class AdaptableBlotterStore {
         // If the user has remote storage set then we use Remote Engine, otherwise we use Local Enginge
         // We pass into the create method the blotterId, the config, and also the Licence Info
         // the Lience Info is needed so we can determine whether or not to load state
-        if (BlotterHelper_1.BlotterHelper.IsConfigServerEnabled(blotter.BlotterOptions)) {
-            storageEngine = IAdaptableBlotterReduxRemoteStorageEngine_1.createEngine(blotter.BlotterOptions.configServerOptions.configServerUrl, blotter.BlotterOptions.userName, blotter.BlotterOptions.blotterId);
+        if (BlotterHelper_1.BlotterHelper.isConfigServerEnabled(blotter.blotterOptions)) {
+            storageEngine = IAdaptableBlotterReduxRemoteStorageEngine_1.createEngine(blotter.blotterOptions.configServerOptions.configServerUrl, blotter.blotterOptions.userName, blotter.blotterOptions.blotterId);
         }
         else {
-            storageEngine = AdaptableBlotterReduxLocalStorageEngine_1.createEngine(blotter.BlotterOptions.localStorageKey, blotter.BlotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
+            storageEngine = AdaptableBlotterReduxLocalStorageEngine_1.createEngine(blotter.blotterOptions.localStorageKey, blotter.blotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
         }
         const nonPersistentReduxKeys = [
             // Non Persisted State
@@ -560,7 +560,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                  * Action (4): Set the Preview Values (this will populate the preview screen)
                  */
                 case SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION: {
-                    let SmartEditStrategy = (blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
+                    let SmartEditStrategy = (blotter.strategies.get(StrategyConstants.SmartEditStrategyId));
                     let state = middlewareAPI.getState();
                     let returnAction = next(action);
                     let apiReturn = SmartEditStrategy.CheckCorrectCellSelection();
@@ -593,7 +593,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     //all our logic needs to be executed AFTER the main reducers
                     //so our state is up to date which allow us not to care about the data within each different action
                     let returnAction = next(action);
-                    let SmartEditStrategy = (blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
+                    let SmartEditStrategy = (blotter.strategies.get(StrategyConstants.SmartEditStrategyId));
                     let state = middlewareAPI.getState();
                     let apiReturn = SmartEditStrategy.BuildPreviewValues(state.SmartEdit.SmartEditValue, state.SmartEdit.MathOperation);
                     middlewareAPI.dispatch(SystemRedux.SmartEditSetPreview(apiReturn));
@@ -605,7 +605,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 * Action (2):  Sends these new values to the Smart Edit Strategy (which will, in turn, apply them to the Blotter)
                 */
                 case SmartEditRedux.SMARTEDIT_APPLY: {
-                    let SmartEditStrategy = (blotter.Strategies.get(StrategyConstants.SmartEditStrategyId));
+                    let SmartEditStrategy = (blotter.strategies.get(StrategyConstants.SmartEditStrategyId));
                     let actionTyped = action;
                     let thePreview = middlewareAPI.getState().System.SmartEditPreviewInfo;
                     let newValues = PreviewHelper_1.PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings);
@@ -617,7 +617,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 * BULK UPDATE ACTIONS
                 *******************/
                 case SystemRedux.BULK_UPDATE_CHECK_CELL_SELECTION: {
-                    let BulkUpdateStrategy = (blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
+                    let BulkUpdateStrategy = (blotter.strategies.get(StrategyConstants.BulkUpdateStrategyId));
                     let state = middlewareAPI.getState();
                     let returnAction = next(action);
                     let apiReturn = BulkUpdateStrategy.CheckCorrectCellSelection();
@@ -644,14 +644,14 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     //all our logic needs to be executed AFTER the main reducers
                     //so our state is up to date which allow us not to care about the data within each different action
                     let returnAction = next(action);
-                    let BulkUpdateStrategy = (blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
+                    let BulkUpdateStrategy = (blotter.strategies.get(StrategyConstants.BulkUpdateStrategyId));
                     let state = middlewareAPI.getState();
                     let apiReturn = BulkUpdateStrategy.BuildPreviewValues(state.BulkUpdate.BulkUpdateValue);
                     middlewareAPI.dispatch(SystemRedux.BulkUpdateSetPreview(apiReturn));
                     return returnAction;
                 }
                 case BulkUpdateRedux.BULK_UPDATE_APPLY: {
-                    let BulkUpdateStrategy = (blotter.Strategies.get(StrategyConstants.BulkUpdateStrategyId));
+                    let BulkUpdateStrategy = (blotter.strategies.get(StrategyConstants.BulkUpdateStrategyId));
                     let actionTyped = action;
                     let thePreview = middlewareAPI.getState().System.BulkUpdatePreviewInfo;
                     let newValues = PreviewHelper_1.PreviewHelper.GetCellInfosFromPreview(thePreview, actionTyped.bypassCellValidationWarnings);
@@ -663,7 +663,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                * PLUS MINUS ACTIONS
                *******************/
                 case PlusMinusRedux.PLUSMINUS_APPLY: {
-                    let plusMinusStrategy = (blotter.Strategies.get(StrategyConstants.PlusMinusStrategyId));
+                    let plusMinusStrategy = (blotter.strategies.get(StrategyConstants.PlusMinusStrategyId));
                     let actionTyped = action;
                     plusMinusStrategy.ApplyPlusMinus(actionTyped.KeyEventString, actionTyped.CellInfos);
                     middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
@@ -677,7 +677,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                  * Action: Tell the Shortcut Strategy to apply the shortcut
                  */
                 case ShortcutRedux.SHORTCUT_APPLY: {
-                    let shortcutStrategy = (blotter.Strategies.get(StrategyConstants.ShortcutStrategyId));
+                    let shortcutStrategy = (blotter.strategies.get(StrategyConstants.ShortcutStrategyId));
                     let actionTyped = action;
                     shortcutStrategy.ApplyShortcut(actionTyped.CellInfo, actionTyped.NewValue);
                     return next(action);
@@ -686,13 +686,13 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                 * EXPORT ACTIONS
                 *******************/
                 case ExportRedux.EXPORT_APPLY: {
-                    let exportStrategy = (blotter.Strategies.get(StrategyConstants.ExportStrategyId));
+                    let exportStrategy = (blotter.strategies.get(StrategyConstants.ExportStrategyId));
                     let actionTyped = action;
                     if (actionTyped.ExportDestination == Enums_1.ExportDestination.iPushPull && iPushPullHelper_1.iPushPullHelper.IPPStatus != iPushPullHelper_1.iPushPullHelper.ServiceStatus.Connected) {
                         middlewareAPI.dispatch(PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, "IPushPullLogin", actionTyped.Report));
                     }
                     else if (actionTyped.ExportDestination == Enums_1.ExportDestination.iPushPull && !actionTyped.Folder) {
-                        iPushPullHelper_1.iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages) => {
+                        iPushPullHelper_1.iPushPullHelper.GetDomainPages(blotter.blotterOptions.iPushPullConfig.api_key).then((domainpages) => {
                             middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
                             middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""));
                         }).catch((err) => {
@@ -716,7 +716,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                         let report = middlewareAPI.getState().Popup.ScreenPopup.Params;
                         middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
                         middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""));
-                        iPushPullHelper_1.iPushPullHelper.GetDomainPages(blotter.BlotterOptions.iPushPullConfig.api_key).then((domainpages) => {
+                        iPushPullHelper_1.iPushPullHelper.GetDomainPages(blotter.blotterOptions.iPushPullConfig.api_key).then((domainpages) => {
                             middlewareAPI.dispatch(SystemRedux.SetIPPDomainPages(domainpages));
                             middlewareAPI.dispatch(SystemRedux.ReportSetErrorMessage(""));
                         }).catch((error) => {
@@ -784,8 +784,8 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     xhr.setRequestHeader("Content-type", "application/json");
                     let obj = {
                         entity: actionTyped.Entity,
-                        user: blotter.BlotterOptions.userName,
-                        blotter_id: blotter.BlotterOptions.blotterId,
+                        user: blotter.blotterOptions.userName,
+                        blotter_id: blotter.blotterOptions.blotterId,
                         strategy: actionTyped.Strategy,
                         timestamp: new Date()
                     };
@@ -964,7 +964,7 @@ var adaptableBlotterMiddleware = (blotter) => function (middlewareAPI) {
                     return next(action);
                 }
                 case GridRedux.GRID_CREATE_CELLS_SUMMARY: {
-                    let SelectedCellsStrategy = (blotter.Strategies.get(StrategyConstants.CellSummaryStrategyId));
+                    let SelectedCellsStrategy = (blotter.strategies.get(StrategyConstants.CellSummaryStrategyId));
                     let returnAction = next(action);
                     let selectedCellInfo = middlewareAPI.getState().Grid.SelectedCellInfo;
                     let apiSummaryReturn = SelectedCellsStrategy.CreateCellSummary(selectedCellInfo);

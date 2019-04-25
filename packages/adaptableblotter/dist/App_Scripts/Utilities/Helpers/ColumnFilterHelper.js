@@ -5,7 +5,7 @@ const ColumnHelper_1 = require("./ColumnHelper");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 var ColumnFilterHelper;
 (function (ColumnFilterHelper) {
-    function ConvertColumnFiltersToKVPArray(columnFilters, columns) {
+    function convertColumnFiltersToKVPArray(columnFilters, columns) {
         let infoBody = [];
         columnFilters.forEach(x => {
             let column = ColumnHelper_1.ColumnHelper.getColumnFromId(x.ColumnId, columns);
@@ -16,12 +16,12 @@ var ColumnFilterHelper;
         });
         return infoBody;
     }
-    ColumnFilterHelper.ConvertColumnFiltersToKVPArray = ConvertColumnFiltersToKVPArray;
+    ColumnFilterHelper.convertColumnFiltersToKVPArray = convertColumnFiltersToKVPArray;
     function getColumnFiltersDescription(columnFilters, columns, blotter) {
         if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(columnFilters)) {
             return "No Column Filter Active";
         }
-        let stringarr = ColumnFilterHelper.ConvertColumnFiltersToKVPArray(columnFilters, columns).map(kvp => {
+        let stringarr = ColumnFilterHelper.convertColumnFiltersToKVPArray(columnFilters, columns).map(kvp => {
             return kvp.Key + ": " + kvp.Value;
         });
         return stringarr.join("; ");

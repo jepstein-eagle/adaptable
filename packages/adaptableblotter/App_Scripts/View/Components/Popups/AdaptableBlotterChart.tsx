@@ -40,9 +40,9 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
   constructor(props: IAdaptableBlotterChartProps) {
     super(props);
     this.state = {
-       chartContainer:  UIHelper.getChartContainer(this.props.AdaptableBlotter.BlotterOptions, document, this.props.showModal),
-       accessLevel: StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, StrategyConstants.ChartStrategyId),
-       isValidUserChartContainer: UIHelper.isValidUserChartContainer(this.props.AdaptableBlotter.BlotterOptions, document),
+       chartContainer:  UIHelper.getChartContainer(this.props.AdaptableBlotter.blotterOptions, document, this.props.showModal),
+       accessLevel: StrategyHelper.getEntitlementAccessLevelForStrategy(this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements, StrategyConstants.ChartStrategyId),
+       isValidUserChartContainer: UIHelper.isValidUserChartContainer(this.props.AdaptableBlotter.blotterOptions, document),
   
     }
 }
@@ -58,10 +58,10 @@ export class AdaptableBlotterChart extends React.Component<IAdaptableBlotterChar
       onClose: this.props.onClose,
       ShowModal: this.props.showModal,
       Blotter: this.props.AdaptableBlotter,
-      UserFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-      SystemFilters: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+      UserFilters: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+      SystemFilters: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
       ColumnFilters: this.props.AdaptableBlotter.api.columnFilterApi.GetAll(),
-      ColorPalette: this.props.AdaptableBlotter.AdaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
+      ColorPalette: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
       AccessLevel: this.state.accessLevel
     }
 

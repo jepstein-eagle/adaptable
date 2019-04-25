@@ -75,16 +75,16 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     componentWillMount() {
         if (this.props.CurrentColumn.DataType != DataType.Boolean) {
             let columnValuePairs: IRawValueDisplayValuePair[] = [];
-            if (this.props.Blotter.BlotterOptions.queryOptions.getColumnValues != null) {
+            if (this.props.Blotter.blotterOptions.queryOptions.getColumnValues != null) {
                 this.setState({ ShowWaitingMessage: true });
-                this.props.Blotter.BlotterOptions.queryOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
+                this.props.Blotter.blotterOptions.queryOptions.getColumnValues(this.props.CurrentColumn.ColumnId).
                     then(result => {
                         if (result == null) { // if nothing returned then default to normal
                             columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(this.props.CurrentColumn.ColumnId, DistinctCriteriaPairValue.DisplayValue, false)
                             columnValuePairs = ArrayExtensions.sortArrayWithProperty(SortOrder.Ascending, columnValuePairs, DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue])
                             this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue });
                         } else { // get the distinct items and make sure within max items that can be displayed
-                            let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
+                            let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(0, this.props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed);
                             distinctItems.forEach(distinctItem => {
                                 let displayValue = (result.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue) ?
                                     this.props.Blotter.getDisplayValueFromRawValue(this.props.CurrentColumn.ColumnId, distinctItem) :
@@ -359,7 +359,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);
 
-export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provider store={FilterContext.Blotter.AdaptableBlotterStore.TheStore}>
+export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provider store={FilterContext.Blotter.adaptableBlotterStore.TheStore}>
     <FilterForm
         Blotter={FilterContext.Blotter}
         CurrentColumn={FilterContext.Column}

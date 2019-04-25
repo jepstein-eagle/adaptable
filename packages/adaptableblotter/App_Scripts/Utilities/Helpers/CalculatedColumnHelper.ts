@@ -3,7 +3,7 @@ import { IColumn } from "../Interface/IColumn";
 
 export module CalculatedColumnHelper {
 
-    export function GetColumnListFromExpression(expression: string): string[] {
+    export function getColumnListFromExpression(expression: string): string[] {
         let columnList: string[] = []
         let regEx: RegExp = /\b(?:Col\(")([a-zA-Z0-9 ]+)(?:"\))/g
         let match = regEx.exec(expression);
@@ -14,7 +14,7 @@ export module CalculatedColumnHelper {
         return columnList
     }
 
-    export function CleanExpressionColumnNames(expression: string, columns: IColumn[]): string {
+    export function cleanExpressionColumnNames(expression: string, columns: IColumn[]): string {
         let newExpression: string = expression;
         let columnNameList: string[] = []
         let regEx: RegExp = /\b(?:Col\(")([a-zA-Z0-9 ]+)(?:"\))/g
@@ -42,9 +42,9 @@ export module CalculatedColumnHelper {
         return newExpression
     }
 
-    export function GetExpressionString(expression: string, columns: IColumn[]): string {
-        let cleanExpression: string = CleanExpressionColumnNames(expression, columns);
-        let columnIds: string[] = GetColumnListFromExpression(cleanExpression);
+    export function getExpressionString(expression: string, columns: IColumn[]): string {
+        let cleanExpression: string = cleanExpressionColumnNames(expression, columns);
+        let columnIds: string[] = getColumnListFromExpression(cleanExpression);
         columnIds.forEach(c => {
             let stringToReplace: string = 'Col("' + c + '")'
             let columnFriendName = ColumnHelper.getFriendlyNameFromColumnId(c, columns);

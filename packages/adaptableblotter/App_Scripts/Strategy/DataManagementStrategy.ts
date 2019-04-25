@@ -11,7 +11,7 @@ export class DataManagementStrategy extends AdaptableStrategyBase implements IDa
     }
 
     protected addPopupMenuItem() {
-        if ("production" == process.env.NODE_ENV  && !BlotterHelper.IsDemoSite()) {
+        if ("production" == process.env.NODE_ENV  && !BlotterHelper.isDemoSite()) {
             return;
         }
         this.createMenuItemShowPopup(StrategyConstants.DataManagementStrategyName, ScreenPopups.DataManagementPopup, StrategyConstants.DataManagementGlyph);

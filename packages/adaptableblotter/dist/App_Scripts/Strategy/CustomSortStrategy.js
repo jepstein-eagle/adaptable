@@ -9,11 +9,11 @@ class CustomSortStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         super(StrategyConstants.CustomSortStrategyId, blotter);
     }
     InitState() {
-        if (this.CustomSorts != this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts) {
+        if (this.CustomSorts != this.blotter.adaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts) {
             this.removeCustomSorts();
-            this.CustomSorts = this.blotter.AdaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts;
+            this.CustomSorts = this.blotter.adaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts;
             this.applyCustomSorts();
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.CustomSort, this.CustomSorts);
             }
         }

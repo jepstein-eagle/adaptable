@@ -20,7 +20,7 @@ class AdaptableBlotterView extends React.Component {
         return (React.createElement("div", { className: StyleConstants.AB_STYLE + StyleConstants.BASE },
             React.createElement(Dashboard_1.Dashboard, { Blotter: this.props.Blotter }),
             this.props.SystemState.ChartVisibility != ChartEnums_1.ChartVisibility.Hidden &&
-                React.createElement(AdaptableBlotterChart_1.AdaptableBlotterChart, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseChartPopup, showChart: this.props.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised, showModal: this.props.Blotter.BlotterOptions.chartOptions.showModal }),
+                React.createElement(AdaptableBlotterChart_1.AdaptableBlotterChart, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseChartPopup, showChart: this.props.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised, showModal: this.props.Blotter.blotterOptions.chartOptions.showModal }),
             React.createElement(AdaptableBlotterAbout_1.AdaptableBlotterAbout, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseAboutPopup, showAbout: this.props.PopupState.AboutPopup.ShowAboutPopup }),
             React.createElement(AdaptableBlotterLoadingScreen_1.AdaptableBlotterLoadingScreen, { AdaptableBlotter: this.props.Blotter, onClose: this.props.onCloseLoadingPopup, showLoadingScreen: this.props.PopupState.LoadingPopup.ShowLoadingPopup }),
             React.createElement(AdaptableBlotterPopupAlert_1.AdaptableBlotterPopupAlert, { Header: this.props.PopupState.AlertPopup.Header, Msg: this.props.PopupState.AlertPopup.Msg, onClose: this.props.onCloseAlertPopup, ShowPopup: this.props.PopupState.AlertPopup.ShowAlertPopup, MessageType: this.props.PopupState.AlertPopup.MessageType, AdaptableBlotter: this.props.Blotter }),
@@ -52,5 +52,5 @@ function mapDispatchToProps(dispatch) {
     };
 }
 let AdaptableBlotterWrapper = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(AdaptableBlotterView);
-exports.AdaptableBlotterApp = ({ AdaptableBlotter }) => React.createElement(react_redux_1.Provider, { store: AdaptableBlotter.AdaptableBlotterStore.TheStore },
+exports.AdaptableBlotterApp = ({ AdaptableBlotter }) => React.createElement(react_redux_1.Provider, { store: AdaptableBlotter.adaptableBlotterStore.TheStore },
     React.createElement(AdaptableBlotterWrapper, { Blotter: AdaptableBlotter }));

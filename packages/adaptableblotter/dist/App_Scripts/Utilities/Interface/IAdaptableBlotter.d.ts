@@ -29,12 +29,12 @@ import { IScheduleService } from '../Services/Interface/IScheduleService';
  */
 export interface IAdaptableBlotter {
     api: IBlotterApi;
-    BlotterOptions: IAdaptableBlotterOptions;
-    AdaptableBlotterStore: IAdaptableBlotterStore;
-    Strategies: IAdaptableStrategyCollection;
+    blotterOptions: IAdaptableBlotterOptions;
+    adaptableBlotterStore: IAdaptableBlotterStore;
+    strategies: IAdaptableStrategyCollection;
     VendorGridName: 'agGrid' | 'Hypergrid';
     EmbedColumnMenu: boolean;
-    isInitialised: boolean;
+    IsInitialised: boolean;
     CalendarService: ICalendarService;
     DataService: IDataService;
     ValidationService: IValidationService;

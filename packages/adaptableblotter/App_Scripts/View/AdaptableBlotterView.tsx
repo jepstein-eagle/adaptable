@@ -50,7 +50,7 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                         AdaptableBlotter={this.props.Blotter}
                         onClose={this.props.onCloseChartPopup}
                         showChart={this.props.SystemState.ChartVisibility == ChartVisibility.Maximised}
-                        showModal={this.props.Blotter.BlotterOptions.chartOptions.showModal}
+                        showModal={this.props.Blotter.blotterOptions.chartOptions.showModal}
                     />
                 }
 
@@ -141,6 +141,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
 
 let AdaptableBlotterWrapper: React.ComponentClass<any> = connect(mapStateToProps, mapDispatchToProps)(AdaptableBlotterView);
 
-export const AdaptableBlotterApp = ({ AdaptableBlotter }: { AdaptableBlotter: IAdaptableBlotter }) => <Provider store={AdaptableBlotter.AdaptableBlotterStore.TheStore}>
+export const AdaptableBlotterApp = ({ AdaptableBlotter }: { AdaptableBlotter: IAdaptableBlotter }) => <Provider store={AdaptableBlotter.adaptableBlotterStore.TheStore}>
     <AdaptableBlotterWrapper Blotter={AdaptableBlotter} />
 </Provider>;

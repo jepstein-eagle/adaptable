@@ -18,14 +18,14 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
 
         // Create the <style> tag for shipped themes
         this.style = document.createElement("style");
-        this.style.id = blotter.BlotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.BlotterOptions.blotterId + '-theme';
+        this.style.id = blotter.blotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.blotterOptions.blotterId + '-theme';
 
         this.style.appendChild(document.createTextNode(""));   // WebKit hack :(
         document.head.appendChild(this.style);  // Adds the <style> element to the page
 
         // Create the theme link for predefined themes
         this.theme = document.createElement("link");
-        this.theme.id = blotter.BlotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.BlotterOptions.blotterId + '-link';
+        this.theme.id = blotter.blotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.blotterOptions.blotterId + '-link';
         this.theme.rel = "stylesheet"
         document.head.appendChild(this.theme);
     }
@@ -35,10 +35,10 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     }
 
     protected InitState() {
-        if (this.ThemeState != this.blotter.AdaptableBlotterStore.TheStore.getState().Theme) {
-            this.ThemeState = this.blotter.AdaptableBlotterStore.TheStore.getState().Theme
+        if (this.ThemeState != this.blotter.adaptableBlotterStore.TheStore.getState().Theme) {
+            this.ThemeState = this.blotter.adaptableBlotterStore.TheStore.getState().Theme
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Theme, this.ThemeState)
             }
 

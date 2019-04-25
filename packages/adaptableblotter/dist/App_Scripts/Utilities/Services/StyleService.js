@@ -12,14 +12,14 @@ class StyleService {
         this.blotter = blotter;
         // Create the <style> tag
         this.style = document.createElement("style");
-        this.style.id = blotter.BlotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.BlotterOptions.blotterId + '-style';
+        this.style.id = blotter.blotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.blotterOptions.blotterId + '-style';
         // WebKit hack :(
         this.style.appendChild(document.createTextNode(""));
         // Add the <style> element to the page
         document.head.appendChild(this.style);
         this.sheet = this.style.sheet;
         this.InitState();
-        blotter.AdaptableBlotterStore.TheStore.subscribe(() => this.InitState());
+        blotter.adaptableBlotterStore.TheStore.subscribe(() => this.InitState());
     }
     InitState() {
         if (this.FlashingCellState != this.blotter.api.flashingCellApi.GetState()

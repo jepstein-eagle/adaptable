@@ -180,5 +180,5 @@ function mapDispatchToProps(dispatch) {
     };
 }
 exports.FloatingFilterForm = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(FloatingFilterFormComponent);
-exports.FloatingFilterFormReact = (FilterContext) => React.createElement(react_redux_1.Provider, { store: FilterContext.Blotter.AdaptableBlotterStore.TheStore },
+exports.FloatingFilterFormReact = (FilterContext) => React.createElement(react_redux_1.Provider, { store: FilterContext.Blotter.adaptableBlotterStore.TheStore },
     React.createElement(exports.FloatingFilterForm, { Blotter: FilterContext.Blotter, CurrentColumn: FilterContext.Column, TeamSharingActivated: false, EmbedColumnMenu: FilterContext.Blotter.EmbedColumnMenu }));

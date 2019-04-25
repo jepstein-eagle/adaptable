@@ -11,7 +11,7 @@ class CalculatedColumnExpressionService {
     IsExpressionValid(expression) {
         try {
             let columns = this.blotter.api.gridApi.getColumns();
-            let cleanedExpression = CalculatedColumnHelper_1.CalculatedColumnHelper.CleanExpressionColumnNames(expression, columns);
+            let cleanedExpression = CalculatedColumnHelper_1.CalculatedColumnHelper.cleanExpressionColumnNames(expression, columns);
             let firstRecord = this.blotter.getFirstRecord();
             math.eval(cleanedExpression, {
                 Col: (columnId) => {

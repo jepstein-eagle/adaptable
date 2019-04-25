@@ -447,8 +447,8 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.DisplayValue), // this value
             blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue),  // other column value
             columns,
-            blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-            blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+            blotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+            blotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
             blotter
         );
     }
@@ -460,8 +460,8 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.DisplayValue),  // this value
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.RawValue), // other column value
             columns,
-            blotter.AdaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-            blotter.AdaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+            blotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
+            blotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
             blotter
         );
     }
@@ -518,19 +518,19 @@ export module ExpressionHelper {
             case DataType.String:
                 // might not be a string so make sure
                 rangeEvaluation.newValue = String(rangeEvaluation.newValue);
-                if (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) {
+                if (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) {
                     rangeEvaluation.newValue = StringExtensions.ToLowerCase(rangeEvaluation.newValue);
                 }
                 rangeEvaluation.operand1 = rangeExpression.Operand1Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
                     (rangeExpression.Operand1 == null) ? null :
-                        (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) ?
+                        (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) ?
                             StringExtensions.ToLowerCase(rangeExpression.Operand1) :
                             rangeExpression.Operand1;
                 rangeEvaluation.operand2 = rangeExpression.Operand2Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
                     (rangeExpression.Operand2 == null) ? null :
-                        (blotter.BlotterOptions.queryOptions.ignoreCaseInQueries) ?
+                        (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) ?
                             StringExtensions.ToLowerCase(rangeExpression.Operand2) :
                             rangeExpression.Operand2;
                 break;

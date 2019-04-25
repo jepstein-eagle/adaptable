@@ -57,7 +57,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
         if (!ArrayExtensions.areArraysEqualWithOrderandProperties(this.GridSorts, this.GetGridState().GridSorts)) {
             this.GridSorts = this.GetGridState().GridSorts
 
-            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == "AllSearchandSort") {
+            if (this.blotter.blotterOptions.generalOptions.serverSearchOption == "AllSearchandSort") {
                 this.publishSearchChanged(SearchChangedTrigger.Sort)
             }
         }
@@ -81,7 +81,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
 
 
     private GetGridState(): GridState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().Grid;
     }
 
 }

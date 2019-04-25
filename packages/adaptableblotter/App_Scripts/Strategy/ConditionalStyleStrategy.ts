@@ -22,12 +22,12 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
     }
 
     protected InitState() {
-        if (this.ConditionalStyleState != this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle) {
-            this.ConditionalStyleState = this.blotter.AdaptableBlotterStore.TheStore.getState().ConditionalStyle;
+        if (this.ConditionalStyleState != this.blotter.adaptableBlotterStore.TheStore.getState().ConditionalStyle) {
+            this.ConditionalStyleState = this.blotter.adaptableBlotterStore.TheStore.getState().ConditionalStyle;
 
             this.InitStyles();
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.ConditionalStyle, this.ConditionalStyleState)
             }
         }

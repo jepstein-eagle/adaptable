@@ -62,7 +62,7 @@ var ReportHelper;
                 ReportColumns = gridColumns.filter(c => c.Visible);
                 break;
             case Enums_1.ReportColumnScope.SelectedColumns:
-                let selectedCells = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+                let selectedCells = blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
                 if (selectedCells.Selection.size == 0) {
                     // some way of saying we cannot export anything
                     return { ActionReturn: dataToExport, Alert: { Header: "Export Error", Msg: "No cells are selected", MessageType: Enums_1.MessageType.Error, ShowAsPopup: true } };
@@ -104,7 +104,7 @@ var ReportHelper;
                 });
                 break;
             case Enums_1.ReportRowScope.SelectedRows:
-                let selectedCells = blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+                let selectedCells = blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
                 let colNames = ReportColumns.map(c => c.FriendlyName);
                 for (var keyValuePair of selectedCells.Selection) {
                     let values = [];

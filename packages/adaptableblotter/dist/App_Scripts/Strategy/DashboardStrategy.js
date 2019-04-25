@@ -22,15 +22,15 @@ class DashboardStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     InitState() {
-        if (this.DashboardState != this.blotter.AdaptableBlotterStore.TheStore.getState().Dashboard) {
-            this.DashboardState = this.blotter.AdaptableBlotterStore.TheStore.getState().Dashboard;
-            if (this.blotter.isInitialised) {
+        if (this.DashboardState != this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard) {
+            this.DashboardState = this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard;
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Dashboard, this.DashboardState);
             }
         }
     }
     GetDashboardState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Dashboard;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard;
     }
 }
 exports.DashboardStrategy = DashboardStrategy;

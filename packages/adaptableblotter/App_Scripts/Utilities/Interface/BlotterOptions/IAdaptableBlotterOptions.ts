@@ -12,6 +12,7 @@ import { IChartOptions } from "./IChartOptions";
   * The class injected into the Adaptable Blotter at startup
   * providing all the user, grid and config information required
   * Contains a few properties (of which 2 are mandatory) and a number of 'Options' classes
+  * Any property that is not supplied by the user will use the default one as suppied in DefaultAdaptableBlotterOptions
  */
 export interface IAdaptableBlotterOptions {
   /**

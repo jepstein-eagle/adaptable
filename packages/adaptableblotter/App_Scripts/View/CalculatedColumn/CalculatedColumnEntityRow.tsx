@@ -21,7 +21,7 @@ export class CalculatedColumnEntityRow extends React.Component<CalculatedColumnE
         let colItems: IColItem[] = [].concat(this.props.colItems);
 
         colItems[0].Content = <EntityRowItem Content={ calculatedColumn.ColumnId} />
-        colItems[1].Content = <EntityRowItem Content={ CalculatedColumnHelper.GetExpressionString(calculatedColumn.ColumnExpression, this.props.Columns)} />
+        colItems[1].Content = <EntityRowItem Content={ CalculatedColumnHelper.getExpressionString(calculatedColumn.ColumnExpression, this.props.Columns)} />
 
         let buttons: any = <EntityListActionButtons
             cssClassName={this.props.cssClassName}

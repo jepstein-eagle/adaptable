@@ -31,11 +31,11 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
             if (this.quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
                 // if searchText is empty then set clear both types, otherwise set them
                 if (StringExtensions.IsNullOrEmpty(this.quickSearchState.QuickSearchText)) {  
-                    this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchClearRange());
-                    this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchClearVisibleColumnExpressions());
+                    this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchClearRange());
+                    this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchClearVisibleColumnExpressions());
                 } else {
                     let quickSearchRange: IRange = RangeHelper.CreateValueRangeFromOperand(this.quickSearchState.QuickSearchText);
-                    this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchSetRange(quickSearchRange));
+                    this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchSetRange(quickSearchRange));
 
                     // we just create expressions for the visible columns - in the Blotter we will check for those missing;
                     // we dont keep this updated - just set once as good for majority of use cases
@@ -46,25 +46,25 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
                             quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression);
                         }
                     }
-                    this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchSetVisibleColumnExpressions(quickSearchVisibleColumnExpressions));
+                    this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchSetVisibleColumnExpressions(quickSearchVisibleColumnExpressions));
                 }
             }
 
             this.blotter.applyGridFiltering();
             this.blotter.redraw();
 
-            if (this.blotter.BlotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
+            if (this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearch' || 'AllSearchandSort') {
                 this.publishSearchChanged(SearchChangedTrigger.QuickSearch)
             }
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.QuickSearch, this.quickSearchState)
             }
 
         }
     }
     protected GetQuickSearchState(): QuickSearchState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().QuickSearch;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().QuickSearch;
     }
 
 

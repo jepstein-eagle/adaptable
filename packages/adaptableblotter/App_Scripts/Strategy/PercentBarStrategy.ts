@@ -35,7 +35,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     protected InitState() {
         if (this.PercentBarState != this.GetPercentBarState()) {
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
 
                 // if we have made any changes then first delete them all
                 this.PercentBarState.PercentBars.forEach(pb => {
@@ -53,7 +53,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     }
 
     protected GetPercentBarState(): PercentBarState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().PercentBar;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().PercentBar;
     }
 
 }

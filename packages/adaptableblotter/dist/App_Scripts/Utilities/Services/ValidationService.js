@@ -18,8 +18,8 @@ class ValidationService {
             return failedWarningRules;
         }
         // first check that if primary key change, the new value is unique
-        if (dataChangedEvent.ColumnId == this.blotter.BlotterOptions.primaryKey) {
-            if (this.blotter.BlotterOptions.generalOptions.preventDuplicatePrimaryKeyValues) {
+        if (dataChangedEvent.ColumnId == this.blotter.blotterOptions.primaryKey) {
+            if (this.blotter.blotterOptions.generalOptions.preventDuplicatePrimaryKeyValues) {
                 if (dataChangedEvent.OldValue != dataChangedEvent.NewValue) {
                     let displayValuePair = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue, false);
                     let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);

@@ -122,11 +122,7 @@ function InitTradeBlotter() {
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
       licenceKey: 'glu5834t-3ay59lrex-mn6ec4fr3d',
-      //  licenceKey: getCommunityKey(),
-      //  licenceKey: getValidStandardKey(),
-      //    licenceKey: getValidEnterpriseKey(),
-      // licenceKey: ,
-      // licenceKey: '',
+     
 
      predefinedConfig: dataSourceJson,
       auditOptions: {
@@ -182,12 +178,12 @@ function InitTradeBlotter() {
     adaptableblotter = new adaptableblotteraggrid.AdaptableBlotter(adaptableBlotterOptions);
     window.adaptableblotter = adaptableblotter;
 
-    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => {
-      dataChangeHack(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions);
+    adaptableblotter.adaptableBlotterStore.TheStore.subscribe(() => {
+      dataChangeHack(adaptableblotter.adaptableBlotterStore.TheStore.getState(), gridOptions);
     });
 
-    adaptableblotter.AdaptableBlotterStore.TheStore.subscribe(() => {
-      apiTester(adaptableblotter.AdaptableBlotterStore.TheStore.getState(), gridOptions);
+    adaptableblotter.adaptableBlotterStore.TheStore.subscribe(() => {
+      apiTester(adaptableblotter.adaptableBlotterStore.TheStore.getState(), gridOptions);
     });
     adaptableblotter.api.eventApi.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs));
     adaptableblotter.api.eventApi.onAlertFired().Subscribe((sender, alertFiredArgs) => listenToAlertFired(alertFiredArgs));
@@ -196,7 +192,7 @@ function InitTradeBlotter() {
     ));
     adaptableblotter.api.eventApi.onSearchedChanged().Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
     setTimeout(() => {
-      if (adaptableblotter.AdaptableBlotterStore.TheStore.getState().Layout.CurrentLayout === 'Ab_Default_Layout') {
+      if (adaptableblotter.adaptableBlotterStore.TheStore.getState().Layout.CurrentLayout === 'Ab_Default_Layout') {
         gridOptions.columnApi.autoSizeAllColumns();
       }
     });

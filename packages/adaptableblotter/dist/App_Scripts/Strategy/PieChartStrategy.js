@@ -17,9 +17,9 @@ class PieChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     InitState() {
-        if (this.PieChartState != this.blotter.AdaptableBlotterStore.TheStore.getState().PieChart) {
-            this.PieChartState = this.blotter.AdaptableBlotterStore.TheStore.getState().PieChart;
-            if (this.blotter.isInitialised) {
+        if (this.PieChartState != this.blotter.adaptableBlotterStore.TheStore.getState().PieChart) {
+            this.PieChartState = this.blotter.adaptableBlotterStore.TheStore.getState().PieChart;
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.PieChart, this.PieChartState);
             }
         }

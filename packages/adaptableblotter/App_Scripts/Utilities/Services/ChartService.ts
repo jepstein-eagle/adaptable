@@ -180,7 +180,7 @@ export class ChartService implements IChartService {
     let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition, columns);
 
     // if we don't use ranges but there are too many slices then we return an error
-    if (!useRanges && dataCounter.size > this.blotter.BlotterOptions.chartOptions.pieChartMaxItems) {
+    if (!useRanges && dataCounter.size > this.blotter.blotterOptions.chartOptions.pieChartMaxItems) {
       let message: string = "Cannot create pie chart as it contains too many items."
       LoggingHelper.LogAdaptableBlotterWarning(message)
       return {

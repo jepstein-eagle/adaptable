@@ -16,7 +16,7 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
     }
 
     protected hasPopupMenu(): boolean {
-        return BlotterHelper.IsConfigServerEnabled(this.blotter.BlotterOptions)
+        return BlotterHelper.isConfigServerEnabled(this.blotter.blotterOptions)
     }
 
     protected InitState() {

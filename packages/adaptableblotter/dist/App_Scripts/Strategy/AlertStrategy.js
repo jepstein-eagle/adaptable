@@ -14,9 +14,9 @@ class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText));
     }
     InitState() {
-        if (this.AlertState != this.blotter.AdaptableBlotterStore.TheStore.getState().Alert) {
-            this.AlertState = this.blotter.AdaptableBlotterStore.TheStore.getState().Alert;
-            if (this.blotter.isInitialised) {
+        if (this.AlertState != this.blotter.adaptableBlotterStore.TheStore.getState().Alert) {
+            this.AlertState = this.blotter.adaptableBlotterStore.TheStore.getState().Alert;
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Alert, this.AlertState);
             }
         }
@@ -27,7 +27,7 @@ class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     handleDataSourceChanged(dataChangedEvent) {
         let alertDefinitions = this.CheckDataChanged(dataChangedEvent);
         if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
-            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
             alertDefinitions.forEach(fr => {
                 this.blotter.api.alertApi.Show(ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns), AlertHelper_1.AlertHelper.createAlertDescription(fr, columns), fr.MessageType, fr.ShowAsPopup);
             });
@@ -37,7 +37,7 @@ class AlertStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         let relatedAlertDefinitions = this.AlertState.AlertDefinitions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
         let triggeredAlerts = [];
         if (relatedAlertDefinitions.length > 0) {
-            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
             // first check the rules which have expressions
             let expressionAlertDefinitions = relatedAlertDefinitions.filter(r => ExpressionHelper_1.ExpressionHelper.IsNotEmptyExpression(r.Expression));
             if (expressionAlertDefinitions.length > 0) {

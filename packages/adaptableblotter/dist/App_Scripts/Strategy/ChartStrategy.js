@@ -16,7 +16,7 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText));
         this.blotter.onSearchChanged().Subscribe(() => this.handleSearchChanged());
         this.blotter.SearchedChanged.Subscribe(() => this.handleSearchChanged());
-        let refreshRate = blotter.AdaptableBlotterStore.TheStore.getState().Chart.RefreshRate * 1000;
+        let refreshRate = blotter.adaptableBlotterStore.TheStore.getState().Chart.RefreshRate * 1000;
         this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
     }
     addPopupMenuItem() {
@@ -29,7 +29,7 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             if (this.ChartState == null) {
                 isChartRelatedStateChanged = true;
                 // if user has set display at startup to be true and there is a current chart then show it
-                if (this.blotter.BlotterOptions.chartOptions.displayOnStartUp && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.GetChartState().CurrentChartName)) {
+                if (this.blotter.blotterOptions.chartOptions.displayOnStartUp && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.GetChartState().CurrentChartName)) {
                     displayChartAtStartUp = true;
                 }
             }
@@ -51,7 +51,7 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     isChartRelatedStateChanged = true;
                 }
             }
-            this.SystemState = this.blotter.AdaptableBlotterStore.TheStore.getState().System;
+            this.SystemState = this.blotter.adaptableBlotterStore.TheStore.getState().System;
         }
         if (isChartRelatedStateChanged) {
             if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.ChartState.CurrentChartName)
@@ -62,13 +62,13 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 this.clearChartData();
             }
             if (this.ChartState.CurrentChartName == null && this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised) {
-                this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartEnums_1.ChartVisibility.Hidden));
+                this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartEnums_1.ChartVisibility.Hidden));
             }
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Chart, this.ChartState);
             }
             if (displayChartAtStartUp) {
-                this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartEnums_1.ChartVisibility.Maximised));
+                this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartEnums_1.ChartVisibility.Maximised));
                 this.setChartData();
             }
         }
@@ -142,7 +142,7 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     isCurrentChartVisibiilityMaximised() {
-        return this.blotter.isInitialised &&
+        return this.blotter.IsInitialised &&
             this.SystemState != null &&
             this.ChartState != null &&
             this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised &&
@@ -162,7 +162,7 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     setChartData() {
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
         let chartDefinition = this.GetCurrentChartDefinition();
         if (chartDefinition) {
             let chartData;
@@ -172,22 +172,22 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             else if (chartDefinition.ChartType == ChartEnums_1.ChartType.PieChart) {
                 chartData = this.blotter.ChartService.BuildPieChartData(chartDefinition);
             }
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
+            this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
         }
     }
     clearChartData() {
         if (this.GetSystemState().ChartData != null) {
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(null));
+            this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(null));
         }
     }
     GetSystemState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().System;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().System;
     }
     GetChartState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Chart;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().Chart;
     }
     GetColumnState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
     }
     GetCurrentChartDefinition() {
         return this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);

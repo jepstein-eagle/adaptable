@@ -28,7 +28,7 @@ export class AdaptableBlotterPopupAlert extends React.Component<AdaptableBlotter
         let header: string = (headerContainsMessage) ? this.props.Header : this.props.MessageType.toUpperCase();
         let glyph: string = UIHelper.getGlyphByMessageType(this.props.MessageType);
 
-        let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+        let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.blotterOptions, document);
         let cssClassName: string = StyleConstants.POPUP_ALERT
 
         return this.props.ShowPopup &&

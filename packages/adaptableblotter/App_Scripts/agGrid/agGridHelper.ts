@@ -3,7 +3,44 @@ import { StringExtensions } from "../Utilities/Extensions/StringExtensions";
 import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
 import { ArrayExtensions } from "../Utilities/Extensions/ArrayExtensions";
 import { IAdaptableBlotterOptions } from "../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions";
-import { string } from "prop-types";
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import { IStrategy } from "../Strategy/Interface/IStrategy";
+import { AlertStrategy } from "../Strategy/AlertStrategy";
+import { AdvancedSearchStrategy } from "../Strategy/AdvancedSearchStrategy";
+import { ApplicationStrategy } from "../Strategy/ApplicationStrategy";
+import { BulkUpdateStrategy } from "../Strategy/BulkUpdateStrategy";
+import { CalculatedColumnStrategy } from "../Strategy/CalculatedColumnStrategy";
+import { CalendarStrategy } from "../Strategy/CalendarStrategy";
+import { CellValidationStrategy } from "../Strategy/CellValidationStrategy";
+import { ChartStrategy } from "../Strategy/ChartStrategy";
+import { ColumnChooserStrategy } from "../Strategy/ColumnChooserStrategy";
+import { ColumnFilterStrategy } from "../Strategy/ColumnFilterStrategy";
+import { ColumnInfoStrategy } from "../Strategy/ColumnInfoStrategy";
+import { ConditionalStyleStrategyagGrid } from "./Strategy/ConditionalStyleStrategyagGrid";
+import { CustomSortStrategyagGrid } from "./Strategy/CustomSortStrategyagGrid";
+import { DashboardStrategy } from "../Strategy/DashboardStrategy";
+import { DataManagementStrategy } from "../Strategy/DataManagementStrategy";
+import { DataSourceStrategy } from "../Strategy/DataSourceStrategy";
+import { ExportStrategy } from "../Strategy/ExportStrategy";
+import { FlashingCellStrategyagGrid } from "./Strategy/FlashingCellsStrategyagGrid";
+import { FormatColumnStrategyagGrid } from "./Strategy/FormatColumnStrategyagGrid";
+import { FreeTextColumnStrategy } from "../Strategy/FreeTextColumnStrategy";
+import { HomeStrategy } from "../Strategy/HomeStrategy";
+import { LayoutStrategy } from "../Strategy/LayoutStrategy";
+import { ColumnCategoryStrategy } from "../Strategy/ColumnCategoryStrategy";
+import { PercentBarStrategy } from "../Strategy/PercentBarStrategy";
+import { PieChartStrategy } from "../Strategy/PieChartStrategy";
+import { PlusMinusStrategy } from "../Strategy/PlusMinusStrategy";
+import { QuickSearchStrategy } from "../Strategy/QuickSearchStrategy";
+import { SmartEditStrategy } from "../Strategy/SmartEditStrategy";
+import { ShortcutStrategy } from "../Strategy/ShortcutStrategy";
+import { TeamSharingStrategy } from "../Strategy/TeamSharingStrategy";
+import { ThemeStrategy } from "../Strategy/ThemeStrategy";
+import { CellSummaryStrategy } from "../Strategy/CellSummaryStrategy";
+import { UserFilterStrategy } from "../Strategy/UserFilterStrategy";
+import { ReminderStrategy } from "../Strategy/ReminderStrategy";
+import { IAdaptableBlotter } from "../Utilities/Interface/IAdaptableBlotter";
+import { AdaptableBlotter } from "./AdaptableBlotter";
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy 
@@ -21,14 +58,51 @@ export module agGridHelper {
         return "ag-theme-balham-dark";
     }
 
-    export function TrySetUpNodeIds(gridOptions: GridOptions, blotterOptions: IAdaptableBlotterOptions): boolean {
-        // need some way of checking if running on client on server
-        // if on server then we return false
+    export function setUpStrategies(blotter:AdaptableBlotter): Map<string, IStrategy> {
+        let strategies = new Map<string, IStrategy>();
+        strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(blotter))
+        strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(blotter))
+        strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy(blotter))
+        strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(blotter))
+        strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(blotter))
+        strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(blotter))
+        strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(blotter))
+        strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(blotter))
+        strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(blotter))
+        strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(blotter))
+        strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(blotter))
+        strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleStrategyagGrid(blotter))
+        strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategyagGrid(blotter))
+        strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(blotter))
+        strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy(blotter))
+        strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(blotter))
+        strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(blotter))
+        strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellStrategyagGrid(blotter))
+        strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyagGrid(blotter))
+        strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(blotter))
+        strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(blotter))
+        strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(blotter))
+        strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy(blotter))
+        strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(blotter))
+        strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy(blotter))
+        strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(blotter))
+        strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(blotter))
+        strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(blotter))
+        strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(blotter))
+        strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(blotter))
+        strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(blotter))
+        strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(blotter))
+        strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(blotter))
+        strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(blotter))
+        return strategies;
+    }
 
-        // if they have not set primary key then we get out
-        if (StringExtensions.IsNullOrEmpty(blotterOptions.primaryKey)) {
+    export function TrySetUpNodeIds(gridOptions: GridOptions, blotterOptions: IAdaptableBlotterOptions, isValidPrimaryKey: boolean): boolean {
+        if (!isValidPrimaryKey) { // if no valid pk then always false
             return false;
         }
+        // need some way of checking if running on client on server
+        // if on server then we return false
 
         // otherwise lets set the Id so that it returns the primaryKey
         gridOptions.getRowNodeId = function (data) {

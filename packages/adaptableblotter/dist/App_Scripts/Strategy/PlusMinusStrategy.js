@@ -19,7 +19,7 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.PlusMinusState != this.GetPlusMinusState()) {
             this.PlusMinusState = this.GetPlusMinusState();
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.PlusMinus, this.PlusMinusState);
             }
         }
@@ -43,14 +43,14 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             if (Helper_1.Helper.getStringRepresentionFromKey(keyEvent) == "-") {
                 side = -1;
             }
-            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
-            let selectedCellInfo = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+            let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let selectedCellInfo = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
             let failedPreventEdits = [];
             let failedWarningEdits = [];
             let warningValues = [];
             for (var keyValuePair of selectedCellInfo.Selection) {
                 for (var selectedCell of keyValuePair[1]) {
-                    let selectedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(selectedCell.columnId, this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns);
+                    let selectedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(selectedCell.columnId, this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns);
                     if (selectedColumn.DataType == Enums_1.DataType.Number && !selectedColumn.ReadOnly) {
                         //for aggrid as we are getting strings sometimes 
                         if (typeof selectedCell.value != "number") {
@@ -150,7 +150,7 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     GetPlusMinusState() {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().PlusMinus;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().PlusMinus;
     }
 }
 exports.PlusMinusStrategy = PlusMinusStrategy;

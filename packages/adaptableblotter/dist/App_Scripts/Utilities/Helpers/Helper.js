@@ -134,11 +134,6 @@ var Helper;
         return !IsInputNullOrEmpty(itemToCheck);
     }
     Helper.IsInputNotNullOrEmpty = IsInputNotNullOrEmpty;
-    function ReadFileContents(fileName) {
-        // let contents: string = fs.readFileSync(fileName, { encoding: 'utf8' })
-        return fileName;
-    }
-    Helper.ReadFileContents = ReadFileContents;
     function areObjectsEqual(obj1, obj2) {
         // if both are null return true
         if (obj1 == null && obj2 == null) {

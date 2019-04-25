@@ -12,7 +12,7 @@ export class FormatColumnStrategyHypergrid extends FormatColumnStrategy implemen
         if (!this.blotterBypass) {
             this.blotterBypass = this.blotter as AdaptableBlotter
         }
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
         this.blotterBypass.removeAllCellStyleHypergrid('formatColumn')
      
         // adding this check as things can get mixed up during 'clean user data'

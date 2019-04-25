@@ -18,8 +18,8 @@ class LicenceService {
         this.LicenceInfo = this.checkifRuningOnDemoSite();
     }
     checkifRuningOnDemoSite() {
-        let initalDate = this.blotter.BlotterOptions.licenceKey;
-        if (BlotterHelper_1.BlotterHelper.IsDemoSite()) {
+        let initalDate = this.blotter.blotterOptions.licenceKey;
+        if (BlotterHelper_1.BlotterHelper.isDemoSite()) {
             return this.CheckIsDouble(31);
         }
         if (StringExtensions_1.StringExtensions.IsNullOrEmpty(initalDate)) {

@@ -24,8 +24,8 @@ export class LicenceService implements ILicenceService {
     LicenceInfo: ILicenceInfo;
 
     private checkifRuningOnDemoSite() {
-        let initalDate = this.blotter.BlotterOptions.licenceKey;
-        if (BlotterHelper.IsDemoSite()) {
+        let initalDate = this.blotter.blotterOptions.licenceKey;
+        if (BlotterHelper.isDemoSite()) {
             return this.CheckIsDouble(31);
         }
         if (StringExtensions.IsNullOrEmpty(initalDate)) {

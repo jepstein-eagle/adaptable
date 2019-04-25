@@ -27,7 +27,7 @@ export class AdaptableBlotterPopupPrompt extends React.Component<AdaptableBlotte
     }
 
     render() {
-        let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+        let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.blotterOptions, document);
         let cssClassName: string = StyleConstants.POPUP_PROMPT
 
 

@@ -15,7 +15,7 @@ export let FilterWrapperFactory = (blotter: AdaptableBlotter) => {
             this.params = params
             this.column = params.column
             this.filterContainer = document.createElement("div")
-            this.filterContainer.id = "filter_" + this.params.column.getColId()+ '_' + blotter.BlotterOptions.blotterId;
+            this.filterContainer.id = "filter_" + this.params.column.getColId()+ '_' + blotter.blotterOptions.blotterId;
         }
         isFilterActive() {
             //make the small filter icon to appear when there is a filter

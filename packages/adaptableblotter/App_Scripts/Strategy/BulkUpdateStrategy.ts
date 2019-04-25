@@ -27,7 +27,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
         if (this.BulkUpdateState != this.GetBulkUpdateState()) {
             this.BulkUpdateState = this.GetBulkUpdateState();
           
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.BulkUpdate, this.BulkUpdateState)
             }
        
@@ -41,7 +41,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     }
 
     public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
-        let selectedCellInfo = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+        let selectedCellInfo = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
         if (selectedCellInfo == null || selectedCellInfo.Selection.size == 0) {
             return {
                 Alert: {
@@ -80,7 +80,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     }
 
     public BuildPreviewValues(bulkUpdateValue: any): IPreviewInfo {
-        let selectedCells = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+        let selectedCells = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
         let previewResults: IPreviewResult[] = [];
         let columnId: string = "";
         if (selectedCells != null && selectedCells.Columns.length > 0) {
@@ -123,7 +123,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     }
 
     private GetBulkUpdateState(): BulkUpdateState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState().BulkUpdate;
+        return this.blotter.adaptableBlotterStore.TheStore.getState().BulkUpdate;
     }
 
 }

@@ -20,7 +20,7 @@ export class ConfigApi extends ApiBase implements IConfigApi {
 
   public configDeleteLocalStorage(): void {
     //   a horrible rough and ready method which clears local storage and refreshes but is not nice.
-    localStorage.removeItem(this.blotter.BlotterOptions.blotterId);
+    localStorage.removeItem(this.blotter.blotterOptions.blotterId);
     window.location.reload();
   }
 

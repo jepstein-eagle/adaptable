@@ -15,7 +15,7 @@ export class AdaptableBlotterLoadingScreen extends React.Component<IAdaptableBlo
   render() {
     let cssClassName: string = StyleConstants.AB_STYLE
 
-    let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+    let modalContainer: HTMLElement = UIHelper.getModalContainer(this.props.AdaptableBlotter.blotterOptions, document);
 
     return (
 

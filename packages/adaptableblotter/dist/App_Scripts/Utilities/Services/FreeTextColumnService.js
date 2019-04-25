@@ -30,7 +30,7 @@ class FreeTextColumnService {
         let freeTextColumn = this.blotter.api.freeTextColumnApi.GetAll().find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
         if (freeTextColumn) {
             let freeTextStoredValue = { PrimaryKey: dataChangedEvent.IdentifierValue, FreeText: dataChangedEvent.NewValue };
-            this.blotter.AdaptableBlotterStore.TheStore.dispatch(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, freeTextStoredValue));
+            this.blotter.adaptableBlotterStore.TheStore.dispatch(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, freeTextStoredValue));
         }
     }
     CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents) {

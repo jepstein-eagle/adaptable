@@ -41,7 +41,7 @@ exports.FilterAndSearchDataSource = (blotter) => DataSourceIndexed_1.DataSourceI
         if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(columns)) {
             return true;
         }
-        let serverSearchOption = blotter.BlotterOptions.generalOptions.serverSearchOption;
+        let serverSearchOption = blotter.blotterOptions.generalOptions.serverSearchOption;
         // first let's assess ADVANCED SEARCH 
         // Note: serverSearchOption has to be 'None' becasue any other value then they are performing search on the server and nothing for us to do
         if (serverSearchOption == 'None') {

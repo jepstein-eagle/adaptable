@@ -12,7 +12,7 @@ class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy_1.Condi
     handleDataSourceChanged(dataChangedEvent) {
         if (ArrayExtensions_1.ArrayExtensions.IsNotEmpty(this.ConditionalStyleState.ConditionalStyles)) {
             let theBlotter = this.blotter;
-            let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
             //here we don't call Repaint as we consider that we already are in the repaint loop
             for (let column of columns) {
                 theBlotter.removeCellStyleHypergrid(dataChangedEvent.IdentifierValue, column.ColumnId, 'csColumn');
@@ -26,7 +26,7 @@ class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy_1.Condi
                                 theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style });
                             }
                             else if (c.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory) {
-                                let columnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId);
+                                let columnCategory = this.blotter.adaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId);
                                 columnCategory.ColumnIds.forEach(cc => {
                                     theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style });
                                 });
@@ -42,7 +42,7 @@ class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy_1.Condi
                                 theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style });
                             }
                             else if (c.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory) {
-                                let columnCategory = this.blotter.AdaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId);
+                                let columnCategory = this.blotter.adaptableBlotterStore.TheStore.getState().ColumnCategory.ColumnCategories.find(lc => lc.ColumnCategoryId == c.ColumnCategoryId);
                                 columnCategory.ColumnIds.forEach(cc => {
                                     theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style });
                                 });
@@ -58,7 +58,7 @@ class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy_1.Condi
     }
     InitStyles() {
         let theBlotter = this.blotter;
-        let columns = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
         theBlotter.removeAllCellStyleHypergrid('csColumn');
         theBlotter.removeAllCellStyleHypergrid('csRow');
         // adding this check as things can get mixed up during 'clean user data'

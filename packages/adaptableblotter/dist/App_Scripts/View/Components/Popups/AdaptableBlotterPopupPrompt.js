@@ -14,7 +14,7 @@ class AdaptableBlotterPopupPrompt extends React.Component {
         this.state = { PromptText: "" };
     }
     render() {
-        let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+        let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.blotterOptions, document);
         let cssClassName = StyleConstants.POPUP_PROMPT;
         return this.props.ShowPopup && React.createElement("div", { className: StyleConstants.POPUP_PROMPT },
             React.createElement(react_bootstrap_1.Modal, { show: this.props.ShowPopup, onHide: this.props.onClose, className: cssClassName, container: modalContainer, bsSize: "small" },

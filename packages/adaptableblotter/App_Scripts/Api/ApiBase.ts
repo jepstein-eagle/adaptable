@@ -18,10 +18,10 @@ export abstract class ApiBase {
       }
 
     public dispatchAction(action: Action): void {
-        this.blotter.AdaptableBlotterStore.TheStore.dispatch(action)
+        this.blotter.adaptableBlotterStore.TheStore.dispatch(action)
     }
 
     public getBlotterState(): AdaptableBlotterState {
-        return this.blotter.AdaptableBlotterStore.TheStore.getState()
+        return this.blotter.adaptableBlotterStore.TheStore.getState()
     }
 }

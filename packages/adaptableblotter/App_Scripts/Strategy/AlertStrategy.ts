@@ -22,10 +22,10 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     }
 
     protected InitState() {
-        if (this.AlertState != this.blotter.AdaptableBlotterStore.TheStore.getState().Alert) {
-            this.AlertState = this.blotter.AdaptableBlotterStore.TheStore.getState().Alert;
+        if (this.AlertState != this.blotter.adaptableBlotterStore.TheStore.getState().Alert) {
+            this.AlertState = this.blotter.adaptableBlotterStore.TheStore.getState().Alert;
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Alert, this.AlertState)
             }
         }
@@ -38,7 +38,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
         let alertDefinitions: IAlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
         if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
-            let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let columns: IColumn[] = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
             alertDefinitions.forEach(fr => { // might be better to do a single alert with all the messages?
                 this.blotter.api.alertApi.Show(ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns), AlertHelper.createAlertDescription(fr, columns), fr.MessageType, fr.ShowAsPopup)
             })
@@ -49,7 +49,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         let relatedAlertDefinitions = this.AlertState.AlertDefinitions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
         let triggeredAlerts: IAlertDefinition[] = [];
         if (relatedAlertDefinitions.length > 0) {
-            let columns: IColumn[] = this.blotter.AdaptableBlotterStore.TheStore.getState().Grid.Columns;
+            let columns: IColumn[] = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
 
             // first check the rules which have expressions
             let expressionAlertDefinitions: IAlertDefinition[] = relatedAlertDefinitions.filter(r => ExpressionHelper.IsNotEmptyExpression(r.Expression));

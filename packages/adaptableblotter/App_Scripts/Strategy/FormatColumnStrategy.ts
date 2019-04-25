@@ -38,7 +38,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase impleme
 
             this.InitStyles();
 
-            if (this.blotter.isInitialised) {
+            if (this.blotter.IsInitialised) {
                 this.publishStateChanged(StateChangedTrigger.FormatColumn, this.FormatColumnState)
             }
         }

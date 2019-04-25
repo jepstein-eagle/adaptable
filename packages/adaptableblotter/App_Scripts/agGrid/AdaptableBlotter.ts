@@ -1,5 +1,6 @@
 ﻿// import styles - ab and 2 default agGrid
 import '../Styles/stylesheets/adaptableblotter-style.css'
+import 'ag-grid-enterprise';
 
 import * as Redux from 'redux'
 import * as ReactDOM from "react-dom";
@@ -31,27 +32,14 @@ import { ChartService } from '../Utilities/Services/ChartService';
 import { FreeTextColumnService } from '../Utilities/Services/FreeTextColumnService';
 import { CalculatedColumnExpressionService } from '../Utilities/Services/CalculatedColumnExpressionService';
 // strategies
-import { IStrategy, IAdaptableStrategyCollection } from '../Strategy/Interface/IStrategy';
+import { IAdaptableStrategyCollection } from '../Strategy/Interface/IStrategy';
 import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalStyleStrategy';
-import { AlertStrategy } from '../Strategy/AlertStrategy';
-import { ApplicationStrategy } from '../Strategy/ApplicationStrategy';
-import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
-import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy'
-import { DashboardStrategy } from '../Strategy/DashboardStrategy'
-import { CalculatedColumnStrategy } from "../Strategy/CalculatedColumnStrategy";
-import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
-import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
-import { HomeStrategy } from '../Strategy/HomeStrategy';
-import { FreeTextColumnStrategy } from '../Strategy/FreeTextColumnStrategy';
-import { ChartStrategy } from '../Strategy/ChartStrategy';
-import { PercentBarStrategy } from '../Strategy/PercentBarStrategy';
-import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 // components
 import { FilterWrapperFactory } from './FilterWrapper';
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 // import other items
 import { EventDispatcher } from '../Utilities/EventDispatcher'
-import { DataType, LeafExpressionOperator, SortOrder, DisplayAction, DistinctCriteriaPairValue, FilterOnDataChangeOptions } from '../Utilities/Enums'
+import { DataType, SortOrder, DisplayAction, DistinctCriteriaPairValue, FilterOnDataChangeOptions } from '../Utilities/Enums'
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from "../Utilities/Interface/Reports/IPPStyle";
@@ -59,7 +47,6 @@ import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { IVendorGridInfo } from "../Utilities/Interface/IVendorGridInfo";
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { IGridSort } from "../Utilities/Interface/IGridSort";
-import { IPermittedColumnValues } from "../Utilities/Interface/IPermittedColumnValues";
 import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
 import { IFreeTextColumn } from "../Utilities/Interface/BlotterObjects/IFreeTextColumn";
 import { ICustomSort } from "../Utilities/Interface/BlotterObjects/ICustomSort";
@@ -67,9 +54,8 @@ import { IColumnFilter } from "../Utilities/Interface/BlotterObjects/IColumnFilt
 import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
 import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { IRange } from "../Utilities/Interface/Expression/IRange";
-import { IRangeExpression } from "../Utilities/Interface/Expression/IRangeExpression";
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../Utilities/Interface/blotterOptions/IAdaptableblotterOptions';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
 import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
@@ -87,7 +73,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 
 // ag-Grid
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { Grid, GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, SideBarDef, ColDefUtil } from "ag-grid-community"
+import { Grid, GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, SideBarDef } from "ag-grid-community"
 import { Events } from "ag-grid-community/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid-community/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid-community/dist/lib/entities/gridOptions"
@@ -99,26 +85,7 @@ import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
 import { BlotterApi } from '../Api/BlotterApi';
 import { Action } from 'redux';
 import { DEFAULT_LAYOUT, HALF_SECOND } from '../Utilities/Constants/GeneralConstants';
-import { AlertToolbarControl } from '../View/Alert/AlertToolbarControl';
-import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy';
-import { CalendarStrategy } from '../Strategy/CalendarStrategy';
-import { CellValidationStrategy } from '../Strategy/CellValidationStrategy';
-import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy';
-import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy';
-import { DataManagementStrategy } from '../Strategy/DataManagementStrategy';
-import { ExportStrategy } from '../Strategy/ExportStrategy';
-import { LayoutStrategy } from '../Strategy/LayoutStrategy';
-import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy';
-import { PieChartStrategy } from '../Strategy/PieChartStrategy';
-import { SmartEditStrategy } from '../Strategy/SmartEditStrategy';
-import { ShortcutStrategy } from '../Strategy/ShortcutStrategy';
-import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy';
-import { ThemeStrategy } from '../Strategy/ThemeStrategy';
-import { UserFilterStrategy } from '../Strategy/UserFilterStrategy';
-import { ConditionalStyleStrategyagGrid } from './Strategy/ConditionalStyleStrategyagGrid';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
-import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
-import { FormatColumnStrategyagGrid } from './Strategy/FormatColumnStrategyagGrid';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
@@ -129,21 +96,17 @@ import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService
 import { LicenceService } from '../Utilities/Services/LicenceService';
 import { AdaptableBlotterToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableBlotterToolPanel';
 import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdaptableBlotterToolPanelContext';
-import 'ag-grid-enterprise';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
-import { ReminderStrategy } from '../Strategy/ReminderStrategy';
-import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
 import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState';
-import { ConditionalStylePopup } from '../View/ConditionalStyle/ConditionalStylePopup';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
     public api: IBlotterApi
-    public Strategies: IAdaptableStrategyCollection
-    public AdaptableBlotterStore: IAdaptableBlotterStore
-    public BlotterOptions: IAdaptableBlotterOptions
+    public strategies: IAdaptableStrategyCollection
+    public adaptableBlotterStore: IAdaptableBlotterStore
+    public blotterOptions: IAdaptableBlotterOptions
     public VendorGridName: any
 
     public CalendarService: ICalendarService
@@ -163,8 +126,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private abContainerElement: HTMLElement;
     private gridOptions: GridOptions
-   
-    public isInitialised: boolean
+
+    public IsInitialised: boolean
     private throttleOnDataChangedUser: (() => void) & _.Cancelable;
     private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
     public hasFloatingFilter: boolean
@@ -173,102 +136,67 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public gridContainer: HTMLElement
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
-        //we init with defaults then overrides with options passed in the constructor
-        this.BlotterOptions = BlotterHelper.AssignBlotterOptions(blotterOptions);
-        this.gridOptions = this.BlotterOptions.vendorGrid
+        //we create the Blotter Options by merging the values provided by the user with the defaults (where no value has been set)
+        this.blotterOptions = BlotterHelper.assignBlotterOptions(blotterOptions);
+
+        this.gridOptions = this.blotterOptions.vendorGrid
         this.VendorGridName = 'agGrid';
-        this.EmbedColumnMenu = true
-        this.isInitialised = false;
+        this.EmbedColumnMenu = true;
+        this.IsInitialised = false;
         this.hasFloatingFilter = true;
+
         // get the api ready
         this.api = new BlotterApi(this);
 
         // set the licence first
         this.LicenceService = new LicenceService(this);
+        BlotterHelper.checkLicenceKey(this.LicenceService.LicenceInfo);
 
         // the audit service needs to be created before the store
-        this.AuditLogService = new AuditLogService(this, this.BlotterOptions);
+        this.AuditLogService = new AuditLogService(this, this.blotterOptions);
         // create the store
-        this.AdaptableBlotterStore = new AdaptableBlotterStore(this);
+        this.adaptableBlotterStore = new AdaptableBlotterStore(this);
 
         // create the services
         this.CalendarService = new CalendarService(this);
         this.DataService = new DataService(this);
         this.ValidationService = new ValidationService(this);
-
         this.StyleService = new StyleService(this);
         this.ChartService = new ChartService(this);
         this.FreeTextColumnService = new FreeTextColumnService(this);
         this.ScheduleService = new ScheduleService(this);
-
-        this.useRowNodeLookUp = agGridHelper.TrySetUpNodeIds(this.gridOptions, blotterOptions);
+        this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
 
         // we prefer the grid to be NOT instantiated so that we can do it
+        // perhaps in future we will force instantiation only?
         const isGridInstantiated = this.gridOptions.api && typeof this.gridOptions.api.getValue === 'function';
-
         if (!isGridInstantiated) {
-            const instantiateResult = this.instantiateAgGrid();
-            if (!instantiateResult) {
-                // we have no grid, we can't do anything
+            const canInstantiateGrid = this.tryInstantiateAgGrid();
+            if (!canInstantiateGrid) { // we have no grid, we can't do anything
                 LoggingHelper.LogAdaptableBlotterError('Unable to set up ag-Grid');
                 return;
             }
         }
 
-        iPushPullHelper.init(this.BlotterOptions.iPushPullConfig);
+        // set up iPushPull
+        iPushPullHelper.init(this.blotterOptions.iPushPullConfig);
+
+        // set up Glue42 - note this is currently not working in the browser but will be done shortly
         if (Glue42Helper.isRunningGlue42()) {
             Glue42Helper.init();
         }
 
-        this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => this.gridOptions.api.getValue(columnId, record));
+        // Set up strategies - we set up all the strategies suitable for the vendor grid
+        // But users can make some hidden or readonly in their entitlements
+        this.strategies = agGridHelper.setUpStrategies(this);
 
-        
-        //we build the list of strategies
-        //maybe we don't need to have a map and just an array is fine..... dunno'
-        this.Strategies = new Map<string, IStrategy>();
-        this.Strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(this))
-        this.Strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(this))
-        this.Strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy(this))
-        this.Strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(this))
-        this.Strategies.set(StrategyConstants.CalculatedColumnStrategyId, new CalculatedColumnStrategy(this))
-        this.Strategies.set(StrategyConstants.CalendarStrategyId, new CalendarStrategy(this))
-        this.Strategies.set(StrategyConstants.CellValidationStrategyId, new CellValidationStrategy(this))
-        this.Strategies.set(StrategyConstants.ChartStrategyId, new ChartStrategy(this))
-        this.Strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(this))
-        this.Strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(this))
-        this.Strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(this))
-        this.Strategies.set(StrategyConstants.ConditionalStyleStrategyId, new ConditionalStyleStrategyagGrid(this))
-        this.Strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategyagGrid(this))
-        this.Strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(this))
-        this.Strategies.set(StrategyConstants.DataManagementStrategyId, new DataManagementStrategy(this))
-        this.Strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(this))
-        this.Strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(this))
-        this.Strategies.set(StrategyConstants.FlashingCellsStrategyId, new FlashingCellStrategyagGrid(this))
-        this.Strategies.set(StrategyConstants.FormatColumnStrategyId, new FormatColumnStrategyagGrid(this))
-        this.Strategies.set(StrategyConstants.FreeTextColumnStrategyId, new FreeTextColumnStrategy(this))
-        this.Strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(this))
-        this.Strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(this))
-        this.Strategies.set(StrategyConstants.ColumnCategoryStrategyId, new ColumnCategoryStrategy(this))
-        this.Strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(this))
-        this.Strategies.set(StrategyConstants.PieChartStrategyId, new PieChartStrategy(this))
-        this.Strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(this))
-        this.Strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(this))
-        this.Strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
-        this.Strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
-        this.Strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))
-        this.Strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(this))
-        this.Strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(this))
-        this.Strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
-        this.Strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(this))
-
-        BlotterHelper.CheckLicenceKey(this.LicenceService.LicenceInfo);
-
-        this.AdaptableBlotterStore.Load
-            .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()),
+        // Load the store
+        this.adaptableBlotterStore.Load
+            .then(() => this.strategies.forEach(strat => strat.initializeWithRedux()),
                 (e) => {
                     LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
                     //for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
-                    this.Strategies.forEach(strat => strat.InitializeWithRedux())
+                    this.strategies.forEach(strat => strat.initializeWithRedux())
                     this.dispatchAction(PopupRedux.PopupHideLoading());  // doesnt really help but at least clears the screen
                 })
             .then(
@@ -281,13 +209,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 })
             .then(() => {
                 this.applyFinalRendering();
-                this.isInitialised = true
+                this.IsInitialised = true
                 this.dispatchAction(PopupRedux.PopupHideLoading());
             })
 
         if (renderGrid) {
             if (this.abContainerElement == null) {
-                this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
+                this.abContainerElement = document.getElementById(this.blotterOptions.containerOptions.adaptableBlotterContainer);
             }
             if (this.abContainerElement != null) {
                 this.abContainerElement.innerHTML = ""
@@ -295,20 +223,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         // create debounce methods that take a time based on user settings
-        this.throttleOnDataChangedUser = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
-        this.throttleOnDataChangedExternal = _.throttle(this.applyDataChange, this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
+        this.throttleOnDataChangedUser = _.throttle(this.applyDataChange, this.blotterOptions.filterOptions.filterActionOnUserDataChange.ThrottleDelay);
+        this.throttleOnDataChangedExternal = _.throttle(this.applyDataChange, this.blotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay);
     }
 
 
-    private instantiateAgGrid(): boolean {
-        let vendorContainer = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
+    private tryInstantiateAgGrid(): boolean {
+        let vendorContainer = document.getElementById(this.blotterOptions.containerOptions.vendorContainer);
         if (!vendorContainer) {
             LoggingHelper.LogAdaptableBlotterError('You must provide an element id in `containerOptions.vendorContainer`');
             return false;
         }
 
         // Create Adaptable Blotter Tool Panel
-        if (this.BlotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
+        if (this.blotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
             LoggingHelper.LogAdaptableBlotterInfo("Adding Adaptable Blotter Tool Panel")
             this.gridOptions.sideBar = this.gridOptions.sideBar || {};
             this.gridOptions.components = this.gridOptions.components || {};
@@ -340,7 +268,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
         // now create the grid itself
         this.grid = new Grid(vendorContainer, this.gridOptions);
-        return true;
+        return (this.grid != null);
     }
 
 
@@ -351,17 +279,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     debouncedFilterGrid = _.debounce(() => this.applyGridFiltering(), HALF_SECOND);
 
     private filterOnUserDataChange(): void {
-        if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
+        if (this.blotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
             this.applyDataChange();
-        } else if (this.BlotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
+        } else if (this.blotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
             this.throttleOnDataChangedUser();
         }
     }
 
     private filterOnExternalDataChange(): void {
-        if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
+        if (this.blotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Always) {
             this.applyDataChange();
-        } else if (this.BlotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
+        } else if (this.blotterOptions.filterOptions.filterActionOnExternalDataChange.RunFilter == FilterOnDataChangeOptions.Throttle) {
             this.throttleOnDataChangedExternal();
         }
     }
@@ -521,11 +449,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private addFiltersToVendorColumn(vendorColumn: Column): void {
-        if (vendorColumn.getColDef().filter && this.BlotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
+        if (vendorColumn.getColDef().filter && this.blotterOptions.filterOptions.useAdaptableBlotterFilterForm) {
             this.createFilterWrapper(vendorColumn);
         }
 
-        if (this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
+        if (this.gridOptions.floatingFilter && this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
             this.createFloatingFilterWrapper(vendorColumn);
         }
     }
@@ -566,7 +494,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public createMenu() {
         let menuItems: IMenuItem[] = [];
-        this.Strategies.forEach(x => {
+        this.strategies.forEach(x => {
             let menuItem = x.getPopupMenuItem()
             if (menuItem != null) {
                 if (menuItems.findIndex(m => m.StrategyId == menuItem.StrategyId) == -1) {
@@ -578,7 +506,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getPrimaryKeyValueFromRecord(record: RowNode): any {
-        return this.gridOptions.api.getValue(this.BlotterOptions.primaryKey, record)
+        return this.gridOptions.api.getValue(this.blotterOptions.primaryKey, record)
     }
 
     public gridHasCurrentEditValue(): boolean {
@@ -613,7 +541,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public saveGridLayout() {
-        if (this.BlotterOptions.layoutOptions != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts) {
+        if (this.blotterOptions.layoutOptions != null && this.blotterOptions.layoutOptions.includeVendorStateInLayouts != null && this.blotterOptions.layoutOptions.includeVendorStateInLayouts) {
             LayoutHelper.autoSaveLayout(this);
         }
     }
@@ -1000,7 +928,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 })
             }
         }
-        return Array.from(returnMap.values()).slice(0, this.BlotterOptions.queryOptions.maxColumnValueItemsDisplayed);
+        return Array.from(returnMap.values()).slice(0, this.blotterOptions.queryOptions.maxColumnValueItemsDisplayed);
     }
 
 
@@ -1180,7 +1108,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef())
         let colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumn.ColumnId)
         let cols: IColumn[] = this.api.gridApi.getColumns();
-        let cleanedExpression: string = CalculatedColumnHelper.CleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
+        let cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
 
         let newColDef: ColDef = colDefs[colDefIndex];
         newColDef.valueGetter = (params: ValueGetterParams) => Helper.RoundValueIfNumeric(this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node), 4);
@@ -1196,7 +1124,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         // and then add
-        let columnList = CalculatedColumnHelper.GetColumnListFromExpression(cleanedExpression)
+        let columnList = CalculatedColumnHelper.getColumnListFromExpression(cleanedExpression)
         for (let column of columnList) {
             let childrenColumnList = this.calculatedColumnPathMap.get(column)
             if (!childrenColumnList) {
@@ -1228,7 +1156,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let colDefs: ColDef[] = venderCols.map(x => x.getColDef())
 
         let cols: IColumn[] = this.api.gridApi.getColumns();
-        let cleanedExpression: string = CalculatedColumnHelper.CleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
+        let cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(calculatedColumn.ColumnExpression, cols);
 
         let newColDef: ColDef = {
             headerName: calculatedColumn.ColumnId,
@@ -1243,7 +1171,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         colDefs.push(newColDef);
         agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
 
-        let columnList = CalculatedColumnHelper.GetColumnListFromExpression(cleanedExpression)
+        let columnList = CalculatedColumnHelper.getColumnListFromExpression(cleanedExpression)
         for (let column of columnList) {
             let childrenColumnList = this.calculatedColumnPathMap.get(column)
             if (!childrenColumnList) {
@@ -1296,8 +1224,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.addFiltersToVendorColumn(vendorColumn);
 
-        if (this.isInitialised) {
-            let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.Strategies.get(StrategyConstants.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
+        if (this.IsInitialised) {
+            let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.strategies.get(StrategyConstants.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
             conditionalStyleagGridStrategy.InitStyles();
         }
     }
@@ -1371,14 +1299,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private initInternalGridLogic() {
         if (this.abContainerElement == null) {
-            this.abContainerElement = document.getElementById(this.BlotterOptions.containerOptions.adaptableBlotterContainer);
+            this.abContainerElement = document.getElementById(this.blotterOptions.containerOptions.adaptableBlotterContainer);
         }
         if (this.abContainerElement == null) {
-            LoggingHelper.LogAdaptableBlotterError("There is no Div called " + this.BlotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
+            LoggingHelper.LogAdaptableBlotterError("There is no Div called " + this.blotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
             return
         }
 
-        let gridContainerElement = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
+        let gridContainerElement = document.getElementById(this.blotterOptions.containerOptions.vendorContainer);
         if (gridContainerElement) {
             gridContainerElement.addEventListener("keydown", (event) => this._onKeyDown.Dispatch(this, event));
         }
@@ -1420,11 +1348,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         });
         // dealing with scenario where the data is poured into the blotter after grid has been setup
-        this.gridOptions.api.addEventListener(Events.EVENT_FIRST_DATA_RENDERED, (params: any) => {
+        this.gridOptions.api.addEventListener(Events.EVENT_FIRST_DATA_RENDERED, () => {
             this.debouncedSetColumnIntoStore();
         });
         // once the grid is ready we should make sure we are too
-        this.gridOptions.api.addEventListener(Events.EVENT_GRID_READY, (params: any) => {
+        this.gridOptions.api.addEventListener(Events.EVENT_GRID_READY, () => {
             // do something?
         });
         // Pinning columms and changing column widths will trigger an auto save (if that and includvendorstate are both turned on)
@@ -1509,7 +1437,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this._currentEditor.isCancelAfterEnd = isCancelAfterEnd;
 
         });
-        this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, (params: any) => {
+        this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STOPPED, () => {
 
             //(<any>this._currentEditor).getGui().removeEventListener("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
             this._currentEditor = null;
@@ -1537,7 +1465,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //  this.gridOptions.api.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
         //     console.log(params)
         // });
-        this.gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, (params: any) => {
+        this.gridOptions.api.addEventListener(Events.EVENT_SORT_CHANGED, () => {
             this.onSortChanged()
             this.debouncedSetSelectedCells();
         });
@@ -1628,7 +1556,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let columns = this.api.gridApi.getColumns();
 
             //first we assess AdvancedSearch (if its running locally)
-            if (this.BlotterOptions.generalOptions.serverSearchOption == 'None') {
+            if (this.blotterOptions.generalOptions.serverSearchOption == 'None') {
                 let currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
                 if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
                     // Get the actual Advanced Search object and check it exists
@@ -1643,7 +1571,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             //we then assess filters
-            if (this.BlotterOptions.generalOptions.serverSearchOption == 'None' || this.BlotterOptions.generalOptions.serverSearchOption == 'AdvancedSearch') {
+            if (this.blotterOptions.generalOptions.serverSearchOption == 'None' || this.blotterOptions.generalOptions.serverSearchOption == 'AdvancedSearch') {
                 let columnFilters: IColumnFilter[] = this.api.columnFilterApi.GetAll();
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
@@ -1696,7 +1624,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             this.dispatchAction(MenuRedux.ClearColumnContextMenu());
             let column: IColumn = ColumnHelper.getColumnFromId(colId, this.api.gridApi.getColumns());
             if (column != null) {
-                this.Strategies.forEach(s => {
+                this.strategies.forEach(s => {
                     s.addContextMenuItem(column)
                 })
             }
@@ -1723,30 +1651,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             });
             return colMenuItems;
         };
+        /*
         this.AdaptableBlotterStore.Load
-            .then(() => this.Strategies.forEach(strat => strat.InitializeWithRedux()), (e) => {
+            .then(() => this.strategies.forEach(strat => strat.initializeWithRedux()), (e) => {
                 LoggingHelper.LogAdaptableBlotterError('Failed to Init AdaptableBlotterStore : ', e);
                 //for now i'm still initializing the strategies even if loading state has failed....
                 //we may revisit that later
-                this.Strategies.forEach(strat => strat.InitializeWithRedux());
+                this.strategies.forEach(strat => strat.initializeWithRedux());
 
             });
-
+*/
 
     }
 
     public addPercentBar(pcr: IPercentBar): void {
         let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.api.gridApi.getColumns());
         if (renderedColumn) {
-            let cellRendererFunc: ICellRendererFunc = agGridHelper.createCellRendererFunc(pcr, this.BlotterOptions.blotterId);
+            let cellRendererFunc: ICellRendererFunc = agGridHelper.createCellRendererFunc(pcr, this.blotterOptions.blotterId);
             let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
             let coldDef: ColDef = vendorGridColumn.getColDef();
             coldDef.cellRenderer = cellRendererFunc;
             // change the style from number-cell temporarily?
-            if(coldDef.cellClass == 'number-cell'){
+            if (coldDef.cellClass == 'number-cell') {
                 coldDef.cellClass = 'number-cell-changed';
             }
-         }
+        }
     }
 
     public removePercentBar(pcr: IPercentBar): void {
@@ -1758,7 +1687,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             let coldDef: ColDef = vendorGridColumn.getColDef();
             coldDef.cellRenderer = null;
             // change the style back if it was changed by us
-            if(coldDef.cellClass == 'number-cell-changed'){
+            if (coldDef.cellClass == 'number-cell-changed') {
                 coldDef.cellClass = 'number-cell';
             }
         }
@@ -1783,7 +1712,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                             if (customSort) {
                                 // check that not already applied
                                 if (!this.getState().Grid.GridSorts.find(gs => ColumnHelper.isSpecialColumn(gs.Column))) {
-                                    let customSortStrategy: CustomSortStrategyagGrid = this.Strategies.get(StrategyConstants.CustomSortStrategyId) as CustomSortStrategyagGrid;
+                                    let customSortStrategy: CustomSortStrategyagGrid = this.strategies.get(StrategyConstants.CustomSortStrategyId) as CustomSortStrategyagGrid;
                                     let groupCustomSort: ICustomSort = ObjectFactory.CreateEmptyCustomSort();
                                     groupCustomSort.ColumnId = sm.colId;
                                     groupCustomSort.SortedValues = customSort.SortedValues;
@@ -1846,7 +1775,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private updateQuickSearchRangeVisibleColumn(columnId: string): void {
-        if (this.isInitialised) {
+        if (this.IsInitialised) {
             let quickSearchState: QuickSearchState = this.api.quickSearchApi.GetState();
             // only update if quick search is not highlight and is set - rare use case...
             if (quickSearchState.DisplayAction != DisplayAction.HighlightCell && StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {
@@ -1858,7 +1787,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                         let quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(column.ColumnId, null, null, null, [quickSearchRange])
                         let quickSearchVisibleColumnExpressions: Expression[] = [].concat(this.getState().System.QuickSearchVisibleColumnExpressions)
                         quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression)
-                        this.AdaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchSetVisibleColumnExpressions(quickSearchVisibleColumnExpressions));
+                        this.adaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchSetVisibleColumnExpressions(quickSearchVisibleColumnExpressions));
                     }
                 }
             }
@@ -1882,7 +1811,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
 
-        if (this.BlotterOptions.layoutOptions != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts != null && this.BlotterOptions.layoutOptions.includeVendorStateInLayouts) {
+        if (this.blotterOptions.layoutOptions != null && this.blotterOptions.layoutOptions.includeVendorStateInLayouts != null && this.blotterOptions.layoutOptions.includeVendorStateInLayouts) {
             let groupedState: any = null
             let displayedColumns: Column[] = this.gridOptions.columnApi.getAllDisplayedColumns();
             let groupedCol = displayedColumns.find(c => ColumnHelper.isSpecialColumn(c.getColId()));
@@ -1955,11 +1884,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     private isFloatingFilterActive(): boolean {
-        return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter && this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter;
+        return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter && this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter;
     }
 
     public showFloatingFilter(): void {
-        if (this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
+        if (this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
             this.gridOptions.floatingFilter = true;
             this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);
@@ -1969,15 +1898,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public hideFloatingFilter(): void {
-        if (this.BlotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
+        if (this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
             this.gridOptions.floatingFilter = false;
             this.gridOptions.api.refreshHeader();
         }
     }
 
     public applyLightTheme(): void {
-        if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.containerOptions.vendorContainer)) {
-            let container = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
+        if (this.blotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.blotterOptions.containerOptions.vendorContainer)) {
+            let container = document.getElementById(this.blotterOptions.containerOptions.vendorContainer);
             if (container != null) {
                 container.className = agGridHelper.getLightThemeName();
             }
@@ -1985,8 +1914,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public applyDarkTheme(): void {
-        if (this.BlotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.BlotterOptions.containerOptions.vendorContainer)) {
-            let container = document.getElementById(this.BlotterOptions.containerOptions.vendorContainer);
+        if (this.blotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.blotterOptions.containerOptions.vendorContainer)) {
+            let container = document.getElementById(this.blotterOptions.containerOptions.vendorContainer);
             if (container != null) {
                 container.className = agGridHelper.getDarkThemeName();
             }
@@ -1996,15 +1925,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // Method called after we have rendered the grid
     // where we apply our stuff but also any ag-Grid props that we control
     private applyFinalRendering(): void {
-        let currentlayout: string = this.api.layoutApi.GetCurrentName();
 
         // Check that we have a primary key
-        BlotterHelper.CheckPrimaryKeyExists(this, this.api.gridApi.getColumns());
+        let isValidPrimaryKey: boolean = BlotterHelper.isValidPrimaryKey(this, this.api.gridApi.getColumns());
+
+        // set up whether we use the getRowNode method or loop when finding a record (former is preferable)
+        this.useRowNodeLookUp = agGridHelper.TrySetUpNodeIds(this.gridOptions, this.blotterOptions, isValidPrimaryKey);
 
         // add the filter header style if required
-        if (this.BlotterOptions.filterOptions.indicateFilteredColumns == true) {
+        if (this.blotterOptions.filterOptions.indicateFilteredColumns == true) {
             var css = document.createElement("style");
-            css.id = this.BlotterOptions.blotterId + '_filtered-columns-style';
+            css.id = this.blotterOptions.blotterId + '_filtered-columns-style';
             css.type = "text/css";
             css.innerHTML = ".ag-header-cell-filtered {  font-style: italic; font-weight: bolder;}";
             document.body.appendChild(css);
@@ -2018,20 +1949,21 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         // if user layout and a percent bar sometimes the first few cells are pre-rendered so we frig it like this
-        if (this.api.layoutApi.GetCurrentName() != DEFAULT_LAYOUT && ArrayExtensions.IsNotNullOrEmpty(this.api.percentBarApi.GetAll())) {
+        let currentlayout: string = this.api.layoutApi.GetCurrentName();
+        if (currentlayout != DEFAULT_LAYOUT && ArrayExtensions.IsNotNullOrEmpty(this.api.percentBarApi.GetAll())) {
             this.api.layoutApi.Set(DEFAULT_LAYOUT);
         }
 
-        // at the end so load the current layout, refresh the toolbar and turn off the loading message
+        // at the end so load the current layout
         this.api.layoutApi.Set(currentlayout);
     }
 
     // A couple of state management functions
     private getState(): AdaptableBlotterState {
-        return this.AdaptableBlotterStore.TheStore.getState()
+        return this.adaptableBlotterStore.TheStore.getState()
     }
 
     private dispatchAction(action: Action): void {
-        this.AdaptableBlotterStore.TheStore.dispatch(action);
+        this.adaptableBlotterStore.TheStore.dispatch(action);
     }
 }

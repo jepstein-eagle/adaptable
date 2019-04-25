@@ -11,7 +11,7 @@ class AdaptableBlotterPopupAlert extends React.Component {
         let style = UIHelper_1.UIHelper.getStyleNameByMessageType(this.props.MessageType);
         let header = (headerContainsMessage) ? this.props.Header : this.props.MessageType.toUpperCase();
         let glyph = UIHelper_1.UIHelper.getGlyphByMessageType(this.props.MessageType);
-        let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+        let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.blotterOptions, document);
         let cssClassName = StyleConstants.POPUP_ALERT;
         return this.props.ShowPopup &&
             React.createElement("div", { className: StyleConstants.POPUP_ALERT },

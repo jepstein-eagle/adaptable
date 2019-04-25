@@ -7,7 +7,7 @@ const StyleConstants = require("../../../Utilities/Constants/StyleConstants");
 class AdaptableBlotterLoadingScreen extends React.Component {
     render() {
         let cssClassName = StyleConstants.AB_STYLE;
-        let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.BlotterOptions, document);
+        let modalContainer = UIHelper_1.UIHelper.getModalContainer(this.props.AdaptableBlotter.blotterOptions, document);
         return (React.createElement(react_bootstrap_1.Modal, { show: this.props.showLoadingScreen, onHide: this.props.onClose, className: cssClassName + StyleConstants.BASE, container: modalContainer },
             React.createElement("div", { className: cssClassName + StyleConstants.MODAL_BASE },
                 React.createElement(react_bootstrap_1.Modal.Title, null, "\u00A0\u00A0\u00A0Initialising Grid"),
