@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
 import { ChartState } from './Interface/IState'
-import { IChartDefinition, IChartProperties } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, IChartProperties } from "../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 import { EMPTY_ARRAY, EMPTY_STRING, CHART_DEFAULT_REFRESH_RATE } from '../../Utilities/Constants/GeneralConstants';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 

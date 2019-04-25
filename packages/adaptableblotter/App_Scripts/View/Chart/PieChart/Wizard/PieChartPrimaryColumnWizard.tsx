@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStepProps, AdaptableWizardStep } from "../../../Wizard/Interface/IAdaptableWizard";
-import { ICategoryChartDefinition, IPieChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, IPieChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 import { Expression } from "../../../../Utilities/Expression";
 import { ExpressionHelper } from "../../../../Utilities/Helpers/ExpressionHelper";
 import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from "react-bootstrap";

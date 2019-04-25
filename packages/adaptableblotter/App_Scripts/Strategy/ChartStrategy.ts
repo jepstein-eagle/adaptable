@@ -9,7 +9,8 @@ import { ChartState, SystemState, ColumnFilterState } from '../Redux/ActionsRedu
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
-import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition, IChartData } from "../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition } from "../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
+import { IChartData } from "../Utilities/Interface/BlotterObjects/Charting/IChartData";
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ChartVisibility, ChartType } from '../Utilities/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';

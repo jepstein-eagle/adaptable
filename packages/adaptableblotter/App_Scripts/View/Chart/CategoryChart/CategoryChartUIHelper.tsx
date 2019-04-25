@@ -1,4 +1,4 @@
-import { ICategoryChartDefinition, ICategoryChartProperties } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, ICategoryChartProperties } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import {
   HorizontalAlignment, CategoryChartType, ToolTipType, CrosshairDisplayMode,
@@ -10,14 +10,15 @@ import * as React from "react";
 import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
 import { IColumn } from "../../../Utilities/Interface/IColumn";
 import { CategoryChartComponentState } from "./CategoryChartComponentState";
+import { DefaultCategoryChartProperties } from "../../../Utilities/Defaults/DefaultCategoryChartProperties";
 
 /* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
 */
 export module CategoryChartUIHelper {
 
   export function setChartDisplayPopupState(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): CategoryChartComponentState {
-    let categoryChartProperties: ICategoryChartProperties = chartDefinition.ChartProperties as ICategoryChartProperties
-
+    let categoryChartProperties: ICategoryChartProperties = Object.assign({}, DefaultCategoryChartProperties, chartDefinition.ChartProperties);
+   
     return {
       ChartProperties: categoryChartProperties,
       IsChartSettingsVisible: false,

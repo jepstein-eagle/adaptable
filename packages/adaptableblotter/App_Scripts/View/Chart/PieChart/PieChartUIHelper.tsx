@@ -1,6 +1,9 @@
-import { IPieChartDefinition, IPieChartProperties, IPieChartDataItem, IChartData } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IPieChartDefinition, IPieChartProperties } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
+import { IChartData } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartData";
+import { IPieChartDataItem } from "../../../Utilities/Interface/BlotterObjects/Charting/IPieChartDataItem";
 import { PieChartComponentState } from "./PieChartComponentState";
 import { SliceSortOption } from "../../../Utilities/ChartEnums";
+import { DefaultPieChartProperties } from "../../../Utilities/Defaults/DefaultPieChartProperties";
 
 /* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
 */
@@ -15,7 +18,8 @@ export module PieChartUIHelper {
   }
 
   export function setChartDisplayPopupState(chartDefinition: IPieChartDefinition, dataSource: IChartData): PieChartComponentState {
-    let pieChartProperties: IPieChartProperties = chartDefinition.ChartProperties as IPieChartProperties
+    let pieChartProperties: IPieChartProperties =  Object.assign({}, DefaultPieChartProperties, chartDefinition.ChartProperties);
+        
     let data: IPieChartDataItem[] = (dataSource != null) ? dataSource.Data : []
     return {
       DataSource: data,

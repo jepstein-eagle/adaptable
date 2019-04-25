@@ -8,7 +8,9 @@ import { IgrRingSeries } from 'igniteui-react-charts/ES2015/igr-ring-series';
 import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
 import { IgrPieChartModule } from 'igniteui-react-charts/ES2015/igr-pie-chart-module';
 import { SliceClickEventArgs } from "igniteui-react-charts/ES2015/igr-slice-click-event-args";
-import { IChartProperties, IPieChartDefinition, IPieChartProperties, IPieChartDataItem, IChartData } from "../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartProperties, IPieChartDefinition, IPieChartProperties } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
+import { IChartData } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartData";
+import { IPieChartDataItem } from "../../../Utilities/Interface/BlotterObjects/Charting/IPieChartDataItem";
 import { PieChartUIHelper } from "./PieChartUIHelper";
 import { PieChartComponentState } from "./PieChartComponentState";
 import { ButtonMaximise } from "../../Components/Buttons/ButtonMaximise";
@@ -22,7 +24,7 @@ import { Row, Col, Table, HelpBlock, FormControl, Checkbox, Panel } from "react-
 import { PanelWithTwoButtons } from "../../Components/Panels/PanelWithTwoButtons";
 import { PanelWithButton } from "../../Components/Panels/PanelWithButton";
 import { AdaptableBlotterForm } from "../../Components/Forms/AdaptableBlotterForm";
-import { PieChartLabelPosition, SliceLabelOption, SliceSortOption, PieChartOthersCategoryType } from "../../../Utilities/ChartEnums";
+import { PieChartLabelPosition, SliceLabelOption, SliceSortOption, OthersCategoryType } from "../../../Utilities/ChartEnums";
 import { AdaptablePopover } from "../../AdaptablePopover";
 import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
 import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
@@ -279,7 +281,7 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
                                     <HelpBlock>
                                         <Checkbox style={{ fontSize: 'small', marginBottom: '0px', marginTop: '0px' }}
                                             onChange={(e) => this.onThresholdAsPercentChanged(e)}
-                                            checked={this.state.ChartProperties.OthersCategoryType == PieChartOthersCategoryType.Percent} >Others Band As %
+                                            checked={this.state.ChartProperties.OthersCategoryType == OthersCategoryType.Percent} >Others Band As %
                             </Checkbox>
                                     </HelpBlock>
                                 </Col>
@@ -450,7 +452,7 @@ export class PieChartComponent extends React.Component<PieChartComponentProps, P
     private onThresholdAsPercentChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
         let chartProperties: IPieChartProperties = this.state.ChartProperties;
-        chartProperties.OthersCategoryType = (e.checked) ? PieChartOthersCategoryType.Percent : PieChartOthersCategoryType.Number;
+        chartProperties.OthersCategoryType = (e.checked) ? OthersCategoryType.Percent : OthersCategoryType.Number;
         this.updateChartProperties(chartProperties);
     }
 

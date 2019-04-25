@@ -1,6 +1,8 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition, IPieChartDataItem, IChartData } from "../Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition } from "../Interface/BlotterObjects/Charting/IChartDefinition";
+import { IChartData } from "../Interface/BlotterObjects/Charting/IChartData";
+import { IPieChartDataItem } from "../Interface/BlotterObjects/Charting/IPieChartDataItem";
 import { IColumnValueExpression } from "../Interface/Expression/IColumnValueExpression";
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';

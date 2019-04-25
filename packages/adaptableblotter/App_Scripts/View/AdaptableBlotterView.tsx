@@ -54,6 +54,8 @@ class AdaptableBlotterView extends React.Component<AdaptableBlotterViewProps, {}
                     />
                 }
 
+
+                {/*  These are all popups that we show at different times */}
                 <AdaptableBlotterAbout
                     AdaptableBlotter={this.props.Blotter}
                     onClose={this.props.onCloseAboutPopup}

@@ -10,7 +10,7 @@ import { ChartVisibility } from '../../Utilities/ChartEnums';
 import { EMPTY_ARRAY, SYSTEM_DEFAULT_CHART_VISIBILITY, EMPTY_STRING, SYSTEM_DEFAULT_SYSTEM_STATUS_COLOUR } from '../../Utilities/Constants/GeneralConstants';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
-import { IChartData } from '../../Utilities/Interface/BlotterObjects/IChartDefinition';
+import { IChartData } from "../../Utilities/Interface/BlotterObjects/Charting/IChartData";
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IRange } from '../../Utilities/Interface/Expression/IRange';
 import { Expression } from '../../Utilities/Expression';

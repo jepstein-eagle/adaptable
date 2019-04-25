@@ -4,7 +4,7 @@ var quickSearchText;
 var trades;
 var gridOptions;
 var showTrade = true;
-var instantiateAgGridInHarness = false;
+
 
 function runQuickSearchViaAPI() {
   const element = document.getElementById('txtQuickSearchText');
@@ -33,7 +33,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(60);
+    return dataGen.getTrades(6000);
   }
   return dataGen.getFtseData(199);
 }
@@ -73,27 +73,27 @@ function InitTradeBlotter() {
     floatingFilter: true,
     suppressColumnVirtualisation: false,
     suppressMenuHide: true,
-    //  sideBar: undefined, // this puts in filters and columns by default
-
-    sideBar: {
-      toolPanels: [
-        {
-          id: 'columns',
-          labelDefault: 'Columns',
-          labelKey: 'columns',
-          iconKey: 'columns',
-          toolPanel: 'agColumnsToolPanel',
+    sideBar: undefined, // this puts in filters and columns by default
+    /*
+        sideBar: {
+          toolPanels: [
+            {
+              id: 'columns',
+              labelDefault: 'Columns',
+              labelKey: 'columns',
+              iconKey: 'columns',
+              toolPanel: 'agColumnsToolPanel',
+            },
+            {
+              id: 'filters',
+              labelDefault: 'Filters',
+              labelKey: 'filters',
+              iconKey: 'filter',
+              toolPanel: 'agFiltersToolPanel',
+            },
+          ],
         },
-        {
-          id: 'filters',
-          labelDefault: 'Filters',
-          labelKey: 'filters',
-          iconKey: 'filter',
-          toolPanel: 'agFiltersToolPanel',
-        },
-      ],
-    },
-
+    */
     columnTypes: { // not required but helpful for column data type identification
       abColDefNumber: {},
       abColDefString: {},
@@ -103,7 +103,8 @@ function InitTradeBlotter() {
     },
   };
 
-  // Create and instantiate an ag-Grid object
+  var instantiateAgGridInHarness = false;
+  // Create and instantiate an ag-Grid object - now want to do this ONLY in the AB!
   if (instantiateAgGridInHarness) {
     const gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = '';
@@ -120,13 +121,14 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
+      licenceKey: 'glu5834t-3ay59lrex-mn6ec4fr3d',
       //  licenceKey: getCommunityKey(),
       //  licenceKey: getValidStandardKey(),
       //    licenceKey: getValidEnterpriseKey(),
       // licenceKey: ,
       // licenceKey: '',
 
-      predefinedConfig: dataSourceJson,
+     predefinedConfig: dataSourceJson,
       auditOptions: {
         //     auditCellEdits: true,
         //  auditFunctionEvents: true,
@@ -135,12 +137,12 @@ function InitTradeBlotter() {
         //        pingInterval: 120
       },
       containerOptions: {
-        // chartContainer: 'chart-container-xx', // set our own container
+        chartContainer: 'chart-container-xx', // set our own container
         vendorContainer: 'grid',
       },
       configServerOptions: {
-     //   enableConfigServer: true,
-     //   configServerUrl: 'http://localhost:8080/adaptableblotter-config',
+        //   enableConfigServer: true,
+        //   configServerUrl: 'http://localhost:8080/adaptableblotter-config',
       },
       layoutOptions: {
         includeVendorStateInLayouts: true,
@@ -163,6 +165,7 @@ function InitTradeBlotter() {
         // pieChartMaxItems: 100
       },
       generalOptions: {
+        showAdaptableBlotterToolPanel: true,
         // serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
       },
       iPushPullConfig: {
@@ -809,5 +812,23 @@ let dataSourceJson = {
         Description: "Datasource 2",
       }
     ]
+  },
+  Chart: {
+    ChartDefinitions: [
+      {
+        ChartType: "PieChart",
+        Description: "",
+        Name: "Hello",
+        PrimaryColumnId: "counterparty",
+        SecondaryColumnId: null,
+        SecondaryColumnOperation: "Count",
+        VisibleRowsOnly: true,
+        ChartProperties:{
+          
+        }
+      }
+    ],
+    CurrentChartName: "Hello",
+    RefreshRate: 3
   }
 };

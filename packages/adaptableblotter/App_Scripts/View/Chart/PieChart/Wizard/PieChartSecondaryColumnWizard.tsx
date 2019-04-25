@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStepProps, AdaptableWizardStep } from "../../../Wizard/Interface/IAdaptableWizard";
-import { IPieChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IPieChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from "react-bootstrap";
 import { AdaptableBlotterForm } from "../../../Components/Forms/AdaptableBlotterForm";
 import { ColumnSelector } from "../../../Components/Selectors/ColumnSelector";
@@ -25,7 +25,7 @@ export class PieChartSecondaryColumnWizard extends React.Component<PieChartSecon
         super(props)
         this.state = {
             SecondaryColumnId: props.Data.SecondaryColumnId,
-            SecondaryColumnOperation: props.Data.SecondaryColumnOperation,
+            SecondaryColumnOperation: props.Data.SecondaryColumnOperation as SecondaryColumnOperation,
         }
     }
 

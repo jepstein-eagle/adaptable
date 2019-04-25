@@ -1,6 +1,6 @@
 import * as React from "react";
 import { AdaptableWizardStepProps, AdaptableWizardStep } from "../../../Wizard/Interface/IAdaptableWizard";
-import { ICategoryChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 import { StringExtensions } from "../../../../Utilities/Extensions/StringExtensions";
 import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock, Radio } from "react-bootstrap";
 import { AdaptableBlotterForm } from "../../../Components/Forms/AdaptableBlotterForm";

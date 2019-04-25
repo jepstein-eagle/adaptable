@@ -76,7 +76,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             )}
         </Nav>
 
-        return <div className={cssBaseClassName}>
+        return <div  className={cssBaseClassName}>
             {this.props.DashboardState.DashboardVisibility != Visibility.Hidden &&
                 <div className="ab_no_margin">
                     {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ?

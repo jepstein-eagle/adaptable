@@ -2,7 +2,7 @@ import {
   CategoryChartType, CrosshairDisplayMode, ToolTipType,
   AxisLabelsLocation, LabelVisibility, HorizontalAlignment, AxisAngle, AxisScale
 } from '../ChartEnums';
-import { ICategoryChartProperties } from '../Interface/BlotterObjects/IChartDefinition';
+import { ICategoryChartProperties } from '../Interface/BlotterObjects/Charting/IChartDefinition';
 
 export const DefaultCategoryChartProperties: ICategoryChartProperties = {
   // General

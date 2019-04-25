@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants'
 import { AdaptableWizardStepProps, AdaptableWizardStep } from "../../../Wizard/Interface/IAdaptableWizard";
-import { ICategoryChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 import { ColumnHelper } from "../../../../Utilities/Helpers/ColumnHelper";
 import { IKeyValuePair } from "../../../../Utilities/Interface/IKeyValuePair";
 import { WizardSummaryPage } from "../../../Components/WizardSummaryPage";

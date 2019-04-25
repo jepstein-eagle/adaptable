@@ -78,17 +78,19 @@ export class LicenceService implements ILicenceService {
         if (!createNewEmptyDateArray) {
             return this.isEmptyArray();
         }
+
+
         let isPrimeNumber = this.isNewPrimeNumber(isValidDateAsNumericStrig);
         let nullExpiryDate = this.doubleFirstString(isPrimeNumber);
         let latestDate = this.checkDate(todaysDate);
-        let initialExpiryDate = myPrimeNumber[2];
+        let initialExpiryDate = yesterdayDate[2];
         if (!this.CreateNewDateArray(initialExpiryDate, 10)) {
             return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Standard, nullExpiryDate, latestDate, isPrimeNumber);
         }
         if (StringExtensions.NotIncludes(initialExpiryDate, 'c') || StringExtensions.NotIncludes(initialExpiryDate, 'f')) {
             return ObjectFactory.CreateLicenceInfo(LicenceScopeType.Standard, nullExpiryDate, latestDate, isPrimeNumber);
         }
-        let isAlternativeDate = this.getOriginalDate(139);
+        let isAlternativeDate = (initialExpiryDate.length == 7);
         if (isAlternativeDate == true) {
             LoggingHelper.LogAdaptableBlotterWarning("This licence is not valid for the Demo Site");
             return null;

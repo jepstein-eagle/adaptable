@@ -21,7 +21,7 @@ import { IColItem } from "../UIInterfaces";
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
-import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { IChartDefinition } from "../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 import { ChartVisibility, ChartType } from "../../Utilities/ChartEnums";
 import { CategoryChartWizard } from "./CategoryChart/Wizard/CategoryChartWizard";
 import { PieChartWizard } from "./PieChart/Wizard/PieChartWizard";

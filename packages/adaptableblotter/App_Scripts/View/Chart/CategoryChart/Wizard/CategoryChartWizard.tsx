@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants'
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from "../../../Wizard/Interface/IAdaptableWizard";
-import { ICategoryChartDefinition, IChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/IChartDefinition";
+import { ICategoryChartDefinition, IChartDefinition } from "../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 import { AdaptableWizard } from "../../../Wizard/AdaptableWizard";
 import { CategoryChartYAxisWizard } from "./CategoryChartYAxisWizard";
 import { CategoryChartXAxisWizard } from "./CategoryChartXAxisWizard";
