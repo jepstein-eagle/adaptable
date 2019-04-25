@@ -8,7 +8,6 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     blotterId: GeneralConstants.BLOTTER_ID,
     predefinedConfig: null,
     licenceKey: '',
-    localStorageKey: 'adaptable-blotter-grid-state',
     auditOptions: {
         auditCellEdits: false,
         auditFunctionEvents: false,
