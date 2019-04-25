@@ -24,7 +24,7 @@ class UserInterfaceApi extends ApiBase_1.ApiBase {
         if (ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(permittedValues)) {
             return permittedValues.find(pc => pc.ColumnId == columnId);
         }
-        return null;
+        return undefined;
     }
     SetColumnPermittedValues(column, permittedValues) {
         let permittedColumnValues = { ColumnId: column, PermittedValues: permittedValues };
