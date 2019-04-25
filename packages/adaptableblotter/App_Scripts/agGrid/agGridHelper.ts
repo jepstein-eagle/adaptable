@@ -191,7 +191,7 @@ export module agGridHelper {
 
     export function getCleanValue(value: string): string {
         if (value == null || value == 'null') {
-            return null;
+            return undefined;
         } else if (value == undefined || value == 'undefined') {
             return undefined;
         } else {

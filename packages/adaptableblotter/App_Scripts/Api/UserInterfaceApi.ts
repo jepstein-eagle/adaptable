@@ -33,7 +33,7 @@ public SetColorPalette(colorPalette: string[]): void {
     if (ArrayExtensions.IsNotNullOrEmpty(permittedValues)) {
       return permittedValues.find(pc => pc.ColumnId == columnId);
     }
-    return null;
+    return undefined;
   }
 
   public SetColumnPermittedValues(column: string, permittedValues: string[]): void {
