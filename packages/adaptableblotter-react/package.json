@@ -1,6 +1,6 @@
 {
 	"name": "adaptableblotter-react",
-	"version": "3.2.11-beta.28+850bc801",
+	"version": "3.2.11-beta.19+f6d87f2c",
 	"description": "",
 	"keywords": [],
 	"main": "dist/index.umd.js",
@@ -107,7 +107,7 @@
 		"typescript": "^3.3.3"
 	},
 	"dependencies": {
-		"adaptableblotter": "^3.4.1-beta.28+850bc801",
+		"adaptableblotter": "^3.4.1-beta.19+f6d87f2c",
 		"ag-grid-community": "^20.2.0",
 		"ag-grid-enterprise": "^20.2.0",
 		"ag-grid-react": "^20.2.0"
@@ -117,5 +117,5 @@
 		"react": "^16.4.2",
 		"react-dom": "^16.4.2"
 	},
-	"gitHead": "850bc8010cf6fe82f8aca3329a131bc32676e4a7"
+	"gitHead": "f6d87f2c1772a5c29cbab6bb029b4fe8d509ed58"
 }
