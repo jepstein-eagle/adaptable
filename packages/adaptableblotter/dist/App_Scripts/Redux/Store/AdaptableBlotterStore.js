@@ -174,11 +174,12 @@ class AdaptableBlotterStore {
         // If the user has remote storage set then we use Remote Engine, otherwise we use Local Enginge
         // We pass into the create method the blotterId, the config, and also the Licence Info
         // the Lience Info is needed so we can determine whether or not to load state
+        const localStorageKey = 'adaptable-blotter-state-' + blotter.blotterOptions.primaryKey;
         if (BlotterHelper_1.BlotterHelper.isConfigServerEnabled(blotter.blotterOptions)) {
             storageEngine = IAdaptableBlotterReduxRemoteStorageEngine_1.createEngine(blotter.blotterOptions.configServerOptions.configServerUrl, blotter.blotterOptions.userName, blotter.blotterOptions.blotterId);
         }
         else {
-            storageEngine = AdaptableBlotterReduxLocalStorageEngine_1.createEngine(blotter.blotterOptions.localStorageKey, blotter.blotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
+            storageEngine = AdaptableBlotterReduxLocalStorageEngine_1.createEngine(localStorageKey, blotter.blotterOptions.predefinedConfig, blotter.LicenceService.LicenceInfo);
         }
         const nonPersistentReduxKeys = [
             // Non Persisted State

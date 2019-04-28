@@ -224,7 +224,9 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     // If the user has remote storage set then we use Remote Engine, otherwise we use Local Enginge
     // We pass into the create method the blotterId, the config, and also the Licence Info
     // the Lience Info is needed so we can determine whether or not to load state
-    const localStorageKey =  'adaptable-blotter-state-' + blotter.blotterOptions.primaryKey;
+    // not sure we can do this as we need to be backwardly compatible with existing users so need to stick with blotter id (which shoudl be unique)
+   // const localStorageKey =  'adaptable-blotter-state-' + blotter.blotterOptions.primaryKey; 
+    const localStorageKey =  blotter.blotterOptions.blotterId;
     if (BlotterHelper.isConfigServerEnabled(blotter.blotterOptions)) {
       storageEngine = createEngineRemote(blotter.blotterOptions.configServerOptions.configServerUrl, blotter.blotterOptions.userName, blotter.blotterOptions.blotterId);
     } else {

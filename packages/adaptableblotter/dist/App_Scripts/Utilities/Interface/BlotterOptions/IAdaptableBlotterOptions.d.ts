@@ -53,10 +53,6 @@ export interface IAdaptableBlotterOptions {
     */
     containerOptions?: IContainerOptions;
     /**
-     * The key to be used for saving the grid store state in localstorage
-     */
-    localStorageKey?: string;
-    /**
      * Options for mananging the Audit Log
      * Depending on your options, every keystroke, data change, user action etc. is logged
      * This is then sent as JSON to and Audit Http Channel for you to listen to using the software of your choice
