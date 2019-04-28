@@ -12,6 +12,7 @@ import { IColumn } from "../../Utilities/Interface/IColumn";
  * ColumnInfo
  * DataManagement
  * Piechart
+ * TeamSharing
  * Plus there is one 'special' strategy that the user cannot hide called the HomeStrategy which has important functions that need to be called (e.g. creates Team Sharing and other menu items)
  */
 export interface IStrategy {

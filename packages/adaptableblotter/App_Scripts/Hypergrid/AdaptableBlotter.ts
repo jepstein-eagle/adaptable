@@ -26,6 +26,7 @@ import { CellValidationStrategy } from '../Strategy/CellValidationStrategy'
 import { LayoutStrategy } from '../Strategy/LayoutStrategy'
 import { ThemeStrategy } from '../Strategy/ThemeStrategy'
 import { DashboardStrategy } from '../Strategy/DashboardStrategy'
+import { TeamSharingStrategy } from '../Strategy/TeamSharingStrategy'
 import { IColumnFilterContext } from "../Utilities/Interface/IColumnFilterContext";
 import { EventDispatcher } from '../Utilities/EventDispatcher'
 import { DataType, DistinctCriteriaPairValue, SortOrder, FilterOnDataChangeOptions } from '../Utilities/Enums'
@@ -208,6 +209,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(this))
         this.strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(this))
         this.strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(this))
+        this.strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(this))
         this.strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(this))
         this.strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(this))
 

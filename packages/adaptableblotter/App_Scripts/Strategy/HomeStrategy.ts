@@ -25,14 +25,6 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
         this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded())
     }
 
-    protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstants.TeamSharingStrategyName, ScreenPopups.TeamSharingPopup, StrategyConstants.TeamSharingGlyph);
-    }
-
-    protected hasPopupMenu(): boolean {
-        return BlotterHelper.isConfigServerEnabled(this.blotter.blotterOptions)
-    }
-
     public addContextMenuItem(column: IColumn): void {
       
         if (this.canCreateContextMenuItem(column, this.blotter)) {

@@ -1878,7 +1878,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
     private isFloatingFilterActive(): boolean {
-        return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter == true && this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter==true;
+        return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter == true && this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter;
     }
 
     public showFloatingFilter(): void {

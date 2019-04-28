@@ -34,6 +34,7 @@ import { PlusMinusStrategy } from "../Strategy/PlusMinusStrategy";
 import { QuickSearchStrategy } from "../Strategy/QuickSearchStrategy";
 import { SmartEditStrategy } from "../Strategy/SmartEditStrategy";
 import { ShortcutStrategy } from "../Strategy/ShortcutStrategy";
+import { TeamSharingStrategy } from "../Strategy/TeamSharingStrategy";
 import { ThemeStrategy } from "../Strategy/ThemeStrategy";
 import { CellSummaryStrategy } from "../Strategy/CellSummaryStrategy";
 import { UserFilterStrategy } from "../Strategy/UserFilterStrategy";
@@ -88,6 +89,7 @@ export module agGridHelper {
         strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(blotter))
         strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(blotter))
         strategies.set(StrategyConstants.ShortcutStrategyId, new ShortcutStrategy(blotter))
+        strategies.set(StrategyConstants.TeamSharingStrategyId, new TeamSharingStrategy(blotter))
         strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(blotter))
         strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(blotter))
         strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(blotter))
