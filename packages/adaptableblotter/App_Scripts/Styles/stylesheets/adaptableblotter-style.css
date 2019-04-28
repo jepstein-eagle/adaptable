@@ -78,7 +78,7 @@ button.placeholder:before {
 }
 
 .ab_small-padding-panel-header > [class*='panel-heading'] {
-  padding: 3px;
+  padding: 4px;
   font-size: small;
 }
 

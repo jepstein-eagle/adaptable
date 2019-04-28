@@ -65,6 +65,7 @@ import { IChartApi } from "./Interface/IChartApi";
 import { ChartApi } from "./ChartApi";
 import { ICellSummaryApi } from "./Interface/ICellSummaryApi";
 import { CellSummaryApi } from "./CellSummaryApi";
+import { SystemApi } from "./SystemApi";
 
 
 
@@ -134,6 +135,7 @@ export class BlotterApi implements IBlotterApi {
     this.reminderApi = new ReminderApi(blotter);
     this.shortcutApi = new ShortcutApi(blotter);
     this.smartEditApi = new SmartEditApi(blotter);
+    this.systemApi = new SystemApi(blotter);
     this.systemFilterApi = new SystemFilterApi(blotter);
     this.systemStatusApi = new SystemStatusApi(blotter);
     this.themeApi = new ThemeApi(blotter);

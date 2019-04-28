@@ -20,16 +20,15 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
         let className = "ab_panel-with-button"; // this will change...
 
         let headerItems = this.props.colItems.map((colItem: IColItem) => {
-            return <Col key={colItem.Content + colItem.Size} xs={colItem.Size}>{colItem.Content}</Col>
+            return <Col  key={colItem.Content + colItem.Size} xs={colItem.Size}>{colItem.Content}</Col>
         })
 
-        let header = <AdaptableBlotterForm horizontal>
-            <Row style={{ display: "flex", alignItems: "center", fontSize: "small" }} >
+        let header =             <Row  style={{ display: "flex", alignItems: "center", fontSize: "small" , padding: '2px'}} >
                 {headerItems}
             </Row>
-        </AdaptableBlotterForm>;
+    
         return <div className={cssClassName}>
-            <Panel header={header} bsSize={"small"} className="ab_no_padding_no_margin" bsStyle={this.props.bsStyle} >
+            <Panel header={header} bsSize={"small"} className="ab_no_padding_no_margin ab_small-padding-panel-header" bsStyle={this.props.bsStyle} >
                 {this.props.children}
             </Panel>
         </div>;
