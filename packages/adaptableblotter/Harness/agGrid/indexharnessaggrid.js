@@ -121,7 +121,7 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
-      licenceKey: 'glu5834t-3ay59lrex-mn6ec4fr3d',
+    
      
 
      predefinedConfig: dataSourceJson,
