@@ -107,7 +107,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public strategies: IAdaptableStrategyCollection
     public adaptableBlotterStore: IAdaptableBlotterStore
     public blotterOptions: IAdaptableBlotterOptions
-    public VendorGridName: any
+    public vendorGridName: any
 
     public CalendarService: ICalendarService
     public DataService: IDataService
@@ -119,7 +119,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public FreeTextColumnService: IFreeTextColumnService
     public LicenceService: ILicenceService
     public ScheduleService: IScheduleService
-    public EmbedColumnMenu: boolean;
+    public embedColumnMenu: boolean;
 
     private calculatedColumnPathMap: Map<string, string[]> = new Map()
     private useRowNodeLookUp: boolean;
@@ -127,7 +127,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private abContainerElement: HTMLElement;
     private gridOptions: GridOptions
 
-    public IsInitialised: boolean
+    public isInitialised: boolean
     private throttleOnDataChangedUser: (() => void) & _.Cancelable;
     private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
     public hasFloatingFilter: boolean
@@ -140,9 +140,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.blotterOptions = BlotterHelper.assignBlotterOptions(blotterOptions);
 
         this.gridOptions = this.blotterOptions.vendorGrid
-        this.VendorGridName = 'agGrid';
-        this.EmbedColumnMenu = true;
-        this.IsInitialised = false;
+        this.vendorGridName = 'agGrid';
+        this.embedColumnMenu = true;
+        this.isInitialised = false;
         this.hasFloatingFilter = true;
 
         // get the api ready
@@ -209,7 +209,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 })
             .then(() => {
                 this.applyFinalRendering();
-                this.IsInitialised = true
+                this.isInitialised = true
                 this.dispatchAction(PopupRedux.PopupHideLoading());
             })
 
@@ -336,12 +336,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onSearchChanged;
     }
-
-
-    public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
-    public StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>();
-    public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
-    public AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs> = new EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>();
 
     public reloadGrid(): void {
         this._onGridReloaded.Dispatch(this, this);
@@ -1224,7 +1218,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         this.addFiltersToVendorColumn(vendorColumn);
 
-        if (this.IsInitialised) {
+        if (this.isInitialised) {
             let conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.strategies.get(StrategyConstants.ConditionalStyleStrategyId) as IConditionalStyleStrategy;
             conditionalStyleagGridStrategy.InitStyles();
         }
@@ -1775,7 +1769,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private updateQuickSearchRangeVisibleColumn(columnId: string): void {
-        if (this.IsInitialised) {
+        if (this.isInitialised) {
             let quickSearchState: QuickSearchState = this.api.quickSearchApi.GetState();
             // only update if quick search is not highlight and is set - rare use case...
             if (quickSearchState.DisplayAction != DisplayAction.HighlightCell && StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {

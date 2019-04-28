@@ -2,8 +2,14 @@
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { ISearchChangedEventArgs, IStateChangedEventArgs, IColumnStateChangedEventArgs, IAlertFiredEventArgs } from '../../Utilities/Interface/IStateEvents';
 import { IEvent } from '../../Utilities/Interface/IEvent';
+import { EventDispatcher } from '../../Utilities/EventDispatcher';
 
 export interface IEventApi {
+
+    _onSearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
+    _onStateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
+    _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
+    _onAlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
 
     /**
      * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.

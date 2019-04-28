@@ -15,7 +15,7 @@ class SmartEditStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.SmartEditState != this.blotter.adaptableBlotterStore.TheStore.getState().SmartEdit) {
             this.SmartEditState = this.blotter.adaptableBlotterStore.TheStore.getState().SmartEdit;
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.SmartEdit, this.SmartEditState);
             }
         }

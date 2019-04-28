@@ -16,9 +16,9 @@ class FlashingCellStrategyagGrid extends FlashingCellsStrategy_1.FlashingCellsSt
         // dont handle 
     }
     InitState() {
-        if (this.FlashingCellState != this.blotter.adaptableBlotterStore.TheStore.getState().FlashingCell) {
-            this.FlashingCellState = this.blotter.adaptableBlotterStore.TheStore.getState().FlashingCell;
-            let numericColumns = ColumnHelper_1.ColumnHelper.getNumericColumns(this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns);
+        if (this.FlashingCellState != this.blotter.api.flashingCellApi.GetState()) {
+            this.FlashingCellState = this.blotter.api.flashingCellApi.GetState();
+            let numericColumns = ColumnHelper_1.ColumnHelper.getNumericColumns(this.blotter.api.gridApi.getColumns());
             let theBlotter = this.blotter;
             let currentFlashing = this.currentFlashing;
             numericColumns.forEach(col => {

@@ -25,7 +25,7 @@ class AlertApi extends ApiBase_1.ApiBase {
                 this.dispatchAction(PopupRedux.PopupShowAlert(alertToShow));
             }
         }
-        this.blotter.AlertFired.Dispatch(this.blotter, { alert: alertToShow });
+        this.blotter.api.eventApi._onAlertFired.Dispatch(this.blotter, { alert: alertToShow });
         LoggingHelper_1.LoggingHelper.LogAlert(alertToShow.Header + ": " + alertToShow.Msg, alertToShow.MessageType);
     }
     Show(alertHeader, alertMessage, MessageType, showAsPopup) {

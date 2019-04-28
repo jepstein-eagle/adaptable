@@ -30,7 +30,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
                 this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch)
             }
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.AdvancedSearch, this.AdvancedSearchState)
             }
         }

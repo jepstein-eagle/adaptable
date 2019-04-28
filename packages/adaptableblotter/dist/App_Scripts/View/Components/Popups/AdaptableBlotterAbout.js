@@ -176,7 +176,7 @@ class AdaptableBlotterAbout extends React.Component {
                 return ColumnHelper_1.ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ": " + gs.SortOrder;
             });
             let licenceInDate = (this.props.AdaptableBlotter.LicenceService.LicenceInfo.IsLicenceInDate) ? "In Date" : "Expired";
-            returnRows.push(this.createColItem(colItems, "Vendor Grid", this.props.AdaptableBlotter.VendorGridName));
+            returnRows.push(this.createColItem(colItems, "Vendor Grid", this.props.AdaptableBlotter.vendorGridName));
             returnRows.push(this.createColItem(colItems, "Adaptable Blotter Version", "3.3"));
             returnRows.push(this.createColItem(colItems, "Licence Key", this.props.AdaptableBlotter.blotterOptions.licenceKey + " (" + licenceInDate + ")"));
             returnRows.push(this.createColItem(colItems, "Licence Type", this.props.AdaptableBlotter.LicenceService.LicenceInfo.LicenceScopeType + " (" + this.props.AdaptableBlotter.LicenceService.LicenceInfo.LicenceUserType + ")"));

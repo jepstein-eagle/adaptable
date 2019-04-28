@@ -121,10 +121,10 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
-    
-     
+   //   licenceKey: 'glu5834t-3ay59lrex-mn6ec4fr3d',
 
-     predefinedConfig: dataSourceJson,
+
+   //   predefinedConfig: dataSourceJson,
       auditOptions: {
         //     auditCellEdits: true,
         //  auditFunctionEvents: true,
@@ -144,8 +144,7 @@ function InitTradeBlotter() {
         includeVendorStateInLayouts: true,
         autoSaveLayouts: true,
       },
-      localStorageKey: 'abcde',
-      queryOptions: {
+       queryOptions: {
         //  ignoreCaseInQueries: false,
         // maxColumnValueItemsDisplayed: 5,
         //  columnValuesOnlyInQueries: true,
@@ -185,12 +184,10 @@ function InitTradeBlotter() {
     adaptableblotter.adaptableBlotterStore.TheStore.subscribe(() => {
       apiTester(adaptableblotter.adaptableBlotterStore.TheStore.getState(), gridOptions);
     });
-    adaptableblotter.api.eventApi.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs));
-    adaptableblotter.api.eventApi.onAlertFired().Subscribe((sender, alertFiredArgs) => listenToAlertFired(alertFiredArgs));
-    adaptableblotter.api.eventApi.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(
-      stateChangedArgs,
-    ));
-    adaptableblotter.api.eventApi.onSearchedChanged().Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
+  //  adaptableblotter.api.eventApi.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs));
+  //  adaptableblotter.api.eventApi.onAlertFired().Subscribe((sender, alertFiredArgs) => listenToAlertFired(alertFiredArgs));
+  //  adaptableblotter.api.eventApi.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs));
+  //  adaptableblotter.api.eventApi.onSearchedChanged().Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
     setTimeout(() => {
       if (adaptableblotter.adaptableBlotterStore.TheStore.getState().Layout.CurrentLayout === 'Ab_Default_Layout') {
         gridOptions.columnApi.autoSizeAllColumns();
@@ -206,23 +203,23 @@ function retrieveValues(columnName) {
 }
 
 function listenToColumnStateChange(columnChangedArgs) {
-  //    console.log("column event received")
-  //     console.log(columnChangedArgs)
+  console.log("column event received");
+  console.log(columnChangedArgs);
 }
 
 function listenToStateChange(stateChangedArgs) {
-  //  console.log("state event received")
-  //    console.log(stateChangedArgs)
+  console.log("state event received");
+  console.log(stateChangedArgs);
 }
 
 function listenToSearchChange(searchChangedArgs) {
-  //  console.log("search changed event received")
-  //   console.log(searchChangedArgs)
+  console.log("search changed event received");
+  console.log(searchChangedArgs);
 }
 
 function listenToAlertFired(alertFiredArgs) {
-  // console.log('from Harness');
-  // console.log(alertFiredArgs.alert);
+  console.log('alert fired event received');
+  console.log(alertFiredArgs.alert);
 }
 
 function getValuesForColumn(columnName) {
@@ -819,8 +816,8 @@ let dataSourceJson = {
         SecondaryColumnId: null,
         SecondaryColumnOperation: "Count",
         VisibleRowsOnly: true,
-        ChartProperties:{
-          
+        ChartProperties: {
+
         }
       }
     ],

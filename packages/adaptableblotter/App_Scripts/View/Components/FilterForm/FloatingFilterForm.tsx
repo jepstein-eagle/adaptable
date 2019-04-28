@@ -252,5 +252,5 @@ export const FloatingFilterFormReact = (FilterContext: IColumnFilterContext) => 
         Blotter={FilterContext.Blotter}
         CurrentColumn={FilterContext.Column}
         TeamSharingActivated={false}
-        EmbedColumnMenu={FilterContext.Blotter.EmbedColumnMenu} />
+        EmbedColumnMenu={FilterContext.Blotter.embedColumnMenu} />
 </Provider>;

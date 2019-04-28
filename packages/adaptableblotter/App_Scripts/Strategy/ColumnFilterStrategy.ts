@@ -41,7 +41,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
                 this.publishSearchChanged(SearchChangedTrigger.ColumnFilter)
             }
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.ColumnFilter, this.columnFilterState)
             }
         }

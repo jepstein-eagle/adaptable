@@ -61,6 +61,10 @@ import { ReminderApi } from "./ReminderApi";
 import { IFlashingCellApi } from "./Interface/IFlashingCellApi";
 import { FlashingCellApi } from "./FlashingCellApi";
 import { ISystemApi } from "./Interface/ISystemApi";
+import { IChartApi } from "./Interface/IChartApi";
+import { ChartApi } from "./ChartApi";
+import { ICellSummaryApi } from "./Interface/ICellSummaryApi";
+import { CellSummaryApi } from "./CellSummaryApi";
 
 
 
@@ -70,7 +74,9 @@ export class BlotterApi implements IBlotterApi {
   public alertApi: IAlertApi;
   public calendarApi: ICalendarApi;
   public calculatedColumnApi: ICalculatedColumnApi;
+  public cellSummaryApi: ICellSummaryApi;
   public cellValidationApi: ICellValidationApi;
+  public chartApi: IChartApi;
   public columnCategoryApi: IColumnCategoryApi;
   public columnFilterApi: IColumnFilterApi;
   public conditionalStyleApi: IConditionalStyleApi;
@@ -104,7 +110,9 @@ export class BlotterApi implements IBlotterApi {
     this.alertApi = new AlertApi(blotter);
     this.calendarApi = new CalendarApi(blotter);
     this.calculatedColumnApi = new CalculatedColumnApi(blotter);
+    this.cellSummaryApi = new CellSummaryApi(blotter);
     this.cellValidationApi = new CellValidationApi(blotter);
+    this.chartApi = new ChartApi(blotter);
     this.columnCategoryApi = new ColumnCategoryApi(blotter);
     this.columnFilterApi = new ColumnFilterApi(blotter);
     this.conditionalStyleApi = new ConditionalStyleApi(blotter);

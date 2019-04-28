@@ -17,7 +17,7 @@ class ConditionalStyleStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
         if (this.ConditionalStyleState != this.blotter.adaptableBlotterStore.TheStore.getState().ConditionalStyle) {
             this.ConditionalStyleState = this.blotter.adaptableBlotterStore.TheStore.getState().ConditionalStyle;
             this.InitStyles();
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.ConditionalStyle, this.ConditionalStyleState);
             }
         }

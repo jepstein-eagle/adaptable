@@ -21,7 +21,7 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.ShortcutState != this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut) {
             this.ShortcutState = this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut;
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Shortcut, this.ShortcutState);
             }
         }

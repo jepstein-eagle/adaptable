@@ -26,7 +26,7 @@ class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.ThemeState != this.blotter.adaptableBlotterStore.TheStore.getState().Theme) {
             this.ThemeState = this.blotter.adaptableBlotterStore.TheStore.getState().Theme;
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Theme, this.ThemeState);
             }
             this.style.innerHTML = "";

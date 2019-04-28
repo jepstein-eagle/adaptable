@@ -136,8 +136,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public ScheduleService: IScheduleService
 
     public blotterOptions: IAdaptableBlotterOptions
-    public VendorGridName: any
-    public EmbedColumnMenu: boolean;
+    public vendorGridName: any
+    public embedColumnMenu: boolean;
 
     private cellStyleHypergridMap: Map<any, Map<string, CellStyleHypergrid>> = new Map()
     private cellFlashIntervalHypergridMap: Map<any, Map<string, number>> = new Map()
@@ -145,7 +145,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private hyperGrid: any
     private filterContainer: HTMLDivElement
 
-    public IsInitialised: boolean
+    public isInitialised: boolean
 
     private throttleOnDataChangedUser: (() => void) & _.Cancelable;
     private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
@@ -156,8 +156,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.blotterOptions = BlotterHelper.assignBlotterOptions(blotterOptions);
 
         this.hyperGrid = this.blotterOptions.vendorGrid;
-        this.VendorGridName = 'Hypergrid';
-        this.EmbedColumnMenu = false;
+        this.vendorGridName = 'Hypergrid';
+        this.embedColumnMenu = false;
         this.hasFloatingFilter = true;
 
         // Create licencing
@@ -248,7 +248,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 let currentlayout = this.adaptableBlotterStore.TheStore.getState().Layout.CurrentLayout
                 this.adaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout))
                 BlotterHelper.isValidPrimaryKey(this, this.getState().Grid.Columns);
-                this.IsInitialised = true
+                this.isInitialised = true
                 this.adaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
             })
 
@@ -379,12 +379,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
         return this._onSearchChanged;
     }
-
-    public SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
-    public StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>();
-    public ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs> = new EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>();
-    public AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs> = new EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>();
-
 
     public createMenu() {
         let menuItems: IMenuItem[] = [];

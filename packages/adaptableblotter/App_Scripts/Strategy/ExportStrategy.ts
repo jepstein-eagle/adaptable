@@ -276,7 +276,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
             this.ExportState = this.blotter.adaptableBlotterStore.TheStore.getState().Export;
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Export, this.ExportState)
             }
         }

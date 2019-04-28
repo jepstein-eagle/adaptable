@@ -16,7 +16,7 @@ class ReminderStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (this.ReminderState != this.blotter.api.reminderApi.GetState()) {
             this.scheduleReminders();
             this.ReminderState = this.blotter.api.reminderApi.GetState();
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Reminder, this.ReminderState);
             }
         }

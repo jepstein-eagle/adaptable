@@ -14,9 +14,9 @@ class CellSummaryStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase 
         this.createMenuItemShowPopup(StrategyConstants.CellSummaryStrategyName, ScreenPopups.CellSummaryPopup, StrategyConstants.CellSummaryGlyph);
     }
     InitState() {
-        if (this.CellSummaryState != this.blotter.adaptableBlotterStore.TheStore.getState().CellSummary) {
-            this.CellSummaryState = this.blotter.adaptableBlotterStore.TheStore.getState().CellSummary;
-            if (this.blotter.IsInitialised) {
+        if (this.CellSummaryState != this.blotter.api.cellSummaryApi.GetState()) {
+            this.CellSummaryState = this.blotter.api.cellSummaryApi.GetState();
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.CellSummary, this.CellSummaryState);
             }
         }

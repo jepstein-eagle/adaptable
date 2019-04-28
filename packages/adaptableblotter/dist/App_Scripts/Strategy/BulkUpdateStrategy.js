@@ -15,7 +15,7 @@ class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.BulkUpdateState != this.GetBulkUpdateState()) {
             this.BulkUpdateState = this.GetBulkUpdateState();
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.BulkUpdate, this.BulkUpdateState);
             }
         }

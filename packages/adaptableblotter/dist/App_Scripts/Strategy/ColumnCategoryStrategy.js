@@ -14,7 +14,7 @@ class ColumnCategoryStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
     InitState() {
         if (this.ColumnCategoryState != this.blotter.adaptableBlotterStore.TheStore.getState().ColumnCategory) {
             this.ColumnCategoryState = this.blotter.adaptableBlotterStore.TheStore.getState().ColumnCategory;
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.ColumnCategory, this.ColumnCategoryState);
             }
         }

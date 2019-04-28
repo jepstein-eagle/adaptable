@@ -44,7 +44,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
                 }
             }
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.UserFilter, this.userFilters)
             }
         }

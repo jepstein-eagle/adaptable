@@ -25,7 +25,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         if (this.AlertState != this.blotter.adaptableBlotterStore.TheStore.getState().Alert) {
             this.AlertState = this.blotter.adaptableBlotterStore.TheStore.getState().Alert;
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Alert, this.AlertState)
             }
         }

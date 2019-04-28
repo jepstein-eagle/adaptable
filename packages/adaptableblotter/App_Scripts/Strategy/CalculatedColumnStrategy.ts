@@ -15,10 +15,10 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase implements I
     }
 
     protected InitState() {
-        if (this.CalculatedColumnState != this.blotter.adaptableBlotterStore.TheStore.getState().CalculatedColumn) {
-            this.CalculatedColumnState = this.blotter.adaptableBlotterStore.TheStore.getState().CalculatedColumn;
+        if (this.CalculatedColumnState != this.blotter.api.calculatedColumnApi.GetState()) {
+            this.CalculatedColumnState = this.blotter.api.calculatedColumnApi.GetState();
        
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.CalculatedColumn, this.CalculatedColumnState)
             }
         }

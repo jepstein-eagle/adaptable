@@ -94,17 +94,13 @@ class AdaptableBlotter {
         this._onRefresh = new EventDispatcher_1.EventDispatcher();
         this._onGridReloaded = new EventDispatcher_1.EventDispatcher();
         this._onSearchChanged = new EventDispatcher_1.EventDispatcher();
-        this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
-        this.StateChanged = new EventDispatcher_1.EventDispatcher();
-        this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
-        this.AlertFired = new EventDispatcher_1.EventDispatcher();
         this.debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), GeneralConstants_1.HALF_SECOND);
         this.debouncedFilterGrid = _.debounce(() => this.applyGridFiltering(), GeneralConstants_1.HALF_SECOND);
         //we init with defaults then overrides with options passed in the constructor
         this.blotterOptions = BlotterHelper_1.BlotterHelper.assignBlotterOptions(blotterOptions);
         this.hyperGrid = this.blotterOptions.vendorGrid;
-        this.VendorGridName = 'Hypergrid';
-        this.EmbedColumnMenu = false;
+        this.vendorGridName = 'Hypergrid';
+        this.embedColumnMenu = false;
         this.hasFloatingFilter = true;
         // Create licencing
         this.LicenceService = new LicenceService_1.LicenceService(this);
@@ -184,7 +180,7 @@ class AdaptableBlotter {
             let currentlayout = this.adaptableBlotterStore.TheStore.getState().Layout.CurrentLayout;
             this.adaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSelect(currentlayout));
             BlotterHelper_1.BlotterHelper.isValidPrimaryKey(this, this.getState().Grid.Columns);
-            this.IsInitialised = true;
+            this.isInitialised = true;
             this.adaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading());
         });
         // get the api ready

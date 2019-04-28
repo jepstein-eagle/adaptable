@@ -30,6 +30,9 @@ import { IConditionalStyleApi } from "./IConditionalStyleApi";
 import { IReminderApi } from "./IReminderApi";
 import { IFlashingCellApi } from "./IFlashingCellApi";
 import { ISystemApi } from "./ISystemApi";
+import { ChartApi } from "../ChartApi";
+import { IChartApi } from "./IChartApi";
+import { ICellSummaryApi } from "./ICellSummaryApi";
 
 
 /**
@@ -42,7 +45,9 @@ export interface IBlotterApi {
   alertApi: IAlertApi;
   calculatedColumnApi: ICalculatedColumnApi;
   calendarApi: ICalendarApi;
+  cellSummaryApi: ICellSummaryApi
   cellValidationApi: ICellValidationApi
+  chartApi: IChartApi
   columnCategoryApi: IColumnCategoryApi;
   columnFilterApi: IColumnFilterApi
   configApi: IConfigApi;

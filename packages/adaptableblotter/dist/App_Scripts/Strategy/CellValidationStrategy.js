@@ -14,7 +14,7 @@ class CellValidationStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
     InitState() {
         if (this.CellValidationState != this.blotter.adaptableBlotterStore.TheStore.getState().CellValidation) {
             this.CellValidationState = this.blotter.adaptableBlotterStore.TheStore.getState().CellValidation;
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.CellValidation, this.CellValidationState);
             }
         }

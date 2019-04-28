@@ -23,7 +23,7 @@ export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSo
 
             this.publishSearchChanged(SearchChangedTrigger.DataSource)
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.DataSource, this.DataSourceState)
             }
         }

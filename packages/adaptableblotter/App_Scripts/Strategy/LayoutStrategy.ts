@@ -24,7 +24,7 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
         if (this.LayoutState != this.blotter.adaptableBlotterStore.TheStore.getState().Layout) {
             this.LayoutState = this.blotter.adaptableBlotterStore.TheStore.getState().Layout;
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Layout, this.LayoutState)
             }
         }

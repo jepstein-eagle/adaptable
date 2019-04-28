@@ -25,10 +25,10 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
     }
 
     protected InitState() {
-        if (this.FlashingCellState != this.blotter.adaptableBlotterStore.TheStore.getState().FlashingCell) {
-            this.FlashingCellState = this.blotter.adaptableBlotterStore.TheStore.getState().FlashingCell;
+        if (this.FlashingCellState != this.blotter.api.flashingCellApi.GetState()) {
+            this.FlashingCellState = this.blotter.api.flashingCellApi.GetState();
 
-            let numericColumns = ColumnHelper.getNumericColumns(this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns);
+            let numericColumns = ColumnHelper.getNumericColumns(this.blotter.api.gridApi.getColumns());
             let theBlotter = this.blotter as AdaptableBlotter
             let currentFlashing = this.currentFlashing
 

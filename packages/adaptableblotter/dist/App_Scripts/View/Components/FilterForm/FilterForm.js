@@ -205,7 +205,7 @@ function mapDispatchToProps(dispatch) {
 }
 exports.FilterForm = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);
 exports.FilterFormReact = (FilterContext) => React.createElement(react_redux_1.Provider, { store: FilterContext.Blotter.adaptableBlotterStore.TheStore },
-    React.createElement(exports.FilterForm, { Blotter: FilterContext.Blotter, CurrentColumn: FilterContext.Column, TeamSharingActivated: false, EmbedColumnMenu: FilterContext.Blotter.EmbedColumnMenu, ShowCloseButton: FilterContext.ShowCloseButton }));
+    React.createElement(exports.FilterForm, { Blotter: FilterContext.Blotter, CurrentColumn: FilterContext.Column, TeamSharingActivated: false, EmbedColumnMenu: FilterContext.Blotter.embedColumnMenu, ShowCloseButton: FilterContext.ShowCloseButton }));
 let panelStyle = {
     width: '235px'
 };

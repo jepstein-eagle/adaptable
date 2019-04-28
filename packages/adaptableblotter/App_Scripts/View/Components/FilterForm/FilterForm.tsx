@@ -364,7 +364,7 @@ export const FilterFormReact = (FilterContext: IColumnFilterContext) => <Provide
         Blotter={FilterContext.Blotter}
         CurrentColumn={FilterContext.Column}
         TeamSharingActivated={false}
-        EmbedColumnMenu={FilterContext.Blotter.EmbedColumnMenu}
+        EmbedColumnMenu={FilterContext.Blotter.embedColumnMenu}
         ShowCloseButton={FilterContext.ShowCloseButton}
     />
 </Provider>;

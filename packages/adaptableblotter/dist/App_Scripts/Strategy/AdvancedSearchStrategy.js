@@ -20,7 +20,7 @@ class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
             if (this.blotter.blotterOptions.generalOptions.serverSearchOption != 'None') {
                 this.publishSearchChanged(Enums_1.SearchChangedTrigger.AdvancedSearch);
             }
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.AdvancedSearch, this.AdvancedSearchState);
             }
         }

@@ -14,7 +14,7 @@ class CalendarStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.CalendarState != this.blotter.adaptableBlotterStore.TheStore.getState().Calendar) {
             this.CalendarState = this.blotter.adaptableBlotterStore.TheStore.getState().Calendar;
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Calendar, this.CalendarState);
             }
         }

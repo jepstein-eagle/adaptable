@@ -37,7 +37,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         if (this.ShortcutState != this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut) {
             this.ShortcutState = this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut;
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Shortcut, this.ShortcutState)
             }
         }

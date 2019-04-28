@@ -29,7 +29,7 @@ class UserFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     this.publishSearchChanged(Enums_1.SearchChangedTrigger.UserFilter);
                 }
             }
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.UserFilter, this.userFilters);
             }
         }

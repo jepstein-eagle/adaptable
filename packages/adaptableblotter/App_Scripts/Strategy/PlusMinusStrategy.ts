@@ -31,7 +31,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         if (this.PlusMinusState != this.GetPlusMinusState()) {
             this.PlusMinusState = this.GetPlusMinusState();
        
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.PlusMinus, this.PlusMinusState)
             }
          }

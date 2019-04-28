@@ -20,7 +20,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
             this.CustomSorts = this.blotter.adaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts;
             this.applyCustomSorts();
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.CustomSort, this.CustomSorts)
             }
         }

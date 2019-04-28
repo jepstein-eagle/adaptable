@@ -21,7 +21,7 @@ class FreeTextColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
     InitState() {
         if (this.FreeTextColumnState != this.blotter.adaptableBlotterStore.TheStore.getState().FreeTextColumn) {
             this.FreeTextColumnState = this.blotter.adaptableBlotterStore.TheStore.getState().FreeTextColumn;
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.FreeTextColumn, this.FreeTextColumnState);
             }
         }

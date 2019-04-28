@@ -20,7 +20,6 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     private ChartState: ChartState
     private SystemState: SystemState
-    //  private ColumnFilter: ColumnFilterState
     private throttleSetChartData: (() => void) & _.Cancelable;
 
     constructor(blotter: IAdaptableBlotter) {
@@ -28,8 +27,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
         this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) => this.handleDataSourceChanged(eventText))
         this.blotter.onSearchChanged().Subscribe(() => this.handleSearchChanged())
-        this.blotter.SearchedChanged.Subscribe(() => this.handleSearchChanged())
-        let refreshRate = blotter.adaptableBlotterStore.TheStore.getState().Chart.RefreshRate * 1000;
+        let refreshRate: number = this.GetChartState().RefreshRate * 1000;
         this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
     }
 
@@ -55,7 +53,6 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
                 if (this.doChartDefinitionChangesRequireDataUpdate(chartStateDefinition, storeStateDefinition)) {
                     isChartRelatedStateChanged = true;
                 }
-
             }
             this.ChartState = this.GetChartState();
         }
@@ -68,7 +65,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
                     isChartRelatedStateChanged = true;
                 }
             }
-            this.SystemState = this.blotter.adaptableBlotterStore.TheStore.getState().System;
+            this.SystemState = this.GetSystemState();
         }
 
         if (isChartRelatedStateChanged) {
@@ -81,15 +78,15 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             }
 
             if (this.ChartState.CurrentChartName == null && this.SystemState.ChartVisibility == ChartVisibility.Maximised) {
-                this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden));
+                this.blotter.api.systemApi.SetChartVisibility(ChartVisibility.Hidden);
             }
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Chart, this.ChartState)
             }
 
             if (displayChartAtStartUp) {
-                this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised));
+                this.blotter.api.systemApi.SetChartVisibility(ChartVisibility.Maximised);
                 this.setChartData();
             }
         }
@@ -145,7 +142,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         if (cd1.SecondaryColumnOperation != cd2.SecondaryColumnOperation) {
             return true;
         }
-         return false;
+        return false;
     }
 
     protected handleSearchChanged(): void {
@@ -173,7 +170,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
 
     private isCurrentChartVisibiilityMaximised(): boolean {
-        return this.blotter.IsInitialised &&
+        return this.blotter.isInitialised &&
             this.SystemState != null &&
             this.ChartState != null &&
             this.SystemState.ChartVisibility == ChartVisibility.Maximised &&
@@ -196,35 +193,34 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
 
     private setChartData() {
-        let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
         let chartDefinition: IChartDefinition = this.GetCurrentChartDefinition();
         if (chartDefinition) {
             let chartData: IChartData;
             if (chartDefinition.ChartType == ChartType.CategoryChart) {
-                chartData = this.blotter.ChartService.BuildCategoryChartData(chartDefinition as ICategoryChartDefinition, columns);
+                chartData = this.blotter.ChartService.BuildCategoryChartData(chartDefinition as ICategoryChartDefinition, this.GetColumnState());
             } else if (chartDefinition.ChartType == ChartType.PieChart) {
                 chartData = this.blotter.ChartService.BuildPieChartData(chartDefinition as IPieChartDefinition);
             }
-            this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(chartData));
+            this.blotter.api.systemApi.SetChartData(chartData);
         }
     }
 
     private clearChartData() {
         if (this.GetSystemState().ChartData != null) {
-            this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ChartSetChartData(null));
+            this.blotter.api.systemApi.SetChartData(null);
         }
     }
 
     private GetSystemState(): SystemState {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().System;
+        return this.blotter.api.systemApi.GetState();
     }
 
     private GetChartState(): ChartState {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().Chart;
+        return this.blotter.api.chartApi.GetState();
     }
 
     private GetColumnState(): IColumn[] {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
+        return this.blotter.api.gridApi.getColumns();
     }
 
     private GetCurrentChartDefinition(): IChartDefinition {

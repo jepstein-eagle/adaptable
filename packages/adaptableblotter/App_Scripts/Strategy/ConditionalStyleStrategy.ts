@@ -27,7 +27,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
 
             this.InitStyles();
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.ConditionalStyle, this.ConditionalStyleState)
             }
         }

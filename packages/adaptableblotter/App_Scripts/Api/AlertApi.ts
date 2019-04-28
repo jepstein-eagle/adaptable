@@ -29,9 +29,10 @@ public ShowAlert(alertToShow: IAdaptableAlert): void {
         this.dispatchAction(PopupRedux.PopupShowAlert(alertToShow))
       }
     }
-    this.blotter.AlertFired.Dispatch(this.blotter, { alert: alertToShow });
+    this.blotter.api.eventApi._onAlertFired.Dispatch(this.blotter, { alert: alertToShow });
     LoggingHelper.LogAlert(alertToShow.Header + ": " + alertToShow.Msg, alertToShow.MessageType)
   }
+
   public Show(alertHeader: string, alertMessage: string, MessageType: "Success" | "Info" | "Warning" | "Error", showAsPopup: boolean): void {
     let MessageTypeEnum = MessageType as MessageType;
     let alertToShow: IAdaptableAlert = {

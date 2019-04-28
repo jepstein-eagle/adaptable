@@ -14,7 +14,7 @@ class LayoutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.LayoutState != this.blotter.adaptableBlotterStore.TheStore.getState().Layout) {
             this.LayoutState = this.blotter.adaptableBlotterStore.TheStore.getState().Layout;
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Layout, this.LayoutState);
             }
         }

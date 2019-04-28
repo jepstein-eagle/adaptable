@@ -22,7 +22,7 @@ class PercentBarStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     }
     InitState() {
         if (this.PercentBarState != this.GetPercentBarState()) {
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 // if we have made any changes then first delete them all
                 this.PercentBarState.PercentBars.forEach(pb => {
                     this.blotter.removePercentBar(pb);

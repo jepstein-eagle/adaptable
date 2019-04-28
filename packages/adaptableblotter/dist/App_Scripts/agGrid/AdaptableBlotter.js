@@ -69,16 +69,12 @@ class AdaptableBlotter {
         this._onRefresh = new EventDispatcher_1.EventDispatcher();
         this._onGridReloaded = new EventDispatcher_1.EventDispatcher();
         this._onSearchChanged = new EventDispatcher_1.EventDispatcher();
-        this.SearchedChanged = new EventDispatcher_1.EventDispatcher();
-        this.StateChanged = new EventDispatcher_1.EventDispatcher();
-        this.ColumnStateChanged = new EventDispatcher_1.EventDispatcher();
-        this.AlertFired = new EventDispatcher_1.EventDispatcher();
         //we create the Blotter Options by merging the values provided by the user with the defaults (where no value has been set)
         this.blotterOptions = BlotterHelper_1.BlotterHelper.assignBlotterOptions(blotterOptions);
         this.gridOptions = this.blotterOptions.vendorGrid;
-        this.VendorGridName = 'agGrid';
-        this.EmbedColumnMenu = true;
-        this.IsInitialised = false;
+        this.vendorGridName = 'agGrid';
+        this.embedColumnMenu = true;
+        this.isInitialised = false;
         this.hasFloatingFilter = true;
         // get the api ready
         this.api = new BlotterApi_1.BlotterApi(this);
@@ -133,7 +129,7 @@ class AdaptableBlotter {
         })
             .then(() => {
             this.applyFinalRendering();
-            this.IsInitialised = true;
+            this.isInitialised = true;
             this.dispatchAction(PopupRedux.PopupHideLoading());
         });
         if (renderGrid) {
@@ -1018,7 +1014,7 @@ class AdaptableBlotter {
         let quickSearchClassName = this.getQuickSearchClassName();
         this.addQuickSearchStyleToColumn(specialColumn, quickSearchClassName);
         this.addFiltersToVendorColumn(vendorColumn);
-        if (this.IsInitialised) {
+        if (this.isInitialised) {
             let conditionalStyleagGridStrategy = this.strategies.get(StrategyConstants.ConditionalStyleStrategyId);
             conditionalStyleagGridStrategy.InitStyles();
         }
@@ -1513,7 +1509,7 @@ class AdaptableBlotter {
         this.gridOptions.api.setRowData(dataSource);
     }
     updateQuickSearchRangeVisibleColumn(columnId) {
-        if (this.IsInitialised) {
+        if (this.isInitialised) {
             let quickSearchState = this.api.quickSearchApi.GetState();
             // only update if quick search is not highlight and is set - rare use case...
             if (quickSearchState.DisplayAction != Enums_1.DisplayAction.HighlightCell && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {

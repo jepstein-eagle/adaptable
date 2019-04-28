@@ -24,7 +24,7 @@ class DashboardStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.DashboardState != this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard) {
             this.DashboardState = this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard;
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Dashboard, this.DashboardState);
             }
         }

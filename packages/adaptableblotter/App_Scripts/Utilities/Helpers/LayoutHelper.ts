@@ -37,7 +37,7 @@ export module LayoutHelper {
 
     export function autoSaveLayout(blotter: IAdaptableBlotter): void {
         let layoutState: LayoutState = blotter.api.layoutApi.GetState();
-        if (blotter.IsInitialised && layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT) {
+        if (blotter.isInitialised && layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT) {
             if (blotter.blotterOptions.layoutOptions != null && blotter.blotterOptions.layoutOptions.autoSaveLayouts != null && blotter.blotterOptions.layoutOptions.autoSaveLayouts) {
                 let layout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout)
                 if (layout != null) {
@@ -49,7 +49,7 @@ export module LayoutHelper {
                     blotter.adaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutPreSave(layoutIndex, layoutToSave))
                 }
             }
-            blotter.ColumnStateChanged.Dispatch(blotter, { currentLayout: layoutState.CurrentLayout });
+            blotter.api.eventApi._onColumnStateChanged.Dispatch(blotter, { currentLayout: layoutState.CurrentLayout });
         }
     }
 }

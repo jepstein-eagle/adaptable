@@ -31,13 +31,17 @@ import { IConditionalStyleApi } from "./Interface/IConditionalStyleApi";
 import { IReminderApi } from "./Interface/IReminderApi";
 import { IFlashingCellApi } from "./Interface/IFlashingCellApi";
 import { ISystemApi } from "./Interface/ISystemApi";
+import { IChartApi } from "./Interface/IChartApi";
+import { ICellSummaryApi } from "./Interface/ICellSummaryApi";
 export declare class BlotterApi implements IBlotterApi {
     protected blotter: IAdaptableBlotter;
     advancedSearchApi: IAdvancedSearchApi;
     alertApi: IAlertApi;
     calendarApi: ICalendarApi;
     calculatedColumnApi: ICalculatedColumnApi;
+    cellSummaryApi: ICellSummaryApi;
     cellValidationApi: ICellValidationApi;
+    chartApi: IChartApi;
     columnCategoryApi: IColumnCategoryApi;
     columnFilterApi: IColumnFilterApi;
     conditionalStyleApi: IConditionalStyleApi;

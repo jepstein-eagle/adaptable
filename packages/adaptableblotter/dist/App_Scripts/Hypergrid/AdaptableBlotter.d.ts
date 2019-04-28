@@ -1,7 +1,6 @@
 import '../Styles/stylesheets/adaptableblotter-style.css';
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { IAdaptableStrategyCollection } from '../Strategy/Interface/IStrategy';
-import { EventDispatcher } from '../Utilities/EventDispatcher';
 import { DataType, DistinctCriteriaPairValue } from '../Utilities/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IPPStyle } from "../Utilities/Interface/Reports/IPPStyle";
@@ -15,7 +14,6 @@ import { IFreeTextColumn } from "../Utilities/Interface/BlotterObjects/IFreeText
 import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import * as _ from 'lodash';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
@@ -41,14 +39,14 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     FreeTextColumnService: IFreeTextColumnService;
     ScheduleService: IScheduleService;
     blotterOptions: IAdaptableBlotterOptions;
-    VendorGridName: any;
-    EmbedColumnMenu: boolean;
+    vendorGridName: any;
+    embedColumnMenu: boolean;
     private cellStyleHypergridMap;
     private cellFlashIntervalHypergridMap;
     private abContainerElement;
     private hyperGrid;
     private filterContainer;
-    IsInitialised: boolean;
+    isInitialised: boolean;
     private throttleOnDataChangedUser;
     private throttleOnDataChangedExternal;
     hasFloatingFilter: boolean;
@@ -71,10 +69,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
     private _onSearchChanged;
     onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
-    SearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
-    StateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
-    ColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
-    AlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
     createMenu(): void;
     reloadGrid(): void;
     getPrimaryKeyValueFromRecord(record: any): any;

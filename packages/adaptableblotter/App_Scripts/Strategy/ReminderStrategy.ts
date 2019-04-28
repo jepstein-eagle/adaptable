@@ -24,7 +24,7 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
 
             this.ReminderState = this.blotter.api.reminderApi.GetState();
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Reminder, this.ReminderState)
             }
         }

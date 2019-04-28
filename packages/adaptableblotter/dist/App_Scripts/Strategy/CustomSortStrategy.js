@@ -13,7 +13,7 @@ class CustomSortStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             this.removeCustomSorts();
             this.CustomSorts = this.blotter.adaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts;
             this.applyCustomSorts();
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.CustomSort, this.CustomSorts);
             }
         }

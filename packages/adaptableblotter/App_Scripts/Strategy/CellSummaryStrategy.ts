@@ -14,7 +14,6 @@ import { Helper } from '../Utilities/Helpers/Helper';
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
     private CellSummaryState: CellSummaryState
 
-
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.CellSummaryStrategyId, blotter)
     }
@@ -24,10 +23,10 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     }
 
     protected InitState() {
-        if (this.CellSummaryState != this.blotter.adaptableBlotterStore.TheStore.getState().CellSummary) {
-            this.CellSummaryState = this.blotter.adaptableBlotterStore.TheStore.getState().CellSummary;
+        if (this.CellSummaryState != this.blotter.api.cellSummaryApi.GetState()) {
+            this.CellSummaryState = this.blotter.api.cellSummaryApi.GetState();
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.CellSummary, this.CellSummaryState)
             }
         }
@@ -103,7 +102,6 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
             // middle number only
             median = numericValues[(numsLen - 1) / 2];
         }
-
         return median;
     }
 

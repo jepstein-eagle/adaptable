@@ -33,7 +33,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
         if (this.PieChartState != this.blotter.adaptableBlotterStore.TheStore.getState().PieChart) {
             this.PieChartState = this.blotter.adaptableBlotterStore.TheStore.getState().PieChart;
 
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.PieChart, this.PieChartState)
             }
         }

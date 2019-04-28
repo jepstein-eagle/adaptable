@@ -29,6 +29,8 @@ import { IConditionalStyleApi } from "./IConditionalStyleApi";
 import { IReminderApi } from "./IReminderApi";
 import { IFlashingCellApi } from "./IFlashingCellApi";
 import { ISystemApi } from "./ISystemApi";
+import { IChartApi } from "./IChartApi";
+import { ICellSummaryApi } from "./ICellSummaryApi";
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
  * Contains all the functionality provided by the Adaptable Blotter UI in function form
@@ -39,7 +41,9 @@ export interface IBlotterApi {
     alertApi: IAlertApi;
     calculatedColumnApi: ICalculatedColumnApi;
     calendarApi: ICalendarApi;
+    cellSummaryApi: ICellSummaryApi;
     cellValidationApi: ICellValidationApi;
+    chartApi: IChartApi;
     columnCategoryApi: IColumnCategoryApi;
     columnFilterApi: IColumnFilterApi;
     configApi: IConfigApi;

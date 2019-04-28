@@ -38,7 +38,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         if (this.DashboardState != this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard) {
              this.DashboardState = this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard;
            
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Dashboard, this.DashboardState)
             }
         }

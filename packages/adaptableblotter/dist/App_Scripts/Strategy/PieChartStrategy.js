@@ -19,7 +19,7 @@ class PieChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     InitState() {
         if (this.PieChartState != this.blotter.adaptableBlotterStore.TheStore.getState().PieChart) {
             this.PieChartState = this.blotter.adaptableBlotterStore.TheStore.getState().PieChart;
-            if (this.blotter.IsInitialised) {
+            if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.PieChart, this.PieChartState);
             }
         }

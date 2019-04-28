@@ -132,7 +132,7 @@ class AdaptableStrategyBase {
             version: "1.0.0",
             data: [searchEventData]
         };
-        this.blotter.SearchedChanged.Dispatch(this.blotter, searchChangedArgs);
+        this.blotter.api.eventApi._onSearchedChanged.Dispatch(this.blotter, searchChangedArgs);
     }
     publishStateChanged(stateChangedTrigger, state) {
         let stateChangedInfo = {
@@ -150,7 +150,7 @@ class AdaptableStrategyBase {
             version: "1.0.0",
             data: [stateEventData]
         };
-        this.blotter.StateChanged.Dispatch(this.blotter, stateChangedArgs);
+        this.blotter.api.eventApi._onStateChanged.Dispatch(this.blotter, stateChangedArgs);
     }
 }
 exports.AdaptableStrategyBase = AdaptableStrategyBase;

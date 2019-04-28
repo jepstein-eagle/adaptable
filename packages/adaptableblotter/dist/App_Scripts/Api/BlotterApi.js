@@ -30,6 +30,8 @@ const InternalApi_1 = require("./InternalApi");
 const ConditionalStyleApi_1 = require("./ConditionalStyleApi");
 const ReminderApi_1 = require("./ReminderApi");
 const FlashingCellApi_1 = require("./FlashingCellApi");
+const ChartApi_1 = require("./ChartApi");
+const CellSummaryApi_1 = require("./CellSummaryApi");
 class BlotterApi {
     constructor(blotter) {
         this.blotter = blotter;
@@ -37,7 +39,9 @@ class BlotterApi {
         this.alertApi = new AlertApi_1.AlertApi(blotter);
         this.calendarApi = new CalendarApi_1.CalendarApi(blotter);
         this.calculatedColumnApi = new CalculatedColumnApi_1.CalculatedColumnApi(blotter);
+        this.cellSummaryApi = new CellSummaryApi_1.CellSummaryApi(blotter);
         this.cellValidationApi = new CellValidationApi_1.CellValidationApi(blotter);
+        this.chartApi = new ChartApi_1.ChartApi(blotter);
         this.columnCategoryApi = new ColumnCategoryApi_1.ColumnCategoryApi(blotter);
         this.columnFilterApi = new ColumnFilterApi_1.ColumnFilterApi(blotter);
         this.conditionalStyleApi = new ConditionalStyleApi_1.ConditionalStyleApi(blotter);
