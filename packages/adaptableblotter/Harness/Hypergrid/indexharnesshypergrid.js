@@ -133,7 +133,7 @@ function InitBlotter() {
         },
         filterOptions: {
             //useAdaptableBlotterFilterForm: false,
-            // useAdaptableBlotterQuickFilter: false
+            // useAdaptableBlotterFloatingFilter: false
         },
         generalOptions: {
             //serverSearchOption: "AdvancedSearch", // performing AdvancedSearch on the server, not the client
