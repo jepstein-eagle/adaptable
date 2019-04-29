@@ -32,7 +32,7 @@ import { ChartService } from '../Utilities/Services/ChartService';
 import { FreeTextColumnService } from '../Utilities/Services/FreeTextColumnService';
 import { CalculatedColumnExpressionService } from '../Utilities/Services/CalculatedColumnExpressionService';
 // strategies
-import { IAdaptableStrategyCollection } from '../Strategy/Interface/IStrategy';
+import { IStrategyCollection } from '../Strategy/Interface/IStrategy';
 import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalStyleStrategy';
 // components
 import { FilterWrapperFactory } from './FilterWrapper';
@@ -104,7 +104,7 @@ import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState';
 export class AdaptableBlotter implements IAdaptableBlotter {
 
     public api: IBlotterApi
-    public strategies: IAdaptableStrategyCollection
+    public strategies: IStrategyCollection
     public adaptableBlotterStore: IAdaptableBlotterStore
     public blotterOptions: IAdaptableBlotterOptions
     public vendorGridName: any
@@ -132,8 +132,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
     public hasFloatingFilter: boolean
 
-    public grid: Grid
-    public gridContainer: HTMLElement
 
     private agGridHelper: agGridHelper;
 
@@ -280,8 +278,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         // now create the grid itself
-        this.grid = new Grid(vendorContainer, this.gridOptions);
-        return (this.grid != null);
+        let grid = new Grid(vendorContainer, this.gridOptions);
+        return (grid != null);
     }
 
 

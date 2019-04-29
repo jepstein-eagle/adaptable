@@ -10,7 +10,7 @@ import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore, AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
-import { IStrategy, IAdaptableStrategyCollection, } from '../Strategy/Interface/IStrategy';
+import { IStrategy, IStrategyCollection, } from '../Strategy/Interface/IStrategy';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
@@ -122,7 +122,7 @@ const getFilterIcon = (state: boolean) => {
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public api: IBlotterApi
-    public strategies: IAdaptableStrategyCollection
+    public strategies: IStrategyCollection
     public adaptableBlotterStore: IAdaptableBlotterStore
 
     public CalendarService: ICalendarService

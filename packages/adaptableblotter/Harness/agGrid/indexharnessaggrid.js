@@ -5,7 +5,6 @@ var trades;
 var gridOptions;
 var showTrade = true;
 
-
 function runQuickSearchViaAPI() {
   const element = document.getElementById('txtQuickSearchText');
   adaptableblotter.api.quickSearchApi.Apply(element.value);
