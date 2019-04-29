@@ -150,7 +150,7 @@ function InitTradeBlotter() {
       },
       filterOptions: {
         useAdaptableBlotterFilterForm: true,
-        useAdaptableBlotterFloatingFilter: false
+        useAdaptableBlotterFloatingFilter: true
       },
       chartOptions: {
         displayOnStartUp: true,
