@@ -6,8 +6,6 @@ describe('Image snapshotting', () => {
 
   it('image snapshoting should work fine', async () => {
     await page.reload();
-    
-    expect(PREFIX_URL).toEqual('http://localhost:8081')
 
     expect(await page.screenshot()).toMatchImageSnapshot();
 
