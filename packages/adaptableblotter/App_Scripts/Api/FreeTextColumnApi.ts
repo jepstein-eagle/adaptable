@@ -9,17 +9,22 @@ import { FreeTextColumnState } from "../Redux/ActionsReducers/Interface/IState";
 
 export class FreeTextColumnApi extends ApiBase implements IFreeTextColumnApi {
 
-  
+
   public GetState(): FreeTextColumnState {
     return this.getBlotterState().FreeTextColumn;
-}
+  }
 
-public GetAll(): IFreeTextColumn[] {
+  public GetAll(): IFreeTextColumn[] {
     return this.getBlotterState().FreeTextColumn.FreeTextColumns;
   }
 
   public Add(freeTextColumn: IFreeTextColumn): void {
     this.dispatchAction(FreeTextColumnRedux.FreeTextColumnAdd(freeTextColumn))
+  }
+
+
+  public AddEditStoredValue(freeTextColumn: IFreeTextColumn, storedValue: any): void {
+    this.dispatchAction(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, storedValue))
   }
 
   public Create(columnId: string, defaultValue: string = null): void {

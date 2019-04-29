@@ -41,7 +41,7 @@ export module LayoutHelper {
             if (blotter.blotterOptions.layoutOptions != null && blotter.blotterOptions.layoutOptions.autoSaveLayouts != null && blotter.blotterOptions.layoutOptions.autoSaveLayouts) {
                 let layout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout)
                 if (layout != null) {
-                    let gridState: GridState = blotter.api.gridApi.GetState();
+                    let gridState: GridState = blotter.api.gridApi.getState();
                     let visibleColumns: IColumn[] = gridState.Columns.filter(c => c.Visible);
                     let gridVendorState: any = blotter.getVendorGridState(visibleColumns.map(vc=>vc.ColumnId), false)
                     let layoutIndex = layoutState.Layouts.findIndex(l => l.Name == layoutState.CurrentLayout)

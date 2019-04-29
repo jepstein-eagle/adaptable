@@ -5,10 +5,11 @@ import { IColumn } from "../Utilities/Interface/IColumn";
 import { GridState } from "../Redux/ActionsReducers/Interface/IState";
 import { DataType } from "../Utilities/Enums";
 import { IGridSort } from "../Utilities/Interface/IGridSort";
+import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
 
 export class GridApi extends ApiBase implements IGridApi {
 
-  public GetState(): GridState {
+  public getState(): GridState {
     return this.getBlotterState().Grid;
 }
 
@@ -18,19 +19,23 @@ export class GridApi extends ApiBase implements IGridApi {
 
 
   public getColumns(): IColumn[]{
-    return this.getBlotterState().Grid.Columns;
+    return this.getState().Columns;
+  }
+
+  public getSelectedCellInfo(): ISelectedCellInfo{
+    return this.getState().SelectedCellInfo;
   }
 
   public getVisibleColumns(): IColumn[]{
-    return this.getBlotterState().Grid.Columns.filter(c=>c.Visible);
+    return this.getColumns().filter(c=>c.Visible);
   }
 
   public getNumericColumns(): IColumn[]{
-    return this.getBlotterState().Grid.Columns.filter(c=>c.DataType==DataType.Number);
+    return this.getColumns().filter(c=>c.DataType==DataType.Number);
   }
 
   public  getGridSorts(): IGridSort[]{
-    return this.getBlotterState().Grid.GridSorts;
+    return this.getState().GridSorts;
   }
  
 

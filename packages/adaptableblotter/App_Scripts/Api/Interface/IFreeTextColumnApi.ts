@@ -1,9 +1,10 @@
 import { IFreeTextColumn } from "../../Utilities/Interface/BlotterObjects/IFreeTextColumn";
-import { FormatColumnState, FreeTextColumnState } from "../../Redux/ActionsReducers/Interface/IState";
+import { FreeTextColumnState } from "../../Redux/ActionsReducers/Interface/IState";
 export interface IFreeTextColumnApi {
   GetState(): FreeTextColumnState;
-   GetAll(): IFreeTextColumn[];
+  GetAll(): IFreeTextColumn[];
   Add(freeTextColumn: IFreeTextColumn): void;
   Create(columnId: string, defaultValue: string): void;
   Delete(columnId: string): void;
+  AddEditStoredValue(freeTextColumn: IFreeTextColumn, storedValue: any): void;
 }

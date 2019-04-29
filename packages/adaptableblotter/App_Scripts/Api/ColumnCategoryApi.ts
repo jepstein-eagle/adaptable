@@ -13,7 +13,11 @@ export class ColumnCategoryApi extends ApiBase implements IColumnCategoryApi {
 }
 
 public GetAll(): IColumnCategory[] {
-    return this.getBlotterState().ColumnCategory.ColumnCategories;
+    return this.GetState().ColumnCategories;
+  }
+
+ public GetById(columnCategoryId: string): IColumnCategory{
+    return this.GetAll().find(cc => cc.ColumnCategoryId == columnCategoryId);
   }
 
   public Add(columnCategory: IColumnCategory): void {
@@ -34,7 +38,7 @@ public GetAll(): IColumnCategory[] {
   }
 
   public AddColumns(columnCategoryId: string, columns: string[]): void {
-    let columnCategory: IColumnCategory = this.GetAll().find(cc => cc.ColumnCategoryId == columnCategoryId)
+    let columnCategory: IColumnCategory = this.GetById(columnCategoryId);
     let index: number = this.GetAll().findIndex(cc => cc.ColumnCategoryId == columnCategoryId)
     columns.forEach(c => {
       columnCategory.ColumnIds.push(c);

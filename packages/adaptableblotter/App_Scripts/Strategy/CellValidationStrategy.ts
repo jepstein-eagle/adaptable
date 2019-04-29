@@ -20,8 +20,8 @@ export class CellValidationStrategy extends AdaptableStrategyBase implements ICe
     }
 
     protected InitState() {
-        if (this.CellValidationState != this.blotter.adaptableBlotterStore.TheStore.getState().CellValidation) {
-            this.CellValidationState = this.blotter.adaptableBlotterStore.TheStore.getState().CellValidation;
+        if (this.CellValidationState != this.blotter.api.cellValidationApi.GetState()) {
+            this.CellValidationState = this.blotter.api.cellValidationApi.GetState();
        
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.CellValidation, this.CellValidationState)

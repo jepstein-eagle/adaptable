@@ -22,8 +22,8 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
     }
 
     protected InitState() {
-        if (this.ConditionalStyleState != this.blotter.adaptableBlotterStore.TheStore.getState().ConditionalStyle) {
-            this.ConditionalStyleState = this.blotter.adaptableBlotterStore.TheStore.getState().ConditionalStyle;
+        if (this.ConditionalStyleState != this.blotter.api.conditionalStyleApi.GetState()) {
+            this.ConditionalStyleState = this.blotter.api.conditionalStyleApi.GetState();
 
             this.InitStyles();
 

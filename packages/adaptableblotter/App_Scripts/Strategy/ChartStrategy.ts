@@ -78,7 +78,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             }
 
             if (this.ChartState.CurrentChartName == null && this.SystemState.ChartVisibility == ChartVisibility.Maximised) {
-                this.blotter.api.systemApi.SetChartVisibility(ChartVisibility.Hidden);
+                this.blotter.api.internalApi.SetChartVisibility(ChartVisibility.Hidden);
             }
 
             if (this.blotter.isInitialised) {
@@ -86,7 +86,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             }
 
             if (displayChartAtStartUp) {
-                this.blotter.api.systemApi.SetChartVisibility(ChartVisibility.Maximised);
+                this.blotter.api.internalApi.SetChartVisibility(ChartVisibility.Maximised);
                 this.setChartData();
             }
         }
@@ -201,18 +201,18 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             } else if (chartDefinition.ChartType == ChartType.PieChart) {
                 chartData = this.blotter.ChartService.BuildPieChartData(chartDefinition as IPieChartDefinition);
             }
-            this.blotter.api.systemApi.SetChartData(chartData);
+            this.blotter.api.internalApi.SetChartData(chartData);
         }
     }
 
     private clearChartData() {
         if (this.GetSystemState().ChartData != null) {
-            this.blotter.api.systemApi.SetChartData(null);
+            this.blotter.api.internalApi.SetChartData(null);
         }
     }
 
     private GetSystemState(): SystemState {
-        return this.blotter.api.systemApi.GetState();
+        return this.blotter.api.internalApi.GetSystemState();
     }
 
     private GetChartState(): ChartState {
