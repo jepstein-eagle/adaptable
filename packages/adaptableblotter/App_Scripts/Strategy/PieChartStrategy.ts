@@ -3,13 +3,10 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter'
 import { IPieChartStrategy } from './Interface/IPieChartStrategy'
-import { PieChartState } from '../Redux/ActionsReducers/Interface/IState';
-import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
 
 export class PieChartStrategy extends AdaptableStrategyBase implements IPieChartStrategy {
-    protected PieChartState: PieChartState
+  
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.PieChartStrategyId, blotter)
     }
@@ -29,15 +26,4 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
 
     }
 
-    protected InitState() {
-        if (this.PieChartState != this.blotter.adaptableBlotterStore.TheStore.getState().PieChart) {
-            this.PieChartState = this.blotter.adaptableBlotterStore.TheStore.getState().PieChart;
-
-            if (this.blotter.isInitialised) {
-                this.publishStateChanged(StateChangedTrigger.PieChart, this.PieChartState)
-            }
-        }
-    }
-
-
-}
+ }

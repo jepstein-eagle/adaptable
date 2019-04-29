@@ -1,5 +1,6 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase'
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import * as GlyphConstants from '../Utilities/Constants/GlyphConstants'
 import * as HomeRedux from '../Redux/ActionsReducers/HomeRedux'
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux'
@@ -11,6 +12,7 @@ import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { SearchChangedTrigger } from '../Utilities/Enums';
 import { LayoutHelper } from '../Utilities/Helpers/LayoutHelper';
 import { IColumn } from '../Utilities/Interface/IColumn';
+import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 
 // This is a special strategy that the user can never remove but which is useful to us 
 // We use it to manage internal state changes and menu items that are not directly strategy related
@@ -50,6 +52,9 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
                 )
             }
         }
+
+
+      
     }
 
 

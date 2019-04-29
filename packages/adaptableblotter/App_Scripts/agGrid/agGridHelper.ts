@@ -1,8 +1,7 @@
-import { ICellRendererFunc, ICellRendererParams, ColDef, GridOptions, SideBarDef, ToolPanelDef, RowNode } from "ag-grid-community";
+import { ICellRendererFunc, ICellRendererParams, ColDef, GridOptions, SideBarDef, ToolPanelDef } from "ag-grid-community";
 import { StringExtensions } from "../Utilities/Extensions/StringExtensions";
 import { IPercentBar } from "../Utilities/Interface/BlotterObjects/IPercentBar";
 import { ArrayExtensions } from "../Utilities/Extensions/ArrayExtensions";
-import { IAdaptableBlotterOptions } from "../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions";
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import { IStrategy } from "../Strategy/Interface/IStrategy";
 import { AlertStrategy } from "../Strategy/AlertStrategy";
@@ -48,18 +47,24 @@ import { AdaptableBlotter } from "./AdaptableBlotter";
  * This is a bit crap - it should take a GridOptions object...
  */
 
-export module agGridHelper {
+// tslint:disable-next-line: class-name
+export class agGridHelper {
 
-    export function getLightThemeName(): string {
+    constructor(private blotter: IAdaptableBlotter, private gridOptions: GridOptions) {
+       
+    }
+
+    public getLightThemeName(): string {
         return "ag-theme-balham";
     }
 
-    export function getDarkThemeName(): string {
+    public getDarkThemeName(): string {
         return "ag-theme-balham-dark";
     }
 
-    export function setUpStrategies(blotter:AdaptableBlotter): Map<string, IStrategy> {
+    public setUpStrategies(): Map<string, IStrategy> {
         let strategies = new Map<string, IStrategy>();
+        let blotter = this.blotter as AdaptableBlotter;
         strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy(blotter))
         strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy(blotter))
         strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy(blotter))
@@ -97,21 +102,24 @@ export module agGridHelper {
         return strategies;
     }
 
-    export function TrySetUpNodeIds(gridOptions: GridOptions, blotterOptions: IAdaptableBlotterOptions, isValidPrimaryKey: boolean): boolean {
+    public TrySetUpNodeIds(isValidPrimaryKey: boolean): boolean {
         if (!isValidPrimaryKey) { // if no valid pk then always false
             return false;
         }
         // need some way of checking if running on client on server
         // if on server then we return false
 
+        // also we can check if they have done it
+
+        let primaryKey: any = this.blotter.blotterOptions.primaryKey;
         // otherwise lets set the Id so that it returns the primaryKey
-        gridOptions.getRowNodeId = function (data) {
-            return data[blotterOptions.primaryKey];
+        this.gridOptions.getRowNodeId = function (data) {
+            return data[primaryKey];
         }
         return true;
     }
 
-    export function createCellRendererFunc(pcr: IPercentBar, blotterId: string): ICellRendererFunc {
+    public createCellRendererFunc(pcr: IPercentBar, blotterId: string): ICellRendererFunc {
         let showNegatives: boolean = pcr.MinValue < 0;
         let showPositives: boolean = pcr.MaxValue > 0;
 
@@ -120,10 +128,10 @@ export module agGridHelper {
             let value = params.value;
 
             let maxValue = StringExtensions.IsNotNullOrEmpty(pcr.MaxValueColumnId) ?
-                this.getRawValueFromRecord(params.node, pcr.MaxValueColumnId) :
+                this.blotter.getRawValueFromRecord(params.node, pcr.MaxValueColumnId) :
                 pcr.MaxValue;
             let minValue = StringExtensions.IsNotNullOrEmpty(pcr.MinValueColumnId) ?
-                this.getRawValueFromRecord(params.node, pcr.MinValueColumnId) :
+                this.blotter.getRawValueFromRecord(params.node, pcr.MinValueColumnId) :
                 pcr.MinValue;
 
             if (isNegativeValue) {
@@ -188,8 +196,7 @@ export module agGridHelper {
     }
 
 
-
-    export function getCleanValue(value: string): string {
+    public getCleanValue(value: string): string {
         if (value == null || value == 'null') {
             return undefined;
         } else if (value == undefined || value == 'undefined') {
@@ -199,7 +206,7 @@ export module agGridHelper {
         }
     }
 
-    export function getRenderedValue(percentBars: IPercentBar[], colDef: ColDef, valueToRender: any): any {
+    public getRenderedValue(percentBars: IPercentBar[], colDef: ColDef, valueToRender: any): any {
         let isRenderedColumn = ArrayExtensions.ContainsItem(percentBars, colDef.field);
         if (isRenderedColumn) {
             return valueToRender;
@@ -207,18 +214,18 @@ export module agGridHelper {
 
         let render: any = colDef.cellRenderer
         if (typeof render == "string") {
-            return getCleanValue(valueToRender)
+            return this.getCleanValue(valueToRender)
         }
         return render({ value: valueToRender }) || "";
     }
 
-    export function safeSetColDefs(colDefs: ColDef[], gridOptions: GridOptions) {
+    public safeSetColDefs(colDefs: ColDef[]) {
         // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
-        gridOptions.api.setColumnDefs([])
-        gridOptions.api.setColumnDefs(colDefs)
+        this.gridOptions.api.setColumnDefs([])
+        this.gridOptions.api.setColumnDefs(colDefs)
     }
 
-    export function createAdaptableBlotterSideBarDefs(showFilterPanel: boolean, showColumnsPanel: boolean): SideBarDef {
+    public createAdaptableBlotterSideBarDefs(showFilterPanel: boolean, showColumnsPanel: boolean): SideBarDef {
         let toolPanelDef: ToolPanelDef[] = [];
 
         if (showFilterPanel) {
@@ -242,7 +249,7 @@ export module agGridHelper {
             }
             toolPanelDef.push(columnsToolPanel);
         }
-        toolPanelDef.push(createAdaptableBlotterToolPanel())
+        toolPanelDef.push(this.createAdaptableBlotterToolPanel())
 
         let abSideBarDef: SideBarDef = {
             toolPanels: toolPanelDef,
@@ -251,7 +258,7 @@ export module agGridHelper {
         return abSideBarDef;
     }
 
-    export function createAdaptableBlotterToolPanel(): ToolPanelDef {
+    public createAdaptableBlotterToolPanel(): ToolPanelDef {
         return {
             id: 'adaptableBlotterToolPanel',
             labelDefault: 'Adaptable Blotter',

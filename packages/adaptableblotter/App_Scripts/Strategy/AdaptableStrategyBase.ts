@@ -14,7 +14,10 @@ import { IMenuItem } from '../Utilities/Interface/IMenu';
 import { IDataSource } from '../Utilities/Interface/BlotterObjects/IDataSource';
 
 
-
+/**
+ * Base class for all strategies and does most of the work of creating menus
+ * Each strategy is reponsible for managing state (through InitState())
+ */
 export abstract class AdaptableStrategyBase implements IStrategy {
     constructor(public Id: string, protected blotter: IAdaptableBlotter) {
     }
@@ -27,7 +30,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     public popupMenuItem: IMenuItem;
 
     protected InitState(): void {
-        // stff - check this works
+        // derived in each strategy that needs to manage state
     }
 
 
@@ -89,7 +92,6 @@ export abstract class AdaptableStrategyBase implements IStrategy {
             this.Id,
             ComponentName,
             GlyphIcon,
-            //  this.isReadOnlyStrategy(),
             this.isVisibleStrategy(),
             PopupParams)
         this.popupMenuItem = menuItemShowPopup;
@@ -153,6 +155,11 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         return true;
     }
 
+    /**
+     * Each time any of the objects that make up search are changed (e.g. filters, quick search, advanced search, data sources etc.) we fire an event
+     * This is primarily to help users who want to run search on the server and so need to know what has changed
+     * @param searchChangedTrigger function that triggered the event
+     */
     publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void {
         let state: AdaptableBlotterState = this.blotter.adaptableBlotterStore.TheStore.getState();
 
@@ -194,6 +201,12 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         this.blotter.api.eventApi._onSearchedChanged.Dispatch(this.blotter, searchChangedArgs);
     }
 
+    /**
+     * An event which is triggered whenever User (as oppoesed to System) State is changed.
+     * Its the responsibility of each function to fire the event when their state changes
+     * @param stateChangedTrigger which function has triggered the event
+     * @param state the current state of that function
+     */
     publishStateChanged(stateChangedTrigger: StateChangedTrigger, state: IUserState): void {
         let stateChangedInfo: IStateChangedInfo = {
             stateChangedTrigger: stateChangedTrigger,
