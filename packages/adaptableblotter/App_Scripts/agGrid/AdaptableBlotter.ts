@@ -146,6 +146,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.embedColumnMenu = true;
         this.isInitialised = false;
         this.hasFloatingFilter = true;
+        this.useRowNodeLookUp = false; // we will set later in instantiate if possible to be true
 
         // get the api ready
         this.api = new BlotterApi(this);
@@ -195,6 +196,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // But users can make some hidden or readonly in their entitlements
         this.strategies = this.agGridHelper.setUpStrategies();
 
+
         // Load the store
         this.adaptableBlotterStore.Load
             .then(() => this.strategies.forEach(strat => strat.initializeWithRedux()),
@@ -239,6 +241,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             LoggingHelper.LogAdaptableBlotterError('You must provide an element id in `containerOptions.vendorContainer`');
             return false;
         }
+
+        // set up whether we use the getRowNode method or loop when finding a record (former is preferable)
+        // can only do that here as the gridOptions not yet set up
+        this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds();
+        console.log('use ookup')
+        console.log(this.useRowNodeLookUp)
 
         // Create Adaptable Blotter Tool Panel
         if (this.blotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
@@ -517,6 +525,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     public getCurrentCellEditValue(): any {
         //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
+        // Currently used by Shortcut to get the current edit value - is there a better way?
         if (this._currentEditor) {
             return this._currentEditor.getValue()
         }
@@ -738,11 +747,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
-
-        //ag-grid doesn't support FindRow based on data
-        // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
-
-        if (ArrayExtensions.IsNullOrEmpty(batchValues)) {
+ if (ArrayExtensions.IsNullOrEmpty(batchValues)) {
             return;
         }
 
@@ -760,7 +765,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             });
         } else {
-            this.gridOptions.api.getModel().forEachNode((rowNode: RowNode) => {
+           this.gridOptions.api.getModel().forEachNode((rowNode: RowNode) => {
                 let cellInfo: ICellInfo = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
                 if (cellInfo) {
                     this.updateBatchValue(cellInfo, rowNode, nodesToRefresh, refreshColumnList, dataChangedEvents, percentBars);
@@ -860,9 +865,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         //same as hypergrid. we do not support the fact that some rows are editable and some are not
         //if editable is a function then we return that its not readonly since we assume that some record will be editable
         //that's wrong but we ll see if we face the issue later
-        //also looks like the column object already has the Iseditable function... need to check that
         let colDef = this.gridOptions.api.getColumnDef(columnId)
-        if (typeof colDef.editable == 'boolean') {
+        if (colDef && typeof colDef.editable == 'boolean') {
             return !colDef.editable;
         }
         else {
@@ -958,9 +962,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public getDisplayValue(id: any, columnId: string): string {
-        //ag-grid doesn't support FindRow based on data
-        // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
-
         let returnValue: string
 
         if (this.useRowNodeLookUp) {
@@ -1927,11 +1928,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // where we apply our stuff but also any ag-Grid props that we control
     private applyFinalRendering(): void {
 
-        // Check that we have a primary key
-        let isValidPrimaryKey: boolean = BlotterHelper.isValidPrimaryKey(this, this.api.gridApi.getColumns());
-
-        // set up whether we use the getRowNode method or loop when finding a record (former is preferable)
-        this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds( isValidPrimaryKey);
 
         // add the filter header style if required
         if (this.blotterOptions.filterOptions.indicateFilteredColumns == true) {

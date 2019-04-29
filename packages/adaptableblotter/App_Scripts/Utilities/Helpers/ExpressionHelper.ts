@@ -121,8 +121,8 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.DisplayValue),  // this value
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.RawValue), // other column value
             columns,
-            blotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-            blotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
+            blotter.api.userFilterApi.GetAll(),
+            blotter.api.systemFilterApi.GetAll(),
             blotter
         );
     }
