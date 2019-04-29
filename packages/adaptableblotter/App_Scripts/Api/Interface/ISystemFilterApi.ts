@@ -2,7 +2,7 @@ import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilte
 import { SystemFilterState } from "../../Redux/ActionsReducers/Interface/IState";
 export interface ISystemFilterApi {
   GetState(): SystemFilterState;
-   userFilterSet(userFilters: IUserFilter[]): void;
+  UserFilterSet(userFilters: IUserFilter[]): void;
   Set(systemFilters: string[]): void;
   Clear(): void;
   GetCurrent(): string[];

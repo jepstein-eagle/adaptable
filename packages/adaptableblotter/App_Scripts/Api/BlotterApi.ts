@@ -66,6 +66,8 @@ import { ChartApi } from "./ChartApi";
 import { ICellSummaryApi } from "./Interface/ICellSummaryApi";
 import { CellSummaryApi } from "./CellSummaryApi";
 import { SystemApi } from "./SystemApi";
+import { IUserFilterApi } from "./Interface/IUserFilterApi";
+import { UserFilterApi } from "./UserFilterApi";
 
 
 
@@ -104,6 +106,7 @@ export class BlotterApi implements IBlotterApi {
   public systemStatusApi: ISystemStatusApi;
   public themeApi: IThemeApi;
   public userInterfaceApi: IUserInterfaceApi;
+  public userFilterApi: IUserFilterApi;
 
 
   constructor(protected blotter: IAdaptableBlotter) {
@@ -140,6 +143,7 @@ export class BlotterApi implements IBlotterApi {
     this.systemStatusApi = new SystemStatusApi(blotter);
     this.themeApi = new ThemeApi(blotter);
     this.userInterfaceApi = new UserInterfaceApi(blotter);
+    this.userFilterApi = new UserFilterApi(blotter);
   }
 
 }

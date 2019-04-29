@@ -33,7 +33,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(6000);
+    return dataGen.getTrades(5);
   }
   return dataGen.getFtseData(199);
 }
@@ -311,7 +311,7 @@ function getTradeSchema() {
     // valueFormatter: notionalFormatter,
     cellClass: 'number-cell',
     type: 'abColDefNumber',
-    filter: false
+    filter: true
   });
   schema.push({
     headerName: 'Counterparty',
@@ -333,7 +333,7 @@ function getTradeSchema() {
   schema.push({
     headerName: 'Currency',
     field: 'currency',
-    //   editable: false,
+       editable: true,
     enableRowGroup: true,
     sortable: true,
     filter: 'agTextColumnFilter',

@@ -33,6 +33,7 @@ import { ISystemApi } from "./ISystemApi";
 import { ChartApi } from "../ChartApi";
 import { IChartApi } from "./IChartApi";
 import { ICellSummaryApi } from "./ICellSummaryApi";
+import { IUserFilterApi } from "./IUserFilterApi";
 
 
 /**
@@ -73,6 +74,7 @@ export interface IBlotterApi {
   systemStatusApi: ISystemStatusApi;
   themeApi: IThemeApi;
   userInterfaceApi: IUserInterfaceApi;
+  userFilterApi: IUserFilterApi;
 
   // internal use
   internalApi: IInternalApi
