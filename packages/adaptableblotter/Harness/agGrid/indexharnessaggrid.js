@@ -109,6 +109,7 @@ function InitTradeBlotter() {
 
   var instantiateAgGridInHarness = false;
   // Create and instantiate an ag-Grid object - now want to do this ONLY in the AB!
+  // NOTE: we much prefer it if the vendor Grid is created by us and not by the user...
   if (instantiateAgGridInHarness) {
     alert('instant hre')
     const gridcontainer = document.getElementById('grid');
