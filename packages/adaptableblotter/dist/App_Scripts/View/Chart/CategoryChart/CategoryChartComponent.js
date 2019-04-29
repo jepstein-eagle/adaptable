@@ -394,6 +394,8 @@ class CategoryChartComponent extends React.Component {
         }
     }
     onSetPropertyDefaults() {
+        // this overrides what has been set in predefined config with defaults - is that right?
+        // or should it just override what has been changed ?
         // first update our state
         this.setState(CategoryChartUIHelper_1.CategoryChartUIHelper.setDefaultChartDisplayPopupState());
         // then update the properties

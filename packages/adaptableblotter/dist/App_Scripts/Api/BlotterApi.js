@@ -32,6 +32,7 @@ const ReminderApi_1 = require("./ReminderApi");
 const FlashingCellApi_1 = require("./FlashingCellApi");
 const ChartApi_1 = require("./ChartApi");
 const CellSummaryApi_1 = require("./CellSummaryApi");
+const SystemApi_1 = require("./SystemApi");
 class BlotterApi {
     constructor(blotter) {
         this.blotter = blotter;
@@ -63,6 +64,7 @@ class BlotterApi {
         this.reminderApi = new ReminderApi_1.ReminderApi(blotter);
         this.shortcutApi = new ShortcutApi_1.ShortcutApi(blotter);
         this.smartEditApi = new SmartEditApi_1.SmartEditApi(blotter);
+        this.systemApi = new SystemApi_1.SystemApi(blotter);
         this.systemFilterApi = new SystemFilterApi_1.SystemFilterApi(blotter);
         this.systemStatusApi = new SystemStatusApi_1.SystemStatusApi(blotter);
         this.themeApi = new ThemeApi_1.ThemeApi(blotter);

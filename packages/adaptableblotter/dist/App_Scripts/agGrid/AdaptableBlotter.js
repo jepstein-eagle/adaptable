@@ -85,6 +85,8 @@ class AdaptableBlotter {
         this.AuditLogService = new AuditLogService_1.AuditLogService(this, this.blotterOptions);
         // create the store
         this.adaptableBlotterStore = new AdaptableBlotterStore_1.AdaptableBlotterStore(this);
+        // set up the helper
+        this.agGridHelper = new agGridHelper_1.agGridHelper(this, this.gridOptions);
         // create the services
         this.CalendarService = new CalendarService_1.CalendarService(this);
         this.DataService = new DataService_1.DataService(this);
@@ -112,7 +114,7 @@ class AdaptableBlotter {
         }
         // Set up strategies - we set up all the strategies suitable for the vendor grid
         // But users can make some hidden or readonly in their entitlements
-        this.strategies = agGridHelper_1.agGridHelper.setUpStrategies(this);
+        this.strategies = this.agGridHelper.setUpStrategies();
         // Load the store
         this.adaptableBlotterStore.Load
             .then(() => this.strategies.forEach(strat => strat.initializeWithRedux()), (e) => {
@@ -161,22 +163,22 @@ class AdaptableBlotter {
                 const sidebar = this.gridOptions.sideBar;
                 if (sidebar === true) {
                     // Possibility 1: Sidebar is true - meaning that they want the default filter and columns, so create both:
-                    this.gridOptions.sideBar = agGridHelper_1.agGridHelper.createAdaptableBlotterSideBarDefs(true, true);
+                    this.gridOptions.sideBar = this.agGridHelper.createAdaptableBlotterSideBarDefs(true, true);
                 }
                 else if (sidebar === 'columns') {
                     // Possibility 2: Sidebar is 'columns' (string) - meaning column only so create just that
-                    this.gridOptions.sideBar = agGridHelper_1.agGridHelper.createAdaptableBlotterSideBarDefs(false, true);
+                    this.gridOptions.sideBar = this.agGridHelper.createAdaptableBlotterSideBarDefs(false, true);
                 }
                 else if (sidebar === 'filters') {
                     // Possibility 3: Sidebar is 'filters' (string) - meaning filters only so create just that
-                    this.gridOptions.sideBar = agGridHelper_1.agGridHelper.createAdaptableBlotterSideBarDefs(true, false);
+                    this.gridOptions.sideBar = this.agGridHelper.createAdaptableBlotterSideBarDefs(true, false);
                 }
                 else {
                     // Possibilty 4: either no sidebar or they created their own; in either case, should add Blotter Tool panel
                     const sidebarDef = this.gridOptions.sideBar;
                     if (sidebarDef) {
                         sidebarDef.toolPanels = sidebarDef.toolPanels || [];
-                        sidebarDef.toolPanels.push(agGridHelper_1.agGridHelper.createAdaptableBlotterToolPanel());
+                        sidebarDef.toolPanels.push(this.agGridHelper.createAdaptableBlotterToolPanel());
                     }
                 }
                 const toolpanelContext = { Blotter: this };
@@ -835,11 +837,11 @@ class AdaptableBlotter {
             return this.getRenderedValue(colDef, rawValue);
         }
         else {
-            return agGridHelper_1.agGridHelper.getCleanValue(rawValue);
+            return this.agGridHelper.getCleanValue(rawValue);
         }
     }
     getRenderedValue(colDef, valueToRender) {
-        return agGridHelper_1.agGridHelper.getRenderedValue(this.api.percentBarApi.GetAll(), colDef, valueToRender);
+        return this.agGridHelper.getRenderedValue(this.api.percentBarApi.GetAll(), colDef, valueToRender);
     }
     getRawValueFromRecord(row, columnId) {
         return this.gridOptions.api.getValue(columnId, row);
@@ -920,7 +922,7 @@ class AdaptableBlotter {
         let newColDef = colDefs[colDefIndex];
         newColDef.valueGetter = (params) => Helper_1.Helper.RoundValueIfNumeric(this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node), 4);
         colDefs[colDefIndex] = newColDef;
-        agGridHelper_1.agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
+        this.agGridHelper.safeSetColDefs(colDefs);
         // for column list its an itnernal map only so we can first delete
         for (let columnList of this.calculatedColumnPathMap.values()) {
             let index = columnList.indexOf(calculatedColumn.ColumnId);
@@ -944,7 +946,7 @@ class AdaptableBlotter {
         let colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumnID);
         if (colDefIndex > -1) {
             colDefs.splice(colDefIndex, 1);
-            agGridHelper_1.agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
+            this.agGridHelper.safeSetColDefs(colDefs);
         }
         for (let columnList of this.calculatedColumnPathMap.values()) {
             let index = columnList.indexOf(calculatedColumnID);
@@ -969,7 +971,7 @@ class AdaptableBlotter {
             valueGetter: (params) => Helper_1.Helper.RoundValueIfNumeric(this.CalculatedColumnExpressionService.ComputeExpressionValue(cleanedExpression, params.node), 4)
         };
         colDefs.push(newColDef);
-        agGridHelper_1.agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
+        this.agGridHelper.safeSetColDefs(colDefs);
         let columnList = CalculatedColumnHelper_1.CalculatedColumnHelper.getColumnListFromExpression(cleanedExpression);
         for (let column of columnList) {
             let childrenColumnList = this.calculatedColumnPathMap.get(column);
@@ -992,7 +994,7 @@ class AdaptableBlotter {
             valueGetter: (params) => this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node)
         };
         colDefs.push(newColDef);
-        agGridHelper_1.agGridHelper.safeSetColDefs(colDefs, this.gridOptions);
+        this.agGridHelper.safeSetColDefs(colDefs);
         this.addSpecialColumnToState(freeTextColumn.ColumnId, false);
     }
     addSpecialColumnToState(columnId, isReadOnly) {
@@ -1035,6 +1037,8 @@ class AdaptableBlotter {
         });
         return record;
     }
+    // need to destroy more than just this... 
+    // TODO;  manage destruction properly
     destroy() {
         if (this.abContainerElement != null) {
             ReactDOM.unmountComponentAtNode(this.abContainerElement);
@@ -1413,7 +1417,7 @@ class AdaptableBlotter {
     addPercentBar(pcr) {
         let renderedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(pcr.ColumnId, this.api.gridApi.getColumns());
         if (renderedColumn) {
-            let cellRendererFunc = agGridHelper_1.agGridHelper.createCellRendererFunc(pcr, this.blotterOptions.blotterId);
+            let cellRendererFunc = this.agGridHelper.createCellRendererFunc(pcr, this.blotterOptions.blotterId);
             let vendorGridColumn = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
             let coldDef = vendorGridColumn.getColDef();
             coldDef.cellRenderer = cellRendererFunc;
@@ -1602,7 +1606,7 @@ class AdaptableBlotter {
         return false;
     }
     isFloatingFilterActive() {
-        return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter && this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter;
+        return this.gridOptions.floatingFilter != null && this.gridOptions.floatingFilter == true && this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter;
     }
     showFloatingFilter() {
         if (this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
@@ -1623,7 +1627,7 @@ class AdaptableBlotter {
         if (this.blotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.blotterOptions.containerOptions.vendorContainer)) {
             let container = document.getElementById(this.blotterOptions.containerOptions.vendorContainer);
             if (container != null) {
-                container.className = agGridHelper_1.agGridHelper.getLightThemeName();
+                container.className = this.agGridHelper.getLightThemeName();
             }
         }
     }
@@ -1631,7 +1635,7 @@ class AdaptableBlotter {
         if (this.blotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.blotterOptions.containerOptions.vendorContainer)) {
             let container = document.getElementById(this.blotterOptions.containerOptions.vendorContainer);
             if (container != null) {
-                container.className = agGridHelper_1.agGridHelper.getDarkThemeName();
+                container.className = this.agGridHelper.getDarkThemeName();
             }
         }
     }
@@ -1641,7 +1645,7 @@ class AdaptableBlotter {
         // Check that we have a primary key
         let isValidPrimaryKey = BlotterHelper_1.BlotterHelper.isValidPrimaryKey(this, this.api.gridApi.getColumns());
         // set up whether we use the getRowNode method or loop when finding a record (former is preferable)
-        this.useRowNodeLookUp = agGridHelper_1.agGridHelper.TrySetUpNodeIds(this.gridOptions, this.blotterOptions, isValidPrimaryKey);
+        this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds(isValidPrimaryKey);
         // add the filter header style if required
         if (this.blotterOptions.filterOptions.indicateFilteredColumns == true) {
             var css = document.createElement("style");

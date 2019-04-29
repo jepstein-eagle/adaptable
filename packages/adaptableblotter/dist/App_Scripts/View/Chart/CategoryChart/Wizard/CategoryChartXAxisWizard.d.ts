@@ -7,7 +7,7 @@ export interface CategoryChartXAxisWizardProps extends AdaptableWizardStepProps<
 export interface CategoryChartXAxisWizardState {
     XAxisColumnId: string;
     UseAllXAsisColumnValues: boolean;
-    XAxisExpression: Expression;
+    XAxisExpression?: Expression;
 }
 export declare class CategoryChartXAxisWizard extends React.Component<CategoryChartXAxisWizardProps, CategoryChartXAxisWizardState> implements AdaptableWizardStep {
     constructor(props: CategoryChartXAxisWizardProps);

@@ -42,18 +42,21 @@ const ReminderStrategy_1 = require("../Strategy/ReminderStrategy");
  * So lets put some of the more obvious 'Helper' functions here
  * This is a bit crap - it should take a GridOptions object...
  */
-var agGridHelper;
-(function (agGridHelper) {
-    function getLightThemeName() {
+// tslint:disable-next-line: class-name
+class agGridHelper {
+    constructor(blotter, gridOptions) {
+        this.blotter = blotter;
+        this.gridOptions = gridOptions;
+    }
+    getLightThemeName() {
         return "ag-theme-balham";
     }
-    agGridHelper.getLightThemeName = getLightThemeName;
-    function getDarkThemeName() {
+    getDarkThemeName() {
         return "ag-theme-balham-dark";
     }
-    agGridHelper.getDarkThemeName = getDarkThemeName;
-    function setUpStrategies(blotter) {
+    setUpStrategies() {
         let strategies = new Map();
+        let blotter = this.blotter;
         strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategy_1.AlertStrategy(blotter));
         strategies.set(StrategyConstants.AdvancedSearchStrategyId, new AdvancedSearchStrategy_1.AdvancedSearchStrategy(blotter));
         strategies.set(StrategyConstants.ApplicationStrategyId, new ApplicationStrategy_1.ApplicationStrategy(blotter));
@@ -90,31 +93,31 @@ var agGridHelper;
         strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy_1.ReminderStrategy(blotter));
         return strategies;
     }
-    agGridHelper.setUpStrategies = setUpStrategies;
-    function TrySetUpNodeIds(gridOptions, blotterOptions, isValidPrimaryKey) {
+    TrySetUpNodeIds(isValidPrimaryKey) {
         if (!isValidPrimaryKey) { // if no valid pk then always false
             return false;
         }
         // need some way of checking if running on client on server
         // if on server then we return false
+        // also we can check if they have done it
+        let primaryKey = this.blotter.blotterOptions.primaryKey;
         // otherwise lets set the Id so that it returns the primaryKey
-        gridOptions.getRowNodeId = function (data) {
-            return data[blotterOptions.primaryKey];
+        this.gridOptions.getRowNodeId = function (data) {
+            return data[primaryKey];
         };
         return true;
     }
-    agGridHelper.TrySetUpNodeIds = TrySetUpNodeIds;
-    function createCellRendererFunc(pcr, blotterId) {
+    createCellRendererFunc(pcr, blotterId) {
         let showNegatives = pcr.MinValue < 0;
         let showPositives = pcr.MaxValue > 0;
         let cellRendererFunc = (params) => {
             let isNegativeValue = params.value < 0;
             let value = params.value;
             let maxValue = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pcr.MaxValueColumnId) ?
-                this.getRawValueFromRecord(params.node, pcr.MaxValueColumnId) :
+                this.blotter.getRawValueFromRecord(params.node, pcr.MaxValueColumnId) :
                 pcr.MaxValue;
             let minValue = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pcr.MinValueColumnId) ?
-                this.getRawValueFromRecord(params.node, pcr.MinValueColumnId) :
+                this.blotter.getRawValueFromRecord(params.node, pcr.MinValueColumnId) :
                 pcr.MinValue;
             if (isNegativeValue) {
                 value = value * -1;
@@ -170,8 +173,7 @@ var agGridHelper;
         };
         return cellRendererFunc;
     }
-    agGridHelper.createCellRendererFunc = createCellRendererFunc;
-    function getCleanValue(value) {
+    getCleanValue(value) {
         if (value == null || value == 'null') {
             return undefined;
         }
@@ -182,26 +184,23 @@ var agGridHelper;
             return String(value) || "";
         }
     }
-    agGridHelper.getCleanValue = getCleanValue;
-    function getRenderedValue(percentBars, colDef, valueToRender) {
+    getRenderedValue(percentBars, colDef, valueToRender) {
         let isRenderedColumn = ArrayExtensions_1.ArrayExtensions.ContainsItem(percentBars, colDef.field);
         if (isRenderedColumn) {
             return valueToRender;
         }
         let render = colDef.cellRenderer;
         if (typeof render == "string") {
-            return getCleanValue(valueToRender);
+            return this.getCleanValue(valueToRender);
         }
         return render({ value: valueToRender }) || "";
     }
-    agGridHelper.getRenderedValue = getRenderedValue;
-    function safeSetColDefs(colDefs, gridOptions) {
+    safeSetColDefs(colDefs) {
         // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
-        gridOptions.api.setColumnDefs([]);
-        gridOptions.api.setColumnDefs(colDefs);
+        this.gridOptions.api.setColumnDefs([]);
+        this.gridOptions.api.setColumnDefs(colDefs);
     }
-    agGridHelper.safeSetColDefs = safeSetColDefs;
-    function createAdaptableBlotterSideBarDefs(showFilterPanel, showColumnsPanel) {
+    createAdaptableBlotterSideBarDefs(showFilterPanel, showColumnsPanel) {
         let toolPanelDef = [];
         if (showFilterPanel) {
             let filterToolPanel = {
@@ -223,15 +222,14 @@ var agGridHelper;
             };
             toolPanelDef.push(columnsToolPanel);
         }
-        toolPanelDef.push(createAdaptableBlotterToolPanel());
+        toolPanelDef.push(this.createAdaptableBlotterToolPanel());
         let abSideBarDef = {
             toolPanels: toolPanelDef,
             defaultToolPanel: '' // for now we wont show an open (default) tool panel in this scenario - might revisit
         };
         return abSideBarDef;
     }
-    agGridHelper.createAdaptableBlotterSideBarDefs = createAdaptableBlotterSideBarDefs;
-    function createAdaptableBlotterToolPanel() {
+    createAdaptableBlotterToolPanel() {
         return {
             id: 'adaptableBlotterToolPanel',
             labelDefault: 'Adaptable Blotter',
@@ -240,5 +238,5 @@ var agGridHelper;
             toolPanel: 'adaptableBlotterToolPanel',
         };
     }
-    agGridHelper.createAdaptableBlotterToolPanel = createAdaptableBlotterToolPanel;
-})(agGridHelper = exports.agGridHelper || (exports.agGridHelper = {}));
+}
+exports.agGridHelper = agGridHelper;

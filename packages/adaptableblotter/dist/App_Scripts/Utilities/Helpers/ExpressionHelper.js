@@ -16,7 +16,7 @@ var ExpressionHelper;
     ExpressionHelper.CreateSingleColumnExpression = CreateSingleColumnExpression;
     function ConvertExpressionToString(Expression, columns, includeColumnName = true) {
         let returnValue = "";
-        if (IsEmptyExpression(Expression)) {
+        if (IsNullOrEmptyExpression(Expression)) {
             return "Any";
         }
         let columnList = GetColumnListFromExpression(Expression);
@@ -359,6 +359,10 @@ var ExpressionHelper;
             .concat(expression.RangeExpressions.map(x => x.ColumnId))));
     }
     ExpressionHelper.GetColumnListFromExpression = GetColumnListFromExpression;
+    function IsNullOrEmptyExpression(expression) {
+        return expression == null || IsEmptyExpression(expression);
+    }
+    ExpressionHelper.IsNullOrEmptyExpression = IsNullOrEmptyExpression;
     function IsEmptyExpression(expression) {
         return expression.ColumnValueExpressions.length == 0
             && expression.FilterExpressions.length == 0

@@ -10,9 +10,9 @@ const ChartEnums_1 = require("./ChartEnums");
 const DefaultPieChartProperties_1 = require("./Defaults/DefaultPieChartProperties");
 var ObjectFactory;
 (function (ObjectFactory) {
-    function CreateLicenceInfo(licenceType, isLicenceInDate, licenceUserType, expiryDate) {
+    function CreateLicenceInfo(licenceScopeType, isLicenceInDate, licenceUserType, expiryDate) {
         return {
-            LicenceScopeType: licenceType,
+            LicenceScopeType: licenceScopeType,
             IsLicenceInDate: isLicenceInDate,
             LicenceUserType: licenceUserType,
             ExpiryDate: expiryDate
@@ -47,7 +47,7 @@ var ObjectFactory;
             YAxisColumnIds: [],
             YAxisTotal: GeneralConstants_1.CHART_DEFAULT_YAXIS_TOTAL,
             XAxisColumnId: GeneralConstants_1.EMPTY_STRING,
-            XAxisExpression: ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression(),
+            XAxisExpression: null,
             ChartProperties: DefaultCategoryChartProperties_1.DefaultCategoryChartProperties,
             ChartType: ChartEnums_1.ChartType.CategoryChart,
             VisibleRowsOnly: true

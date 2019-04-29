@@ -28,7 +28,6 @@ export interface AdaptableBlotterState {
     Layout: AdaptableBlotterStates.LayoutState;
     ColumnCategory: AdaptableBlotterStates.ColumnCategoryState;
     PercentBar: AdaptableBlotterStates.PercentBarState;
-    PieChart: AdaptableBlotterStates.PieChartState;
     PlusMinus: AdaptableBlotterStates.PlusMinusState;
     QuickSearch: AdaptableBlotterStates.QuickSearchState;
     CellSummary: AdaptableBlotterStates.CellSummaryState;

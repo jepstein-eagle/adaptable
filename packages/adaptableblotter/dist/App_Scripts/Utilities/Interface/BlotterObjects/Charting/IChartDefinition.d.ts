@@ -1,6 +1,11 @@
 import { Expression } from '../../../Expression';
 import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, PieChartLabelPosition, SliceLabelOption, OthersCategoryType } from '../../../ChartEnums';
+/**
+ * Our Chart Definitions which will get added to and updated as we add new charts
+ * But the basic idea is that each chart will have a base chart defintion that just includes a name, description, type and chart properties
+ * These chart properties are specialised for each chart type: they are all nullable types because we use defaults in the DefaultXXXProperties that we assign
+ */
 export interface IChartDefinition extends IAdaptableBlotterObject {
     Name: string;
     Description: string;
@@ -19,7 +24,7 @@ export interface ICategoryChartDefinition extends IChartDefinition {
     YAxisColumnIds: string[];
     YAxisTotal: 'Sum' | 'Average';
     XAxisColumnId: string;
-    XAxisExpression: Expression;
+    XAxisExpression?: Expression;
 }
 export interface IPieChartProperties extends IChartProperties {
     OthersCategoryThreshold?: number;

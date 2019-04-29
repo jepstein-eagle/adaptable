@@ -13,7 +13,7 @@ class CategoryChartXAxisWizard extends React.Component {
         super(props);
         this.state = {
             XAxisColumnId: props.Data.XAxisColumnId,
-            UseAllXAsisColumnValues: ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(this.props.Data.XAxisExpression),
+            UseAllXAsisColumnValues: ExpressionHelper_1.ExpressionHelper.IsNullOrEmptyExpression(this.props.Data.XAxisExpression),
             XAxisExpression: this.props.Data.XAxisExpression
         };
     }
@@ -44,7 +44,11 @@ class CategoryChartXAxisWizard extends React.Component {
     onUseAllColumnValuesChanged(event) {
         let e = event.target;
         let showAll = e.value == "All";
-        this.setState({ UseAllXAsisColumnValues: showAll }, () => this.props.UpdateGoBackState());
+        let expression = this.state.XAxisExpression;
+        if (!showAll && ExpressionHelper_1.ExpressionHelper.IsNullOrEmptyExpression(expression)) {
+            expression = ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression();
+        }
+        this.setState({ UseAllXAsisColumnValues: showAll, XAxisExpression: expression }, () => this.props.UpdateGoBackState());
     }
     onXAxisColumnChanged(columns) {
         let isColumn = ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(columns);
@@ -59,9 +63,9 @@ class CategoryChartXAxisWizard extends React.Component {
     canBack() { return true; }
     Next() {
         this.props.Data.XAxisColumnId = this.state.XAxisColumnId;
-        this.props.Data.XAxisExpression = (this.state.UseAllXAsisColumnValues) ? ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression() : this.state.XAxisExpression;
+        this.props.Data.XAxisExpression = (this.state.UseAllXAsisColumnValues) ? null : this.state.XAxisExpression;
         if (this.props.Data.XAxisColumnId != this.state.XAxisColumnId) {
-            this.props.Data.XAxisExpression = ExpressionHelper_1.ExpressionHelper.CreateEmptyExpression();
+            this.props.Data.XAxisExpression = null;
         }
     }
     Back() {

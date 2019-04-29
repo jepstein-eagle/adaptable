@@ -31,9 +31,10 @@ class LayoutGridSortWizard extends React.Component {
             return React.createElement(GridSortRow_1.GridSortRow, { key: index, cssClassName: "", AdaptableBlotterObject: null, colItems: colItems, Columns: this.props.Columns, UserFilters: null, Index: index, onEdit: null, onDeleteGridSort: () => this.onDeleteGridSort(index), onGridSortColumnChanged: (column) => this.onColumnSelectedChanged(index, column), onGridSortOrderChanged: (sortOrder) => this.onSortOrderChanged(index, sortOrder), onShare: null, TeamSharingActivated: false, onDeleteConfirm: null, GridSort: x });
         });
         let cssClassName = this.props.cssClassName + "-gridsort";
-        return React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Sort Information", bsStyle: "primary", style: divStyle, button: addButton },
-            React.createElement("div", null,
-                React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: gridSortRows, allowOverflow: true })));
+        return React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: "Sort Information", bsStyle: "primary", style: divStyle, button: addButton }, gridSortRows.length > 0 ?
+            React.createElement(AdaptableObjectCollection_1.AdaptableObjectCollection, { cssClassName: cssClassName, colItems: colItems, items: gridSortRows, allowOverflow: true })
+            :
+                React.createElement(react_bootstrap_1.HelpBlock, null, "Click 'New' to add a Sort Order for a column in the layout."));
     }
     addSort() {
         let sorts = [].concat(this.state.GridSorts, ObjectFactory_1.ObjectFactory.CreateEmptyGridSort());

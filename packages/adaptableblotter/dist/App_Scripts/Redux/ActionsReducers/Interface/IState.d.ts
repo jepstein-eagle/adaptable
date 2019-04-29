@@ -193,9 +193,6 @@ export interface LayoutState extends IUserState {
 export interface PercentBarState extends IUserState {
     PercentBars: IPercentBar[];
 }
-export interface PieChartState extends IUserState {
-    PieCharts: any[];
-}
 export interface PlusMinusState extends IUserState {
     PlusMinusRules: IPlusMinusRule[];
 }

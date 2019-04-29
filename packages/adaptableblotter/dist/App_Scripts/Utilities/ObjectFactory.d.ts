@@ -32,7 +32,7 @@ import { ISchedule } from './Interface/BlotterObjects/ISchedule';
 import { IReminder } from './Interface/BlotterObjects/IReminder';
 import { IAdaptableAlert } from './Interface/IMessage';
 export declare module ObjectFactory {
-    function CreateLicenceInfo(licenceType: LicenceScopeType, isLicenceInDate: boolean, licenceUserType: LicenceUserType, expiryDate: Date): ILicenceInfo;
+    function CreateLicenceInfo(licenceScopeType: LicenceScopeType, isLicenceInDate: boolean, licenceUserType: LicenceUserType, expiryDate: Date): ILicenceInfo;
     function CreateEmptyCustomSort(): ICustomSort;
     function CreateEmptyDataSource(): IDataSource;
     function CreateEmptyPieChartDefinition(): IPieChartDefinition;

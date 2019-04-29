@@ -3,6 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Enums_1 = require("../Utilities/Enums");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const MenuItem_1 = require("../Utilities/MenuItem");
+/**
+ * Base class for all strategies and does most of the work of creating menus
+ * Each strategy is reponsible for managing state (through InitState())
+ */
 class AdaptableStrategyBase {
     constructor(Id, blotter) {
         this.Id = Id;
@@ -13,7 +17,7 @@ class AdaptableStrategyBase {
         this.blotter.adaptableBlotterStore.TheStore.subscribe(() => this.InitState());
     }
     InitState() {
-        // stff - check this works
+        // derived in each strategy that needs to manage state
     }
     getPopupMenuItem() {
         if (!this.hasPopupMenu()) {
@@ -58,9 +62,7 @@ class AdaptableStrategyBase {
     }
     // creates the menu items in the main dropdown
     createMenuItemShowPopup(Label, ComponentName, GlyphIcon, PopupParams) {
-        let menuItemShowPopup = new MenuItem_1.MenuItemShowPopup(Label, this.Id, ComponentName, GlyphIcon, 
-        //  this.isReadOnlyStrategy(),
-        this.isVisibleStrategy(), PopupParams);
+        let menuItemShowPopup = new MenuItem_1.MenuItemShowPopup(Label, this.Id, ComponentName, GlyphIcon, this.isVisibleStrategy(), PopupParams);
         this.popupMenuItem = menuItemShowPopup;
     }
     // direct actions called by the context menu - invisible if strategy is hidden or readonly
@@ -100,6 +102,11 @@ class AdaptableStrategyBase {
         }
         return true;
     }
+    /**
+     * Each time any of the objects that make up search are changed (e.g. filters, quick search, advanced search, data sources etc.) we fire an event
+     * This is primarily to help users who want to run search on the server and so need to know what has changed
+     * @param searchChangedTrigger function that triggered the event
+     */
     publishSearchChanged(searchChangedTrigger) {
         let state = this.blotter.adaptableBlotterStore.TheStore.getState();
         let dataSource = state.DataSource.DataSources.find(ds => ds.Name == state.DataSource.CurrentDataSource);
@@ -134,6 +141,12 @@ class AdaptableStrategyBase {
         };
         this.blotter.api.eventApi._onSearchedChanged.Dispatch(this.blotter, searchChangedArgs);
     }
+    /**
+     * An event which is triggered whenever User (as oppoesed to System) State is changed.
+     * Its the responsibility of each function to fire the event when their state changes
+     * @param stateChangedTrigger which function has triggered the event
+     * @param state the current state of that function
+     */
     publishStateChanged(stateChangedTrigger, state) {
         let stateChangedInfo = {
             stateChangedTrigger: stateChangedTrigger,

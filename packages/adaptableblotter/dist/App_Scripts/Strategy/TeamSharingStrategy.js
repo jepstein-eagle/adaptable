@@ -14,8 +14,5 @@ class TeamSharingStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase 
     hasPopupMenu() {
         return BlotterHelper_1.BlotterHelper.isConfigServerEnabled(this.blotter.blotterOptions);
     }
-    InitState() {
-        //nothing 
-    }
 }
 exports.TeamSharingStrategy = TeamSharingStrategy;

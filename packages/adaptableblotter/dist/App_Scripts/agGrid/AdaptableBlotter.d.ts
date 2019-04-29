@@ -55,6 +55,7 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     hasFloatingFilter: boolean;
     grid: Grid;
     gridContainer: HTMLElement;
+    private agGridHelper;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
     private tryInstantiateAgGrid;
     debouncedSetColumnIntoStore: (() => void) & _.Cancelable;

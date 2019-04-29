@@ -26,7 +26,7 @@ class CategoryChartSummaryWizard extends React.Component {
         return React.createElement("div", { className: cssClassName }, summaryPage);
     }
     getExpressionString(expression) {
-        if (ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(expression)) {
+        if (ExpressionHelper_1.ExpressionHelper.IsNullOrEmptyExpression(expression)) {
             return "[All Column Values]";
         }
         else {

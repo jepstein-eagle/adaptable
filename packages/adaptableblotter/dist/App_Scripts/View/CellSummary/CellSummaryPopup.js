@@ -13,7 +13,7 @@ class CellSummaryPopupComponent extends React.Component {
     }
     render() {
         let cssClassName = this.props.cssClassName + "__CellSummary";
-        let infoBody = ["Selected cells info."];
+        let infoBody = ["Provides summary information about the (numeric) cells which have been selected."];
         return React.createElement("div", { className: cssClassName },
             React.createElement(PanelWithButton_1.PanelWithButton, { cssClassName: cssClassName, headerText: StrategyConstants.CellSummaryStrategyName, className: "ab_main_popup", bsStyle: "primary", glyphicon: StrategyConstants.CellSummaryGlyph, infoBody: infoBody },
                 React.createElement("div", { className: this.props.cssClassName + StyleConstants.ITEMS_TABLE },

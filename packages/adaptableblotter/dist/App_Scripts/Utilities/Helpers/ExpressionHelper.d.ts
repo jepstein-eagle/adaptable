@@ -22,6 +22,7 @@ export declare module ExpressionHelper {
     function OperatorToLongFriendlyString(leafExpressionOperator: LeafExpressionOperator, dataType: DataType): string;
     function GetOperatorsForDataType(dataType: DataType): LeafExpressionOperator[];
     function GetColumnListFromExpression(expression: Expression): Array<string>;
+    function IsNullOrEmptyExpression(expression: Expression): boolean;
     function IsEmptyExpression(expression: Expression): boolean;
     function IsNotEmptyExpression(expression: Expression): boolean;
     function IsNotEmptyOrInvalidExpression(expression: Expression): boolean;

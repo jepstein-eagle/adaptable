@@ -181,17 +181,23 @@ var CategoryChartUIHelper;
         if (chartData === undefined) {
             return [];
         }
-        let item = chartData[0];
-        let dataProps = Object.keys(item);
+        let dataItem = chartData[0];
+        if (dataItem === undefined || dataItem === null) {
+            return [];
+        }
+        let dataProps = Object.keys(dataItem);
         return dataProps;
     }
     CategoryChartUIHelper.getDataProperties = getDataProperties;
     // TODO ideally we should get names of numeric using IChartDefinition.YAxisColumnIds instead of:
     function getNumericProperties(chartData) {
-        if (chartData === undefined) {
+        if (chartData === undefined || chartData === null) {
             return [];
         }
         let dataItem = chartData[0];
+        if (dataItem === undefined || dataItem === null) {
+            return [];
+        }
         let allProps = Object.keys(dataItem);
         let dataProps = [];
         allProps.forEach((name) => {
@@ -200,7 +206,6 @@ var CategoryChartUIHelper;
                 dataProps.push(name);
             }
         });
-        // console.log("getNumericProperties " + dataProps);
         return dataProps;
     }
     CategoryChartUIHelper.getNumericProperties = getNumericProperties;

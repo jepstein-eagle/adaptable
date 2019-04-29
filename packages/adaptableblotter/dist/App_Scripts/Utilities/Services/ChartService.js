@@ -90,7 +90,7 @@ class ChartService {
     // Gets the unique values in the (horizontal) X Axis column - either through an expression or getting the distinct values
     getXAxisColumnValues(chartDefinition, columns) {
         let xAxisColValues = [];
-        if (ExpressionHelper_1.ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
+        if (ExpressionHelper_1.ExpressionHelper.IsNullOrEmptyExpression(chartDefinition.XAxisExpression)) {
             xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, Enums_1.DistinctCriteriaPairValue.DisplayValue, chartDefinition.VisibleRowsOnly).map(cv => { return cv.DisplayValue; });
         }
         else {
