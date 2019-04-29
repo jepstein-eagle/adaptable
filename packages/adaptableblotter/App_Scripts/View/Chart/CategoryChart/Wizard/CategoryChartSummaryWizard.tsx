@@ -37,7 +37,7 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
     }
 
     private getExpressionString(expression: Expression): string {
-        if (ExpressionHelper.IsEmptyExpression(expression)) {
+        if (ExpressionHelper.IsNullOrEmptyExpression(expression)) {
             return "[All Column Values]"
         } else {
             return ExpressionHelper.ConvertExpressionToString(expression, this.props.Columns, false)

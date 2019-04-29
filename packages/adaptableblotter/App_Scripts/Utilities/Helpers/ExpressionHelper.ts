@@ -41,7 +41,7 @@ export module ExpressionHelper {
 
     export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, includeColumnName: boolean = true): string {
         let returnValue = ""
-        if (IsEmptyExpression(Expression)) {
+        if (IsNullOrEmptyExpression(Expression)) {
             return "Any";
         }
 
@@ -395,6 +395,10 @@ export module ExpressionHelper {
         return Array.from(new Set(expression.ColumnValueExpressions.map(x => x.ColumnId)
             .concat(expression.FilterExpressions.map(x => x.ColumnId))
             .concat(expression.RangeExpressions.map(x => x.ColumnId))))
+    }
+
+    export function IsNullOrEmptyExpression(expression: Expression): boolean {
+        return expression==null || IsEmptyExpression(expression);
     }
 
     export function IsEmptyExpression(expression: Expression): boolean {

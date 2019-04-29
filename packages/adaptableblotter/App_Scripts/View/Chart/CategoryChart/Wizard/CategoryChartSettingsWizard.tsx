@@ -107,7 +107,7 @@ export class CategoryChartSettingsWizard extends React.Component<CategoryChartSe
         return 1;
     }
     public GetIndexStepDecrement() {
-        return (ExpressionHelper.IsEmptyExpression(this.props.Data.XAxisExpression)) ? 2 : 1
+        return (ExpressionHelper.IsNullOrEmptyExpression(this.props.Data.XAxisExpression)) ? 2 : 1
     }
    
 }

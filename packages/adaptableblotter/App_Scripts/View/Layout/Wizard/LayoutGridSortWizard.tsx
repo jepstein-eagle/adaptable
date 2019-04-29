@@ -17,7 +17,7 @@ import { ILayout } from "../../../Utilities/Interface/BlotterObjects/ILayout";
 
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<ILayout> {
-    }
+}
 
 export interface LayoutGridSortWizardState {
     GridSorts: IGridSort[]
@@ -70,9 +70,13 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
         let cssClassName: string = this.props.cssClassName + "-gridsort"
 
         return <PanelWithButton cssClassName={cssClassName} headerText="Sort Information" bsStyle="primary" style={divStyle} button={addButton}>
-            <div>
+
+            {gridSortRows.length > 0 ?
                 <AdaptableObjectCollection cssClassName={cssClassName} colItems={colItems} items={gridSortRows} allowOverflow={true} />
-            </div>
+                :
+                <HelpBlock>Click 'New' to add a Sort Order for a column in the layout.</HelpBlock>
+            }
+
         </PanelWithButton>
     }
 
@@ -128,7 +132,7 @@ export class LayoutGridSortWizard extends React.Component<LayoutGridSortWizardPr
     public GetIndexStepDecrement() {
         return 1;  // some way of knowing to go back 2 steps?
     }
-   
+
 }
 
 let divStyle: React.CSSProperties = {

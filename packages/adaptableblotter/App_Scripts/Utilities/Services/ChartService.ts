@@ -116,7 +116,7 @@ export class ChartService implements IChartService {
   // Gets the unique values in the (horizontal) X Axis column - either through an expression or getting the distinct values
   private getXAxisColumnValues(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): string[] {
     let xAxisColValues: string[] = [];
-    if (ExpressionHelper.IsEmptyExpression(chartDefinition.XAxisExpression)) {
+    if (ExpressionHelper.IsNullOrEmptyExpression(chartDefinition.XAxisExpression)) {
       xAxisColValues = this.blotter.getColumnValueDisplayValuePairDistinctList(chartDefinition.XAxisColumnId, DistinctCriteriaPairValue.DisplayValue, chartDefinition.VisibleRowsOnly).map(cv => { return cv.DisplayValue })
     } else {
       if (chartDefinition.VisibleRowsOnly) {

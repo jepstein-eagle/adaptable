@@ -18,7 +18,7 @@ export module CategoryChartUIHelper {
 
   export function setChartDisplayPopupState(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): CategoryChartComponentState {
     let categoryChartProperties: ICategoryChartProperties = Object.assign({}, DefaultCategoryChartProperties, chartDefinition.ChartProperties);
-   
+
     return {
       ChartProperties: categoryChartProperties,
       IsChartSettingsVisible: false,
@@ -198,17 +198,23 @@ export module CategoryChartUIHelper {
     if (chartData === undefined) {
       return [];
     }
-    let item = chartData[0];
-    let dataProps = Object.keys(item);
+    let dataItem = chartData[0];
+    if (dataItem === undefined || dataItem === null) {
+      return [];
+    }
+    let dataProps = Object.keys(dataItem);
     return dataProps;
   }
 
   // TODO ideally we should get names of numeric using IChartDefinition.YAxisColumnIds instead of:
   export function getNumericProperties(chartData: any): string[] {
-    if (chartData === undefined) {
+    if (chartData === undefined || chartData === null) {
       return [];
     }
     let dataItem = chartData[0];
+    if (dataItem === undefined || dataItem === null) {
+      return [];
+    }
     let allProps = Object.keys(dataItem);
     let dataProps: string[] = [];
 
@@ -218,8 +224,7 @@ export module CategoryChartUIHelper {
         dataProps.push(name);
       }
     });
-    // console.log("getNumericProperties " + dataProps);
-    return dataProps;
+     return dataProps;
   }
 
   export function getCalloutsData(chartData: any, chartProps: ICategoryChartProperties): any[] {

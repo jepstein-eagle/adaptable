@@ -12,13 +12,12 @@ import { ArrayExtensions } from "../../../../Utilities/Extensions/ArrayExtension
 import { StringExtensions } from "../../../../Utilities/Extensions/StringExtensions";
 
 export interface CategoryChartXAxisWizardProps extends AdaptableWizardStepProps<ICategoryChartDefinition> {
-    //  ChartDefinitions: IChartDefinition[]
 }
 
 export interface CategoryChartXAxisWizardState {
     XAxisColumnId: string,
     UseAllXAsisColumnValues: boolean,
-    XAxisExpression: Expression
+    XAxisExpression?: Expression
 }
 
 export class CategoryChartXAxisWizard extends React.Component<CategoryChartXAxisWizardProps, CategoryChartXAxisWizardState> implements AdaptableWizardStep {
@@ -26,7 +25,7 @@ export class CategoryChartXAxisWizard extends React.Component<CategoryChartXAxis
         super(props)
         this.state = {
             XAxisColumnId: props.Data.XAxisColumnId,
-            UseAllXAsisColumnValues: ExpressionHelper.IsEmptyExpression(this.props.Data.XAxisExpression),
+            UseAllXAsisColumnValues: ExpressionHelper.IsNullOrEmptyExpression(this.props.Data.XAxisExpression),
             XAxisExpression: this.props.Data.XAxisExpression
         }
     }
@@ -73,8 +72,12 @@ export class CategoryChartXAxisWizard extends React.Component<CategoryChartXAxis
 
     private onUseAllColumnValuesChanged(event: React.FormEvent<any>) {
         let e = event.target as HTMLInputElement;
-        let showAll: boolean = e.value == "All"
-        this.setState({ UseAllXAsisColumnValues: showAll } as CategoryChartXAxisWizardState, () => this.props.UpdateGoBackState())
+        let showAll: boolean = e.value == "All";
+        let expression: Expression = this.state.XAxisExpression;
+        if (!showAll && ExpressionHelper.IsNullOrEmptyExpression(expression)) {
+            expression = ExpressionHelper.CreateEmptyExpression();
+        }
+        this.setState({ UseAllXAsisColumnValues: showAll, XAxisExpression: expression } as CategoryChartXAxisWizardState, () => this.props.UpdateGoBackState())
     }
 
     private onXAxisColumnChanged(columns: IColumn[]) {
@@ -94,9 +97,9 @@ export class CategoryChartXAxisWizard extends React.Component<CategoryChartXAxis
 
     public Next(): void {
         this.props.Data.XAxisColumnId = this.state.XAxisColumnId
-        this.props.Data.XAxisExpression = (this.state.UseAllXAsisColumnValues) ? ExpressionHelper.CreateEmptyExpression() : this.state.XAxisExpression
+        this.props.Data.XAxisExpression = (this.state.UseAllXAsisColumnValues) ? null : this.state.XAxisExpression
         if (this.props.Data.XAxisColumnId != this.state.XAxisColumnId) {
-            this.props.Data.XAxisExpression = ExpressionHelper.CreateEmptyExpression();
+            this.props.Data.XAxisExpression = null;
         }
     }
 

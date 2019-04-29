@@ -41,9 +41,9 @@ import { IAdaptableAlert } from './Interface/IMessage';
 
 export module ObjectFactory {
 
-    export function CreateLicenceInfo(licenceType: LicenceScopeType, isLicenceInDate: boolean, licenceUserType: LicenceUserType, expiryDate: Date): ILicenceInfo {
+    export function CreateLicenceInfo(licenceScopeType: LicenceScopeType, isLicenceInDate: boolean, licenceUserType: LicenceUserType, expiryDate: Date): ILicenceInfo {
         return {
-            LicenceScopeType: licenceType,
+            LicenceScopeType: licenceScopeType,
             IsLicenceInDate: isLicenceInDate,
             LicenceUserType: licenceUserType,
             ExpiryDate: expiryDate
@@ -79,7 +79,7 @@ export module ObjectFactory {
             YAxisColumnIds: [],
             YAxisTotal: CHART_DEFAULT_YAXIS_TOTAL,
             XAxisColumnId: EMPTY_STRING,
-            XAxisExpression: ExpressionHelper.CreateEmptyExpression(),
+            XAxisExpression: null,
             ChartProperties: DefaultCategoryChartProperties,
             ChartType: ChartType.CategoryChart,
             VisibleRowsOnly: true

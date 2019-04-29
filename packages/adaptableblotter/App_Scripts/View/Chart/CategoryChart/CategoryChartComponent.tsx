@@ -59,7 +59,7 @@ export class CategoryChartComponent extends React.Component<CategoryChartCompone
     componentWillReceiveProps(nextProps: CategoryChartComponentProps, nextContext: any) {
         if (nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name) {
             this.setState(CategoryChartUIHelper.setChartDisplayPopupState(nextProps.CurrentChartDefinition as ICategoryChartDefinition, this.props.Columns) as CategoryChartComponentState);
-       
+
         }
     }
 
@@ -937,6 +937,8 @@ export class CategoryChartComponent extends React.Component<CategoryChartCompone
 
 
     onSetPropertyDefaults() {
+        // this overrides what has been set in predefined config with defaults - is that right?
+        // or should it just override what has been changed ?
         // first update our state
         this.setState(CategoryChartUIHelper.setDefaultChartDisplayPopupState() as CategoryChartComponentState);
         // then update the properties
@@ -971,8 +973,6 @@ export class CategoryChartComponent extends React.Component<CategoryChartCompone
         this.setState({ IsYAxisMinimised: true, IsGeneralMinimised: true, IsXAxisMinimised: true, IsHighlightsMinimised: true, IsMiscMinimised: true } as CategoryChartComponentState)
     }
 
-
-
     onShowChartSettings() {
         this.setState({ IsChartSettingsVisible: true, } as CategoryChartComponentState)
     }
@@ -1001,8 +1001,7 @@ export class CategoryChartComponent extends React.Component<CategoryChartCompone
         let selected = e.value.toString();
         if (selected.indexOf("Left") > 0) {
             chartProperties.YAxisLabelLocation = AxisLabelsLocation.OutsideLeft;
-        }
-        else {
+        } else {
             chartProperties.YAxisLabelLocation = AxisLabelsLocation.OutsideRight;
         }
         this.updateChartProperties(chartProperties);
@@ -1013,8 +1012,7 @@ export class CategoryChartComponent extends React.Component<CategoryChartCompone
         let selected = e.value.toString();
         if (selected.indexOf("Top") > 0) {
             chartProperties.XAxisLabelLocation = AxisLabelsLocation.OutsideTop;
-        }
-        else {
+        } else {
             chartProperties.XAxisLabelLocation = AxisLabelsLocation.OutsideBottom;
         }
         this.updateChartProperties(chartProperties);

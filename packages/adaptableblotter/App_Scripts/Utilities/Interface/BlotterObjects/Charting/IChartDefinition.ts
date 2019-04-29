@@ -2,8 +2,13 @@ import { Expression } from '../../../Expression';
 import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation, PieChartLabelPosition, SliceLabelOption, OthersCategoryType } from '../../../ChartEnums';
 
-// not too sure at the moment how we will break up these objects as we add data series, financial, pie, doughnut etc.
-// trying to make it as flexible as possible though I suspeect some stuff will break as we go forward...
+/**
+ * Our Chart Definitions which will get added to and updated as we add new charts
+ * But the basic idea is that each chart will have a base chart defintion that just includes a name, description, type and chart properties
+ * These chart properties are specialised for each chart type: they are all nullable types because we use defaults in the DefaultXXXProperties that we assign
+ */
+
+
 
 export interface IChartDefinition extends IAdaptableBlotterObject {
   Name: string;
@@ -14,26 +19,26 @@ export interface IChartDefinition extends IAdaptableBlotterObject {
 }
 
 export interface IChartProperties extends IAdaptableBlotterObject {
-  // still empty at this stage
+  // empty inteface that is overriden for each individual chart type
 }
 
 export interface IPieChartDefinition extends IChartDefinition {
   PrimaryColumnId: string;
   SecondaryColumnId: string;
-  SecondaryColumnOperation: 'Sum'|'Count';
+  SecondaryColumnOperation: 'Sum' | 'Count';
 }
 
 export interface ICategoryChartDefinition extends IChartDefinition {
   YAxisColumnIds: string[];
   YAxisTotal: 'Sum' | 'Average';
   XAxisColumnId: string;
-  XAxisExpression: Expression;
- }
+  XAxisExpression?: Expression;
+}
 
 export interface IPieChartProperties extends IChartProperties {
   OthersCategoryThreshold?: number;
   OthersCategoryType?: OthersCategoryType;
-  PieChartLabelPosition?: PieChartLabelPosition; 
+  PieChartLabelPosition?: PieChartLabelPosition;
   SliceLabelsMapping?: SliceLabelOption;
   SliceValuesMapping?: SliceLabelOption;
   SliceLegendMapping?: SliceLabelOption;
