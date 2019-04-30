@@ -34,7 +34,7 @@ export class ScheduleService implements IScheduleService {
         let date: Date = this.getDateFromSchedule(reminder.Schedule);
         if (date != null) {
             var alertJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
-                this.blotter.api.alertApi.ShowAlert(reminder.Alert);
+                this.blotter.api.alertApi.showAlert(reminder.Alert);
             })
             this.alertJobs.push(alertJob);
         }

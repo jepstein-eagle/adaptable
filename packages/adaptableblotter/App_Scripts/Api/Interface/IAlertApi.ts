@@ -3,7 +3,7 @@ import { AlertState } from "../../Redux/ActionsReducers/Interface/IState";
 
 export interface IAlertApi {
 
-  GetState(): AlertState;
+  getAlertState(): AlertState;
   /**
    * 
   * @param alertHeader Title to appear in the popup
@@ -11,10 +11,10 @@ export interface IAlertApi {
   * @param MessageType Type (Success, Info, Warning or Error) of the Alert - depending on this value the image and colour of the alert will change.
   * @param showAsPopup TDetermines whether the Alert appears in the middle of the screen or in the Alerts tab.
    */
-  Show(alertHeader: string, alertMessage: string, MessageType: "Success" | "Info" | "Warning" | "Error", showAsPopup: boolean): void
-  ShowAlert(alertToShow: IAdaptableAlert): void
-  ShowInfo(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
-  ShowSuccess(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
-  ShowWarning(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
-  ShowError(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
+  displayAlert(alertHeader: string, alertMessage: string, MessageType: "Success" | "Info" | "Warning" | "Error", showAsPopup: boolean): void
+  showAlert(alertToShow: IAdaptableAlert): void
+  showAlertInfo(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
+  showAlertSuccess(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
+  showAlertWarning(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
+  showAlertError(alertHeader: string, alertMessage: string, showAsPopup: boolean): void
 }

@@ -139,7 +139,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                                 LoggingHelper.LogAdaptableBlotterWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
                                 this.blotter.adaptableBlotterStore.TheStore.dispatch(
                                     SystemRedux.ReportStopLive(cle.Report, ExportDestination.OpenfinExcel));
-                                this.blotter.api.alertApi.ShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
+                                this.blotter.api.alertApi.showAlertError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
                             })
                     )
                 }
@@ -165,7 +165,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                                 LoggingHelper.LogAdaptableBlotterWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
                                 this.blotter.adaptableBlotterStore.TheStore.dispatch(
                                     SystemRedux.ReportStopLive(cle.Report, ExportDestination.iPushPull));
-                                this.blotter.api.alertApi.ShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
+                                this.blotter.api.alertApi.showAlertError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
 
                             })
                     )

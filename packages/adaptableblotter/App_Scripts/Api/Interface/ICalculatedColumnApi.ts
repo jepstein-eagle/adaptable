@@ -2,10 +2,10 @@ import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICal
 import { CalculatedColumnState } from "../../Redux/ActionsReducers/Interface/IState";
 
 export interface ICalculatedColumnApi {
-  GetState(): CalculatedColumnState;
-  GetAll(): ICalculatedColumn[];
-  Add(calculatedColumn: ICalculatedColumn): void;
-  EditExpression(column: string, columnExpression: string): void;
-  Delete(column: string): void;
+  getCalculatedColumnState(): CalculatedColumnState;
+  getAllCalculatedColumn(): ICalculatedColumn[];
+  addCalculatedColumn(calculatedColumn: ICalculatedColumn): void;
+  editCalculatedColumnExpression(column: string, columnExpression: string): void;
+  deleteCalculatedColumn(column: string): void;
 }
 

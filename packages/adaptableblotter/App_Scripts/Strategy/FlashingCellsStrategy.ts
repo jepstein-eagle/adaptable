@@ -29,7 +29,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
         if (this.canCreateContextMenuItem(column, this.blotter)) {
 
             if (column.DataType == DataType.Number) {
-                if (this.blotter.api.calculatedColumnApi.GetAll().find(c => c.ColumnId == column.ColumnId) == null) {
+                if (this.blotter.api.calculatedColumnApi.getAllCalculatedColumn().find(c => c.ColumnId == column.ColumnId) == null) {
 
                     let flashingCell = this.FlashingCellState.FlashingCells.find(x => x.ColumnId == column.ColumnId)
                     if (flashingCell && flashingCell.IsLive) {

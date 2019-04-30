@@ -22,8 +22,8 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     }
 
     protected InitState() {
-        if (this.AlertState != this.blotter.api.alertApi.GetState()) {
-            this.AlertState = this.blotter.api.alertApi.GetState();
+        if (this.AlertState != this.blotter.api.alertApi.getAlertState()) {
+            this.AlertState = this.blotter.api.alertApi.getAlertState();
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Alert, this.AlertState)
@@ -40,7 +40,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
         if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
             let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
             alertDefinitions.forEach(fr => { // might be better to do a single alert with all the messages?
-                this.blotter.api.alertApi.Show(ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns), AlertHelper.createAlertDescription(fr, columns), fr.MessageType, fr.ShowAsPopup)
+                this.blotter.api.alertApi.displayAlert(ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns), AlertHelper.createAlertDescription(fr, columns), fr.MessageType, fr.ShowAsPopup)
             })
         }
     }

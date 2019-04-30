@@ -4,32 +4,29 @@ import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalcul
 import { ICalculatedColumnApi } from './Interface/ICalculatedColumnApi';
 import { CalculatedColumnState } from '../Redux/ActionsReducers/Interface/IState';
 
-
-
 export class CalculatedColumnApi extends ApiBase implements ICalculatedColumnApi {
 
- 
-  public GetState(): CalculatedColumnState {
+  public getCalculatedColumnState(): CalculatedColumnState {
     return this.getBlotterState().CalculatedColumn;
 }
 
-  public GetAll(): ICalculatedColumn[] {
-    return this.getBlotterState().CalculatedColumn.CalculatedColumns;
+  public getAllCalculatedColumn(): ICalculatedColumn[] {
+    return this.getCalculatedColumnState().CalculatedColumns;
   }
 
-  public Add(calculatedColumn: ICalculatedColumn): void {
+  public addCalculatedColumn(calculatedColumn: ICalculatedColumn): void {
     this.dispatchAction(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn))
   }
 
-  public EditExpression(column: string, columnExpression: string): void {
-    let calcColumn: ICalculatedColumn = this.GetAll().find(cc => cc.ColumnId == column);
-    let calcColumnIndex: number = this.GetAll().findIndex(cc => cc.ColumnId == column);
+  public editCalculatedColumnExpression(column: string, columnExpression: string): void {
+    let calcColumn: ICalculatedColumn = this.getAllCalculatedColumn().find(cc => cc.ColumnId == column);
+    let calcColumnIndex: number = this.getAllCalculatedColumn().findIndex(cc => cc.ColumnId == column);
     calcColumn.ColumnExpression = columnExpression;
     this.dispatchAction(CalculatedColumnRedux.CalculatedColumnEdit(calcColumnIndex, calcColumn))
   }
 
-  public Delete(column: string): void {
-    let calcColumnIndex: number = this.GetAll().findIndex(cc => cc.ColumnId == column);
+  public deleteCalculatedColumn(column: string): void {
+    let calcColumnIndex: number = this.getAllCalculatedColumn().findIndex(cc => cc.ColumnId == column);
     this.dispatchAction(CalculatedColumnRedux.CalculatedColumnDelete(calcColumnIndex))
   }
 
