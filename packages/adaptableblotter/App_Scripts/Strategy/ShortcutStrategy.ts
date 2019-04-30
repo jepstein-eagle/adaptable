@@ -15,7 +15,7 @@ import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { IShortcut } from "../Utilities/Interface/BlotterObjects/IShortcut";
 import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
@@ -34,8 +34,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     protected InitState() {
-        if (this.ShortcutState != this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut) {
-            this.ShortcutState = this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut;
+        if (this.ShortcutState != this.blotter.api.shortcutApi.getShortcutState()) {
+            this.ShortcutState = this.blotter.api.shortcutApi.getShortcutState();
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Shortcut, this.ShortcutState)

@@ -7,13 +7,13 @@ var showTrade = true;
 
 function runQuickSearchViaAPI() {
   const element = document.getElementById('txtQuickSearchText');
-  adaptableblotter.api.quickSearchApi.Apply(element.value);
+  adaptableblotter.api.quickSearchApi.applyQuickSearch(element.value);
 }
 
 function clearQuickSearchViaAPI() {
   const element = document.getElementById('txtQuickSearchText');
   element.value = '';
-  adaptableblotter.api.quickSearchApi.Clear();
+  adaptableblotter.api.quickSearchApi.clearQuickSearch();
 }
 
 function getCommunityKey() {

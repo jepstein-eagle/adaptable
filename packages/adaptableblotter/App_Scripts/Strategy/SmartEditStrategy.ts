@@ -10,7 +10,7 @@ import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
 import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {

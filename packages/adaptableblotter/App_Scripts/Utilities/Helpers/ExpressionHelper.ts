@@ -108,8 +108,8 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.DisplayValue), // this value display
             blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue),  // other column value
             columns,
-            blotter.api.userFilterApi.GetAll(),
-            blotter.api.systemFilterApi.GetAll(),
+            blotter.api.userFilterApi.getAllUserFilter(),
+            blotter.api.systemFilterApi.getAllSystemFilter(),
             blotter
         );
     }
@@ -121,8 +121,8 @@ export module ExpressionHelper {
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.DisplayValue),  // this value
             blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.RawValue), // other column value
             columns,
-            blotter.api.userFilterApi.GetAll(),
-            blotter.api.systemFilterApi.GetAll(),
+            blotter.api.userFilterApi.getAllUserFilter(),
+            blotter.api.systemFilterApi.getAllSystemFilter(),
             blotter
         );
     }

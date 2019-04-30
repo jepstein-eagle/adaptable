@@ -2,8 +2,8 @@ import { ICellValidationRule } from "../../Utilities/Interface/BlotterObjects/IC
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export interface ICellValidationApi {
-  GetState(): CellValidationState;
-  GetAll(): ICellValidationRule[]
-  Add(cellValidationRule: ICellValidationRule): void
-  Delete(cellValidationRule: ICellValidationRule): void
+  getCellValidationState(): CellValidationState;
+  getAllCellValidation(): ICellValidationRule[]
+  addCellValidation(cellValidationRule: ICellValidationRule): void
+  deleteCellValidation(cellValidationRule: ICellValidationRule): void
 }

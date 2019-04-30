@@ -1,4 +1,4 @@
-import { IDataChangedInfo } from "../../../Api/Interface/IDataChangedInfo";
+import { IDataChangedInfo } from "../../Interface/IDataChangedInfo";
 import { IEvent } from "../../Interface/IEvent";
 
 export enum ChangeDirection{

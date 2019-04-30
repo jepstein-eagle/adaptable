@@ -36,7 +36,7 @@ export module LayoutHelper {
     }
 
     export function autoSaveLayout(blotter: IAdaptableBlotter): void {
-        let layoutState: LayoutState = blotter.api.layoutApi.GetState();
+        let layoutState: LayoutState = blotter.api.layoutApi.getLayoutState();
         if (blotter.isInitialised && layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT) {
             if (blotter.blotterOptions.layoutOptions != null && blotter.blotterOptions.layoutOptions.autoSaveLayouts != null && blotter.blotterOptions.layoutOptions.autoSaveLayouts) {
                 let layout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout)

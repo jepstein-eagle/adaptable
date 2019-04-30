@@ -9,7 +9,7 @@ import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState'
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {

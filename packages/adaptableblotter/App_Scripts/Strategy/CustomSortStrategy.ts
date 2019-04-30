@@ -13,9 +13,9 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     }
 
     protected InitState() {
-        if (this.CustomSorts != this.blotter.api.customSortApi.GetAll()) {
+        if (this.CustomSorts != this.blotter.api.customSortApi.getAllCustomSort()) {
             this.removeCustomSorts();
-            this.CustomSorts = this.blotter.api.customSortApi.GetAll();
+            this.CustomSorts = this.blotter.api.customSortApi.getAllCustomSort();
             this.applyCustomSorts();
 
             if (this.blotter.isInitialised) {

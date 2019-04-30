@@ -6,15 +6,15 @@ import { CalendarState } from '../Redux/ActionsReducers/Interface/IState';
 export class CalendarApi extends ApiBase implements ICalendarApi {
 
   
-  public GetState(): CalendarState {
+  public getCalendarState(): CalendarState {
     return this.getBlotterState().Calendar;
 }
 
-  public SetCurrent(calendar: string): void {
+  public setCurrentCalendar(calendar: string): void {
     this.dispatchAction(CalendarRedux.CalendarSelect(calendar))
   }
 
-  public GetCurrent(): string {
+  public getCurrentCalendar(): string {
     return this.getBlotterState().Calendar.CurrentCalendar;
   }
 

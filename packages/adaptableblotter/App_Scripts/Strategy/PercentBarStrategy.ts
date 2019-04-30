@@ -53,7 +53,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     }
 
     protected GetPercentBarState(): PercentBarState {
-        return this.blotter.api.percentBarApi.GetState();
+        return this.blotter.api.percentBarApi.getPercentBarState();
     }
 
 }

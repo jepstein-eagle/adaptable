@@ -7,31 +7,31 @@ import { QuickSearchState } from "../Redux/ActionsReducers/Interface/IState";
 
 export class QuickSearchApi extends ApiBase implements IQuickSearchApi {
 
-    public GetState(): QuickSearchState {
+    public getQuickSearchState(): QuickSearchState {
         return this.getBlotterState().QuickSearch;
     }
 
-    public Apply(quickSearchText: string): void {
+    public applyQuickSearch(quickSearchText: string): void {
         this.dispatchAction(QuickSearchRedux.QuickSearchApply(quickSearchText))
     }
 
-    public Clear(): void {
+    public clearQuickSearch(): void {
         this.dispatchAction(QuickSearchRedux.QuickSearchApply(""))
     }
 
-    public GetValue(): string {
+    public getQuickSearchValue(): string {
         return this.getBlotterState().QuickSearch.QuickSearchText;
     }
     
-    public GetStyle(): IStyle {
+    public getQuickSearchStyle(): IStyle {
         return this.getBlotterState().QuickSearch.Style;
     }
 
-    public SetDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void {
+    public setQuickSearchDisplayAction(displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'): void {
         this.dispatchAction(QuickSearchRedux.QuickSearchSetDisplay(displayAction as DisplayAction))
     }
 
-    public SetStyle(style: IStyle): void {
+    public setQuickSearchStyle(style: IStyle): void {
         this.dispatchAction(QuickSearchRedux.QuickSearchSetStyle(style))
     }
 

@@ -23,8 +23,8 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     }
 
     protected InitState() {
-        if (this.CellSummaryState != this.blotter.api.cellSummaryApi.GetState()) {
-            this.CellSummaryState = this.blotter.api.cellSummaryApi.GetState();
+        if (this.CellSummaryState != this.blotter.api.cellSummaryApi.getCellSummaryState()) {
+            this.CellSummaryState = this.blotter.api.cellSummaryApi.getCellSummaryState();
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.CellSummary, this.CellSummaryState)

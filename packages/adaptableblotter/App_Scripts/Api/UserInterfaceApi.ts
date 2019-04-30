@@ -8,40 +8,40 @@ import { UserInterfaceState } from '../Redux/ActionsReducers/Interface/IState';
 export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
 
   
-  public GetState(): UserInterfaceState {
+  public getUserInterfaceState(): UserInterfaceState {
     return this.getBlotterState().UserInterface;
 }
 
-public SetColorPalette(colorPalette: string[]): void {
+public setColorPalette(colorPalette: string[]): void {
     this.dispatchAction(UserInterfaceRedux.ColorPaletteSet(colorPalette))
   }
 
-  public AddColorsToPalette(colorPalette: string[]): void {
+  public addColorsToPalette(colorPalette: string[]): void {
     this.dispatchAction(UserInterfaceRedux.ColorPaletteAdd(colorPalette))
   }
 
-  public AddStyleClassNames(styleClassNames: string[]): void {
+  public addStyleClassNames(styleClassNames: string[]): void {
     this.dispatchAction(UserInterfaceRedux.StyleClassNamesAdd(styleClassNames))
   }
 
-  public GetAllPermittedValues(): IPermittedColumnValues[] {
+  public getAllPermittedValues(): IPermittedColumnValues[] {
     return this.getBlotterState().UserInterface.PermittedColumnValues;
   }
 
-  public GetPermittedValuesForColumn(columnId: string): IPermittedColumnValues {
-    let permittedValues: IPermittedColumnValues[] = this.GetAllPermittedValues();
+  public getPermittedValuesForColumn(columnId: string): IPermittedColumnValues {
+    let permittedValues: IPermittedColumnValues[] = this.getAllPermittedValues();
     if (ArrayExtensions.IsNotNullOrEmpty(permittedValues)) {
       return permittedValues.find(pc => pc.ColumnId == columnId);
     }
     return undefined;
   }
 
-  public SetColumnPermittedValues(column: string, permittedValues: string[]): void {
+  public setColumnPermittedValues(column: string, permittedValues: string[]): void {
     let permittedColumnValues: IPermittedColumnValues = { ColumnId: column, PermittedValues: permittedValues }
     this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesSet(permittedColumnValues))
   }
 
-  public ClearColumnPermittedValues(column: string): void {
+  public clearColumnPermittedValues(column: string): void {
     this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesDelete(column))
   }
 

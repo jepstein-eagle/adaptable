@@ -6,7 +6,7 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableBlotter } from '../AdaptableBlotter'
 import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
 import { IConditionalStyle } from "../../Utilities/Interface/BlotterObjects/IConditionalStyle";
-import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
@@ -33,7 +33,7 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy 
                             if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
                                 theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
                             } else if (c.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                                let columnCategory: IColumnCategory = this.blotter.api.columnCategoryApi.GetAll().find(lc => lc.ColumnCategoryId == c.ColumnCategoryId)
+                                let columnCategory: IColumnCategory = this.blotter.api.columnCategoryApi.getAllColumnCategory().find(lc => lc.ColumnCategoryId == c.ColumnCategoryId)
                                 columnCategory.ColumnIds.forEach(cc => {
                                     theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style })
                                 })
@@ -47,7 +47,7 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy 
                             if (c.ConditionalStyleScope == ConditionalStyleScope.Row) {
                                 theBlotter.addRowStyleHypergrid(dataChangedEvent.IdentifierValue, { conditionalStyleRow: c.Style })
                             } else if (c.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                                let columnCategory: IColumnCategory = this.blotter.api.columnCategoryApi.GetById(c.ColumnCategoryId);
+                                let columnCategory: IColumnCategory = this.blotter.api.columnCategoryApi.getColumnCategoryById(c.ColumnCategoryId);
                                 columnCategory.ColumnIds.forEach(cc => {
                                     theBlotter.addCellStyleHypergrid(dataChangedEvent.IdentifierValue, cc, { conditionalStyleColumn: c.Style })
                                 })

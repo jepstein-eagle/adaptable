@@ -49,6 +49,6 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     }
 
     private GetColumnFilterState(): IColumnFilter[] {
-        return this.blotter.api.columnFilterApi.GetAll();
+        return this.blotter.api.columnFilterApi.getAllColumnFilter();
     }
 }

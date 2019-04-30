@@ -7,7 +7,7 @@ import { ICellValidationRule } from "../Interface/BlotterObjects/ICellValidation
 import { ArrayExtensions } from "../Extensions/ArrayExtensions";
 import { DataType, ActionMode } from "../Enums";
 import { ExpressionHelper } from "./ExpressionHelper";
-import { IDataChangedInfo } from "../../Api/Interface/IDataChangedInfo";
+import { IDataChangedInfo } from "../Interface/IDataChangedInfo";
 
 declare var Glue4Office: any;
 

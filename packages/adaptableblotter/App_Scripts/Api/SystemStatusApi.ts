@@ -6,29 +6,29 @@ import { ISystemStatus } from "../Utilities/Interface/ISystemStatus";
 
 export class SystemStatusApi extends ApiBase implements ISystemStatusApi {
 
-      // System Status api Methods
-  public  Set(statusMessage: string, statusColour: "Blue"| "Red" | "Amber" | "Green"): void {
+
+  public setSystemStatus(statusMessage: string, statusColour: "Blue" | "Red" | "Amber" | "Green"): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: statusColour }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
-  public  SetRed(statusMessage: string): void {
+  public setRedSystemStatus(statusMessage: string): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Red }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
-  public  SetAmber(statusMessage: string): void {
+  public setAmberSystemStatus(statusMessage: string): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Amber }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
-  public  SetGreen(statusMessage: string): void {
+  public setGreenSystemStatus(statusMessage: string): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Green }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
-  public  SetBlue(statusMessage: string): void {
+  public setBlueSystemStatus(statusMessage: string): void {
     let systemStatus: ISystemStatus = { StatusMessage: statusMessage, StatusColour: StatusColour.Blue }
     this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus))
   }
 
-  public  Clear(): void {
+  public clearSystemStatus(): void {
     this.dispatchAction(SystemRedux.SystemClearHealthStatus())
   }
 

@@ -8,7 +8,7 @@ import { IChartStrategy } from './Interface/IChartStrategy';
 import { ChartState, SystemState, ColumnFilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition } from "../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 import { IChartData } from "../Utilities/Interface/BlotterObjects/Charting/IChartData";
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
@@ -216,7 +216,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
 
     private GetChartState(): ChartState {
-        return this.blotter.api.chartApi.GetState();
+        return this.blotter.api.chartApi.getChartState();
     }
 
     private GetColumnState(): IColumn[] {

@@ -4,51 +4,49 @@ import { IColumnCategoryApi } from './Interface/IColumnCategoryApi';
 import { IColumnCategory } from "../Utilities/Interface/BlotterObjects/IColumnCategory";
 import { ColumnCategoryState } from '../Redux/ActionsReducers/Interface/IState';
 
-
 export class ColumnCategoryApi extends ApiBase implements IColumnCategoryApi {
 
-  
-  public GetState(): ColumnCategoryState {
+  public getColumnCategoryState(): ColumnCategoryState {
     return this.getBlotterState().ColumnCategory;
-}
-
-public GetAll(): IColumnCategory[] {
-    return this.GetState().ColumnCategories;
   }
 
- public GetById(columnCategoryId: string): IColumnCategory{
-    return this.GetAll().find(cc => cc.ColumnCategoryId == columnCategoryId);
+  public getAllColumnCategory(): IColumnCategory[] {
+    return this.getColumnCategoryState().ColumnCategories;
   }
 
-  public Add(columnCategory: IColumnCategory): void {
+  public getColumnCategoryById(columnCategoryId: string): IColumnCategory {
+    return this.getAllColumnCategory().find(cc => cc.ColumnCategoryId == columnCategoryId);
+  }
+
+  public addColumnCategory(columnCategory: IColumnCategory): void {
     this.dispatchAction(ColumnCategoryRedux.ColumnCategoryAdd(columnCategory))
   }
 
-  public Create(columnCategoryId: string, columns: string[]): void {
+  public createColumnCategory(columnCategoryId: string, columns: string[]): void {
     let columnCategory: IColumnCategory = {
       ColumnCategoryId: columnCategoryId,
       ColumnIds: columns
     }
-    this.Add(columnCategory);
+    this.addColumnCategory(columnCategory);
   }
 
-  public Edit(previousColumnCategoryId: string, columnCategory: IColumnCategory): void {
-    let index: number = this.GetAll().findIndex(cc => cc.ColumnCategoryId == previousColumnCategoryId)
+  public editColumnCategory(previousColumnCategoryId: string, columnCategory: IColumnCategory): void {
+    let index: number = this.getAllColumnCategory().findIndex(cc => cc.ColumnCategoryId == previousColumnCategoryId)
     this.dispatchAction(ColumnCategoryRedux.ColumnCategoryEdit(index, columnCategory))
   }
 
-  public AddColumns(columnCategoryId: string, columns: string[]): void {
-    let columnCategory: IColumnCategory = this.GetById(columnCategoryId);
-    let index: number = this.GetAll().findIndex(cc => cc.ColumnCategoryId == columnCategoryId)
+  public addColumnsToColumnCategory(columnCategoryId: string, columns: string[]): void {
+    let columnCategory: IColumnCategory = this.getColumnCategoryById(columnCategoryId);
+    let index: number = this.getAllColumnCategory().findIndex(cc => cc.ColumnCategoryId == columnCategoryId)
     columns.forEach(c => {
       columnCategory.ColumnIds.push(c);
     })
     this.dispatchAction(ColumnCategoryRedux.ColumnCategoryEdit(index, columnCategory))
   }
 
-  public RemoveColumns(columnCategoryId: string, columns: string[]): void {
-    let columnCategory: IColumnCategory = this.GetAll().find(cc => cc.ColumnCategoryId == columnCategoryId)
-    let index: number = this.GetAll().findIndex(cc => cc.ColumnCategoryId == columnCategoryId)
+  public removeColumnsFromColumnCategory(columnCategoryId: string, columns: string[]): void {
+    let columnCategory: IColumnCategory = this.getAllColumnCategory().find(cc => cc.ColumnCategoryId == columnCategoryId)
+    let index: number = this.getAllColumnCategory().findIndex(cc => cc.ColumnCategoryId == columnCategoryId)
     columns.forEach(c => {
       let ccIndex = columnCategory.ColumnIds.findIndex(cc => cc == c)
       columnCategory.ColumnIds.splice(ccIndex, 1);
@@ -57,8 +55,8 @@ public GetAll(): IColumnCategory[] {
   }
 
 
-  public Delete(columnCategoryId: string): void {
-    let columnCategory: IColumnCategory = this.GetAll().find(cc => cc.ColumnCategoryId == columnCategoryId)
+  public deleteColumnCategory(columnCategoryId: string): void {
+    let columnCategory: IColumnCategory = this.getAllColumnCategory().find(cc => cc.ColumnCategoryId == columnCategoryId)
     this.dispatchAction(ColumnCategoryRedux.ColumnCategoryDelete(columnCategory))
   }
 

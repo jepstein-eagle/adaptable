@@ -5,13 +5,13 @@ import { FlashingCellState } from "../Redux/ActionsReducers/Interface/IState";
 
 export class FlashingCellApi extends ApiBase implements IFlashingCellApi {
 
- 
-  public GetState(): FlashingCellState {
-    return this.getBlotterState().FlashingCell;
-}
 
-public GetAll(): IFlashingCell[] {
-    return this.getBlotterState().FlashingCell.FlashingCells;
+  public getFlashingCellState(): FlashingCellState {
+    return this.getBlotterState().FlashingCell;
+  }
+
+  public getAllFlashingCell(): IFlashingCell[] {
+    return this.getFlashingCellState().FlashingCells;
   }
 
 

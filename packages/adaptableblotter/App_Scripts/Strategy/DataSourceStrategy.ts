@@ -30,7 +30,7 @@ export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSo
     }
 
     private GetDataSourceState(): DataSourceState {
-        return this.blotter.api.dataSourceApi.GetState();
+        return this.blotter.api.dataSourceApi.getDataSourceState();
     }
     
 

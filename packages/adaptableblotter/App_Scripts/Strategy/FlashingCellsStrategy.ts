@@ -9,7 +9,7 @@ import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { DataType, StateChangedTrigger } from '../Utilities/Enums';
 import { IFlashingCell } from "../Utilities/Interface/BlotterObjects/IFlashingCell";
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implements IFlashingCellsStrategy {
     protected FlashingCellState: FlashingCellState
@@ -55,8 +55,8 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase implem
     }
 
     protected InitState() {
-        if (this.FlashingCellState != this.blotter.api.flashingCellApi.GetState()) {
-            this.FlashingCellState = this.blotter.api.flashingCellApi.GetState();
+        if (this.FlashingCellState != this.blotter.api.flashingCellApi.getFlashingCellState()) {
+            this.FlashingCellState = this.blotter.api.flashingCellApi.getFlashingCellState();
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.FlashingCell, this.FlashingCellState)

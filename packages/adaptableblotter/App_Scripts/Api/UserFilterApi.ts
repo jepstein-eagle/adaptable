@@ -6,14 +6,14 @@ import { UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class UserFilterApi extends ApiBase implements IUserFilterApi {
 
-    
-  public GetState(): UserFilterState {
-    return this.getBlotterState().UserFilter;
-}
 
-public  GetAll(): IUserFilter[] {
-      return this.GetState().UserFilters;
-    }
-  
-  
+  public getUserFilterState(): UserFilterState {
+    return this.getBlotterState().UserFilter;
+  }
+
+  public getAllUserFilter(): IUserFilter[] {
+    return this.getUserFilterState().UserFilters;
+  }
+
+
 }

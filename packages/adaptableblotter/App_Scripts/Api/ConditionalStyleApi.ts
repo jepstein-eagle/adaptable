@@ -4,14 +4,13 @@ import { IConditionalStyle } from '../Utilities/Interface/BlotterObjects/ICondit
 import { ConditionalStyleState } from "../Redux/ActionsReducers/Interface/IState";
 
 export class ConditionalStyleApi extends ApiBase implements IConditionalStyleApi {
-
  
-  public GetState(): ConditionalStyleState {
+  public getConditionalStyleState(): ConditionalStyleState {
     return this.getBlotterState().ConditionalStyle;
 }
 
-public GetAll(): IConditionalStyle[] {
-    return this.getBlotterState().ConditionalStyle.ConditionalStyles;
+public getAllConditionalStyle(): IConditionalStyle[] {
+    return this.getConditionalStyleState().ConditionalStyles;
   }
 
 

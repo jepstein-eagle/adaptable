@@ -5,6 +5,8 @@ import { SystemState } from "../../Redux/ActionsReducers/Interface/IState";
 import { ICalendar } from "../../Utilities/Interface/BlotterObjects/ICalendar";
 import { IChartData } from "../../Utilities/Interface/BlotterObjects/Charting/IChartData";
 import { ChartVisibility } from "../../Utilities/ChartEnums";
+import { IReport } from "../../Utilities/Interface/BlotterObjects/IReport";
+import { ILiveReport } from "../../Utilities/Interface/Reports/ILiveReport";
 
 export interface IInternalApi {
 
@@ -14,6 +16,8 @@ export interface IInternalApi {
     GetAvailableCalendars(): ICalendar[];
     SetChartData(chartData: IChartData): void;
     SetChartVisibility(chartVisbility: ChartVisibility): void;
+    getSystemReports(): IReport[];
+    getLiveReports(): ILiveReport[];
 
     // Menu Redux
     ColumnContextMenuClear(): void;

@@ -11,18 +11,18 @@ import { ColumnFilterState } from '../Redux/ActionsReducers/Interface/IState';
 export class ColumnFilterApi extends ApiBase implements IColumnFilterApi {
 
      
-  public GetState(): ColumnFilterState {
+  public getColumnFilterState(): ColumnFilterState {
     return this.getBlotterState().ColumnFilter;
 }
 
 
-public Set(columnFilters: IColumnFilter[]): void {
+public setColumnFilter(columnFilters: IColumnFilter[]): void {
       columnFilters.forEach(cf => {
         this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(cf))
       })
     }
   
-    public SetFromUserFilter(userFilter: string): void {
+    public setColumnFilterFromUserFilter(userFilter: string): void {
       let existingUserFilter: IUserFilter = this.getBlotterState().UserFilter.UserFilters.find(uf => uf.Name == userFilter);
       if (this.checkItemExists(existingUserFilter, userFilter, "User Filter")) {
         let columnFilter: IColumnFilter = ObjectFactory.CreateColumnFilterFromUserFilter(existingUserFilter)
@@ -30,25 +30,25 @@ public Set(columnFilters: IColumnFilter[]): void {
       }
     }
   
-    public Clear(columnFilter: IColumnFilter): void {
+    public clearColumnFilter(columnFilter: IColumnFilter): void {
       this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(columnFilter.ColumnId));
     }
   
-    public ClearByColumns(columns: string[]): void {
+    public clearColumnFilterByColumns(columns: string[]): void {
       columns.forEach(c => {
-        this.ClearByColumn(c);
+        this.clearColumnFilterByColumn(c);
       })
     }
   
-    public ClearByColumn(column: string): void {
+    public clearColumnFilterByColumn(column: string): void {
       this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(column));
     }
   
-    public ClearAll(): void {
+    public clearAllColumnFilter(): void {
       this.dispatchAction(ColumnFilterRedux.ColumnFilterClearAll());
     }
   
-    public GetAll(): IColumnFilter[] {
+    public getAllColumnFilter(): IColumnFilter[] {
       return this.getBlotterState().ColumnFilter.ColumnFilters;
     }
 

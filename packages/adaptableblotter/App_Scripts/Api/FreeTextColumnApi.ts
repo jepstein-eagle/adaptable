@@ -10,32 +10,32 @@ import { FreeTextColumnState } from "../Redux/ActionsReducers/Interface/IState";
 export class FreeTextColumnApi extends ApiBase implements IFreeTextColumnApi {
 
 
-  public GetState(): FreeTextColumnState {
+  public getFreeTextColumnState(): FreeTextColumnState {
     return this.getBlotterState().FreeTextColumn;
   }
 
-  public GetAll(): IFreeTextColumn[] {
+  public getAllFreeTextColumn(): IFreeTextColumn[] {
     return this.getBlotterState().FreeTextColumn.FreeTextColumns;
   }
 
-  public Add(freeTextColumn: IFreeTextColumn): void {
+  public addFreeTextColumn(freeTextColumn: IFreeTextColumn): void {
     this.dispatchAction(FreeTextColumnRedux.FreeTextColumnAdd(freeTextColumn))
   }
 
 
-  public AddEditStoredValue(freeTextColumn: IFreeTextColumn, storedValue: any): void {
+  public addEditFreeTextColumnStoredValue(freeTextColumn: IFreeTextColumn, storedValue: any): void {
     this.dispatchAction(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, storedValue))
   }
 
-  public Create(columnId: string, defaultValue: string = null): void {
+  public createFreeTextColumn(columnId: string, defaultValue: string = null): void {
     let freeTextColumn = ObjectFactory.CreateEmptyFreeTextColumn();
     freeTextColumn.ColumnId = columnId;
     freeTextColumn.DefaultValue = defaultValue;
-    this.Add(freeTextColumn);
+    this.addFreeTextColumn(freeTextColumn);
   }
 
-  public Delete(columnId: string): void {
-    let freeTextColumn: IFreeTextColumn = this.GetAll().find(ftc => ftc.ColumnId == columnId);
+  public deleteFreeTextColumn(columnId: string): void {
+    let freeTextColumn: IFreeTextColumn = this.getAllFreeTextColumn().find(ftc => ftc.ColumnId == columnId);
     if (this.checkItemExists(freeTextColumn, columnId, StrategyConstants.FreeTextColumnStrategyId)) {
       this.dispatchAction(FreeTextColumnRedux.FreeTextColumnDelete(freeTextColumn))
     }

@@ -31,8 +31,8 @@ export  class FreeTextColumnStrategy extends AdaptableStrategyBase implements IF
     }
 
       protected InitState() {
-        if (this.FreeTextColumnState != this.blotter.api.freeTextColumnApi.GetState()) {
-            this.FreeTextColumnState = this.blotter.api.freeTextColumnApi.GetState();
+        if (this.FreeTextColumnState != this.blotter.api.freeTextColumnApi.getFreeTextColumnState()) {
+            this.FreeTextColumnState = this.blotter.api.freeTextColumnApi.getFreeTextColumnState();
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.FreeTextColumn, this.FreeTextColumnState)

@@ -35,8 +35,8 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     }
 
     protected InitState() {
-        if (this.ThemeState != this.blotter.api.themeApi.GetState()) {
-            this.ThemeState = this.blotter.api.themeApi.GetState();
+        if (this.ThemeState != this.blotter.api.themeApi.getThemeState()) {
+            this.ThemeState = this.blotter.api.themeApi.getThemeState();
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Theme, this.ThemeState)

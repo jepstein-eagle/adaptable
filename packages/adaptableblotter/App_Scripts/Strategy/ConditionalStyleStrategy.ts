@@ -6,7 +6,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     protected ConditionalStyleState: ConditionalStyleState
@@ -22,8 +22,8 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase imp
     }
 
     protected InitState() {
-        if (this.ConditionalStyleState != this.blotter.api.conditionalStyleApi.GetState()) {
-            this.ConditionalStyleState = this.blotter.api.conditionalStyleApi.GetState();
+        if (this.ConditionalStyleState != this.blotter.api.conditionalStyleApi.getConditionalStyleState()) {
+            this.ConditionalStyleState = this.blotter.api.conditionalStyleApi.getConditionalStyleState();
 
             this.InitStyles();
 

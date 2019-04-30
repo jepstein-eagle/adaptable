@@ -81,7 +81,7 @@ import { Expression } from '../Utilities/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { BlotterApi } from '../Api/BlotterApi';
 import { Action } from 'redux';
 import { DEFAULT_LAYOUT, HALF_SECOND } from '../Utilities/Constants/GeneralConstants';
@@ -100,6 +100,7 @@ import { IScheduleService } from '../Utilities/Services/Interface/IScheduleServi
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
 import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState';
+import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
 
@@ -464,8 +465,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private getQuickSearchClassName(): string {
-        let quickSearchClassName: string = StringExtensions.IsNotNullOrEmpty(this.api.quickSearchApi.GetStyle().ClassName) ?
-            this.api.quickSearchApi.GetStyle().ClassName :
+        let quickSearchClassName: string = StringExtensions.IsNotNullOrEmpty(this.api.quickSearchApi.getQuickSearchStyle().ClassName) ?
+            this.api.quickSearchApi.getQuickSearchStyle().ClassName :
             StyleHelper.CreateStyleName(StrategyConstants.QuickSearchStrategyId, this)
         return quickSearchClassName;
     }
@@ -475,7 +476,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let cellClassRules: any = {};
         cellClassRules[quickSearchClassName] = function (params: any) {
             let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
-            let quickSearchState = blotter.api.quickSearchApi.GetState();
+            let quickSearchState = blotter.api.quickSearchApi.getQuickSearchState();
             if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
                 && (quickSearchState.DisplayAction == DisplayAction.HighlightCell
                     || quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)) {
@@ -752,7 +753,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         var dataChangedEvents: IDataChangedInfo[] = []
         let nodesToRefresh: RowNode[] = []
         let refreshColumnList: string[] = []
-        let percentBars: IPercentBar[] = this.api.percentBarApi.GetAll();
+        let percentBars: IPercentBar[] = this.api.percentBarApi.getAllPercentBar();
 
         // now two ways to do this - one using pk lookup and other using foreach on row node
         if (this.useRowNodeLookUp) {
@@ -912,7 +913,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
         // check if there are permitted column values for that column
         // NB.  this is currently a bug as we dont check for visibility so if using permitted values then ALL are returned :(
-        let permittedValuesForColumn = this.api.userInterfaceApi.GetPermittedValuesForColumn(columnId)
+        let permittedValuesForColumn: IPermittedColumnValues = this.api.userInterfaceApi.getPermittedValuesForColumn(columnId)
         if (permittedValuesForColumn != undefined) {
             permittedValuesForColumn.PermittedValues.forEach(pv => {
                 returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
@@ -952,7 +953,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private useRawValueForColumn(columnId: string): boolean {
         // will add more in due course I'm sure but for now only percent bar columns return false...
-        let percentBars: IPercentBar[] = this.api.percentBarApi.GetAll();
+        let percentBars: IPercentBar[] = this.api.percentBarApi.getAllPercentBar();
         if (ArrayExtensions.IsEmpty(percentBars)) {
             return false;
         }
@@ -1018,7 +1019,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private getRenderedValue(colDef: ColDef, valueToRender: any): string {
-        return this.agGridHelper.getRenderedValue(this.api.percentBarApi.GetAll(), colDef, valueToRender);
+        return this.agGridHelper.getRenderedValue(this.api.percentBarApi.getAllPercentBar(), colDef, valueToRender);
     }
 
 
@@ -1039,7 +1040,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             }
             else if (type == "ConditionalStyle") {
-                let cssStyles: string[] = this.api.conditionalStyleApi.GetAll().map(c => c.Style.ClassName);
+                let cssStyles: string[] = this.api.conditionalStyleApi.getAllConditionalStyle().map(c => c.Style.ClassName);
                 for (let prop in localCellClassRules) {
                     if (prop.includes(StrategyConstants.ConditionalStyleStrategyId) || ArrayExtensions.ContainsItem(cssStyles, prop)) {
                         delete localCellClassRules[prop]
@@ -1511,7 +1512,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
 
             // see if we need to refresh any percent bars
-            this.api.percentBarApi.GetAll().forEach(pb => {
+            this.api.percentBarApi.getAllPercentBar().forEach(pb => {
                 refreshColumnList.forEach(changedColId => {
                     if (StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) && pb.MaxValueColumnId == changedColId) {
                         ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
@@ -1572,7 +1573,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
             //we then assess filters
             if (this.blotterOptions.generalOptions.serverSearchOption == 'None' || this.blotterOptions.generalOptions.serverSearchOption == 'AdvancedSearch') {
-                let columnFilters: IColumnFilter[] = this.api.columnFilterApi.GetAll();
+                let columnFilters: IColumnFilter[] = this.api.columnFilterApi.getAllColumnFilter();
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
                         if (!ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, node, columns, this)) {
@@ -1581,7 +1582,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     }
                 }
                 //we next assess quicksearch
-                let quickSearchState: QuickSearchState = this.api.quickSearchApi.GetState();
+                let quickSearchState: QuickSearchState = this.api.quickSearchApi.getQuickSearchState();
                 if (quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
                     if (StringExtensions.IsNullOrEmpty(quickSearchState.QuickSearchText)) {
                         return true;
@@ -1611,7 +1612,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         };
 
         // add any special renderers
-        this.api.percentBarApi.GetAll().forEach(pcr => {
+        this.api.percentBarApi.getAllPercentBar().forEach(pcr => {
             this.addPercentBar(pcr);
         });
 
@@ -1708,7 +1709,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                     if (ColumnHelper.isSpecialColumn(sm.colId)) {
                         let groupedColumn: Column = this.gridOptions.columnApi.getAllColumns().find(c => c.isRowGroupActive() == true)
                         if (groupedColumn) {
-                            let customSort: ICustomSort = this.api.customSortApi.GetAll().find(cs => cs.ColumnId == groupedColumn.getColId());
+                            let customSort: ICustomSort = this.api.customSortApi.getAllCustomSort().find(cs => cs.ColumnId == groupedColumn.getColId());
                             if (customSort) {
                                 // check that not already applied
                                 if (!this.getState().Grid.GridSorts.find(gs => ColumnHelper.isSpecialColumn(gs.Column))) {
@@ -1776,7 +1777,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     private updateQuickSearchRangeVisibleColumn(columnId: string): void {
         if (this.isInitialised) {
-            let quickSearchState: QuickSearchState = this.api.quickSearchApi.GetState();
+            let quickSearchState: QuickSearchState = this.api.quickSearchApi.getQuickSearchState();
             // only update if quick search is not highlight and is set - rare use case...
             if (quickSearchState.DisplayAction != DisplayAction.HighlightCell && StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {
                 let quickSearchRange: IRange = this.getState().System.QuickSearchRange;
@@ -1944,13 +1945,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
 
         // if user layout and a percent bar sometimes the first few cells are pre-rendered so we frig it like this
-        let currentlayout: string = this.api.layoutApi.GetCurrentName();
-        if (currentlayout != DEFAULT_LAYOUT && ArrayExtensions.IsNotNullOrEmpty(this.api.percentBarApi.GetAll())) {
-            this.api.layoutApi.Set(DEFAULT_LAYOUT);
+        let currentlayout: string = this.api.layoutApi.getCurrentLayoutName();
+        if (currentlayout != DEFAULT_LAYOUT && ArrayExtensions.IsNotNullOrEmpty(this.api.percentBarApi.getAllPercentBar())) {
+            this.api.layoutApi.setLayout(DEFAULT_LAYOUT);
         }
 
         // at the end so load the current layout
-        this.api.layoutApi.Set(currentlayout);
+        this.api.layoutApi.setLayout(currentlayout);
     }
 
     // A couple of state management functions

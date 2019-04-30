@@ -3,7 +3,7 @@ import { AdaptableBlotter } from '../AdaptableBlotter'
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy'
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants'
 import { IFlashingCell } from "../../Utilities/Interface/BlotterObjects/IFlashingCell";
-import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import { RowNode, GridOptions } from 'ag-grid-community';
@@ -25,8 +25,8 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy implements
     }
 
     protected InitState() {
-        if (this.FlashingCellState != this.blotter.api.flashingCellApi.GetState()) {
-            this.FlashingCellState = this.blotter.api.flashingCellApi.GetState();
+        if (this.FlashingCellState != this.blotter.api.flashingCellApi.getFlashingCellState()) {
+            this.FlashingCellState = this.blotter.api.flashingCellApi.getFlashingCellState();
 
             let numericColumns = ColumnHelper.getNumericColumns(this.blotter.api.gridApi.getColumns());
             let theBlotter = this.blotter as AdaptableBlotter

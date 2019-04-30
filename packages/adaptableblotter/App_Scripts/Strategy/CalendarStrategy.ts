@@ -19,8 +19,8 @@ export class CalendarStrategy extends AdaptableStrategyBase implements ICalendar
     }
    
     protected InitState() {
-        if (this.CalendarState != this.blotter.api.calendarApi.GetState()) {
-            this.CalendarState = this.blotter.api.calendarApi.GetState();
+        if (this.CalendarState != this.blotter.api.calendarApi.getCalendarState()) {
+            this.CalendarState = this.blotter.api.calendarApi.getCalendarState();
           
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Calendar, this.CalendarState)

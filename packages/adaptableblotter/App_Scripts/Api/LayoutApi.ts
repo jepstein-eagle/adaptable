@@ -12,31 +12,31 @@ import { LayoutState } from '../Redux/ActionsReducers/Interface/IState';
 export class LayoutApi extends ApiBase implements ILayoutApi {
 
 
-    public GetState(): LayoutState {
+    public getLayoutState(): LayoutState {
         return this.getBlotterState().Layout;
     }
 
-    public Set(layoutName: string): void {
+    public setLayout(layoutName: string): void {
         let layout: ILayout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
         if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
             this.dispatchAction(LayoutRedux.LayoutSelect(layoutName))
         }
     }
 
-    public Clear(): void {
+    public clearLayout(): void {
         this.dispatchAction(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT))
     }
 
-    public GetCurrent(): ILayout {
+    public getCurrentLayout(): ILayout {
         let layoutName = this.getBlotterState().Layout.CurrentLayout;
-        return this.GetByName(layoutName);
+        return this.getLayoutByName(layoutName);
     }
 
-    public GetCurrentName(): string {
+    public getCurrentLayoutName(): string {
         return this.getBlotterState().Layout.CurrentLayout;
     }
 
-    public GetByName(layoutName: string): ILayout {
+    public getLayoutByName(layoutName: string): ILayout {
         let layout: ILayout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
         if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
             return layout;
@@ -44,11 +44,11 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
     }
 
 
-    public GetAll(): ILayout[] {
+    public getAllLayout(): ILayout[] {
         return this.getBlotterState().Layout.Layouts;
     }
 
-    public Save(): void {
+    public saveLayout(): void {
         let currentLayoutName: string = this.getBlotterState().Layout.CurrentLayout
         if (currentLayoutName != DEFAULT_LAYOUT) {
             let currentLayoutObject: ILayout = this.getBlotterState().Layout.Layouts.find(l => l.Name == currentLayoutName)

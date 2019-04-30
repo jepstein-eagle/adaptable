@@ -11,7 +11,7 @@ import { LeafExpressionOperator, StateChangedTrigger } from '../Utilities/Enums'
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
     protected AlertState: AlertState
