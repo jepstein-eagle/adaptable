@@ -3,23 +3,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const CalculatedColumnRedux = require("../Redux/ActionsReducers/CalculatedColumnRedux");
 const ApiBase_1 = require("./ApiBase");
 class CalculatedColumnApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getCalculatedColumnState() {
         return this.getBlotterState().CalculatedColumn;
     }
-    GetAll() {
-        return this.getBlotterState().CalculatedColumn.CalculatedColumns;
+    getAllCalculatedColumn() {
+        return this.getCalculatedColumnState().CalculatedColumns;
     }
-    Add(calculatedColumn) {
+    addCalculatedColumn(calculatedColumn) {
         this.dispatchAction(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn));
     }
-    EditExpression(column, columnExpression) {
-        let calcColumn = this.GetAll().find(cc => cc.ColumnId == column);
-        let calcColumnIndex = this.GetAll().findIndex(cc => cc.ColumnId == column);
+    editCalculatedColumnExpression(column, columnExpression) {
+        let calcColumn = this.getAllCalculatedColumn().find(cc => cc.ColumnId == column);
+        let calcColumnIndex = this.getAllCalculatedColumn().findIndex(cc => cc.ColumnId == column);
         calcColumn.ColumnExpression = columnExpression;
         this.dispatchAction(CalculatedColumnRedux.CalculatedColumnEdit(calcColumnIndex, calcColumn));
     }
-    Delete(column) {
-        let calcColumnIndex = this.GetAll().findIndex(cc => cc.ColumnId == column);
+    deleteCalculatedColumn(column) {
+        let calcColumnIndex = this.getAllCalculatedColumn().findIndex(cc => cc.ColumnId == column);
         this.dispatchAction(CalculatedColumnRedux.CalculatedColumnDelete(calcColumnIndex));
     }
 }

@@ -12,8 +12,8 @@ class CellValidationStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
         this.createMenuItemShowPopup(StrategyConstants.CellValidationStrategyName, ScreenPopups.CellValidationPopup, StrategyConstants.CellValidationGlyph);
     }
     InitState() {
-        if (this.CellValidationState != this.blotter.adaptableBlotterStore.TheStore.getState().CellValidation) {
-            this.CellValidationState = this.blotter.adaptableBlotterStore.TheStore.getState().CellValidation;
+        if (this.CellValidationState != this.blotter.api.cellValidationApi.getCellValidationState()) {
+            this.CellValidationState = this.blotter.api.cellValidationApi.getCellValidationState();
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.CellValidation, this.CellValidationState);
             }

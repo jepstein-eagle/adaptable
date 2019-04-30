@@ -3,21 +3,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ShortcutRedux = require("../Redux/ActionsReducers/ShortcutRedux");
 const ApiBase_1 = require("./ApiBase");
 class ShortcutApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getShortcutState() {
         return this.getBlotterState().Shortcut;
     }
-    GetAll() {
+    getAllShortcut() {
         return this.getBlotterState().Shortcut.Shortcuts;
     }
-    Add(shortcut) {
+    addShortcut(shortcut) {
         this.dispatchAction(ShortcutRedux.ShortcutAdd(shortcut));
     }
-    Delete(shortcut) {
+    deleteShortcut(shortcut) {
         this.dispatchAction(ShortcutRedux.ShortcutDelete(shortcut));
     }
-    DeleteAll() {
-        this.GetAll().forEach(s => {
-            this.Delete(s);
+    deleteAllShortcut() {
+        this.getAllShortcut().forEach(s => {
+            this.deleteShortcut(s);
         });
     }
 }

@@ -43,14 +43,14 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             if (Helper_1.Helper.getStringRepresentionFromKey(keyEvent) == "-") {
                 side = -1;
             }
-            let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
-            let selectedCellInfo = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+            let columns = this.blotter.api.gridApi.getColumns();
+            let selectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
             let failedPreventEdits = [];
             let failedWarningEdits = [];
             let warningValues = [];
             for (var keyValuePair of selectedCellInfo.Selection) {
                 for (var selectedCell of keyValuePair[1]) {
-                    let selectedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(selectedCell.columnId, this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns);
+                    let selectedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(selectedCell.columnId, this.blotter.api.gridApi.getColumns());
                     if (selectedColumn.DataType == Enums_1.DataType.Number && !selectedColumn.ReadOnly) {
                         //for aggrid as we are getting strings sometimes 
                         if (typeof selectedCell.value != "number") {
@@ -122,7 +122,7 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                     failedMessages.push(failedMessage);
                 }
             });
-            this.blotter.api.alertApi.ShowError("Nudge(s) failed rule", failedMessages.toString(), true);
+            this.blotter.api.alertApi.showAlertError("Nudge(s) failed rule", failedMessages.toString(), true);
         }
     }
     ShowWarningMessages(failedRules, warningValues, successfulValues, keyEventString) {
@@ -150,7 +150,7 @@ class PlusMinusStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     GetPlusMinusState() {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().PlusMinus;
+        return this.blotter.api.plusMinusApi.getPlusMinusState();
     }
 }
 exports.PlusMinusStrategy = PlusMinusStrategy;

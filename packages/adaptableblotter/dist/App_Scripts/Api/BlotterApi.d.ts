@@ -30,13 +30,16 @@ import { IInternalApi } from "./Interface/IInternalApi";
 import { IConditionalStyleApi } from "./Interface/IConditionalStyleApi";
 import { IReminderApi } from "./Interface/IReminderApi";
 import { IFlashingCellApi } from "./Interface/IFlashingCellApi";
-import { ISystemApi } from "./Interface/ISystemApi";
 import { IChartApi } from "./Interface/IChartApi";
 import { ICellSummaryApi } from "./Interface/ICellSummaryApi";
+import { IUserFilterApi } from "./Interface/IUserFilterApi";
+import { IPlusMinusApi } from "./Interface/IPlusMinusApi";
+import { IBulkUpdateApi } from "./Interface/IBulkUpdateApi";
 export declare class BlotterApi implements IBlotterApi {
     protected blotter: IAdaptableBlotter;
     advancedSearchApi: IAdvancedSearchApi;
     alertApi: IAlertApi;
+    bulkUpdateApi: IBulkUpdateApi;
     calendarApi: ICalendarApi;
     calculatedColumnApi: ICalculatedColumnApi;
     cellSummaryApi: ICellSummaryApi;
@@ -58,15 +61,16 @@ export declare class BlotterApi implements IBlotterApi {
     gridApi: IGridApi;
     internalApi: IInternalApi;
     layoutApi: ILayoutApi;
+    plusMinusApi: IPlusMinusApi;
     percentBarApi: IPercentBarApi;
     quickSearchApi: IQuickSearchApi;
     reminderApi: IReminderApi;
     shortcutApi: IShortcutApi;
     smartEditApi: ISmartEditApi;
-    systemApi: ISystemApi;
     systemFilterApi: ISystemFilterApi;
     systemStatusApi: ISystemStatusApi;
     themeApi: IThemeApi;
     userInterfaceApi: IUserInterfaceApi;
+    userFilterApi: IUserFilterApi;
     constructor(blotter: IAdaptableBlotter);
 }

@@ -3,7 +3,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IAlertDefinition } from "../Utilities/Interface/BlotterObjects/IAlertDefinition";
 import { AlertState } from '../Redux/ActionsReducers/Interface/IState';
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 export declare class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
     protected AlertState: AlertState;
     constructor(blotter: IAdaptableBlotter);

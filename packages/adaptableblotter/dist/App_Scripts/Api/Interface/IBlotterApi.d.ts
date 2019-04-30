@@ -28,9 +28,11 @@ import { IInternalApi } from "./IInternalApi";
 import { IConditionalStyleApi } from "./IConditionalStyleApi";
 import { IReminderApi } from "./IReminderApi";
 import { IFlashingCellApi } from "./IFlashingCellApi";
-import { ISystemApi } from "./ISystemApi";
 import { IChartApi } from "./IChartApi";
 import { ICellSummaryApi } from "./ICellSummaryApi";
+import { IUserFilterApi } from "./IUserFilterApi";
+import { IPlusMinusApi } from "./IPlusMinusApi";
+import { IBulkUpdateApi } from "./IBulkUpdateApi";
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
  * Contains all the functionality provided by the Adaptable Blotter UI in function form
@@ -39,6 +41,7 @@ import { ICellSummaryApi } from "./ICellSummaryApi";
 export interface IBlotterApi {
     advancedSearchApi: IAdvancedSearchApi;
     alertApi: IAlertApi;
+    bulkUpdateApi: IBulkUpdateApi;
     calculatedColumnApi: ICalculatedColumnApi;
     calendarApi: ICalendarApi;
     cellSummaryApi: ICellSummaryApi;
@@ -60,14 +63,15 @@ export interface IBlotterApi {
     gridApi: IGridApi;
     layoutApi: ILayoutApi;
     percentBarApi: IPercentBarApi;
+    plusMinusApi: IPlusMinusApi;
     reminderApi: IReminderApi;
     quickSearchApi: IQuickSearchApi;
     shortcutApi: IShortcutApi;
     smartEditApi: ISmartEditApi;
-    systemApi: ISystemApi;
     systemFilterApi: ISystemFilterApi;
     systemStatusApi: ISystemStatusApi;
     themeApi: IThemeApi;
     userInterfaceApi: IUserInterfaceApi;
+    userFilterApi: IUserFilterApi;
     internalApi: IInternalApi;
 }

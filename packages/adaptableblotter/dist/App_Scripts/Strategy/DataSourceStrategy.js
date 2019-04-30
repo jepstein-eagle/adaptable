@@ -21,7 +21,7 @@ class DataSourceStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     GetDataSourceState() {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().DataSource;
+        return this.blotter.api.dataSourceApi.getDataSourceState();
     }
 }
 exports.DataSourceStrategy = DataSourceStrategy;

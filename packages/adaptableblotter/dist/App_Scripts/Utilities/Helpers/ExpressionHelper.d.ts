@@ -12,10 +12,16 @@ export interface IRangeEvaluation {
     initialValue: any;
     columnId: string;
 }
+/**
+ * This is the main Helper class dealing with Expressions (a.k.a. Queries)
+ * This class allows you to create and evalute (i.e. see if they are satisfied) Expressions and represent them as strings
+ */
 export declare module ExpressionHelper {
     function CreateSingleColumnExpression(columnId: string, columnDisplayValues: Array<string>, columnRawValues: Array<string>, userFilters: Array<string>, ranges: Array<IRange>): Expression;
     function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, includeColumnName?: boolean): string;
     function ConvertRangeToString(range: IRange, columns: IColumn[]): string;
+    function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean;
+    function checkForExpressionFromRecord(Expression: Expression, record: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean;
     function IsSatisfied(Expression: Expression, getColumnValue: (columnId: string) => any, getDisplayColumnValue: (columnId: string) => string, getOtherColumnValue: (columnId: string) => any, columnBlotterList: IColumn[], userFilters: IUserFilter[], systemFilters: string[], blotter: IAdaptableBlotter): boolean;
     function OperatorToOneCharacterString(operator: LeafExpressionOperator): string;
     function OperatorToShortFriendlyString(operator: LeafExpressionOperator): string;
@@ -29,8 +35,6 @@ export declare module ExpressionHelper {
     function IsEmptyOrValidExpression(expression: Expression): boolean;
     function IsExpressionValid(expression: Expression): boolean;
     function IsEmptyRange(range: IRange): boolean;
-    function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean;
-    function checkForExpressionFromRecord(Expression: Expression, record: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean;
     function CreateEmptyExpression(): Expression;
     function CreateEmptyRange(): IRange;
     function GetRangeEvaluation(rangeExpression: IRange, newValue: any, initialValue: any, column: IColumn, blotter: IAdaptableBlotter, getOtherColumnValue: (columnId: string) => any): IRangeEvaluation;

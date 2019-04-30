@@ -26,7 +26,7 @@ class AdvancedSearchStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBa
         }
     }
     GetAdvancedSearchState() {
-        return this.blotter.api.advancedSearchApi.GetState();
+        return this.blotter.api.advancedSearchApi.getAdvancedSearchState();
     }
 }
 exports.AdvancedSearchStrategy = AdvancedSearchStrategy;

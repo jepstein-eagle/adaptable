@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ApiBase_1 = require("./ApiBase");
 class ConditionalStyleApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getConditionalStyleState() {
         return this.getBlotterState().ConditionalStyle;
     }
-    GetAll() {
-        return this.getBlotterState().ConditionalStyle.ConditionalStyles;
+    getAllConditionalStyle() {
+        return this.getConditionalStyleState().ConditionalStyles;
     }
 }
 exports.ConditionalStyleApi = ConditionalStyleApi;

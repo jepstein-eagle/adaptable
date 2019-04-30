@@ -88,7 +88,7 @@ class ValidationService {
         return ExpressionHelper_1.ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter);
     }
     GetCellValidationState() {
-        return this.blotter.api.cellValidationApi.GetState();
+        return this.blotter.api.cellValidationApi.getCellValidationState();
     }
     logAuditValidationEvent(action, info, data) {
         if (this.blotter.AuditLogService.IsAuditFunctionEventsEnabled) {

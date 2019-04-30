@@ -76,6 +76,7 @@ class AdaptableBlotter {
         this.embedColumnMenu = true;
         this.isInitialised = false;
         this.hasFloatingFilter = true;
+        this.useRowNodeLookUp = false; // we will set later in instantiate if possible to be true
         // get the api ready
         this.api = new BlotterApi_1.BlotterApi(this);
         // set the licence first
@@ -153,6 +154,11 @@ class AdaptableBlotter {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterError('You must provide an element id in `containerOptions.vendorContainer`');
             return false;
         }
+        // set up whether we use the getRowNode method or loop when finding a record (former is preferable)
+        // can only do that here as the gridOptions not yet set up
+        this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds();
+        console.log('use ookup');
+        console.log(this.useRowNodeLookUp);
         // Create Adaptable Blotter Tool Panel
         if (this.blotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Adding Adaptable Blotter Tool Panel");
@@ -186,8 +192,8 @@ class AdaptableBlotter {
             }
         }
         // now create the grid itself
-        this.grid = new ag_grid_community_1.Grid(vendorContainer, this.gridOptions);
-        return (this.grid != null);
+        let grid = new ag_grid_community_1.Grid(vendorContainer, this.gridOptions);
+        return (grid != null);
     }
     filterOnUserDataChange() {
         if (this.blotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Always) {
@@ -333,8 +339,8 @@ class AdaptableBlotter {
         }
     }
     getQuickSearchClassName() {
-        let quickSearchClassName = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.api.quickSearchApi.GetStyle().ClassName) ?
-            this.api.quickSearchApi.GetStyle().ClassName :
+        let quickSearchClassName = StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.api.quickSearchApi.getQuickSearchStyle().ClassName) ?
+            this.api.quickSearchApi.getQuickSearchStyle().ClassName :
             StyleHelper_1.StyleHelper.CreateStyleName(StrategyConstants.QuickSearchStrategyId, this);
         return quickSearchClassName;
     }
@@ -343,7 +349,7 @@ class AdaptableBlotter {
         let cellClassRules = {};
         cellClassRules[quickSearchClassName] = function (params) {
             let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
-            let quickSearchState = blotter.api.quickSearchApi.GetState();
+            let quickSearchState = blotter.api.quickSearchApi.getQuickSearchState();
             if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
                 && (quickSearchState.DisplayAction == Enums_1.DisplayAction.HighlightCell
                     || quickSearchState.DisplayAction == Enums_1.DisplayAction.ShowRowAndHighlightCell)) {
@@ -385,6 +391,7 @@ class AdaptableBlotter {
     }
     getCurrentCellEditValue() {
         //TODO: Jo: This is a workaround as we are accessing private members of agGrid.
+        // Currently used by Shortcut to get the current edit value - is there a better way?
         if (this._currentEditor) {
             return this._currentEditor.getValue();
         }
@@ -588,15 +595,13 @@ class AdaptableBlotter {
         this.DataService.CreateDataChangedEvent(dataChangedEvent);
     }
     setValueBatch(batchValues) {
-        //ag-grid doesn't support FindRow based on data
-        // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         if (ArrayExtensions_1.ArrayExtensions.IsNullOrEmpty(batchValues)) {
             return;
         }
         var dataChangedEvents = [];
         let nodesToRefresh = [];
         let refreshColumnList = [];
-        let percentBars = this.api.percentBarApi.GetAll();
+        let percentBars = this.api.percentBarApi.getAllPercentBar();
         // now two ways to do this - one using pk lookup and other using foreach on row node
         if (this.useRowNodeLookUp) {
             batchValues.forEach((cellInfo) => {
@@ -696,9 +701,8 @@ class AdaptableBlotter {
         //same as hypergrid. we do not support the fact that some rows are editable and some are not
         //if editable is a function then we return that its not readonly since we assume that some record will be editable
         //that's wrong but we ll see if we face the issue later
-        //also looks like the column object already has the Iseditable function... need to check that
         let colDef = this.gridOptions.api.getColumnDef(columnId);
-        if (typeof colDef.editable == 'boolean') {
+        if (colDef && typeof colDef.editable == 'boolean') {
             return !colDef.editable;
         }
         else {
@@ -738,7 +742,7 @@ class AdaptableBlotter {
         let returnMap = new Map();
         // check if there are permitted column values for that column
         // NB.  this is currently a bug as we dont check for visibility so if using permitted values then ALL are returned :(
-        let permittedValuesForColumn = this.api.userInterfaceApi.GetPermittedValuesForColumn(columnId);
+        let permittedValuesForColumn = this.api.userInterfaceApi.getPermittedValuesForColumn(columnId);
         if (permittedValuesForColumn != undefined) {
             permittedValuesForColumn.PermittedValues.forEach(pv => {
                 returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
@@ -777,15 +781,13 @@ class AdaptableBlotter {
     }
     useRawValueForColumn(columnId) {
         // will add more in due course I'm sure but for now only percent bar columns return false...
-        let percentBars = this.api.percentBarApi.GetAll();
+        let percentBars = this.api.percentBarApi.getAllPercentBar();
         if (ArrayExtensions_1.ArrayExtensions.IsEmpty(percentBars)) {
             return false;
         }
         return ArrayExtensions_1.ArrayExtensions.ContainsItem(percentBars.map(pb => { return pb.ColumnId; }), columnId);
     }
     getDisplayValue(id, columnId) {
-        //ag-grid doesn't support FindRow based on data
-        // so we use the foreach rownode and apparently it doesn't cause perf issues.... but we'll see
         let returnValue;
         if (this.useRowNodeLookUp) {
             let rowNode = this.gridOptions.api.getRowNode(id);
@@ -841,7 +843,7 @@ class AdaptableBlotter {
         }
     }
     getRenderedValue(colDef, valueToRender) {
-        return this.agGridHelper.getRenderedValue(this.api.percentBarApi.GetAll(), colDef, valueToRender);
+        return this.agGridHelper.getRenderedValue(this.api.percentBarApi.getAllPercentBar(), colDef, valueToRender);
     }
     getRawValueFromRecord(row, columnId) {
         return this.gridOptions.api.getValue(columnId, row);
@@ -857,7 +859,7 @@ class AdaptableBlotter {
                 }
             }
             else if (type == "ConditionalStyle") {
-                let cssStyles = this.api.conditionalStyleApi.GetAll().map(c => c.Style.ClassName);
+                let cssStyles = this.api.conditionalStyleApi.getAllConditionalStyle().map(c => c.Style.ClassName);
                 for (let prop in localCellClassRules) {
                     if (prop.includes(StrategyConstants.ConditionalStyleStrategyId) || ArrayExtensions_1.ArrayExtensions.ContainsItem(cssStyles, prop)) {
                         delete localCellClassRules[prop];
@@ -1173,7 +1175,7 @@ class AdaptableBlotter {
                     // first see if its an error = should only be one item in array if so
                     if (failedRules[0].ActionMode == "Stop Edit") {
                         let errorMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                        this.api.alertApi.ShowError("Validation Error", errorMessage, true);
+                        this.api.alertApi.showAlertError("Validation Error", errorMessage, true);
                         return true;
                     }
                     else {
@@ -1271,7 +1273,7 @@ class AdaptableBlotter {
                 });
             }
             // see if we need to refresh any percent bars
-            this.api.percentBarApi.GetAll().forEach(pb => {
+            this.api.percentBarApi.getAllPercentBar().forEach(pb => {
                 refreshColumnList.forEach(changedColId => {
                     if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) && pb.MaxValueColumnId == changedColId) {
                         ArrayExtensions_1.ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
@@ -1327,7 +1329,7 @@ class AdaptableBlotter {
             }
             //we then assess filters
             if (this.blotterOptions.generalOptions.serverSearchOption == 'None' || this.blotterOptions.generalOptions.serverSearchOption == 'AdvancedSearch') {
-                let columnFilters = this.api.columnFilterApi.GetAll();
+                let columnFilters = this.api.columnFilterApi.getAllColumnFilter();
                 if (columnFilters.length > 0) {
                     for (let columnFilter of columnFilters) {
                         if (!ExpressionHelper_1.ExpressionHelper.checkForExpressionFromRecord(columnFilter.Filter, node, columns, this)) {
@@ -1336,7 +1338,7 @@ class AdaptableBlotter {
                     }
                 }
                 //we next assess quicksearch
-                let quickSearchState = this.api.quickSearchApi.GetState();
+                let quickSearchState = this.api.quickSearchApi.getQuickSearchState();
                 if (quickSearchState.DisplayAction != Enums_1.DisplayAction.HighlightCell) {
                     if (StringExtensions_1.StringExtensions.IsNullOrEmpty(quickSearchState.QuickSearchText)) {
                         return true;
@@ -1366,7 +1368,7 @@ class AdaptableBlotter {
             return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
         };
         // add any special renderers
-        this.api.percentBarApi.GetAll().forEach(pcr => {
+        this.api.percentBarApi.getAllPercentBar().forEach(pcr => {
             this.addPercentBar(pcr);
         });
         let originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
@@ -1454,7 +1456,7 @@ class AdaptableBlotter {
                     if (ColumnHelper_1.ColumnHelper.isSpecialColumn(sm.colId)) {
                         let groupedColumn = this.gridOptions.columnApi.getAllColumns().find(c => c.isRowGroupActive() == true);
                         if (groupedColumn) {
-                            let customSort = this.api.customSortApi.GetAll().find(cs => cs.ColumnId == groupedColumn.getColId());
+                            let customSort = this.api.customSortApi.getAllCustomSort().find(cs => cs.ColumnId == groupedColumn.getColId());
                             if (customSort) {
                                 // check that not already applied
                                 if (!this.getState().Grid.GridSorts.find(gs => ColumnHelper_1.ColumnHelper.isSpecialColumn(gs.Column))) {
@@ -1514,7 +1516,7 @@ class AdaptableBlotter {
     }
     updateQuickSearchRangeVisibleColumn(columnId) {
         if (this.isInitialised) {
-            let quickSearchState = this.api.quickSearchApi.GetState();
+            let quickSearchState = this.api.quickSearchApi.getQuickSearchState();
             // only update if quick search is not highlight and is set - rare use case...
             if (quickSearchState.DisplayAction != Enums_1.DisplayAction.HighlightCell && StringExtensions_1.StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {
                 let quickSearchRange = this.getState().System.QuickSearchRange;
@@ -1642,10 +1644,6 @@ class AdaptableBlotter {
     // Method called after we have rendered the grid
     // where we apply our stuff but also any ag-Grid props that we control
     applyFinalRendering() {
-        // Check that we have a primary key
-        let isValidPrimaryKey = BlotterHelper_1.BlotterHelper.isValidPrimaryKey(this, this.api.gridApi.getColumns());
-        // set up whether we use the getRowNode method or loop when finding a record (former is preferable)
-        this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds(isValidPrimaryKey);
         // add the filter header style if required
         if (this.blotterOptions.filterOptions.indicateFilteredColumns == true) {
             var css = document.createElement("style");
@@ -1660,12 +1658,12 @@ class AdaptableBlotter {
             this.gridOptions.api.refreshHeader();
         }
         // if user layout and a percent bar sometimes the first few cells are pre-rendered so we frig it like this
-        let currentlayout = this.api.layoutApi.GetCurrentName();
-        if (currentlayout != GeneralConstants_1.DEFAULT_LAYOUT && ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.api.percentBarApi.GetAll())) {
-            this.api.layoutApi.Set(GeneralConstants_1.DEFAULT_LAYOUT);
+        let currentlayout = this.api.layoutApi.getCurrentLayoutName();
+        if (currentlayout != GeneralConstants_1.DEFAULT_LAYOUT && ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.api.percentBarApi.getAllPercentBar())) {
+            this.api.layoutApi.setLayout(GeneralConstants_1.DEFAULT_LAYOUT);
         }
         // at the end so load the current layout
-        this.api.layoutApi.Set(currentlayout);
+        this.api.layoutApi.setLayout(currentlayout);
     }
     // A couple of state management functions
     getState() {

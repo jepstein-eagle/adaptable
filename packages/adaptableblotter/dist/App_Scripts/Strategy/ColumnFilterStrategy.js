@@ -33,7 +33,7 @@ class ColumnFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase
         }
     }
     GetColumnFilterState() {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters;
+        return this.blotter.api.columnFilterApi.getAllColumnFilter();
     }
 }
 exports.ColumnFilterStrategy = ColumnFilterStrategy;

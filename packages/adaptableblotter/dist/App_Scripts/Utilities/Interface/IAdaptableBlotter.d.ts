@@ -18,7 +18,7 @@ import { ICalculatedColumnExpressionService } from '../Services/Interface/ICalcu
 import { IChartService } from '../Services/Interface/IChartService';
 import { IPPStyle } from "./Reports/IPPStyle";
 import { IEvent } from './IEvent';
-import { IAdaptableStrategyCollection } from '../../Strategy/Interface/IStrategy';
+import { IStrategyCollection } from '../../Strategy/Interface/IStrategy';
 import { ILicenceService } from '../Services/Interface/ILicenceService';
 import { IScheduleService } from '../Services/Interface/IScheduleService';
 /**
@@ -51,7 +51,7 @@ export interface IAdaptableBlotter {
      * Users are able to set through Predefined Config which ones are available (default), ReadOnly or Hidden
      * Each strategy currently manages the State relevant to it and reacts to any changes (this might change?)
      */
-    strategies: IAdaptableStrategyCollection;
+    strategies: IStrategyCollection;
     /**
      * The name of the underlying vendor grid - only used in the about page
      */

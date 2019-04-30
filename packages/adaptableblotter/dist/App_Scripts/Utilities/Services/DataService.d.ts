@@ -1,6 +1,6 @@
 import { IDataService, ChangeDirection } from "./Interface/IDataService";
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
-import { IDataChangedInfo } from "../../Api/Interface/IDataChangedInfo";
+import { IDataChangedInfo } from "../Interface/IDataChangedInfo";
 import { IEvent } from "../Interface/IEvent";
 export declare class DataService implements IDataService {
     private blotter;

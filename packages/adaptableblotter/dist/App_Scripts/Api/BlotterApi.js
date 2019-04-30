@@ -32,12 +32,15 @@ const ReminderApi_1 = require("./ReminderApi");
 const FlashingCellApi_1 = require("./FlashingCellApi");
 const ChartApi_1 = require("./ChartApi");
 const CellSummaryApi_1 = require("./CellSummaryApi");
-const SystemApi_1 = require("./SystemApi");
+const UserFilterApi_1 = require("./UserFilterApi");
+const PlusMinusApi_1 = require("./PlusMinusApi");
+const BulkUpdateApi_1 = require("./BulkUpdateApi");
 class BlotterApi {
     constructor(blotter) {
         this.blotter = blotter;
         this.advancedSearchApi = new AdvancedSearchApi_1.AdvancedSearchApi(blotter);
         this.alertApi = new AlertApi_1.AlertApi(blotter);
+        this.bulkUpdateApi = new BulkUpdateApi_1.BulkUpdateApi(blotter);
         this.calendarApi = new CalendarApi_1.CalendarApi(blotter);
         this.calculatedColumnApi = new CalculatedColumnApi_1.CalculatedColumnApi(blotter);
         this.cellSummaryApi = new CellSummaryApi_1.CellSummaryApi(blotter);
@@ -57,18 +60,19 @@ class BlotterApi {
         this.formatColumnApi = new FormatColumnApi_1.FormatColumnApi(blotter);
         this.freeTextColumnApi = new FreeTextColumnApi_1.FreeTextColumnApi(blotter);
         this.gridApi = new GridApi_1.GridApi(blotter);
-        this.internalApi = new InternalApi_1.InternalApi(blotter);
         this.layoutApi = new LayoutApi_1.LayoutApi(blotter);
         this.percentBarApi = new PercentBarApi_1.PercentBarApi(blotter);
+        this.plusMinusApi = new PlusMinusApi_1.PlusMinusApi(blotter);
         this.quickSearchApi = new QuickSearchApi_1.QuickSearchApi(blotter);
         this.reminderApi = new ReminderApi_1.ReminderApi(blotter);
         this.shortcutApi = new ShortcutApi_1.ShortcutApi(blotter);
         this.smartEditApi = new SmartEditApi_1.SmartEditApi(blotter);
-        this.systemApi = new SystemApi_1.SystemApi(blotter);
         this.systemFilterApi = new SystemFilterApi_1.SystemFilterApi(blotter);
         this.systemStatusApi = new SystemStatusApi_1.SystemStatusApi(blotter);
         this.themeApi = new ThemeApi_1.ThemeApi(blotter);
         this.userInterfaceApi = new UserInterfaceApi_1.UserInterfaceApi(blotter);
+        this.userFilterApi = new UserFilterApi_1.UserFilterApi(blotter);
+        this.internalApi = new InternalApi_1.InternalApi(blotter);
     }
 }
 exports.BlotterApi = BlotterApi;

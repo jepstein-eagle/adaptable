@@ -3,17 +3,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const CellValidationRedux = require("../Redux/ActionsReducers/CellValidationRedux");
 const ApiBase_1 = require("./ApiBase");
 class CellValidationApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getCellValidationState() {
         return this.getBlotterState().CellValidation;
     }
-    GetAll() {
-        return this.getBlotterState().CellValidation.CellValidations;
+    getAllCellValidation() {
+        return this.getCellValidationState().CellValidations;
     }
-    Add(cellValidationRule) {
+    addCellValidation(cellValidationRule) {
         this.dispatchAction(CellValidationRedux.CellValidationAddUpdate(-1, cellValidationRule));
     }
-    Delete(cellValidationRule) {
-        let index = this.GetAll().findIndex(cv => cv == cellValidationRule);
+    deleteCellValidation(cellValidationRule) {
+        let index = this.getAllCellValidation().findIndex(cv => cv == cellValidationRule);
         this.dispatchAction(CellValidationRedux.CellValidationDelete(index));
     }
 }

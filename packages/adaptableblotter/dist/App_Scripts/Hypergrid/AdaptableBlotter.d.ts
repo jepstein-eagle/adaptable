@@ -1,6 +1,6 @@
 import '../Styles/stylesheets/adaptableblotter-style.css';
 import { IAdaptableBlotterStore } from '../Redux/Store/Interface/IAdaptableStore';
-import { IAdaptableStrategyCollection } from '../Strategy/Interface/IStrategy';
+import { IStrategyCollection } from '../Strategy/Interface/IStrategy';
 import { DataType, DistinctCriteriaPairValue } from '../Utilities/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IPPStyle } from "../Utilities/Interface/Reports/IPPStyle";
@@ -27,7 +27,7 @@ import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
-    strategies: IAdaptableStrategyCollection;
+    strategies: IStrategyCollection;
     adaptableBlotterStore: IAdaptableBlotterStore;
     CalendarService: ICalendarService;
     DataService: IDataService;

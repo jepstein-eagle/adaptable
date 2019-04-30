@@ -37,7 +37,7 @@ class PercentBarStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     GetPercentBarState() {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().PercentBar;
+        return this.blotter.api.percentBarApi.getPercentBarState();
     }
 }
 exports.PercentBarStrategy = PercentBarStrategy;

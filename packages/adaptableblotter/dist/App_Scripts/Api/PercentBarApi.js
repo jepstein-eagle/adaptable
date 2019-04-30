@@ -3,20 +3,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const PercentBarRedux = require("../Redux/ActionsReducers/PercentBarRedux");
 const ApiBase_1 = require("./ApiBase");
 class PercentBarApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getPercentBarState() {
         return this.getBlotterState().PercentBar;
     }
-    GetAll() {
+    getAllPercentBar() {
         return this.getBlotterState().PercentBar.PercentBars;
     }
-    GetByColumn(columnId) {
+    getPercentBarByColumn(columnId) {
         let percentBar = this.getBlotterState().PercentBar.PercentBars.find(pcb => pcb.ColumnId == columnId);
         return percentBar;
     }
-    Add(percentBar) {
+    addPercentBar(percentBar) {
         this.dispatchAction(PercentBarRedux.PercentBarAdd(percentBar));
     }
-    Create(columnId, minValue, maxValue, positiveColor, negativeColor, showValue) {
+    createPercentBar(columnId, minValue, maxValue, positiveColor, negativeColor, showValue) {
         let percentBar = {
             ColumnId: columnId,
             MinValue: minValue,
@@ -25,47 +25,47 @@ class PercentBarApi extends ApiBase_1.ApiBase {
             NegativeColor: negativeColor,
             ShowValue: showValue
         };
-        this.Add(percentBar);
+        this.addPercentBar(percentBar);
     }
-    EditByIndex(index, percentBar) {
+    editPercentBarByIndex(index, percentBar) {
         this.dispatchAction(PercentBarRedux.PercentBarEdit(index, percentBar));
     }
-    Edit(percentBar) {
-        let index = this.GetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
-        this.EditByIndex(index, percentBar);
+    editPercentBar(percentBar) {
+        let index = this.getAllPercentBar().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
+        this.editPercentBarByIndex(index, percentBar);
     }
-    EditMinValue(minValue, columnId) {
-        let percentBar = this.GetByColumn(columnId);
+    editPercentBarMinValue(minValue, columnId) {
+        let percentBar = this.getPercentBarByColumn(columnId);
         percentBar.MinValue = minValue;
-        let index = this.GetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
-        this.EditByIndex(index, percentBar);
+        let index = this.getAllPercentBar().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
+        this.editPercentBarByIndex(index, percentBar);
     }
-    EditMaxValue(maxValue, columnId) {
-        let percentBar = this.GetByColumn(columnId);
+    editPercentBarMaxValue(maxValue, columnId) {
+        let percentBar = this.getPercentBarByColumn(columnId);
         percentBar.MaxValue = maxValue;
-        let index = this.GetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
-        this.EditByIndex(index, percentBar);
+        let index = this.getAllPercentBar().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
+        this.editPercentBarByIndex(index, percentBar);
     }
-    EditPositiveColor(positiveColor, columnId) {
-        let percentBar = this.GetByColumn(columnId);
+    editPercentBarPositiveColor(positiveColor, columnId) {
+        let percentBar = this.getPercentBarByColumn(columnId);
         percentBar.PositiveColor = positiveColor;
-        let index = this.GetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
-        this.EditByIndex(index, percentBar);
+        let index = this.getAllPercentBar().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
+        this.editPercentBarByIndex(index, percentBar);
     }
-    EditNegativeColor(negativeColor, columnId) {
-        let percentBar = this.GetByColumn(columnId);
+    editPercentBarNegativeColor(negativeColor, columnId) {
+        let percentBar = this.getPercentBarByColumn(columnId);
         percentBar.NegativeColor = negativeColor;
-        let index = this.GetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
-        this.EditByIndex(index, percentBar);
+        let index = this.getAllPercentBar().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
+        this.editPercentBarByIndex(index, percentBar);
     }
-    EditShowValue(showValue, columnId) {
-        let percentBar = this.GetByColumn(columnId);
+    editPercentBarShowValue(showValue, columnId) {
+        let percentBar = this.getPercentBarByColumn(columnId);
         percentBar.ShowValue = showValue;
-        let index = this.GetAll().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
-        this.EditByIndex(index, percentBar);
+        let index = this.getAllPercentBar().findIndex(pcb => pcb.ColumnId == percentBar.ColumnId);
+        this.editPercentBarByIndex(index, percentBar);
     }
-    Delete(columnId) {
-        let index = this.GetAll().findIndex(pcb => pcb.ColumnId == columnId);
+    deletePercentBar(columnId) {
+        let index = this.getAllPercentBar().findIndex(pcb => pcb.ColumnId == columnId);
         this.dispatchAction(PercentBarRedux.PercentBarDelete(index));
     }
 }

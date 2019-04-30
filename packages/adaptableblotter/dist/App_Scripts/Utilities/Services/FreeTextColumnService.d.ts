@@ -1,7 +1,7 @@
 import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
 import { IFreeTextColumn } from "../Interface/BlotterObjects/IFreeTextColumn";
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 export declare class FreeTextColumnService implements IFreeTextColumnService {
     private blotter;
     constructor(blotter: IAdaptableBlotter);

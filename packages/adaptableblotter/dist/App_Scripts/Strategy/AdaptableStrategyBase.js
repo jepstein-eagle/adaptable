@@ -38,8 +38,8 @@ class AdaptableStrategyBase {
         // base class implementation which is empty
     }
     getStrategyEntitlement() {
-        let state = this.blotter.adaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
-        return state.find(x => x.FunctionName == this.Id);
+        let functionEntitlements = this.blotter.api.entitlementApi.getEntitlementState().FunctionEntitlements;
+        return functionEntitlements.find(x => x.FunctionName == this.Id);
     }
     isVisibleStrategy() {
         let entitlement = this.getStrategyEntitlement();
@@ -108,19 +108,18 @@ class AdaptableStrategyBase {
      * @param searchChangedTrigger function that triggered the event
      */
     publishSearchChanged(searchChangedTrigger) {
-        let state = this.blotter.adaptableBlotterStore.TheStore.getState();
-        let dataSource = state.DataSource.DataSources.find(ds => ds.Name == state.DataSource.CurrentDataSource);
-        let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch);
+        let currentDataSource = this.blotter.api.dataSourceApi.getCurrentDataSource();
+        let currentAdvancedSearch = this.blotter.api.advancedSearchApi.getCurrentAdvancedSearch();
         // lets get the searchstate
         let blotterSearchState = {
-            dataSource: dataSource == null ? null : dataSource,
-            advancedSearch: advancedSearch == null ? null : advancedSearch,
-            quickSearch: state.QuickSearch.QuickSearchText,
-            columnFilters: state.ColumnFilter.ColumnFilters
+            dataSource: currentDataSource == null ? null : currentDataSource,
+            advancedSearch: currentAdvancedSearch == null ? null : currentAdvancedSearch,
+            quickSearch: this.blotter.api.quickSearchApi.getQuickSearchValue(),
+            columnFilters: this.blotter.api.columnFilterApi.getAllColumnFilter()
         };
         let blotterSortState = {
-            gridSorts: state.Grid.GridSorts,
-            customSorts: state.CustomSort.CustomSorts
+            gridSorts: this.blotter.api.gridApi.getGridSorts(),
+            customSorts: this.blotter.api.customSortApi.getAllCustomSort()
         };
         let searchChangedInfo = {
             searchChangedTrigger: searchChangedTrigger,

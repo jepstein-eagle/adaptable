@@ -29,7 +29,7 @@ class AdaptableBlotterChart extends React.Component {
             Blotter: this.props.AdaptableBlotter,
             UserFilters: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
             SystemFilters: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
-            ColumnFilters: this.props.AdaptableBlotter.api.columnFilterApi.GetAll(),
+            ColumnFilters: this.props.AdaptableBlotter.api.columnFilterApi.getAllColumnFilter(),
             ColorPalette: this.props.AdaptableBlotter.adaptableBlotterStore.TheStore.getState().UserInterface.ColorPalette,
             AccessLevel: this.state.accessLevel
         };

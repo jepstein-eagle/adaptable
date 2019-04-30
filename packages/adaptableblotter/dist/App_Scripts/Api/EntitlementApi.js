@@ -3,27 +3,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const EntitlementsRedux = require("../Redux/ActionsReducers/EntitlementsRedux");
 const ApiBase_1 = require("./ApiBase");
 class EntitlementApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getEntitlementState() {
         return this.getBlotterState().Entitlements;
     }
-    GetAll() {
+    getAllEntitlement() {
         return this.getBlotterState().Entitlements.FunctionEntitlements;
     }
-    GetByFunction(functionName) {
+    getEntitlementByFunction(functionName) {
         return this.getBlotterState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName);
     }
-    GetAccessLevelForFunction(functionName) {
+    getEntitlementAccessLevelForFunction(functionName) {
         return this.getBlotterState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName).AccessLevel;
     }
-    Add(functionName, accessLevel) {
+    addEntitlement(functionName, accessLevel) {
         let entitlement = { FunctionName: functionName, AccessLevel: accessLevel };
         this.dispatchAction(EntitlementsRedux.EntitlementAdd(entitlement));
     }
-    Edit(functionName, accessLevel) {
+    editEntitlement(functionName, accessLevel) {
         let entitlement = { FunctionName: functionName, AccessLevel: accessLevel };
         this.dispatchAction(EntitlementsRedux.EntitlementUpdate(entitlement));
     }
-    Delete(functionName) {
+    deleteEntitlement(functionName) {
         this.dispatchAction(EntitlementsRedux.EntitlementDelete(functionName));
     }
 }

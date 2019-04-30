@@ -3,19 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const SmartEditRedux = require("../Redux/ActionsReducers/SmartEditRedux");
 const ApiBase_1 = require("./ApiBase");
 class SmartEditApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getSmartEditState() {
         return this.getBlotterState().SmartEdit;
     }
-    SetMathOperation(mathOperation) {
+    setSmartEditMathOperation(mathOperation) {
         this.dispatchAction(SmartEditRedux.SmartEditChangeOperation(mathOperation));
     }
-    GetMathOperation() {
+    getSmartEditMathOperation() {
         return this.getBlotterState().SmartEdit.MathOperation;
     }
-    SetValue(smartEditValue) {
+    setSmartEditValue(smartEditValue) {
         this.dispatchAction(SmartEditRedux.SmartEditChangeValue(smartEditValue));
     }
-    GetValue() {
+    getSmartEditValue() {
         return this.getBlotterState().SmartEdit.SmartEditValue;
     }
 }

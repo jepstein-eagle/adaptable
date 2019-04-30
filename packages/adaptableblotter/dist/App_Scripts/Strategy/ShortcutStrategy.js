@@ -19,8 +19,8 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyConstants.ShortcutStrategyName, ScreenPopups.ShortcutPopup, StrategyConstants.ShortcutGlyph);
     }
     InitState() {
-        if (this.ShortcutState != this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut) {
-            this.ShortcutState = this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut;
+        if (this.ShortcutState != this.blotter.api.shortcutApi.getShortcutState()) {
+            this.ShortcutState = this.blotter.api.shortcutApi.getShortcutState();
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Shortcut, this.ShortcutState);
             }
@@ -34,7 +34,7 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         if (!activeCell) {
             return;
         }
-        let selectedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns);
+        let selectedColumn = ColumnHelper_1.ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.api.gridApi.getColumns());
         if (activeCell && !selectedColumn.ReadOnly) {
             let columnDataType = selectedColumn.DataType;
             let keyEventString = Helper_1.Helper.getStringRepresentionFromKey(keyEvent);
@@ -121,7 +121,7 @@ class ShortcutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.blotter.setValueBatch([{ Id: activeCell.Id, ColumnId: activeCell.ColumnId, Value: newValue }]);
     }
     ShowErrorPreventMessage(failedRule) {
-        this.blotter.api.alertApi.ShowError("Shortcut Failed", ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true);
+        this.blotter.api.alertApi.showAlertError("Shortcut Failed", ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true);
     }
     ShowWarningMessages(failedRules, shortcut, activeCell, keyEventString, newValue, oldValue) {
         let warningMessage = "";

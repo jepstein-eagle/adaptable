@@ -4,28 +4,27 @@ const SystemRedux = require("../Redux/ActionsReducers/SystemRedux");
 const ApiBase_1 = require("./ApiBase");
 const Enums_1 = require("../Utilities/Enums");
 class SystemStatusApi extends ApiBase_1.ApiBase {
-    // System Status api Methods
-    Set(statusMessage, statusColour) {
+    setSystemStatus(statusMessage, statusColour) {
         let systemStatus = { StatusMessage: statusMessage, StatusColour: statusColour };
         this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
     }
-    SetRed(statusMessage) {
+    setRedSystemStatus(statusMessage) {
         let systemStatus = { StatusMessage: statusMessage, StatusColour: Enums_1.StatusColour.Red };
         this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
     }
-    SetAmber(statusMessage) {
+    setAmberSystemStatus(statusMessage) {
         let systemStatus = { StatusMessage: statusMessage, StatusColour: Enums_1.StatusColour.Amber };
         this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
     }
-    SetGreen(statusMessage) {
+    setGreenSystemStatus(statusMessage) {
         let systemStatus = { StatusMessage: statusMessage, StatusColour: Enums_1.StatusColour.Green };
         this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
     }
-    SetBlue(statusMessage) {
+    setBlueSystemStatus(statusMessage) {
         let systemStatus = { StatusMessage: statusMessage, StatusColour: Enums_1.StatusColour.Blue };
         this.dispatchAction(SystemRedux.SystemSetHealthStatus(systemStatus));
     }
-    Clear() {
+    clearSystemStatus() {
         this.dispatchAction(SystemRedux.SystemClearHealthStatus());
     }
 }

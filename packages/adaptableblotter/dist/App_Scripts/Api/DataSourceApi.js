@@ -4,26 +4,36 @@ const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 const DataSourceRedux = require("../Redux/ActionsReducers/DataSourceRedux");
 const ApiBase_1 = require("./ApiBase");
 class DataSourceApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getDataSourceState() {
         return this.getBlotterState().DataSource;
     }
-    Set(dataSourceName) {
+    getAllDataSource() {
+        return this.getDataSourceState().DataSources;
+    }
+    getCurrentDataSource() {
+        let currentDataSourceName = this.getDataSourceState().CurrentDataSource;
+        return this.getDataSourceByName(currentDataSourceName);
+    }
+    getDataSourceByName(dataSourceName) {
+        return this.getAllDataSource().find(a => a.Name == dataSourceName);
+    }
+    setDataSource(dataSourceName) {
         let dataSource = this.getBlotterState().DataSource.DataSources.find(a => a.Name == dataSourceName);
         if (this.checkItemExists(dataSource, dataSourceName, StrategyConstants.DataSourceStrategyName)) {
             this.dispatchAction(DataSourceRedux.DataSourceSelect(dataSource.Name));
         }
     }
-    Create(dataSourceName, dataSourceDescription) {
+    createDataSource(dataSourceName, dataSourceDescription) {
         let dataSource = {
             Name: dataSourceName,
             Description: dataSourceDescription
         };
-        this.Add(dataSource);
+        this.addDataSource(dataSource);
     }
-    Add(dataSource) {
+    addDataSource(dataSource) {
         this.dispatchAction(DataSourceRedux.DataSourceAddUpdate(-1, dataSource));
     }
-    Clear() {
+    clearDataSource() {
         this.dispatchAction(DataSourceRedux.DataSourceSelect(""));
     }
 }

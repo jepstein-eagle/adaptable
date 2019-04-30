@@ -4,40 +4,40 @@ const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 const AdvancedSearchRedux = require("../Redux/ActionsReducers/AdvancedSearchRedux");
 const ApiBase_1 = require("./ApiBase");
 class AdvancedSearchApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getAdvancedSearchState() {
         return this.getBlotterState().AdvancedSearch;
     }
-    Set(advancedSearchName) {
+    setAdvancedSearch(advancedSearchName) {
         let advancedSearch = this.getBlotterState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
         if (this.checkItemExists(advancedSearch, advancedSearchName, StrategyConstants.AdvancedSearchStrategyName)) {
             this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName));
         }
     }
-    Clear() {
+    clearAdvancedSearch() {
         this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(""));
     }
-    Add(advancedSearch) {
+    addAdvancedSearch(advancedSearch) {
         this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAddUpdate(-1, advancedSearch));
     }
-    Edit(advancedSearchName, advancedSearch) {
+    editAdvancedSearch(advancedSearchName, advancedSearch) {
         let searchIndex = this.getBlotterState().AdvancedSearch.AdvancedSearches.findIndex(a => a.Name == advancedSearchName);
         this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAddUpdate(searchIndex, advancedSearch));
     }
-    Delete(advancedSearchName) {
-        let searchToDelete = this.GetByName(advancedSearchName);
+    deleteAdvancedSearch(advancedSearchName) {
+        let searchToDelete = this.getAdvancedSearchByName(advancedSearchName);
         this.dispatchAction(AdvancedSearchRedux.AdvancedSearchDelete(searchToDelete));
     }
-    GetCurrent() {
+    getCurrentAdvancedSearch() {
         let currentAdvancedSearchName = this.getBlotterState().AdvancedSearch.CurrentAdvancedSearch;
-        return this.GetByName(currentAdvancedSearchName);
+        return this.getAdvancedSearchByName(currentAdvancedSearchName);
     }
-    GetCurrentName() {
+    getCurrentAdvancedSearchName() {
         return this.getBlotterState().AdvancedSearch.CurrentAdvancedSearch;
     }
-    GetByName(advancedSearchName) {
+    getAdvancedSearchByName(advancedSearchName) {
         return this.getBlotterState().AdvancedSearch.AdvancedSearches.find(a => a.Name == advancedSearchName);
     }
-    GetAll() {
+    getAllAdvancedSearch() {
         return this.getBlotterState().AdvancedSearch.AdvancedSearches;
     }
 }

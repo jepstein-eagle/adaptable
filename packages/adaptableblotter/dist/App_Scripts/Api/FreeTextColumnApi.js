@@ -5,23 +5,26 @@ const ApiBase_1 = require("./ApiBase");
 const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 class FreeTextColumnApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getFreeTextColumnState() {
         return this.getBlotterState().FreeTextColumn;
     }
-    GetAll() {
+    getAllFreeTextColumn() {
         return this.getBlotterState().FreeTextColumn.FreeTextColumns;
     }
-    Add(freeTextColumn) {
+    addFreeTextColumn(freeTextColumn) {
         this.dispatchAction(FreeTextColumnRedux.FreeTextColumnAdd(freeTextColumn));
     }
-    Create(columnId, defaultValue = null) {
+    addEditFreeTextColumnStoredValue(freeTextColumn, storedValue) {
+        this.dispatchAction(FreeTextColumnRedux.FreeTextColumnAddEditStoredValue(freeTextColumn, storedValue));
+    }
+    createFreeTextColumn(columnId, defaultValue = null) {
         let freeTextColumn = ObjectFactory_1.ObjectFactory.CreateEmptyFreeTextColumn();
         freeTextColumn.ColumnId = columnId;
         freeTextColumn.DefaultValue = defaultValue;
-        this.Add(freeTextColumn);
+        this.addFreeTextColumn(freeTextColumn);
     }
-    Delete(columnId) {
-        let freeTextColumn = this.GetAll().find(ftc => ftc.ColumnId == columnId);
+    deleteFreeTextColumn(columnId) {
+        let freeTextColumn = this.getAllFreeTextColumn().find(ftc => ftc.ColumnId == columnId);
         if (this.checkItemExists(freeTextColumn, columnId, StrategyConstants.FreeTextColumnStrategyId)) {
             this.dispatchAction(FreeTextColumnRedux.FreeTextColumnDelete(freeTextColumn));
         }

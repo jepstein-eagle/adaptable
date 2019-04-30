@@ -25,7 +25,7 @@ class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.blotter.setValueBatch(newValues);
     }
     CheckCorrectCellSelection() {
-        let selectedCellInfo = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+        let selectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
         if (selectedCellInfo == null || selectedCellInfo.Selection.size == 0) {
             return {
                 Alert: {
@@ -59,7 +59,7 @@ class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         return { ActionReturn: true };
     }
     BuildPreviewValues(bulkUpdateValue) {
-        let selectedCells = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+        let selectedCells = this.blotter.api.gridApi.getSelectedCellInfo();
         let previewResults = [];
         let columnId = "";
         if (selectedCells != null && selectedCells.Columns.length > 0) {
@@ -98,7 +98,7 @@ class BulkUpdateStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         };
     }
     GetBulkUpdateState() {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().BulkUpdate;
+        return this.blotter.api.bulkUpdateApi.getBulkUpdateState();
     }
 }
 exports.BulkUpdateStrategy = BulkUpdateStrategy;

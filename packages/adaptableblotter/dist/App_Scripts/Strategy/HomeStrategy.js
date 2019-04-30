@@ -50,7 +50,7 @@ class HomeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.blotter.applyGridFiltering();
     }
     GetGridState() {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().Grid;
+        return this.blotter.api.gridApi.getGridState();
     }
 }
 exports.HomeStrategy = HomeStrategy;

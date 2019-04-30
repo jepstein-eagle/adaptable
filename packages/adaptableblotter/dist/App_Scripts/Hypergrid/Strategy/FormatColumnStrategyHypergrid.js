@@ -11,7 +11,7 @@ class FormatColumnStrategyHypergrid extends FormatColumnStrategy_1.FormatColumnS
         if (!this.blotterBypass) {
             this.blotterBypass = this.blotter;
         }
-        let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = this.blotter.api.gridApi.getColumns();
         this.blotterBypass.removeAllCellStyleHypergrid('formatColumn');
         // adding this check as things can get mixed up during 'clean user data'
         if (columns.length > 0 && this.FormatColumnState.FormatColumns.length > 0) {

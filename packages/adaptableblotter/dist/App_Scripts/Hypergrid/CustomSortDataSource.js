@@ -58,7 +58,7 @@ exports.CustomSortDataSource = (blotter) => DataSourceIndexed_1.DataSourceIndexe
         gridSorts.forEach((gridSort) => {
             let hypergridColumn = blotter.getHypergridColumn(gridSort.Column);
             hypergridColumns.push(hypergridColumn);
-            let customSort = blotter.api.customSortApi.GetAll().find(x => x.ColumnId == gridSort.Column);
+            let customSort = blotter.api.customSortApi.getAllCustomSort().find(x => x.ColumnId == gridSort.Column);
             if (customSort) {
                 let direction = (gridSort.SortOrder === Enums_1.SortOrder.Ascending) ? 1 : -1;
                 let formatter = blotter.getColumnFormatter(customSort.ColumnId);

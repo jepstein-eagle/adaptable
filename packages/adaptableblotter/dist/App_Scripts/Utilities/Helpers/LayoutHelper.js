@@ -31,12 +31,12 @@ var LayoutHelper;
     }
     LayoutHelper.getSortOrder = getSortOrder;
     function autoSaveLayout(blotter) {
-        let layoutState = blotter.api.layoutApi.GetState();
+        let layoutState = blotter.api.layoutApi.getLayoutState();
         if (blotter.isInitialised && layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT) {
             if (blotter.blotterOptions.layoutOptions != null && blotter.blotterOptions.layoutOptions.autoSaveLayouts != null && blotter.blotterOptions.layoutOptions.autoSaveLayouts) {
                 let layout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
                 if (layout != null) {
-                    let gridState = blotter.api.gridApi.GetState();
+                    let gridState = blotter.api.gridApi.getGridState();
                     let visibleColumns = gridState.Columns.filter(c => c.Visible);
                     let gridVendorState = blotter.getVendorGridState(visibleColumns.map(vc => vc.ColumnId), false);
                     let layoutIndex = layoutState.Layouts.findIndex(l => l.Name == layoutState.CurrentLayout);

@@ -8,12 +8,18 @@ const StringExtensions_1 = require("../Extensions/StringExtensions");
 const LoggingHelper_1 = require("./LoggingHelper");
 const ArrayExtensions_1 = require("../Extensions/ArrayExtensions");
 const ObjectFactory_1 = require("../ObjectFactory");
+/**
+ * This is the main Helper class dealing with Expressions (a.k.a. Queries)
+ * This class allows you to create and evalute (i.e. see if they are satisfied) Expressions and represent them as strings
+ */
 var ExpressionHelper;
 (function (ExpressionHelper) {
+    // Creates a very basic expression containing just a single colum (Expressions can contain theoretically multiple columns)
     function CreateSingleColumnExpression(columnId, columnDisplayValues, columnRawValues, userFilters, ranges) {
         return new Expression_1.Expression(((columnDisplayValues && columnDisplayValues.length > 0) || (columnRawValues && columnRawValues.length > 0)) ? [{ ColumnId: columnId, ColumnDisplayValues: columnDisplayValues, ColumnRawValues: columnRawValues }] : [], userFilters && userFilters.length > 0 ? [{ ColumnId: columnId, Filters: userFilters }] : [], ranges && ranges.length > 0 ? [{ ColumnId: columnId, Ranges: ranges }] : []);
     }
     ExpressionHelper.CreateSingleColumnExpression = CreateSingleColumnExpression;
+    // Converts an Expression to a readable string - used in display boxes
     function ConvertExpressionToString(Expression, columns, includeColumnName = true) {
         let returnValue = "";
         if (IsNullOrEmptyExpression(Expression)) {
@@ -58,7 +64,7 @@ var ExpressionHelper;
         return returnValue;
     }
     ExpressionHelper.ConvertExpressionToString = ConvertExpressionToString;
-    // doesnt do columns and stuff....
+    // Converts a Range to a readable string
     function ConvertRangeToString(range, columns) {
         let returnValue = range.Operator + " " + range.Operand1;
         if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(range.Operand2)) {
@@ -67,6 +73,21 @@ var ExpressionHelper;
         return returnValue;
     }
     ExpressionHelper.ConvertRangeToString = ConvertRangeToString;
+    function checkForExpression(Expression, identifierValue, columns, blotter) {
+        return IsSatisfied(Expression, blotter.getRecordIsSatisfiedFunction(identifierValue, Enums_1.DistinctCriteriaPairValue.RawValue), // this value raw
+        blotter.getRecordIsSatisfiedFunction(identifierValue, Enums_1.DistinctCriteriaPairValue.DisplayValue), // this value display
+        blotter.getRecordIsSatisfiedFunction(identifierValue, Enums_1.DistinctCriteriaPairValue.RawValue), // other column value
+        columns, blotter.api.userFilterApi.getAllUserFilter(), blotter.api.systemFilterApi.getAllSystemFilter(), blotter);
+    }
+    ExpressionHelper.checkForExpression = checkForExpression;
+    function checkForExpressionFromRecord(Expression, record, columns, blotter) {
+        return IsSatisfied(Expression, blotter.getRecordIsSatisfiedFunctionFromRecord(record, Enums_1.DistinctCriteriaPairValue.RawValue), // this value
+        blotter.getRecordIsSatisfiedFunctionFromRecord(record, Enums_1.DistinctCriteriaPairValue.DisplayValue), // this value
+        blotter.getRecordIsSatisfiedFunctionFromRecord(record, Enums_1.DistinctCriteriaPairValue.RawValue), // other column value
+        columns, blotter.api.userFilterApi.getAllUserFilter(), blotter.api.systemFilterApi.getAllSystemFilter(), blotter);
+    }
+    ExpressionHelper.checkForExpressionFromRecord = checkForExpressionFromRecord;
+    // The main function that evaluates whether a row meets an Expression
     function IsSatisfied(Expression, getColumnValue, getDisplayColumnValue, getOtherColumnValue, columnBlotterList, userFilters, systemFilters, blotter) {
         let expressionColumnList = GetColumnListFromExpression(Expression);
         for (let columnId of expressionColumnList) {
@@ -403,23 +424,9 @@ var ExpressionHelper;
     }
     ExpressionHelper.IsExpressionValid = IsExpressionValid;
     function IsEmptyRange(range) {
-        return StringExtensions_1.StringExtensions.IsNullOrEmpty(range.Operand1); // more??
+        return StringExtensions_1.StringExtensions.IsNullOrEmpty(range.Operand1) && StringExtensions_1.StringExtensions.IsNullOrEmpty(range.Operand2);
     }
     ExpressionHelper.IsEmptyRange = IsEmptyRange;
-    function checkForExpression(Expression, identifierValue, columns, blotter) {
-        return IsSatisfied(Expression, blotter.getRecordIsSatisfiedFunction(identifierValue, Enums_1.DistinctCriteriaPairValue.RawValue), // this value
-        blotter.getRecordIsSatisfiedFunction(identifierValue, Enums_1.DistinctCriteriaPairValue.DisplayValue), // this value
-        blotter.getRecordIsSatisfiedFunction(identifierValue, Enums_1.DistinctCriteriaPairValue.RawValue), // other column value
-        columns, blotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters, blotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters, blotter);
-    }
-    ExpressionHelper.checkForExpression = checkForExpression;
-    function checkForExpressionFromRecord(Expression, record, columns, blotter) {
-        return IsSatisfied(Expression, blotter.getRecordIsSatisfiedFunctionFromRecord(record, Enums_1.DistinctCriteriaPairValue.RawValue), // this value
-        blotter.getRecordIsSatisfiedFunctionFromRecord(record, Enums_1.DistinctCriteriaPairValue.DisplayValue), // this value
-        blotter.getRecordIsSatisfiedFunctionFromRecord(record, Enums_1.DistinctCriteriaPairValue.RawValue), // other column value
-        columns, blotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters, blotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters, blotter);
-    }
-    ExpressionHelper.checkForExpressionFromRecord = checkForExpressionFromRecord;
     function CreateEmptyExpression() {
         return new Expression_1.Expression([], [], []);
     }
@@ -475,21 +482,17 @@ var ExpressionHelper;
             case Enums_1.DataType.String:
                 // might not be a string so make sure
                 rangeEvaluation.newValue = String(rangeEvaluation.newValue);
-                if (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) {
-                    rangeEvaluation.newValue = StringExtensions_1.StringExtensions.ToLowerCase(rangeEvaluation.newValue);
-                }
                 rangeEvaluation.operand1 = rangeExpression.Operand1Type == Enums_1.RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
-                    (rangeExpression.Operand1 == null) ? null :
-                        (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) ?
-                            StringExtensions_1.StringExtensions.ToLowerCase(rangeExpression.Operand1) :
-                            rangeExpression.Operand1;
+                    (rangeExpression.Operand1 == null) ? null : rangeExpression.Operand1;
                 rangeEvaluation.operand2 = rangeExpression.Operand2Type == Enums_1.RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
-                    (rangeExpression.Operand2 == null) ? null :
-                        (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) ?
-                            StringExtensions_1.StringExtensions.ToLowerCase(rangeExpression.Operand2) :
-                            rangeExpression.Operand2;
+                    (rangeExpression.Operand2 == null) ? null : rangeExpression.Operand2;
+                if (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) {
+                    rangeEvaluation.newValue = StringExtensions_1.StringExtensions.ToLowerCase(rangeEvaluation.newValue);
+                    rangeEvaluation.operand1 = StringExtensions_1.StringExtensions.ToLowerCase(rangeEvaluation.operand1);
+                    rangeEvaluation.operand2 = StringExtensions_1.StringExtensions.ToLowerCase(rangeEvaluation.operand2);
+                }
                 break;
         }
         return rangeEvaluation;

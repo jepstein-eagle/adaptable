@@ -1,7 +1,7 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 export declare class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
     private ChartState;
     private SystemState;

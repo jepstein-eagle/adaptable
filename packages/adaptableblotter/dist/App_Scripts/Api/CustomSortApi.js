@@ -4,30 +4,30 @@ const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 const CustomSortRedux = require("../Redux/ActionsReducers/CustomSortRedux");
 const ApiBase_1 = require("./ApiBase");
 class CustomSortApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getCustomSortState() {
         return this.getBlotterState().CustomSort;
     }
-    GetAll() {
+    getAllCustomSort() {
         return this.getBlotterState().CustomSort.CustomSorts;
     }
-    GetByColumn(column) {
+    getCustomSortByColumn(column) {
         return this.getBlotterState().CustomSort.CustomSorts.find(cs => cs.ColumnId == column);
     }
-    Add(customSort) {
+    addCustomSort(customSort) {
         this.dispatchAction(CustomSortRedux.CustomSortAdd(customSort));
     }
-    Create(columnId, values) {
+    createCustomSort(columnId, values) {
         let customSort = { ColumnId: columnId, SortedValues: values };
-        this.Add(customSort);
+        this.addCustomSort(customSort);
     }
-    Edit(columnId, values) {
+    editCustomSort(columnId, values) {
         let customSort = { ColumnId: columnId, SortedValues: values };
         if (this.checkItemExists(customSort, columnId, StrategyConstants.CustomSortStrategyId)) {
             this.dispatchAction(CustomSortRedux.CustomSortEdit(customSort));
         }
     }
-    Delete(column) {
-        let customSort = this.GetByColumn(column);
+    deleteCustomSort(column) {
+        let customSort = this.getCustomSortByColumn(column);
         this.dispatchAction(CustomSortRedux.CustomSortDelete(customSort));
     }
 }

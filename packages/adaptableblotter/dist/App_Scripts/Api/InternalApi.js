@@ -9,6 +9,24 @@ class InternalApi extends ApiBase_1.ApiBase {
     ReportStartLive(reportName, workbookName, exportDestination) {
         this.dispatchAction(SystemRedux.ReportStartLive(reportName, workbookName, exportDestination));
     }
+    GetSystemState() {
+        return this.getBlotterState().System;
+    }
+    GetAvailableCalendars() {
+        return this.GetSystemState().AvailableCalendars;
+    }
+    SetChartData(chartData) {
+        this.dispatchAction(SystemRedux.ChartSetChartData(chartData));
+    }
+    SetChartVisibility(chartVisbility) {
+        this.dispatchAction(SystemRedux.ChartSetChartVisibility(chartVisbility));
+    }
+    getSystemReports() {
+        return this.GetSystemState().SystemReports;
+    }
+    getLiveReports() {
+        return this.GetSystemState().CurrentLiveReports;
+    }
     // Menu Redux Actions
     ColumnContextMenuClear() {
         this.dispatchAction(MenuRedux.ClearColumnContextMenu());

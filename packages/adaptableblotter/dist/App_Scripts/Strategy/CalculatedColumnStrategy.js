@@ -9,8 +9,8 @@ class CalculatedColumnStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
         super(StrategyConstants.CalculatedColumnStrategyId, blotter);
     }
     InitState() {
-        if (this.CalculatedColumnState != this.blotter.api.calculatedColumnApi.GetState()) {
-            this.CalculatedColumnState = this.blotter.api.calculatedColumnApi.GetState();
+        if (this.CalculatedColumnState != this.blotter.api.calculatedColumnApi.getCalculatedColumnState()) {
+            this.CalculatedColumnState = this.blotter.api.calculatedColumnApi.getCalculatedColumnState();
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.CalculatedColumn, this.CalculatedColumnState);
             }

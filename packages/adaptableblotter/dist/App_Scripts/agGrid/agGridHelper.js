@@ -93,12 +93,14 @@ class agGridHelper {
         strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy_1.ReminderStrategy(blotter));
         return strategies;
     }
-    TrySetUpNodeIds(isValidPrimaryKey) {
-        if (!isValidPrimaryKey) { // if no valid pk then always false
+    TrySetUpNodeIds() {
+        if (StringExtensions_1.StringExtensions.IsNullOrEmpty(this.blotter.blotterOptions.primaryKey)) { // if no valid pk then always false
             return false;
         }
-        // need some way of checking if running on client on server
-        // if on server then we return false
+        // need some way of checking if running on client on server: if on server then we return false
+        if (this.gridOptions.getRowNodeId != null) {
+            return true;
+        }
         // also we can check if they have done it
         let primaryKey = this.blotter.blotterOptions.primaryKey;
         // otherwise lets set the Id so that it returns the primaryKey

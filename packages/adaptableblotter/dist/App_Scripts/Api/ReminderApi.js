@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const ApiBase_1 = require("./ApiBase");
 class ReminderApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getReminderState() {
         return this.getBlotterState().Reminder;
     }
-    GetAll() {
+    getAllReminder() {
         return this.getBlotterState().Reminder.Reminders;
     }
 }

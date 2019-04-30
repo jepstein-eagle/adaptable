@@ -60,13 +60,13 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                 this.clearChartData();
             }
             if (this.ChartState.CurrentChartName == null && this.SystemState.ChartVisibility == ChartEnums_1.ChartVisibility.Maximised) {
-                this.blotter.api.systemApi.SetChartVisibility(ChartEnums_1.ChartVisibility.Hidden);
+                this.blotter.api.internalApi.SetChartVisibility(ChartEnums_1.ChartVisibility.Hidden);
             }
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Chart, this.ChartState);
             }
             if (displayChartAtStartUp) {
-                this.blotter.api.systemApi.SetChartVisibility(ChartEnums_1.ChartVisibility.Maximised);
+                this.blotter.api.internalApi.SetChartVisibility(ChartEnums_1.ChartVisibility.Maximised);
                 this.setChartData();
             }
         }
@@ -169,19 +169,19 @@ class ChartStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             else if (chartDefinition.ChartType == ChartEnums_1.ChartType.PieChart) {
                 chartData = this.blotter.ChartService.BuildPieChartData(chartDefinition);
             }
-            this.blotter.api.systemApi.SetChartData(chartData);
+            this.blotter.api.internalApi.SetChartData(chartData);
         }
     }
     clearChartData() {
         if (this.GetSystemState().ChartData != null) {
-            this.blotter.api.systemApi.SetChartData(null);
+            this.blotter.api.internalApi.SetChartData(null);
         }
     }
     GetSystemState() {
-        return this.blotter.api.systemApi.GetState();
+        return this.blotter.api.internalApi.GetSystemState();
     }
     GetChartState() {
-        return this.blotter.api.chartApi.GetState();
+        return this.blotter.api.chartApi.getChartState();
     }
     GetColumnState() {
         return this.blotter.api.gridApi.getColumns();

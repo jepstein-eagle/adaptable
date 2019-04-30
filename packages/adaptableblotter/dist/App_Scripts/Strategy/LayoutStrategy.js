@@ -12,8 +12,8 @@ class LayoutStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyConstants.LayoutStrategyName, ScreenPopups.LayoutPopup, StrategyConstants.LayoutGlyph);
     }
     InitState() {
-        if (this.LayoutState != this.blotter.adaptableBlotterStore.TheStore.getState().Layout) {
-            this.LayoutState = this.blotter.adaptableBlotterStore.TheStore.getState().Layout;
+        if (this.LayoutState != this.blotter.api.layoutApi.getLayoutState()) {
+            this.LayoutState = this.blotter.api.layoutApi.getLayoutState();
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Layout, this.LayoutState);
             }

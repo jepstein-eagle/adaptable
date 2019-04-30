@@ -1060,7 +1060,7 @@ class AdaptableBlotter {
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].ActionMode == 'Stop Edit') {
                     let errorMessage = ObjectFactory_1.ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                    this.api.alertApi.ShowError("Validation Error", errorMessage, true);
+                    this.api.alertApi.showAlertError("Validation Error", errorMessage, true);
                     event.preventDefault();
                 }
                 else {

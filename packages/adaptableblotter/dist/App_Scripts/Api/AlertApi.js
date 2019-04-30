@@ -7,10 +7,10 @@ const Enums_1 = require("../Utilities/Enums");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
 class AlertApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getAlertState() {
         return this.getBlotterState().Alert;
     }
-    ShowAlert(alertToShow) {
+    showAlert(alertToShow) {
         let maxAlerts = this.getBlotterState().Alert.MaxAlertsInStore;
         this.dispatchAction(SystemRedux.SystemAlertAdd(alertToShow, maxAlerts));
         if (alertToShow.ShowAsPopup) {
@@ -28,7 +28,7 @@ class AlertApi extends ApiBase_1.ApiBase {
         this.blotter.api.eventApi._onAlertFired.Dispatch(this.blotter, { alert: alertToShow });
         LoggingHelper_1.LoggingHelper.LogAlert(alertToShow.Header + ": " + alertToShow.Msg, alertToShow.MessageType);
     }
-    Show(alertHeader, alertMessage, MessageType, showAsPopup) {
+    displayAlert(alertHeader, alertMessage, MessageType, showAsPopup) {
         let MessageTypeEnum = MessageType;
         let alertToShow = {
             Header: alertHeader,
@@ -36,19 +36,19 @@ class AlertApi extends ApiBase_1.ApiBase {
             MessageType: MessageTypeEnum,
             ShowAsPopup: showAsPopup
         };
-        this.ShowAlert(alertToShow);
+        this.showAlert(alertToShow);
     }
-    ShowInfo(alertHeader, alertMessage, showAsPopup) {
-        this.Show(alertHeader, alertMessage, Enums_1.MessageType.Info, showAsPopup);
+    showAlertInfo(alertHeader, alertMessage, showAsPopup) {
+        this.displayAlert(alertHeader, alertMessage, Enums_1.MessageType.Info, showAsPopup);
     }
-    ShowSuccess(alertHeader, alertMessage, showAsPopup) {
-        this.Show(alertHeader, alertMessage, Enums_1.MessageType.Success, showAsPopup);
+    showAlertSuccess(alertHeader, alertMessage, showAsPopup) {
+        this.displayAlert(alertHeader, alertMessage, Enums_1.MessageType.Success, showAsPopup);
     }
-    ShowWarning(alertHeader, alertMessage, showAsPopup) {
-        this.Show(alertHeader, alertMessage, Enums_1.MessageType.Warning, showAsPopup);
+    showAlertWarning(alertHeader, alertMessage, showAsPopup) {
+        this.displayAlert(alertHeader, alertMessage, Enums_1.MessageType.Warning, showAsPopup);
     }
-    ShowError(alertHeader, alertMessage, showAsPopup) {
-        this.Show(alertHeader, alertMessage, Enums_1.MessageType.Error, showAsPopup);
+    showAlertError(alertHeader, alertMessage, showAsPopup) {
+        this.displayAlert(alertHeader, alertMessage, Enums_1.MessageType.Error, showAsPopup);
     }
 }
 exports.AlertApi = AlertApi;

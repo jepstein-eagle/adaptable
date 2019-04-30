@@ -24,8 +24,8 @@ class ThemeStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         this.createMenuItemShowPopup(StrategyConstants.ThemeStrategyName, ScreenPopups.ThemePopup, StrategyConstants.ThemeGlyph);
     }
     InitState() {
-        if (this.ThemeState != this.blotter.adaptableBlotterStore.TheStore.getState().Theme) {
-            this.ThemeState = this.blotter.adaptableBlotterStore.TheStore.getState().Theme;
+        if (this.ThemeState != this.blotter.api.themeApi.getThemeState()) {
+            this.ThemeState = this.blotter.api.themeApi.getThemeState();
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Theme, this.ThemeState);
             }

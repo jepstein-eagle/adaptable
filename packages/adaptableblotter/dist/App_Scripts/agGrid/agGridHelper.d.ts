@@ -14,7 +14,7 @@ export declare class agGridHelper {
     getLightThemeName(): string;
     getDarkThemeName(): string;
     setUpStrategies(): Map<string, IStrategy>;
-    TrySetUpNodeIds(isValidPrimaryKey: boolean): boolean;
+    TrySetUpNodeIds(): boolean;
     createCellRendererFunc(pcr: IPercentBar, blotterId: string): ICellRendererFunc;
     getCleanValue(value: string): string;
     getRenderedValue(percentBars: IPercentBar[], colDef: ColDef, valueToRender: any): any;

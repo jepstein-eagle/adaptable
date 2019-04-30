@@ -10,7 +10,7 @@ import { StyleService } from '../Utilities/Services/StyleService';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTextColumnService';
-import { IAdaptableStrategyCollection } from '../Strategy/Interface/IStrategy';
+import { IStrategyCollection } from '../Strategy/Interface/IStrategy';
 import { DistinctCriteriaPairValue } from '../Utilities/Enums';
 import { IPPStyle } from "../Utilities/Interface/Reports/IPPStyle";
 import { ICellInfo } from "../Utilities/Interface/ICellInfo";
@@ -23,14 +23,14 @@ import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalcul
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/blotterOptions/IAdaptableblotterOptions';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
-import { Grid, RowNode } from "ag-grid-community";
+import { RowNode } from "ag-grid-community";
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 export declare class AdaptableBlotter implements IAdaptableBlotter {
     api: IBlotterApi;
-    strategies: IAdaptableStrategyCollection;
+    strategies: IStrategyCollection;
     adaptableBlotterStore: IAdaptableBlotterStore;
     blotterOptions: IAdaptableBlotterOptions;
     vendorGridName: any;
@@ -53,8 +53,6 @@ export declare class AdaptableBlotter implements IAdaptableBlotter {
     private throttleOnDataChangedUser;
     private throttleOnDataChangedExternal;
     hasFloatingFilter: boolean;
-    grid: Grid;
-    gridContainer: HTMLElement;
     private agGridHelper;
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid?: boolean);
     private tryInstantiateAgGrid;

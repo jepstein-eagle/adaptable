@@ -6,35 +6,35 @@ const ApiBase_1 = require("./ApiBase");
 const GeneralConstants_1 = require("../Utilities/Constants/GeneralConstants");
 const ObjectFactory_1 = require("../Utilities/ObjectFactory");
 class LayoutApi extends ApiBase_1.ApiBase {
-    GetState() {
+    getLayoutState() {
         return this.getBlotterState().Layout;
     }
-    Set(layoutName) {
+    setLayout(layoutName) {
         let layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
         if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
             this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
         }
     }
-    Clear() {
+    clearLayout() {
         this.dispatchAction(LayoutRedux.LayoutSelect(GeneralConstants_1.DEFAULT_LAYOUT));
     }
-    GetCurrent() {
+    getCurrentLayout() {
         let layoutName = this.getBlotterState().Layout.CurrentLayout;
-        return this.GetByName(layoutName);
+        return this.getLayoutByName(layoutName);
     }
-    GetCurrentName() {
+    getCurrentLayoutName() {
         return this.getBlotterState().Layout.CurrentLayout;
     }
-    GetByName(layoutName) {
+    getLayoutByName(layoutName) {
         let layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
         if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
             return layout;
         }
     }
-    GetAll() {
+    getAllLayout() {
         return this.getBlotterState().Layout.Layouts;
     }
-    Save() {
+    saveLayout() {
         let currentLayoutName = this.getBlotterState().Layout.CurrentLayout;
         if (currentLayoutName != GeneralConstants_1.DEFAULT_LAYOUT) {
             let currentLayoutObject = this.getBlotterState().Layout.Layouts.find(l => l.Name == currentLayoutName);

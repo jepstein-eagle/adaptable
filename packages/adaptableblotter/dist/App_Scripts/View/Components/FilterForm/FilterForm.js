@@ -56,7 +56,7 @@ class FilterFormComponent extends React.Component {
                             Enums_1.DistinctCriteriaPairValue.DisplayValue;
                         this.setState({ ColumnValuePairs: columnValuePairs, ShowWaitingMessage: false, DistinctCriteriaPairValue: distinctCriteriaPairValue });
                         // set the UIPermittedValues for this column to what has been sent
-                        this.props.Blotter.api.userInterfaceApi.SetColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems);
+                        this.props.Blotter.api.userInterfaceApi.setColumnPermittedValues(this.props.CurrentColumn.ColumnId, distinctItems);
                     }
                 }, function () {
                     //    this.setState({ name: error });

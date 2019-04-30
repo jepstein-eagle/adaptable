@@ -14,8 +14,8 @@ class ConditionalStyleStrategy extends AdaptableStrategyBase_1.AdaptableStrategy
         this.createMenuItemShowPopup(StrategyConstants.ConditionalStyleStrategyName, ScreenPopups.ConditionalStylePopup, StrategyConstants.ConditionalStyleGlyph);
     }
     InitState() {
-        if (this.ConditionalStyleState != this.blotter.adaptableBlotterStore.TheStore.getState().ConditionalStyle) {
-            this.ConditionalStyleState = this.blotter.adaptableBlotterStore.TheStore.getState().ConditionalStyle;
+        if (this.ConditionalStyleState != this.blotter.api.conditionalStyleApi.getConditionalStyleState()) {
+            this.ConditionalStyleState = this.blotter.api.conditionalStyleApi.getConditionalStyleState();
             this.InitStyles();
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.ConditionalStyle, this.ConditionalStyleState);

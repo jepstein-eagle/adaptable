@@ -3,7 +3,7 @@ import { IConditionalStyleStrategy } from './Interface/IConditionalStyleStrategy
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 export declare abstract class ConditionalStyleStrategy extends AdaptableStrategyBase implements IConditionalStyleStrategy {
     protected ConditionalStyleState: ConditionalStyleState;
     protected ColumnCategoryState: ColumnCategoryState;

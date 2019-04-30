@@ -24,5 +24,5 @@ export interface IStrategy {
 /**
  * A Wrapper around the strategies
  */
-export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {
+export interface IStrategyCollection extends Map<string, IStrategy> {
 }

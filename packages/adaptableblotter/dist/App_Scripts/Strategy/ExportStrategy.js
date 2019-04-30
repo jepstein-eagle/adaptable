@@ -117,7 +117,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                         .catch((reason) => {
                         LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("Live Excel failed to send data for [" + cle.Report + "]", reason);
                         this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.OpenfinExcel));
-                        this.blotter.api.alertApi.ShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true);
+                        this.blotter.api.alertApi.showAlertError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true);
                     }));
                 }
                 else if (cle.ExportDestination == Enums_1.ExportDestination.iPushPull) {
@@ -141,7 +141,7 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
                         .catch((reason) => {
                         LoggingHelper_1.LoggingHelper.LogAdaptableBlotterWarning("Live Excel failed to send data for [" + cle.Report + "]", reason);
                         this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.ReportStopLive(cle.Report, Enums_1.ExportDestination.iPushPull));
-                        this.blotter.api.alertApi.ShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true);
+                        this.blotter.api.alertApi.showAlertError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true);
                     }));
                 }
             });
@@ -231,15 +231,15 @@ class ExportStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         return this.blotter.adaptableBlotterStore.TheStore.getState().System.SystemReports.concat(this.ExportState.Reports).find(r => r.Name == ReportName);
     }
     InitState() {
-        if (this.ExportState != this.blotter.adaptableBlotterStore.TheStore.getState().Export) {
+        if (this.ExportState != this.blotter.api.exportApi.getExportState()) {
             this.scheduleReports();
-            this.ExportState = this.blotter.adaptableBlotterStore.TheStore.getState().Export;
+            this.ExportState = this.blotter.api.exportApi.getExportState();
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(Enums_1.StateChangedTrigger.Export, this.ExportState);
             }
         }
-        if (this.CurrentLiveReports != this.blotter.adaptableBlotterStore.TheStore.getState().System.CurrentLiveReports) {
-            this.CurrentLiveReports = this.blotter.adaptableBlotterStore.TheStore.getState().System.CurrentLiveReports;
+        if (this.CurrentLiveReports != this.blotter.api.internalApi.getLiveReports()) {
+            this.CurrentLiveReports = this.blotter.api.internalApi.getLiveReports();
         }
     }
     scheduleReports() {

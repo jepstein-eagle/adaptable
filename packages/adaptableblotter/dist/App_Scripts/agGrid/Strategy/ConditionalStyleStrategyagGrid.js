@@ -22,7 +22,7 @@ class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy_1.Conditio
                     listOfColumns.push(...this.blotter.api.gridApi.getColumns().map(c => c.ColumnId));
                 }
                 else if (x.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory) {
-                    let columnCategory = this.blotter.api.columnCategoryApi.GetAll().find(lc => lc.ColumnCategoryId == x.ColumnCategoryId);
+                    let columnCategory = this.blotter.api.columnCategoryApi.getAllColumnCategory().find(lc => lc.ColumnCategoryId == x.ColumnCategoryId);
                     if (columnCategory) {
                         listOfColumns.push(...columnCategory.ColumnIds);
                     }
@@ -59,7 +59,7 @@ class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy_1.Conditio
                         };
                     }
                     else if (cs.ConditionalStyleScope == Enums_1.ConditionalStyleScope.ColumnCategory) {
-                        let columnCategory = this.blotter.api.columnCategoryApi.GetAll().find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
+                        let columnCategory = this.blotter.api.columnCategoryApi.getAllColumnCategory().find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
                         if (columnCategory) {
                             if (ArrayExtensions_1.ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
                                 cellClassRules[styleName] = function (params) {

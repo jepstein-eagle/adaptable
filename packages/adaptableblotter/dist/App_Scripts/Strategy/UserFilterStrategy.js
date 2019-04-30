@@ -5,6 +5,7 @@ const StrategyConstants = require("../Utilities/Constants/StrategyConstants");
 const ScreenPopups = require("../Utilities/Constants/ScreenPopups");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const Enums_1 = require("../Utilities/Enums");
+const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 class UserFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
     constructor(blotter) {
         super(StrategyConstants.UserFilterStrategyId, blotter);
@@ -24,8 +25,8 @@ class UserFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
             if (this.blotter.blotterOptions.generalOptions.serverSearchOption != 'None') {
                 // we cannot stop all extraneous publishing (e.g. we publish if the changed user filter is NOT being used)
                 // but we can at least ensure that we only publish IF there are live searches or column filters
-                if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.blotter.adaptableBlotterStore.TheStore.getState().AdvancedSearch.CurrentAdvancedSearch)
-                    || this.blotter.adaptableBlotterStore.TheStore.getState().ColumnFilter.ColumnFilters.length > 0) {
+                if (StringExtensions_1.StringExtensions.IsNotNullOrEmpty(this.blotter.api.advancedSearchApi.getCurrentAdvancedSearchName())
+                    || ArrayExtensions_1.ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.columnFilterApi.getAllColumnFilter())) {
                     this.publishSearchChanged(Enums_1.SearchChangedTrigger.UserFilter);
                 }
             }
@@ -35,7 +36,7 @@ class UserFilterStrategy extends AdaptableStrategyBase_1.AdaptableStrategyBase {
         }
     }
     GetUserFilterState() {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters;
+        return this.blotter.api.userFilterApi.getAllUserFilter();
     }
 }
 exports.UserFilterStrategy = UserFilterStrategy;
