@@ -9,7 +9,7 @@ import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelected
 
 export class GridApi extends ApiBase implements IGridApi {
 
-  public getState(): GridState {
+  public getGridState(): GridState {
     return this.getBlotterState().Grid;
 }
 
@@ -19,11 +19,11 @@ export class GridApi extends ApiBase implements IGridApi {
 
 
   public getColumns(): IColumn[]{
-    return this.getState().Columns;
+    return this.getGridState().Columns;
   }
 
   public getSelectedCellInfo(): ISelectedCellInfo{
-    return this.getState().SelectedCellInfo;
+    return this.getGridState().SelectedCellInfo;
   }
 
   public getVisibleColumns(): IColumn[]{
@@ -35,7 +35,7 @@ export class GridApi extends ApiBase implements IGridApi {
   }
 
   public  getGridSorts(): IGridSort[]{
-    return this.getState().GridSorts;
+    return this.getGridState().GridSorts;
   }
  
 

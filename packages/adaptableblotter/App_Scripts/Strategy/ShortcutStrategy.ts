@@ -47,7 +47,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         if (this.ShortcutState.Shortcuts && ArrayExtensions.IsEmpty(this.ShortcutState.Shortcuts)) { return; }
         let activeCell: ICellInfo = this.blotter.getActiveCell();
         if (!activeCell) { return; }
-        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns);
+        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.api.gridApi.getColumns());
         if (activeCell && !selectedColumn.ReadOnly) {
             let columnDataType: DataType = selectedColumn.DataType;
             let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);

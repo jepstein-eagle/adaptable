@@ -269,20 +269,17 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
 
     protected InitState() {
-        if (this.ExportState != this.blotter.adaptableBlotterStore.TheStore.getState().Export) {
-
+        if (this.ExportState != this.blotter.api.exportApi.getExportState()) {
             this.scheduleReports();
-
-
-            this.ExportState = this.blotter.adaptableBlotterStore.TheStore.getState().Export;
+            this.ExportState = this.blotter.api.exportApi.getExportState();
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Export, this.ExportState)
             }
         }
 
-        if (this.CurrentLiveReports != this.blotter.adaptableBlotterStore.TheStore.getState().System.CurrentLiveReports) {
-            this.CurrentLiveReports = this.blotter.adaptableBlotterStore.TheStore.getState().System.CurrentLiveReports;
+        if (this.CurrentLiveReports != this.blotter.api.internalApi.getLiveReports()) {
+            this.CurrentLiveReports = this.blotter.api.internalApi.getLiveReports();
         }
     }
 

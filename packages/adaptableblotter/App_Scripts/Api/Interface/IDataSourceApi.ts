@@ -3,6 +3,13 @@ import { DataSourceState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export interface IDataSourceApi {
   getDataSourceState(): DataSourceState;
+
+  getAllDataSource(): IDataSource[]
+
+  getCurrentDataSource(): IDataSource;
+
+  getDataSourceByName(dataSourceName: string): IDataSource;
+
   /**
   * Sets the DataSource
   * @param dataSource has to be an existing DataSource

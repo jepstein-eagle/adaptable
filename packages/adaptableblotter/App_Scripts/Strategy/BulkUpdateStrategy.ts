@@ -11,6 +11,7 @@ import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
+import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
     protected BulkUpdateState: BulkUpdateState
@@ -41,7 +42,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     }
 
     public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
-        let selectedCellInfo = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+        let selectedCellInfo : ISelectedCellInfo= this.blotter.api.gridApi.getSelectedCellInfo();
         if (selectedCellInfo == null || selectedCellInfo.Selection.size == 0) {
             return {
                 Alert: {
@@ -80,7 +81,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     }
 
     public BuildPreviewValues(bulkUpdateValue: any): IPreviewInfo {
-        let selectedCells = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+        let selectedCells = this.blotter.api.gridApi.getSelectedCellInfo();
         let previewResults: IPreviewResult[] = [];
         let columnId: string = "";
         if (selectedCells != null && selectedCells.Columns.length > 0) {
@@ -123,7 +124,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     }
 
     private GetBulkUpdateState(): BulkUpdateState {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().BulkUpdate;
+        return this.blotter.api.bulkUpdateApi.getBulkUpdateState();
     }
 
 }

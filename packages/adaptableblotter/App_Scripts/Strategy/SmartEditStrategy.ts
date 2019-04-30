@@ -26,8 +26,8 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     }
 
     protected InitState() {
-        if (this.SmartEditState != this.blotter.adaptableBlotterStore.TheStore.getState().SmartEdit) {
-            this.SmartEditState = this.blotter.adaptableBlotterStore.TheStore.getState().SmartEdit;
+        if (this.SmartEditState != this.blotter.api.smartEditApi.getSmartEditState()) {
+            this.SmartEditState = this.blotter.api.smartEditApi.getSmartEditState();
        
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.SmartEdit, this.SmartEditState)
@@ -40,7 +40,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     }
 
     public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
-        let selectedCellInfo: ISelectedCellInfo = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+        let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
         if (selectedCellInfo == null || selectedCellInfo.Selection.size == 0) {
             return {
                 Alert: {
@@ -88,7 +88,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     }
 
     public BuildPreviewValues(smartEditValue: number, smartEditOperation: MathOperation): IPreviewInfo {
-        let selectedCells = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo;
+        let selectedCells:ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
         let previewResults: IPreviewResult[] = [];
         let columnId: string = selectedCells.Columns[0].ColumnId
        
@@ -135,7 +135,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     }
 
     private GetSmartEditState(): SmartEditState {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().SmartEdit;
+        return this.blotter.api.smartEditApi.getSmartEditState();
     }
 
 }

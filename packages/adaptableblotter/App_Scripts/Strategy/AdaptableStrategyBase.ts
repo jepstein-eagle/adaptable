@@ -58,8 +58,8 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     }
 
     getStrategyEntitlement(): IEntitlement {
-        let state = this.blotter.adaptableBlotterStore.TheStore.getState().Entitlements.FunctionEntitlements;
-        return state.find(x => x.FunctionName == this.Id)
+        let functionEntitlements: IEntitlement[] = this.blotter.api.entitlementApi.getEntitlementState().FunctionEntitlements;
+        return functionEntitlements.find(x => x.FunctionName == this.Id)
     }
 
     isVisibleStrategy(): boolean {
@@ -161,22 +161,20 @@ export abstract class AdaptableStrategyBase implements IStrategy {
      * @param searchChangedTrigger function that triggered the event
      */
     publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void {
-        let state: AdaptableBlotterState = this.blotter.adaptableBlotterStore.TheStore.getState();
-
-        let dataSource: IDataSource = state.DataSource.DataSources.find(ds => ds.Name == state.DataSource.CurrentDataSource);
-        let advancedSearch: IAdvancedSearch = state.AdvancedSearch.AdvancedSearches.find(as => as.Name == state.AdvancedSearch.CurrentAdvancedSearch);
+        let currentDataSource: IDataSource = this.blotter.api.dataSourceApi.getCurrentDataSource();
+        let currentAdvancedSearch: IAdvancedSearch = this.blotter.api.advancedSearchApi.getCurrentAdvancedSearch();
 
         // lets get the searchstate
         let blotterSearchState: IBlotterSearchState = {
-            dataSource: dataSource == null ? null : dataSource,
-            advancedSearch: advancedSearch == null ? null : advancedSearch,
-            quickSearch: state.QuickSearch.QuickSearchText,
-            columnFilters: state.ColumnFilter.ColumnFilters
+            dataSource: currentDataSource == null ? null : currentDataSource,
+            advancedSearch: currentAdvancedSearch == null ? null : currentAdvancedSearch,
+            quickSearch: this.blotter.api.quickSearchApi.getQuickSearchValue(),
+            columnFilters: this.blotter.api.columnFilterApi.getAllColumnFilter()
         }
 
         let blotterSortState: IBlotterSortState = {
-            gridSorts: state.Grid.GridSorts,
-            customSorts: state.CustomSort.CustomSorts
+            gridSorts: this.blotter.api.gridApi.getGridSorts(),
+            customSorts: this.blotter.api.customSortApi.getAllCustomSort()
         }
 
         let searchChangedInfo: ISearchChangedInfo = {

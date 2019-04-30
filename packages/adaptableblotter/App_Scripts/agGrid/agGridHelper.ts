@@ -107,13 +107,12 @@ export class agGridHelper {
             return false;
         }
         // need some way of checking if running on client on server: if on server then we return false
-if(this.gridOptions.getRowNodeId != null){
-    alert('already set')
-    return true;
-}
+        if (this.gridOptions.getRowNodeId != null) {
+            return true;
+        }
 
         // also we can check if they have done it
-       let primaryKey: any = this.blotter.blotterOptions.primaryKey;
+        let primaryKey: any = this.blotter.blotterOptions.primaryKey;
         // otherwise lets set the Id so that it returns the primaryKey
         this.gridOptions.getRowNodeId = function (data) {
             return data[primaryKey];

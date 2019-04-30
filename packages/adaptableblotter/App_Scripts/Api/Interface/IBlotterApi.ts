@@ -31,6 +31,8 @@ import { IFlashingCellApi } from "./IFlashingCellApi";
 import { IChartApi } from "./IChartApi";
 import { ICellSummaryApi } from "./ICellSummaryApi";
 import { IUserFilterApi } from "./IUserFilterApi";
+import { IPlusMinusApi } from "./IPlusMinusApi";
+import { IBulkUpdateApi } from "./IBulkUpdateApi";
 
 
 /**
@@ -41,6 +43,7 @@ import { IUserFilterApi } from "./IUserFilterApi";
 export interface IBlotterApi {
   advancedSearchApi: IAdvancedSearchApi;
   alertApi: IAlertApi;
+  bulkUpdateApi: IBulkUpdateApi;
   calculatedColumnApi: ICalculatedColumnApi;
   calendarApi: ICalendarApi;
   cellSummaryApi: ICellSummaryApi
@@ -62,6 +65,7 @@ export interface IBlotterApi {
   gridApi: IGridApi;
   layoutApi: ILayoutApi;
   percentBarApi: IPercentBarApi;
+  plusMinusApi: IPlusMinusApi;
   reminderApi: IReminderApi;
   quickSearchApi: IQuickSearchApi;
   shortcutApi: IShortcutApi;

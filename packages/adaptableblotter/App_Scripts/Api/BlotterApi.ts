@@ -66,6 +66,10 @@ import { ICellSummaryApi } from "./Interface/ICellSummaryApi";
 import { CellSummaryApi } from "./CellSummaryApi";
 import { IUserFilterApi } from "./Interface/IUserFilterApi";
 import { UserFilterApi } from "./UserFilterApi";
+import { IPlusMinusApi } from "./Interface/IPlusMinusApi";
+import { PlusMinusApi } from "./PlusMinusApi";
+import { IBulkUpdateApi } from "./Interface/IBulkUpdateApi";
+import { BulkUpdateApi } from "./BulkUpdateApi";
 
 
 
@@ -73,6 +77,7 @@ export class BlotterApi implements IBlotterApi {
 
   public advancedSearchApi: IAdvancedSearchApi;
   public alertApi: IAlertApi;
+  public bulkUpdateApi: IBulkUpdateApi;
   public calendarApi: ICalendarApi;
   public calculatedColumnApi: ICalculatedColumnApi;
   public cellSummaryApi: ICellSummaryApi;
@@ -94,6 +99,7 @@ export class BlotterApi implements IBlotterApi {
   public gridApi: IGridApi
   public internalApi: IInternalApi
   public layoutApi: ILayoutApi;
+  public plusMinusApi: IPlusMinusApi;
   public percentBarApi: IPercentBarApi;
   public quickSearchApi: IQuickSearchApi;
   public reminderApi: IReminderApi;
@@ -109,6 +115,7 @@ export class BlotterApi implements IBlotterApi {
   constructor(protected blotter: IAdaptableBlotter) {
     this.advancedSearchApi = new AdvancedSearchApi(blotter);
     this.alertApi = new AlertApi(blotter);
+    this.bulkUpdateApi = new BulkUpdateApi(blotter);
     this.calendarApi = new CalendarApi(blotter);
     this.calculatedColumnApi = new CalculatedColumnApi(blotter);
     this.cellSummaryApi = new CellSummaryApi(blotter);
@@ -130,6 +137,7 @@ export class BlotterApi implements IBlotterApi {
     this.gridApi = new GridApi(blotter);
     this.layoutApi = new LayoutApi(blotter);
     this.percentBarApi = new PercentBarApi(blotter);
+    this.plusMinusApi = new PlusMinusApi(blotter);
     this.quickSearchApi = new QuickSearchApi(blotter);
     this.reminderApi = new ReminderApi(blotter);
     this.shortcutApi = new ShortcutApi(blotter);

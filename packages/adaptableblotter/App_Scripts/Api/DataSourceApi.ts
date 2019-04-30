@@ -11,6 +11,19 @@ export class DataSourceApi extends ApiBase implements IDataSourceApi {
     return this.getBlotterState().DataSource;
   }
 
+  public getAllDataSource(): IDataSource[] {
+    return this.getDataSourceState().DataSources;
+  }
+
+  public getCurrentDataSource(): IDataSource {
+    let currentDataSourceName: string = this.getDataSourceState().CurrentDataSource;
+    return this.getDataSourceByName(currentDataSourceName);
+  }
+
+  public getDataSourceByName(dataSourceName: string): IDataSource {
+    return this.getAllDataSource().find(a => a.Name == dataSourceName);
+  }
+
   public setDataSource(dataSourceName: string): void {
     let dataSource: IDataSource = this.getBlotterState().DataSource.DataSources.find(a => a.Name == dataSourceName);
     if (this.checkItemExists(dataSource, dataSourceName, StrategyConstants.DataSourceStrategyName)) {
