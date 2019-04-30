@@ -2,10 +2,8 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux'
 import { ICustomSort } from "../Utilities/Interface/BlotterObjects/ICustomSort";
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { StateChangedTrigger } from '../Utilities/Enums';
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
@@ -15,9 +13,9 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     }
 
     protected InitState() {
-        if (this.CustomSorts != this.blotter.adaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts) {
+        if (this.CustomSorts != this.blotter.api.customSortApi.getAllCustomSort()) {
             this.removeCustomSorts();
-            this.CustomSorts = this.blotter.adaptableBlotterStore.TheStore.getState().CustomSort.CustomSorts;
+            this.CustomSorts = this.blotter.api.customSortApi.getAllCustomSort();
             this.applyCustomSorts();
 
             if (this.blotter.isInitialised) {

@@ -34,7 +34,7 @@ export class ScheduleService implements IScheduleService {
         let date: Date = this.getDateFromSchedule(reminder.Schedule);
         if (date != null) {
             var alertJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
-                this.blotter.api.alertApi.ShowAlert(reminder.Alert);
+                this.blotter.api.alertApi.showAlert(reminder.Alert);
             })
             this.alertJobs.push(alertJob);
         }
@@ -45,7 +45,7 @@ export class ScheduleService implements IScheduleService {
             let date: Date = this.getDateFromSchedule(report.AutoExport.Schedule);
             if (date != null) {
                 var exportJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
-                    this.blotter.api.exportApi.SendReport(report.Name, report.AutoExport.ExportDestination);
+                    this.blotter.api.exportApi.sendReport(report.Name, report.AutoExport.ExportDestination);
                 })
                 this.exportJobs.push(exportJob);
             }

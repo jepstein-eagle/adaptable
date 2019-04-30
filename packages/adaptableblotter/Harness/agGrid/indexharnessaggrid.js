@@ -5,16 +5,15 @@ var trades;
 var gridOptions;
 var showTrade = true;
 
-
 function runQuickSearchViaAPI() {
   const element = document.getElementById('txtQuickSearchText');
-  adaptableblotter.api.quickSearchApi.Apply(element.value);
+  adaptableblotter.api.quickSearchApi.applyQuickSearch(element.value);
 }
 
 function clearQuickSearchViaAPI() {
   const element = document.getElementById('txtQuickSearchText');
   element.value = '';
-  adaptableblotter.api.quickSearchApi.Clear();
+  adaptableblotter.api.quickSearchApi.clearQuickSearch();
 }
 
 function getCommunityKey() {
@@ -33,7 +32,7 @@ function getData() {
 
 function getRowsForGrid(dataGen) {
   if (showTrade) {
-    return dataGen.getTrades(6000);
+    return dataGen.getTrades(5);
   }
   return dataGen.getFtseData(199);
 }
@@ -74,6 +73,10 @@ function InitTradeBlotter() {
     suppressColumnVirtualisation: false,
     suppressMenuHide: true,
     sideBar: undefined, // this puts in filters and columns by default
+    getRowNodeId: (data) => {
+      return data.tradeId;
+    },
+ 
     /*
         sideBar: {
           toolPanels: [
@@ -105,7 +108,9 @@ function InitTradeBlotter() {
 
   var instantiateAgGridInHarness = false;
   // Create and instantiate an ag-Grid object - now want to do this ONLY in the AB!
+  // NOTE: we much prefer it if the vendor Grid is created by us and not by the user...
   if (instantiateAgGridInHarness) {
+    alert('instant hre')
     const gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = '';
     const grid = new agGrid.Grid(gridcontainer, gridOptions);
@@ -311,7 +316,7 @@ function getTradeSchema() {
     // valueFormatter: notionalFormatter,
     cellClass: 'number-cell',
     type: 'abColDefNumber',
-    filter: false
+    filter: true
   });
   schema.push({
     headerName: 'Counterparty',
@@ -333,7 +338,7 @@ function getTradeSchema() {
   schema.push({
     headerName: 'Currency',
     field: 'currency',
-    //   editable: false,
+       editable: true,
     enableRowGroup: true,
     sortable: true,
     filter: 'agTextColumnFilter',

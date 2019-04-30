@@ -11,7 +11,7 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { DistinctCriteriaPairValue, LeafExpressionOperator, RangeOperandType, ActionMode, DisplayAction } from '../Enums';
 import { IColumn } from '../Interface/IColumn';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
-import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 
 export class ValidationService implements IValidationService {
 
@@ -103,7 +103,7 @@ export class ValidationService implements IValidationService {
     }
 
     private GetCellValidationState(): CellValidationState {
-        return this.blotter.api.cellValidationApi.GetState();
+        return this.blotter.api.cellValidationApi.getCellValidationState();
     }
 
     private logAuditValidationEvent(action: string, info: string, data?: any): void {

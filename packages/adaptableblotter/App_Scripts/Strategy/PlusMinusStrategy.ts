@@ -15,10 +15,11 @@ import { ICellInfo } from "../Utilities/Interface/ICellInfo";
 import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
+import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
     private PlusMinusState: PlusMinusState
@@ -63,8 +64,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 side = -1
             }
 
-            let columns: IColumn[] = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
-            let selectedCellInfo = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.SelectedCellInfo
+            let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
+            let selectedCellInfo:ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
             let failedPreventEdits: ICellValidationRule[] = []
             let failedWarningEdits: ICellValidationRule[] = []
@@ -72,7 +73,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             for (var keyValuePair of selectedCellInfo.Selection) {
                 for (var selectedCell of keyValuePair[1]) {
-                    let selectedColumn: IColumn = ColumnHelper.getColumnFromId(selectedCell.columnId, this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns);
+                    let selectedColumn: IColumn = ColumnHelper.getColumnFromId(selectedCell.columnId, this.blotter.api.gridApi.getColumns());
                     if (selectedColumn.DataType == DataType.Number && !selectedColumn.ReadOnly) {
                         //for aggrid as we are getting strings sometimes 
                         if (typeof selectedCell.value != "number") {
@@ -151,7 +152,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                     failedMessages.push(failedMessage)
                 }
             })
-            this.blotter.api.alertApi.ShowError("Nudge(s) failed rule", failedMessages.toString(), true)
+            this.blotter.api.alertApi.showAlertError("Nudge(s) failed rule", failedMessages.toString(), true)
         }
     }
 
@@ -183,7 +184,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     }
 
     protected GetPlusMinusState(): PlusMinusState {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().PlusMinus;
+        return this.blotter.api.plusMinusApi.getPlusMinusState();
     }
 
 }

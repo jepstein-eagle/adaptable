@@ -31,14 +31,14 @@ export class StyleService {
 
     InitState() {
 
-        if (this.FlashingCellState != this.blotter.api.flashingCellApi.GetState()
-            || this.ConditionalStyleState != this.blotter.api.conditionalStyleApi.GetState()
-            || this.QuickSearchState != this.blotter.api.quickSearchApi.GetState()
-            || this.FormatColumnState != this.blotter.api.formatColumnApi.GetState()) {
-            this.FlashingCellState = this.blotter.api.flashingCellApi.GetState();
-            this.ConditionalStyleState = this.blotter.api.conditionalStyleApi.GetState();
-            this.FormatColumnState = this.blotter.api.formatColumnApi.GetState();
-            this.QuickSearchState = this.blotter.api.quickSearchApi.GetState();
+        if (this.FlashingCellState != this.blotter.api.flashingCellApi.getFlashingCellState()
+            || this.ConditionalStyleState != this.blotter.api.conditionalStyleApi.getConditionalStyleState()
+            || this.QuickSearchState != this.blotter.api.quickSearchApi.getQuickSearchState()
+            || this.FormatColumnState != this.blotter.api.formatColumnApi.getFormatColumnState()) {
+            this.FlashingCellState = this.blotter.api.flashingCellApi.getFlashingCellState();
+            this.ConditionalStyleState = this.blotter.api.conditionalStyleApi.getConditionalStyleState();
+            this.FormatColumnState = this.blotter.api.formatColumnApi.getFormatColumnState();
+            this.QuickSearchState = this.blotter.api.quickSearchApi.getQuickSearchState();
             this.clearCSSRules()
 
             // Format Column

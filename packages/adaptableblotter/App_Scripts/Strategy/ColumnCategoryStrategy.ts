@@ -20,8 +20,8 @@ export class ColumnCategoryStrategy extends AdaptableStrategyBase implements ICo
     }
 
     protected InitState() {
-        if (this.ColumnCategoryState != this.blotter.adaptableBlotterStore.TheStore.getState().ColumnCategory) {
-            this.ColumnCategoryState = this.blotter.adaptableBlotterStore.TheStore.getState().ColumnCategory;
+        if (this.ColumnCategoryState != this.blotter.api.columnCategoryApi.getColumnCategoryState()) {
+            this.ColumnCategoryState = this.blotter.api.columnCategoryApi.getColumnCategoryState();
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.ColumnCategory, this.ColumnCategoryState)

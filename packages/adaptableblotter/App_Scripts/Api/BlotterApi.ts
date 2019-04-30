@@ -60,12 +60,16 @@ import { IReminderApi } from "./Interface/IReminderApi";
 import { ReminderApi } from "./ReminderApi";
 import { IFlashingCellApi } from "./Interface/IFlashingCellApi";
 import { FlashingCellApi } from "./FlashingCellApi";
-import { ISystemApi } from "./Interface/ISystemApi";
 import { IChartApi } from "./Interface/IChartApi";
 import { ChartApi } from "./ChartApi";
 import { ICellSummaryApi } from "./Interface/ICellSummaryApi";
 import { CellSummaryApi } from "./CellSummaryApi";
-import { SystemApi } from "./SystemApi";
+import { IUserFilterApi } from "./Interface/IUserFilterApi";
+import { UserFilterApi } from "./UserFilterApi";
+import { IPlusMinusApi } from "./Interface/IPlusMinusApi";
+import { PlusMinusApi } from "./PlusMinusApi";
+import { IBulkUpdateApi } from "./Interface/IBulkUpdateApi";
+import { BulkUpdateApi } from "./BulkUpdateApi";
 
 
 
@@ -73,6 +77,7 @@ export class BlotterApi implements IBlotterApi {
 
   public advancedSearchApi: IAdvancedSearchApi;
   public alertApi: IAlertApi;
+  public bulkUpdateApi: IBulkUpdateApi;
   public calendarApi: ICalendarApi;
   public calculatedColumnApi: ICalculatedColumnApi;
   public cellSummaryApi: ICellSummaryApi;
@@ -94,21 +99,23 @@ export class BlotterApi implements IBlotterApi {
   public gridApi: IGridApi
   public internalApi: IInternalApi
   public layoutApi: ILayoutApi;
+  public plusMinusApi: IPlusMinusApi;
   public percentBarApi: IPercentBarApi;
   public quickSearchApi: IQuickSearchApi;
   public reminderApi: IReminderApi;
   public shortcutApi: IShortcutApi;
   public smartEditApi: ISmartEditApi;
-  public systemApi: ISystemApi;
-  public systemFilterApi: ISystemFilterApi;
+   public systemFilterApi: ISystemFilterApi;
   public systemStatusApi: ISystemStatusApi;
   public themeApi: IThemeApi;
   public userInterfaceApi: IUserInterfaceApi;
+  public userFilterApi: IUserFilterApi;
 
 
   constructor(protected blotter: IAdaptableBlotter) {
     this.advancedSearchApi = new AdvancedSearchApi(blotter);
     this.alertApi = new AlertApi(blotter);
+    this.bulkUpdateApi = new BulkUpdateApi(blotter);
     this.calendarApi = new CalendarApi(blotter);
     this.calculatedColumnApi = new CalculatedColumnApi(blotter);
     this.cellSummaryApi = new CellSummaryApi(blotter);
@@ -128,18 +135,21 @@ export class BlotterApi implements IBlotterApi {
     this.formatColumnApi = new FormatColumnApi(blotter);
     this.freeTextColumnApi = new FreeTextColumnApi(blotter);
     this.gridApi = new GridApi(blotter);
-    this.internalApi = new InternalApi(blotter);
     this.layoutApi = new LayoutApi(blotter);
     this.percentBarApi = new PercentBarApi(blotter);
+    this.plusMinusApi = new PlusMinusApi(blotter);
     this.quickSearchApi = new QuickSearchApi(blotter);
     this.reminderApi = new ReminderApi(blotter);
     this.shortcutApi = new ShortcutApi(blotter);
     this.smartEditApi = new SmartEditApi(blotter);
-    this.systemApi = new SystemApi(blotter);
     this.systemFilterApi = new SystemFilterApi(blotter);
     this.systemStatusApi = new SystemStatusApi(blotter);
     this.themeApi = new ThemeApi(blotter);
     this.userInterfaceApi = new UserInterfaceApi(blotter);
+    this.userFilterApi = new UserFilterApi(blotter);
+
+    this.internalApi = new InternalApi(blotter);
+   
   }
 
 }

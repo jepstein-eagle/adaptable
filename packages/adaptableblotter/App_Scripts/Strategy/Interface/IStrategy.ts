@@ -15,6 +15,7 @@ import { IColumn } from "../../Utilities/Interface/IColumn";
  * TeamSharing
  * Plus there is one 'special' strategy that the user cannot hide called the HomeStrategy which has important functions that need to be called (e.g. creates Team Sharing and other menu items)
  */
+
 export interface IStrategy {
     Id: string
     getPopupMenuItem(): IMenuItem
@@ -26,5 +27,5 @@ export interface IStrategy {
 /**
  * A Wrapper around the strategies
  */
-export interface IAdaptableStrategyCollection extends Map<string, IStrategy> {
+export interface IStrategyCollection extends Map<string, IStrategy> {
 }

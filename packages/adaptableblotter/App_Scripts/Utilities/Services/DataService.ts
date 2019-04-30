@@ -1,7 +1,7 @@
 import { EventDispatcher } from "../EventDispatcher";
 import { IDataService, ChangeDirection } from "./Interface/IDataService";
 import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
-import { IDataChangedInfo } from "../../Api/Interface/IDataChangedInfo";
+import { IDataChangedInfo } from "../Interface/IDataChangedInfo";
 import { IEvent } from "../Interface/IEvent";
 
 // Used to be the Audit Service - now much reduced

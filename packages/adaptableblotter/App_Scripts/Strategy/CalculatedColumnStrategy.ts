@@ -15,8 +15,8 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase implements I
     }
 
     protected InitState() {
-        if (this.CalculatedColumnState != this.blotter.api.calculatedColumnApi.GetState()) {
-            this.CalculatedColumnState = this.blotter.api.calculatedColumnApi.GetState();
+        if (this.CalculatedColumnState != this.blotter.api.calculatedColumnApi.getCalculatedColumnState()) {
+            this.CalculatedColumnState = this.blotter.api.calculatedColumnApi.getCalculatedColumnState();
        
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.CalculatedColumn, this.CalculatedColumnState)

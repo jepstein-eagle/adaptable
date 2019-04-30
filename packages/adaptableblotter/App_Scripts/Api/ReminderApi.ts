@@ -7,11 +7,11 @@ import { ReminderState } from "../Redux/ActionsReducers/Interface/IState";
 export class ReminderApi extends ApiBase implements IReminderApi {
 
   
-  public GetState(): ReminderState {
+  public getReminderState(): ReminderState {
     return this.getBlotterState().Reminder;
 }
 
-public GetAll(): IReminder[] {
+public getAllReminder(): IReminder[] {
     return this.getBlotterState().Reminder.Reminders;
   }
 

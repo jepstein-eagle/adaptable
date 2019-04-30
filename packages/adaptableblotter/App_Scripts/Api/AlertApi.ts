@@ -10,11 +10,11 @@ import { AlertState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class AlertApi extends ApiBase implements IAlertApi {
 
-  public GetState(): AlertState {
+  public getAlertState(): AlertState {
     return this.getBlotterState().Alert;
 }
 
-public ShowAlert(alertToShow: IAdaptableAlert): void {
+public showAlert(alertToShow: IAdaptableAlert): void {
     let maxAlerts: number = this.getBlotterState().Alert.MaxAlertsInStore;
 
     this.dispatchAction(SystemRedux.SystemAlertAdd(alertToShow, maxAlerts))
@@ -33,7 +33,7 @@ public ShowAlert(alertToShow: IAdaptableAlert): void {
     LoggingHelper.LogAlert(alertToShow.Header + ": " + alertToShow.Msg, alertToShow.MessageType)
   }
 
-  public Show(alertHeader: string, alertMessage: string, MessageType: "Success" | "Info" | "Warning" | "Error", showAsPopup: boolean): void {
+  public displayAlert(alertHeader: string, alertMessage: string, MessageType: "Success" | "Info" | "Warning" | "Error", showAsPopup: boolean): void {
     let MessageTypeEnum = MessageType as MessageType;
     let alertToShow: IAdaptableAlert = {
       Header: alertHeader,
@@ -41,23 +41,23 @@ public ShowAlert(alertToShow: IAdaptableAlert): void {
       MessageType: MessageTypeEnum,
       ShowAsPopup: showAsPopup
     }
-    this.ShowAlert(alertToShow);
+    this.showAlert(alertToShow);
   }
 
-  public ShowInfo(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
-    this.Show(alertHeader, alertMessage, MessageType.Info, showAsPopup)
+  public showAlertInfo(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
+    this.displayAlert(alertHeader, alertMessage, MessageType.Info, showAsPopup)
   }
 
-  public ShowSuccess(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
-    this.Show(alertHeader, alertMessage, MessageType.Success, showAsPopup)
+  public showAlertSuccess(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
+    this.displayAlert(alertHeader, alertMessage, MessageType.Success, showAsPopup)
   }
 
-  public ShowWarning(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
-    this.Show(alertHeader, alertMessage, MessageType.Warning, showAsPopup)
+  public showAlertWarning(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
+    this.displayAlert(alertHeader, alertMessage, MessageType.Warning, showAsPopup)
   }
 
-  public ShowError(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
-    this.Show(alertHeader, alertMessage, MessageType.Error, showAsPopup)
+  public showAlertError(alertHeader: string, alertMessage: string, showAsPopup: boolean): void {
+    this.displayAlert(alertHeader, alertMessage, MessageType.Error, showAsPopup)
   }
 
 

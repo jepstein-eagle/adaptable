@@ -4,14 +4,14 @@ import { AdvancedSearchState } from "../../Redux/ActionsReducers/Interface/IStat
 
 export interface IAdvancedSearchApi {
 
-  GetState(): AdvancedSearchState;
+  getAdvancedSearchState(): AdvancedSearchState;
   /**
    * Sets Advanced Search
    * @param advancedSearchName 
    */
-  Set(advancedSearchName: string): void;
-  Clear(): void;
-  Add(advancedSearch: IAdvancedSearch): void;
+  setAdvancedSearch(advancedSearchName: string): void;
+  clearAdvancedSearch(): void;
+  addAdvancedSearch(advancedSearch: IAdvancedSearch): void;
   /**
    * Updates an existing Advanced Search. 
    * The first parameter is the name of the Search that is being edited. 
@@ -19,12 +19,12 @@ export interface IAdvancedSearchApi {
    * @param advancedSearchName 
    * @param advancedSearch 
    */
-  Edit(advancedSearchName: string, advancedSearch: IAdvancedSearch): void;
-  Delete(advancedSearchName: string): void;
-  GetCurrent(): IAdvancedSearch;
-  GetCurrentName(): string;
-  GetByName(advancedSearchName: string): IAdvancedSearch;
-  GetAll(): IAdvancedSearch[];
+  editAdvancedSearch(advancedSearchName: string, advancedSearch: IAdvancedSearch): void;
+  deleteAdvancedSearch(advancedSearchName: string): void;
+  getCurrentAdvancedSearch(): IAdvancedSearch;
+  getCurrentAdvancedSearchName(): string;
+  getAdvancedSearchByName(advancedSearchName: string): IAdvancedSearch;
+  getAllAdvancedSearch(): IAdvancedSearch[];
   
 }
 

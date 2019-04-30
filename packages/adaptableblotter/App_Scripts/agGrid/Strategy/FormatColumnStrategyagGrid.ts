@@ -13,7 +13,7 @@ export class FormatColumnStrategyagGrid extends FormatColumnStrategy implements 
 
     protected InitStyles(): void {
 
-        let columns = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
+        let columns = this.blotter.api.gridApi.getColumns();
         let theBlotter = this.blotter as AdaptableBlotter
 
         // adding this check as things can get mixed up during 'clean user data'

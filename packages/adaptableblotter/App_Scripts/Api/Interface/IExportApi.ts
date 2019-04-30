@@ -4,10 +4,8 @@ import { ExportDestination } from "../../Utilities/Enums";
 import { ExportState } from "../../Redux/ActionsReducers/Interface/IState";
 
 export interface IExportApi {
-  GetState(): ExportState;
-   GetCurrent(): string;
-  GetAllReports(): IReport[];
-  GetAllLiveReports(): ILiveReport[];
-  SendReport(reportName: string, destination: ExportDestination): void;
- // ExportReport(adaptableExport: IAdaptableExport): void;
+  getExportState(): ExportState;
+  getCurrentReport(): string;
+  getAllReports(): IReport[];
+  sendReport(reportName: string, destination: ExportDestination): void;
 }

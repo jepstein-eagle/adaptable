@@ -4,37 +4,35 @@ import { IEntitlementApi } from './Interface/IEntitlementApi';
 import { IEntitlement } from "../Utilities/Interface/IEntitlement";
 import { EntitlementsState } from '../Redux/ActionsReducers/Interface/IState';
 
-
 export class EntitlementApi extends ApiBase implements IEntitlementApi {
 
-  
-  public GetState(): EntitlementsState {
+  public getEntitlementState(): EntitlementsState {
     return this.getBlotterState().Entitlements;
-}
+  }
 
-public GetAll(): IEntitlement[] {
+  public getAllEntitlement(): IEntitlement[] {
     return this.getBlotterState().Entitlements.FunctionEntitlements;
   }
 
-  public GetByFunction(functionName: string): IEntitlement {
+  public getEntitlementByFunction(functionName: string): IEntitlement {
     return this.getBlotterState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName);
   }
 
-  public GetAccessLevelForFunction(functionName: string): string {
+  public getEntitlementAccessLevelForFunction(functionName: string): string {
     return this.getBlotterState().Entitlements.FunctionEntitlements.find(f => f.FunctionName == functionName).AccessLevel;
   }
 
-  public Add(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void {
+  public addEntitlement(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void {
     let entitlement: IEntitlement = { FunctionName: functionName, AccessLevel: accessLevel }
     this.dispatchAction(EntitlementsRedux.EntitlementAdd(entitlement))
   }
 
-  public Edit(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void {
+  public editEntitlement(functionName: string, accessLevel: "ReadOnly" | "Hidden" | "Full"): void {
     let entitlement: IEntitlement = { FunctionName: functionName, AccessLevel: accessLevel }
     this.dispatchAction(EntitlementsRedux.EntitlementUpdate(entitlement))
   }
 
-  public Delete(functionName: string): void {
+  public deleteEntitlement(functionName: string): void {
     this.dispatchAction(EntitlementsRedux.EntitlementDelete(functionName))
   }
 

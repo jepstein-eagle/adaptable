@@ -7,7 +7,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { IDataChangedInfo } from '../../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
 import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy implements IConditionalStyleStrategy {
@@ -25,7 +25,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy imp
                 if (x.ConditionalStyleScope == ConditionalStyleScope.Row) {
                     listOfColumns.push(...this.blotter.api.gridApi.getColumns().map(c => c.ColumnId))
                 } else if (x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                    let columnCategory: IColumnCategory = this.blotter.api.columnCategoryApi.GetAll().find(lc => lc.ColumnCategoryId == x.ColumnCategoryId)
+                    let columnCategory: IColumnCategory = this.blotter.api.columnCategoryApi.getAllColumnCategory().find(lc => lc.ColumnCategoryId == x.ColumnCategoryId)
                     if (columnCategory) {
                         listOfColumns.push(...columnCategory.ColumnIds);
                     }
@@ -61,14 +61,12 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy imp
                     let styleName: string = (StringExtensions.IsNullOrEmpty(cs.Style.ClassName)) ?
                         StyleHelper.CreateIndexedStyleName(StrategyConstants.ConditionalStyleStrategyId, index, this.blotter) :
                         cs.Style.ClassName;
-
-
                     if (cs.ConditionalStyleScope == ConditionalStyleScope.Column && cs.ColumnId == column.ColumnId) {
                         cellClassRules[styleName] = function (params: any) {
                             return ExpressionHelper.checkForExpressionFromRecord(cs.Expression, params.node, columns, theBlotter)
                         }
                     } else if (cs.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                        let columnCategory: IColumnCategory= this.blotter.api.columnCategoryApi.GetAll().find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId)
+                        let columnCategory: IColumnCategory= this.blotter.api.columnCategoryApi.getAllColumnCategory().find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId)
                         if (columnCategory) {
                             if (ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
                                 cellClassRules[styleName] = function (params: any) {
@@ -85,7 +83,6 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy imp
                 theBlotter.setCellClassRules(cellClassRules, column.ColumnId, "ConditionalStyle");
             }
         }
-
         this.blotter.redraw()
     }
 }

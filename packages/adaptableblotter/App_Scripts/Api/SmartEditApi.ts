@@ -7,23 +7,23 @@ import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState';
 export class SmartEditApi extends ApiBase implements ISmartEditApi {
 
 
-  public GetState(): SmartEditState {
+  public getSmartEditState(): SmartEditState {
     return this.getBlotterState().SmartEdit;
   }
 
-  public SetMathOperation(mathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'): void {
+  public setSmartEditMathOperation(mathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide' | 'Replace'): void {
     this.dispatchAction(SmartEditRedux.SmartEditChangeOperation(mathOperation as MathOperation))
   }
 
-  public GetMathOperation(): string {
+  public getSmartEditMathOperation(): string {
     return this.getBlotterState().SmartEdit.MathOperation;
   }
 
-  public SetValue(smartEditValue: number): void {
+  public setSmartEditValue(smartEditValue: number): void {
     this.dispatchAction(SmartEditRedux.SmartEditChangeValue(smartEditValue))
   }
 
-  public GetValue(): number {
+  public getSmartEditValue(): number {
     return this.getBlotterState().SmartEdit.SmartEditValue;
   }
 

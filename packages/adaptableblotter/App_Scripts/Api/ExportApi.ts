@@ -8,25 +8,21 @@ import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class ExportApi extends ApiBase implements IExportApi {
 
- 
-  public GetState(): ExportState {
+
+  public getExportState(): ExportState {
     return this.getBlotterState().Export;
-}
-
-public GetCurrent(): string {
-    return this.getBlotterState().Export.CurrentReport;
   }
 
-  public GetAllReports(): IReport[] {
-    return this.getBlotterState().System.SystemReports.concat(this.getBlotterState().Export.Reports);
+  public getCurrentReport(): string {
+    return this.getExportState().CurrentReport;
   }
 
-  public GetAllLiveReports(): ILiveReport[] {
-    return this.getBlotterState().System.CurrentLiveReports;
+  public getAllReports(): IReport[] {
+    return this.blotter.api.internalApi.getSystemReports().concat(this.getBlotterState().Export.Reports);
   }
 
-  public SendReport(reportName: string, destination: ExportDestination): void {
-     let report: IReport = this.GetAllReports().find(r => r.Name == reportName);
+  public sendReport(reportName: string, destination: ExportDestination): void {
+    let report: IReport = this.getAllReports().find(r => r.Name == reportName);
     if (this.checkItemExists(report, reportName, "Report")) {
       this.dispatchAction(ExportRedux.ExportApply(reportName, destination))
     }

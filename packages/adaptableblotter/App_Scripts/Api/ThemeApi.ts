@@ -6,32 +6,32 @@ import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class ThemeApi extends ApiBase implements IThemeApi {
 
-  
-  public GetState(): ThemeState {
-    return this.getBlotterState().Theme;
-}
 
-public  SetCurrent(theme: string): void {
+  public getThemeState(): ThemeState {
+    return this.getBlotterState().Theme;
+  }
+
+  public setTheme(theme: string): void {
     this.dispatchAction(ThemeRedux.ThemeSelect(theme))
   }
 
-  public  GetCurrent(): string {
+  public getCurrentTheme(): string {
     return this.getBlotterState().Theme.CurrentTheme;
   }
 
-  public  SetSystemThemes(systemThemes: string[]): void {
+  public setSystemThemes(systemThemes: string[]): void {
     this.dispatchAction(ThemeRedux.ThemeSetSystemThemes(systemThemes))
   }
 
-  public  SetUserThemes(userThemes: string[]): void {
+  public setUserThemes(userThemes: string[]): void {
     this.dispatchAction(ThemeRedux.ThemeSetUserThemes(userThemes))
   }
 
-  public  GetAllSystemTheme(): string[] {
+  public getAllSystemTheme(): string[] {
     return this.getBlotterState().Theme.SystemThemes;
   }
 
-  public  GetAllUserTheme(): IUserTheme[] {
+  public getAllUserTheme(): IUserTheme[] {
     return this.getBlotterState().Theme.UserThemes;
   }
 

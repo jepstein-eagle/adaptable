@@ -15,7 +15,7 @@ import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { IShortcut } from "../Utilities/Interface/BlotterObjects/IShortcut";
 import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICellValidationRule";
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
@@ -34,8 +34,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     protected InitState() {
-        if (this.ShortcutState != this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut) {
-            this.ShortcutState = this.blotter.adaptableBlotterStore.TheStore.getState().Shortcut;
+        if (this.ShortcutState != this.blotter.api.shortcutApi.getShortcutState()) {
+            this.ShortcutState = this.blotter.api.shortcutApi.getShortcutState();
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Shortcut, this.ShortcutState)
@@ -47,7 +47,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
         if (this.ShortcutState.Shortcuts && ArrayExtensions.IsEmpty(this.ShortcutState.Shortcuts)) { return; }
         let activeCell: ICellInfo = this.blotter.getActiveCell();
         if (!activeCell) { return; }
-        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns);
+        let selectedColumn: IColumn = ColumnHelper.getColumnFromId(activeCell.ColumnId, this.blotter.api.gridApi.getColumns());
         if (activeCell && !selectedColumn.ReadOnly) {
             let columnDataType: DataType = selectedColumn.DataType;
             let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
@@ -139,7 +139,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
 
     private ShowErrorPreventMessage(failedRule: ICellValidationRule): void {
-        this.blotter.api.alertApi.ShowError("Shortcut Failed", ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true)
+        this.blotter.api.alertApi.showAlertError("Shortcut Failed", ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter), true)
     }
 
     private ShowWarningMessages(failedRules: ICellValidationRule[], shortcut: IShortcut, activeCell: ICellInfo, keyEventString: string, newValue: any, oldValue: any): void {

@@ -8,33 +8,30 @@ import { SystemFilterState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class SystemFilterApi extends ApiBase implements ISystemFilterApi {
 
-
-  public GetState(): SystemFilterState {
+  public getSystemFilterState(): SystemFilterState {
     return this.getBlotterState().SystemFilter;
-}
+  }
 
-  public userFilterSet(userFilters: IUserFilter[]): void {
+  public setSystemFilterByUserFilters(userFilters: IUserFilter[]): void {
     userFilters.forEach(uf => {
       this.dispatchAction(UserFilterRedux.UserFilterAddUpdate(-1, uf))
     })
   }
 
-  public Set(systemFilters: string[]): void {
+  public setSystemFilter(systemFilters: string[]): void {
     this.dispatchAction(SystemFilterRedux.SystemFilterSet(systemFilters));
   }
 
-  public Clear(): void {
+  public clearSystemFilter(): void {
     this.dispatchAction(SystemFilterRedux.SystemFilterSet([]));
   }
 
-  public GetCurrent(): string[] {
+  public getCurrentSystemFilter(): string[] {
     return this.getBlotterState().SystemFilter.SystemFilters;
   }
 
-  public GetAll(): string[] {
+  public getAllSystemFilter(): string[] {
     return FilterHelper.GetAllSystemFilters();
   }
-
-
 
 }

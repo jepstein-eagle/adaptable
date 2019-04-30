@@ -10,7 +10,7 @@ import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux'
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux'
 import { IAdaptableBlotterStore, AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore'
 import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore'
-import { IStrategy, IAdaptableStrategyCollection, } from '../Strategy/Interface/IStrategy';
+import { IStrategy, IStrategyCollection, } from '../Strategy/Interface/IStrategy';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy'
 import { SmartEditStrategy } from '../Strategy/SmartEditStrategy'
@@ -77,7 +77,7 @@ import { FreeTextColumnStrategy } from '../Strategy/FreeTextColumnStrategy';
 import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTextColumnService';
 import { FreeTextColumnService } from '../Utilities/Services/FreeTextColumnService';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { IDataService, ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import { DataService } from '../Utilities/Services/DataService';
 import { BlotterApi } from '../Api/BlotterApi';
@@ -122,7 +122,7 @@ const getFilterIcon = (state: boolean) => {
 
 export class AdaptableBlotter implements IAdaptableBlotter {
     public api: IBlotterApi
-    public strategies: IAdaptableStrategyCollection
+    public strategies: IStrategyCollection
     public adaptableBlotterStore: IAdaptableBlotterStore
 
     public CalendarService: ICalendarService
@@ -1253,7 +1253,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 // first see if its an error = should only be one item in array if so
                 if (failedRules[0].ActionMode == 'Stop Edit') {
                     let errorMessage: string = ObjectFactory.CreateCellValidationMessage(failedRules[0], this);
-                    this.api.alertApi.ShowError("Validation Error", errorMessage, true)
+                    this.api.alertApi.showAlertError("Validation Error", errorMessage, true)
                     event.preventDefault();
                 }
                 else {

@@ -2,30 +2,37 @@ import { IDataSource } from '../../Utilities/Interface/BlotterObjects/IDataSourc
 import { DataSourceState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export interface IDataSourceApi {
-  GetState(): DataSourceState;
+  getDataSourceState(): DataSourceState;
+
+  getAllDataSource(): IDataSource[]
+
+  getCurrentDataSource(): IDataSource;
+
+  getDataSourceByName(dataSourceName: string): IDataSource;
+
   /**
   * Sets the DataSource
   * @param dataSource has to be an existing DataSource
   */
-  Set(dataSource: string): void
+  setDataSource(dataSource: string): void
 
   /**
    * Creates a DataSource from a given name and description
    * @param dataSourceName 
    * @param dataSourceDescription 
    */
-  Create(dataSourceName: string, dataSourceDescription: string): void;
+  createDataSource(dataSourceName: string, dataSourceDescription: string): void;
 
   /**
    * Adds a new DataSource
    * @param dataSource
    */
-  Add(dataSource: IDataSource): void;
+  addDataSource(dataSource: IDataSource): void;
 
   /**
    * Clears the currently selected DataSource
    */
-  Clear(): void
+  clearDataSource(): void
 
 }
 

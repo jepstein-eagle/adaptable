@@ -277,9 +277,9 @@ export class AdaptableBlotterAbout extends React.Component<AdaptableBlotterAbout
 
         let returnRows: IColItem[][] = []
         if (this.props.showAbout) {
-            let calcColumns: string[] = this.props.AdaptableBlotter.api.calculatedColumnApi.GetAll().map(c => c.ColumnId)
+            let calcColumns: string[] = this.props.AdaptableBlotter.api.calculatedColumnApi.getAllCalculatedColumn().map(c => c.ColumnId)
             let columns: IColumn[] = this.props.AdaptableBlotter.api.gridApi.getColumns();
-            let columnFilterDescription: string = ColumnFilterHelper.getColumnFiltersDescription(this.props.AdaptableBlotter.api.columnFilterApi.GetAll(), columns, this.props.AdaptableBlotter)
+            let columnFilterDescription: string = ColumnFilterHelper.getColumnFiltersDescription(this.props.AdaptableBlotter.api.columnFilterApi.getAllColumnFilter(), columns, this.props.AdaptableBlotter)
             let sorts: any = this.props.AdaptableBlotter.api.gridApi.getGridSorts().map(gs => {
                 return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ": " + gs.SortOrder
             })

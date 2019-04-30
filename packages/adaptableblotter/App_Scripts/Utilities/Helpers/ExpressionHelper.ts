@@ -14,7 +14,6 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 
-
 export interface IRangeEvaluation {
     operand1: any;
     operand2: any;
@@ -24,8 +23,13 @@ export interface IRangeEvaluation {
     columnId: string
 }
 
+/**
+ * This is the main Helper class dealing with Expressions (a.k.a. Queries)
+ * This class allows you to create and evalute (i.e. see if they are satisfied) Expressions and represent them as strings
+ */
 export module ExpressionHelper {
 
+    // Creates a very basic expression containing just a single colum (Expressions can contain theoretically multiple columns)
     export function CreateSingleColumnExpression(columnId: string,
         columnDisplayValues: Array<string>,
         columnRawValues: Array<string>,
@@ -38,7 +42,7 @@ export module ExpressionHelper {
         )
     }
 
-
+    // Converts an Expression to a readable string - used in display boxes
     export function ConvertExpressionToString(Expression: Expression, columns: Array<IColumn>, includeColumnName: boolean = true): string {
         let returnValue = ""
         if (IsNullOrEmptyExpression(Expression)) {
@@ -88,7 +92,7 @@ export module ExpressionHelper {
         return returnValue
     }
 
-    // doesnt do columns and stuff....
+    // Converts a Range to a readable string
     export function ConvertRangeToString(range: IRange, columns: IColumn[]): string {
         let returnValue: string = range.Operator + " " + range.Operand1
         if (StringExtensions.IsNotNullOrEmpty(range.Operand2)) {
@@ -97,7 +101,34 @@ export module ExpressionHelper {
         return returnValue
     }
 
+    export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
+        return IsSatisfied(
+            Expression,
+            blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // this value raw
+            blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.DisplayValue), // this value display
+            blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue),  // other column value
+            columns,
+            blotter.api.userFilterApi.getAllUserFilter(),
+            blotter.api.systemFilterApi.getAllSystemFilter(),
+            blotter
+        );
+    }
 
+    export function checkForExpressionFromRecord(Expression: Expression, record: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
+        return IsSatisfied(
+            Expression,
+            blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.RawValue),  // this value
+            blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.DisplayValue),  // this value
+            blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.RawValue), // other column value
+            columns,
+            blotter.api.userFilterApi.getAllUserFilter(),
+            blotter.api.systemFilterApi.getAllSystemFilter(),
+            blotter
+        );
+    }
+
+
+    // The main function that evaluates whether a row meets an Expression
     export function IsSatisfied(Expression: Expression, getColumnValue: (columnId: string) => any, getDisplayColumnValue: (columnId: string) => string, getOtherColumnValue: (columnId: string) => any, columnBlotterList: IColumn[], userFilters: IUserFilter[], systemFilters: string[], blotter: IAdaptableBlotter): boolean {
         let expressionColumnList = GetColumnListFromExpression(Expression)
 
@@ -398,7 +429,7 @@ export module ExpressionHelper {
     }
 
     export function IsNullOrEmptyExpression(expression: Expression): boolean {
-        return expression==null || IsEmptyExpression(expression);
+        return expression == null || IsEmptyExpression(expression);
     }
 
     export function IsEmptyExpression(expression: Expression): boolean {
@@ -441,34 +472,9 @@ export module ExpressionHelper {
     }
 
     export function IsEmptyRange(range: IRange): boolean {
-        return StringExtensions.IsNullOrEmpty(range.Operand1) // more??
+        return StringExtensions.IsNullOrEmpty(range.Operand1) && StringExtensions.IsNullOrEmpty(range.Operand2);
     }
 
-    export function checkForExpression(Expression: Expression, identifierValue: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
-        return IsSatisfied(
-            Expression,
-            blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // this value
-            blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.DisplayValue), // this value
-            blotter.getRecordIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue),  // other column value
-            columns,
-            blotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-            blotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
-            blotter
-        );
-    }
-
-    export function checkForExpressionFromRecord(Expression: Expression, record: any, columns: IColumn[], blotter: IAdaptableBlotter): boolean {
-        return IsSatisfied(
-            Expression,
-            blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.RawValue),  // this value
-            blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.DisplayValue),  // this value
-            blotter.getRecordIsSatisfiedFunctionFromRecord(record, DistinctCriteriaPairValue.RawValue), // other column value
-            columns,
-            blotter.adaptableBlotterStore.TheStore.getState().UserFilter.UserFilters,
-            blotter.adaptableBlotterStore.TheStore.getState().SystemFilter.SystemFilters,
-            blotter
-        );
-    }
 
     export function CreateEmptyExpression(): Expression {
         return new Expression([], [], [])
@@ -522,21 +528,19 @@ export module ExpressionHelper {
             case DataType.String:
                 // might not be a string so make sure
                 rangeEvaluation.newValue = String(rangeEvaluation.newValue);
-                if (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) {
-                    rangeEvaluation.newValue = StringExtensions.ToLowerCase(rangeEvaluation.newValue);
-                }
+
                 rangeEvaluation.operand1 = rangeExpression.Operand1Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand1) :
-                    (rangeExpression.Operand1 == null) ? null :
-                        (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) ?
-                            StringExtensions.ToLowerCase(rangeExpression.Operand1) :
-                            rangeExpression.Operand1;
+                    (rangeExpression.Operand1 == null) ? null : rangeExpression.Operand1;
                 rangeEvaluation.operand2 = rangeExpression.Operand2Type == RangeOperandType.Column ?
                     getOtherColumnValue(rangeExpression.Operand2) :
-                    (rangeExpression.Operand2 == null) ? null :
-                        (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) ?
-                            StringExtensions.ToLowerCase(rangeExpression.Operand2) :
-                            rangeExpression.Operand2;
+                    (rangeExpression.Operand2 == null) ? null : rangeExpression.Operand2;
+
+                if (blotter.blotterOptions.queryOptions.ignoreCaseInQueries) {
+                    rangeEvaluation.newValue = StringExtensions.ToLowerCase(rangeEvaluation.newValue);
+                    rangeEvaluation.operand1 = StringExtensions.ToLowerCase(rangeEvaluation.operand1);
+                    rangeEvaluation.operand2 = StringExtensions.ToLowerCase(rangeEvaluation.operand2);
+                }
                 break;
         }
         return rangeEvaluation;

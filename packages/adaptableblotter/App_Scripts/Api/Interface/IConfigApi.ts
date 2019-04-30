@@ -4,8 +4,6 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 export interface IConfigApi {
 
   // General Config
-
-
   configInit(): void;
   /**
    * Clears the  configuration for the current user, reverting everyting to system defaults.

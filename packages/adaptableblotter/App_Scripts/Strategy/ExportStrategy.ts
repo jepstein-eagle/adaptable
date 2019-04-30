@@ -139,7 +139,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                                 LoggingHelper.LogAdaptableBlotterWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
                                 this.blotter.adaptableBlotterStore.TheStore.dispatch(
                                     SystemRedux.ReportStopLive(cle.Report, ExportDestination.OpenfinExcel));
-                                this.blotter.api.alertApi.ShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
+                                this.blotter.api.alertApi.showAlertError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
                             })
                     )
                 }
@@ -165,7 +165,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
                                 LoggingHelper.LogAdaptableBlotterWarning("Live Excel failed to send data for [" + cle.Report + "]", reason)
                                 this.blotter.adaptableBlotterStore.TheStore.dispatch(
                                     SystemRedux.ReportStopLive(cle.Report, ExportDestination.iPushPull));
-                                this.blotter.api.alertApi.ShowError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
+                                this.blotter.api.alertApi.showAlertError("Live Excel Error", "Failed to send data for [" + cle.Report + "]. This live export has been stopped", true)
 
                             })
                     )
@@ -269,20 +269,17 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
 
     protected InitState() {
-        if (this.ExportState != this.blotter.adaptableBlotterStore.TheStore.getState().Export) {
-
+        if (this.ExportState != this.blotter.api.exportApi.getExportState()) {
             this.scheduleReports();
-
-
-            this.ExportState = this.blotter.adaptableBlotterStore.TheStore.getState().Export;
+            this.ExportState = this.blotter.api.exportApi.getExportState();
 
             if (this.blotter.isInitialised) {
                 this.publishStateChanged(StateChangedTrigger.Export, this.ExportState)
             }
         }
 
-        if (this.CurrentLiveReports != this.blotter.adaptableBlotterStore.TheStore.getState().System.CurrentLiveReports) {
-            this.CurrentLiveReports = this.blotter.adaptableBlotterStore.TheStore.getState().System.CurrentLiveReports;
+        if (this.CurrentLiveReports != this.blotter.api.internalApi.getLiveReports()) {
+            this.CurrentLiveReports = this.blotter.api.internalApi.getLiveReports();
         }
     }
 

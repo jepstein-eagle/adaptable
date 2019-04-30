@@ -2,8 +2,8 @@ import { IFlashingCell } from "../../Utilities/Interface/BlotterObjects/IFlashin
 import { FlashingCellState } from "../../Redux/ActionsReducers/Interface/IState";
 
 export interface IFlashingCellApi {
-  GetState(): FlashingCellState;
-  GetAll(): IFlashingCell[]
+  getFlashingCellState(): FlashingCellState;
+  getAllFlashingCell(): IFlashingCell[]
  
 }
 

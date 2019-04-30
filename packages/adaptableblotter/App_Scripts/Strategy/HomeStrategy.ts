@@ -86,7 +86,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
 
 
     private GetGridState(): GridState {
-        return this.blotter.adaptableBlotterStore.TheStore.getState().Grid;
+        return this.blotter.api.gridApi.getGridState();
     }
 
 }

@@ -39,7 +39,7 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase implements IAd
 
 
     private GetAdvancedSearchState(): AdvancedSearchState {
-        return this.blotter.api.advancedSearchApi.GetState();
+        return this.blotter.api.advancedSearchApi.getAdvancedSearchState();
     }
 
 

@@ -5,34 +5,45 @@ import { IDataSourceApi } from './Interface/IDataSourceApi';
 import { IDataSource } from '../Utilities/Interface/BlotterObjects/IDataSource';
 import { DataSourceState } from '../Redux/ActionsReducers/Interface/IState';
 
-
 export class DataSourceApi extends ApiBase implements IDataSourceApi {
 
-  
-  public GetState(): DataSourceState {
+  public getDataSourceState(): DataSourceState {
     return this.getBlotterState().DataSource;
-}
+  }
 
-public Set(dataSourceName: string): void {
+  public getAllDataSource(): IDataSource[] {
+    return this.getDataSourceState().DataSources;
+  }
+
+  public getCurrentDataSource(): IDataSource {
+    let currentDataSourceName: string = this.getDataSourceState().CurrentDataSource;
+    return this.getDataSourceByName(currentDataSourceName);
+  }
+
+  public getDataSourceByName(dataSourceName: string): IDataSource {
+    return this.getAllDataSource().find(a => a.Name == dataSourceName);
+  }
+
+  public setDataSource(dataSourceName: string): void {
     let dataSource: IDataSource = this.getBlotterState().DataSource.DataSources.find(a => a.Name == dataSourceName);
     if (this.checkItemExists(dataSource, dataSourceName, StrategyConstants.DataSourceStrategyName)) {
       this.dispatchAction(DataSourceRedux.DataSourceSelect(dataSource.Name))
     }
   }
 
-  public Create(dataSourceName: string, dataSourceDescription: string): void {
+  public createDataSource(dataSourceName: string, dataSourceDescription: string): void {
     let dataSource: IDataSource = {
       Name: dataSourceName,
       Description: dataSourceDescription
     }
-    this.Add(dataSource);
+    this.addDataSource(dataSource);
   }
 
-  public Add(dataSource: IDataSource): void {
-      this.dispatchAction(DataSourceRedux.DataSourceAddUpdate(-1, dataSource))
+  public addDataSource(dataSource: IDataSource): void {
+    this.dispatchAction(DataSourceRedux.DataSourceAddUpdate(-1, dataSource))
   }
 
-  public Clear(): void {
+  public clearDataSource(): void {
     this.dispatchAction(DataSourceRedux.DataSourceSelect(""))
   }
 }

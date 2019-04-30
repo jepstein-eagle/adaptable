@@ -8,7 +8,7 @@ import { IChartStrategy } from './Interface/IChartStrategy';
 import { ChartState, SystemState, ColumnFilterState } from '../Redux/ActionsReducers/Interface/IState';
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { IDataChangedInfo } from '../Api/Interface/IDataChangedInfo';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { IChartDefinition, ICategoryChartDefinition, IPieChartDefinition } from "../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
 import { IChartData } from "../Utilities/Interface/BlotterObjects/Charting/IChartData";
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
@@ -78,7 +78,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             }
 
             if (this.ChartState.CurrentChartName == null && this.SystemState.ChartVisibility == ChartVisibility.Maximised) {
-                this.blotter.api.systemApi.SetChartVisibility(ChartVisibility.Hidden);
+                this.blotter.api.internalApi.SetChartVisibility(ChartVisibility.Hidden);
             }
 
             if (this.blotter.isInitialised) {
@@ -86,7 +86,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             }
 
             if (displayChartAtStartUp) {
-                this.blotter.api.systemApi.SetChartVisibility(ChartVisibility.Maximised);
+                this.blotter.api.internalApi.SetChartVisibility(ChartVisibility.Maximised);
                 this.setChartData();
             }
         }
@@ -201,22 +201,22 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
             } else if (chartDefinition.ChartType == ChartType.PieChart) {
                 chartData = this.blotter.ChartService.BuildPieChartData(chartDefinition as IPieChartDefinition);
             }
-            this.blotter.api.systemApi.SetChartData(chartData);
+            this.blotter.api.internalApi.SetChartData(chartData);
         }
     }
 
     private clearChartData() {
         if (this.GetSystemState().ChartData != null) {
-            this.blotter.api.systemApi.SetChartData(null);
+            this.blotter.api.internalApi.SetChartData(null);
         }
     }
 
     private GetSystemState(): SystemState {
-        return this.blotter.api.systemApi.GetState();
+        return this.blotter.api.internalApi.GetSystemState();
     }
 
     private GetChartState(): ChartState {
-        return this.blotter.api.chartApi.GetState();
+        return this.blotter.api.chartApi.getChartState();
     }
 
     private GetColumnState(): IColumn[] {
