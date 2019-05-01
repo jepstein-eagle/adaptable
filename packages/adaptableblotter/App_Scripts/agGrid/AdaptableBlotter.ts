@@ -73,7 +73,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 
 // ag-Grid
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { Grid, GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, SideBarDef } from "ag-grid-community"
+import {  GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, SideBarDef } from "ag-grid-community"
 import { Events } from "ag-grid-community/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid-community/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid-community/dist/lib/entities/gridOptions"
@@ -133,7 +133,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
     public hasFloatingFilter: boolean
 
-
     private agGridHelper: agGridHelper;
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
@@ -183,6 +182,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
 
+        console.log("we have got to here")
         // set up iPushPull
         iPushPullHelper.init(this.blotterOptions.iPushPullConfig);
 
@@ -244,9 +244,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // set up whether we use the getRowNode method or loop when finding a record (former is preferable)
         // can only do that here as the gridOptions not yet set up
         this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds();
-        console.log('use ookup')
-        console.log(this.useRowNodeLookUp)
-
+       
         // Create Adaptable Blotter Tool Panel
         if (this.blotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
             LoggingHelper.LogAdaptableBlotterInfo("Adding Adaptable Blotter Tool Panel")
@@ -278,11 +276,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.gridOptions.components.adaptableBlotterToolPanel = AdaptableBlotterToolPanelBuilder(toolpanelContext);
             }
         }
-        // now create the grid itself
-        let grid = new Grid(vendorContainer, this.gridOptions);
+        // now create the grid itself - we have to do it this way as previously when we instantiated the Grid 'properly' it got created as J.Grid 
+        console.log('creating the grid as not created by user')
+         let grid: any =   new (<any>window).agGrid.Grid(vendorContainer, this.gridOptions);
         return (grid != null);
     }
-
+    
 
     // debounced methods
     debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), HALF_SECOND);

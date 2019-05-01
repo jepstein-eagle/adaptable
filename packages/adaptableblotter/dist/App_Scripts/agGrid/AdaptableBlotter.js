@@ -40,9 +40,6 @@ const LoggingHelper_1 = require("../Utilities/Helpers/LoggingHelper");
 const StringExtensions_1 = require("../Utilities/Extensions/StringExtensions");
 const ArrayExtensions_1 = require("../Utilities/Extensions/ArrayExtensions");
 const Helper_1 = require("../Utilities/Helpers/Helper");
-// ag-Grid
-//if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-const ag_grid_community_1 = require("ag-grid-community");
 const eventKeys_1 = require("ag-grid-community/dist/lib/eventKeys");
 const RangeHelper_1 = require("../Utilities/Helpers/RangeHelper");
 const BlotterHelper_1 = require("../Utilities/Helpers/BlotterHelper");
@@ -107,6 +104,7 @@ class AdaptableBlotter {
                 return;
             }
         }
+        console.log("we have got to here");
         // set up iPushPull
         iPushPullHelper_1.iPushPullHelper.init(this.blotterOptions.iPushPullConfig);
         // set up Glue42 - note this is currently not working in the browser but will be done shortly
@@ -157,8 +155,7 @@ class AdaptableBlotter {
         // set up whether we use the getRowNode method or loop when finding a record (former is preferable)
         // can only do that here as the gridOptions not yet set up
         this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds();
-        console.log('use ookup');
-        console.log(this.useRowNodeLookUp);
+        console.log('using node lookup: ' + this.useRowNodeLookUp);
         // Create Adaptable Blotter Tool Panel
         if (this.blotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
             LoggingHelper_1.LoggingHelper.LogAdaptableBlotterInfo("Adding Adaptable Blotter Tool Panel");
@@ -191,9 +188,11 @@ class AdaptableBlotter {
                 this.gridOptions.components.adaptableBlotterToolPanel = AdaptableBlotterToolPanel_1.AdaptableBlotterToolPanelBuilder(toolpanelContext);
             }
         }
-        // now create the grid itself
-        let grid = new ag_grid_community_1.Grid(vendorContainer, this.gridOptions);
-        return (grid != null);
+        // now create the grid itself - we have to do it this way as previously when we instantiated the Grid 'properly' it got created as J.Grid 
+        console.log('creating the grid as not created by user');
+        console.log('using an alias');
+        let myGrid = new window.agGrid.Grid(vendorContainer, this.gridOptions);
+        return (myGrid != null);
     }
     filterOnUserDataChange() {
         if (this.blotterOptions.filterOptions.filterActionOnUserDataChange.RunFilter == Enums_1.FilterOnDataChangeOptions.Always) {
