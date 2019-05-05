@@ -146,7 +146,7 @@ export class DataGenerator {
                     let trade = rowNode;
                     let columnName = "price";
                     let initialPrice = gridOptions.api.getValue(columnName, trade);
-                    let newPrice = (this.roundTo4Dp(initialPrice + numberToAdd) + 500);
+                    let newPrice = (this.roundTo4Dp(initialPrice + numberToAdd) );
                     trade.setDataValue(columnName, newPrice);
                     let bidOfferSpread = gridOptions.api.getValue("bidOfferSpread", trade);
                     let ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
