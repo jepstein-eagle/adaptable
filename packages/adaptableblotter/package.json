@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter",
-  "version": "3.4.1-beta.40+0327fa69",
+  "version": "3.4.1-beta.41",
   "description": "Powerful data-agnostic HTML5 datagrid add-on that sits on top of an underlying grid component and provides all the rich functionality that advanced users expect from their grids and blotters",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -94,7 +94,7 @@
     "release:patch": "npm run build && release patch && npm run registry-publish",
     "release:minor": "npm run build && release minor && npm run registry-publish",
     "release:major": "npm run build && release major && npm run registry-publish",
-    "registry-publish": "npm publish dist --dry-run",
+    "registry-publish": "npm publish dist",
     "prebuild": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-abvendor": "webpack --config webpack.vendor.js",
