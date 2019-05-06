@@ -1,21 +1,27 @@
 {
+  "extends": "../../../tsconfig.json",
   "compilerOptions": {
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
     "jsx": "preserve",
-    "lib": ["dom", "es2017"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "preserveConstEnums": true,
-    "removeComments": false,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "esnext"
+    "lib": [
+      "dom",
+      "es2017"
+    ],
+    "module": "commonjs",
+    "allowJs": false,
+    "declaration": false,
+    "target": "es6",
+    "typeRoots": [
+      "node_modules/@types",
+      "../typings"
+    ]
   },
-  "include": ["./**/*.ts", "./**/*.tsx"],
-  "exclude": ["node_modules", "lib", ".next"]
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    ".next"
+  ]
 }

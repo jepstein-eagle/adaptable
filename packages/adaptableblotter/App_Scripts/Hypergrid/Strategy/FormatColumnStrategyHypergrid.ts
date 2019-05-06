@@ -4,7 +4,8 @@ import { AdaptableBlotter } from '../AdaptableBlotter'
 
 export class FormatColumnStrategyHypergrid extends FormatColumnStrategy implements IFormatColumnStrategy {
     constructor(private blotterBypass: AdaptableBlotter) {
-        super(blotterBypass)
+        super(blotterBypass);
+        this.blotterBypass = blotterBypass;
     }
 
     protected InitStyles(): void {

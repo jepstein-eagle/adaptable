@@ -51,7 +51,8 @@ import { AdaptableBlotter } from "./AdaptableBlotter";
 export class agGridHelper {
 
     constructor(private blotter: IAdaptableBlotter, private gridOptions: GridOptions) {
-
+        this.blotter = blotter;
+        this.gridOptions = gridOptions;
     }
 
     public getLightThemeName(): string {

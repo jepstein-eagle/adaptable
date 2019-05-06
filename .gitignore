@@ -2,3 +2,8 @@
 node_modules/
 .vscode/
 .next
+.awcache
+/packages/adaptableblotter/dist
+/packages/adaptableblotter/examples/package-lock.json
+.DS_Store
+/packages/adaptableblotter/App_Scripts/**/*.d.ts

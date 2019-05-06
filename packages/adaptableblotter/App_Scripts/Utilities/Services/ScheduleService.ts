@@ -13,6 +13,7 @@ export class ScheduleService implements IScheduleService {
     private exportJobs: NodeSchedule.Job[]
 
     constructor(private blotter: IAdaptableBlotter) {
+        this.blotter = blotter;
         this.alertJobs = [];
         this.exportJobs = [];
 
@@ -25,7 +26,7 @@ export class ScheduleService implements IScheduleService {
         let date: Date = this.getDateFromSchedule(reloadSchedule);
         if (date != null) {
             var refreshGridJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
-                 this.blotter.reloadGrid();
+                this.blotter.reloadGrid();
             })
         }
     }

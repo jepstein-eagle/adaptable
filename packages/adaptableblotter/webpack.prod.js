@@ -6,8 +6,8 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-        'adaptableblotterhypergrid': ["./App_Scripts/Hypergrid/AdaptableBlotter.ts"],
-        'adaptableblotteraggrid': ["./App_Scripts/agGrid/AdaptableBlotter.ts"],
+        'adaptableblotterhypergrid': ["./App_Scripts/Hypergrid/AdaptableBlotter.js"],
+        'adaptableblotteraggrid': ["./App_Scripts/agGrid/AdaptableBlotter.js"],
     },
     output: {
         path: __dirname + '/dist',
@@ -25,7 +25,7 @@ module.exports = {
     },
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension.
-        extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.json']
+        extensions: ['', '.webpack.js', '.web.js', '.js', '.json']
     },
 
     plugins: [
@@ -35,19 +35,23 @@ module.exports = {
         }),
         new webpack.ProvidePlugin({
             Promise: 'es6-promise-promise', // works as expected
-        }),
-        new CopyWebpackPlugin([{
-            from: 'App_Scripts/Styles',
-            to: 'App_Scripts/Styles',
-            ignore: ['*.ts'],
-        }]),
+        })
+        // ,
+        // new CopyWebpackPlugin([{
+        //     from: 'App_Scripts/Styles',
+        //     to: '.',
+        //     ignore: ['*.ts'],
+        // }]),
     ],
     module: {
         loaders: [
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
             // note that babel-loader is configured to run after ts-loader
+            // {
+            //     test: /\.ts(x?)$/, loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime!ts-loader',
+            // },
             {
-                test: /\.ts(x?)$/, loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime!ts-loader',
+                test: /\.js(x?)$/, loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime',
             },
             {
                 include: /\.json$/, loaders: ["json-loader"]

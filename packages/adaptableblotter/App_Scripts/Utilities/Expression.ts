@@ -20,6 +20,9 @@ export class Expression {
     public FilterExpressions: IFilterExpression[],
     public RangeExpressions: IRangeExpression[]
   ) {
+    this.ColumnValueExpressions = ColumnValueExpressions;
+    this.FilterExpressions = FilterExpressions;
+    this.RangeExpressions = RangeExpressions;
   }
 }
 

@@ -1,6 +1,4 @@
-﻿import '../Styles/stylesheets/adaptableblotter-style.css'
-
-import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
+﻿import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
 import * as Redux from 'redux'
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
@@ -173,6 +171,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.DataService = new DataService(this);
         this.ValidationService = new ValidationService(this);
+        // get the api ready
+        this.api = new BlotterApi(this);
         this.ChartService = new ChartService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => { let column = this.getHypergridColumn(columnId); return this.valOrFunc(record, column) });
         this.FreeTextColumnService = new FreeTextColumnService(this);
@@ -252,8 +252,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.adaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
             })
 
-        // get the api ready
-        this.api = new BlotterApi(this);
 
         if (renderGrid) {
             if (this.abContainerElement != null) {

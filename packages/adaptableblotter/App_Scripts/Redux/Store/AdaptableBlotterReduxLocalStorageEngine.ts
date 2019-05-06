@@ -16,7 +16,11 @@ const checkStatus = (response: Response) => {
 };
 
 class AdaptableBlotterReduxLocalStorageEngine implements IStorageEngine {
-  constructor(private key: string, private predefinedConfig: object, private licenceInfo: ILicenceInfo) { }
+  constructor(private key: string, private predefinedConfig: object, private licenceInfo: ILicenceInfo) {
+    this.key = key;
+    this.predefinedConfig = predefinedConfig;
+    this.licenceInfo = licenceInfo;
+  }
 
   load(): Promise<any> {
     const jsonState = localStorage.getItem(this.key);

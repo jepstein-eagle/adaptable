@@ -3,10 +3,25 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
 import { IThemeStrategy } from './Interface/IThemeStrategy'
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { ThemesContent } from '../Styles/themes'
 import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
 import * as GeneralConstants from '../Utilities/Constants/GeneralConstants'
 import { StateChangedTrigger } from '../Utilities/Enums';
+
+const WARNINGS: { [key: string]: boolean } = {}
+const warnTheme = (themeName: string) => {
+    if (WARNINGS[themeName]) {
+        return
+    }
+    WARNINGS[themeName] = true
+    const themeFile = themeName.toLowerCase().split(' ')[0] + '.css'
+    console.warn(`Theme "${themeName}" is no longer imported automatically. Make sure you import it separately:
+
+    'import "adaptableblotter/themes/${themeFile}"'
+
+Also make sure to import the base styles:
+
+    'import "adaptableblotter/base.css"'`)
+}
 
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
     private ThemeState: ThemeState
@@ -49,18 +64,21 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
                     // do nothing...
                     break;
                 case GeneralConstants.LIGHT_THEME:
-                    this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
+                    warnTheme(this.ThemeState.CurrentTheme)
+                    // this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
                     this.blotter.applyLightTheme()
                     break;
                 case GeneralConstants.DARK_THEME:
-                    this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
+                    warnTheme(this.ThemeState.CurrentTheme)
+                    // this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
                     this.blotter.applyDarkTheme()
                     break;
                 default:
                     let shippedTheme = this.ThemeState.SystemThemes.find(t => t == this.ThemeState.CurrentTheme)
                     // if its a system theme then use that..
                     if (shippedTheme) {
-                        this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
+                        warnTheme(this.ThemeState.CurrentTheme)
+                        // this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
                     } else { // otherwise use the predefined one
                         let userTheme = this.ThemeState.UserThemes.find(t => t.Name == this.ThemeState.CurrentTheme)
                         if (userTheme) {
@@ -77,7 +95,8 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
                 let shippedTheme = this.ThemeState.SystemThemes.find(t => t == this.ThemeState.CurrentTheme)
                 // if its a system theme then use that..
                 if (shippedTheme) {
-                    this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
+                    warnTheme(this.ThemeState.CurrentTheme)
+                    // this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
                 } else { // otherwise use the predefined one
                     let userTheme = this.ThemeState.UserThemes.find(t => t.Name == this.ThemeState.CurrentTheme)
                     if (userTheme) {

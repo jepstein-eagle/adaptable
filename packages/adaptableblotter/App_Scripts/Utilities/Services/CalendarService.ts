@@ -16,6 +16,7 @@ import { CalendarState } from '../../Redux/ActionsReducers/Interface/IState';
 export class CalendarService implements ICalendarService {
 
     constructor(private blotter: IAdaptableBlotter) {
+        this.blotter = blotter;
     }
 
     public GetDynamicDate(dynamicDateName: string): Date {

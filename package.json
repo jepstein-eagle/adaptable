@@ -1,13 +1,28 @@
 {
   "name": "adaptableblotter-monorepo",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/preset-typescript": "^7.3.3",
+    "chalk": "^2.4.2",
     "copyfiles": "^2.1.0",
-    "lerna": "^3.10.8"
+    "cpy-cli": "^2.0.0",
+    "lerna": "^3.10.8",
+    "next": "^8.1.0",
+    "rimraf": "^2.6.3"
   },
   "scripts": {
     "cleanup": "lerna clean --yes",
-    "publish": "lerna publish"
+    "publish": "lerna publish",
+    "build-main": "npm run --prefix packages/adaptableblotter build-prod",
+    "pack-ab": "npm pack ./packages/adaptableblotter"
   },
+  "files": [
+    "/packages/adaptableblotter/App_Scripts",
+    "/packages/adaptableblotter/dist/",
+    "/packages/adaptableblotter-react/src/",
+    "/packages/adaptableblotter-react/package.json"
+  ],
   "dependencies": {}
 }

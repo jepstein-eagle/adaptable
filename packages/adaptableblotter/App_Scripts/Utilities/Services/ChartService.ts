@@ -25,6 +25,7 @@ Returns a ChartData object that the ChartDisplay will receive and then show to t
 export class ChartService implements IChartService {
 
   constructor(private blotter: IAdaptableBlotter) {
+    this.blotter = blotter;
   }
 
   public BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): IChartData {

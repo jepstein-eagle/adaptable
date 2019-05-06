@@ -18,6 +18,9 @@ const checkStatus = (response: Response) => {
 class AdaptableBlotterRemoteStorageEngine implements IStorageEngine {
 
   constructor(private url: string, private userName: string, private blotterId: string) {
+    this.url = url;
+    this.userName = userName;
+    this.blotterId = blotterId;
     this.save = lodash.debounce(this.save, DEBOUNCE_DELAY)
   }
 

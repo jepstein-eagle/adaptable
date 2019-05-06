@@ -9,6 +9,7 @@ import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 
 export class FreeTextColumnService implements IFreeTextColumnService {
     constructor(private blotter: IAdaptableBlotter) {
+        this.blotter = blotter;
     }
 
 

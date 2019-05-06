@@ -3,13 +3,7 @@
 	"version": "3.2.11-beta.40+0327fa69",
 	"description": "",
 	"keywords": [],
-	"main": "dist/index.umd.js",
-	"module": "dist/index.es5.js",
-	"typings": "dist/index.d.ts",
-	"files": [
-		"dist"
-	],
-	"author": "Samed Duzcay <samedduzcay@gmail.com>",
+	"main": "adaptableblotter-react/src/AdaptableBlotterAgGrid.js",
 	"repository": {
 		"type": "git",
 		"url": ""
@@ -74,6 +68,7 @@
 		"commitizen": "^2.9.6",
 		"copyfiles": "^2.1.0",
 		"coveralls": "^3.0.0",
+		"cpy-cli": "^2.0.0",
 		"cross-env": "^5.0.1",
 		"cz-conventional-changelog": "^2.0.0",
 		"eslint": "^5.14.1",
@@ -87,8 +82,9 @@
 		"postcss-url": "^8.0.0",
 		"prettier": "^1.13.4",
 		"prompt": "^1.0.0",
+		"release": "^6.0.1",
 		"replace-in-file": "^3.0.0-beta.2",
-		"rimraf": "^2.6.1",
+		"rimraf": "^2.6.3",
 		"rollup": "^0.59.2",
 		"rollup-plugin-commonjs": "^9.0.0",
 		"rollup-plugin-copy": "^0.2.3",
@@ -117,5 +113,16 @@
 		"react": "^16.4.2",
 		"react-dom": "^16.4.2"
 	},
-	"gitHead": "0327fa695a81ec99e840a3a7cef18bad2a8180c9"
+	"gitHead": "0327fa695a81ec99e840a3a7cef18bad2a8180c9",
+	"scripts": {
+		"release": "npm run release:patch",
+		"prerelease": "npm run build && release pre && npm run registry-publish",
+		"release:patch": "npm run build && release patch && npm run registry-publish",
+		"release:minor": "npm run build && release minor && npm run registry-publish",
+		"release:major": "npm run build && release major && npm run registry-publish",
+		"registry-publish": "cp package.json dist && npm publish dist --dry-run",
+		"build": "rimraf dist && npm run tsc && npm run copy-assets",
+		"tsc": "tsc --outDir dist",
+		"copy-assets": "cp -R ../adaptableblotter/dist/fonts ./dist/fonts/ && cp -R ../adaptableblotter/dist/stylesheets ./dist/stylesheets/ && cp -R ../adaptableblotter/dist/themes ./dist/themes/"
+	}
 }

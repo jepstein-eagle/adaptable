@@ -1,6 +1,7 @@
 ﻿import * as React from 'react'
-import { BlotterFactory, AdaptableBlotterApp } from 'adaptableblotter/factory'
-import { IAdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter/types'
+import { AdaptableBlotterApp } from '../../adaptableblotter/App_Scripts/View/AdaptableBlotterView';
+import { BlotterFactoryAgGrid } from "../../adaptableblotter/App_Scripts/agGrid/BlotterFactoryAgGrid";
+import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../adaptableblotter/types'
 
 // This is the main React Wrapper
 // It simply takes an IAdaptableBlotterOptions object and instantiates the appropriate instance of the Adaptable Blotter
@@ -14,15 +15,16 @@ export interface AdaptableBlotterState extends React.ClassAttributes<AdaptableBl
 }
 
 export default class AdaptableBlotter extends React.Component<
-AdaptableBlotterProps,
-AdaptableBlotterState
+  AdaptableBlotterProps,
+  AdaptableBlotterState
   > {
   componentWillMount() {
     const { AdaptableBlotterOptions, VendorGridName } = this.props;
     AdaptableBlotterOptions.containerOptions.adaptableBlotterContainer =
       AdaptableBlotterOptions.containerOptions.adaptableBlotterContainer || `adaptableBlotter-${Math.random() * 10000 | 0}`;
+
     this.setState({
-      AdaptableBlotter: BlotterFactory.CreateAdaptableBlotter(AdaptableBlotterOptions, VendorGridName)
+      AdaptableBlotter: BlotterFactoryAgGrid.CreateAdaptableBlotter(AdaptableBlotterOptions, false)
     })
   }
 

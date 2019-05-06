@@ -12,6 +12,7 @@ export class DataService implements IDataService {
     private _columnValueList: Map<string, Map<any, number>>;
 
     constructor(private blotter: IAdaptableBlotter) {
+        this.blotter = blotter;
         // create the _columnValueList - will be empty - used currrently only for flashing cell
         this._columnValueList = new Map();
     }
@@ -32,7 +33,7 @@ export class DataService implements IDataService {
         let columnValueList: Map<any, number> = this.getCellValuesForColumn(columnId);
 
         let oldValue: number = columnValueList.get(identifierValue);
-     
+
         // this horrible code is for dealing with ag-Grid because it comes in twice for Flashing Cell and we only want to return (and save!) a value if its the correct direction
         if (oldValue) {
             switch (changeDirection) {
@@ -54,9 +55,9 @@ export class DataService implements IDataService {
         if (oldValue == newValue) {
             return null;
         }
-     
+
         columnValueList.set(identifierValue, newValue);
-        if (oldValue!=null) {
+        if (oldValue != null) {
             return oldValue;
         } else {
             return newValue;

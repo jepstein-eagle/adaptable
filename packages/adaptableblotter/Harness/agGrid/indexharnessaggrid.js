@@ -76,7 +76,7 @@ function InitTradeBlotter() {
     getRowNodeId: (data) => {
       return data.tradeId;
     },
- 
+
     /*
         sideBar: {
           toolPanels: [
@@ -338,7 +338,7 @@ function getTradeSchema() {
   schema.push({
     headerName: 'Currency',
     field: 'currency',
-       editable: true,
+    editable: true,
     enableRowGroup: true,
     sortable: true,
     filter: 'agTextColumnFilter',

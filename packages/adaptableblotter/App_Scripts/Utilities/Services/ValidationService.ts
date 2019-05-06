@@ -16,6 +16,7 @@ import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 export class ValidationService implements IValidationService {
 
     constructor(private blotter: IAdaptableBlotter) {
+        this.blotter = blotter;
     }
 
     // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...

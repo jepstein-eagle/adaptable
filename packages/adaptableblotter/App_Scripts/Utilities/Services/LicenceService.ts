@@ -18,6 +18,7 @@ N.B.  This code does not run on production
 export class LicenceService implements ILicenceService {
 
     constructor(private blotter: IAdaptableBlotter) {
+        this.blotter = blotter;
         this.LicenceInfo = this.checkifRuningOnDemoSite();
     }
 

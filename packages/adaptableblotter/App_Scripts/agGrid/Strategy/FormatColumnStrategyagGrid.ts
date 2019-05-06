@@ -9,6 +9,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 export class FormatColumnStrategyagGrid extends FormatColumnStrategy implements IFormatColumnStrategy {
     constructor(private blotterBypass: AdaptableBlotter) {
         super(blotterBypass)
+        this.blotterBypass = blotterBypass;
     }
 
     protected InitStyles(): void {

@@ -16,9 +16,10 @@ export class StyleService {
     private sheet: CSSStyleSheet
     private style: HTMLStyleElement
     constructor(private blotter: IAdaptableBlotter) {
+        this.blotter = blotter;
         // Create the <style> tag
         this.style = document.createElement("style");
-        this.style.id = blotter.blotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.blotterOptions.blotterId +'-style';
+        this.style.id = blotter.blotterOptions.containerOptions.adaptableBlotterContainer + '_' + blotter.blotterOptions.blotterId + '-style';
         // WebKit hack :(
         this.style.appendChild(document.createTextNode(""));
         // Add the <style> element to the page

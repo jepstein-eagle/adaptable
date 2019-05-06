@@ -343,11 +343,11 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         pieChartDefinition.PrimaryColumnId = labelColumn;
         pieChartDefinition.SecondaryColumnId = valueColumn;
 
-      let chartData:IChartData=   this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition);
-         let dataSource: IPieChartDataItem[] =chartData.Data;
-         let errorMessage: string = chartData.ErrorMessage;
+        let chartData: IChartData = this.props.Blotter.ChartService.BuildPieChartData(pieChartDefinition);
+        let dataSource: IPieChartDataItem[] = chartData.Data;
+        let errorMessage: string = chartData.ErrorMessage;
         dataSource = PieChartUIHelper.sortDataSource(this.state.SliceSortOption, dataSource);
-       
+
         this.setState({
             PieChartDefinition: pieChartDefinition,
             DataSource: dataSource,
@@ -422,8 +422,8 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
         let e = event.target as HTMLInputElement;
         let sliceSortOption: SliceSortOption = e.value as SliceSortOption;
         let oldData = this.state.DataSource;
-        let newData: IPieChartDataItem[] =PieChartUIHelper.sortDataSource(sliceSortOption, oldData)
-           
+        let newData: IPieChartDataItem[] = PieChartUIHelper.sortDataSource(sliceSortOption, oldData)
+
         this.setState({ DataSource: newData, SliceSortOption: sliceSortOption });
     }
 
