@@ -5,53 +5,46 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 
 import { Grid } from 'ag-grid-community/dist/lib/grid'
 
-import AdaptableBlotter from '../../../App_Scripts/agGrid'
+import AdaptableBlotter from '../../../../App_Scripts/agGrid'
 
-import '../../../App_Scripts/base.css'
-import '../../../App_Scripts/themes/light.css'
+import '../../../../App_Scripts/base.css'
+import '../../../../App_Scripts/themes/light.css'
 
-import { DataGenerator } from '../../../Harness/DataGenerator'
+import { DataGenerator } from '../../../../Harness/DataGenerator'
+import { IAdaptableBlotter } from '../../../../App_Scripts/types';
+import { GridOptions, ColDef } from 'ag-grid-community';
+import { AdaptableBlotterState } from '../../../../App_Scripts/Redux/Store/Interface/IAdaptableStore';
+import { ExportDestination } from '../../../../App_Scripts/Utilities/Enums';
+import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../../../../App_Scripts/Utilities/Interface/IStateEvents';
 
-var themeName = '';
-var adaptableblotter;
-var quickSearchText;
-var trades;
-var gridOptions;
+var adaptableblotter: IAdaptableBlotter;
+var quickSearchText: string;
+var trades: any;
+var gridOptions: GridOptions;
 var showTrade = true;
 
+// these 2 functions are used currently when demoing how to access teh api outside the Blotter
+// Ideally they should go into a DIFFERENT demo once we start to have more than one
 function runQuickSearchViaAPI() {
-  const element = document.getElementById('txtQuickSearchText');
+  const element: any = document.getElementById('txtQuickSearchText');
   adaptableblotter.api.quickSearchApi.applyQuickSearch(element.value);
 }
 
 function clearQuickSearchViaAPI() {
-  const element = document.getElementById('txtQuickSearchText');
+  const element: any = document.getElementById('txtQuickSearchText');
   element.value = '';
   adaptableblotter.api.quickSearchApi.clearQuickSearch();
 }
 
-function getCommunityKey() {
-  return 'AB Licence Key';
-}
 
-function getColumns() {
-  this.gridOptions.api.setColumnDefs(getTradeSchema());
-}
-
-function getData() {
-  const dataGen = new DataGenerator();
-  const data = dataGen.getTrades(10);
-  gridOptions.api.setRowData(data);
-}
-
-function getRowsForGrid(dataGen) {
+function getRowsForGrid(dataGen: any): any {
   if (showTrade) {
     return dataGen.getTrades(5);
   }
   return dataGen.getFtseData(199);
 }
 
-function getColumnsForGrid() {
+function getColumnsForGrid(): ColDef[] {
   if (showTrade) {
     return getTradeSchema();
   }
@@ -73,7 +66,6 @@ function getBlotterIdforGrid() {
 }
 
 function InitTradeBlotter() {
-  console.log('initializing the blotter now')
   const dataGen = new DataGenerator();
   trades = getRowsForGrid(dataGen);
 
@@ -125,8 +117,7 @@ function InitTradeBlotter() {
   // Create and instantiate an ag-Grid object - now want to do this ONLY in the AB!
   // NOTE: we much prefer it if the vendor Grid is created by us and not by the user...
   if (instantiateAgGridInHarness) {
-    alert('instant hre')
-    const gridcontainer = document.getElementById('grid');
+    const gridcontainer: HTMLElement = document.getElementById('grid') as HTMLElement;
     gridcontainer.innerHTML = '';
     const grid = new Grid(gridcontainer, gridOptions);
   }
@@ -194,15 +185,11 @@ function InitTradeBlotter() {
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
 
     adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
-    window.adaptableblotter = adaptableblotter;
-
-    adaptableblotter.adaptableBlotterStore.TheStore.subscribe(() => {
-      dataChangeHack(adaptableblotter.adaptableBlotterStore.TheStore.getState(), gridOptions);
-    });
-
-    adaptableblotter.adaptableBlotterStore.TheStore.subscribe(() => {
-      apiTester(adaptableblotter.adaptableBlotterStore.TheStore.getState(), gridOptions);
-    });
+ 
+  //  adaptableblotter.adaptableBlotterStore.TheStore.subscribe(() => {
+   //   apiTester(adaptableblotter.adaptableBlotterStore.TheStore.getState(), gridOptions);
+   // });
+    
     //  adaptableblotter.api.eventApi.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs));
     //  adaptableblotter.api.eventApi.onAlertFired().Subscribe((sender, alertFiredArgs) => listenToAlertFired(alertFiredArgs));
     //  adaptableblotter.api.eventApi.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs));
@@ -215,33 +202,33 @@ function InitTradeBlotter() {
   }
 }
 
-function retrieveValues(columnName) {
+function retrieveValues(columnName: string) {
   return new Promise((resolve, reject) => {
     setTimeout(() => resolve(getValuesForColumn(columnName)), 500);
   });
 }
 
-function listenToColumnStateChange(columnChangedArgs) {
+function listenToColumnStateChange(columnChangedArgs: IColumnStateChangedEventArgs) {
   console.log("column event received");
   console.log(columnChangedArgs);
 }
 
-function listenToStateChange(stateChangedArgs) {
+function listenToStateChange(stateChangedArgs: IStateChangedEventArgs) {
   console.log("state event received");
   console.log(stateChangedArgs);
 }
 
-function listenToSearchChange(searchChangedArgs) {
+function listenToSearchChange(searchChangedArgs: ISearchChangedEventArgs) {
   console.log("search changed event received");
   console.log(searchChangedArgs);
 }
 
-function listenToAlertFired(alertFiredArgs) {
+function listenToAlertFired(alertFiredArgs: IAlertFiredEventArgs) {
   console.log('alert fired event received');
   console.log(alertFiredArgs.alert);
 }
 
-function getValuesForColumn(columnName) {
+function getValuesForColumn(columnName: string) {
   let vals;
   if (columnName === 'notionalhhh') {
     vals = [1000000, 5000000, 10000000];
@@ -262,8 +249,8 @@ function getValuesForColumn(columnName) {
   };
 }
 
-function getFTSESchema() {
-  var schema = [];
+function getFTSESchema(): ColDef[] {
+  var schema: any[] = [];
   schema.push({
     headerName: 'Date',
     field: 'date',
@@ -314,8 +301,8 @@ function getFTSESchema() {
   return schema;
 }
 
-function getTradeSchema() {
-  var schema = [];
+function getTradeSchema(): ColDef[] {
+  var schema: any[] = [];
   schema.push({
     headerName: 'Trade Id',
     field: 'tradeId',
@@ -442,7 +429,6 @@ function getTradeSchema() {
     headerName: 'Moodys',
     field: 'moodysRating',
     editable: true,
-    filter: true,
     filter: 'text',
     type: 'abColDefString',
   });
@@ -500,8 +486,6 @@ function getTradeSchema() {
     editable: true,
     filter: 'text',
     type: 'abColDefNumber',
-    //  type: "numericColumn"
-    type: 'abColDefNumber',
   });
   schema.push({
     headerName: 'Desk No.',
@@ -515,159 +499,102 @@ function getTradeSchema() {
   return schema;
 }
 
-function dataChangeHack(state, gridOptions) {
-  if (state.QuickSearch.QuickSearchText === '#demohack') {
-    gridOptions.api.forEachNode((rowNode, index) => {
-      if (index === 4) {
-        rowNode.setDataValue('bidOfferSpread', 20);
-      }
-    });
-  }
-}
 
 
-function apiTester(state, gridOptions) {
+
+
+function apiTester(state: AdaptableBlotterState, gridOptions: GridOptions) {
   if (state.QuickSearch.QuickSearchText !== quickSearchText) {
     quickSearchText = state.QuickSearch.QuickSearchText;
     if (quickSearchText === '#advanced') {
-      const test = adaptableblotter.api.ConfigApi.configGetUserStateByFunction('AdvancedSearch');
+      const test = adaptableblotter.api.configApi.configGetUserStateByFunction('AdvancedSearch', false);
       console.log('object');
       console.log(test);
-      const test2 = adaptableblotter.api.ConfigApi.configGetUserStateByFunction('AdvancedSearch', true);
+      const test2 = adaptableblotter.api.configApi.configGetUserStateByFunction('AdvancedSearch', true);
       console.log('string version');
       console.log(test2);
-      const test3 = adaptableblotter.api.ConfigApi.configGetAllUserState();
+      const test3 = adaptableblotter.api.configApi.configGetAllUserState();
       console.log('all version');
       console.log(test3);
-      const test4 = adaptableblotter.api.ConfigApi.configGetAdvancedSearchState();
+      const test4 = adaptableblotter.api.configApi.configGetAdvancedSearchState(false);
       console.log('advanced search');
       console.log(test4);
-      const test5 = adaptableblotter.api.ConfigApi.configGetAdvancedSearchState(true);
+      const test5 = adaptableblotter.api.configApi.configGetAdvancedSearchState(true);
       console.log('advanced search string');
       console.log(test5);
     } else if (quickSearchText === '#hideabout') {
-      adaptableblotter.api.DashboardApi.dashboardHideAboutButton();
+      adaptableblotter.api.dashboardApi.HideAboutButton();
     } else if (quickSearchText === '#showabout') {
-      adaptableblotter.api.DashboardApi.dashboardShowAboutButton();
+      adaptableblotter.api.dashboardApi.ShowAboutButton();
     } else if (quickSearchText === '#permies') {
-      adaptableblotter.api.UserInterfaceApi.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third']);
+      adaptableblotter.api.userInterfaceApi.setColumnPermittedValues('counterparty', ['first', 'second', 'third']);
     } else if (quickSearchText === '#systemfilters') {
-      adaptableblotter.api.SystemFilterApi.systemFilterClear();
+      adaptableblotter.api.systemFilterApi.clearSystemFilter();
     } else if (quickSearchText === '#reset') {
       //     adaptableblotter.api.configDeleteLocalStorage()
     } else if (quickSearchText === '#loadUserState') {
-      adaptableblotter.api.loadUserState(oldjson);
+      //  adaptableblotter.api.configApi.loadUserState(oldjson);
     } else if (quickSearchText === '#miguel') {
-      setTimeout(() => adaptableblotter.api.uiSetColumnPermittedValues('deskId', ['5555555',
+      setTimeout(() => adaptableblotter.api.userInterfaceApi.setColumnPermittedValues('deskId', ['5555555',
         '8888888',
       ]), 20000);
     } else if (quickSearchText === '#allsf') {
-      const thisxx = adaptableblotter.api.filterGetAllSystemFilters();
+      const thisxx = adaptableblotter.api.systemFilterApi.getAllSystemFilter();
     } else if (quickSearchText === '#permiex') {
-      adaptableblotter.api.uiSetColumnPermittedValues('counterparty', ['fourth', 'fith', 'sixth']);
+      adaptableblotter.api.userInterfaceApi.setColumnPermittedValues('counterparty', ['fourth', 'fith', 'sixth']);
     } else if (quickSearchText === '#clear') {
-      adaptableblotter.api.uiClearColumnPermittedValues('counterparty');
+      adaptableblotter.api.userInterfaceApi.clearColumnPermittedValues('counterparty');
     } else if (quickSearchText === '#send') {
-      adaptableblotter.api.ExportApi.exportSendReport('All Data', 'CSV');
+      adaptableblotter.api.exportApi.sendReport('All Data', ExportDestination.CSV);
     } else if (quickSearchText === '#info') {
-      adaptableblotter.api.alertApi.Show('Nice one', 'Your data is fine actually its very good and I want to check that this wraps', 'Info', true);
+      adaptableblotter.api.alertApi.displayAlert('Nice one', 'Your data is fine actually its very good and I want to check that this wraps', 'Info', true);
     } else if (quickSearchText === '#success') {
-      adaptableblotter.api.alertApi.Show('Success Message', 'You have won the lottery', 'Success', true);
+      adaptableblotter.api.alertApi.displayAlert('Success Message', 'You have won the lottery', 'Success', true);
     } else if (quickSearchText === '#warning') {
-      adaptableblotter.api.alertApi.Show('End of Day', 'Dont forget to send the report', 'Warning', true);
+      adaptableblotter.api.alertApi.displayAlert('End of Day', 'Dont forget to send the report', 'Warning', true);
     } else if (quickSearchText === '#error') {
-      adaptableblotter.api.alertApi.Show('Limits Breached', 'Pleae adjust your PnL', 'Error', true);
+      adaptableblotter.api.alertApi.displayAlert('Limits Breached', 'Pleae adjust your PnL', 'Error', true);
     } else if (quickSearchText === '#green') {
-      adaptableblotter.api.systemStatusApi.SetGreen('The server is fine');
+      adaptableblotter.api.systemStatusApi.setGreenSystemStatus('The server is fine');
     } else if (quickSearchText === '#blue') {
-      adaptableblotter.api.systemStatusApi.setBlue('nothing to worry aobut');
+      adaptableblotter.api.systemStatusApi.setBlueSystemStatus('nothing to worry aobut');
     } else if (quickSearchText === '#amber') {
-      adaptableblotter.api.systemStatusApi.SetAmber('The server is running slowly');
+      adaptableblotter.api.systemStatusApi.setAmberSystemStatus('The server is running slowly');
     } else if (quickSearchText === '#red') {
-      adaptableblotter.api.systemStatusApi.SetRed('The server has stopped ');
+      adaptableblotter.api.systemStatusApi.setRedSystemStatus('The server has stopped ');
     } else if (quickSearchText === '#sbutton') {
-      adaptableblotter.api.DashboardApi.dashboardShowSystemStatusButton();
+      adaptableblotter.api.dashboardApi.ShowSystemStatusButton();
     } else if (quickSearchText === '#hbutton') {
-      adaptableblotter.api.DashboardApi.dashboardHideSystemStatusButton();
+      adaptableblotter.api.dashboardApi.HideSystemStatusButton();
     } else if (quickSearchText === '#sfunc') {
       adaptableblotter.api.dashboardApi.ShowFunctionsDropdown();
     } else if (quickSearchText === '#hfunc') {
       adaptableblotter.api.dashboardApi.HideFunctionsDropdown();
     } else if (quickSearchText === '#scols') {
-      adaptableblotter.api.DashboardApi.dashboardShowColumnsDropdown();
+      adaptableblotter.api.dashboardApi.ShowColumnsDropdown();
     } else if (quickSearchText === '#hcols') {
-      adaptableblotter.api.DashboardApi.dashboardHideColumnsDropdown();
+      adaptableblotter.api.dashboardApi.HideColumnsDropdown();
     } else if (quickSearchText === '#title') {
-      adaptableblotter.api.DashboardApi.dashboardSetHomeToolbarTitle('hello world');
+      adaptableblotter.api.dashboardApi.SetHomeToolbarTitle('hello world');
     } else if (quickSearchText === '#filterclear') {
-      adaptableblotter.api.ColumnFilterApi.columnFilterClearAll();
+      adaptableblotter.api.columnFilterApi.clearAllColumnFilter();
     } else if (quickSearchText === '#userfilter') {
-      adaptableblotter.api.ColumnFilterApi.columnFilterSetUserFilter('Big Desk Id');
+      adaptableblotter.api.columnFilterApi.setColumnFilterFromUserFilter('Big Desk Id');
     } else if (quickSearchText === '#savelayout') {
-      adaptableblotter.api.LayoutApi.layoutSave();
+      adaptableblotter.api.layoutApi.saveLayout();
     } else if (quickSearchText === '#setlayout') {
-      adaptableblotter.api.LayoutApi.layoutSet('miguel');
-    } else if (quickSearchText === '#notionalkkkk') {
-      gridOptions.api.forEachNode((rowNode, index) => {
-        if (index === 4) {
-          rowNode.setDataValue('notional', 345);
-        }
-      });
-    }
+      adaptableblotter.api.layoutApi.setLayout('miguel');
+    } 
   }
 }
 
-function getTradesForSearch(searchArgs, dataGen) {
-  const searchChangedInfo = searchArgs.data[0].id;
-  if (searchChangedInfo.searchChangedTrigger === 'QuickSearch') {
-    //  alert("Quick search: " + searchChangedInfo.blotterSearchState.quickSearch)
-  }
 
-  const jsonstring = JSON.stringify(searchArgs);
-  console.log(jsonstring);
 
-  // alert(searchArgs.SearchChangedTrigger)
-  if (searchChangedInfo.searchChangedTrigger === 'DataSource') {
-    if (searchArgs.BlotterSearchState.DataSource === 'Eurssso') {
-      //     adaptableblotter.api.themeSelectCurrent("Dark Theme");
-      adaptableblotter.api.systemStatusSet('its all broken', 'Red');
-      adaptableblotter.api.systemStatusSet('its all broken', 'Red');
-      adaptableblotter.api.alertShow('Error Header', 'Error message', 'Error');
-    } else if (searchArgs.BlotterSearchState.DataSource === 'Euro') {
-      //       adaptableblotter.api.themeSelectCurrent("White Theme");
-      adaptableblotter.api.configClear();
-      adaptableblotter.api.systemStatusClear();
-      adaptableblotter.api.alertShow('Hello Arjun', 'This is a message sent from the Server...',
-        'Info');
-    } else if (searchArgs.BlotterSearchState.DataSource === 'Dollar') {
-      //      adaptableblotter.api.themeSelectCurrent("White Theme");
-      adaptableblotter.api.systemStatusSet('a few issues perhaps', 'Amber');
-      adaptableblotter.api.alertShow('Warning Header', 'Warning message', 'Warning');
-    }
-    /*
-    if (searchArgs.BlotterSearchState.DataSource === "Dollar") {
-        adaptableblotter.api.setGridData(dataGen.getDollarTrades());
-        adaptableblotter.api.selectLayout("Dollar View")
-      //  adaptableblotter.api.selectCurrentTheme("Dark Theme")
-    } else if (searchArgs.BlotterSearchState.DataSource === "Sterling") {
-        adaptableblotter.api.setGridData(dataGen.getGBPTrades());
-        adaptableblotter.api.selectLayout("Sterling View")
-    } else if (searchArgs.BlotterSearchState.DataSource === "Euro") {
-        adaptableblotter.api.setGridData(dataGen.getEuroTrades());
-        adaptableblotter.api.selectLayout("Euro View")
-    } else {
-        adaptableblotter.api.setGridData(dataGen.getTrades(15000));
-        adaptableblotter.api.clearLayout();
-    }
-    */
-  }
-}
-
-function notionalFormatter(params) {
+function notionalFormatter(params: any) {
   return `£${formatNumber(params.value)}`;
 }
 
-function formatNumber(number) {
+function formatNumber(number: any) {
   // this puts commas into the number eg 1000 goes to 1,000,
   // i pulled this from stack overflow, i have no idea how it works
   return Math.floor(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -679,21 +606,21 @@ var currencyFormatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2,
 });
 
-function notionalCellRenderer(params) {
+function notionalCellRenderer(params: any) {
   if (params.value) {
     return currencyFormatter.format(params.value);
   }
   return null;
 }
 
-function numberToBool(params) {
+function numberToBool(params: any) {
   if (params.value === 0) {
     return 'false';
   }
   return 'true';
 }
 
-function dateParseragGrid(params) {
+function dateParseragGrid(params: any) {
   try {
     return stringToDate(params.newValue, 'dd/mm/yyyy', '/');
   } catch (ex) {
@@ -703,7 +630,7 @@ function dateParseragGrid(params) {
 }
 
 
-function stringToDate(date, format, delimiter) {
+function stringToDate(date: any, format: any, delimiter: any) {
   var formatLowerCase = format.toLowerCase();
   var formatItems = formatLowerCase.split(delimiter);
   var dateItems = date.split(delimiter);
@@ -716,7 +643,7 @@ function stringToDate(date, format, delimiter) {
   return formatedDate;
 }
 
-var decimalPlaceRendereragGrid = (minDigits, maxDigits) => (params) => {
+var decimalPlaceRendereragGrid = (minDigits: any, maxDigits: any) => (params: any) => {
   if (params.value) {
     var decimalPlaceFormatter = new Intl.NumberFormat('en-GB', {
       minimumFractionDigits: minDigits,
@@ -727,19 +654,19 @@ var decimalPlaceRendereragGrid = (minDigits, maxDigits) => (params) => {
   return null;
 };
 
-function capitalize(string) {
-  return (/[a-z]/.test(string) ? string : string.toLowerCase())
+function capitalize(mystring: string) {
+  return (/[a-z]/.test(mystring) ? mystring : mystring.toLowerCase())
     .replace(/[\s\-_]*([^\s\-_])([^\s\-_]+)/g, replacer)
     .replace(/[A-Z]/g, ' $&')
     .trim();
 }
 
-function replacer(a, b, c) {
+function replacer(a: any, b: any, c: any) {
   return b.toUpperCase() + c;
 }
 var shortDateFormatter = new Intl.DateTimeFormat('en-GB');
 
-function shortDateFormatteragGrid(params) {
+function shortDateFormatteragGrid(params: any) {
   try {
     if (params.value) {
       return shortDateFormatter.format(params.value);
@@ -750,7 +677,7 @@ function shortDateFormatteragGrid(params) {
   return null;
 }
 
-function boolParseragGrid(params) {
+function boolParseragGrid(params: any) {
   try {
     return `<input type='checkbox'   ${params.value ? 'checked' : ''} />`;
   } catch (ex) {
@@ -759,7 +686,7 @@ function boolParseragGrid(params) {
   return null;
 }
 
-function currencyRendereragGrid(params) {
+function currencyRendereragGrid(params: any) {
   try {
     if (params.value) {
       return currencyFormatter.format(params.value);
