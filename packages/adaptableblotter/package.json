@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter",
-  "version": "3.4.1-beta.44",
+  "version": "3.4.1-beta.45",
   "description": "Powerful data-agnostic HTML5 datagrid add-on that sits on top of an underlying grid component and provides all the rich functionality that advanced users expect from their grids and blotters",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -106,7 +106,6 @@
     "copy-assets": "cp ./App_Scripts/base.css ./dist && cp -R ./App_Scripts/fonts ./dist/ && cp -R ./App_Scripts/themes ./dist/",
     "tsc": "tsc --outDir dist",
     "build": "npm run build-prod",
-    "prepublish": "npm run build-prod",
     "build-ts": "tsc --outDir ./dist/App_Scripts",
     "build-ts-watch": "tsc --outDir ./dist/App_Scripts --watch",
     "dev-hypergrid": "cross-env arg=hypergrid webpack-dev-server --config webpack.dev.js --content-base Harness/Hypergrid/",
