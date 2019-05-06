@@ -89,8 +89,8 @@
     "webpack-fail-plugin": "^1.0.6"
   },
   "scripts": {
-    "release": "npm run prerelease",
-    "prerelease": "npm run build && release pre && npm run registry-publish",
+    "release": "npm run build && release pre && npm run registry-publish",
+    
     "release:patch": "npm run build && release patch && npm run registry-publish",
     "release:minor": "npm run build && release minor && npm run registry-publish",
     "release:major": "npm run build && release major && npm run registry-publish",
