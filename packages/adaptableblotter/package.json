@@ -88,6 +88,7 @@
     "webpack-dev-server": "^1.16.5",
     "webpack-fail-plugin": "^1.0.6"
   },
+  
   "scripts": {
     "release": "npm run build && release pre && npm run registry-publish",
     "release:patch": "npm run build && release patch && npm run registry-publish",
