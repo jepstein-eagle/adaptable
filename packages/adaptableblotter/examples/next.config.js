@@ -1,4 +1,5 @@
 const path = require('path')
+const Dotenv = require('dotenv-webpack')
 
 // make the app accept sources from everywhere in the monorepo
 const SRC_PATH = path.resolve('../');
@@ -47,6 +48,18 @@ const withTypescript = (nextConfig = {}) => {
           defaultLoaders.babel.options.presets.push(TS_PRESET)
         }
       }
+
+      config.plugins = config.plugins || []
+
+      config.plugins = [
+        ...config.plugins,
+
+        // Read the .env file
+        new Dotenv({
+          path: path.join(__dirname, '.env'),
+          systemvars: false
+        })
+      ]
 
       if (typeof nextConfig.webpack === 'function') {
         return nextConfig.webpack(config, options)
