@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import { Grid } from 'ag-grid-community/dist/lib/grid'
 import AdaptableBlotter from '../../../../App_Scripts/Hypergrid'
 import '../../../../App_Scripts/base.css'
 import '../../../../App_Scripts/themes/light.css'
 import { DataGenerator } from '../../../../Harness/DataGenerator'
-import { GridOptions } from 'ag-grid-community';
 
 /*
 Basic Hypergrid demo that just tests that we can create a Hypergrid and an Adaptable Blotter working together
