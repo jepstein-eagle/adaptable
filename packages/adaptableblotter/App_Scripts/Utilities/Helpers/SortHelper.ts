@@ -1,6 +1,4 @@
 
-export module SortHelper {
-
     export function orderBy(collection: any, iteratees: any, orders: any, functions: any): any {
         let index = -1
     
@@ -67,4 +65,7 @@ export module SortHelper {
         return collection
     }
 
+export const SortHelper = {
+    orderBy
 }
+export default SortHelper

@@ -4,6 +4,8 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import AdaptableBlotter from '../../../../App_Scripts/Hypergrid'
 import '../../../../App_Scripts/base.css'
 import '../../../../App_Scripts/themes/light.css'
+import '../../../../ExtLibs/hypergrid/fin-hypergrid';
+
 import { DataGenerator } from '../../../../Harness/DataGenerator'
 
 /*

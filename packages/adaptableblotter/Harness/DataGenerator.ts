@@ -1040,7 +1040,7 @@ export class DataGenerator {
 
     // Think we have plans to replace this with something better but for now it will allow me to check in...
     public getLicenceKey(): string {
-        return '';
+        return 'abc5834u-yt5a4evp1-r1oq9nclf1';
     }
 
 }
