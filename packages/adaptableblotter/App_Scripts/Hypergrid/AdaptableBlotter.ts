@@ -48,7 +48,6 @@ import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICell
 import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import * as _ from 'lodash'
 import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
