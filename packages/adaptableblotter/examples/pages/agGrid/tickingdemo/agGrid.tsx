@@ -15,22 +15,7 @@ Has pseudo ticking data together with some JSON that sets flashing
 function InitAdaptableBlotter() {
   const dataGen = new DataGenerator();
 
-  const gridOptions: GridOptions = {
-    columnDefs: dataGen.getTradeSchema(),
-    rowData: dataGen.getTrades(40),
-    enableRangeSelection: true,
-    floatingFilter: true,
-    suppressColumnVirtualisation: false,
-    suppressMenuHide: true,
-    sideBar: undefined,
-    columnTypes: {
-      abColDefNumber: {},
-      abColDefString: {},
-      abColDefBoolean: {},
-      abColDefDate: {},
-      abColDefObject: {},
-    },
-  };
+  const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
 
   // turn on mimicing ticking data
   dataGen.startTickingDataagGrid(gridOptions);

@@ -16,22 +16,7 @@ Note: we DON'T create the grid ourselves - and instead its done in the Blotter c
 function InitAdaptableBlotter() {
   const dataGen = new DataGenerator();
 
-  const gridOptions: GridOptions = {
-    columnDefs: dataGen.getTradeSchema(), 
-    rowData: dataGen.getTrades(300), 
-    enableRangeSelection: true,
-    floatingFilter: true,
-    suppressColumnVirtualisation: false,
-    suppressMenuHide: true,
-    sideBar: undefined, 
-    columnTypes: { 
-      abColDefNumber: {},
-      abColDefString: {},
-      abColDefBoolean: {},
-      abColDefDate: {},
-      abColDefObject: {},
-    },
-  };
+  const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
 
   // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
   const adaptableBlotterOptions = {

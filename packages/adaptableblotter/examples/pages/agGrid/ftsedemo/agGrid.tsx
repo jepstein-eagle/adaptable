@@ -17,22 +17,7 @@ import { GridOptions } from 'ag-grid-community';
 function InitAdaptableBlotter() {
   const dataGen = new DataGenerator();
 
-  const gridOptions: GridOptions = {
-    columnDefs: dataGen.getFTSESchema(),
-    rowData: dataGen.getFtseData(5),
-    enableRangeSelection: true,
-    floatingFilter: true,
-    suppressColumnVirtualisation: false,
-    suppressMenuHide: true,
-    sideBar: undefined,
-    columnTypes: {
-      abColDefNumber: {},
-      abColDefString: {},
-      abColDefBoolean: {},
-      abColDefDate: {},
-      abColDefObject: {},
-    },
-  };
+  const gridOptions: GridOptions = dataGen.getGridOptionsFTSE(50);
 
   const adaptableBlotterOptions = {
     vendorGrid: gridOptions,

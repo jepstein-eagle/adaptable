@@ -1,6 +1,6 @@
 ﻿/// <reference path="trade.d.ts" />
 
-import { ColDef } from "ag-grid-community";
+import { ColDef, GridOptions } from "ag-grid-community";
 import { LeaderLineType } from "igniteui-react-charts/ES2015/LeaderLineType";
 
 export interface IFtse {
@@ -692,7 +692,45 @@ export class DataGenerator {
         return names;
     }
 
-    public getFTSESchema(): ColDef[] {
+    public getGridOptionsTrade(rowCount: number): GridOptions {
+        return {
+            columnDefs: this.getTradeSchema(),
+            rowData: this.getTrades(rowCount),
+            enableRangeSelection: true,
+            floatingFilter: true,
+            suppressColumnVirtualisation: false,
+            suppressMenuHide: true,
+            sideBar: undefined,
+            columnTypes: {
+                abColDefNumber: {},
+                abColDefString: {},
+                abColDefBoolean: {},
+                abColDefDate: {},
+                abColDefObject: {},
+            },
+        };
+    }
+
+    public getGridOptionsFTSE(rowCount: number): GridOptions {
+        return{
+            columnDefs: this.getFTSESchema(),
+            rowData: this.getFtseData(rowCount),
+            enableRangeSelection: true,
+            floatingFilter: true,
+            suppressColumnVirtualisation: false,
+            suppressMenuHide: true,
+            sideBar: undefined,
+            columnTypes: {
+              abColDefNumber: {},
+              abColDefString: {},
+              abColDefBoolean: {},
+              abColDefDate: {},
+              abColDefObject: {},
+            },
+          };
+    }
+
+     public getFTSESchema(): ColDef[] {
         var schema: any[] = [];
         schema.push({
             headerName: 'Date',
@@ -979,7 +1017,7 @@ export class DataGenerator {
 
 
     // Think we have plans to replace this with something better but for now it will allow me to check in...
-    public getLicenceKey():string{
+    public getLicenceKey(): string {
         return '';
     }
 
