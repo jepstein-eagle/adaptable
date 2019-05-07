@@ -985,7 +985,7 @@ export class DataGenerator {
             primaryKey: 'tradeId',
             userName: 'demo user',
             blotterId: blotterId,
-            licenceKey: this.getLicenceKey(),
+            licenceKey: this.getEnterpriseLicenceKey(),
         };
         return adaptableBlotterOptions;
     }
@@ -996,7 +996,7 @@ export class DataGenerator {
             primaryKey: 'date',
             userName: 'demo user',
             blotterId: blotterId,
-            licenceKey: this.getLicenceKey(),
+            licenceKey: this.getStandardLicenceKey(),
         };
         return adaptableBlotterOptions;
     }
@@ -1038,9 +1038,16 @@ export class DataGenerator {
     }
 
 
-    // Think we have plans to replace this with something better but for now it will allow me to check in...
-    public getLicenceKey(): string {
-        return 'abc5834u-yt5a4evp1-r1oq9nclf1';
+    public getCommunityLicenceKey(): string {
+        return process.env.COMMUNITY_LICENSE as string;
+    }
+
+    public getStandardLicenceKey(): string {
+        return process.env.STANDARD_LICENSE as string;
+    }
+
+    public getEnterpriseLicenceKey(): string {
+        return process.env.ENTERPRISE_LICENSE as string;
     }
 
 }

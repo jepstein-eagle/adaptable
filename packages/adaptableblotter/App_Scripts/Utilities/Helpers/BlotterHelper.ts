@@ -10,9 +10,6 @@ import { StringExtensions } from '../Extensions/StringExtensions';
 
 
 
-export function isDemoSite(): boolean {
-    return (window.location.hostname == 'demo.adaptableblotter.com');
-}
 
 export function assignBlotterOptions(blotterOptions: IAdaptableBlotterOptions): IAdaptableBlotterOptions {
     let returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
@@ -84,7 +81,6 @@ export function checkLicenceKey(licenceInfo: ILicenceInfo): void {
 
 
 export const BlotterHelper = {
-    isDemoSite,
     assignBlotterOptions,
     isValidPrimaryKey,
     isConfigServerEnabled,

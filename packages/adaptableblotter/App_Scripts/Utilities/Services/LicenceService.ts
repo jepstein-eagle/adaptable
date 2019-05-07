@@ -6,7 +6,6 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ILicenceInfo } from '../Interface/ILicenceInfo';
 import { ObjectFactory } from '../ObjectFactory';
 import { YEAR_ADD, MONTH_ADD } from '../Constants/GeneralConstants';
-import { BlotterHelper } from '../Helpers/BlotterHelper';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 
 /*
@@ -26,9 +25,7 @@ export class LicenceService implements ILicenceService {
 
     private checkifRuningOnDemoSite() {
         let initalDate = this.blotter.blotterOptions.licenceKey;
-        if (BlotterHelper.isDemoSite()) {
-            return this.CheckIsDouble(31);
-        }
+       
         if (StringExtensions.IsNullOrEmpty(initalDate)) {
             return this.isEmptyArray();
         }
