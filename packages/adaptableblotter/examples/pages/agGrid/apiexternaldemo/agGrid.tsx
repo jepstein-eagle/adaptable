@@ -6,7 +6,7 @@ import '../../../../App_Scripts/base.css'
 import '../../../../App_Scripts/themes/light.css'
 import { DataGenerator } from '../../../../Harness/DataGenerator'
 import { GridOptions } from 'ag-grid-community';
-import { IAdaptableBlotter } from '../../../../App_Scripts/types';
+import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 
 /*
 Demo that shows how we can use the api 'externally' via textboxes and buttons
@@ -30,17 +30,8 @@ function clearQuickSearchViaAPI() {
 
 function InitAdaptableBlotter() {
   const dataGen = new DataGenerator();
-
   const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
-
-  // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
-  const adaptableBlotterOptions = {
-    vendorGrid: gridOptions,
-    primaryKey: 'tradeId',
-    userName: 'demo user',
-    blotterId: 'api external demo',
-    licenceKey: dataGen.getLicenceKey(),
-  };
+  const adaptableBlotterOptions: IAdaptableBlotterOptions = dataGen.createAdaptableBlotterOptionsTrade(gridOptions, 'api external demo');
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   setTimeout(() => {

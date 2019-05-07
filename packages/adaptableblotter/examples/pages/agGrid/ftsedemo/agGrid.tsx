@@ -10,23 +10,14 @@ import '../../../../App_Scripts/base.css'
 import '../../../../App_Scripts/themes/light.css'
 
 import { DataGenerator } from '../../../../Harness/DataGenerator'
-import { IAdaptableBlotter } from '../../../../App_Scripts/types';
+import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 
 
 function InitAdaptableBlotter() {
   const dataGen = new DataGenerator();
-
   const gridOptions: GridOptions = dataGen.getGridOptionsFTSE(50);
-
-  const adaptableBlotterOptions = {
-    vendorGrid: gridOptions,
-    primaryKey: 'date',
-    userName: 'demo user',
-    blotterId: 'ftse demo',
-    licenceKey: dataGen.getLicenceKey(),
-  };
-
+  const adaptableBlotterOptions: IAdaptableBlotterOptions = dataGen.createAdaptableBlotterOptionsFtse(gridOptions, 'ftse demo');
   const adaptableblotter: IAdaptableBlotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   setTimeout(() => {
@@ -35,8 +26,6 @@ function InitAdaptableBlotter() {
     }
   });
 }
-
-
 
 export default () => {
   useEffect(() => {

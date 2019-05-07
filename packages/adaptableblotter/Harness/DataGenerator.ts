@@ -712,7 +712,7 @@ export class DataGenerator {
     }
 
     public getGridOptionsFTSE(rowCount: number): GridOptions {
-        return{
+        return {
             columnDefs: this.getFTSESchema(),
             rowData: this.getFtseData(rowCount),
             enableRangeSelection: true,
@@ -721,16 +721,16 @@ export class DataGenerator {
             suppressMenuHide: true,
             sideBar: undefined,
             columnTypes: {
-              abColDefNumber: {},
-              abColDefString: {},
-              abColDefBoolean: {},
-              abColDefDate: {},
-              abColDefObject: {},
+                abColDefNumber: {},
+                abColDefString: {},
+                abColDefBoolean: {},
+                abColDefDate: {},
+                abColDefObject: {},
             },
-          };
+        };
     }
 
-     public getFTSESchema(): ColDef[] {
+    public getFTSESchema(): ColDef[] {
         var schema: any[] = [];
         schema.push({
             headerName: 'Date',
@@ -977,6 +977,28 @@ export class DataGenerator {
             enableRowGroup: true,
         });
         return schema;
+    }
+
+    public createAdaptableBlotterOptionsTrade(gridOptions: GridOptions, blotterId: string) {
+        const adaptableBlotterOptions = {
+            vendorGrid: gridOptions,
+            primaryKey: 'tradeId',
+            userName: 'demo user',
+            blotterId: blotterId,
+            licenceKey: this.getLicenceKey(),
+        };
+        return adaptableBlotterOptions;
+    }
+
+    public createAdaptableBlotterOptionsFtse(gridOptions: GridOptions, blotterId: string) {
+        const adaptableBlotterOptions = {
+            vendorGrid: gridOptions,
+            primaryKey: 'date',
+            userName: 'demo user',
+            blotterId: blotterId,
+            licenceKey: this.getLicenceKey(),
+        };
+        return adaptableBlotterOptions;
     }
 
     private dateParseragGrid = (params: any) => {

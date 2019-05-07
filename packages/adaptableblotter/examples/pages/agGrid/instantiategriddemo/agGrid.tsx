@@ -5,12 +5,13 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid'
 import '../../../../App_Scripts/base.css'
 import '../../../../App_Scripts/themes/light.css'
 import { DataGenerator } from '../../../../Harness/DataGenerator'
-import { GridOptions } from 'ag-grid-community';
+import { GridOptions, Grid } from 'ag-grid-community';
+import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 
 /*
 Similar to the Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
 No JSON or anything complicated
-Note: we DON'T create the grid ourselves - and instead its done in the Blotter code
+Note: we DO create the grid ourselves - and instead its done in the Blotter code
 */
 
 function InitAdaptableBlotter() {
@@ -18,14 +19,12 @@ function InitAdaptableBlotter() {
 
   const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
 
-  // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
-  const adaptableBlotterOptions = {
-    vendorGrid: gridOptions, 
-    primaryKey: 'tradeId', 
-    userName: 'demo user',
-    blotterId: 'no grid demo', 
-    licenceKey: dataGen.getLicenceKey(),
-  };
+  // creating ag-Grid ourselves
+  const gridcontainer: HTMLElement = document.getElementById('grid') as HTMLElement;
+  gridcontainer.innerHTML = '';
+  const grid = new Grid(gridcontainer, gridOptions);
+
+  const adaptableBlotterOptions: IAdaptableBlotterOptions = dataGen.createAdaptableBlotterOptionsTrade(gridOptions, 'instantiate demo');
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   setTimeout(() => {

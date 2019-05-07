@@ -6,6 +6,7 @@ import '../../../../App_Scripts/base.css'
 import '../../../../App_Scripts/themes/light.css'
 import { DataGenerator } from '../../../../Harness/DataGenerator'
 import { GridOptions } from 'ag-grid-community';
+import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 
 
 /*
@@ -20,14 +21,8 @@ function InitAdaptableBlotter() {
   // turn on mimicing ticking data
   dataGen.startTickingDataagGrid(gridOptions);
 
-  const adaptableBlotterOptions = {
-    vendorGrid: gridOptions,
-    primaryKey: 'tradeId',
-    userName: 'demo user',
-    blotterId: 'ticking data demo', // id for blotter
-    predefinedConfig: flashingJson,
-    licenceKey: dataGen.getLicenceKey(),
-  };
+  const adaptableBlotterOptions: IAdaptableBlotterOptions = dataGen.createAdaptableBlotterOptionsTrade(gridOptions, 'ticking demo');
+  adaptableBlotterOptions.predefinedConfig = flashingJson;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   setTimeout(() => {

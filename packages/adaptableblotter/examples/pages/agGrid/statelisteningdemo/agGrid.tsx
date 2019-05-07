@@ -6,7 +6,7 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid'
 import '../../../../App_Scripts/base.css'
 import '../../../../App_Scripts/themes/light.css'
 import { DataGenerator } from '../../../../Harness/DataGenerator'
-import { IAdaptableBlotter } from '../../../../App_Scripts/types';
+import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../../../../App_Scripts/Utilities/Interface/IStateEvents';
 
@@ -17,14 +17,7 @@ function InitAdaptableBlotter() {
 
   const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
 
-  // Create an Adaptable Blotter passing in the ag-Grid Options as the VendorGrid property
-  const adaptableBlotterOptions = {
-    vendorGrid: gridOptions,
-    primaryKey: 'tradeId',
-    userName: 'demo user',
-    blotterId: 'no grid demo',
-    licenceKey: dataGen.getLicenceKey(),
-  };
+  const adaptableBlotterOptions: IAdaptableBlotterOptions = dataGen.createAdaptableBlotterOptionsTrade(gridOptions, 'state listen demo');
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
