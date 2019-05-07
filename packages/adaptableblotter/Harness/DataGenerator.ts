@@ -1,5 +1,8 @@
 ﻿/// <reference path="trade.d.ts" />
 
+import { ColDef } from "ag-grid-community";
+import { LeaderLineType } from "igniteui-react-charts/ES2015/LeaderLineType";
+
 export interface IFtse {
     date: Date;
     start: number;
@@ -118,7 +121,7 @@ export class DataGenerator {
             //pick a random colum in the numeric col
             let columnName = "price";// this.getRandomItem(this._numericCols);
             let initialNewValue = trade[columnName];
-            let newValue = this.roundTo4Dp(initialNewValue + numberToAdd + 500);
+            let newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
             trade[columnName] = newValue;
 
             trade["ask"] = this.roundTo4Dp(trade["price"] - trade["bidOfferSpread"] / 2);
@@ -146,7 +149,7 @@ export class DataGenerator {
                     let trade = rowNode;
                     let columnName = "price";
                     let initialPrice = gridOptions.api.getValue(columnName, trade);
-                    let newPrice = (this.roundTo4Dp(initialPrice + numberToAdd) + 500);
+                    let newPrice = (this.roundTo4Dp(initialPrice + numberToAdd));
                     trade.setDataValue(columnName, newPrice);
                     let bidOfferSpread = gridOptions.api.getValue("bidOfferSpread", trade);
                     let ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
@@ -169,7 +172,7 @@ export class DataGenerator {
         let high = (start > end) ?
             this.roundTo2Dp(start + this.generateRandomInt(0, 10) + this.generateRandomDouble()) :
             this.roundTo2Dp(end + this.generateRandomInt(0, 10) + this.generateRandomDouble());
-            let volume = this.generateRandomInt(3423, 6978) ;
+        let volume = this.generateRandomInt(3423, 6978);
         let ftse =
         {
             "date": newDate,
@@ -687,6 +690,297 @@ export class DataGenerator {
             "Louella Spiker"
         ];
         return names;
+    }
+
+    public getFTSESchema(): ColDef[] {
+        var schema: any[] = [];
+        schema.push({
+            headerName: 'Date',
+            field: 'date',
+            editable: false,
+            filter: true,
+            cellEditorParams: {
+                useFormatter: true,
+            },
+            valueParser: this.dateParseragGrid,
+            valueFormatter: this.shortDateFormatteragGrid,
+        });
+
+        schema.push({
+            headerName: 'Start',
+            field: 'start',
+            filter: true,
+            editable: true,
+            cellClass: 'number-cell',
+        });
+        schema.push({
+            headerName: 'End',
+            field: 'end',
+            filter: true,
+            editable: true,
+            cellClass: 'number-cell',
+        });
+        schema.push({
+            headerName: 'Low',
+            field: 'low',
+            filter: true,
+            editable: true,
+            cellClass: 'number-cell',
+        });
+        schema.push({
+            headerName: 'High',
+            field: 'high',
+            editable: true,
+            cellClass: 'number-cell',
+        });
+        schema.push({
+            headerName: 'Volume',
+            field: 'volume',
+            filter: true,
+            editable: true,
+            cellClass: 'number-cell',
+        });
+
+        return schema;
+    }
+
+
+    public getTradeSchema(): ColDef[] {
+        var schema: any[] = [];
+        schema.push({
+            headerName: 'Trade Id',
+            field: 'tradeId',
+            editable: true,
+            type: 'abColDefNumber',
+            sortable: false,
+            filter: true,
+        });
+        schema.push({
+            headerName: 'Notional',
+            field: 'notional',
+            enableValue: true,
+            editable: true,
+            // valueFormatter: notionalFormatter,
+            cellClass: 'number-cell',
+            type: 'abColDefNumber',
+            filter: true
+        });
+        schema.push({
+            headerName: 'Counterparty',
+            field: 'counterparty',
+            editable: true,
+            enableRowGroup: true,
+            filter: true,
+            sortable: true,
+            type: 'abColDefString',
+        });
+
+        schema.push({
+            headerName: 'Change',
+            field: 'changeOnYear',
+            filter: true,
+            editable: true,
+            type: 'abColDefNumber',
+        });
+        schema.push({
+            headerName: 'Currency',
+            field: 'currency',
+            editable: true,
+            enableRowGroup: true,
+            sortable: true,
+            filter: 'agTextColumnFilter',
+            type: 'abColDefString',
+        });
+        schema.push({
+            headerName: 'Status',
+            field: 'status',
+            editable: true,
+            filter: true,
+            sortable: true,
+            enableRowGroup: true,
+            type: 'abColDefString',
+        });
+        schema.push({
+            headerName: 'B/O Spread',
+            field: 'bidOfferSpread',
+            columnGroupShow: 'open',
+            enableValue: true,
+            editable: true,
+            filter: true,
+            cellClass: 'number-cell',
+            type: 'abColDefNumber',
+        });
+        schema.push({
+            headerName: 'Price',
+            field: 'price',
+            columnGroupShow: 'open',
+            editable: true,
+            enableValue: true,
+            cellClass: 'number-cell',
+            enableRowGroup: true,
+            filter: 'agNumberColumnFilter',
+            type: 'abColDefNumber',
+        });
+        schema.push({
+            headerName: 'Country',
+            field: 'country',
+            editable: true,
+            filter: true,
+            sortable: true,
+            enableRowGroup: true,
+            type: 'abColDefString',
+        });
+        schema.push({
+            headerName: 'Ask',
+            field: 'ask',
+            columnGroupShow: 'closed',
+            filter: true,
+            cellClass: 'number-cell',
+            type: 'abColDefNumber',
+        });
+        schema.push({
+            headerName: 'DV01',
+            field: 'dv01',
+            columnGroupShow: 'closed',
+            filter: true,
+            cellClass: 'number-cell',
+            type: 'abColDefNumber',
+        });
+        schema.push({
+            headerName: 'Bid',
+            field: 'bid',
+            columnGroupShow: 'closed',
+            filter: true,
+            cellClass: 'number-cell',
+            type: 'abColDefNumber',
+        });
+
+        schema.push({
+            headerName: 'Bbg Ask',
+            field: 'bloombergAsk',
+            columnGroupShow: 'closed',
+            cellClass: 'number-cell',
+            type: 'abColDefNumber',
+        });
+        schema.push({
+            headerName: 'Bbg Bid',
+            field: 'bloombergBid',
+            columnGroupShow: 'closed',
+            cellClass: 'number-cell',
+            type: 'abColDefNumber',
+        });
+        schema.push({
+            headerName: 'Moodys',
+            field: 'moodysRating',
+            editable: true,
+            filter: 'text',
+            type: 'abColDefString',
+        });
+        schema.push({
+            headerName: 'Trade Date',
+            field: 'tradeDate',
+            editable: true,
+            cellEditorParams: {
+                useFormatter: true,
+            },
+            valueParser: this.dateParseragGrid,
+            valueFormatter: this.shortDateFormatteragGrid,
+            filter: 'agDateColumnFilter',
+            type: 'abColDefDate',
+        });
+        schema.push({
+            headerName: 'SandP',
+            field: 'sandpRating',
+            editable: true,
+            sortable: true,
+            filter: 'text',
+            type: 'abColDefString',
+        });
+        schema.push({
+            headerName: 'Settlement Date',
+            field: 'settlementDate',
+            editable: true,
+            cellEditorParams: {
+                useFormatter: true,
+            },
+            valueParser: this.dateParseragGrid,
+            valueFormatter: this.shortDateFormatteragGrid,
+            type: 'abColDefDate',
+        });
+        schema.push({
+            headerName: 'Last Updated By',
+            field: 'lastUpdatedBy',
+            enableRowGroup: true,
+            type: 'abColDefString',
+        });
+        schema.push({
+            headerName: 'Last Updated',
+            field: 'lastUpdated',
+            editable: true,
+            cellEditorParams: {
+                useFormatter: true,
+            },
+            valueParser: this.dateParseragGrid,
+            valueFormatter: this.shortDateFormatteragGrid,
+            type: 'abColDefDate',
+        });
+        schema.push({
+            headerName: 'Pct Change',
+            field: 'percentChange',
+            editable: true,
+            filter: 'text',
+            type: 'abColDefNumber',
+        });
+        schema.push({
+            headerName: 'Desk No.',
+            field: 'deskId',
+            editable: true,
+            type: 'abColDefNumber',
+            enableRowGroup: true,
+        });
+        return schema;
+    }
+
+    private dateParseragGrid = (params: any) => {
+        try {
+            return this.stringToDate(params.newValue, 'dd/mm/yyyy', '/');
+        } catch (ex) {
+            console.error(`Error parsing the date value: ${params.newValue} and node : `, params.node);
+            return null;
+        }
+    }
+
+
+    private stringToDate(date: any, format: any, delimiter: any) {
+        var formatLowerCase = format.toLowerCase();
+        var formatItems = formatLowerCase.split(delimiter);
+        var dateItems = date.split(delimiter);
+        var monthIndex = formatItems.indexOf('mm');
+        var dayIndex = formatItems.indexOf('dd');
+        var yearIndex = formatItems.indexOf('yyyy');
+        var month = parseInt(dateItems[monthIndex], 10);
+        month -= 1;
+        var formatedDate = new Date(parseInt(dateItems[yearIndex], 10), month, parseInt(dateItems[dayIndex], 10));
+        return formatedDate;
+    }
+
+    private shortDateFormatter = new Intl.DateTimeFormat('en-GB');
+
+    private shortDateFormatteragGrid = (params: any) => {
+        try {
+            if (params.value) {
+                return this.shortDateFormatter.format(params.value);
+            }
+        } catch (ex) {
+            console.error(`Error formatting the date for value: ${params.value} and node : `, params.node);
+        }
+        return null;
+    }
+
+
+    // Think we have plans to replace this with something better but for now it will allow me to check in...
+    public getLicenceKey():string{
+        return '';
     }
 
 }

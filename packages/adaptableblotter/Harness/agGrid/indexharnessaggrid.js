@@ -58,7 +58,7 @@ function getBlotterIdforGrid() {
   return 'demo ftse';
 }
 
-function InitTradeBlotter() {
+function InitAdaptableBlotter() {
   const dataGen = new harness.DataGenerator();
   trades = getRowsForGrid(dataGen);
 

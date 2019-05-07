@@ -16,7 +16,7 @@ export default () => {
       <div id="adaptableBlotter" style={{ margin: 0 }}></div>
 
       {/*  <!-- div for the underlying grid - please always call this 'grid' or set the 'vendorContainer' property in IAdaptableBlotterOptions-- >*/}
-      <div id="chart-container-xxsssss"></div>
+      
       <div id="grid" className="ag-theme-balham" style={{ margin: 5 }}></div>
 
       <DynamicComponent />

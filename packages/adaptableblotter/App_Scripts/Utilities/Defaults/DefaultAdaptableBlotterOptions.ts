@@ -23,8 +23,8 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     containerOptions: {
         adaptableBlotterContainer: "adaptableBlotter",
         vendorContainer: "grid",
-        modalContainer: null,
-        chartContainer: null,
+        modalContainer: undefined,
+        chartContainer: undefined,
     },
     layoutOptions: {
         includeVendorStateInLayouts: false,
@@ -46,7 +46,7 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
     queryOptions: {
         maxColumnValueItemsDisplayed: 5000,
         columnValuesOnlyInQueries: false,
-        getColumnValues: null,
+        getColumnValues: undefined,
         ignoreCaseInQueries: true,
     },
     chartOptions: {
