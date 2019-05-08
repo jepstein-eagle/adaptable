@@ -42,7 +42,7 @@ export function isRunningGlue42(): boolean {
      * Checks if the glue4office.js file is referenced and if we are running inside of a Glue42 container.
      * v2 will support browser.
      */
-    return typeof window !== "undefined" && "glue42gd" in window && "Glue4Office" in window;
+    return false; // typeof window !== "undefined" && "glue42gd" in window && "Glue4Office" in window;
 }
 
 export async function exportData(data: any[], gridColumns: IColumn[], blotter: IAdaptableBlotter) {

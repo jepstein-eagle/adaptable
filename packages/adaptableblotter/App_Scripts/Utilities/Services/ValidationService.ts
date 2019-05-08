@@ -99,7 +99,7 @@ export class ValidationService implements IValidationService {
         }
         // todo: change the last argument from null as we might want to do evaluation based on other cells...
         let column: IColumn = ColumnHelper.getColumnFromId(dataChangedEvent.ColumnId, columns);
-        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(cellValidationRule.Range, dataChangedEvent.NewValue, dataChangedEvent.NewValue, column, this.blotter, null)
+        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(cellValidationRule.Range, dataChangedEvent.NewValue, dataChangedEvent.OldValue, column, this.blotter, null)
         return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter)
     }
 

@@ -501,7 +501,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let menuItems: IMenuItem[] = [];
         this.strategies.forEach(x => {
             let menuItem = x.getPopupMenuItem()
-            if (menuItem != null) {
+            console.log(menuItem);
+            if (menuItem != null && menuItem !=undefined) {
                 if (menuItems.findIndex(m => m.StrategyId == menuItem.StrategyId) == -1) {
                     menuItems.push(menuItem);
                 }
@@ -1667,8 +1668,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public addPercentBar(pcr: IPercentBar): void {
         let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.api.gridApi.getColumns());
         if (renderedColumn) {
-            let cellRendererFunc: ICellRendererFunc = this.agGridHelper.createCellRendererFunc(pcr, this.blotterOptions.blotterId);
-            let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
+            let cellRendererFunc: ICellRendererFunc = this.agGridHelper.createPercentBarCellRendererFunc(pcr, this.blotterOptions.blotterId!);
+            let vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
             let coldDef: ColDef = vendorGridColumn.getColDef();
             coldDef.cellRenderer = cellRendererFunc;
             // change the style from number-cell temporarily?
@@ -1681,7 +1682,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public removePercentBar(pcr: IPercentBar): void {
         let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.api.gridApi.getColumns())
         if (renderedColumn) {
-            let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
+            let vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
             // note we dont get it from the original (but I guess it will be applied next time you run...)
             vendorGridColumn.getColDef().cellRenderer = null;
             let coldDef: ColDef = vendorGridColumn.getColDef();

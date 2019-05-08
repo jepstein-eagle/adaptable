@@ -4,12 +4,25 @@ import { IMenuItem } from './Interface/IMenu';
 
 export class MenuItemDoReduxAction implements IMenuItem {
 
-    constructor(public Label: string,
-        public StrategyId: string,
-        public Action: Redux.Action,
-        public GlyphIcon: string,
-        public IsVisible: boolean) {
+    constructor(label: string,
+        strategyId: string,
+        action: Redux.Action,
+        glyphIcon: string,
+        isVisible: boolean) {
+        this.Label = label;
+        this.StrategyId = strategyId;
+        this.IsVisible = isVisible;
+        this.GlyphIcon = glyphIcon;
+        this.Action = action;
     }
+
+    public Action: Redux.Action;
+    public Label: string;
+    public StrategyId: string;
+    public IsVisible: boolean;
+    public GlyphIcon: string
+
+
 }
 
 

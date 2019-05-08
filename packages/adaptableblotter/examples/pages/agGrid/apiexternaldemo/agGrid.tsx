@@ -8,7 +8,7 @@ import { DataGenerator } from '../../../../Harness/DataGenerator'
 import { GridOptions } from 'ag-grid-community';
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 
-import {Button} from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 /*
 Demo that shows how we can use the api 'externally' via textboxes and buttons
 */
@@ -54,12 +54,12 @@ export default () => {
 
   return <div >
     <br />
-    <label>Quick Search (from client application via Adaptable Blotter API): </label>
+    &nbsp;
+     <label>Quick Search (from client application via Adaptable Blotter API): </label>
+    &nbsp;
     <input type="text" id="txtQuickSearchText" />
-    
-      <Button onClick={() => runQuickSearchViaAPI()}>Run</Button>
-      <Button onClick={() => clearQuickSearchViaAPI()}>Clear</Button>
-    
+    <Button bsSize={'xs'} style={{ marginLeft: '5px', marginRight: '5px' }} onClick={() => runQuickSearchViaAPI()}>Run</Button>
+    <Button bsSize={'xs'} onClick={() => clearQuickSearchViaAPI()}>Clear</Button>
   </div>
-  
+
 }

@@ -23,6 +23,7 @@ import { IPreviewInfo } from "../../Utilities/Interface/IPreview";
 import { ColumnValueSelector } from "../Components/Selectors/ColumnValueSelector";
 import { IUIConfirmation } from "../../Utilities/Interface/IMessage";
 import { CellValidationHelper } from "../../Utilities/Helpers/CellValidationHelper";
+import { DEFAULT_BSSTYLE, PRIMARY_BSSTYLE } from "../../Utilities/Constants/StyleConstants";
 
 interface BulkUpdateToolbarControlComponentProps extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
     BulkUpdateValue: string;
@@ -70,9 +71,11 @@ class BulkUpdateToolbarControlComponent extends React.Component<BulkUpdateToolba
         // we dont want to show the panel in the form but will need to appear in a popup....
         let cssClassName: string = this.props.cssClassName + "__bulkupdate";
 
+        let activeButtonStyle: string = this.props.UseSingleColourForButtons ? DEFAULT_BSSTYLE: PRIMARY_BSSTYLE;
+
         let activeButton = this.state.Disabled ?
             <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="default" bsSize={this.props.DashboardSize}>Off</Button>
-            : <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle="primary" bsSize={this.props.DashboardSize}>On</Button>
+            : <Button style={{ marginRight: "3px" }} onClick={() => this.onDisabledChanged()} bsStyle={activeButtonStyle} bsSize={this.props.DashboardSize}>On</Button>
 
         let selectedColumn = (this.props.PreviewInfo && StringExtensions.IsNotNullOrEmpty(this.props.PreviewInfo.ColumnId)) ?
             ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns) :
