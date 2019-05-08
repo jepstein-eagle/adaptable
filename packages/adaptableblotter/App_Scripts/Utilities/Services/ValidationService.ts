@@ -29,7 +29,7 @@ export class ValidationService implements IValidationService {
 
         // first check that if primary key change, the new value is unique
         if (dataChangedEvent.ColumnId == this.blotter.blotterOptions.primaryKey) {
-            if (this.blotter.blotterOptions.generalOptions.preventDuplicatePrimaryKeyValues) {
+            if (this.blotter.blotterOptions.generalOptions!.preventDuplicatePrimaryKeyValues) {
                 if (dataChangedEvent.OldValue != dataChangedEvent.NewValue) {
                     let displayValuePair: IRawValueDisplayValuePair[] = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, DistinctCriteriaPairValue.DisplayValue, false)
                     let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);
