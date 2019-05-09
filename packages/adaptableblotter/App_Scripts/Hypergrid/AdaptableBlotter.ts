@@ -1,6 +1,4 @@
-﻿import '../Styles/stylesheets/adaptableblotter-style.css'
-
-import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
+﻿import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
 import * as Redux from 'redux'
 import * as ReactDOM from "react-dom";
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
@@ -50,7 +48,6 @@ import { ICellValidationRule } from "../Utilities/Interface/BlotterObjects/ICell
 import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalculatedColumn";
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import * as _ from 'lodash'
 import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
@@ -173,6 +170,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.CalendarService = new CalendarService(this);
         this.DataService = new DataService(this);
         this.ValidationService = new ValidationService(this);
+        // get the api ready
+        this.api = new BlotterApi(this);
         this.ChartService = new ChartService(this);
         this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this, (columnId, record) => { let column = this.getHypergridColumn(columnId); return this.valOrFunc(record, column) });
         this.FreeTextColumnService = new FreeTextColumnService(this);
@@ -252,8 +251,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 this.adaptableBlotterStore.TheStore.dispatch(PopupRedux.PopupHideLoading())
             })
 
-        // get the api ready
-        this.api = new BlotterApi(this);
 
         if (renderGrid) {
             if (this.abContainerElement != null) {

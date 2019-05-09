@@ -6,7 +6,6 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ILicenceInfo } from '../Interface/ILicenceInfo';
 import { ObjectFactory } from '../ObjectFactory';
 import { YEAR_ADD, MONTH_ADD } from '../Constants/GeneralConstants';
-import { BlotterHelper } from '../Helpers/BlotterHelper';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 
 /*
@@ -18,6 +17,7 @@ N.B.  This code does not run on production
 export class LicenceService implements ILicenceService {
 
     constructor(private blotter: IAdaptableBlotter) {
+        this.blotter = blotter;
         this.LicenceInfo = this.checkifRuningOnDemoSite();
     }
 
@@ -25,9 +25,7 @@ export class LicenceService implements ILicenceService {
 
     private checkifRuningOnDemoSite() {
         let initalDate = this.blotter.blotterOptions.licenceKey;
-        if (BlotterHelper.isDemoSite()) {
-            return this.CheckIsDouble(31);
-        }
+       
         if (StringExtensions.IsNullOrEmpty(initalDate)) {
             return this.isEmptyArray();
         }

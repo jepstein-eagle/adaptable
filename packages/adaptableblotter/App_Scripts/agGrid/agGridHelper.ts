@@ -51,7 +51,8 @@ import { AdaptableBlotter } from "./AdaptableBlotter";
 export class agGridHelper {
 
     constructor(private blotter: IAdaptableBlotter, private gridOptions: GridOptions) {
-
+        this.blotter = blotter;
+        this.gridOptions = gridOptions;
     }
 
     public getLightThemeName(): string {
@@ -120,7 +121,7 @@ export class agGridHelper {
         return true;
     }
 
-    public createCellRendererFunc(pcr: IPercentBar, blotterId: string): ICellRendererFunc {
+    public createPercentBarCellRendererFunc(pcr: IPercentBar, blotterId: string): ICellRendererFunc {
         let showNegatives: boolean = pcr.MinValue < 0;
         let showPositives: boolean = pcr.MaxValue > 0;
 
@@ -197,10 +198,8 @@ export class agGridHelper {
     }
 
 
-    public getCleanValue(value: string): string {
-        if (value == null || value == 'null') {
-            return undefined;
-        } else if (value == undefined || value == 'undefined') {
+    public getCleanValue(value: string): string | undefined {
+        if (value == null || value == 'null' || value == undefined || value == 'undefined') {
             return undefined;
         } else {
             return String(value) || "";

@@ -18,6 +18,7 @@ export class AuditLogService {
     public IsAuditInternalStateChangesEnabled: boolean;
 
     constructor(private blotter: IAdaptableBlotter, blotterOptions: IAdaptableBlotterOptions) {
+        this.blotter = blotter;
         this.auditLogQueue = []
         this.blotterOptions = blotterOptions
         this.setUpFlags(blotterOptions)
@@ -117,7 +118,7 @@ export class AuditLogService {
                     data: data ? this.convertToText(data) : null
                 }
             };
-             this.auditLogQueue.push(auditLogEntry);
+            this.auditLogQueue.push(auditLogEntry);
         }
     }
 

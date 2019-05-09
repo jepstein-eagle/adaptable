@@ -7,6 +7,8 @@ import { IColumn } from "../Interface/IColumn";
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
     constructor(private blotter: IAdaptableBlotter, private colFunctionValue: (columnId: string, record: any) => any) {
+        this.blotter = blotter;
+        this.colFunctionValue = colFunctionValue;
     }
 
     IsExpressionValid(expression: string): { IsValid: Boolean, ErrorMsg?: string } {

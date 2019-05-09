@@ -1,5 +1,6 @@
 ﻿// import styles - ab and 2 default agGrid
-import '../Styles/stylesheets/adaptableblotter-style.css'
+
+import { Grid } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
 import * as Redux from 'redux'
@@ -73,7 +74,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 
 // ag-Grid
 //if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import {  GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, SideBarDef } from "ag-grid-community"
+import { GridOptions, Column, RowNode, ICellEditor, AddRangeSelectionParams, ICellRendererFunc, SideBarDef } from "ag-grid-community"
 import { Events } from "ag-grid-community/dist/lib/eventKeys"
 import { NewValueParams, ValueGetterParams, ColDef, ValueFormatterParams } from "ag-grid-community/dist/lib/entities/colDef"
 import { GetMainMenuItemsParams, MenuItemDef } from "ag-grid-community/dist/lib/entities/gridOptions"
@@ -146,12 +147,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.hasFloatingFilter = true;
         this.useRowNodeLookUp = false; // we will set later in instantiate if possible to be true
 
-        // get the api ready
-        this.api = new BlotterApi(this);
-
         // set the licence first
         this.LicenceService = new LicenceService(this);
         BlotterHelper.checkLicenceKey(this.LicenceService.LicenceInfo);
+
+        // get the api ready
+        this.api = new BlotterApi(this);
 
         // the audit service needs to be created before the store
         this.AuditLogService = new AuditLogService(this, this.blotterOptions);
@@ -182,7 +183,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
 
-        console.log("we have got to here")
         // set up iPushPull
         iPushPullHelper.init(this.blotterOptions.iPushPullConfig);
 
@@ -244,7 +244,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // set up whether we use the getRowNode method or loop when finding a record (former is preferable)
         // can only do that here as the gridOptions not yet set up
         this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds();
-       
+
         // Create Adaptable Blotter Tool Panel
         if (this.blotterOptions.generalOptions.showAdaptableBlotterToolPanel) {
             LoggingHelper.LogAdaptableBlotterInfo("Adding Adaptable Blotter Tool Panel")
@@ -277,11 +277,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
         }
         // now create the grid itself - we have to do it this way as previously when we instantiated the Grid 'properly' it got created as J.Grid 
-        console.log('creating the grid as not created by user')
-         let grid: any =   new (<any>window).agGrid.Grid(vendorContainer, this.gridOptions);
+        //console.log('creating the grid as not created by user')
+        let grid: any = new Grid(vendorContainer, this.gridOptions);
         return (grid != null);
     }
-    
+
 
     // debounced methods
     debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), HALF_SECOND);
@@ -501,7 +501,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let menuItems: IMenuItem[] = [];
         this.strategies.forEach(x => {
             let menuItem = x.getPopupMenuItem()
-            if (menuItem != null) {
+            console.log(menuItem);
+            if (menuItem != null && menuItem !=undefined) {
                 if (menuItems.findIndex(m => m.StrategyId == menuItem.StrategyId) == -1) {
                     menuItems.push(menuItem);
                 }
@@ -745,7 +746,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public setValueBatch(batchValues: ICellInfo[]): void {
- if (ArrayExtensions.IsNullOrEmpty(batchValues)) {
+        if (ArrayExtensions.IsNullOrEmpty(batchValues)) {
             return;
         }
 
@@ -763,7 +764,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 }
             });
         } else {
-           this.gridOptions.api.getModel().forEachNode((rowNode: RowNode) => {
+            this.gridOptions.api.getModel().forEachNode((rowNode: RowNode) => {
                 let cellInfo: ICellInfo = batchValues.find(x => x.Id == this.getPrimaryKeyValueFromRecord(rowNode))
                 if (cellInfo) {
                     this.updateBatchValue(cellInfo, rowNode, nodesToRefresh, refreshColumnList, dataChangedEvents, percentBars);
@@ -1667,8 +1668,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public addPercentBar(pcr: IPercentBar): void {
         let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.api.gridApi.getColumns());
         if (renderedColumn) {
-            let cellRendererFunc: ICellRendererFunc = this.agGridHelper.createCellRendererFunc(pcr, this.blotterOptions.blotterId);
-            let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
+            let cellRendererFunc: ICellRendererFunc = this.agGridHelper.createPercentBarCellRendererFunc(pcr, this.blotterOptions.blotterId!);
+            let vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
             let coldDef: ColDef = vendorGridColumn.getColDef();
             coldDef.cellRenderer = cellRendererFunc;
             // change the style from number-cell temporarily?
@@ -1681,7 +1682,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public removePercentBar(pcr: IPercentBar): void {
         let renderedColumn = ColumnHelper.getColumnFromId(pcr.ColumnId, this.api.gridApi.getColumns())
         if (renderedColumn) {
-            let vendorGridColumn: Column = this.gridOptions.columnApi.getColumn(pcr.ColumnId);
+            let vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
             // note we dont get it from the original (but I guess it will be applied next time you run...)
             vendorGridColumn.getColDef().cellRenderer = null;
             let coldDef: ColDef = vendorGridColumn.getColDef();

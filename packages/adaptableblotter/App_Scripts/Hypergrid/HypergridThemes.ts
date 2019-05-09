@@ -1,4 +1,3 @@
-export module HypergridThemes {
 
     export function getLightTheme(): any {
         return {
@@ -102,4 +101,8 @@ export module HypergridThemes {
         }
 
     }
-}
+    export const HypergridThemes = {
+        getLightTheme,
+        getDarkTheme
+    }
+    export default HypergridThemes

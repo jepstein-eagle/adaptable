@@ -1,0 +1,28 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "es2017"
+    ],
+    "module": "commonjs",
+    "target": "es6",
+    "isolatedModules": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "../App_Scripts/**/*.ts",
+    "../App_Scripts/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    ".next"
+  ],
+  "awesomeTypescriptLoaderOptions": {}
+}

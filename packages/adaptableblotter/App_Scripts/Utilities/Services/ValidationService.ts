@@ -16,6 +16,7 @@ import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 export class ValidationService implements IValidationService {
 
     constructor(private blotter: IAdaptableBlotter) {
+        this.blotter = blotter;
     }
 
     // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...
@@ -28,7 +29,7 @@ export class ValidationService implements IValidationService {
 
         // first check that if primary key change, the new value is unique
         if (dataChangedEvent.ColumnId == this.blotter.blotterOptions.primaryKey) {
-            if (this.blotter.blotterOptions.generalOptions.preventDuplicatePrimaryKeyValues) {
+            if (this.blotter.blotterOptions.generalOptions!.preventDuplicatePrimaryKeyValues) {
                 if (dataChangedEvent.OldValue != dataChangedEvent.NewValue) {
                     let displayValuePair: IRawValueDisplayValuePair[] = this.blotter.getColumnValueDisplayValuePairDistinctList(dataChangedEvent.ColumnId, DistinctCriteriaPairValue.DisplayValue, false)
                     let existingItem = displayValuePair.find(dv => dv.DisplayValue == dataChangedEvent.NewValue);
@@ -98,7 +99,7 @@ export class ValidationService implements IValidationService {
         }
         // todo: change the last argument from null as we might want to do evaluation based on other cells...
         let column: IColumn = ColumnHelper.getColumnFromId(dataChangedEvent.ColumnId, columns);
-        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(cellValidationRule.Range, dataChangedEvent.NewValue, dataChangedEvent.NewValue, column, this.blotter, null)
+        let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(cellValidationRule.Range, dataChangedEvent.NewValue, dataChangedEvent.OldValue, column, this.blotter, null)
         return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.blotter)
     }
 

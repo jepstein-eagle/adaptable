@@ -105,7 +105,7 @@ export class BlotterApi implements IBlotterApi {
   public reminderApi: IReminderApi;
   public shortcutApi: IShortcutApi;
   public smartEditApi: ISmartEditApi;
-   public systemFilterApi: ISystemFilterApi;
+  public systemFilterApi: ISystemFilterApi;
   public systemStatusApi: ISystemStatusApi;
   public themeApi: IThemeApi;
   public userInterfaceApi: IUserInterfaceApi;
@@ -113,6 +113,7 @@ export class BlotterApi implements IBlotterApi {
 
 
   constructor(protected blotter: IAdaptableBlotter) {
+    this.blotter = blotter;
     this.advancedSearchApi = new AdvancedSearchApi(blotter);
     this.alertApi = new AlertApi(blotter);
     this.bulkUpdateApi = new BulkUpdateApi(blotter);
@@ -149,7 +150,7 @@ export class BlotterApi implements IBlotterApi {
     this.userFilterApi = new UserFilterApi(blotter);
 
     this.internalApi = new InternalApi(blotter);
-   
+
   }
 
 }

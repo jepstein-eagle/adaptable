@@ -11,5 +11,13 @@
 		"emitDecoratorMetadata": false,
 		"allowSyntheticDefaultImports": true
 	},
-	"include": ["App_Scripts/**/*", "Hypergrid/**/*", "agGrid/**/*"],
+	"include": [
+		"App_Scripts/**/*",
+		"Hypergrid/**/*",
+		"agGrid/**/*"
+	],
+	"exclude": [
+		"node_modules",
+		".next"
+	]
 }

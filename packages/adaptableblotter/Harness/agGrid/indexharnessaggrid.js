@@ -58,7 +58,7 @@ function getBlotterIdforGrid() {
   return 'demo ftse';
 }
 
-function InitTradeBlotter() {
+function InitAdaptableBlotter() {
   const dataGen = new harness.DataGenerator();
   trades = getRowsForGrid(dataGen);
 
@@ -76,7 +76,7 @@ function InitTradeBlotter() {
     getRowNodeId: (data) => {
       return data.tradeId;
     },
- 
+
     /*
         sideBar: {
           toolPanels: [
@@ -126,8 +126,8 @@ function InitTradeBlotter() {
       primaryKey: getPKForGrid(), // pk for blotter - required
       userName: 'demo user', // name of current user
       blotterId: getBlotterIdforGrid(), // id for blotter
-   
-   //   predefinedConfig: dataSourceJson,
+
+      //   predefinedConfig: dataSourceJson,
       auditOptions: {
         //     auditCellEdits: true,
         //  auditFunctionEvents: true,
@@ -147,7 +147,7 @@ function InitTradeBlotter() {
         includeVendorStateInLayouts: true,
         autoSaveLayouts: true,
       },
-       queryOptions: {
+      queryOptions: {
         //  ignoreCaseInQueries: false,
         // maxColumnValueItemsDisplayed: 5,
         //  columnValuesOnlyInQueries: true,
@@ -187,10 +187,10 @@ function InitTradeBlotter() {
     adaptableblotter.adaptableBlotterStore.TheStore.subscribe(() => {
       apiTester(adaptableblotter.adaptableBlotterStore.TheStore.getState(), gridOptions);
     });
-  //  adaptableblotter.api.eventApi.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs));
-  //  adaptableblotter.api.eventApi.onAlertFired().Subscribe((sender, alertFiredArgs) => listenToAlertFired(alertFiredArgs));
-  //  adaptableblotter.api.eventApi.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs));
-  //  adaptableblotter.api.eventApi.onSearchedChanged().Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
+    //  adaptableblotter.api.eventApi.onColumnStateChanged().Subscribe((sender, columnChangedArgs) => listenToColumnStateChange(columnChangedArgs));
+    //  adaptableblotter.api.eventApi.onAlertFired().Subscribe((sender, alertFiredArgs) => listenToAlertFired(alertFiredArgs));
+    //  adaptableblotter.api.eventApi.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs));
+    //  adaptableblotter.api.eventApi.onSearchedChanged().Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
     setTimeout(() => {
       if (adaptableblotter.adaptableBlotterStore.TheStore.getState().Layout.CurrentLayout === 'Ab_Default_Layout') {
         gridOptions.columnApi.autoSizeAllColumns();
@@ -338,7 +338,7 @@ function getTradeSchema() {
   schema.push({
     headerName: 'Currency',
     field: 'currency',
-       editable: true,
+    editable: true,
     enableRowGroup: true,
     sortable: true,
     filter: 'agTextColumnFilter',

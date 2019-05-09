@@ -20,6 +20,8 @@ import { IDataSource } from '../Utilities/Interface/BlotterObjects/IDataSource';
  */
 export abstract class AdaptableStrategyBase implements IStrategy {
     constructor(public Id: string, protected blotter: IAdaptableBlotter) {
+        this.Id = Id
+        this.blotter = blotter;
     }
 
     public initializeWithRedux() {

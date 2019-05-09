@@ -41,6 +41,19 @@ Note: The Adaptable Blotter licence does not include the licence for the underly
 
 Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for more information.
 
+## Usage
+
+
+```js
+import AdaptableBlotter from 'adaptableblotter/agGrid';
+
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+
+import 'adaptableblotter/base.css';
+import 'adaptableblotter/themes/light.css';
+```
+
 ## Demo
 To see AdaptableBlotter.JS in action visit https://demo.adaptableblotter.com where you can see the Adaptable Blotter running againt a number of different dummy data sets using various underlying DataGrids. 
 
