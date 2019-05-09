@@ -4,36 +4,31 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid'
 import '../../../../App_Scripts/base.css'
 import '../../../../App_Scripts/themes/light.css'
-import { DataGenerator } from '../../../../Harness/DataGenerator'
 import { GridOptions } from 'ag-grid-community';
 import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { ExamplesHelper } from '../../ExamplesHelper';
 
 
 /*
-Has pseudo ticking data together with some JSON that sets flashing
+Has pseudo ticking data together with some JSON that sets flashing in 3 columns
 */
 
 function InitAdaptableBlotter() {
-  const dataGen = new DataGenerator();
+  const examplesHelper = new ExamplesHelper();
 
-  const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
 
   // turn on mimicing ticking data
-  dataGen.startTickingDataagGrid(gridOptions);
+  examplesHelper.startTickingDataagGrid(gridOptions);
 
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = dataGen.createAdaptableBlotterOptionsTrade(gridOptions, 'ticking demo');
+  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(gridOptions, 'ticking demo');
   adaptableBlotterOptions.predefinedConfig = flashingJson;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
-
-  setTimeout(() => {
-    if (adaptableblotter.adaptableBlotterStore.TheStore.getState().Layout.CurrentLayout === 'Ab_Default_Layout') {
-      gridOptions.columnApi.autoSizeAllColumns();
-    }
-  });
+  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
 let flashingJson = {
-   FlashingCell: {
+  FlashingCell: {
     FlashingCells: [
       {
         "IsLive": true,
@@ -53,10 +48,10 @@ let flashingJson = {
         "IsLive": true,
         "ColumnId": "price",
         "FlashingCellDuration": 500,
-        "UpColor": "#008000",
-        "DownColor": "#FF0000"
+        "UpColor": "Blue",
+        "DownColor": "Yellow"
       },
-         ]
+    ]
   }
 };
 

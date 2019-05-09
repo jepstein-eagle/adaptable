@@ -7,6 +7,11 @@ import { DateExtensions } from "../Extensions/DateExtensions";
 import { IReport } from "../Interface/BlotterObjects/IReport";
 import { IReminder } from "../Interface/BlotterObjects/IReminder";
 
+/**
+ * This class is used for managing scheduling of Reports and Reminders
+ * It uses node-schedule (via a strongly typed NodeSchedule) and creates standard jobs
+ * It also createsa daily job to run at midnight that will refresh the Blotter - this is so that date-based schedules can jump to the new day
+ */
 export class ScheduleService implements IScheduleService {
 
     private alertJobs: NodeSchedule.Job[]
@@ -17,6 +22,7 @@ export class ScheduleService implements IScheduleService {
         this.alertJobs = [];
         this.exportJobs = [];
 
+        // create the midnight reload job
         let reloadSchedule: ISchedule = {
             Hour: 0,
             Minute: 1,

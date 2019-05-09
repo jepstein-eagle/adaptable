@@ -101,7 +101,6 @@
     "build-package-json": "node ../../scripts/buildPackageJson",
     "copy-assets": "cp ./App_Scripts/base.css ./dist && cp -R ./App_Scripts/fonts ./dist/ && cp -R ./App_Scripts/themes ./dist/",
     "tsc": "tsc --outDir dist",
-    
     "build": "npm run build-prod",
     "openfin": "node openfin-launcher.js",
     "configserver": "ts-node configserver/configserver.ts --configfolder ./tmp | bunyan"

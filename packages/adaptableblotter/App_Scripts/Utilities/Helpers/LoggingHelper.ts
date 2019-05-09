@@ -63,6 +63,22 @@ export function LogError(message: string, ...optionalParams: any[]): void {
     }
 }
 
+export function LogInfo(message: string, ...optionalParams: any[]): void {
+    if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
+        console.info(message, optionalParams)
+    } else {
+        console.info(message)
+    }
+}
+
+export function LogObject(objectToLog: any, ...optionalParams: any[]): void {
+    if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
+        console.log(objectToLog, optionalParams)
+    } else {
+        console.log(objectToLog)
+    }
+}
+
 export const LoggingHelper = {
     LogAlert,
     LogAdaptableBlotterInfo,
@@ -70,6 +86,8 @@ export const LoggingHelper = {
     LogAdaptableBlotterWarning,
     LogAdaptableBlotterError,
     LogWarning,
-    LogError
+    LogError,
+    LogInfo,
+    LogObject
 }
 export default LoggingHelper

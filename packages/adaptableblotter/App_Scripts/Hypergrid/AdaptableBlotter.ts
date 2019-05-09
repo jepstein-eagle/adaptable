@@ -162,7 +162,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         BlotterHelper.checkLicenceKey(this.LicenceService.LicenceInfo);
 
         // the audit service needs to be created before the store
-        this.AuditLogService = new AuditLogService(this, this.blotterOptions);
+        this.AuditLogService = new AuditLogService(this.blotterOptions);
         // create the store
         this.adaptableBlotterStore = new AdaptableBlotterStore(this);
 

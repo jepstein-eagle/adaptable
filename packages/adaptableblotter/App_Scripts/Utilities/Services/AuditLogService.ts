@@ -1,9 +1,9 @@
 import { IAdaptableBlotterOptions } from "../Interface/BlotterOptions/IAdaptableBlotterOptions";
-import { IAdaptableBlotter } from "../Interface/IAdaptableBlotter";
 import { AuditLogTrigger } from "../Enums";
 import { LoggingHelper } from "../Helpers/LoggingHelper";
 import { IDataChangedInfo } from "../Interface/IDataChangedInfo";
 import { IAuditLogEntry } from "../Interface/IAuditLogEntry";
+import AdaptableBlotter from "../../agGrid";
 
 export class AuditLogService {
     private auditLogQueue: Array<IAuditLogEntry>
@@ -16,16 +16,18 @@ export class AuditLogService {
     public IsAuditFunctionEventsEnabled: boolean;
     public IsAuditUserStateChangesEnabled: boolean;
     public IsAuditInternalStateChangesEnabled: boolean;
+    public ShouldAuditToConsole: boolean;
 
-    constructor(private blotter: IAdaptableBlotter, blotterOptions: IAdaptableBlotterOptions) {
-        this.blotter = blotter;
+    constructor(blotterOptions: IAdaptableBlotterOptions) {
         this.auditLogQueue = []
         this.blotterOptions = blotterOptions
         this.setUpFlags(blotterOptions)
         if (this.IsAuditEnabled) {
-            this.ping()
-            setInterval(() => this.ping(), blotterOptions.auditOptions.pingInterval * 1000)
-            setInterval(() => this.flushAuditQueue(), blotterOptions.auditOptions.auditLogsSendInterval * 1000)
+            if (!this.ShouldAuditToConsole) {
+                this.ping()
+                setInterval(() => this.ping(), blotterOptions.auditOptions.pingInterval * 1000)
+                setInterval(() => this.flushAuditQueue(), blotterOptions.auditOptions.auditLogsSendInterval * 1000)
+            }
         }
     }
 
@@ -63,6 +65,9 @@ export class AuditLogService {
 
         // General Audit Flag
         this.IsAuditEnabled = this.IsAuditStateChangesEnabled || this.IsAuditFunctionEventsEnabled || this.IsAuditCellEditsEnabled;
+
+        // Log to Console (or to the default queue)
+        this.ShouldAuditToConsole = blotterOptions.auditOptions.auditToConsole;
     }
 
     public AddEditCellAuditLogBatch(dataChangedEvents: IDataChangedInfo[]) {
@@ -71,7 +76,7 @@ export class AuditLogService {
 
     public AddEditCellAuditLog(dataChangedEvent: IDataChangedInfo) {
         if (this.IsAuditCellEditsEnabled) {
-            this.auditLogQueue.push({
+            let auditLogEntry: IAuditLogEntry = {
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotterOptions.userName,
@@ -83,22 +88,22 @@ export class AuditLogService {
                     previous_value: String(dataChangedEvent.OldValue),
                     new_value: String(dataChangedEvent.NewValue)
                 }
-            });
+            }
+            this.processAuditLogEntry(auditLogEntry);
         }
     }
 
     public AddStateChangeAuditLog(stateChanges: any, actionType: string) {
         if (this.IsAuditStateChangesEnabled) {
-            this.auditLogQueue.push({
+            let auditLogEntry: IAuditLogEntry = {
                 adaptableblotter_auditlog_trigger: AuditLogTrigger.StateChange,
                 adaptableblotter_client_timestamp: new Date(),
                 adaptableblotter_username: this.blotterOptions.userName,
                 adaptableblotter_id: this.blotterOptions.blotterId,
-                //we want to lose the type since you cannot have same field name with different types in logstash. So log it as a string...
-                //it makes sense anyway
                 adaptableblotter_state_change: this.convertToText(stateChanges),
                 adaptableblotter_state_change_action: actionType
-            });
+            }
+            this.processAuditLogEntry(auditLogEntry);
         }
     }
 
@@ -117,7 +122,15 @@ export class AuditLogService {
                     //same as adaptableblotter_state_change we log the obj as a string
                     data: data ? this.convertToText(data) : null
                 }
-            };
+            }
+            this.processAuditLogEntry(auditLogEntry);
+        }
+    }
+
+    private processAuditLogEntry(auditLogEntry: IAuditLogEntry):void{
+        if (this.ShouldAuditToConsole) {
+            LoggingHelper.LogObject(auditLogEntry)
+        } else {
             this.auditLogQueue.push(auditLogEntry);
         }
     }

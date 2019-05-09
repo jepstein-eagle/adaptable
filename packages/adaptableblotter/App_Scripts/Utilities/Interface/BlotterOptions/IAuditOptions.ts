@@ -40,4 +40,6 @@ export interface IAuditOptions {
       * Default Value: 1
      */
     auditLogsSendInterval?: number;
+
+    auditToConsole?: boolean;
 }

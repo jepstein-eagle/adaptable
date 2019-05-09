@@ -9,6 +9,7 @@ import { GridOptions } from 'ag-grid-community';
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 
 import { Button } from 'react-bootstrap'
+import { ExamplesHelper } from '../../ExamplesHelper';
 /*
 Demo that shows how we can use the api 'externally' via textboxes and buttons
 */
@@ -30,16 +31,11 @@ export function clearQuickSearchViaAPI() {
 
 
 function InitAdaptableBlotter() {
-  const dataGen = new DataGenerator();
-  const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = dataGen.createAdaptableBlotterOptionsTrade(gridOptions, 'api external demo');
+  const examplesHelper = new ExamplesHelper();
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
+  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(gridOptions, 'api external demo');
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
-
-  setTimeout(() => {
-    if (adaptableblotter.adaptableBlotterStore.TheStore.getState().Layout.CurrentLayout === 'Ab_Default_Layout') {
-      gridOptions.columnApi!.autoSizeAllColumns();
-    }
-  });
+  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
 

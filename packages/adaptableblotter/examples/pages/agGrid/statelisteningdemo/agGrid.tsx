@@ -9,15 +9,16 @@ import { DataGenerator } from '../../../../Harness/DataGenerator'
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../../../../App_Scripts/Utilities/Interface/IStateEvents';
+import { ExamplesHelper } from '../../ExamplesHelper';
 
 var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
-  const dataGen = new DataGenerator();
+  const examplesHelper = new ExamplesHelper();
+ 
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
 
-  const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
-
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = dataGen.createAdaptableBlotterOptionsTrade(gridOptions, 'state listen demo');
+  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(gridOptions, 'state listen demo');
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
@@ -25,11 +26,7 @@ function InitAdaptableBlotter() {
   adaptableblotter.api.eventApi.onAlertFired().Subscribe((sender, alertFiredArgs) => listenToAlertFired(alertFiredArgs));
   adaptableblotter.api.eventApi.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs));
   adaptableblotter.api.eventApi.onSearchedChanged().Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
-  setTimeout(() => {
-    if (adaptableblotter.adaptableBlotterStore.TheStore.getState().Layout.CurrentLayout === 'Ab_Default_Layout') {
-      gridOptions.columnApi.autoSizeAllColumns();
-    }
-  });
+  examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
 

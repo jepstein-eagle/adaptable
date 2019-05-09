@@ -155,7 +155,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.api = new BlotterApi(this);
 
         // the audit service needs to be created before the store
-        this.AuditLogService = new AuditLogService(this, this.blotterOptions);
+        this.AuditLogService = new AuditLogService(this.blotterOptions);
         // create the store
         this.adaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -281,7 +281,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let grid: any = new Grid(vendorContainer, this.gridOptions);
         return (grid != null);
     }
-
 
     // debounced methods
     debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), HALF_SECOND);
@@ -501,7 +500,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let menuItems: IMenuItem[] = [];
         this.strategies.forEach(x => {
             let menuItem = x.getPopupMenuItem()
-            console.log(menuItem);
             if (menuItem != null && menuItem !=undefined) {
                 if (menuItems.findIndex(m => m.StrategyId == menuItem.StrategyId) == -1) {
                     menuItems.push(menuItem);
