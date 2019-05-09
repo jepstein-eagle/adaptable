@@ -4,7 +4,6 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid'
 import '../../../../App_Scripts/base.css'
 import '../../../../App_Scripts/themes/light.css'
-import { DataGenerator } from '../../../../Harness/DataGenerator'
 import { GridOptions } from 'ag-grid-community';
 import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';

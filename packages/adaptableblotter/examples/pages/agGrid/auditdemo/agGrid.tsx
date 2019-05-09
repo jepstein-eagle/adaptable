@@ -28,7 +28,7 @@ function InitAdaptableBlotter() {
       auditCellEdits: true,
       auditFunctionEvents: true,
       auditUserStateChanges: true,
-      auditInternalStateChanges: true,
+      auditInternalStateChanges: false,
       pingInterval: 120,
       auditToConsole: true
     },

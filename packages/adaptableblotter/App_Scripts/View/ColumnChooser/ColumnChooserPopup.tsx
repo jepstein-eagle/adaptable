@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps'
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { DualListBoxEditor } from "../Components/ListBox/DualListBoxEditor";
@@ -14,7 +14,7 @@ import { ArrayExtensions } from "../../Utilities/Extensions/ArrayExtensions";
 import { IColumnCategory } from "../../Utilities/Interface/BlotterObjects/IColumnCategory";
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {
-    onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
+    onNewColumnListOrder: (VisibleColumnList: IColumn[]) => SystemRedux.SetNewColumnListOrderAction
     ColumnCategories: Array<IColumnCategory>
 }
 
@@ -70,7 +70,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     return {
-        onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList))
+        onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList))
     };
 }
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as Redux from "redux";
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux'
-import * as ColumnChooserRedux from '../../Redux/ActionsReducers/ColumnChooserRedux'
+import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux'
 import { Glyphicon, MenuItem, OverlayTrigger, Tooltip, Checkbox, DropdownButton } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps'
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
@@ -31,7 +31,7 @@ interface HomeToolbarComponentProps extends ToolbarStrategyViewPopupProps<HomeTo
     SystemStatus: ISystemStatus,
     HeaderText: string,
     DashboardSize: DashboardSize;
-    onNewColumnListOrder: (VisibleColumnList: IColumn[]) => ColumnChooserRedux.SetNewColumnListOrderAction
+    onNewColumnListOrder: (VisibleColumnList: IColumn[]) => SystemRedux.SetNewColumnListOrderAction
     onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction
     onSetToolbarVisibility: (strategyIds: string[]) => DashboardRedux.DashboardSetToolbarsAction
     onShowStatusMessage: (alert: IAdaptableAlert) => PopupRedux.PopupShowAlertAction
@@ -286,7 +286,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
         onClick: (action: Redux.Action) => dispatch(action),
         onClose: (dashboardControl: string) => dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
         onConfigure: () => dispatch(PopupRedux.PopupShowScreen(StrategyConstants.HomeStrategyId, ScreenPopups.DashboardPopup)),
-        onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(ColumnChooserRedux.SetNewColumnListOrder(VisibleColumnList)),
+        onNewColumnListOrder: (VisibleColumnList: IColumn[]) => dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),
         onSetDashboardVisibility: (visibility: Visibility) => dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
         onSetToolbarVisibility: (strategyIds: string[]) => dispatch(DashboardRedux.DashboardSetToolbars(strategyIds)),
         onShowStatusMessage: (alert: IAdaptableAlert) => dispatch(PopupRedux.PopupShowAlert(alert)),
