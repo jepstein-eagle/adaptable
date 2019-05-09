@@ -8,9 +8,6 @@ import { ILicenceInfo } from '../Interface/ILicenceInfo';
 import { LicenceScopeType } from '../Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 
-
-
-
 export function assignBlotterOptions(blotterOptions: IAdaptableBlotterOptions): IAdaptableBlotterOptions {
     let returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions)
     returnBlotterOptions.auditOptions = Object.assign({}, DefaultAdaptableBlotterOptions.auditOptions, blotterOptions.auditOptions)
@@ -79,8 +76,12 @@ export function checkLicenceKey(licenceInfo: ILicenceInfo): void {
     }
 }
 
+export function isDemoSite(): boolean {
+    return (window.location.hostname == 'demo.adaptableblotter.com');
+}
 
 export const BlotterHelper = {
+    isDemoSite,
     assignBlotterOptions,
     isValidPrimaryKey,
     isConfigServerEnabled,
