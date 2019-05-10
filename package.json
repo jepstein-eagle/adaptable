@@ -10,19 +10,28 @@
     "cpy-cli": "^2.0.0",
     "lerna": "^3.10.8",
     "next": "^8.1.0",
-    "rimraf": "^2.6.3"
+    "rimraf": "^2.6.3",
+    "husky": ">=1",
+    "lint-staged": ">=8",
+    "prettier": "^1.17.0"
   },
   "scripts": {
+    "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "cleanup": "lerna clean --yes",
     "publish": "lerna publish",
     "build-main": "npm run --prefix packages/adaptableblotter build-prod",
     "pack-ab": "npm pack ./packages/adaptableblotter"
   },
-  "files": [
-    "/packages/adaptableblotter/App_Scripts",
-    "/packages/adaptableblotter/dist/",
-    "/packages/adaptableblotter-react/src/",
-    "/packages/adaptableblotter-react/package.json"
-  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "packages/**/*.{js,jsx,ts,tsx,json,css,scss}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
   "dependencies": {}
 }
