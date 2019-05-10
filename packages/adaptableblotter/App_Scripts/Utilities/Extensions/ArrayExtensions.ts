@@ -58,7 +58,7 @@ export function IsNotNullOrEmpty(arrayToCheck: any[]): boolean {
     return ArrayExtensions.IsNotNull(arrayToCheck) && ArrayExtensions.IsNotEmpty(arrayToCheck);
 }
 
-export function HasOneItem(arrayToCheck: any[]): boolean {
+export function hasOneItem(arrayToCheck: any[]): boolean {
     return arrayToCheck.length == 1;
 }
 
@@ -188,7 +188,7 @@ export function groupArrayBy(array: Array<any>, prop: string): Array<any> {
     }, {});
 }
 
-export function CreateCommaSeparatedString(values: any[]): string {
+export function createCommaSeparatedString(values: any[]): string {
     return values.join(", ")
 
 }
@@ -197,7 +197,25 @@ export const ArrayExtensions = {
     CorrectLength,
     NotCorrectLength,
     groupArrayBy,
-    AddItem, ContainsItem, NotContainsItem, RetrieveDistinct, IsNull, IsNotNull, IsEmpty, IsNotEmpty, IsNullOrEmpty, IsNotNullOrEmpty, HasOneItem, moveArray, areArraysEqual, areArraysNotEqual, areArraysEqualWithOrder, areArraysEqualWithOrderandProperties, sortArray, sortArrayWithProperty, CreateCommaSeparatedString
+    AddItem, 
+    ContainsItem, 
+    NotContainsItem, 
+    RetrieveDistinct, 
+    IsNull, 
+    IsNotNull, 
+    IsEmpty, 
+    IsNotEmpty, 
+    IsNullOrEmpty, 
+    IsNotNullOrEmpty, 
+    hasOneItem, 
+    moveArray, 
+    areArraysEqual, 
+    areArraysNotEqual, 
+    areArraysEqualWithOrder, 
+    areArraysEqualWithOrderandProperties, 
+    sortArray, 
+    sortArrayWithProperty, 
+    createCommaSeparatedString
 }
 
 export default ArrayExtensions

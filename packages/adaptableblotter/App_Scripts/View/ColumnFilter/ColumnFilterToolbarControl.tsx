@@ -53,7 +53,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterTo
         let cssClassName: string = this.props.cssClassName + "__columnfilter";
         let collapsedText = ArrayExtensions.IsNullOrEmpty(this.props.ColumnFilters) ?
             "No Filters" :
-            ArrayExtensions.HasOneItem(this.props.ColumnFilters) ?
+            ArrayExtensions.hasOneItem(this.props.ColumnFilters) ?
                 "1 Filter" :
                 this.props.ColumnFilters.length + " Filters";
 
