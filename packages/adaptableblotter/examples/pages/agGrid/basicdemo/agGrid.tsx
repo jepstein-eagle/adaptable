@@ -5,6 +5,7 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid'
 import '../../../../App_Scripts/base.css'
 import '../../../../App_Scripts/themes/light.css'
 import { GridOptions } from 'ag-grid-community';
+import { LicenseManager } from "ag-grid-enterprise";
 import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
@@ -14,10 +15,13 @@ No JSON or anything complicated
 Nor do we create the ag-Grid
 */
 
+LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
+
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
   const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(gridOptions, 'basic demo');
+
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
   adaptableblotter.applyLightTheme();

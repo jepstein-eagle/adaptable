@@ -1,4 +1,5 @@
 const path = require('path')
+const Dotenv = require('dotenv-webpack')
 
 // make the app accept sources from everywhere in the monorepo
 const SRC_PATH = path.resolve('../../../');
@@ -24,12 +25,20 @@ const withTypescript = (nextConfig = {}) => {
 
       config.resolve.extensions.push('.ts', '.tsx')
 
+      // needed in order to avoid 2 copies of react being included, which makes hooks not work
+      config.resolve = config.resolve || {};
+      config.resolve.alias = config.resolve.alias || {};
+      config.resolve.alias.react = path.resolve('../node_modules/react');
+      config.resolve.alias['react-dom'] = path.resolve(
+        '../node_modules/react-dom')
+
       config.module.rules.push({
         test: /\.(ts|tsx)$/,
         include: [dir],
         exclude: /node_modules/,
         use: defaultLoaders.babel
       })
+
 
       config.module.rules.forEach(rule => {
         if (Array.isArray(rule.include)) {
@@ -48,6 +57,18 @@ const withTypescript = (nextConfig = {}) => {
         }
       }
 
+      config.plugins = config.plugins || []
+
+      config.plugins = [
+        ...config.plugins,
+
+        // Read the .env file
+        new Dotenv({
+          path: path.join(__dirname, '../../../', '.env'),
+          systemvars: false
+        })
+      ]
+
       if (typeof nextConfig.webpack === 'function') {
         return nextConfig.webpack(config, options)
       }
@@ -57,4 +78,18 @@ const withTypescript = (nextConfig = {}) => {
   })
 }
 
-module.exports = withTypescript()
+// next.config.js
+const withCSS = require('@zeit/next-css');
+const withImages = require('next-images');
+const withFonts = require('next-fonts');
+
+let nextConfig = withCSS(
+  Object.assign({}, withImages(), {
+    cssModules: false
+  })
+);
+nextConfig = withTypescript(withFonts(nextConfig));
+
+module.exports = Object.assign({}, nextConfig, {
+  pageExtensions: ['jsx', 'js', 'tsx', 'ts']
+});

@@ -57,7 +57,6 @@ import { ICalculatedColumn } from "../Utilities/Interface/BlotterObjects/ICalcul
 import { IRange } from "../Utilities/Interface/Expression/IRange";
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/blotterOptions/IAdaptableblotterOptions';
-import { ISearchChangedEventArgs, IColumnStateChangedEventArgs, IStateChangedEventArgs, IAlertFiredEventArgs } from '../Utilities/Interface/IStateEvents';
 import { ISelectedCellInfo } from "../Utilities/Interface/SelectedCell/ISelectedCellInfo";
 import { ISelectedCell } from "../Utilities/Interface/SelectedCell/ISelectedCell";
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
@@ -135,11 +134,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     public hasFloatingFilter: boolean
 
     private agGridHelper: agGridHelper;
+    private renderGrid: boolean;
 
     constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
         //we create the Blotter Options by merging the values provided by the user with the defaults (where no value has been set)
         this.blotterOptions = BlotterHelper.assignBlotterOptions(blotterOptions);
 
+        this.renderGrid = renderGrid;
         this.gridOptions = this.blotterOptions.vendorGrid
         this.vendorGridName = 'agGrid';
         this.embedColumnMenu = true;
@@ -220,6 +221,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             })
 
         if (renderGrid) {
+            
             if (this.abContainerElement == null) {
                 this.abContainerElement = document.getElementById(this.blotterOptions.containerOptions.adaptableBlotterContainer);
             }
@@ -500,7 +502,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let menuItems: IMenuItem[] = [];
         this.strategies.forEach(x => {
             let menuItem = x.getPopupMenuItem()
-            if (menuItem != null && menuItem !=undefined) {
+            if (menuItem != null && menuItem != undefined) {
                 if (menuItems.findIndex(m => m.StrategyId == menuItem.StrategyId) == -1) {
                     menuItems.push(menuItem);
                 }
@@ -1297,12 +1299,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     private initInternalGridLogic() {
-        if (this.abContainerElement == null) {
-            this.abContainerElement = document.getElementById(this.blotterOptions.containerOptions.adaptableBlotterContainer);
-        }
-        if (this.abContainerElement == null) {
-            LoggingHelper.LogAdaptableBlotterError("There is no Div called " + this.blotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
-            return
+        if (this.renderGrid) {
+            if (this.abContainerElement == null) {
+                this.abContainerElement = document.getElementById(this.blotterOptions.containerOptions.adaptableBlotterContainer);
+            }
+            if (this.abContainerElement == null) {
+                LoggingHelper.LogAdaptableBlotterError("There is no Div called " + this.blotterOptions.containerOptions.adaptableBlotterContainer + " so cannot render the Adaptable Blotter")
+                return
+            }
         }
 
         let gridContainerElement = document.getElementById(this.blotterOptions.containerOptions.vendorContainer);

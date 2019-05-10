@@ -4,18 +4,53 @@ Repository for the Adaptable Blotter React Wrapper.
 
 This allows you to install, instantiate and reference the Adaptable Blotter in a "React-friendly" manner.
 
-There are 2 React Components available:
-
-* *AdaptableBlotter* - this wraps the core Adaptable Blotter package. If used then you will need to provide an immplementation for the underlying vendor grid you are using.
-
-* *AdaptableBlotterAgGrid* - this wraps both the core Adaptable Blotter package and also ag-Grids AgGridReact component.
-
-
 ## Installation
 To install Adaptable Blotter React via npm, run:
 ```javascript
 npm install adaptableblotter-react
 ```
+
+## Usage
+
+```jsx
+
+import AdaptableBlotterReact from 'adaptableblotter-react';
+
+import 'adaptableblotter/base.css'
+import 'adaptableblotter/themes/light.css'
+import 'adaptableblotter-react/base.css';
+
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+
+const adaptableBlotterOptions: IAdaptableBlotterOptions = {
+  primaryKey: 'tradeId',
+  userName: 'demo user',
+  blotterId: 'basic demo',
+  licenceKey: process.env.ENTERPRISE_LICENSE
+};
+
+export default () => <AdaptableBlotterReact
+  style={{ height: '100vh' }}
+  gridOptions={ ... }
+  blotterOptions={adaptableBlotterOptions}
+/>
+
+
+```
+
+### Props
+
+#### Mandatory:
+
+ * gridOptions: AgGrid GridOptions object
+ * blotterOptions: IAdaptableBlotterOptions object
+
+#### Optional
+
+ * renderGrid: (gridOptions: AgGrid GridOptions) => AgGridReact - can specify a custom render function for AgGridReact
+ * render|children: ({ grid, blotter}) => ReactNode - can specify a custom render function that is called with the rendered grid and blotter, and can be used to change the layout of the component, and render additional elements or change blotter/grid order
+ * agGridTheme: string - defaults to 'balham'. Can be used to give the AgGridReact wrapper element a corresponding theme className
   
 ## Licences
 The Adaptable Blotter is a commercial product and requires a purchased licence for use.
