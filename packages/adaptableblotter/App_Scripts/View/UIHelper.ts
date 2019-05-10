@@ -231,7 +231,7 @@ export function GetScheduleDescription(schedule: ISchedule): string {
             let names: string[] = schedule.DaysOfWeek.sort().map(d => {
                 return DayOfWeek[d]
             })
-            dateString = ArrayExtensions.CreateCommaSeparatedString(names)
+            dateString = ArrayExtensions.createCommaSeparatedString(names)
         }
     } else {
         dateString = new Date(schedule.OneOffDate).toDateString();

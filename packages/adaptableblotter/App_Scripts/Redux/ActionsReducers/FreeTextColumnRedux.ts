@@ -1,7 +1,6 @@
 import { FreeTextColumnState } from './Interface/IState';
 import * as Redux from 'redux'
-import { IFreeTextColumn } from "../../Utilities/Interface/BlotterObjects/IFreeTextColumn";
-import { FreeTextStoredValue } from '../../View/UIInterfaces';
+import { IFreeTextColumn, IFreeTextStoredValue } from "../../Utilities/Interface/BlotterObjects/IFreeTextColumn";
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const FREE_TEXT_COLUMN_ADD = 'FREE_TEXT_COLUMN_ADD';
@@ -24,7 +23,7 @@ export interface FreeTextColumnDeleteAction extends Redux.Action {
 
 export interface FreeTextColumnAddEditStoredValueAction extends Redux.Action {
     FreeTextColumn: IFreeTextColumn,
-    FreeTextStoredValue: FreeTextStoredValue
+    FreeTextStoredValue: IFreeTextStoredValue
 }
 
 export const FreeTextColumnAdd = (FreeTextColumn: IFreeTextColumn): FreeTextColumnAddAction => ({
@@ -43,7 +42,7 @@ export const FreeTextColumnDelete = (FreeTextColumn: IFreeTextColumn): FreeTextC
     FreeTextColumn
 })
 
-export const FreeTextColumnAddEditStoredValue = (FreeTextColumn: IFreeTextColumn, FreeTextStoredValue: FreeTextStoredValue): FreeTextColumnAddEditStoredValueAction => ({
+export const FreeTextColumnAddEditStoredValue = (FreeTextColumn: IFreeTextColumn, FreeTextStoredValue: IFreeTextStoredValue): FreeTextColumnAddEditStoredValueAction => ({
     type: FREE_TEXT_COLUMN_ADD_EDIT_STORED_VALUE,
     FreeTextColumn,
     FreeTextStoredValue

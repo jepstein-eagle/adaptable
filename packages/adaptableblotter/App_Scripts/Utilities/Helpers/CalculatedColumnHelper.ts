@@ -52,6 +52,7 @@ export function getExpressionString(expression: string, columns: IColumn[]): str
     })
     return cleanExpression
 }
+
 export const CalculatedColumnHelper = {
     getColumnListFromExpression,
     cleanExpressionColumnNames,

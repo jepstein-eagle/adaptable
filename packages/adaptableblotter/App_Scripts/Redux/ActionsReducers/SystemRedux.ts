@@ -14,6 +14,7 @@ import { IChartData } from "../../Utilities/Interface/BlotterObjects/Charting/IC
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IRange } from '../../Utilities/Interface/Expression/IRange';
 import { Expression } from '../../Utilities/Expression';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -60,6 +61,11 @@ export const QUICK_SEARCH_SET_RANGE = 'QUICK_SEARCH_SET_RANGE';
 export const QUICK_SEARCH_CLEAR_RANGE = 'QUICK_SEARCH_CLEAR_RANGE';
 export const QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS = 'QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS';
 export const QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS = 'QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS';
+
+// Columns
+export const SET_NEW_COLUMN_LIST_ORDER = 'SET_NEW_COLUMN_LIST_ORDER';
+
+
 
 
 export interface SystemSetHealthStatusAction extends Redux.Action {
@@ -145,6 +151,10 @@ export interface QuickSearchSetVisibleColumnExpressionsAction extends Redux.Acti
     Expressions: Expression[]
 }
 export interface QuickSearchClearVisibleColumnExpressionsAction extends Redux.Action {
+}
+
+export interface SetNewColumnListOrderAction extends Redux.Action {
+    VisibleColumnList: Array<IColumn>
 }
 
 export const SystemSetHealthStatus = (SystemStatus: ISystemStatus): SystemSetHealthStatusAction => ({
@@ -254,6 +264,12 @@ export const QuickSearchSetVisibleColumnExpressions = (Expressions: Expression[]
 
 export const QuickSearchClearVisibleColumnExpressions = (): QuickSearchClearVisibleColumnExpressionsAction => ({
     type: QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS
+})
+
+
+export const SetNewColumnListOrder = (VisibleColumnList: Array<IColumn>): SetNewColumnListOrderAction => ({
+    type: SET_NEW_COLUMN_LIST_ORDER,
+    VisibleColumnList
 })
 
 const initialSystemState: SystemState = {

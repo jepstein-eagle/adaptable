@@ -155,7 +155,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.api = new BlotterApi(this);
 
         // the audit service needs to be created before the store
-        this.AuditLogService = new AuditLogService(this, this.blotterOptions);
+        this.AuditLogService = new AuditLogService(this.blotterOptions);
         // create the store
         this.adaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -281,7 +281,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let grid: any = new Grid(vendorContainer, this.gridOptions);
         return (grid != null);
     }
-
 
     // debounced methods
     debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), HALF_SECOND);
@@ -501,7 +500,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         let menuItems: IMenuItem[] = [];
         this.strategies.forEach(x => {
             let menuItem = x.getPopupMenuItem()
-            console.log(menuItem);
             if (menuItem != null && menuItem !=undefined) {
                 if (menuItems.findIndex(m => m.StrategyId == menuItem.StrategyId) == -1) {
                     menuItems.push(menuItem);
@@ -1889,19 +1887,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public showFloatingFilter(): void {
-        if (this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
+        if (this.blotterOptions.filterOptions!.useAdaptableBlotterFloatingFilter) {
             this.gridOptions.floatingFilter = true;
-            this.gridOptions.columnApi.getAllGridColumns().forEach(col => {
+            this.gridOptions.columnApi!.getAllGridColumns().forEach(col => {
                 this.createFloatingFilterWrapper(col);
             });
-            this.gridOptions.api.refreshHeader();
+            this.gridOptions.api!.refreshHeader();
         }
     }
 
     public hideFloatingFilter(): void {
-        if (this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter) {
+        if (this.blotterOptions.filterOptions!.useAdaptableBlotterFloatingFilter) {
             this.gridOptions.floatingFilter = false;
-            this.gridOptions.api.refreshHeader();
+            this.gridOptions.api!.refreshHeader();
         }
     }
 
@@ -1915,9 +1913,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     public applyDarkTheme(): void {
-        if (this.blotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.blotterOptions.containerOptions.vendorContainer)) {
+       if (this.blotterOptions.generalOptions.useDefaultVendorGridThemes && StringExtensions.IsNotNullOrEmpty(this.blotterOptions.containerOptions.vendorContainer)) {
             let container = document.getElementById(this.blotterOptions.containerOptions.vendorContainer);
             if (container != null) {
+                console.log("applying dark theme")
                 container.className = this.agGridHelper.getDarkThemeName();
             }
         }
@@ -1929,7 +1928,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
 
         // add the filter header style if required
-        if (this.blotterOptions.filterOptions.indicateFilteredColumns == true) {
+        if (this.blotterOptions.filterOptions!.indicateFilteredColumns == true) {
             var css = document.createElement("style");
             css.id = this.blotterOptions.blotterId + '_filtered-columns-style';
             css.type = "text/css";
@@ -1941,7 +1940,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         // sometimes the header row looks wrong when using floating filter so to be sure...
         if (this.isFloatingFilterActive()) {
             this.dispatchAction(GridRedux.FloatingilterBarShow())
-            this.gridOptions.api.refreshHeader();
+            this.gridOptions.api!.refreshHeader();
         }
 
         // if user layout and a percent bar sometimes the first few cells are pre-rendered so we frig it like this

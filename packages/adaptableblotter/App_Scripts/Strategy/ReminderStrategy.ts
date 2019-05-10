@@ -10,7 +10,7 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
     protected ReminderState: ReminderState
     constructor(blotter: IAdaptableBlotter) {
         super(StrategyConstants.ReminderStrategyId, blotter)
-        this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded())
+        this.blotter.onGridReloaded().Subscribe(() => this.handleGridReloaded())
     }
 
     protected addPopupMenuItem() {

@@ -186,6 +186,8 @@ export const ReportHelper = {
     SELECTED_CELLS_REPORT,
     IsSystemReport,
     GetReportColumnsDescription,
-    GetReportExpressionDescription, ConvertReportToArray, CreateSystemReports
+    GetReportExpressionDescription, 
+    ConvertReportToArray, 
+    CreateSystemReports
 }
 export default ReportHelper

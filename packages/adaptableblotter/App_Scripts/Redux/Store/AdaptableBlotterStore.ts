@@ -19,7 +19,6 @@ import * as GridRedux from '../ActionsReducers/GridRedux'
 import * as SystemRedux from '../ActionsReducers/SystemRedux'
 import * as HomeRedux from '../ActionsReducers/HomeRedux'
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux'
-import * as ColumnChooserRedux from '../ActionsReducers/ColumnChooserRedux'
 import * as ExportRedux from '../ActionsReducers/ExportRedux'
 import * as FlashingCellsRedux from '../ActionsReducers/FlashingCellsRedux'
 import * as CalendarRedux from '../ActionsReducers/CalendarRedux'
@@ -121,7 +120,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
   Layout: LayoutRedux.LayoutReducer,
   PercentBar: PercentBarRedux.PercentBarReducer,
-   PlusMinus: PlusMinusRedux.PlusMinusReducer,
+  PlusMinus: PlusMinusRedux.PlusMinusReducer,
   QuickSearch: QuickSearchRedux.QuickSearchReducer,
   CellSummary: CellSummaryRedux.CellSummaryReducer,
   Shortcut: ShortcutRedux.ShortcutReducer,
@@ -223,8 +222,8 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     // We pass into the create method the blotterId, the config, and also the Licence Info
     // the Lience Info is needed so we can determine whether or not to load state
     // not sure we can do this as we need to be backwardly compatible with existing users so need to stick with blotter id (which shoudl be unique)
-   // const localStorageKey =  'adaptable-blotter-state-' + blotter.blotterOptions.primaryKey; 
-    const localStorageKey =  blotter.blotterOptions.blotterId;
+    // const localStorageKey =  'adaptable-blotter-state-' + blotter.blotterOptions.primaryKey; 
+    const localStorageKey = blotter.blotterOptions.blotterId;
     if (BlotterHelper.isConfigServerEnabled(blotter.blotterOptions)) {
       storageEngine = createEngineRemote(blotter.blotterOptions.configServerOptions.configServerUrl, blotter.blotterOptions.userName, blotter.blotterOptions.blotterId);
     } else {
@@ -520,7 +519,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           if (deletedCalculatedColumnIndex > -1) {
             columnsLocalLayout.splice(deletedCalculatedColumnIndex, 1)
           }
-          middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
+          middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(columnsLocalLayout))
           let returnAction = next(action);
           return returnAction;
         }
@@ -548,7 +547,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           } else {  // it exists so just edit
             blotter.editCalculatedColumnInGrid(actionTyped.calculatedColumn)
           }
-          middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(columnsLocalLayout))
+          middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(columnsLocalLayout))
           let returnAction = next(action);
           return returnAction;
         }
@@ -652,7 +651,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
                 LoggingHelper.LogAdaptableBlotterWarning("Column '" + c + "' not found while selecting layout: " + currentLayout)
               }
             })
-            middlewareAPI.dispatch(ColumnChooserRedux.SetNewColumnListOrder(blotterColumns))
+            middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(blotterColumns))
             // set sort
             middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts))
             blotter.setGridSort(currentLayout.GridSorts);
@@ -910,13 +909,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return next(action);
         }
 
-        /*******************
-        * COLUMN CHOOSER ACTIONS
-        *******************/
-        case ColumnChooserRedux.SET_NEW_COLUMN_LIST_ORDER:
-          let actionTyped = <ColumnChooserRedux.SetNewColumnListOrderAction>action
-          blotter.setNewColumnListOrder(actionTyped.VisibleColumnList)
-          return next(action);
+       
 
 
         /*******************
@@ -1103,6 +1096,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
           return returnAction;
         }
 
+
+        case SystemRedux.SET_NEW_COLUMN_LIST_ORDER:
+        let actionTyped = <SystemRedux.SetNewColumnListOrderAction>action
+        blotter.setNewColumnListOrder(actionTyped.VisibleColumnList)
+        return next(action);
+
+
         /*******************
         * GRID (INTERNAL) ACTIONS
         *******************/
@@ -1236,6 +1236,10 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any => function (
 
 export function getNonPersistedReduxActions(): string[] {
   return [
+    RESET_STATE,
+    INIT_STATE,
+    LOAD_STATE,
+
     SystemRedux.SYSTEM_SET_HEALTH_STATUS,
     SystemRedux.SYSTEM_CLEAR_HEALTH_STATUS,
     SystemRedux.SYSTEM_ALERT_ADD,
@@ -1259,6 +1263,15 @@ export function getNonPersistedReduxActions(): string[] {
     SystemRedux.CHART_SET_CHART_DATA,
     SystemRedux.CHART_SET_CHART_VISIBILITY,
 
+    SystemRedux.CALCULATEDCOLUMN_SET_ERROR_MESSAGE,
+
+    SystemRedux.QUICK_SEARCH_SET_RANGE,
+    SystemRedux.QUICK_SEARCH_CLEAR_RANGE,
+    SystemRedux.QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS,
+    SystemRedux.QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS,
+
+    SystemRedux.SET_NEW_COLUMN_LIST_ORDER,
+
     GridRedux.GRID_SET_COLUMNS,
     GridRedux.GRID_ADD_COLUMN,
     GridRedux.GRID_HIDE_COLUMN,
@@ -1268,6 +1281,8 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.GRID_SET_SELECTED_CELLS,
     GridRedux.GRID_CREATE_CELLS_SUMMARY,
     GridRedux.GRID_SET_CELLS_SUMMARY,
+    GridRedux.GRID_FLOATING_FILTER_BAR_SHOW,
+    GridRedux.GRID_FLOATING_FILTER_BAR_HIDE,
 
     MenuRedux.SET_MENUITEMS,
     MenuRedux.BUILD_COLUMN_CONTEXT_MENU,

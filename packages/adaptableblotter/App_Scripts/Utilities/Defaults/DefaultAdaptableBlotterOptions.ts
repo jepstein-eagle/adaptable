@@ -14,7 +14,9 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
         auditUserStateChanges: false,
         auditInternalStateChanges: false,
         pingInterval: 60,
-        auditLogsSendInterval: 1
+        auditLogsSendInterval: 1,
+        auditToConsole: false
+        
     },
     configServerOptions: {
         enableConfigServer: false,

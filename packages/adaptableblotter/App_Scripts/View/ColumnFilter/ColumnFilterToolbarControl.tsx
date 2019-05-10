@@ -38,22 +38,18 @@ interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPo
     UserFilters: IUserFilter[]
     Entitlements: IEntitlement[];
     IsFloatingFilterActive: boolean;
-
-
 }
 
 
 
 class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterToolbarControlComponentProps, {}> {
 
-
-
     render(): any {
 
         let cssClassName: string = this.props.cssClassName + "__columnfilter";
         let collapsedText = ArrayExtensions.IsNullOrEmpty(this.props.ColumnFilters) ?
             "No Filters" :
-            ArrayExtensions.HasOneItem(this.props.ColumnFilters) ?
+            ArrayExtensions.hasOneItem(this.props.ColumnFilters) ?
                 "1 Filter" :
                 this.props.ColumnFilters.length + " Filters";
 

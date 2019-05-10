@@ -14,8 +14,5 @@ export interface IColItem {
     Content: any;
 }
 
-export interface FreeTextStoredValue {
-    PrimaryKey: any,
-    FreeText: any
-}
+
 
