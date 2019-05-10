@@ -74,13 +74,16 @@ const withTypescript = (nextConfig = {}) => {
 
 // next.config.js
 const withCSS = require('@zeit/next-css');
+const withSass = require('@zeit/next-sass');
 const withImages = require('next-images');
 const withFonts = require('next-fonts');
 
-let nextConfig = withCSS(
-  Object.assign({}, withImages(), {
-    cssModules: false,
-  })
+let nextConfig = withSass(
+  withCSS(
+    Object.assign({}, withImages(), {
+      cssModules: false,
+    })
+  )
 );
 nextConfig = withTypescript(withFonts(nextConfig));
 

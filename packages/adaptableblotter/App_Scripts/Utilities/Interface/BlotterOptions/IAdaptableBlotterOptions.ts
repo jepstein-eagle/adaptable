@@ -53,6 +53,11 @@ export interface IAdaptableBlotterOptions {
    * Also can set where popups are displayed relative to the page.
    */
   containerOptions?: IContainerOptions;
+
+  /**
+   * The name of the theme to apply to the blotter UI. If not specified, will default to "light"
+   */
+  // theme?: string;
   /**
    * Options for mananging the Audit Log
    * Depending on your options, every keystroke, data change, user action etc. is logged

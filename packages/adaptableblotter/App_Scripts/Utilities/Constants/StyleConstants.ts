@@ -2,8 +2,8 @@
 export const AB_HEADER: string = 'Ab-';
 
 // Constants for when we create internal styles
-export const FLASH_UP_STYLE: string = AB_HEADER + 'FlashUp';
-export const FLASH_DOWN_STYLE: string = AB_HEADER + 'FlashDown';
+export const FLASH_UP_STYLE: string = `${AB_HEADER}FlashUp`;
+export const FLASH_DOWN_STYLE: string = `${AB_HEADER}FlashDown`;
 
 // Constants for when we use Boostrap bsStyles
 export const DEFAULT_BSSTYLE: string = 'default';
@@ -14,7 +14,7 @@ export const WARNING_BSSTYLE: string = 'warning';
 export const DANGER_BSSTYLE: string = 'danger';
 
 // constants for CSS
-export const AB_STYLE: string = '#ab-style';
+export const AB_STYLE: string = 'ab-style';
 export const BASE: string = '__base';
 
 // Modal
@@ -27,8 +27,8 @@ export const WIZARD_BASE: string = '__wizard-base';
 export const WIZARD_HEADER: string = '__wizard__modal-header';
 export const WIZARD_BODY: string = '__wizard__modal-body';
 export const WIZARD_FOOTER: string = '__wizard__modal-footer';
-export const WIZARD_STRATEGY: string = AB_STYLE + '__wizard';
-export const WIZARD_LEGEND: string = AB_STYLE + WIZARD_HEADER + '__legend';
+export const WIZARD_STRATEGY: string = `${AB_STYLE}__wizard`;
+export const WIZARD_LEGEND: string = `${AB_STYLE + WIZARD_HEADER}__legend`;
 
 // Dashboard
 export const DASHBOARD_BASE: string = '__dashboard-base';
@@ -71,9 +71,9 @@ export const PREVIEW_DELETE_COLUMN_BUTTON: string = '__btn-previewdeletecolumn';
 export const PREVIEW_DELETE_ITEM_BUTTON: string = '__btn-previewdeleteitem';
 
 // others
-export const FILTER_FORM: string = AB_STYLE + '__filterform';
-export const PUSHPULL_LOGIN: string = AB_STYLE + '__pushpulllogin';
-export const PUSHPULL_PAGE_SELECTOR: string = AB_STYLE + '__pushpullpageselector';
+export const FILTER_FORM: string = `${AB_STYLE}__filterform`;
+export const PUSHPULL_LOGIN: string = `${AB_STYLE}__pushpulllogin`;
+export const PUSHPULL_PAGE_SELECTOR: string = `${AB_STYLE}__pushpullpageselector`;
 export const STYLE_COMPONENT: string = '__stylecomponent';
 export const PREVIEW_RESULTS: string = '__previewresults';
 export const ACTIVE_FILTERS: string = '__activefilters';
@@ -83,12 +83,12 @@ export const COLOR_PICKER: string = '__colorpicker';
 export const COLUMN_SELECTOR: string = '__columnselector';
 export const COLUMN_VALUE_SELECTOR: string = '__columnvalueselector';
 export const STRATEGY_PROFILE: string = '__strategyprofile';
-export const CONTEXT_MENU: string = AB_STYLE + '__contextmenu';
+export const CONTEXT_MENU: string = `${AB_STYLE}__contextmenu`;
 export const SINGLE_LIST_BOX: string = '__singlelistbox';
 export const DOUBLE_LIST_BOX: string = '__doublelistbox';
 export const TEXT_ENTRY_FORM: string = '__textentryform';
 
 // popups
-export const POPUP_CONFIRMATION: string = AB_STYLE + '__popup-confirmation';
-export const POPUP_ALERT: string = AB_STYLE + '__popup-alert';
-export const POPUP_PROMPT: string = AB_STYLE + '__popup-prompt';
+export const POPUP_CONFIRMATION: string = `${AB_STYLE}__popup-confirmation`;
+export const POPUP_ALERT: string = `${AB_STYLE}__popup-alert`;
+export const POPUP_PROMPT: string = `${AB_STYLE}__popup-prompt`;

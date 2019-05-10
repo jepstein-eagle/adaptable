@@ -35,6 +35,7 @@
     "@types/react": "^16.8.14",
     "@types/react-dom": "^16.8.4",
     "@zeit/next-css": "^1.0.1",
+    "@zeit/next-sass": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "awesome-typescript-loader": "^5.2.1",
     "babel-jest": "^24.7.1",

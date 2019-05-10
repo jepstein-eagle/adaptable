@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, ReactNode } from 'react';
+import React, { useRef, useState, useEffect, ReactNode, useMemo } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { GridOptions, GridApi, ColumnApi, GridReadyEvent } from 'ag-grid-community';
 
@@ -16,6 +16,8 @@ type TypeFactory =
 type TypeChildren = ({ blotter, grid }: { blotter: ReactNode; grid: ReactNode }) => ReactNode;
 
 const join = (...args: any[]): string => args.filter(x => !!x).join(' ');
+
+const getRandomInt = (max: number): number => Math.floor(Math.random() * Math.floor(max));
 
 const getAgGridWrapperClassName = (agGridTheme: string) => {
   const themeClassName =
@@ -41,6 +43,10 @@ const AdaptableBlotterReact = ({
   gridOptions: GridOptions;
   tagName?: TypeFactory;
 } & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
+  const seedId = useMemo(() => `${getRandomInt(1000)}-${Date.now()}`, []);
+  const blotterContainerId = `blotter-${seedId}`;
+  const gridContainerId = `grid-${seedId}`;
+
   const [blotter, setBlotter] = useState<AdaptableBlotter | null>(null);
   const TagName = tagName || 'div';
   agGridTheme = agGridTheme || 'balham';
@@ -56,6 +62,11 @@ const AdaptableBlotterReact = ({
     const blotterInstance = new AdaptableBlotter(
       {
         ...blotterOptions,
+        containerOptions: {
+          ...blotterOptions.containerOptions,
+          adaptableBlotterContainer: blotterContainerId,
+          vendorContainer: gridContainerId,
+        },
         vendorGrid: { ...gridOptions, api: params.api, columnApi: params.columnApi },
       },
       false
@@ -84,6 +95,7 @@ const AdaptableBlotterReact = ({
       key="agGridWrapper"
       style={{ flex: 1 }}
       childProps={{
+        id: gridContainerId,
         className: getAgGridWrapperClassName(agGridTheme),
         style: { visibility: blotter ? 'visible' : 'hidden' },
       }}
@@ -104,7 +116,11 @@ const AdaptableBlotterReact = ({
   }
 
   return (
-    <TagName {...props} className={join(props.className, 'ab__react-wrapper')}>
+    <TagName
+      {...props}
+      id={blotterContainerId}
+      className={join(props.className, 'ab__react-wrapper')}
+    >
       {children}
     </TagName>
   );

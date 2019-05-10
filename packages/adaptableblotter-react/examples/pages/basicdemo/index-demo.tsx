@@ -4,16 +4,16 @@ import { LicenseManager } from 'ag-grid-enterprise';
 import { GridOptions } from 'ag-grid-community';
 
 import AdaptableBlotterReact from '../../../src';
-import '../../../src/base.css';
+import '../../../src/base.scss';
+import '../../../src/themes/dark.scss';
+import '../../../src/themes/light.scss';
 
 import { DataGenerator } from '../../../../adaptableblotter/Harness/DataGenerator';
 import { IAdaptableBlotterOptions } from '../../../../adaptableblotter/App_Scripts/types';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-
-import '../../../../adaptableblotter/App_Scripts/base.css';
-import '../../../../adaptableblotter/App_Scripts/themes/light.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
 LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
 

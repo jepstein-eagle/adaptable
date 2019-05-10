@@ -1,8 +1,8 @@
+import { IPageService } from 'ipushpull-js/dist/Page/Page';
+import ipushpull, { ICreate } from 'ipushpull-js';
 import { IPPDomain } from '../Interface/Reports/IPPDomain';
 import { IPPStyle } from '../Interface/Reports/IPPStyle';
 import { LoggingHelper } from './LoggingHelper';
-import { IPageService } from 'ipushpull-js/dist/Page/Page';
-import ipushpull, { ICreate } from 'ipushpull-js';
 
 export enum ServiceStatus {
   Unknown = 'Unknown',
@@ -13,7 +13,7 @@ export enum ServiceStatus {
 
 export var IPPStatus: ServiceStatus = ServiceStatus.Unknown;
 let ipp: ICreate;
-let pages: Map<string, any> = new Map();
+const pages: Map<string, any> = new Map();
 
 // creates the iPushPullApp object using blotterOptions ippconfig
 export function init(iPPConfig?: any): void {
@@ -35,7 +35,7 @@ export function isIPushPullLoaded() {
 // Logs in to iPushpull
 export function Login(login: string, password: string): Promise<any> {
   return new Promise<string>((resolve: any, reject: any) => {
-    ipp.auth.on(ipp.auth.EVENT_LOGGED_IN, function() {
+    ipp.auth.on(ipp.auth.EVENT_LOGGED_IN, () => {
       IPPStatus = ServiceStatus.Connected;
       resolve();
     });
@@ -53,14 +53,12 @@ export function GetDomainPages(clientId: string): Promise<IPPDomain[]> {
     ipp.api
       .getDomainsAndPages(clientId)
       .then((x: any) => {
-        let result: IPPDomain[] = x.data.domains.map((domain: any) => {
-          return {
-            Name: domain.name,
-            Pages: domain.current_user_domain_page_access.pages
-              .filter((page: any) => page.special_page_type == 0 && page.write_access)
-              .map((page: any) => page.name),
-          };
-        });
+        const result: IPPDomain[] = x.data.domains.map((domain: any) => ({
+          Name: domain.name,
+          Pages: domain.current_user_domain_page_access.pages
+            .filter((page: any) => page.special_page_type == 0 && page.write_access)
+            .map((page: any) => page.name),
+        }));
         resolve(result);
       })
       .catch((x: any) => {
@@ -71,35 +69,35 @@ export function GetDomainPages(clientId: string): Promise<IPPDomain[]> {
 }
 
 export function LoadPage(folderIPP: string, pageIPP: string): Promise<any> {
-  let myIpp: any = ipp;
+  const myIpp: any = ipp;
   return new Promise<any>((resolve: any, reject: any) => {
-    let page: IPageService = new myIpp.Page(pageIPP, folderIPP);
+    const page: IPageService = new myIpp.Page(pageIPP, folderIPP);
 
-    page.on(page.EVENT_NEW_CONTENT, function(data: any) {
-      LoggingHelper.LogAdaptableBlotterInfo('Page Ready : ' + pageIPP);
+    page.on(page.EVENT_NEW_CONTENT, (data: any) => {
+      LoggingHelper.LogAdaptableBlotterInfo(`Page Ready : ${pageIPP}`);
       pages.set(pageIPP, page);
       resolve(page);
-      //we return true so it removes the listener for new content.
-      //IPP should add that line to their wiki
+      // we return true so it removes the listener for new content.
+      // IPP should add that line to their wiki
       return true;
     });
   });
 }
 
 export function UnloadPage(page: string) {
-  let pageIPP = pages.get(page);
+  const pageIPP = pages.get(page);
   if (pageIPP) {
     pageIPP.destroy();
     pages.delete(page);
-    LoggingHelper.LogAdaptableBlotterInfo('Page Unloaded : ' + page);
+    LoggingHelper.LogAdaptableBlotterInfo(`Page Unloaded : ${page}`);
   }
 }
 
 export function pushData(page: string, data: any[], style: IPPStyle): Promise<any> {
   return new Promise<any>((resolve, reject) => {
-    var newData = data.map(function(row: any, i: number) {
-      return row.map((cell: any, y: number) => {
-        let col =
+    var newData = data.map((row: any, i: number) =>
+      row.map((cell: any, y: number) => {
+        const col =
           i == 0
             ? style.Header.Columns.find(x => x.columnFriendlyName == data[0][y])
             : style.Row.Columns.find(x => x.columnFriendlyName == data[0][y]);
@@ -124,11 +122,11 @@ export function pushData(page: string, data: any[], style: IPPStyle): Promise<an
             'font-size': style.Header.headerFontSize,
             'font-style': style.Header.headerFontStyle,
             'font-weight': style.Header.headerFontWeight,
-            height: String(style.Header.height / 3) + 'px',
+            height: `${String(style.Header.height / 3)}px`,
             'text-align': col.textAlign,
             'vertical-align': 'middle',
             'white-space': 'nowrap',
-            width: String(col.width) + 'px',
+            width: `${String(col.width)}px`,
             'text-wrap': 'normal',
             'word-wrap': 'normal',
           };
@@ -152,19 +150,19 @@ export function pushData(page: string, data: any[], style: IPPStyle): Promise<an
           formatted_value: cell,
           style: styleIPP,
         };
-      });
-    });
+      })
+    );
 
-    let pageIPP = pages.get(page);
+    const pageIPP = pages.get(page);
     pageIPP.Content.canDoDelta = false;
     pageIPP.Content.update(newData, true);
     pageIPP.push().then(
-      function() {
-        LoggingHelper.LogAdaptableBlotterSuccess('Data pushed for iPushPull page : ' + page);
+      () => {
+        LoggingHelper.LogAdaptableBlotterSuccess(`Data pushed for iPushPull page : ${page}`);
         resolve();
       },
       (err: any) => {
-        LoggingHelper.LogAdaptableBlotterInfo('Error pushing data for iPushPull page : ' + page);
+        LoggingHelper.LogAdaptableBlotterInfo(`Error pushing data for iPushPull page : ${page}`);
         reject();
       }
     );
