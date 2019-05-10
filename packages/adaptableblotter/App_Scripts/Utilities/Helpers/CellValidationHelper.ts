@@ -38,7 +38,6 @@ export function createCellValidationDescription(cellValidationRule: ICellValidat
     return valueDescription;
 }
 
-
 export function createCellValidationUIConfirmation(confirmAction: Redux.Action, cancelAction: Redux.Action, warningMessage: string = "Do you want to continue?"): IUIConfirmation {
 
     return {

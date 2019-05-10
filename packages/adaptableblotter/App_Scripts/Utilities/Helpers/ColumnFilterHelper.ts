@@ -6,9 +6,6 @@ import { ColumnHelper } from './ColumnHelper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 
-
-
-
 export function convertColumnFiltersToKVPArray(columnFilters: IColumnFilter[], columns: IColumn[]): IKeyValuePair[] {
     let infoBody: IKeyValuePair[] = []
     columnFilters.forEach(x => {
@@ -30,6 +27,7 @@ export function getColumnFiltersDescription(columnFilters: IColumnFilter[], colu
     })
     return stringarr.join("; ")
 }
+
 export const ColumnFilterHelper = {
     convertColumnFiltersToKVPArray,
     getColumnFiltersDescription
