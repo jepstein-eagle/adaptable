@@ -59,7 +59,11 @@ export function IsNotNullOrEmpty(arrayToCheck: any[]): boolean {
 }
 
 export function hasOneItem(arrayToCheck: any[]): boolean {
-    return arrayToCheck.length == 1;
+    return hasItemsOfCount(arrayToCheck, 1);
+}
+
+export function hasItemsOfCount(arrayToCheck: any[], numberOfItems: number): boolean {
+    return arrayToCheck.length == numberOfItems;
 }
 
 export function moveArray(array: any[], from: number, to: number): void {
@@ -197,24 +201,25 @@ export const ArrayExtensions = {
     CorrectLength,
     NotCorrectLength,
     groupArrayBy,
-    AddItem, 
-    ContainsItem, 
-    NotContainsItem, 
-    RetrieveDistinct, 
-    IsNull, 
-    IsNotNull, 
-    IsEmpty, 
-    IsNotEmpty, 
-    IsNullOrEmpty, 
-    IsNotNullOrEmpty, 
-    hasOneItem, 
-    moveArray, 
-    areArraysEqual, 
-    areArraysNotEqual, 
-    areArraysEqualWithOrder, 
-    areArraysEqualWithOrderandProperties, 
-    sortArray, 
-    sortArrayWithProperty, 
+    AddItem,
+    ContainsItem,
+    NotContainsItem,
+    RetrieveDistinct,
+    IsNull,
+    IsNotNull,
+    IsEmpty,
+    IsNotEmpty,
+    IsNullOrEmpty,
+    IsNotNullOrEmpty,
+    hasOneItem,
+    hasItemsOfCount,
+    moveArray,
+    areArraysEqual,
+    areArraysNotEqual,
+    areArraysEqualWithOrder,
+    areArraysEqualWithOrderandProperties,
+    sortArray,
+    sortArrayWithProperty,
     createCommaSeparatedString
 }
 

@@ -38,15 +38,11 @@ interface ColumnFilterToolbarControlComponentProps extends ToolbarStrategyViewPo
     UserFilters: IUserFilter[]
     Entitlements: IEntitlement[];
     IsFloatingFilterActive: boolean;
-
-
 }
 
 
 
 class ColumnFilterToolbarControlComponent extends React.Component<ColumnFilterToolbarControlComponentProps, {}> {
-
-
 
     render(): any {
 

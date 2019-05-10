@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import 'ag-grid-community/dist/styles/ag-theme-blue.css';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid'
 import '../../../../App_Scripts/base.css'
 import '../../../../App_Scripts/themes/light.css'
