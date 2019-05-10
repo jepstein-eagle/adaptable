@@ -15,7 +15,7 @@
   "runtime": {
     "arguments": "",
     "version": "8.*"
-},
+  },
   "shortcut": {
     "company": "Adaptable Tools",
     "description": "Adaptable Blotter",

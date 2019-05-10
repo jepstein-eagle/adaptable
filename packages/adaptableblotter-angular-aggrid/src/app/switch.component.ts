@@ -2,18 +2,20 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'switch-root',
-  template: `<div>
-    <button (click)="showWrapper(1)">Angular Wrapper</button>
-    <button (click)="showWrapper(2)">agGrid Angular Wrapper</button>
-     <div [hidden]="show !== 1">
-      <h3>Angular Wrapper - working alongside agGrid angular component</h3>
-      <adaptableblotter-root></adaptableblotter-root>
+  template: `
+    <div>
+      <button (click)="showWrapper(1)">Angular Wrapper</button>
+      <button (click)="showWrapper(2)">agGrid Angular Wrapper</button>
+      <div [hidden]="show !== 1">
+        <h3>Angular Wrapper - working alongside agGrid angular component</h3>
+        <adaptableblotter-root></adaptableblotter-root>
+      </div>
+      <div [hidden]="show !== 2">
+        <h3>AgGrid Angular Wrapper - wraps Adaptable Blotter AND agGrid components</h3>
+        <adaptableblotter-aggrid-root></adaptableblotter-aggrid-root>
+      </div>
     </div>
-    <div [hidden]="show !== 2">
-      <h3>AgGrid Angular Wrapper - wraps Adaptable Blotter AND agGrid components</h3>
-      <adaptableblotter-aggrid-root></adaptableblotter-aggrid-root>
-    </div>
-  </div>`
+  `,
 })
 export class SwitchComponent implements OnInit {
   private styles: Map<string, string> = new Map();
@@ -38,12 +40,15 @@ export class SwitchComponent implements OnInit {
       case 2:
         rootId = 'adaptableblotter-aggrid-root';
         break;
-       default:
+      default:
         return;
     }
 
     interval = setInterval(() => {
-      const el = document.querySelector(rootId).querySelector('adaptable-blotter').querySelector('[id^=adaptableBlotter]');
+      const el = document
+        .querySelector(rootId)
+        .querySelector('adaptable-blotter')
+        .querySelector('[id^=adaptableBlotter]');
       if (el) {
         clearInterval(interval);
         Array.from(document.querySelectorAll('style')).forEach(style => {

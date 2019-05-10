@@ -8,9 +8,8 @@ describe('AdaptableBlotterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdaptableBlotterComponent ]
-    })
-    .compileComponents();
+      declarations: [AdaptableBlotterComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

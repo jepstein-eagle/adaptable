@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid'
-import '../../../../App_Scripts/base.css'
-import '../../../../App_Scripts/themes/light.css'
+import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import '../../../../App_Scripts/base.css';
+import '../../../../App_Scripts/themes/light.css';
 import { GridOptions, Grid } from 'ag-grid-community';
 import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
@@ -24,24 +24,22 @@ function InitAdaptableBlotter() {
   gridcontainer.innerHTML = '';
   const grid = new Grid(gridcontainer, gridOptions);
 
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(gridOptions, 'instantiate demo');
+  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+    gridOptions,
+    'instantiate demo'
+  );
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
-
 }
-
 
 export default () => {
   useEffect(() => {
-
-
     if (!process.browser) {
-      return
+      return;
     }
 
+    InitAdaptableBlotter();
+  }, []);
 
-    InitAdaptableBlotter()
-  }, [])
-
-  return null
-}
+  return null;
+};

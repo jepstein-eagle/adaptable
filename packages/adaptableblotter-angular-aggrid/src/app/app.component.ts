@@ -7,24 +7,22 @@ import { IAdaptableBlotterOptions } from 'adaptableblotter-angular-aggrid';
 @Component({
   selector: 'adaptableblotter-root',
   template: `
-  <div>
-    <adaptable-blotter
-      [adaptableBlotterOptions]="blotterOptions">
-    </adaptable-blotter>
-    <div id="grid">
-    <ag-grid-angular
-      style="width: 100%; height: 97vh;"
-      class="ag-theme-balham"
-      [rowData]="rowData"
-      [columnDefs]="columnDefs"
-      [gridOptions]="gridOptions">
-    </ag-grid-angular>
+    <div>
+      <adaptable-blotter [adaptableBlotterOptions]="blotterOptions"> </adaptable-blotter>
+      <div id="grid">
+        <ag-grid-angular
+          style="width: 100%; height: 97vh;"
+          class="ag-theme-balham"
+          [rowData]="rowData"
+          [columnDefs]="columnDefs"
+          [gridOptions]="gridOptions"
+        >
+        </ag-grid-angular>
+      </div>
     </div>
-  </div>
-  `
+  `,
 })
 export class AppComponent {
-
   gridOptions: GridOptions = {
     columnDefs: new HarnessHelper().getTradeSchema(),
     rowData: new DataGenerator().getTrades(5000),
@@ -38,8 +36,7 @@ export class AppComponent {
     blotterId: 'angular wrapper',
     licenceKey: 'Community',
     containerOptions: {
-      adaptableBlotterContainer: 'adaptableBlotter'
-    }
+      adaptableBlotterContainer: 'adaptableBlotter',
+    },
   };
 }
-

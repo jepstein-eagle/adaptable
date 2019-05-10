@@ -1,150 +1,184 @@
-import * as React from "react";
-import * as Redux from "redux";
-import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps'
+import * as React from 'react';
+import * as Redux from 'redux';
+import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
-import { FormatColumnWizard } from './Wizard/FormatColumnWizard'
-import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux'
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux'
+import { FormatColumnWizard } from './Wizard/FormatColumnWizard';
+import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux';
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore'
-import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader'
-import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail'
-import { StrategyProfile } from '../Components/StrategyProfile'
-import { StyleVisualItem } from '../Components/StyleVisualItem'
-import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
+import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
+import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
+import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
+import { StrategyProfile } from '../Components/StrategyProfile';
+import { StyleVisualItem } from '../Components/StyleVisualItem';
+import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterObject } from "../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
-import { IFormatColumn } from "../../Utilities/Interface/BlotterObjects/IFormatColumn";
+import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
+import { IFormatColumn } from '../../Utilities/Interface/BlotterObjects/IFormatColumn';
 
-export interface FormatColumnSummaryProps extends StrategySummaryProps<FormatColumnSummaryComponent> {
-    FormatColumns: IFormatColumn[]
-    ColorPalette: string[]
-    StyleClassNames: string[]
-    onAddFormatColumn: (FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnAddAction
-    onEditFormatColumn: (FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnEditAction
-    onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction
+export interface FormatColumnSummaryProps
+  extends StrategySummaryProps<FormatColumnSummaryComponent> {
+  FormatColumns: IFormatColumn[];
+  ColorPalette: string[];
+  StyleClassNames: string[];
+  onAddFormatColumn: (FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnAddAction;
+  onEditFormatColumn: (FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnEditAction;
+  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
-export class FormatColumnSummaryComponent extends React.Component<FormatColumnSummaryProps, EditableConfigEntityState> {
+export class FormatColumnSummaryComponent extends React.Component<
+  FormatColumnSummaryProps,
+  EditableConfigEntityState
+> {
+  constructor(props: FormatColumnSummaryProps) {
+    super(props);
+    this.state = UIHelper.getEmptyConfigState();
+  }
 
-    constructor(props: FormatColumnSummaryProps) {
-        super(props);
-        this.state = UIHelper.getEmptyConfigState();
-    }
+  render(): any {
+    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__formatcolumn';
 
-    render(): any {
-        let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + "__formatcolumn";
-      
-        let formatColumn: IFormatColumn = this.props.FormatColumns.find(c => c.ColumnId == this.props.SummarisedColumn.ColumnId)
-        let noFormatColumn: boolean = formatColumn == null;
+    let formatColumn: IFormatColumn = this.props.FormatColumns.find(
+      c => c.ColumnId == this.props.SummarisedColumn.ColumnId
+    );
+    let noFormatColumn: boolean = formatColumn == null;
 
-        let formatColumnRow: any;
+    let formatColumnRow: any;
 
-        if (noFormatColumn) {
-            formatColumnRow = <StrategyHeader
-                key={StrategyConstants.FormatColumnStrategyName}
-                cssClassName={this.props.cssClassName}
-                StrategyId={StrategyConstants.FormatColumnStrategyId}
-                StrategySummary={"No Format Column Set"}
-                onNew={() => this.onNew()}
-                NewButtonTooltip={StrategyConstants.FormatColumnStrategyName}
-                AccessLevel={this.props.AccessLevel}
+    if (noFormatColumn) {
+      formatColumnRow = (
+        <StrategyHeader
+          key={StrategyConstants.FormatColumnStrategyName}
+          cssClassName={this.props.cssClassName}
+          StrategyId={StrategyConstants.FormatColumnStrategyId}
+          StrategySummary={'No Format Column Set'}
+          onNew={() => this.onNew()}
+          NewButtonTooltip={StrategyConstants.FormatColumnStrategyName}
+          AccessLevel={this.props.AccessLevel}
+        />
+      );
+    } else {
+      formatColumnRow = (
+        <StrategyDetail
+          key={StrategyConstants.FormatColumnStrategyName}
+          cssClassName={this.props.cssClassName}
+          Item1={
+            <StrategyProfile
+              cssClassName={this.props.cssClassName}
+              StrategyId={StrategyConstants.FormatColumnStrategyId}
             />
-        } else {
-            formatColumnRow = <StrategyDetail
-                key={StrategyConstants.FormatColumnStrategyName}
-                cssClassName={this.props.cssClassName}
-                Item1={<StrategyProfile cssClassName={this.props.cssClassName} StrategyId={StrategyConstants.FormatColumnStrategyId} />}
-                Item2={<StyleVisualItem Style={formatColumn.Style} />}
-                ConfigEnity={formatColumn}
-                showShare={this.props.TeamSharingActivated}
-                EntityType={StrategyConstants.FormatColumnStrategyName}
-                onEdit={() => this.onEdit(formatColumn)}
-                onShare={() => this.props.onShare(formatColumn)}
-                onDelete={FormatColumnRedux.FormatColumnDelete(formatColumn)}
-                showBold={true}
-            />
-        }
-
-        return <div>
-            {formatColumnRow}
-
-            {this.state.EditedAdaptableBlotterObject &&
-                <FormatColumnWizard
-                    cssClassName={cssWizardClassName}
-                    EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
-                    ModalContainer={this.props.ModalContainer}
-                    Columns={this.props.Columns}
-                    ConfigEntities={this.props.FormatColumns}
-                    UserFilters={this.props.UserFilters}
-                    SystemFilters={this.props.SystemFilters}
-                    ColorPalette={this.props.ColorPalette}
-                    StyleClassNames={this.props.StyleClassNames}
-                    WizardStartIndex={this.state.WizardStartIndex}
-                    onCloseWizard={() => this.onCloseWizard()}
-                    onFinishWizard={() => this.onFinishWizard()}
-                    canFinishWizard={() => this.canFinishWizard()}
-                    Blotter={this.props.Blotter}
-                
-                />
-            }
-        </div>
+          }
+          Item2={<StyleVisualItem Style={formatColumn.Style} />}
+          ConfigEnity={formatColumn}
+          showShare={this.props.TeamSharingActivated}
+          EntityType={StrategyConstants.FormatColumnStrategyName}
+          onEdit={() => this.onEdit(formatColumn)}
+          onShare={() => this.props.onShare(formatColumn)}
+          onDelete={FormatColumnRedux.FormatColumnDelete(formatColumn)}
+          showBold={true}
+        />
+      );
     }
 
-    onNew() {
-        let configEntity: IFormatColumn = ObjectFactory.CreateEmptyFormatColumn()
-        configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-        this.setState({ EditedAdaptableBlotterObject: configEntity, WizardStartIndex: 1, EditedAdaptableBlotterObjectIndex: -1 });
-    }
+    return (
+      <div>
+        {formatColumnRow}
 
-    onEdit(formatColumn: IFormatColumn) {
-        let clonedObject: IFormatColumn = Helper.cloneObject(formatColumn);
-        this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1 });
-    }
+        {this.state.EditedAdaptableBlotterObject && (
+          <FormatColumnWizard
+            cssClassName={cssWizardClassName}
+            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
+            ModalContainer={this.props.ModalContainer}
+            Columns={this.props.Columns}
+            ConfigEntities={this.props.FormatColumns}
+            UserFilters={this.props.UserFilters}
+            SystemFilters={this.props.SystemFilters}
+            ColorPalette={this.props.ColorPalette}
+            StyleClassNames={this.props.StyleClassNames}
+            WizardStartIndex={this.state.WizardStartIndex}
+            onCloseWizard={() => this.onCloseWizard()}
+            onFinishWizard={() => this.onFinishWizard()}
+            canFinishWizard={() => this.canFinishWizard()}
+            Blotter={this.props.Blotter}
+          />
+        )}
+      </div>
+    );
+  }
 
-    onCloseWizard() {
-        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
-    }
+  onNew() {
+    let configEntity: IFormatColumn = ObjectFactory.CreateEmptyFormatColumn();
+    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    this.setState({
+      EditedAdaptableBlotterObject: configEntity,
+      WizardStartIndex: 1,
+      EditedAdaptableBlotterObjectIndex: -1,
+    });
+  }
 
-    onFinishWizard() {
-        let formatColumn: IFormatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn
-        if (this.props.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)) {
-            this.props.onEditFormatColumn(formatColumn)
-        } else {
-            this.props.onAddFormatColumn(formatColumn)
-        }
-        this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
-    }
+  onEdit(formatColumn: IFormatColumn) {
+    let clonedObject: IFormatColumn = Helper.cloneObject(formatColumn);
+    this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1 });
+  }
 
-    canFinishWizard() {
-        let formatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn
-        return StringExtensions.IsNotNullOrEmpty(formatColumn.ColumnId) &&
-            UIHelper.IsNotEmptyStyle(formatColumn.Style)
-    }
+  onCloseWizard() {
+    this.setState({
+      EditedAdaptableBlotterObject: null,
+      WizardStartIndex: 0,
+      EditedAdaptableBlotterObjectIndex: -1,
+    });
+  }
 
+  onFinishWizard() {
+    let formatColumn: IFormatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn;
+    if (this.props.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)) {
+      this.props.onEditFormatColumn(formatColumn);
+    } else {
+      this.props.onAddFormatColumn(formatColumn);
+    }
+    this.setState({
+      EditedAdaptableBlotterObject: null,
+      WizardStartIndex: 0,
+      EditedAdaptableBlotterObjectIndex: -1,
+    });
+  }
+
+  canFinishWizard() {
+    let formatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn;
+    return (
+      StringExtensions.IsNotNullOrEmpty(formatColumn.ColumnId) &&
+      UIHelper.IsNotEmptyStyle(formatColumn.Style)
+    );
+  }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
-    return {
-        Columns: state.Grid.Columns,
-        FormatColumns: state.FormatColumn.FormatColumns,
-        ColorPalette: state.UserInterface.ColorPalette,
-        Entitlements: state.Entitlements.FunctionEntitlements,
-        StyleClassNames: state.UserInterface.StyleClassNames
-    };
+  return {
+    Columns: state.Grid.Columns,
+    FormatColumns: state.FormatColumn.FormatColumns,
+    ColorPalette: state.UserInterface.ColorPalette,
+    Entitlements: state.Entitlements.FunctionEntitlements,
+    StyleClassNames: state.UserInterface.StyleClassNames,
+  };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
-    return {
-        onAddFormatColumn: (FormatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnAdd(FormatColumn)),
-        onEditFormatColumn: (FormatColumn: IFormatColumn) => dispatch(FormatColumnRedux.FormatColumnEdit(FormatColumn)),
-        onShare: (entity: IAdaptableBlotterObject) => dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId))
-    };
+  return {
+    onAddFormatColumn: (FormatColumn: IFormatColumn) =>
+      dispatch(FormatColumnRedux.FormatColumnAdd(FormatColumn)),
+    onEditFormatColumn: (FormatColumn: IFormatColumn) =>
+      dispatch(FormatColumnRedux.FormatColumnEdit(FormatColumn)),
+    onShare: (entity: IAdaptableBlotterObject) =>
+      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId)),
+  };
 }
 
-export let FormatColumnSummary = connect(mapStateToProps, mapDispatchToProps)(FormatColumnSummaryComponent);
+export let FormatColumnSummary = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FormatColumnSummaryComponent);

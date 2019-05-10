@@ -1,23 +1,16 @@
 ﻿{
-	"compilerOptions": {
-		"sourceMap": false,
-		"declaration": true,
-		"noImplicitAny": true,
-		"module": "commonjs",
-		"target": "es6",
-		"jsx": "react",
-		"noUnusedLocals": false,
-		"downlevelIteration": true,
-		"emitDecoratorMetadata": false,
-		"allowSyntheticDefaultImports": true
-	},
-	"include": [
-		"App_Scripts/**/*",
-		"Hypergrid/**/*",
-		"agGrid/**/*"
-	],
-	"exclude": [
-		"node_modules",
-		".next"
-	]
+  "compilerOptions": {
+    "sourceMap": false,
+    "declaration": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es6",
+    "jsx": "react",
+    "noUnusedLocals": false,
+    "downlevelIteration": true,
+    "emitDecoratorMetadata": false,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["App_Scripts/**/*", "Hypergrid/**/*", "agGrid/**/*"],
+  "exclude": ["node_modules", ".next"]
 }

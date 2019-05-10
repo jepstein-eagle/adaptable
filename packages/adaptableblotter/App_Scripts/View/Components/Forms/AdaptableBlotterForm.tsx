@@ -1,20 +1,21 @@
-import * as React from "react";
+import * as React from 'react';
 import { Form, FormProps } from 'react-bootstrap';
 
-export interface AdaptableBlotterFormProps extends FormProps {
-}
+export interface AdaptableBlotterFormProps extends FormProps {}
 
 export class AdaptableBlotterForm extends React.Component<AdaptableBlotterFormProps, {}> {
-    render() {
-        const { children, ...attrs } = this.props;
-        return <Form {...attrs} onSubmit={(e) => this.CancelOnFormSubmit(e)} >
-            {this.props.children}
-        </Form>
+  render() {
+    const { children, ...attrs } = this.props;
+    return (
+      <Form {...attrs} onSubmit={e => this.CancelOnFormSubmit(e)}>
+        {this.props.children}
+      </Form>
+    );
+  }
+  CancelOnFormSubmit(e: React.FormEvent<any>) {
+    e.preventDefault();
+    if (this.props.onSubmit) {
+      this.props.onSubmit(null);
     }
-    CancelOnFormSubmit(e: React.FormEvent<any>) {
-        e.preventDefault();
-        if (this.props.onSubmit) {
-            this.props.onSubmit(null);
-        }
-    }
+  }
 }

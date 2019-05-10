@@ -1,4 +1,4 @@
 export interface IMasterChildren {
-    Master: any;
-    Children: any[];
+  Master: any;
+  Children: any[];
 }

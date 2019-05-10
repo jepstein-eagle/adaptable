@@ -1,48 +1,46 @@
-import * as React from "react";
-import { AdaptableBlotterAgGrid } from "adaptableblotter-react";
+import * as React from 'react';
+import { AdaptableBlotterAgGrid } from 'adaptableblotter-react';
 import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-     let gridOptions= this.createGridOptions();
-    let adaptableBlotterOptions = this.createAdaptableBlotterOptions(
-      gridOptions
-    );
+    let gridOptions = this.createGridOptions();
+    let adaptableBlotterOptions = this.createAdaptableBlotterOptions(gridOptions);
     this.state = {
       gridOptions: gridOptions,
-      blotterOptions: adaptableBlotterOptions
+      blotterOptions: adaptableBlotterOptions,
     };
   }
 
-   createGridOptions() {
+  createGridOptions() {
     return {
       rowData: [
-        { make: "Toyota", model: "Celica", price: 35000 },
-        { make: "Ford", model: "Mondeo", price: 32000 },
-        { make: "Porsche", model: "Boxter", price: 72000 }
+        { make: 'Toyota', model: 'Celica', price: 35000 },
+        { make: 'Ford', model: 'Mondeo', price: 32000 },
+        { make: 'Porsche', model: 'Boxter', price: 72000 },
       ],
 
       columnDefs: [
-        { headerName: "Make", field: "make", },
-        { headerName: "Model", field: "model" },
-        { headerName: "Price", field: "price" ,editable: true}
+        { headerName: 'Make', field: 'make' },
+        { headerName: 'Model', field: 'model' },
+        { headerName: 'Price', field: 'price', editable: true },
       ],
       enableRangeSelection: true,
-      suppressColumnVirtualisation: false
+      suppressColumnVirtualisation: false,
     };
   }
 
-   createAdaptableBlotterOptions(gridOptions) {
+  createAdaptableBlotterOptions(gridOptions) {
     return {
-      primaryKey: "make",
+      primaryKey: 'make',
       vendorGrid: gridOptions,
-      userName: "AgGrid Wrapper user",
-      blotterId: "AgGrid Wrapper"
+      userName: 'AgGrid Wrapper user',
+      blotterId: 'AgGrid Wrapper',
     };
   }
 
-    render() {
+  render() {
     return (
       <div id="adaptableblotter-aggrid-react-demo-app">
         <AdaptableBlotterAgGrid

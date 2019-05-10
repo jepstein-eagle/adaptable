@@ -1,4 +1,4 @@
-import { IRange } from "./IRange";
+import { IRange } from './IRange';
 /**
  * Any ranges contained in the expression, grouped by column
  */

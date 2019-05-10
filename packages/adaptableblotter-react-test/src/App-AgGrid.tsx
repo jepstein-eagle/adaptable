@@ -1,11 +1,11 @@
-import * as React from "react";
-import { AdaptableBlotterAgGrid, IAdaptableBlotterOptions } from "adaptableblotter-react";
-import { ReactHarnessHelper } from "./ReactHarnessHelper";
-import { DataGenerator } from "./DataGenerator";
-import { GridOptions } from "ag-grid-community";
+import * as React from 'react';
+import { AdaptableBlotterAgGrid, IAdaptableBlotterOptions } from 'adaptableblotter-react';
+import { ReactHarnessHelper } from './ReactHarnessHelper';
+import { DataGenerator } from './DataGenerator';
+import { GridOptions } from 'ag-grid-community';
 import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-balham.css";
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 
 export interface AppState extends React.ClassAttributes<App> {
   gridOptions: GridOptions;
@@ -26,7 +26,7 @@ export default class App extends React.Component<{}, AppState> {
     );
     this.state = {
       gridOptions: gridOptions,
-      blotterOptions: adaptableBlotterOptions
+      blotterOptions: adaptableBlotterOptions,
     };
   }
 
@@ -36,20 +36,20 @@ export default class App extends React.Component<{}, AppState> {
       columnDefs: new ReactHarnessHelper().getTradeSchema(),
       rowData: new DataGenerator().getTrades(15000),
       enableRangeSelection: true,
-      suppressColumnVirtualisation: false
+      suppressColumnVirtualisation: false,
     };
   }
 
   // Create the AdaptableBlotterOptions object that the Adaptable Blotter needs
   createAdaptableBlotterOptions(gridOptions: GridOptions): IAdaptableBlotterOptions {
     return {
-      primaryKey: "tradeId",
+      primaryKey: 'tradeId',
       vendorGrid: gridOptions,
-      userName: "AgGrid Wrapper user",
-      blotterId: "AgGrid Wrapper",
+      userName: 'AgGrid Wrapper user',
+      blotterId: 'AgGrid Wrapper',
       containerOptions: {
-        adaptableBlotterContainer: "adaptableBlotter",
-        vendorContainer: "grid",
+        adaptableBlotterContainer: 'adaptableBlotter',
+        vendorContainer: 'grid',
         modalContainer: null,
         chartContainer: null,
       },

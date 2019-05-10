@@ -62,7 +62,6 @@ function InitAdaptableBlotter() {
   const dataGen = new harness.DataGenerator();
   trades = getRowsForGrid(dataGen);
 
-
   // Create a GridOptions object.  This is used to create the ag-Grid
   // And is also passed into the IAdaptableBlotterOptionsAgGrid object as well
   gridOptions = {
@@ -73,7 +72,7 @@ function InitAdaptableBlotter() {
     suppressColumnVirtualisation: false,
     suppressMenuHide: true,
     sideBar: undefined, // this puts in filters and columns by default
-    getRowNodeId: (data) => {
+    getRowNodeId: data => {
       return data.tradeId;
     },
 
@@ -97,7 +96,8 @@ function InitAdaptableBlotter() {
           ],
         },
     */
-    columnTypes: { // not required but helpful for column data type identification
+    columnTypes: {
+      // not required but helpful for column data type identification
       abColDefNumber: {},
       abColDefString: {},
       abColDefBoolean: {},
@@ -110,7 +110,7 @@ function InitAdaptableBlotter() {
   // Create and instantiate an ag-Grid object - now want to do this ONLY in the AB!
   // NOTE: we much prefer it if the vendor Grid is created by us and not by the user...
   if (instantiateAgGridInHarness) {
-    alert('instant hre')
+    alert('instant hre');
     const gridcontainer = document.getElementById('grid');
     gridcontainer.innerHTML = '';
     const grid = new agGrid.Grid(gridcontainer, gridOptions);
@@ -155,7 +155,7 @@ function InitAdaptableBlotter() {
       },
       filterOptions: {
         useAdaptableBlotterFilterForm: true,
-        useAdaptableBlotterFloatingFilter: true
+        useAdaptableBlotterFloatingFilter: true,
       },
       chartOptions: {
         displayOnStartUp: true,
@@ -168,11 +168,11 @@ function InitAdaptableBlotter() {
       },
       iPushPullConfig: {
         api_key: 'CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP',
-        api_secret: 'xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj',
+        api_secret:
+          'xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj',
         api_url: 'https://www.ipushpull.com/api/1.0',
         hsts: false,
       },
-
     };
 
     // instantiate the Adaptable Blotter, passing in JUST the AdaptableBlotterOptions
@@ -192,7 +192,10 @@ function InitAdaptableBlotter() {
     //  adaptableblotter.api.eventApi.onStateChanged().Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs));
     //  adaptableblotter.api.eventApi.onSearchedChanged().Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
     setTimeout(() => {
-      if (adaptableblotter.adaptableBlotterStore.TheStore.getState().Layout.CurrentLayout === 'Ab_Default_Layout') {
+      if (
+        adaptableblotter.adaptableBlotterStore.TheStore.getState().Layout.CurrentLayout ===
+        'Ab_Default_Layout'
+      ) {
         gridOptions.columnApi.autoSizeAllColumns();
       }
     });
@@ -206,17 +209,17 @@ function retrieveValues(columnName) {
 }
 
 function listenToColumnStateChange(columnChangedArgs) {
-  console.log("column event received");
+  console.log('column event received');
   console.log(columnChangedArgs);
 }
 
 function listenToStateChange(stateChangedArgs) {
-  console.log("state event received");
+  console.log('state event received');
   console.log(stateChangedArgs);
 }
 
 function listenToSearchChange(searchChangedArgs) {
-  console.log("search changed event received");
+  console.log('search changed event received');
   console.log(searchChangedArgs);
 }
 
@@ -316,7 +319,7 @@ function getTradeSchema() {
     // valueFormatter: notionalFormatter,
     cellClass: 'number-cell',
     type: 'abColDefNumber',
-    filter: true
+    filter: true,
   });
   schema.push({
     headerName: 'Counterparty',
@@ -509,7 +512,6 @@ function dataChangeHack(state, gridOptions) {
   }
 }
 
-
 function apiTester(state, gridOptions) {
   if (state.QuickSearch.QuickSearchText !== quickSearchText) {
     quickSearchText = state.QuickSearch.QuickSearchText;
@@ -517,7 +519,10 @@ function apiTester(state, gridOptions) {
       const test = adaptableblotter.api.ConfigApi.configGetUserStateByFunction('AdvancedSearch');
       console.log('object');
       console.log(test);
-      const test2 = adaptableblotter.api.ConfigApi.configGetUserStateByFunction('AdvancedSearch', true);
+      const test2 = adaptableblotter.api.ConfigApi.configGetUserStateByFunction(
+        'AdvancedSearch',
+        true
+      );
       console.log('string version');
       console.log(test2);
       const test3 = adaptableblotter.api.ConfigApi.configGetAllUserState();
@@ -534,7 +539,11 @@ function apiTester(state, gridOptions) {
     } else if (quickSearchText === '#showabout') {
       adaptableblotter.api.DashboardApi.dashboardShowAboutButton();
     } else if (quickSearchText === '#permies') {
-      adaptableblotter.api.UserInterfaceApi.uiSetColumnPermittedValues('counterparty', ['first', 'second', 'third']);
+      adaptableblotter.api.UserInterfaceApi.uiSetColumnPermittedValues('counterparty', [
+        'first',
+        'second',
+        'third',
+      ]);
     } else if (quickSearchText === '#systemfilters') {
       adaptableblotter.api.SystemFilterApi.systemFilterClear();
     } else if (quickSearchText === '#reset') {
@@ -542,9 +551,10 @@ function apiTester(state, gridOptions) {
     } else if (quickSearchText === '#loadUserState') {
       adaptableblotter.api.loadUserState(oldjson);
     } else if (quickSearchText === '#miguel') {
-      setTimeout(() => adaptableblotter.api.uiSetColumnPermittedValues('deskId', ['5555555',
-        '8888888',
-      ]), 20000);
+      setTimeout(
+        () => adaptableblotter.api.uiSetColumnPermittedValues('deskId', ['5555555', '8888888']),
+        20000
+      );
     } else if (quickSearchText === '#allsf') {
       const thisxx = adaptableblotter.api.filterGetAllSystemFilters();
     } else if (quickSearchText === '#permiex') {
@@ -554,11 +564,26 @@ function apiTester(state, gridOptions) {
     } else if (quickSearchText === '#send') {
       adaptableblotter.api.ExportApi.exportSendReport('All Data', 'CSV');
     } else if (quickSearchText === '#info') {
-      adaptableblotter.api.alertApi.Show('Nice one', 'Your data is fine actually its very good and I want to check that this wraps', 'Info', true);
+      adaptableblotter.api.alertApi.Show(
+        'Nice one',
+        'Your data is fine actually its very good and I want to check that this wraps',
+        'Info',
+        true
+      );
     } else if (quickSearchText === '#success') {
-      adaptableblotter.api.alertApi.Show('Success Message', 'You have won the lottery', 'Success', true);
+      adaptableblotter.api.alertApi.Show(
+        'Success Message',
+        'You have won the lottery',
+        'Success',
+        true
+      );
     } else if (quickSearchText === '#warning') {
-      adaptableblotter.api.alertApi.Show('End of Day', 'Dont forget to send the report', 'Warning', true);
+      adaptableblotter.api.alertApi.Show(
+        'End of Day',
+        'Dont forget to send the report',
+        'Warning',
+        true
+      );
     } else if (quickSearchText === '#error') {
       adaptableblotter.api.alertApi.Show('Limits Breached', 'Pleae adjust your PnL', 'Error', true);
     } else if (quickSearchText === '#green') {
@@ -621,8 +646,11 @@ function getTradesForSearch(searchArgs, dataGen) {
       //       adaptableblotter.api.themeSelectCurrent("White Theme");
       adaptableblotter.api.configClear();
       adaptableblotter.api.systemStatusClear();
-      adaptableblotter.api.alertShow('Hello Arjun', 'This is a message sent from the Server...',
-        'Info');
+      adaptableblotter.api.alertShow(
+        'Hello Arjun',
+        'This is a message sent from the Server...',
+        'Info'
+      );
     } else if (searchArgs.BlotterSearchState.DataSource === 'Dollar') {
       //      adaptableblotter.api.themeSelectCurrent("White Theme");
       adaptableblotter.api.systemStatusSet('a few issues perhaps', 'Amber');
@@ -654,7 +682,9 @@ function notionalFormatter(params) {
 function formatNumber(number) {
   // this puts commas into the number eg 1000 goes to 1,000,
   // i pulled this from stack overflow, i have no idea how it works
-  return Math.floor(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  return Math.floor(number)
+    .toString()
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
 
 var currencyFormatter = new Intl.NumberFormat('en-US', {
@@ -686,7 +716,6 @@ function dateParseragGrid(params) {
   }
 }
 
-
 function stringToDate(date, format, delimiter) {
   var formatLowerCase = format.toLowerCase();
   var formatItems = formatLowerCase.split(delimiter);
@@ -696,11 +725,15 @@ function stringToDate(date, format, delimiter) {
   var yearIndex = formatItems.indexOf('yyyy');
   var month = parseInt(dateItems[monthIndex], 10);
   month -= 1;
-  var formatedDate = new Date(parseInt(dateItems[yearIndex], 10), month, parseInt(dateItems[dayIndex], 10));
+  var formatedDate = new Date(
+    parseInt(dateItems[yearIndex], 10),
+    month,
+    parseInt(dateItems[dayIndex], 10)
+  );
   return formatedDate;
 }
 
-var decimalPlaceRendereragGrid = (minDigits, maxDigits) => (params) => {
+var decimalPlaceRendereragGrid = (minDigits, maxDigits) => params => {
   if (params.value) {
     var decimalPlaceFormatter = new Intl.NumberFormat('en-GB', {
       minimumFractionDigits: minDigits,
@@ -750,12 +783,13 @@ function currencyRendereragGrid(params) {
     }
     return null;
   } catch (ex) {
-    console.error(`Error formatting the currency for value: ${params.value} and node : `,
-      params.node);
+    console.error(
+      `Error formatting the currency for value: ${params.value} and node : `,
+      params.node
+    );
   }
   return null;
 }
-
 
 let myJson = {
   QuickSearch: {
@@ -763,68 +797,61 @@ let myJson = {
   },
   Dashboard: {
     DashboardVisibility: 'Minimised',
-  }
+  },
 };
-
 
 let reportJson = {
   Layout: {
-    CurrentLayout: "Citi Price",
+    CurrentLayout: 'Citi Price',
     Layouts: [
       {
-        Columns: [
-          "ask",
-          "bid",
-          "bidOfferSpread"
-        ],
+        Columns: ['ask', 'bid', 'bidOfferSpread'],
         GridSorts: [],
-        Name: "Citi Price"
-      }
-    ]
+        Name: 'Citi Price',
+      },
+    ],
   },
   Export: {
-    CurrentReport: "test",
+    CurrentReport: 'test',
     Reports: [
       {
         ColumnIds: [],
         Expression: { ColumnValueExpressions: [], FilterExpressions: [], RangeExpressions: [] },
-        Name: "test",
-        ReportColumnScope: "AllColumns",
-        ReportRowScope: "AllRows"
-      }
-    ]
-  }
+        Name: 'test',
+        ReportColumnScope: 'AllColumns',
+        ReportRowScope: 'AllRows',
+      },
+    ],
+  },
 };
 let dataSourceJson = {
   DataSource: {
-    CurrentDataSource: "Second",
+    CurrentDataSource: 'Second',
     DataSources: [
       {
-        Name: "First",
-        Description: "DataSource 1",
+        Name: 'First',
+        Description: 'DataSource 1',
       },
       {
-        Name: "Second",
-        Description: "Datasource 2",
-      }
-    ]
+        Name: 'Second',
+        Description: 'Datasource 2',
+      },
+    ],
   },
   Chart: {
     ChartDefinitions: [
       {
-        ChartType: "PieChart",
-        Description: "",
-        Name: "Hello",
-        PrimaryColumnId: "counterparty",
+        ChartType: 'PieChart',
+        Description: '',
+        Name: 'Hello',
+        PrimaryColumnId: 'counterparty',
         SecondaryColumnId: null,
-        SecondaryColumnOperation: "Count",
+        SecondaryColumnOperation: 'Count',
         VisibleRowsOnly: true,
-        ChartProperties: {
-
-        }
-      }
+        ChartProperties: {},
+      },
     ],
-    CurrentChartName: "Hello",
-    RefreshRate: 3
-  }
+    CurrentChartName: 'Hello',
+    RefreshRate: 3,
+  },
 };

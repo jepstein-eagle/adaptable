@@ -1,3 +1,3 @@
-import { AdaptableBlotter } from './AdaptableBlotter'
+import { AdaptableBlotter } from './AdaptableBlotter';
 
-export default AdaptableBlotter
+export default AdaptableBlotter;

@@ -1,28 +1,32 @@
 import { CalendarState } from './Interface/IState';
-import * as Redux from 'redux'
+import * as Redux from 'redux';
 import { CALENDAR_DEFAULT_CURRENT_CALENDER } from '../../Utilities/Constants/GeneralConstants';
 
 export const CALENDAR_SELECT = 'CALENDAR_SELECT';
 
 export interface CalendarSelectAction extends Redux.Action {
-    selectedCalendarName: string
+  selectedCalendarName: string;
 }
 
 export const CalendarSelect = (selectedCalendarName: string): CalendarSelectAction => ({
-    type: CALENDAR_SELECT,
-    selectedCalendarName
-})
+  type: CALENDAR_SELECT,
+  selectedCalendarName,
+});
 
 const initialCalendarState: CalendarState = {
-    CurrentCalendar: CALENDAR_DEFAULT_CURRENT_CALENDER    
-}
+  CurrentCalendar: CALENDAR_DEFAULT_CURRENT_CALENDER,
+};
 
-
-export const CalendarReducer: Redux.Reducer<CalendarState> = (state: CalendarState = initialCalendarState, action: Redux.Action): CalendarState => {
-    switch (action.type) {
-        case CALENDAR_SELECT:
-            return Object.assign({}, state, { CurrentCalendar: (<CalendarSelectAction>action).selectedCalendarName })
-        default:
-            return state
-    }
-}
+export const CalendarReducer: Redux.Reducer<CalendarState> = (
+  state: CalendarState = initialCalendarState,
+  action: Redux.Action
+): CalendarState => {
+  switch (action.type) {
+    case CALENDAR_SELECT:
+      return Object.assign({}, state, {
+        CurrentCalendar: (<CalendarSelectAction>action).selectedCalendarName,
+      });
+    default:
+      return state;
+  }
+};

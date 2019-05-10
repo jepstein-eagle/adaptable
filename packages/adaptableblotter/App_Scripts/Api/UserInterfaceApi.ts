@@ -1,27 +1,25 @@
-import * as UserInterfaceRedux from '../Redux/ActionsReducers/UserInterfaceRedux'
-import { ApiBase } from "./ApiBase";
+import * as UserInterfaceRedux from '../Redux/ActionsReducers/UserInterfaceRedux';
+import { ApiBase } from './ApiBase';
 import { IUserInterfaceApi } from './Interface/IUserInterfaceApi';
-import { IPermittedColumnValues } from "../Utilities/Interface/IPermittedColumnValues";
+import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { UserInterfaceState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
-
-  
   public getUserInterfaceState(): UserInterfaceState {
     return this.getBlotterState().UserInterface;
-}
+  }
 
-public setColorPalette(colorPalette: string[]): void {
-    this.dispatchAction(UserInterfaceRedux.ColorPaletteSet(colorPalette))
+  public setColorPalette(colorPalette: string[]): void {
+    this.dispatchAction(UserInterfaceRedux.ColorPaletteSet(colorPalette));
   }
 
   public addColorsToPalette(colorPalette: string[]): void {
-    this.dispatchAction(UserInterfaceRedux.ColorPaletteAdd(colorPalette))
+    this.dispatchAction(UserInterfaceRedux.ColorPaletteAdd(colorPalette));
   }
 
   public addStyleClassNames(styleClassNames: string[]): void {
-    this.dispatchAction(UserInterfaceRedux.StyleClassNamesAdd(styleClassNames))
+    this.dispatchAction(UserInterfaceRedux.StyleClassNamesAdd(styleClassNames));
   }
 
   public getAllPermittedValues(): IPermittedColumnValues[] {
@@ -37,12 +35,14 @@ public setColorPalette(colorPalette: string[]): void {
   }
 
   public setColumnPermittedValues(column: string, permittedValues: string[]): void {
-    let permittedColumnValues: IPermittedColumnValues = { ColumnId: column, PermittedValues: permittedValues }
-    this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesSet(permittedColumnValues))
+    let permittedColumnValues: IPermittedColumnValues = {
+      ColumnId: column,
+      PermittedValues: permittedValues,
+    };
+    this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesSet(permittedColumnValues));
   }
 
   public clearColumnPermittedValues(column: string): void {
-    this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesDelete(column))
+    this.dispatchAction(UserInterfaceRedux.PermittedColumnValuesDelete(column));
   }
-
 }

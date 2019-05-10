@@ -1,13 +1,11 @@
-
-
 export function abbreviateNumber(numberToAbbreviate: number): string {
-  let str: string = "";
+  let str: string = '';
   if (numberToAbbreviate >= 1000000000) {
-    str = (numberToAbbreviate / 1000000000).toFixed(1) + "B";
+    str = (numberToAbbreviate / 1000000000).toFixed(1) + 'B';
   } else if (numberToAbbreviate >= 1000000) {
-    str = (numberToAbbreviate / 1000000).toFixed(1) + "M";
+    str = (numberToAbbreviate / 1000000).toFixed(1) + 'M';
   } else if (numberToAbbreviate >= 1000) {
-    str = (numberToAbbreviate / 1000).toFixed(1) + "K";
+    str = (numberToAbbreviate / 1000).toFixed(1) + 'K';
   } else {
     str = numberToAbbreviate.toString();
   }
@@ -15,7 +13,7 @@ export function abbreviateNumber(numberToAbbreviate: number): string {
 }
 
 export const NumberExtensions = {
-  abbreviateNumber
-}
+  abbreviateNumber,
+};
 
-export default NumberExtensions
+export default NumberExtensions;

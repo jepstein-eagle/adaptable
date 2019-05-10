@@ -8,12 +8,12 @@ export interface IRange {
    */
   Operator: LeafExpressionOperator;
   /**
-  * Comparison value - can either be a static column valur or name of another column (set in Operand1Type property)
-  */
+   * Comparison value - can either be a static column valur or name of another column (set in Operand1Type property)
+   */
   Operand1: string;
   /**
-  * Comparison value - can either be a static column valur or name of another column (set in Operand2Type property).  Only used when operator is 'Between'
-  */
+   * Comparison value - can either be a static column valur or name of another column (set in Operand2Type property).  Only used when operator is 'Between'
+   */
   Operand2: string;
   /**
    * Whether first operand is a static value or the name of a column; if latter then we look up that column's value in real time when evaluating the expression

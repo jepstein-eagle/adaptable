@@ -1,4 +1,3 @@
-
 describe('Image snapshotting', () => {
   beforeAll(async () => {
     await page.goto(`${PREFIX_URL}`);
@@ -9,9 +8,9 @@ describe('Image snapshotting', () => {
 
     expect(await page.screenshot()).toMatchImageSnapshot();
 
-    const btn = await page.$('button')
+    const btn = await page.$('button');
 
-    await btn.click()
+    await btn.click();
 
     expect(await page.screenshot()).toMatchImageSnapshot();
   });

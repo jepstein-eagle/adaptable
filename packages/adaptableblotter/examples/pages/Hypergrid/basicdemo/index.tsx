@@ -1,23 +1,20 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
-import './index.css'
+import './index.css';
 
-const DynamicComponent = dynamic(
-  () => import('./hypergrid'),
-  {
-    loading: () => null,
-    ssr: false
-  }
-);
+const DynamicComponent = dynamic(() => import('./hypergrid'), {
+  loading: () => null,
+  ssr: false,
+});
 
 export default () => {
   return (
     <>
-      <div id="adaptableBlotter" style={{ margin: 0 }}></div>
+      <div id="adaptableBlotter" style={{ margin: 0 }} />
 
       {/*  <!-- div for the underlying grid - please always call this 'grid' or set the 'vendorContainer' property in IAdaptableBlotterOptions-- >*/}
-      
-      <div id="grid"></div>
+
+      <div id="grid" />
 
       <DynamicComponent />
     </>

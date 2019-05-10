@@ -3,7 +3,5 @@ import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummm
 import { ISelectedCellInfo } from '../../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 
 export interface ICellSummaryStrategy extends IStrategy {
-    CreateCellSummary(selectedCellInfo: ISelectedCellInfo): ICellSummmary
+  CreateCellSummary(selectedCellInfo: ISelectedCellInfo): ICellSummmary;
 }
-
-

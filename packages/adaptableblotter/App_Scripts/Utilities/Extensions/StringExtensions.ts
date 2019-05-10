@@ -1,6 +1,3 @@
-
-
-
 export function IsNull(stringToCheck: string) {
   return stringToCheck == null;
 }
@@ -10,7 +7,7 @@ export function IsNotNull(stringToCheck: string) {
 }
 
 export function IsEmpty(stringToCheck: string) {
-  return stringToCheck == "";
+  return stringToCheck == '';
 }
 
 export function IsNotEmpty(stringToCheck: string) {
@@ -26,15 +23,15 @@ export function IsNotNullOrEmpty(stringToCheck: string) {
 }
 
 export function PlaceSpaceBetweenCapitalisedWords(stringToCheck: string) {
-  return stringToCheck.replace(/([A-Z])/g, ' $1').trim()
+  return stringToCheck.replace(/([A-Z])/g, ' $1').trim();
 }
 
 export function RemoveTrailingComma(stringToCheck: string) {
-  return stringToCheck.replace(/,\s*$/, "")
+  return stringToCheck.replace(/,\s*$/, '');
 }
 
 export function ToLowerCase(stringToCheck: string) {
-  return (IsNullOrEmpty(stringToCheck)) ? stringToCheck : stringToCheck.toLowerCase()
+  return IsNullOrEmpty(stringToCheck) ? stringToCheck : stringToCheck.toLowerCase();
 }
 
 export function Includes(stringToCheck: string, valueToCheck: string) {
@@ -42,13 +39,14 @@ export function Includes(stringToCheck: string, valueToCheck: string) {
 }
 
 export function NotIncludes(stringToCheck: string, valueToCheck: string) {
-  return !Includes(stringToCheck, valueToCheck)
+  return !Includes(stringToCheck, valueToCheck);
 }
 
 export function abbreviateString(stringToAbbreviate: string, maxLength: number) {
-  return stringToAbbreviate.length < maxLength ? stringToAbbreviate : stringToAbbreviate.substr(0, maxLength) + "...";
+  return stringToAbbreviate.length < maxLength
+    ? stringToAbbreviate
+    : stringToAbbreviate.substr(0, maxLength) + '...';
 }
-
 
 export const StringExtensions = {
   IsNull,
@@ -62,7 +60,7 @@ export const StringExtensions = {
   ToLowerCase,
   Includes,
   NotIncludes,
-  abbreviateString
-}
+  abbreviateString,
+};
 
-export default StringExtensions
+export default StringExtensions;

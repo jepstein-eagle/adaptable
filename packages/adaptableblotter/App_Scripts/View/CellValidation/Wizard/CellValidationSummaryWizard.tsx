@@ -1,62 +1,89 @@
-import * as React from "react";
+import * as React from 'react';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { WizardSummaryPage } from "../../Components/WizardSummaryPage";
-import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants'
-import { ExpressionHelper } from "../../../Utilities/Helpers/ExpressionHelper";
-import { IUserFilter } from "../../../Utilities/Interface/BlotterObjects/IUserFilter";
-import { ICellValidationRule } from "../../../Utilities/Interface/BlotterObjects/ICellValidationRule";
-import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
-import { CellValidationHelper } from "../../../Utilities/Helpers/CellValidationHelper";
-import { IKeyValuePair } from "../../../Utilities/Interface/IKeyValuePair";
+import {
+  AdaptableWizardStep,
+  AdaptableWizardStepProps,
+} from '../../Wizard/Interface/IAdaptableWizard';
+import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
+import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
+import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
+import { ICellValidationRule } from '../../../Utilities/Interface/BlotterObjects/ICellValidationRule';
+import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import { CellValidationHelper } from '../../../Utilities/Helpers/CellValidationHelper';
+import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 
-
-export interface CellValidationSummaryWizardProps extends AdaptableWizardStepProps<ICellValidationRule> {
-    UserFilters: IUserFilter[]
+export interface CellValidationSummaryWizardProps
+  extends AdaptableWizardStepProps<ICellValidationRule> {
+  UserFilters: IUserFilter[];
 }
 
+export class CellValidationSummaryWizard
+  extends React.Component<CellValidationSummaryWizardProps, {}>
+  implements AdaptableWizardStep {
+  constructor(props: CellValidationSummaryWizardProps) {
+    super(props);
+  }
 
-export class CellValidationSummaryWizard extends React.Component<CellValidationSummaryWizardProps, {}> implements AdaptableWizardStep {
-    constructor(props: CellValidationSummaryWizardProps) {
-        super(props)
-    }
+  render(): any {
+    let cssClassName: string = this.props.cssClassName + '-summary';
 
-    render(): any {
-        let cssClassName: string = this.props.cssClassName + "-summary"
+    let keyValuePairs: IKeyValuePair[] = [
+      {
+        Key: 'Column',
+        Value: ColumnHelper.getFriendlyNameFromColumnId(
+          this.props.Data.ColumnId,
+          this.props.Columns
+        ),
+      },
+      { Key: 'Mode', Value: this.props.Data.ActionMode },
+      {
+        Key: 'Rule',
+        Value: CellValidationHelper.createCellValidationDescription(
+          this.props.Data,
+          this.props.Columns
+        ),
+      },
+      {
+        Key: 'Query',
+        Value: ExpressionHelper.IsNotEmptyExpression(this.props.Data.Expression)
+          ? ExpressionHelper.ConvertExpressionToString(
+              this.props.Data.Expression,
+              this.props.Columns
+            )
+          : 'None',
+      },
+    ];
 
-        let keyValuePairs: IKeyValuePair[] = [
-            { Key: "Column", Value: ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns) },
-            { Key: "Mode", Value: this.props.Data.ActionMode },
-            { Key: "Rule", Value: CellValidationHelper.createCellValidationDescription( this.props.Data, this.props.Columns) },
-            {
-                Key: "Query", Value: ExpressionHelper.IsNotEmptyExpression( this.props.Data.Expression) ?
-                    ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Columns) :
-                    "None"
-            }
-        ]
+    let summaryPage = (
+      <WizardSummaryPage
+        cssClassName={cssClassName}
+        KeyValuePairs={keyValuePairs}
+        header={StrategyConstants.CellValidationStrategyName}
+      />
+    );
+    return <div className={cssClassName}>{summaryPage}</div>;
+  }
 
-        let summaryPage = <WizardSummaryPage cssClassName={cssClassName} KeyValuePairs={keyValuePairs} header={StrategyConstants.CellValidationStrategyName} />
-        return <div className={cssClassName}>
-            {summaryPage}
-        </div>
+  public canNext(): boolean {
+    return true;
+  }
 
-    }
+  public canBack(): boolean {
+    return true;
+  }
+  public Next(): void {
+    /* no implementation */
+  }
 
-    public canNext(): boolean {
-        return true;
-    }
+  public Back(): void {
+    /* no implementation */
+  }
 
-    public canBack(): boolean { return true; }
-    public Next(): void { /* no implementation */ }
-
-    public Back(): void { /* no implementation */ }
-
-    public GetIndexStepIncrement() {
-        return 1;
-    }
-    public GetIndexStepDecrement() {
-        return ExpressionHelper.IsEmptyExpression( this.props.Data.Expression )? 2 : 1;
-    }
-   
+  public GetIndexStepIncrement() {
+    return 1;
+  }
+  public GetIndexStepDecrement() {
+    return ExpressionHelper.IsEmptyExpression(this.props.Data.Expression) ? 2 : 1;
+  }
 }
-

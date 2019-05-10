@@ -1,28 +1,26 @@
 ﻿.hypergrid-container {
-    position: relative;
-    height: 100vh;
+  position: relative;
+  height: 100vh;
 }
 
-.finbar-horizontal div.thumb{
-    background-color: black !important;
-    height: 17px !important;
+.finbar-horizontal div.thumb {
+  background-color: black !important;
+  height: 17px !important;
 }
 
-.finbar-vertical div.thumb{
-    background-color: black !important;
-    width: 17px !important;
+.finbar-vertical div.thumb {
+  background-color: black !important;
+  width: 17px !important;
 }
 
+.styleBackBrown {
+  background-color: rosybrown;
+}
 
-.styleBackBrown{
-    background-color : rosybrown 
-  }
-
-.styleForeYellow{
-    color: orange;
-    font-stretch: expanded;
-    vertical-align: baseline;
-    font-family: cursive;
-    font-size: xx-large;
-
-  }
+.styleForeYellow {
+  color: orange;
+  font-stretch: expanded;
+  vertical-align: baseline;
+  font-family: cursive;
+  font-size: xx-large;
+}

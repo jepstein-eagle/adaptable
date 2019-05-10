@@ -6,6 +6,6 @@ export interface ICalendar extends IAdaptableBlotterObject {
 }
 
 export interface ICalendarEntry {
-    HolidayName: string;
-    HolidayDate: string;
-  }
+  HolidayName: string;
+  HolidayDate: string;
+}

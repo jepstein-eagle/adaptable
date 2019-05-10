@@ -1,44 +1,46 @@
 import { ICellValidationStrategy } from './Interface/ICellValidationStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
-import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { CellValidationState } from '../Redux/ActionsReducers/Interface/IState';
 import { StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
 
-export class CellValidationStrategy extends AdaptableStrategyBase implements ICellValidationStrategy {
+export class CellValidationStrategy extends AdaptableStrategyBase
+  implements ICellValidationStrategy {
+  private CellValidationState: CellValidationState;
 
-    private CellValidationState: CellValidationState
+  constructor(blotter: IAdaptableBlotter) {
+    super(StrategyConstants.CellValidationStrategyId, blotter);
+  }
 
-    constructor(blotter: IAdaptableBlotter) {
-        super(StrategyConstants.CellValidationStrategyId, blotter)
+  protected addPopupMenuItem() {
+    this.createMenuItemShowPopup(
+      StrategyConstants.CellValidationStrategyName,
+      ScreenPopups.CellValidationPopup,
+      StrategyConstants.CellValidationGlyph
+    );
+  }
+
+  protected InitState() {
+    if (this.CellValidationState != this.blotter.api.cellValidationApi.getCellValidationState()) {
+      this.CellValidationState = this.blotter.api.cellValidationApi.getCellValidationState();
+
+      if (this.blotter.isInitialised) {
+        this.publishStateChanged(StateChangedTrigger.CellValidation, this.CellValidationState);
       }
-
-    protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstants.CellValidationStrategyName, ScreenPopups.CellValidationPopup, StrategyConstants.CellValidationGlyph);
     }
+  }
 
-    protected InitState() {
-        if (this.CellValidationState != this.blotter.api.cellValidationApi.getCellValidationState()) {
-            this.CellValidationState = this.blotter.api.cellValidationApi.getCellValidationState();
-       
-            if (this.blotter.isInitialised) {
-                this.publishStateChanged(StateChangedTrigger.CellValidation, this.CellValidationState)
-            }
-        }
+  public addContextMenuItem(column: IColumn): void {
+    if (this.canCreateContextMenuItem(column, this.blotter)) {
+      this.createContextMenuItemShowPopup(
+        'Create Cell Validation Rule',
+        ScreenPopups.CellValidationPopup,
+        StrategyConstants.CellValidationGlyph,
+        'New|' + column.ColumnId
+      );
     }
-
-    public addContextMenuItem(column: IColumn): void {
-        if (this.canCreateContextMenuItem(column, this.blotter)) {
-            this.createContextMenuItemShowPopup(
-                "Create Cell Validation Rule",
-                ScreenPopups.CellValidationPopup,
-                StrategyConstants.CellValidationGlyph,
-                "New|" + column.ColumnId)
-            }
-    }
+  }
 }
-
-
-

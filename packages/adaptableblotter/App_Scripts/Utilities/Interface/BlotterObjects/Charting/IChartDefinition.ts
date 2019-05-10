@@ -1,6 +1,20 @@
 import { Expression } from '../../../Expression';
 import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
-import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocation, LabelVisibility, AxisScale, AxisAngle, HorizontalAlignment, ChartType, SecondaryColumnOperation, PieChartLabelPosition, SliceLabelOption, OthersCategoryType } from '../../../ChartEnums';
+import {
+  CategoryChartType,
+  CrosshairDisplayMode,
+  ToolTipType,
+  AxisLabelsLocation,
+  LabelVisibility,
+  AxisScale,
+  AxisAngle,
+  HorizontalAlignment,
+  ChartType,
+  SecondaryColumnOperation,
+  PieChartLabelPosition,
+  SliceLabelOption,
+  OthersCategoryType,
+} from '../../../ChartEnums';
 
 /**
  * Our Chart Definitions which will get added to and updated as we add new charts
@@ -8,14 +22,12 @@ import { CategoryChartType, CrosshairDisplayMode, ToolTipType, AxisLabelsLocatio
  * These chart properties are specialised for each chart type: they are all nullable types because we use defaults in the DefaultXXXProperties that we assign
  */
 
-
-
 export interface IChartDefinition extends IAdaptableBlotterObject {
   Name: string;
   Description: string;
-  ChartProperties: IChartProperties
-  ChartType: ChartType
-  VisibleRowsOnly: boolean
+  ChartProperties: IChartProperties;
+  ChartType: ChartType;
+  VisibleRowsOnly: boolean;
 }
 
 export interface IChartProperties extends IAdaptableBlotterObject {

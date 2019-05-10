@@ -1,6 +1,3 @@
-import { IStrategy } from "./IStrategy";
+import { IStrategy } from './IStrategy';
 
-export interface ICalculatedColumnStrategy extends IStrategy {
-}
-
-
+export interface ICalculatedColumnStrategy extends IStrategy {}

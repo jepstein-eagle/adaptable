@@ -1,5 +1,5 @@
-import { ICalculatedColumn } from "../../Utilities/Interface/BlotterObjects/ICalculatedColumn";
-import { CalculatedColumnState } from "../../Redux/ActionsReducers/Interface/IState";
+import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
+import { CalculatedColumnState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export interface ICalculatedColumnApi {
   getCalculatedColumnState(): CalculatedColumnState;
@@ -8,4 +8,3 @@ export interface ICalculatedColumnApi {
   editCalculatedColumnExpression(column: string, columnExpression: string): void;
   deleteCalculatedColumn(column: string): void;
 }
-

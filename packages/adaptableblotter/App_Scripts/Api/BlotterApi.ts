@@ -1,80 +1,77 @@
-import { IBlotterApi } from "./Interface/IBlotterApi";
-import { IAdvancedSearchApi } from "./Interface/IAdvancedSearchApi";
-import { IAlertApi } from "./Interface/IAlertApi";
-import { ICalendarApi } from "./Interface/ICalendarApi";
-import { ICalculatedColumnApi } from "./Interface/ICalculatedColumnApi";
-import { ICellValidationApi } from "./Interface/ICellValidationApi";
-import { IColumnCategoryApi } from "./Interface/IColumnCategoryApi";
-import { IColumnFilterApi } from "./Interface/IColumnFilterApi";
-import { IConfigApi } from "./Interface/IConfigApi";
-import { ICustomSortApi } from "./Interface/ICustomSortApi";
-import { IDashboardApi } from "./Interface/IDashboardApi";
-import { IDataSourceApi } from "./Interface/IDataSourceApi";
-import { IEntitlementApi } from "./Interface/IEntitlementApi";
-import { IEventApi } from "./Interface/IEventApi";
-import { IExportApi } from "./Interface/IExportApi";
-import { IFormatColumnApi } from "./Interface/IFormatColumnApi";
-import { IFreeTextColumnApi } from "./Interface/IFreeTextColumnApi";
-import { IGridApi } from "./Interface/IGridApi";
-import { ILayoutApi } from "./Interface/ILayoutApi";
-import { IPercentBarApi } from "./Interface/IPercentBarApi";
-import { IQuickSearchApi } from "./Interface/IQuickSearchApi";
-import { IShortcutApi } from "./Interface/IShortcutApi";
-import { ISmartEditApi } from "./Interface/ISmartEditApi";
-import { ISystemFilterApi } from "./Interface/ISystemFilterApi";
-import { ISystemStatusApi } from "./Interface/ISystemStatusApi";
-import { IThemeApi } from "./Interface/IThemeApi";
-import { IUserInterfaceApi } from "./Interface/IUserInterfaceApi";
-import { IAdaptableBlotter } from "../Utilities/Interface/IAdaptableBlotter";
-import { AdvancedSearchApi } from "./AdvancedSearchApi";
-import { AlertApi } from "./AlertApi";
-import { CalendarApi } from "./CalendarApi";
-import { CalculatedColumnApi } from "./CalculatedColumnApi";
-import { CellValidationApi } from "./CellValidationApi";
-import { ColumnCategoryApi } from "./ColumnCategoryApi";
-import { ColumnFilterApi } from "./ColumnFilterApi";
-import { ConfigApi } from "./ConfigApi";
-import { CustomSortApi } from "./CustomSortApi";
-import { DashboardApi } from "./DashboardApi";
-import { DataSourceApi } from "./DataSourceApi";
-import { EntitlementApi } from "./EntitlementApi";
-import { EventApi } from "./EventApi";
-import { ExportApi } from "./ExportApi";
-import { FormatColumnApi } from "./FormatColumnApi";
-import { FreeTextColumnApi } from "./FreeTextColumnApi";
-import { GridApi } from "./GridApi";
-import { LayoutApi } from "./LayoutApi";
-import { PercentBarApi } from "./PercentBarApi";
-import { QuickSearchApi } from "./QuickSearchApi";
-import { ShortcutApi } from "./ShortcutApi";
-import { SmartEditApi } from "./SmartEditApi";
-import { SystemFilterApi } from "./SystemFilterApi";
-import { SystemStatusApi } from "./SystemStatusApi";
-import { ThemeApi } from "./ThemeApi";
-import { UserInterfaceApi } from "./UserInterfaceApi";
-import { IInternalApi } from "./Interface/IInternalApi";
-import { InternalApi } from "./InternalApi";
-import { IConditionalStyleApi } from "./Interface/IConditionalStyleApi";
-import { ConditionalStyleApi } from "./ConditionalStyleApi";
-import { IReminderApi } from "./Interface/IReminderApi";
-import { ReminderApi } from "./ReminderApi";
-import { IFlashingCellApi } from "./Interface/IFlashingCellApi";
-import { FlashingCellApi } from "./FlashingCellApi";
-import { IChartApi } from "./Interface/IChartApi";
-import { ChartApi } from "./ChartApi";
-import { ICellSummaryApi } from "./Interface/ICellSummaryApi";
-import { CellSummaryApi } from "./CellSummaryApi";
-import { IUserFilterApi } from "./Interface/IUserFilterApi";
-import { UserFilterApi } from "./UserFilterApi";
-import { IPlusMinusApi } from "./Interface/IPlusMinusApi";
-import { PlusMinusApi } from "./PlusMinusApi";
-import { IBulkUpdateApi } from "./Interface/IBulkUpdateApi";
-import { BulkUpdateApi } from "./BulkUpdateApi";
-
-
+import { IBlotterApi } from './Interface/IBlotterApi';
+import { IAdvancedSearchApi } from './Interface/IAdvancedSearchApi';
+import { IAlertApi } from './Interface/IAlertApi';
+import { ICalendarApi } from './Interface/ICalendarApi';
+import { ICalculatedColumnApi } from './Interface/ICalculatedColumnApi';
+import { ICellValidationApi } from './Interface/ICellValidationApi';
+import { IColumnCategoryApi } from './Interface/IColumnCategoryApi';
+import { IColumnFilterApi } from './Interface/IColumnFilterApi';
+import { IConfigApi } from './Interface/IConfigApi';
+import { ICustomSortApi } from './Interface/ICustomSortApi';
+import { IDashboardApi } from './Interface/IDashboardApi';
+import { IDataSourceApi } from './Interface/IDataSourceApi';
+import { IEntitlementApi } from './Interface/IEntitlementApi';
+import { IEventApi } from './Interface/IEventApi';
+import { IExportApi } from './Interface/IExportApi';
+import { IFormatColumnApi } from './Interface/IFormatColumnApi';
+import { IFreeTextColumnApi } from './Interface/IFreeTextColumnApi';
+import { IGridApi } from './Interface/IGridApi';
+import { ILayoutApi } from './Interface/ILayoutApi';
+import { IPercentBarApi } from './Interface/IPercentBarApi';
+import { IQuickSearchApi } from './Interface/IQuickSearchApi';
+import { IShortcutApi } from './Interface/IShortcutApi';
+import { ISmartEditApi } from './Interface/ISmartEditApi';
+import { ISystemFilterApi } from './Interface/ISystemFilterApi';
+import { ISystemStatusApi } from './Interface/ISystemStatusApi';
+import { IThemeApi } from './Interface/IThemeApi';
+import { IUserInterfaceApi } from './Interface/IUserInterfaceApi';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { AdvancedSearchApi } from './AdvancedSearchApi';
+import { AlertApi } from './AlertApi';
+import { CalendarApi } from './CalendarApi';
+import { CalculatedColumnApi } from './CalculatedColumnApi';
+import { CellValidationApi } from './CellValidationApi';
+import { ColumnCategoryApi } from './ColumnCategoryApi';
+import { ColumnFilterApi } from './ColumnFilterApi';
+import { ConfigApi } from './ConfigApi';
+import { CustomSortApi } from './CustomSortApi';
+import { DashboardApi } from './DashboardApi';
+import { DataSourceApi } from './DataSourceApi';
+import { EntitlementApi } from './EntitlementApi';
+import { EventApi } from './EventApi';
+import { ExportApi } from './ExportApi';
+import { FormatColumnApi } from './FormatColumnApi';
+import { FreeTextColumnApi } from './FreeTextColumnApi';
+import { GridApi } from './GridApi';
+import { LayoutApi } from './LayoutApi';
+import { PercentBarApi } from './PercentBarApi';
+import { QuickSearchApi } from './QuickSearchApi';
+import { ShortcutApi } from './ShortcutApi';
+import { SmartEditApi } from './SmartEditApi';
+import { SystemFilterApi } from './SystemFilterApi';
+import { SystemStatusApi } from './SystemStatusApi';
+import { ThemeApi } from './ThemeApi';
+import { UserInterfaceApi } from './UserInterfaceApi';
+import { IInternalApi } from './Interface/IInternalApi';
+import { InternalApi } from './InternalApi';
+import { IConditionalStyleApi } from './Interface/IConditionalStyleApi';
+import { ConditionalStyleApi } from './ConditionalStyleApi';
+import { IReminderApi } from './Interface/IReminderApi';
+import { ReminderApi } from './ReminderApi';
+import { IFlashingCellApi } from './Interface/IFlashingCellApi';
+import { FlashingCellApi } from './FlashingCellApi';
+import { IChartApi } from './Interface/IChartApi';
+import { ChartApi } from './ChartApi';
+import { ICellSummaryApi } from './Interface/ICellSummaryApi';
+import { CellSummaryApi } from './CellSummaryApi';
+import { IUserFilterApi } from './Interface/IUserFilterApi';
+import { UserFilterApi } from './UserFilterApi';
+import { IPlusMinusApi } from './Interface/IPlusMinusApi';
+import { PlusMinusApi } from './PlusMinusApi';
+import { IBulkUpdateApi } from './Interface/IBulkUpdateApi';
+import { BulkUpdateApi } from './BulkUpdateApi';
 
 export class BlotterApi implements IBlotterApi {
-
   public advancedSearchApi: IAdvancedSearchApi;
   public alertApi: IAlertApi;
   public bulkUpdateApi: IBulkUpdateApi;
@@ -96,8 +93,8 @@ export class BlotterApi implements IBlotterApi {
   public flashingCellApi: IFlashingCellApi;
   public formatColumnApi: IFormatColumnApi;
   public freeTextColumnApi: IFreeTextColumnApi;
-  public gridApi: IGridApi
-  public internalApi: IInternalApi
+  public gridApi: IGridApi;
+  public internalApi: IInternalApi;
   public layoutApi: ILayoutApi;
   public plusMinusApi: IPlusMinusApi;
   public percentBarApi: IPercentBarApi;
@@ -110,7 +107,6 @@ export class BlotterApi implements IBlotterApi {
   public themeApi: IThemeApi;
   public userInterfaceApi: IUserInterfaceApi;
   public userFilterApi: IUserFilterApi;
-
 
   constructor(protected blotter: IAdaptableBlotter) {
     this.blotter = blotter;
@@ -150,7 +146,5 @@ export class BlotterApi implements IBlotterApi {
     this.userFilterApi = new UserFilterApi(blotter);
 
     this.internalApi = new InternalApi(blotter);
-
   }
-
 }

@@ -5,18 +5,8 @@ import { AdaptableblotterAgGridComponent } from './adaptableblotter-aggrid.compo
 import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AgGridModule.withComponents([])
-  ],
-  declarations: [
-    AdaptableBlotterComponent,
-    AdaptableblotterAgGridComponent,
-  ],
-  exports: [
-    AdaptableBlotterComponent,
-    AdaptableblotterAgGridComponent,
-  ]
+  imports: [CommonModule, AgGridModule.withComponents([])],
+  declarations: [AdaptableBlotterComponent, AdaptableblotterAgGridComponent],
+  exports: [AdaptableBlotterComponent, AdaptableblotterAgGridComponent],
 })
-export class AdaptableBlotterModule { }
-
+export class AdaptableBlotterModule {}

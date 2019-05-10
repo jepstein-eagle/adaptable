@@ -1,36 +1,43 @@
-import * as React from "react";
+import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
 import { Col, Row } from 'react-bootstrap';
-import { IColItem } from "../UIInterfaces";
+import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 
 export interface AdaptableObjectRowProps extends React.ClassAttributes<AdaptableObjectRow> {
-    colItems: IColItem[]
-    cssClassName: string
-    fontSize?: string
+  colItems: IColItem[];
+  cssClassName: string;
+  fontSize?: string;
 }
 
 export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps, {}> {
-    render(): any {
-        let cssClassName = this.props.cssClassName + StyleConstants.LIST_GROUP_ITEM
-        let fontSize = this.props.fontSize ? this.props.fontSize : "small"
-        let colItems = this.props.colItems.map((colItem: IColItem, index: number) => {
-            return <Col key={index} xs={colItem.Size}>
-                <span style={{ fontSize: fontSize }}>
-                    {colItem.Content}
-                </span>
-            </Col>
-        });
+  render(): any {
+    let cssClassName = this.props.cssClassName + StyleConstants.LIST_GROUP_ITEM;
+    let fontSize = this.props.fontSize ? this.props.fontSize : 'small';
+    let colItems = this.props.colItems.map((colItem: IColItem, index: number) => {
+      return (
+        <Col key={index} xs={colItem.Size}>
+          <span style={{ fontSize: fontSize }}>{colItem.Content}</span>
+        </Col>
+      );
+    });
 
-        return <div className={cssClassName}>
-            <li style={{ padding: '5px' }}
-                className="list-group-item"
-            >
-                <Row style={{ display: "flex", alignItems: "center", overflowY: 'visible', padding: '0px', margin:'0px' }}>
-                    {colItems}
-                </Row>
-            </li>
-        </div>
-    }
-
+    return (
+      <div className={cssClassName}>
+        <li style={{ padding: '5px' }} className="list-group-item">
+          <Row
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              overflowY: 'visible',
+              padding: '0px',
+              margin: '0px',
+            }}
+          >
+            {colItems}
+          </Row>
+        </li>
+      </div>
+    );
+  }
 }

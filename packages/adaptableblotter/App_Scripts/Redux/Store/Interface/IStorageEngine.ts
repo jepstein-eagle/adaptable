@@ -1,4 +1,4 @@
-import { AdaptableBlotterState } from "./IAdaptableStore";
+import { AdaptableBlotterState } from './IAdaptableStore';
 
 export default interface IStorageEngine {
   load(): PromiseLike<any>;

@@ -1,4 +1,3 @@
 import { IStrategy } from './IStrategy';
 
-export interface IAlertStrategy extends IStrategy {
-}
+export interface IAlertStrategy extends IStrategy {}

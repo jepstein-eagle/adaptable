@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid'
-import '../../../../App_Scripts/base.css'
-import '../../../../App_Scripts/themes/light.css'
+import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import '../../../../App_Scripts/base.css';
+import '../../../../App_Scripts/themes/light.css';
 import { GridOptions } from 'ag-grid-community';
-import { LicenseManager } from "ag-grid-enterprise";
+import { LicenseManager } from 'ag-grid-enterprise';
 import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
@@ -17,10 +17,12 @@ Nor do we create the ag-Grid
 
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
-
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(gridOptions, 'basic demo');
+  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+    gridOptions,
+    'basic demo'
+  );
 
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
@@ -30,11 +32,11 @@ function InitAdaptableBlotter() {
 export default () => {
   useEffect(() => {
     if (!process.browser) {
-      return
+      return;
     }
 
-    InitAdaptableBlotter()
-  }, [])
+    InitAdaptableBlotter();
+  }, []);
 
-  return null
-}
+  return null;
+};

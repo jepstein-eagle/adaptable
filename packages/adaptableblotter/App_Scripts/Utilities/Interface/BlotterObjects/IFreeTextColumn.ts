@@ -6,6 +6,6 @@ export interface IFreeTextColumn extends IAdaptableBlotterObject {
 }
 
 export interface IFreeTextStoredValue {
-  PrimaryKey: any,
-  FreeText: any
+  PrimaryKey: any;
+  FreeText: any;
 }

@@ -41,21 +41,21 @@ export class DataGenerator {
   getDollarTrades(count: number) {
     let trades = [];
     for (let i = 1; i <= count; i++) {
-      trades.push(this.createTrade(i, "USD"));
+      trades.push(this.createTrade(i, 'USD'));
     }
     return trades;
   }
   getGBPTrades(count: number) {
     let trades = [];
     for (let i = 1; i <= count; i++) {
-      trades.push(this.createTrade(i, "GBP"));
+      trades.push(this.createTrade(i, 'GBP'));
     }
     return trades;
   }
   getEuroTrades(count: number) {
     let trades = [];
     for (let i = 1; i <= count; i++) {
-      trades.push(this.createTrade(i, "EUR"));
+      trades.push(this.createTrade(i, 'EUR'));
     }
     return trades;
   }
@@ -76,7 +76,7 @@ export class DataGenerator {
     return fxs;
   }
 
-  private _numericCols: string[] = ["price", "bid", "ask"];
+  private _numericCols: string[] = ['price', 'bid', 'ask'];
 
   startTickingDataHypergrid(grid: any) {
     setInterval(() => {
@@ -84,20 +84,16 @@ export class DataGenerator {
       //pick a random trade in the first ten
       let trade = this.getRandomItem(grid.behavior.getData(), 30);
       //pick a random colum in the numeric col
-      let columnName = "price"; // this.getRandomItem(this._numericCols);
+      let columnName = 'price'; // this.getRandomItem(this._numericCols);
       let initialNewValue = trade[columnName];
       let newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
       trade[columnName] = newValue;
 
-      trade["ask"] = this.roundTo4Dp(
-        trade["price"] - trade["bidOfferSpread"] / 2
-      );
-      trade["bid"] = this.roundTo4Dp(
-        trade["price"] + trade["bidOfferSpread"] / 2
-      );
+      trade['ask'] = this.roundTo4Dp(trade['price'] - trade['bidOfferSpread'] / 2);
+      trade['bid'] = this.roundTo4Dp(trade['price'] + trade['bidOfferSpread'] / 2);
 
-      trade["bloombergAsk"] = this.roundTo4Dp(trade["ask"] + 0.01);
-      trade["bloombergBid"] = this.roundTo4Dp(trade["bid"] - 0.01);
+      trade['bloombergAsk'] = this.roundTo4Dp(trade['ask'] + 0.01);
+      trade['bloombergBid'] = this.roundTo4Dp(trade['bid'] - 0.01);
       //grid.behavior.reindex();
       grid.repaint();
     }, 100);
@@ -110,32 +106,31 @@ export class DataGenerator {
         if (rowNode.group) {
           return;
         }
-        let rowTradeId = gridOptions.api.getValue("tradeId", rowNode);
+        let rowTradeId = gridOptions.api.getValue('tradeId', rowNode);
         // only do first 30
         if (rowTradeId != tradeId) {
           return;
         }
 
-        let numberToAdd: number =
-          this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
+        let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
         let trade = rowNode;
-        let columnName = "price";
+        let columnName = 'price';
         let initialNewValue = gridOptions.api.getValue(columnName, trade);
         let newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
         trade.setDataValue(columnName, newValue);
         let ask = this.roundTo4Dp(
-          gridOptions.api.getValue("price", trade) -
-            gridOptions.api.getValue("bidOfferSpread", trade) / 2
+          gridOptions.api.getValue('price', trade) -
+            gridOptions.api.getValue('bidOfferSpread', trade) / 2
         );
-        trade.setDataValue("ask", ask);
+        trade.setDataValue('ask', ask);
         let bid = this.roundTo4Dp(
-          gridOptions.api.getValue("price", trade) +
-            gridOptions.api.getValue("bidOfferSpread", trade) / 2
+          gridOptions.api.getValue('price', trade) +
+            gridOptions.api.getValue('bidOfferSpread', trade) / 2
         );
-        trade.setDataValue("bid", bid);
+        trade.setDataValue('bid', bid);
 
-        trade.setDataValue("bloombergAsk", this.roundTo4Dp(ask + 0.01));
-        trade.setDataValue("bloombergBid", this.roundTo4Dp(bid - 0.01));
+        trade.setDataValue('bloombergAsk', this.roundTo4Dp(ask + 0.01));
+        trade.setDataValue('bloombergBid', this.roundTo4Dp(bid - 0.01));
       });
     }, 100);
   }
@@ -160,7 +155,7 @@ export class DataGenerator {
       tradeDate: tradeDate,
       effectiveDate: this.addDays(tradeDate, 3),
       maturityDate: this.addDays(tradeDate, 245),
-      lastUpdated: this.generateRandomDateAndTime(-7, 0)
+      lastUpdated: this.generateRandomDateAndTime(-7, 0),
     };
     return bond;
   }
@@ -177,9 +172,7 @@ export class DataGenerator {
       dealType: this.getRandomItem(this.getDealType()),
       baseCcy: baseCurrency,
       baseAmount: baseAmount,
-      secondCcy: this.getRandomItem(
-        this.getCurrenciesOtherThanOne(baseCurrency)
-      ),
+      secondCcy: this.getRandomItem(this.getCurrenciesOtherThanOne(baseCurrency)),
       secondAmount: secondaryAmount,
       rate: rate,
       pnL: this.getMeaningfulDoubleInRange(3, 40),
@@ -187,7 +180,7 @@ export class DataGenerator {
       trader: this.getRandomItem(this.getNames()),
       tradeDate: tradeDate,
       effectiveDate: this.addDays(tradeDate, 3),
-      lastUpdated: this.generateRandomDateAndTime(-7, 0)
+      lastUpdated: this.generateRandomDateAndTime(-7, 0),
     };
     return fx;
   }
@@ -199,9 +192,7 @@ export class DataGenerator {
     let bid = this.roundTo4Dp(price - bidOfferSpread / 2);
     let tradeDate = this.generateRandomDate(-1000, 1000);
     let moodyRating = this.getRandomItem(this.getMoodysRatings());
-    let tradeCurrency = currency
-      ? currency
-      : this.getRandomItem(this.getCurrencies());
+    let tradeCurrency = currency ? currency : this.getRandomItem(this.getCurrencies());
     let trade = {
       tradeId: i,
       notional: this.getRandomItem(this.getNotionals()),
@@ -226,7 +217,7 @@ export class DataGenerator {
       bloombergBid: this.getSimilarNumber(bid),
       percentChange: this.generateRandomNullableDouble(),
       lastUpdated: this.generateRandomDateAndTime(-7, 0),
-      lastUpdatedBy: this.getRandomItem(this.getNames())
+      lastUpdatedBy: this.getRandomItem(this.getNames()),
       /*
              "extraCol1": "1",
              "extraCol2": "2",
@@ -266,7 +257,7 @@ export class DataGenerator {
     return trade;
   }
 
- // If minValue is 1 and maxValue is 2, then Math.random()*(maxValue-minValue+1)
+  // If minValue is 1 and maxValue is 2, then Math.random()*(maxValue-minValue+1)
   // generates a value between 0 and 2 =[0, 2), adding 1 makes this
   // [1, 3) and Math.floor gives 1 or 2.
   public generateRandomInt(minValue: number, maxValue: number): number {
@@ -286,13 +277,13 @@ export class DataGenerator {
   protected getStatus(): string {
     let randomNumber = this.generateRandomInt(1, 3);
     if (randomNumber == 1) {
-      return "Completed";
+      return 'Completed';
     } else if (randomNumber == 2) {
-      return "Pending";
+      return 'Pending';
     } else if (randomNumber == 3) {
-      return "Rejected";
+      return 'Rejected';
     }
-    return "";
+    return '';
   }
 
   protected generateRandomNullableDouble(): number {
@@ -318,15 +309,11 @@ export class DataGenerator {
   }
 
   protected getMeaningfulDouble(): number {
-    return this.roundTo4Dp(
-      this.generateRandomInt(10, 150) + this.generateRandomDouble()
-    );
+    return this.roundTo4Dp(this.generateRandomInt(10, 150) + this.generateRandomDouble());
   }
 
   protected getMeaningfulPositiveNegativeDouble(): number {
-    return this.roundTo4Dp(
-      this.generateRandomInt(-150, 150) + this.generateRandomDouble()
-    );
+    return this.roundTo4Dp(this.generateRandomInt(-150, 150) + this.generateRandomDouble());
   }
 
   protected removeDecimalPoints(val: number): number {
@@ -338,15 +325,12 @@ export class DataGenerator {
   }
 
   protected getMeaningfulDoubleInRange(min: number, max: number): number {
-    return this.roundTo4Dp(
-      this.generateRandomInt(min, max) + this.generateRandomDouble()
-    );
+    return this.roundTo4Dp(this.generateRandomInt(min, max) + this.generateRandomDouble());
   }
 
   protected getMeaningfulDoubleTest(): number {
     return (
-      Math.round((100 + this.generateRandomDouble()) * 10) / 10 +
-      this.generateRandomDouble() / 1000
+      Math.round((100 + this.generateRandomDouble()) * 10) / 10 + this.generateRandomDouble() / 1000
     );
   }
 
@@ -354,9 +338,7 @@ export class DataGenerator {
     let currentDate = new Date(); // Fix it
     let start = this.addDays(currentDate, minDays);
     let end = this.addDays(currentDate, maxDays);
-    return new Date(
-      start.getTime() + Math.random() * (end.getTime() - start.getTime())
-    );
+    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   }
 
   protected addDays(date: Date, days: number): Date {
@@ -371,14 +353,14 @@ export class DataGenerator {
 
   protected toDateTimeString(date: Date) {
     let options = {
-      weekday: "long",
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
+      weekday: 'long',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
     };
-    return date.toLocaleTimeString("en-us", options);
+    return date.toLocaleTimeString('en-us', options);
   }
 
   protected generateCounterparty(): string {
@@ -393,88 +375,88 @@ export class DataGenerator {
 
   protected getIsin(index: number): string {
     let isins: string[] = [
-      "US046353AB45",
-      "FR0010326975",
-      "XS0133582147",
-      "XS0097283096",
-      "XS0253989635",
-      "FR0010828095",
-      "XS0315528850",
-      "XS0173501379",
-      "XS0297700006",
-      "XS0630204351",
-      "FR0010967216",
-      "XS0323411016",
-      "FR0010185975",
-      "USF7061BAN04",
-      "DE000A1MA9V5",
-      "DE000DB5S5U8",
-      "XS1000918018",
-      "US822582AC66",
-      "XS0097283096",
-      "FR0011043124",
-      "DE000A0TKUU3",
-      "XS0469026453",
-      "XS0133582147",
-      "XS0493098486",
-      "FR0010394478",
-      "XS0369461644",
-      "S780641AH94",
-      "XS0369461644",
-      "XS0909769407",
-      "XS0741004062",
-      "XS0783934911",
-      "XS0133582147",
-      "XS0097283096",
-      "XS0253989635",
-      "FR0010828095",
-      "XS0315528850",
-      "XS0173501379"
+      'US046353AB45',
+      'FR0010326975',
+      'XS0133582147',
+      'XS0097283096',
+      'XS0253989635',
+      'FR0010828095',
+      'XS0315528850',
+      'XS0173501379',
+      'XS0297700006',
+      'XS0630204351',
+      'FR0010967216',
+      'XS0323411016',
+      'FR0010185975',
+      'USF7061BAN04',
+      'DE000A1MA9V5',
+      'DE000DB5S5U8',
+      'XS1000918018',
+      'US822582AC66',
+      'XS0097283096',
+      'FR0011043124',
+      'DE000A0TKUU3',
+      'XS0469026453',
+      'XS0133582147',
+      'XS0493098486',
+      'FR0010394478',
+      'XS0369461644',
+      'S780641AH94',
+      'XS0369461644',
+      'XS0909769407',
+      'XS0741004062',
+      'XS0783934911',
+      'XS0133582147',
+      'XS0097283096',
+      'XS0253989635',
+      'FR0010828095',
+      'XS0315528850',
+      'XS0173501379',
     ];
     return isins[index];
   }
 
   protected getTicker(index: number): string {
     let tickers: string[] = [
-      "AZN",
-      "BOUY",
-      "BYLAN",
-      "KONIPHI",
-      "SIEM",
-      "LADBRK",
-      "RNTKIL",
-      "WENL",
-      "PSON",
-      "BAB",
-      "DANONE",
-      "STAN-Bank",
-      "LOUISDR",
-      "AF-AirFrance",
-      "PERNOD",
-      "RDSPLC",
-      "DB",
-      "BRITEL-BritTel",
-      "DAMLR",
-      "VLOF",
-      "HEI",
-      "TATELN",
-      "SESG",
-      "BAB",
-      "SIEM",
-      "CARR",
-      "KPN",
-      "SIEM",
-      "LBTG-UPC",
-      "TECHGH",
-      "WENL",
-      "CPGLN",
-      "KONIPHI",
-      "SIEM",
-      "LADBRK",
-      "RNTKIL",
-      "WENL",
-      "PSON",
-      "BAB"
+      'AZN',
+      'BOUY',
+      'BYLAN',
+      'KONIPHI',
+      'SIEM',
+      'LADBRK',
+      'RNTKIL',
+      'WENL',
+      'PSON',
+      'BAB',
+      'DANONE',
+      'STAN-Bank',
+      'LOUISDR',
+      'AF-AirFrance',
+      'PERNOD',
+      'RDSPLC',
+      'DB',
+      'BRITEL-BritTel',
+      'DAMLR',
+      'VLOF',
+      'HEI',
+      'TATELN',
+      'SESG',
+      'BAB',
+      'SIEM',
+      'CARR',
+      'KPN',
+      'SIEM',
+      'LBTG-UPC',
+      'TECHGH',
+      'WENL',
+      'CPGLN',
+      'KONIPHI',
+      'SIEM',
+      'LADBRK',
+      'RNTKIL',
+      'WENL',
+      'PSON',
+      'BAB',
     ];
     return tickers[index];
   }
@@ -497,15 +479,15 @@ export class DataGenerator {
   }
   protected getCounterparties(): string[] {
     let counterparties = [
-      "Goldman Sachs",
-      "Soc Gen",
-      "BAML",
-      "Nat West",
-      "Barcap",
-      "Citi",
-      "JP Morgan",
-      "Morgan Stanley",
-      "BNP"
+      'Goldman Sachs',
+      'Soc Gen',
+      'BAML',
+      'Nat West',
+      'Barcap',
+      'Citi',
+      'JP Morgan',
+      'Morgan Stanley',
+      'BNP',
       //   "Lloyds TSB",
       //   "MUFJ",
       //   "Rabobank",
@@ -518,7 +500,7 @@ export class DataGenerator {
   }
 
   protected getCurrencies(): string[] {
-    let currencies = ["EUR", "USD", "GBP", "CHF", "CAD", "AUD", "ZAR"];
+    let currencies = ['EUR', 'USD', 'GBP', 'CHF', 'CAD', 'AUD', 'ZAR'];
     return currencies;
   }
 
@@ -527,39 +509,39 @@ export class DataGenerator {
   }
 
   protected getBuySell(): string[] {
-    let buySell = ["Buy", "Sell"];
+    let buySell = ['Buy', 'Sell'];
     return buySell;
   }
   protected getDealType(): string[] {
-    let dealType = ["Swap", "Spot", "Forward"];
+    let dealType = ['Swap', 'Spot', 'Forward'];
     return dealType;
   }
 
   protected getCountries(): string[] {
     let countries = [
-      "Argentina",
-      "Australia",
-      "Belgium",
-      "Brazil",
-      "Canada",
-      "China",
-      "Denmark",
-      "Egypt",
-      "France",
-      "Germany",
-      "Holland",
-      "Hungary",
-      "India",
-      "Ireland",
-      "Italy",
-      "Japan",
-      "Kenya",
-      "Luxembourg",
-      "Portugal",
-      "Qatar",
-      "Russia",
-      "Spain",
-      "Thailand"
+      'Argentina',
+      'Australia',
+      'Belgium',
+      'Brazil',
+      'Canada',
+      'China',
+      'Denmark',
+      'Egypt',
+      'France',
+      'Germany',
+      'Holland',
+      'Hungary',
+      'India',
+      'Ireland',
+      'Italy',
+      'Japan',
+      'Kenya',
+      'Luxembourg',
+      'Portugal',
+      'Qatar',
+      'Russia',
+      'Spain',
+      'Thailand',
     ];
     return countries;
   }
@@ -571,27 +553,27 @@ export class DataGenerator {
 
   protected getMoodysRatings(): string[] {
     let moodysRatings = [
-      "Aaa",
-      "Aa1",
-      "Aa2",
-      "Aa3",
-      "A1",
-      "A2",
-      "A3",
-      "Baa1",
-      "Baa2",
-      "Baa3",
-      "Ba1",
-      "Ba2",
-      "Ba3",
-      "B1",
-      "B2",
-      "B3",
-      "Caa",
-      "Ca",
-      "C",
-      "WR",
-      "NR"
+      'Aaa',
+      'Aa1',
+      'Aa2',
+      'Aa3',
+      'A1',
+      'A2',
+      'A3',
+      'Baa1',
+      'Baa2',
+      'Baa3',
+      'Ba1',
+      'Ba2',
+      'Ba3',
+      'B1',
+      'B2',
+      'B3',
+      'Caa',
+      'Ca',
+      'C',
+      'WR',
+      'NR',
     ];
     return moodysRatings;
   }
@@ -609,73 +591,73 @@ export class DataGenerator {
   // for s&P and Fitch we got one of 3 ratings based off the moodys rating
   protected getRatingFromMoodyRating(moodysRating: string): string {
     switch (moodysRating) {
-      case "Aaa":
-        return this.getRandomItem(["AAA", "AA+"]);
-      case "Aa1":
-        return this.getRandomItem(["AAA", "AA+", "AA"]);
-      case "Aa2":
-        return this.getRandomItem(["AA+", "AA", "AA-"]);
-      case "Aa3":
-        return this.getRandomItem(["AA", "AA-", "A+"]);
-      case "A1":
-        return this.getRandomItem(["AA-", "A+", "A"]);
-      case "A2":
-        return this.getRandomItem(["A+", "A", "A-"]);
-      case "A3":
-        return this.getRandomItem(["A", "A-", "BBB+"]);
-      case "Baa1":
-        return this.getRandomItem(["A-", "BBB+", "BBB"]);
-      case "Baa2":
-        return this.getRandomItem(["BBB+", "BBB", "BBB-"]);
-      case "Baa3":
-        return this.getRandomItem(["BBB", "BBB-", "BB+"]);
-      case "Ba1":
-        return this.getRandomItem(["BBB-", "BB+", "BB"]);
-      case "Ba2":
-        return this.getRandomItem(["BB+", "BB", "BB-"]);
-      case "Ba3":
-        return this.getRandomItem(["BB", "BB-", "B+"]);
-      case "B1":
-        return this.getRandomItem(["BB-", "B+", "B"]);
-      case "B2":
-        return this.getRandomItem(["B+", "B", "B-"]);
-      case "B3":
-        return this.getRandomItem(["B", "B-", "CCC"]);
-      case "Caa":
-        return this.getRandomItem(["B-", "CCC", "CC"]);
-      case "Ca":
-        return this.getRandomItem(["CCC", "CC"]);
-      case "C":
-        return this.getRandomItem(["CC", "D"]);
-      case "WR":
-        return "SD";
-      case "NR":
-        return "NR";
+      case 'Aaa':
+        return this.getRandomItem(['AAA', 'AA+']);
+      case 'Aa1':
+        return this.getRandomItem(['AAA', 'AA+', 'AA']);
+      case 'Aa2':
+        return this.getRandomItem(['AA+', 'AA', 'AA-']);
+      case 'Aa3':
+        return this.getRandomItem(['AA', 'AA-', 'A+']);
+      case 'A1':
+        return this.getRandomItem(['AA-', 'A+', 'A']);
+      case 'A2':
+        return this.getRandomItem(['A+', 'A', 'A-']);
+      case 'A3':
+        return this.getRandomItem(['A', 'A-', 'BBB+']);
+      case 'Baa1':
+        return this.getRandomItem(['A-', 'BBB+', 'BBB']);
+      case 'Baa2':
+        return this.getRandomItem(['BBB+', 'BBB', 'BBB-']);
+      case 'Baa3':
+        return this.getRandomItem(['BBB', 'BBB-', 'BB+']);
+      case 'Ba1':
+        return this.getRandomItem(['BBB-', 'BB+', 'BB']);
+      case 'Ba2':
+        return this.getRandomItem(['BB+', 'BB', 'BB-']);
+      case 'Ba3':
+        return this.getRandomItem(['BB', 'BB-', 'B+']);
+      case 'B1':
+        return this.getRandomItem(['BB-', 'B+', 'B']);
+      case 'B2':
+        return this.getRandomItem(['B+', 'B', 'B-']);
+      case 'B3':
+        return this.getRandomItem(['B', 'B-', 'CCC']);
+      case 'Caa':
+        return this.getRandomItem(['B-', 'CCC', 'CC']);
+      case 'Ca':
+        return this.getRandomItem(['CCC', 'CC']);
+      case 'C':
+        return this.getRandomItem(['CC', 'D']);
+      case 'WR':
+        return 'SD';
+      case 'NR':
+        return 'NR';
     }
   }
 
   protected getNames(): string[] {
     let names: string[] = [
-      "Stacee Dreiling",
-      "Cecil Staab",
-      "Sheba Dowdy",
-      "Loralee Stalker",
-      "Sanjuana Kimsey",
-      "Shante Hey",
-      "Magen Willison",
-      "Casimira Tabler",
-      "Annemarie Rybicki",
-      "Granville Westfall",
-      "Colby Troupe",
-      "Wei Frith",
-      "Sarai Pilgrim",
-      "Yael Rich",
-      "Hester Bluhm",
-      "Season Landreth",
-      "Britany Saffell",
-      "Kelley Babb",
-      "Bradley Chumley",
-      "Louella Spiker"
+      'Stacee Dreiling',
+      'Cecil Staab',
+      'Sheba Dowdy',
+      'Loralee Stalker',
+      'Sanjuana Kimsey',
+      'Shante Hey',
+      'Magen Willison',
+      'Casimira Tabler',
+      'Annemarie Rybicki',
+      'Granville Westfall',
+      'Colby Troupe',
+      'Wei Frith',
+      'Sarai Pilgrim',
+      'Yael Rich',
+      'Hester Bluhm',
+      'Season Landreth',
+      'Britany Saffell',
+      'Kelley Babb',
+      'Bradley Chumley',
+      'Louella Spiker',
     ];
     return names;
   }

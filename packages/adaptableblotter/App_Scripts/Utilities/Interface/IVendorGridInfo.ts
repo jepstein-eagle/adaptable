@@ -1,4 +1,4 @@
 export interface IVendorGridInfo {
-    GroupState: any;
-    ColumnState: any;
+  GroupState: any;
+  ColumnState: any;
 }

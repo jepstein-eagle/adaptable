@@ -1,6 +1,3 @@
-import {  IStrategy } from './IStrategy';
+import { IStrategy } from './IStrategy';
 
-
-export interface IReminderStrategy extends IStrategy {
-}
-
+export interface IReminderStrategy extends IStrategy {}

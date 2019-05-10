@@ -4,22 +4,22 @@ import { DataSourceState } from '../../Redux/ActionsReducers/Interface/IState';
 export interface IDataSourceApi {
   getDataSourceState(): DataSourceState;
 
-  getAllDataSource(): IDataSource[]
+  getAllDataSource(): IDataSource[];
 
   getCurrentDataSource(): IDataSource;
 
   getDataSourceByName(dataSourceName: string): IDataSource;
 
   /**
-  * Sets the DataSource
-  * @param dataSource has to be an existing DataSource
-  */
-  setDataSource(dataSource: string): void
+   * Sets the DataSource
+   * @param dataSource has to be an existing DataSource
+   */
+  setDataSource(dataSource: string): void;
 
   /**
    * Creates a DataSource from a given name and description
-   * @param dataSourceName 
-   * @param dataSourceDescription 
+   * @param dataSourceName
+   * @param dataSourceDescription
    */
   createDataSource(dataSourceName: string, dataSourceDescription: string): void;
 
@@ -32,7 +32,5 @@ export interface IDataSourceApi {
   /**
    * Clears the currently selected DataSource
    */
-  clearDataSource(): void
-
+  clearDataSource(): void;
 }
-

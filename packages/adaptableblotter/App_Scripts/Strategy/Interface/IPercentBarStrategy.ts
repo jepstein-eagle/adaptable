@@ -1,6 +1,3 @@
-import {  IStrategy } from './IStrategy';
+import { IStrategy } from './IStrategy';
 
-
-export interface IPercentBarStrategy extends IStrategy {
-}
-
+export interface IPercentBarStrategy extends IStrategy {}

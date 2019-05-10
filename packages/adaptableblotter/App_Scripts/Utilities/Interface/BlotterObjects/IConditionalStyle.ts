@@ -1,6 +1,6 @@
 import { Expression } from '../../Expression';
 import { IAdaptableBlotterObject } from './IAdaptableBlotterObject';
-import { IStyle } from "../IStyle";
+import { IStyle } from '../IStyle';
 export interface IConditionalStyle extends IAdaptableBlotterObject {
   ColumnId?: string;
   ColumnCategoryId?: string;

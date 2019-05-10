@@ -1,4 +1,4 @@
 export interface IKeyValuePair {
-    Key: string;
-    Value: any;
+  Key: string;
+  Value: any;
 }

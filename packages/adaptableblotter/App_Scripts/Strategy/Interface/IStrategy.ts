@@ -1,6 +1,6 @@
-import { IMenuItem } from "../../Utilities/Interface/IMenu";
-import { IEntitlement } from "../../Utilities/Interface/IEntitlement";
-import { IColumn } from "../../Utilities/Interface/IColumn";
+import { IMenuItem } from '../../Utilities/Interface/IMenu';
+import { IEntitlement } from '../../Utilities/Interface/IEntitlement';
+import { IColumn } from '../../Utilities/Interface/IColumn';
 
 /**
  * This is the interface that all Strategies implement (as well as all deriving from AdaptableStrategyBase).
@@ -17,15 +17,14 @@ import { IColumn } from "../../Utilities/Interface/IColumn";
  */
 
 export interface IStrategy {
-    Id: string
-    getPopupMenuItem(): IMenuItem
-    getStrategyEntitlement(): IEntitlement
-    initializeWithRedux(): void
-    addContextMenuItem(column: IColumn): void
+  Id: string;
+  getPopupMenuItem(): IMenuItem;
+  getStrategyEntitlement(): IEntitlement;
+  initializeWithRedux(): void;
+  addContextMenuItem(column: IColumn): void;
 }
 
 /**
  * A Wrapper around the strategies
  */
-export interface IStrategyCollection extends Map<string, IStrategy> {
-}
+export interface IStrategyCollection extends Map<string, IStrategy> {}

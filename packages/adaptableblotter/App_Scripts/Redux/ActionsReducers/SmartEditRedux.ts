@@ -1,53 +1,63 @@
 import { SmartEditState } from './Interface/IState';
 import { MathOperation } from '../../Utilities/Enums';
-import * as Redux from 'redux'
-import { SMART_EDIT_DEFAULT_OPERATION, SMART_EDIT_DEFAULT_VALUE } from '../../Utilities/Constants/GeneralConstants';
+import * as Redux from 'redux';
+import {
+  SMART_EDIT_DEFAULT_OPERATION,
+  SMART_EDIT_DEFAULT_VALUE,
+} from '../../Utilities/Constants/GeneralConstants';
 
 export const SMARTEDIT_APPLY = 'SMARTEDIT_APPLY';
 export const SMARTEDIT_CHANGE_VALUE = 'SMARTEDIT_CHANGE_VALUE';
 export const SMARTEDIT_CHANGE_OPERATION = 'SMARTEDIT_CHANGE_OPERATION';
 
-
 export interface SmartEditApplyAction extends Redux.Action {
-    bypassCellValidationWarnings: boolean
+  bypassCellValidationWarnings: boolean;
 }
 
 export interface SmartEditChangeValueAction extends Redux.Action {
-    value: number
+  value: number;
 }
 
 export interface SmartEditChangeOperationAction extends Redux.Action {
-    MathOperation: MathOperation
+  MathOperation: MathOperation;
 }
 
 export const SmartEditApply = (bypassCellValidationWarnings: boolean): SmartEditApplyAction => ({
-    type: SMARTEDIT_APPLY,
-    bypassCellValidationWarnings
-})
+  type: SMARTEDIT_APPLY,
+  bypassCellValidationWarnings,
+});
 
 export const SmartEditChangeValue = (value: number): SmartEditChangeValueAction => ({
-    type: SMARTEDIT_CHANGE_VALUE,
-    value
-})
+  type: SMARTEDIT_CHANGE_VALUE,
+  value,
+});
 
-export const SmartEditChangeOperation = (MathOperation: MathOperation): SmartEditChangeOperationAction => ({
-    type: SMARTEDIT_CHANGE_OPERATION,
-    MathOperation
-})
-
+export const SmartEditChangeOperation = (
+  MathOperation: MathOperation
+): SmartEditChangeOperationAction => ({
+  type: SMARTEDIT_CHANGE_OPERATION,
+  MathOperation,
+});
 
 const initialSmartEditState: SmartEditState = {
-    SmartEditValue: SMART_EDIT_DEFAULT_VALUE,
-    MathOperation: SMART_EDIT_DEFAULT_OPERATION,
-}
+  SmartEditValue: SMART_EDIT_DEFAULT_VALUE,
+  MathOperation: SMART_EDIT_DEFAULT_OPERATION,
+};
 
-export const SmartEditReducer: Redux.Reducer<SmartEditState> = (state: SmartEditState = initialSmartEditState, action: Redux.Action): SmartEditState => {
-    switch (action.type) {
-         case SMARTEDIT_CHANGE_VALUE:
-            return Object.assign({}, state, { SmartEditValue: (<SmartEditChangeValueAction>action).value })
-        case SMARTEDIT_CHANGE_OPERATION:
-            return Object.assign({}, state, { MathOperation: (<SmartEditChangeOperationAction>action).MathOperation })
-        default:
-            return state
-    }
-}
+export const SmartEditReducer: Redux.Reducer<SmartEditState> = (
+  state: SmartEditState = initialSmartEditState,
+  action: Redux.Action
+): SmartEditState => {
+  switch (action.type) {
+    case SMARTEDIT_CHANGE_VALUE:
+      return Object.assign({}, state, {
+        SmartEditValue: (<SmartEditChangeValueAction>action).value,
+      });
+    case SMARTEDIT_CHANGE_OPERATION:
+      return Object.assign({}, state, {
+        MathOperation: (<SmartEditChangeOperationAction>action).MathOperation,
+      });
+    default:
+      return state;
+  }
+};

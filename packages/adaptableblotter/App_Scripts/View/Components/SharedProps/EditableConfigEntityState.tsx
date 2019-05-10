@@ -1,13 +1,9 @@
-import { IAdaptableBlotterObject } from "../../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject";
-
-
+import { IAdaptableBlotterObject } from '../../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 
 /// <reference path="../../typings/.d.ts" />
 
-
 export interface EditableConfigEntityState {
-    EditedAdaptableBlotterObject: IAdaptableBlotterObject
-    WizardStartIndex: number
-    EditedAdaptableBlotterObjectIndex: number
+  EditedAdaptableBlotterObject: IAdaptableBlotterObject;
+  WizardStartIndex: number;
+  EditedAdaptableBlotterObjectIndex: number;
 }
-

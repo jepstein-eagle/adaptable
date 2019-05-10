@@ -14,8 +14,10 @@ try {
 
 @Component({
   selector: 'adaptable-blotter',
-  template: `<div [id]="adaptableBlotterOptions.containerOptions.adaptableBlotterContainer">Loading...</div>`,
-  styles: []
+  template: `
+    <div [id]="adaptableBlotterOptions.containerOptions.adaptableBlotterContainer">Loading...</div>
+  `,
+  styles: [],
 })
 export class AdaptableBlotterComponent implements OnInit {
   @Input() adaptableBlotterOptions: IAdaptableBlotterOptions;
@@ -24,25 +26,26 @@ export class AdaptableBlotterComponent implements OnInit {
 
   private adaptableBlotter: IAdaptableBlotter;
 
-  constructor(private elRef: ElementRef) { }
+  constructor(private elRef: ElementRef) {}
 
   ngOnInit() {
     this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer =
-      this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer || `adaptableBlotter-${Math.random() * 10000 | 0}`;
-     const waitForContainer = setInterval(() => {
+      this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer ||
+      `adaptableBlotter-${(Math.random() * 10000) | 0}`;
+    const waitForContainer = setInterval(() => {
       try {
-        document.getElementById(this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer);
+        document.getElementById(
+          this.adaptableBlotterOptions.containerOptions.adaptableBlotterContainer
+        );
         // Element is mounted
         this.adaptableBlotter = new AdaptableBlotter(this.adaptableBlotterOptions, false);
         this.adaptableBlotterMounted.emit(this.adaptableBlotter);
         ReactDOM.render(
           AdaptableBlotterApp({ AdaptableBlotter: this.adaptableBlotter }),
-          this.elRef.nativeElement.firstChild,
+          this.elRef.nativeElement.firstChild
         );
         clearInterval(waitForContainer);
-      } catch (e) {
-      }
+      } catch (e) {}
     }, 100);
   }
-
 }

@@ -1,37 +1,39 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Utilities/Constants/StrategyConstants'
-import * as ScreenPopups from '../Utilities/Constants/ScreenPopups'
+import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { DataSourceState } from '../Redux/ActionsReducers/Interface/IState'
+import { DataSourceState } from '../Redux/ActionsReducers/Interface/IState';
 import { IDataSourceStrategy } from './Interface/IDataSourceStrategy';
 import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
 
 export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSourceStrategy {
-    private DataSourceState: DataSourceState
+  private DataSourceState: DataSourceState;
 
-    constructor(blotter: IAdaptableBlotter) {
-        super(StrategyConstants.DataSourceStrategyId, blotter)
+  constructor(blotter: IAdaptableBlotter) {
+    super(StrategyConstants.DataSourceStrategyId, blotter);
+  }
+
+  protected addPopupMenuItem() {
+    this.createMenuItemShowPopup(
+      StrategyConstants.DataSourceStrategyName,
+      ScreenPopups.DataSourcePopup,
+      StrategyConstants.DataSourceGlyph
+    );
+  }
+
+  protected InitState() {
+    if (this.DataSourceState != this.GetDataSourceState()) {
+      this.DataSourceState = this.GetDataSourceState();
+
+      this.publishSearchChanged(SearchChangedTrigger.DataSource);
+
+      if (this.blotter.isInitialised) {
+        this.publishStateChanged(StateChangedTrigger.DataSource, this.DataSourceState);
+      }
     }
+  }
 
-    protected addPopupMenuItem() {
-        this.createMenuItemShowPopup(StrategyConstants.DataSourceStrategyName, ScreenPopups.DataSourcePopup, StrategyConstants.DataSourceGlyph);
-    }
-
-    protected InitState() {
-        if (this.DataSourceState != this.GetDataSourceState()) {
-            this.DataSourceState = this.GetDataSourceState();
-
-            this.publishSearchChanged(SearchChangedTrigger.DataSource)
-
-            if (this.blotter.isInitialised) {
-                this.publishStateChanged(StateChangedTrigger.DataSource, this.DataSourceState)
-            }
-        }
-    }
-
-    private GetDataSourceState(): DataSourceState {
-        return this.blotter.api.dataSourceApi.getDataSourceState();
-    }
-    
-
+  private GetDataSourceState(): DataSourceState {
+    return this.blotter.api.dataSourceApi.getDataSourceState();
+  }
 }

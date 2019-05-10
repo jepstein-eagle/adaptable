@@ -1,13 +1,13 @@
-html, body,#__next {
-    height: 100%
-    }
-    
-    #grid{
-        height: 88%
-    }
+html,
+body,
+#__next {
+  height: 100%;
+}
 
-    .number-cell {
-      text-align: right;
-  }
+#grid {
+  height: 88%;
+}
 
-
+.number-cell {
+  text-align: right;
+}

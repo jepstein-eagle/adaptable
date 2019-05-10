@@ -1,5 +1,3 @@
-import {IStrategy} from './IStrategy';
+import { IStrategy } from './IStrategy';
 
-export interface IDataManagementStrategy extends IStrategy{
-    
-}
+export interface IDataManagementStrategy extends IStrategy {}

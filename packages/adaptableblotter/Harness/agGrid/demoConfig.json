@@ -1,95 +1,67 @@
 {
-	"Layout": {
-		"CurrentLayout": "Citi Price",
-		"Layouts": [
-			{
-				"Columns": [
-					"ask",
-					"bid"
-				],
-				"GridSorts": [],
-				"Name": "Citi Price"
-			}
-		]
-	},
-	"Entitlements": {
-		"FunctionEntitlements": [
-			{
-				"FunctionName": "QuickSearch",
-				"AccessLevel": "ReadOnly"
-			},
-			{
-				"FunctionName": "PlusMinus",
-				"AccessLevel": "Hidden"
-			},
-			{
-				"FunctionName": "SmartEdit",
-				"AccessLevel": "ReadOnly"
-			}
-		]
-	},
-	"SystemFilter": {
-		"SystemFilters": [
-			"Zero"
-		]
-	},
-	"UserInterface": {
-		"PermittedColumnValues": [
-			{
-				"ColumnId": "country",
-				"PermittedValues": [
-					"France",
-					"Russia",
-					"Israel",
-					"Test"
-				]
-			},
-			{
-				"ColumnId": "currency",
-				"PermittedValues": [
-					"EUR",
-					"USD",
-					"NIS"
-				]
-			}
-		],
-		"ColumnCategories": [
-			{
-				"Category": "finance",
-				"Columns": [
-					"bid",
-					"ask",
-					"tradeId"
-				]
-			},
-			{
-				"Category": "date",
-				"Columns": [
-					"tradeDate",
-					"settlementDate"
-				]
-			}
-		]
-	},
-	"Dashboard": {
-		"VisibleToolbars": [
-			"Export",
-			"QuickSearch",
-			"SmartEdit",
-			"Layout",
-			"DataSource"
-		],
-		"VisibleButtons": [
-			"About",
-			"Dashboard",
-			"QuickSearch",
-			"SmartEdit",
-			"ColumnChooser",
-			"BulkUpdate"
-		],
-		"Zoom": "0.9",
-		"DashboardVisibility": "Minimised",
-		"ShowSystemStatusButton": true
-	}
+  "Layout": {
+    "CurrentLayout": "Citi Price",
+    "Layouts": [
+      {
+        "Columns": ["ask", "bid"],
+        "GridSorts": [],
+        "Name": "Citi Price"
+      }
+    ]
+  },
+  "Entitlements": {
+    "FunctionEntitlements": [
+      {
+        "FunctionName": "QuickSearch",
+        "AccessLevel": "ReadOnly"
+      },
+      {
+        "FunctionName": "PlusMinus",
+        "AccessLevel": "Hidden"
+      },
+      {
+        "FunctionName": "SmartEdit",
+        "AccessLevel": "ReadOnly"
+      }
+    ]
+  },
+  "SystemFilter": {
+    "SystemFilters": ["Zero"]
+  },
+  "UserInterface": {
+    "PermittedColumnValues": [
+      {
+        "ColumnId": "country",
+        "PermittedValues": ["France", "Russia", "Israel", "Test"]
+      },
+      {
+        "ColumnId": "currency",
+        "PermittedValues": ["EUR", "USD", "NIS"]
+      }
+    ],
+    "ColumnCategories": [
+      {
+        "Category": "finance",
+        "Columns": ["bid", "ask", "tradeId"]
+      },
+      {
+        "Category": "date",
+        "Columns": ["tradeDate", "settlementDate"]
+      }
+    ]
+  },
+  "Dashboard": {
+    "VisibleToolbars": ["Export", "QuickSearch", "SmartEdit", "Layout", "DataSource"],
+    "VisibleButtons": [
+      "About",
+      "Dashboard",
+      "QuickSearch",
+      "SmartEdit",
+      "ColumnChooser",
+      "BulkUpdate"
+    ],
+    "Zoom": "0.9",
+    "DashboardVisibility": "Minimised",
+    "ShowSystemStatusButton": true
+  }
 }
-

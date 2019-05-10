@@ -1,22 +1,23 @@
-import { AdaptableWizardStep, ExpressionWizardProps } from '../../Wizard/Interface/IAdaptableWizard'
-import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage'
-import { IAdvancedSearch } from "../../../Utilities/Interface/BlotterObjects/IAdvancedSearch";
-import { UIHelper } from "../../UIHelper";
+import {
+  AdaptableWizardStep,
+  ExpressionWizardProps,
+} from '../../Wizard/Interface/IAdaptableWizard';
+import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
+import { IAdvancedSearch } from '../../../Utilities/Interface/BlotterObjects/IAdvancedSearch';
+import { UIHelper } from '../../UIHelper';
 
+export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage
+  implements AdaptableWizardStep {
+  constructor(public props2: ExpressionWizardProps<IAdvancedSearch>) {
+    super(props2);
+    this.state = UIHelper.getExpressionBuilderState(this.props2.Data.Expression);
+  }
 
-export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-    constructor(public props2: ExpressionWizardProps<IAdvancedSearch>) {
-        super(props2)
-        this.state = UIHelper.getExpressionBuilderState(this.props2.Data.Expression)
-    }
+  public Next(): void {
+    this.props2.Data.Expression = this.state.Expression;
+  }
 
-    public Next(): void {
-        this.props2.Data.Expression = this.state.Expression
-    }
-
-    public Back(): void {
-        // todo
-    }
-
-   
+  public Back(): void {
+    // todo
+  }
 }

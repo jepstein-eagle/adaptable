@@ -1,18 +1,16 @@
-import * as ThemeRedux from '../Redux/ActionsReducers/ThemeRedux'
-import { ApiBase } from "./ApiBase";
-import { IUserTheme } from "../Utilities/Interface/BlotterObjects/IUserTheme";
+import * as ThemeRedux from '../Redux/ActionsReducers/ThemeRedux';
+import { ApiBase } from './ApiBase';
+import { IUserTheme } from '../Utilities/Interface/BlotterObjects/IUserTheme';
 import { IThemeApi } from './Interface/IThemeApi';
 import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
 
 export class ThemeApi extends ApiBase implements IThemeApi {
-
-
   public getThemeState(): ThemeState {
     return this.getBlotterState().Theme;
   }
 
   public setTheme(theme: string): void {
-    this.dispatchAction(ThemeRedux.ThemeSelect(theme))
+    this.dispatchAction(ThemeRedux.ThemeSelect(theme));
   }
 
   public getCurrentTheme(): string {
@@ -20,11 +18,11 @@ export class ThemeApi extends ApiBase implements IThemeApi {
   }
 
   public setSystemThemes(systemThemes: string[]): void {
-    this.dispatchAction(ThemeRedux.ThemeSetSystemThemes(systemThemes))
+    this.dispatchAction(ThemeRedux.ThemeSetSystemThemes(systemThemes));
   }
 
   public setUserThemes(userThemes: string[]): void {
-    this.dispatchAction(ThemeRedux.ThemeSetUserThemes(userThemes))
+    this.dispatchAction(ThemeRedux.ThemeSetUserThemes(userThemes));
   }
 
   public getAllSystemTheme(): string[] {
@@ -34,5 +32,4 @@ export class ThemeApi extends ApiBase implements IThemeApi {
   public getAllUserTheme(): IUserTheme[] {
     return this.getBlotterState().Theme.UserThemes;
   }
-
 }

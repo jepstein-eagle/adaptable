@@ -1,25 +1,45 @@
-import { IPieChartDefinition, IPieChartProperties } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
-import { IChartData } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartData";
-import { IPieChartDataItem } from "../../../Utilities/Interface/BlotterObjects/Charting/IPieChartDataItem";
-import { PieChartComponentState } from "./PieChartComponentState";
-import { SliceSortOption } from "../../../Utilities/ChartEnums";
-import { DefaultPieChartProperties } from "../../../Utilities/Defaults/DefaultPieChartProperties";
+import {
+  IPieChartDefinition,
+  IPieChartProperties,
+} from '../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
+import { IChartData } from '../../../Utilities/Interface/BlotterObjects/Charting/IChartData';
+import { IPieChartDataItem } from '../../../Utilities/Interface/BlotterObjects/Charting/IPieChartDataItem';
+import { PieChartComponentState } from './PieChartComponentState';
+import { SliceSortOption } from '../../../Utilities/ChartEnums';
+import { DefaultPieChartProperties } from '../../../Utilities/Defaults/DefaultPieChartProperties';
 
 /* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
-*/
+ */
 
 export function getBrushesEven(): string[] {
-  return ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47"];
+  return ['#7446B9', '#9FB328', '#F96232', '#2E9CA6', '#DC3F76', '#FF9800', '#3F51B5', '#439C47'];
 }
 
 export function getBrushesOdd(): string[] {
-  return ["#7446B9", "#9FB328", "#F96232", "#2E9CA6", "#DC3F76", "#FF9800", "#3F51B5", "#439C47", "#795548"];
+  return [
+    '#7446B9',
+    '#9FB328',
+    '#F96232',
+    '#2E9CA6',
+    '#DC3F76',
+    '#FF9800',
+    '#3F51B5',
+    '#439C47',
+    '#795548',
+  ];
 }
 
-export function setChartDisplayPopupState(chartDefinition: IPieChartDefinition, dataSource: IChartData): PieChartComponentState {
-  let pieChartProperties: IPieChartProperties = Object.assign({}, DefaultPieChartProperties, chartDefinition.ChartProperties);
+export function setChartDisplayPopupState(
+  chartDefinition: IPieChartDefinition,
+  dataSource: IChartData
+): PieChartComponentState {
+  let pieChartProperties: IPieChartProperties = Object.assign(
+    {},
+    DefaultPieChartProperties,
+    chartDefinition.ChartProperties
+  );
 
-  let data: IPieChartDataItem[] = (dataSource != null) ? dataSource.Data : []
+  let data: IPieChartDataItem[] = dataSource != null ? dataSource.Data : [];
   return {
     DataSource: data,
     ChartProperties: pieChartProperties,
@@ -27,7 +47,7 @@ export function setChartDisplayPopupState(chartDefinition: IPieChartDefinition, 
     IsGeneralMinimised: false,
     SliceSortOption: SliceSortOption.ValueDescending,
     SliceBrushes: data.length % 2 == 0 ? getBrushesOdd() : getBrushesEven(),
-  }
+  };
 }
 
 export function setDefaultChartDisplayPopupState(): PieChartComponentState {
@@ -35,12 +55,14 @@ export function setDefaultChartDisplayPopupState(): PieChartComponentState {
     IsChartSettingsVisible: true,
     IsGeneralMinimised: false,
     SliceSortOption: SliceSortOption.ValueDescending,
-
   } as PieChartComponentState;
   return defaultState;
 }
 
-export function sortDataSource(sliceSortOption: SliceSortOption, oldData: IPieChartDataItem[]): IPieChartDataItem[] {
+export function sortDataSource(
+  sliceSortOption: SliceSortOption,
+  oldData: IPieChartDataItem[]
+): IPieChartDataItem[] {
   if (oldData == null || oldData.length == 0) {
     return [];
   }
@@ -65,28 +87,44 @@ export function sortDataSource(sliceSortOption: SliceSortOption, oldData: IPieCh
 export function sortByNameAscending(a: IPieChartDataItem, b: IPieChartDataItem): number {
   let nameA = a.Name.toLowerCase();
   let nameB = b.Name.toLowerCase();
-  if (nameA > nameB) { return 1; }
-  if (nameA < nameB) { return -1; }
+  if (nameA > nameB) {
+    return 1;
+  }
+  if (nameA < nameB) {
+    return -1;
+  }
   return 0;
 }
 
 export function sortByNameDescending(a: IPieChartDataItem, b: IPieChartDataItem): number {
   let nameA = a.Name.toLowerCase();
   let nameB = b.Name.toLowerCase();
-  if (nameA > nameB) { return -1; }
-  if (nameA < nameB) { return 1; }
+  if (nameA > nameB) {
+    return -1;
+  }
+  if (nameA < nameB) {
+    return 1;
+  }
   return 0;
 }
 
 export function sortByValueAscending(a: IPieChartDataItem, b: IPieChartDataItem): number {
-  if (a.Value > b.Value) { return 1; }
-  if (a.Value < b.Value) { return -1; }
+  if (a.Value > b.Value) {
+    return 1;
+  }
+  if (a.Value < b.Value) {
+    return -1;
+  }
   return 0;
 }
 
 export function sortByValueDescending(a: IPieChartDataItem, b: IPieChartDataItem): number {
-  if (a.Value > b.Value) { return -1; }
-  if (a.Value < b.Value) { return 1; }
+  if (a.Value > b.Value) {
+    return -1;
+  }
+  if (a.Value < b.Value) {
+    return 1;
+  }
   return 0;
 }
 
@@ -99,6 +137,6 @@ export const PieChartUIHelper = {
   sortByNameAscending,
   sortByNameDescending,
   sortByValueAscending,
-  sortByValueDescending
-}
-export default PieChartUIHelper
+  sortByValueDescending,
+};
+export default PieChartUIHelper;

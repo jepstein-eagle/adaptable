@@ -1,7 +1,3 @@
-import {  IStrategy } from './IStrategy';
+import { IStrategy } from './IStrategy';
 
-
-export interface IFlashingCellsStrategy extends IStrategy {
-}
-
-
+export interface IFlashingCellsStrategy extends IStrategy {}

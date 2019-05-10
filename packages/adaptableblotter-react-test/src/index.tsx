@@ -8,12 +8,6 @@ import './index.css';
 // import the main style file
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root') as HTMLElement
-);
-ReactDOM.render(
-  <AppAgGrid />,
-  document.getElementById('root-aggrid') as HTMLElement
-);
+ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);
+ReactDOM.render(<AppAgGrid />, document.getElementById('root-aggrid') as HTMLElement);
 registerServiceWorker();

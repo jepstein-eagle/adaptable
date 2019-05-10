@@ -1,6 +1,3 @@
 import { IStrategy } from './IStrategy';
 
-export interface IAdvancedSearchStrategy extends IStrategy {
-}
-
-
+export interface IAdvancedSearchStrategy extends IStrategy {}

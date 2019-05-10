@@ -1,57 +1,80 @@
-import { IUserState } from "../../Redux/ActionsReducers/Interface/IState";
-import { IGridSort } from "./IGridSort";
-import { ICustomSort } from "./BlotterObjects/ICustomSort";
-import { IColumnFilter } from "./BlotterObjects/IColumnFilter";
-import { IAdvancedSearch } from "./BlotterObjects/IAdvancedSearch";
-import { IAdaptableAlert } from "./IMessage";
-import { IDataChangedInfo } from "./IDataChangedInfo";
-import { IDataSource } from "./BlotterObjects/IDataSource";
-
+import { IUserState } from '../../Redux/ActionsReducers/Interface/IState';
+import { IGridSort } from './IGridSort';
+import { ICustomSort } from './BlotterObjects/ICustomSort';
+import { IColumnFilter } from './BlotterObjects/IColumnFilter';
+import { IAdvancedSearch } from './BlotterObjects/IAdvancedSearch';
+import { IAdaptableAlert } from './IMessage';
+import { IDataChangedInfo } from './IDataChangedInfo';
+import { IDataSource } from './BlotterObjects/IDataSource';
 
 export interface IFDC3Schema {
-  object: string
-  definition: string
-  version: string
+  object: string;
+  definition: string;
+  version: string;
 }
 
-
 export interface IColumnStateChangedEventArgs {
-  currentLayout: string
+  currentLayout: string;
 }
 
 export interface IAlertFiredEventArgs {
-  alert: IAdaptableAlert
+  alert: IAdaptableAlert;
 }
 
 export interface IStateChangedEventArgs extends IFDC3Schema {
-  data: IStateEventData[]
+  data: IStateEventData[];
 }
 
 /**
  * EventArgs sent as part of the onSearchedChanged Event
  */
 export interface ISearchChangedEventArgs extends IFDC3Schema {
-  data: ISearchEventData[]
+  data: ISearchEventData[];
 }
 
 export interface IEventData {
-  name: string
-  type: string
+  name: string;
+  type: string;
 }
 
 export interface IStateEventData extends IEventData {
-  id: IStateChangedInfo
+  id: IStateChangedInfo;
 }
 
 export interface ISearchEventData extends IEventData {
-  id: ISearchChangedInfo
+  id: ISearchChangedInfo;
 }
 
 export interface IStateChangedInfo {
-  stateChangedTrigger: 'AdvancedSearch' | 'Alert' | 'BulkUpdate' | 'CalculatedColumn' | 'Calendar' |
-  'CellValidation' | 'Chart' | 'ColumnFilter' | 'ConditionalStyle' | 'CustomSort' | 'Dashboard' | 'DataSource' |
-  'Export' | 'FlashingCell' | 'FormatColumn' | 'FreeTextColumn' | 'Layout' | 'ColumnCategory' | 'PieChart' |
-  'PercentBar' | 'PlusMinus' | 'QuickSearch' | 'CellSummary' | 'Shortcut' | 'SmartEdit' |'Reminder'| 'Theme' | 'UserFilter';
+  stateChangedTrigger:
+    | 'AdvancedSearch'
+    | 'Alert'
+    | 'BulkUpdate'
+    | 'CalculatedColumn'
+    | 'Calendar'
+    | 'CellValidation'
+    | 'Chart'
+    | 'ColumnFilter'
+    | 'ConditionalStyle'
+    | 'CustomSort'
+    | 'Dashboard'
+    | 'DataSource'
+    | 'Export'
+    | 'FlashingCell'
+    | 'FormatColumn'
+    | 'FreeTextColumn'
+    | 'Layout'
+    | 'ColumnCategory'
+    | 'PieChart'
+    | 'PercentBar'
+    | 'PlusMinus'
+    | 'QuickSearch'
+    | 'CellSummary'
+    | 'Shortcut'
+    | 'SmartEdit'
+    | 'Reminder'
+    | 'Theme'
+    | 'UserFilter';
   userState: IUserState;
 }
 
@@ -59,7 +82,14 @@ export interface ISearchChangedInfo {
   /**
    * Which action in the grid caused the Search state to chagne
    */
-  searchChangedTrigger: 'DataSource' | 'AdvancedSearch' | 'QuickSearch' | 'ColumnFilter' | 'UserFilter' | 'DataChange' | 'Sort';
+  searchChangedTrigger:
+    | 'DataSource'
+    | 'AdvancedSearch'
+    | 'QuickSearch'
+    | 'ColumnFilter'
+    | 'UserFilter'
+    | 'DataChange'
+    | 'Sort';
 
   /**
    * All current active search and filters in the Grid
@@ -75,9 +105,8 @@ export interface ISearchChangedInfo {
    * Date the search should use - defaults to now
    * Uuseful if getting historical data
    */
-  searchAsAtDate: Date
+  searchAsAtDate: Date;
 }
-
 
 /**
  * The current Search and Filter in the Blotter
@@ -104,7 +133,6 @@ export interface IBlotterSearchState {
   columnFilters: IColumnFilter[];
 }
 
-
 /**
  * Overview of the current sorting state in the grid
  */
@@ -119,7 +147,3 @@ export interface IBlotterSortState {
    */
   customSorts: ICustomSort[];
 }
-
-
-
-

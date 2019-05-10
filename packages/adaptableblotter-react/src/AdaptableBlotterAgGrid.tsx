@@ -1,37 +1,37 @@
-﻿import * as React from 'react'
-import { AgGridReact } from 'ag-grid-react'
-import { GridOptions } from 'ag-grid-community'
-import AdaptableBlotter from './AdaptableBlotter'
+﻿import * as React from 'react';
+import { AgGridReact } from 'ag-grid-react';
+import { GridOptions } from 'ag-grid-community';
+import AdaptableBlotter from './AdaptableBlotter';
 import { IAdaptableBlotterOptions } from '../../adaptableblotter/types';
 
 export interface AdaptableBlotterAgGridProps extends React.ClassAttributes<AdaptableBlotterAgGrid> {
-  AdaptableBlotterOptions: IAdaptableBlotterOptions
-  GridOptions: GridOptions
-  agTheme?: 'balham' | 'balham-dark' | 'material' | 'fresh' | 'dark' | 'blue' | 'bootstrap'
-  agDivStyle?: any
+  AdaptableBlotterOptions: IAdaptableBlotterOptions;
+  GridOptions: GridOptions;
+  agTheme?: 'balham' | 'balham-dark' | 'material' | 'fresh' | 'dark' | 'blue' | 'bootstrap';
+  agDivStyle?: any;
 }
 
 export interface AdaptableBlotterAgGridState extends React.ClassAttributes<AdaptableBlotterAgGrid> {
-  AdaptableBlotterOptions: IAdaptableBlotterOptions
-  GridOptions: GridOptions
+  AdaptableBlotterOptions: IAdaptableBlotterOptions;
+  GridOptions: GridOptions;
 }
 
 export default class AdaptableBlotterAgGrid extends React.Component<
   AdaptableBlotterAgGridProps,
   AdaptableBlotterAgGridState
-  > {
+> {
   componentWillMount() {
     this.state = {
       AdaptableBlotterOptions: this.props.AdaptableBlotterOptions,
-      GridOptions: this.props.GridOptions
-    }
+      GridOptions: this.props.GridOptions,
+    };
   }
 
   render() {
-    let theme: string = this.props.agTheme ? 'ag-theme-' + this.props.agTheme : 'ag-theme-balham'
+    let theme: string = this.props.agTheme ? 'ag-theme-' + this.props.agTheme : 'ag-theme-balham';
     let style: any = this.props.agDivStyle
       ? this.props.agDivStyle
-      : { width: '100%', height: '90%', position: 'absolute', margin: '0px' }
+      : { width: '100%', height: '90%', position: 'absolute', margin: '0px' };
     return (
       <div id="adaptableBlotter-react">
         <AdaptableBlotter
@@ -42,6 +42,6 @@ export default class AdaptableBlotterAgGrid extends React.Component<
           <AgGridReact gridOptions={this.state.GridOptions} />
         </div>
       </div>
-    )
+    );
   }
 }

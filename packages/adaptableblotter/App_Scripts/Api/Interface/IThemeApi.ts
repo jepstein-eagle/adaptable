@@ -1,5 +1,5 @@
-import { IUserTheme } from "../../Utilities/Interface/BlotterObjects/IUserTheme";
-import { ThemeState } from "../../Redux/ActionsReducers/Interface/IState";
+import { IUserTheme } from '../../Utilities/Interface/BlotterObjects/IUserTheme';
+import { ThemeState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export interface IThemeApi {
   getThemeState(): ThemeState;

@@ -1,100 +1,144 @@
-import * as React from "react";
+import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { IColItem } from "../UIInterfaces";
-import { IPercentBar } from "../../Utilities/Interface/BlotterObjects/IPercentBar";
-import { ColumnHelper } from "../../Utilities/Helpers/ColumnHelper";
-import { ColorPicker } from "../ColorPicker";
-import { IAdaptableBlotter } from "../../Utilities/Interface/IAdaptableBlotter";
-import { FormControl } from "react-bootstrap";
-import { StringExtensions } from "../../Utilities/Extensions/StringExtensions";
-import { EntityRowItem } from "../Components/EntityRowItem";
+import { IColItem } from '../UIInterfaces';
+import { IPercentBar } from '../../Utilities/Interface/BlotterObjects/IPercentBar';
+import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
+import { ColorPicker } from '../ColorPicker';
+import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
+import { FormControl } from 'react-bootstrap';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { EntityRowItem } from '../Components/EntityRowItem';
 
-
-export interface PercentBarEntityRowProps extends SharedEntityExpressionRowProps<PercentBarEntityRow> {
-    Column: IColumn
-    ColorPalette: string[]
-    onMinimumValueChanged: (PercentBar: IPercentBar, minimumValue: number) => void;
-    onMaximumValueChanged: (PercentBar: IPercentBar, maximumValue: number) => void;
-    onPositiveColorChanged: (PercentBar: IPercentBar, positiveColor: string) => void;
-    onNegativeColorChanged: (PercentBar: IPercentBar, negativeColor: string) => void;
+export interface PercentBarEntityRowProps
+  extends SharedEntityExpressionRowProps<PercentBarEntityRow> {
+  Column: IColumn;
+  ColorPalette: string[];
+  onMinimumValueChanged: (PercentBar: IPercentBar, minimumValue: number) => void;
+  onMaximumValueChanged: (PercentBar: IPercentBar, maximumValue: number) => void;
+  onPositiveColorChanged: (PercentBar: IPercentBar, positiveColor: string) => void;
+  onNegativeColorChanged: (PercentBar: IPercentBar, negativeColor: string) => void;
 }
 
 export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProps, {}> {
-    render(): any {
-        let PercentBar: IPercentBar = this.props.AdaptableBlotterObject as IPercentBar;
+  render(): any {
+    let PercentBar: IPercentBar = this.props.AdaptableBlotterObject as IPercentBar;
 
-        let colItems: IColItem[] = [].concat(this.props.colItems);
+    let colItems: IColItem[] = [].concat(this.props.colItems);
 
-        colItems[0].Content = <EntityRowItem Content={ColumnHelper.getFriendlyNameFromColumn(PercentBar.ColumnId, this.props.Column)} />;
-        colItems[1].Content = <EntityRowItem Content={(StringExtensions.IsNullOrEmpty(PercentBar.MinValueColumnId)) ?
+    colItems[0].Content = (
+      <EntityRowItem
+        Content={ColumnHelper.getFriendlyNameFromColumn(PercentBar.ColumnId, this.props.Column)}
+      />
+    );
+    colItems[1].Content = (
+      <EntityRowItem
+        Content={
+          StringExtensions.IsNullOrEmpty(PercentBar.MinValueColumnId) ? (
             <FormControl
-                bsSize={'small'}
-                type={"number"}
-                placeholder="Min Value"
-                onChange={(e) => this.onMinimumValueChanged(e)}
-                value={PercentBar.MinValue}
+              bsSize={'small'}
+              type={'number'}
+              placeholder="Min Value"
+              onChange={e => this.onMinimumValueChanged(e)}
+              value={PercentBar.MinValue}
             />
-            :
-            "[" + ColumnHelper.getFriendlyNameFromColumnId(PercentBar.MinValueColumnId, this.props.Columns) + "]"} />;
-        colItems[2].Content = <EntityRowItem Content={ (StringExtensions.IsNullOrEmpty(PercentBar.MaxValueColumnId)) ?
+          ) : (
+            '[' +
+            ColumnHelper.getFriendlyNameFromColumnId(
+              PercentBar.MinValueColumnId,
+              this.props.Columns
+            ) +
+            ']'
+          )
+        }
+      />
+    );
+    colItems[2].Content = (
+      <EntityRowItem
+        Content={
+          StringExtensions.IsNullOrEmpty(PercentBar.MaxValueColumnId) ? (
             <FormControl
-                bsSize={"small"}
-                type={"number"}
-                placeholder="Max Value"
-                onChange={(e) => this.onMaximumValueChanged(e)}
-                value={PercentBar.MaxValue} />
-            :
-            "[" + ColumnHelper.getFriendlyNameFromColumnId(PercentBar.MaxValueColumnId, this.props.Columns) + "]" } />;
-        colItems[3].Content = <EntityRowItem Content={ <ColorPicker ColorPalette={this.props.ColorPalette} value={PercentBar.PositiveColor} onChange={(x) => this.onPositiveColorChanged(x)} /> } />
-        colItems[4].Content = <EntityRowItem Content={ <ColorPicker ColorPalette={this.props.ColorPalette} value={PercentBar.NegativeColor} onChange={(x) => this.onNegativeColorChanged(x)} /> } />
-
-        colItems[5].Content = <EntityListActionButtons
-            cssClassName={this.props.cssClassName}
-            ConfirmDeleteAction={this.props.onDeleteConfirm}
-            showShare={this.props.TeamSharingActivated}
-            editClick={() => this.props.onEdit(this.props.Index, PercentBar)}
-            shareClick={() => this.props.onShare()}
-            overrideDisableEdit={!this.props.Column}
-            EntityType={StrategyConstants.PercentBarStrategyName}
-        />
-
-
-        return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />
-    }
-
-
-    onMinimumValueChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        if (!isNaN(Number(e.value))) {
-            let minValue: number = Number(e.value);
-            this.props.onMinimumValueChanged(this.props.AdaptableBlotterObject as IPercentBar, minValue);
+              bsSize={'small'}
+              type={'number'}
+              placeholder="Max Value"
+              onChange={e => this.onMaximumValueChanged(e)}
+              value={PercentBar.MaxValue}
+            />
+          ) : (
+            '[' +
+            ColumnHelper.getFriendlyNameFromColumnId(
+              PercentBar.MaxValueColumnId,
+              this.props.Columns
+            ) +
+            ']'
+          )
         }
-    }
-
-    onMaximumValueChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        if (!isNaN(Number(e.value))) {
-            let maxValue: number = Number(e.value);
-            this.props.onMaximumValueChanged(this.props.AdaptableBlotterObject as IPercentBar, maxValue);
+      />
+    );
+    colItems[3].Content = (
+      <EntityRowItem
+        Content={
+          <ColorPicker
+            ColorPalette={this.props.ColorPalette}
+            value={PercentBar.PositiveColor}
+            onChange={x => this.onPositiveColorChanged(x)}
+          />
         }
+      />
+    );
+    colItems[4].Content = (
+      <EntityRowItem
+        Content={
+          <ColorPicker
+            ColorPalette={this.props.ColorPalette}
+            value={PercentBar.NegativeColor}
+            onChange={x => this.onNegativeColorChanged(x)}
+          />
+        }
+      />
+    );
+
+    colItems[5].Content = (
+      <EntityListActionButtons
+        cssClassName={this.props.cssClassName}
+        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        showShare={this.props.TeamSharingActivated}
+        editClick={() => this.props.onEdit(this.props.Index, PercentBar)}
+        shareClick={() => this.props.onShare()}
+        overrideDisableEdit={!this.props.Column}
+        EntityType={StrategyConstants.PercentBarStrategyName}
+      />
+    );
+
+    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+  }
+
+  onMinimumValueChanged(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    if (!isNaN(Number(e.value))) {
+      let minValue: number = Number(e.value);
+      this.props.onMinimumValueChanged(this.props.AdaptableBlotterObject as IPercentBar, minValue);
     }
+  }
 
-    onPositiveColorChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.props.onPositiveColorChanged(this.props.AdaptableBlotterObject as IPercentBar, e.value);
+  onMaximumValueChanged(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    if (!isNaN(Number(e.value))) {
+      let maxValue: number = Number(e.value);
+      this.props.onMaximumValueChanged(this.props.AdaptableBlotterObject as IPercentBar, maxValue);
     }
+  }
 
-    onNegativeColorChanged(event: React.FormEvent<any>) {
-        let e = event.target as HTMLInputElement;
-        this.props.onNegativeColorChanged(this.props.AdaptableBlotterObject as IPercentBar, e.value);
-    }
+  onPositiveColorChanged(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    this.props.onPositiveColorChanged(this.props.AdaptableBlotterObject as IPercentBar, e.value);
+  }
 
-
-
-
+  onNegativeColorChanged(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    this.props.onNegativeColorChanged(this.props.AdaptableBlotterObject as IPercentBar, e.value);
+  }
 }
-

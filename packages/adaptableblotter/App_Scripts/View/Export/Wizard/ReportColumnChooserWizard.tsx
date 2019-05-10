@@ -1,75 +1,77 @@
-import * as React from "react";
+import * as React from 'react';
 import { Panel } from 'react-bootstrap';
-import { AdaptableWizardStep, AdaptableWizardStepProps } from '../../Wizard/Interface/IAdaptableWizard'
+import {
+  AdaptableWizardStep,
+  AdaptableWizardStepProps,
+} from '../../Wizard/Interface/IAdaptableWizard';
 import { ReportColumnScope } from '../../../Utilities/Enums';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
-import { IReport } from "../../../Utilities/Interface/BlotterObjects/IReport";
+import { IReport } from '../../../Utilities/Interface/BlotterObjects/IReport';
 
-export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<IReport> {
-   
-}
+export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<IReport> {}
 export interface ReportColumnsWizardState {
-    AllColumnValues: string[];
-    SelectedColumnValues: string[];
+  AllColumnValues: string[];
+  SelectedColumnValues: string[];
 }
 
-export class ReportColumnChooserWizard extends React.Component<ReportColumnChooserWizardProps, ReportColumnsWizardState> implements AdaptableWizardStep {
-    constructor(props: ReportColumnChooserWizardProps) {
-        super(props);
-        this.state = {
-            AllColumnValues: this.props.Columns.map(c => c.FriendlyName),
-            SelectedColumnValues: this.props.Data.ColumnIds.map(c =>
-                this.props.Columns.find(col => col.ColumnId == c).FriendlyName),
-        }
-    }
-    render() {
-        let cssClassName: string = this.props.cssClassName + "-choosecolumns"
-       
-        return <div className={cssClassName}>
-        {this.props.Data.ReportColumnScope == ReportColumnScope.BespokeColumns &&
-                <Panel>
-                    <DualListBoxEditor AvailableValues={this.state.AllColumnValues}
-                       cssClassName={cssClassName}
-                       SelectedValues={this.state.SelectedColumnValues}
-                        HeaderAvailable="Columns"
-                        HeaderSelected="Columns in Report"
-                        onChange={(SelectedValues) => this.OnSelectedValuesChange(SelectedValues)}
-                        DisplaySize={DisplaySize.Small}
-                        />
-                </Panel>
-            }
-        </div>
-    }
+export class ReportColumnChooserWizard
+  extends React.Component<ReportColumnChooserWizardProps, ReportColumnsWizardState>
+  implements AdaptableWizardStep {
+  constructor(props: ReportColumnChooserWizardProps) {
+    super(props);
+    this.state = {
+      AllColumnValues: this.props.Columns.map(c => c.FriendlyName),
+      SelectedColumnValues: this.props.Data.ColumnIds.map(
+        c => this.props.Columns.find(col => col.ColumnId == c).FriendlyName
+      ),
+    };
+  }
+  render() {
+    let cssClassName: string = this.props.cssClassName + '-choosecolumns';
 
+    return (
+      <div className={cssClassName}>
+        {this.props.Data.ReportColumnScope == ReportColumnScope.BespokeColumns && (
+          <Panel>
+            <DualListBoxEditor
+              AvailableValues={this.state.AllColumnValues}
+              cssClassName={cssClassName}
+              SelectedValues={this.state.SelectedColumnValues}
+              HeaderAvailable="Columns"
+              HeaderSelected="Columns in Report"
+              onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
+              DisplaySize={DisplaySize.Small}
+            />
+          </Panel>
+        )}
+      </div>
+    );
+  }
 
+  OnSelectedValuesChange(newValues: Array<string>) {
+    this.setState({ SelectedColumnValues: newValues } as ReportColumnsWizardState, () =>
+      this.props.UpdateGoBackState()
+    );
+  }
 
-    OnSelectedValuesChange(newValues: Array<string>) {
-        this.setState({ SelectedColumnValues: newValues } as ReportColumnsWizardState, () => this.props.UpdateGoBackState())
-    }
-
-   
-    public canNext(): boolean {
-        return (
-            this.state.SelectedColumnValues.length > 0);
-    }
-    public canBack(): boolean { return true; }
-    public Next(): void {
-        this.props.Data.ColumnIds = this.state.SelectedColumnValues.map(c =>
-            this.props.Columns.find(col => col.FriendlyName == c).ColumnId)
-    }
-    public Back(): void {
-        //todo
-    }
-    public GetIndexStepIncrement(){
-        return 1;
-    }
-    public GetIndexStepDecrement(){
-        return 1;
-    }
-
-   
+  public canNext(): boolean {
+    return this.state.SelectedColumnValues.length > 0;
+  }
+  public canBack(): boolean {
+    return true;
+  }
+  public Next(): void {
+    this.props.Data.ColumnIds = this.state.SelectedColumnValues.map(
+      c => this.props.Columns.find(col => col.FriendlyName == c).ColumnId
+    );
+  }
+  public Back(): void {
+    //todo
+  }
+  public GetIndexStepIncrement() {
+    return 1;
+  }
+  public GetIndexStepDecrement() {
+    return 1;
+  }
 }
-
-
-
-

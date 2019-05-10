@@ -1,20 +1,20 @@
 {
-	"Theme": {
-		"UserThemes": [
-			{
-				"Name": "Hello",
-				"Url": "Hello world"
-			},
-			{
-				"Name": "Goodnight",
-				"Url": "Goodnight Cowboy"
-			}
-		]
-	},
-	"QuickSearch": {
-		"QuickSearchText": "Pen"
-	},
-	"Dashboard": {
-		"DashboardVisibility": "Minimised"
-	}
+  "Theme": {
+    "UserThemes": [
+      {
+        "Name": "Hello",
+        "Url": "Hello world"
+      },
+      {
+        "Name": "Goodnight",
+        "Url": "Goodnight Cowboy"
+      }
+    ]
+  },
+  "QuickSearch": {
+    "QuickSearchText": "Pen"
+  },
+  "Dashboard": {
+    "DashboardVisibility": "Minimised"
+  }
 }

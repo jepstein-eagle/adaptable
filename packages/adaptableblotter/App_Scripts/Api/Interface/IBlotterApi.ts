@@ -1,39 +1,38 @@
-import { ICellValidationApi } from "./ICellValidationApi";
-import { IColumnFilterApi } from "./IColumnFilterApi";
-import { IAdvancedSearchApi } from "./IAdvancedSearchApi";
-import { IAlertApi } from "./IAlertApi";
-import { ICalculatedColumnApi } from "./ICalculatedColumnApi";
-import { ICalendarApi } from "./ICalendarApi";
-import { IColumnCategoryApi } from "./IColumnCategoryApi";
-import { IConfigApi } from "./IConfigApi";
-import { IDashboardApi } from "./IDashboardApi";
-import { IDataSourceApi } from "./IDataSourceApi";
-import { IEntitlementApi } from "./IEntitlementApi";
-import { IEventApi } from "./IEventApi";
-import { IExportApi } from "./IExportApi";
-import { IFormatColumnApi } from "./IFormatColumnApi";
-import { IFreeTextColumnApi } from "./IFreeTextColumnApi";
-import { IGridApi } from "./IGridApi";
-import { ILayoutApi } from "./ILayoutApi";
-import { IPercentBarApi } from "./IPercentBarApi";
-import { IQuickSearchApi } from "./IQuickSearchApi";
-import { IShortcutApi } from "./IShortcutApi";
-import { ISmartEditApi } from "./ISmartEditApi";
-import { ISystemFilterApi } from "./ISystemFilterApi";
-import { ISystemStatusApi } from "./ISystemStatusApi";
-import { IThemeApi } from "./IThemeApi";
-import { IUserInterfaceApi } from "./IUserInterfaceApi";
-import { ICustomSortApi } from "./ICustomSortApi";
-import { IInternalApi } from "./IInternalApi";
-import { IConditionalStyleApi } from "./IConditionalStyleApi";
-import { IReminderApi } from "./IReminderApi";
-import { IFlashingCellApi } from "./IFlashingCellApi";
-import { IChartApi } from "./IChartApi";
-import { ICellSummaryApi } from "./ICellSummaryApi";
-import { IUserFilterApi } from "./IUserFilterApi";
-import { IPlusMinusApi } from "./IPlusMinusApi";
-import { IBulkUpdateApi } from "./IBulkUpdateApi";
-
+import { ICellValidationApi } from './ICellValidationApi';
+import { IColumnFilterApi } from './IColumnFilterApi';
+import { IAdvancedSearchApi } from './IAdvancedSearchApi';
+import { IAlertApi } from './IAlertApi';
+import { ICalculatedColumnApi } from './ICalculatedColumnApi';
+import { ICalendarApi } from './ICalendarApi';
+import { IColumnCategoryApi } from './IColumnCategoryApi';
+import { IConfigApi } from './IConfigApi';
+import { IDashboardApi } from './IDashboardApi';
+import { IDataSourceApi } from './IDataSourceApi';
+import { IEntitlementApi } from './IEntitlementApi';
+import { IEventApi } from './IEventApi';
+import { IExportApi } from './IExportApi';
+import { IFormatColumnApi } from './IFormatColumnApi';
+import { IFreeTextColumnApi } from './IFreeTextColumnApi';
+import { IGridApi } from './IGridApi';
+import { ILayoutApi } from './ILayoutApi';
+import { IPercentBarApi } from './IPercentBarApi';
+import { IQuickSearchApi } from './IQuickSearchApi';
+import { IShortcutApi } from './IShortcutApi';
+import { ISmartEditApi } from './ISmartEditApi';
+import { ISystemFilterApi } from './ISystemFilterApi';
+import { ISystemStatusApi } from './ISystemStatusApi';
+import { IThemeApi } from './IThemeApi';
+import { IUserInterfaceApi } from './IUserInterfaceApi';
+import { ICustomSortApi } from './ICustomSortApi';
+import { IInternalApi } from './IInternalApi';
+import { IConditionalStyleApi } from './IConditionalStyleApi';
+import { IReminderApi } from './IReminderApi';
+import { IFlashingCellApi } from './IFlashingCellApi';
+import { IChartApi } from './IChartApi';
+import { ICellSummaryApi } from './ICellSummaryApi';
+import { IUserFilterApi } from './IUserFilterApi';
+import { IPlusMinusApi } from './IPlusMinusApi';
+import { IBulkUpdateApi } from './IBulkUpdateApi';
 
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
@@ -46,14 +45,14 @@ export interface IBlotterApi {
   bulkUpdateApi: IBulkUpdateApi;
   calculatedColumnApi: ICalculatedColumnApi;
   calendarApi: ICalendarApi;
-  cellSummaryApi: ICellSummaryApi
-  cellValidationApi: ICellValidationApi
-  chartApi: IChartApi
+  cellSummaryApi: ICellSummaryApi;
+  cellValidationApi: ICellValidationApi;
+  chartApi: IChartApi;
   columnCategoryApi: IColumnCategoryApi;
-  columnFilterApi: IColumnFilterApi
+  columnFilterApi: IColumnFilterApi;
   configApi: IConfigApi;
   conditionalStyleApi: IConditionalStyleApi;
-  customSortApi: ICustomSortApi
+  customSortApi: ICustomSortApi;
   dashboardApi: IDashboardApi;
   dataSourceApi: IDataSourceApi;
   entitlementApi: IEntitlementApi;
@@ -77,5 +76,5 @@ export interface IBlotterApi {
   userFilterApi: IUserFilterApi;
 
   // internal use
-  internalApi: IInternalApi
+  internalApi: IInternalApi;
 }

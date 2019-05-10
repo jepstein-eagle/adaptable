@@ -1,6 +1,6 @@
-import { BaseProps } from "./BaseProps";
+import { BaseProps } from './BaseProps';
 
 export interface ChartDisplayPopupPropsBase<View> extends BaseProps<View> {
-     onClose?: Function;
-     ShowModal: boolean;
-  }
+  onClose?: Function;
+  ShowModal: boolean;
+}

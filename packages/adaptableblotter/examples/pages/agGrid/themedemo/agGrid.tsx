@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
-import AdaptableBlotter from '../../../../App_Scripts/agGrid'
-import '../../../../App_Scripts/base.css'
-import '../../../../App_Scripts/themes/light.css'
-import '../../../../App_Scripts/themes/dark.css'
+import AdaptableBlotter from '../../../../App_Scripts/agGrid';
+import '../../../../App_Scripts/base.css';
+import '../../../../App_Scripts/themes/light.css';
+import '../../../../App_Scripts/themes/dark.css';
 import { GridOptions } from 'ag-grid-community';
 import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
@@ -18,27 +18,29 @@ Needs other things to work but it should be possible to stipulate a Current Them
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(10);
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(gridOptions, 'theme demo');
+  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+    gridOptions,
+    'theme demo'
+  );
   adaptableBlotterOptions.predefinedConfig = themeJson;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-
 let themeJson = {
   Theme: {
-    CurrentTheme: "Dark Theme"
-  }
+    CurrentTheme: 'Dark Theme',
+  },
 };
 
 export default () => {
   useEffect(() => {
     if (!process.browser) {
-      return
+      return;
     }
 
-    InitAdaptableBlotter()
-  }, [])
+    InitAdaptableBlotter();
+  }, []);
 
-  return null
-}
+  return null;
+};

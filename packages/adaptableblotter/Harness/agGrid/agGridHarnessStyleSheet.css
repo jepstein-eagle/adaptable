@@ -1,29 +1,27 @@
-﻿html, body {
-    height: 100%
-    }
-    
-    #grid{
-        height: 88%
-    }
+﻿html,
+body {
+  height: 100%;
+}
 
-    .number-cell {
-      text-align: right;
-  }
+#grid {
+  height: 88%;
+}
 
-    .styleBackBrown{
-        background-color : rosybrown 
-      }
-    .styleBackGreen{
-        background-color :lightgreen 
-      }
+.number-cell {
+  text-align: right;
+}
 
-    .styleForeYellow{
-        color: orange;
-        font-stretch: expanded;
-        vertical-align: baseline;
-        font-family: cursive;
-        font-size: xx-large;
+.styleBackBrown {
+  background-color: rosybrown;
+}
+.styleBackGreen {
+  background-color: lightgreen;
+}
 
-      }
-     
-
+.styleForeYellow {
+  color: orange;
+  font-stretch: expanded;
+  vertical-align: baseline;
+  font-family: cursive;
+  font-size: xx-large;
+}

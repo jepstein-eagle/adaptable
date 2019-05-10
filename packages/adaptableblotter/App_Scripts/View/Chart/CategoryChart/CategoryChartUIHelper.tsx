@@ -1,22 +1,39 @@
-import { ICategoryChartDefinition, ICategoryChartProperties } from "../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition";
-import { StringExtensions } from "../../../Utilities/Extensions/StringExtensions";
 import {
-  HorizontalAlignment, CategoryChartType, ToolTipType, CrosshairDisplayMode,
-  AxisAngle, AxisScale, AxisLabelsLocation, MarkerType, CalloutsType
-} from "../../../Utilities/ChartEnums";
+  ICategoryChartDefinition,
+  ICategoryChartProperties,
+} from '../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
+import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import {
+  HorizontalAlignment,
+  CategoryChartType,
+  ToolTipType,
+  CrosshairDisplayMode,
+  AxisAngle,
+  AxisScale,
+  AxisLabelsLocation,
+  MarkerType,
+  CalloutsType,
+} from '../../../Utilities/ChartEnums';
 
-import { EnumExtensions } from "../../../Utilities/Extensions/EnumExtensions";
-import * as React from "react";
-import { ColumnHelper } from "../../../Utilities/Helpers/ColumnHelper";
-import { IColumn } from "../../../Utilities/Interface/IColumn";
-import { CategoryChartComponentState } from "./CategoryChartComponentState";
-import { DefaultCategoryChartProperties } from "../../../Utilities/Defaults/DefaultCategoryChartProperties";
+import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
+import * as React from 'react';
+import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { CategoryChartComponentState } from './CategoryChartComponentState';
+import { DefaultCategoryChartProperties } from '../../../Utilities/Defaults/DefaultCategoryChartProperties';
 
 /* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
-*/
+ */
 
-export function setChartDisplayPopupState(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): CategoryChartComponentState {
-  let categoryChartProperties: ICategoryChartProperties = Object.assign({}, DefaultCategoryChartProperties, chartDefinition.ChartProperties);
+export function setChartDisplayPopupState(
+  chartDefinition: ICategoryChartDefinition,
+  columns: IColumn[]
+): CategoryChartComponentState {
+  let categoryChartProperties: ICategoryChartProperties = Object.assign(
+    {},
+    DefaultCategoryChartProperties,
+    chartDefinition.ChartProperties
+  );
 
   return {
     ChartProperties: categoryChartProperties,
@@ -44,32 +61,46 @@ export function setChartDisplayPopupState(chartDefinition: ICategoryChartDefinit
 
     // Misc
     IsMiscMinimised: true,
-    TitleMargin: (categoryChartProperties.TitleAlignment == HorizontalAlignment.Right) ? 5 : 0,
-    SubTitleMargin: (categoryChartProperties.SubTitleAlignment == HorizontalAlignment.Right) ? 5 : 0
-
-  }
-
+    TitleMargin: categoryChartProperties.TitleAlignment == HorizontalAlignment.Right ? 5 : 0,
+    SubTitleMargin: categoryChartProperties.SubTitleAlignment == HorizontalAlignment.Right ? 5 : 0,
+  };
 }
 
-function isDefaultYAxisTitle(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): boolean {
-  let categoryChartProperties: ICategoryChartProperties = chartDefinition.ChartProperties as ICategoryChartProperties
-  return StringExtensions.IsNullOrEmpty(categoryChartProperties.YAxisTitle) ||
-    categoryChartProperties.YAxisTitle == createDefaultYAxisTitle(chartDefinition, columns);
+function isDefaultYAxisTitle(
+  chartDefinition: ICategoryChartDefinition,
+  columns: IColumn[]
+): boolean {
+  let categoryChartProperties: ICategoryChartProperties = chartDefinition.ChartProperties as ICategoryChartProperties;
+  return (
+    StringExtensions.IsNullOrEmpty(categoryChartProperties.YAxisTitle) ||
+    categoryChartProperties.YAxisTitle == createDefaultYAxisTitle(chartDefinition, columns)
+  );
 }
 
-function isDefaultXAxisTitle(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): boolean {
-  let categoryChartProperties: ICategoryChartProperties = chartDefinition.ChartProperties as ICategoryChartProperties
-  return StringExtensions.IsNullOrEmpty(categoryChartProperties.XAxisTitle) ||
-    categoryChartProperties.XAxisTitle == createDefaultXAxisTitle(chartDefinition, columns);
+function isDefaultXAxisTitle(
+  chartDefinition: ICategoryChartDefinition,
+  columns: IColumn[]
+): boolean {
+  let categoryChartProperties: ICategoryChartProperties = chartDefinition.ChartProperties as ICategoryChartProperties;
+  return (
+    StringExtensions.IsNullOrEmpty(categoryChartProperties.XAxisTitle) ||
+    categoryChartProperties.XAxisTitle == createDefaultXAxisTitle(chartDefinition, columns)
+  );
 }
 
-export function createDefaultYAxisTitle(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): string {
+export function createDefaultYAxisTitle(
+  chartDefinition: ICategoryChartDefinition,
+  columns: IColumn[]
+): string {
   return chartDefinition.YAxisColumnIds.map(c => {
-    return ColumnHelper.getFriendlyNameFromColumnId(c, columns)
-  }).join(', ')
+    return ColumnHelper.getFriendlyNameFromColumnId(c, columns);
+  }).join(', ');
 }
 
-export function createDefaultXAxisTitle(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): string {
+export function createDefaultXAxisTitle(
+  chartDefinition: ICategoryChartDefinition,
+  columns: IColumn[]
+): string {
   return ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns);
 }
 
@@ -86,45 +117,64 @@ export function setDefaultChartDisplayPopupState(): CategoryChartComponentState 
     IsMiscMinimised: true,
     TitleMargin: 0,
     SubTitleMargin: 0,
-    UseDefaultXAxisTitle: true
+    UseDefaultXAxisTitle: true,
   } as CategoryChartComponentState;
   return defaultState;
 }
 
-
 export function getChartTypeOptions(): JSX.Element[] {
-  let optionChartTypes = EnumExtensions.getNames(CategoryChartType).map((enumName) => {
-    return <option key={enumName} value={enumName}>{enumName as CategoryChartType}</option>
-  })
+  let optionChartTypes = EnumExtensions.getNames(CategoryChartType).map(enumName => {
+    return (
+      <option key={enumName} value={enumName}>
+        {enumName as CategoryChartType}
+      </option>
+    );
+  });
   return optionChartTypes;
 }
 
 export function getToolTipOptions(): JSX.Element[] {
-  let optionToolTipTypes = EnumExtensions.getNames(ToolTipType).map((enumName) => {
-    return <option key={enumName} value={enumName}>{enumName as ToolTipType}</option>
-  })
+  let optionToolTipTypes = EnumExtensions.getNames(ToolTipType).map(enumName => {
+    return (
+      <option key={enumName} value={enumName}>
+        {enumName as ToolTipType}
+      </option>
+    );
+  });
   return optionToolTipTypes;
 }
 
 export function getCrossHairModeOptions(): JSX.Element[] {
-  let optionCrossHairModeTypes = EnumExtensions.getNames(CrosshairDisplayMode).map((enumName) => {
-    return <option key={enumName} value={enumName}>{enumName as CrosshairDisplayMode}</option>
-  })
+  let optionCrossHairModeTypes = EnumExtensions.getNames(CrosshairDisplayMode).map(enumName => {
+    return (
+      <option key={enumName} value={enumName}>
+        {enumName as CrosshairDisplayMode}
+      </option>
+    );
+  });
   return optionCrossHairModeTypes;
 }
 
 export function getAlignmentOptions(): JSX.Element[] {
-  let optionAligments = EnumExtensions.getNames(HorizontalAlignment).map((enumName) => {
-    return <option key={enumName} value={enumName}>{enumName as HorizontalAlignment}</option>
-  })
+  let optionAligments = EnumExtensions.getNames(HorizontalAlignment).map(enumName => {
+    return (
+      <option key={enumName} value={enumName}>
+        {enumName as HorizontalAlignment}
+      </option>
+    );
+  });
   return optionAligments;
 }
 
 export function getMarkerTypeOptions(): JSX.Element[] {
-  let options = EnumExtensions.getNames(MarkerType).map((enumName) => {
+  let options = EnumExtensions.getNames(MarkerType).map(enumName => {
     let name = enumName.toString();
-    return <option key={name} value={name}>{name}</option>
-  })
+    return (
+      <option key={name} value={name}>
+        {name}
+      </option>
+    );
+  });
   return options;
 }
 
@@ -132,54 +182,73 @@ export function getMarkerFromProps(chartProps: ICategoryChartProperties): string
   let chartType = chartProps.CategoryChartType;
   let markerType = chartProps.MarkerType;
   // resolves marker for specified chart type since some chart types should hide markers by default
-  if (markerType === "Default" || markerType === "Unset") {
-    return chartType == CategoryChartType.Point ? "Circle" : "None";
+  if (markerType === 'Default' || markerType === 'Unset') {
+    return chartType == CategoryChartType.Point ? 'Circle' : 'None';
   } else {
-    return markerType // return marker that the user selected
+    return markerType; // return marker that the user selected
   }
 }
 
 export function getYAxisLabelsLocations(): JSX.Element[] {
   let options = [
-    <option key="Left" value={AxisLabelsLocation.OutsideLeft}>Left</option>,
-    <option key="Right" value={AxisLabelsLocation.OutsideRight}>Right</option>,
-  ]
+    <option key="Left" value={AxisLabelsLocation.OutsideLeft}>
+      Left
+    </option>,
+    <option key="Right" value={AxisLabelsLocation.OutsideRight}>
+      Right
+    </option>,
+  ];
   return options;
 }
 
 export function getXAxisLabelsLocations(): JSX.Element[] {
   let options = [
-    <option key="Top" value={AxisLabelsLocation.OutsideTop}>Top</option>,
-    <option key="Bottom" value={AxisLabelsLocation.OutsideBottom}>Bottom</option>,
-  ]
+    <option key="Top" value={AxisLabelsLocation.OutsideTop}>
+      Top
+    </option>,
+    <option key="Bottom" value={AxisLabelsLocation.OutsideBottom}>
+      Bottom
+    </option>,
+  ];
   return options;
 }
 
 export function getAxisAngleOptions(): JSX.Element[] {
-  let options = EnumExtensions.getNames(AxisAngle).map((enumName) => {
-    return <option key={enumName} value={enumName}>{enumName as AxisAngle}</option>
-  })
+  let options = EnumExtensions.getNames(AxisAngle).map(enumName => {
+    return (
+      <option key={enumName} value={enumName}>
+        {enumName as AxisAngle}
+      </option>
+    );
+  });
   return options;
 }
 
 export function getAxisLabelScales(): JSX.Element[] {
-  let options = EnumExtensions.getNames(AxisScale).map((enumName) => {
-    return <option key={enumName} value={enumName}>{enumName as AxisScale}</option>
-  })
+  let options = EnumExtensions.getNames(AxisScale).map(enumName => {
+    return (
+      <option key={enumName} value={enumName}>
+        {enumName as AxisScale}
+      </option>
+    );
+  });
   return options;
 }
 
 export function getCalloutTypeOptions(): JSX.Element[] {
-  let options = EnumExtensions.getNames(CalloutsType).map((enumName) => {
+  let options = EnumExtensions.getNames(CalloutsType).map(enumName => {
     let name = enumName.toString();
     // adding known callouts as strings because we will add non-numeric properties from data source in future
-    return <option key={name} value={name}>{name}</option>
-  })
+    return (
+      <option key={name} value={name}>
+        {name}
+      </option>
+    );
+  });
   // TODO get non-numeric properties from data source and then add them to above options:
   // <option key={PropName} value={PropName}>PropName</option>,
   return options;
 }
-
 
 export function getAngleFromEnum(axisAngle: AxisAngle): number {
   switch (axisAngle) {
@@ -219,7 +288,7 @@ export function getNumericProperties(chartData: any): string[] {
 
   allProps.forEach((name: string) => {
     let dataValue = dataItem[name];
-    if (typeof (dataValue) === "number") {
+    if (typeof dataValue === 'number') {
       dataProps.push(name);
     }
   });
@@ -282,23 +351,27 @@ export function getCalloutsDataRanges(chartData: any, numericProps: string[]): a
     }
     // add callouts for MIN/MAX values of each data column
     callouts.push({
-      CalloutsLabel: "MAX " + maxValue.toFixed(1),
+      CalloutsLabel: 'MAX ' + maxValue.toFixed(1),
       CalloutsIndex: maxIndex,
       CalloutsValue: maxValue,
-      MemberPath: columnName
+      MemberPath: columnName,
     });
     callouts.push({
-      CalloutsLabel: "MIN " + minValue.toFixed(1),
+      CalloutsLabel: 'MIN ' + minValue.toFixed(1),
       CalloutsIndex: minIndex,
       CalloutsValue: minValue,
-      MemberPath: columnName
+      MemberPath: columnName,
     });
   });
 
   return callouts;
 }
 
-export function getCalloutsDataChanges(chartData: any, numericProps: string[], showPercentages: boolean): any[] {
+export function getCalloutsDataChanges(
+  chartData: any,
+  numericProps: string[],
+  showPercentages: boolean
+): any[] {
   let callouts: any[] = [];
   if (chartData.length < 2) {
     return callouts;
@@ -310,11 +383,11 @@ export function getCalloutsDataChanges(chartData: any, numericProps: string[], s
       const itemCurrent = chartData[i];
       const itemPrevious = chartData[i - 1];
       let itemChange = itemCurrent[column] - itemPrevious[column];
-      let itemLabel = itemChange >= 0 ? "+" : "";
+      let itemLabel = itemChange >= 0 ? '+' : '';
 
       if (showPercentages) {
-        itemChange = itemChange / itemPrevious[column] * 100.0
-        itemLabel = itemLabel + itemChange.toFixed(0) + "%";
+        itemChange = (itemChange / itemPrevious[column]) * 100.0;
+        itemLabel = itemLabel + itemChange.toFixed(0) + '%';
       } else {
         itemLabel = itemLabel + itemChange.toFixed(1);
       }
@@ -323,9 +396,9 @@ export function getCalloutsDataChanges(chartData: any, numericProps: string[], s
         CalloutsLabel: itemLabel,
         CalloutsValue: itemCurrent[column],
         CalloutsIndex: i,
-        MemberPath: column
+        MemberPath: column,
       });
-    };
+    }
   });
   return callouts;
 }
@@ -340,14 +413,12 @@ export function getCalloutsDataPoints(chartData: any, numericProps: string[]): a
         CalloutsLabel: itemCurrent[column].toFixed(1),
         CalloutsValue: itemCurrent[column],
         CalloutsIndex: i,
-        MemberPath: column
+        MemberPath: column,
       });
-    };
+    }
   });
   return callouts;
 }
-
-
 
 export const CategoryChartUIHelper = {
   setChartDisplayPopupState,
@@ -371,6 +442,6 @@ export const CategoryChartUIHelper = {
   getCalloutsData,
   getCalloutsDataRanges,
   getCalloutsDataChanges,
-  getCalloutsDataPoints
-}
-export default CategoryChartUIHelper
+  getCalloutsDataPoints,
+};
+export default CategoryChartUIHelper;

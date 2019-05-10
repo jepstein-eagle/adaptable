@@ -17,4 +17,3 @@ export interface IChartOptions {
    */
   pieChartMaxItems?: number;
 }
-

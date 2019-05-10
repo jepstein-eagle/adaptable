@@ -1,6 +1,6 @@
-import { IStyle } from "../../Utilities/Interface/IStyle";
-import { IFormatColumn } from "../../Utilities/Interface/BlotterObjects/IFormatColumn";
-import { FormatColumnState } from "../../Redux/ActionsReducers/Interface/IState";
+import { IStyle } from '../../Utilities/Interface/IStyle';
+import { IFormatColumn } from '../../Utilities/Interface/BlotterObjects/IFormatColumn';
+import { FormatColumnState } from '../../Redux/ActionsReducers/Interface/IState';
 export interface IFormatColumnApi {
   getFormatColumnState(): FormatColumnState;
   getAllFormatColumn(): IFormatColumn[];

@@ -1,4 +1,4 @@
 export interface ISelectedCell {
-    columnId: string;
-    value: any;
+  columnId: string;
+  value: any;
 }

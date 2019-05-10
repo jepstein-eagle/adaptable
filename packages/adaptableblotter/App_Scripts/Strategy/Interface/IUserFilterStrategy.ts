@@ -1,9 +1,3 @@
 import { IStrategy } from './IStrategy';
 
-export interface IUserFilterStrategy extends IStrategy {
-}
-
-
-
-
-
+export interface IUserFilterStrategy extends IStrategy {}

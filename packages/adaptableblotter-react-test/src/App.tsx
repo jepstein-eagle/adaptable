@@ -1,13 +1,13 @@
-import * as React from "react";
-import { GridOptions } from "ag-grid-community";
-import { DataGenerator } from "./DataGenerator";
-import { AdaptableBlotter, IAdaptableBlotterOptions } from "adaptableblotter-react";
-import { AgGridReact } from "ag-grid-react";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-balham.css";
-import "ag-grid-community/dist/styles/ag-theme-balham-dark.css";
+import * as React from 'react';
+import { GridOptions } from 'ag-grid-community';
+import { DataGenerator } from './DataGenerator';
+import { AdaptableBlotter, IAdaptableBlotterOptions } from 'adaptableblotter-react';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham.css';
+import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
-import { ReactHarnessHelper } from "./ReactHarnessHelper";
+import { ReactHarnessHelper } from './ReactHarnessHelper';
 import 'adaptableblotter-react/dist/styles/adaptableblotter-style.css';
 
 export interface AppState extends React.ClassAttributes<App> {
@@ -26,19 +26,19 @@ export default class App extends React.Component<{}, AppState> {
     this.state = {
       gridOptions: gridOptions,
       blotterOptions: {
-        primaryKey: "tradeId",
+        primaryKey: 'tradeId',
         vendorGrid: gridOptions,
-        userName: "Blotter Wrapper user",
-        blotterId: "Adaptable Blotter Wrapper",
+        userName: 'Blotter Wrapper user',
+        blotterId: 'Adaptable Blotter Wrapper',
         containerOptions: {
-         adaptableBlotterContainer: "adaptableBlotter",
-          vendorContainer: "grid",
+          adaptableBlotterContainer: 'adaptableBlotter',
+          vendorContainer: 'grid',
           modalContainer: null,
           chartContainer: null,
         },
       },
       rowData: new DataGenerator().getTrades(15000),
-      columnDefs: new ReactHarnessHelper().getTradeSchema()
+      columnDefs: new ReactHarnessHelper().getTradeSchema(),
     };
   }
 
@@ -47,9 +47,9 @@ export default class App extends React.Component<{}, AppState> {
       <div>
         <AdaptableBlotter
           AdaptableBlotterOptions={this.state.blotterOptions}
-          VendorGridName={"agGrid"}
+          VendorGridName={'agGrid'}
         />
-        <div id="grid" style={{ height: "97vh", width: "100%" }}>
+        <div id="grid" style={{ height: '97vh', width: '100%' }}>
           <AgGridReact
             columnDefs={this.state.columnDefs}
             rowData={this.state.rowData}

@@ -8,9 +8,8 @@ describe('AdaptableblotterAgGridComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdaptableblotterAgGridComponent ]
-    })
-    .compileComponents();
+      declarations: [AdaptableblotterAgGridComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

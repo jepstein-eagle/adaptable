@@ -1,9 +1,4 @@
-
 /**
- * The base empty Adaptable Blotter Object interface 
+ * The base empty Adaptable Blotter Object interface
  */
-export interface IAdaptableBlotterObject {
-}
-
-
-
+export interface IAdaptableBlotterObject {}

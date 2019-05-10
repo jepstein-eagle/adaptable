@@ -1,11 +1,5 @@
 {
-	"extends": "../adaptableblotter/tsconfig.json",
-	"include": [
-		"src/**/*"
-	],
-	"exclude": [
-		"node_modules",
-		".next",
-		"typings"
-	]
+  "extends": "../adaptableblotter/tsconfig.json",
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", ".next", "typings"]
 }

@@ -1,9 +1,7 @@
-
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 // import AdaptableBlotterAgGrid from '../../../src/AdaptableBlotterAgGrid'
-import { DataGenerator } from '../../../../../packages/adaptableblotter/Harness/DataGenerator'
-
+import { DataGenerator } from '../../../../../packages/adaptableblotter/Harness/DataGenerator';
 
 function getRowsForGrid(dataGen: DataGenerator) {
   return dataGen.getTrades(6000);
@@ -27,7 +25,11 @@ function stringToDate(date, format, delimiter) {
   var yearIndex = formatItems.indexOf('yyyy');
   var month = parseInt(dateItems[monthIndex], 10);
   month -= 1;
-  var formatedDate = new Date(parseInt(dateItems[yearIndex], 10), month, parseInt(dateItems[dayIndex], 10));
+  var formatedDate = new Date(
+    parseInt(dateItems[yearIndex], 10),
+    month,
+    parseInt(dateItems[dayIndex], 10)
+  );
   return formatedDate;
 }
 
@@ -43,8 +45,6 @@ function shortDateFormatteragGrid(params) {
   }
   return null;
 }
-
-
 
 function getColumnsForGrid() {
   var schema = [];
@@ -64,7 +64,7 @@ function getColumnsForGrid() {
     // valueFormatter: notionalFormatter,
     cellClass: 'number-cell',
     type: 'abColDefNumber',
-    filter: false
+    filter: false,
   });
   schema.push({
     headerName: 'Counterparty',
@@ -231,7 +231,7 @@ function getColumnsForGrid() {
     field: 'percentChange',
     editable: true,
     filter: 'text',
-    type: 'abColDefNumber'
+    type: 'abColDefNumber',
   });
   schema.push({
     headerName: 'Desk No.',
@@ -248,8 +248,7 @@ function getColumnsForGrid() {
 const dataGen = new DataGenerator();
 const trades = getRowsForGrid(dataGen);
 const App = () => {
-  const [name, setName] = useState<string>("Typescript")
-
+  const [name, setName] = useState<string>('Typescript');
 
   const gridOptions = {
     columnDefs: getColumnsForGrid(), // returns a list of agGrid column definitions
@@ -279,7 +278,8 @@ const App = () => {
           ],
         },
     */
-    columnTypes: { // not required but helpful for column data type identification
+    columnTypes: {
+      // not required but helpful for column data type identification
       abColDefNumber: {},
       abColDefString: {},
       abColDefBoolean: {},
@@ -321,7 +321,7 @@ const App = () => {
     },
     filterOptions: {
       useAdaptableBlotterFilterForm: true,
-      useAdaptableBlotterFloatingFilter: true
+      useAdaptableBlotterFloatingFilter: true,
     },
     chartOptions: {
       displayOnStartUp: true,
@@ -334,17 +334,17 @@ const App = () => {
     },
     iPushPullConfig: {
       api_key: 'CbBaMaoqHVifScrYwKssGnGyNkv5xHOhQVGm3cYP',
-      api_secret: 'xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj',
+      api_secret:
+        'xYzE51kuHyyt9kQCvMe0tz0H2sDSjyEQcF5SOBlPQmcL9em0NqcCzyqLYj5fhpuZxQ8BiVcYl6zoOHeI6GYZj1TkUiiLVFoW3HUxiCdEUjlPS8Vl2YHUMEPD5qkLYnGj',
       api_url: 'https://www.ipushpull.com/api/1.0',
       hsts: false,
     },
-
   };
-  return <div>
-    <div agTheme="balham-dark"
-      AdaptableBlotterOptions={abOptions} GridOptions={gridOptions} />
-  </div>
-}
+  return (
+    <div>
+      <div agTheme="balham-dark" AdaptableBlotterOptions={abOptions} GridOptions={gridOptions} />
+    </div>
+  );
+};
 
-
-export default App
+export default App;

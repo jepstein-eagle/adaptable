@@ -1,5 +1,5 @@
-import { IUserFilter } from "../../Utilities/Interface/BlotterObjects/IUserFilter";
-import { SystemFilterState } from "../../Redux/ActionsReducers/Interface/IState";
+import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
+import { SystemFilterState } from '../../Redux/ActionsReducers/Interface/IState';
 export interface ISystemFilterApi {
   getSystemFilterState(): SystemFilterState;
   setSystemFilterByUserFilters(userFilters: IUserFilter[]): void;

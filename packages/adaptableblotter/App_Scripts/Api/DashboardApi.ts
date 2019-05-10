@@ -1,115 +1,109 @@
-import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux'
-import { ApiBase } from "./ApiBase";
+import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
+import { ApiBase } from './ApiBase';
 import { Visibility } from '../Utilities/Enums';
 import { IDashboardApi } from './Interface/IDashboardApi';
 import { DashboardState } from '../Redux/ActionsReducers/Interface/IState';
 
-
 export class DashboardApi extends ApiBase implements IDashboardApi {
-
-   
   public GetState(): DashboardState {
     return this.getBlotterState().Dashboard;
-}
+  }
 
-public SetAvailableToolbars(availableToolbars: string[]): void {
-        this.dispatchAction(DashboardRedux.DashboardSetAvailableToolbars(availableToolbars))
-    }
+  public SetAvailableToolbars(availableToolbars: string[]): void {
+    this.dispatchAction(DashboardRedux.DashboardSetAvailableToolbars(availableToolbars));
+  }
 
-    public SetVisibleToolbars(visibleToolbars: string[]): void {
-        visibleToolbars.forEach(vt => {
-            this.ShowToolbar(vt)
-        })
-    }
+  public SetVisibleToolbars(visibleToolbars: string[]): void {
+    visibleToolbars.forEach(vt => {
+      this.ShowToolbar(vt);
+    });
+  }
 
-    public ShowToolbar(visibleToolbar: string): void {
-        this.dispatchAction(DashboardRedux.DashboardShowToolbar(visibleToolbar))
-    }
+  public ShowToolbar(visibleToolbar: string): void {
+    this.dispatchAction(DashboardRedux.DashboardShowToolbar(visibleToolbar));
+  }
 
-    public HideToolbar(visibleToolbar: string): void {
-        this.dispatchAction(DashboardRedux.DashboardHideToolbar(visibleToolbar))
-    }
+  public HideToolbar(visibleToolbar: string): void {
+    this.dispatchAction(DashboardRedux.DashboardHideToolbar(visibleToolbar));
+  }
 
-    public SetVisibleButtons(functionButtons: string[]): void {
-        this.dispatchAction(DashboardRedux.DashboardSetFunctionButtons(functionButtons))
-    }
+  public SetVisibleButtons(functionButtons: string[]): void {
+    this.dispatchAction(DashboardRedux.DashboardSetFunctionButtons(functionButtons));
+  }
 
-    public SetZoom(zoom: Number): void {
-        this.dispatchAction(DashboardRedux.DashboardSetZoom(zoom))
-    }
+  public SetZoom(zoom: Number): void {
+    this.dispatchAction(DashboardRedux.DashboardSetZoom(zoom));
+  }
 
-    public SetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void {
-        this.dispatchAction(DashboardRedux.DashboardSetVisibility(dashboardVisibility as Visibility))
-    }
+  public SetVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void {
+    this.dispatchAction(DashboardRedux.DashboardSetVisibility(dashboardVisibility as Visibility));
+  }
 
-    public Show(): void {
-        this.SetVisibility(Visibility.Visible);
-    }
+  public Show(): void {
+    this.SetVisibility(Visibility.Visible);
+  }
 
-    public Hide(): void {
-        this.SetVisibility(Visibility.Hidden);
-    }
+  public Hide(): void {
+    this.SetVisibility(Visibility.Hidden);
+  }
 
-    public Minimise(): void {
-        this.SetVisibility(Visibility.Minimised);
-    }
+  public Minimise(): void {
+    this.SetVisibility(Visibility.Minimised);
+  }
 
-    public ShowSystemStatusButton(): void {
-        this.dispatchAction(DashboardRedux.DashboardShowSystemStatusButton())
-    }
+  public ShowSystemStatusButton(): void {
+    this.dispatchAction(DashboardRedux.DashboardShowSystemStatusButton());
+  }
 
-    public HideSystemStatusButton(): void {
-        this.dispatchAction(DashboardRedux.DashboardHideSystemStatusButton())
-    }
+  public HideSystemStatusButton(): void {
+    this.dispatchAction(DashboardRedux.DashboardHideSystemStatusButton());
+  }
 
-    public ShowAboutButton(): void {
-        this.dispatchAction(DashboardRedux.DashboardShowAboutButton())
-    }
+  public ShowAboutButton(): void {
+    this.dispatchAction(DashboardRedux.DashboardShowAboutButton());
+  }
 
-    public HideAboutButton(): void {
-        this.dispatchAction(DashboardRedux.DashboardHideAboutButton())
-    }
+  public HideAboutButton(): void {
+    this.dispatchAction(DashboardRedux.DashboardHideAboutButton());
+  }
 
-    public ShowFunctionsDropdown(): void {
-        this.dispatchAction(DashboardRedux.DashboardShowFunctionsDropdown())
-    }
+  public ShowFunctionsDropdown(): void {
+    this.dispatchAction(DashboardRedux.DashboardShowFunctionsDropdown());
+  }
 
-    public HideFunctionsDropdown(): void {
-        this.dispatchAction(DashboardRedux.DashboardHideFunctionsDropdown())
-    }
+  public HideFunctionsDropdown(): void {
+    this.dispatchAction(DashboardRedux.DashboardHideFunctionsDropdown());
+  }
 
-    public ShowColumnsDropdown(): void {
-        this.dispatchAction(DashboardRedux.DashboardShowColumnsDropdown())
-    }
+  public ShowColumnsDropdown(): void {
+    this.dispatchAction(DashboardRedux.DashboardShowColumnsDropdown());
+  }
 
-    public HideColumnsDropdown(): void {
-        this.dispatchAction(DashboardRedux.DashboardHideColumnsDropdown())
-    }
+  public HideColumnsDropdown(): void {
+    this.dispatchAction(DashboardRedux.DashboardHideColumnsDropdown());
+  }
 
-    public SetHomeToolbarTitle(title: string): void {
-        this.dispatchAction(DashboardRedux.DashboardSetHomeToolbarTitle(title))
-    }
+  public SetHomeToolbarTitle(title: string): void {
+    this.dispatchAction(DashboardRedux.DashboardSetHomeToolbarTitle(title));
+  }
 
-    public SetApplicationToolbarTitle(title: string): void {
-        this.dispatchAction(DashboardRedux.DashboardSetApplicationToolbarTitle(title))
-    }
+  public SetApplicationToolbarTitle(title: string): void {
+    this.dispatchAction(DashboardRedux.DashboardSetApplicationToolbarTitle(title));
+  }
 
-    public UseSingleColourForButtons(): void {
-        this.dispatchAction(DashboardRedux.DashboardUseSingleColourForButtons())
-    }
+  public UseSingleColourForButtons(): void {
+    this.dispatchAction(DashboardRedux.DashboardUseSingleColourForButtons());
+  }
 
-    public UseMultipleColourForButtons(): void {
-        this.dispatchAction(DashboardRedux.DashboardUseMultipleColourForButtons())
-    }
+  public UseMultipleColourForButtons(): void {
+    this.dispatchAction(DashboardRedux.DashboardUseMultipleColourForButtons());
+  }
 
-    public UseExtraSmallButtons(): void {
-        this.dispatchAction(DashboardRedux.DashboardUseExtraSmallButtons())
-    }
+  public UseExtraSmallButtons(): void {
+    this.dispatchAction(DashboardRedux.DashboardUseExtraSmallButtons());
+  }
 
-    public UseDefaultSizeButtons(): void {
-        this.dispatchAction(DashboardRedux.DashboardUseDefaultSizeButtons())
-    }
-
-
-
+  public UseDefaultSizeButtons(): void {
+    this.dispatchAction(DashboardRedux.DashboardUseDefaultSizeButtons());
+  }
 }

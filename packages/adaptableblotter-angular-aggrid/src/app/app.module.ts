@@ -8,19 +8,9 @@ import { AdaptableBlotterModule } from 'adaptableblotter-angular-aggrid';
 import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AppAgGridComponent,
-    SwitchComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AdaptableBlotterModule,
-    AgGridModule.withComponents([]),
-  ],
+  declarations: [AppComponent, AppAgGridComponent, SwitchComponent],
+  imports: [BrowserModule, AdaptableBlotterModule, AgGridModule.withComponents([])],
   providers: [],
-  bootstrap: [
-    SwitchComponent,
-  ]
+  bootstrap: [SwitchComponent],
 })
-export class AppModule { }
+export class AppModule {}

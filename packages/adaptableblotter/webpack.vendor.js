@@ -4,77 +4,76 @@ var failPlugin = require('webpack-fail-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: {
-        'abvendors':
-            [
-                'create-react-class',
-                'deep-diff',
-                'fin-hypergrid-data-source-base',
-                'igniteui-react-charts/ES2015/igr-category-chart-module',
-                'igniteui-react-charts/ES2015/igr-category-chart-core-module',
-                'igniteui-react-charts/ES2015/igr-pie-chart-module',
-                'igniteui-react-charts/ES2015/igr-pie-chart-core-module',
-                'igniteui-react-charts/ES2015/igr-data-chart-annotation-module',
-                'igniteui-react-charts/ES2015/igr-doughnut-chart-module',
-                'igniteui-react-charts/ES2015/igr-doughnut-chart',
-                'igniteui-react-charts/ES2015/igr-ring-series-module',
-                'igniteui-react-charts/ES2015/igr-ring-series',
-                'igniteui-react-charts/ES2015/igr-item-legend-module',
-                'igniteui-react-charts/ES2015/igr-item-legend',
-                'ipushpull-js',
-                'isomorphic-fetch',
-                'json-loader',
-                'lodash',
-                'mathjs',
-                'node-schedule',
-                'prop-types',
-                'react',
-                'react-bootstrap',
-                'react-bootstrap-typeahead',
-                'react-dom',
-                'react-redux',
-                'redux',
-                'redux-devtools-extension'
-             ]
-    },
-
-    output: {
-        filename: '[name].bundle.js',
-        path: 'ExtLibs/ABVendorsDist/',
-
-        // The name of the global variable which the library's
-        // require() function will be assigned to
-        library: '[name]_lib',
-    },
-    resolve: {
-        // Add `.ts` and `.tsx` as a resolvable extension.
-        extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.json']
-    },
-
-    plugins: [
-        failPlugin,
-        new webpack.DllPlugin({
-            // The path to the manifest file which maps between
-            // modules included in a bundle and the internal IDs
-            // within that bundle
-            path: 'ExtLibs/ABVendorsDist/[name]-manifest.json',
-            // The name of the global variable which the library's
-            // require function has been assigned to. This must match the
-            // output.library option above
-            name: '[name]_lib'
-        })
+  entry: {
+    abvendors: [
+      'create-react-class',
+      'deep-diff',
+      'fin-hypergrid-data-source-base',
+      'igniteui-react-charts/ES2015/igr-category-chart-module',
+      'igniteui-react-charts/ES2015/igr-category-chart-core-module',
+      'igniteui-react-charts/ES2015/igr-pie-chart-module',
+      'igniteui-react-charts/ES2015/igr-pie-chart-core-module',
+      'igniteui-react-charts/ES2015/igr-data-chart-annotation-module',
+      'igniteui-react-charts/ES2015/igr-doughnut-chart-module',
+      'igniteui-react-charts/ES2015/igr-doughnut-chart',
+      'igniteui-react-charts/ES2015/igr-ring-series-module',
+      'igniteui-react-charts/ES2015/igr-ring-series',
+      'igniteui-react-charts/ES2015/igr-item-legend-module',
+      'igniteui-react-charts/ES2015/igr-item-legend',
+      'ipushpull-js',
+      'isomorphic-fetch',
+      'json-loader',
+      'lodash',
+      'mathjs',
+      'node-schedule',
+      'prop-types',
+      'react',
+      'react-bootstrap',
+      'react-bootstrap-typeahead',
+      'react-dom',
+      'react-redux',
+      'redux',
+      'redux-devtools-extension',
     ],
-    module: {
-        loaders: [
-            {
-                test: /\.js(x?)$/, loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime',
-                include: [
-                    path.resolve(__dirname, "node_modules/igniteui-react-core"),
-                    path.resolve(__dirname, "node_modules/igniteui-react-charts")
-                ],
-            },
-            { include: /\.json$/, loaders: ["json-loader"] }
-        ],
+  },
 
-    }
+  output: {
+    filename: '[name].bundle.js',
+    path: 'ExtLibs/ABVendorsDist/',
+
+    // The name of the global variable which the library's
+    // require() function will be assigned to
+    library: '[name]_lib',
+  },
+  resolve: {
+    // Add `.ts` and `.tsx` as a resolvable extension.
+    extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.json'],
+  },
+
+  plugins: [
+    failPlugin,
+    new webpack.DllPlugin({
+      // The path to the manifest file which maps between
+      // modules included in a bundle and the internal IDs
+      // within that bundle
+      path: 'ExtLibs/ABVendorsDist/[name]-manifest.json',
+      // The name of the global variable which the library's
+      // require function has been assigned to. This must match the
+      // output.library option above
+      name: '[name]_lib',
+    }),
+  ],
+  module: {
+    loaders: [
+      {
+        test: /\.js(x?)$/,
+        loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime',
+        include: [
+          path.resolve(__dirname, 'node_modules/igniteui-react-core'),
+          path.resolve(__dirname, 'node_modules/igniteui-react-charts'),
+        ],
+      },
+      { include: /\.json$/, loaders: ['json-loader'] },
+    ],
+  },
 };

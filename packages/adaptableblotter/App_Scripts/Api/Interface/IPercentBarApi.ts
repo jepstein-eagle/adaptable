@@ -1,11 +1,18 @@
-import { IPercentBar } from "../../Utilities/Interface/BlotterObjects/IPercentBar";
-import { PercentBarState } from "../../Redux/ActionsReducers/Interface/IState";
+import { IPercentBar } from '../../Utilities/Interface/BlotterObjects/IPercentBar';
+import { PercentBarState } from '../../Redux/ActionsReducers/Interface/IState';
 export interface IPercentBarApi {
   getPercentBarState(): PercentBarState;
   getAllPercentBar(): IPercentBar[];
   getPercentBarByColumn(columnId: string): IPercentBar;
   addPercentBar(percentBar: IPercentBar): void;
-  createPercentBar(columnId: string, minValue: number, maxValue: number, positiveColor: string, negativeColor: string, showValue: boolean): void;
+  createPercentBar(
+    columnId: string,
+    minValue: number,
+    maxValue: number,
+    positiveColor: string,
+    negativeColor: string,
+    showValue: boolean
+  ): void;
   editPercentBarByIndex(index: number, percentBar: IPercentBar): void;
   editPercentBar(percentBar: IPercentBar): void;
   editPercentBarMinValue(minValue: number, columnId: string): void;

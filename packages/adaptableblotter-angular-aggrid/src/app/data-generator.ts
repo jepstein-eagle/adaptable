@@ -1,4 +1,3 @@
-
 export default class DataGenerator {
   private _numericCols: string[] = ['price', 'bid', 'ask'];
 
@@ -11,8 +10,6 @@ export default class DataGenerator {
     }
     return trades;
   }
-
-
 
   startTickingDataagGrid(gridOptions: any) {
     setInterval(() => {
@@ -50,7 +47,6 @@ export default class DataGenerator {
     }, 100);
   }
 
-
   createTrade(i: number, currency?: string) {
     const price = this.getMeaningfulDouble();
     const bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
@@ -83,7 +79,7 @@ export default class DataGenerator {
       bloombergBid: this.getSimilarNumber(bid),
       percentChange: this.generateRandomNullableDouble(),
       lastUpdated: this.generateRandomDateAndTime(-7, 0),
-      lastUpdatedBy: this.getRandomItem(this.getNames())
+      lastUpdatedBy: this.getRandomItem(this.getNames()),
     };
     return trade;
   }
@@ -189,7 +185,7 @@ export default class DataGenerator {
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     };
     return date.toLocaleTimeString('en-us', options);
   }
@@ -230,7 +226,7 @@ export default class DataGenerator {
       'Citi',
       'JP Morgan',
       'Morgan Stanley',
-      'BNP'
+      'BNP',
       //   'Lloyds TSB',
       //   'MUFJ',
       //   'Rabobank',
@@ -284,7 +280,7 @@ export default class DataGenerator {
       'Qatar',
       'Russia',
       'Spain',
-      'Thailand'
+      'Thailand',
     ];
     return countries;
   }
@@ -316,7 +312,7 @@ export default class DataGenerator {
       'Ca',
       'C',
       'WR',
-      'NR'
+      'NR',
     ];
     return moodysRatings;
   }
@@ -400,7 +396,7 @@ export default class DataGenerator {
       'Britany Saffell',
       'Kelley Babb',
       'Bradley Chumley',
-      'Louella Spiker'
+      'Louella Spiker',
     ];
     return names;
   }
