@@ -875,6 +875,7 @@ export class ExamplesHelper {
       field: 'notional',
       enableValue: true,
       editable: true,
+      sortable: true,
       // valueFormatter: notionalFormatter,
       cellClass: 'number-cell',
       type: 'abColDefNumber',
@@ -1032,11 +1033,12 @@ export class ExamplesHelper {
       headerName: 'Last Updated',
       field: 'lastUpdated',
       editable: true,
+      filter: true,
       cellEditorParams: {
         useFormatter: true,
       },
-      valueParser: this.dateParseragGrid,
-      valueFormatter: this.shortDateFormatteragGrid,
+      //  valueParser: this.dateParseragGrid,
+      //  valueFormatter: this.shortDateFormatteragGrid,
       type: 'abColDefDate',
     });
     schema.push({

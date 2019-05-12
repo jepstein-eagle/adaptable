@@ -23,7 +23,7 @@ Nor do we create the ag-Grid
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(20);
   const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
     'basic demo'
