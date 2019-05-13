@@ -10,6 +10,20 @@ export class QuickSearchApi extends ApiBase implements IQuickSearchApi {
     return this.getBlotterState().QuickSearch;
   }
 
+  public setQuickSearchState(quickSearchState: QuickSearchState): void {
+    let currentQuickSearchState = this.getQuickSearchState();
+    // apply QuickSearch if different
+    if (currentQuickSearchState.QuickSearchText != quickSearchState.QuickSearchText) {
+      this.applyQuickSearch(quickSearchState.QuickSearchText);
+    }
+    if (currentQuickSearchState.DisplayAction != quickSearchState.DisplayAction) {
+      this.setQuickSearchDisplayAction(quickSearchState.DisplayAction);
+    }
+    if (currentQuickSearchState.Style != quickSearchState.Style) {
+      this.setQuickSearchStyle(quickSearchState.Style);
+    }
+  }
+
   public applyQuickSearch(quickSearchText: string): void {
     this.dispatchAction(QuickSearchRedux.QuickSearchApply(quickSearchText));
   }

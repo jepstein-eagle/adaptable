@@ -139,7 +139,7 @@ export function GetFunctionForSystemFilter(systemFilterName: string): any {
       return {
         IsExpressionSatisfied: (dateToCheck: Date): boolean => {
           let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date());
-          return today.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
+          return today.setHours(0, 0, 0, 0) == new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0);
         },
       };
     }
@@ -161,7 +161,9 @@ export function GetFunctionForSystemFilter(systemFilterName: string): any {
       return {
         IsExpressionSatisfied: (dateToCheck: Date): boolean => {
           let yesterday = ((d: Date) => new Date(d.setDate(d.getDate() - 1)))(new Date());
-          return yesterday.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
+          return (
+            yesterday.setHours(0, 0, 0, 0) == new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
+          );
         },
       };
     }
@@ -169,7 +171,9 @@ export function GetFunctionForSystemFilter(systemFilterName: string): any {
       return {
         IsExpressionSatisfied: (dateToCheck: Date): boolean => {
           let tomorrow = ((d: Date) => new Date(d.setDate(d.getDate() + 1)))(new Date());
-          return tomorrow.setHours(0, 0, 0, 0) == dateToCheck.setHours(0, 0, 0, 0);
+          return (
+            tomorrow.setHours(0, 0, 0, 0) == new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
+          );
         },
       };
     }
@@ -178,7 +182,7 @@ export function GetFunctionForSystemFilter(systemFilterName: string): any {
         IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
           return (
             blotter.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0) ==
-            dateToCheck.setHours(0, 0, 0, 0)
+            new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
           );
         },
       };
@@ -188,7 +192,7 @@ export function GetFunctionForSystemFilter(systemFilterName: string): any {
         IsExpressionSatisfied: (dateToCheck: Date, blotter: IAdaptableBlotter): boolean => {
           return (
             blotter.CalendarService.GetPreviousWorkingDay().setHours(0, 0, 0, 0) ==
-            dateToCheck.setHours(0, 0, 0, 0)
+            new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
           );
         },
       };

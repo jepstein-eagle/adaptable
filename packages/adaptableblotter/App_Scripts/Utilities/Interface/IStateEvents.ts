@@ -4,7 +4,6 @@ import { ICustomSort } from './BlotterObjects/ICustomSort';
 import { IColumnFilter } from './BlotterObjects/IColumnFilter';
 import { IAdvancedSearch } from './BlotterObjects/IAdvancedSearch';
 import { IAdaptableAlert } from './IMessage';
-import { IDataChangedInfo } from './IDataChangedInfo';
 import { IDataSource } from './BlotterObjects/IDataSource';
 
 export interface IFDC3Schema {

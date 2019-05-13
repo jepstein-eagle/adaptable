@@ -5,15 +5,14 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
-import { DataGenerator } from '../../../../Harness/DataGenerator';
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import {
   ISearchChangedEventArgs,
   IColumnStateChangedEventArgs,
-  IStateChangedEventArgs,
   IAlertFiredEventArgs,
 } from '../../../../App_Scripts/Utilities/Interface/IStateEvents';
+import { IStateChangedEventArgs } from '../../../../App_Scripts/Utilities/Interface/StateChanged/IStateChangedEventArgs';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 var adaptableblotter: IAdaptableBlotter;

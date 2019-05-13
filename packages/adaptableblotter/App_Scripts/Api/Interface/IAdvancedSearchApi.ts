@@ -3,6 +3,8 @@ import { AdvancedSearchState } from '../../Redux/ActionsReducers/Interface/IStat
 
 export interface IAdvancedSearchApi {
   getAdvancedSearchState(): AdvancedSearchState;
+  setAdvancedSearchState(advancedSearchState: AdvancedSearchState): void;
+
   /**
    * Sets Advanced Search
    * @param advancedSearchName
@@ -21,6 +23,6 @@ export interface IAdvancedSearchApi {
   deleteAdvancedSearch(advancedSearchName: string): void;
   getCurrentAdvancedSearch(): IAdvancedSearch;
   getCurrentAdvancedSearchName(): string;
-  getAdvancedSearchByName(advancedSearchName: string): IAdvancedSearch;
+  getAdvancedSearchByName(advancedSearchName: string): IAdvancedSearch | undefined;
   getAllAdvancedSearch(): IAdvancedSearch[];
 }

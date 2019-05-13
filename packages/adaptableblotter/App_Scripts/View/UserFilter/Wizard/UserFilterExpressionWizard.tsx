@@ -10,13 +10,15 @@ export class UserFilterExpressionWizard extends ExpressionBuilderPage
   implements AdaptableWizardStep {
   constructor(private props2: ExpressionWizardProps<IUserFilter>) {
     super(props2);
+    this.Data = props2.Data;
     this.state = UIHelper.getExpressionBuilderStateWithColumn(
-      this.props2.Data.Expression,
-      this.props2.Data.ColumnId
+      props2.Data.Expression,
+      props2.Data.ColumnId
     );
   }
+  public Data: any;
 
   public Next(): void {
-    this.props2.Data.Expression = this.state.Expression;
+    this.Data.Expression = this.state.Expression;
   }
 }

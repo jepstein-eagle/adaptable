@@ -10,14 +10,17 @@ export class CategoryChartXAxisExpressionWizard extends ExpressionBuilderPage
   implements AdaptableWizardStep {
   constructor(private props2: ExpressionWizardProps<ICategoryChartDefinition>) {
     super(props2);
+    this.Data = props2.Data;
     this.state = UIHelper.getExpressionBuilderStateWithColumn(
-      this.props2.Data.XAxisExpression,
-      this.props2.Data.XAxisColumnId
+      props2.Data.XAxisExpression,
+      props2.Data.XAxisColumnId
     );
   }
 
+  public Data: any;
+
   public Next(): void {
-    this.props2.Data.XAxisExpression = this.state.Expression;
+    this.Data.XAxisExpression = this.state.Expression;
   }
 
   public canBack(): boolean {

@@ -70,6 +70,7 @@ import {
   DisplayAction,
   DistinctCriteriaPairValue,
   FilterOnDataChangeOptions,
+  StateChangedTrigger,
 } from '../Utilities/Enums';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
@@ -90,9 +91,9 @@ import { IAdaptableBlotterOptions } from '../Utilities/Interface/blotterOptions/
 import {
   ISearchChangedEventArgs,
   IColumnStateChangedEventArgs,
-  IStateChangedEventArgs,
   IAlertFiredEventArgs,
 } from '../Utilities/Interface/IStateEvents';
+import { IStateChangedEventArgs } from '../Utilities/Interface/StateChanged/IStateChangedEventArgs';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
@@ -130,7 +131,7 @@ import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdapt
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
-import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState';
+import { QuickSearchState, AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState';
 import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
 
 export class AdaptableBlotter implements IAdaptableBlotter {

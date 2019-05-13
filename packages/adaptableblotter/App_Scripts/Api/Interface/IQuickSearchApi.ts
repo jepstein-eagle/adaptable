@@ -2,6 +2,7 @@ import { IStyle } from '../../Utilities/Interface/IStyle';
 import { QuickSearchState } from '../../Redux/ActionsReducers/Interface/IState';
 export interface IQuickSearchApi {
   getQuickSearchState(): QuickSearchState;
+  setQuickSearchState(quickSearchState: QuickSearchState): void;
   /**
    * Runs QuickSearch on the supplied text
    * @param quickSearchText text to run QuickSearch on
