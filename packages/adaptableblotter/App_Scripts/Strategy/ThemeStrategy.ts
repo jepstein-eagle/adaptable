@@ -41,15 +41,6 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ThemeStrategyId, blotter);
 
-    // Create the <style> tag for shipped themes
-    this.style = document.createElement('style');
-    this.style.id = `${blotter.blotterOptions.containerOptions.adaptableBlotterContainer}_${
-      blotter.blotterOptions.blotterId
-    }-theme`;
-
-    this.style.appendChild(document.createTextNode('')); // WebKit hack :(
-    document.head.appendChild(this.style); // Adds the <style> element to the page
-
     // Create the theme link for predefined themes
     this.theme = document.createElement('link');
     this.theme.id = `${blotter.blotterOptions.containerOptions.adaptableBlotterContainer}_${
@@ -87,7 +78,6 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
         this.publishStateChanged(StateChangedTrigger.Theme, this.ThemeState);
       }
 
-      this.style.innerHTML = '';
       this.theme.href = '';
       switch (this.ThemeState.CurrentTheme) {
         case 'None':
@@ -132,7 +122,6 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
         // if its a system theme then use that..
         if (shippedTheme) {
           warnTheme(this.ThemeState.CurrentTheme);
-          // this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
         } else {
           // otherwise use the predefined one
           const userTheme = this.ThemeState.UserThemes.find(

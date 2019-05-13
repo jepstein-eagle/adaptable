@@ -949,7 +949,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let actionTyped = <ExportRedux.ExportApplyAction>action;
             if (
               actionTyped.ExportDestination == ExportDestination.iPushPull &&
-              iPushPullHelper.IPPStatus != iPushPullHelper.ServiceStatus.Connected
+              iPushPullHelper.getIPPStatus() != iPushPullHelper.ServiceStatus.Connected
             ) {
               middlewareAPI.dispatch(
                 PopupRedux.PopupShowScreen(

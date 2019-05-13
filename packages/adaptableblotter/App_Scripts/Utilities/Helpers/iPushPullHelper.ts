@@ -11,7 +11,7 @@ export enum ServiceStatus {
   Error = 'Error',
 }
 
-export var IPPStatus: ServiceStatus = ServiceStatus.Unknown;
+var IPPStatus: ServiceStatus = ServiceStatus.Unknown;
 let ipp: ICreate;
 const pages: Map<string, any> = new Map();
 
@@ -170,7 +170,7 @@ export function pushData(page: string, data: any[], style: IPPStyle): Promise<an
 }
 export const iPushPullHelper = {
   ServiceStatus,
-  IPPStatus,
+  getIPPStatus: (): ServiceStatus => IPPStatus,
   init,
   isIPushPullLoaded,
   Login,

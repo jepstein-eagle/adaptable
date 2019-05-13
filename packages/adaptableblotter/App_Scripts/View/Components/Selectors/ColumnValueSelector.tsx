@@ -79,7 +79,7 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
         placeholder={placeholderText}
         labelKey={'DisplayValue'}
         multiple={false}
-        selected={[selectedValue]}
+        selected={[selectedValue as any]}
         onChange={selected => {
           this.onColumnChange(selected);
         }}
