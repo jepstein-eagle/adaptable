@@ -10,8 +10,8 @@ import {
   ISearchEventData,
   IStateChangedInfo,
   IStateEventData,
-  IStateChangedEventArgs,
 } from '../Utilities/Interface/IStateEvents';
+import { IStateChangedEventArgs } from '../Utilities/Interface/StateChanged/IStateChangedEventArgs';
 import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Utilities/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IEntitlement } from '../Utilities/Interface/IEntitlement';

@@ -3,10 +3,10 @@ import { IEvent } from '../Utilities/Interface/IEvent';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import {
   ISearchChangedEventArgs,
-  IStateChangedEventArgs,
   IColumnStateChangedEventArgs,
   IAlertFiredEventArgs,
 } from '../Utilities/Interface/IStateEvents';
+import { IStateChangedEventArgs } from '../Utilities/Interface/StateChanged/IStateChangedEventArgs';
 import { IEventApi } from './Interface/IEventApi';
 import { EventDispatcher } from '../Utilities/EventDispatcher';
 

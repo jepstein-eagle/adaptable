@@ -1,10 +1,10 @@
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import {
   ISearchChangedEventArgs,
-  IStateChangedEventArgs,
   IColumnStateChangedEventArgs,
   IAlertFiredEventArgs,
 } from '../../Utilities/Interface/IStateEvents';
+import { IStateChangedEventArgs } from '../../Utilities/Interface/StateChanged/IStateChangedEventArgs';
 import { IEvent } from '../../Utilities/Interface/IEvent';
 import { EventDispatcher } from '../../Utilities/EventDispatcher';
 

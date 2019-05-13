@@ -4,7 +4,6 @@ import { ICustomSort } from './BlotterObjects/ICustomSort';
 import { IColumnFilter } from './BlotterObjects/IColumnFilter';
 import { IAdvancedSearch } from './BlotterObjects/IAdvancedSearch';
 import { IAdaptableAlert } from './IMessage';
-import { IDataChangedInfo } from './IDataChangedInfo';
 import { IDataSource } from './BlotterObjects/IDataSource';
 
 export interface IFDC3Schema {
@@ -19,10 +18,6 @@ export interface IColumnStateChangedEventArgs {
 
 export interface IAlertFiredEventArgs {
   alert: IAdaptableAlert;
-}
-
-export interface IStateChangedEventArgs extends IFDC3Schema {
-  data: IStateEventData[];
 }
 
 /**
