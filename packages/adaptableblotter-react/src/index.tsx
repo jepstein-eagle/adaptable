@@ -7,6 +7,24 @@ import { IAdaptableBlotterOptions } from '../../adaptableblotter/types';
 import { AdaptableBlotterApp } from '../../adaptableblotter/App_Scripts/View/AdaptableBlotterView';
 import AdaptableBlotter from '../../adaptableblotter/App_Scripts/agGrid';
 import DefiniteHeight from './DefiniteHeight';
+import {
+  ISearchChangedEventArgs,
+  IThemeChangedEventArgs,
+  IStateChangedEventArgs,
+  IColumnStateChangedEventArgs,
+  IAlertFiredEventArgs,
+} from '../../adaptableblotter/App_Scripts/Utilities/Interface/IStateEvents';
+
+import useEventListener from './useEventListener';
+import { IEventApi } from '../../adaptableblotter/App_Scripts/Api/Interface/IEventApi';
+
+export {
+  ISearchChangedEventArgs,
+  IThemeChangedEventArgs,
+  IStateChangedEventArgs,
+  IColumnStateChangedEventArgs,
+  IAlertFiredEventArgs,
+};
 
 type TypeAgGridApiParams = { api: GridApi; columnApi: ColumnApi; type: string };
 type TypeFactory =
@@ -34,6 +52,11 @@ const AdaptableBlotterReact = ({
   renderGrid,
   render,
   onReady,
+  onSearchChanged,
+  onThemeChanged,
+  onStateChanged,
+  onColumnStateChanged,
+  onAlertFired,
   ...props
 }: {
   onReady?: (ab: AdaptableBlotter) => void;
@@ -41,6 +64,11 @@ const AdaptableBlotterReact = ({
   renderGrid?: (gridOptions: GridOptions) => typeof AgGridReact;
   blotterOptions: IAdaptableBlotterOptions;
   gridOptions: GridOptions;
+  onSearchChanged?: (blotter: AdaptableBlotter, args: ISearchChangedEventArgs) => void;
+  onThemeChanged?: (blotter: AdaptableBlotter, args: IThemeChangedEventArgs) => void;
+  onStateChanged?: (blotter: AdaptableBlotter, args: IStateChangedEventArgs) => void;
+  onColumnStateChanged?: (blotter: AdaptableBlotter, args: IColumnStateChangedEventArgs) => void;
+  onAlertFired?: (blotter: AdaptableBlotter, args: IAlertFiredEventArgs) => void;
   tagName?: TypeFactory;
 } & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
   const seedId = useMemo(() => `${getRandomInt(1000)}-${Date.now()}`, []);
@@ -114,6 +142,14 @@ const AdaptableBlotterReact = ({
       grid: gridWrapperNode,
     });
   }
+
+  useEventListener(onSearchChanged, blotter, (eventApi: IEventApi) => eventApi.onSearchedChanged());
+  useEventListener(onThemeChanged, blotter, (eventApi: IEventApi) => eventApi.onThemeChanged());
+  useEventListener(onColumnStateChanged, blotter, (eventApi: IEventApi) =>
+    eventApi.onColumnStateChanged()
+  );
+  useEventListener(onStateChanged, blotter, (eventApi: IEventApi) => eventApi.onStateChanged());
+  useEventListener(onAlertFired, blotter, (eventApi: IEventApi) => eventApi.onAlertFired());
 
   return (
     <TagName
