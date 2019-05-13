@@ -5,8 +5,9 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 
 import '../../../../App_Scripts/base.scss';
-import '../../../../App_Scripts/themes/light.scss';
+
 import '../../../../App_Scripts/themes/dark.scss';
+import '../../../../App_Scripts/themes/light.scss';
 
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';

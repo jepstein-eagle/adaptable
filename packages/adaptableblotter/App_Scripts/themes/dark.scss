@@ -11,6 +11,16 @@ body {
   line-height: 1.42857143;
 }
 
+html.ab--theme-dark {
+  --ab-theme-loaded: 777; // this custom variable is here to allow checking if the theme was correctly loaded by the host app
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  body {
+    color: #c8c8c8;
+    background-color: #272b30;
+  }
+}
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -1088,24 +1098,6 @@ body {
   }
   .glyphicon-menu-up:before {
     content: '\e260';
-  }
-  * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-  *:before,
-  *:after {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-  }
-  html {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-  body {
-    color: #c8c8c8;
-    background-color: #272b30;
   }
   input,
   button,

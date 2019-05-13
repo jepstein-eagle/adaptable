@@ -1084,8 +1084,6 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
-  color: #333;
-  background-color: #fff;
 }
 button,
 input,
@@ -7073,7 +7071,7 @@ button.close {
 ADAPTABLE BLOTTER STYLES
 */
 
-#{'.ab-style__base'} {
+.ab-style__base {
   /*Default Style for the main popup*/
   .modal-dialog {
     /*position: relative;*/
@@ -7538,86 +7536,86 @@ Searchable DropDown Styles
   .input-group .bootstrap-typeahead:last-child .form-control {
     border-radius: 0 4px 4px 0;
   }
+}
 
-  /*******************************************
+/*******************************************
 End Searchable DropDown Styles
 ********************************************/
 
-  .ab_preview_panel {
-    overflow-y: auto;
-    max-height: 460px;
-  }
-  .ab_no_padding {
-    padding: 0px;
-  }
-  .ab_small_padding {
-    padding: 2px;
-  }
-  .ab_medium_padding {
-    padding: 5px;
-  }
-  .ab_large_padding {
-    padding: 10px;
-  }
+.ab_preview_panel {
+  overflow-y: auto;
+  max-height: 460px;
+}
+.ab_no_padding {
+  padding: 0px;
+}
+.ab_small_padding {
+  padding: 2px;
+}
+.ab_medium_padding {
+  padding: 5px;
+}
+.ab_large_padding {
+  padding: 10px;
+}
 
-  .ab_no_margin {
-    margin: 0px;
-  }
+.ab_no_margin {
+  margin: 0px;
+}
 
-  .ab_small_margin {
-    margin: 2px;
-  }
+.ab_small_margin {
+  margin: 2px;
+}
 
-  .ab_medium_margin {
-    margin: 5px;
-  }
+.ab_medium_margin {
+  margin: 5px;
+}
 
-  .ab_large_margin {
-    margin: 10px;
-  }
+.ab_large_margin {
+  margin: 10px;
+}
 
-  .ab_no_padding_no_margin {
-    margin: 0px;
-    padding: 0px;
-  }
+.ab_no_padding_no_margin {
+  margin: 0px;
+  padding: 0px;
+}
 
-  .ab_no_padding_small_margin {
-    margin: 2px;
-    padding: 0px;
-  }
+.ab_no_padding_small_margin {
+  margin: 2px;
+  padding: 0px;
+}
 
-  .ab_no_padding_medium_margin {
-    margin: 5px;
-    padding: 0px;
-  }
+.ab_no_padding_medium_margin {
+  margin: 5px;
+  padding: 0px;
+}
 
-  .ab_no_padding_large_margin {
-    margin: 10px;
-    padding: 0px;
-  }
+.ab_no_padding_large_margin {
+  margin: 10px;
+  padding: 0px;
+}
 
-  .ab_large_right_margin_style {
-    margin-right: 10px;
-  }
+.ab_large_right_margin_style {
+  margin-right: 10px;
+}
 
-  /* Styles for the coloured cell render */
-  .ab_div-colour-render-bar {
-    display: inline-block;
-    height: 100%;
-    position: relative;
-    z-index: 0;
-  }
+/* Styles for the coloured cell render */
+.ab_div-colour-render-bar {
+  display: inline-block;
+  height: 100%;
+  position: relative;
+  z-index: 0;
+}
 
-  .ab_div-colour-render-text {
-    position: absolute;
-    font-weight: normal;
-    font-size: 12p;
-    z-index: 100;
-  }
+.ab_div-colour-render-text {
+  position: absolute;
+  font-weight: normal;
+  font-size: 12p;
+  z-index: 100;
+}
 
-  .ab_div-colour-render-div {
-    display: inline-block;
-    height: 100%;
-    width: 100%;
-  }
+.ab_div-colour-render-div {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
 }

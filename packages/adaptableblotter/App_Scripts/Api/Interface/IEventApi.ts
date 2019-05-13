@@ -4,6 +4,7 @@ import {
   IStateChangedEventArgs,
   IColumnStateChangedEventArgs,
   IAlertFiredEventArgs,
+  IThemeChangedEventArgs,
 } from '../../Utilities/Interface/IStateEvents';
 import { IEvent } from '../../Utilities/Interface/IEvent';
 import { EventDispatcher } from '../../Utilities/EventDispatcher';
@@ -11,6 +12,7 @@ import { EventDispatcher } from '../../Utilities/EventDispatcher';
 export interface IEventApi {
   _onSearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
   _onStateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
+  _onThemeChanged: EventDispatcher<IAdaptableBlotter, IThemeChangedEventArgs>;
   _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
   _onAlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
 
@@ -20,6 +22,12 @@ export interface IEventApi {
    * @returns IEvent<IAdaptableBlotter, ISearchChangedEventArgs>
    */
   onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
+
+  /**
+   * Event fired whenever the theme of the Blotter has been changed
+   * @returns IEvent<IAdaptableBlotter, IThemeChangedEventArgs>
+   */
+  onThemeChanged(): IEvent<IAdaptableBlotter, IThemeChangedEventArgs>;
 
   /**
    * Event fired whenever the state in the Blotter changes

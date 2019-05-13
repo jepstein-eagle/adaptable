@@ -5,8 +5,8 @@ import { GridOptions } from 'ag-grid-community';
 
 import AdaptableBlotterReact from '../../../src';
 import '../../../src/base.scss';
-import '../../../src/themes/dark.scss';
 import '../../../src/themes/light.scss';
+import '../../../src/themes/dark.scss';
 
 import { DataGenerator } from '../../../../adaptableblotter/Harness/DataGenerator';
 import { IAdaptableBlotterOptions } from '../../../../adaptableblotter/App_Scripts/types';

@@ -21,6 +21,10 @@ export interface IAlertFiredEventArgs {
   alert: IAdaptableAlert;
 }
 
+export interface IThemeChangedEventArgs {
+  themeName: string;
+}
+
 export interface IStateChangedEventArgs extends IFDC3Schema {
   data: IStateEventData[];
 }

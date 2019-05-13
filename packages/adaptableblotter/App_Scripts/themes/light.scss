@@ -1,3 +1,6 @@
+html.ab--theme-light {
+  --ab-theme-loaded: 777; // this custom variable is here to allow checking if the theme was correctly loaded by the host app
+}
 .ab--theme-light {
   /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)

@@ -171,6 +171,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private useRowNodeLookUp: boolean;
 
   private abContainerElement: HTMLElement;
+
   private gridContainerElement: HTMLElement;
 
   private gridOptions: GridOptions;
@@ -2307,6 +2308,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       blotterContainer.classList.remove(this.getBlotterDarkThemeName());
       blotterContainer.classList.remove(this.getBlotterLightThemeName());
       blotterContainer.classList.add(themeClassName);
+    }
+
+    if (document.documentElement) {
+      // also add those classes on the document element
+      document.documentElement.classList.remove(this.getBlotterDarkThemeName());
+      document.documentElement.classList.remove(this.getBlotterLightThemeName());
+      document.documentElement.classList.add(themeClassName);
     }
   }
 

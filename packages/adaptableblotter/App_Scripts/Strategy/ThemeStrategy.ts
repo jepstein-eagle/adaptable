@@ -6,6 +6,7 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
 import * as GeneralConstants from '../Utilities/Constants/GeneralConstants';
 import { StateChangedTrigger } from '../Utilities/Enums';
+import { IThemeChangedEventArgs } from '../Utilities/Interface/IStateEvents';
 
 const WARNINGS: { [key: string]: boolean } = {};
 const warnTheme = (themeName: string) => {
@@ -13,19 +14,28 @@ const warnTheme = (themeName: string) => {
     return;
   }
   WARNINGS[themeName] = true;
-  const themeFile = themeName.toLowerCase().split(' ')[0] + '.css';
-  console.warn(`Theme "${themeName}" is no longer imported automatically. Make sure you import it separately:
+  const themeFile = `${themeName.toLowerCase().split(' ')[0]}.css`;
+  setTimeout(() => {
+    if (document.documentElement) {
+      // every thing should contain this custom css variable: --ab-theme-loaded defined on the document element.
+      if (!getComputedStyle(document.documentElement).getPropertyValue('--ab-theme-loaded')) {
+        console.warn(`Theme "${themeName}" is no longer imported automatically. Make sure you import it separately:
 
     'import "adaptableblotter/themes/${themeFile}"'
 
 Also make sure to import the base styles:
 
     'import "adaptableblotter/base.css"'`);
+      }
+    }
+  }, 500);
 };
 
 export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrategy {
   private ThemeState: ThemeState;
+
   private style: HTMLStyleElement;
+
   private theme: HTMLLinkElement;
 
   constructor(blotter: IAdaptableBlotter) {
@@ -33,22 +43,18 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
 
     // Create the <style> tag for shipped themes
     this.style = document.createElement('style');
-    this.style.id =
-      blotter.blotterOptions.containerOptions.adaptableBlotterContainer +
-      '_' +
-      blotter.blotterOptions.blotterId +
-      '-theme';
+    this.style.id = `${blotter.blotterOptions.containerOptions.adaptableBlotterContainer}_${
+      blotter.blotterOptions.blotterId
+    }-theme`;
 
     this.style.appendChild(document.createTextNode('')); // WebKit hack :(
     document.head.appendChild(this.style); // Adds the <style> element to the page
 
     // Create the theme link for predefined themes
     this.theme = document.createElement('link');
-    this.theme.id =
-      blotter.blotterOptions.containerOptions.adaptableBlotterContainer +
-      '_' +
-      blotter.blotterOptions.blotterId +
-      '-link';
+    this.theme.id = `${blotter.blotterOptions.containerOptions.adaptableBlotterContainer}_${
+      blotter.blotterOptions.blotterId
+    }-link`;
     this.theme.rel = 'stylesheet';
     document.head.appendChild(this.theme);
   }
@@ -61,9 +67,21 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
     );
   }
 
+  publishThemeChanged(themeState: ThemeState) {
+    const themeName = themeState.CurrentTheme;
+
+    const themeChangedInfo: IThemeChangedEventArgs = {
+      themeName,
+    };
+    this.blotter.api.eventApi._onThemeChanged.Dispatch(this.blotter, themeChangedInfo);
+  }
+
   protected InitState() {
     if (this.ThemeState != this.blotter.api.themeApi.getThemeState()) {
       this.ThemeState = this.blotter.api.themeApi.getThemeState();
+
+      // publish the theme changed event even on initialization
+      this.publishThemeChanged(this.ThemeState);
 
       if (this.blotter.isInitialised) {
         this.publishStateChanged(StateChangedTrigger.Theme, this.ThemeState);
@@ -86,7 +104,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
           this.blotter.applyDarkTheme();
           break;
         default:
-          let shippedTheme = this.ThemeState.SystemThemes.find(
+          const shippedTheme = this.ThemeState.SystemThemes.find(
             t => t == this.ThemeState.CurrentTheme
           );
           // if its a system theme then use that..
@@ -95,7 +113,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
             // this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
           } else {
             // otherwise use the predefined one
-            let userTheme = this.ThemeState.UserThemes.find(
+            const userTheme = this.ThemeState.UserThemes.find(
               t => t.Name == this.ThemeState.CurrentTheme
             );
             if (userTheme) {
@@ -108,7 +126,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
       if (this.ThemeState.CurrentTheme == 'None') {
         // do nothing...
       } else {
-        let shippedTheme = this.ThemeState.SystemThemes.find(
+        const shippedTheme = this.ThemeState.SystemThemes.find(
           t => t == this.ThemeState.CurrentTheme
         );
         // if its a system theme then use that..
@@ -117,7 +135,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
           // this.style.innerHTML = ThemesContent.get(this.ThemeState.CurrentTheme)
         } else {
           // otherwise use the predefined one
-          let userTheme = this.ThemeState.UserThemes.find(
+          const userTheme = this.ThemeState.UserThemes.find(
             t => t.Name == this.ThemeState.CurrentTheme
           );
           if (userTheme) {
