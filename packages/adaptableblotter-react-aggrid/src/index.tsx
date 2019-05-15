@@ -86,9 +86,9 @@ const AdaptableBlotterReact = ({
     <DefiniteHeight
       key="agGridWrapper"
       style={{ flex: 1 }}
+      className={getAgGridWrapperClassName(agGridTheme)}
       childProps={{
         id: gridContainerId,
-        className: getAgGridWrapperClassName(agGridTheme),
       }}
     />
   );

@@ -51,7 +51,6 @@ export default () => <AdaptableBlotterReact
 
 - render|children: ({ grid, blotter}) => ReactNode - can specify a custom render function that is called with the rendered grid and blotter, and can be used to change the layout of the component, and render additional elements or change blotter/grid order
 - onReady(blotter) - function prop called after the blotter is instantiated and ready to use
-- agGridTheme: string - defaults to 'balham'. Can be used to give the AgGridReact wrapper element a corresponding theme className
 - onThemeChanged: (blotter, arg: IThemeChangedEventArgs)
 - onSearchChanged: (blotter, arg: ISearchChangedEventArgs)
 - onStateChanged: (blotter, arg: IStateChangedEventArgs)

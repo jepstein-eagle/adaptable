@@ -29,7 +29,7 @@ const adaptableBlotterOptions: IAdaptableBlotterOptions = {
 
 export default () => (
   <AdaptableBlotterReact
-    style={{ height: '50vh' }}
+    style={{ height: '100vh' }}
     gridOptions={gridOptions}
     blotterOptions={adaptableBlotterOptions}
   />
