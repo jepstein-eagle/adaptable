@@ -1,4 +1,4 @@
-# Adaptable Blotter React
+# Adaptable Blotter React ag-Grid
 
 Repository for the Adaptable Blotter React ag-Grid Wrapper.
 
