@@ -62,8 +62,8 @@ The Adaptable Blotter is a commercial product and requires a purchased licence f
 There are 3 licence types available (all sold on an annual basis):
 
 - _Community_ - free for charities, students in full time education and open-source projects. Offers full range of functionality but state cannot be saved.
-- _Standard_ - full functionality of the Adaptable Blotter other than Enteprise modules like Charting (which can be created by not saved).
-- _Enterprise_ - full access to all functionality and modules in the Adaptable Blotter.
+- _Standard_ - offers full functionality of the Adaptable Blotter but state for Enteprise modules like Charting cannot be saved.
+- _Enterprise_ - provides full access to all functionality and modules in the Adaptable Blotter and all state is saved.
 
 The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support.
 
