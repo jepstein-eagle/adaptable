@@ -9,7 +9,7 @@ This allows you to install, instantiate and reference the Adaptable Blotter in a
 To install Adaptable Blotter React via npm, run:
 
 ```javascript
-npm install adaptableblotter-react
+npm install adaptableblotter-react-aggrid
 ```
 
 ## Usage
