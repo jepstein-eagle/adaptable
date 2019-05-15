@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect, ReactNode, useMemo } from 'react';
-import { AgGridReact } from 'ag-grid-react';
 import { GridOptions, GridApi, ColumnApi, GridReadyEvent } from 'ag-grid-community';
 
 import { IAdaptableBlotterOptions } from '../../adaptableblotter/types';
@@ -19,6 +18,7 @@ import useEventListener from './useEventListener';
 import { IEventApi } from '../../adaptableblotter/App_Scripts/Api/Interface/IEventApi';
 
 export {
+  IAdaptableBlotterOptions,
   ISearchChangedEventArgs,
   IThemeChangedEventArgs,
   IStateChangedEventArgs,

@@ -6,7 +6,11 @@
   "main": "./adaptableblotter-react-aggrid/src/index.js",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/JonnyAdaptableTools/adaptableblotter.git",
+    "directory": "packages/adaptableblotter-react-aggrid"
+  },
+  "bugs": {
+    "url": "https://github.com/JonnyAdaptableTools/adaptableblotter/issues"
   },
   "license": "MIT",
   "engines": {
@@ -115,8 +119,7 @@
     "react": "=>16.0.0",
     "react-dom": ">=16.0.0",
     "ag-grid-community": ">=20.2.0",
-    "ag-grid-enterprise": ">=20.2.0",
-    "ag-grid-react": ">=20.2.0"
+    "ag-grid-enterprise": ">=20.2.0"
   },
   "scripts": {
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\" --fix",
