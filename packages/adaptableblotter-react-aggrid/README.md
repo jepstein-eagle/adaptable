@@ -19,7 +19,7 @@ npm install adaptableblotter-react-aggrid
 import AdaptableBlotterReact from 'adaptableblotter-react-aggrid';
 
 import 'adaptableblotter-react-aggrid/base.css';
-import 'adaptableblotter/themes/light.css'
+import 'adaptableblotter-react-aggrid/themes/light.css'
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
