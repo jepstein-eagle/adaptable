@@ -302,7 +302,7 @@ export class ListBoxFilterForm extends React.Component<
       return (
         <DropdownButton
           disabled={availableColumns.length == 0}
-          style={{ minWidth: '150px' }}
+          style={columnOperandStyle}
           className={this.props.cssClassName}
           bsSize={'small'}
           bsStyle={'default'}
@@ -352,7 +352,7 @@ export class ListBoxFilterForm extends React.Component<
       return (
         <DropdownButton
           disabled={availableColumns.length == 0}
-          style={{ minWidth: '150px' }}
+          style={columnOperandStyle}
           className={this.props.cssClassName}
           bsSize={'small'}
           bsStyle={'default'}
@@ -528,12 +528,17 @@ let columnValueItemStyle = {
 let rangeOperatorStyle = {
   marginTop: '0px',
   marginLeft: '15px',
-  width: '222px',
+  width: '200px',
 };
 let rangeOperandStyle = {
   marginTop: '0px',
   marginLeft: '0px',
-  width: '150px',
+  width: '130px',
+};
+let columnOperandStyle = {
+  marginTop: '0px',
+  marginLeft: '0px',
+  width: '128px',
 };
 
 let rangeTypeStyle = {
@@ -544,7 +549,7 @@ let rangeTypeStyle = {
 let searchFilterStyle = {
   marginTop: '0px',
   marginLeft: '0px',
-  width: '222px',
+  width: '203px',
 };
 
 let separatorStyle = {

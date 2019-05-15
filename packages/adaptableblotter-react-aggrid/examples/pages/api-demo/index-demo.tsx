@@ -35,7 +35,7 @@ const adaptableBlotterOptions: IAdaptableBlotterOptions = {
 
 function listenToSearchChange(searchChangedArgs: ISearchChangedEventArgs) {
   console.log('search changed event received');
-  console.log(searchChangedArgs.data);
+  console.log(searchChangedArgs.data[0].id);
 }
 
 export default () => {

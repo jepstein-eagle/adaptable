@@ -68,6 +68,11 @@ export class LicenceService implements ILicenceService {
     ) {
       return this.isEmptyArray();
     }
+
+    if (todayDate.charAt(6) != 's') {
+      return this.isEmptyArray();
+    }
+
     let infiniteDouble = todayDate.replace(/\D/g, '');
     if (!this.CreateNewDateArray(infiniteDouble, 3)) {
       return this.isEmptyArray();
@@ -104,6 +109,9 @@ export class LicenceService implements ILicenceService {
         isPrimeNumber
       );
     }
+    if (initialExpiryDate.charAt(5) != 'j') {
+      return this.isEmptyArray();
+    }
     let isAlternativeDate = initialExpiryDate.length == 7;
     if (isAlternativeDate == true) {
       LoggingHelper.LogAdaptableBlotterWarning('This licence is not valid for the Demo Site');
@@ -117,6 +125,10 @@ export class LicenceService implements ILicenceService {
         latestDate,
         isPrimeNumber
       );
+    }
+    let roundedUpNumber = Number(infiniteDouble);
+    if (isNaN(roundedUpNumber)) {
+      return this.isEmptyArray();
     }
     let enterpriseIdNumber = Number(emptyDate);
     if (isNaN(enterpriseIdNumber)) {
