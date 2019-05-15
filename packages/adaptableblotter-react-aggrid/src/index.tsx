@@ -1,30 +1,23 @@
-import React, { useRef, useState, useEffect, ReactNode, useMemo } from 'react';
-import { GridOptions, GridApi, ColumnApi, GridReadyEvent } from 'ag-grid-community';
-
-import { IAdaptableBlotterOptions } from '../../adaptableblotter/types';
+import React, { useState, useEffect, ReactNode, useMemo } from 'react';
+import { GridOptions } from 'ag-grid-community';
 
 import { AdaptableBlotterApp } from '../../adaptableblotter/App_Scripts/View/AdaptableBlotterView';
 import AdaptableBlotter from '../../adaptableblotter/App_Scripts/agGrid';
+
 import DefiniteHeight from './DefiniteHeight';
+
 import {
-  ISearchChangedEventArgs,
-  IThemeChangedEventArgs,
-  IStateChangedEventArgs,
-  IColumnStateChangedEventArgs,
-  IAlertFiredEventArgs,
-} from '../../adaptableblotter/App_Scripts/Utilities/Interface/IStateEvents';
-
-import useEventListener from './useEventListener';
-import { IEventApi } from '../../adaptableblotter/App_Scripts/Api/Interface/IEventApi';
-
-export {
   IAdaptableBlotterOptions,
   ISearchChangedEventArgs,
   IThemeChangedEventArgs,
   IStateChangedEventArgs,
   IColumnStateChangedEventArgs,
   IAlertFiredEventArgs,
-};
+} from '../../adaptableblotter/types';
+
+import useEventListener from './useEventListener';
+
+export * from '../../adaptableblotter/types';
 
 type TypeFactory =
   | string
