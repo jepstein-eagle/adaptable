@@ -1,5 +1,5 @@
-import { IPageService } from 'ipushpull-js/dist/Page/Page';
-import ipushpull, { ICreate } from 'ipushpull-js';
+// import { IPageService } from 'ipushpull-js/dist/Page/Page';
+// import ipushpull, { ICreate } from 'ipushpull-js';
 import { IPPDomain } from '../Interface/Reports/IPPDomain';
 import { IPPStyle } from '../Interface/Reports/IPPStyle';
 import { LoggingHelper } from './LoggingHelper';
@@ -12,24 +12,25 @@ export enum ServiceStatus {
 }
 
 var IPPStatus: ServiceStatus = ServiceStatus.Unknown;
-let ipp: ICreate;
+let ipp: any;
 const pages: Map<string, any> = new Map();
 
 // creates the iPushPullApp object using blotterOptions ippconfig
 export function init(iPPConfig?: any): void {
-  if (ipp == null) {
-    if (iPPConfig != null) {
-      ipp = new ipushpull.Create(iPPConfig);
-      if (ipp == undefined) {
-        LoggingHelper.LogAdaptableBlotterWarning('Could not instantiate iPushPull');
-      }
-    }
-  }
+  // if (ipp == null) {
+  //   if (iPPConfig != null) {
+  //     ipp = new ipushpull.Create(iPPConfig);
+  //     if (ipp == undefined) {
+  //       LoggingHelper.LogAdaptableBlotterWarning('Could not instantiate iPushPull');
+  //     }
+  //   }
+  // }
 }
 
 // checks if we have loaded iPushPullproperly
 export function isIPushPullLoaded() {
-  return ipp != null; // remove this if we want to go back to old version
+  // return ipp != null; // remove this if we want to go back to old version
+  return false;
 }
 
 // Logs in to iPushpull
@@ -71,16 +72,16 @@ export function GetDomainPages(clientId: string): Promise<IPPDomain[]> {
 export function LoadPage(folderIPP: string, pageIPP: string): Promise<any> {
   const myIpp: any = ipp;
   return new Promise<any>((resolve: any, reject: any) => {
-    const page: IPageService = new myIpp.Page(pageIPP, folderIPP);
-
-    page.on(page.EVENT_NEW_CONTENT, (data: any) => {
-      LoggingHelper.LogAdaptableBlotterInfo(`Page Ready : ${pageIPP}`);
-      pages.set(pageIPP, page);
-      resolve(page);
-      // we return true so it removes the listener for new content.
-      // IPP should add that line to their wiki
-      return true;
-    });
+    reject('not implemented');
+    // const page: IPageService = new myIpp.Page(pageIPP, folderIPP);
+    // page.on(page.EVENT_NEW_CONTENT, (data: any) => {
+    //   LoggingHelper.LogAdaptableBlotterInfo(`Page Ready : ${pageIPP}`);
+    //   pages.set(pageIPP, page);
+    //   resolve(page);
+    //   // we return true so it removes the listener for new content.
+    //   // IPP should add that line to their wiki
+    //   return true;
+    // });
   });
 }
 
