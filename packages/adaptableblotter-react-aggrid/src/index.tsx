@@ -26,11 +26,11 @@ export {
   IAlertFiredEventArgs,
 };
 
-type TypeAgGridApiParams = { api: GridApi; columnApi: ColumnApi; type: string };
 type TypeFactory =
   | string
   | typeof React.Component
   | (({ children }: { children: ReactNode }) => ReactNode);
+
 type TypeChildren = ({ blotter, grid }: { blotter: ReactNode; grid: ReactNode }) => ReactNode;
 
 const join = (...args: any[]): string => args.filter(x => !!x).join(' ');
@@ -49,7 +49,6 @@ const AdaptableBlotterReact = ({
   gridOptions,
   tagName,
   agGridTheme,
-  renderGrid,
   render,
   onReady,
   onSearchChanged,
@@ -61,7 +60,6 @@ const AdaptableBlotterReact = ({
 }: {
   onReady?: (ab: AdaptableBlotter) => void;
   agGridTheme?: string;
-  renderGrid?: (gridOptions: GridOptions) => typeof AgGridReact;
   blotterOptions: IAdaptableBlotterOptions;
   gridOptions: GridOptions;
   onSearchChanged?: (blotter: AdaptableBlotter, args: ISearchChangedEventArgs) => void;
@@ -75,44 +73,10 @@ const AdaptableBlotterReact = ({
   const blotterContainerId = `blotter-${seedId}`;
   const gridContainerId = `grid-${seedId}`;
 
-  const [blotter, setBlotter] = useState<AdaptableBlotter | null>(null);
+  let [blotter, setBlotter] = useState<AdaptableBlotter | null>(null);
+
   const TagName = tagName || 'div';
   agGridTheme = agGridTheme || 'balham';
-
-  const agGridApiRef = useRef<{ agGridApi: GridApi | null; agGridColumnApi: ColumnApi | null }>({
-    agGridApi: null,
-    agGridColumnApi: null,
-  });
-
-  const onGridReady = (params: TypeAgGridApiParams) => {
-    agGridApiRef.current = { agGridApi: params.api, agGridColumnApi: params.columnApi };
-
-    const blotterInstance = new AdaptableBlotter(
-      {
-        ...blotterOptions,
-        containerOptions: {
-          ...blotterOptions.containerOptions,
-          adaptableBlotterContainer: blotterContainerId,
-          vendorContainer: gridContainerId,
-        },
-        vendorGrid: { ...gridOptions, api: params.api, columnApi: params.columnApi },
-      },
-      false
-    );
-
-    setBlotter(blotterInstance);
-
-    if (onReady) {
-      onReady(blotterInstance);
-    }
-
-    if (gridOptions.onGridReady) {
-      gridOptions.onGridReady(params);
-    }
-  };
-
-  const agGridOptions = { ...gridOptions, onGridReady };
-  const agGrid = renderGrid ? renderGrid(agGridOptions) : <AgGridReact {...agGridOptions} />;
 
   const blotterNode = blotter ? (
     <AdaptableBlotterApp key="blotter" AdaptableBlotter={blotter} />
@@ -125,11 +89,8 @@ const AdaptableBlotterReact = ({
       childProps={{
         id: gridContainerId,
         className: getAgGridWrapperClassName(agGridTheme),
-        style: { visibility: blotter ? 'visible' : 'hidden' },
       }}
-    >
-      {agGrid}
-    </DefiniteHeight>
+    />
   );
 
   let children: ReactNode | ReactNode[] = [blotterNode, gridWrapperNode];
@@ -142,6 +103,22 @@ const AdaptableBlotterReact = ({
       grid: gridWrapperNode,
     });
   }
+
+  useEffect(() => {
+    const blotterInstance = new AdaptableBlotter(
+      {
+        ...blotterOptions,
+        containerOptions: {
+          ...blotterOptions.containerOptions,
+          adaptableBlotterContainer: blotterContainerId,
+          vendorContainer: gridContainerId,
+        },
+        vendorGrid: gridOptions,
+      },
+      false
+    );
+    setBlotter(blotterInstance);
+  }, []);
 
   useEventListener(onSearchChanged, blotter, (eventApi: IEventApi) => eventApi.onSearchedChanged());
   useEventListener(onThemeChanged, blotter, (eventApi: IEventApi) => eventApi.onThemeChanged());
