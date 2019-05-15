@@ -1,12 +1,12 @@
 # Adaptable Blotter React
 
-Repository for the Adaptable Blotter React Wrapper.
+Repository for the Adaptable Blotter React ag-Grid Wrapper.
 
-This allows you to install, instantiate and reference the Adaptable Blotter in a "React-friendly" manner.
+This allows you to install, instantiate and reference the Adaptable Blotter using ag-Grid in a "React-friendly" manner.
 
 ## Installation
 
-To install Adaptable Blotter React via npm, run:
+To install Adaptable Blotter React ag-Grid via npm, run:
 
 ```javascript
 npm install adaptableblotter-react-aggrid
@@ -27,8 +27,7 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 const adaptableBlotterOptions: IAdaptableBlotterOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
-  blotterId: 'basic demo',
-  licenceKey: process.env.ENTERPRISE_LICENSE
+  blotterId: 'react demo',
 };
 
 export default () => <AdaptableBlotterReact
@@ -44,7 +43,7 @@ export default () => <AdaptableBlotterReact
 
 #### Mandatory:
 
-- gridOptions: AgGrid GridOptions object
+- gridOptions: ag-Grid GridOptions object
 - blotterOptions: IAdaptableBlotterOptions object
 
 #### Optional
