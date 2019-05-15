@@ -7,6 +7,7 @@ import AdaptableBlotter from '../../adaptableblotter/App_Scripts/agGrid';
 import DefiniteHeight from './DefiniteHeight';
 
 import {
+  IEventApi,
   IAdaptableBlotterOptions,
   ISearchChangedEventArgs,
   IThemeChangedEventArgs,
