@@ -1,4 +1,6 @@
-import React, { useState, useEffect, ReactNode, useMemo } from 'react';
+import * as React from 'react';
+import { useState, useEffect, ReactNode, useMemo } from 'react';
+
 import { GridOptions } from 'ag-grid-community';
 
 import { AdaptableBlotterApp } from '../../adaptableblotter/App_Scripts/View/AdaptableBlotterView';
