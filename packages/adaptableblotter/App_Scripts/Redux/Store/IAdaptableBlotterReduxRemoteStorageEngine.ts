@@ -1,5 +1,5 @@
-import * as fetch from 'isomorphic-fetch';
-import * as lodash from 'lodash';
+import fetch from 'isomorphic-fetch';
+import { debounce } from 'lodash';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import IStorageEngine from './Interface/IStorageEngine';
 
@@ -20,11 +20,11 @@ class AdaptableBlotterRemoteStorageEngine implements IStorageEngine {
     this.url = url;
     this.userName = userName;
     this.blotterId = blotterId;
-    this.save = lodash.debounce(this.save, DEBOUNCE_DELAY);
+    this.save = debounce(this.save, DEBOUNCE_DELAY);
   }
 
   load(): Promise<any> {
-    let loadOptions = {
+    const loadOptions = {
       headers: {
         ab_username: this.userName,
         ab_id: this.blotterId,
@@ -37,7 +37,7 @@ class AdaptableBlotterRemoteStorageEngine implements IStorageEngine {
   }
 
   save(state: any): Promise<any> {
-    let saveOptions = {
+    const saveOptions = {
       method: 'POST',
       body: JSON.stringify(state),
       headers: {
@@ -51,8 +51,8 @@ class AdaptableBlotterRemoteStorageEngine implements IStorageEngine {
     return fetch(this.url, saveOptions)
       .then(checkStatus)
       .catch(error => {
-        LoggingHelper.LogAdaptableBlotterError('Cannot Save Config: ' + error.message);
-        return Promise.reject('Cannot save config:' + error.message);
+        LoggingHelper.LogAdaptableBlotterError(`Cannot Save Config: ${error.message}`);
+        return Promise.reject(`Cannot save config:${error.message}`);
       });
   }
 }

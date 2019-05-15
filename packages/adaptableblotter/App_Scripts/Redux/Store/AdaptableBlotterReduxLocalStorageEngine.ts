@@ -1,4 +1,4 @@
-import * as fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch';
 import { MergeStateFunctionChooser } from './AdaptableBlotterReduxMerger';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
@@ -28,9 +28,9 @@ class AdaptableBlotterReduxLocalStorageEngine implements IStorageEngine {
 
   load(): Promise<any> {
     const jsonState = localStorage.getItem(this.key);
-    let parsedJsonState = JSON.parse(jsonState) || {};
+    const parsedJsonState = JSON.parse(jsonState) || {};
     if (
-      typeof this.predefinedConfig == 'string' &&
+      typeof this.predefinedConfig === 'string' &&
       StringExtensions.IsNotNullOrEmpty(this.predefinedConfig)
     ) {
       // we have config in a file so lets merge it with the other state
@@ -41,20 +41,21 @@ class AdaptableBlotterReduxLocalStorageEngine implements IStorageEngine {
           MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceInfo)
         )
         .catch(err => LoggingHelper.LogAdaptableBlotterError(err));
-    } else if (this.predefinedConfig != null) {
+    }
+    if (this.predefinedConfig != null) {
       // we have config as an object so need to merge that
       return Promise.resolve(this.predefinedConfig)
         .then(parsedPredefinedState =>
           MergeStateFunctionChooser(parsedPredefinedState, parsedJsonState, this.licenceInfo)
         )
         .catch(err => LoggingHelper.LogAdaptableBlotterError(err));
-    } else {
-      // no predefined config so nothing to merge
-      return new Promise(resolve => {
-        resolve(parsedJsonState || {});
-      }).catch(rejectWithMessage);
     }
+    // no predefined config so nothing to merge
+    return new Promise(resolve => {
+      resolve(parsedJsonState || {});
+    }).catch(rejectWithMessage);
   }
+
   save(state: any): Promise<any> {
     return new Promise(resolve => {
       localStorage.setItem(this.key, JSON.stringify(state));
