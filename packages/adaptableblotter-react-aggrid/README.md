@@ -1,12 +1,12 @@
-# Adaptable Blotter React
+# Adaptable Blotter React ag-Grid
 
-Repository for the Adaptable Blotter React Wrapper.
+Repository for the Adaptable Blotter React ag-Grid Wrapper.
 
-This allows you to install, instantiate and reference the Adaptable Blotter in a "React-friendly" manner.
+This allows you to install, instantiate and reference the Adaptable Blotter using ag-Grid in a "React-friendly" manner.
 
 ## Installation
 
-To install Adaptable Blotter React via npm, run:
+To install Adaptable Blotter React ag-Grid via npm, run:
 
 ```javascript
 npm install adaptableblotter-react-aggrid
@@ -27,8 +27,7 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 const adaptableBlotterOptions: IAdaptableBlotterOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
-  blotterId: 'basic demo',
-  licenceKey: process.env.ENTERPRISE_LICENSE
+  blotterId: 'react demo',
 };
 
 export default () => <AdaptableBlotterReact
@@ -44,7 +43,7 @@ export default () => <AdaptableBlotterReact
 
 #### Mandatory:
 
-- gridOptions: AgGrid GridOptions object
+- gridOptions: ag-Grid GridOptions object
 - blotterOptions: IAdaptableBlotterOptions object
 
 #### Optional
@@ -63,8 +62,8 @@ The Adaptable Blotter is a commercial product and requires a purchased licence f
 There are 3 licence types available (all sold on an annual basis):
 
 - _Community_ - free for charities, students in full time education and open-source projects. Offers full range of functionality but state cannot be saved.
-- _Standard_ - full functionality of the Adaptable Blotter other than Enteprise modules like Charting (which can be created by not saved).
-- _Enterprise_ - full access to all functionality and modules in the Adaptable Blotter.
+- _Standard_ - offers full functionality of the Adaptable Blotter but state for Enteprise modules like Charting cannot be saved.
+- _Enterprise_ - provides full access to all functionality and modules in the Adaptable Blotter and all state is saved.
 
 The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlotter.JS versions, and offers regular updates and full support.
 
