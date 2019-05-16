@@ -16,6 +16,9 @@ function buildGlobalPackageJSON() {
     packageJSON.dependencies = packageJSON.dependencies || {};
 
     Object.assign(packageJSON.dependencies, abPackageJSON.dependencies || {});
+    delete packageJSON.dependencies.react;
+    delete packageJSON.dependencies['react-dom'];
+
     const content = JSON.stringify(packageJSON, null, 2);
     const path = resolve(process.cwd(), './dist', 'package.json');
     fs.writeFile(path, content, 'utf8', err => {

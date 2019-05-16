@@ -52,11 +52,6 @@
     },
     "collectCoverage": true
   },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
   "devDependencies": {
     "@babel/runtime-corejs2": "^7.4.4",
     "@commitlint/cli": "^7.0.0",
