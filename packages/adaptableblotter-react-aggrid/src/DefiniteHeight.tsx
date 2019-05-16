@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import RO from 'resize-observer-polyfill';
 
-const ResizeObserver = global.ResizeObserver || RO;
+const ResizeObserver = window.ResizeObserver || RO;
 /**
  * This is a component that renders an absolute child
  * and sizes the absolute child to have fixed height - the height
@@ -26,7 +26,7 @@ const DefiniteHeight = ({
       return;
     }
 
-    const ro = new ResizeObserver(entries => {
+    const ro = new ResizeObserver((entries: any[]) => {
       const entry = entries[0];
       if (!entry) {
         return;
