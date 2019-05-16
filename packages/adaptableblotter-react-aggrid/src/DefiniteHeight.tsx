@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
+import RO from 'resize-observer-polyfill';
 
+const ResizeObserver = global.ResizeObserver || RO;
 /**
  * This is a component that renders an absolute child
  * and sizes the absolute child to have fixed height - the height
