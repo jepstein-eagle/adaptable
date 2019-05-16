@@ -9,6 +9,7 @@ const packageJSON = require(sourcePackagePath);
 const abPackageJSON = require(abBlotterPackagePath);
 
 function buildGlobalPackageJSON() {
+  console.log('Preparing package');
   return new Promise((res, reject) => {
     const toDelete = ['devDependencies', 'scripts', 'private'];
     toDelete.forEach(key => delete packageJSON[key]);
