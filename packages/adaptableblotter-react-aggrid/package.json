@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter-react-aggrid",
-  "version": "3.4.0-canary.2",
+  "version": "3.4.0",
   "description": "",
   "keywords": [],
   "main": "./adaptableblotter-react-aggrid/src/index.js",
