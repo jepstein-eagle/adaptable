@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter-react-aggrid",
-  "version": "3.4.2-canary.0",
+  "version": "3.4.2",
   "description": "",
   "keywords": [],
   "main": "./adaptableblotter-react-aggrid/src/index.js",
@@ -109,7 +109,7 @@
   "scripts": {
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\" --fix",
     "release": "npm run release:patch",
-    "prerelease": "npm run build && release pre && npm run registry-publish",
+    "canaryrelease": "npm run build && release pre && npm run registry-publish",
     "release:patch": "npm run build && release patch && npm run registry-publish",
     "release:minor": "npm run build && release minor && npm run registry-publish",
     "release:major": "npm run build && release major && npm run registry-publish",
