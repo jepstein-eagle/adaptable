@@ -113,7 +113,7 @@
     "release:patch": "npm run build && release patch && npm run registry-publish",
     "release:minor": "npm run build && release minor && npm run registry-publish",
     "release:major": "npm run build && release major && npm run registry-publish",
-    "registry-publish": "cp package.json dist && npm publish dist",
+    "registry-publish": "npm publish dist",
     "build": "rimraf dist && npm run tsc && npm run sass && npm run copy-assets && npm run build-package-json",
     "build-package-json": "node ./scripts/buildPackageJson",
     "tsc": "tsc --outDir dist",
