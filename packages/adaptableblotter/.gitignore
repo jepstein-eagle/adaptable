@@ -254,5 +254,4 @@ ModelManifest.xml
 /npm-debug.log.*
 /tmp/TeamSharing/**/*.*
 
-.npmrc
 *.tgz
