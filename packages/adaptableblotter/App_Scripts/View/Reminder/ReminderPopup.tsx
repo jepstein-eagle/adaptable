@@ -67,7 +67,7 @@ class ReminderPopupComponent extends React.Component<
           UserFilters={this.props.UserFilters}
           Columns={this.props.Columns}
           onEdit={() => this.onEdit(index, reminder as IReminder)}
-          onDeleteConfirm={ReminderRedux.ReminderDelete(index)}
+          onDeleteConfirm={ReminderRedux.ReminderDelete(index, reminder)}
         />
       );
     });

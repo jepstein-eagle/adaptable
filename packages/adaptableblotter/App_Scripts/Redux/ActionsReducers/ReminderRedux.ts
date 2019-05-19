@@ -3,9 +3,9 @@ import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { IReminder } from '../../Utilities/Interface/BlotterObjects/IReminder';
 
-export const Reminder_ADD = 'Reminder_ADD';
-export const Reminder_EDIT = 'Reminder_EDIT';
-export const Reminder_DELETE = 'Reminder_DELETE';
+export const REMINDER_ADD = 'REMINDER_ADD';
+export const REMINDER_EDIT = 'REMINDER_EDIT';
+export const REMINDER_DELETE = 'REMINDER_DELETE';
 
 export interface ReminderAddAction extends Redux.Action {
   Reminder: IReminder;
@@ -18,21 +18,23 @@ export interface ReminderEditAction extends Redux.Action {
 
 export interface ReminderDeleteAction extends Redux.Action {
   index: number;
+  Reminder: IReminder;
 }
 
 export const ReminderAdd = (Reminder: IReminder): ReminderAddAction => ({
-  type: Reminder_ADD,
+  type: REMINDER_ADD,
   Reminder,
 });
 
 export const ReminderEdit = (index: number, Reminder: IReminder): ReminderEditAction => ({
-  type: Reminder_EDIT,
+  type: REMINDER_EDIT,
   index,
   Reminder,
 });
-export const ReminderDelete = (index: number): ReminderDeleteAction => ({
-  type: Reminder_DELETE,
+export const ReminderDelete = (index: number, Reminder: IReminder): ReminderDeleteAction => ({
+  type: REMINDER_DELETE,
   index,
+  Reminder,
 });
 
 const initialReminderState: ReminderState = {
@@ -46,18 +48,18 @@ export const ReminderReducer: Redux.Reducer<ReminderState> = (
   let Reminders: IReminder[];
 
   switch (action.type) {
-    case Reminder_ADD:
+    case REMINDER_ADD:
       Reminders = [].concat(state.Reminders);
       Reminders.push((<ReminderAddAction>action).Reminder);
       return Object.assign({}, state, { Reminders: Reminders });
 
-    case Reminder_EDIT: {
+    case REMINDER_EDIT: {
       Reminders = [].concat(state.Reminders);
       let actionTyped = <ReminderEditAction>action;
       Reminders[actionTyped.index] = (<ReminderAddAction>action).Reminder;
       return Object.assign({}, state, { Reminders: Reminders });
     }
-    case Reminder_DELETE:
+    case REMINDER_DELETE:
       Reminders = [].concat(state.Reminders);
       Reminders.splice((<ReminderDeleteAction>action).index, 1);
       return Object.assign({}, state, { Reminders: Reminders });

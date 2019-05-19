@@ -49,7 +49,6 @@ const AdaptableBlotterReact = ({
   onReady,
   onSearchChanged,
   onThemeChanged,
-  onStateChanged,
   onColumnStateChanged,
   onAlertFired,
   ...props
@@ -60,7 +59,6 @@ const AdaptableBlotterReact = ({
   gridOptions: GridOptions;
   onSearchChanged?: (blotter: AdaptableBlotter, args: ISearchChangedEventArgs) => void;
   onThemeChanged?: (blotter: AdaptableBlotter, args: IThemeChangedEventArgs) => void;
-  onStateChanged?: (blotter: AdaptableBlotter, args: IStateChangedEventArgs) => void;
   onColumnStateChanged?: (blotter: AdaptableBlotter, args: IColumnStateChangedEventArgs) => void;
   onAlertFired?: (blotter: AdaptableBlotter, args: IAlertFiredEventArgs) => void;
   tagName?: TypeFactory;
@@ -121,7 +119,6 @@ const AdaptableBlotterReact = ({
   useEventListener(onColumnStateChanged, blotter, (eventApi: IEventApi) =>
     eventApi.onColumnStateChanged()
   );
-  useEventListener(onStateChanged, blotter, (eventApi: IEventApi) => eventApi.onStateChanged());
   useEventListener(onAlertFired, blotter, (eventApi: IEventApi) => eventApi.onAlertFired());
 
   return (

@@ -22,21 +22,11 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 import { IShortcut } from '../../Utilities/Interface/BlotterObjects/IShortcut';
+import Helper from '../../Utilities/Helpers/Helper';
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {
   onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction;
-  onChangeKeyShortcut: (
-    shortcut: IShortcut,
-    NewShortcutKey: string
-  ) => ShortcutRedux.ShortcutChangeKeyAction;
-  onChangeOperationShortcut: (
-    shortcut: IShortcut,
-    NewShortcutOperation: MathOperation
-  ) => ShortcutRedux.ShortcutChangeOperationAction;
-  onChangeResultShortcut: (
-    shortcut: IShortcut,
-    NewShortcutResult: any
-  ) => ShortcutRedux.ShortcutChangeResultAction;
+  onEditShortcut: (index: number, shortcut: IShortcut) => ShortcutRedux.ShortcutEditAction;
   Shortcuts: Array<IShortcut>;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
@@ -92,14 +82,12 @@ class ShortcutPopupComponent extends React.Component<
           AvailableKeys={this.getAvailableKeys(shortcut)}
           onShare={() => this.props.onShare(shortcut)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          onDeleteConfirm={ShortcutRedux.ShortcutDelete(shortcut)}
-          onChangeKey={(shortcut, newKey) => this.props.onChangeKeyShortcut(shortcut, newKey)}
+          onDeleteConfirm={ShortcutRedux.ShortcutDelete(index, shortcut)}
+          onChangeKey={(shortcut, newKey) => this.onChangeKeyShortcut(shortcut, newKey)}
           onChangeOperation={(shortcut, newOperation) =>
-            this.props.onChangeOperationShortcut(shortcut, newOperation)
+            this.onChangeOperationShortcut(shortcut, newOperation)
           }
-          onChangeResult={(shortcut, newResult) =>
-            this.props.onChangeResultShortcut(shortcut, newResult)
-          }
+          onChangeResult={(shortcut, newResult) => this.onChangeResultShortcut(shortcut, newResult)}
         />
       );
     });
@@ -195,6 +183,25 @@ class ShortcutPopupComponent extends React.Component<
     );
   }
 
+  onChangeKeyShortcut(shortcut: IShortcut, newKey: string): void {
+    let currentIndex: number = this.props.Shortcuts.findIndex(s => s == shortcut);
+    let clonedShortcut: IShortcut = Helper.cloneObject(shortcut);
+    clonedShortcut.ShortcutKey = newKey;
+    this.props.onEditShortcut(currentIndex, clonedShortcut);
+  }
+  onChangeOperationShortcut(shortcut: IShortcut, newMathOperation: MathOperation): void {
+    let currentIndex: number = this.props.Shortcuts.findIndex(s => s == shortcut);
+    let clonedShortcut: IShortcut = Helper.cloneObject(shortcut);
+    clonedShortcut.ShortcutOperation = newMathOperation;
+    this.props.onEditShortcut(currentIndex, clonedShortcut);
+  }
+  onChangeResultShortcut(shortcut: IShortcut, newResult: any): void {
+    let currentIndex: number = this.props.Shortcuts.findIndex(s => s == shortcut);
+    let clonedShortcut: IShortcut = Helper.cloneObject(shortcut);
+    clonedShortcut.ShortcutResult = newResult;
+    this.props.onEditShortcut(currentIndex, clonedShortcut);
+  }
+
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
@@ -262,12 +269,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.ShortcutAdd(shortcut)),
-    onChangeKeyShortcut: (shortcut: IShortcut, NewShortcutKey: string) =>
-      dispatch(ShortcutRedux.ShortcutChangeKey(shortcut, NewShortcutKey)),
-    onChangeOperationShortcut: (shortcut: IShortcut, NewshortcutOperation: MathOperation) =>
-      dispatch(ShortcutRedux.ShortcutChangeOperation(shortcut, NewshortcutOperation)),
-    onChangeResultShortcut: (shortcut: IShortcut, NewShortcutResult: any) =>
-      dispatch(ShortcutRedux.ShortcutChangeResult(shortcut, NewShortcutResult)),
+    onEditShortcut: (index: number, shortcut: IShortcut) =>
+      dispatch(ShortcutRedux.ShortcutEdit(index, shortcut)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ShortcutStrategyId)),
   };

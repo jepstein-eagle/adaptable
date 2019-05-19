@@ -154,9 +154,6 @@ function InitBlotter() {
   };
 
   adaptableblotter = new adaptableblotterhypergrid.AdaptableBlotter(adaptableBlotterOptions);
-  adaptableblotter.api.eventApi
-    .onStateChanged()
-    .Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs));
 
   //  adaptableblotter.api.eventApi.onSearchedChanged().Subscribe((blotter, searchArgs) => getTradesForSearch(searchArgs, dataGen))
   //  vendorGrid.addProperties(lightTheme);

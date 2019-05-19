@@ -79,6 +79,9 @@ import {
   CURRENT_CALENDAR,
   SUMMARY_OPERATION,
   CURRENT_LAYOUT,
+  QUICK_SEARCH_TEXT,
+  QUICK_SEARCH_DISPLAY_ACTION,
+  QUICK_SEARCH_STYLE,
 } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
@@ -1058,7 +1061,6 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             return ret;
           }
           /* 
-/* 
           **********************
           PERCENT BAR
           **********************
@@ -1102,9 +1104,148 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
+          /* 
+          **********************
+          QUICK SEARCH
+          **********************
+           */
+          case QuickSearchRedux.QUICK_SEARCH_APPLY: {
+            let actionTyped = <QuickSearchRedux.QuickSearchApplyAction>action;
+            let changedDetails: IStatePropertyChangedDetails = {
+              name: StrategyConstants.QuickSearchStrategyId,
+              actionType: action.type,
+              state: newState.QuickSearch,
+              diffInfo: diff,
+              propertyName: QUICK_SEARCH_TEXT,
+              oldValue: oldState.QuickSearch.QuickSearchText,
+              newValue: actionTyped.quickSearchText,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY: {
+            let actionTyped = <QuickSearchRedux.QuickSearchSetDisplayAction>action;
+            let changedDetails: IStatePropertyChangedDetails = {
+              name: StrategyConstants.QuickSearchStrategyId,
+              actionType: action.type,
+              state: newState.QuickSearch,
+              diffInfo: diff,
+              propertyName: QUICK_SEARCH_DISPLAY_ACTION,
+              oldValue: oldState.QuickSearch.DisplayAction,
+              newValue: actionTyped.DisplayAction,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case QuickSearchRedux.QUICK_SEARCH_SET_STYLE: {
+            let actionTyped = <QuickSearchRedux.QuickSearchSetStyleAction>action;
+            let changedDetails: IStatePropertyChangedDetails = {
+              name: StrategyConstants.QuickSearchStrategyId,
+              actionType: action.type,
+              state: newState.QuickSearch,
+              diffInfo: diff,
+              propertyName: QUICK_SEARCH_STYLE,
+              oldValue: adaptableBlotter.AuditLogService.convertAuditMessageToText(
+                oldState.QuickSearch.Style
+              ),
+              newValue: adaptableBlotter.AuditLogService.convertAuditMessageToText(
+                actionTyped.style
+              ),
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
 
+          /* 
+          **********************
+          REMINDER
+          **********************
+           */
+          case ReminderRedux.REMINDER_ADD: {
+            let actionTyped = <ReminderRedux.ReminderAddAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.ReminderStrategyId,
+              actionType: action.type,
+              state: newState.Reminder,
+              diffInfo: diff,
+              objectChanged: actionTyped.Reminder,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case ReminderRedux.REMINDER_EDIT: {
+            let actionTyped = <ReminderRedux.ReminderEditAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.ReminderStrategyId,
+              actionType: action.type,
+              state: newState.Reminder,
+              diffInfo: diff,
+              objectChanged: actionTyped.Reminder,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case ReminderRedux.REMINDER_DELETE: {
+            let actionTyped = <ReminderRedux.ReminderDeleteAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.ReminderStrategyId,
+              actionType: action.type,
+              state: newState.Reminder,
+              diffInfo: diff,
+              objectChanged: actionTyped.Reminder,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          /* 
+          **********************
+          SHORTCUT
+          **********************
+           */
+          case ShortcutRedux.SHORTCUT_ADD: {
+            let actionTyped = <ShortcutRedux.ShortcutAddAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.ShortcutStrategyId,
+              actionType: action.type,
+              state: newState.Shortcut,
+              diffInfo: diff,
+              objectChanged: actionTyped.Shortcut,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case ShortcutRedux.SHORTCUT_EDIT: {
+            let actionTyped = <ShortcutRedux.ShortcutEditAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.ShortcutStrategyId,
+              actionType: action.type,
+              state: newState.Shortcut,
+              diffInfo: diff,
+              objectChanged: actionTyped.Shortcut,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case ShortcutRedux.SHORTCUT_DELETE: {
+            let actionTyped = <ShortcutRedux.ShortcutDeleteAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.ShortcutStrategyId,
+              actionType: action.type,
+              state: newState.Shortcut,
+              diffInfo: diff,
+              objectChanged: actionTyped.Shortcut,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
           /**
-           * TODO:  Chart, Dashboard, Export, flashing cell
+           * TODO:  Chart, Dashboard, Export, flashing cell, pluminus
            *
            * NOT DOING AS THEY DONT CHANGE:  Entitlement
            */
@@ -1214,7 +1355,33 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
               name: StrategyConstants.QuickSearchStrategyId,
               action: action.type,
               info: actionTyped.quickSearchText,
-              data: actionTyped.quickSearchText,
+              data: state.QuickSearch,
+            };
+
+            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+          case QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY: {
+            let actionTyped = <QuickSearchRedux.QuickSearchSetDisplayAction>action;
+
+            let functionAppliedDetails: IFunctionAppliedDetails = {
+              name: StrategyConstants.QuickSearchStrategyId,
+              action: action.type,
+              info: actionTyped.DisplayAction,
+              data: state.QuickSearch,
+            };
+
+            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+          case QuickSearchRedux.QUICK_SEARCH_SET_STYLE: {
+            let actionTyped = <QuickSearchRedux.QuickSearchSetStyleAction>action;
+
+            let functionAppliedDetails: IFunctionAppliedDetails = {
+              name: StrategyConstants.QuickSearchStrategyId,
+              action: action.type,
+              info: actionTyped.style.ClassName,
+              data: state.QuickSearch,
             };
 
             adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
@@ -2370,6 +2537,8 @@ export function getFunctionAppliedReduxActions(): string[] {
     DataSourceRedux.DATA_SOURCE_SELECT,
     FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD_EDIT_STORED_VALUE,
     QuickSearchRedux.QUICK_SEARCH_APPLY,
+    QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY,
+    QuickSearchRedux.QUICK_SEARCH_SET_STYLE,
     PlusMinusRedux.PLUSMINUS_APPLY,
     ShortcutRedux.SHORTCUT_APPLY,
     ColumnFilterRedux.COLUMN_FILTER_ADD,

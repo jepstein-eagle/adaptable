@@ -89,3 +89,6 @@ export const BULK_UPDATE_VALUE: string = 'BulkUpdateValue';
 export const CURRENT_CALENDAR: string = 'CurrentCalendar';
 export const SUMMARY_OPERATION: string = 'SummaryOperation';
 export const CURRENT_LAYOUT: string = 'CurrentLayout';
+export const QUICK_SEARCH_TEXT: string = 'QuickSearchText';
+export const QUICK_SEARCH_DISPLAY_ACTION: string = 'DisplayAction';
+export const QUICK_SEARCH_STYLE: string = 'Style';

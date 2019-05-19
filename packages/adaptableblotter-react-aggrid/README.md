@@ -52,7 +52,6 @@ export default () => <AdaptableBlotterReact
 - onReady(blotter) - function prop called after the blotter is instantiated and ready to use
 - onThemeChanged: (blotter, arg: IThemeChangedEventArgs)
 - onSearchChanged: (blotter, arg: ISearchChangedEventArgs)
-- onStateChanged: (blotter, arg: IStateChangedEventArgs)
 - onColumnStateChanged: (blotter, arg: IColumnStateChangedEventArgs)
 - onAlertFired: (blotter, arg: IAlertFiredEventArgs)
 
