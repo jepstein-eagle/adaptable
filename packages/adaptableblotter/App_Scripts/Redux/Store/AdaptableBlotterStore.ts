@@ -89,6 +89,8 @@ import {
   FLASHING_CELL_DEFAULT_UP_COLOR_STATE_PROPERTY,
   FLASHING_CELL_DEFAULT_DOWN_COLOR_STATE_PROPERTY,
   FLASHING_CELL_DEFAULT_DURATION_STATE_PROPERTY,
+  CURRENT_CHART_NAME_STATE_PROPERTY,
+  CURRENT_REPORT_STATE_PROPERTY,
 } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
@@ -313,9 +315,9 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
       persistedReducer,
       composeEnhancers(
         Redux.applyMiddleware(
-          diffStateAuditMiddleware(blotter),
-          adaptableBlotterMiddleware(blotter),
-          functionLogMiddleware(blotter)
+          stateChangedAuditLogMiddleware(blotter), // checks for changes in internal / user state and sends to audit log
+          adaptableBlotterMiddleware(blotter), // the main middleware that actually does stuff
+          functionAppliedLogMiddleware(blotter) // looks at when functions are applied (e..g Quick Search) and logs accordingly
         )
       )
     );
@@ -353,7 +355,7 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
 // this function checks for any differences in the state and sends it to AUDIT LOGGER (for use in Audit Log)
 // we now allow users to differentiate between user and internal state so we check for both
 // NOTE:  the Audit Logger is also responsible for firing AuditEventApi changes if that has been set
-var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
+var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
   function(middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
     return function(next: Redux.Dispatch<AdaptableBlotterState>) {
       return function(action: Redux.Action) {
@@ -372,7 +374,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
 
         // for non persisting actions (e.g. system, grid, menu and popup state functions)
         // we audit state changes only if audit is set to log internal state
-        // for now lets keep it really simple and just send a diff to Audit Log for Internal Changes
+        // and we send a diff of the change to Audit Log for Internal Changes
         if (ArrayExtensions.ContainsItem(getNonPersistedReduxActions(), action.type)) {
           if (adaptableBlotter.AuditLogService.isAuditInternalStateChangesEnabled) {
             let oldState = middlewareAPI.getState();
@@ -401,6 +403,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           return next(action);
         }
 
+        // We have User Changes Audit On
         // Get the OldState, NewState and Diff - as required for each use case
         let oldState = middlewareAPI.getState();
         let ret = next(action);
@@ -409,7 +412,6 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           DeepDiff.diff(oldState, newState)
         );
 
-        // we have User Audit On so look at the action to decide what to do
         switch (action.type) {
           /* 
           **********************
@@ -659,7 +661,64 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-
+          /* 
+          **********************
+           CHART
+          **********************
+           */
+          case ChartRedux.CHART_DEFINITION_SELECT: {
+            let actionTyped = <ChartRedux.ChartDefinitionSelectAction>action;
+            let changedDetails: IStatePropertyChangedDetails = {
+              name: StrategyConstants.ChartStrategyId,
+              actionType: action.type,
+              state: newState.Chart,
+              diffInfo: diff,
+              propertyName: CURRENT_CHART_NAME_STATE_PROPERTY,
+              oldValue: oldState.Chart.CurrentChartName,
+              newValue: actionTyped.CurrentChartName,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case ChartRedux.CHART_DEFINITION_ADD: {
+            let actionTyped = <ChartRedux.ChartDefinitionAddAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.ChartStrategyId,
+              actionType: action.type,
+              state: newState.Chart,
+              diffInfo: diff,
+              objectChanged: actionTyped.ChartDefinition,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case ChartRedux.CHART_DEFINITION_EDIT: {
+            let actionTyped = <ChartRedux.ChartDefinitionEditAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.ChartStrategyId,
+              actionType: action.type,
+              state: newState.Chart,
+              diffInfo: diff,
+              objectChanged: actionTyped.ChartDefinition,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case ChartRedux.CHART_DEFINITION_DELETE: {
+            let actionTyped = <ChartRedux.ChartDefinitionDeleteAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.ChartStrategyId,
+              actionType: action.type,
+              state: newState.Chart,
+              diffInfo: diff,
+              objectChanged: actionTyped.ChartDefinition,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
           /* 
           **********************
           COLUMN CATEGORY
@@ -908,6 +967,63 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             return ret;
           }
           /* 
+          **********************
+           EXPORT
+          **********************
+           */
+          case ExportRedux.REPORT_SELECT: {
+            let actionTyped = <ExportRedux.ReportSelectAction>action;
+            let changedDetails: IStatePropertyChangedDetails = {
+              name: StrategyConstants.ExportStrategyId,
+              actionType: action.type,
+              state: newState.Export,
+              diffInfo: diff,
+              propertyName: CURRENT_REPORT_STATE_PROPERTY,
+              oldValue: oldState.Export.CurrentReport,
+              newValue: actionTyped.SelectedReport,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case ExportRedux.REPORT_ADD: {
+            let actionTyped = <ExportRedux.ReportAddAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.ExportStrategyId,
+              actionType: action.type,
+              state: newState.Export,
+              diffInfo: diff,
+              objectChanged: actionTyped.Report,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case ExportRedux.REPORT_EDIT: {
+            let actionTyped = <ExportRedux.ReportEditAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.ExportStrategyId,
+              actionType: action.type,
+              state: newState.Export,
+              diffInfo: diff,
+              objectChanged: actionTyped.Report,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case ExportRedux.REPORT_DELETE: {
+            let actionTyped = <ExportRedux.ReportDeleteAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.ExportStrategyId,
+              actionType: action.type,
+              state: newState.Export,
+              diffInfo: diff,
+              objectChanged: actionTyped.Report,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          } /* 
           **********************
           FLASHING CELL
           **********************
@@ -1160,6 +1276,50 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
           }
           /* 
           **********************
+          PLUS / MINUS
+          **********************
+           */
+          case PlusMinusRedux.PLUS_MINUS_RULE_ADD: {
+            let actionTyped = <PlusMinusRedux.PlusMinusRuleAddAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.PlusMinusStrategyId,
+              actionType: action.type,
+              state: newState.PlusMinus,
+              diffInfo: diff,
+              objectChanged: actionTyped.PlusMinusRule,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case PlusMinusRedux.PLUS_MINUS_RULE_EDIT: {
+            let actionTyped = <PlusMinusRedux.PlusMinusRuleEditAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.PlusMinusStrategyId,
+              actionType: action.type,
+              state: newState.PlusMinus,
+              diffInfo: diff,
+              objectChanged: actionTyped.PlusMinusRule,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case PlusMinusRedux.PLUS_MINUS_RULE_DELETE: {
+            let actionTyped = <PlusMinusRedux.PlusMinusRuleDeleteAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.PlusMinusStrategyId,
+              actionType: action.type,
+              state: newState.PlusMinus,
+              diffInfo: diff,
+              objectChanged: actionTyped.PlusMinusRule,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          /* 
+          **********************
           QUICK SEARCH
           **********************
            */
@@ -1395,9 +1555,9 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             return ret;
           }
           /**
-           * TODO:  Chart, Dashboard, Export, pluminus, Teamsharing
+           * TODO: Dashboard,  Teamsharing
            *
-           * NOT DOING AS THEY DONT CHANGE:  Entitlement
+           * NOT DOING AS THEY DONT CHANGE:  Entitlement, UserInterface
            */
 
           // leave this here in case we miss any actions and then at least we have the old and new state
@@ -1422,7 +1582,7 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
 // there are relatively few - primarily relating to search and edit functions
 // note it does not capture when something happens automatically as the result of a function (e.g. if a conditional style gets applied because a value has changed)
 // e.g. this should say when the current Advanced search has changed, or if a custom sort is being applied (it doesnt yet), but not when sorts have been added generally or searches changed
-var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
+var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
   function(middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
     return function(next: Redux.Dispatch<AdaptableBlotterState>) {
       return function(action: Redux.Action) {
@@ -1469,6 +1629,21 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             return next(action);
           }
 
+          case ChartRedux.CHART_DEFINITION_SELECT: {
+            let actionTyped = <ChartRedux.ChartDefinitionSelectAction>action;
+            let chart = state.Chart.ChartDefinitions.find(
+              cd => cd.Name == actionTyped.CurrentChartName
+            );
+            let functionAppliedDetails: IFunctionAppliedDetails = {
+              name: StrategyConstants.ChartStrategyId,
+              action: action.type,
+              info: actionTyped.CurrentChartName,
+              data: chart,
+            };
+            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+
           case DataSourceRedux.DATA_SOURCE_SELECT: {
             let actionTyped = <DataSourceRedux.DataSourceSelectAction>action;
             let dataSource = state.DataSource.DataSources.find(
@@ -1479,6 +1654,19 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
               action: action.type,
               info: actionTyped.SelectedDataSource,
               data: dataSource,
+            };
+            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+
+          case ExportRedux.EXPORT_APPLY: {
+            let actionTyped = <ExportRedux.ExportApplyAction>action;
+            let report = state.Export.Reports.find(r => r.Name == actionTyped.Report);
+            let functionAppliedDetails: IFunctionAppliedDetails = {
+              name: StrategyConstants.ExportStrategyId,
+              action: action.type,
+              info: actionTyped.Report,
+              data: report,
             };
             adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
@@ -1564,9 +1752,8 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
-          case PlusMinusRedux.PLUSMINUS_APPLY: {
+          case PlusMinusRedux.PLUS_MINUS_APPLY: {
             let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action;
-
             let functionAppliedDetails: IFunctionAppliedDetails = {
               name: StrategyConstants.PlusMinusStrategyId,
               action: action.type,
@@ -2082,7 +2269,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            * PLUS MINUS ACTIONS
            *******************/
 
-          case PlusMinusRedux.PLUSMINUS_APPLY: {
+          case PlusMinusRedux.PLUS_MINUS_APPLY: {
             let plusMinusStrategy = <IPlusMinusStrategy>(
               blotter.strategies.get(StrategyConstants.PlusMinusStrategyId)
             );
@@ -2384,7 +2571,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               }
               case StrategyConstants.PlusMinusStrategyId: {
                 let plusMinus = actionTyped.Entity as IPlusMinusRule;
-                importAction = PlusMinusRedux.PlusMinusAddUpdateCondition(-1, plusMinus);
+                importAction = PlusMinusRedux.PlusMinusRuleAdd(plusMinus);
                 break;
               }
               case StrategyConstants.ShortcutStrategyId: {
@@ -2446,7 +2633,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 if (idx > -1) {
                   overwriteConfirmation = true;
                 }
-                importAction = ExportRedux.ReportAddUpdate(idx, report);
+                importAction = ExportRedux.ReportAdd(report);
                 break;
               }
             }
@@ -2713,14 +2900,16 @@ export function getFunctionAppliedReduxActions(): string[] {
   return [
     AdvancedSearchRedux.ADVANCED_SEARCH_SELECT,
     CalendarRedux.CALENDAR_SELECT,
+    ChartRedux.CHART_DEFINITION_SELECT,
     DataSourceRedux.DATA_SOURCE_SELECT,
+    ExportRedux.EXPORT_APPLY,
     FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD_EDIT_STORED_VALUE,
     FlashingCellsRedux.FLASHING_CELL_SELECT,
     FlashingCellsRedux.FLASHING_CELL_SELECT_ALL,
     QuickSearchRedux.QUICK_SEARCH_APPLY,
     QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY,
     QuickSearchRedux.QUICK_SEARCH_SET_STYLE,
-    PlusMinusRedux.PLUSMINUS_APPLY,
+    PlusMinusRedux.PLUS_MINUS_APPLY,
     ShortcutRedux.SHORTCUT_APPLY,
     ThemeRedux.THEME_SELECT,
     ColumnFilterRedux.COLUMN_FILTER_ADD,

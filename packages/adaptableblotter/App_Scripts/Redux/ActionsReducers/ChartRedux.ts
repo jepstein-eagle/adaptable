@@ -5,26 +5,23 @@ import {
   IChartProperties,
 } from '../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
 import {
-  EMPTY_ARRAY,
   EMPTY_STRING,
   CHART_DEFAULT_REFRESH_RATE,
 } from '../../Utilities/Constants/GeneralConstants';
-import { ObjectFactory } from '../../Utilities/ObjectFactory';
 
-export const CHART_DEFINITION_ADD_UPDATE = 'CHART_DEFINITION_ADD_UPDATE';
-export const CHART_PROPERTIES_UPDATE = 'CHART_PROPERTIES_UPDATE';
+export const CHART_DEFINITION_SELECT = 'CHART_DEFINITION_SELECT';
+export const CHART_DEFINITION_ADD = 'CHART_DEFINITION_ADD';
 export const CHART_DEFINITION_EDIT = 'CHART_DEFINITION_EDIT';
 export const CHART_DEFINITION_DELETE = 'CHART_DEFINITION_DELETE';
-export const CHART_DEFINITION_SELECT = 'CHART_DEFINITION_SELECT';
+export const CHART_PROPERTIES_UPDATE = 'CHART_PROPERTIES_UPDATE';
 
-export interface ChartDefinitionAddUpdateAction extends Redux.Action {
-  Index: number;
+export interface ChartDefinitionAddAction extends Redux.Action {
   ChartDefinition: IChartDefinition;
 }
 
-export interface ChartPropertiesUpdateAction extends Redux.Action {
-  ChartName: string;
-  ChartProperties: IChartProperties;
+export interface ChartDefinitionEditAction extends Redux.Action {
+  Index: number;
+  ChartDefinition: IChartDefinition;
 }
 
 export interface ChartDefinitionDeleteAction extends Redux.Action {
@@ -35,22 +32,25 @@ export interface ChartDefinitionSelectAction extends Redux.Action {
   CurrentChartName: string;
 }
 
-export const ChartDefinitionAddUpdate = (
-  Index: number,
+export interface ChartPropertiesUpdateAction extends Redux.Action {
+  ChartName: string;
+  ChartProperties: IChartProperties;
+}
+
+export const ChartDefinitionAdd = (
   ChartDefinition: IChartDefinition
-): ChartDefinitionAddUpdateAction => ({
-  type: CHART_DEFINITION_ADD_UPDATE,
-  Index,
+): ChartDefinitionAddAction => ({
+  type: CHART_DEFINITION_ADD,
   ChartDefinition,
 });
 
-export const ChartPropertiesUpdate = (
-  ChartName: string,
-  ChartProperties: IChartProperties
-): ChartPropertiesUpdateAction => ({
-  type: CHART_PROPERTIES_UPDATE,
-  ChartName,
-  ChartProperties,
+export const ChartDefinitionEdit = (
+  Index: number,
+  ChartDefinition: IChartDefinition
+): ChartDefinitionEditAction => ({
+  type: CHART_DEFINITION_EDIT,
+  Index,
+  ChartDefinition,
 });
 
 export const ChartDefinitionDelete = (
@@ -71,6 +71,15 @@ const initialChartState: ChartState = {
   RefreshRate: CHART_DEFAULT_REFRESH_RATE,
 };
 
+export const ChartPropertiesUpdate = (
+  ChartName: string,
+  ChartProperties: IChartProperties
+): ChartPropertiesUpdateAction => ({
+  type: CHART_PROPERTIES_UPDATE,
+  ChartName,
+  ChartProperties,
+});
+
 export const ChartReducer: Redux.Reducer<ChartState> = (
   state: ChartState = initialChartState,
   action: Redux.Action
@@ -78,15 +87,16 @@ export const ChartReducer: Redux.Reducer<ChartState> = (
   let chartDefinitions: IChartDefinition[];
 
   switch (action.type) {
-    case CHART_DEFINITION_ADD_UPDATE:
-      let actionTypedAddUpdate = <ChartDefinitionAddUpdateAction>action;
+    case CHART_DEFINITION_ADD:
+      let actionTypedAdd = <ChartDefinitionAddAction>action;
       chartDefinitions = [].concat(state.ChartDefinitions);
-      if (actionTypedAddUpdate.Index != -1) {
-        // it exists
-        chartDefinitions[actionTypedAddUpdate.Index] = actionTypedAddUpdate.ChartDefinition;
-      } else {
-        chartDefinitions.push(actionTypedAddUpdate.ChartDefinition);
-      }
+      chartDefinitions.push(actionTypedAdd.ChartDefinition);
+      return Object.assign({}, state, { ChartDefinitions: chartDefinitions });
+
+    case CHART_DEFINITION_EDIT:
+      let actionTypedEdit = <ChartDefinitionEditAction>action;
+      chartDefinitions = [].concat(state.ChartDefinitions);
+      chartDefinitions[actionTypedEdit.Index] = actionTypedEdit.ChartDefinition;
       return Object.assign({}, state, { ChartDefinitions: chartDefinitions });
 
     case CHART_PROPERTIES_UPDATE:

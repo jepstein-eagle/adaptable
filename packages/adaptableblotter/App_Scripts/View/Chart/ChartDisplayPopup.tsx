@@ -33,10 +33,11 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
   ChartData: IChartData;
   ChartVisibility: ChartVisibility;
 
-  onAddUpdateChartDefinition: (
+  onAddChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddAction;
+  onEditChartDefinition: (
     index: number,
     chartDefinition: IChartDefinition
-  ) => ChartRedux.ChartDefinitionAddUpdateAction;
+  ) => ChartRedux.ChartDefinitionEditAction;
   onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction;
   onSetChartVisibility: (
     chartVisibility: ChartVisibility
@@ -226,7 +227,11 @@ class ChartDisplayPopupComponent extends React.Component<
     let index: number = this.props.ChartDefinitions.findIndex(
       cd => cd.Name == this.state.EditedChartDefinition.Name
     );
-    this.props.onAddUpdateChartDefinition(index, clonedObject);
+    if (index != -1) {
+      this.props.onEditChartDefinition(index, clonedObject);
+    } else {
+      this.props.onAddChartDefinition(clonedObject);
+    }
     this.setState({ EditedChartDefinition: null });
     this.props.onSelectChartDefinition(clonedObject.Name);
   }
@@ -249,8 +254,10 @@ function mapStateToProps(state: AdaptableBlotterState) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) =>
-      dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
+    onAddChartDefinition: (chartDefinition: IChartDefinition) =>
+      dispatch(ChartRedux.ChartDefinitionAdd(chartDefinition)),
+    onEditChartDefinition: (index: number, chartDefinition: IChartDefinition) =>
+      dispatch(ChartRedux.ChartDefinitionEdit(index, chartDefinition)),
     onSelectChartDefinition: (chartDefinition: string) =>
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
     onSetChartVisibility: (chartVisibility: ChartVisibility) =>

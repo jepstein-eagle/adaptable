@@ -4,60 +4,60 @@ import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
 import { IPlusMinusRule } from '../../Utilities/Interface/BlotterObjects/IPlusMinusRule';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
-export const PLUSMINUS_APPLY = 'PLUSMINUS_APPLY';
-export const PLUSMINUS_ADD_UPDATE_CONDITION = 'PLUSMINUS_ADD_UPDATE_CONDITION';
-export const PLUSMINUS_EDIT_CONDITION = 'PLUSMINUS_EDIT_CONDITION';
-export const PLUSMINUS_DELETE_CONDITION = 'PLUSMINUS_DELETE_CONDITION';
+export const PLUS_MINUS_APPLY = 'PLUS_MINUS_APPLY';
+export const PLUS_MINUS_RULE_ADD = 'PLUS_MINUS_RULE_ADD';
+export const PLUS_MINUS_RULE_EDIT = 'PLUS_MINUS_RULE_EDIT';
+export const PLUS_MINUS_RULE_DELETE = 'PLUS_MINUS_RULE_DELETE';
 
 export interface PlusMinusApplyAction extends Redux.Action {
   CellInfos: ICellInfo[];
   KeyEventString: string;
 }
 
-export interface PlusMinusAddUpdateConditionAction extends Redux.Action {
+export interface PlusMinusRuleAddAction extends Redux.Action {
+  PlusMinusRule: IPlusMinusRule;
+}
+
+export interface PlusMinusRuleEditAction extends Redux.Action {
   Index: number;
   PlusMinusRule: IPlusMinusRule;
 }
 
-export interface PlusMinusEditConditionAction extends Redux.Action {
+export interface PlusMinusRuleDeleteAction extends Redux.Action {
   Index: number;
-  ColumnDefaultNudge: { ColumnId: string; DefaultNudge: number };
-}
-
-export interface PlusMinusDeleteConditionAction extends Redux.Action {
-  Index: number;
+  PlusMinusRule: IPlusMinusRule;
 }
 
 export const PlusMinusApply = (
   CellInfos: ICellInfo[],
   KeyEventString: string
 ): PlusMinusApplyAction => ({
-  type: PLUSMINUS_APPLY,
+  type: PLUS_MINUS_APPLY,
   CellInfos,
   KeyEventString,
 });
 
-export const PlusMinusAddUpdateCondition = (
+export const PlusMinusRuleAdd = (PlusMinusRule: IPlusMinusRule): PlusMinusRuleAddAction => ({
+  type: PLUS_MINUS_RULE_ADD,
+  PlusMinusRule,
+});
+
+export const PlusMinusRuleEdit = (
   Index: number,
   PlusMinusRule: IPlusMinusRule
-): PlusMinusAddUpdateConditionAction => ({
-  type: PLUSMINUS_ADD_UPDATE_CONDITION,
+): PlusMinusRuleEditAction => ({
+  type: PLUS_MINUS_RULE_EDIT,
   Index,
   PlusMinusRule,
 });
 
-export const PlusMinusEditCondition = (
+export const PlusMinusRuleDelete = (
   Index: number,
-  ColumnDefaultNudge: { ColumnId: string; DefaultNudge: number }
-): PlusMinusEditConditionAction => ({
-  type: PLUSMINUS_EDIT_CONDITION,
+  PlusMinusRule: IPlusMinusRule
+): PlusMinusRuleDeleteAction => ({
+  type: PLUS_MINUS_RULE_DELETE,
   Index,
-  ColumnDefaultNudge,
-});
-
-export const PlusMinusDeleteCondition = (Index: number): PlusMinusDeleteConditionAction => ({
-  type: PLUSMINUS_DELETE_CONDITION,
-  Index,
+  PlusMinusRule,
 });
 
 const initialPlusMinusState: PlusMinusState = {
@@ -69,35 +69,27 @@ export const PlusMinusReducer: Redux.Reducer<PlusMinusState> = (
   action: Redux.Action
 ): PlusMinusState => {
   switch (action.type) {
-    case PLUSMINUS_APPLY:
+    case PLUS_MINUS_APPLY:
       //we apply logic in the middleware since it's an API call
       return Object.assign({}, state);
 
-    case PLUSMINUS_ADD_UPDATE_CONDITION: {
-      let actionTyped = <PlusMinusAddUpdateConditionAction>action;
+    case PLUS_MINUS_RULE_ADD: {
+      let actionTyped = <PlusMinusRuleAddAction>action;
       let plusMinusRules: IPlusMinusRule[] = [].concat(state.PlusMinusRules);
-      if (actionTyped.Index == -1) {
-        plusMinusRules.push(actionTyped.PlusMinusRule);
-      } else {
-        plusMinusRules[actionTyped.Index] = actionTyped.PlusMinusRule;
-      }
+      plusMinusRules.push(actionTyped.PlusMinusRule);
       return Object.assign({}, state, { PlusMinusRules: plusMinusRules });
     }
 
-    case PLUSMINUS_EDIT_CONDITION: {
+    case PLUS_MINUS_RULE_EDIT: {
       let plusMinusRules: IPlusMinusRule[] = [].concat(state.PlusMinusRules);
-      let actionTyped = <PlusMinusEditConditionAction>action;
-      let oldCondition = plusMinusRules[actionTyped.Index];
-      plusMinusRules[actionTyped.Index] = Object.assign({}, oldCondition, {
-        ColumnId: actionTyped.ColumnDefaultNudge.ColumnId,
-        NudgeValue: actionTyped.ColumnDefaultNudge.DefaultNudge,
-      });
+      let actionTyped = <PlusMinusRuleEditAction>action;
+      plusMinusRules[actionTyped.Index] = actionTyped.PlusMinusRule;
       return Object.assign({}, state, { PlusMinusRules: plusMinusRules });
     }
 
-    case PLUSMINUS_DELETE_CONDITION: {
+    case PLUS_MINUS_RULE_DELETE: {
       let plusMinusRules: IPlusMinusRule[] = [].concat(state.PlusMinusRules);
-      plusMinusRules.splice((<PlusMinusDeleteConditionAction>action).Index, 1);
+      plusMinusRules.splice((<PlusMinusRuleDeleteAction>action).Index, 1);
       return Object.assign({}, state, { PlusMinusRules: plusMinusRules });
     }
     default:

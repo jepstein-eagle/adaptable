@@ -22,10 +22,11 @@ import { IPlusMinusRule } from '../../Utilities/Interface/BlotterObjects/IPlusMi
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
   PlusMinusRules: IPlusMinusRule[];
-  onAddUpdatePlusMinus: (
-    index: number,
+  onAddPlusMinusRule: (PlusMinus: IPlusMinusRule) => PlusMinusRedux.PlusMinusRuleAddAction;
+  onEditPlusMinusRule: (
+    Index: number,
     PlusMinus: IPlusMinusRule
-  ) => PlusMinusRedux.PlusMinusAddUpdateConditionAction;
+  ) => PlusMinusRedux.PlusMinusRuleEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -77,7 +78,7 @@ export class PlusMinusSummaryComponent extends React.Component<
             EntityType={StrategyConstants.PlusMinusStrategyName}
             onEdit={() => this.onEdit(index, item)}
             onShare={() => this.props.onShare(item)}
-            onDelete={PlusMinusRedux.PlusMinusDeleteCondition(index)}
+            onDelete={PlusMinusRedux.PlusMinusRuleDelete(index, item)}
           />
         );
         strategySummaries.push(detailRow);
@@ -136,8 +137,14 @@ export class PlusMinusSummaryComponent extends React.Component<
   }
 
   onFinishWizard() {
-    this.props.onAddUpdatePlusMinus(this.state.EditedAdaptableBlotterObjectIndex, this.state
-      .EditedAdaptableBlotterObject as IPlusMinusRule);
+    let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusRule;
+
+    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
+      this.props.onEditPlusMinusRule(this.state.EditedAdaptableBlotterObjectIndex, plusMinus);
+    } else {
+      this.props.onAddPlusMinusRule(plusMinus);
+    }
+
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
@@ -171,8 +178,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddUpdatePlusMinus: (index: number, PlusMinus: IPlusMinusRule) =>
-      dispatch(PlusMinusRedux.PlusMinusAddUpdateCondition(index, PlusMinus)),
+    onAddPlusMinusRule: (PlusMinusRule: IPlusMinusRule) =>
+      dispatch(PlusMinusRedux.PlusMinusRuleAdd(PlusMinusRule)),
+    onEditPlusMinusRule: (Index: number, PlusMinusRule: IPlusMinusRule) =>
+      dispatch(PlusMinusRedux.PlusMinusRuleEdit(Index, PlusMinusRule)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),

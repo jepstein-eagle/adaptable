@@ -35,10 +35,11 @@ import { PieChartWizard } from './PieChart/Wizard/PieChartWizard';
 import { AccessLevel } from '../../Utilities/Enums';
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
-  onAddUpdateChartDefinition: (
+  onAddChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddAction;
+  onEditChartDefinition: (
     index: number,
     chartDefinition: IChartDefinition
-  ) => ChartRedux.ChartDefinitionAddUpdateAction;
+  ) => ChartRedux.ChartDefinitionEditAction;
   onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction;
   onShowChart: () => SystemRedux.ChartSetChartVisibiityAction;
   ChartDefinitions: Array<IChartDefinition>;
@@ -256,10 +257,12 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     let clonedObject: IChartDefinition = Helper.cloneObject(
       this.state.EditedAdaptableBlotterObject
     );
-    this.props.onAddUpdateChartDefinition(
-      this.state.EditedAdaptableBlotterObjectIndex,
-      clonedObject
-    );
+    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
+      this.props.onEditChartDefinition(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
+    } else {
+      this.props.onAddChartDefinition(clonedObject);
+    }
+
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
@@ -295,8 +298,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddUpdateChartDefinition: (index: number, chartDefinition: IChartDefinition) =>
-      dispatch(ChartRedux.ChartDefinitionAddUpdate(index, chartDefinition)),
+    onAddChartDefinition: (chartDefinition: IChartDefinition) =>
+      dispatch(ChartRedux.ChartDefinitionAdd(chartDefinition)),
+    onEditChartDefinition: (index: number, chartDefinition: IChartDefinition) =>
+      dispatch(ChartRedux.ChartDefinitionEdit(index, chartDefinition)),
     onSelectChartDefinition: (chartDefinition: string) =>
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
     onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),

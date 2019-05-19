@@ -36,7 +36,8 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
     value: string,
     exportDestination: ExportDestination
   ) => ExportRedux.ExportApplyAction;
-  onAddUpdateReport: (index: number, Report: IReport) => ExportRedux.ReportAddUpdateAction;
+  onAddReport: (Report: IReport) => ExportRedux.ReportAddAction;
+  onEditReport: (index: number, Report: IReport) => ExportRedux.ReportEditAction;
   onReportStopLive: (
     Report: string,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
@@ -103,7 +104,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
               this.props.onReportStopLive(report.Name, exportDestination)
             }
             onEdit={() => this.onEdit(reportIndex, report)}
-            onDeleteConfirm={ExportRedux.ReportDelete(reportIndex)}
+            onDeleteConfirm={ExportRedux.ReportDelete(reportIndex, report)}
           />
         );
       }
@@ -175,8 +176,13 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
   }
 
   onFinishWizard() {
-    let Report: IReport = this.state.EditedAdaptableBlotterObject as IReport;
-    this.props.onAddUpdateReport(this.state.EditedAdaptableBlotterObjectIndex, Report);
+    let report: IReport = this.state.EditedAdaptableBlotterObject as IReport;
+    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
+      this.props.onEditReport(this.state.EditedAdaptableBlotterObjectIndex, report);
+    } else {
+      this.props.onAddReport(report);
+    }
+
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
@@ -250,8 +256,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onApplyExport: (value: string, exportDestination: ExportDestination) =>
       dispatch(ExportRedux.ExportApply(value, exportDestination)),
-    onAddUpdateReport: (Index: number, Report: IReport) =>
-      dispatch(ExportRedux.ReportAddUpdate(Index, Report)),
+    onAddReport: (Report: IReport) => dispatch(ExportRedux.ReportAdd(Report)),
+    onEditReport: (Index: number, Report: IReport) =>
+      dispatch(ExportRedux.ReportEdit(Index, Report)),
     onReportStopLive: (
       Report: string,
       exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull

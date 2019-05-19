@@ -5,10 +5,11 @@ import { IReport, IAutoExport } from '../../Utilities/Interface/BlotterObjects/I
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const EXPORT_APPLY = 'EXPORT_APPLY';
-export const IPP_LOGIN = 'IPP_LOGIN';
 export const REPORT_SELECT = 'REPORT_SELECT';
-export const REPORT_ADD_UPDATE = 'REPORT_ADD_UPDATE';
+export const REPORT_ADD = 'REPORT_ADD';
+export const REPORT_EDIT = 'REPORT_EDIT';
 export const REPORT_DELETE = 'REPORT_DELETE';
+export const IPP_LOGIN = 'IPP_LOGIN';
 
 export interface ExportApplyAction extends Redux.Action {
   Report: string;
@@ -17,22 +18,22 @@ export interface ExportApplyAction extends Redux.Action {
   Page?: string;
 }
 
-export interface IPPLoginAction extends Redux.Action {
-  Login: string;
-  Password: string;
-}
-
 export interface ReportSelectAction extends Redux.Action {
   SelectedReport: string;
 }
 
-export interface ReportAddUpdateAction extends Redux.Action {
+export interface ReportAddAction extends Redux.Action {
+  Report: IReport;
+}
+
+export interface ReportEditAction extends Redux.Action {
   Index: number;
   Report: IReport;
 }
 
 export interface ReportDeleteAction extends Redux.Action {
   Index: number;
+  Report: IReport;
 }
 
 export interface AutoExportAddUpdateAction extends Redux.Action {
@@ -44,20 +45,31 @@ export interface AutoExportDeleteAction extends Redux.Action {
   Index: number;
 }
 
+export interface IPPLoginAction extends Redux.Action {
+  Login: string;
+  Password: string;
+}
+
 export const ReportSelect = (SelectedReport: string): ReportSelectAction => ({
   type: REPORT_SELECT,
   SelectedReport,
 });
 
-export const ReportAddUpdate = (Index: number, Report: IReport): ReportAddUpdateAction => ({
-  type: REPORT_ADD_UPDATE,
+export const ReportAdd = (Report: IReport): ReportAddAction => ({
+  type: REPORT_ADD,
+  Report,
+});
+
+export const ReportEdit = (Index: number, Report: IReport): ReportEditAction => ({
+  type: REPORT_EDIT,
   Index,
   Report,
 });
 
-export const ReportDelete = (Index: number): ReportDeleteAction => ({
+export const ReportDelete = (Index: number, Report: IReport): ReportDeleteAction => ({
   type: REPORT_DELETE,
   Index,
+  Report,
 });
 
 export const ExportApply = (
@@ -93,16 +105,19 @@ export const ExportReducer: Redux.Reducer<ExportState> = (
       return Object.assign({}, state, {
         CurrentReport: (<ReportSelectAction>action).SelectedReport,
       });
-    case REPORT_ADD_UPDATE: {
+    case REPORT_ADD: {
       let Reports: IReport[] = [].concat(state.Reports);
-
-      let actionTypedAddUpdate = <ReportAddUpdateAction>action;
-      if (actionTypedAddUpdate.Index >= 0) {
-        // it exists
-        Reports[actionTypedAddUpdate.Index] = actionTypedAddUpdate.Report;
-      } else {
-        Reports.push(actionTypedAddUpdate.Report);
-      }
+      let actionTypedAddUpdate = <ReportAddAction>action;
+      Reports.push(actionTypedAddUpdate.Report);
+      return Object.assign({}, state, {
+        Reports: Reports,
+        CurrentReport: actionTypedAddUpdate.Report.Name,
+      });
+    }
+    case REPORT_EDIT: {
+      let Reports: IReport[] = [].concat(state.Reports);
+      let actionTypedAddUpdate = <ReportEditAction>action;
+      Reports[actionTypedAddUpdate.Index] = actionTypedAddUpdate.Report;
       return Object.assign({}, state, {
         Reports: Reports,
         CurrentReport: actionTypedAddUpdate.Report.Name,
@@ -110,7 +125,6 @@ export const ExportReducer: Redux.Reducer<ExportState> = (
     }
     case REPORT_DELETE: {
       let Reports: IReport[] = [].concat(state.Reports);
-
       let actionTypedDelete = <ReportDeleteAction>action;
       Reports.splice(actionTypedDelete.Index, 1);
       return Object.assign({}, state, { Reports: Reports, CurrentReport: '' });

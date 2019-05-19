@@ -85,11 +85,13 @@ export const ALERT_DEFAULT_SHOW_AS_POPUP: boolean = true;
  * Constants for State (primarily for audit property events) - good idea?
  */
 export const CURRENT_ADVANCED_SEARCH_STATE_PROPERTY: string = 'CurrentAdvancedSearch';
+export const CURRENT_CHART_NAME_STATE_PROPERTY: string = 'CurrentChartName';
 export const BULK_UPDATE_VALUE_STATE_PROPERTY: string = 'BulkUpdateValue';
 export const CURRENT_CALENDAR_STATE_PROPERTY: string = 'CurrentCalendar';
 export const SUMMARY_OPERATION_STATE_PROPERTY: string = 'SummaryOperation';
 export const CURRENT_LAYOUT_STATE_PROPERTY: string = 'CurrentLayout';
 export const CURRENT_DATA_SOURCE_STATE_PROPERTY: string = 'CurrentDataSource';
+export const CURRENT_REPORT_STATE_PROPERTY: string = 'CurrentReport';
 export const FLASHING_CELL_DEFAULT_UP_COLOR_STATE_PROPERTY: string = 'DefaultUpColor';
 export const FLASHING_CELL_DEFAULT_DOWN_COLOR_STATE_PROPERTY: string = 'DefautDownColor';
 export const FLASHING_CELL_DEFAULT_DURATION_STATE_PROPERTY: string = 'DefaultDuration';
