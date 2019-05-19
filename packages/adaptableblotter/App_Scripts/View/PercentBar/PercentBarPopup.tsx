@@ -31,22 +31,6 @@ interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupCom
     PercentBar: IPercentBar
   ) => PercentBarRedux.PercentBarEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
-  onMinimumValueChanged: (
-    PercentBar: IPercentBar,
-    MinimumValue: number
-  ) => PercentBarRedux.PercentBarChangeMinimumValueAction;
-  onMaximumValueChanged: (
-    PercentBar: IPercentBar,
-    MaximumValue: number
-  ) => PercentBarRedux.PercentBarChangeMaximumValueAction;
-  onPositiveColorChanged: (
-    PercentBar: IPercentBar,
-    PositiveColor: string
-  ) => PercentBarRedux.PercentBarChangePositiveColorAction;
-  onNegativeColorChanged: (
-    PercentBar: IPercentBar,
-    NegativeColor: string
-  ) => PercentBarRedux.PercentBarChangeNegativeColorAction;
 }
 
 class PercentBarPopupComponent extends React.Component<
@@ -108,34 +92,34 @@ class PercentBarPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let PercentBarItems = this.props.PercentBars.map((PercentBar: IPercentBar, index) => {
-      let column = ColumnHelper.getColumnFromId(PercentBar.ColumnId, this.props.Columns);
+    let PercentBarItems = this.props.PercentBars.map((percentBar: IPercentBar, index) => {
+      let column = ColumnHelper.getColumnFromId(percentBar.ColumnId, this.props.Columns);
       return (
         <PercentBarEntityRow
           key={index}
           cssClassName={cssClassName}
           colItems={colItems}
-          AdaptableBlotterObject={PercentBar}
+          AdaptableBlotterObject={percentBar}
           Column={column}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
           ColorPalette={this.props.ColorPalette}
           Index={index}
-          onEdit={(index, object) => this.onEdit(index, PercentBar)}
-          onShare={() => this.props.onShare(PercentBar)}
+          onEdit={(index, object) => this.onEdit(index, percentBar)}
+          onShare={() => this.props.onShare(percentBar)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          onDeleteConfirm={PercentBarRedux.PercentBarDelete(index)}
-          onMinimumValueChanged={(PercentBar, minimumValue) =>
-            this.props.onMinimumValueChanged(PercentBar, minimumValue)
+          onDeleteConfirm={PercentBarRedux.PercentBarDelete(index, percentBar)}
+          onMinimumValueChanged={(percentBar, minimumValue) =>
+            this.onMinimumValueChanged(percentBar, minimumValue)
           }
-          onMaximumValueChanged={(PercentBar, maximumValue) =>
-            this.props.onMaximumValueChanged(PercentBar, maximumValue)
+          onMaximumValueChanged={(percentBar, maximumValue) =>
+            this.onMaximumValueChanged(percentBar, maximumValue)
           }
-          onPositiveColorChanged={(PercentBar, positiveColor) =>
-            this.props.onPositiveColorChanged(PercentBar, positiveColor)
+          onPositiveColorChanged={(percentBar, positiveColor) =>
+            this.onPositiveColorChanged(percentBar, positiveColor)
           }
-          onNegativeColorChanged={(PercentBar, negativeColor) =>
-            this.props.onNegativeColorChanged(PercentBar, negativeColor)
+          onNegativeColorChanged={(percentBar, negativeColor) =>
+            this.onNegativeColorChanged(percentBar, negativeColor)
           }
         />
       );
@@ -197,6 +181,39 @@ class PercentBarPopupComponent extends React.Component<
         </PanelWithButton>
       </div>
     );
+  }
+
+  onMinimumValueChanged(percentBar: IPercentBar, minimumValue: number): void {
+    let currentIndex: number = this.props.PercentBars.findIndex(
+      pb => pb.ColumnId == percentBar.ColumnId
+    );
+    let clonedPercentBar: IPercentBar = Helper.cloneObject(percentBar);
+    clonedPercentBar.MinValue = minimumValue;
+    this.props.onEditPercentBar(currentIndex, clonedPercentBar);
+  }
+  onMaximumValueChanged(percentBar: IPercentBar, maximumValue: number): void {
+    let currentIndex: number = this.props.PercentBars.findIndex(
+      pb => pb.ColumnId == percentBar.ColumnId
+    );
+    let clonedPercentBar: IPercentBar = Helper.cloneObject(percentBar);
+    clonedPercentBar.MaxValue = maximumValue;
+    this.props.onEditPercentBar(currentIndex, clonedPercentBar);
+  }
+  onPositiveColorChanged(percentBar: IPercentBar, positiveColor: string): void {
+    let currentIndex: number = this.props.PercentBars.findIndex(
+      pb => pb.ColumnId == percentBar.ColumnId
+    );
+    let clonedPercentBar: IPercentBar = Helper.cloneObject(percentBar);
+    clonedPercentBar.PositiveColor = positiveColor;
+    this.props.onEditPercentBar(currentIndex, clonedPercentBar);
+  }
+  onNegativeColorChanged(percentBar: IPercentBar, negativeColor: string): void {
+    let currentIndex: number = this.props.PercentBars.findIndex(
+      pb => pb.ColumnId == percentBar.ColumnId
+    );
+    let clonedPercentBar: IPercentBar = Helper.cloneObject(percentBar);
+    clonedPercentBar.NegativeColor = negativeColor;
+    this.props.onEditPercentBar(currentIndex, clonedPercentBar);
   }
 
   onNew() {
@@ -267,14 +284,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(PercentBarRedux.PercentBarEdit(Index, PercentBar)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PercentBarStrategyId)),
-    onMinimumValueChanged: (PercentBar: IPercentBar, minimumValue: number) =>
-      dispatch(PercentBarRedux.PercentBarChangeMinimumValue(PercentBar, minimumValue)),
-    onMaximumValueChanged: (PercentBar: IPercentBar, maximumValue: number) =>
-      dispatch(PercentBarRedux.PercentBarChangeMaximumValue(PercentBar, maximumValue)),
-    onPositiveColorChanged: (PercentBar: IPercentBar, positiveColor: string) =>
-      dispatch(PercentBarRedux.PercentBarChangePositiveColor(PercentBar, positiveColor)),
-    onNegativeColorChanged: (PercentBar: IPercentBar, negativeColor: string) =>
-      dispatch(PercentBarRedux.PercentBarChangeNegativeColor(PercentBar, negativeColor)),
   };
 }
 

@@ -88,3 +88,4 @@ export const CURRENT_ADVANCED_SEARCH: string = 'CurrentAdvancedSearch';
 export const BULK_UPDATE_VALUE: string = 'BulkUpdateValue';
 export const CURRENT_CALENDAR: string = 'CurrentCalendar';
 export const SUMMARY_OPERATION: string = 'SummaryOperation';
+export const CURRENT_LAYOUT: string = 'CurrentLayout';

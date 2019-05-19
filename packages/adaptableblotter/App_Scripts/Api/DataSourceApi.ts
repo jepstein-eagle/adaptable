@@ -43,7 +43,7 @@ export class DataSourceApi extends ApiBase implements IDataSourceApi {
   }
 
   public addDataSource(dataSource: IDataSource): void {
-    this.dispatchAction(DataSourceRedux.DataSourceAddUpdate(-1, dataSource));
+    this.dispatchAction(DataSourceRedux.DataSourceAdd(dataSource));
   }
 
   public clearDataSource(): void {

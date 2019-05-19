@@ -78,6 +78,7 @@ import {
   BULK_UPDATE_VALUE,
   CURRENT_CALENDAR,
   SUMMARY_OPERATION,
+  CURRENT_LAYOUT,
 } from '../../Utilities/Constants/GeneralConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
@@ -794,9 +795,318 @@ var diffStateAuditMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
+          /* 
+          **********************
+          CUSTOM SORT
+          **********************
+           */
+          case CustomSortRedux.CUSTOMSORT_ADD: {
+            let actionTyped = <CustomSortRedux.CustomSortAddAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.CustomSortStrategyId,
+              actionType: action.type,
+              state: newState.CustomSort,
+              diffInfo: diff,
+              objectChanged: actionTyped.CustomSort,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case CustomSortRedux.CUSTOMSORT_EDIT: {
+            let actionTyped = <CustomSortRedux.CustomSortEditAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.CustomSortStrategyId,
+              actionType: action.type,
+              state: newState.CustomSort,
+              diffInfo: diff,
+              objectChanged: actionTyped.CustomSort,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case CustomSortRedux.CUSTOMSORT_DELETE: {
+            let actionTyped = <CustomSortRedux.CustomSortDeleteAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.CustomSortStrategyId,
+              actionType: action.type,
+              state: newState.CustomSort,
+              diffInfo: diff,
+              objectChanged: actionTyped.CustomSort,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          /* 
+          **********************
+          DATA SOURCE
+          **********************
+           */
+          case DataSourceRedux.DATA_SOURCE_SELECT: {
+            let actionTyped = <DataSourceRedux.DataSourceSelectAction>action;
+            let changedDetails: IStatePropertyChangedDetails = {
+              name: StrategyConstants.DataSourceStrategyId,
+              actionType: action.type,
+              state: newState.DataSource,
+              diffInfo: diff,
+              propertyName: CURRENT_ADVANCED_SEARCH,
+              oldValue: oldState.DataSource.CurrentDataSource,
+              newValue: actionTyped.SelectedDataSource,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case DataSourceRedux.DATASOURCE_ADD: {
+            let actionTyped = <DataSourceRedux.DataSourceAddAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.DataSourceStrategyId,
+              actionType: action.type,
+              state: newState.DataSource,
+              diffInfo: diff,
+              objectChanged: actionTyped.DataSource,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case DataSourceRedux.DATASOURCE_EDIT: {
+            let actionTyped = <DataSourceRedux.DataSourceEditAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.DataSourceStrategyId,
+              actionType: action.type,
+              state: newState.DataSource,
+              diffInfo: diff,
+              objectChanged: actionTyped.DataSource,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case DataSourceRedux.DATASOURCE_DELETE: {
+            let actionTyped = <DataSourceRedux.DataSourceDeleteAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.DataSourceStrategyId,
+              actionType: action.type,
+              state: newState.DataSource,
+              diffInfo: diff,
+              objectChanged: actionTyped.DataSource,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          /* 
+          **********************
+          FORMAT COLUMN
+          **********************
+           */
+          case FormatColumnRedux.FORMAT_COLUMN_ADD: {
+            let actionTyped = <FormatColumnRedux.FormatColumnAddAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.FormatColumnStrategyId,
+              actionType: action.type,
+              state: newState.FormatColumn,
+              diffInfo: diff,
+              objectChanged: actionTyped.FormatColumn,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case FormatColumnRedux.FORMAT_COLUMN_EDIT: {
+            let actionTyped = <FormatColumnRedux.FormatColumnEditAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.FormatColumnStrategyId,
+              actionType: action.type,
+              state: newState.FormatColumn,
+              diffInfo: diff,
+              objectChanged: actionTyped.FormatColumn,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case FormatColumnRedux.FORMAT_COLUMN_DELETE: {
+            let actionTyped = <FormatColumnRedux.FormatColumnDeleteAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.FormatColumnStrategyId,
+              actionType: action.type,
+              state: newState.FormatColumn,
+              diffInfo: diff,
+              objectChanged: actionTyped.FormatColumn,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          /* 
+          **********************
+          FREE TEXT COLUMN
+          **********************
+           */
+          case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD: {
+            let actionTyped = <FreeTextColumnRedux.FreeTextColumnAddAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.FreeTextColumnStrategyId,
+              actionType: action.type,
+              state: newState.FreeTextColumn,
+              diffInfo: diff,
+              objectChanged: actionTyped.FreeTextColumn,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
+            let actionTyped = <FreeTextColumnRedux.FreeTextColumnEditAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.FreeTextColumnStrategyId,
+              actionType: action.type,
+              state: newState.FreeTextColumn,
+              diffInfo: diff,
+              objectChanged: actionTyped.FreeTextColumn,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case FreeTextColumnRedux.FREE_TEXT_COLUMN_DELETE: {
+            let actionTyped = <FreeTextColumnRedux.FreeTextColumnDeleteAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.FreeTextColumnStrategyId,
+              actionType: action.type,
+              state: newState.FreeTextColumn,
+              diffInfo: diff,
+              objectChanged: actionTyped.FreeTextColumn,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+
+          /* 
+          **********************
+          LAYOUT
+          **********************
+           */
+          case LayoutRedux.LAYOUT_SELECT: {
+            let actionTyped = <LayoutRedux.LayoutSelectAction>action;
+            let changedDetails: IStatePropertyChangedDetails = {
+              name: StrategyConstants.LayoutStrategyId,
+              actionType: action.type,
+              state: newState.Layout,
+              diffInfo: diff,
+              propertyName: CURRENT_LAYOUT,
+              oldValue: oldState.Layout.CurrentLayout,
+              newValue: actionTyped.LayoutName,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case LayoutRedux.LAYOUT_SAVE: {
+            let actionTyped = <LayoutRedux.LayoutSaveAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.LayoutStrategyId,
+              actionType: action.type,
+              state: newState.Layout,
+              diffInfo: diff,
+              objectChanged: actionTyped.Layout,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case LayoutRedux.LAYOUT_ADD: {
+            let actionTyped = <LayoutRedux.LayoutAddAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.LayoutStrategyId,
+              actionType: action.type,
+              state: newState.Layout,
+              diffInfo: diff,
+              objectChanged: actionTyped.Layout,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case LayoutRedux.LAYOUT_EDIT: {
+            let actionTyped = <LayoutRedux.LayoutEditAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.LayoutStrategyId,
+              actionType: action.type,
+              state: newState.Layout,
+              diffInfo: diff,
+              objectChanged: actionTyped.Layout,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case LayoutRedux.LAYOUT_DELETE: {
+            let actionTyped = <LayoutRedux.LayoutDeleteAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.LayoutStrategyId,
+              actionType: action.type,
+              state: newState.Layout,
+              diffInfo: diff,
+              objectChanged: actionTyped.Layout,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          /* 
+/* 
+          **********************
+          PERCENT BAR
+          **********************
+           */
+          case PercentBarRedux.PERCENT_BAR_ADD: {
+            let actionTyped = <PercentBarRedux.PercentBarAddAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.PercentBarStrategyId,
+              actionType: action.type,
+              state: newState.PercentBar,
+              diffInfo: diff,
+              objectChanged: actionTyped.PercentBar,
+              stateObjectChangeType: StateObjectChangeType.Created,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case PercentBarRedux.PERCENT_BAR_EDIT: {
+            let actionTyped = <PercentBarRedux.PercentBarEditAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.PercentBarStrategyId,
+              actionType: action.type,
+              state: newState.PercentBar,
+              diffInfo: diff,
+              objectChanged: actionTyped.PercentBar,
+              stateObjectChangeType: StateObjectChangeType.Updated,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
+          case PercentBarRedux.PERCENT_BAR_DELETE: {
+            let actionTyped = <PercentBarRedux.PercentBarDeleteAction>action;
+            let changedDetails: IStateObjectChangedDetails = {
+              name: StrategyConstants.PercentBarStrategyId,
+              actionType: action.type,
+              state: newState.PercentBar,
+              diffInfo: diff,
+              objectChanged: actionTyped.PercentBar,
+              stateObjectChangeType: StateObjectChangeType.Deleted,
+            };
+            adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
+            return ret;
+          }
 
           /**
-           * TODO:  Chart, Dashboard
+           * TODO:  Chart, Dashboard, Export, flashing cell
+           *
+           * NOT DOING AS THEY DONT CHANGE:  Entitlement
            */
 
           // leave this here in case we miss any actions and then at least we have the old and new state
@@ -846,16 +1156,12 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(
               as => as.Name == actionTyped.selectedSearchName
             );
-
             let functionAppliedDetails: IFunctionAppliedDetails = {
               name: StrategyConstants.AdvancedSearchStrategyId,
               action: action.type,
-              info: StringExtensions.IsNullOrEmpty(actionTyped.selectedSearchName)
-                ? '[No Advanced Search selected]'
-                : actionTyped.selectedSearchName,
+              info: actionTyped.selectedSearchName,
               data: advancedSearch,
             };
-
             adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
@@ -873,6 +1179,33 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             return next(action);
           }
 
+          case DataSourceRedux.DATA_SOURCE_SELECT: {
+            let actionTyped = <DataSourceRedux.DataSourceSelectAction>action;
+            let dataSource = state.DataSource.DataSources.find(
+              ds => ds.Name == actionTyped.SelectedDataSource
+            );
+            let functionAppliedDetails: IFunctionAppliedDetails = {
+              name: StrategyConstants.DataSourceStrategyId,
+              action: action.type,
+              info: actionTyped.SelectedDataSource,
+              data: dataSource,
+            };
+            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+
+          case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD_EDIT_STORED_VALUE: {
+            let actionTyped = <FreeTextColumnRedux.FreeTextColumnAddEditStoredValueAction>action;
+            let functionAppliedDetails: IFunctionAppliedDetails = {
+              name: StrategyConstants.FreeTextColumnStrategyId,
+              action: action.type,
+              info: actionTyped.FreeTextColumn.ColumnId,
+              data: actionTyped.FreeTextStoredValue,
+            };
+            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+
           // should we create a Quick Search Clear?  Might be neater...
           case QuickSearchRedux.QUICK_SEARCH_APPLY: {
             let actionTyped = <QuickSearchRedux.QuickSearchApplyAction>action;
@@ -880,9 +1213,7 @@ var functionLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             let functionAppliedDetails: IFunctionAppliedDetails = {
               name: StrategyConstants.QuickSearchStrategyId,
               action: action.type,
-              info: StringExtensions.IsNullOrEmpty(actionTyped.quickSearchText)
-                ? '[No Quick Search]'
-                : actionTyped.quickSearchText,
+              info: actionTyped.quickSearchText,
               data: actionTyped.quickSearchText,
             };
 
@@ -1245,7 +1576,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let layout: ILayout = Helper.cloneObject(actionTyped.Layout);
             let forceFetch = layout.Name == DEFAULT_LAYOUT;
             layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns, forceFetch);
-            middlewareAPI.dispatch(LayoutRedux.LayoutAddUpdate(actionTyped.Index, layout));
+            if (actionTyped.Index == -1) {
+              middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));
+            } else {
+              middlewareAPI.dispatch(LayoutRedux.LayoutEdit(actionTyped.Index, layout));
+            }
             return returnAction;
           }
 
@@ -2032,6 +2367,8 @@ export function getFunctionAppliedReduxActions(): string[] {
   return [
     AdvancedSearchRedux.ADVANCED_SEARCH_SELECT,
     CalendarRedux.CALENDAR_SELECT,
+    DataSourceRedux.DATA_SOURCE_SELECT,
+    FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD_EDIT_STORED_VALUE,
     QuickSearchRedux.QUICK_SEARCH_APPLY,
     PlusMinusRedux.PLUSMINUS_APPLY,
     ShortcutRedux.SHORTCUT_APPLY,

@@ -4,7 +4,8 @@ import { ILayout } from '../../Utilities/Interface/BlotterObjects/ILayout';
 import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 export const LAYOUT_SELECT = 'LAYOUT_SELECT';
-export const LAYOUT_ADD_UPDATE = 'LAYOUT_ADD_UPDATE';
+export const LAYOUT_ADD = 'LAYOUT_ADD';
+export const LAYOUT_EDIT = 'LAYOUT_EDIT';
 export const LAYOUT_SAVE = 'LAYOUT_SAVE';
 export const LAYOUT_DELETE = 'DELETE_LAYOUT';
 
@@ -13,7 +14,11 @@ export interface LayoutSaveAction extends Redux.Action {
   Layout: ILayout;
 }
 
-export interface LayoutAddUpdateAction extends Redux.Action {
+export interface LayoutAddAction extends Redux.Action {
+  Layout: ILayout;
+}
+
+export interface LayoutEditAction extends Redux.Action {
   Index: number;
   Layout: ILayout;
 }
@@ -23,7 +28,7 @@ export interface LayoutSelectAction extends Redux.Action {
 }
 
 export interface LayoutDeleteAction extends Redux.Action {
-  LayoutName: string;
+  Layout: ILayout;
 }
 
 export interface LayoutIncludeVendorStateAction extends Redux.Action {}
@@ -36,8 +41,13 @@ export const LayoutSave = (Index: number, Layout: ILayout): LayoutSaveAction => 
   Layout,
 });
 
-export const LayoutAddUpdate = (Index: number, Layout: ILayout): LayoutAddUpdateAction => ({
-  type: LAYOUT_ADD_UPDATE,
+export const LayoutAdd = (Layout: ILayout): LayoutAddAction => ({
+  type: LAYOUT_ADD,
+  Layout,
+});
+
+export const LayoutEdit = (Index: number, Layout: ILayout): LayoutEditAction => ({
+  type: LAYOUT_EDIT,
   Index,
   Layout,
 });
@@ -47,9 +57,9 @@ export const LayoutSelect = (LayoutName: string): LayoutSelectAction => ({
   LayoutName,
 });
 
-export const LayoutDelete = (LayoutName: string): LayoutDeleteAction => ({
+export const LayoutDelete = (Layout: ILayout): LayoutDeleteAction => ({
   type: LAYOUT_DELETE,
-  LayoutName,
+  Layout,
 });
 
 const initialLayoutState: LayoutState = {
@@ -68,21 +78,21 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (
     //      return state
     case LAYOUT_SELECT:
       return Object.assign({}, state, { CurrentLayout: (<LayoutSelectAction>action).LayoutName });
-    case LAYOUT_ADD_UPDATE:
-      let actionTypedAddUpdate = <LayoutAddUpdateAction>action;
+    case LAYOUT_ADD:
+      let actionTypedAdd = <LayoutAddAction>action;
+      layouts = [].concat(state.Layouts);
+      layouts.push(actionTypedAdd.Layout);
+      return Object.assign({}, state, { Layouts: layouts });
+    case LAYOUT_EDIT:
+      let actionTypedAddUpdate = <LayoutEditAction>action;
       layouts = [].concat(state.Layouts);
       index = actionTypedAddUpdate.Index;
-      if (actionTypedAddUpdate.Index > -1) {
-        // it exists
-        layouts[index] = actionTypedAddUpdate.Layout;
-      } else {
-        layouts.push(actionTypedAddUpdate.Layout);
-      }
+      layouts[index] = actionTypedAddUpdate.Layout;
       return Object.assign({}, state, { Layouts: layouts });
     case LAYOUT_DELETE:
       let actionTypedDelete = <LayoutDeleteAction>action;
       layouts = [].concat(state.Layouts);
-      index = layouts.findIndex(a => a.Name == actionTypedDelete.LayoutName);
+      index = layouts.findIndex(x => x.Name == actionTypedDelete.Layout.Name);
       layouts.splice(index, 1);
       return Object.assign({}, state, { Layouts: layouts });
     default:

@@ -7,8 +7,6 @@ import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { DataType, AccessLevel } from '../../Utilities/Enums';
-import { MathOperation } from '../../Utilities/Enums';
 import { DataSourceEntityRow } from './DataSourceEntityRow';
 import { DataSourceWizard } from './Wizard/DataSourceWizard';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -22,22 +20,15 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 import { IDataSource } from '../../Utilities/Interface/BlotterObjects/IDataSource';
-import { IAdvancedSearch } from '../../Utilities/Interface/BlotterObjects/IAdvancedSearch';
 import { Helper } from '../../Utilities/Helpers/Helper';
 
 interface DataSourcePopupProps extends StrategyViewPopupProps<DataSourcePopupComponent> {
-  onAddUpdateDataSource: (
+  onAddDataSource: (DataSource: IDataSource) => DataSourceRedux.DataSourceAddAction;
+  onEditDataSource: (
     Index: number,
     DataSource: IDataSource
-  ) => DataSourceRedux.DataSourceAddUpdateAction;
-  onChangeName: (
-    DataSource: IDataSource,
-    Name: string
-  ) => DataSourceRedux.DataSourceChangeNameAction;
-  onChangeDescription: (
-    DataSource: IDataSource,
-    Description: string
-  ) => DataSourceRedux.DataSourceChangeDescriptionAction;
+  ) => DataSourceRedux.DataSourceEditAction;
+
   onSelectDataSource: (SelectedDataSource: string) => DataSourceRedux.DataSourceSelectAction;
   DataSources: Array<IDataSource>;
   CurrentDataSource: string;
@@ -79,9 +70,9 @@ class DataSourcePopupComponent extends React.Component<
           onShare={() => this.props.onShare(dataSource)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={DataSourceRedux.DataSourceDelete(dataSource)}
-          onChangeName={(dataSource, newKey) => this.props.onChangeName(dataSource, newKey)}
-          onChangeDescription={(dataSource, newOperation) =>
-            this.props.onChangeDescription(dataSource, newOperation)
+          onChangeName={(dataSource, name) => this.onChangeName(dataSource, name)}
+          onChangeDescription={(dataSource, description) =>
+            this.onChangeDescription(dataSource, description)
           }
         />
       );
@@ -142,6 +133,20 @@ class DataSourcePopupComponent extends React.Component<
     );
   }
 
+  onChangeName(dataSource: IDataSource, name: string): void {
+    let currentIndex: number = this.props.DataSources.findIndex(ds => ds.Name == dataSource.Name);
+    let clonedDataSource: IDataSource = Helper.cloneObject(dataSource);
+    clonedDataSource.Name = name;
+    this.props.onEditDataSource(currentIndex, clonedDataSource);
+  }
+
+  onChangeDescription(dataSource: IDataSource, description: string): void {
+    let currentIndex: number = this.props.DataSources.findIndex(ds => ds.Name == dataSource.Name);
+    let clonedDataSource: IDataSource = Helper.cloneObject(dataSource);
+    clonedDataSource.Description = description;
+    this.props.onEditDataSource(currentIndex, clonedDataSource);
+  }
+
   onEdit(index: number, dataSource: IDataSource) {
     let clonedObject: IDataSource = Helper.cloneObject(dataSource);
     this.setState({
@@ -166,7 +171,12 @@ class DataSourcePopupComponent extends React.Component<
       as => as.Name == this.props.CurrentDataSource
     );
     let clonedObject: IDataSource = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
-    this.props.onAddUpdateDataSource(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
+    if (this.state.EditedAdaptableBlotterObject != -1) {
+      this.props.onEditDataSource(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
+    } else {
+      this.props.onAddDataSource(clonedObject);
+    }
+
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
@@ -195,7 +205,7 @@ class DataSourcePopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableBlotterState) {
   return {
     DataSources: state.DataSource.DataSources,
     CurrentDataSource: state.DataSource.CurrentDataSource,
@@ -204,12 +214,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddUpdateDataSource: (Index: number, DataSource: IDataSource) =>
-      dispatch(DataSourceRedux.DataSourceAddUpdate(Index, DataSource)),
-    onChangeName: (DataSource: IDataSource, Name: string) =>
-      dispatch(DataSourceRedux.DataSourceChangeName(DataSource, Name)),
-    onChangeDescription: (DataSource: IDataSource, Description: string) =>
-      dispatch(DataSourceRedux.DataSourceChangeDescription(DataSource, Description)),
+    onAddDataSource: (DataSource: IDataSource) =>
+      dispatch(DataSourceRedux.DataSourceAdd(DataSource)),
+    onEditSource: (Index: number, DataSource: IDataSource) =>
+      dispatch(DataSourceRedux.DataSourceEdit(Index, DataSource)),
     onSelectDataSource: (SelectedDataSource: string) =>
       dispatch(DataSourceRedux.DataSourceSelect(SelectedDataSource)),
     onShare: (entity: IAdaptableBlotterObject) =>
