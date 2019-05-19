@@ -6,7 +6,6 @@ import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 export const CALCULATEDCOLUMN_ADD = 'CALCULATEDCOLUMN_ADD';
 export const CALCULATEDCOLUMN_EDIT = 'CALCULATEDCOLUMN_EDIT';
 export const CALCULATEDCOLUMN_DELETE = 'CALCULATEDCOLUMN_DELETE';
-export const CALCULATEDCOLUMN_IS_EXPRESSION_VALID = 'CALCULATEDCOLUMN_IS_EXPRESSION_VALID';
 
 export interface CalculatedColumnAddAction extends Redux.Action {
   calculatedColumn: ICalculatedColumn;
@@ -19,10 +18,7 @@ export interface CalculatedColumnEditAction extends Redux.Action {
 
 export interface CalculatedColumnDeleteAction extends Redux.Action {
   index: number;
-}
-
-export interface CalculatedColumnIsExpressionValidAction extends Redux.Action {
-  expression: string;
+  calculatedColumn: ICalculatedColumn;
 }
 
 export const CalculatedColumnAdd = (
@@ -41,16 +37,13 @@ export const CalculatedColumnEdit = (
   calculatedColumn,
 });
 
-export const CalculatedColumnDelete = (index: number): CalculatedColumnDeleteAction => ({
+export const CalculatedColumnDelete = (
+  index: number,
+  calculatedColumn: ICalculatedColumn
+): CalculatedColumnDeleteAction => ({
   type: CALCULATEDCOLUMN_DELETE,
   index,
-});
-
-export const CalculatedColumnIsExpressionValid = (
-  expression: string
-): CalculatedColumnIsExpressionValidAction => ({
-  type: CALCULATEDCOLUMN_IS_EXPRESSION_VALID,
-  expression,
+  calculatedColumn,
 });
 
 const initialCalculatedColumnState: CalculatedColumnState = {
@@ -83,7 +76,6 @@ export const CalculatedColumnReducer: Redux.Reducer<CalculatedColumnState> = (
       var items: Array<ICalculatedColumn> = [].concat(state.CalculatedColumns);
       let index = (<CalculatedColumnDeleteAction>action).index;
       items.splice(index, 1);
-
       return Object.assign({}, state, {
         CalculatedColumns: items,
       });

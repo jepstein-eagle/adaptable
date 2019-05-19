@@ -58,14 +58,14 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
   }
 
   public addAdvancedSearch(advancedSearch: IAdvancedSearch): void {
-    this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAddUpdate(-1, advancedSearch));
+    this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAdd(advancedSearch));
   }
 
   public editAdvancedSearch(advancedSearchName: string, advancedSearch: IAdvancedSearch): void {
     let searchIndex: number = this.getBlotterState().AdvancedSearch.AdvancedSearches.findIndex(
       a => a.Name == advancedSearchName
     );
-    this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAddUpdate(searchIndex, advancedSearch));
+    this.dispatchAction(AdvancedSearchRedux.AdvancedSearchEdit(searchIndex, advancedSearch));
   }
 
   public deleteAdvancedSearch(advancedSearchName: string): void {

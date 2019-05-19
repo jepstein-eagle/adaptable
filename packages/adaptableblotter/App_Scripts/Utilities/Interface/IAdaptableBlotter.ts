@@ -21,6 +21,7 @@ import { IEvent } from './IEvent';
 import { IStrategyCollection } from '../../Strategy/Interface/IStrategy';
 import { ILicenceService } from '../Services/Interface/ILicenceService';
 import { IScheduleService } from '../Services/Interface/IScheduleService';
+import { IAuditLogService } from '../Services/Interface/IAuditLogService';
 
 /**
  *  The only interface for the AdaptableBlotter
@@ -80,7 +81,7 @@ export interface IAdaptableBlotter {
   CalendarService: ICalendarService;
   DataService: IDataService;
   ValidationService: IValidationService;
-  AuditLogService: AuditLogService;
+  AuditLogService: IAuditLogService;
   CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
   ChartService: IChartService;
   LicenceService: ILicenceService;

@@ -64,7 +64,7 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
           gridState,
           currentLayoutName
         );
-        this.dispatchAction(LayoutRedux.LayoutPreSave(currentLayoutIndex, layoutToSave));
+        this.dispatchAction(LayoutRedux.LayoutSave(currentLayoutIndex, layoutToSave));
       }
     }
   }

@@ -4,17 +4,23 @@ import { ICellValidationRule } from '../../Utilities/Interface/BlotterObjects/IC
 import { ActionMode } from '../../Utilities/Enums';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
-export const CELL_VALIDATION_ADD_UPDATE = 'CELL_VALIDATION_ADD_UPDATE';
+export const CELL_VALIDATION_ADD = 'CELL_VALIDATION_ADD';
+export const CELL_VALIDATION_EDIT = 'CELL_VALIDATION_EDIT';
 export const CELL_VALIDATION_DELETE = 'CELL_VALIDATION_DELETE';
 export const CELL_VALIDATION_CHANGE_MODE = 'CELL_VALIDATION_CHANGE_MODE';
 
-export interface CellValidationAddUpdateAction extends Redux.Action {
+export interface CellValidationAddAction extends Redux.Action {
+  cellValidationRule: ICellValidationRule;
+}
+
+export interface CellValidationEditAction extends Redux.Action {
   index: number;
   cellValidationRule: ICellValidationRule;
 }
 
 export interface CellValidationDeleteAction extends Redux.Action {
   index: number;
+  cellValidationRule: ICellValidationRule;
 }
 
 export interface CellValidationChangeModeAction extends Redux.Action {
@@ -22,18 +28,29 @@ export interface CellValidationChangeModeAction extends Redux.Action {
   ActionMode: ActionMode;
 }
 
-export const CellValidationAddUpdate = (
+export const CellValidationAdd = (
+  cellValidationRule: ICellValidationRule
+): CellValidationAddAction => ({
+  type: CELL_VALIDATION_ADD,
+  cellValidationRule,
+});
+
+export const CellValidationEdit = (
   index: number,
   cellValidationRule: ICellValidationRule
-): CellValidationAddUpdateAction => ({
-  type: CELL_VALIDATION_ADD_UPDATE,
+): CellValidationEditAction => ({
+  type: CELL_VALIDATION_EDIT,
   index,
   cellValidationRule,
 });
 
-export const CellValidationDelete = (index: number): CellValidationDeleteAction => ({
+export const CellValidationDelete = (
+  index: number,
+  cellValidationRule: ICellValidationRule
+): CellValidationDeleteAction => ({
   type: CELL_VALIDATION_DELETE,
   index,
+  cellValidationRule,
 });
 
 export const CellValidationChangeMode = (
@@ -56,14 +73,16 @@ export const CellValidationReducer: Redux.Reducer<CellValidationState> = (
   let cellValidations: ICellValidationRule[];
 
   switch (action.type) {
-    case CELL_VALIDATION_ADD_UPDATE: {
-      let actionTyped = <CellValidationAddUpdateAction>action;
+    case CELL_VALIDATION_ADD: {
+      let actionTyped = <CellValidationAddAction>action;
       cellValidations = [].concat(state.CellValidations);
-      if (actionTyped.index == -1) {
-        cellValidations.push(actionTyped.cellValidationRule);
-      } else {
-        cellValidations[actionTyped.index] = actionTyped.cellValidationRule;
-      }
+      cellValidations.push(actionTyped.cellValidationRule);
+      return Object.assign({}, state, { CellValidations: cellValidations });
+    }
+    case CELL_VALIDATION_EDIT: {
+      let actionTyped = <CellValidationEditAction>action;
+      cellValidations = [].concat(state.CellValidations);
+      cellValidations[actionTyped.index] = actionTyped.cellValidationRule;
       return Object.assign({}, state, { CellValidations: cellValidations });
     }
 

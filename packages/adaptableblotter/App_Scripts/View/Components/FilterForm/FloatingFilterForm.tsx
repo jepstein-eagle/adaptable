@@ -28,9 +28,8 @@ interface FloatingFilterFormProps extends StrategyViewPopupProps<FloatingFilterF
   UserFilters: IUserFilter[];
   SystemFilters: string[];
   ColumnFilters: IColumnFilter[];
-  onAddEditColumnFilter: (
-    columnFilter: IColumnFilter
-  ) => ColumnFilterRedux.ColumnFilterAddUpdateAction;
+  onAddColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
+  onEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
   onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
 }
 
@@ -182,7 +181,11 @@ class FloatingFilterFormComponent extends React.Component<
       filterExpression: expression,
       placeholder: '',
     });
-    this.props.onAddEditColumnFilter(columnFilter);
+    if (this.props.ColumnFilters.find(cf => cf.ColumnId == columnFilter.ColumnId)) {
+      this.props.onEditColumnFilter(columnFilter);
+    } else {
+      this.props.onAddColumnFilter(columnFilter);
+    }
   }
 
   createRangeExpression(operatorKVP: IKeyValuePair, searchText: string): void {
@@ -301,8 +304,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddEditColumnFilter: (columnFilter: IColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
+    onAddColumnFilter: (columnFilter: IColumnFilter) =>
+      dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
+    onEditColumnFilter: (columnFilter: IColumnFilter) =>
+      dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter)),
     onClearColumnFilter: (columnId: string) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
   };

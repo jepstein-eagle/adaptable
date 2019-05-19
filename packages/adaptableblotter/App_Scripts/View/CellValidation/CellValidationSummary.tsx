@@ -23,10 +23,13 @@ import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelp
 export interface CellValidationSummaryProps
   extends StrategySummaryProps<CellValidationSummaryComponent> {
   CellValidations: ICellValidationRule[];
-  onAddUpdateCellValidation: (
+  onAddCellValidation: (
+    CellValidation: ICellValidationRule
+  ) => CellValidationRedux.CellValidationAddAction;
+  onEditCellValidation: (
     index: number,
     CellValidation: ICellValidationRule
-  ) => CellValidationRedux.CellValidationAddUpdateAction;
+  ) => CellValidationRedux.CellValidationEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -76,7 +79,7 @@ export class CellValidationSummaryComponent extends React.Component<
             showShare={this.props.TeamSharingActivated}
             onEdit={() => this.onEdit(index, item)}
             onShare={() => this.props.onShare(item)}
-            onDelete={CellValidationRedux.CellValidationDelete(index)}
+            onDelete={CellValidationRedux.CellValidationDelete(index, item)}
           />
         );
         strategySummaries.push(detailRow);
@@ -136,8 +139,14 @@ export class CellValidationSummaryComponent extends React.Component<
   }
 
   onFinishWizard() {
-    this.props.onAddUpdateCellValidation(this.state.EditedAdaptableBlotterObjectIndex, this.state
-      .EditedAdaptableBlotterObject as ICellValidationRule);
+    if (this.state.EditedAdaptableBlotterObjectIndex == -1) {
+      this.props.onAddCellValidation(this.state
+        .EditedAdaptableBlotterObject as ICellValidationRule);
+    } else {
+      this.props.onEditCellValidation(this.state.EditedAdaptableBlotterObjectIndex, this.state
+        .EditedAdaptableBlotterObject as ICellValidationRule);
+    }
+
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
@@ -162,8 +171,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddUpdateCellValidation: (index: number, CellValidation: ICellValidationRule) =>
-      dispatch(CellValidationRedux.CellValidationAddUpdate(index, CellValidation)),
+    onAddCellValidation: (CellValidation: ICellValidationRule) =>
+      dispatch(CellValidationRedux.CellValidationAdd(CellValidation)),
+    onEditCellValidation: (index: number, CellValidation: ICellValidationRule) =>
+      dispatch(CellValidationRedux.CellValidationEdit(index, CellValidation)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId)

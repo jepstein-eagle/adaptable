@@ -52,9 +52,8 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   EmbedColumnMenu: boolean;
   ShowCloseButton: boolean;
   onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
-  onAddEditColumnFilter: (
-    columnFilter: IColumnFilter
-  ) => ColumnFilterRedux.ColumnFilterAddUpdateAction;
+  onAddColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
+  onEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
   onHideFilterForm: () => HomeRedux.FilterFormHideAction;
   onContextMenuItemClick: (action: Redux.Action) => Redux.Action;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
@@ -430,7 +429,11 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     ) {
       this.props.onClearColumnFilter(columnFilter.ColumnId);
     } else {
-      this.props.onAddEditColumnFilter(columnFilter);
+      if (this.props.ColumnFilters.find(cf => cf.ColumnId == columnFilter.ColumnId)) {
+        this.props.onEditColumnFilter(columnFilter);
+      } else {
+        this.props.onAddColumnFilter(columnFilter);
+      }
     }
   }
 
@@ -479,8 +482,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     onContextMenuItemClick: (action: Redux.Action) => dispatch(action),
     onClearColumnFilter: (columnId: string) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
-    onAddEditColumnFilter: (columnFilter: IColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter)),
+    onAddColumnFilter: (columnFilter: IColumnFilter) =>
+      dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
+    onEditColumnFilter: (columnFilter: IColumnFilter) =>
+      dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter)),
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
     onHideFilterForm: () => dispatch(HomeRedux.FilterFormHide()),
   };

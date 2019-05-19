@@ -80,7 +80,7 @@ class ColumnCategoryPopupComponent extends React.Component<
           onEdit={(index, x) => this.onEdit(index, x as IColumnCategory)}
           onShare={() => this.props.onShare(x)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          onDeleteConfirm={ColumnCategoryRedux.ColumnCategoryDelete(x)}
+          onDeleteConfirm={ColumnCategoryRedux.ColumnCategoryDelete(index, x)}
         />
       );
     });

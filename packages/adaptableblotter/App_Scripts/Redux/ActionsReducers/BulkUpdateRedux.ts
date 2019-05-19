@@ -10,7 +10,7 @@ export interface BulkUpdateApplyAction extends Redux.Action {
 }
 
 export interface BulkUpdateChangeValueAction extends Redux.Action {
-  value: string;
+  bulkUpdateValue: string;
 }
 
 export const BulkUpdateApply = (bypassCellValidationWarnings: boolean): BulkUpdateApplyAction => ({
@@ -18,9 +18,9 @@ export const BulkUpdateApply = (bypassCellValidationWarnings: boolean): BulkUpda
   bypassCellValidationWarnings,
 });
 
-export const BulkUpdateChangeValue = (value: string): BulkUpdateChangeValueAction => ({
+export const BulkUpdateChangeValue = (bulkUpdateValue: string): BulkUpdateChangeValueAction => ({
   type: BULK_UPDATE_CHANGE_VALUE,
-  value,
+  bulkUpdateValue,
 });
 
 const initialBulkUpdateState: BulkUpdateState = {
@@ -37,7 +37,7 @@ export const BulkUpdateReducer: Redux.Reducer<BulkUpdateState> = (
       return Object.assign({}, state, { PreviewInfo: null });
     case BULK_UPDATE_CHANGE_VALUE:
       return Object.assign({}, state, {
-        BulkUpdateValue: (<BulkUpdateChangeValueAction>action).value,
+        BulkUpdateValue: (<BulkUpdateChangeValueAction>action).bulkUpdateValue,
       });
     default:
       return state;

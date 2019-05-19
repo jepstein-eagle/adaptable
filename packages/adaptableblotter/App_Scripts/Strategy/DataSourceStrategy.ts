@@ -26,10 +26,6 @@ export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSo
       this.DataSourceState = this.GetDataSourceState();
 
       this.publishSearchChanged(SearchChangedTrigger.DataSource);
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.DataSource, this.DataSourceState);
-      }
     }
   }
 

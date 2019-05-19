@@ -103,6 +103,7 @@ import { LicenceService } from '../Utilities/Services/LicenceService';
 import { PieChartStrategy } from '../Strategy/PieChartStrategy';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
+import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
@@ -134,7 +135,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public CalendarService: ICalendarService;
   public DataService: IDataService;
   public ValidationService: IValidationService;
-  public AuditLogService: AuditLogService;
+  public AuditLogService: IAuditLogService;
   public ChartService: IChartService;
   public LicenceService: ILicenceService;
   public CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
@@ -171,7 +172,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     BlotterHelper.checkLicenceKey(this.LicenceService.LicenceInfo);
 
     // the audit service needs to be created before the store
-    this.AuditLogService = new AuditLogService(this.blotterOptions);
+    this.AuditLogService = new AuditLogService(this);
     // create the store
     this.adaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -708,8 +709,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       IdentifierValue: cellInfo.Id,
       Record: null,
     };
-    if (this.AuditLogService.IsAuditCellEditsEnabled) {
-      this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+    if (this.AuditLogService.isAuditCellEditsEnabled) {
+      this.AuditLogService.addEditCellAuditLog(dataChangedEvent);
     }
     // it might be a free text column so we need to update the values
     this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
@@ -741,8 +742,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //the grid will eventually pick up the change but we want to force the refresh in order to avoid the weird lag
     this.filterOnUserDataChange();
 
-    if (this.AuditLogService.IsAuditCellEditsEnabled) {
-      this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
+    if (this.AuditLogService.isAuditCellEditsEnabled) {
+      this.AuditLogService.addEditCellAuditLogBatch(dataChangedEvents);
     }
     this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents);
 
@@ -1485,8 +1486,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
 
       // finally call auditlogservice
-      if (this.AuditLogService.IsAuditCellEditsEnabled) {
-        this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+      if (this.AuditLogService.isAuditCellEditsEnabled) {
+        this.AuditLogService.addEditCellAuditLog(dataChangedEvent);
       }
     });
     //We call Reindex so functions like CustomSort, Search and Filter are reapplied

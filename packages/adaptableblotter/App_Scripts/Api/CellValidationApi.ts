@@ -14,11 +14,11 @@ export class CellValidationApi extends ApiBase implements ICellValidationApi {
   }
 
   public addCellValidation(cellValidationRule: ICellValidationRule): void {
-    this.dispatchAction(CellValidationRedux.CellValidationAddUpdate(-1, cellValidationRule));
+    this.dispatchAction(CellValidationRedux.CellValidationAdd(cellValidationRule));
   }
 
   public deleteCellValidation(cellValidationRule: ICellValidationRule): void {
     let index: number = this.getAllCellValidation().findIndex(cv => cv == cellValidationRule);
-    this.dispatchAction(CellValidationRedux.CellValidationDelete(index));
+    this.dispatchAction(CellValidationRedux.CellValidationDelete(index, cellValidationRule));
   }
 }

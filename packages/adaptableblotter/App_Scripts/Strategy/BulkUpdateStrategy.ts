@@ -12,10 +12,11 @@ import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICell
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
+import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
+import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
+import StringExtensions from '../Utilities/Extensions/StringExtensions';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
-  protected BulkUpdateState: BulkUpdateState;
-
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.BulkUpdateStrategyId, blotter);
   }
@@ -28,18 +29,17 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
     );
   }
 
-  protected InitState() {
-    if (this.BulkUpdateState != this.GetBulkUpdateState()) {
-      this.BulkUpdateState = this.GetBulkUpdateState();
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.BulkUpdate, this.BulkUpdateState);
-      }
-    }
-  }
   public ApplyBulkUpdate(newValues: ICellInfo[]): void {
-    // this.AuditFunctionAction("ApplyBulkUpdate", "", { BulkUpdateValue: this.GetBulkUpdateState().BulkUpdateValue, NewValues: newValues })
-
+    if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
+      // logging audit log function here as there is no obvious Action to listen to in the Store - not great but not end of the world...
+      let functionAppliedDetails: IFunctionAppliedDetails = {
+        name: StrategyConstants.BulkUpdateStrategyId,
+        action: BULK_UPDATE_APPLY,
+        info: 'Bulk Update Applied',
+        data: newValues,
+      };
+      this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+    }
     this.blotter.setValueBatch(newValues);
   }
 

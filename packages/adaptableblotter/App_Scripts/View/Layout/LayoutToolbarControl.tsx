@@ -24,7 +24,7 @@ import { AccessLevel, DashboardSize } from '../../Utilities/Enums';
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
   onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
-  onPreSaveLayout: (index: number, layout: ILayout) => LayoutRedux.LayoutPreSaveAction;
+  onSaveLayout: (index: number, layout: ILayout) => LayoutRedux.LayoutSaveAction;
   onNewLayout: () => PopupRedux.PopupShowScreenAction;
   Layouts: ILayout[];
   CurrentLayout: string;
@@ -204,7 +204,7 @@ class LayoutToolbarControlComponent extends React.Component<
     );
     let currentLayoutIndex = this.props.Layouts.findIndex(l => l.Name == this.props.CurrentLayout);
     if (currentLayoutIndex != -1) {
-      this.props.onPreSaveLayout(currentLayoutIndex, layoutToSave);
+      this.props.onSaveLayout(currentLayoutIndex, layoutToSave);
     }
   }
 
@@ -223,8 +223,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
-    onPreSaveLayout: (index: number, layout: ILayout) =>
-      dispatch(LayoutRedux.LayoutPreSave(index, layout)),
+    onSaveLayout: (index: number, layout: ILayout) =>
+      dispatch(LayoutRedux.LayoutSave(index, layout)),
     onNewLayout: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

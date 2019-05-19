@@ -1,11 +1,11 @@
 import { IEventApi } from './Api/Interface/IEventApi';
 import {
-  ISearchChangedEventArgs,
   IThemeChangedEventArgs,
-  IStateChangedEventArgs,
   IColumnStateChangedEventArgs,
   IAlertFiredEventArgs,
-} from './Utilities/Interface/IStateEvents';
+} from './Utilities/Interface/IBlotterEvents';
+import { ISearchChangedEventArgs } from './Utilities/Interface/SearchChanged/ISearchChangedEventArgs';
+import { IStateChangedEventArgs } from './Utilities/Interface/SearchChanged/IStateChangedEventArgs';
 
 export { IAdaptableBlotter } from './Utilities/Interface/IAdaptableBlotter';
 export {

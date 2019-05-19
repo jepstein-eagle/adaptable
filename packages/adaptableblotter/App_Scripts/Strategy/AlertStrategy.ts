@@ -6,31 +6,18 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IAlertDefinition } from '../Utilities/Interface/BlotterObjects/IAlertDefinition';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
-import { AlertState } from '../Redux/ActionsReducers/Interface/IState';
-import { LeafExpressionOperator, StateChangedTrigger } from '../Utilities/Enums';
+import { LeafExpressionOperator } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
-  protected AlertState: AlertState;
-
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.AlertStrategyId, blotter);
     this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) =>
       this.handleDataSourceChanged(eventText)
     );
-  }
-
-  protected InitState() {
-    if (this.AlertState != this.blotter.api.alertApi.getAlertState()) {
-      this.AlertState = this.blotter.api.alertApi.getAlertState();
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.Alert, this.AlertState);
-      }
-    }
   }
 
   protected addPopupMenuItem() {
@@ -58,9 +45,9 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
   }
 
   public CheckDataChanged(dataChangedEvent: IDataChangedInfo): IAlertDefinition[] {
-    let relatedAlertDefinitions = this.AlertState.AlertDefinitions.filter(
-      v => v.ColumnId == dataChangedEvent.ColumnId
-    );
+    let relatedAlertDefinitions = this.blotter.api.alertApi
+      .getAlertState()
+      .AlertDefinitions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
     let triggeredAlerts: IAlertDefinition[] = [];
     if (relatedAlertDefinitions.length > 0) {
       let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
@@ -94,17 +81,6 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
       for (let noExpressionRule of noExpressionRules) {
         if (this.IsAlertTriggered(noExpressionRule, dataChangedEvent, columns)) {
           triggeredAlerts.push(noExpressionRule);
-        }
-      }
-
-      if (ArrayExtensions.IsNotEmpty(triggeredAlerts)) {
-        if (this.blotter.AuditLogService.IsAuditFunctionEventsEnabled) {
-          this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(
-            StrategyConstants.AlertStrategyId,
-            'Data Changed',
-            'Alerts Triggered',
-            { TriggeredAlerts: triggeredAlerts, DataChangedEvent: dataChangedEvent }
-          );
         }
       }
     }

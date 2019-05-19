@@ -5,7 +5,6 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IPercentBarStrategy } from './Interface/IPercentBarStrategy';
 import { PercentBarState } from '../Redux/ActionsReducers/Interface/IState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
 
 export class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
@@ -54,7 +53,6 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
         this.blotter.redraw();
       }
       this.PercentBarState = this.GetPercentBarState();
-      this.publishStateChanged(StateChangedTrigger.PercentBar, this.PercentBarState);
     }
   }
 

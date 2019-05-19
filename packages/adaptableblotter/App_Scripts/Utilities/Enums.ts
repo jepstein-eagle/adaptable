@@ -113,13 +113,6 @@ export enum DisplayAction {
   ShowRowAndHighlightCell = 'ShowRowAndHighlightCell',
 }
 
-export enum AuditLogTrigger {
-  CellEdit = 'CellEdit',
-  StateChange = 'StateChange',
-  AdaptableBlotterFunction = 'AdaptableBlotterFunction',
-  Ping = 'Ping',
-}
-
 export enum RangeOperandType {
   Column = 'Column',
   Value = 'Value',

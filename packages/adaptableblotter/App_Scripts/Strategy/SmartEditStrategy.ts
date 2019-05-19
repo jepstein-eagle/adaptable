@@ -12,10 +12,11 @@ import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICell
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
+import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
+import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
+import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
-  private SmartEditState: SmartEditState;
-
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.SmartEditStrategyId, blotter);
   }
@@ -28,17 +29,18 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     );
   }
 
-  protected InitState() {
-    if (this.SmartEditState != this.blotter.api.smartEditApi.getSmartEditState()) {
-      this.SmartEditState = this.blotter.api.smartEditApi.getSmartEditState();
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.SmartEdit, this.SmartEditState);
-      }
-    }
-  }
-
   public ApplySmartEdit(newValues: ICellInfo[]): void {
+    if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
+      // logging audit log function here as there is no obvious Action to listen to in the Store - not great but not end of the world...
+      let functionAppliedDetails: IFunctionAppliedDetails = {
+        name: StrategyConstants.SmartEditStrategyId,
+        action: SMARTEDIT_APPLY,
+        info: 'Smart Edit Applied',
+        data: newValues,
+      };
+      this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+    }
+
     this.blotter.setValueBatch(newValues);
   }
 

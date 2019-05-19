@@ -9,13 +9,28 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
   predefinedConfig: null,
   licenceKey: '',
   auditOptions: {
-    auditCellEdits: false,
-    auditFunctionEvents: false,
-    auditUserStateChanges: false,
-    auditInternalStateChanges: false,
+    auditCellEdits: {
+      auditToHttpChannel: false,
+      auditToConsole: false,
+      auditAsEvent: false,
+    },
+    auditFunctionEvents: {
+      auditToHttpChannel: false,
+      auditToConsole: false,
+      auditAsEvent: false,
+    },
+    auditUserStateChanges: {
+      auditToHttpChannel: false,
+      auditToConsole: false,
+      auditAsEvent: false,
+    },
+    auditInternalStateChanges: {
+      auditToHttpChannel: false,
+      auditToConsole: false,
+      auditAsEvent: false,
+    },
     pingInterval: 60,
     auditLogsSendInterval: 1,
-    auditToConsole: false,
   },
   configServerOptions: {
     enableConfigServer: false,

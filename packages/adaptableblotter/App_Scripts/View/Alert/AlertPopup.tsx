@@ -27,14 +27,8 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
   AlertDefinitions: IAlertDefinition[];
-  onAddEditAlert: (
-    Index: number,
-    Alert: IAlertDefinition
-  ) => AlertRedux.AlertDefinitionAddUpdateAction;
-  onChangeMessageType: (
-    index: number,
-    ActionMode: any
-  ) => AlertRedux.AlertDefinitionChangeMessageTypeAction;
+  onAddAlert: (Alert: IAlertDefinition) => AlertRedux.AlertDefinitionAddAction;
+  onEditAlert: (Index: number, Alert: IAlertDefinition) => AlertRedux.AlertDefinitionEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -90,8 +84,10 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
           onEdit={(index, x) => this.onEdit(index, x as IAlertDefinition)}
           onShare={() => this.props.onShare(x)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          onDeleteConfirm={AlertRedux.AlertDefinitionDelete(index)}
-          onChangeMessageType={(index, x) => this.onMessageTypeChanged(index, x)}
+          onDeleteConfirm={AlertRedux.AlertDefinitionDelete(index, x)}
+          onChangeMessageType={(index, messageType) =>
+            this.onMessageTypeChanged(index, messageType, x)
+          }
         />
       );
     });
@@ -169,8 +165,9 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     });
   }
 
-  onMessageTypeChanged(index: number, ActionMode: any) {
-    this.props.onChangeMessageType(index, ActionMode);
+  onMessageTypeChanged(index: number, messageType: MessageType, alertDefinition: IAlertDefinition) {
+    alertDefinition.MessageType = messageType;
+    this.props.onEditAlert(index, alertDefinition);
   }
 
   onEdit(index: number, Alert: IAlertDefinition) {
@@ -191,8 +188,13 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
   }
 
   onFinishWizard() {
-    this.props.onAddEditAlert(this.state.EditedAdaptableBlotterObjectIndex, this.state
-      .EditedAdaptableBlotterObject as IAlertDefinition);
+    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
+      this.props.onEditAlert(this.state.EditedAdaptableBlotterObjectIndex, this.state
+        .EditedAdaptableBlotterObject as IAlertDefinition);
+    } else {
+      this.props.onAddAlert(this.state.EditedAdaptableBlotterObject as IAlertDefinition);
+    }
+
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
@@ -217,10 +219,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddEditAlert: (index: number, Alert: IAlertDefinition) =>
-      dispatch(AlertRedux.AlertDefinitionAddUpdate(index, Alert)),
-    onChangeMessageType: (index: number, MessageType: MessageType) =>
-      dispatch(AlertRedux.AlertDefinitionChangeMessageType(index, MessageType)),
+    onAddAlert: (alert: IAlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(alert)),
+    onEditAlert: (index: number, alert: IAlertDefinition) =>
+      dispatch(AlertRedux.AlertDefinitionEdit(index, alert)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId)),
   };

@@ -58,7 +58,7 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
           layoutState.CurrentLayout
         );
         blotter.adaptableBlotterStore.TheStore.dispatch(
-          LayoutRedux.LayoutPreSave(layoutIndex, layoutToSave)
+          LayoutRedux.LayoutSave(layoutIndex, layoutToSave)
         );
       }
     }

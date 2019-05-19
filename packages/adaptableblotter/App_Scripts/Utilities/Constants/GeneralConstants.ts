@@ -80,3 +80,11 @@ export const ALERT_DEFAULT_OPERATOR: LeafExpressionOperator = LeafExpressionOper
 export const ALERT_DEFAULT_RANGE_OPERAND_TYPE: 'Value' | 'Column' = 'Column';
 export const ALERT_DEFAULT_MESSAGE_TYPE: 'Success' | 'Info' | 'Warning' | 'Error' = 'Error';
 export const ALERT_DEFAULT_SHOW_AS_POPUP: boolean = true;
+
+/**
+ * Constants for State (primarily for audit property events) - good idea?
+ */
+export const CURRENT_ADVANCED_SEARCH: string = 'CurrentAdvancedSearch';
+export const BULK_UPDATE_VALUE: string = 'BulkUpdateValue';
+export const CURRENT_CALENDAR: string = 'CurrentCalendar';
+export const SUMMARY_OPERATION: string = 'SummaryOperation';

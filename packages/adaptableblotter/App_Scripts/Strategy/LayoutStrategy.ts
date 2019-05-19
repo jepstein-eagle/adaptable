@@ -21,14 +21,4 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
       StrategyConstants.LayoutGlyph
     );
   }
-
-  protected InitState() {
-    if (this.LayoutState != this.blotter.api.layoutApi.getLayoutState()) {
-      this.LayoutState = this.blotter.api.layoutApi.getLayoutState();
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.Layout, this.LayoutState);
-      }
-    }
-  }
 }

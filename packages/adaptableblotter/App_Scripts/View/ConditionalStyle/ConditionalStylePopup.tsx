@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { HelpBlock } from 'react-bootstrap';
-import { ConditionalStyleScope, AccessLevel } from '../../Utilities/Enums';
+import { ConditionalStyleScope } from '../../Utilities/Enums';
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -31,10 +30,13 @@ interface ConditionalStylePopupProps
   ConditionalStyles: IConditionalStyle[];
   StyleClassNames: string[];
   ColumnCategories: IColumnCategory[];
-  onAddUpdateConditionalStyle: (
+  onAddConditionalStyle: (
+    condiditionalStyleCondition: IConditionalStyle
+  ) => ConditionalStyleRedux.ConditionalStyleAddAction;
+  onEditConditionalStyle: (
     index: number,
     condiditionalStyleCondition: IConditionalStyle
-  ) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction;
+  ) => ConditionalStyleRedux.ConditionalStyleEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -190,10 +192,15 @@ class ConditionalStylePopupComponent extends React.Component<
   onFinishWizard() {
     let conditionalStyle: IConditionalStyle = this.state
       .EditedAdaptableBlotterObject as IConditionalStyle;
-    this.props.onAddUpdateConditionalStyle(
-      this.state.EditedAdaptableBlotterObjectIndex,
-      conditionalStyle
-    );
+    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
+      this.props.onEditConditionalStyle(
+        this.state.EditedAdaptableBlotterObjectIndex,
+        conditionalStyle
+      );
+    } else {
+      this.props.onAddConditionalStyle(conditionalStyle);
+    }
+
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
@@ -222,7 +229,7 @@ class ConditionalStylePopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableBlotterState) {
   return {
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
     StyleClassNames: state.UserInterface.StyleClassNames,
@@ -232,8 +239,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyle) =>
-      dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(index, conditionalStyle)),
+    onAddConditionalStyle: (conditionalStyle: IConditionalStyle) =>
+      dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
+    onEditConditionalStyle: (index: number, conditionalStyle: IConditionalStyle) =>
+      dispatch(ConditionalStyleRedux.ConditionalStyleEdit(index, conditionalStyle)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)

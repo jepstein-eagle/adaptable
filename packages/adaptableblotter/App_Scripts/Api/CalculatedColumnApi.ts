@@ -32,6 +32,9 @@ export class CalculatedColumnApi extends ApiBase implements ICalculatedColumnApi
     let calcColumnIndex: number = this.getAllCalculatedColumn().findIndex(
       cc => cc.ColumnId == column
     );
-    this.dispatchAction(CalculatedColumnRedux.CalculatedColumnDelete(calcColumnIndex));
+    let calcColumn: ICalculatedColumn = this.getAllCalculatedColumn().find(
+      cc => cc.ColumnId == column
+    );
+    this.dispatchAction(CalculatedColumnRedux.CalculatedColumnDelete(calcColumnIndex, calcColumn));
   }
 }

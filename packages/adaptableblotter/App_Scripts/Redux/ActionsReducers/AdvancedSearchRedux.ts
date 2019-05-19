@@ -3,11 +3,16 @@ import * as Redux from 'redux';
 import { IAdvancedSearch } from '../../Utilities/Interface/BlotterObjects/IAdvancedSearch';
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
-export const ADVANCED_SEARCH_ADD_UPDATE = 'ADVANCED_SEARCH_ADD_UPDATE';
+export const ADVANCED_SEARCH_ADD = 'ADVANCED_SEARCH_ADD';
+export const ADVANCED_SEARCH_EDIT = 'ADVANCED_SEARCH_EDIT';
 export const ADVANCED_SEARCH_DELETE = 'ADVANCED_SEARCH_DELETE';
 export const ADVANCED_SEARCH_SELECT = 'ADVANCED_SEARCH_SELECT';
 
-export interface AdvancedSearchAddUpdateAction extends Redux.Action {
+export interface AdvancedSearchAddAction extends Redux.Action {
+  advancedSearch: IAdvancedSearch;
+}
+
+export interface AdvancedSearchEditAction extends Redux.Action {
   index: number;
   advancedSearch: IAdvancedSearch;
 }
@@ -20,11 +25,16 @@ export interface AdvancedSearchSelectAction extends Redux.Action {
   selectedSearchName: string;
 }
 
-export const AdvancedSearchAddUpdate = (
+export const AdvancedSearchAdd = (advancedSearch: IAdvancedSearch): AdvancedSearchAddAction => ({
+  type: ADVANCED_SEARCH_ADD,
+  advancedSearch,
+});
+
+export const AdvancedSearchEdit = (
   index: number,
   advancedSearch: IAdvancedSearch
-): AdvancedSearchAddUpdateAction => ({
-  type: ADVANCED_SEARCH_ADD_UPDATE,
+): AdvancedSearchEditAction => ({
+  type: ADVANCED_SEARCH_EDIT,
   index,
   advancedSearch,
 });
@@ -54,16 +64,17 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (
   let advancedSearches: IAdvancedSearch[];
 
   switch (action.type) {
-    case ADVANCED_SEARCH_ADD_UPDATE:
-      let actionTypedAddUpdate = <AdvancedSearchAddUpdateAction>action;
+    case ADVANCED_SEARCH_ADD:
+      let actionTypedAdd = <AdvancedSearchAddAction>action;
       advancedSearches = [].concat(state.AdvancedSearches);
-      if (actionTypedAddUpdate.index != -1) {
-        // it exists
-        advancedSearches[actionTypedAddUpdate.index] = actionTypedAddUpdate.advancedSearch;
-      } else {
-        advancedSearches.push(actionTypedAddUpdate.advancedSearch);
-      }
-      return Object.assign({}, state, { AdvancedSearches: advancedSearches }); //, CurrentAdvancedSearch: currentSearchName })
+      advancedSearches.push(actionTypedAdd.advancedSearch);
+      return Object.assign({}, state, { AdvancedSearches: advancedSearches });
+
+    case ADVANCED_SEARCH_EDIT:
+      let actionTypedEdit = <AdvancedSearchEditAction>action;
+      advancedSearches = [].concat(state.AdvancedSearches);
+      advancedSearches[actionTypedEdit.index] = actionTypedEdit.advancedSearch;
+      return Object.assign({}, state, { AdvancedSearches: advancedSearches });
 
     case ADVANCED_SEARCH_DELETE:
       let actionTypedDelete = <AdvancedSearchDeleteAction>action;

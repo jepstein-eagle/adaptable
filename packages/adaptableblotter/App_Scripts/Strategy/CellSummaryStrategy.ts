@@ -6,19 +6,11 @@ import { ICellSummaryStrategy } from './Interface/ICellSummaryStrategy';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ICellSummmary } from '../Utilities/Interface/SelectedCell/ICellSummmary';
 import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
-import {
-  DataType,
-  StateChangedTrigger,
-  CellSummaryOperation,
-  CellSummaryOptionalOperation,
-} from '../Utilities/Enums';
+import { DataType, CellSummaryOptionalOperation } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { CellSummaryState } from '../Redux/ActionsReducers/Interface/IState';
 import { Helper } from '../Utilities/Helpers/Helper';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
-  private CellSummaryState: CellSummaryState;
-
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.CellSummaryStrategyId, blotter);
   }
@@ -29,16 +21,6 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
       ScreenPopups.CellSummaryPopup,
       StrategyConstants.CellSummaryGlyph
     );
-  }
-
-  protected InitState() {
-    if (this.CellSummaryState != this.blotter.api.cellSummaryApi.getCellSummaryState()) {
-      this.CellSummaryState = this.blotter.api.cellSummaryApi.getCellSummaryState();
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.CellSummary, this.CellSummaryState);
-      }
-    }
   }
 
   public CreateCellSummary(selectedCellInfo: ISelectedCellInfo): ICellSummmary {
@@ -126,7 +108,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
   private calculateOnly(distinctCount: number, allValues: any[]): any {
     if (
       ArrayExtensions.NotContainsItem(
-        this.CellSummaryState.OptionalSummaryOperations,
+        this.blotter.api.cellSummaryApi.getCellSummaryState().OptionalSummaryOperations,
         CellSummaryOptionalOperation.Only
       )
     ) {
@@ -138,7 +120,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
   private calculateVwap(numericValues: number[], numericColumns: number[]): any {
     if (
       ArrayExtensions.NotContainsItem(
-        this.CellSummaryState.OptionalSummaryOperations,
+        this.blotter.api.cellSummaryApi.getCellSummaryState().OptionalSummaryOperations,
         CellSummaryOptionalOperation.VWAP
       )
     ) {

@@ -3,13 +3,10 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IDashboardStrategy } from './Interface/IDashboardStrategy';
-import { DashboardState } from '../Redux/ActionsReducers/Interface/IState';
-import { Visibility, StateChangedTrigger } from '../Utilities/Enums';
+import { Visibility } from '../Utilities/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
-  private DashboardState: DashboardState;
-
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.DashboardStrategyId, blotter);
   }
@@ -24,7 +21,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
 
   public addContextMenuItem(): void {
     // for now just show / hide = lets worry about minimise later..
-    if (this.GetDashboardState().DashboardVisibility == Visibility.Hidden) {
+    if (this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Hidden) {
       this.createContextMenuItemReduxAction(
         'Show Dashboard',
         StrategyConstants.DashboardGlyph,
@@ -37,19 +34,5 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         DashboardRedux.DashboardSetVisibility(Visibility.Hidden)
       );
     }
-  }
-
-  protected InitState() {
-    if (this.DashboardState != this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard) {
-      this.DashboardState = this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard;
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.Dashboard, this.DashboardState);
-      }
-    }
-  }
-
-  private GetDashboardState(): DashboardState {
-    return this.blotter.adaptableBlotterStore.TheStore.getState().Dashboard;
   }
 }

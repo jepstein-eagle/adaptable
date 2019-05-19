@@ -8,46 +8,48 @@ import {
   ALERT_DEFAULT_MAX_ALERTS_IN_STORE,
 } from '../../Utilities/Constants/GeneralConstants';
 
-export const ALERT_DEFIINITION_ADD_UPDATE = 'ALERT_DEFIINITION_ADD_UPDATE';
+export const ALERT_DEFIINITION_ADD = 'ALERT_DEFIINITION_ADD';
+export const ALERT_DEFIINITION_EDIT = 'ALERT_DEFIINITION_EDIT';
 export const ALERT_DEFIINITION_DELETE = 'ALERT_DEFIINITION_DELETE';
 export const ALERT_DEFIINITION_SELECT = 'ALERT_DEFIINITION_SELECT';
-export const ALERT_DEFIINITION_CHANGE_ALERT_TYPE = 'ALERT_DEFIINITION_CHANGE_ALERT_TYPE';
 
-export interface AlertDefinitionAddUpdateAction extends Redux.Action {
+export interface AlertDefinitionAddAction extends Redux.Action {
+  alertDefinition: IAlertDefinition;
+}
+
+export interface AlertDefinitionEditAction extends Redux.Action {
   index: number;
   alertDefinition: IAlertDefinition;
 }
 
 export interface AlertDefinitionDeleteAction extends Redux.Action {
   index: number;
+  alertDefinition: IAlertDefinition;
 }
 
-export interface AlertDefinitionChangeMessageTypeAction extends Redux.Action {
-  index: number;
-  messageType: MessageType;
-}
+export const AlertDefinitionAdd = (
+  alertDefinition: IAlertDefinition
+): AlertDefinitionAddAction => ({
+  type: ALERT_DEFIINITION_ADD,
+  alertDefinition,
+});
 
-export const AlertDefinitionAddUpdate = (
+export const AlertDefinitionEdit = (
   index: number,
   alertDefinition: IAlertDefinition
-): AlertDefinitionAddUpdateAction => ({
-  type: ALERT_DEFIINITION_ADD_UPDATE,
+): AlertDefinitionEditAction => ({
+  type: ALERT_DEFIINITION_EDIT,
   index,
   alertDefinition,
 });
 
-export const AlertDefinitionDelete = (index: number): AlertDefinitionDeleteAction => ({
+export const AlertDefinitionDelete = (
+  index: number,
+  alertDefinition: IAlertDefinition
+): AlertDefinitionDeleteAction => ({
   type: ALERT_DEFIINITION_DELETE,
   index,
-});
-
-export const AlertDefinitionChangeMessageType = (
-  index: number,
-  messageType: MessageType
-): AlertDefinitionChangeMessageTypeAction => ({
-  type: ALERT_DEFIINITION_CHANGE_ALERT_TYPE,
-  index,
-  messageType,
+  alertDefinition,
 });
 
 const initialAlertState: AlertState = {
@@ -63,30 +65,22 @@ export const AlertReducer: Redux.Reducer<AlertState> = (
   let alertDefinitions: IAlertDefinition[];
 
   switch (action.type) {
-    case ALERT_DEFIINITION_ADD_UPDATE: {
-      let actionTypedAddUpdate = <AlertDefinitionAddUpdateAction>action;
+    case ALERT_DEFIINITION_ADD: {
+      let actionTypedAddUpdate = <AlertDefinitionAddAction>action;
       alertDefinitions = [].concat(state.AlertDefinitions);
-      if (actionTypedAddUpdate.index != -1) {
-        // it exists
-        alertDefinitions[actionTypedAddUpdate.index] = actionTypedAddUpdate.alertDefinition;
-      } else {
-        alertDefinitions.push(actionTypedAddUpdate.alertDefinition);
-      }
+      alertDefinitions.push(actionTypedAddUpdate.alertDefinition);
+      return Object.assign({}, state, { AlertDefinitions: alertDefinitions });
+    }
+    case ALERT_DEFIINITION_EDIT: {
+      let actionTypedAddUpdate = <AlertDefinitionEditAction>action;
+      alertDefinitions = [].concat(state.AlertDefinitions);
+      alertDefinitions[actionTypedAddUpdate.index] = actionTypedAddUpdate.alertDefinition;
       return Object.assign({}, state, { AlertDefinitions: alertDefinitions });
     }
     case ALERT_DEFIINITION_DELETE: {
       let actionTypedDelete = <AlertDefinitionDeleteAction>action;
       alertDefinitions = [].concat(state.AlertDefinitions);
       alertDefinitions.splice(actionTypedDelete.index, 1);
-      return Object.assign({}, state, { AlertDefinitions: alertDefinitions });
-    }
-    case ALERT_DEFIINITION_CHANGE_ALERT_TYPE: {
-      let actionTyped = <AlertDefinitionChangeMessageTypeAction>action;
-      alertDefinitions = [].concat(state.AlertDefinitions);
-      let alert = alertDefinitions[actionTyped.index];
-      alertDefinitions[actionTyped.index] = Object.assign({}, alert, {
-        MessageType: actionTyped.messageType,
-      });
       return Object.assign({}, state, { AlertDefinitions: alertDefinitions });
     }
 

@@ -1,17 +1,15 @@
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import {
-  ISearchChangedEventArgs,
   IColumnStateChangedEventArgs,
   IAlertFiredEventArgs,
   IThemeChangedEventArgs,
-} from '../../Utilities/Interface/IStateEvents';
-import { IStateChangedEventArgs } from '../../Utilities/Interface/StateChanged/IStateChangedEventArgs';
+} from '../../Utilities/Interface/IBlotterEvents';
+import { ISearchChangedEventArgs } from '../../Utilities/Interface/SearchChanged/ISearchChangedEventArgs';
 import { IEvent } from '../../Utilities/Interface/IEvent';
 import { EventDispatcher } from '../../Utilities/EventDispatcher';
 
 export interface IEventApi {
   _onSearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
-  _onStateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
   _onThemeChanged: EventDispatcher<IAdaptableBlotter, IThemeChangedEventArgs>;
   _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
   _onAlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
@@ -28,13 +26,6 @@ export interface IEventApi {
    * @returns IEvent<IAdaptableBlotter, IThemeChangedEventArgs>
    */
   onThemeChanged(): IEvent<IAdaptableBlotter, IThemeChangedEventArgs>;
-
-  /**
-   * Event fired whenever the state in the Blotter changes
-   * Provides full coverage of what triggered the change and the new function state.*
-   * @returns IEvent<IAdaptableBlotter, IStateChangedEventArgs>
-   */
-  onStateChanged(): IEvent<IAdaptableBlotter, IStateChangedEventArgs>;
 
   /**
    * Event fired whenever column order (and visiblity) and grid sorts in the Blotter change.

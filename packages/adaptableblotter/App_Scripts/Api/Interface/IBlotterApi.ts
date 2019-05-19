@@ -33,6 +33,7 @@ import { ICellSummaryApi } from './ICellSummaryApi';
 import { IUserFilterApi } from './IUserFilterApi';
 import { IPlusMinusApi } from './IPlusMinusApi';
 import { IBulkUpdateApi } from './IBulkUpdateApi';
+import { IAuditEventApi } from './IAuditEventApi';
 
 /**
  * The main interface between users (devs) and the Blotter while the system is up and running
@@ -42,6 +43,7 @@ import { IBulkUpdateApi } from './IBulkUpdateApi';
 export interface IBlotterApi {
   advancedSearchApi: IAdvancedSearchApi;
   alertApi: IAlertApi;
+  auditEventApi: IAuditEventApi;
   bulkUpdateApi: IBulkUpdateApi;
   calculatedColumnApi: ICalculatedColumnApi;
   calendarApi: ICalendarApi;

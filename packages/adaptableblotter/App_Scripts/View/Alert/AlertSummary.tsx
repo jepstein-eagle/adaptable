@@ -22,10 +22,8 @@ import { AlertHelper } from '../../Utilities/Helpers/AlertHelper';
 
 export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComponent> {
   Alerts: IAlertDefinition[];
-  onAddUpdateAlert: (
-    index: number,
-    Alert: IAlertDefinition
-  ) => AlertRedux.AlertDefinitionAddUpdateAction;
+  onAddAlert: (Alert: IAlertDefinition) => AlertRedux.AlertDefinitionAddAction;
+  onEditAlert: (index: number, Alert: IAlertDefinition) => AlertRedux.AlertDefinitionEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -73,7 +71,7 @@ export class AlertSummaryComponent extends React.Component<
             showShare={this.props.TeamSharingActivated}
             onEdit={() => this.onEdit(index, item)}
             onShare={() => this.props.onShare(item)}
-            onDelete={AlertRedux.AlertDefinitionDelete(index)}
+            onDelete={AlertRedux.AlertDefinitionDelete(index, item)}
           />
         );
         strategySummaries.push(detailRow);
@@ -133,8 +131,13 @@ export class AlertSummaryComponent extends React.Component<
   }
 
   onFinishWizard() {
-    this.props.onAddUpdateAlert(this.state.EditedAdaptableBlotterObjectIndex, this.state
-      .EditedAdaptableBlotterObject as IAlertDefinition);
+    if (this.state.EditedAdaptableBlotterObjectIndex == -1) {
+      this.props.onAddAlert(this.state.EditedAdaptableBlotterObject as IAlertDefinition);
+    } else {
+      this.props.onEditAlert(this.state.EditedAdaptableBlotterObjectIndex, this.state
+        .EditedAdaptableBlotterObject as IAlertDefinition);
+    }
+
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
@@ -160,8 +163,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddUpdateAlert: (index: number, Alert: IAlertDefinition) =>
-      dispatch(AlertRedux.AlertDefinitionAddUpdate(index, Alert)),
+    onAddAlert: (Alert: IAlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(Alert)),
+    onEditAlert: (index: number, Alert: IAlertDefinition) =>
+      dispatch(AlertRedux.AlertDefinitionEdit(index, Alert)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId)),
   };

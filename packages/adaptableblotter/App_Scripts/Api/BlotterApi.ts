@@ -70,10 +70,13 @@ import { IPlusMinusApi } from './Interface/IPlusMinusApi';
 import { PlusMinusApi } from './PlusMinusApi';
 import { IBulkUpdateApi } from './Interface/IBulkUpdateApi';
 import { BulkUpdateApi } from './BulkUpdateApi';
+import { IAuditEventApi } from './Interface/IAuditEventApi';
+import { AuditEventApi } from './AuditEventApi';
 
 export class BlotterApi implements IBlotterApi {
   public advancedSearchApi: IAdvancedSearchApi;
   public alertApi: IAlertApi;
+  public auditEventApi: IAuditEventApi;
   public bulkUpdateApi: IBulkUpdateApi;
   public calendarApi: ICalendarApi;
   public calculatedColumnApi: ICalculatedColumnApi;
@@ -112,6 +115,7 @@ export class BlotterApi implements IBlotterApi {
     this.blotter = blotter;
     this.advancedSearchApi = new AdvancedSearchApi(blotter);
     this.alertApi = new AlertApi(blotter);
+    this.auditEventApi = new AuditEventApi(blotter);
     this.bulkUpdateApi = new BulkUpdateApi(blotter);
     this.calendarApi = new CalendarApi(blotter);
     this.calculatedColumnApi = new CalculatedColumnApi(blotter);

@@ -3,14 +3,10 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { CellValidationState } from '../Redux/ActionsReducers/Interface/IState';
-import { StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
 
 export class CellValidationStrategy extends AdaptableStrategyBase
   implements ICellValidationStrategy {
-  private CellValidationState: CellValidationState;
-
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.CellValidationStrategyId, blotter);
   }
@@ -21,16 +17,6 @@ export class CellValidationStrategy extends AdaptableStrategyBase
       ScreenPopups.CellValidationPopup,
       StrategyConstants.CellValidationGlyph
     );
-  }
-
-  protected InitState() {
-    if (this.CellValidationState != this.blotter.api.cellValidationApi.getCellValidationState()) {
-      this.CellValidationState = this.blotter.api.cellValidationApi.getCellValidationState();
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.CellValidation, this.CellValidationState);
-      }
-    }
   }
 
   public addContextMenuItem(column: IColumn): void {

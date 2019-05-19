@@ -7,9 +7,8 @@ export const LAYOUT_SELECT = 'LAYOUT_SELECT';
 export const LAYOUT_ADD_UPDATE = 'LAYOUT_ADD_UPDATE';
 export const LAYOUT_SAVE = 'LAYOUT_SAVE';
 export const LAYOUT_DELETE = 'DELETE_LAYOUT';
-export const LAYOUT_PRESAVE = 'LAYOUT_PRESAVE';
 
-export interface LayoutPreSaveAction extends Redux.Action {
+export interface LayoutSaveAction extends Redux.Action {
   Index: number;
   Layout: ILayout;
 }
@@ -31,8 +30,8 @@ export interface LayoutIncludeVendorStateAction extends Redux.Action {}
 
 export interface LayoutExcludeVendorStateAction extends Redux.Action {}
 
-export const LayoutPreSave = (Index: number, Layout: ILayout): LayoutPreSaveAction => ({
-  type: LAYOUT_PRESAVE,
+export const LayoutSave = (Index: number, Layout: ILayout): LayoutSaveAction => ({
+  type: LAYOUT_SAVE,
   Index,
   Layout,
 });
@@ -65,7 +64,7 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (
   let index: number;
   let layouts: ILayout[];
   switch (action.type) {
-    //  case LAYOUT_PRESAVE:
+    //  case LAYOUT_SAVE: // we do nothing here as its all done in the store
     //      return state
     case LAYOUT_SELECT:
       return Object.assign({}, state, { CurrentLayout: (<LayoutSelectAction>action).LayoutName });

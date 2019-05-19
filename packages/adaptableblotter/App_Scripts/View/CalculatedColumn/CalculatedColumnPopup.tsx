@@ -36,9 +36,7 @@ interface CalculatedColumnPopupProps
   ) => CalculatedColumnRedux.CalculatedColumnEditAction;
   CalculatedColumns: Array<ICalculatedColumn>;
   CalculatedColumnErrorMessage: string;
-  IsExpressionValid: (
-    expression: string
-  ) => CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction;
+  IsExpressionValid: (expression: string) => SystemRedux.CalculatedColumnIsExpressionValidAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -102,7 +100,7 @@ class CalculatedColumnPopupComponent extends React.Component<
             onEdit={(index, calculatedColumn) =>
               this.onEdit(index, calculatedColumn as ICalculatedColumn)
             }
-            onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(index)}
+            onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(index, calculatedColumn)}
           />
         );
       }
@@ -237,7 +235,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     onEditCalculatedColumn: (index: number, calculatedColumn: ICalculatedColumn) =>
       dispatch(CalculatedColumnRedux.CalculatedColumnEdit(index, calculatedColumn)),
     IsExpressionValid: (expression: string) =>
-      dispatch(CalculatedColumnRedux.CalculatedColumnIsExpressionValid(expression)),
+      dispatch(SystemRedux.CalculatedColumnIsExpressionValid(expression)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CalculatedColumnStrategyId)

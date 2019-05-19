@@ -6,7 +6,7 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
 import * as GeneralConstants from '../Utilities/Constants/GeneralConstants';
 import { StateChangedTrigger } from '../Utilities/Enums';
-import { IThemeChangedEventArgs } from '../Utilities/Interface/IStateEvents';
+import { IThemeChangedEventArgs } from '../Utilities/Interface/IBlotterEvents';
 
 const WARNINGS: { [key: string]: boolean } = {};
 const warnTheme = (themeName: string) => {
@@ -43,7 +43,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
 
     // Create the theme link for predefined themes
     this.theme = document.createElement('link');
-    this.theme.id = `${blotter.blotterOptions.containerOptions.adaptableBlotterContainer}_${
+    this.theme.id = `${blotter.blotterOptions.containerOptions!.adaptableBlotterContainer}_${
       blotter.blotterOptions.blotterId
     }-link`;
     this.theme.rel = 'stylesheet';
@@ -73,10 +73,6 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
 
       // publish the theme changed event even on initialization
       this.publishThemeChanged(this.ThemeState);
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.Theme, this.ThemeState);
-      }
 
       this.theme.href = '';
       switch (this.ThemeState.CurrentTheme) {

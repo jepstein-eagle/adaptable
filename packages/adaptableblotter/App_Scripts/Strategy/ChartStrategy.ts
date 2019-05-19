@@ -2,15 +2,9 @@ import * as _ from 'lodash';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
-import {
-  ChartState,
-  SystemState,
-  ColumnFilterState,
-} from '../Redux/ActionsReducers/Interface/IState';
-import { StateChangedTrigger } from '../Utilities/Enums';
+import { ChartState, SystemState } from '../Redux/ActionsReducers/Interface/IState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import {
@@ -103,10 +97,6 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         this.SystemState.ChartVisibility == ChartVisibility.Maximised
       ) {
         this.blotter.api.internalApi.SetChartVisibility(ChartVisibility.Hidden);
-      }
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.Chart, this.ChartState);
       }
 
       if (displayChartAtStartUp) {

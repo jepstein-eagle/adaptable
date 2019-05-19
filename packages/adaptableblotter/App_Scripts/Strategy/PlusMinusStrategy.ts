@@ -3,10 +3,9 @@ import { IPlusMinusStrategy } from './Interface/IPlusMinusStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as Redux from 'redux';
 import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux';
-import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { DataType, StateChangedTrigger } from '../Utilities/Enums';
+import { DataType } from '../Utilities/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
@@ -22,20 +21,9 @@ import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper'
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
-  private PlusMinusState: PlusMinusState;
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.PlusMinusStrategyId, blotter);
     blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent));
-  }
-
-  protected InitState() {
-    if (this.PlusMinusState != this.GetPlusMinusState()) {
-      this.PlusMinusState = this.GetPlusMinusState();
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.PlusMinus, this.PlusMinusState);
-      }
-    }
   }
 
   protected addPopupMenuItem() {
@@ -62,117 +50,117 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
   private handleKeyDown(keyEvent: KeyboardEvent | any) {
     //it's a speacial key so we handle the string representation of the key '
     let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
-    if (
-      (keyEventString == '-' || keyEventString == '+') &&
-      ArrayExtensions.IsNotNullOrEmpty(this.PlusMinusState.PlusMinusRules)
-    ) {
-      let successfulValues: ICellInfo[] = [];
-      let side = 1;
-      if (Helper.getStringRepresentionFromKey(keyEvent) == '-') {
-        side = -1;
-      }
+    if (keyEventString == '-' || keyEventString == '+') {
+      let plusMinusRules = this.blotter.api.plusMinusApi.getAllPlusMinus();
 
-      let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
-      let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
+      if (ArrayExtensions.IsNotNullOrEmpty(plusMinusRules)) {
+        let successfulValues: ICellInfo[] = [];
+        let side = 1;
+        if (Helper.getStringRepresentionFromKey(keyEvent) == '-') {
+          side = -1;
+        }
 
-      let failedPreventEdits: ICellValidationRule[] = [];
-      let failedWarningEdits: ICellValidationRule[] = [];
-      let warningValues: ICellInfo[] = [];
+        let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
+        let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
-      for (var keyValuePair of selectedCellInfo.Selection) {
-        for (var selectedCell of keyValuePair[1]) {
-          let selectedColumn: IColumn = ColumnHelper.getColumnFromId(
-            selectedCell.columnId,
-            this.blotter.api.gridApi.getColumns()
-          );
-          if (selectedColumn.DataType == DataType.Number && !selectedColumn.ReadOnly) {
-            //for aggrid as we are getting strings sometimes
-            if (typeof selectedCell.value != 'number') {
-              selectedCell.value = parseFloat(selectedCell.value);
-            }
-            let newValue: ICellInfo;
+        let failedPreventEdits: ICellValidationRule[] = [];
+        let failedWarningEdits: ICellValidationRule[] = [];
+        let warningValues: ICellInfo[] = [];
 
-            //we try to find a condition with an expression for that column that matches the record
-            let columnNudgesWithExpression = this.PlusMinusState.PlusMinusRules.filter(
-              x => x.ColumnId == selectedCell.columnId && !x.IsDefaultNudge
+        for (var keyValuePair of selectedCellInfo.Selection) {
+          for (var selectedCell of keyValuePair[1]) {
+            let selectedColumn: IColumn = ColumnHelper.getColumnFromId(
+              selectedCell.columnId,
+              this.blotter.api.gridApi.getColumns()
             );
-            for (let columnNudge of columnNudgesWithExpression) {
-              if (
-                ExpressionHelper.checkForExpression(
-                  columnNudge.Expression,
-                  keyValuePair[0],
-                  columns,
-                  this.blotter
-                )
-              ) {
-                newValue = {
-                  Id: keyValuePair[0],
-                  ColumnId: selectedCell.columnId,
-                  Value: selectedCell.value + columnNudge.NudgeValue * side,
-                };
+            if (selectedColumn.DataType == DataType.Number && !selectedColumn.ReadOnly) {
+              //for aggrid as we are getting strings sometimes
+              if (typeof selectedCell.value != 'number') {
+                selectedCell.value = parseFloat(selectedCell.value);
               }
-            }
-            //we havent found any Condition with an Expression so we look for a general one for the column
-            if (!newValue) {
-              let columnNudge = this.PlusMinusState.PlusMinusRules.find(
-                x => x.ColumnId == selectedCell.columnId && x.IsDefaultNudge
+              let newValue: ICellInfo;
+              //we try to find a condition with an expression for that column that matches the record
+              let columnNudgesWithExpression = plusMinusRules.filter(
+                x => x.ColumnId == selectedCell.columnId && !x.IsDefaultNudge
               );
-              if (columnNudge) {
-                newValue = {
-                  Id: keyValuePair[0],
-                  ColumnId: selectedCell.columnId,
-                  Value: selectedCell.value + columnNudge.NudgeValue * side,
-                };
+              for (let columnNudge of columnNudgesWithExpression) {
+                if (
+                  ExpressionHelper.checkForExpression(
+                    columnNudge.Expression,
+                    keyValuePair[0],
+                    columns,
+                    this.blotter
+                  )
+                ) {
+                  newValue = {
+                    Id: keyValuePair[0],
+                    ColumnId: selectedCell.columnId,
+                    Value: selectedCell.value + columnNudge.NudgeValue * side,
+                  };
+                }
               }
-              //we havent found a condition so we return - this will allow a minus to be entered into the column
-              else {
-                return;
+              //we havent found any Condition with an Expression so we look for a general one for the column
+              if (!newValue) {
+                let columnNudge = plusMinusRules.find(
+                  x => x.ColumnId == selectedCell.columnId && x.IsDefaultNudge
+                );
+                if (columnNudge) {
+                  newValue = {
+                    Id: keyValuePair[0],
+                    ColumnId: selectedCell.columnId,
+                    Value: selectedCell.value + columnNudge.NudgeValue * side,
+                  };
+                }
+                //we havent found a condition so we return - this will allow a minus to be entered into the column
+                else {
+                  return;
+                }
               }
-            }
 
-            //avoid the 0.0000000000x
-            newValue.Value = parseFloat(newValue.Value.toFixed(12));
+              //avoid the 0.0000000000x
+              newValue.Value = parseFloat(newValue.Value.toFixed(12));
 
-            let dataChangedEvent: IDataChangedInfo = {
-              OldValue: Number(selectedCell.value),
-              NewValue: newValue.Value,
-              ColumnId: selectedCell.columnId,
-              IdentifierValue: keyValuePair[0],
-              Record: null,
-            };
+              let dataChangedEvent: IDataChangedInfo = {
+                OldValue: Number(selectedCell.value),
+                NewValue: newValue.Value,
+                ColumnId: selectedCell.columnId,
+                IdentifierValue: keyValuePair[0],
+                Record: null,
+              };
 
-            let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
-              dataChangedEvent
-            );
+              let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+                dataChangedEvent
+              );
 
-            if (validationRules.length > 0) {
-              if (validationRules[0].ActionMode == 'Stop Edit') {
-                failedPreventEdits.push(validationRules[0]);
+              if (validationRules.length > 0) {
+                if (validationRules[0].ActionMode == 'Stop Edit') {
+                  failedPreventEdits.push(validationRules[0]);
+                } else {
+                  failedWarningEdits.push(validationRules[0]);
+                  warningValues.push(newValue);
+                }
               } else {
-                failedWarningEdits.push(validationRules[0]);
-                warningValues.push(newValue);
+                successfulValues.push(newValue);
               }
-            } else {
-              successfulValues.push(newValue);
-            }
 
-            //Jo : I've added this for agGrid. Shouldnt cause harm and I even think it should have been there since the beginning
-            keyEvent.preventDefault();
+              //Jo : I've added this for agGrid. Shouldnt cause harm and I even think it should have been there since the beginning
+              keyEvent.preventDefault();
+            }
           }
         }
-      }
 
-      // first inform if any failed with prevent
-      this.ShowErrorPreventMessage(failedPreventEdits);
-      if (failedWarningEdits.length > 0) {
-        this.ShowWarningMessages(
-          failedWarningEdits,
-          warningValues,
-          successfulValues,
-          keyEventString
-        );
-      } else {
-        this.ApplyPlusMinus(keyEventString, successfulValues);
+        // first inform if any failed with prevent
+        this.ShowErrorPreventMessage(failedPreventEdits);
+        if (failedWarningEdits.length > 0) {
+          this.ShowWarningMessages(
+            failedWarningEdits,
+            warningValues,
+            successfulValues,
+            keyEventString
+          );
+        } else {
+          this.ApplyPlusMinus(keyEventString, successfulValues);
+        }
       }
     }
   }

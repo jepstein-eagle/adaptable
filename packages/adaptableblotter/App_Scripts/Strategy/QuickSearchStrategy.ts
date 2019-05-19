@@ -77,10 +77,6 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
       ) {
         this.publishSearchChanged(SearchChangedTrigger.QuickSearch);
       }
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.QuickSearch, this.quickSearchState);
-      }
     }
   }
   protected GetQuickSearchState(): QuickSearchState {

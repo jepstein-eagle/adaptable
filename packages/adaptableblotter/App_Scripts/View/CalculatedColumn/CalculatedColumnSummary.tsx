@@ -22,9 +22,7 @@ export interface CalculatedColumnSummaryProps
   onEdit: (index: number, calculatedColumn: ICalculatedColumn) => void;
   onDeleteConfirm: Redux.Action;
   CalculatedColumnErrorMessage: string;
-  IsExpressionValid: (
-    expression: string
-  ) => CalculatedColumnRedux.CalculatedColumnIsExpressionValidAction;
+  IsExpressionValid: (expression: string) => SystemRedux.CalculatedColumnIsExpressionValidAction;
 }
 
 export class CalculatedColumnSummaryComponent extends React.Component<
@@ -54,7 +52,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<
             EntityType={StrategyConstants.CalculatedColumnStrategyName}
             onEdit={() => this.onEdit(index, item)}
             onShare={() => this.props.onShare(item)}
-            onDelete={CalculatedColumnRedux.CalculatedColumnDelete(index)}
+            onDelete={CalculatedColumnRedux.CalculatedColumnDelete(index, item)}
             showBold={true}
           />
         );
@@ -138,7 +136,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     onEdit: (index: number, calculatedColumn: ICalculatedColumn) =>
       dispatch(CalculatedColumnRedux.CalculatedColumnEdit(index, calculatedColumn)),
     IsExpressionValid: (expression: string) =>
-      dispatch(CalculatedColumnRedux.CalculatedColumnIsExpressionValid(expression)),
+      dispatch(SystemRedux.CalculatedColumnIsExpressionValid(expression)),
   };
 }
 

@@ -2,6 +2,8 @@
  * Options for managing Audit Log
  * ​​Note: Adaptable Blotter has no knowledge of which messages Audit Log is given and where they are sent.
  * And it has no ability to access this data: any data sent to the Audit Log is known only to our users, and is accessible only by them.​​
+ * Each Audit event can be sent to an HTTP stream, the Console or fired as an event (or a combination thereor)
+ * The default is false - meaning that audit is only triggered if you set some values to true
  */
 export interface IAuditOptions {
   /**
@@ -9,41 +11,40 @@ export interface IAuditOptions {
    * These include any edits made to the data in the grid but not outside (e.g. not a ticking stream)
    * Default Value: false
    * */
-  auditCellEdits?: boolean;
+  auditCellEdits?: IAuditDestinationOptions;
   /**
    * Whether to audit function events in the Blotter
    * (e.g. 'Advanced Search Selected', 'Smart Edit Applied' etc.)
-   * Default Value: false
    */
-  auditFunctionEvents?: boolean;
+  auditFunctionEvents?: IAuditDestinationOptions;
   /**
    * Whether to audit all changes to the User State
    * Includes any objects (e.g. Conditional Styles) created, edited or deleted
    * Default Value: false
    */
-  auditUserStateChanges?: boolean;
+  auditUserStateChanges?: IAuditDestinationOptions;
   /**
    * Whether to audit changes to the Adaptable Blotter's state
    * Includes things like which popups are active, what are the selected cells
    * Can potentially be very verbose
    * Default Value: false
    */
-  auditInternalStateChanges?: boolean;
+  auditInternalStateChanges?: IAuditDestinationOptions;
   /**
-   * How often (in seconds) the Audit Log should ping to check that the listening service is up and running
-   * Note: the Audit Log will only ping if at least one of the 4 options above is set to true
+   * How often (in seconds) the Audit Log should ping to check that the listening service is up and running (if its been set)
+   * Note: the Audit Log will only ping if at least one of the 4 audit optios has 'auditToHttpChannel' as set to true
    * Default Value: 60
    */
   pingInterval?: number;
   /**
-   * The 'batch' time (in seconds) for pushing Audit Log messages
+   * The 'batch' time (in seconds) for pushing Audit Log messages if using the HTTP Channel
    * Default Value: 1
    */
   auditLogsSendInterval?: number;
-  /**
-   * Whether to audit to the console or to the HTTP Channel.
-   * HTTP Channel is recommended so that the audit messages can be used in software like the Elastic Stack
-   * Default Value: false
-   */
+}
+
+export interface IAuditDestinationOptions {
+  auditToHttpChannel?: boolean;
   auditToConsole?: boolean;
+  auditAsEvent?: boolean;
 }

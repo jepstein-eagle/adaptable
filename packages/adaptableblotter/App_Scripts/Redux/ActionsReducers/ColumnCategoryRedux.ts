@@ -17,6 +17,7 @@ export interface ColumnCategoryEditAction extends Redux.Action {
 }
 
 export interface ColumnCategoryDeleteAction extends Redux.Action {
+  Index: number;
   ColumnCategory: IColumnCategory;
 }
 
@@ -35,9 +36,11 @@ export const ColumnCategoryEdit = (
 });
 
 export const ColumnCategoryDelete = (
+  Index: number,
   ColumnCategory: IColumnCategory
 ): ColumnCategoryDeleteAction => ({
   type: COLUMN_CATEGORY_DELETE,
+  Index,
   ColumnCategory,
 });
 
@@ -65,11 +68,7 @@ export const ColumnCategoryReducer: Redux.Reducer<ColumnCategoryState> = (
     }
     case COLUMN_CATEGORY_DELETE: {
       columnCategories = [].concat(state.ColumnCategories);
-      let index = columnCategories.findIndex(
-        x =>
-          x.ColumnCategoryId == (<ColumnCategoryDeleteAction>action).ColumnCategory.ColumnCategoryId
-      );
-      columnCategories.splice(index, 1);
+      columnCategories.splice((<ColumnCategoryDeleteAction>action).Index, 1);
       return Object.assign({}, state, { ColumnCategories: columnCategories });
     }
     default:

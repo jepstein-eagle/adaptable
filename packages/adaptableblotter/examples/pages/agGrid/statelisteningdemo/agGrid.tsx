@@ -8,11 +8,10 @@ import '../../../../App_Scripts/themes/light.scss';
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import {
-  ISearchChangedEventArgs,
   IColumnStateChangedEventArgs,
   IAlertFiredEventArgs,
-} from '../../../../App_Scripts/Utilities/Interface/IStateEvents';
-import { IStateChangedEventArgs } from '../../../../App_Scripts/Utilities/Interface/StateChanged/IStateChangedEventArgs';
+} from '../../../../App_Scripts/Utilities/Interface/IBlotterEvents';
+import { ISearchChangedEventArgs } from '../../../../App_Scripts/Utilities/Interface/SearchChanged/ISearchChangedEventArgs';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 var adaptableblotter: IAdaptableBlotter;
@@ -36,9 +35,6 @@ function InitAdaptableBlotter() {
     .onAlertFired()
     .Subscribe((sender, alertFiredArgs) => listenToAlertFired(alertFiredArgs));
   adaptableblotter.api.eventApi
-    .onStateChanged()
-    .Subscribe((sender, stateChangedArgs) => listenToStateChange(stateChangedArgs));
-  adaptableblotter.api.eventApi
     .onSearchedChanged()
     .Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
@@ -47,11 +43,6 @@ function InitAdaptableBlotter() {
 function listenToColumnStateChange(columnChangedArgs: IColumnStateChangedEventArgs) {
   console.log('column event received');
   console.log(columnChangedArgs.currentLayout);
-}
-
-function listenToStateChange(stateChangedArgs: IStateChangedEventArgs) {
-  console.log('state event received');
-  console.log(stateChangedArgs.data[0].id);
 }
 
 function listenToSearchChange(searchChangedArgs: ISearchChangedEventArgs) {

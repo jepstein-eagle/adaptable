@@ -2,15 +2,13 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IStrategy } from './Interface/IStrategy';
 import { Action } from 'redux';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
-import {
-  IBlotterSearchState,
-  IBlotterSortState,
-  ISearchChangedEventArgs,
-  ISearchChangedInfo,
-  ISearchEventData,
-  IStateChangedInfo,
-  IStateEventData,
-} from '../Utilities/Interface/IStateEvents';
+import { IBlotterSortState } from '../Utilities/Interface/SearchChanged/IBlotterSortState';
+import { IStateEventData } from '../Utilities/Interface/StateChanged/IStateEventData';
+import { IBlotterSearchState } from '../Utilities/Interface/SearchChanged/IBlotterSearchState';
+import { ISearchEventData } from '../Utilities/Interface/SearchChanged/ISearchEventData';
+import { ISearchChangedEventArgs } from '../Utilities/Interface/SearchChanged/ISearchChangedEventArgs';
+import { ISearchChangedInfo } from '../Utilities/Interface/SearchChanged/ISearchChangedInfo';
+import { IStateChangedInfo } from '../Utilities/Interface/StateChanged/IStateChangedInfo';
 import { IStateChangedEventArgs } from '../Utilities/Interface/StateChanged/IStateChangedEventArgs';
 import { SearchChangedTrigger, StateChangedTrigger, DataType } from '../Utilities/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
@@ -215,32 +213,5 @@ export abstract class AdaptableStrategyBase implements IStrategy {
       data: [searchEventData],
     };
     this.blotter.api.eventApi._onSearchedChanged.Dispatch(this.blotter, searchChangedArgs);
-  }
-
-  /**
-   * An event which is triggered whenever User (as oppoesed to System) State is changed.
-   * Its the responsibility of each function to fire the event when their state changes
-   * @param stateChangedTrigger which function has triggered the event
-   * @param state the current state of that function
-   */
-  publishStateChanged(stateChangedTrigger: StateChangedTrigger, state: IUserState): void {
-    let stateChangedInfo: IStateChangedInfo = {
-      stateChangedTrigger: stateChangedTrigger,
-      userState: state,
-    };
-
-    let stateEventData: IStateEventData = {
-      name: 'Adaptable Blotter',
-      type: 'State Args',
-      id: stateChangedInfo,
-    };
-
-    let stateChangedArgs: IStateChangedEventArgs = {
-      object: 'fdc3-context',
-      definition: 'https://fdc3.org/context/1.0.0/',
-      version: '1.0.0',
-      data: [stateEventData],
-    };
-    this.blotter.api.eventApi._onStateChanged.Dispatch(this.blotter, stateChangedArgs);
   }
 }

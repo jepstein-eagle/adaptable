@@ -59,6 +59,7 @@ export const CHART_SET_CHART_VISIBILITY = 'CHART_SET_CHART_VISIBILITY';
 
 // Error Messages
 export const CALCULATEDCOLUMN_SET_ERROR_MESSAGE = 'CALCULATEDCOLUMN_SET_ERROR_MESSAGE';
+export const CALCULATEDCOLUMN_IS_EXPRESSION_VALID = 'CALCULATEDCOLUMN_IS_EXPRESSION_VALID';
 
 // Quick Search
 export const QUICK_SEARCH_SET_RANGE = 'QUICK_SEARCH_SET_RANGE';
@@ -131,6 +132,10 @@ export interface ChartSetChartVisibiityAction extends Redux.Action {
 
 export interface CalculatedColumnSetErrorMessageAction extends Redux.Action {
   ErrorMsg: string;
+}
+
+export interface CalculatedColumnIsExpressionValidAction extends Redux.Action {
+  expression: string;
 }
 
 export interface SetIPPDomainPagesAction extends Redux.Action {
@@ -255,6 +260,13 @@ export const CalculatedColumnSetErrorMessage = (
 ): CalculatedColumnSetErrorMessageAction => ({
   type: CALCULATEDCOLUMN_SET_ERROR_MESSAGE,
   ErrorMsg,
+});
+
+export const CalculatedColumnIsExpressionValid = (
+  expression: string
+): CalculatedColumnIsExpressionValidAction => ({
+  type: CALCULATEDCOLUMN_IS_EXPRESSION_VALID,
+  expression,
 });
 
 export const SetIPPDomainPages = (IPPDomainsPages: IPPDomain[]): SetIPPDomainPagesAction => ({

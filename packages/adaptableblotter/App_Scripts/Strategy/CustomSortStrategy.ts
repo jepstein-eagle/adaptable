@@ -4,7 +4,6 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ICustomSort } from '../Utilities/Interface/BlotterObjects/ICustomSort';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { StateChangedTrigger } from '../Utilities/Enums';
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
   private CustomSorts: ICustomSort[];
@@ -17,10 +16,6 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
       this.removeCustomSorts();
       this.CustomSorts = this.blotter.api.customSortApi.getAllCustomSort();
       this.applyCustomSorts();
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.CustomSort, this.CustomSorts);
-      }
     }
   }
 

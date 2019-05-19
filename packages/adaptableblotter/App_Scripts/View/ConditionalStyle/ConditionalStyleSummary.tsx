@@ -29,10 +29,13 @@ export interface ConditionalStyleSummaryProps
   ColorPalette: string[];
   ColumnCategories: IColumnCategory[];
   StyleClassNames: string[];
-  onAddUpdateConditionalStyle: (
+  onAddConditionalStyle: (
+    conditionalStyle: IConditionalStyle
+  ) => ConditionalStyleRedux.ConditionalStyleAddAction;
+  onEditConditionalStyle: (
     index: number,
     conditionalStyle: IConditionalStyle
-  ) => ConditionalStyleRedux.ConditionalStyleAddUpdateAction;
+  ) => ConditionalStyleRedux.ConditionalStyleEditAction;
 }
 
 export class ConditionalStyleSummaryComponent extends React.Component<
@@ -149,8 +152,14 @@ export class ConditionalStyleSummaryComponent extends React.Component<
   }
 
   onFinishWizard() {
-    this.props.onAddUpdateConditionalStyle(this.state.EditedAdaptableBlotterObjectIndex, this.state
-      .EditedAdaptableBlotterObject as IConditionalStyle);
+    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
+      this.props.onEditConditionalStyle(this.state.EditedAdaptableBlotterObjectIndex, this.state
+        .EditedAdaptableBlotterObject as IConditionalStyle);
+    } else {
+      this.props.onAddConditionalStyle(this.state
+        .EditedAdaptableBlotterObject as IConditionalStyle);
+    }
+
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
@@ -184,8 +193,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddUpdateConditionalStyle: (index: number, conditionalStyle: IConditionalStyle) =>
-      dispatch(ConditionalStyleRedux.ConditionalStyleAddUpdate(index, conditionalStyle)),
+    onAddConditionalStyle: (conditionalStyle: IConditionalStyle) =>
+      dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
+    onEditConditionalStyle: (index: number, conditionalStyle: IConditionalStyle) =>
+      dispatch(ConditionalStyleRedux.ConditionalStyleEdit(index, conditionalStyle)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)

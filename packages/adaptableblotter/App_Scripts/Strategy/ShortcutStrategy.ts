@@ -4,16 +4,8 @@ import * as Redux from 'redux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux';
-import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
-import { ShortcutState } from '../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import {
-  StateChangedTrigger,
-  DataType,
-  MathOperation,
-  ActionMode,
-  MessageType,
-} from '../Utilities/Enums';
+import { DataType, MathOperation, ActionMode } from '../Utilities/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
@@ -27,8 +19,6 @@ import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
-  private ShortcutState: ShortcutState;
-
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ShortcutStrategyId, blotter);
     blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent));
@@ -42,18 +32,9 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     );
   }
 
-  protected InitState() {
-    if (this.ShortcutState != this.blotter.api.shortcutApi.getShortcutState()) {
-      this.ShortcutState = this.blotter.api.shortcutApi.getShortcutState();
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.Shortcut, this.ShortcutState);
-      }
-    }
-  }
-
   private handleKeyDown(keyEvent: KeyboardEvent | any) {
-    if (this.ShortcutState.Shortcuts && ArrayExtensions.IsEmpty(this.ShortcutState.Shortcuts)) {
+    let shortcuts = this.blotter.api.shortcutApi.getAllShortcut();
+    if (ArrayExtensions.IsNullOrEmpty(shortcuts)) {
       return;
     }
     let activeCell: ICellInfo = this.blotter.getActiveCell();
@@ -71,9 +52,9 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       let valueToReplace: any;
       switch (columnDataType) {
         case DataType.Number: {
-          activeShortcut = this.ShortcutState.Shortcuts.filter(
-            s => s.ColumnType == DataType.Number
-          ).find(x => keyEventString == x.ShortcutKey.toLowerCase());
+          activeShortcut = shortcuts
+            .filter(s => s.ColumnType == DataType.Number)
+            .find(x => keyEventString == x.ShortcutKey.toLowerCase());
           if (activeShortcut) {
             let currentCellValue: any;
             // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
@@ -96,9 +77,9 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
           break;
         }
         case DataType.Date: {
-          activeShortcut = this.ShortcutState.Shortcuts.filter(
-            s => s.ColumnType == DataType.Date
-          ).find(x => keyEventString == x.ShortcutKey.toLowerCase());
+          activeShortcut = shortcuts
+            .filter(s => s.ColumnType == DataType.Date)
+            .find(x => keyEventString == x.ShortcutKey.toLowerCase());
           if (activeShortcut) {
             // Date we ONLY replace so dont need to worry about replacing values
             if (activeShortcut.IsDynamic) {
@@ -144,8 +125,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
               activeShortcut,
               activeCell,
               keyEventString,
-              valueToReplace,
-              dataChangedEvent.OldValue
+              valueToReplace
             );
           } else {
             this.ApplyShortcut(activeCell, valueToReplace);
@@ -194,8 +174,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     shortcut: IShortcut,
     activeCell: ICellInfo,
     keyEventString: string,
-    newValue: any,
-    oldValue: any
+    newValue: any
   ): void {
     let warningMessage: string = '';
     failedRules.forEach(f => {

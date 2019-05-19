@@ -1,171 +1,239 @@
-import { IAdaptableBlotterOptions } from '../Interface/BlotterOptions/IAdaptableBlotterOptions';
-import { AuditLogTrigger } from '../Enums';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 import { IAuditLogEntry } from '../Interface/IAuditLogEntry';
-import AdaptableBlotter from '../../agGrid';
+import { IAuditLogService } from './Interface/IAuditLogService';
+import { IAdaptableBlotter } from '../../types';
+import {
+  IFunctionAppliedDetails,
+  IStateChangedDetails,
+  IAuditLogEventData,
+  IAuditLogEventArgs,
+} from '../Interface/IAuditEvents';
+import { IAuditDestinationOptions, IAuditOptions } from '../Interface/BlotterOptions/IAuditOptions';
 
-export class AuditLogService {
+export enum AuditLogTrigger {
+  CellEdit = 'CellEdit',
+  UserStateChange = 'UserStateChange',
+  InternalStateChange = 'InternalStateChange',
+  FunctionApplied = 'FunctionApplied',
+  Ping = 'Ping',
+}
+
+export class AuditLogService implements IAuditLogService {
   private auditLogQueue: Array<IAuditLogEntry>;
   private canSendLog: boolean = true;
   private numberOfMissedPing: number = 0;
-  private blotterOptions: IAdaptableBlotterOptions;
-  public IsAuditEnabled: boolean;
-  public IsAuditStateChangesEnabled: boolean;
-  public IsAuditCellEditsEnabled: boolean;
-  public IsAuditFunctionEventsEnabled: boolean;
-  public IsAuditUserStateChangesEnabled: boolean;
-  public IsAuditInternalStateChangesEnabled: boolean;
-  public ShouldAuditToConsole: boolean;
+  private blotter: IAdaptableBlotter;
 
-  constructor(blotterOptions: IAdaptableBlotterOptions) {
+  public isAuditEnabled: boolean;
+  public isAuditStateChangesEnabled: boolean;
+  public isAuditCellEditsEnabled: boolean;
+  public isAuditFunctionEventsEnabled: boolean;
+  public isAuditUserStateChangesEnabled: boolean;
+  public isAuditInternalStateChangesEnabled: boolean;
+
+  constructor(blotter: IAdaptableBlotter) {
     this.auditLogQueue = [];
-    this.blotterOptions = blotterOptions;
-    this.setUpFlags(blotterOptions);
-    if (this.IsAuditEnabled) {
-      if (!this.ShouldAuditToConsole) {
-        this.ping();
-        setInterval(() => this.ping(), blotterOptions.auditOptions.pingInterval * 1000);
-        setInterval(
-          () => this.flushAuditQueue(),
-          blotterOptions.auditOptions.auditLogsSendInterval * 1000
-        );
-      }
-    }
-  }
+    this.blotter = blotter;
 
-  private setUpFlags(blotterOptions: IAdaptableBlotterOptions) {
     // Internal State
     if (
-      blotterOptions.auditOptions != null &&
-      blotterOptions.auditOptions.auditInternalStateChanges != null
+      blotter.blotterOptions.auditOptions != null &&
+      blotter.blotterOptions.auditOptions.auditInternalStateChanges != null
     ) {
-      this.IsAuditInternalStateChangesEnabled =
-        blotterOptions.auditOptions.auditInternalStateChanges;
+      this.isAuditInternalStateChangesEnabled = this.isAuditOptionEnabled(
+        blotter.blotterOptions.auditOptions.auditInternalStateChanges
+      );
     } else {
-      this.IsAuditInternalStateChangesEnabled = false;
+      this.isAuditInternalStateChangesEnabled = false;
     }
 
     // User State
     if (
-      blotterOptions.auditOptions != null &&
-      blotterOptions.auditOptions.auditUserStateChanges != null
+      blotter.blotterOptions.auditOptions != null &&
+      blotter.blotterOptions.auditOptions.auditUserStateChanges != null
     ) {
-      this.IsAuditUserStateChangesEnabled = blotterOptions.auditOptions.auditUserStateChanges;
+      this.isAuditUserStateChangesEnabled = this.isAuditOptionEnabled(
+        blotter.blotterOptions.auditOptions.auditUserStateChanges
+      );
     } else {
-      this.IsAuditUserStateChangesEnabled = false;
+      this.isAuditUserStateChangesEnabled = false;
     }
 
     // Function Events
     if (
-      blotterOptions.auditOptions != null &&
-      blotterOptions.auditOptions.auditFunctionEvents != null
+      blotter.blotterOptions.auditOptions != null &&
+      blotter.blotterOptions.auditOptions.auditFunctionEvents != null
     ) {
-      this.IsAuditFunctionEventsEnabled = blotterOptions.auditOptions.auditFunctionEvents;
+      this.isAuditFunctionEventsEnabled = this.isAuditOptionEnabled(
+        blotter.blotterOptions.auditOptions.auditFunctionEvents
+      );
     } else {
-      this.IsAuditFunctionEventsEnabled = false;
+      this.isAuditFunctionEventsEnabled = false;
     }
 
     // Cell Edit
-    if (blotterOptions.auditOptions != null && blotterOptions.auditOptions.auditCellEdits != null) {
-      this.IsAuditCellEditsEnabled = blotterOptions.auditOptions.auditCellEdits;
+    if (
+      blotter.blotterOptions.auditOptions != null &&
+      blotter.blotterOptions.auditOptions.auditCellEdits != null
+    ) {
+      this.isAuditCellEditsEnabled = this.isAuditOptionEnabled(
+        blotter.blotterOptions.auditOptions.auditCellEdits
+      );
     } else {
-      this.IsAuditCellEditsEnabled = false;
+      this.isAuditCellEditsEnabled = false;
     }
 
     // Log State
-    this.IsAuditStateChangesEnabled =
-      this.IsAuditInternalStateChangesEnabled || this.IsAuditUserStateChangesEnabled;
+    this.isAuditStateChangesEnabled =
+      this.isAuditInternalStateChangesEnabled || this.isAuditUserStateChangesEnabled;
 
     // General Audit Flag
-    this.IsAuditEnabled =
-      this.IsAuditStateChangesEnabled ||
-      this.IsAuditFunctionEventsEnabled ||
-      this.IsAuditCellEditsEnabled;
+    this.isAuditEnabled =
+      this.isAuditStateChangesEnabled ||
+      this.isAuditFunctionEventsEnabled ||
+      this.isAuditCellEditsEnabled;
 
-    // Log to Console (or to the default queue)
-    this.ShouldAuditToConsole = blotterOptions.auditOptions.auditToConsole;
+    // set up the Audit Queue if any of the Audits is set to use HTTP Channel
+    if (this.isAuditEnabled) {
+      if (blotter.blotterOptions.auditOptions != undefined) {
+        if (this.shouldAuditToHttpChannel(blotter.blotterOptions.auditOptions)) {
+          if (
+            blotter.blotterOptions.auditOptions.pingInterval != undefined &&
+            blotter.blotterOptions.auditOptions.auditLogsSendInterval != undefined
+          ) {
+            this.ping();
+            setInterval(() => this.ping(), blotter.blotterOptions.auditOptions.pingInterval * 1000);
+            setInterval(
+              () => this.flushAuditQueue(),
+              blotter.blotterOptions.auditOptions.auditLogsSendInterval * 1000
+            );
+          }
+        }
+      }
+    }
   }
 
-  public AddEditCellAuditLogBatch(dataChangedEvents: IDataChangedInfo[]) {
+  public addEditCellAuditLogBatch(dataChangedEvents: IDataChangedInfo[]) {
     dataChangedEvents.forEach(dce => {
-      this.AddEditCellAuditLog(dce);
+      this.addEditCellAuditLog(dce);
     });
   }
 
-  public AddEditCellAuditLog(dataChangedEvent: IDataChangedInfo) {
-    if (this.IsAuditCellEditsEnabled) {
+  public addEditCellAuditLog(dataChangedEvent: IDataChangedInfo) {
+    if (this.isAuditCellEditsEnabled) {
       let auditLogEntry: IAuditLogEntry = {
-        adaptableblotter_auditlog_trigger: AuditLogTrigger.CellEdit,
-        adaptableblotter_client_timestamp: new Date(),
-        adaptableblotter_username: this.blotterOptions.userName,
-        adaptableblotter_id: this.blotterOptions.blotterId,
-        adaptableblotter_editcell: {
-          primarykey: String(dataChangedEvent.IdentifierValue),
-          primarykey_column_id: this.blotterOptions.primaryKey,
+        auditlog_trigger: AuditLogTrigger.CellEdit,
+        client_timestamp: new Date(),
+        username: this.blotter.blotterOptions.userName!,
+        blotter_id: this.blotter.blotterOptions.blotterId!,
+        cell_edit_details: {
+          primarykey_column_value: String(dataChangedEvent.IdentifierValue),
+          primarykey_column_id: this.blotter.blotterOptions.primaryKey,
           column_id: dataChangedEvent.ColumnId,
           previous_value: String(dataChangedEvent.OldValue),
           new_value: String(dataChangedEvent.NewValue),
         },
       };
-      this.processAuditLogEntry(auditLogEntry);
+      let auditDestinationOptions = this.blotter.blotterOptions.auditOptions!.auditCellEdits!;
+
+      if (auditDestinationOptions.auditToConsole) {
+        LoggingHelper.LogObject(auditLogEntry);
+      }
+      if (auditDestinationOptions.auditAsEvent) {
+        this.publishStateChanged(auditLogEntry, AuditLogTrigger.CellEdit);
+      }
+      if (auditDestinationOptions.auditToHttpChannel) {
+        this.auditLogQueue.push(auditLogEntry);
+      }
     }
   }
 
-  public AddStateChangeAuditLog(stateChanges: any, actionType: string) {
-    if (this.IsAuditStateChangesEnabled) {
+  public addUserStateChangeAuditLog(stateChangeDetails: IStateChangedDetails) {
+    if (this.isAuditUserStateChangesEnabled) {
       let auditLogEntry: IAuditLogEntry = {
-        adaptableblotter_auditlog_trigger: AuditLogTrigger.StateChange,
-        adaptableblotter_client_timestamp: new Date(),
-        adaptableblotter_username: this.blotterOptions.userName,
-        adaptableblotter_id: this.blotterOptions.blotterId,
-        adaptableblotter_state_change: this.convertToText(stateChanges),
-        adaptableblotter_state_change_action: actionType,
+        auditlog_trigger: AuditLogTrigger.UserStateChange,
+        client_timestamp: new Date(),
+        username: this.blotter.blotterOptions.userName!,
+        blotter_id: this.blotter.blotterOptions.blotterId!,
+        state_change_details: stateChangeDetails,
       };
-      this.processAuditLogEntry(auditLogEntry);
+      let auditDestinationOptions = this.blotter.blotterOptions.auditOptions!
+        .auditUserStateChanges!;
+
+      if (auditDestinationOptions.auditToConsole) {
+        LoggingHelper.LogObject(auditLogEntry);
+      }
+      if (auditDestinationOptions.auditAsEvent) {
+        this.publishStateChanged(auditLogEntry, AuditLogTrigger.UserStateChange);
+      }
+      if (auditDestinationOptions.auditToHttpChannel) {
+        this.auditLogQueue.push(auditLogEntry);
+      }
     }
   }
-
-  public AddAdaptableBlotterFunctionLog(
-    functionName: string,
-    action: string,
-    info: string,
-    data?: any
-  ) {
-    if (this.IsAuditFunctionEventsEnabled) {
+  public addInternalStateChangeAuditLog(stateChangeDetails: IStateChangedDetails) {
+    if (this.isAuditInternalStateChangesEnabled) {
       let auditLogEntry: IAuditLogEntry = {
-        adaptableblotter_auditlog_trigger: AuditLogTrigger.AdaptableBlotterFunction,
-        adaptableblotter_client_timestamp: new Date(),
-        adaptableblotter_username: this.blotterOptions.userName,
-        adaptableblotter_id: this.blotterOptions.blotterId,
-        adaptableblotter_function: {
-          name: functionName,
-          action: action,
-          info: info,
-          //not sure if it's best to leave undefined or null.... I think null is better
-          //same as adaptableblotter_state_change we log the obj as a string
-          data: data ? this.convertToText(data) : null,
-        },
+        auditlog_trigger: AuditLogTrigger.InternalStateChange,
+        client_timestamp: new Date(),
+        username: this.blotter.blotterOptions.userName!,
+        blotter_id: this.blotter.blotterOptions.blotterId!,
+        state_change_details: stateChangeDetails,
       };
-      this.processAuditLogEntry(auditLogEntry);
+      let auditDestinationOptions = this.blotter.blotterOptions.auditOptions!
+        .auditInternalStateChanges!;
+
+      if (auditDestinationOptions.auditToConsole) {
+        LoggingHelper.LogObject(auditLogEntry);
+      }
+      if (auditDestinationOptions.auditAsEvent) {
+        this.publishStateChanged(auditLogEntry, AuditLogTrigger.InternalStateChange);
+      }
+      if (auditDestinationOptions.auditToHttpChannel) {
+        this.auditLogQueue.push(auditLogEntry);
+      }
     }
   }
 
-  private processAuditLogEntry(auditLogEntry: IAuditLogEntry): void {
-    if (this.ShouldAuditToConsole) {
-      LoggingHelper.LogObject(auditLogEntry);
-    } else {
-      this.auditLogQueue.push(auditLogEntry);
+  public addFunctionAppliedAuditLog(functionAppliedDetails: IFunctionAppliedDetails) {
+    if (this.isAuditFunctionEventsEnabled) {
+      let auditLogEntry: IAuditLogEntry = {
+        auditlog_trigger: AuditLogTrigger.FunctionApplied,
+        client_timestamp: new Date(),
+        username: this.blotter.blotterOptions.userName!,
+        blotter_id: this.blotter.blotterOptions.blotterId!,
+        function_applied_details: functionAppliedDetails,
+        //  adaptableblotter_function: {
+        //   name: functionName,
+        //   action: action,
+        //   info: info,
+        //not sure if it's best to leave undefined or null.... I think null is better
+        //same as adaptableblotter_state_change we log the obj as a string
+        //   data: data ? this.convertAuditMessageToText(data) : null,
+        // },
+      };
+      let auditDestinationOptions = this.blotter.blotterOptions.auditOptions!.auditFunctionEvents!;
+
+      if (auditDestinationOptions.auditToConsole) {
+        LoggingHelper.LogObject(auditLogEntry);
+      }
+      if (auditDestinationOptions.auditAsEvent) {
+        this.publishStateChanged(auditLogEntry, AuditLogTrigger.FunctionApplied);
+      }
+      if (auditDestinationOptions.auditToHttpChannel) {
+        this.auditLogQueue.push(auditLogEntry);
+      }
     }
   }
 
   private ping() {
     let pingMessage: IAuditLogEntry = {
-      adaptableblotter_auditlog_trigger: AuditLogTrigger.Ping,
-      adaptableblotter_client_timestamp: new Date(),
-      adaptableblotter_username: this.blotterOptions.userName,
-      adaptableblotter_id: this.blotterOptions.blotterId,
-      adaptableblotter_number_of_missed_ping: this.numberOfMissedPing,
+      auditlog_trigger: AuditLogTrigger.Ping,
+      client_timestamp: new Date(),
+      username: this.blotter.blotterOptions.userName,
+      blotter_id: this.blotter.blotterOptions.blotterId,
+      number_of_missed_ping: this.numberOfMissedPing,
     };
     let xhr = new XMLHttpRequest();
     xhr.onerror = (ev: any) => {
@@ -233,21 +301,21 @@ export class AuditLogService {
     }
   }
 
-  private convertToText(obj: any): string {
+  public convertAuditMessageToText(obj: any): string {
     let stringArray: string[] = [];
 
     if (obj == undefined) {
       return String(obj);
     } else if (Array.isArray(obj)) {
       for (let prop in obj) {
-        stringArray.push(this.convertToText(obj[prop]));
+        stringArray.push(this.convertAuditMessageToText(obj[prop]));
       }
       return '[' + stringArray.join(',') + ']';
     }
     if (typeof obj == 'object') {
       for (let prop in obj) {
         if (obj.hasOwnProperty(prop)) {
-          stringArray.push(prop + ': ' + this.convertToText(obj[prop]));
+          stringArray.push(prop + ': ' + this.convertAuditMessageToText(obj[prop]));
         }
       }
       return '{' + stringArray.join(',') + '}';
@@ -259,5 +327,74 @@ export class AuditLogService {
     }
 
     return stringArray.join(',');
+  }
+
+  private isAuditOptionEnabled(auditDestinationOptions: IAuditDestinationOptions): boolean {
+    return (
+      auditDestinationOptions.auditAsEvent ||
+      auditDestinationOptions.auditToConsole ||
+      auditDestinationOptions.auditToHttpChannel
+    );
+  }
+
+  private shouldAuditToHttpChannel(auditLogOptions: IAuditOptions | undefined): boolean {
+    if (auditLogOptions) {
+      if (auditLogOptions.auditCellEdits) {
+        if (auditLogOptions.auditCellEdits.auditToHttpChannel) {
+          return true;
+        }
+      }
+      if (auditLogOptions.auditFunctionEvents) {
+        if (auditLogOptions.auditFunctionEvents.auditToHttpChannel) {
+          return true;
+        }
+      }
+      if (auditLogOptions.auditInternalStateChanges) {
+        if (auditLogOptions.auditInternalStateChanges.auditToHttpChannel) {
+          return true;
+        }
+      }
+      if (auditLogOptions.auditUserStateChanges) {
+        if (auditLogOptions.auditUserStateChanges.auditToHttpChannel) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  // not sure this is best place to put this but it shouldnt be in Strategy Base
+  publishStateChanged(auditLogEntry: IAuditLogEntry, auditLogTrigger: AuditLogTrigger): void {
+    let stateEventData: IAuditLogEventData = {
+      name: 'Adaptable Blotter',
+      type: 'Audit Log Event',
+      id: auditLogEntry,
+    };
+
+    let stateChangedArgs: IAuditLogEventArgs = {
+      object: 'fdc3-context',
+      definition: 'https://fdc3.org/context/1.0.0/',
+      version: '1.0.0',
+      data: [stateEventData],
+    };
+
+    switch (auditLogTrigger) {
+      case AuditLogTrigger.CellEdit:
+        this.blotter.api.auditEventApi._onAuditCellEdited.Dispatch(this.blotter, stateChangedArgs);
+        break;
+      case AuditLogTrigger.FunctionApplied:
+        this.blotter.api.auditEventApi._onAuditFunctionApplied.Dispatch(
+          this.blotter,
+          stateChangedArgs
+        );
+        break;
+      case AuditLogTrigger.InternalStateChange:
+      case AuditLogTrigger.UserStateChange:
+        this.blotter.api.auditEventApi._onAuditStateChanged.Dispatch(
+          this.blotter,
+          stateChangedArgs
+        );
+        break;
+    }
   }
 }

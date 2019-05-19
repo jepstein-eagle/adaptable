@@ -10,6 +10,7 @@ import '../../../../App_Scripts/themes/light.scss';
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { IAuditLogEventArgs } from '../../../../App_Scripts/Utilities/Interface/IAuditEvents';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -26,18 +27,31 @@ function InitAdaptableBlotter() {
     blotterId: 'audit demo',
     licenceKey: examplesHelper.getEnterpriseLicenceKey(),
     auditOptions: {
-      auditCellEdits: true,
-      auditFunctionEvents: true,
-      auditUserStateChanges: true,
-      auditInternalStateChanges: false,
-      pingInterval: 120,
-      auditToConsole: true,
+      auditUserStateChanges: {
+        auditToConsole: true,
+        auditAsEvent: false,
+      },
+      auditFunctionEvents: {
+        auditToConsole: true,
+      },
+      auditCellEdits: {
+        auditToConsole: true,
+      },
     },
   };
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
+  adaptableblotter.api.auditEventApi
+    .onAuditStateChanged()
+    .Subscribe((sender, columnChangedArgs) => listenToAuditLogEvent(columnChangedArgs));
+
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
+}
+
+function listenToAuditLogEvent(auditLogEventArgs: IAuditLogEventArgs) {
+  console.log('audit event received');
+  console.log(auditLogEventArgs);
 }
 
 export default () => {

@@ -14,7 +14,7 @@ import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFi
 import { IUserTheme } from '../../../Utilities/Interface/BlotterObjects/IUserTheme';
 import { IPercentBar } from '../../../Utilities/Interface/BlotterObjects/IPercentBar';
 import { IFreeTextColumn } from '../../../Utilities/Interface/BlotterObjects/IFreeTextColumn';
-import { IReport, IAutoExport } from '../../../Utilities/Interface/BlotterObjects/IReport';
+import { IReport } from '../../../Utilities/Interface/BlotterObjects/IReport';
 import { IFlashingCell } from '../../../Utilities/Interface/BlotterObjects/IFlashingCell';
 import { ICustomSort } from '../../../Utilities/Interface/BlotterObjects/ICustomSort';
 import { IConditionalStyle } from '../../../Utilities/Interface/BlotterObjects/IConditionalStyle';

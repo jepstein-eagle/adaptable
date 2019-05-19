@@ -2,12 +2,11 @@ import { ApiBase } from './ApiBase';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import {
-  ISearchChangedEventArgs,
   IColumnStateChangedEventArgs,
   IThemeChangedEventArgs,
   IAlertFiredEventArgs,
-} from '../Utilities/Interface/IStateEvents';
-import { IStateChangedEventArgs } from '../Utilities/Interface/StateChanged/IStateChangedEventArgs';
+} from '../Utilities/Interface/IBlotterEvents';
+import { ISearchChangedEventArgs } from '../Utilities/Interface/SearchChanged/ISearchChangedEventArgs';
 import { IEventApi } from './Interface/IEventApi';
 import { EventDispatcher } from '../Utilities/EventDispatcher';
 
@@ -15,8 +14,6 @@ export class EventApi extends ApiBase implements IEventApi {
   public _onSearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
 
   public _onThemeChanged: EventDispatcher<IAdaptableBlotter, IThemeChangedEventArgs>;
-
-  public _onStateChanged: EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>;
 
   public _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
 
@@ -26,7 +23,6 @@ export class EventApi extends ApiBase implements IEventApi {
     super(blotter);
 
     this._onSearchedChanged = new EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>();
-    this._onStateChanged = new EventDispatcher<IAdaptableBlotter, IStateChangedEventArgs>();
     this._onThemeChanged = new EventDispatcher<IAdaptableBlotter, IThemeChangedEventArgs>();
     this._onColumnStateChanged = new EventDispatcher<
       IAdaptableBlotter,
@@ -41,10 +37,6 @@ export class EventApi extends ApiBase implements IEventApi {
 
   public onThemeChanged(): IEvent<IAdaptableBlotter, IThemeChangedEventArgs> {
     return this._onThemeChanged;
-  }
-
-  public onStateChanged(): IEvent<IAdaptableBlotter, IStateChangedEventArgs> {
-    return this._onStateChanged;
   }
 
   public onColumnStateChanged(): IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs> {

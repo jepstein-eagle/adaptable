@@ -3,8 +3,8 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { AdvancedSearchState, GridState } from '../Redux/ActionsReducers/Interface/IState';
-import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
+import { AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState';
+import { SearchChangedTrigger } from '../Utilities/Enums';
 
 export class AdvancedSearchStrategy extends AdaptableStrategyBase
   implements IAdvancedSearchStrategy {
@@ -22,20 +22,15 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase
     );
   }
 
+  // Not sure we need this.  i wonder if the store shoud do this...?
   protected InitState() {
     if (this.AdvancedSearchState != this.GetAdvancedSearchState()) {
       this.AdvancedSearchState = this.GetAdvancedSearchState();
 
-      // this is re-applying grid filtering even if the change to the advanced search state doesnt effect the current advanced search
-      //  probably not an issue but might be worth revisiting ...
-      this.blotter.applyGridFiltering();
-
-      if (this.blotter.blotterOptions.generalOptions.serverSearchOption != 'None') {
-        this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch);
-      }
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.AdvancedSearch, this.AdvancedSearchState);
+      if (this.blotter.blotterOptions.generalOptions!.serverSearchOption != 'None') {
+        if (this.blotter.isInitialised) {
+          this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch);
+        }
       }
     }
   }

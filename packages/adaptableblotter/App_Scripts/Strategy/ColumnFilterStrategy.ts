@@ -5,9 +5,8 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumnFilter } from '../Utilities/Interface/BlotterObjects/IColumnFilter';
-import { SearchChangedTrigger, StateChangedTrigger } from '../Utilities/Enums';
+import { SearchChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
   private columnFilterState: IColumnFilter[];
@@ -43,14 +42,10 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
 
       setTimeout(() => this.blotter.applyGridFiltering(), 5);
       if (
-        this.blotter.blotterOptions.generalOptions.serverSearchOption == 'AllSearch' ||
+        this.blotter.blotterOptions.generalOptions!.serverSearchOption == 'AllSearch' ||
         'AllSearchandSort'
       ) {
         this.publishSearchChanged(SearchChangedTrigger.ColumnFilter);
-      }
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.ColumnFilter, this.columnFilterState);
       }
     }
   }

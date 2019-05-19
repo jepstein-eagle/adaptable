@@ -12,8 +12,12 @@ export class ColumnFilterApi extends ApiBase implements IColumnFilterApi {
   }
 
   public setColumnFilter(columnFilters: IColumnFilter[]): void {
-    columnFilters.forEach(cf => {
-      this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(cf));
+    columnFilters.forEach(columnFilter => {
+      if (this.getAllColumnFilter().find(cf => cf.ColumnId == columnFilter.ColumnId)) {
+        this.dispatchAction(ColumnFilterRedux.ColumnFilterEdit(columnFilter));
+      } else {
+        this.dispatchAction(ColumnFilterRedux.ColumnFilterAdd(columnFilter));
+      }
     });
   }
 
@@ -25,7 +29,7 @@ export class ColumnFilterApi extends ApiBase implements IColumnFilterApi {
       let columnFilter: IColumnFilter = ObjectFactory.CreateColumnFilterFromUserFilter(
         existingUserFilter
       );
-      this.dispatchAction(ColumnFilterRedux.ColumnFilterAddUpdate(columnFilter));
+      this.dispatchAction(ColumnFilterRedux.ColumnFilterAdd(columnFilter));
     }
   }
 

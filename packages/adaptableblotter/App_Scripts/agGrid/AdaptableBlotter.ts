@@ -70,7 +70,6 @@ import {
   DisplayAction,
   DistinctCriteriaPairValue,
   FilterOnDataChangeOptions,
-  StateChangedTrigger,
 } from '../Utilities/Enums';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
@@ -88,12 +87,6 @@ import { ICalculatedColumn } from '../Utilities/Interface/BlotterObjects/ICalcul
 import { IRange } from '../Utilities/Interface/Expression/IRange';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { IAdaptableBlotterOptions } from '../Utilities/Interface/blotterOptions/IAdaptableblotterOptions';
-import {
-  ISearchChangedEventArgs,
-  IColumnStateChangedEventArgs,
-  IAlertFiredEventArgs,
-} from '../Utilities/Interface/IStateEvents';
-import { IStateChangedEventArgs } from '../Utilities/Interface/StateChanged/IStateChangedEventArgs';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
@@ -131,8 +124,9 @@ import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdapt
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
-import { QuickSearchState, AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState';
+import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState';
 import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
+import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;
@@ -151,7 +145,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public ValidationService: IValidationService;
 
-  public AuditLogService: AuditLogService;
+  public AuditLogService: IAuditLogService;
 
   public StyleService: StyleService;
 
@@ -209,7 +203,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.api = new BlotterApi(this);
 
     // the audit service needs to be created before the store
-    this.AuditLogService = new AuditLogService(this.blotterOptions);
+    this.AuditLogService = new AuditLogService(this);
     // create the store
     this.adaptableBlotterStore = new AdaptableBlotterStore(this);
 
@@ -891,8 +885,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       IdentifierValue: cellInfo.Id,
       Record: null,
     };
-    if (this.AuditLogService.IsAuditCellEditsEnabled) {
-      this.AuditLogService.AddEditCellAuditLog(dataChangedEvent);
+    if (this.AuditLogService.isAuditCellEditsEnabled) {
+      this.AuditLogService.addEditCellAuditLog(dataChangedEvent);
     }
     this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedEvent);
     this.DataService.CreateDataChangedEvent(dataChangedEvent);
@@ -941,8 +935,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       });
     }
 
-    if (this.AuditLogService.IsAuditCellEditsEnabled) {
-      this.AuditLogService.AddEditCellAuditLogBatch(dataChangedEvents);
+    if (this.AuditLogService.isAuditCellEditsEnabled) {
+      this.AuditLogService.addEditCellAuditLogBatch(dataChangedEvents);
     }
     this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents);
     dataChangedEvents.forEach(dc => this.DataService.CreateDataChangedEvent(dc));
@@ -1702,8 +1696,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         const whatToReturn = oldIsCancelAfterEnd ? oldIsCancelAfterEnd() : false;
         if (!whatToReturn) {
           // audit the cell event if needed
-          if (this.AuditLogService.IsAuditCellEditsEnabled) {
-            this.AuditLogService.AddEditCellAuditLog(dataChangedInfo);
+          if (this.AuditLogService.isAuditCellEditsEnabled) {
+            this.AuditLogService.addEditCellAuditLog(dataChangedInfo);
           }
           // it might be a free text column so we need to update the values
           this.FreeTextColumnService.CheckIfDataChangingColumnIsFreeText(dataChangedInfo);

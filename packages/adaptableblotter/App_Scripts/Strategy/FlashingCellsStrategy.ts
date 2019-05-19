@@ -69,15 +69,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
     }
   }
 
-  protected InitState() {
-    if (this.FlashingCellState != this.blotter.api.flashingCellApi.getFlashingCellState()) {
-      this.FlashingCellState = this.blotter.api.flashingCellApi.getFlashingCellState();
-
-      if (this.blotter.isInitialised) {
-        this.publishStateChanged(StateChangedTrigger.FlashingCell, this.FlashingCellState);
-      }
-    }
-  }
+  protected InitState() {}
 
   protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo) {
     let flashingCell: IFlashingCell = this.FlashingCellState.FlashingCells.find(
