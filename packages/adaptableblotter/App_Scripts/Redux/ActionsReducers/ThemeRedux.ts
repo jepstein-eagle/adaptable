@@ -9,7 +9,7 @@ import {
 
 const THEME_SET_SYSTEM_THEMES = 'THEME_SET_SYSTEM_THEMES';
 const THEME_SET_USER_THEMES = 'THEME_SET_USER_THEMES';
-const THEME_SELECT = 'THEME_SELECT';
+export const THEME_SELECT = 'THEME_SELECT';
 
 export interface ThemeSetSystemThemesAction extends Redux.Action {
   SystemThemes: string[];

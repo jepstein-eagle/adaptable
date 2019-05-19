@@ -13,7 +13,7 @@ export class SystemFilterApi extends ApiBase implements ISystemFilterApi {
 
   public setSystemFilterByUserFilters(userFilters: IUserFilter[]): void {
     userFilters.forEach(uf => {
-      this.dispatchAction(UserFilterRedux.UserFilterAddUpdate(-1, uf));
+      this.dispatchAction(UserFilterRedux.UserFilterAdd(uf));
     });
   }
 

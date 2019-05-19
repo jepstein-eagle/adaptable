@@ -84,11 +84,18 @@ export const ALERT_DEFAULT_SHOW_AS_POPUP: boolean = true;
 /**
  * Constants for State (primarily for audit property events) - good idea?
  */
-export const CURRENT_ADVANCED_SEARCH: string = 'CurrentAdvancedSearch';
-export const BULK_UPDATE_VALUE: string = 'BulkUpdateValue';
-export const CURRENT_CALENDAR: string = 'CurrentCalendar';
-export const SUMMARY_OPERATION: string = 'SummaryOperation';
-export const CURRENT_LAYOUT: string = 'CurrentLayout';
-export const QUICK_SEARCH_TEXT: string = 'QuickSearchText';
-export const QUICK_SEARCH_DISPLAY_ACTION: string = 'DisplayAction';
-export const QUICK_SEARCH_STYLE: string = 'Style';
+export const CURRENT_ADVANCED_SEARCH_STATE_PROPERTY: string = 'CurrentAdvancedSearch';
+export const BULK_UPDATE_VALUE_STATE_PROPERTY: string = 'BulkUpdateValue';
+export const CURRENT_CALENDAR_STATE_PROPERTY: string = 'CurrentCalendar';
+export const SUMMARY_OPERATION_STATE_PROPERTY: string = 'SummaryOperation';
+export const CURRENT_LAYOUT_STATE_PROPERTY: string = 'CurrentLayout';
+export const CURRENT_DATA_SOURCE_STATE_PROPERTY: string = 'CurrentDataSource';
+export const FLASHING_CELL_DEFAULT_UP_COLOR_STATE_PROPERTY: string = 'DefaultUpColor';
+export const FLASHING_CELL_DEFAULT_DOWN_COLOR_STATE_PROPERTY: string = 'DefautDownColor';
+export const FLASHING_CELL_DEFAULT_DURATION_STATE_PROPERTY: string = 'DefaultDuration';
+export const CURRENT_THEME_STATE_PROPERTY: string = 'CurrentTheme';
+export const QUICK_SEARCH_TEXT_STATE_PROPERTY: string = 'QuickSearchText';
+export const QUICK_SEARCH_DISPLAY_ACTION_STATE_PROPERTY: string = 'DisplayAction';
+export const QUICK_SEARCH_STYLE_STATE_PROPERTY: string = 'Style';
+export const SMART_EDIT_VALUE_STATE_PROPERTY: string = 'SmartEditValue';
+export const SMART_EDIT_MATH_OPERATION_STATE_PROPERTY: string = 'MathOperationz';

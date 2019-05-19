@@ -1,7 +1,15 @@
 import { ICellEditDetails, IFunctionAppliedDetails, IStateChangedDetails } from './IAuditEvents';
 
+export enum AuditLogType {
+  CellEdit = 'Cell Edit',
+  UserStateChange = 'User State Change',
+  InternalStateChange = 'Internal State Change',
+  FunctionApplied = 'Function Applied',
+  Ping = 'Ping',
+}
+
 export interface IAuditLogEntry {
-  auditlog_trigger: string;
+  auditlog_type: AuditLogType;
   client_timestamp: Date;
   username: string;
   blotter_id: string;

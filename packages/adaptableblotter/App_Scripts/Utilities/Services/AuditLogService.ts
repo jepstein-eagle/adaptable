@@ -1,6 +1,6 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
-import { IAuditLogEntry } from '../Interface/IAuditLogEntry';
+import { IAuditLogEntry, AuditLogType } from '../Interface/IAuditLogEntry';
 import { IAuditLogService } from './Interface/IAuditLogService';
 import { IAdaptableBlotter } from '../../types';
 import {
@@ -10,14 +10,6 @@ import {
   IAuditLogEventArgs,
 } from '../Interface/IAuditEvents';
 import { IAuditDestinationOptions, IAuditOptions } from '../Interface/BlotterOptions/IAuditOptions';
-
-export enum AuditLogTrigger {
-  CellEdit = 'CellEdit',
-  UserStateChange = 'UserStateChange',
-  InternalStateChange = 'InternalStateChange',
-  FunctionApplied = 'FunctionApplied',
-  Ping = 'Ping',
-}
 
 export class AuditLogService implements IAuditLogService {
   private auditLogQueue: Array<IAuditLogEntry>;
@@ -123,7 +115,7 @@ export class AuditLogService implements IAuditLogService {
   public addEditCellAuditLog(dataChangedEvent: IDataChangedInfo) {
     if (this.isAuditCellEditsEnabled) {
       let auditLogEntry: IAuditLogEntry = {
-        auditlog_trigger: AuditLogTrigger.CellEdit,
+        auditlog_type: AuditLogType.CellEdit,
         client_timestamp: new Date(),
         username: this.blotter.blotterOptions.userName!,
         blotter_id: this.blotter.blotterOptions.blotterId!,
@@ -141,7 +133,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditLogTrigger.CellEdit);
+        this.publishStateChanged(auditLogEntry, AuditLogType.CellEdit);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -152,7 +144,7 @@ export class AuditLogService implements IAuditLogService {
   public addUserStateChangeAuditLog(stateChangeDetails: IStateChangedDetails) {
     if (this.isAuditUserStateChangesEnabled) {
       let auditLogEntry: IAuditLogEntry = {
-        auditlog_trigger: AuditLogTrigger.UserStateChange,
+        auditlog_type: AuditLogType.UserStateChange,
         client_timestamp: new Date(),
         username: this.blotter.blotterOptions.userName!,
         blotter_id: this.blotter.blotterOptions.blotterId!,
@@ -165,7 +157,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditLogTrigger.UserStateChange);
+        this.publishStateChanged(auditLogEntry, AuditLogType.UserStateChange);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -175,7 +167,7 @@ export class AuditLogService implements IAuditLogService {
   public addInternalStateChangeAuditLog(stateChangeDetails: IStateChangedDetails) {
     if (this.isAuditInternalStateChangesEnabled) {
       let auditLogEntry: IAuditLogEntry = {
-        auditlog_trigger: AuditLogTrigger.InternalStateChange,
+        auditlog_type: AuditLogType.InternalStateChange,
         client_timestamp: new Date(),
         username: this.blotter.blotterOptions.userName!,
         blotter_id: this.blotter.blotterOptions.blotterId!,
@@ -188,7 +180,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditLogTrigger.InternalStateChange);
+        this.publishStateChanged(auditLogEntry, AuditLogType.InternalStateChange);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -199,7 +191,7 @@ export class AuditLogService implements IAuditLogService {
   public addFunctionAppliedAuditLog(functionAppliedDetails: IFunctionAppliedDetails) {
     if (this.isAuditFunctionEventsEnabled) {
       let auditLogEntry: IAuditLogEntry = {
-        auditlog_trigger: AuditLogTrigger.FunctionApplied,
+        auditlog_type: AuditLogType.FunctionApplied,
         client_timestamp: new Date(),
         username: this.blotter.blotterOptions.userName!,
         blotter_id: this.blotter.blotterOptions.blotterId!,
@@ -219,7 +211,7 @@ export class AuditLogService implements IAuditLogService {
         LoggingHelper.LogObject(auditLogEntry);
       }
       if (auditDestinationOptions.auditAsEvent) {
-        this.publishStateChanged(auditLogEntry, AuditLogTrigger.FunctionApplied);
+        this.publishStateChanged(auditLogEntry, AuditLogType.FunctionApplied);
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
@@ -229,7 +221,7 @@ export class AuditLogService implements IAuditLogService {
 
   private ping() {
     let pingMessage: IAuditLogEntry = {
-      auditlog_trigger: AuditLogTrigger.Ping,
+      auditlog_type: AuditLogType.Ping,
       client_timestamp: new Date(),
       username: this.blotter.blotterOptions.userName,
       blotter_id: this.blotter.blotterOptions.blotterId,
@@ -364,7 +356,7 @@ export class AuditLogService implements IAuditLogService {
   }
 
   // not sure this is best place to put this but it shouldnt be in Strategy Base
-  publishStateChanged(auditLogEntry: IAuditLogEntry, auditLogTrigger: AuditLogTrigger): void {
+  publishStateChanged(auditLogEntry: IAuditLogEntry, auditLogType: AuditLogType): void {
     let stateEventData: IAuditLogEventData = {
       name: 'Adaptable Blotter',
       type: 'Audit Log Event',
@@ -378,18 +370,18 @@ export class AuditLogService implements IAuditLogService {
       data: [stateEventData],
     };
 
-    switch (auditLogTrigger) {
-      case AuditLogTrigger.CellEdit:
+    switch (auditLogType) {
+      case AuditLogType.CellEdit:
         this.blotter.api.auditEventApi._onAuditCellEdited.Dispatch(this.blotter, stateChangedArgs);
         break;
-      case AuditLogTrigger.FunctionApplied:
+      case AuditLogType.FunctionApplied:
         this.blotter.api.auditEventApi._onAuditFunctionApplied.Dispatch(
           this.blotter,
           stateChangedArgs
         );
         break;
-      case AuditLogTrigger.InternalStateChange:
-      case AuditLogTrigger.UserStateChange:
+      case AuditLogType.InternalStateChange:
+      case AuditLogType.UserStateChange:
         this.blotter.api.auditEventApi._onAuditStateChanged.Dispatch(
           this.blotter,
           stateChangedArgs

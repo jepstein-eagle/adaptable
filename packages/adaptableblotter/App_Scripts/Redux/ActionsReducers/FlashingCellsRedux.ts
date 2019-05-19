@@ -9,17 +9,17 @@ import {
 } from '../../Utilities/Constants/GeneralConstants';
 
 export const FLASHING_CELL_SELECT = 'FLASHING_CELL_SELECT';
-export const FLASHING_CELL_CHANGE_DURATION = 'FLASHING_CELL_CHANGE_DURATION';
 export const FLASHING_CELL_SELECT_ALL = 'FLASHING_CELL_SELECT_ALL';
 export const FLASHING_CELL_CHANGE_UP_COLOR = 'FLASHING_CELL_CHANGE_UP_COLOR';
 export const FLASHING_CELL_CHANGE_DOWN_COLOR = 'FLASHING_CELL_CHANGE_DOWN_COLOR';
+export const FLASHING_CELL_CHANGE_DURATION = 'FLASHING_CELL_CHANGE_DURATION';
 
 export interface FlashingCellSelectAction extends Redux.Action {
   FlashingCell: IFlashingCell;
 }
 
 export interface FlashingCellSelectAllAction extends Redux.Action {
-  NumericColumns: IFlashingCell[];
+  FlashingCells: IFlashingCell[];
   shouldTurnOn: boolean;
 }
 
@@ -45,11 +45,11 @@ export const FlashingCellSelect = (FlashingCell: IFlashingCell): FlashingCellSel
 
 export const FlashingCellSelectAll = (
   shouldTurnOn: boolean,
-  NumericColumns: IFlashingCell[]
+  FlashingCells: IFlashingCell[]
 ): FlashingCellSelectAllAction => ({
   type: FLASHING_CELL_SELECT_ALL,
   shouldTurnOn,
-  NumericColumns,
+  FlashingCells,
 });
 
 export const FlashingCellChangeDuration = (
@@ -109,11 +109,10 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
       });
     }
     case FLASHING_CELL_SELECT_ALL: {
-      let numericColumns: Array<IFlashingCell> = (<FlashingCellSelectAllAction>action)
-        .NumericColumns;
+      let flashingCells: Array<IFlashingCell> = (<FlashingCellSelectAllAction>action).FlashingCells;
       let shouldTurnOn = (<FlashingCellSelectAllAction>action).shouldTurnOn;
       let items: Array<IFlashingCell> = [].concat(state.FlashingCells);
-      numericColumns.forEach(column => {
+      flashingCells.forEach(column => {
         let index = items.findIndex(i => i.ColumnId == column.ColumnId);
         if (index != -1) {
           // it exists

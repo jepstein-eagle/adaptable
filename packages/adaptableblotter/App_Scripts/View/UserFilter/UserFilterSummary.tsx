@@ -20,10 +20,11 @@ import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObject
 import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
 
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
-  onAddUpdateUserFilter: (
+  onAddUserFilter: (UserFilter: IUserFilter) => UserFilterRedux.UserFilterAddAction;
+  onEditUserFilter: (
     index: number,
     UserFilter: IUserFilter
-  ) => UserFilterRedux.UserFilterAddUpdateAction;
+  ) => UserFilterRedux.UserFilterEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -163,7 +164,12 @@ export class UserFilterSummaryComponent extends React.Component<
 
   onFinishWizard() {
     let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter;
-    this.props.onAddUpdateUserFilter(this.state.EditedAdaptableBlotterObjectIndex, userFilter);
+    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
+      this.props.onEditUserFilter(this.state.EditedAdaptableBlotterObjectIndex, userFilter);
+    } else {
+      this.props.onAddUserFilter(userFilter);
+    }
+
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
@@ -191,8 +197,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddUpdateUserFilter: (index: number, UserFilter: IUserFilter) =>
-      dispatch(UserFilterRedux.UserFilterAddUpdate(index, UserFilter)),
+    onAddUserFilter: (UserFilter: IUserFilter) =>
+      dispatch(UserFilterRedux.UserFilterAdd(UserFilter)),
+    onEditUserFilter: (index: number, UserFilter: IUserFilter) =>
+      dispatch(UserFilterRedux.UserFilterEdit(index, UserFilter)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId)),
   };
