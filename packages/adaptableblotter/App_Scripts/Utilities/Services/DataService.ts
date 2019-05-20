@@ -3,23 +3,60 @@ import { IDataService, ChangeDirection } from './Interface/IDataService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 import { IEvent } from '../Interface/IEvent';
+import { ConditionalStyleState, IState } from '../../Redux/ActionsReducers/Interface/IState';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 
 // Used to be the Audit Service - now much reduced
 // Doesnt store any data (other than for flashing cell) - simply responsible for publishing DataChanged Events
 
+export interface IStateChangedArgs {
+  StrategyId: string;
+  OldState: IState;
+  NewState: IState;
+}
+
 export class DataService implements IDataService {
   private _columnValueList: Map<string, Map<any, number>>;
+
+  // to move to another...
+  private ConditionalStyleState: ConditionalStyleState;
 
   constructor(private blotter: IAdaptableBlotter) {
     this.blotter = blotter;
     // create the _columnValueList - will be empty - used currrently only for flashing cell
     this._columnValueList = new Map();
+
+    this.WatchState();
+    this.blotter.adaptableBlotterStore.TheStore.subscribe(() => this.WatchState());
+  }
+
+  protected WatchState(): void {
+    if (
+      this.ConditionalStyleState != this.blotter.api.conditionalStyleApi.getConditionalStyleState()
+    ) {
+      let stateChangedArgs: IStateChangedArgs = {
+        StrategyId: StrategyConstants.ConditionalStyleStrategyId,
+        OldState: this.ConditionalStyleState,
+        NewState: this.blotter.api.conditionalStyleApi.getConditionalStyleState(),
+      };
+      this._onStateChanged.Dispatch(this, stateChangedArgs);
+    }
+    this.ConditionalStyleState = this.blotter.api.conditionalStyleApi.getConditionalStyleState();
   }
 
   public CreateDataChangedEvent(dataChangedInfo: IDataChangedInfo): void {
     if (dataChangedInfo.NewValue != dataChangedInfo.OldValue) {
       this._onDataSourceChanged.Dispatch(this, dataChangedInfo);
     }
+  }
+
+  private _onStateChanged: EventDispatcher<IDataService, IStateChangedArgs> = new EventDispatcher<
+    IDataService,
+    IStateChangedArgs
+  >();
+
+  OnStateChanged(): IEvent<IDataService, IStateChangedArgs> {
+    return this._onStateChanged;
   }
 
   private _onDataSourceChanged: EventDispatcher<

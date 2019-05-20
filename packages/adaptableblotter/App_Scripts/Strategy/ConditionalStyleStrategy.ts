@@ -6,6 +6,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { IStateChangedArgs } from '../Utilities/Services/DataService';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {
@@ -15,7 +16,19 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
     this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) =>
       this.handleDataSourceChanged(eventText)
     );
+    this.blotter.DataService.OnStateChanged().Subscribe((sender, stateChangedArgs) =>
+      this.test(stateChangedArgs)
+    );
     this.blotter.onGridDataBound().Subscribe((sender, blotter) => this.handleGridDataBound());
+  }
+
+  protected test(args: IStateChangedArgs): void {
+    if (args.StrategyId == StrategyConstants.ConditionalStyleStrategyId) {
+      // console.log('received update');
+      // console.log(args);
+      //  this.ConditionalStyleState = args.NewState as ConditionalStyleState;
+      //  this.InitStyles();
+    }
   }
 
   protected addPopupMenuItem() {
@@ -31,7 +44,6 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
       this.ConditionalStyleState != this.blotter.api.conditionalStyleApi.getConditionalStyleState()
     ) {
       this.ConditionalStyleState = this.blotter.api.conditionalStyleApi.getConditionalStyleState();
-
       this.InitStyles();
     }
   }

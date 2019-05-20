@@ -1,5 +1,6 @@
 import { IDataChangedInfo } from '../../Interface/IDataChangedInfo';
 import { IEvent } from '../../Interface/IEvent';
+import { IStateChangedArgs } from '../DataService';
 
 export enum ChangeDirection {
   Up = 'Up',
@@ -16,4 +17,6 @@ export interface IDataService {
     newValue: number,
     changeDirection: ChangeDirection
   ): number;
+
+  OnStateChanged(): IEvent<IDataService, IStateChangedArgs>;
 }

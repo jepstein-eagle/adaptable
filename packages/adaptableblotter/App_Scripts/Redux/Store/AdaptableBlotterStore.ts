@@ -113,6 +113,7 @@ import {
   StateObjectChangeType,
 } from '../../Utilities/Interface/IAuditEvents';
 import { Calendar } from 'igniteui-react-core/ES2015/culture';
+import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 
 /*
 This is the main store for the Adaptable Blotter
@@ -1857,10 +1858,8 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
     };
   };
 
-// this is the main function for dealing with Actions that we CANNOT deal with in strategies or dont make sense to.
-// only use this function where it makes sense to  - try to use the strategy to deal with appropriate state where possible
-// please document each use case where we have to use the Store
-// actually we should do this OVER the strategies so that all in logic is one place as currently getting confusing...
+// this is the main function for dealing with Redux Actions which require additional functionality to be triggered.
+// Please document each use case where we have to use the Store
 var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
   function(middlewareAPI: Redux.MiddlewareAPI<AdaptableBlotterState>) {
     return function(next: Redux.Dispatch<AdaptableBlotterState>) {
