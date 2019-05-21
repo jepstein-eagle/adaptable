@@ -13,14 +13,9 @@ export interface AdvancedSearchAddAction extends Redux.Action {
   advancedSearch: IAdvancedSearch;
 }
 
-export interface AdvancedSearchEditAction extends Redux.Action {
-  index: number;
-  advancedSearch: IAdvancedSearch;
-}
+export interface AdvancedSearchEditAction extends AdvancedSearchAddAction {}
 
-export interface AdvancedSearchDeleteAction extends Redux.Action {
-  advancedSearch: IAdvancedSearch;
-}
+export interface AdvancedSearchDeleteAction extends AdvancedSearchAddAction {}
 
 export interface AdvancedSearchSelectAction extends Redux.Action {
   selectedSearchName: string;
@@ -31,12 +26,8 @@ export const AdvancedSearchAdd = (advancedSearch: IAdvancedSearch): AdvancedSear
   advancedSearch,
 });
 
-export const AdvancedSearchEdit = (
-  index: number,
-  advancedSearch: IAdvancedSearch
-): AdvancedSearchEditAction => ({
+export const AdvancedSearchEdit = (advancedSearch: IAdvancedSearch): AdvancedSearchEditAction => ({
   type: ADVANCED_SEARCH_EDIT,
-  index,
   advancedSearch,
 });
 

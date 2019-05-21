@@ -6,4 +6,5 @@ export interface EditableConfigEntityState {
   EditedAdaptableBlotterObject: IAdaptableBlotterObject;
   WizardStartIndex: number;
   EditedAdaptableBlotterObjectIndex: number;
+  EditIsNew?: boolean;
 }

@@ -34,7 +34,6 @@ interface ConditionalStylePopupProps
     condiditionalStyleCondition: IConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleAddAction;
   onEditConditionalStyle: (
-    index: number,
     condiditionalStyleCondition: IConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
@@ -88,15 +87,13 @@ class ConditionalStylePopupComponent extends React.Component<
             cssClassName={cssClassName}
             AdaptableBlotterObject={conditionalStyle}
             colItems={colItems}
-            key={'CS' + index}
+            key={'CS' + (conditionalStyle.Uuid || index)}
             Index={index}
             onShare={() => this.props.onShare(conditionalStyle)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             UserFilters={this.props.UserFilters}
             Columns={this.props.Columns}
-            onEdit={(index, conditionalStyle) =>
-              this.onEdit(index, conditionalStyle as IConditionalStyle)
-            }
+            onEdit={(index, conditionalStyle) => this.onEdit(conditionalStyle as IConditionalStyle)}
             onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(index, conditionalStyle)}
           />
         );
@@ -167,16 +164,16 @@ class ConditionalStylePopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyConditionalStyle(),
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      EditIsNew: true,
     });
   }
 
-  onEdit(index: number, condition: IConditionalStyle) {
+  onEdit(condition: IConditionalStyle) {
     let clonedObject: IConditionalStyle = Helper.cloneObject(condition);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: index,
+      EditIsNew: false,
     });
   }
 
@@ -185,26 +182,20 @@ class ConditionalStylePopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
     });
   }
 
   onFinishWizard() {
-    let conditionalStyle: IConditionalStyle = this.state
-      .EditedAdaptableBlotterObject as IConditionalStyle;
-    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-      this.props.onEditConditionalStyle(
-        this.state.EditedAdaptableBlotterObjectIndex,
-        conditionalStyle
-      );
-    } else {
+    const conditionalStyle = this.state.EditedAdaptableBlotterObject as IConditionalStyle;
+    if (this.state.EditIsNew) {
       this.props.onAddConditionalStyle(conditionalStyle);
+    } else {
+      this.props.onEditConditionalStyle(conditionalStyle);
     }
 
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
     });
   }
 
@@ -241,8 +232,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddConditionalStyle: (conditionalStyle: IConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
-    onEditConditionalStyle: (index: number, conditionalStyle: IConditionalStyle) =>
-      dispatch(ConditionalStyleRedux.ConditionalStyleEdit(index, conditionalStyle)),
+    onEditConditionalStyle: (conditionalStyle: IConditionalStyle) =>
+      dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)
