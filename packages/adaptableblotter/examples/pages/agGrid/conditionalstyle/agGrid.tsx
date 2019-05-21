@@ -20,14 +20,6 @@ import config from './config';
 import jsonData from './dataset.json';
 import { IGridSort } from '../../../../App_Scripts/Utilities/Interface/IGridSort';
 
-import predefinedConfig from './config';
-
-/*
-Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
-No JSON or anything complicated
-Nor do we create the ag-Grid
-*/
-
 LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
 
 const getBasicNorthwindColumnSchema = (): any[] => {
@@ -217,30 +209,6 @@ const getBasicNorthwindColumnSchema = (): any[] => {
   });
   return schema;
 };
-const predefinedConfigx = {
-  // Layout: {
-  //   CurrentLayout: 'Trade View',
-  //   Layouts: [
-  //     {
-  //       Columns: ['OrderId', 'ShippedDate'],
-  //       GridSorts: [
-  //         {
-  //           Column: 'ShippedDate',
-  //           SortOrder: 'Descending',
-  //         } as IGridSort,
-  //       ],
-  //       Name: 'Trade View',
-  //       VendorGridInfo: null,
-  //     },
-  //     {
-  //       Columns: ['OrderId'],
-  //       GridSorts: [],
-  //       Name: 'Trade View Second',
-  //       VendorGridInfo: null,
-  //     },
-  //   ],
-  // },
-};
 
 function InitAdaptableBlotter() {
   const gridOptions: GridOptions = {
@@ -265,7 +233,7 @@ function InitAdaptableBlotter() {
     userName: 'demo user',
     blotterId: 'config blotter demo',
     licenceKey: process.env.ENTERPRISE_LICENSE,
-    predefinedConfig,
+    predefinedConfig: config,
   };
 
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);

@@ -43,15 +43,15 @@ export interface IAdaptableBlotterOptions {
    * Configuration properties and objects set at design-time
    * Only used when Config Server is not enabled
    */
-  predefinedConfig?: {
-    // TODO we should list them all here
-    // and fill in all those config types,
-    // so people using TS can get validation
-    // for the config they are passing
+  predefinedConfig?: any;
+  // Dashboard?: IConfigDashboardOptions;
+  //   Layout?: IConfigLayoutOptions;
+  // };
+  // TODO we should list them all here
+  // and fill in all those config types,
+  // so people using TS can get validation
+  // for the config they are passing
 
-    // Dashboard?: IConfigDashboardOptions;
-    Layout: IConfigLayoutOptions;
-  };
   /**
    * A unique key - provided by the Adaptable Tools team that uniquely identifies the user / team
    * Required to get access to Standard or Enterprise functionality.
