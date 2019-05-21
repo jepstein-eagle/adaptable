@@ -1,7 +1,8 @@
-import { AdvancedSearchState } from './Interface/IState';
 import * as Redux from 'redux';
+import { AdvancedSearchState } from './Interface/IState';
 import { IAdvancedSearch } from '../../Utilities/Interface/BlotterObjects/IAdvancedSearch';
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const ADVANCED_SEARCH_ADD_UPDATE = 'ADVANCED_SEARCH_ADD_UPDATE';
 export const ADVANCED_SEARCH_DELETE = 'ADVANCED_SEARCH_DELETE';
@@ -50,31 +51,47 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (
   state: AdvancedSearchState = initialAdvancedSearchState,
   action: Redux.Action
 ): AdvancedSearchState => {
-  let index: number;
   let advancedSearches: IAdvancedSearch[];
 
   switch (action.type) {
-    case ADVANCED_SEARCH_ADD_UPDATE:
-      let actionTypedAddUpdate = <AdvancedSearchAddUpdateAction>action;
-      advancedSearches = [].concat(state.AdvancedSearches);
-      if (actionTypedAddUpdate.index != -1) {
-        // it exists
-        advancedSearches[actionTypedAddUpdate.index] = actionTypedAddUpdate.advancedSearch;
+    case ADVANCED_SEARCH_ADD_UPDATE: {
+      const actionAdvancedSearch = (action as AdvancedSearchAddUpdateAction).advancedSearch;
+
+      if (actionAdvancedSearch.Uuid) {
+        let isUpdate: boolean = false;
+
+        advancedSearches = state.AdvancedSearches.map(s => {
+          const found = s.Uuid === actionAdvancedSearch.Uuid;
+          if (found) {
+            isUpdate = true;
+          }
+          return found ? actionAdvancedSearch : s;
+        });
+        if (!isUpdate) {
+          advancedSearches.push(actionAdvancedSearch);
+        }
       } else {
-        advancedSearches.push(actionTypedAddUpdate.advancedSearch);
+        actionAdvancedSearch.Uuid = createUuid();
+        advancedSearches = [...state.AdvancedSearches, actionAdvancedSearch];
       }
-      return Object.assign({}, state, { AdvancedSearches: advancedSearches }); //, CurrentAdvancedSearch: currentSearchName })
+      return { ...state, AdvancedSearches: advancedSearches };
+    }
+    case ADVANCED_SEARCH_DELETE: {
+      const actionAdvancedSearch = (action as AdvancedSearchDeleteAction).advancedSearch;
 
-    case ADVANCED_SEARCH_DELETE:
-      let actionTypedDelete = <AdvancedSearchDeleteAction>action;
-      advancedSearches = [].concat(state.AdvancedSearches);
-      index = advancedSearches.findIndex(a => a.Name == actionTypedDelete.advancedSearch.Name);
-      advancedSearches.splice(index, 1);
-      return Object.assign({}, state, {
-        AdvancedSearches: advancedSearches,
-        CurrentAdvancedSearch: EMPTY_STRING,
-      });
+      const currentActiveSearch: IAdvancedSearch = state.AdvancedSearches.filter(
+        s => s.Name === state.CurrentAdvancedSearch
+      )[0];
 
+      return {
+        ...state,
+        AdvancedSearches: state.AdvancedSearches.filter(s => s.Uuid !== actionAdvancedSearch.Uuid),
+        CurrentAdvancedSearch:
+          currentActiveSearch && currentActiveSearch.Uuid === actionAdvancedSearch.Uuid
+            ? EMPTY_STRING
+            : currentActiveSearch.Name,
+      };
+    }
     case ADVANCED_SEARCH_SELECT:
       return Object.assign({}, state, {
         CurrentAdvancedSearch: (<AdvancedSearchSelectAction>action).selectedSearchName,

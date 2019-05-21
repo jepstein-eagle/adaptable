@@ -1,7 +1,8 @@
-import { ConditionalStyleState } from './Interface/IState';
 import * as Redux from 'redux';
+import { ConditionalStyleState } from './Interface/IState';
 import { IConditionalStyle } from '../../Utilities/Interface/BlotterObjects/IConditionalStyle';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const CONDITIONAL_STYLE_ADD_UPDATE = 'CONDITIONAL_STYLE_ADD_UPDATE';
 export const CONDITIONAL_STYLE_DELETE = 'CONDITIONAL_STYLE_DELETE';
@@ -45,21 +46,40 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (
   let conditions: IConditionalStyle[];
 
   switch (action.type) {
-    case CONDITIONAL_STYLE_ADD_UPDATE:
-      let actionTypedAddUpdate = <ConditionalStyleAddUpdateAction>action;
-      conditions = [].concat(state.ConditionalStyles);
-      if (actionTypedAddUpdate.Index != -1) {
-        // it exists
-        conditions[actionTypedAddUpdate.Index] = actionTypedAddUpdate.conditionalStyle;
+    case CONDITIONAL_STYLE_ADD_UPDATE: {
+      const actionConditionalStyle: IConditionalStyle = (action as ConditionalStyleAddUpdateAction)
+        .conditionalStyle;
+
+      if (actionConditionalStyle.Uuid) {
+        let isUpdate: boolean = false;
+        conditions = state.ConditionalStyles.map(c => {
+          const found = c.Uuid === actionConditionalStyle.Uuid;
+
+          if (found) {
+            isUpdate = true;
+          }
+          return found ? actionConditionalStyle : c;
+        });
+        if (!isUpdate) {
+          conditions.push(actionConditionalStyle);
+        }
       } else {
-        conditions.push(actionTypedAddUpdate.conditionalStyle);
+        actionConditionalStyle.Uuid = createUuid();
+        conditions = [...state.ConditionalStyles, actionConditionalStyle];
       }
-      return Object.assign({}, state, { ConditionalStyles: conditions });
-    case CONDITIONAL_STYLE_DELETE:
-      let actionTypedDelete = <ConditionalStyleDeleteAction>action;
-      conditions = [].concat(state.ConditionalStyles);
-      conditions.splice(actionTypedDelete.Index, 1);
-      return Object.assign({}, state, { ConditionalStyles: conditions });
+      return { ...state, ConditionalStyles: conditions };
+    }
+
+    case CONDITIONAL_STYLE_DELETE: {
+      const actionConditionalStyle = (action as ConditionalStyleDeleteAction).conditionalStyle;
+
+      return {
+        ...state,
+        ConditionalStyles: state.ConditionalStyles.filter(
+          c => actionConditionalStyle.Uuid !== c.Uuid
+        ),
+      };
+    }
     default:
       return state;
   }
