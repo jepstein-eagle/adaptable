@@ -1,3 +1,4 @@
+import { cloneDeepWith, isPlainObject } from 'lodash';
 import { IAdaptableBlotterOptions } from '../Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { DefaultAdaptableBlotterOptions } from '../Defaults/DefaultAdaptableBlotterOptions';
 import { IColumn } from '../Interface/IColumn';
@@ -7,11 +8,12 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ILicenceInfo } from '../Interface/ILicenceInfo';
 import { LicenceScopeType } from '../Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
+import { createUuid } from '../Uuid';
 
 export function assignBlotterOptions(
   blotterOptions: IAdaptableBlotterOptions
 ): IAdaptableBlotterOptions {
-  let returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions);
+  const returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions);
   returnBlotterOptions.auditOptions = Object.assign(
     {},
     DefaultAdaptableBlotterOptions.auditOptions,
@@ -52,17 +54,34 @@ export function assignBlotterOptions(
     DefaultAdaptableBlotterOptions.chartOptions,
     blotterOptions.chartOptions
   );
+
+  const { predefinedConfig } = returnBlotterOptions;
+  if (predefinedConfig) {
+    // this customizer function is called by lodash.cloneDeepWith
+    // to determine how to clone each property
+    const customizer = (value: any) => {
+      // so whenever we clone a plain object,
+      // we add a Uuid property
+      if (isPlainObject(value) && value != predefinedConfig) {
+        value.Uuid = createUuid();
+      }
+    };
+
+    returnBlotterOptions.predefinedConfig = cloneDeepWith(predefinedConfig, customizer);
+  }
   return returnBlotterOptions;
 }
 
 export function isValidPrimaryKey(blotter: IAdaptableBlotter, columns: IColumn[]): boolean {
-  let pkColumn: IColumn = ColumnHelper.getColumnFromId(blotter.blotterOptions.primaryKey, columns);
+  const pkColumn: IColumn = ColumnHelper.getColumnFromId(
+    blotter.blotterOptions.primaryKey,
+    columns
+  );
 
   if (pkColumn == null) {
-    let errorMessage: string =
-      "The PK Column '" +
-      blotter.blotterOptions.primaryKey +
-      "' does not exist.  This will affect many functions in the Adaptable Blotter.";
+    const errorMessage: string = `The PK Column '${
+      blotter.blotterOptions.primaryKey
+    }' does not exist.  This will affect many functions in the Adaptable Blotter.`;
     if (blotter.blotterOptions.generalOptions.showMissingPrimaryKeyWarning == true) {
       // show an alert if that is the option
       blotter.api.alertApi.showAlertError('No Primary Key', errorMessage, true);
@@ -85,8 +104,8 @@ export function isConfigServerEnabled(blotterOptions: IAdaptableBlotterOptions):
 }
 
 export function checkLicenceKey(licenceInfo: ILicenceInfo): void {
-  let universalOrEndUser: string = ' (' + licenceInfo.LicenceUserType + '). ';
-  let expiryDate: string = 'Expires: ' + licenceInfo.ExpiryDate.toLocaleDateString();
+  const universalOrEndUser: string = ` (${licenceInfo.LicenceUserType}). `;
+  const expiryDate: string = `Expires: ${licenceInfo.ExpiryDate.toLocaleDateString()}`;
   switch (licenceInfo.LicenceScopeType) {
     case LicenceScopeType.Community:
       let licenceMessage: string = '\n';
@@ -107,12 +126,12 @@ export function checkLicenceKey(licenceInfo: ILicenceInfo): void {
 
     case LicenceScopeType.Standard:
       LoggingHelper.LogAdaptableBlotterInfo(
-        ' Licence Type: Standard' + universalOrEndUser + expiryDate
+        ` Licence Type: Standard${universalOrEndUser}${expiryDate}`
       );
       break;
     case LicenceScopeType.Enterprise:
       LoggingHelper.LogAdaptableBlotterInfo(
-        ' Licence Type: Enterprise' + universalOrEndUser + expiryDate
+        ` Licence Type: Enterprise${universalOrEndUser}${expiryDate}`
       );
       break;
   }

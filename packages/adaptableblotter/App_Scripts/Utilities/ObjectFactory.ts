@@ -66,6 +66,7 @@ import { IDataSource } from './Interface/BlotterObjects/IDataSource';
 import { ISchedule } from './Interface/BlotterObjects/ISchedule';
 import { IReminder } from './Interface/BlotterObjects/IReminder';
 import { IAdaptableAlert } from './Interface/IMessage';
+import { createUuid } from './Uuid';
 
 export function CreateLicenceInfo(
   licenceScopeType: LicenceScopeType,
@@ -155,6 +156,7 @@ export function CreateEmptyAlertDefinition(): IAlertDefinition {
 
 export function CreateEmptyAdvancedSearch(): IAdvancedSearch {
   return {
+    Uuid: createUuid(),
     Name: EMPTY_STRING,
     Expression: ExpressionHelper.CreateEmptyExpression(),
   };
@@ -303,6 +305,7 @@ export function CreateCellValidationMessage(
 
 export function CreateEmptyConditionalStyle(): IConditionalStyle {
   return {
+    Uuid: createUuid(),
     ColumnId: null,
     ColumnCategoryId: null,
     Style: CreateEmptyStyle(),

@@ -1874,7 +1874,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            * Action: Apply Grid Filtering
            */
           case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
-            console.log('Testing if we add this twice - worried that we do...');
             let ret = next(action);
             blotter.applyGridFiltering();
             return ret;

@@ -1,7 +1,8 @@
-import { ConditionalStyleState } from './Interface/IState';
 import * as Redux from 'redux';
+import { ConditionalStyleState } from './Interface/IState';
 import { IConditionalStyle } from '../../Utilities/Interface/BlotterObjects/IConditionalStyle';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const CONDITIONAL_STYLE_ADD = 'CONDITIONAL_STYLE_ADD';
 export const CONDITIONAL_STYLE_EDIT = 'CONDITIONAL_STYLE_EDIT';
@@ -58,21 +59,40 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (
 
   switch (action.type) {
     case CONDITIONAL_STYLE_ADD: {
-      let actionTypedAdd = <ConditionalStyleAddAction>action;
+      const actionTypedAdd = <ConditionalStyleAddAction>action;
+      const actionConditionalStyle: IConditionalStyle = (action as ConditionalStyleAddAction)
+        .conditionalStyle;
+
+      if (!actionConditionalStyle.Uuid) {
+        actionConditionalStyle.Uuid = createUuid();
+      }
       conditions = [].concat(state.ConditionalStyles);
       conditions.push(actionTypedAdd.conditionalStyle);
-      return Object.assign({}, state, { ConditionalStyles: conditions });
+      return { ...state, ConditionalStyles: conditions };
     }
     case CONDITIONAL_STYLE_EDIT:
-      let actionTypedEdit = <ConditionalStyleEditAction>action;
-      conditions = [].concat(state.ConditionalStyles);
-      conditions[actionTypedEdit.Index] = actionTypedEdit.conditionalStyle;
-      return Object.assign({}, state, { ConditionalStyles: conditions });
-    case CONDITIONAL_STYLE_DELETE:
-      let actionTypedDelete = <ConditionalStyleDeleteAction>action;
+      const actionConditionalStyle: IConditionalStyle = (action as ConditionalStyleEditAction)
+        .conditionalStyle;
+
+      return {
+        ...state,
+        ConditionalStyles: state.ConditionalStyles.map(c =>
+          c.Uuid === actionConditionalStyle.Uuid ? actionConditionalStyle : c
+        ),
+      };
+    case CONDITIONAL_STYLE_DELETE: {
+      const actionTypedDelete = <ConditionalStyleDeleteAction>action;
+      const actionConditionalStyle: IConditionalStyle = (action as ConditionalStyleDeleteAction)
+        .conditionalStyle;
       conditions = [].concat(state.ConditionalStyles);
       conditions.splice(actionTypedDelete.Index, 1);
-      return Object.assign({}, state, { ConditionalStyles: conditions });
+      return {
+        ...state,
+        ConditionalStyles: state.ConditionalStyles.filter(
+          c => c.Uuid !== actionConditionalStyle.Uuid
+        ),
+      };
+    }
     default:
       return state;
   }
