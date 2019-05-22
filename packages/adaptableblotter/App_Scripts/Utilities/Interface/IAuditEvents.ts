@@ -40,8 +40,8 @@ export enum StateObjectChangeType {
 export interface IFunctionAppliedDetails {
   name: string;
   action: string;
-  info: string;
-  data: any;
+  info?: string;
+  data?: any;
 }
 
 // Cell Edited

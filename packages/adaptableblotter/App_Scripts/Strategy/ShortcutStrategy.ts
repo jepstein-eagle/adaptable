@@ -17,6 +17,7 @@ import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
+import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -128,7 +129,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
               valueToReplace
             );
           } else {
-            this.ApplyShortcut(activeCell, valueToReplace);
+            this.applyShortcut(activeShortcut, activeCell, valueToReplace, keyEventString);
           }
         }
         // useful feature - prevents the main thing happening you want to on the keypress.
@@ -155,10 +156,28 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
   }
 
-  public ApplyShortcut(activeCell: ICellInfo, newValue: any): void {
+  private applyShortcut(
+    activeShortcut: IShortcut,
+    activeCell: ICellInfo,
+    newValue: any,
+    keyEventString: string
+  ): void {
     this.blotter.setValueBatch([
       { Id: activeCell.Id, ColumnId: activeCell.ColumnId, Value: newValue },
     ]);
+
+    let functionAppliedDetails: IFunctionAppliedDetails = {
+      name: StrategyConstants.ShortcutStrategyId,
+      action: ShortcutRedux.SHORTCUT_APPLY,
+      info: 'KeyPressed:' + keyEventString,
+      data: {
+        Shortcut: activeShortcut,
+        PrimaryKey: activeCell.Id,
+        ColumnId: activeCell.ColumnId,
+        NewValue: newValue,
+      },
+    };
+    this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
   }
 
   private ShowErrorPreventMessage(failedRule: ICellValidationRule): void {

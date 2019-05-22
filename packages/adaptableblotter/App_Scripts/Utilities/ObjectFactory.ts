@@ -95,7 +95,7 @@ export function CreateEmptyPieChartDefinition(): IPieChartDefinition {
     Name: EMPTY_STRING,
     Description: EMPTY_STRING,
     PrimaryColumnId: EMPTY_STRING,
-    SecondaryColumnId: null,
+    SecondaryColumnId: undefined,
     SecondaryColumnOperation: SecondaryColumnOperation.Count,
     ChartProperties: DefaultPieChartProperties,
     ChartType: ChartType.PieChart,
@@ -109,7 +109,7 @@ export function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition {
     YAxisColumnIds: [],
     YAxisTotal: CHART_DEFAULT_YAXIS_TOTAL,
     XAxisColumnId: EMPTY_STRING,
-    XAxisExpression: null,
+    XAxisExpression: undefined,
     ChartProperties: DefaultCategoryChartProperties,
     ChartType: ChartType.CategoryChart,
     VisibleRowsOnly: true,
@@ -209,8 +209,8 @@ export function CreateEmptyPercentBar(): IPercentBar {
     PositiveColor: DEFAULT_DARK_GREEN_COLOR,
     NegativeColor: DEFAULT_DARK_RED_COLOR,
     ShowValue: false,
-    MaxValueColumnId: null,
-    MinValueColumnId: null,
+    MaxValueColumnId: undefined,
+    MinValueColumnId: undefined,
   };
 }
 
@@ -264,7 +264,7 @@ export function CreateEmptyAutoExport(): IAutoExport {
 export function CreateEmptySchedule(): ISchedule {
   return {
     // todo: base of tommorrow?
-    OneOffDate: null,
+    OneOffDate: undefined,
     DaysOfWeek: [],
     Hour: 17,
     Minute: 0,
@@ -273,8 +273,8 @@ export function CreateEmptySchedule(): ISchedule {
 
 export function CreateEmptyShortcut(): IShortcut {
   return {
-    ShortcutKey: null,
-    ShortcutResult: null,
+    ShortcutKey: EMPTY_STRING,
+    ShortcutResult: undefined,
     ColumnType: DataType.Number,
     ShortcutOperation: MathOperation.Multiply,
     IsDynamic: false,
@@ -306,8 +306,8 @@ export function CreateCellValidationMessage(
 export function CreateEmptyConditionalStyle(): IConditionalStyle {
   return {
     Uuid: createUuid(),
-    ColumnId: null,
-    ColumnCategoryId: null,
+    ColumnId: undefined,
+    ColumnCategoryId: undefined,
     Style: CreateEmptyStyle(),
     ConditionalStyleScope: ConditionalStyleScope.Row,
     Expression: ExpressionHelper.CreateEmptyExpression(),
@@ -423,11 +423,11 @@ export function CreateCellValidationRule(
 
 export function CreateEmptyStyle(): IStyle {
   return {
-    BackColor: null,
-    ForeColor: null,
+    BackColor: undefined,
+    ForeColor: undefined,
     FontWeight: FontWeight.Normal,
     FontStyle: FontStyle.Normal,
-    FontSize: null,
+    FontSize: undefined,
     ClassName: EMPTY_STRING,
   };
 }

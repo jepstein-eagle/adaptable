@@ -10,7 +10,6 @@ import {
   AxisAngle,
   HorizontalAlignment,
   ChartType,
-  SecondaryColumnOperation,
   PieChartLabelPosition,
   SliceLabelOption,
   OthersCategoryType,
@@ -36,7 +35,7 @@ export interface IChartProperties extends IAdaptableBlotterObject {
 
 export interface IPieChartDefinition extends IChartDefinition {
   PrimaryColumnId: string;
-  SecondaryColumnId: string;
+  SecondaryColumnId?: string;
   SecondaryColumnOperation: 'Sum' | 'Count';
 }
 

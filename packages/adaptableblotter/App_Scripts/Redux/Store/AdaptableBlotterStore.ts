@@ -1597,7 +1597,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
         let state = middlewareAPI.getState();
 
         // Note: not done custom sort as not sure how!
-        // Bulk Update Apply and Smart Edit Apply we do in the Bulk Update Strategy
+        // Shortcut Apply, Bulk Update Apply and Smart Edit Apply we do in relevant Strategy
         switch (action.type) {
           case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
             let actionTyped = <AdvancedSearchRedux.AdvancedSearchSelectAction>action;
@@ -1759,22 +1759,6 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
               data: actionTyped.CellInfos,
             };
 
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
-            return next(action);
-          }
-          case ShortcutRedux.SHORTCUT_APPLY: {
-            let actionTyped = <ShortcutRedux.ShortcutApplyAction>action;
-
-            let functionAppliedDetails: IFunctionAppliedDetails = {
-              name: StrategyConstants.ShortcutStrategyId,
-              action: action.type,
-              info: 'KeyPressed:' + actionTyped.KeyEventString,
-              data: {
-                Shortcut: actionTyped.Shortcut,
-                PrimaryKey: actionTyped.CellInfo.Id,
-                ColumnId: actionTyped.CellInfo.ColumnId,
-              },
-            };
             adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
@@ -2269,24 +2253,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action;
             plusMinusStrategy.ApplyPlusMinus(actionTyped.KeyEventString, actionTyped.CellInfos);
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-            return next(action);
-          }
-
-          /*******************
-           * SHORTCUT ACTIONS
-           *******************/
-
-          /**
-           * Use Case: User applies a shortcut via the keyboard
-           * Action: Tell the Shortcut Strategy to apply the shortcut
-           */
-
-          case ShortcutRedux.SHORTCUT_APPLY: {
-            let shortcutStrategy = <IShortcutStrategy>(
-              blotter.strategies.get(StrategyConstants.ShortcutStrategyId)
-            );
-            let actionTyped = <ShortcutRedux.ShortcutApplyAction>action;
-            shortcutStrategy.ApplyShortcut(actionTyped.CellInfo, actionTyped.NewValue);
             return next(action);
           }
 
@@ -2903,7 +2869,6 @@ export function getFunctionAppliedReduxActions(): string[] {
     QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY,
     QuickSearchRedux.QUICK_SEARCH_SET_STYLE,
     PlusMinusRedux.PLUS_MINUS_APPLY,
-    ShortcutRedux.SHORTCUT_APPLY,
     ThemeRedux.THEME_SELECT,
     ColumnFilterRedux.COLUMN_FILTER_ADD,
     ColumnFilterRedux.COLUMN_FILTER_EDIT,
