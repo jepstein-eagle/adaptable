@@ -17,7 +17,6 @@ import * as CalculatedColumnRedux from '../ActionsReducers/CalculatedColumnRedux
 import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux';
 import * as GridRedux from '../ActionsReducers/GridRedux';
 import * as SystemRedux from '../ActionsReducers/SystemRedux';
-import * as HomeRedux from '../ActionsReducers/HomeRedux';
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux';
 import * as ExportRedux from '../ActionsReducers/ExportRedux';
 import * as FlashingCellsRedux from '../ActionsReducers/FlashingCellsRedux';
@@ -112,8 +111,6 @@ import {
   IStateObjectChangedDetails,
   StateObjectChangeType,
 } from '../../Utilities/Interface/IAuditEvents';
-import { Calendar } from 'igniteui-react-core/ES2015/culture';
-import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 
 /*
 This is the main store for the Adaptable Blotter
@@ -2752,7 +2749,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             return next(action);
           }
 
-          case HomeRedux.FILTER_FORM_HIDE: {
+          case GridRedux.FILTER_FORM_HIDE: {
             blotter.hideFilterForm();
             return next(action);
           }

@@ -18,6 +18,7 @@ export const GRID_CREATE_CELLS_SUMMARY = 'GRID_CREATE_CELLS_SUMMARY';
 export const GRID_SET_CELLS_SUMMARY = 'GRID_SET_CELLS_SUMMARY';
 export const GRID_FLOATING_FILTER_BAR_SHOW = 'GRID_FLOATING_FILTER_BAR_SHOW';
 export const GRID_FLOATING_FILTER_BAR_HIDE = 'GRID_FLOATING_FILTER_BAR_HIDE';
+export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
 
 export interface GridSetColumnsAction extends Redux.Action {
   Columns: IColumn[];
@@ -59,6 +60,8 @@ export interface GridSetCellSummaryAction extends Redux.Action {
 export interface FloatingFilterBarShowAction extends Redux.Action {}
 
 export interface FloatingFilterBarHideAction extends Redux.Action {}
+
+export interface FilterFormHideAction extends Redux.Action {}
 
 export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
   type: GRID_SET_COLUMNS,
@@ -116,6 +119,10 @@ export const FloatingilterBarShow = (): FloatingFilterBarShowAction => ({
 
 export const FloatingFilterBarHide = (): FloatingFilterBarHideAction => ({
   type: GRID_FLOATING_FILTER_BAR_HIDE,
+});
+
+export const FilterFormHide = (): FilterFormHideAction => ({
+  type: FILTER_FORM_HIDE,
 });
 
 const initialGridState: GridState = {
