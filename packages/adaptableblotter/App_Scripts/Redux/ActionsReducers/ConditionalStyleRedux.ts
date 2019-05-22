@@ -58,27 +58,28 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (
       conditions.push(actionConditionalStyle);
       return { ...state, ConditionalStyles: conditions };
     }
+
     case CONDITIONAL_STYLE_EDIT:
       const actionConditionalStyle: IConditionalStyle = (action as ConditionalStyleAction)
         .conditionalStyle;
-
       return {
         ...state,
-        ConditionalStyles: state.ConditionalStyles.map(c =>
-          c.Uuid === actionConditionalStyle.Uuid ? actionConditionalStyle : c
+        ConditionalStyles: state.ConditionalStyles.map(abObject =>
+          abObject.Uuid === actionConditionalStyle.Uuid ? actionConditionalStyle : abObject
         ),
       };
+
     case CONDITIONAL_STYLE_DELETE: {
       const actionConditionalStyle: IConditionalStyle = (action as ConditionalStyleAction)
         .conditionalStyle;
-
       return {
         ...state,
         ConditionalStyles: state.ConditionalStyles.filter(
-          c => c.Uuid !== actionConditionalStyle.Uuid
+          abObject => abObject.Uuid !== actionConditionalStyle.Uuid
         ),
       };
     }
+
     default:
       return state;
   }

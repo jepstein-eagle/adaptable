@@ -140,6 +140,7 @@ export function CreateEmptyAlert(): IAdaptableAlert {
 
 export function CreateEmptyAlertDefinition(): IAlertDefinition {
   return {
+    Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
     Range: {
       Operator: ALERT_DEFAULT_OPERATOR,

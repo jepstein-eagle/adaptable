@@ -799,7 +799,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.ColumnFilter,
               diffInfo: diff,
-              objectChanged: actionTyped.columnId,
+              objectChanged: undefined, // TODO: actionTyped.columnId - this should have the object not te column?
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1851,12 +1851,27 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            *******************/
 
           /**
-           * Use Case: User has applied an Advanced Search
+           * Use Case: User has selected an Advanced Search
            * Action: Apply Grid Filtering
            */
           case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
             let ret = next(action);
             blotter.applyGridFiltering();
+            return ret;
+          }
+
+          /**
+           * Use Case: User has deleted an Advanced Search
+           * Action: If the deleted Advanced Search was the currently selected one: Apply Grid Filtering
+           */
+          case AdvancedSearchRedux.ADVANCED_SEARCH_DELETE: {
+            let actionTyped = <AdvancedSearchRedux.AdvancedSearchDeleteAction>action;
+            let CurrentAdvancedSearch = middlewareAPI.getState().AdvancedSearch
+              .CurrentAdvancedSearch;
+            let ret = next(action);
+            if (CurrentAdvancedSearch == actionTyped.advancedSearch.Name) {
+              blotter.applyGridFiltering();
+            }
             return ret;
           }
 

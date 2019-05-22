@@ -9,9 +9,10 @@ export const ADVANCED_SEARCH_EDIT = 'ADVANCED_SEARCH_EDIT';
 export const ADVANCED_SEARCH_DELETE = 'ADVANCED_SEARCH_DELETE';
 export const ADVANCED_SEARCH_SELECT = 'ADVANCED_SEARCH_SELECT';
 
-export interface AdvancedSearchAddAction extends Redux.Action {
+export interface AdvancedSearchAction extends Redux.Action {
   advancedSearch: IAdvancedSearch;
 }
+export interface AdvancedSearchAddAction extends AdvancedSearchAction {}
 
 export interface AdvancedSearchEditAction extends AdvancedSearchAddAction {}
 
@@ -54,33 +55,33 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (
 ): AdvancedSearchState => {
   switch (action.type) {
     case ADVANCED_SEARCH_ADD: {
-      const actionConditionalStyle = (action as AdvancedSearchAddAction).advancedSearch;
-      if (!actionConditionalStyle.Uuid) {
-        actionConditionalStyle.Uuid = createUuid();
+      const actionAdvancedSearch = (action as AdvancedSearchAddAction).advancedSearch;
+      if (!actionAdvancedSearch.Uuid) {
+        actionAdvancedSearch.Uuid = createUuid();
       }
-      return { ...state, AdvancedSearches: [...state.AdvancedSearches, actionConditionalStyle] };
+      return { ...state, AdvancedSearches: [...state.AdvancedSearches, actionAdvancedSearch] };
     }
 
     case ADVANCED_SEARCH_EDIT: {
       const actionAdvancedSearch = (action as AdvancedSearchEditAction).advancedSearch;
-
       return {
         ...state,
-        AdvancedSearches: state.AdvancedSearches.map(s =>
-          s.Uuid === actionAdvancedSearch.Uuid ? actionAdvancedSearch : s
+        AdvancedSearches: state.AdvancedSearches.map(abObject =>
+          abObject.Uuid === actionAdvancedSearch.Uuid ? actionAdvancedSearch : abObject
         ),
       };
     }
     case ADVANCED_SEARCH_DELETE: {
       const actionAdvancedSearch = (action as AdvancedSearchEditAction).advancedSearch;
-
       const currentActiveSearch: IAdvancedSearch = state.AdvancedSearches.filter(
         s => s.Name === state.CurrentAdvancedSearch
       )[0];
 
       return {
         ...state,
-        AdvancedSearches: state.AdvancedSearches.filter(s => s.Uuid !== actionAdvancedSearch.Uuid),
+        AdvancedSearches: state.AdvancedSearches.filter(
+          abObject => abObject.Uuid !== actionAdvancedSearch.Uuid
+        ),
         CurrentAdvancedSearch:
           currentActiveSearch && currentActiveSearch.Uuid === actionAdvancedSearch.Uuid
             ? EMPTY_STRING

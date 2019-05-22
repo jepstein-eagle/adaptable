@@ -1,31 +1,26 @@
 import { AlertState } from './Interface/IState';
 import * as Redux from 'redux';
 import { IAlertDefinition } from '../../Utilities/Interface/BlotterObjects/IAlertDefinition';
-import { MessageType } from '../../Utilities/Enums';
 import {
   EMPTY_ARRAY,
   EMPTY_STRING,
   ALERT_DEFAULT_MAX_ALERTS_IN_STORE,
 } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const ALERT_DEFIINITION_ADD = 'ALERT_DEFIINITION_ADD';
 export const ALERT_DEFIINITION_EDIT = 'ALERT_DEFIINITION_EDIT';
 export const ALERT_DEFIINITION_DELETE = 'ALERT_DEFIINITION_DELETE';
-export const ALERT_DEFIINITION_SELECT = 'ALERT_DEFIINITION_SELECT';
 
-export interface AlertDefinitionAddAction extends Redux.Action {
+export interface AlertDefinitionAction extends Redux.Action {
   alertDefinition: IAlertDefinition;
 }
 
-export interface AlertDefinitionEditAction extends Redux.Action {
-  index: number;
-  alertDefinition: IAlertDefinition;
-}
+export interface AlertDefinitionAddAction extends AlertDefinitionAction {}
 
-export interface AlertDefinitionDeleteAction extends Redux.Action {
-  index: number;
-  alertDefinition: IAlertDefinition;
-}
+export interface AlertDefinitionEditAction extends AlertDefinitionAction {}
+
+export interface AlertDefinitionDeleteAction extends AlertDefinitionAction {}
 
 export const AlertDefinitionAdd = (
   alertDefinition: IAlertDefinition
@@ -35,20 +30,16 @@ export const AlertDefinitionAdd = (
 });
 
 export const AlertDefinitionEdit = (
-  index: number,
   alertDefinition: IAlertDefinition
 ): AlertDefinitionEditAction => ({
   type: ALERT_DEFIINITION_EDIT,
-  index,
   alertDefinition,
 });
 
 export const AlertDefinitionDelete = (
-  index: number,
   alertDefinition: IAlertDefinition
 ): AlertDefinitionDeleteAction => ({
   type: ALERT_DEFIINITION_DELETE,
-  index,
   alertDefinition,
 });
 
@@ -66,22 +57,37 @@ export const AlertReducer: Redux.Reducer<AlertState> = (
 
   switch (action.type) {
     case ALERT_DEFIINITION_ADD: {
-      let actionTypedAddUpdate = <AlertDefinitionAddAction>action;
+      const actionAlertDefinition: IAlertDefinition = (action as AlertDefinitionAction)
+        .alertDefinition;
+
+      if (!actionAlertDefinition.Uuid) {
+        actionAlertDefinition.Uuid = createUuid();
+      }
       alertDefinitions = [].concat(state.AlertDefinitions);
-      alertDefinitions.push(actionTypedAddUpdate.alertDefinition);
-      return Object.assign({}, state, { AlertDefinitions: alertDefinitions });
+      alertDefinitions.push(actionAlertDefinition);
+      return { ...state, AlertDefinitions: alertDefinitions };
     }
+
     case ALERT_DEFIINITION_EDIT: {
-      let actionTypedAddUpdate = <AlertDefinitionEditAction>action;
-      alertDefinitions = [].concat(state.AlertDefinitions);
-      alertDefinitions[actionTypedAddUpdate.index] = actionTypedAddUpdate.alertDefinition;
-      return Object.assign({}, state, { AlertDefinitions: alertDefinitions });
+      const actionAlertDefinition: IAlertDefinition = (action as AlertDefinitionAction)
+        .alertDefinition;
+      return {
+        ...state,
+        AlertDefinitions: state.AlertDefinitions.map(abObject =>
+          abObject.Uuid === actionAlertDefinition.Uuid ? actionAlertDefinition : abObject
+        ),
+      };
     }
+
     case ALERT_DEFIINITION_DELETE: {
-      let actionTypedDelete = <AlertDefinitionDeleteAction>action;
-      alertDefinitions = [].concat(state.AlertDefinitions);
-      alertDefinitions.splice(actionTypedDelete.index, 1);
-      return Object.assign({}, state, { AlertDefinitions: alertDefinitions });
+      const actionAlertDefinition: IAlertDefinition = (action as AlertDefinitionAction)
+        .alertDefinition;
+      return {
+        ...state,
+        AlertDefinitions: state.AlertDefinitions.filter(
+          abObject => abObject.Uuid !== actionAlertDefinition.Uuid
+        ),
+      };
     }
 
     default:
