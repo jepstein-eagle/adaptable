@@ -1,4 +1,7 @@
-import { EditableConfigEntityState } from './Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from './Components/SharedProps/EditableConfigEntityState';
 import {
   DataType,
   FontWeight,
@@ -58,6 +61,7 @@ export function getEmptyConfigState(): EditableConfigEntityState {
     EditedAdaptableBlotterObject: null,
     WizardStartIndex: 0,
     EditedAdaptableBlotterObjectIndex: -1,
+    WizardStatus: WizardStatus.None,
   };
 }
 
