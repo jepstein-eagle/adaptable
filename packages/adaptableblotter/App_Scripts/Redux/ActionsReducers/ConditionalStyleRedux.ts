@@ -30,7 +30,6 @@ export const ConditionalStyleEdit = (
 });
 
 export const ConditionalStyleDelete = (
-  Index: number,
   conditionalStyle: IConditionalStyle
 ): ConditionalStyleAction => ({
   type: CONDITIONAL_STYLE_DELETE,

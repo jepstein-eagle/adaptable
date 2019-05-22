@@ -2004,14 +2004,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let returnAction = next(action);
             let actionTyped = <ColumnCategoryRedux.ColumnCategoryDeleteAction>action;
             let conditionalStyleState = middlewareAPI.getState().ConditionalStyle;
-            conditionalStyleState.ConditionalStyles.forEach(
-              (cs: IConditionalStyle, index: number) => {
-                if (cs.ColumnCategoryId == actionTyped.ColumnCategory.ColumnCategoryId) {
-                  // some warning?
-                  middlewareAPI.dispatch(ConditionalStyleRedux.ConditionalStyleDelete(index, cs));
-                }
+            conditionalStyleState.ConditionalStyles.forEach((cs: IConditionalStyle) => {
+              if (cs.ColumnCategoryId == actionTyped.ColumnCategory.ColumnCategoryId) {
+                // some warning?
+                middlewareAPI.dispatch(ConditionalStyleRedux.ConditionalStyleDelete(cs));
               }
-            );
+            });
             return returnAction;
           }
 

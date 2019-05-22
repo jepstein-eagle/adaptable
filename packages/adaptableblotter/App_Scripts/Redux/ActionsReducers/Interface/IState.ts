@@ -120,11 +120,9 @@ export interface TeamSharingState extends ISystemState {
   SharedEntities: ISharedEntity[];
 }
 
-/*
-Predefined Config Only 
-This can be set by users in Predefined Config at design-time but never editable by users at runtime
-Therefore it is not saved nor included in State events
-*/
+/**
+ * DESIGN TIME STATE IMPLEMENTATIONS - Entitlement, UserInterface, SystemFilter
+ */
 export interface EntitlementsState extends IDesignTimeState {
   FunctionEntitlements: IEntitlement[];
 }
@@ -141,10 +139,9 @@ export interface SystemFilterState extends IDesignTimeState {
 
 export interface ApplicationState extends IDesignTimeState {}
 
-/* 
-Full Config 
-Can bet set at design time and also editable at run time by users 
-*/
+/**
+ * USER STATE IMPLEMENTATIONS - Each of the individual Application state
+ */
 export interface AdvancedSearchState extends IUserState {
   AdvancedSearches: IAdvancedSearch[];
   CurrentAdvancedSearch: string;

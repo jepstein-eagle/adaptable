@@ -88,7 +88,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             showShare={this.props.TeamSharingActivated}
             onEdit={() => this.onEdit(index, item)}
             onShare={() => this.props.onShare(item)}
-            onDelete={ConditionalStyleRedux.ConditionalStyleDelete(index, item)}
+            onDelete={ConditionalStyleRedux.ConditionalStyleDelete(item)}
           />
         );
         strategySummaries.push(detailRow);
@@ -195,8 +195,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddConditionalStyle: (conditionalStyle: IConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
-    onEditConditionalStyle: (index: number, conditionalStyle: IConditionalStyle) =>
-      dispatch(ConditionalStyleRedux.ConditionalStyleEdit(index, conditionalStyle)),
+    onEditConditionalStyle: (conditionalStyle: IConditionalStyle) =>
+      dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)

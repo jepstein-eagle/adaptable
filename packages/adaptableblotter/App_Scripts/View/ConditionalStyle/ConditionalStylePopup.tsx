@@ -94,7 +94,7 @@ class ConditionalStylePopupComponent extends React.Component<
             UserFilters={this.props.UserFilters}
             Columns={this.props.Columns}
             onEdit={(index, conditionalStyle) => this.onEdit(conditionalStyle as IConditionalStyle)}
-            onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(index, conditionalStyle)}
+            onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(conditionalStyle)}
           />
         );
       }
