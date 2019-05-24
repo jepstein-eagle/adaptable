@@ -23,6 +23,8 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
   onAddUserFilter: (userFilter: IUserFilter) => UserFilterRedux.UserFilterAddAction;
@@ -119,7 +121,7 @@ class UserFilterPopupComponent extends React.Component<
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.UserFilterStrategyName}
           bsStyle="primary"
@@ -135,12 +137,14 @@ class UserFilterPopupComponent extends React.Component<
               items={UserFilterItems}
             />
           ) : (
-            <HelpBlock>
-              Click 'New' to start creating user filters.
+            <EmptyContent>
+              <p>Click 'New' to start creating user filters.</p>
               <p />
-              Once created, user filters are accessible both when filtering columns and creating
-              queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.).
-            </HelpBlock>
+              <p>
+                Once created, user filters are accessible both when filtering columns and creating
+                queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.).
+              </p>
+            </EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -161,7 +165,7 @@ class UserFilterPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

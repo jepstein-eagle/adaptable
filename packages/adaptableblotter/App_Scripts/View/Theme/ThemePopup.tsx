@@ -9,6 +9,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import { IUserTheme } from '../../Utilities/Interface/BlotterObjects/IUserTheme';
+import { Flex } from 'rebass';
 
 interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
   SystemThemes: Array<string>;
@@ -47,7 +48,7 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
       );
     });
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.ThemeStrategyName}
@@ -73,7 +74,7 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
             </FormGroup>
           </AdaptableBlotterForm>
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Panel } from 'react-bootstrap';
+import Panel from '../../../components/Panel';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -32,7 +32,11 @@ export class ReportColumnChooserWizard
     return (
       <div className={cssClassName}>
         {this.props.Data.ReportColumnScope == ReportColumnScope.BespokeColumns && (
-          <Panel>
+          <Panel
+            borderRadius="none"
+            bodyProps={{ style: { border: 'none' } }}
+            headerProps={{ style: { border: 'none' } }}
+          >
             <DualListBoxEditor
               AvailableValues={this.state.AllColumnValues}
               cssClassName={cssClassName}

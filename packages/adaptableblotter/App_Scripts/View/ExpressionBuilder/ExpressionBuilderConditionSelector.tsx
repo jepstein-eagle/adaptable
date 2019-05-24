@@ -61,16 +61,31 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 > {
   constructor(props: ExpressionBuilderConditionSelectorProps) {
     super(props);
-    this.state = this.buildState(this.props);
+    // this.state = this.buildState(this.props);
   }
 
-  componentWillReceiveProps(nextProps: ExpressionBuilderConditionSelectorProps, nextContext: any) {
-    this.setState(this.buildState(nextProps));
-    this.buildColumnValuesState();
+  // componentWillReceiveProps(nextProps: ExpressionBuilderConditionSelectorProps, nextContext: any) {
+  //   this.setState(this.buildState(nextProps));
+  //   this.buildColumnValuesState();
+  // }
+
+  static getDerivedStateFromProps(
+    props: ExpressionBuilderConditionSelectorProps,
+    state: ExpressionBuilderConditionSelectorState
+  ) {
+    state = {
+      ...state,
+      ...ExpressionBuilderConditionSelector.buildState(props, state),
+    };
+    return {
+      ...state,
+      ...ExpressionBuilderConditionSelector.buildColumnValuesState(props, state),
+    };
   }
 
-  private buildState(
-    theProps: ExpressionBuilderConditionSelectorProps
+  private static buildState(
+    theProps: ExpressionBuilderConditionSelectorProps,
+    state: ExpressionBuilderConditionSelectorState
   ): ExpressionBuilderConditionSelectorState {
     if (StringExtensions.IsNullOrEmpty(theProps.SelectedColumnId)) {
       return {
@@ -80,12 +95,12 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         AllFilterExpresions: [],
         SelectedFilterExpressions: [],
         SelectedColumnRanges: [],
-        QueryBuildStatus: this.props.QueryBuildStatus,
+        QueryBuildStatus: theProps.QueryBuildStatus,
         ShowWaitingMessage: false,
-        SelectedTab: this.props.SelectedTab,
+        SelectedTab: theProps.SelectedTab,
       };
     } else {
-      if (this.state == null && this.props.ExpressionMode == ExpressionMode.SingleColumn) {
+      if (state == null && theProps.ExpressionMode == ExpressionMode.SingleColumn) {
         // no state so we have come in with a column and nothing else
         return {
           SelectedColumnId: theProps.SelectedColumnId,
@@ -121,19 +136,19 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         if (filterExpressions) {
           filterExpressions.Filters.forEach((fe: string) => {
             // if its a userfilter add it to that list
-            let userFilter: IUserFilter = this.props.UserFilters.find(uf => uf.Name == fe);
+            let userFilter: IUserFilter = theProps.UserFilters.find(uf => uf.Name == fe);
             if (userFilter) {
               selectedColumnFilterExpressions.push(fe);
             }
             // if it is a system filter add it ot that list
-            let selectedSystemFilter: string = this.props.SystemFilters.find(sf => sf == fe);
+            let selectedSystemFilter: string = theProps.SystemFilters.find(sf => sf == fe);
             if (selectedSystemFilter) {
               selectedColumnFilterExpressions.push(fe);
             }
           });
         }
-        let availableFilterExpressions: string[] = this.props.UserFilters.map(f => f.Name).concat(
-          ...this.props.SystemFilters.map(sf => sf)
+        let availableFilterExpressions: string[] = theProps.UserFilters.map(f => f.Name).concat(
+          ...theProps.SystemFilters.map(sf => sf)
         );
 
         // get ranges
@@ -143,89 +158,93 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         selectedColumnRanges = ranges ? ranges.Ranges : [];
 
         return {
-          SelectedColumnId: this.state.SelectedColumnId,
-          ColumnRawValueDisplayValuePairs: this.state.ColumnRawValueDisplayValuePairs, // we fill this later...
+          SelectedColumnId: state.SelectedColumnId,
+          ColumnRawValueDisplayValuePairs: state.ColumnRawValueDisplayValuePairs, // we fill this later...
           SelectedColumnDisplayValues: selectedColumnDisplayValues,
           AllFilterExpresions: availableFilterExpressions,
           SelectedFilterExpressions: selectedColumnFilterExpressions,
           SelectedColumnRanges: selectedColumnRanges,
-          QueryBuildStatus: this.props.QueryBuildStatus,
+          QueryBuildStatus: theProps.QueryBuildStatus,
           ShowWaitingMessage: false,
-          SelectedTab:
-            this.props.SelectedTab == null ? QueryTab.ColumnValue : this.props.SelectedTab,
+          SelectedTab: theProps.SelectedTab == null ? QueryTab.ColumnValue : theProps.SelectedTab,
         };
       }
     }
   }
 
-  private buildColumnValuesState(): void {
+  private static buildColumnValuesState(
+    props: ExpressionBuilderConditionSelectorProps,
+    state: ExpressionBuilderConditionSelectorState
+  ): any {
     let shouldGetColumnValues: boolean = false;
-    if (this.props.SelectedColumnId != this.state.SelectedColumnId) {
+    if (props.SelectedColumnId != state.SelectedColumnId) {
       shouldGetColumnValues = true;
     } else if (
-      ArrayExtensions.IsNullOrEmpty(this.state.ColumnRawValueDisplayValuePairs) &&
-      StringExtensions.IsNotNullOrEmpty(this.props.SelectedColumnId)
+      ArrayExtensions.IsNullOrEmpty(state.ColumnRawValueDisplayValuePairs) &&
+      StringExtensions.IsNotNullOrEmpty(props.SelectedColumnId)
     ) {
       shouldGetColumnValues = true;
     }
 
+    let newState = {};
+
     if (shouldGetColumnValues) {
       let columnValuePairs: IRawValueDisplayValuePair[] = [];
-      if (this.props.Blotter.blotterOptions.queryOptions.getColumnValues != null) {
-        this.setState({ ShowWaitingMessage: true });
-        this.props.Blotter.blotterOptions.queryOptions
-          .getColumnValues(this.props.SelectedColumnId)
-          .then(
-            result => {
-              if (result == null) {
-                // if nothing returned then default to normal
-                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
-                  this.props.SelectedColumnId,
-                  DistinctCriteriaPairValue.DisplayValue,
-                  false
+      if (props.Blotter.blotterOptions.queryOptions.getColumnValues != null) {
+        newState = { ShowWaitingMessage: true };
+        props.Blotter.blotterOptions.queryOptions.getColumnValues(props.SelectedColumnId).then(
+          result => {
+            if (result == null) {
+              // if nothing returned then default to normal
+              columnValuePairs = props.Blotter.getColumnValueDisplayValuePairDistinctList(
+                props.SelectedColumnId,
+                DistinctCriteriaPairValue.DisplayValue,
+                false
+              );
+              columnValuePairs = ArrayExtensions.sortArrayWithProperty(
+                SortOrder.Ascending,
+                columnValuePairs,
+                DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
+              );
+              newState = {
+                ...newState,
+                ColumnRawValueDisplayValuePairs: columnValuePairs,
+                ShowWaitingMessage: false,
+                SelectedColumnId: props.SelectedColumnId,
+              };
+            } else {
+              // get the distinct items and make sure within max items that can be displayed
+              let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
+                0,
+                props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed
+              );
+              distinctItems.forEach(di => {
+                let displayValue = props.Blotter.getDisplayValueFromRawValue(
+                  props.SelectedColumnId,
+                  di
                 );
-                columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-                  SortOrder.Ascending,
-                  columnValuePairs,
-                  DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
-                );
-                this.setState({
-                  ColumnRawValueDisplayValuePairs: columnValuePairs,
-                  ShowWaitingMessage: false,
-                  SelectedColumnId: this.props.SelectedColumnId,
-                });
-              } else {
-                // get the distinct items and make sure within max items that can be displayed
-                let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
-                  0,
-                  this.props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed
-                );
-                distinctItems.forEach(di => {
-                  let displayValue = this.props.Blotter.getDisplayValueFromRawValue(
-                    this.props.SelectedColumnId,
-                    di
-                  );
-                  columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
-                });
-                this.setState({
-                  ColumnRawValueDisplayValuePairs: columnValuePairs,
-                  ShowWaitingMessage: false,
-                  SelectedColumnId: this.props.SelectedColumnId,
-                });
-                // set the UIPermittedValues for this column to what has been sent
-                this.props.Blotter.api.userInterfaceApi.setColumnPermittedValues(
-                  this.props.SelectedColumnId,
-                  distinctItems
-                );
-              }
-            },
-            function() {
-              //    this.setState({ name: error });
+                columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
+              });
+              newState = {
+                ...newState,
+                ColumnRawValueDisplayValuePairs: columnValuePairs,
+                ShowWaitingMessage: false,
+                SelectedColumnId: props.SelectedColumnId,
+              };
+              // set the UIPermittedValues for this column to what has been sent
+              props.Blotter.api.userInterfaceApi.setColumnPermittedValues(
+                props.SelectedColumnId,
+                distinctItems
+              );
             }
-          );
+          },
+          function() {
+            //    this.setState({ name: error });
+          }
+        );
       } else {
-        columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
-          this.props.SelectedColumnId,
+        columnValuePairs = props.Blotter.getColumnValueDisplayValuePairDistinctList(
+          props.SelectedColumnId,
           DistinctCriteriaPairValue.DisplayValue,
           false
         );
@@ -234,13 +253,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<
           columnValuePairs,
           DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
         );
-        this.setState({
+        newState = {
+          ...newState,
           ColumnRawValueDisplayValuePairs: columnValuePairs,
           ShowWaitingMessage: false,
-          SelectedColumnId: this.props.SelectedColumnId,
-        });
+          SelectedColumnId: props.SelectedColumnId,
+        };
       }
     }
+    return newState;
   }
 
   render() {
@@ -282,7 +303,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         cssClassName={this.props.cssClassName + ' pull-right '}
         onClick={() => this.onSelectedColumnChanged()}
         bsStyle={'default'}
-        style={{ margin: '5px' }}
         size={'xsmall'}
         overrideDisableButton={
           this.props.ExpressionMode == ExpressionMode.SingleColumn ||
@@ -300,8 +320,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         cssClassName={cssClassName}
         headerText={panelHeader}
         bsStyle="info"
-        style={{ height: '447px' }}
         button={clearButton}
+        bodyProps={{
+          padding: 0,
+          paddingTop: 2,
+        }}
+        style={{
+          flex: '1 0 0%',
+          marginRight: 'var(--ab-space-2)',
+        }}
       >
         {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn ||
         this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn ? (

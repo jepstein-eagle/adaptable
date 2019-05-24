@@ -6,11 +6,13 @@ import { MessageType } from '../../../Utilities/Enums';
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import NewPanel from '../../../components/Panel';
+import { Box, Flex } from 'rebass';
 
 export interface PanelWithImageProps extends PanelProps {
   glyphicon?: string;
   infoBody?: any[];
   cssClassName: string;
+  borderRadius?: string;
   theme: any;
   button?: React.ReactElement<any>;
 }
@@ -27,8 +29,8 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
         inline
         style={{ flex: 1, '--ab-cmp-panel-icon-fill': this.props.theme.colors.almostwhite }}
       >
-        <Row style={{ display: 'flex', alignItems: 'center' }}>
-          <Col xs={9}>
+        <Flex>
+          <Box>
             {<Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />}
             {this.props.header}{' '}
             {this.props.infoBody != null && (
@@ -44,12 +46,10 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
                 </span>
               </span>
             )}
-          </Col>
-          <Col xs={3}>
-            {this.props.button &&
-              React.cloneElement(this.props.button, { style: { float: 'right' } })}
-          </Col>
-        </Row>
+          </Box>
+          <Box flex={1} />
+          {this.props.button && React.cloneElement(this.props.button)}
+        </Flex>
       </AdaptableBlotterForm>
     );
     return (
@@ -59,6 +59,7 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
         bsStyle={this.props.bsStyle}
         bsSize={this.props.bsSize}
         style={this.props.style}
+        borderRadius={this.props.borderRadius || 'none'}
         headerProps={{ style: { border: 'none' } }}
         bodyProps={{ style: { border: 'none' } }}
       >

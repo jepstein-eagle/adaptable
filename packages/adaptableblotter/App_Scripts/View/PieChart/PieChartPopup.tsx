@@ -42,6 +42,7 @@ import {
   OthersCategoryType,
 } from '../../Utilities/ChartEnums';
 import { PieChartUIHelper } from '../Chart/PieChart/PieChartUIHelper';
+import { Flex } from 'rebass';
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {}
 
@@ -347,7 +348,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithImage
           cssClassName={cssClassName}
           header={StrategyConstants.PieChartStrategyName}
@@ -392,7 +393,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             </Row>
           </div>
         </PanelWithImage>
-      </div>
+      </Flex>
     );
   }
 

@@ -21,6 +21,8 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 import { IReminder } from '../../Utilities/Interface/BlotterObjects/IReminder';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface ReminderPopupProps extends StrategyViewPopupProps<ReminderPopupComponent> {
   Reminders: IReminder[];
@@ -84,7 +86,7 @@ class ReminderPopupComponent extends React.Component<
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.ReminderStrategyName}
           button={newButton}
@@ -94,10 +96,10 @@ class ReminderPopupComponent extends React.Component<
           infoBody={infoBody}
         >
           {this.props.Reminders.length == 0 ? (
-            <HelpBlock>
+            <EmptyContent>
               Click 'New' to create a new Reminder that will trigger an alert according to a
               schedule set by you.
-            </HelpBlock>
+            </EmptyContent>
           ) : (
             <AdaptableObjectCollection
               cssClassName={cssClassName}
@@ -123,7 +125,7 @@ class ReminderPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

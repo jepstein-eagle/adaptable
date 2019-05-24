@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
+import { Flex, Box } from 'rebass';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { IColumn } from '../../Utilities/Interface/IColumn';
@@ -354,7 +355,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     }
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithImage
           cssClassName={cssClassName}
           header={headerText}
@@ -364,24 +365,18 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
         >
           {this.state.ShowSelector && (
             <AdaptableBlotterForm horizontal>
-              <FormGroup controlId="searchName">
-                <Row>
-                  <Col xs={2} componentClass={ControlLabel}>
-                    Column:{' '}
-                  </Col>
-
-                  <Col xs={8}>
-                    <ColumnSelector
-                      cssClassName={cssClassName}
-                      SelectedColumnIds={[selectedColumnId]}
-                      ColumnList={this.props.Columns}
-                      onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-                      SelectionMode={SelectionMode.Single}
-                    />
-                  </Col>
-                  <Col xs={2}> </Col>
-                </Row>
-              </FormGroup>
+              <Flex flexDirection="row" alignItems="center" marginBottom={2}>
+                <Box>Column: </Box>
+                <Box flex={1} marginLeft={2}>
+                  <ColumnSelector
+                    cssClassName={cssClassName}
+                    SelectedColumnIds={[selectedColumnId]}
+                    ColumnList={this.props.Columns}
+                    onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+                    SelectionMode={SelectionMode.Single}
+                  />
+                </Box>
+              </Flex>
             </AdaptableBlotterForm>
           )}
 
@@ -394,7 +389,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             />
           )}
         </PanelWithImage>
-      </div>
+      </Flex>
     );
   }
 

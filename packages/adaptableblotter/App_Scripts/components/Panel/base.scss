@@ -19,9 +19,11 @@
   }
 
   &__body {
+    position: relative;
     padding: var(--ab-cmp-panel-padding);
     border: var(--ab-cmp-panel-border);
     border-top: none;
+    flex: 1;
     border-bottom-left-radius: var(--ab-cmp-panel-radius);
     border-bottom-right-radius: var(--ab-cmp-panel-radius);
   }

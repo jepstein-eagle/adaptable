@@ -1,6 +1,7 @@
 import { IReport } from '../../../Utilities/Interface/BlotterObjects/IReport';
 import * as React from 'react';
-import { Panel, Col, Radio, ControlLabel } from 'react-bootstrap';
+import { Col, Radio, ControlLabel } from 'react-bootstrap';
+import Panel from '../../../components/Panel';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -30,7 +31,13 @@ export class ReportRowTypeWizard
     let cssClassName: string = this.props.cssClassName + '-ReportRows';
     return (
       <div className={cssClassName}>
-        <Panel header="Select Rows for the Report" bsStyle="primary">
+        <Panel
+          header="Select Rows for the Report"
+          bsStyle="primary"
+          borderRadius="none"
+          bodyProps={{ style: { border: 'none' } }}
+          headerProps={{ style: { border: 'none' } }}
+        >
           <Col xs={12} className="ab_large_margin">
             <AdaptableBlotterForm inline>
               <Radio

@@ -106,6 +106,7 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
     if (selected.length == 0 && isEmptySelection) {
       return; // must be a nicer way but we want to avoid ridiculous amounts of prop calls
     }
+
     this.props.onColumnChange(selected);
   }
 }

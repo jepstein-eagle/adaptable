@@ -24,6 +24,8 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface CalculatedColumnPopupProps
   extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {
@@ -120,7 +122,7 @@ class CalculatedColumnPopupComponent extends React.Component<
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.CalculatedColumnStrategyName}
@@ -137,7 +139,7 @@ class CalculatedColumnPopupComponent extends React.Component<
               items={calculatedColumns}
             />
           ) : (
-            <HelpBlock>Click 'New' to create a new Calculated Column.</HelpBlock>
+            <EmptyContent>Click 'New' to create a new Calculated Column.</EmptyContent>
           )}
 
           {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
@@ -162,7 +164,7 @@ class CalculatedColumnPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

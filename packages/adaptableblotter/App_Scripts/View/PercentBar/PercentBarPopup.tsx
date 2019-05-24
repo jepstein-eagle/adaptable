@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -22,6 +21,8 @@ import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObject
 import { IPercentBar } from '../../Utilities/Interface/BlotterObjects/IPercentBar';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../../Utilities/Enums';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {
   PercentBars: IPercentBar[];
@@ -136,7 +137,7 @@ class PercentBarPopupComponent extends React.Component<
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.PercentBarStrategyName}
           bsStyle="primary"
@@ -152,13 +153,13 @@ class PercentBarPopupComponent extends React.Component<
               items={PercentBarItems}
             />
           ) : (
-            <div>
-              <HelpBlock>Click 'New' to start creating Percent Bars.</HelpBlock>
-              <HelpBlock>
+            <EmptyContent>
+              <p>Click 'New' to start creating Percent Bars.</p>
+              <p>
                 Visualise numeric columns as a bar (positive, negative or both) in order better to
                 see their contents.
-              </HelpBlock>
-            </div>
+              </p>
+            </EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -179,7 +180,7 @@ class PercentBarPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

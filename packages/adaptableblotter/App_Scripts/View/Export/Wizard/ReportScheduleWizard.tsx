@@ -1,15 +1,7 @@
 import { IReport, IAutoExport } from '../../../Utilities/Interface/BlotterObjects/IReport';
 import * as React from 'react';
-import {
-  Panel,
-  FormControl,
-  Checkbox,
-  FormGroup,
-  Radio,
-  Col,
-  ControlLabel,
-  Row,
-} from 'react-bootstrap';
+import { FormControl, Checkbox, FormGroup, Radio, Col, ControlLabel, Row } from 'react-bootstrap';
+import Panel from '../../../components/Panel';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -85,7 +77,13 @@ export class ReportScheduleWizard
 
     return (
       <div className={cssClassName}>
-        <Panel header="Schedule Report" bsStyle="primary">
+        <Panel
+          header="Schedule Report"
+          bsStyle="primary"
+          borderRadius="none"
+          bodyProps={{ style: { border: 'none' }, padding: 3 }}
+          headerProps={{ style: { border: 'none' } }}
+        >
           <Checkbox
             className={cssClassName + '__checkbox'}
             inline

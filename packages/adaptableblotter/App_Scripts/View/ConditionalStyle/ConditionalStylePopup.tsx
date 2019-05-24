@@ -24,6 +24,8 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 import { IColumnCategory } from '../../Utilities/Interface/BlotterObjects/IColumnCategory';
 import { IConditionalStyle } from '../../Utilities/Interface/BlotterObjects/IConditionalStyle';
+import { Flex } from 'rebass';
+import EmptyContent from '../../components/EmptyContent';
 
 interface ConditionalStylePopupProps
   extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
@@ -112,7 +114,7 @@ class ConditionalStylePopupComponent extends React.Component<
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.ConditionalStyleStrategyName}
           button={newButton}
@@ -122,10 +124,10 @@ class ConditionalStylePopupComponent extends React.Component<
           infoBody={infoBody}
         >
           {this.props.ConditionalStyles.length == 0 ? (
-            <HelpBlock>
+            <EmptyContent>
               Click 'New' to create a new conditional style to be applied at row or column level
               when a rule set by you is met.
-            </HelpBlock>
+            </EmptyContent>
           ) : (
             <AdaptableObjectCollection
               cssClassName={cssClassName}
@@ -156,7 +158,7 @@ class ConditionalStylePopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IColItem } from '../UIInterfaces';
 import { WizardSummaryRow } from './WizardSummaryRow';
-import { Panel } from 'react-bootstrap';
+import Panel from '../../components/Panel';
 import { AdaptableObjectCollection } from './AdaptableObjectCollection';
 import { IKeyValuePair } from '../../Utilities/Interface/IKeyValuePair';
 
@@ -34,6 +34,9 @@ export class WizardSummaryPage extends React.Component<WizardSummaryPageProps, {
           className={this.props.cssClassName}
           header={this.props.header + ' Summary'}
           bsStyle="primary"
+          borderRadius="none"
+          bodyProps={{ style: { border: 'none' } }}
+          headerProps={{ style: { border: 'none' } }}
         >
           <AdaptableObjectCollection
             cssClassName={this.props.cssClassName}

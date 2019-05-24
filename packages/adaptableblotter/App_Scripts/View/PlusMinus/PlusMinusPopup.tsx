@@ -27,6 +27,8 @@ import { IPlusMinusRule } from '../../Utilities/Interface/BlotterObjects/IPlusMi
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { MessageType } from '../../Utilities/Enums';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
   DefaultNudgeValue: number;
@@ -123,7 +125,7 @@ class PlusMinusPopupComponent extends React.Component<
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.PlusMinusStrategyName}
           bsStyle="primary"
@@ -139,10 +141,10 @@ class PlusMinusPopupComponent extends React.Component<
               items={PlusMinusRules}
             />
           ) : (
-            <HelpBlock>
+            <EmptyContent>
               Click 'New' to create new Nudge Value rules for when the '+' or '-' keys are clicked
               while in a numeric cell.
-            </HelpBlock>
+            </EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -165,7 +167,7 @@ class PlusMinusPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

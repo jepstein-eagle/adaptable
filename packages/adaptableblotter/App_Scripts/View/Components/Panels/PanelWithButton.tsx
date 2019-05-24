@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { PanelProps, Panel, Row, Col, Button, Glyphicon } from 'react-bootstrap';
+import { PanelProps, Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { MessageType } from '../../../Utilities/Enums';
+import Panel, { PanelProps as TypePanelProps } from '../../../components/Panel';
+import { Flex, Box, BoxProps } from 'rebass';
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import useTheme from '../../../components/utils/useTheme';
 
 export interface PanelWithButtonProps extends PanelProps {
   //use either button content + buttonClick OR button
@@ -11,9 +14,11 @@ export interface PanelWithButtonProps extends PanelProps {
   buttonClick?: () => void;
   button?: React.ReactElement<any>;
   headerText: string;
+  bodyProps?: BoxProps;
   glyphicon?: string;
   buttonDisabled?: boolean;
   buttonStyle?: string;
+  borderRadius?: string;
   infoBody?: any[];
   cssClassName: string;
 }
@@ -21,7 +26,7 @@ export interface PanelWithButtonProps extends PanelProps {
 //We cannot destructure this.props using the react way in typescript which is a real pain as you
 //need to transfer props individually as a consequence
 //let { buttonContent, ...other } = this.props
-export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
+export class PanelWithButton extends React.Component<PanelWithButtonProps & TypePanelProps, {}> {
   render() {
     let cssClassName = this.props.cssClassName + StyleConstants.ITEMS_PANEL;
     let { buttonContent } = this.props;
@@ -34,10 +39,18 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
     //   }
     let buttonStyle: string = this.props.buttonStyle ? this.props.buttonStyle : 'default';
 
+    const theme = useTheme();
     let header = (
-      <AdaptableBlotterForm inline>
-        <Row style={{ display: 'flex', alignItems: 'center' }}>
-          <Col xs={9}>
+      <AdaptableBlotterForm
+        inline
+        style={{
+          width: '100%',
+          flex: 1,
+          '--ab-cmp-panel-icon-fill': theme.colors.almostwhite,
+        }}
+      >
+        <Flex alignItems="center">
+          <Box>
             {this.props.glyphicon != null && (
               <Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />
             )}
@@ -55,37 +68,40 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps, {}> {
                 </span>
               </span>
             )}
-          </Col>
-          <Col xs={3}>
-            {buttonContent && (
+          </Box>
+          <Box style={{ flex: 1 }} />
+          <Box>
+            {buttonContent ? (
               <Button
                 bsSize="small"
                 bsStyle={buttonStyle}
                 disabled={this.props.buttonDisabled}
                 onClick={() => this.props.buttonClick()}
-                style={{ float: 'right' }}
               >
                 {buttonContent}
               </Button>
-            )}
-            {this.props.button &&
-              React.cloneElement(this.props.button, { style: { float: 'right' } })}
-          </Col>
-        </Row>
+            ) : null}
+
+            {this.props.button ? React.cloneElement(this.props.button) : null}
+          </Box>
+        </Flex>
       </AdaptableBlotterForm>
     );
     return (
-      <div className={cssClassName}>
+      <Flex flex={1} flexDirection="column" style={this.props.style} className={cssClassName}>
         <Panel
+          border="none"
+          flex={1}
+          bodyProps={this.props.bodyProps}
           header={header}
           className={className}
-          style={this.props.style}
           bsStyle={this.props.bsStyle}
           bsSize={this.props.bsSize}
+          borderRadius={(this.props.borderRadius || 'none') as any}
         >
           {this.props.children}
         </Panel>
-      </div>
+      </Flex>
     );
   }
 }

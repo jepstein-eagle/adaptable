@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { IColumn } from '../../Utilities/Interface/IColumn';
+import { Flex } from 'rebass';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import {
   ListGroupItem,
@@ -299,9 +300,18 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
       );
     });
     return (
-      <div>
+      <Flex style={{ flex: '1 0 0%' }} flexDirection="column">
         {this.props.ShowPanel && (
-          <PanelWithButton cssClassName={cssClassName} headerText="Preview" bsStyle="info">
+          <PanelWithButton
+            style={{ flex: 1 }}
+            cssClassName={cssClassName}
+            bodyProps={{
+              padding: 0,
+              paddingTop: 2,
+            }}
+            headerText="Preview"
+            bsStyle="info"
+          >
             <div style={{ height: '385px', overflowY: 'auto', overflowX: 'hidden' }}>
               {previewLists}
             </div>
@@ -309,7 +319,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         )}
 
         {!this.props.ShowPanel && <div>{previewLists}</div>}
-      </div>
+      </Flex>
     );
   }
 

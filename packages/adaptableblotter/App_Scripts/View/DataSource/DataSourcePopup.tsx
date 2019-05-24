@@ -21,6 +21,8 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 import { IDataSource } from '../../Utilities/Interface/BlotterObjects/IDataSource';
 import { Helper } from '../../Utilities/Helpers/Helper';
+import { Flex } from 'rebass';
+import EmptyContent from '../../components/EmptyContent';
 
 interface DataSourcePopupProps extends StrategyViewPopupProps<DataSourcePopupComponent> {
   onAddDataSource: (DataSource: IDataSource) => DataSourceRedux.DataSourceAddAction;
@@ -92,7 +94,7 @@ class DataSourcePopupComponent extends React.Component<
     let DataSource: IDataSource = this.state.EditedAdaptableBlotterObject as IDataSource;
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.DataSourceStrategyName}
@@ -109,7 +111,7 @@ class DataSourcePopupComponent extends React.Component<
               items={dataSources}
             />
           ) : (
-            <HelpBlock>Click 'New' to add a new DataSource.</HelpBlock>
+            <EmptyContent>Click 'New' to add a new DataSource.</EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -129,7 +131,7 @@ class DataSourcePopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

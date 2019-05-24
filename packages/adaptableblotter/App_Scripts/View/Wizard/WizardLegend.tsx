@@ -49,7 +49,7 @@ export class WizardLegend extends React.Component<WizardLegendProps, {}> {
 
     return (
       <div className={StyleConstants.WIZARD_LEGEND}>
-        {this.props.FriendlyName} : {stepButtons}
+        {this.props.FriendlyName}: {stepButtons}
       </div>
     );
   }

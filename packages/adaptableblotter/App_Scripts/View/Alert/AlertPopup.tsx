@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
+import { Flex } from 'rebass';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -24,6 +24,7 @@ import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObject
 import { IAlertDefinition } from '../../Utilities/Interface/BlotterObjects/IAlertDefinition';
 import { MessageType, AccessLevel } from '../../Utilities/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
+import EmptyContent from '../../components/EmptyContent';
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
   AlertDefinitions: IAlertDefinition[];
@@ -104,10 +105,11 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.AlertStrategyName}
           bsStyle="primary"
+          style={{ flex: 1 }}
           cssClassName={cssClassName}
           button={newButton}
           glyphicon={StrategyConstants.AlertGlyph}
@@ -120,18 +122,18 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
               items={alertEntities}
             />
           ) : (
-            <div>
-              <HelpBlock>You have no Alert Definitions.</HelpBlock>
+            <EmptyContent>
+              <p>You have no Alert Definitions.</p>
               {this.props.AccessLevel != AccessLevel.ReadOnly && (
                 <div>
-                  <HelpBlock>Click 'New' to start creating alert definitions.</HelpBlock>
-                  <HelpBlock>
+                  <p>Click 'New' to start creating alert definitions.</p>
+                  <p>
                     An alert will be triggered whenever an edit - or external data change - matches
                     the condition in the alert definition.
-                  </HelpBlock>
+                  </p>
                 </div>
               )}
-            </div>
+            </EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -153,7 +155,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

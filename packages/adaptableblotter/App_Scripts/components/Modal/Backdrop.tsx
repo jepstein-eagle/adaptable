@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { unstable_batchedUpdates } from 'react-dom';
-import { useState, MutableRefObject, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 
 export const baseClassName = 'ab-Modal';
 export type TypeBackdropHandle = {
@@ -63,7 +63,6 @@ export const updatePositionInStack = (id: string, data?: ModalStackingInfo) => {
     data.setBackdropOrder(false, -1);
   });
   if (last) {
-    console.log(last);
     last.setBackdropOrder(true, last.baseZIndex);
   }
 };

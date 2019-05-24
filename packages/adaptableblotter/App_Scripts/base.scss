@@ -7181,17 +7181,24 @@ ADAPTABLE BLOTTER STYLES
   /*Styling for our main modal windows*/
   .ab_main_popup {
     width: 700px;
+    max-width: 80vw;
     height: 590px;
+    max-height: 80vh;
+    
   }
 
   .ab_main_chart {
     width: 900px;
+    max-width: 90vw;
     height: 650px;
+    max-height: 80vh;
   }
 
   .ab_main_wizard {
     width: 700px;
     height: 520px;
+    height: 650px;
+    max-height: 80vh;
   }
 
   .ab_object_list_item {

@@ -1,6 +1,7 @@
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import * as React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { Box, Flex } from 'rebass';
 import { AccessLevel } from '../../../Utilities/Enums';
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
@@ -10,6 +11,7 @@ import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants
 import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
 import { BlotterHelper } from '../../../Utilities/Helpers/BlotterHelper';
 import { UIHelper } from '../../UIHelper';
+import Dialog from '../../../components/Dialog';
 
 /**
  * This is the main popup that we use - so all function popups will appear here.
@@ -19,7 +21,7 @@ export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<Adapt
   showModal: boolean;
   ComponentName: string;
   ComponentStrategy: string;
-  onHide?: Function;
+  onHide?: () => void | Function;
   Blotter: IAdaptableBlotter;
   PopupParams: string;
   onClearPopupParams: () => PopupRedux.PopupClearParamAction;
@@ -69,35 +71,48 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
     }
 
     return (
-      <Modal
-        show={this.props.showModal}
-        onHide={this.props.onHide}
+      <Dialog
+        isOpen={this.props.showModal}
+        onDismiss={this.props.onHide}
         className={cssClassName + StyleConstants.BASE}
-        container={modalContainer}
-        enforceFocus={null}
+        showCloseButton={false}
+        modal
+        padding={0}
       >
-        <div className={cssClassName + StyleConstants.MODAL_BASE}>
-          <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY} style={{ padding: 0 }}>
-            <div className="ab_main_popup">
-              <div
+        <Flex flexDirection="column" className={cssClassName + StyleConstants.MODAL_BASE}>
+          <Flex
+            flexDirection="column"
+            className={cssClassName + StyleConstants.MODAL_BODY}
+            padding={0}
+            flex={1}
+          >
+            <Flex className="ab_main_popup" flexDirection="column" flex={1}>
+              <Flex
+                flexDirection="column"
+                flex={1}
                 className={
                   accessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
                 }
               >
                 {body}
-              </div>
-            </div>
-          </Modal.Body>
-          <Modal.Footer className={cssClassName + StyleConstants.MODAL_FOOTER}>
+              </Flex>
+            </Flex>
+          </Flex>
+          <Flex
+            className={cssClassName + StyleConstants.MODAL_FOOTER}
+            justifyContent="flex-end"
+            padding={2}
+            backgroundColor="lightgray"
+          >
             <Button
               className={cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON}
               onClick={() => this.props.onHide()}
             >
               Close
             </Button>
-          </Modal.Footer>
-        </div>
-      </Modal>
+          </Flex>
+        </Flex>
+      </Dialog>
     );
   }
 }

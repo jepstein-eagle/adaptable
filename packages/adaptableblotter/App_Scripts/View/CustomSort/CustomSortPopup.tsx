@@ -26,6 +26,8 @@ import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObject
 import { ICustomSort } from '../../Utilities/Interface/BlotterObjects/ICustomSort';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
+import { Flex } from 'rebass';
+import EmptyContent from '../../components/EmptyContent';
 
 interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupComponent> {
   onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction;
@@ -112,7 +114,7 @@ class CustomSortPopupComponent extends React.Component<
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.CustomSortStrategyName}
@@ -129,7 +131,9 @@ class CustomSortPopupComponent extends React.Component<
               items={customSorts}
             />
           ) : (
-            <HelpBlock>Click 'New' to create a bespoke sort order for a selected column.</HelpBlock>
+            <EmptyContent>
+              Click 'New' to create a bespoke sort order for a selected column.
+            </EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject && (
@@ -149,7 +153,7 @@ class CustomSortPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

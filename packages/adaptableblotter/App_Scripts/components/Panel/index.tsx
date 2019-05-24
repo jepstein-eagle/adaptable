@@ -10,6 +10,9 @@ export type PanelProps = HTMLProps<HTMLElement> & {
   headerProps?: BoxProps;
   bodyProps?: BoxProps;
   bsStyle?: string;
+  bsSize?: string;
+  border?: string | number;
+  borderRadius?: string | number;
 } & BoxProps;
 
 const Header = ({
@@ -48,21 +51,52 @@ const Body = ({ children, ...bodyProps }: { children?: ReactNode } & BoxProps) =
   }
 
   return (
-    <div {...bodyProps} className={`${baseClassName}__body`}>
+    <Box {...bodyProps} className={`${baseClassName}__body`}>
       {children}
-    </div>
+    </Box>
   );
 };
 
 const Panel = (props: PanelProps) => {
-  const { className, header, children, headerProps, bodyProps, bsStyle, ...boxProps } = props;
+  const {
+    borderRadius,
+    border,
+    className,
+    header,
+    children,
+    headerProps,
+    bodyProps,
+    bsStyle,
+    ...boxProps
+  } = props;
+
+  const style: { [key: string]: any } = {};
+
+  if (borderRadius !== undefined) {
+    style['--ab-cmp-panel-radius'] = borderRadius;
+  }
+
+  const headerStyle = {
+    border,
+    ...(headerProps ? headerProps.style : null),
+  };
+  const bodyStyle = {
+    border,
+    ...(bodyProps ? bodyProps.style : null),
+  };
 
   return (
-    <Box {...boxProps} className={join(className, baseClassName)}>
-      <Header {...headerProps} bsStyle={bsStyle}>
+    <Box
+      {...boxProps}
+      style={{ ...style, ...boxProps.style }}
+      className={join(className, baseClassName)}
+    >
+      <Header {...headerProps} style={headerStyle} bsStyle={bsStyle}>
         {header}
       </Header>
-      <Body {...bodyProps}>{children}</Body>
+      <Body {...bodyProps} style={bodyStyle}>
+        {children}
+      </Body>
     </Box>
   );
 };

@@ -20,6 +20,8 @@ import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 import { IFreeTextColumn } from '../../Utilities/Interface/BlotterObjects/IFreeTextColumn';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface FreeTextColumnPopupProps extends StrategyViewPopupProps<FreeTextColumnPopupComponent> {
   FreeTextColumns: Array<IFreeTextColumn>;
@@ -106,7 +108,7 @@ class FreeTextColumnPopupComponent extends React.Component<
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.FreeTextColumnStrategyName}
@@ -117,7 +119,7 @@ class FreeTextColumnPopupComponent extends React.Component<
           infoBody={infoBody}
         >
           {this.props.FreeTextColumns.length == 0 ? (
-            <HelpBlock>Click 'New' to create a new column FreeText.</HelpBlock>
+            <EmptyContent>Click 'New' to create a new column FreeText.</EmptyContent>
           ) : (
             <AdaptableObjectCollection
               cssClassName={cssClassName}
@@ -145,7 +147,7 @@ class FreeTextColumnPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

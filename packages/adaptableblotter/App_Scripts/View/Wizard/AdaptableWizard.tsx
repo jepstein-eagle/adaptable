@@ -9,6 +9,8 @@ import { AccessLevel } from '../../Utilities/Enums';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import { Flex, Box } from 'rebass';
+import Dialog from '../../components/Dialog';
 
 export interface IWizardStepInfo {
   StepName: string;
@@ -87,27 +89,33 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
       })
     );
     return (
-      <Modal
-        show={true}
-        onHide={this.props.onHide}
+      <Dialog
+        modal
+        isOpen={true}
+        onDismiss={() => (this.props.onHide ? this.props.onHide() : null)}
         className={cssClassName + StyleConstants.BASE}
-        container={this.props.ModalContainer}
       >
-        <div className={cssClassName + StyleConstants.WIZARD_BASE}>
-          <Modal.Header closeButton className={cssClassName + StyleConstants.WIZARD_HEADER}>
-            <Modal.Title>
-              <WizardLegend
-                StepNames={wizardStepNames}
-                ActiveStepName={this.stepName}
-                FriendlyName={this.props.FriendlyName}
-                CanShowAllSteps={this.canFinishWizard()}
-                onStepButtonClicked={s => this.onStepButtonClicked(s)}
-              />
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className={cssClassName + StyleConstants.WIZARD_BODY}>
+        <Flex
+          flexDirection="column"
+          style={{ height: '100%' }}
+          className={cssClassName + StyleConstants.WIZARD_BASE}
+        >
+          <Box
+            style={{ fontWeight: 600 }}
+            padding={2}
+            className={cssClassName + StyleConstants.WIZARD_HEADER}
+          >
+            <WizardLegend
+              StepNames={wizardStepNames}
+              ActiveStepName={this.stepName}
+              FriendlyName={this.props.FriendlyName}
+              CanShowAllSteps={this.canFinishWizard()}
+              onStepButtonClicked={s => this.onStepButtonClicked(s)}
+            />
+          </Box>
+          <Box style={{ flex: 1 }} className={cssClassName + StyleConstants.WIZARD_BODY}>
             <div className="ab_main_wizard">{this.state.ActiveState}</div>
-          </Modal.Body>
+          </Box>
           <Modal.Footer className={cssClassName + StyleConstants.WIZARD_FOOTER}>
             <ButtonCancel
               cssClassName={cssClassName}
@@ -149,8 +157,8 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               AccessLevel={AccessLevel.Full}
             />
           </Modal.Footer>
-        </div>
-      </Modal>
+        </Flex>
+      </Dialog>
     );
   }
 

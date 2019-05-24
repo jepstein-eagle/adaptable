@@ -14,6 +14,7 @@ export default {
     blue: '#07c',
     lightgray: 'var(--ab-color-lightgray)',
     textgray: 'var(--ab-color-textgray)',
+    gray: 'var(--ab-color-gray)',
     'almost-white': 'var(--ab-color-almost-white)',
     almostwhite: 'var(--ab-color-almost-white)',
   },

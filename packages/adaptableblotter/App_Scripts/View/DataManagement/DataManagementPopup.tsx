@@ -9,6 +9,8 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import { AccessLevel } from '../../Utilities/Enums';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex, Box } from 'rebass';
 
 interface DataManagementPopupProps extends StrategyViewPopupProps<DataManagementPopupComponent> {}
 
@@ -37,7 +39,7 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.DataManagementStrategyName}
           button={null}
@@ -46,7 +48,7 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
           glyphicon={StrategyConstants.DataManagementGlyph}
           infoBody={infoBody}
         >
-          <HelpBlock>
+          <Box>
             Click below to clear all current state.
             <br />
             <br />
@@ -55,11 +57,11 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
             <br />
             <br />
             <b>This option only appears in non production builds.</b>
-          </HelpBlock>
+          </Box>
 
           {clearButton}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

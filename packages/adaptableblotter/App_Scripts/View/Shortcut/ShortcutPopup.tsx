@@ -23,6 +23,8 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 import { IShortcut } from '../../Utilities/Interface/BlotterObjects/IShortcut';
 import Helper from '../../Utilities/Helpers/Helper';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {
   onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction;
@@ -106,7 +108,7 @@ class ShortcutPopupComponent extends React.Component<
     let shortcut: IShortcut = this.state.EditedAdaptableBlotterObject as IShortcut;
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.ShortcutStrategyName}
@@ -123,7 +125,7 @@ class ShortcutPopupComponent extends React.Component<
               items={shortcuts}
             />
           ) : (
-            <HelpBlock>Click 'New' to add a new Shortcut.</HelpBlock>
+            <EmptyContent>Click 'New' to add a new Shortcut.</EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -179,7 +181,7 @@ class ShortcutPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

@@ -21,6 +21,8 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
 import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 import { IFormatColumn } from '../../Utilities/Interface/BlotterObjects/IFormatColumn';
+import { Flex } from 'rebass';
+import EmptyContent from '../../components/EmptyContent';
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {
   FormatColumns: Array<IFormatColumn>;
@@ -106,7 +108,7 @@ class FormatColumnPopupComponent extends React.Component<
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.FormatColumnStrategyName}
@@ -117,7 +119,7 @@ class FormatColumnPopupComponent extends React.Component<
           infoBody={infoBody}
         >
           {this.props.FormatColumns.length == 0 ? (
-            <HelpBlock>Click 'New' to create a new column format.</HelpBlock>
+            <EmptyContent>Click 'New' to create a new column format.</EmptyContent>
           ) : (
             <AdaptableObjectCollection
               cssClassName={cssClassName}
@@ -147,7 +149,7 @@ class FormatColumnPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

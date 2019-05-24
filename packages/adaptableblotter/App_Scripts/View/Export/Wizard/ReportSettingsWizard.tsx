@@ -1,6 +1,7 @@
 import { IReport } from '../../../Utilities/Interface/BlotterObjects/IReport';
 import * as React from 'react';
-import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import Panel from '../../../components/Panel';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -35,7 +36,13 @@ export class ReportSettingsWizard
 
     return (
       <div className={cssClassName}>
-        <Panel header="Enter a Name for the Report" bsStyle="primary">
+        <Panel
+          header="Enter a Name for the Report"
+          bsStyle="primary"
+          borderRadius="none"
+          bodyProps={{ style: { border: 'none' } }}
+          headerProps={{ style: { border: 'none' } }}
+        >
           <AdaptableBlotterForm horizontal>
             <Col xs={10}>
               <FormGroup controlId="formInlineName" validationState={validationState}>

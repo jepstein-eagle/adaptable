@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
@@ -24,6 +23,8 @@ import { SortOrder, AccessLevel } from '../../Utilities/Enums';
 import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 import { ILayout } from '../../Utilities/Interface/BlotterObjects/ILayout';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
   Layouts: ILayout[];
@@ -106,7 +107,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           bsStyle="primary"
@@ -123,7 +124,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
               items={LayoutRows}
             />
           ) : (
-            <HelpBlock>Click 'New' to start creating layouts.</HelpBlock>
+            <EmptyContent>Click 'New' to start creating layouts.</EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -144,7 +145,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

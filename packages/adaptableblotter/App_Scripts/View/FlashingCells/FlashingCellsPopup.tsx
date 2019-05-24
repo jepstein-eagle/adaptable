@@ -4,12 +4,10 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
-import { IColumn } from '../../Utilities/Interface/IColumn';
 import { FormGroup, Col, Checkbox } from 'react-bootstrap';
 import { DataType, SortOrder } from '../../Utilities/Enums';
 import { FlashingCellEntityRow } from './FlashingCellEntityRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { Helper } from '../../Utilities/Helpers/Helper';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
@@ -19,6 +17,7 @@ import { IFlashingCell } from '../../Utilities/Interface/BlotterObjects/IFlashin
 import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { FlashingCellState } from '../../Redux/ActionsReducers/Interface/IState';
+import { Flex } from 'rebass';
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
   FlashingCells: IFlashingCell[];
@@ -145,7 +144,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithImage
           cssClassName={cssClassName}
           header={StrategyConstants.FlashingCellsStrategyName}
@@ -162,12 +161,12 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
             reducedPanel={true}
           />
         </PanelWithImage>
-      </div>
+      </Flex>
     );
   }
 }
 
-function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
+function mapStateToProps(state: AdaptableBlotterState) {
   return {
     FlashingCells: state.FlashingCell.FlashingCells,
     CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
