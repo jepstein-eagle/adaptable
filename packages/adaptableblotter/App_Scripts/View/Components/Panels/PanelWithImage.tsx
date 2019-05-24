@@ -1,26 +1,32 @@
 import * as React from 'react';
 import { PanelProps, Panel, Row, Col, Glyphicon } from 'react-bootstrap';
+import { withTheme } from 'styled-components';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { MessageType } from '../../../Utilities/Enums';
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import NewPanel from '../../../components/Panel';
 
 export interface PanelWithImageProps extends PanelProps {
   glyphicon?: string;
   infoBody?: any[];
   cssClassName: string;
+  theme: any;
   button?: React.ReactElement<any>;
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you
 //need to transfer props individually as a consequence
 //let { buttonContent, ...other } = this.props
-export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
+class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
   render() {
     let cssClassName = this.props.cssClassName + StyleConstants.PANEL_WITH_IMAGE;
 
     let headerRow = (
-      <AdaptableBlotterForm inline>
+      <AdaptableBlotterForm
+        inline
+        style={{ flex: 1, '--ab-cmp-panel-icon-fill': this.props.theme.colors.almostwhite }}
+      >
         <Row style={{ display: 'flex', alignItems: 'center' }}>
           <Col xs={9}>
             {<Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />}
@@ -47,15 +53,19 @@ export class PanelWithImage extends React.Component<PanelWithImageProps, {}> {
       </AdaptableBlotterForm>
     );
     return (
-      <Panel
+      <NewPanel
         header={headerRow}
         className={cssClassName}
-        style={this.props.style}
         bsStyle={this.props.bsStyle}
         bsSize={this.props.bsSize}
+        style={this.props.style}
+        headerProps={{ style: { border: 'none' } }}
+        bodyProps={{ style: { border: 'none' } }}
       >
         {this.props.children}
-      </Panel>
+      </NewPanel>
     );
   }
 }
+
+export const PanelWithImage = withTheme(PanelWithImageCmp);

@@ -21,6 +21,8 @@ import {
   QUICK_SEARCH_DEFAULT_FORE_COLOR,
 } from '../../Utilities/Constants/GeneralConstants';
 
+import NewPanel from '../../components/Panel';
+
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
   QuickSearchText: string;
   DisplayAction: DisplayAction;
@@ -159,7 +161,7 @@ class QuickSearchPopupComponent extends React.Component<
           infoBody={infoBody}
         >
           <AdaptableBlotterForm inline>
-            <Panel header={'Search For'} bsStyle="info">
+            <NewPanel header={'Search For'} mb={2}>
               <AdaptableBlotterFormControlTextClear
                 cssClassName={cssClassName}
                 type="text"
@@ -167,11 +169,11 @@ class QuickSearchPopupComponent extends React.Component<
                 value={this.state.EditedQuickSearchText}
                 OnTextChange={x => this.handleQuickSearchTextChange(x)}
               />
-            </Panel>
+            </NewPanel>
           </AdaptableBlotterForm>
 
           <AdaptableBlotterForm horizontal>
-            <Panel header="Quick Search Options" eventKey="1" bsStyle="info">
+            <NewPanel header="Quick Search Options" eventKey="1" bsStyle="info">
               <FormGroup controlId="formInlineSearchDisplay">
                 <Col xs={3}>
                   <ControlLabel>Behaviour:</ControlLabel>
@@ -248,7 +250,7 @@ class QuickSearchPopupComponent extends React.Component<
                   )}
                 </Col>
               </FormGroup>
-            </Panel>
+            </NewPanel>
           </AdaptableBlotterForm>
         </PanelWithImage>
       </div>

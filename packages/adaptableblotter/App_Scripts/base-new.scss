@@ -1,0 +1,27 @@
+:root {
+  --ab-space-0: 0px;
+  --ab-space-1: 4px;
+  --ab-space-2: 8px;
+  --ab-space-3: 16px;
+  --ab-space-4: 32px;
+  --ab-space-5: 64px;
+  --ab-space-6: 128px;
+  --ab-space-7: 256px;
+
+  --ab-font-size-0: 12px;
+  --ab-font-size-1: 14px;
+  --ab-font-size-2: 16px;
+  --ab-font-size-3: 20px;
+  --ab-font-size-4: 24px;
+  --ab-font-size-5: 32px;
+  --ab-font-size-6: 48px;
+  --ab-font-size-7: 64px;
+
+  --ab-color-lightgray: #e8e8e8;
+  --ab-color-textgray: rgba(95, 95, 95, 0.87);
+  --ab-color-almost-white: #f5f5f5;
+  --ab-icon-fill: black;
+  --ab-info-gradient: linear-gradient(180deg, #337ab7 0, #2e6da4);
+}
+
+@import './components/Panel/base.scss';

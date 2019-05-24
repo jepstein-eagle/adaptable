@@ -77,7 +77,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         enforceFocus={null}
       >
         <div className={cssClassName + StyleConstants.MODAL_BASE}>
-          <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
+          <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY} style={{ padding: 0 }}>
             <div className="ab_main_popup">
               <div
                 className={

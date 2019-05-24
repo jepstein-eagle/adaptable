@@ -1,0 +1,28 @@
+.ab-panel {
+  display: flex;
+  flex-flow: column;
+
+  .glyphicon {
+    -webkit-text-fill-color: var(--ab-cmp-panel-icon-fill);
+    fill: var(--ab-cmp-panel-icon-fill);
+  }
+
+  &__header {
+    display: flex;
+    flex-flow: row;
+    background: var(--ab-cmp-panel_header-bg);
+    color: var(--ab-cmp-panel_header-color);
+    padding: var(--ab-cmp-panel_header-padding);
+    border-top-left-radius: var(--ab-cmp-panel-radius);
+    border-top-right-radius: var(--ab-cmp-panel-radius);
+    border: var(--ab-cmp-panel-border);
+  }
+
+  &__body {
+    padding: var(--ab-cmp-panel-padding);
+    border: var(--ab-cmp-panel-border);
+    border-top: none;
+    border-bottom-left-radius: var(--ab-cmp-panel-radius);
+    border-bottom-right-radius: var(--ab-cmp-panel-radius);
+  }
+}

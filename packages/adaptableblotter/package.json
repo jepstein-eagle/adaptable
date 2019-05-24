@@ -35,8 +35,10 @@
     "react-bootstrap-typeahead": "^3.2.0",
     "react-dom": "^16.4.2",
     "react-redux": "^5.1.1",
+    "rebass": "^3.1.0",
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.5",
+    "styled-components": "^4.2.0",
     "uuid": "^3.3.2"
   },
   "peerDependencies": {
@@ -47,6 +49,7 @@
     "@types/body-parser": "^1.17.0",
     "@types/bunyan": "^1.8.4",
     "@types/express": "^4.16.0",
+    "@types/rebass": "^3.0.4",
     "ag-grid-community": "^20.2.0",
     "ag-grid-enterprise": "^20.2.0",
     "amdefine": "^1.0.1",

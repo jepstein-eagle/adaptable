@@ -7,15 +7,15 @@ export class AdaptableBlotterForm extends React.Component<AdaptableBlotterFormPr
   render() {
     const { children, ...attrs } = this.props;
     return (
-      <Form {...attrs} onSubmit={e => this.CancelOnFormSubmit(e)}>
-        {this.props.children}
+      <Form {...attrs} onSubmit={this.CancelOnFormSubmit}>
+        {children}
       </Form>
     );
   }
-  CancelOnFormSubmit(e: React.FormEvent<any>) {
+  CancelOnFormSubmit = (e: React.FormEvent<any>) => {
     e.preventDefault();
     if (this.props.onSubmit) {
       this.props.onSubmit(null);
     }
-  }
+  };
 }

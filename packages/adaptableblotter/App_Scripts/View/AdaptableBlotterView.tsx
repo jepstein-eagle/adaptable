@@ -1,6 +1,9 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { Provider, connect } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
+import theme from '../theme';
+
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup';
@@ -154,6 +157,8 @@ export const AdaptableBlotterApp = ({
   AdaptableBlotter: IAdaptableBlotter;
 }) => (
   <Provider store={AdaptableBlotter.adaptableBlotterStore.TheStore}>
-    <AdaptableBlotterWrapper Blotter={AdaptableBlotter} />
+    <ThemeProvider theme={theme}>
+      <AdaptableBlotterWrapper Blotter={AdaptableBlotter} />
+    </ThemeProvider>
   </Provider>
 );

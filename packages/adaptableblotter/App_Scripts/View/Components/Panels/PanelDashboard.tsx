@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
   PanelProps,
-  Panel,
+  // Panel,
   Glyphicon,
   Button,
   Label,
@@ -9,6 +9,7 @@ import {
   Tooltip,
 } from 'react-bootstrap';
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
+import Panel from '../../../components/Panel';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ButtonClose } from '../Buttons/ButtonClose';
 import { ButtonConfigure } from '../Buttons/ButtonConfigure';
@@ -54,7 +55,7 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
       : StyleConstants.PRIMARY_BSSTYLE;
 
     let header = (
-      <span>
+      <>
         <span
           style={{
             verticalAlign: 'middle',
@@ -63,7 +64,7 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
             fontSize: 'xsmall',
           }}
         >
-          {this.props.showMinimiseButton && (
+          {this.props.showMinimiseButton ? (
             <span>
               <ButtonMinimise
                 cssClassName={cssClassName}
@@ -82,32 +83,13 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
                 onClick={() => this.props.onMinimise()}
               />{' '}
             </span>
-          )}
-          {this.props.showGlyphIcon && (
+          ) : null}
+          {this.props.showGlyphIcon ? (
             <Glyphicon style={{ fontSize: 'small' }} glyph={this.props.glyphicon} />
-          )}{' '}
-          <span style={{ fontSize: 'small' }}>{this.props.headerText}</span>
+          ) : null}
         </span>{' '}
-        {this.props.showCloseButton && (
-          <ButtonClose
-            cssClassName={cssClassName}
-            overrideTooltip={'Close ' + this.props.headerText}
-            size="xs"
-            bsStyle={panelStyle}
-            DisplayMode={'Glyph'}
-            style={{
-              float: 'right',
-              marginLeft: '0px',
-              marginRight: '0px',
-              border: '0px',
-              background: 'none',
-              borderRadius: '0px',
-              boxShadow: 'none',
-            }}
-            onClick={() => this.props.onClose()}
-          />
-        )}
-        {this.props.showConfigureButton && (
+        <div style={{ flex: 1 }}>{this.props.headerText}</div>
+        {this.props.showConfigureButton ? (
           <ButtonConfigure
             cssClassName={cssClassName}
             overrideTooltip={'Configure ' + this.props.headerText}
@@ -125,15 +107,33 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
             }}
             onClick={() => this.props.onConfigure()}
           />
-        )}
-      </span>
+        ) : null}
+        {this.props.showCloseButton ? (
+          <ButtonClose
+            cssClassName={cssClassName}
+            overrideTooltip={'Close ' + this.props.headerText}
+            size="xs"
+            bsStyle={panelStyle}
+            DisplayMode={'Glyph'}
+            style={{
+              float: 'right',
+              marginLeft: '0px',
+              marginRight: '0px',
+              border: '0px',
+              background: 'none',
+              borderRadius: '0px',
+              boxShadow: 'none',
+            }}
+            onClick={() => this.props.onClose()}
+          />
+        ) : null}
+      </>
     );
     return (
       <div className={cssClassName}>
         <Panel
           className="ab_small-padding-panel ab-panel-header-dashboard"
           header={header}
-          bsStyle={panelStyle}
           style={this.props.style}
         >
           <AdaptableBlotterForm inline>{this.props.children}</AdaptableBlotterForm>
