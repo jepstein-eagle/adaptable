@@ -3,7 +3,7 @@ import { Box, BoxProps } from 'rebass';
 import { ReactNode, HTMLProps } from 'react';
 import join from '../utils/join';
 
-export const baseClassName = 'ab-panel';
+export const baseClassName = 'ab-Panel';
 
 export type PanelProps = HTMLProps<HTMLElement> & {
   header?: ReactNode | string;
