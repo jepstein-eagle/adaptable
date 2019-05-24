@@ -17,6 +17,7 @@ import {
 import { IColumn } from '../Interface/IColumn';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
+import { IFunctionAppliedDetails } from '../Interface/IAuditEvents';
 
 export class ValidationService implements IValidationService {
   constructor(private blotter: IAdaptableBlotter) {
@@ -163,13 +164,14 @@ export class ValidationService implements IValidationService {
   }
 
   private logAuditValidationEvent(action: string, info: string, data?: any): void {
-    if (this.blotter.AuditLogService.IsAuditFunctionEventsEnabled) {
-      this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(
-        StrategyConstants.CellValidationStrategyId,
-        action,
-        info,
-        data
-      );
+    if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
+      let functionAppliedDetails: IFunctionAppliedDetails = {
+        name: StrategyConstants.CellValidationStrategyId,
+        action: action,
+        info: info,
+        data: data,
+      };
+      this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
   }
 }

@@ -279,7 +279,7 @@ class ExportToolbarControlComponent extends React.Component<
             overrideTooltip="Delete Report"
             overrideDisableButton={savedReport == null || ReportHelper.IsSystemReport(savedReport)}
             DisplayMode="Glyph"
-            ConfirmAction={ExportRedux.ReportDelete(savedReportIndex)}
+            ConfirmAction={ExportRedux.ReportDelete(savedReport)}
             ConfirmationMsg={deleteMessage}
             ConfirmationTitle={'Delete Report'}
             AccessLevel={this.props.AccessLevel}

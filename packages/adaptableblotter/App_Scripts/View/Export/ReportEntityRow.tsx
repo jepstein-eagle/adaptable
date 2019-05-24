@@ -113,7 +113,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       <EntityListActionButtons
         cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        editClick={() => this.props.onEdit(this.props.Index, report)}
+        editClick={() => this.props.onEdit(report)}
         overrideDisableEdit={isSystemReport}
         overrideDisableDelete={isSystemReport}
         overrideDisableShare={isSystemReport}

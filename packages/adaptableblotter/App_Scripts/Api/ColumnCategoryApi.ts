@@ -29,39 +29,27 @@ export class ColumnCategoryApi extends ApiBase implements IColumnCategoryApi {
     this.addColumnCategory(columnCategory);
   }
 
-  public editColumnCategory(
-    previousColumnCategoryId: string,
-    columnCategory: IColumnCategory
-  ): void {
-    let index: number = this.getAllColumnCategory().findIndex(
-      cc => cc.ColumnCategoryId == previousColumnCategoryId
-    );
-    this.dispatchAction(ColumnCategoryRedux.ColumnCategoryEdit(index, columnCategory));
+  public editColumnCategory(columnCategory: IColumnCategory): void {
+    this.dispatchAction(ColumnCategoryRedux.ColumnCategoryEdit(columnCategory));
   }
 
   public addColumnsToColumnCategory(columnCategoryId: string, columns: string[]): void {
     let columnCategory: IColumnCategory = this.getColumnCategoryById(columnCategoryId);
-    let index: number = this.getAllColumnCategory().findIndex(
-      cc => cc.ColumnCategoryId == columnCategoryId
-    );
     columns.forEach(c => {
       columnCategory.ColumnIds.push(c);
     });
-    this.dispatchAction(ColumnCategoryRedux.ColumnCategoryEdit(index, columnCategory));
+    this.dispatchAction(ColumnCategoryRedux.ColumnCategoryEdit(columnCategory));
   }
 
   public removeColumnsFromColumnCategory(columnCategoryId: string, columns: string[]): void {
     let columnCategory: IColumnCategory = this.getAllColumnCategory().find(
       cc => cc.ColumnCategoryId == columnCategoryId
     );
-    let index: number = this.getAllColumnCategory().findIndex(
-      cc => cc.ColumnCategoryId == columnCategoryId
-    );
     columns.forEach(c => {
       let ccIndex = columnCategory.ColumnIds.findIndex(cc => cc == c);
       columnCategory.ColumnIds.splice(ccIndex, 1);
     });
-    this.dispatchAction(ColumnCategoryRedux.ColumnCategoryEdit(index, columnCategory));
+    this.dispatchAction(ColumnCategoryRedux.ColumnCategoryEdit(columnCategory));
   }
 
   public deleteColumnCategory(columnCategoryId: string): void {

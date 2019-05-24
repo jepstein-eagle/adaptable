@@ -20,6 +20,7 @@ import { Helper } from '../Helpers/Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { NumberExtensions } from '../Extensions/NumberExtensions';
+import { createUuid } from '../Uuid';
 
 /*
 Class that buils the chart - probably needs some refactoring but working for the time being.
@@ -97,6 +98,7 @@ export class ChartService implements IChartService {
     });
 
     let completedExpression: Expression = {
+      Uuid: createUuid(),
       ColumnValueExpressions: columnValueExpressions,
       FilterExpressions: [],
       RangeExpressions: [],

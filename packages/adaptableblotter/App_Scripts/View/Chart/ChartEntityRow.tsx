@@ -44,7 +44,7 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
       <EntityListActionButtons
         cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        editClick={() => this.props.onEdit(this.props.Index, Chart)}
+        editClick={() => this.props.onEdit(Chart)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
         overrideDisableEdit={null}
