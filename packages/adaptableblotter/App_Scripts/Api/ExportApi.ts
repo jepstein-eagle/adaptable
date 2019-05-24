@@ -21,7 +21,7 @@ export class ExportApi extends ApiBase implements IExportApi {
   }
 
   public getReportByName(reportName: string): IReport {
-    let report: IReport = this.getBlotterState().Export.Reports.find(l => l.Name == reportName);
+    let report: IReport = this.getAllReports().find(r => r.Name == reportName);
     return report;
   }
 

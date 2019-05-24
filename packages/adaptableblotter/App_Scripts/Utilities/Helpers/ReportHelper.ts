@@ -7,6 +7,7 @@ import { ISelectedCell } from '../Interface/SelectedCell/ISelectedCell';
 import { IColumn } from '../Interface/IColumn';
 import { ReportColumnScope, MessageType, ReportRowScope } from '../Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { createUuid } from '../Uuid';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -192,6 +193,7 @@ export function CreateSystemReports(): Array<IReport> {
   let _systemReports: IReport[] = [];
 
   _systemReports.push({
+    Uuid: createUuid(),
     Name: ALL_DATA_REPORT,
     ReportColumnScope: ReportColumnScope.AllColumns,
     ReportRowScope: ReportRowScope.AllRows,
@@ -200,6 +202,7 @@ export function CreateSystemReports(): Array<IReport> {
   });
 
   _systemReports.push({
+    Uuid: createUuid(),
     Name: VISIBLE_DATA_REPORT,
     ReportColumnScope: ReportColumnScope.VisibleColumns,
     ReportRowScope: ReportRowScope.VisibleRows,
@@ -208,6 +211,7 @@ export function CreateSystemReports(): Array<IReport> {
   });
 
   _systemReports.push({
+    Uuid: createUuid(),
     Name: SELECTED_CELLS_REPORT,
     ReportColumnScope: ReportColumnScope.SelectedColumns,
     ReportRowScope: ReportRowScope.SelectedRows,
