@@ -1838,25 +1838,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
       // first we assess AdvancedSearch (if its running locally)
       if (this.blotterOptions.generalOptions.serverSearchOption == 'None') {
-        const currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
-        if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
-          // Get the actual Advanced Search object and check it exists
-          const currentSearch = this.getState().AdvancedSearch.AdvancedSearches.find(
-            s => s.Name == currentSearchName
-          );
-          if (currentSearch) {
-            // See if our record passes the Expression - using Expression Helper; if not then return false
-            if (
-              !ExpressionHelper.checkForExpressionFromRecord(
-                currentSearch.Expression,
-                node,
-                columns,
-                this
-              )
-            ) {
-              // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
-              return false;
-            }
+        const currentSearch = this.api.advancedSearchApi.getCurrentAdvancedSearch();
+        if (currentSearch) {
+          // See if our record passes the Expression - using Expression Helper; if not then return false
+          if (
+            !ExpressionHelper.checkForExpressionFromRecord(
+              currentSearch.Expression,
+              node,
+              columns,
+              this
+            )
+          ) {
+            return false;
           }
         }
       }

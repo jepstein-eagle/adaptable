@@ -13,7 +13,7 @@ export const REPORT_DELETE = 'REPORT_DELETE';
 export const IPP_LOGIN = 'IPP_LOGIN';
 
 export interface ExportApplyAction extends Redux.Action {
-  Report: string;
+  Report: IReport;
   ExportDestination: ExportDestination;
   Folder?: string;
   Page?: string;
@@ -68,7 +68,7 @@ export const ReportDelete = (report: IReport): ReportDeleteAction => ({
 });
 
 export const ExportApply = (
-  Report: string,
+  Report: IReport,
   ExportDestination: ExportDestination,
   Folder?: string,
   Page?: string

@@ -40,14 +40,14 @@ import { Glue42Helper } from '../../Utilities/Helpers/Glue42Helper';
 interface ExportToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
   onApplyExport: (
-    Report: string,
+    Report: IReport,
     exportDestination: ExportDestination
   ) => ExportRedux.ExportApplyAction;
   onSelectReport: (Report: string) => ExportRedux.ReportSelectAction;
   onNewReport: () => PopupRedux.PopupShowScreenAction;
   onEditReport: () => PopupRedux.PopupShowScreenAction;
   onReportStopLive: (
-    Report: string,
+    Report: IReport,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ) => SystemRedux.ReportStopLiveAction;
   Columns: IColumn[];
@@ -64,6 +64,8 @@ class ExportToolbarControlComponent extends React.Component<
   render(): any {
     const selectReportString: string = 'Select a Report';
     let allReports: IReport[] = this.props.SystemReports.concat(this.props.Reports);
+
+    let currentReport: IReport = this.props.Blotter.api.exportApi.getCurrentReport();
 
     let cssClassName: string = this.props.cssClassName + '__export';
     let savedReport: IReport = allReports.find(s => s.Name == this.props.CurrentReport);
@@ -90,7 +92,7 @@ class ExportToolbarControlComponent extends React.Component<
     let csvMenuItem = (
       <MenuItem
         disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-        onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.CSV)}
+        onClick={() => this.props.onApplyExport(currentReport, ExportDestination.CSV)}
         key={'csv'}
       >
         {'CSV'}
@@ -99,7 +101,7 @@ class ExportToolbarControlComponent extends React.Component<
     let clipboardMenuItem = (
       <MenuItem
         disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-        onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.Clipboard)}
+        onClick={() => this.props.onApplyExport(currentReport, ExportDestination.Clipboard)}
         key={'clipboard'}
       >
         {' '}
@@ -109,15 +111,13 @@ class ExportToolbarControlComponent extends React.Component<
     let openfinExcelMenuItem;
     if (
       this.props.LiveReports.find(
-        x => x.Report == currentReportId && x.ExportDestination == ExportDestination.OpenfinExcel
+        x => x.Report == currentReport && x.ExportDestination == ExportDestination.OpenfinExcel
       )
     ) {
       openfinExcelMenuItem = (
         <MenuItem
           disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-          onClick={() =>
-            this.props.onReportStopLive(currentReportId, ExportDestination.OpenfinExcel)
-          }
+          onClick={() => this.props.onReportStopLive(currentReport, ExportDestination.OpenfinExcel)}
           key={'OpenfinExcel'}
         >
           {' '}
@@ -128,7 +128,7 @@ class ExportToolbarControlComponent extends React.Component<
       openfinExcelMenuItem = (
         <MenuItem
           disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-          onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.OpenfinExcel)}
+          onClick={() => this.props.onApplyExport(currentReport, ExportDestination.OpenfinExcel)}
           key={'OpenfinExcel'}
         >
           {' '}
@@ -140,13 +140,13 @@ class ExportToolbarControlComponent extends React.Component<
     let iPushPullExcelMenuItem;
     if (
       this.props.LiveReports.find(
-        x => x.Report == currentReportId && x.ExportDestination == ExportDestination.iPushPull
+        x => x.Report == currentReport && x.ExportDestination == ExportDestination.iPushPull
       )
     ) {
       iPushPullExcelMenuItem = (
         <MenuItem
           disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-          onClick={() => this.props.onReportStopLive(currentReportId, ExportDestination.iPushPull)}
+          onClick={() => this.props.onReportStopLive(currentReport, ExportDestination.iPushPull)}
           key={'IPPExcel'}
         >
           {' '}
@@ -157,7 +157,7 @@ class ExportToolbarControlComponent extends React.Component<
       iPushPullExcelMenuItem = (
         <MenuItem
           disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-          onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.iPushPull)}
+          onClick={() => this.props.onApplyExport(currentReport, ExportDestination.iPushPull)}
           key={'IPPExcel'}
         >
           {' '}
@@ -169,7 +169,7 @@ class ExportToolbarControlComponent extends React.Component<
     let glue42MenuItem = (
       <MenuItem
         disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-        onClick={() => this.props.onApplyExport(currentReportId, ExportDestination.Glue42)}
+        onClick={() => this.props.onApplyExport(currentReport, ExportDestination.Glue42)}
         key={'Glue42'}
       >
         {' '}
@@ -319,11 +319,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onApplyExport: (Report: string, exportDestination: ExportDestination) =>
+    onApplyExport: (Report: IReport, exportDestination: ExportDestination) =>
       dispatch(ExportRedux.ExportApply(Report, exportDestination)),
     onSelectReport: (Report: string) => dispatch(ExportRedux.ReportSelect(Report)),
     onReportStopLive: (
-      Report: string,
+      Report: IReport,
       exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
     ) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
     onNewReport: () =>

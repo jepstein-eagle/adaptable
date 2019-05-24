@@ -19,7 +19,7 @@ export interface IAdvancedSearchApi {
    * @param advancedSearchName
    * @param advancedSearch
    */
-  editAdvancedSearch(advancedSearchName: string, advancedSearch: IAdvancedSearch): void;
+  editAdvancedSearch(advancedSearch: IAdvancedSearch): void;
   deleteAdvancedSearch(advancedSearchName: string): void;
   getCurrentAdvancedSearch(): IAdvancedSearch;
   getCurrentAdvancedSearchName(): string;

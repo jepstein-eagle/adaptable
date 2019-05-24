@@ -42,7 +42,7 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
       blotter.blotterOptions.layoutOptions.autoSaveLayouts != null &&
       blotter.blotterOptions.layoutOptions.autoSaveLayouts
     ) {
-      let layout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
+      let layout = blotter.api.layoutApi.getCurrentLayout();
       if (layout != null) {
         let gridState: GridState = blotter.api.gridApi.getGridState();
         let visibleColumns: IColumn[] = gridState.Columns.filter(c => c.Visible);

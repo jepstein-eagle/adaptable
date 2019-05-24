@@ -16,11 +16,11 @@ import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
 export class InternalApi extends ApiBase implements IInternalApi {
   // System Redux Actions
   public ReportStartLive(
-    reportName: string,
+    report: IReport,
     workbookName: string,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ): void {
-    this.dispatchAction(SystemRedux.ReportStartLive(reportName, workbookName, exportDestination));
+    this.dispatchAction(SystemRedux.ReportStartLive(report, workbookName, exportDestination));
   }
 
   public GetSystemState(): SystemState {

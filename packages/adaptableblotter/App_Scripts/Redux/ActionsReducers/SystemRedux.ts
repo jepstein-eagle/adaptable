@@ -20,6 +20,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IRange } from '../../Utilities/Interface/Expression/IRange';
 import { Expression } from '../../Utilities/Expression';
 import { IColumn } from '../../Utilities/Interface/IColumn';
+import { IReport } from '../../Utilities/Interface/BlotterObjects/IReport';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -90,13 +91,13 @@ export interface SystemAlertDeleteAction extends Redux.Action {
 export interface SystemAlertDeleteAllAction extends Redux.Action {}
 
 export interface ReportStartLiveAction extends Redux.Action {
-  Report: string;
+  Report: IReport;
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull;
   WorkbookName: string;
 }
 
 export interface ReportStopLiveAction extends Redux.Action {
-  Report: string;
+  Report: IReport;
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull;
 }
 
@@ -188,7 +189,7 @@ export const SystemAlertDeleteAll = (): SystemAlertDeleteAllAction => ({
 });
 
 export const ReportStartLive = (
-  Report: string,
+  Report: IReport,
   WorkbookName: string,
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
 ): ReportStartLiveAction => ({
@@ -199,7 +200,7 @@ export const ReportStartLive = (
 });
 
 export const ReportStopLive = (
-  Report: string,
+  Report: IReport,
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
 ): ReportStopLiveAction => ({
   type: REPORT_STOP_LIVE,

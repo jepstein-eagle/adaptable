@@ -61,7 +61,7 @@ export class UserFilterSummaryComponent extends React.Component<
       if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
         let detailRow = (
           <StrategyDetail
-            key={'UF' + index}
+            key={item.Uuid}
             cssClassName={this.props.cssClassName}
             Item1={item.Name}
             Item2={this.getDescription(item)}

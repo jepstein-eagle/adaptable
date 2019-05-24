@@ -1657,12 +1657,11 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
 
           case ExportRedux.EXPORT_APPLY: {
             let actionTyped = <ExportRedux.ExportApplyAction>action;
-            let report = state.Export.Reports.find(r => r.Name == actionTyped.Report);
             let functionAppliedDetails: IFunctionAppliedDetails = {
               name: StrategyConstants.ExportStrategyId,
               action: action.type,
-              info: actionTyped.Report,
-              data: report,
+              info: actionTyped.Report.Name,
+              data: actionTyped.Report,
             };
             adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
@@ -2280,7 +2279,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 PopupRedux.PopupShowScreen(
                   StrategyConstants.ExportStrategyId,
                   'IPushPullLogin',
-                  actionTyped.Report
+                  actionTyped.Report.Name
                 )
               );
             } else if (
@@ -2300,7 +2299,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 PopupRedux.PopupShowScreen(
                   StrategyConstants.ExportStrategyId,
                   'IPushPullDomainPageSelector',
-                  actionTyped.Report
+                  actionTyped.Report.Name
                 )
               );
             } else if (actionTyped.ExportDestination == ExportDestination.iPushPull) {

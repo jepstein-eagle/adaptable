@@ -9,6 +9,7 @@ import { ILicenceInfo } from '../Interface/ILicenceInfo';
 import { LicenceScopeType } from '../Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../Uuid';
+import { IAdaptableBlotterObject } from '../Interface/BlotterObjects/IAdaptableBlotterObject';
 
 export function assignBlotterOptions(
   blotterOptions: IAdaptableBlotterOptions
@@ -151,6 +152,16 @@ export function checkLicenceKey(licenceInfo: ILicenceInfo): void {
   }
 }
 
+export function BlotterObjectExistsInState(
+  array: IAdaptableBlotterObject[],
+  itemToCheck: IAdaptableBlotterObject
+): boolean {
+  if (array == null) {
+    return false;
+  }
+  return array.findIndex(abObject => abObject.Uuid == itemToCheck.Uuid) > -1;
+}
+
 export function isDemoSite(): boolean {
   return window.location.hostname == 'demo.adaptableblotter.com';
 }
@@ -161,5 +172,6 @@ export const BlotterHelper = {
   isValidPrimaryKey,
   isConfigServerEnabled,
   checkLicenceKey,
+  BlotterObjectExistsInState,
 };
 export default BlotterHelper;
