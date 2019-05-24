@@ -17,12 +17,12 @@ import { EntityRowItem } from '../Components/EntityRowItem';
 export interface CellValidationEntityRowProps
   extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
   Column: IColumn;
-  onChangeActionMode: (index: number, ActionMode: ActionMode) => void;
+  onChangeActionMode: (cellValidationRule: ICellValidationRule, ActionMode: ActionMode) => void;
 }
 
 export class CellValidationEntityRow extends React.Component<CellValidationEntityRowProps, {}> {
   render(): any {
-    let cellValidation: ICellValidationRule = this.props
+    let cellValidationRule: ICellValidationRule = this.props
       .AdaptableBlotterObject as ICellValidationRule;
 
     let ActionModeTypes = EnumExtensions.getNames(ActionMode).map(validationMode => {
@@ -35,15 +35,17 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
-    colItems[0].Content = <EntityRowItem Content={this.getColumnandRule(cellValidation)} />;
-    colItems[1].Content = <EntityRowItem Content={this.setExpressionDescription(cellValidation)} />;
+    colItems[0].Content = <EntityRowItem Content={this.getColumnandRule(cellValidationRule)} />;
+    colItems[1].Content = (
+      <EntityRowItem Content={this.setExpressionDescription(cellValidationRule)} />
+    );
     colItems[2].Content = (
       <FormControl
         bsSize={'small'}
         componentClass="select"
         placeholder="select"
-        value={cellValidation.ActionMode}
-        onChange={x => this.onActionModeChanged(this.props.Index, x)}
+        value={cellValidationRule.ActionMode}
+        onChange={x => this.onActionModeChanged(cellValidationRule, x)}
       >
         {ActionModeTypes}
       </FormControl>
@@ -53,7 +55,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
         cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.TeamSharingActivated}
-        editClick={() => this.props.onEdit(this.props.Index, cellValidation)}
+        editClick={() => this.props.onEdit(cellValidationRule)}
         shareClick={() => this.props.onShare()}
         overrideDisableEdit={!this.props.Column}
         EntityType={StrategyConstants.CellValidationStrategyName}
@@ -80,9 +82,9 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
     return columnInfo;
   }
 
-  onActionModeChanged(index: number, event: React.FormEvent<any>) {
+  onActionModeChanged(cellValidationRule: ICellValidationRule, event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     let returnValue: any = e.value == 'Stop Edit' ? 'Stop Edit' : 'Warn User';
-    this.props.onChangeActionMode(index, returnValue);
+    this.props.onChangeActionMode(cellValidationRule, returnValue);
   }
 }

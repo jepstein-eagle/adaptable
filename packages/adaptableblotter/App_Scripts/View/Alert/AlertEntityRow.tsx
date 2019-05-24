@@ -16,12 +16,12 @@ import { EntityRowItem } from '../Components/EntityRowItem';
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
   Column: IColumn;
-  onChangeMessageType: (index: number, Type: MessageType) => void;
+  onChangeMessageType: (alertDefinition: IAlertDefinition, Type: MessageType) => void;
 }
 
 export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
   render(): any {
-    let alert: IAlertDefinition = this.props.AdaptableBlotterObject as IAlertDefinition;
+    let alertDefinition: IAlertDefinition = this.props.AdaptableBlotterObject as IAlertDefinition;
 
     let MessageTypes = EnumExtensions.getNames(MessageType).map(type => {
       return (
@@ -33,25 +33,27 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
-    colItems[0].Content = <EntityRowItem Content={this.getColumnandRule(alert)} />;
+    colItems[0].Content = <EntityRowItem Content={this.getColumnandRule(alertDefinition)} />;
     colItems[1].Content = (
       <FormControl
         bsSize={'small'}
         componentClass="select"
         placeholder="select"
-        value={alert.MessageType}
-        onChange={x => this.onMessageTypeChanged(this.props.Index, x)}
+        value={alertDefinition.MessageType}
+        onChange={event => this.onMessageTypeChanged(alertDefinition, event)}
       >
         {MessageTypes}
       </FormControl>
     );
-    colItems[2].Content = <EntityRowItem Content={this.setExpressionDescription(alert)} />;
+    colItems[2].Content = (
+      <EntityRowItem Content={this.setExpressionDescription(alertDefinition)} />
+    );
     colItems[3].Content = (
       <EntityListActionButtons
         cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.TeamSharingActivated}
-        editClick={() => this.props.onEdit(this.props.Index, alert)}
+        editClick={() => this.props.onEdit(alertDefinition)}
         shareClick={() => this.props.onShare()}
         overrideDisableEdit={!this.props.Column}
         EntityType={StrategyConstants.AlertStrategyName}
@@ -76,7 +78,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
     return columnInfo;
   }
 
-  onMessageTypeChanged(index: number, event: React.FormEvent<any>) {
+  onMessageTypeChanged(alertDefinition: IAlertDefinition, event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     let messageType: MessageType;
     if (e.value == 'Info') {
@@ -86,6 +88,6 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
     } else if (e.value == 'Error') {
       messageType = MessageType.Error;
     }
-    this.props.onChangeMessageType(index, messageType);
+    this.props.onChangeMessageType(alertDefinition, messageType);
   }
 }

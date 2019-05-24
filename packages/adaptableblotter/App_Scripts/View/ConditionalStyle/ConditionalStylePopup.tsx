@@ -92,12 +92,11 @@ class ConditionalStylePopupComponent extends React.Component<
             AdaptableBlotterObject={conditionalStyle}
             colItems={colItems}
             key={'CS' + (conditionalStyle.Uuid || index)}
-            Index={index}
             onShare={() => this.props.onShare(conditionalStyle)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             UserFilters={this.props.UserFilters}
             Columns={this.props.Columns}
-            onEdit={(index, conditionalStyle) => this.onEdit(conditionalStyle as IConditionalStyle)}
+            onEdit={() => this.onEdit(conditionalStyle)}
             onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(conditionalStyle)}
           />
         );

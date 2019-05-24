@@ -9,7 +9,10 @@ import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedCo
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { UIHelper } from '../UIHelper';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -19,7 +22,7 @@ import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICal
 export interface CalculatedColumnSummaryProps
   extends StrategySummaryProps<CalculatedColumnSummaryComponent> {
   CalculatedColumns: ICalculatedColumn[];
-  onEdit: (index: number, calculatedColumn: ICalculatedColumn) => void;
+  onEdit: (calculatedColumn: ICalculatedColumn) => void;
   onDeleteConfirm: Redux.Action;
   CalculatedColumnErrorMessage: string;
   IsExpressionValid: (expression: string) => SystemRedux.CalculatedColumnIsExpressionValidAction;
@@ -50,9 +53,9 @@ export class CalculatedColumnSummaryComponent extends React.Component<
             ConfigEnity={item}
             showShare={this.props.TeamSharingActivated}
             EntityType={StrategyConstants.CalculatedColumnStrategyName}
-            onEdit={() => this.onEdit(index, item)}
+            onEdit={() => this.onEdit(item)}
             onShare={() => this.props.onShare(item)}
-            onDelete={CalculatedColumnRedux.CalculatedColumnDelete(index, item)}
+            onDelete={CalculatedColumnRedux.CalculatedColumnDelete(item)}
             showBold={true}
           />
         );
@@ -87,11 +90,11 @@ export class CalculatedColumnSummaryComponent extends React.Component<
     );
   }
 
-  onEdit(index: number, calculatedColumn: ICalculatedColumn) {
+  onEdit(calculatedColumn: ICalculatedColumn) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(calculatedColumn),
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -99,7 +102,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -107,11 +110,11 @@ export class CalculatedColumnSummaryComponent extends React.Component<
     let calculatedColumn: ICalculatedColumn = Helper.cloneObject(
       this.state.EditedAdaptableBlotterObject
     );
-    this.props.onEdit(this.state.EditedAdaptableBlotterObjectIndex, calculatedColumn);
+    this.props.onEdit(calculatedColumn);
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -133,8 +136,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onEdit: (index: number, calculatedColumn: ICalculatedColumn) =>
-      dispatch(CalculatedColumnRedux.CalculatedColumnEdit(index, calculatedColumn)),
+    onEdit: (calculatedColumn: ICalculatedColumn) =>
+      dispatch(CalculatedColumnRedux.CalculatedColumnEdit(calculatedColumn)),
     IsExpressionValid: (expression: string) =>
       dispatch(SystemRedux.CalculatedColumnIsExpressionValid(expression)),
   };

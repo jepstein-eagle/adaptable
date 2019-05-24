@@ -4,48 +4,39 @@ import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilte
 import { IColumnFilter } from '../../Utilities/Interface/BlotterObjects/IColumnFilter';
 import { InputAction } from '../../Utilities/Interface/IMessage';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const USER_FILTER_ADD = 'USER_FILTER_ADD';
 export const USER_FILTER_EDIT = 'USER_FILTER_EDIT';
 export const USER_FILTER_DELETE = 'USER_FILTER_DELETE';
 export const USER_FILTER_CREATE_FROM_COLUMN_FILTER = 'USER_FILTER_CREATE_FROM_COLUMN_FILTER';
 
-export interface UserFilterAddAction extends Redux.Action {
-  UserFilter: IUserFilter;
+export interface UserFilterAction extends Redux.Action {
+  userFilter: IUserFilter;
 }
 
-export interface UserFilterEditAction extends Redux.Action {
-  Index: number;
-  UserFilter: IUserFilter;
-}
+export interface UserFilterAddAction extends UserFilterAction {}
 
-export interface UserFilterDeleteAction extends Redux.Action {
-  Index: number;
-  UserFilter: IUserFilter;
-}
+export interface UserFilterEditAction extends UserFilterAction {}
+
+export interface UserFilterDeleteAction extends UserFilterAction {}
 
 export interface CreateUserFilterFromColumnFilterAction extends InputAction {
   ColumnFilter: IColumnFilter;
 }
 
-export const UserFilterAdd = (UserFilter: IUserFilter): UserFilterAddAction => ({
+export const UserFilterAdd = (userFilter: IUserFilter): UserFilterAddAction => ({
   type: USER_FILTER_ADD,
-  UserFilter,
+  userFilter,
 });
 
-export const UserFilterEdit = (Index: number, UserFilter: IUserFilter): UserFilterEditAction => ({
+export const UserFilterEdit = (userFilter: IUserFilter): UserFilterEditAction => ({
   type: USER_FILTER_EDIT,
-  Index,
-  UserFilter,
+  userFilter,
 });
-
-export const UserFilterDelete = (
-  Index: number,
-  UserFilter: IUserFilter
-): UserFilterDeleteAction => ({
+export const UserFilterDelete = (userFilter: IUserFilter): UserFilterDeleteAction => ({
   type: USER_FILTER_DELETE,
-  Index,
-  UserFilter,
+  userFilter,
 });
 
 export const CreateUserFilterFromColumnFilter = (
@@ -70,24 +61,31 @@ export const UserFilterReducer: Redux.Reducer<UserFilterState> = (
 
   switch (action.type) {
     case USER_FILTER_ADD: {
-      let actionTypedAddUpdate = <UserFilterAddAction>action;
+      const actionUserFilter: IUserFilter = (action as UserFilterAction).userFilter;
+
+      if (!actionUserFilter.Uuid) {
+        actionUserFilter.Uuid = createUuid();
+      }
       userFilters = [].concat(state.UserFilters);
-      userFilters.push(actionTypedAddUpdate.UserFilter);
-      return Object.assign({}, state, { UserFilters: userFilters });
-    }
-    case USER_FILTER_EDIT: {
-      let actionTypedAddUpdate = <UserFilterEditAction>action;
-      userFilters = [].concat(state.UserFilters);
-      userFilters[actionTypedAddUpdate.Index] = actionTypedAddUpdate.UserFilter;
-      return Object.assign({}, state, { UserFilters: userFilters });
+      userFilters.push(actionUserFilter);
+      return { ...state, UserFilters: userFilters };
     }
 
+    case USER_FILTER_EDIT: {
+      const actionUserFilter: IUserFilter = (action as UserFilterAction).userFilter;
+      return {
+        ...state,
+        UserFilters: state.UserFilters.map(abObject =>
+          abObject.Uuid === actionUserFilter.Uuid ? actionUserFilter : abObject
+        ),
+      };
+    }
     case USER_FILTER_DELETE: {
-      let actionTypedDelete = <UserFilterDeleteAction>action;
-      userFilters = [].concat(state.UserFilters);
-      index = userFilters.findIndex(i => i.Name == actionTypedDelete.UserFilter.Name);
-      userFilters.splice(index, 1);
-      return Object.assign({}, state, { UserFilters: userFilters });
+      const actionUserFilter: IUserFilter = (action as UserFilterAction).userFilter;
+      return {
+        ...state,
+        UserFilters: state.UserFilters.filter(abObject => abObject.Uuid !== actionUserFilter.Uuid),
+      };
     }
 
     default:

@@ -60,7 +60,6 @@ export function getEmptyConfigState(): EditableConfigEntityState {
   return {
     EditedAdaptableBlotterObject: null,
     WizardStartIndex: 0,
-    EditedAdaptableBlotterObjectIndex: -1,
     WizardStatus: WizardStatus.None,
   };
 }

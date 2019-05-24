@@ -1,7 +1,10 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { FreeTextColumnWizard } from './Wizard/FreeTextColumnWizard';
@@ -112,7 +115,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
@@ -121,7 +124,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -129,7 +132,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -144,7 +147,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -165,8 +168,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddFreeTextColumn: (FreeTextColumn: IFreeTextColumn) =>
       dispatch(FreeTextColumnRedux.FreeTextColumnAdd(FreeTextColumn)),
-    onEditFreeTextColumn: (index: number, FreeTextColumn: IFreeTextColumn) =>
-      dispatch(FreeTextColumnRedux.FreeTextColumnEdit(index, FreeTextColumn)),
+    onEditFreeTextColumn: (FreeTextColumn: IFreeTextColumn) =>
+      dispatch(FreeTextColumnRedux.FreeTextColumnEdit(FreeTextColumn)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FreeTextColumnStrategyId)

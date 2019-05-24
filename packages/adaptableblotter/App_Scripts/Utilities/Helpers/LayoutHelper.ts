@@ -50,16 +50,14 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
           visibleColumns.map(vc => vc.ColumnId),
           false
         );
-        let layoutIndex = layoutState.Layouts.findIndex(l => l.Name == layoutState.CurrentLayout);
-        let layoutToSave = ObjectFactory.CreateLayout(
-          visibleColumns,
-          gridState.GridSorts,
-          gridVendorState,
-          layoutState.CurrentLayout
-        );
-        blotter.adaptableBlotterStore.TheStore.dispatch(
-          LayoutRedux.LayoutSave(layoutIndex, layoutToSave)
-        );
+        let layoutToSave: ILayout = {
+          Uuid: layout.Uuid,
+          Name: layoutState.CurrentLayout,
+          Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
+          GridSorts: gridState.GridSorts,
+          VendorGridInfo: gridVendorState,
+        };
+        blotter.adaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSave(layoutToSave));
       }
     }
     blotter.api.eventApi._onColumnStateChanged.Dispatch(blotter, {

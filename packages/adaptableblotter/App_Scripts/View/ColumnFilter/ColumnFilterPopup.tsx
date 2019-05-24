@@ -55,7 +55,6 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
           ColumnFilter={columnFilter}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
-          Index={index}
           onEdit={null}
           onDeleteConfirm={null}
           onClear={() => this.onClearColumnFilter(columnFilter.ColumnId)}

@@ -2,35 +2,34 @@ import { FormatColumnState } from './Interface/IState';
 import * as Redux from 'redux';
 import { IFormatColumn } from '../../Utilities/Interface/BlotterObjects/IFormatColumn';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const FORMAT_COLUMN_ADD = 'FORMAT_COLUMN_ADD';
 export const FORMAT_COLUMN_EDIT = 'FORMAT_COLUMN_EDIT';
 export const FORMAT_COLUMN_DELETE = 'FORMAT_COLUMN_DELETE';
 
-export interface FormatColumnAddAction extends Redux.Action {
-  FormatColumn: IFormatColumn;
+export interface FormatColumnAction extends Redux.Action {
+  formatColumn: IFormatColumn;
 }
 
-export interface FormatColumnEditAction extends Redux.Action {
-  FormatColumn: IFormatColumn;
-}
+export interface FormatColumnAddAction extends FormatColumnAction {}
 
-export interface FormatColumnDeleteAction extends Redux.Action {
-  FormatColumn: IFormatColumn;
-}
+export interface FormatColumnEditAction extends FormatColumnAction {}
 
-export const FormatColumnAdd = (FormatColumn: IFormatColumn): FormatColumnAddAction => ({
+export interface FormatColumnDeleteAction extends FormatColumnAction {}
+
+export const FormatColumnAdd = (formatColumn: IFormatColumn): FormatColumnAddAction => ({
   type: FORMAT_COLUMN_ADD,
-  FormatColumn,
+  formatColumn,
 });
 
-export const FormatColumnEdit = (FormatColumn: IFormatColumn): FormatColumnEditAction => ({
+export const FormatColumnEdit = (formatColumn: IFormatColumn): FormatColumnEditAction => ({
   type: FORMAT_COLUMN_EDIT,
-  FormatColumn,
+  formatColumn,
 });
-export const FormatColumnDelete = (FormatColumn: IFormatColumn): FormatColumnDeleteAction => ({
+export const FormatColumnDelete = (formatColumn: IFormatColumn): FormatColumnDeleteAction => ({
   type: FORMAT_COLUMN_DELETE,
-  FormatColumn,
+  formatColumn,
 });
 
 const initialFormatColumnState: FormatColumnState = {
@@ -44,26 +43,36 @@ export const FormatColumnReducer: Redux.Reducer<FormatColumnState> = (
   let formatColumns: IFormatColumn[];
 
   switch (action.type) {
-    case FORMAT_COLUMN_ADD:
-      formatColumns = [].concat(state.FormatColumns);
-      formatColumns.push((<FormatColumnAddAction>action).FormatColumn);
-      return Object.assign({}, state, { FormatColumns: formatColumns });
+    case FORMAT_COLUMN_ADD: {
+      const actionFormatColumn: IFormatColumn = (action as FormatColumnAction).formatColumn;
 
-    case FORMAT_COLUMN_EDIT: {
+      if (!actionFormatColumn.Uuid) {
+        actionFormatColumn.Uuid = createUuid();
+      }
       formatColumns = [].concat(state.FormatColumns);
-      let index = formatColumns.findIndex(
-        x => x.ColumnId == (<FormatColumnAddAction>action).FormatColumn.ColumnId
-      );
-      formatColumns[index] = (<FormatColumnAddAction>action).FormatColumn;
-      return Object.assign({}, state, { FormatColumns: formatColumns });
+      formatColumns.push(actionFormatColumn);
+      return { ...state, FormatColumns: formatColumns };
     }
-    case FORMAT_COLUMN_DELETE:
-      formatColumns = [].concat(state.FormatColumns);
-      let index = formatColumns.findIndex(
-        x => x.ColumnId == (<FormatColumnDeleteAction>action).FormatColumn.ColumnId
-      );
-      formatColumns.splice(index, 1);
-      return Object.assign({}, state, { FormatColumns: formatColumns });
+
+    case FORMAT_COLUMN_EDIT:
+      const actionFormatColumn: IFormatColumn = (action as FormatColumnAction).formatColumn;
+      return {
+        ...state,
+        FormatColumns: state.FormatColumns.map(abObject =>
+          abObject.Uuid === actionFormatColumn.Uuid ? actionFormatColumn : abObject
+        ),
+      };
+
+    case FORMAT_COLUMN_DELETE: {
+      const actionFormatColumn: IFormatColumn = (action as FormatColumnAction).formatColumn;
+      return {
+        ...state,
+        FormatColumns: state.FormatColumns.filter(
+          abObject => abObject.Uuid !== actionFormatColumn.Uuid
+        ),
+      };
+    }
+
     default:
       return state;
   }

@@ -15,7 +15,10 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -36,8 +39,8 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
     value: string,
     exportDestination: ExportDestination
   ) => ExportRedux.ExportApplyAction;
-  onAddReport: (Report: IReport) => ExportRedux.ReportAddAction;
-  onEditReport: (index: number, Report: IReport) => ExportRedux.ReportEditAction;
+  onAddReport: (report: IReport) => ExportRedux.ReportAddAction;
+  onEditReport: (report: IReport) => ExportRedux.ReportEditAction;
   onReportStopLive: (
     Report: string,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
@@ -91,9 +94,8 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
           <ReportEntityRow
             cssClassName={cssClassName}
             AdaptableBlotterObject={report}
-            key={index}
+            key={report.Uuid}
             colItems={colItems}
-            Index={reportIndex}
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
             LiveReports={this.props.LiveReports}
@@ -104,7 +106,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
               this.props.onReportStopLive(report.Name, exportDestination)
             }
             onEdit={() => this.onEdit(reportIndex, report)}
-            onDeleteConfirm={ExportRedux.ReportDelete(reportIndex, report)}
+            onDeleteConfirm={ExportRedux.ReportDelete(report)}
           />
         );
       }
@@ -171,14 +173,14 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
     let report: IReport = this.state.EditedAdaptableBlotterObject as IReport;
-    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-      this.props.onEditReport(this.state.EditedAdaptableBlotterObjectIndex, report);
+    if (this.state.WizardStatus == WizardStatus.Edit) {
+      this.props.onEditReport(report);
     } else {
       this.props.onAddReport(report);
     }
@@ -186,7 +188,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -225,7 +227,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyReport(),
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
@@ -234,7 +236,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     this.setState({
       EditedAdaptableBlotterObject: clonedReportToEdit,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -256,9 +258,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onApplyExport: (value: string, exportDestination: ExportDestination) =>
       dispatch(ExportRedux.ExportApply(value, exportDestination)),
-    onAddReport: (Report: IReport) => dispatch(ExportRedux.ReportAdd(Report)),
-    onEditReport: (Index: number, Report: IReport) =>
-      dispatch(ExportRedux.ReportEdit(Index, Report)),
+    onAddReport: (report: IReport) => dispatch(ExportRedux.ReportAdd(report)),
+    onEditReport: (report: IReport) => dispatch(ExportRedux.ReportEdit(report)),
     onReportStopLive: (
       Report: string,
       exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull

@@ -15,7 +15,10 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UserFilterEntityRow } from './UserFilterEntityRow';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
@@ -26,10 +29,7 @@ import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilte
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
   onAddUserFilter: (userFilter: IUserFilter) => UserFilterRedux.UserFilterAddAction;
-  onEditUserFilter: (
-    index: number,
-    userFilter: IUserFilter
-  ) => UserFilterRedux.UserFilterEditAction;
+  onEditUserFilter: (userFilter: IUserFilter) => UserFilterRedux.UserFilterEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -96,13 +96,12 @@ class UserFilterPopupComponent extends React.Component<
           AdaptableBlotterObject={userFilter}
           colItems={colItems}
           key={'CS' + index}
-          Index={index}
           onShare={() => this.props.onShare(userFilter)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           UserFilters={this.props.UserFilters}
           Columns={this.props.Columns}
-          onEdit={(index, userFilter) => this.onEdit(index, userFilter as IUserFilter)}
-          onDeleteConfirm={UserFilterRedux.UserFilterDelete(index, userFilter)}
+          onEdit={() => this.onEdit(userFilter)}
+          onDeleteConfirm={UserFilterRedux.UserFilterDelete(userFilter)}
         />
       );
     });
@@ -169,15 +168,16 @@ class UserFilterPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyUserFilter(),
       WizardStartIndex: 0,
+      WizardStatus: WizardStatus.New,
     });
   }
 
-  onEdit(index: number, userFilter: IUserFilter) {
+  onEdit(userFilter: IUserFilter) {
     let clonedObject: IUserFilter = Helper.cloneObject(userFilter);
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(clonedObject),
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -186,14 +186,14 @@ class UserFilterPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
     let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter;
-    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-      this.props.onEditUserFilter(this.state.EditedAdaptableBlotterObjectIndex, userFilter);
+    if (this.state.WizardStatus == WizardStatus.Edit) {
+      this.props.onEditUserFilter(userFilter);
     } else {
       this.props.onAddUserFilter(userFilter);
     }
@@ -201,7 +201,7 @@ class UserFilterPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -223,8 +223,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddUserFilter: (userFilter: IUserFilter) =>
       dispatch(UserFilterRedux.UserFilterAdd(userFilter)),
-    onEditUserFilter: (index: number, userFilter: IUserFilter) =>
-      dispatch(UserFilterRedux.UserFilterEdit(index, userFilter)),
+    onEditUserFilter: (userFilter: IUserFilter) =>
+      dispatch(UserFilterRedux.UserFilterEdit(userFilter)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId)),
   };

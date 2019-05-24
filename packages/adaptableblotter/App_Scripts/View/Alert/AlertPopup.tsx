@@ -49,7 +49,6 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
         cellValitdation.ColumnId = arrayParams[1];
         this.setState({
           EditedAdaptableBlotterObject: cellValitdation,
-          EditedAdaptableBlotterObjectIndex: -1,
           WizardStartIndex: 1,
           WizardStatus: WizardStatus.None,
         });
@@ -85,13 +84,12 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
           Column={column}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
-          Index={index}
           onEdit={() => this.onEdit(alertDefinition)}
           onShare={() => this.props.onShare(alertDefinition)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={AlertRedux.AlertDefinitionDelete(alertDefinition)}
-          onChangeMessageType={(index, messageType) =>
-            this.onMessageTypeChanged(messageType, alertDefinition)
+          onChangeMessageType={(alertDef, messageType) =>
+            this.onMessageTypeChanged(alertDef, messageType)
           }
         />
       );
@@ -170,7 +168,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     });
   }
 
-  onMessageTypeChanged(messageType: MessageType, alertDefinition: IAlertDefinition) {
+  onMessageTypeChanged(alertDefinition: IAlertDefinition, messageType: MessageType) {
     alertDefinition.MessageType = messageType;
     this.props.onEditAlert(alertDefinition);
   }

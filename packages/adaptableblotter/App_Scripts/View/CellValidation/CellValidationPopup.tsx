@@ -16,7 +16,10 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { CellValidationEntityRow } from './CellValidationEntityRow';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -29,16 +32,12 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
   CellValidations: ICellValidationRule[];
   onAddCellValidation: (
-    CellValidation: ICellValidationRule
+    cellValidationRule: ICellValidationRule
   ) => CellValidationRedux.CellValidationAddAction;
   onEditCellValidation: (
-    Index: number,
-    CellValidation: ICellValidationRule
+    cellValidationRule: ICellValidationRule
   ) => CellValidationRedux.CellValidationEditAction;
-  onChangeActionMode: (
-    index: number,
-    ActionMode: any
-  ) => CellValidationRedux.CellValidationChangeModeAction;
+
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -58,8 +57,8 @@ class CellValidationPopupComponent extends React.Component<
         cellValitdation.ColumnId = arrayParams[1];
         this.setState({
           EditedAdaptableBlotterObject: cellValitdation,
-          EditedAdaptableBlotterObjectIndex: -1,
           WizardStartIndex: 1,
+          WizardStatus: WizardStatus.None,
         });
       }
     }
@@ -85,30 +84,29 @@ class CellValidationPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let CellValidationItems = this.props.CellValidations.map((x, index) => {
-      let column = ColumnHelper.getColumnFromId(x.ColumnId, this.props.Columns);
+    let CellValidationItems = this.props.CellValidations.map((cellValidationRule, index) => {
+      let column = ColumnHelper.getColumnFromId(cellValidationRule.ColumnId, this.props.Columns);
       return (
         <CellValidationEntityRow
           key={index}
           cssClassName={cssClassName}
           colItems={colItems}
-          AdaptableBlotterObject={x}
+          AdaptableBlotterObject={cellValidationRule}
           Column={column}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
-          Index={index}
-          onEdit={(index, x) => this.onEdit(index, x as ICellValidationRule)}
-          onShare={() => this.props.onShare(x)}
+          onEdit={() => this.onEdit(cellValidationRule)}
+          onShare={() => this.props.onShare(cellValidationRule)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          onDeleteConfirm={CellValidationRedux.CellValidationDelete(index, x)}
-          onChangeActionMode={(index, x) => this.onActionModeChanged(index, x)}
+          onDeleteConfirm={CellValidationRedux.CellValidationDelete(cellValidationRule)}
+          onChangeActionMode={(x, actionMode) => this.onActionModeChanged(x, actionMode)}
         />
       );
     });
     let newButton = (
       <ButtonNew
         cssClassName={cssClassName}
-        onClick={() => this.createCellValidation()}
+        onClick={() => this.onNew()}
         overrideTooltip="Create Cell Validation Rule"
         DisplayMode="Glyph+Text"
         size={'small'}
@@ -165,24 +163,25 @@ class CellValidationPopupComponent extends React.Component<
     );
   }
 
-  createCellValidation() {
+  onNew() {
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyCellValidation(),
-      EditedAdaptableBlotterObjectIndex: -1,
       WizardStartIndex: 0,
+      WizardStatus: WizardStatus.New,
     });
   }
 
-  onEdit(index: number, CellValidation: ICellValidationRule) {
+  onEdit(CellValidation: ICellValidationRule) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(CellValidation),
-      EditedAdaptableBlotterObjectIndex: index,
       WizardStartIndex: 1,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
-  onActionModeChanged(index: number, ActionMode: any) {
-    this.props.onChangeActionMode(index, ActionMode);
+  onActionModeChanged(cellValidationRule: ICellValidationRule, actionMode: any) {
+    cellValidationRule.ActionMode = actionMode;
+    this.props.onEditCellValidation(cellValidationRule);
   }
 
   onCloseWizard() {
@@ -190,23 +189,25 @@ class CellValidationPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    if (this.state.EditedAdaptableBlotterObjectIndex == -1) {
-      this.props.onAddCellValidation(this.state
-        .EditedAdaptableBlotterObject as ICellValidationRule);
+    let cellValidationRule: ICellValidationRule = Helper.cloneObject(
+      this.state.EditedAdaptableBlotterObject
+    );
+    console.log(cellValidationRule);
+    if (this.state.WizardStatus == WizardStatus.New) {
+      this.props.onAddCellValidation(cellValidationRule);
     } else {
-      this.props.onEditCellValidation(this.state.EditedAdaptableBlotterObjectIndex, this.state
-        .EditedAdaptableBlotterObject as ICellValidationRule);
+      this.props.onEditCellValidation(cellValidationRule);
     }
 
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -230,12 +231,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddCellValidation: (CellValidation: ICellValidationRule) =>
-      dispatch(CellValidationRedux.CellValidationAdd(CellValidation)),
-    onEditCellValidation: (index: number, CellValidation: ICellValidationRule) =>
-      dispatch(CellValidationRedux.CellValidationEdit(index, CellValidation)),
-    onChangeActionMode: (index: number, ActionMode: any) =>
-      dispatch(CellValidationRedux.CellValidationChangeMode(index, ActionMode)),
+    onAddCellValidation: (cellValidationRule: ICellValidationRule) =>
+      dispatch(CellValidationRedux.CellValidationAdd(cellValidationRule)),
+    onEditCellValidation: (cellValidationRule: ICellValidationRule) =>
+      dispatch(CellValidationRedux.CellValidationEdit(cellValidationRule)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId)

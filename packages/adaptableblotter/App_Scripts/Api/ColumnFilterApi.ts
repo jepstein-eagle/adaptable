@@ -21,18 +21,6 @@ export class ColumnFilterApi extends ApiBase implements IColumnFilterApi {
     });
   }
 
-  public setColumnFilterFromUserFilter(userFilter: string): void {
-    let existingUserFilter: IUserFilter = this.getBlotterState().UserFilter.UserFilters.find(
-      uf => uf.Name == userFilter
-    );
-    if (this.checkItemExists(existingUserFilter, userFilter, 'User Filter')) {
-      let columnFilter: IColumnFilter = ObjectFactory.CreateColumnFilterFromUserFilter(
-        existingUserFilter
-      );
-      this.dispatchAction(ColumnFilterRedux.ColumnFilterAdd(columnFilter));
-    }
-  }
-
   public clearColumnFilter(columnFilter: IColumnFilter): void {
     this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(columnFilter.ColumnId));
   }

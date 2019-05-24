@@ -14,7 +14,10 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
@@ -28,7 +31,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
   Layouts: ILayout[];
   CurrentLayoutName: string;
-  onSaveLayout: (index: number, layout: ILayout) => LayoutRedux.LayoutSaveAction;
+  onSaveLayout: (layout: ILayout) => LayoutRedux.LayoutSaveAction;
   onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
@@ -76,15 +79,14 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       (x, index) => {
         return (
           <LayoutEntityRow
-            key={index}
+            key={x.Uuid}
             cssClassName={cssClassName}
             colItems={colItems}
             IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
             AdaptableBlotterObject={x}
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
-            Index={index}
-            onEdit={(index, x) => this.onEdit(index, x as ILayout)}
+            onEdit={() => this.onEdit(x)}
             onShare={() => this.props.onShare(x)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
@@ -152,16 +154,16 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateLayout([], [], null, ''),
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
-  onEdit(index: number, layout: ILayout) {
+  onEdit(layout: ILayout) {
     let clonedObject: ILayout = Helper.cloneObject(layout);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -170,31 +172,26 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
     let clonedObject: ILayout = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
 
-    let layoutNameChanged: boolean = this.state.EditedAdaptableBlotterObjectIndex == -1;
-    if (this.state.EditedAdaptableBlotterObjectIndex > -1) {
-      let previousLayout = this.props.Layouts[this.state.EditedAdaptableBlotterObjectIndex + 1];
-      layoutNameChanged = previousLayout.Name == this.props.CurrentLayoutName;
-    }
-    // note: add 1 to index if editing because default layout not included in collection
-    let index =
-      this.state.EditedAdaptableBlotterObjectIndex > -1
-        ? this.state.EditedAdaptableBlotterObjectIndex + 1
-        : this.state.EditedAdaptableBlotterObjectIndex;
-    this.props.onSaveLayout(index, clonedObject);
+    this.props.onSaveLayout(clonedObject);
+
+    let currentLayout = this.props.Layouts.find(l => l.Name == this.props.CurrentLayoutName);
+    let shouldChangeLayout: boolean =
+      this.state.WizardStatus == WizardStatus.New || currentLayout.Uuid == clonedObject.Uuid;
+
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
 
-    if (layoutNameChanged) {
+    if (shouldChangeLayout) {
       // its new so make it the selected layout or name has changed.
       this.props.onSelectLayout(clonedObject.Name);
     }
@@ -229,8 +226,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onSaveLayout: (index: number, layout: ILayout) =>
-      dispatch(LayoutRedux.LayoutSave(index, layout)),
+    onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.LayoutSave(layout)),
     onSelectLayout: (selectedSearchName: string) =>
       dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
     onShare: (entity: IAdaptableBlotterObject) =>

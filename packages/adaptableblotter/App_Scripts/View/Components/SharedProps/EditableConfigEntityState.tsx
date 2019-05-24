@@ -11,6 +11,5 @@ export enum WizardStatus {
 export interface EditableConfigEntityState {
   EditedAdaptableBlotterObject: IAdaptableBlotterObject;
   WizardStartIndex: number;
-  EditedAdaptableBlotterObjectIndex: number;
-  WizardStatus?: WizardStatus;
+  WizardStatus: WizardStatus;
 }

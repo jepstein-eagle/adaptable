@@ -1,7 +1,10 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { FormatColumnWizard } from './Wizard/FormatColumnWizard';
@@ -118,20 +121,24 @@ export class FormatColumnSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(formatColumn: IFormatColumn) {
     let clonedObject: IFormatColumn = Helper.cloneObject(formatColumn);
-    this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1 });
+    this.setState({
+      EditedAdaptableBlotterObject: clonedObject,
+      WizardStartIndex: 1,
+      WizardStatus: WizardStatus.Edit,
+    });
   }
 
   onCloseWizard() {
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -145,7 +152,7 @@ export class FormatColumnSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 

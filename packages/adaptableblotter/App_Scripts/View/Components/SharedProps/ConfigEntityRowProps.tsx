@@ -15,8 +15,7 @@ export interface BaseRowProps<View> extends React.ClassAttributes<View> {
 export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
   AdaptableBlotterObject: IAdaptableBlotterObject;
   onDeleteConfirm: Redux.Action;
-  Index: number;
-  onEdit: (index: number, adaptableBlotterObject: IAdaptableBlotterObject) => void;
+  onEdit: (adaptableBlotterObject: IAdaptableBlotterObject) => void;
 }
 
 // shared props

@@ -15,7 +15,10 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { PlusMinusEntityRow } from './PlusMinusEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
@@ -31,11 +34,8 @@ import { MessageType } from '../../Utilities/Enums';
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
   DefaultNudgeValue: number;
   PlusMinusRules: IPlusMinusRule[];
-  onAddPlusMinusRule: (PlusMinus: IPlusMinusRule) => PlusMinusRedux.PlusMinusRuleAddAction;
-  onEditPlusMinusRule: (
-    Index: number,
-    PlusMinus: IPlusMinusRule
-  ) => PlusMinusRedux.PlusMinusRuleEditAction;
+  onAddPlusMinusRule: (plusMinusRule: IPlusMinusRule) => PlusMinusRedux.PlusMinusRuleAddAction;
+  onEditPlusMinusRule: (plusMinusRule: IPlusMinusRule) => PlusMinusRedux.PlusMinusRuleEditAction;
   onConfirmWarningCellValidation: (
     confirmation: IUIConfirmation
   ) => PopupRedux.PopupShowConfirmationAction;
@@ -59,7 +59,7 @@ class PlusMinusPopupComponent extends React.Component<
         plusMinus.ColumnId = arrayParams[1];
         this.setState({
           EditedAdaptableBlotterObject: plusMinus,
-          EditedAdaptableBlotterObjectIndex: -1,
+          WizardStatus: WizardStatus.None,
           WizardStartIndex: 1,
         });
       }
@@ -96,16 +96,15 @@ class PlusMinusPopupComponent extends React.Component<
           colItems={colItems}
           AdaptableBlotterObject={x}
           key={index}
-          Index={index}
           UserFilters={this.props.UserFilters}
           Columns={this.props.Columns}
-          onEdit={(index, customSort) => this.onEdit(index, x as IPlusMinusRule)}
+          onEdit={() => this.onEdit(x)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onShare={() => this.props.onShare(x)}
-          onDeleteConfirm={PlusMinusRedux.PlusMinusRuleDelete(index, x)}
+          onDeleteConfirm={PlusMinusRedux.PlusMinusRuleDelete(x)}
           Column={column}
-          onColumnDefaultNudgeValueChange={(index, event) =>
-            this.onColumnDefaultNudgeValueChange(index, event)
+          onColumnDefaultNudgeValueChange={(plusMinusRule, event) =>
+            this.onColumnDefaultNudgeValueChange(plusMinusRule, event)
           }
         />
       );
@@ -114,7 +113,7 @@ class PlusMinusPopupComponent extends React.Component<
     let newButton = (
       <ButtonNew
         cssClassName={cssClassName}
-        onClick={() => this.createColumnNudgeValue()}
+        onClick={() => this.onNew()}
         overrideTooltip="Create Plus / Minus Rule"
         DisplayMode="Glyph+Text"
         size={'small'}
@@ -169,18 +168,18 @@ class PlusMinusPopupComponent extends React.Component<
     );
   }
 
-  createColumnNudgeValue() {
+  onNew() {
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyPlusMinusRule(),
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
       WizardStartIndex: 0,
     });
   }
-  onEdit(index: number, condition: IPlusMinusRule) {
-    let clonedObject: IPlusMinusRule = Helper.cloneObject(condition);
+  onEdit(plusMinusRule: IPlusMinusRule) {
+    let clonedObject: IPlusMinusRule = Helper.cloneObject(plusMinusRule);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
       WizardStartIndex: 1,
     });
   }
@@ -190,21 +189,21 @@ class PlusMinusPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
     let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusRule;
-    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-      this.props.onEditPlusMinusRule(this.state.EditedAdaptableBlotterObjectIndex, plusMinus);
+    if (this.state.WizardStatus == WizardStatus.Edit) {
+      this.props.onEditPlusMinusRule(plusMinus);
     } else {
       this.props.onAddPlusMinusRule(plusMinus);
     }
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -218,15 +217,13 @@ class PlusMinusPopupComponent extends React.Component<
     );
   }
 
-  onColumnDefaultNudgeValueChange(index: number, event: React.FormEvent<any>) {
+  onColumnDefaultNudgeValueChange(plusMinusRule: IPlusMinusRule, event: React.FormEvent<any>) {
+    let clonedObject: IPlusMinusRule = Helper.cloneObject(plusMinusRule);
+
     let e = event.target as HTMLInputElement;
-    let plusMinusRule: IPlusMinusRule = {
-      ColumnId: this.props.PlusMinusRules[index].ColumnId,
-      NudgeValue: parseFloat(e.value),
-      IsDefaultNudge: true,
-      Expression: this.props.PlusMinusRules[index].Expression,
-    };
-    this.props.onEditPlusMinusRule(index, plusMinusRule);
+    clonedObject.NudgeValue = parseFloat(e.value);
+
+    this.props.onEditPlusMinusRule(clonedObject);
   }
 
   onAddPlusMinusRule(index: number, plusMinusRule: IPlusMinusRule) {
@@ -238,7 +235,7 @@ class PlusMinusPopupComponent extends React.Component<
       if (existingIndex > -1) {
         if (existingIndex == index) {
           // editing the existing default nudge so just do an edit
-          this.props.onEditPlusMinusRule(index, plusMinusRule);
+          this.props.onEditPlusMinusRule(plusMinusRule);
         } else {
           // its a new one so need warning that will update
           this.onConfirmWarningCellValidation(existingIndex, plusMinusRule);
@@ -248,8 +245,8 @@ class PlusMinusPopupComponent extends React.Component<
       }
     } else {
       // not quite sure that this is right... need to test:
-      if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-        this.props.onEditPlusMinusRule(this.state.EditedAdaptableBlotterObjectIndex, plusMinusRule);
+      if (this.state.WizardStatus == WizardStatus.Edit) {
+        this.props.onEditPlusMinusRule(plusMinusRule);
       } else {
         this.props.onAddPlusMinusRule(plusMinusRule);
       }
@@ -263,7 +260,7 @@ class PlusMinusPopupComponent extends React.Component<
       Msg: 'Do you want to override it with new value: ?',
       ConfirmButtonText: 'Confirm',
       CancelAction: null,
-      ConfirmAction: PlusMinusRedux.PlusMinusRuleEdit(index, plusMinusRule),
+      ConfirmAction: PlusMinusRedux.PlusMinusRuleEdit(plusMinusRule),
       ShowInputBox: false,
       MessageType: MessageType.Warning,
     };
@@ -279,10 +276,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddPlusMinusRule: (PlusMinusRule: IPlusMinusRule) =>
-      dispatch(PlusMinusRedux.PlusMinusRuleAdd(PlusMinusRule)),
-    onEditPlusMinusRule: (Index: number, PlusMinusRule: IPlusMinusRule) =>
-      dispatch(PlusMinusRedux.PlusMinusRuleEdit(Index, PlusMinusRule)),
+    onAddPlusMinusRule: (plusMinusRule: IPlusMinusRule) =>
+      dispatch(PlusMinusRedux.PlusMinusRuleAdd(plusMinusRule)),
+    onEditPlusMinusRule: (plusMinusRule: IPlusMinusRule) =>
+      dispatch(PlusMinusRedux.PlusMinusRuleEdit(plusMinusRule)),
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     onShare: (entity: IAdaptableBlotterObject) =>

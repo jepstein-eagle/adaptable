@@ -1,40 +1,35 @@
 import { ReminderState } from './Interface/IState';
 import * as Redux from 'redux';
-import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { IReminder } from '../../Utilities/Interface/BlotterObjects/IReminder';
+import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const REMINDER_ADD = 'REMINDER_ADD';
 export const REMINDER_EDIT = 'REMINDER_EDIT';
 export const REMINDER_DELETE = 'REMINDER_DELETE';
 
-export interface ReminderAddAction extends Redux.Action {
-  Reminder: IReminder;
+export interface ReminderAction extends Redux.Action {
+  reminder: IReminder;
 }
 
-export interface ReminderEditAction extends Redux.Action {
-  index: number;
-  Reminder: IReminder;
-}
+export interface ReminderAddAction extends ReminderAction {}
 
-export interface ReminderDeleteAction extends Redux.Action {
-  index: number;
-  Reminder: IReminder;
-}
+export interface ReminderEditAction extends ReminderAction {}
 
-export const ReminderAdd = (Reminder: IReminder): ReminderAddAction => ({
+export interface ReminderDeleteAction extends ReminderAction {}
+
+export const ReminderAdd = (reminder: IReminder): ReminderAddAction => ({
   type: REMINDER_ADD,
-  Reminder,
+  reminder,
 });
 
-export const ReminderEdit = (index: number, Reminder: IReminder): ReminderEditAction => ({
+export const ReminderEdit = (reminder: IReminder): ReminderEditAction => ({
   type: REMINDER_EDIT,
-  index,
-  Reminder,
+  reminder,
 });
-export const ReminderDelete = (index: number, Reminder: IReminder): ReminderDeleteAction => ({
+export const ReminderDelete = (reminder: IReminder): ReminderDeleteAction => ({
   type: REMINDER_DELETE,
-  index,
-  Reminder,
+  reminder,
 });
 
 const initialReminderState: ReminderState = {
@@ -45,24 +40,36 @@ export const ReminderReducer: Redux.Reducer<ReminderState> = (
   state: ReminderState = initialReminderState,
   action: Redux.Action
 ): ReminderState => {
-  let Reminders: IReminder[];
+  let reminders: IReminder[];
 
   switch (action.type) {
-    case REMINDER_ADD:
-      Reminders = [].concat(state.Reminders);
-      Reminders.push((<ReminderAddAction>action).Reminder);
-      return Object.assign({}, state, { Reminders: Reminders });
+    case REMINDER_ADD: {
+      const actionReminder: IReminder = (action as ReminderAction).reminder;
+
+      if (!actionReminder.Uuid) {
+        actionReminder.Uuid = createUuid();
+      }
+      reminders = [].concat(state.Reminders);
+      reminders.push(actionReminder);
+      return { ...state, Reminders: reminders };
+    }
 
     case REMINDER_EDIT: {
-      Reminders = [].concat(state.Reminders);
-      let actionTyped = <ReminderEditAction>action;
-      Reminders[actionTyped.index] = (<ReminderAddAction>action).Reminder;
-      return Object.assign({}, state, { Reminders: Reminders });
+      const actionReminder: IReminder = (action as ReminderAction).reminder;
+      return {
+        ...state,
+        Reminders: state.Reminders.map(abObject =>
+          abObject.Uuid === actionReminder.Uuid ? actionReminder : abObject
+        ),
+      };
     }
-    case REMINDER_DELETE:
-      Reminders = [].concat(state.Reminders);
-      Reminders.splice((<ReminderDeleteAction>action).index, 1);
-      return Object.assign({}, state, { Reminders: Reminders });
+    case REMINDER_DELETE: {
+      const actionReminder: IReminder = (action as ReminderAction).reminder;
+      return {
+        ...state,
+        Reminders: state.Reminders.filter(abObject => abObject.Uuid !== actionReminder.Uuid),
+      };
+    }
 
     default:
       return state;

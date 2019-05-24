@@ -14,7 +14,10 @@ import { ShortcutWizard } from './Wizard/ShortcutWizard';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
@@ -26,7 +29,7 @@ import Helper from '../../Utilities/Helpers/Helper';
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {
   onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction;
-  onEditShortcut: (index: number, shortcut: IShortcut) => ShortcutRedux.ShortcutEditAction;
+  onEditShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutEditAction;
   Shortcuts: Array<IShortcut>;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
@@ -75,14 +78,13 @@ class ShortcutPopupComponent extends React.Component<
           cssClassName={cssClassName}
           AdaptableBlotterObject={shortcut}
           key={'ns' + index}
-          Index={index}
           onEdit={null}
           colItems={colItems}
           AvailableActions={shortcutOperationList}
           AvailableKeys={this.getAvailableKeys(shortcut)}
           onShare={() => this.props.onShare(shortcut)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          onDeleteConfirm={ShortcutRedux.ShortcutDelete(index, shortcut)}
+          onDeleteConfirm={ShortcutRedux.ShortcutDelete(shortcut)}
           onChangeKey={(shortcut, newKey) => this.onChangeKeyShortcut(shortcut, newKey)}
           onChangeOperation={(shortcut, newOperation) =>
             this.onChangeOperationShortcut(shortcut, newOperation)
@@ -95,7 +97,7 @@ class ShortcutPopupComponent extends React.Component<
     let newButton = (
       <ButtonNew
         cssClassName={cssClassName}
-        onClick={() => this.CreateShortcut()}
+        onClick={() => this.onNew()}
         overrideTooltip="Create New Shortcut"
         DisplayMode="Glyph+Text"
         size={'small'}
@@ -184,22 +186,19 @@ class ShortcutPopupComponent extends React.Component<
   }
 
   onChangeKeyShortcut(shortcut: IShortcut, newKey: string): void {
-    let currentIndex: number = this.props.Shortcuts.findIndex(s => s == shortcut);
     let clonedShortcut: IShortcut = Helper.cloneObject(shortcut);
     clonedShortcut.ShortcutKey = newKey;
-    this.props.onEditShortcut(currentIndex, clonedShortcut);
+    this.props.onEditShortcut(clonedShortcut);
   }
   onChangeOperationShortcut(shortcut: IShortcut, newMathOperation: MathOperation): void {
-    let currentIndex: number = this.props.Shortcuts.findIndex(s => s == shortcut);
     let clonedShortcut: IShortcut = Helper.cloneObject(shortcut);
     clonedShortcut.ShortcutOperation = newMathOperation;
-    this.props.onEditShortcut(currentIndex, clonedShortcut);
+    this.props.onEditShortcut(clonedShortcut);
   }
   onChangeResultShortcut(shortcut: IShortcut, newResult: any): void {
-    let currentIndex: number = this.props.Shortcuts.findIndex(s => s == shortcut);
     let clonedShortcut: IShortcut = Helper.cloneObject(shortcut);
     clonedShortcut.ShortcutResult = newResult;
-    this.props.onEditShortcut(currentIndex, clonedShortcut);
+    this.props.onEditShortcut(clonedShortcut);
   }
 
   onCloseWizard() {
@@ -207,7 +206,7 @@ class ShortcutPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -217,7 +216,7 @@ class ShortcutPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -230,10 +229,11 @@ class ShortcutPopupComponent extends React.Component<
     );
   }
 
-  CreateShortcut() {
+  onNew() {
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyShortcut(),
       WizardStartIndex: 0,
+      WizardStatus: WizardStatus.New,
     });
   }
 
@@ -269,8 +269,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.ShortcutAdd(shortcut)),
-    onEditShortcut: (index: number, shortcut: IShortcut) =>
-      dispatch(ShortcutRedux.ShortcutEdit(index, shortcut)),
+    onEditShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.ShortcutEdit(shortcut)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ShortcutStrategyId)),
   };

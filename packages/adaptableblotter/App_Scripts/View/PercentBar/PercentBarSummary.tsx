@@ -1,7 +1,10 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PercentBarWizard } from './Wizard/PercentBarWizard';
@@ -25,11 +28,8 @@ export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarS
   PercentBars: IPercentBar[];
   ColorPalette: string[];
   StyleClassNames: string[];
-  onAddPercentBar: (PercentBar: IPercentBar) => PercentBarRedux.PercentBarAddAction;
-  onEditPercentBar: (
-    index: number,
-    PercentBar: IPercentBar
-  ) => PercentBarRedux.PercentBarEditAction;
+  onAddPercentBar: (percentBar: IPercentBar) => PercentBarRedux.PercentBarAddAction;
+  onEditPercentBar: (percentBar: IPercentBar) => PercentBarRedux.PercentBarEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -84,7 +84,7 @@ export class PercentBarSummaryComponent extends React.Component<
           EntityType={StrategyConstants.PercentBarStrategyName}
           onEdit={() => this.onEdit(percentBarIndex, percentBar)}
           onShare={() => this.props.onShare(percentBar)}
-          onDelete={PercentBarRedux.PercentBarDelete(percentBarIndex)}
+          onDelete={PercentBarRedux.PercentBarDelete(percentBar)}
           showBold={true}
         />
       );
@@ -121,7 +121,7 @@ export class PercentBarSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
@@ -130,7 +130,7 @@ export class PercentBarSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -138,21 +138,21 @@ export class PercentBarSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
     let percentBar: IPercentBar = this.state.EditedAdaptableBlotterObject as IPercentBar;
-    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-      this.props.onEditPercentBar(this.state.EditedAdaptableBlotterObjectIndex, percentBar);
+    if (this.state.WizardStatus == WizardStatus.Edit) {
+      this.props.onEditPercentBar(percentBar);
     } else {
       this.props.onAddPercentBar(percentBar);
     }
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -173,10 +173,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddPercentBar: (PercentBar: IPercentBar) =>
-      dispatch(PercentBarRedux.PercentBarAdd(PercentBar)),
-    onEditPercentBar: (index: number, PercentBar: IPercentBar) =>
-      dispatch(PercentBarRedux.PercentBarEdit(index, PercentBar)),
+    onAddPercentBar: (percentBar: IPercentBar) =>
+      dispatch(PercentBarRedux.PercentBarAdd(percentBar)),
+    onEditPercentBar: (percentBar: IPercentBar) =>
+      dispatch(PercentBarRedux.PercentBarEdit(percentBar)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PercentBarStrategyId)),
   };

@@ -101,8 +101,7 @@ class AdvancedSearchPopupComponent extends React.Component<
             AdaptableBlotterObject={advancedSearch}
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
-            Index={index}
-            onEdit={(index, advancedSearch) => this.onEdit(advancedSearch as IAdvancedSearch)}
+            onEdit={advancedSearch => this.onEdit(advancedSearch as IAdvancedSearch)}
             onShare={() => this.props.onShare(advancedSearch)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)}

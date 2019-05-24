@@ -74,7 +74,7 @@ export class ColumnFilterEntityRow extends React.Component<
       <AdaptableObjectRow
         cssClassName={this.props.cssClassName}
         colItems={colItems}
-        key={this.props.Index}
+        key={this.props.ColumnFilter.Uuid}
       />
     );
   }

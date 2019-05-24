@@ -3,6 +3,7 @@ import * as Redux from 'redux';
 import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
 import { IPlusMinusRule } from '../../Utilities/Interface/BlotterObjects/IPlusMinusRule';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const PLUS_MINUS_APPLY = 'PLUS_MINUS_APPLY';
 export const PLUS_MINUS_RULE_ADD = 'PLUS_MINUS_RULE_ADD';
@@ -14,19 +15,15 @@ export interface PlusMinusApplyAction extends Redux.Action {
   KeyEventString: string;
 }
 
-export interface PlusMinusRuleAddAction extends Redux.Action {
-  PlusMinusRule: IPlusMinusRule;
+export interface PlusMinusRuleAction extends Redux.Action {
+  plusMinusRule: IPlusMinusRule;
 }
 
-export interface PlusMinusRuleEditAction extends Redux.Action {
-  Index: number;
-  PlusMinusRule: IPlusMinusRule;
-}
+export interface PlusMinusRuleAddAction extends PlusMinusRuleAction {}
 
-export interface PlusMinusRuleDeleteAction extends Redux.Action {
-  Index: number;
-  PlusMinusRule: IPlusMinusRule;
-}
+export interface PlusMinusRuleEditAction extends PlusMinusRuleAction {}
+
+export interface PlusMinusRuleDeleteAction extends PlusMinusRuleAction {}
 
 export const PlusMinusApply = (
   CellInfos: ICellInfo[],
@@ -37,27 +34,18 @@ export const PlusMinusApply = (
   KeyEventString,
 });
 
-export const PlusMinusRuleAdd = (PlusMinusRule: IPlusMinusRule): PlusMinusRuleAddAction => ({
+export const PlusMinusRuleAdd = (plusMinusRule: IPlusMinusRule): PlusMinusRuleAddAction => ({
   type: PLUS_MINUS_RULE_ADD,
-  PlusMinusRule,
+  plusMinusRule,
 });
 
-export const PlusMinusRuleEdit = (
-  Index: number,
-  PlusMinusRule: IPlusMinusRule
-): PlusMinusRuleEditAction => ({
+export const PlusMinusRuleEdit = (plusMinusRule: IPlusMinusRule): PlusMinusRuleEditAction => ({
   type: PLUS_MINUS_RULE_EDIT,
-  Index,
-  PlusMinusRule,
+  plusMinusRule,
 });
-
-export const PlusMinusRuleDelete = (
-  Index: number,
-  PlusMinusRule: IPlusMinusRule
-): PlusMinusRuleDeleteAction => ({
+export const PlusMinusRuleDelete = (plusMinusRule: IPlusMinusRule): PlusMinusRuleDeleteAction => ({
   type: PLUS_MINUS_RULE_DELETE,
-  Index,
-  PlusMinusRule,
+  plusMinusRule,
 });
 
 const initialPlusMinusState: PlusMinusState = {
@@ -68,30 +56,42 @@ export const PlusMinusReducer: Redux.Reducer<PlusMinusState> = (
   state: PlusMinusState = initialPlusMinusState,
   action: Redux.Action
 ): PlusMinusState => {
+  let plusMinusRules: IPlusMinusRule[];
   switch (action.type) {
     case PLUS_MINUS_APPLY:
       //we apply logic in the middleware since it's an API call
       return Object.assign({}, state);
 
     case PLUS_MINUS_RULE_ADD: {
-      let actionTyped = <PlusMinusRuleAddAction>action;
-      let plusMinusRules: IPlusMinusRule[] = [].concat(state.PlusMinusRules);
-      plusMinusRules.push(actionTyped.PlusMinusRule);
-      return Object.assign({}, state, { PlusMinusRules: plusMinusRules });
+      const actionPlusMinusRule: IPlusMinusRule = (action as PlusMinusRuleAction).plusMinusRule;
+
+      if (!actionPlusMinusRule.Uuid) {
+        actionPlusMinusRule.Uuid = createUuid();
+      }
+      plusMinusRules = [].concat(state.PlusMinusRules);
+      plusMinusRules.push(actionPlusMinusRule);
+      return { ...state, PlusMinusRules: plusMinusRules };
     }
 
     case PLUS_MINUS_RULE_EDIT: {
-      let plusMinusRules: IPlusMinusRule[] = [].concat(state.PlusMinusRules);
-      let actionTyped = <PlusMinusRuleEditAction>action;
-      plusMinusRules[actionTyped.Index] = actionTyped.PlusMinusRule;
-      return Object.assign({}, state, { PlusMinusRules: plusMinusRules });
+      const actionPlusMinusRule: IPlusMinusRule = (action as PlusMinusRuleAction).plusMinusRule;
+      return {
+        ...state,
+        PlusMinusRules: state.PlusMinusRules.map(abObject =>
+          abObject.Uuid === actionPlusMinusRule.Uuid ? actionPlusMinusRule : abObject
+        ),
+      };
+    }
+    case PLUS_MINUS_RULE_DELETE: {
+      const actionPlusMinusRule: IPlusMinusRule = (action as PlusMinusRuleAction).plusMinusRule;
+      return {
+        ...state,
+        PlusMinusRules: state.PlusMinusRules.filter(
+          abObject => abObject.Uuid !== actionPlusMinusRule.Uuid
+        ),
+      };
     }
 
-    case PLUS_MINUS_RULE_DELETE: {
-      let plusMinusRules: IPlusMinusRule[] = [].concat(state.PlusMinusRules);
-      plusMinusRules.splice((<PlusMinusRuleDeleteAction>action).Index, 1);
-      return Object.assign({}, state, { PlusMinusRules: plusMinusRules });
-    }
     default:
       return state;
   }

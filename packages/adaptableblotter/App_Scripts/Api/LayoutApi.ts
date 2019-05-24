@@ -51,20 +51,20 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
       let currentLayoutObject: ILayout = this.getBlotterState().Layout.Layouts.find(
         l => l.Name == currentLayoutName
       );
-      let currentLayoutIndex: number = this.getBlotterState().Layout.Layouts.findIndex(
-        l => l.Name == currentLayoutName
-      );
-      if (currentLayoutIndex != -1) {
+      if (currentLayoutObject) {
         let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
         let visibleColumns: IColumn[] = this.getBlotterState().Grid.Columns.filter(c => c.Visible);
         let gridSorts: IGridSort[] = this.getBlotterState().Grid.GridSorts;
-        let layoutToSave = ObjectFactory.CreateLayout(
-          visibleColumns,
-          gridSorts,
-          gridState,
-          currentLayoutName
-        );
-        this.dispatchAction(LayoutRedux.LayoutSave(currentLayoutIndex, layoutToSave));
+
+        let layoutToSave: ILayout = {
+          Uuid: currentLayoutObject.Uuid,
+          Name: currentLayoutName,
+          Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
+          GridSorts: gridSorts,
+          VendorGridInfo: gridState,
+        };
+
+        this.dispatchAction(LayoutRedux.LayoutSave(layoutToSave));
       }
     }
   }

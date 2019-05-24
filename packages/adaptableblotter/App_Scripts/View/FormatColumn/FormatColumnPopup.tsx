@@ -14,7 +14,10 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -39,7 +42,7 @@ class FormatColumnPopupComponent extends React.Component<
     this.state = {
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: 0,
+      WizardStatus: WizardStatus.None,
     };
   }
 
@@ -79,13 +82,12 @@ class FormatColumnPopupComponent extends React.Component<
     let FormatColumns = this.props.FormatColumns.map((formatColumn: IFormatColumn, index) => {
       return (
         <FormatColumnEntityRow
-          key={index}
+          key={formatColumn.Uuid}
           cssClassName={cssClassName}
           colItems={colItems}
           AdaptableBlotterObject={formatColumn}
           Columns={this.props.Columns}
           UserFilters={null}
-          Index={index}
           onEdit={() => this.onEdit(formatColumn)}
           onShare={() => this.props.onShare(formatColumn)}
           TeamSharingActivated={this.props.TeamSharingActivated}
@@ -155,22 +157,31 @@ class FormatColumnPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyFormatColumn(),
       WizardStartIndex: 0,
+      WizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(formatColumn: IFormatColumn) {
     let clonedObject: IFormatColumn = Helper.cloneObject(formatColumn);
-    this.setState({ EditedAdaptableBlotterObject: clonedObject, WizardStartIndex: 1 });
+    this.setState({
+      EditedAdaptableBlotterObject: clonedObject,
+      WizardStartIndex: 1,
+      WizardStatus: WizardStatus.Edit,
+    });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
-    this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
+    this.setState({
+      EditedAdaptableBlotterObject: null,
+      WizardStartIndex: 0,
+      WizardStatus: WizardStatus.None,
+    });
   }
 
   onFinishWizard() {
     let formatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn;
-    if (this.props.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)) {
+    if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditFormatColumn(formatColumn);
     } else {
       this.props.onAddFormatColumn(formatColumn);

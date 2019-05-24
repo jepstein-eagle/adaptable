@@ -17,7 +17,10 @@ import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard';
 import { SortOrder } from '../../Utilities/Enums';
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -31,7 +34,6 @@ interface CalculatedColumnPopupProps
     calculatedColumn: ICalculatedColumn
   ) => CalculatedColumnRedux.CalculatedColumnAddAction;
   onEditCalculatedColumn: (
-    index: number,
     calculatedColumn: ICalculatedColumn
   ) => CalculatedColumnRedux.CalculatedColumnEditAction;
   CalculatedColumns: Array<ICalculatedColumn>;
@@ -55,8 +57,7 @@ class CalculatedColumnPopupComponent extends React.Component<
       // only editing is possible - you cannot create a new calc column from the column menu
       if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
         let calculatedColumn = this.props.CalculatedColumns.find(x => x.ColumnId == arrayParams[1]);
-        let index = this.props.CalculatedColumns.indexOf(calculatedColumn);
-        this.onEdit(index, calculatedColumn);
+        this.onEdit(calculatedColumn);
       }
     }
   }
@@ -90,17 +91,14 @@ class CalculatedColumnPopupComponent extends React.Component<
         return (
           <CalculatedColumnEntityRow
             cssClassName={cssClassName}
-            Index={index}
             colItems={colItems}
             Columns={this.props.Columns}
             onShare={() => this.props.onShare(calculatedColumn)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             AdaptableBlotterObject={calculatedColumn}
             key={calculatedColumn.ColumnId}
-            onEdit={(index, calculatedColumn) =>
-              this.onEdit(index, calculatedColumn as ICalculatedColumn)
-            }
-            onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(index, calculatedColumn)}
+            onEdit={calculatedColumn => this.onEdit(calculatedColumn as ICalculatedColumn)}
+            onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(calculatedColumn)}
           />
         );
       }
@@ -170,16 +168,16 @@ class CalculatedColumnPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyCalculatedColumn(),
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
-  onEdit(index: number, calculatedColumn: ICalculatedColumn) {
+  onEdit(calculatedColumn: ICalculatedColumn) {
     let clonedObject = Helper.cloneObject(calculatedColumn);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -188,7 +186,7 @@ class CalculatedColumnPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
     this.props.IsExpressionValid('');
   }
@@ -197,18 +195,15 @@ class CalculatedColumnPopupComponent extends React.Component<
     let calculatedColumn: ICalculatedColumn = Helper.cloneObject(
       this.state.EditedAdaptableBlotterObject
     );
-    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-      this.props.onEditCalculatedColumn(
-        this.state.EditedAdaptableBlotterObjectIndex,
-        calculatedColumn
-      );
+    if (this.state.WizardStatus == WizardStatus.Edit) {
+      this.props.onEditCalculatedColumn(calculatedColumn);
     } else {
       this.props.onAddCalculatedColumn(calculatedColumn);
     }
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -232,8 +227,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) =>
       dispatch(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn)),
-    onEditCalculatedColumn: (index: number, calculatedColumn: ICalculatedColumn) =>
-      dispatch(CalculatedColumnRedux.CalculatedColumnEdit(index, calculatedColumn)),
+    onEditCalculatedColumn: (calculatedColumn: ICalculatedColumn) =>
+      dispatch(CalculatedColumnRedux.CalculatedColumnEdit(calculatedColumn)),
     IsExpressionValid: (expression: string) =>
       dispatch(SystemRedux.CalculatedColumnIsExpressionValid(expression)),
     onShare: (entity: IAdaptableBlotterObject) =>

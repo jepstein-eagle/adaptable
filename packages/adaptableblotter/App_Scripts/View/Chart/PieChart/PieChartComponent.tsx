@@ -46,7 +46,7 @@ interface PieChartComponentProps {
   cssClassName: string;
   CurrentChartDefinition: IPieChartDefinition;
   ChartData: IChartData;
-  onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => void;
+  onUpdateChartProperties: (chartUuid: string, chartProperties: IChartProperties) => void;
 }
 
 export class PieChartComponent extends React.Component<
@@ -482,7 +482,7 @@ export class PieChartComponent extends React.Component<
 
   private updateChartProperties(chartProperties: IChartProperties): void {
     this.setState({ ChartProperties: chartProperties } as PieChartComponentState);
-    this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Name, chartProperties);
+    this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Uuid, chartProperties);
   }
 
   private onPieOrDoughnutViewChanged(event: React.FormEvent<any>) {

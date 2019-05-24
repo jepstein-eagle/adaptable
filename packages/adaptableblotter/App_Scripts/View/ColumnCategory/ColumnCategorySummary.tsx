@@ -1,7 +1,10 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard';
@@ -110,7 +113,7 @@ export class ColumnCategorySummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
@@ -118,6 +121,7 @@ export class ColumnCategorySummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(ColumnCategory),
       WizardStartIndex: 1,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -125,7 +129,7 @@ export class ColumnCategorySummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 

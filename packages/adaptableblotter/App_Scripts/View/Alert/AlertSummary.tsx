@@ -1,7 +1,10 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AlertWizard } from './Wizard/AlertWizard';
@@ -69,7 +72,7 @@ export class AlertSummaryComponent extends React.Component<
             ConfigEnity={item}
             EntityType={StrategyConstants.AlertStrategyName}
             showShare={this.props.TeamSharingActivated}
-            onEdit={() => this.onEdit(index, item)}
+            onEdit={() => this.onEdit(item)}
             onShare={() => this.props.onShare(item)}
             onDelete={AlertRedux.AlertDefinitionDelete(item)}
           />
@@ -110,15 +113,15 @@ export class AlertSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
-  onEdit(index: number, Alert: IAlertDefinition) {
+  onEdit(Alert: IAlertDefinition) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(Alert),
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -126,12 +129,12 @@ export class AlertSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    if (this.state.EditedAdaptableBlotterObjectIndex == -1) {
+    if (this.state.WizardStatus == WizardStatus.New) {
       this.props.onAddAlert(this.state.EditedAdaptableBlotterObject as IAlertDefinition);
     } else {
       this.props.onEditAlert(this.state.EditedAdaptableBlotterObject as IAlertDefinition);
@@ -140,7 +143,7 @@ export class AlertSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
