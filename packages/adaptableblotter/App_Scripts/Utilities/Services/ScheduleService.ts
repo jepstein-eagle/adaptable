@@ -71,6 +71,8 @@ export class ScheduleService implements IScheduleService {
         date.setHours(schedule.Hour);
         date.setMinutes(schedule.Minute);
         date.setSeconds(0);
+      } else {
+        return null; // because it will rerun at midnight so we can get rid
       }
     }
 
