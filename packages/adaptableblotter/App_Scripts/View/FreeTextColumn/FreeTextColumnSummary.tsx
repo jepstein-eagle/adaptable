@@ -75,7 +75,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
           ConfigEnity={freeTextColumn}
           showShare={this.props.TeamSharingActivated}
           EntityType={StrategyConstants.FreeTextColumnStrategyName}
-          onEdit={() => this.onEdit(index, freeTextColumn)}
+          onEdit={() => this.onEdit(freeTextColumn)}
           onShare={() => this.props.onShare(freeTextColumn)}
           onDelete={FreeTextColumnRedux.FreeTextColumnDelete(freeTextColumn)}
           showBold={true}
@@ -119,7 +119,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
     });
   }
 
-  onEdit(index: number, FreeTextColumn: IFreeTextColumn) {
+  onEdit(FreeTextColumn: IFreeTextColumn) {
     let clonedObject: IFreeTextColumn = Helper.cloneObject(FreeTextColumn);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,

@@ -50,7 +50,6 @@ export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (
   state: ColumnFilterState = initialFilterState,
   action: Redux.Action
 ): ColumnFilterState => {
-  let index: number;
   let columnFilters: IColumnFilter[];
 
   switch (action.type) {
@@ -84,7 +83,7 @@ export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (
     case COLUMN_FILTER_CLEAR: {
       let actionTypedDelete = <ColumnFilterClearAction>action;
       columnFilters = [].concat(state.ColumnFilters);
-      index = columnFilters.findIndex(i => i.ColumnId == actionTypedDelete.columnId);
+      let index = columnFilters.findIndex(i => i.Uuid == actionTypedDelete.columnId);
       columnFilters.splice(index, 1);
       return Object.assign({}, state, { ColumnFilters: columnFilters });
     }

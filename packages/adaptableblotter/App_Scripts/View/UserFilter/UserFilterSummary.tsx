@@ -69,7 +69,7 @@ export class UserFilterSummaryComponent extends React.Component<
             showShare={this.props.TeamSharingActivated}
             showEdit={this.isFilterable()}
             EntityType={StrategyConstants.UserFilterStrategyName}
-            onEdit={() => this.onEdit(index, item)}
+            onEdit={() => this.onEdit(item)}
             onShare={() => this.props.onShare(item)}
             onDelete={UserFilterRedux.UserFilterDelete(item)}
           />
@@ -146,7 +146,7 @@ export class UserFilterSummaryComponent extends React.Component<
     });
   }
 
-  onEdit(index: number, UserFilter: IUserFilter) {
+  onEdit(UserFilter: IUserFilter) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(UserFilter),
       WizardStartIndex: 1,

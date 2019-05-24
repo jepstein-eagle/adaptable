@@ -62,10 +62,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
       let selectedReport: IReport = this.props.Reports.find(
         a => a.Name == this.props.CurrentReport
       );
-      let selectedReportIndex = this.props.Reports.findIndex(
-        a => a.Name == this.props.CurrentReport
-      );
-      this.onEdit(selectedReportIndex, selectedReport);
+      this.onEdit(selectedReport);
     }
   }
 
@@ -105,7 +102,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             onReportStopLive={exportDestination =>
               this.props.onReportStopLive(report.Name, exportDestination)
             }
-            onEdit={() => this.onEdit(reportIndex, report)}
+            onEdit={() => this.onEdit(report)}
             onDeleteConfirm={ExportRedux.ReportDelete(report)}
           />
         );
@@ -231,7 +228,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     });
   }
 
-  onEdit(index: number, ReportToEdit: IReport) {
+  onEdit(ReportToEdit: IReport) {
     let clonedReportToEdit = Helper.cloneObject(ReportToEdit);
     this.setState({
       EditedAdaptableBlotterObject: clonedReportToEdit,

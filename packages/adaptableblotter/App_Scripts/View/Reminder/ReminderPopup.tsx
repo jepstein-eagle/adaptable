@@ -68,7 +68,7 @@ class ReminderPopupComponent extends React.Component<
           TeamSharingActivated={this.props.TeamSharingActivated}
           UserFilters={this.props.UserFilters}
           Columns={this.props.Columns}
-          onEdit={() => this.onEdit(index, reminder as IReminder)}
+          onEdit={() => this.onEdit(reminder)}
           onDeleteConfirm={ReminderRedux.ReminderDelete(reminder)}
         />
       );
@@ -137,7 +137,7 @@ class ReminderPopupComponent extends React.Component<
     });
   }
 
-  onEdit(index: number, reminder: IReminder) {
+  onEdit(reminder: IReminder) {
     let clonedObject: IReminder = Helper.cloneObject(reminder);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,

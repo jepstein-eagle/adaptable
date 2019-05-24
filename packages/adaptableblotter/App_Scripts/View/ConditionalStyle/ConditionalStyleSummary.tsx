@@ -88,7 +88,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             ConfigEnity={item}
             EntityType={StrategyConstants.ConditionalStyleStrategyName}
             showShare={this.props.TeamSharingActivated}
-            onEdit={() => this.onEdit(index, item)}
+            onEdit={() => this.onEdit(item)}
             onShare={() => this.props.onShare(item)}
             onDelete={ConditionalStyleRedux.ConditionalStyleDelete(item)}
           />
@@ -137,7 +137,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
     });
   }
 
-  onEdit(index: number, ConditionalStyle: IConditionalStyle) {
+  onEdit(ConditionalStyle: IConditionalStyle) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(ConditionalStyle),
       WizardStartIndex: 1,

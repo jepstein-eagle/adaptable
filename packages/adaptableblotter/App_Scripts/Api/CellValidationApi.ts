@@ -18,7 +18,6 @@ export class CellValidationApi extends ApiBase implements ICellValidationApi {
   }
 
   public deleteCellValidation(cellValidationRule: ICellValidationRule): void {
-    let index: number = this.getAllCellValidation().findIndex(cv => cv == cellValidationRule);
-    this.dispatchAction(CellValidationRedux.CellValidationDelete(index, cellValidationRule));
+    this.dispatchAction(CellValidationRedux.CellValidationDelete(cellValidationRule));
   }
 }
