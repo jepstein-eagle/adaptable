@@ -47,7 +47,7 @@ export class LicenceService implements ILicenceService {
       return this.isEmptyArray();
     }
     let todaysDate = myPrimeNumber.substr(myPrimeNumber.length - 1);
-    if (todaysDate != 'u' && todaysDate != 'e' && todaysDate != 't') {
+    if (todaysDate != 'u' && todaysDate != 'e' && todaysDate != 't' && todaysDate != 'd') {
       return this.isEmptyArray();
     }
     let fiveDigitSquaredNumber = myPrimeNumber.replace(/\D/g, '');
@@ -224,6 +224,8 @@ export class LicenceService implements ILicenceService {
         return LicenceUserType.EndUser;
       case 't':
         return LicenceUserType.Team;
+      case 'd':
+        return LicenceUserType.Development;
     }
   }
 }
