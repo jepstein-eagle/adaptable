@@ -5,12 +5,7 @@ import join from '../utils/join';
 import { RemoveScroll } from 'react-remove-scroll';
 import { FlexProps, Flex } from 'rebass';
 
-import {
-  baseClassName,
-  default as Backdrop,
-  TypeBackdropHandle,
-  updatePositionInStack,
-} from './Backdrop';
+import { baseClassName, default as Backdrop } from './Backdrop';
 
 const uuidv4 = require('uuid/v4');
 const createUuid = (): string => uuidv4();
@@ -33,30 +28,19 @@ export type ModalProps = React.HTMLProps<HTMLElement> &
   FlexProps & {
     isOpen?: boolean;
     baseZIndex?: number;
+    backdropZIndexOffset?: number;
   };
 
 const Modal = (props: ModalProps) => {
   ensurePortalElement();
 
-  const { baseZIndex, className, style, children, isOpen, ...boxProps } = props;
+  const { className, style, children, isOpen, ...boxProps } = props;
 
   const timestamp = isOpen ? Date.now() : 0;
   const uuid: string = useMemo(() => createUuid(), []);
 
-  const [stackZIndex] = useState<number>(baseZIndex || 1000);
-
-  const backdropHandleRef = useRef<TypeBackdropHandle>(null);
-
-  useLayoutEffect(() => {
-    if (!backdropHandleRef.current) {
-      return;
-    }
-    updatePositionInStack(uuid, {
-      baseZIndex,
-      timestamp,
-      setBackdropVisible: backdropHandleRef.current.setBackdropVisible,
-    });
-  });
+  const backdropZIndexOffset = props.backdropZIndexOffset || 10;
+  const zIndex = props.baseZIndex || 1000;
 
   return createPortal(
     isOpen ? (
@@ -67,13 +51,13 @@ const Modal = (props: ModalProps) => {
             justifyContent="center"
             flexDirection="column"
             {...boxProps}
-            style={{ zIndex: stackZIndex, ...style }}
+            style={{ zIndex, ...style }}
             className={join(baseClassName, className)}
           >
             {children}
           </Flex>
         </RemoveScroll>
-        <Backdrop uuid={uuid} handle={backdropHandleRef} baseZIndex={baseZIndex || 1000} />
+        <Backdrop timestamp={timestamp} uuid={uuid} zIndex={zIndex - backdropZIndexOffset} />
       </>
     ) : null,
     portalElement

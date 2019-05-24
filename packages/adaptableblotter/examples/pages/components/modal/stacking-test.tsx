@@ -26,7 +26,7 @@ export default () => {
       {arr.map(k => {
         console.log(k);
         return (
-          <Modal key={k} isOpen={true} style={{ border: '1px solid red' }}>
+          <Modal key={k} isOpen={true} style={{ border: '1px solid red' }} baseZIndex={1000 * k}>
             modal content here {k}
             <button>xxx</button>
             <button onClick={add}>add modal</button> - {arr.length}

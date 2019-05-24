@@ -5,33 +5,27 @@ import { useState, MutableRefObject, useLayoutEffect } from 'react';
 export const baseClassName = 'ab-Modal';
 export type TypeBackdropHandle = {
   id: string;
-  setBackdropVisible: (visible: boolean, zIndex: number) => void;
+  setBackdropOrder: (visible: boolean, zIndex: number) => void;
 };
 
-const Backdrop = ({
-  handle,
-  uuid,
-  baseZIndex,
-}: {
-  uuid: string;
-  baseZIndex: number;
-  handle: MutableRefObject<TypeBackdropHandle>;
-}) => {
+const Backdrop = (props: { zIndex: number; uuid: string; timestamp: number }) => {
+  const { uuid, timestamp } = props;
   const [backdropVisible, setBackdropVisible] = React.useState(false);
-  const [zIndex, setZIndex] = useState<number>(baseZIndex);
+  const [zIndex, setZIndex] = useState<number>(-1);
 
   useLayoutEffect(() => {
-    if (handle) {
-      handle.current = {
-        id: uuid,
-        setBackdropVisible: (visible: boolean, zIndex: number) => {
-          unstable_batchedUpdates(() => {
-            setBackdropVisible(visible);
-            setZIndex(zIndex);
-          });
-        },
-      };
-    }
+    updatePositionInStack(uuid, {
+      timestamp,
+      baseZIndex: props.zIndex,
+      setBackdropOrder: (visible: boolean, zIndex: number) => {
+        unstable_batchedUpdates(() => {
+          setBackdropVisible(visible);
+          setZIndex(zIndex);
+        });
+      },
+    });
+
+    return () => updatePositionInStack(uuid, null);
   }, []);
 
   return backdropVisible ? (
@@ -42,12 +36,16 @@ const Backdrop = ({
 type ModalStackingInfo = {
   timestamp: number;
   baseZIndex: number;
-  setBackdropVisible: (visible: boolean, zIndex: number) => void;
+  setBackdropOrder: (visible: boolean, zIndex: number) => void;
 };
 const stack: { [key: string]: ModalStackingInfo } = {};
 
-export const updatePositionInStack = (id: string, data: ModalStackingInfo) => {
+export const updatePositionInStack = (id: string, data?: ModalStackingInfo) => {
   stack[id] = data;
+
+  if (!data) {
+    delete stack[id];
+  }
 
   const pairs = Object.keys(stack).map((key: string) => {
     const data: ModalStackingInfo = stack[key];
@@ -62,10 +60,11 @@ export const updatePositionInStack = (id: string, data: ModalStackingInfo) => {
 
   const last = pairs.pop();
   pairs.forEach((data: ModalStackingInfo) => {
-    data.setBackdropVisible(false, -1);
+    data.setBackdropOrder(false, -1);
   });
   if (last) {
-    last.setBackdropVisible(true, last.baseZIndex);
+    console.log(last);
+    last.setBackdropOrder(true, last.baseZIndex);
   }
 };
 
