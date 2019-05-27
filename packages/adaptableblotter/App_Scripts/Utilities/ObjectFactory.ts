@@ -1,5 +1,5 @@
 import { ExpressionHelper, IRangeEvaluation } from './Helpers/ExpressionHelper';
-import { IGridSort } from './Interface/IGridSort';
+import { IColumnSort } from './Interface/IColumnSort';
 import { IStyle } from './Interface/IStyle';
 import { IColumnCategory } from './Interface/BlotterObjects/IColumnCategory';
 import { IFormatColumn } from './Interface/BlotterObjects/IFormatColumn';
@@ -184,7 +184,7 @@ export function CreateEmptyRange(): IRange {
   };
 }
 
-export function CreateEmptyGridSort(): IGridSort {
+export function CreateEmptyColumnSort(): IColumnSort {
   return {
     Column: EMPTY_STRING,
     SortOrder: SortOrder.Unknown,
@@ -347,14 +347,14 @@ export function CreateEmptyFreeTextColumn(): IFreeTextColumn {
 
 export function CreateLayout(
   columns: IColumn[],
-  gridSorts: IGridSort[],
+  columnSorts: IColumnSort[],
   vendorGridInfo: IVendorGridInfo,
   name: string
 ): ILayout {
   return {
     Uuid: createUuid(),
     Columns: columns ? columns.map(x => x.ColumnId) : [],
-    GridSorts: gridSorts,
+    ColumnSorts: columnSorts,
     Name: name,
     VendorGridInfo: vendorGridInfo,
   };
@@ -466,7 +466,7 @@ export const ObjectFactory = {
   CreateEmptyAdvancedSearch,
   CreateEmptyColumnCategory,
   CreateEmptyRange,
-  CreateEmptyGridSort,
+  CreateEmptyColumnSort,
   CreateEmptyCellValidation,
   CreateEmptyPercentBar,
   CreateEmptyUserFilter,

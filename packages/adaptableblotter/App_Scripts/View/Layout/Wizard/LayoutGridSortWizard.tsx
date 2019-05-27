@@ -25,13 +25,13 @@ import { AdaptableObjectCollection } from '../../Components/AdaptableObjectColle
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { PanelWithButton } from '../../Components/Panels/PanelWithButton';
-import { IGridSort } from '../../../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../../../Utilities/Interface/IColumnSort';
 import { ILayout } from '../../../Utilities/Interface/BlotterObjects/ILayout';
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<ILayout> {}
 
 export interface LayoutGridSortWizardState {
-  GridSorts: IGridSort[];
+  ColumnSorts: IColumnSort[];
 }
 
 export class LayoutGridSortWizard
@@ -44,7 +44,7 @@ export class LayoutGridSortWizard
     super(props);
 
     this.state = {
-      GridSorts: this.props.Data.GridSorts,
+      ColumnSorts: this.props.Data.ColumnSorts,
     };
   }
   render(): any {
@@ -66,7 +66,7 @@ export class LayoutGridSortWizard
       { Content: '', Size: 4 },
     ];
 
-    let gridSortRows = this.state.GridSorts.map((x, index) => {
+    let gridSortRows = this.state.ColumnSorts.map((x, index) => {
       return (
         <GridSortRow
           key={index}
@@ -76,13 +76,13 @@ export class LayoutGridSortWizard
           Columns={this.props.Columns}
           UserFilters={null}
           onEdit={null}
-          onDeleteGridSort={() => this.onDeleteGridSort(index)}
-          onGridSortColumnChanged={column => this.onColumnSelectedChanged(index, column)}
-          onGridSortOrderChanged={sortOrder => this.onSortOrderChanged(index, sortOrder)}
+          onDeleteColumnSort={() => this.onDeleteGridSort(index)}
+          onColumnSortColumnChanged={column => this.onColumnSelectedChanged(index, column)}
+          onColumnSortOrderChanged={sortOrder => this.onSortOrderChanged(index, sortOrder)}
           onShare={null}
           TeamSharingActivated={false}
           onDeleteConfirm={null}
-          GridSort={x}
+          ColumnSort={x}
         />
       );
     });
@@ -112,41 +112,44 @@ export class LayoutGridSortWizard
   }
 
   addSort(): any {
-    let sorts: IGridSort[] = [].concat(this.state.GridSorts, ObjectFactory.CreateEmptyGridSort());
-    this.setState({ GridSorts: sorts } as LayoutGridSortWizardState, () =>
+    let sorts: IColumnSort[] = [].concat(
+      this.state.ColumnSorts,
+      ObjectFactory.CreateEmptyColumnSort()
+    );
+    this.setState({ ColumnSorts: sorts } as LayoutGridSortWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
   private onColumnSelectedChanged(index: number, column: IColumn) {
-    let sorts: IGridSort[] = [].concat(this.state.GridSorts);
-    let sort: IGridSort = sorts[index];
+    let sorts: IColumnSort[] = [].concat(this.state.ColumnSorts);
+    let sort: IColumnSort = sorts[index];
     sort.Column = column.ColumnId;
-    this.setState({ GridSorts: sorts } as LayoutGridSortWizardState, () =>
+    this.setState({ ColumnSorts: sorts } as LayoutGridSortWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
   private onSortOrderChanged(index: number, sortOrder: SortOrder) {
-    let sorts: IGridSort[] = [].concat(this.state.GridSorts);
-    let sort: IGridSort = sorts[index];
+    let sorts: IColumnSort[] = [].concat(this.state.ColumnSorts);
+    let sort: IColumnSort = sorts[index];
     sort.SortOrder = sortOrder;
-    this.setState({ GridSorts: sorts } as LayoutGridSortWizardState, () =>
+    this.setState({ ColumnSorts: sorts } as LayoutGridSortWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
   private onDeleteGridSort(index: number): any {
-    let sorts: IGridSort[] = [].concat(this.state.GridSorts);
+    let sorts: IColumnSort[] = [].concat(this.state.ColumnSorts);
     sorts.splice(index, 1);
-    this.setState({ GridSorts: sorts } as LayoutGridSortWizardState, () =>
+    this.setState({ ColumnSorts: sorts } as LayoutGridSortWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
   public canNext(): boolean {
     let canNext: boolean = true;
-    this.state.GridSorts.forEach(gs => {
+    this.state.ColumnSorts.forEach(gs => {
       if (StringExtensions.IsNullOrEmpty(gs.Column) || gs.SortOrder == SortOrder.Unknown) {
         canNext = false;
       }
@@ -159,7 +162,7 @@ export class LayoutGridSortWizard
   }
 
   public Next(): void {
-    this.props.Data.GridSorts = this.state.GridSorts;
+    this.props.Data.ColumnSorts = this.state.ColumnSorts;
   }
   public Back(): void {
     // todo

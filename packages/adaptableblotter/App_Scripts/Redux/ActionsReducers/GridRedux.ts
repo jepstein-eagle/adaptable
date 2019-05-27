@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import { GridState } from './Interface/IState';
 import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { IGridSort } from '../../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../../Utilities/Interface/IColumnSort';
 import { ISelectedCellInfo } from '../../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
@@ -40,7 +40,7 @@ export interface GridSelectColumnAction extends Redux.Action {
 }
 
 export interface GridSetSortAction extends Redux.Action {
-  GridSorts: IGridSort[];
+  ColumnSorts: IColumnSort[];
 }
 
 export interface GridSetBlotterRestrictionsAction extends Redux.Action {
@@ -92,9 +92,9 @@ export const GridSelectColumn = (ColumnId: string): GridSelectColumnAction => ({
   ColumnId,
 });
 
-export const GridSetSort = (GridSorts: IGridSort[]): GridSetSortAction => ({
+export const GridSetSort = (ColumnSorts: IColumnSort[]): GridSetSortAction => ({
   type: GRID_SET_SORT,
-  GridSorts,
+  ColumnSorts,
 });
 
 export const GridSetSelectedCells = (
@@ -127,7 +127,7 @@ export const FilterFormHide = (): FilterFormHideAction => ({
 
 const initialGridState: GridState = {
   Columns: EMPTY_ARRAY,
-  GridSorts: EMPTY_ARRAY,
+  ColumnSorts: EMPTY_ARRAY,
   SelectedCellInfo: null,
   CellSummary: null,
   IsFloatingFilterActive: false,
@@ -148,7 +148,7 @@ export const GridReducer: Redux.Reducer<GridState> = (
       columns.push(actionTypedAddUpdate.Column);
       return Object.assign({}, state, { Columns: columns });
     case GRID_SET_SORT:
-      return Object.assign({}, state, { GridSorts: (<GridSetSortAction>action).GridSorts });
+      return Object.assign({}, state, { ColumnSorts: (<GridSetSortAction>action).ColumnSorts });
     case GRID_SET_SELECTED_CELLS:
       return Object.assign({}, state, {
         SelectedCellInfo: (<GridSetSelectedCellsAction>action).SelectedCellInfo,

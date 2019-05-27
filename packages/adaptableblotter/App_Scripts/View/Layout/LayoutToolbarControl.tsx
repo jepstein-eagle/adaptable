@@ -171,8 +171,8 @@ class LayoutToolbarControlComponent extends React.Component<
       }
       if (
         !ArrayExtensions.areArraysEqualWithOrderandProperties(
-          layoutEntity.GridSorts,
-          this.props.GridSorts
+          layoutEntity.ColumnSorts,
+          this.props.ColumnSorts
         )
       ) {
         return true;
@@ -201,7 +201,7 @@ class LayoutToolbarControlComponent extends React.Component<
       Uuid: currentLayoutObject.Uuid,
       Name: this.props.CurrentLayout,
       Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-      GridSorts: this.props.GridSorts,
+      ColumnSorts: this.props.ColumnSorts,
       VendorGridInfo: gridState,
     };
     this.props.onSaveLayout(layoutToSave);

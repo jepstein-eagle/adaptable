@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -13,12 +13,10 @@ import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
-import { ExamplesHelper } from '../../ExamplesHelper';
 
 import config from './config';
 
 import jsonData from './dataset.json';
-import { IGridSort } from '../../../../App_Scripts/Utilities/Interface/IGridSort';
 
 LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
 

@@ -2061,8 +2061,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               });
               middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(blotterColumns));
               // set sort
-              middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts));
-              blotter.setGridSort(currentLayout.GridSorts);
+              middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.ColumnSorts));
+              blotter.setColumnSort(currentLayout.ColumnSorts);
               // set vendor specific info
               blotter.setVendorGridState(currentLayout.VendorGridInfo);
             }

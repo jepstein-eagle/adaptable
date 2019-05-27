@@ -1,5 +1,5 @@
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IGridSort } from '../Interface/IGridSort';
+import { IColumnSort } from '../Interface/IColumnSort';
 import { ILayout } from '../Interface/BlotterObjects/ILayout';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
@@ -13,17 +13,17 @@ export function getLayoutDescription(layout: ILayout, columns: IColumn[]): strin
   let returnString: string = '';
   returnString += layout.Columns.length + ' Columns; ';
   returnString += '\n';
-  returnString += ' Sort: ' + getGridSort(layout.GridSorts, columns);
+  returnString += ' Sort: ' + getColumnSort(layout.ColumnSorts, columns);
   return returnString;
 }
 
-export function getGridSort(gridSorts: IGridSort[], columns: IColumn[]): string {
-  if (gridSorts.length == 0) {
+export function getColumnSort(columnSorts: IColumnSort[], columns: IColumn[]): string {
+  if (columnSorts.length == 0) {
     return 'None';
   }
 
   let returnString: string = '';
-  gridSorts.forEach((gs: IGridSort) => {
+  columnSorts.forEach((gs: IColumnSort) => {
     returnString +=
       ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + getSortOrder(gs.SortOrder);
   });
@@ -54,7 +54,7 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
           Uuid: layout.Uuid,
           Name: layoutState.CurrentLayout,
           Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-          GridSorts: gridState.GridSorts,
+          ColumnSorts: gridState.ColumnSorts,
           VendorGridInfo: gridVendorState,
         };
         blotter.adaptableBlotterStore.TheStore.dispatch(LayoutRedux.LayoutSave(layoutToSave));
@@ -68,7 +68,7 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
 
 export const LayoutHelper = {
   getLayoutDescription,
-  getGridSort,
+  getColumnSort,
   getSortOrder,
   autoSaveLayout,
 };

@@ -1,6 +1,6 @@
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
-import { IGridSort } from '../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../Utilities/Interface/IColumnSort';
 import { ILayout } from '../Utilities/Interface/BlotterObjects/ILayout';
 import { ApiBase } from './ApiBase';
 import { DEFAULT_LAYOUT } from '../Utilities/Constants/GeneralConstants';
@@ -54,13 +54,13 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
       if (currentLayoutObject) {
         let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
         let visibleColumns: IColumn[] = this.getBlotterState().Grid.Columns.filter(c => c.Visible);
-        let gridSorts: IGridSort[] = this.getBlotterState().Grid.GridSorts;
+        let columSorts: IColumnSort[] = this.getBlotterState().Grid.ColumnSorts;
 
         let layoutToSave: ILayout = {
           Uuid: currentLayoutObject.Uuid,
           Name: currentLayoutName,
           Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-          GridSorts: gridSorts,
+          ColumnSorts: columSorts,
           VendorGridInfo: gridState,
         };
 

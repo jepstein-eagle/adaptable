@@ -8,13 +8,13 @@ import { SelectionMode, SortOrder, AccessLevel } from '../../Utilities/Enums';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { IGridSort } from '../../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../../Utilities/Interface/IColumnSort';
 
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {
-  GridSort: IGridSort;
-  onGridSortColumnChanged: (column: IColumn) => void;
-  onGridSortOrderChanged: (sortOrder: SortOrder) => void;
-  onDeleteGridSort: () => void;
+  ColumnSort: IColumnSort;
+  onColumnSortColumnChanged: (column: IColumn) => void;
+  onColumnSortOrderChanged: (sortOrder: SortOrder) => void;
+  onDeleteColumnSort: () => void;
 }
 
 export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, {}> {
@@ -32,7 +32,7 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
     colItems[0].Content = (
       <ColumnSelector
         cssClassName={this.props.cssClassName}
-        SelectedColumnIds={[this.props.GridSort.Column]}
+        SelectedColumnIds={[this.props.ColumnSort.Column]}
         ColumnList={this.props.Columns.filter(c => c.Sortable)}
         onColumnChange={columns => this.onColumnSelectedChanged(columns)}
         SelectionMode={SelectionMode.Single}
@@ -43,7 +43,7 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
       <FormControl
         componentClass="select"
         placeholder="select"
-        value={this.props.GridSort.SortOrder}
+        value={this.props.ColumnSort.SortOrder}
         onChange={(x: any) => this.onSortOrderChanged(x)}
       >
         {sortOrders}
@@ -60,7 +60,7 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
         ConfirmAction={null}
         ConfirmationMsg={''}
         ConfirmationTitle={''}
-        onClickAction={() => this.props.onDeleteGridSort()}
+        onClickAction={() => this.props.onDeleteColumnSort()}
         size="small"
         AccessLevel={AccessLevel.Full} // only here if in wizard...
       />
@@ -74,11 +74,11 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
   private onColumnSelectedChanged(columns: IColumn[]): any {
     let column: IColumn = columns[0];
 
-    this.props.onGridSortColumnChanged(column);
+    this.props.onColumnSortColumnChanged(column);
   }
 
   private onSortOrderChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onGridSortOrderChanged(e.value as SortOrder);
+    this.props.onColumnSortOrderChanged(e.value as SortOrder);
   }
 }

@@ -1,19 +1,12 @@
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IStrategy } from './Interface/IStrategy';
 import { Action } from 'redux';
-import { IBlotterSortState } from '../Utilities/Interface/SearchChanged/IBlotterSortState';
-import { IBlotterSearchState } from '../Utilities/Interface/SearchChanged/IBlotterSearchState';
-import { ISearchEventData } from '../Utilities/Interface/SearchChanged/ISearchEventData';
-import { ISearchChangedEventArgs } from '../Utilities/Interface/SearchChanged/ISearchChangedEventArgs';
-import { ISearchChangedInfo } from '../Utilities/Interface/SearchChanged/ISearchChangedInfo';
-import { SearchChangedTrigger, DataType } from '../Utilities/Enums';
+import { DataType } from '../Utilities/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IEntitlement } from '../Utilities/Interface/IEntitlement';
-import { IAdvancedSearch } from '../Utilities/Interface/BlotterObjects/IAdvancedSearch';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
-import { IDataSource } from '../Utilities/Interface/BlotterObjects/IDataSource';
 
 /**
  * Base class for all strategies and does most of the work of creating menus
@@ -164,49 +157,5 @@ export abstract class AdaptableStrategyBase implements IStrategy {
       }
     }
     return true;
-  }
-
-  /**
-   * Each time any of the objects that make up search are changed (e.g. filters, quick search, advanced search, data sources etc.) we fire an event
-   * This is primarily to help users who want to run search on the server and so need to know what has changed
-   * @param searchChangedTrigger function that triggered the event
-   */
-  publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void {
-    let currentDataSource: IDataSource = this.blotter.api.dataSourceApi.getCurrentDataSource();
-    let currentAdvancedSearch: IAdvancedSearch = this.blotter.api.advancedSearchApi.getCurrentAdvancedSearch();
-
-    // lets get the searchstate
-    let blotterSearchState: IBlotterSearchState = {
-      dataSource: currentDataSource == null ? null : currentDataSource,
-      advancedSearch: currentAdvancedSearch == null ? null : currentAdvancedSearch,
-      quickSearch: this.blotter.api.quickSearchApi.getQuickSearchValue(),
-      columnFilters: this.blotter.api.columnFilterApi.getAllColumnFilter(),
-    };
-
-    let blotterSortState: IBlotterSortState = {
-      gridSorts: this.blotter.api.gridApi.getGridSorts(),
-      customSorts: this.blotter.api.customSortApi.getAllCustomSort(),
-    };
-
-    let searchChangedInfo: ISearchChangedInfo = {
-      searchChangedTrigger: searchChangedTrigger,
-      blotterSearchState: blotterSearchState,
-      blotterSortState: blotterSortState,
-      searchAsAtDate: new Date(),
-    };
-
-    let searchEventData: ISearchEventData = {
-      name: 'Adaptable Blotter',
-      type: 'Search Args',
-      id: searchChangedInfo,
-    };
-
-    let searchChangedArgs: ISearchChangedEventArgs = {
-      object: 'fdc3-context',
-      definition: 'https://fdc3.org/context/1.0.0/',
-      version: '1.0.0',
-      data: [searchEventData],
-    };
-    this.blotter.api.eventApi._onSearchedChanged.Dispatch(this.blotter, searchChangedArgs);
   }
 }

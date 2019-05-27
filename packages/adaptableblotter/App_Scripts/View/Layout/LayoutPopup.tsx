@@ -137,7 +137,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
               Columns={this.props.Columns}
               UserFilters={this.props.UserFilters}
               SystemFilters={this.props.SystemFilters}
-              GridSorts={this.props.GridSorts}
+              ColumnSorts={this.props.ColumnSorts}
               Blotter={this.props.Blotter}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
@@ -199,9 +199,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   canFinishWizard() {
     let layout = this.state.EditedAdaptableBlotterObject as ILayout;
-    if (ArrayExtensions.IsNotNullOrEmpty(layout.GridSorts)) {
+    if (ArrayExtensions.IsNotNullOrEmpty(layout.ColumnSorts)) {
       let canFinish: boolean = true;
-      layout.GridSorts.forEach(gs => {
+      layout.ColumnSorts.forEach(gs => {
         if (StringExtensions.IsNullOrEmpty(gs.Column) || gs.SortOrder == SortOrder.Unknown) {
           canFinish = false;
         }

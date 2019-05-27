@@ -35,11 +35,15 @@ export class StyleService {
     document.head.appendChild(this.style);
 
     this.sheet = <CSSStyleSheet>this.style.sheet;
-    this.InitState();
-    blotter.adaptableBlotterStore.TheStore.subscribe(() => this.InitState());
+    this.ListenToStyleStoreChanges();
+    blotter.adaptableBlotterStore.TheStore.subscribe(() => this.ListenToStyleStoreChanges());
   }
 
-  InitState() {
+  /**
+   * This function is HORRIBLE.  It deletes and recreates all styles each time that quick search changes even if its just text???
+   * And its messy and conflicts with what we do in the respective strategies...
+   */
+  ListenToStyleStoreChanges() {
     if (
       this.FlashingCellState != this.blotter.api.flashingCellApi.getFlashingCellState() ||
       this.ConditionalStyleState !=
@@ -52,6 +56,8 @@ export class StyleService {
       this.FormatColumnState = this.blotter.api.formatColumnApi.getFormatColumnState();
       this.QuickSearchState = this.blotter.api.quickSearchApi.getQuickSearchState();
       this.clearCSSRules();
+
+      console.log('Here');
 
       // Format Column
       this.FormatColumnState.FormatColumns.forEach((formatColumn, index) => {
@@ -165,6 +171,7 @@ export class StyleService {
           StrategyConstants.QuickSearchStrategyId,
           this.blotter
         );
+        console.log('adding quick search rule');
         this.addCSSRule(
           '.' + styleName,
           'background-color: ' +

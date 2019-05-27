@@ -3,7 +3,7 @@ import { IGridApi } from './Interface/IGridApi';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { GridState } from '../Redux/ActionsReducers/Interface/IState';
 import { DataType } from '../Utilities/Enums';
-import { IGridSort } from '../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../Utilities/Interface/IColumnSort';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 
 export class GridApi extends ApiBase implements IGridApi {
@@ -31,7 +31,7 @@ export class GridApi extends ApiBase implements IGridApi {
     return this.getColumns().filter(c => c.DataType == DataType.Number);
   }
 
-  public getGridSorts(): IGridSort[] {
-    return this.getGridState().GridSorts;
+  public getColumnSorts(): IColumnSort[] {
+    return this.getGridState().ColumnSorts;
   }
 }
