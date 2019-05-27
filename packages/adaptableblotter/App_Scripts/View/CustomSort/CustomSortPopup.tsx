@@ -52,7 +52,7 @@ class CustomSortPopupComponent extends React.Component<
       if (arrayParams.length == 2 && arrayParams[0] == 'New') {
         let newCustomSort = ObjectFactory.CreateEmptyCustomSort();
         newCustomSort.ColumnId = arrayParams[1];
-        this.onEdit(newCustomSort);
+        this.onNewFromColumn(newCustomSort);
       }
       if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
         let editCustomSort = this.props.CustomSorts.find(x => x.ColumnId == arrayParams[1]);
@@ -169,6 +169,15 @@ class CustomSortPopupComponent extends React.Component<
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyCustomSort(),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
+    });
+  }
+
+  onNewFromColumn(customsort: ICustomSort) {
+    let clonedObject: ICustomSort = Helper.cloneObject(customsort);
+    this.setState({
+      EditedAdaptableBlotterObject: clonedObject,
+      WizardStatus: WizardStatus.New,
+      WizardStartIndex: 1,
     });
   }
 

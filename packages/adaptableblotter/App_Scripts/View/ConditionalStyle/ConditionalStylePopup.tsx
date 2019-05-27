@@ -61,7 +61,7 @@ class ConditionalStylePopupComponent extends React.Component<
         this.setState({
           EditedAdaptableBlotterObject: _editedConditionalStyle,
           WizardStartIndex: 1,
-          WizardStatus: WizardStatus.None,
+          WizardStatus: WizardStatus.New,
         });
       }
     }

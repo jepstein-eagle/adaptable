@@ -52,7 +52,7 @@ class FormatColumnPopupComponent extends React.Component<
       if (arrayParams.length == 2 && arrayParams[0] == 'New') {
         let newFormatColumn = ObjectFactory.CreateEmptyFormatColumn();
         newFormatColumn.ColumnId = arrayParams[1];
-        this.onEdit(newFormatColumn);
+        this.onNewFromColumn(newFormatColumn);
       }
       if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
         let editFormatColumn = this.props.FormatColumns.find(x => x.ColumnId == arrayParams[1]);
@@ -158,6 +158,15 @@ class FormatColumnPopupComponent extends React.Component<
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyFormatColumn(),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
+    });
+  }
+
+  onNewFromColumn(formatColumn: IFormatColumn) {
+    let clonedObject: IFormatColumn = Helper.cloneObject(formatColumn);
+    this.setState({
+      EditedAdaptableBlotterObject: clonedObject,
+      WizardStatus: WizardStatus.New,
+      WizardStartIndex: 1,
     });
   }
 

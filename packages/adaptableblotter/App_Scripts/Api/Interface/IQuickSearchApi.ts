@@ -1,5 +1,6 @@
 import { IStyle } from '../../Utilities/Interface/IStyle';
 import { QuickSearchState } from '../../Redux/ActionsReducers/Interface/IState';
+import { DisplayAction } from '../../Utilities/Enums';
 export interface IQuickSearchApi {
   getQuickSearchState(): QuickSearchState;
   setQuickSearchState(quickSearchState: QuickSearchState): void;
@@ -17,6 +18,8 @@ export interface IQuickSearchApi {
    */
   getQuickSearchValue(): string;
   getQuickSearchStyle(): IStyle;
+  getQuickSearchDisplayAction(): 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
+
   setQuickSearchDisplayAction(
     displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'
   ): void;

@@ -59,7 +59,7 @@ class PlusMinusPopupComponent extends React.Component<
         plusMinus.ColumnId = arrayParams[1];
         this.setState({
           EditedAdaptableBlotterObject: plusMinus,
-          WizardStatus: WizardStatus.None,
+          WizardStatus: WizardStatus.New,
           WizardStartIndex: 1,
         });
       }

@@ -58,7 +58,7 @@ class CellValidationPopupComponent extends React.Component<
         this.setState({
           EditedAdaptableBlotterObject: cellValitdation,
           WizardStartIndex: 1,
-          WizardStatus: WizardStatus.None,
+          WizardStatus: WizardStatus.New,
         });
       }
     }

@@ -3,6 +3,13 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import StringExtensions from '../Utilities/Extensions/StringExtensions';
+import { IRange } from '../Utilities/Interface/Expression/IRange';
+import RangeHelper from '../Utilities/Helpers/RangeHelper';
+import { Expression } from '../Utilities/Expression';
+import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
+import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
+import { DisplayAction } from '../Utilities/Enums';
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -15,5 +22,41 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
       ScreenPopups.QuickSearchPopup,
       StrategyConstants.QuickSearchGlyph
     );
+  }
+
+  public createQuickSearchRange() {
+    // if searchText is empty then set clear both types, otherwise set them
+    if (StringExtensions.IsNullOrEmpty(this.blotter.api.quickSearchApi.getQuickSearchValue())) {
+      this.blotter.adaptableBlotterStore.TheStore.dispatch(SystemRedux.QuickSearchClearRange());
+      this.blotter.adaptableBlotterStore.TheStore.dispatch(
+        SystemRedux.QuickSearchClearVisibleColumnExpressions()
+      );
+    } else {
+      let quickSearchRange: IRange = RangeHelper.CreateValueRangeFromOperand(
+        this.blotter.api.quickSearchApi.getQuickSearchValue()
+      );
+      this.blotter.adaptableBlotterStore.TheStore.dispatch(
+        SystemRedux.QuickSearchSetRange(quickSearchRange)
+      );
+
+      // we just create expressions for the visible columns - in the Blotter we will check for those missing;
+      // we dont keep this updated - just set once as good for majority of use cases
+      let quickSearchVisibleColumnExpressions: Expression[] = [];
+      for (let column of this.blotter.api.gridApi.getVisibleColumns()) {
+        if (RangeHelper.IsColumnAppropriateForRange(quickSearchRange.Operator, column)) {
+          let quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(
+            column.ColumnId,
+            null,
+            null,
+            null,
+            [quickSearchRange]
+          );
+          quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression);
+        }
+      }
+      this.blotter.adaptableBlotterStore.TheStore.dispatch(
+        SystemRedux.QuickSearchSetVisibleColumnExpressions(quickSearchVisibleColumnExpressions)
+      );
+    }
   }
 }

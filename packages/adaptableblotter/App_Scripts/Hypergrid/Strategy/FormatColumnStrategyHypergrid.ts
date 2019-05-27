@@ -9,18 +9,19 @@ export class FormatColumnStrategyHypergrid extends FormatColumnStrategy
     this.blotterBypass = blotterBypass;
   }
 
-  protected InitStyles(): void {
+  public initStyles(): void {
     //JO: temp fix
     if (!this.blotterBypass) {
       this.blotterBypass = this.blotter as AdaptableBlotter;
     }
     let columns = this.blotter.api.gridApi.getColumns();
+    let formatColumns = this.blotter.api.formatColumnApi.getAllFormatColumn();
     this.blotterBypass.removeAllCellStyleHypergrid('formatColumn');
 
     // adding this check as things can get mixed up during 'clean user data'
-    if (columns.length > 0 && this.FormatColumnState.FormatColumns.length > 0) {
+    if (columns.length > 0 && formatColumns.length > 0) {
       this.blotterBypass.forAllRecordsDo((row: any) => {
-        this.FormatColumnState.FormatColumns.forEach(fc => {
+        formatColumns.forEach(fc => {
           this.blotterBypass.addCellStyleHypergrid(
             this.blotterBypass.getPrimaryKeyValueFromRecord(row),
             fc.ColumnId,

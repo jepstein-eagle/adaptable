@@ -50,7 +50,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
         this.setState({
           EditedAdaptableBlotterObject: cellValitdation,
           WizardStartIndex: 1,
-          WizardStatus: WizardStatus.None,
+          WizardStatus: WizardStatus.New,
         });
       }
     }

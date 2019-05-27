@@ -224,8 +224,4 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       this.blotter.setValueBatch(successfulValues);
     }
   }
-
-  protected GetPlusMinusState(): PlusMinusState {
-    return this.blotter.api.plusMinusApi.getPlusMinusState();
-  }
 }

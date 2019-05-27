@@ -6,7 +6,6 @@ import { IFlashingCell } from '../../Utilities/Interface/BlotterObjects/IFlashin
 import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
-import { RowNode, GridOptions } from 'ag-grid-community';
 
 export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
   implements IFlashingCellsStrategy {
@@ -24,80 +23,74 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
     // dont handle
   }
 
-  protected InitState() {
-    if (this.FlashingCellState != this.blotter.api.flashingCellApi.getFlashingCellState()) {
-      this.FlashingCellState = this.blotter.api.flashingCellApi.getFlashingCellState();
+  public initStyles(): void {
+    let numericColumns = ColumnHelper.getNumericColumns(this.blotter.api.gridApi.getColumns());
+    let theBlotter = this.blotter as AdaptableBlotter;
+    let currentFlashing = this.currentFlashing;
+    let flashingCells: IFlashingCell[] = this.blotter.api.flashingCellApi.getAllFlashingCell();
+    numericColumns.forEach(col => {
+      let fc = flashingCells.find(x => x.ColumnId == col.ColumnId && x.IsLive);
+      let index = flashingCells.indexOf(fc);
+      let cellClassRules: any = {};
+      if (fc) {
+        cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function(params: any) {
+          let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node);
+          let key = primaryKey + col.ColumnId + 'up';
+          let currentFlashTimer = currentFlashing.get(key);
+          if (currentFlashTimer) {
+            return true;
+          }
 
-      let numericColumns = ColumnHelper.getNumericColumns(this.blotter.api.gridApi.getColumns());
-      let theBlotter = this.blotter as AdaptableBlotter;
-      let currentFlashing = this.currentFlashing;
-
-      numericColumns.forEach(col => {
-        let fc = this.FlashingCellState.FlashingCells.find(
-          x => x.ColumnId == col.ColumnId && x.IsLive
-        );
-        let index = this.FlashingCellState.FlashingCells.indexOf(fc);
-        let cellClassRules: any = {};
-        if (fc) {
-          cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function(params: any) {
-            let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node);
-            let key = primaryKey + col.ColumnId + 'up';
-            let currentFlashTimer = currentFlashing.get(key);
+          let oldValue = theBlotter.DataService.GetPreviousColumnValue(
+            col.ColumnId,
+            primaryKey,
+            params.value,
+            ChangeDirection.Up
+          );
+          if (oldValue && params.value > oldValue) {
             if (currentFlashTimer) {
-              return true;
+              window.clearTimeout(currentFlashTimer);
             }
+            let timer: number = window.setTimeout(() => {
+              currentFlashing.set(key, null);
+              theBlotter.refreshCells(params.node, [col.ColumnId]);
+            }, fc.FlashingCellDuration);
+            currentFlashing.set(key, timer);
+            return true;
+          } else {
+            return false;
+          }
+        };
 
-            let oldValue = theBlotter.DataService.GetPreviousColumnValue(
-              col.ColumnId,
-              primaryKey,
-              params.value,
-              ChangeDirection.Up
-            );
-            if (oldValue && params.value > oldValue) {
-              if (currentFlashTimer) {
-                window.clearTimeout(currentFlashTimer);
-              }
-              let timer: number = window.setTimeout(() => {
-                currentFlashing.set(key, null);
-                theBlotter.refreshCells(params.node, [col.ColumnId]);
-              }, fc.FlashingCellDuration);
-              currentFlashing.set(key, timer);
-              return true;
-            } else {
-              return false;
-            }
-          };
-
-          cellClassRules[StyleConstants.FLASH_DOWN_STYLE + index] = function(params: any) {
-            let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node);
-            let key = primaryKey + col.ColumnId + 'down';
-            let currentFlashTimer = currentFlashing.get(key);
+        cellClassRules[StyleConstants.FLASH_DOWN_STYLE + index] = function(params: any) {
+          let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node);
+          let key = primaryKey + col.ColumnId + 'down';
+          let currentFlashTimer = currentFlashing.get(key);
+          if (currentFlashTimer) {
+            return true;
+          }
+          let oldValue = theBlotter.DataService.GetPreviousColumnValue(
+            col.ColumnId,
+            primaryKey,
+            params.value,
+            ChangeDirection.Down
+          );
+          if (oldValue && params.value < oldValue) {
             if (currentFlashTimer) {
-              return true;
+              window.clearTimeout(currentFlashTimer);
             }
-            let oldValue = theBlotter.DataService.GetPreviousColumnValue(
-              col.ColumnId,
-              primaryKey,
-              params.value,
-              ChangeDirection.Down
-            );
-            if (oldValue && params.value < oldValue) {
-              if (currentFlashTimer) {
-                window.clearTimeout(currentFlashTimer);
-              }
-              let timer: any = window.setTimeout(() => {
-                currentFlashing.set(key, null);
-                theBlotter.refreshCells(params.node, [col.ColumnId]);
-              }, fc.FlashingCellDuration);
-              currentFlashing.set(key, timer);
-              return true;
-            } else {
-              return false;
-            }
-          };
-        }
-        theBlotter.setCellClassRules(cellClassRules, col.ColumnId, 'FlashingCell');
-      });
-    }
+            let timer: any = window.setTimeout(() => {
+              currentFlashing.set(key, null);
+              theBlotter.refreshCells(params.node, [col.ColumnId]);
+            }, fc.FlashingCellDuration);
+            currentFlashing.set(key, timer);
+            return true;
+          } else {
+            return false;
+          }
+        };
+      }
+      theBlotter.setCellClassRules(cellClassRules, col.ColumnId, 'FlashingCell');
+    });
   }
 }

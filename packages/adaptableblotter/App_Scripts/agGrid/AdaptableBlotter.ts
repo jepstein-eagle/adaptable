@@ -1452,7 +1452,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       const conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.strategies.get(
         StrategyConstants.ConditionalStyleStrategyId
       ) as IConditionalStyleStrategy;
-      conditionalStyleagGridStrategy.InitStyles();
+      conditionalStyleagGridStrategy.initStyles();
     }
   }
 

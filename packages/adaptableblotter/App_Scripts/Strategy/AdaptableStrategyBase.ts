@@ -26,7 +26,14 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   public popupMenuItem: IMenuItem;
 
   protected InitState(): void {
-    // derived in each strategy that needs to manage state
+    /**
+     *  derived in each strategy that needs to manage state
+     * Most now have been taken elsewhere into services.  All that is left is:
+     *  Chart Strategy - lots
+     *  Custom Sort
+     *  Percent Bar
+     *  Theme
+     */
   }
 
   public getPopupMenuItem(): IMenuItem {

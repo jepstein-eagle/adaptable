@@ -33,11 +33,15 @@ export class QuickSearchApi extends ApiBase implements IQuickSearchApi {
   }
 
   public getQuickSearchValue(): string {
-    return this.getBlotterState().QuickSearch.QuickSearchText;
+    return this.getQuickSearchState().QuickSearchText;
   }
 
   public getQuickSearchStyle(): IStyle {
-    return this.getBlotterState().QuickSearch.Style;
+    return this.getQuickSearchState().Style;
+  }
+
+  public getQuickSearchDisplayAction(): 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell' {
+    return this.getQuickSearchState().DisplayAction;
   }
 
   public setQuickSearchDisplayAction(

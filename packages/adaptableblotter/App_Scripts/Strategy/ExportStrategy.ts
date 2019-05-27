@@ -4,8 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { IExportStrategy } from './Interface/IExportStrategy';
-import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
-import { ExportDestination, StateChangedTrigger } from '../Utilities/Enums';
+import { ExportDestination } from '../Utilities/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ReportHelper } from '../Utilities/Helpers/ReportHelper';
@@ -13,7 +12,7 @@ import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash';
 import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
-import { IReport, IAutoExport } from '../Utilities/Interface/BlotterObjects/IReport';
+import { IReport } from '../Utilities/Interface/BlotterObjects/IReport';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
@@ -21,7 +20,6 @@ import { IColumn } from '../Utilities/Interface/IColumn';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   private ExportState: ExportState;
-  private CurrentLiveReports: ILiveReport[];
   private isSendingData = false;
   private workAroundOpenfinExcelDataDimension: Map<string, { x: number; y: number }> = new Map();
 
@@ -32,11 +30,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ExportStrategyId, blotter);
-    this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded(blotter));
+    this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded());
 
     OpenfinHelper.OnExcelDisconnected().Subscribe(() => {
       LoggingHelper.LogAdaptableBlotterInfo('Excel closed stopping all Live Excel');
-      this.CurrentLiveReports.forEach(cle => {
+      this.blotter.api.internalApi.getLiveReports().forEach(cle => {
         this.blotter.adaptableBlotterStore.TheStore.dispatch(
           SystemRedux.ReportStopLive(cle.Report, ExportDestination.OpenfinExcel)
         );
@@ -46,7 +44,9 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       LoggingHelper.LogAdaptableBlotterInfo(
         'Workbook closed:' + workbook.name + ', Stopping Openfin Live Excel'
       );
-      let liveReport = this.CurrentLiveReports.find(x => x.WorkbookName == workbook.name);
+      let liveReport = this.blotter.api.internalApi
+        .getLiveReports()
+        .find(x => x.WorkbookName == workbook.name);
       if (liveReport) {
         this.blotter.adaptableBlotterStore.TheStore.dispatch(
           SystemRedux.ReportStopLive(liveReport.Report, ExportDestination.OpenfinExcel)
@@ -55,9 +55,9 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     });
     OpenfinHelper.OnWorkbookSaved().Subscribe((sender, workbookSavedEvent) => {
       LoggingHelper.LogAdaptableBlotterInfo('Workbook Saved', workbookSavedEvent);
-      let liveReport = this.CurrentLiveReports.find(
-        x => x.WorkbookName == workbookSavedEvent.OldName
-      );
+      let liveReport = this.blotter.api.internalApi
+        .getLiveReports()
+        .find(x => x.WorkbookName == workbookSavedEvent.OldName);
       this.blotter.adaptableBlotterStore.TheStore.dispatch(
         SystemRedux.ReportStopLive(liveReport.Report, ExportDestination.OpenfinExcel)
       );
@@ -76,10 +76,10 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       this.throttledRecomputeAndSendLiveExcelEvent();
     });
     this.blotter.onSelectedCellsChanged().Subscribe(() => {
-      if (ArrayExtensions.IsNotNullOrEmpty(this.CurrentLiveReports)) {
-        let liveReport = this.CurrentLiveReports.find(
-          x => x.Report.Name == ReportHelper.SELECTED_CELLS_REPORT
-        );
+      if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.internalApi.getLiveReports())) {
+        let liveReport = this.blotter.api.internalApi
+          .getLiveReports()
+          .find(x => x.Report.Name == ReportHelper.SELECTED_CELLS_REPORT);
         if (liveReport) {
           this.throttledRecomputeAndSendLiveExcelEvent();
         }
@@ -87,7 +87,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     });
   }
 
-  private handleGridReloaded(blotter: IAdaptableBlotter) {
+  private handleGridReloaded() {
     this.scheduleReports();
   }
 
@@ -105,11 +105,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       this.throttledRecomputeAndSendLiveExcelEvent();
       return;
     }
-    if (ArrayExtensions.IsNotNullOrEmpty(this.CurrentLiveReports)) {
+    if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.internalApi.getLiveReports())) {
       this.isSendingData = true;
       let ippStyle = this.blotter.getIPPStyle();
       let promises: Promise<any>[] = [];
-      this.CurrentLiveReports.forEach(cle => {
+      this.blotter.api.internalApi.getLiveReports().forEach(cle => {
         if (cle.ExportDestination == ExportDestination.OpenfinExcel) {
           promises.push(
             Promise.resolve()
@@ -305,27 +305,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     return actionReturnObj.ActionReturn;
   }
 
-  /*
-    private getColsForReport(Report: IReport): IColumn[] {
-        let allCols: IColumn[] = this.blotter.adaptableBlotterStore.TheStore.getState().Grid.Columns;
-        return (Report.ReportColumnScope == ReportColumnScope.AllColumns) ?
-            allCols :
-            Report.Columns.map(c => allCols.find(col => col.ColumnId == c));
-    }
-*/
-
-  protected InitState() {
-    if (this.ExportState != this.blotter.api.exportApi.getExportState()) {
-      this.scheduleReports();
-      this.ExportState = this.blotter.api.exportApi.getExportState();
-    }
-
-    if (this.CurrentLiveReports != this.blotter.api.internalApi.getLiveReports()) {
-      this.CurrentLiveReports = this.blotter.api.internalApi.getLiveReports();
-    }
-  }
-
-  private scheduleReports(): void {
+  public scheduleReports(): void {
     // just clear all jobs and recreate - simplest thing to do...
     this.blotter.ScheduleService.ClearAllExportJobs();
 

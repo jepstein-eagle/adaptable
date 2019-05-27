@@ -6,29 +6,17 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
-import { IStateChangedArgs } from '../Utilities/Services/DataService';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {
-  protected ConditionalStyleState: ConditionalStyleState;
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ConditionalStyleStrategyId, blotter);
     this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) =>
       this.handleDataSourceChanged(eventText)
     );
-    this.blotter.DataService.OnStateChanged().Subscribe((sender, stateChangedArgs) =>
-      this.test(stateChangedArgs)
-    );
-    this.blotter.onGridDataBound().Subscribe((sender, blotter) => this.handleGridDataBound());
-  }
 
-  protected test(args: IStateChangedArgs): void {
-    if (args.StrategyId == StrategyConstants.ConditionalStyleStrategyId) {
-      // console.log('received update');
-      // console.log(args);
-      //  this.ConditionalStyleState = args.NewState as ConditionalStyleState;
-      //  this.InitStyles();
-    }
+    this.blotter.onGridDataBound().Subscribe(() => this.handleGridDataBound());
   }
 
   protected addPopupMenuItem() {
@@ -37,15 +25,6 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
       ScreenPopups.ConditionalStylePopup,
       StrategyConstants.ConditionalStyleGlyph
     );
-  }
-
-  protected InitState() {
-    if (
-      this.ConditionalStyleState != this.blotter.api.conditionalStyleApi.getConditionalStyleState()
-    ) {
-      this.ConditionalStyleState = this.blotter.api.conditionalStyleApi.getConditionalStyleState();
-      this.InitStyles();
-    }
   }
 
   public addContextMenuItem(column: IColumn): void {
@@ -65,12 +44,13 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   // Called when we have re-bound the grid e.g. after sorting a column or even after a smart edit or plus / minus :(
   private handleGridDataBound() {
     if (
-      this.ConditionalStyleState != null &&
-      this.ConditionalStyleState.ConditionalStyles.length > 0
+      ArrayExtensions.IsNotNullOrEmpty(
+        this.blotter.api.conditionalStyleApi.getAllConditionalStyle()
+      )
     ) {
-      this.InitStyles();
+      this.initStyles();
     }
   }
 
-  public abstract InitStyles(): void;
+  public abstract initStyles(): void;
 }
