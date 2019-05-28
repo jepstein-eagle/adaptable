@@ -14,11 +14,12 @@ import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExportDestination } from '../../Utilities/Enums';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { IReport } from '../../Utilities/Interface/BlotterObjects/IReport';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {
   IPPDomainsPages: IPPDomain[];
-  onApplyExport: (value: string, folder: string, page: string) => ExportRedux.ExportApplyAction;
+  onApplyExport: (value: IReport, folder: string, page: string) => ExportRedux.ExportApplyAction;
   onCancel: () => PopupRedux.PopupHideScreenAction;
   ErrorMsg: string;
   LiveReports: ILiveReport[];
@@ -40,6 +41,11 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
   render() {
     let cssClassName: string = StyleConstants.PUSHPULL_PAGE_SELECTOR;
     let itemsElements: any[] = [];
+    // this line is total rubbish and just here to get the build to work!
+    let tempToFixBuild: IReport = this.props.LiveReports.find(
+      lr => lr.Report.Name == this.props.PopupParams
+    ).Report;
+
     this.props.IPPDomainsPages.forEach(x => {
       // let itemsElements = this.props.IPPDomainsPages.map(x => {
       if (x.Name == this.state.SelectedFolder) {
@@ -114,7 +120,7 @@ class IPushPullDomainPageSelectorComponent extends React.Component<
           bsStyle="primary"
           onClick={() => {
             this.props.onApplyExport(
-              this.props.PopupParams,
+              tempToFixBuild,
               this.state.SelectedFolder,
               this.state.SelectedPage
             );
@@ -147,7 +153,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onApplyExport: (value: string, folder: string, page: string) =>
+    onApplyExport: (value: IReport, folder: string, page: string) =>
       dispatch(ExportRedux.ExportApply(value, ExportDestination.iPushPull, folder, page)),
     onCancel: () => {
       dispatch(PopupRedux.PopupHideScreen());
