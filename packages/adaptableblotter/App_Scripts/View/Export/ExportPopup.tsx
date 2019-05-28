@@ -196,7 +196,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     }
     if (
       report.ReportRowScope == ReportRowScope.ExpressionRows &&
-      ExpressionHelper.IsEmptyExpression(report.Expression)
+      ExpressionHelper.IsNullOrEmptyExpression(report.Expression)
     ) {
       return false;
     }

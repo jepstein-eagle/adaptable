@@ -215,7 +215,7 @@ class CellValidationPopupComponent extends React.Component<
     let cellValidationRule = this.state.EditedAdaptableBlotterObject as ICellValidationRule;
     return (
       StringExtensions.IsNotNullOrEmpty(cellValidationRule.ColumnId) &&
-      ExpressionHelper.IsEmptyOrValidExpression(cellValidationRule.Expression) &&
+      ExpressionHelper.IsNullOrEmptyOrValidExpression(cellValidationRule.Expression) &&
       StringExtensions.IsNotNullOrEmpty(
         CellValidationHelper.createCellValidationDescription(cellValidationRule, this.props.Columns)
       )

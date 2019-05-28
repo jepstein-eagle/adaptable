@@ -208,7 +208,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     let AlertRule = this.state.EditedAdaptableBlotterObject as IAlertDefinition;
     return (
       StringExtensions.IsNotNullOrEmpty(AlertRule.ColumnId) &&
-      ExpressionHelper.IsEmptyOrValidExpression(AlertRule.Expression)
+      ExpressionHelper.IsNullOrEmptyOrValidExpression(AlertRule.Expression)
     );
   }
 }

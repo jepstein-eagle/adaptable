@@ -91,6 +91,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               key={StrategyConstants.ColumnChooserStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
               TeamSharingActivated={this.props.TeamSharingActivated}
+              Blotter={this.props.Blotter}
               AccessLevel={this.getAccessLevel(StrategyConstants.ColumnChooserStrategyId)}
             />
           </div>
@@ -136,6 +137,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               getColumnValueDisplayValuePairDistinctList={
                 this.props.Blotter.getColumnValueDisplayValuePairDistinctList
               }
+              Blotter={this.props.Blotter}
               AccessLevel={this.getAccessLevel(StrategyConstants.ConditionalStyleStrategyId)}
             />
           </div>
@@ -154,6 +156,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             <CellValidationSummary
               key={StrategyConstants.CellValidationStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
+              Blotter={this.props.Blotter}
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={
                 this.props.Blotter.getColumnValueDisplayValuePairDistinctList
@@ -199,6 +202,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             <ColumnFilterSummary
               key={StrategyConstants.ColumnFilterStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
+              Blotter={this.props.Blotter}
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={
                 this.props.Blotter.getColumnValueDisplayValuePairDistinctList
@@ -222,6 +226,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             <FormatColumnSummary
               key={StrategyConstants.FormatColumnStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
+              Blotter={this.props.Blotter}
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={
                 this.props.Blotter.getColumnValueDisplayValuePairDistinctList
@@ -244,6 +249,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             <FreeTextColumnSummary
               key={StrategyConstants.FormatColumnStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
+              Blotter={this.props.Blotter}
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={
                 this.props.Blotter.getColumnValueDisplayValuePairDistinctList
@@ -269,6 +275,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             <PercentBarSummary
               key={StrategyConstants.FormatColumnStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
+              Blotter={this.props.Blotter}
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={
                 this.props.Blotter.getColumnValueDisplayValuePairDistinctList
@@ -294,6 +301,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             <PlusMinusSummary
               key={StrategyConstants.PlusMinusStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
+              Blotter={this.props.Blotter}
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={
                 this.props.Blotter.getColumnValueDisplayValuePairDistinctList
@@ -344,6 +352,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             <CalculatedColumnSummary
               key={StrategyConstants.CalculatedColumnStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
+              Blotter={this.props.Blotter}
               AccessLevel={this.getAccessLevel(StrategyConstants.CalculatedColumnStrategyId)}
             />
           </div>

@@ -23,6 +23,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
 import { IPercentBar } from '../../Utilities/Interface/BlotterObjects/IPercentBar';
+import { DistinctCriteriaPairValue } from '../../Utilities/Enums';
 
 export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarSummaryComponent> {
   PercentBars: IPercentBar[];
@@ -118,6 +119,17 @@ export class PercentBarSummaryComponent extends React.Component<
   onNew() {
     let configEntity: IPercentBar = ObjectFactory.CreateEmptyPercentBar();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+
+    let distinctColumnsValues: number[] = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
+      this.props.SummarisedColumn.ColumnId,
+      DistinctCriteriaPairValue.RawValue,
+      false
+    ).map(pair => {
+      return pair.RawValue;
+    });
+    configEntity.MinValue = Math.min(...distinctColumnsValues);
+    configEntity.MaxValue = Math.max(...distinctColumnsValues);
+
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
       WizardStartIndex: 1,

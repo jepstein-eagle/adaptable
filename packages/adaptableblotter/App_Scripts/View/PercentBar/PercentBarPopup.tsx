@@ -66,7 +66,6 @@ class PercentBarPopupComponent extends React.Component<
       }
       if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
         let editPercentRender = this.props.PercentBars.find(x => x.ColumnId == arrayParams[1]);
-        let index = this.props.PercentBars.findIndex(x => x.ColumnId == editPercentRender.ColumnId);
         this.onEdit(editPercentRender);
       }
     }

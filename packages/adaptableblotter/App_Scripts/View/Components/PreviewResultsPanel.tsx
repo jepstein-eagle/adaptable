@@ -107,7 +107,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
   ): string {
     let returnString: string[] = [];
     for (let CellValidation of CellValidations) {
-      let expressionDescription: string = ExpressionHelper.IsNotEmptyExpression(
+      let expressionDescription: string = ExpressionHelper.IsNotNullOrEmptyExpression(
         CellValidation.Expression
       )
         ? ' when ' +

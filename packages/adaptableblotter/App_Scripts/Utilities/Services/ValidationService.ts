@@ -73,7 +73,7 @@ export class ValidationService implements IValidationService {
 
       // first check the rules which have expressions
       let expressionRules: ICellValidationRule[] = editingRules.filter(r =>
-        ExpressionHelper.IsNotEmptyExpression(r.Expression)
+        ExpressionHelper.IsNotNullOrEmptyExpression(r.Expression)
       );
 
       if (expressionRules.length > 0) {
@@ -107,7 +107,7 @@ export class ValidationService implements IValidationService {
 
       // now check the rules without expressions
       let noExpressionRules: ICellValidationRule[] = editingRules.filter(r =>
-        ExpressionHelper.IsEmptyExpression(r.Expression)
+        ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
       );
       for (let noExpressionRule of noExpressionRules) {
         if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedEvent, columns)) {

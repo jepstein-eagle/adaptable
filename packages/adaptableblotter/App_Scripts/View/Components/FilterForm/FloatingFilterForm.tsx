@@ -103,7 +103,7 @@ class FloatingFilterFormComponent extends React.Component<
       // no filter so make sure our stuff is clear
       if (this.state.placeholder != 'TEMP') {
         if (
-          ExpressionHelper.IsNotEmptyExpression(this.state.filterExpression) ||
+          ExpressionHelper.IsNotNullOrEmptyExpression(this.state.filterExpression) ||
           StringExtensions.IsNotNullOrEmpty(this.state.placeholder) ||
           StringExtensions.IsNotNullOrEmpty(this.state.floatingFilterFormText)
         ) {

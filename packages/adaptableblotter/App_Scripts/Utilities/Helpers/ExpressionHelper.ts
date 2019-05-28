@@ -545,12 +545,27 @@ export function IsEmptyExpression(expression: Expression): boolean {
   );
 }
 
+export function IsNotNullOrEmptyExpression(expression: Expression): boolean {
+  return !IsNullOrEmptyExpression(expression);
+}
+
 export function IsNotEmptyExpression(expression: Expression): boolean {
   return !IsEmptyExpression(expression);
 }
 
 export function IsNotEmptyOrInvalidExpression(expression: Expression): boolean {
   return IsNotEmptyExpression(expression) && IsExpressionValid(expression);
+}
+
+export function IsNullOrEmptyOrValidExpression(expression: Expression): boolean {
+  if (expression == null) {
+    return true;
+  }
+
+  if (IsEmptyExpression(expression)) {
+    return true;
+  }
+  return IsExpressionValid(expression);
 }
 
 export function IsEmptyOrValidExpression(expression: Expression): boolean {
@@ -809,8 +824,10 @@ export const ExpressionHelper = {
   GetColumnListFromExpression,
   IsNullOrEmptyExpression,
   IsEmptyExpression,
+  IsNotNullOrEmptyExpression,
   IsNotEmptyExpression,
   IsNotEmptyOrInvalidExpression,
+  IsNullOrEmptyOrValidExpression,
   IsEmptyOrValidExpression,
   IsExpressionValid,
   IsEmptyRange,

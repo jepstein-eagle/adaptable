@@ -304,7 +304,7 @@ export function CreateCellValidationMessage(
     CellValidation.ColumnId,
     columns
   );
-  let expressionDescription: string = ExpressionHelper.IsNotEmptyExpression(
+  let expressionDescription: string = ExpressionHelper.IsNotNullOrEmptyExpression(
     CellValidation.Expression
   )
     ? ' when ' + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns)
