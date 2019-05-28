@@ -47,7 +47,7 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
         editClick={() => this.props.onEdit(Chart)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
-        overrideDisableEdit={null}
+        overrideDisableEdit={undefined}
         EntityType={StrategyConstants.ChartStrategyName}
       />
     );

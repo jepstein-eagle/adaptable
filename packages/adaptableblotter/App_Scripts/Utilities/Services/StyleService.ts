@@ -5,6 +5,7 @@ import {
   ConditionalStyleState,
   QuickSearchState,
   FormatColumnState,
+  PercentBarState,
 } from '../../Redux/ActionsReducers/Interface/IState';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { StyleHelper } from '../Helpers/StyleHelper';
@@ -17,17 +18,18 @@ import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditional
 
 //Somehow all the CSSRules do not work so I end up just forcing the innerHTML......
 export class StyleService {
-  private FlashingCellState: FlashingCellState;
-  private ConditionalStyleState: ConditionalStyleState;
-  private QuickSearchState: QuickSearchState;
-  private FormatColumnState: FormatColumnState;
+  private flashingCellState!: FlashingCellState;
+  private conditionalStyleState!: ConditionalStyleState;
+  private quickSearchState!: QuickSearchState;
+  private formatColumnState!: FormatColumnState;
+
   private style: HTMLStyleElement;
   constructor(private blotter: IAdaptableBlotter) {
     this.blotter = blotter;
     // Create the <style> tag
     this.style = document.createElement('style');
     this.style.id =
-      blotter.blotterOptions.containerOptions.adaptableBlotterContainer +
+      blotter.blotterOptions.containerOptions!.adaptableBlotterContainer +
       '_' +
       blotter.blotterOptions.blotterId +
       '-style';
@@ -46,48 +48,44 @@ export class StyleService {
   private listenToStyleStoreChanges() {
     let isStyleStateChanged: boolean = false;
     if (this.blotter.isInitialised) {
-      if (this.FormatColumnState != this.blotter.api.formatColumnApi.getFormatColumnState()) {
+      if (this.formatColumnState != this.blotter.api.formatColumnApi.getFormatColumnState()) {
         isStyleStateChanged = true;
-        console.log('Format Column');
-        this.FormatColumnState = this.blotter.api.formatColumnApi.getFormatColumnState();
+        this.formatColumnState = this.blotter.api.formatColumnApi.getFormatColumnState();
         let formatColumnStrategy = <IFormatColumnStrategy>(
           this.blotter.strategies.get(StrategyConstants.FormatColumnStrategyId)
         );
         formatColumnStrategy.initStyles();
       }
 
-      if (this.FlashingCellState != this.blotter.api.flashingCellApi.getFlashingCellState()) {
+      if (this.flashingCellState != this.blotter.api.flashingCellApi.getFlashingCellState()) {
         isStyleStateChanged = true;
-        this.FlashingCellState = this.blotter.api.flashingCellApi.getFlashingCellState();
-        console.log('flashing cell');
-        this.FormatColumnState = this.blotter.api.formatColumnApi.getFormatColumnState();
+        this.flashingCellState = this.blotter.api.flashingCellApi.getFlashingCellState();
+        this.formatColumnState = this.blotter.api.formatColumnApi.getFormatColumnState();
         let flashingCellsStrategy = <IFlashingCellsStrategy>(
           this.blotter.strategies.get(StrategyConstants.FlashingCellsStrategyId)
         );
         flashingCellsStrategy.initStyles();
       }
 
-      if (this.QuickSearchState != this.blotter.api.quickSearchApi.getQuickSearchState()) {
+      if (this.quickSearchState != this.blotter.api.quickSearchApi.getQuickSearchState()) {
         // not quite right as we reapply if the display action changes but for some reason we cannot compare on styles
         // and this way at least we dont rebuild styles every time we update quick search text
         if (
-          this.QuickSearchState != null &&
-          this.QuickSearchState.QuickSearchText ==
+          this.quickSearchState != null &&
+          this.quickSearchState.QuickSearchText ==
             this.blotter.api.quickSearchApi.getQuickSearchValue()
         ) {
-          console.log('quick search - not text');
           isStyleStateChanged = true;
         }
-        this.QuickSearchState = this.blotter.api.quickSearchApi.getQuickSearchState();
+        this.quickSearchState = this.blotter.api.quickSearchApi.getQuickSearchState();
       }
 
       if (
-        this.ConditionalStyleState !=
+        this.conditionalStyleState !=
         this.blotter.api.conditionalStyleApi.getConditionalStyleState()
       ) {
         isStyleStateChanged = true;
-        this.ConditionalStyleState = this.blotter.api.conditionalStyleApi.getConditionalStyleState();
-        console.log('cond style');
+        this.conditionalStyleState = this.blotter.api.conditionalStyleApi.getConditionalStyleState();
         let conditionalStyleStrategy = <IConditionalStyleStrategy>(
           this.blotter.strategies.get(StrategyConstants.ConditionalStyleStrategyId)
         );
@@ -97,13 +95,11 @@ export class StyleService {
       if (isStyleStateChanged) {
         this.clearCSSRules();
 
-        console.log('Here');
-
         // Format Column
-        this.FormatColumnState.FormatColumns.forEach(formatColumn => {
+        this.formatColumnState.FormatColumns.forEach(formatColumn => {
           let styleName = StyleHelper.CreateIndexedStyleName(
             StrategyConstants.FormatColumnStrategyId,
-            this.FormatColumnState.FormatColumns.indexOf(formatColumn),
+            this.formatColumnState.FormatColumns.indexOf(formatColumn),
             this.blotter
           );
           this.addCSSRule(
@@ -126,12 +122,12 @@ export class StyleService {
         });
 
         //we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
-        this.ConditionalStyleState.ConditionalStyles.filter(
+        this.conditionalStyleState.ConditionalStyles.filter(
           x => x.ConditionalStyleScope == ConditionalStyleScope.Row
         ).forEach(element => {
           let styleName = StyleHelper.CreateIndexedStyleName(
             StrategyConstants.ConditionalStyleStrategyId,
-            this.ConditionalStyleState.ConditionalStyles.indexOf(element),
+            this.conditionalStyleState.ConditionalStyles.indexOf(element),
             this.blotter
           );
           this.addCSSRule(
@@ -152,12 +148,12 @@ export class StyleService {
                 : '')
           );
         });
-        this.ConditionalStyleState.ConditionalStyles.filter(
+        this.conditionalStyleState.ConditionalStyles.filter(
           x => x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory
         ).forEach(element => {
           let styleName = StyleHelper.CreateIndexedStyleName(
             StrategyConstants.ConditionalStyleStrategyId,
-            this.ConditionalStyleState.ConditionalStyles.indexOf(element),
+            this.conditionalStyleState.ConditionalStyles.indexOf(element),
             this.blotter
           );
           this.addCSSRule(
@@ -178,12 +174,12 @@ export class StyleService {
                 : '')
           );
         });
-        this.ConditionalStyleState.ConditionalStyles.filter(
+        this.conditionalStyleState.ConditionalStyles.filter(
           x => x.ConditionalStyleScope == ConditionalStyleScope.Column
         ).forEach(element => {
           let styleName = StyleHelper.CreateIndexedStyleName(
             StrategyConstants.ConditionalStyleStrategyId,
-            this.ConditionalStyleState.ConditionalStyles.indexOf(element),
+            this.conditionalStyleState.ConditionalStyles.indexOf(element),
             this.blotter
           );
           this.addCSSRule(
@@ -206,34 +202,34 @@ export class StyleService {
         });
 
         // quick search
-        if (StringExtensions.IsNullOrEmpty(this.QuickSearchState.Style.ClassName)) {
+        if (StringExtensions.IsNullOrEmpty(this.quickSearchState.Style.ClassName)) {
           let styleName = StyleHelper.CreateStyleName(
             StrategyConstants.QuickSearchStrategyId,
             this.blotter
           );
-          console.log('adding quick search rule');
+
           this.addCSSRule(
             '.' + styleName,
             'background-color: ' +
-              this.QuickSearchState.Style.BackColor +
+              this.quickSearchState.Style.BackColor +
               ' !important;color: ' +
-              this.QuickSearchState.Style.ForeColor +
+              this.quickSearchState.Style.ForeColor +
               ' !important;font-weight: ' +
-              this.QuickSearchState.Style.FontWeight +
+              this.quickSearchState.Style.FontWeight +
               ' !important;font-style: ' +
-              this.QuickSearchState.Style.FontStyle +
+              this.quickSearchState.Style.FontStyle +
               ' !important;' +
-              (this.QuickSearchState.Style.FontSize
+              (this.quickSearchState.Style.FontSize
                 ? 'font-size: ' +
                   EnumExtensions.getCssFontSizeFromFontSizeEnum(
-                    this.QuickSearchState.Style.FontSize
+                    this.quickSearchState.Style.FontSize
                   ) +
                   ' !important'
                 : '')
           );
         }
         //we define last Flash since it has the highest priority
-        this.FlashingCellState.FlashingCells.forEach((element, index) => {
+        this.flashingCellState.FlashingCells.forEach((element, index) => {
           if (element.IsLive) {
             this.addCSSRule(
               '.' + StyleConstants.FLASH_UP_STYLE + index,
