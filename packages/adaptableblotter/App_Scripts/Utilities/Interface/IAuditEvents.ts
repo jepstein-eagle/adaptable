@@ -35,16 +35,12 @@ export enum StateObjectChangeType {
   Deleted = 'Deleted',
 }
 
-// Function Applied
-
 export interface IFunctionAppliedDetails {
   name: string;
   action: string;
-  info: string;
-  data: any;
+  info?: string;
+  data?: any;
 }
-
-// Cell Edited
 
 export interface ICellEditDetails {
   primarykey_column_value: string;

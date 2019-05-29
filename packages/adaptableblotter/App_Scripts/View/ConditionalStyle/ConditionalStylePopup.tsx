@@ -16,7 +16,10 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -34,7 +37,6 @@ interface ConditionalStylePopupProps
     condiditionalStyleCondition: IConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleAddAction;
   onEditConditionalStyle: (
-    index: number,
     condiditionalStyleCondition: IConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
@@ -59,6 +61,7 @@ class ConditionalStylePopupComponent extends React.Component<
         this.setState({
           EditedAdaptableBlotterObject: _editedConditionalStyle,
           WizardStartIndex: 1,
+          WizardStatus: WizardStatus.New,
         });
       }
     }
@@ -88,16 +91,13 @@ class ConditionalStylePopupComponent extends React.Component<
             cssClassName={cssClassName}
             AdaptableBlotterObject={conditionalStyle}
             colItems={colItems}
-            key={'CS' + index}
-            Index={index}
+            key={'CS' + (conditionalStyle.Uuid || index)}
             onShare={() => this.props.onShare(conditionalStyle)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             UserFilters={this.props.UserFilters}
             Columns={this.props.Columns}
-            onEdit={(index, conditionalStyle) =>
-              this.onEdit(index, conditionalStyle as IConditionalStyle)
-            }
-            onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(index, conditionalStyle)}
+            onEdit={() => this.onEdit(conditionalStyle)}
+            onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(conditionalStyle)}
           />
         );
       }
@@ -167,16 +167,16 @@ class ConditionalStylePopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyConditionalStyle(),
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
-  onEdit(index: number, condition: IConditionalStyle) {
+  onEdit(condition: IConditionalStyle) {
     let clonedObject: IConditionalStyle = Helper.cloneObject(condition);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -185,26 +185,22 @@ class ConditionalStylePopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let conditionalStyle: IConditionalStyle = this.state
-      .EditedAdaptableBlotterObject as IConditionalStyle;
-    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-      this.props.onEditConditionalStyle(
-        this.state.EditedAdaptableBlotterObjectIndex,
-        conditionalStyle
-      );
-    } else {
+    const conditionalStyle = this.state.EditedAdaptableBlotterObject as IConditionalStyle;
+    if (this.state.WizardStatus == WizardStatus.New) {
       this.props.onAddConditionalStyle(conditionalStyle);
+    } else if (this.state.WizardStatus == WizardStatus.Edit) {
+      this.props.onEditConditionalStyle(conditionalStyle);
     }
 
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -241,8 +237,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddConditionalStyle: (conditionalStyle: IConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
-    onEditConditionalStyle: (index: number, conditionalStyle: IConditionalStyle) =>
-      dispatch(ConditionalStyleRedux.ConditionalStyleEdit(index, conditionalStyle)),
+    onEditConditionalStyle: (conditionalStyle: IConditionalStyle) =>
+      dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)

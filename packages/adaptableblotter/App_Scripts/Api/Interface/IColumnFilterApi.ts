@@ -4,7 +4,6 @@ import { ColumnFilterState } from '../../Redux/ActionsReducers/Interface/IState'
 export interface IColumnFilterApi {
   getColumnFilterState(): ColumnFilterState;
   setColumnFilter(columnFilters: IColumnFilter[]): void;
-  setColumnFilterFromUserFilter(userFilter: string): void;
   clearColumnFilter(columnFilter: IColumnFilter): void;
   clearColumnFilterByColumn(column: string): void;
   clearColumnFilterByColumns(columns: string[]): void;

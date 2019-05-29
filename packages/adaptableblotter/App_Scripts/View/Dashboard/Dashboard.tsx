@@ -72,7 +72,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             UserFilters: this.props.UserFilters,
             SystemFilters: this.props.SystemFilters,
             ColorPalette: this.props.ColorPalette,
-            GridSorts: this.props.GridSorts,
+            ColumnSorts: this.props.ColumnSorts,
             cssClassName: cssClassName,
             AccessLevel: accessLevel,
             DashboardSize: dashboardSize,
@@ -147,7 +147,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     UserFilters: state.UserFilter.UserFilters,
     SystemFilters: state.SystemFilter.SystemFilters,
     ColorPalette: state.UserInterface.ColorPalette,
-    GridSorts: state.Grid.GridSorts,
+    ColumnSorts: state.Grid.ColumnSorts,
   };
 }
 

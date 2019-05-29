@@ -47,7 +47,7 @@ import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IVendorGridInfo } from '../Utilities/Interface/IVendorGridInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
-import { IGridSort } from '../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../Utilities/Interface/IColumnSort';
 import { IStyle } from '../Utilities/Interface/IStyle';
 import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
 import { IPercentBar } from '../Utilities/Interface/BlotterObjects/IPercentBar';
@@ -104,6 +104,8 @@ import { PieChartStrategy } from '../Strategy/PieChartStrategy';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
+import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
+import { SearchService } from '../Utilities/Services/SearchService';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
@@ -141,6 +143,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
   public FreeTextColumnService: IFreeTextColumnService;
   public ScheduleService: IScheduleService;
+  public SearchService: ISearchService;
 
   public blotterOptions: IAdaptableBlotterOptions;
   public vendorGridName: any;
@@ -180,6 +183,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.CalendarService = new CalendarService(this);
     this.DataService = new DataService(this);
     this.ValidationService = new ValidationService(this);
+    this.SearchService = new SearchService(this);
     // get the api ready
     this.api = new BlotterApi(this);
     this.ChartService = new ChartService(this);
@@ -862,20 +866,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public setCustomSort(columnId: string): void {
     //nothing to do except the reindex so the CustomSortSource does it's job if needed
-    let gridSort: IGridSort = this.adaptableBlotterStore.TheStore.getState().Grid.GridSorts.find(
+    let columnSort: IColumnSort = this.adaptableBlotterStore.TheStore.getState().Grid.ColumnSorts.find(
       x => x.Column == columnId
     );
-    if (gridSort) {
+    if (columnSort) {
       this.ReindexAndRepaint();
     }
   }
 
   public removeCustomSort(columnId: string): void {
     //nothing to do except the reindex so the CustomSortSource does it's job if needed
-    let gridSort: IGridSort = this.adaptableBlotterStore.TheStore.getState().Grid.GridSorts.find(
+    let columnSort: IColumnSort = this.adaptableBlotterStore.TheStore.getState().Grid.ColumnSorts.find(
       x => x.Column == columnId
     );
-    if (gridSort) {
+    if (columnSort) {
       this.ReindexAndRepaint();
     }
   }
@@ -1505,14 +1509,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.hyperGrid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
       var icon = '';
 
-      let gridSorts: IGridSort[] = this.adaptableBlotterStore.TheStore.getState().Grid.GridSorts;
+      let columnSorts: IColumnSort[] = this.adaptableBlotterStore.TheStore.getState().Grid
+        .ColumnSorts;
       let cols: any[] = this.hyperGrid.behavior.getActiveColumns();
-      gridSorts.forEach((gs: IGridSort, index: number) => {
+      columnSorts.forEach((gs: IColumnSort, index: number) => {
         let foundCol = cols.find(c => c.name == gs.Column);
 
         if (foundCol && foundCol.index == columnIndex) {
           icon = gs.SortOrder == SortOrder.Ascending ? UPWARDS_BLACK_ARROW : DOWNWARDS_BLACK_ARROW;
-          if (gridSorts.length > 1) {
+          if (columnSorts.length > 1) {
             let gridIndex = index + 1;
             icon += '(' + gridIndex + ') ';
           }
@@ -1717,35 +1722,35 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public onSortSaved(gridColumnIndex: number) {
-    let currentGridSorts: IGridSort[] = this.adaptableBlotterStore.TheStore.getState().Grid
-      .GridSorts;
-    let newGridSorts: IGridSort[] = [].concat(currentGridSorts);
+    let currentColumnSorts: IColumnSort[] = this.adaptableBlotterStore.TheStore.getState().Grid
+      .ColumnSorts;
+    let newColumnSorts: IColumnSort[] = [].concat(currentColumnSorts);
 
     let column = this.hyperGrid.behavior.getActiveColumns()[gridColumnIndex].name;
 
     // not rigth for existing sorts in terms of turning off...
-    let currentGridSort: IGridSort = newGridSorts.find(gs => gs.Column == column);
-    if (currentGridSort) {
+    let currentColumnSort: IColumnSort = newColumnSorts.find(gs => gs.Column == column);
+    if (currentColumnSort) {
       // if exists and ascending make descending
-      if (currentGridSort.SortOrder == SortOrder.Ascending) {
-        currentGridSort.SortOrder = SortOrder.Descending;
+      if (currentColumnSort.SortOrder == SortOrder.Ascending) {
+        currentColumnSort.SortOrder = SortOrder.Descending;
       } else {
         // it exists and is descendig so need to 'turn off' (i.e.remove from colection)
-        let index = newGridSorts.findIndex(a => a.Column == currentGridSort.Column);
-        newGridSorts.splice(index, 1);
+        let index = newColumnSorts.findIndex(a => a.Column == currentColumnSort.Column);
+        newColumnSorts.splice(index, 1);
       }
     } else {
-      let newGridSort: IGridSort = { Column: column, SortOrder: SortOrder.Ascending };
-      newGridSorts.push(newGridSort);
+      let newcColumnSort: IColumnSort = { Column: column, SortOrder: SortOrder.Ascending };
+      newColumnSorts.push(newcColumnSort);
     }
 
     this.adaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSortAction>(
-      GridRedux.GridSetSort(newGridSorts)
+      GridRedux.GridSetSort(newColumnSorts)
     );
     this.hyperGrid.behavior.reindex();
   }
 
-  public setGridSort(): void {
+  public setColumnSort(): void {
     this.hyperGrid.behavior.reindex();
   }
 

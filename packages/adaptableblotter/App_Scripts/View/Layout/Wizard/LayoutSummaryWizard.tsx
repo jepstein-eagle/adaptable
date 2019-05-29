@@ -26,7 +26,7 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
       { Key: 'Columns', Value: this.getColumnNames() },
       {
         Key: 'Grid Sorts',
-        Value: LayoutHelper.getGridSort(this.props.Data.GridSorts, this.props.Columns),
+        Value: LayoutHelper.getColumnSort(this.props.Data.ColumnSorts, this.props.Columns),
       },
     ];
 

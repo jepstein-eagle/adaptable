@@ -1,25 +1,25 @@
-export function IsNull(stringToCheck: string) {
-  return stringToCheck == null;
+export function IsNull(stringToCheck: string | undefined) {
+  return stringToCheck == null || stringToCheck == undefined;
 }
 
-export function IsNotNull(stringToCheck: string) {
+export function IsNotNull(stringToCheck: string | undefined) {
   return !IsNull(stringToCheck);
 }
 
-export function IsEmpty(stringToCheck: string) {
+export function IsEmpty(stringToCheck: string | undefined) {
   return stringToCheck == '';
 }
 
-export function IsNotEmpty(stringToCheck: string) {
+export function IsNotEmpty(stringToCheck: string | undefined) {
   return !IsEmpty(stringToCheck);
 }
 
-export function IsNullOrEmpty(stringToCheck: string) {
+export function IsNullOrEmpty(stringToCheck: string | undefined) {
   return IsNull(stringToCheck) || IsEmpty(stringToCheck);
 }
 
-export function IsNotNullOrEmpty(stringToCheck: string) {
-  return !this.IsNullOrEmpty(stringToCheck);
+export function IsNotNullOrEmpty(stringToCheck: string | undefined) {
+  return !IsNullOrEmpty(stringToCheck);
 }
 
 export function PlaceSpaceBetweenCapitalisedWords(stringToCheck: string) {

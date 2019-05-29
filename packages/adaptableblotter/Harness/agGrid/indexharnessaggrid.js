@@ -806,7 +806,7 @@ let reportJson = {
     Layouts: [
       {
         Columns: ['ask', 'bid', 'bidOfferSpread'],
-        GridSorts: [],
+        ColumnSorts: [],
         Name: 'Citi Price',
       },
     ],

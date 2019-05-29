@@ -3,6 +3,7 @@ import { ExportDestination } from '../../Utilities/Enums';
 import * as Redux from 'redux';
 import { IReport, IAutoExport } from '../../Utilities/Interface/BlotterObjects/IReport';
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const EXPORT_APPLY = 'EXPORT_APPLY';
 export const REPORT_SELECT = 'REPORT_SELECT';
@@ -12,29 +13,25 @@ export const REPORT_DELETE = 'REPORT_DELETE';
 export const IPP_LOGIN = 'IPP_LOGIN';
 
 export interface ExportApplyAction extends Redux.Action {
-  Report: string;
+  Report: IReport;
   ExportDestination: ExportDestination;
   Folder?: string;
   Page?: string;
+}
+
+export interface ReportAction extends Redux.Action {
+  report: IReport;
 }
 
 export interface ReportSelectAction extends Redux.Action {
   SelectedReport: string;
 }
 
-export interface ReportAddAction extends Redux.Action {
-  Report: IReport;
-}
+export interface ReportAddAction extends ReportAction {}
 
-export interface ReportEditAction extends Redux.Action {
-  Index: number;
-  Report: IReport;
-}
+export interface ReportEditAction extends ReportAction {}
 
-export interface ReportDeleteAction extends Redux.Action {
-  Index: number;
-  Report: IReport;
-}
+export interface ReportDeleteAction extends ReportAction {}
 
 export interface AutoExportAddUpdateAction extends Redux.Action {
   Index: number;
@@ -55,25 +52,23 @@ export const ReportSelect = (SelectedReport: string): ReportSelectAction => ({
   SelectedReport,
 });
 
-export const ReportAdd = (Report: IReport): ReportAddAction => ({
+export const ReportAdd = (report: IReport): ReportAddAction => ({
   type: REPORT_ADD,
-  Report,
+  report,
 });
 
-export const ReportEdit = (Index: number, Report: IReport): ReportEditAction => ({
+export const ReportEdit = (report: IReport): ReportEditAction => ({
   type: REPORT_EDIT,
-  Index,
-  Report,
+  report,
 });
 
-export const ReportDelete = (Index: number, Report: IReport): ReportDeleteAction => ({
+export const ReportDelete = (report: IReport): ReportDeleteAction => ({
   type: REPORT_DELETE,
-  Index,
-  Report,
+  report,
 });
 
 export const ExportApply = (
-  Report: string,
+  Report: IReport,
   ExportDestination: ExportDestination,
   Folder?: string,
   Page?: string
@@ -100,36 +95,41 @@ export const ExportReducer: Redux.Reducer<ExportState> = (
   state: ExportState = initialExportState,
   action: Redux.Action
 ): ExportState => {
+  let reports: IReport[];
+
   switch (action.type) {
     case REPORT_SELECT:
       return Object.assign({}, state, {
         CurrentReport: (<ReportSelectAction>action).SelectedReport,
       });
+
     case REPORT_ADD: {
-      let Reports: IReport[] = [].concat(state.Reports);
-      let actionTypedAddUpdate = <ReportAddAction>action;
-      Reports.push(actionTypedAddUpdate.Report);
-      return Object.assign({}, state, {
-        Reports: Reports,
-        CurrentReport: actionTypedAddUpdate.Report.Name,
-      });
-    }
-    case REPORT_EDIT: {
-      let Reports: IReport[] = [].concat(state.Reports);
-      let actionTypedAddUpdate = <ReportEditAction>action;
-      Reports[actionTypedAddUpdate.Index] = actionTypedAddUpdate.Report;
-      return Object.assign({}, state, {
-        Reports: Reports,
-        CurrentReport: actionTypedAddUpdate.Report.Name,
-      });
-    }
-    case REPORT_DELETE: {
-      let Reports: IReport[] = [].concat(state.Reports);
-      let actionTypedDelete = <ReportDeleteAction>action;
-      Reports.splice(actionTypedDelete.Index, 1);
-      return Object.assign({}, state, { Reports: Reports, CurrentReport: '' });
+      const actionReport: IReport = (action as ReportAction).report;
+
+      if (!actionReport.Uuid) {
+        actionReport.Uuid = createUuid();
+      }
+      reports = [].concat(state.Reports);
+      reports.push(actionReport);
+      return { ...state, Reports: reports };
     }
 
+    case REPORT_EDIT:
+      const actionReport: IReport = (action as ReportAction).report;
+      return {
+        ...state,
+        Reports: state.Reports.map(abObject =>
+          abObject.Uuid === actionReport.Uuid ? actionReport : abObject
+        ),
+      };
+
+    case REPORT_DELETE: {
+      const actionReport: IReport = (action as ReportAction).report;
+      return {
+        ...state,
+        Reports: state.Reports.filter(abObject => abObject.Uuid !== actionReport.Uuid),
+      };
+    }
     default:
       return state;
   }

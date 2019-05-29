@@ -2,19 +2,20 @@ import { ColumnFilterState } from './Interface/IState';
 import * as Redux from 'redux';
 import { IColumnFilter } from '../../Utilities/Interface/BlotterObjects/IColumnFilter';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const COLUMN_FILTER_ADD = 'COLUMN_FILTER_ADD';
 export const COLUMN_FILTER_EDIT = 'COLUMN_FILTER_EDIT';
 export const COLUMN_FILTER_CLEAR_ALL = 'COLUMN_FILTER_CLEAR_ALL';
 export const COLUMN_FILTER_CLEAR = 'COLUMN_FILTER_CLEAR';
 
-export interface ColumnFilterAddAction extends Redux.Action {
+export interface ColumnFilterAction extends Redux.Action {
   columnFilter: IColumnFilter;
 }
 
-export interface ColumnFilterEditAction extends Redux.Action {
-  columnFilter: IColumnFilter;
-}
+export interface ColumnFilterAddAction extends ColumnFilterAction {}
+
+export interface ColumnFilterEditAction extends ColumnFilterAction {}
 
 export interface ColumnFilterClearAllAction extends Redux.Action {}
 
@@ -49,28 +50,30 @@ export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (
   state: ColumnFilterState = initialFilterState,
   action: Redux.Action
 ): ColumnFilterState => {
-  let index: number;
   let columnFilters: IColumnFilter[];
 
   switch (action.type) {
     case COLUMN_FILTER_ADD: {
-      let actionTypedAddUpdate = <ColumnFilterAddAction>action;
+      const actionColumnFilter: IColumnFilter = (action as ColumnFilterAction).columnFilter;
+      if (!actionColumnFilter.Uuid) {
+        actionColumnFilter.Uuid = createUuid();
+      }
       columnFilters = [].concat(state.ColumnFilters);
-      index = columnFilters.findIndex(
-        i => i.ColumnId == actionTypedAddUpdate.columnFilter.ColumnId
-      );
-      columnFilters.push(actionTypedAddUpdate.columnFilter);
-      return Object.assign({}, state, { ColumnFilters: columnFilters });
+      columnFilters.push(actionColumnFilter);
+      return { ...state, ColumnFilters: columnFilters };
     }
 
     case COLUMN_FILTER_EDIT: {
-      let actionTypedAddUpdate = <ColumnFilterEditAction>action;
-      columnFilters = [].concat(state.ColumnFilters);
-      index = columnFilters.findIndex(
-        i => i.ColumnId == actionTypedAddUpdate.columnFilter.ColumnId
+      const actionColumnFilter: IColumnFilter = (action as ColumnFilterAction).columnFilter;
+      let filtersToSave = state.ColumnFilters.map(abObject =>
+        abObject.Uuid === actionColumnFilter.Uuid ? actionColumnFilter : abObject
       );
-      columnFilters[index] = actionTypedAddUpdate.columnFilter;
-      return Object.assign({}, state, { ColumnFilters: columnFilters });
+      return {
+        ...state,
+        ColumnFilters: state.ColumnFilters.map(abObject =>
+          abObject.Uuid === actionColumnFilter.Uuid ? actionColumnFilter : abObject
+        ),
+      };
     }
 
     case COLUMN_FILTER_CLEAR_ALL: {
@@ -80,7 +83,7 @@ export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (
     case COLUMN_FILTER_CLEAR: {
       let actionTypedDelete = <ColumnFilterClearAction>action;
       columnFilters = [].concat(state.ColumnFilters);
-      index = columnFilters.findIndex(i => i.ColumnId == actionTypedDelete.columnId);
+      let index = columnFilters.findIndex(i => i.Uuid == actionTypedDelete.columnId);
       columnFilters.splice(index, 1);
       return Object.assign({}, state, { ColumnFilters: columnFilters });
     }

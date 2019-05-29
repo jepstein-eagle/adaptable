@@ -2,24 +2,21 @@ import { CalculatedColumnState } from './Interface/IState';
 import * as Redux from 'redux';
 import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const CALCULATEDCOLUMN_ADD = 'CALCULATEDCOLUMN_ADD';
 export const CALCULATEDCOLUMN_EDIT = 'CALCULATEDCOLUMN_EDIT';
 export const CALCULATEDCOLUMN_DELETE = 'CALCULATEDCOLUMN_DELETE';
 
-export interface CalculatedColumnAddAction extends Redux.Action {
+export interface CalculatedColumnAction extends Redux.Action {
   calculatedColumn: ICalculatedColumn;
 }
 
-export interface CalculatedColumnEditAction extends Redux.Action {
-  index: number;
-  calculatedColumn: ICalculatedColumn;
-}
+export interface CalculatedColumnAddAction extends CalculatedColumnAction {}
 
-export interface CalculatedColumnDeleteAction extends Redux.Action {
-  index: number;
-  calculatedColumn: ICalculatedColumn;
-}
+export interface CalculatedColumnEditAction extends CalculatedColumnAction {}
+
+export interface CalculatedColumnDeleteAction extends CalculatedColumnAction {}
 
 export const CalculatedColumnAdd = (
   calculatedColumn: ICalculatedColumn
@@ -29,20 +26,16 @@ export const CalculatedColumnAdd = (
 });
 
 export const CalculatedColumnEdit = (
-  index: number,
   calculatedColumn: ICalculatedColumn
 ): CalculatedColumnEditAction => ({
   type: CALCULATEDCOLUMN_EDIT,
-  index,
   calculatedColumn,
 });
 
 export const CalculatedColumnDelete = (
-  index: number,
   calculatedColumn: ICalculatedColumn
 ): CalculatedColumnDeleteAction => ({
   type: CALCULATEDCOLUMN_DELETE,
-  index,
   calculatedColumn,
 });
 
@@ -54,31 +47,43 @@ export const CalculatedColumnReducer: Redux.Reducer<CalculatedColumnState> = (
   state: CalculatedColumnState = initialCalculatedColumnState,
   action: Redux.Action
 ): CalculatedColumnState => {
+  let calculatedColumns: ICalculatedColumn[];
+
   switch (action.type) {
     case CALCULATEDCOLUMN_ADD: {
-      let items: Array<ICalculatedColumn> = [].concat(state.CalculatedColumns);
+      const actionCalculatedColumn: ICalculatedColumn = (action as CalculatedColumnAction)
+        .calculatedColumn;
 
-      items.push((<CalculatedColumnAddAction>action).calculatedColumn);
-      return Object.assign({}, state, {
-        CalculatedColumns: items,
-      });
+      if (!actionCalculatedColumn.Uuid) {
+        actionCalculatedColumn.Uuid = createUuid();
+      }
+      calculatedColumns = [].concat(state.CalculatedColumns);
+      calculatedColumns.push(actionCalculatedColumn);
+      return { ...state, CalculatedColumns: calculatedColumns };
     }
+
     case CALCULATEDCOLUMN_EDIT: {
-      let items: Array<ICalculatedColumn> = [].concat(state.CalculatedColumns);
-      let index = (<CalculatedColumnEditAction>action).index;
-      items[index] = (<CalculatedColumnEditAction>action).calculatedColumn;
-
-      return Object.assign({}, state, {
-        CalculatedColumns: items,
-      });
+      const actionCalculatedColumn: ICalculatedColumn = (action as CalculatedColumnAction)
+        .calculatedColumn;
+      return {
+        ...state,
+        CalculatedColumns: state.CalculatedColumns.map(abObject =>
+          abObject.Uuid === actionCalculatedColumn.Uuid ? actionCalculatedColumn : abObject
+        ),
+      };
     }
-    case CALCULATEDCOLUMN_DELETE:
-      var items: Array<ICalculatedColumn> = [].concat(state.CalculatedColumns);
-      let index = (<CalculatedColumnDeleteAction>action).index;
-      items.splice(index, 1);
-      return Object.assign({}, state, {
-        CalculatedColumns: items,
-      });
+
+    case CALCULATEDCOLUMN_DELETE: {
+      const actionCalculatedColumn: ICalculatedColumn = (action as CalculatedColumnAction)
+        .calculatedColumn;
+      return {
+        ...state,
+        CalculatedColumns: state.CalculatedColumns.filter(
+          abObject => abObject.Uuid !== actionCalculatedColumn.Uuid
+        ),
+      };
+    }
+
     default:
       return state;
   }

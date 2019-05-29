@@ -1,11 +1,15 @@
 import { IScheduleService } from './Interface/IScheduleService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import * as NodeSchedule from 'node-schedule';
+import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ISchedule } from '../Interface/BlotterObjects/ISchedule';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DateExtensions } from '../Extensions/DateExtensions';
 import { IReport } from '../Interface/BlotterObjects/IReport';
 import { IReminder } from '../Interface/BlotterObjects/IReminder';
+import { ReminderState, ExportState } from '../../Redux/ActionsReducers/Interface/IState';
+import { IReminderStrategy } from '../../Strategy/Interface/IReminderStrategy';
+import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
 
 /**
  * This class is used for managing scheduling of Reports and Reminders
@@ -16,8 +20,14 @@ export class ScheduleService implements IScheduleService {
   private alertJobs: NodeSchedule.Job[];
   private exportJobs: NodeSchedule.Job[];
 
+  private reminderState: ReminderState;
+  private exportState: ExportState;
+
   constructor(private blotter: IAdaptableBlotter) {
     this.blotter = blotter;
+    this.blotter.adaptableBlotterStore.TheStore.subscribe(() =>
+      this.listenToScheduleStoreChanges()
+    );
     this.alertJobs = [];
     this.exportJobs = [];
 
@@ -33,6 +43,26 @@ export class ScheduleService implements IScheduleService {
       var refreshGridJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
         this.blotter.reloadGrid();
       });
+    }
+  }
+
+  protected listenToScheduleStoreChanges(): void {
+    if (this.blotter.isInitialised) {
+      if (this.reminderState != this.getReminderState()) {
+        this.reminderState = this.getReminderState();
+        let reminderStrategy = <IReminderStrategy>(
+          this.blotter.strategies.get(StrategyConstants.ReminderStrategyId)
+        );
+        reminderStrategy.scheduleReminders();
+      }
+
+      if (this.exportState != this.getExportState()) {
+        this.exportState = this.getExportState();
+        let exportStrategy = <IExportStrategy>(
+          this.blotter.strategies.get(StrategyConstants.ExportStrategyId)
+        );
+        exportStrategy.scheduleReports();
+      }
     }
   }
 
@@ -71,6 +101,8 @@ export class ScheduleService implements IScheduleService {
         date.setHours(schedule.Hour);
         date.setMinutes(schedule.Minute);
         date.setSeconds(0);
+      } else {
+        return null; // because it will rerun at midnight so we can get rid
       }
     }
 
@@ -97,5 +129,13 @@ export class ScheduleService implements IScheduleService {
       }
     });
     this.exportJobs = [];
+  }
+
+  private getReminderState(): ReminderState {
+    return this.blotter.api.reminderApi.getReminderState();
+  }
+
+  private getExportState(): ExportState {
+    return this.blotter.api.exportApi.getExportState();
   }
 }

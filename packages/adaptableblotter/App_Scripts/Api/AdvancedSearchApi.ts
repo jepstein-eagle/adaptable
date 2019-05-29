@@ -6,6 +6,7 @@ import { IAdvancedSearchApi } from './Interface/IAdvancedSearchApi';
 import { AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
+import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
 
 export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
   public getAdvancedSearchState(): AdvancedSearchState {
@@ -14,12 +15,12 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
 
   public setAdvancedSearchState(advancedSearchState: AdvancedSearchState): void {
     // add/update each advanced search where the states are different
-    let advancedSearches: IAdvancedSearch[] = this.getAllAdvancedSearch();
-    //  let advancedSearchNmes: string[]=
+    const advancedSearches: IAdvancedSearch[] = this.getAllAdvancedSearch();
+
     if (advancedSearches != advancedSearchState.AdvancedSearches) {
       advancedSearchState.AdvancedSearches.forEach((advancedSearch: IAdvancedSearch) => {
-        if (ArrayExtensions.ContainsItem(advancedSearches, advancedSearch)) {
-          this.editAdvancedSearch(advancedSearch.Name, advancedSearch);
+        if (BlotterHelper.BlotterObjectExistsInState(advancedSearches, advancedSearch)) {
+          this.editAdvancedSearch(advancedSearch);
         } else {
           this.addAdvancedSearch(advancedSearch);
         }
@@ -39,7 +40,7 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
   }
 
   public setAdvancedSearch(advancedSearchName: string): void {
-    let advancedSearch: IAdvancedSearch = this.getBlotterState().AdvancedSearch.AdvancedSearches.find(
+    const advancedSearch: IAdvancedSearch = this.getBlotterState().AdvancedSearch.AdvancedSearches.find(
       a => a.Name == advancedSearchName
     );
     if (
@@ -61,22 +62,17 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAdd(advancedSearch));
   }
 
-  public editAdvancedSearch(advancedSearchName: string, advancedSearch: IAdvancedSearch): void {
-    let searchIndex: number = this.getBlotterState().AdvancedSearch.AdvancedSearches.findIndex(
-      a => a.Name == advancedSearchName
-    );
-    this.dispatchAction(AdvancedSearchRedux.AdvancedSearchEdit(searchIndex, advancedSearch));
+  public editAdvancedSearch(advancedSearch: IAdvancedSearch): void {
+    this.dispatchAction(AdvancedSearchRedux.AdvancedSearchEdit(advancedSearch));
   }
 
   public deleteAdvancedSearch(advancedSearchName: string): void {
-    let searchToDelete = this.getAdvancedSearchByName(advancedSearchName);
+    const searchToDelete = this.getAdvancedSearchByName(advancedSearchName);
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchDelete(searchToDelete));
   }
 
   public getCurrentAdvancedSearch(): IAdvancedSearch {
-    let currentAdvancedSearchName: string = this.getBlotterState().AdvancedSearch
-      .CurrentAdvancedSearch;
-    return this.getAdvancedSearchByName(currentAdvancedSearchName);
+    return this.getAdvancedSearchByName(this.getCurrentAdvancedSearchName());
   }
 
   public getCurrentAdvancedSearchName(): string {

@@ -149,8 +149,4 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
       PreviewValidationSummary: PreviewHelper.GetPreviewValidationSummary(previewResults),
     };
   }
-
-  private GetSmartEditState(): SmartEditState {
-    return this.blotter.api.smartEditApi.getSmartEditState();
-  }
 }

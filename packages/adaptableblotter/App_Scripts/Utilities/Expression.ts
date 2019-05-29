@@ -1,11 +1,17 @@
 import { IRangeExpression } from './Interface/Expression/IRangeExpression';
 import { IFilterExpression } from './Interface/Expression/IFilterExpression';
 import { IColumnValueExpression } from './Interface/Expression/IColumnValueExpression';
+import { createUuid, TypeUuid } from './Uuid';
 
 /**
  * The main Expression object - comprised of 3 collections: Column Values, Filters and Ranges
  */
 export class Expression {
+  /**
+   * @property {Uuid} - unique identifier for the expression
+   */
+  public Uuid: TypeUuid;
+
   /**
    * @property {ColumnValueExpressions} - Column values (as displayed in the Grid)
    */
@@ -23,5 +29,6 @@ export class Expression {
     this.ColumnValueExpressions = ColumnValueExpressions;
     this.FilterExpressions = FilterExpressions;
     this.RangeExpressions = RangeExpressions;
+    this.Uuid = createUuid();
   }
 }

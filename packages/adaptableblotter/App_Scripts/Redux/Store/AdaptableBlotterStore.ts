@@ -17,7 +17,6 @@ import * as CalculatedColumnRedux from '../ActionsReducers/CalculatedColumnRedux
 import * as ShortcutRedux from '../ActionsReducers/ShortcutRedux';
 import * as GridRedux from '../ActionsReducers/GridRedux';
 import * as SystemRedux from '../ActionsReducers/SystemRedux';
-import * as HomeRedux from '../ActionsReducers/HomeRedux';
 import * as PlusMinusRedux from '../ActionsReducers/PlusMinusRedux';
 import * as ExportRedux from '../ActionsReducers/ExportRedux';
 import * as FlashingCellsRedux from '../ActionsReducers/FlashingCellsRedux';
@@ -112,8 +111,6 @@ import {
   IStateObjectChangedDetails,
   StateObjectChangeType,
 } from '../../Utilities/Interface/IAuditEvents';
-import { Calendar } from 'igniteui-react-core/ES2015/culture';
-import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 
 /*
 This is the main store for the Adaptable Blotter
@@ -676,7 +673,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               diffInfo: diff,
               propertyName: CURRENT_CHART_NAME_STATE_PROPERTY,
               oldValue: oldState.Chart.CurrentChartName,
-              newValue: actionTyped.CurrentChartName,
+              newValue: actionTyped.chartName,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
@@ -688,7 +685,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Chart,
               diffInfo: diff,
-              objectChanged: actionTyped.ChartDefinition,
+              objectChanged: actionTyped.chartDefinition,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -701,7 +698,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Chart,
               diffInfo: diff,
-              objectChanged: actionTyped.ChartDefinition,
+              objectChanged: actionTyped.chartDefinition,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -714,7 +711,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Chart,
               diffInfo: diff,
-              objectChanged: actionTyped.ChartDefinition,
+              objectChanged: actionTyped.chartDefinition,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -732,7 +729,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.ColumnCategory,
               diffInfo: diff,
-              objectChanged: actionTyped.ColumnCategory,
+              objectChanged: actionTyped.columnCategory,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -745,7 +742,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.ColumnCategory,
               diffInfo: diff,
-              objectChanged: actionTyped.ColumnCategory,
+              objectChanged: actionTyped.columnCategory,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -758,7 +755,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.ColumnCategory,
               diffInfo: diff,
-              objectChanged: actionTyped.ColumnCategory,
+              objectChanged: actionTyped.columnCategory,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -802,7 +799,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.ColumnFilter,
               diffInfo: diff,
-              objectChanged: actionTyped.columnId,
+              objectChanged: undefined, // TODO: actionTyped.columnId - this should have the object not te column?
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -870,40 +867,40 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
           CUSTOM SORT
           **********************
            */
-          case CustomSortRedux.CUSTOMSORT_ADD: {
+          case CustomSortRedux.CUSTOM_SORT_ADD: {
             let actionTyped = <CustomSortRedux.CustomSortAddAction>action;
             let changedDetails: IStateObjectChangedDetails = {
               name: StrategyConstants.CustomSortStrategyId,
               actionType: action.type,
               state: newState.CustomSort,
               diffInfo: diff,
-              objectChanged: actionTyped.CustomSort,
+              objectChanged: actionTyped.customSort,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case CustomSortRedux.CUSTOMSORT_EDIT: {
+          case CustomSortRedux.CUSTOM_SORT_EDIT: {
             let actionTyped = <CustomSortRedux.CustomSortEditAction>action;
             let changedDetails: IStateObjectChangedDetails = {
               name: StrategyConstants.CustomSortStrategyId,
               actionType: action.type,
               state: newState.CustomSort,
               diffInfo: diff,
-              objectChanged: actionTyped.CustomSort,
+              objectChanged: actionTyped.customSort,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case CustomSortRedux.CUSTOMSORT_DELETE: {
+          case CustomSortRedux.CUSTOM_SORT_DELETE: {
             let actionTyped = <CustomSortRedux.CustomSortDeleteAction>action;
             let changedDetails: IStateObjectChangedDetails = {
               name: StrategyConstants.CustomSortStrategyId,
               actionType: action.type,
               state: newState.CustomSort,
               diffInfo: diff,
-              objectChanged: actionTyped.CustomSort,
+              objectChanged: actionTyped.customSort,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -928,40 +925,40 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case DataSourceRedux.DATASOURCE_ADD: {
+          case DataSourceRedux.DATA_SOURCE_ADD: {
             let actionTyped = <DataSourceRedux.DataSourceAddAction>action;
             let changedDetails: IStateObjectChangedDetails = {
               name: StrategyConstants.DataSourceStrategyId,
               actionType: action.type,
               state: newState.DataSource,
               diffInfo: diff,
-              objectChanged: actionTyped.DataSource,
+              objectChanged: actionTyped.dataSource,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case DataSourceRedux.DATASOURCE_EDIT: {
+          case DataSourceRedux.DATA_SOURCE_EDIT: {
             let actionTyped = <DataSourceRedux.DataSourceEditAction>action;
             let changedDetails: IStateObjectChangedDetails = {
               name: StrategyConstants.DataSourceStrategyId,
               actionType: action.type,
               state: newState.DataSource,
               diffInfo: diff,
-              objectChanged: actionTyped.DataSource,
+              objectChanged: actionTyped.dataSource,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case DataSourceRedux.DATASOURCE_DELETE: {
+          case DataSourceRedux.DATA_SOURCE_DELETE: {
             let actionTyped = <DataSourceRedux.DataSourceDeleteAction>action;
             let changedDetails: IStateObjectChangedDetails = {
               name: StrategyConstants.DataSourceStrategyId,
               actionType: action.type,
               state: newState.DataSource,
               diffInfo: diff,
-              objectChanged: actionTyped.DataSource,
+              objectChanged: actionTyped.dataSource,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -993,7 +990,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Export,
               diffInfo: diff,
-              objectChanged: actionTyped.Report,
+              objectChanged: actionTyped.report,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1006,7 +1003,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Export,
               diffInfo: diff,
-              objectChanged: actionTyped.Report,
+              objectChanged: actionTyped.report,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1019,7 +1016,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Export,
               diffInfo: diff,
-              objectChanged: actionTyped.Report,
+              objectChanged: actionTyped.report,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1083,7 +1080,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.FormatColumn,
               diffInfo: diff,
-              objectChanged: actionTyped.FormatColumn,
+              objectChanged: actionTyped.formatColumn,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1096,7 +1093,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.FormatColumn,
               diffInfo: diff,
-              objectChanged: actionTyped.FormatColumn,
+              objectChanged: actionTyped.formatColumn,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1109,7 +1106,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.FormatColumn,
               diffInfo: diff,
-              objectChanged: actionTyped.FormatColumn,
+              objectChanged: actionTyped.formatColumn,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1127,7 +1124,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.FreeTextColumn,
               diffInfo: diff,
-              objectChanged: actionTyped.FreeTextColumn,
+              objectChanged: actionTyped.freeTextColumn,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1140,7 +1137,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.FreeTextColumn,
               diffInfo: diff,
-              objectChanged: actionTyped.FreeTextColumn,
+              objectChanged: actionTyped.freeTextColumn,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1153,7 +1150,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.FreeTextColumn,
               diffInfo: diff,
-              objectChanged: actionTyped.FreeTextColumn,
+              objectChanged: actionTyped.freeTextColumn,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1186,7 +1183,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Layout,
               diffInfo: diff,
-              objectChanged: actionTyped.Layout,
+              objectChanged: actionTyped.layout,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1199,7 +1196,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Layout,
               diffInfo: diff,
-              objectChanged: actionTyped.Layout,
+              objectChanged: actionTyped.layout,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1212,7 +1209,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Layout,
               diffInfo: diff,
-              objectChanged: actionTyped.Layout,
+              objectChanged: actionTyped.layout,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1225,7 +1222,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Layout,
               diffInfo: diff,
-              objectChanged: actionTyped.Layout,
+              objectChanged: actionTyped.layout,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1243,7 +1240,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.PercentBar,
               diffInfo: diff,
-              objectChanged: actionTyped.PercentBar,
+              objectChanged: actionTyped.percentBar,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1256,7 +1253,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.PercentBar,
               diffInfo: diff,
-              objectChanged: actionTyped.PercentBar,
+              objectChanged: actionTyped.percentBar,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1269,7 +1266,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.PercentBar,
               diffInfo: diff,
-              objectChanged: actionTyped.PercentBar,
+              objectChanged: actionTyped.percentBar,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1287,7 +1284,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.PlusMinus,
               diffInfo: diff,
-              objectChanged: actionTyped.PlusMinusRule,
+              objectChanged: actionTyped.plusMinusRule,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1300,7 +1297,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.PlusMinus,
               diffInfo: diff,
-              objectChanged: actionTyped.PlusMinusRule,
+              objectChanged: actionTyped.plusMinusRule,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1313,7 +1310,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.PlusMinus,
               diffInfo: diff,
-              objectChanged: actionTyped.PlusMinusRule,
+              objectChanged: actionTyped.plusMinusRule,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1383,7 +1380,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Reminder,
               diffInfo: diff,
-              objectChanged: actionTyped.Reminder,
+              objectChanged: actionTyped.reminder,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1396,7 +1393,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Reminder,
               diffInfo: diff,
-              objectChanged: actionTyped.Reminder,
+              objectChanged: actionTyped.reminder,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1409,7 +1406,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Reminder,
               diffInfo: diff,
-              objectChanged: actionTyped.Reminder,
+              objectChanged: actionTyped.reminder,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1427,7 +1424,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Shortcut,
               diffInfo: diff,
-              objectChanged: actionTyped.Shortcut,
+              objectChanged: actionTyped.shortcut,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1440,7 +1437,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Shortcut,
               diffInfo: diff,
-              objectChanged: actionTyped.Shortcut,
+              objectChanged: actionTyped.shortcut,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1453,7 +1450,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.Shortcut,
               diffInfo: diff,
-              objectChanged: actionTyped.Shortcut,
+              objectChanged: actionTyped.shortcut,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1523,7 +1520,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.UserFilter,
               diffInfo: diff,
-              objectChanged: actionTyped.UserFilter,
+              objectChanged: actionTyped.userFilter,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1536,7 +1533,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.UserFilter,
               diffInfo: diff,
-              objectChanged: actionTyped.UserFilter,
+              objectChanged: actionTyped.userFilter,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1549,7 +1546,7 @@ var stateChangedAuditLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any 
               actionType: action.type,
               state: newState.UserFilter,
               diffInfo: diff,
-              objectChanged: actionTyped.UserFilter,
+              objectChanged: actionTyped.userFilter,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptableBlotter.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1600,7 +1597,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
         let state = middlewareAPI.getState();
 
         // Note: not done custom sort as not sure how!
-        // Bulk Update Apply and Smart Edit Apply we do in the Bulk Update Strategy
+        // Shortcut Apply, Bulk Update Apply and Smart Edit Apply we do in relevant Strategy
         switch (action.type) {
           case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
             let actionTyped = <AdvancedSearchRedux.AdvancedSearchSelectAction>action;
@@ -1632,13 +1629,11 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
 
           case ChartRedux.CHART_DEFINITION_SELECT: {
             let actionTyped = <ChartRedux.ChartDefinitionSelectAction>action;
-            let chart = state.Chart.ChartDefinitions.find(
-              cd => cd.Name == actionTyped.CurrentChartName
-            );
+            let chart = state.Chart.ChartDefinitions.find(cd => cd.Name == actionTyped.chartName);
             let functionAppliedDetails: IFunctionAppliedDetails = {
               name: StrategyConstants.ChartStrategyId,
               action: action.type,
-              info: actionTyped.CurrentChartName,
+              info: actionTyped.chartName,
               data: chart,
             };
             adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
@@ -1662,12 +1657,11 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
 
           case ExportRedux.EXPORT_APPLY: {
             let actionTyped = <ExportRedux.ExportApplyAction>action;
-            let report = state.Export.Reports.find(r => r.Name == actionTyped.Report);
             let functionAppliedDetails: IFunctionAppliedDetails = {
               name: StrategyConstants.ExportStrategyId,
               action: action.type,
-              info: actionTyped.Report,
-              data: report,
+              info: actionTyped.Report.Name,
+              data: actionTyped.Report,
             };
             adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
@@ -1765,22 +1759,6 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
-          case ShortcutRedux.SHORTCUT_APPLY: {
-            let actionTyped = <ShortcutRedux.ShortcutApplyAction>action;
-
-            let functionAppliedDetails: IFunctionAppliedDetails = {
-              name: StrategyConstants.ShortcutStrategyId,
-              action: action.type,
-              info: 'KeyPressed:' + actionTyped.KeyEventString,
-              data: {
-                Shortcut: actionTyped.Shortcut,
-                PrimaryKey: actionTyped.CellInfo.Id,
-                ColumnId: actionTyped.CellInfo.ColumnId,
-              },
-            };
-            adaptableBlotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
-            return next(action);
-          }
 
           case ThemeRedux.THEME_SELECT: {
             let actionTyped = <ThemeRedux.ThemeSelectAction>action;
@@ -1870,13 +1848,27 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            *******************/
 
           /**
-           * Use Case: User has applied an Advanced Search
+           * Use Case: User has selected an Advanced Search
            * Action: Apply Grid Filtering
            */
           case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
-            console.log('Testing if we add this twice - worried that we do...');
             let ret = next(action);
             blotter.applyGridFiltering();
+            return ret;
+          }
+
+          /**
+           * Use Case: User has deleted an Advanced Search
+           * Action: If the deleted Advanced Search was the currently selected one: Apply Grid Filtering
+           */
+          case AdvancedSearchRedux.ADVANCED_SEARCH_DELETE: {
+            let actionTyped = <AdvancedSearchRedux.AdvancedSearchDeleteAction>action;
+            let CurrentAdvancedSearch = middlewareAPI.getState().AdvancedSearch
+              .CurrentAdvancedSearch;
+            let ret = next(action);
+            if (CurrentAdvancedSearch == actionTyped.advancedSearch.Name) {
+              blotter.applyGridFiltering();
+            }
             return ret;
           }
 
@@ -1922,22 +1914,15 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            * N.B. This will NOT update any layouts that reference the column
            */
           case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
-            let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
             let actionTyped = <CalculatedColumnRedux.CalculatedColumnDeleteAction>action;
             let columnsLocalLayout = middlewareAPI.getState().Grid.Columns;
-            let deletedCalculatedColumnIndex = middlewareAPI
-              .getState()
-              .Grid.Columns.findIndex(
-                x =>
-                  x.ColumnId == calculatedColumnState.CalculatedColumns[actionTyped.index].ColumnId
-              );
-            blotter.removeCalculatedColumnFromGrid(
-              calculatedColumnState.CalculatedColumns[actionTyped.index].ColumnId
+
+            blotter.removeCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId);
+            // do we need this?
+            let test = columnsLocalLayout.filter(
+              col => col.ColumnId !== actionTyped.calculatedColumn.ColumnId
             );
-            if (deletedCalculatedColumnIndex > -1) {
-              columnsLocalLayout.splice(deletedCalculatedColumnIndex, 1);
-            }
-            middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(columnsLocalLayout));
+            middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(test));
             let returnAction = next(action);
             return returnAction;
           }
@@ -1952,18 +1937,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            * Action:  Tell the blotter so it can do what it needs
            */
           case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
-            let calculatedColumnState = middlewareAPI.getState().CalculatedColumn;
             let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action;
             let columnsLocalLayout = middlewareAPI.getState().Grid.Columns;
-            let index = actionTyped.index;
             let isNameChanged: boolean =
               columnsLocalLayout.find(c => c.ColumnId == actionTyped.calculatedColumn.ColumnId) ==
               null;
             if (isNameChanged) {
               // name has changed so we are going to delete and then add to ensure all col names are correct
-              blotter.removeCalculatedColumnFromGrid(
-                calculatedColumnState.CalculatedColumns[index].ColumnId
-              );
+              blotter.removeCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId);
               blotter.addCalculatedColumnToGrid(actionTyped.calculatedColumn);
               blotter.setColumnIntoStore();
               columnsLocalLayout = middlewareAPI.getState().Grid.Columns; // need to get again
@@ -1983,7 +1964,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let returnAction = next(action);
             let freeTextColumn: IFreeTextColumn = (<FreeTextColumnRedux.FreeTextColumnAddAction>(
               action
-            )).FreeTextColumn;
+            )).freeTextColumn;
             blotter.addFreeTextColumnToGrid(freeTextColumn);
             return returnAction;
           }
@@ -2008,14 +1989,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let returnAction = next(action);
             let actionTyped = <ColumnCategoryRedux.ColumnCategoryDeleteAction>action;
             let conditionalStyleState = middlewareAPI.getState().ConditionalStyle;
-            conditionalStyleState.ConditionalStyles.forEach(
-              (cs: IConditionalStyle, index: number) => {
-                if (cs.ColumnCategoryId == actionTyped.ColumnCategory.ColumnCategoryId) {
-                  // some warning?
-                  middlewareAPI.dispatch(ConditionalStyleRedux.ConditionalStyleDelete(index, cs));
-                }
+            conditionalStyleState.ConditionalStyles.forEach((cs: IConditionalStyle) => {
+              if (cs.ColumnCategoryId == actionTyped.columnCategory.ColumnCategoryId) {
+                // some warning?
+                middlewareAPI.dispatch(ConditionalStyleRedux.ConditionalStyleDelete(cs));
               }
-            );
+            });
             return returnAction;
           }
 
@@ -2040,7 +2019,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            */
           case ChartRedux.CHART_DEFINITION_SELECT: {
             let actionTyped = <ChartRedux.ChartDefinitionSelectAction>action;
-            if (StringExtensions.IsNullOrEmpty(actionTyped.CurrentChartName)) {
+            if (StringExtensions.IsNullOrEmpty(actionTyped.chartName)) {
               middlewareAPI.dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Hidden));
             }
             let returnAction = next(action);
@@ -2082,8 +2061,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               });
               middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(blotterColumns));
               // set sort
-              middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.GridSorts));
-              blotter.setGridSort(currentLayout.GridSorts);
+              middlewareAPI.dispatch(GridRedux.GridSetSort(currentLayout.ColumnSorts));
+              blotter.setColumnSort(currentLayout.ColumnSorts);
               // set vendor specific info
               blotter.setVendorGridState(currentLayout.VendorGridInfo);
             }
@@ -2102,13 +2081,18 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           case LayoutRedux.LAYOUT_SAVE: {
             let returnAction = next(action);
             let actionTyped = <LayoutRedux.LayoutSaveAction>action;
-            let layout: ILayout = Helper.cloneObject(actionTyped.Layout);
+            let layout: ILayout = Helper.cloneObject(actionTyped.layout);
+
             let forceFetch = layout.Name == DEFAULT_LAYOUT;
             layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns, forceFetch);
-            if (actionTyped.Index == -1) {
-              middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));
+            let layoutState = middlewareAPI.getState().Layout;
+            let isExistingLayout: boolean =
+              layoutState.Layouts.find(l => l.Uuid == actionTyped.layout.Uuid) != null;
+
+            if (isExistingLayout) {
+              middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
             } else {
-              middlewareAPI.dispatch(LayoutRedux.LayoutEdit(actionTyped.Index, layout));
+              middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));
             }
             return returnAction;
           }
@@ -2279,24 +2263,6 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           }
 
           /*******************
-           * SHORTCUT ACTIONS
-           *******************/
-
-          /**
-           * Use Case: User applies a shortcut via the keyboard
-           * Action: Tell the Shortcut Strategy to apply the shortcut
-           */
-
-          case ShortcutRedux.SHORTCUT_APPLY: {
-            let shortcutStrategy = <IShortcutStrategy>(
-              blotter.strategies.get(StrategyConstants.ShortcutStrategyId)
-            );
-            let actionTyped = <ShortcutRedux.ShortcutApplyAction>action;
-            shortcutStrategy.ApplyShortcut(actionTyped.CellInfo, actionTyped.NewValue);
-            return next(action);
-          }
-
-          /*******************
            * EXPORT ACTIONS
            *******************/
 
@@ -2313,7 +2279,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 PopupRedux.PopupShowScreen(
                   StrategyConstants.ExportStrategyId,
                   'IPushPullLogin',
-                  actionTyped.Report
+                  actionTyped.Report.Name
                 )
               );
             } else if (
@@ -2333,7 +2299,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 PopupRedux.PopupShowScreen(
                   StrategyConstants.ExportStrategyId,
                   'IPushPullDomainPageSelector',
-                  actionTyped.Report
+                  actionTyped.Report.Name
                 )
               );
             } else if (actionTyped.ExportDestination == ExportDestination.iPushPull) {
@@ -2408,11 +2374,16 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             );
             middlewareAPI.dispatch(UserFilterRedux.UserFilterAdd(userFilter));
 
-            // then create a new column filter from the user filter - so that it will display the user filter name
-            let newColumnFilter: IColumnFilter = ObjectFactory.CreateColumnFilterFromUserFilter(
-              userFilter
+            // then update a new column filter from the user filter - so that it will display the user filter name
+            let columnFilter: IColumnFilter = actionTyped.ColumnFilter;
+            columnFilter.Filter = ExpressionHelper.CreateSingleColumnExpression(
+              userFilter.ColumnId,
+              [],
+              [],
+              [userFilter.Name],
+              []
             );
-            middlewareAPI.dispatch(ColumnFilterRedux.ColumnFilterAdd(newColumnFilter));
+            middlewareAPI.dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter));
 
             return next(action);
           }
@@ -2529,7 +2500,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                   );
                 if (idx > -1) {
                   overwriteConfirmation = true;
-                  importAction = CalculatedColumnRedux.CalculatedColumnEdit(idx, calcCol);
+                  importAction = CalculatedColumnRedux.CalculatedColumnEdit(calcCol);
                 } else {
                   importAction = CalculatedColumnRedux.CalculatedColumnAdd(calcCol);
                 }
@@ -2582,7 +2553,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                     let index: number = shortcuts.findIndex(
                       si => si.ShortcutKey == shortcut.ShortcutKey
                     );
-                    middlewareAPI.dispatch(ShortcutRedux.ShortcutDelete(index, shortcut));
+                    middlewareAPI.dispatch(ShortcutRedux.ShortcutDelete(shortcut));
                   }
                   importAction = ShortcutRedux.ShortcutAdd(shortcut);
                 }
@@ -2621,7 +2592,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 if (layoutIndex != -1) {
                   overwriteConfirmation = true;
                 }
-                importAction = LayoutRedux.LayoutSave(layoutIndex, layout);
+                importAction = LayoutRedux.LayoutSave(layout);
                 break;
               }
               case StrategyConstants.ExportStrategyId: {
@@ -2753,7 +2724,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             return next(action);
           }
 
-          case HomeRedux.FILTER_FORM_HIDE: {
+          case GridRedux.FILTER_FORM_HIDE: {
             blotter.hideFilterForm();
             return next(action);
           }
@@ -2776,14 +2747,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
 
             //create the default layout (if not there) so we can revert to it if needed
             let currentLayout = DEFAULT_LAYOUT;
-            let defaultLayoutIndex = layoutState.Layouts.findIndex(l => l.Name == DEFAULT_LAYOUT);
             let defaultLayout: ILayout = ObjectFactory.CreateLayout(
               gridState.Columns,
               [],
               blotter.getVendorGridState(visibleColumnNames, true),
               DEFAULT_LAYOUT
             );
-            middlewareAPI.dispatch(LayoutRedux.LayoutSave(defaultLayoutIndex, defaultLayout));
+            middlewareAPI.dispatch(LayoutRedux.LayoutSave(defaultLayout));
             if (layoutState.Layouts.length > 0) {
               currentLayout = layoutState.CurrentLayout;
             }
@@ -2909,7 +2879,6 @@ export function getFunctionAppliedReduxActions(): string[] {
     QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY,
     QuickSearchRedux.QUICK_SEARCH_SET_STYLE,
     PlusMinusRedux.PLUS_MINUS_APPLY,
-    ShortcutRedux.SHORTCUT_APPLY,
     ThemeRedux.THEME_SELECT,
     ColumnFilterRedux.COLUMN_FILTER_ADD,
     ColumnFilterRedux.COLUMN_FILTER_EDIT,

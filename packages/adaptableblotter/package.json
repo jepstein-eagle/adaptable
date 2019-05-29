@@ -36,7 +36,8 @@
     "react-dom": "^16.4.2",
     "react-redux": "^5.1.1",
     "redux": "^3.6.0",
-    "redux-devtools-extension": "^2.13.5"
+    "redux-devtools-extension": "^2.13.5",
+    "uuid": "^3.3.2"
   },
   "peerDependencies": {
     "ag-grid-community": ">=20.2.0",
@@ -93,7 +94,8 @@
   },
   "scripts": {
     "pretty": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\"",
-    "release": "npm run build && release pre && npm run registry-publish",
+    "release": "npm run build && release && npm run registry-publish",
+    "canaryrelease": "npm run build && release pre && npm run registry-publish",
     "release:patch": "npm run build && release patch && npm run registry-publish",
     "release:minor": "npm run build && release minor && npm run registry-publish",
     "release:major": "npm run build && release major && npm run registry-publish",

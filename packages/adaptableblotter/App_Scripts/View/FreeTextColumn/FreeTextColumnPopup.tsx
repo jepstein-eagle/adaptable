@@ -14,7 +14,10 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -27,7 +30,6 @@ interface FreeTextColumnPopupProps extends StrategyViewPopupProps<FreeTextColumn
     FreeTextColumn: IFreeTextColumn
   ) => FreeTextColumnRedux.FreeTextColumnAddAction;
   onEditFreeTextColumn: (
-    Index: number,
     FreeTextColumn: IFreeTextColumn
   ) => FreeTextColumnRedux.FreeTextColumnEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
@@ -42,7 +44,7 @@ class FreeTextColumnPopupComponent extends React.Component<
     this.state = {
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: 0,
+      WizardStatus: WizardStatus.None,
     };
   }
 
@@ -52,7 +54,7 @@ class FreeTextColumnPopupComponent extends React.Component<
       if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
         let editFreeTextColumn = this.props.FreeTextColumns.find(x => x.ColumnId == arrayParams[1]);
         let index = this.props.FreeTextColumns.indexOf(editFreeTextColumn);
-        this.onEdit(index, editFreeTextColumn);
+        this.onEdit(editFreeTextColumn);
       }
     }
   }
@@ -78,14 +80,13 @@ class FreeTextColumnPopupComponent extends React.Component<
       (FreeTextColumn: IFreeTextColumn, index) => {
         return (
           <FreeTextColumnEntityRow
-            key={index}
+            key={FreeTextColumn.Uuid}
             cssClassName={cssClassName}
             colItems={colItems}
             AdaptableBlotterObject={FreeTextColumn}
             Columns={this.props.Columns}
             UserFilters={null}
-            Index={index}
-            onEdit={() => this.onEdit(index, FreeTextColumn)}
+            onEdit={() => this.onEdit(FreeTextColumn)}
             onShare={() => this.props.onShare(FreeTextColumn)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={FreeTextColumnRedux.FreeTextColumnDelete(FreeTextColumn)}
@@ -153,32 +154,40 @@ class FreeTextColumnPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyFreeTextColumn(),
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
-  onEdit(index: number, FreeTextColumn: IFreeTextColumn) {
+  onEdit(FreeTextColumn: IFreeTextColumn) {
     let clonedObject: IFreeTextColumn = Helper.cloneObject(FreeTextColumn);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
-    this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
+    this.setState({
+      EditedAdaptableBlotterObject: null,
+      WizardStartIndex: 0,
+      WizardStatus: WizardStatus.None,
+    });
   }
 
   onFinishWizard() {
     let freeTextColumn = this.state.EditedAdaptableBlotterObject as IFreeTextColumn;
-    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-      this.props.onEditFreeTextColumn(this.state.EditedAdaptableBlotterObjectIndex, freeTextColumn);
+    if (this.state.WizardStatus == WizardStatus.Edit) {
+      this.props.onEditFreeTextColumn(freeTextColumn);
     } else {
       this.props.onAddFreeTextColumn(freeTextColumn);
     }
-    this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
+    this.setState({
+      EditedAdaptableBlotterObject: null,
+      WizardStartIndex: 0,
+      WizardStatus: WizardStatus.None,
+    });
   }
 
   canFinishWizard() {
@@ -197,8 +206,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddFreeTextColumn: (FreeTextColumn: IFreeTextColumn) =>
       dispatch(FreeTextColumnRedux.FreeTextColumnAdd(FreeTextColumn)),
-    onEditFreeTextColumn: (Index: number, FreeTextColumn: IFreeTextColumn) =>
-      dispatch(FreeTextColumnRedux.FreeTextColumnEdit(Index, FreeTextColumn)),
+    onEditFreeTextColumn: (FreeTextColumn: IFreeTextColumn) =>
+      dispatch(FreeTextColumnRedux.FreeTextColumnEdit(FreeTextColumn)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FreeTextColumnStrategyId)

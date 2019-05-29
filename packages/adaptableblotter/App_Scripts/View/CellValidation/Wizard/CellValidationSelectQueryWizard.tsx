@@ -26,7 +26,7 @@ export class CellValidationSelectQueryWizard
   constructor(props: CellValidationSelectQueryWizardProps) {
     super(props);
     this.state = {
-      HasExpression: ExpressionHelper.IsNotEmptyExpression(this.props.Data.Expression),
+      HasExpression: ExpressionHelper.IsNotNullOrEmptyExpression(this.props.Data.Expression),
     };
   }
 

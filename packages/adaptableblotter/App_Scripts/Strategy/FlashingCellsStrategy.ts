@@ -7,14 +7,12 @@ import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux';
 import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { DataType, StateChangedTrigger } from '../Utilities/Enums';
+import { DataType } from '../Utilities/Enums';
 import { IFlashingCell } from '../Utilities/Interface/BlotterObjects/IFlashingCell';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   implements IFlashingCellsStrategy {
-  protected FlashingCellState: FlashingCellState;
-
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.FlashingCellsStrategyId, blotter);
     if (this.shouldHandleDataSourceChanged()) {
@@ -40,9 +38,9 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
             .getAllCalculatedColumn()
             .find(c => c.ColumnId == column.ColumnId) == null
         ) {
-          let flashingCell = this.FlashingCellState.FlashingCells.find(
-            x => x.ColumnId == column.ColumnId
-          );
+          let flashingCell = this.blotter.api.flashingCellApi
+            .getAllFlashingCell()
+            .find(x => x.ColumnId == column.ColumnId);
           if (flashingCell && flashingCell.IsLive) {
             this.createContextMenuItemReduxAction(
               'Turn Flashing Cell Off',
@@ -51,11 +49,12 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
             );
           } else {
             if (!flashingCell) {
+              let flashingCellState: FlashingCellState = this.blotter.api.flashingCellApi.getFlashingCellState();
               flashingCell = ObjectFactory.CreateDefaultFlashingCell(
                 column,
-                this.FlashingCellState.DefaultUpColor,
-                this.FlashingCellState.DefautDownColor,
-                this.FlashingCellState.DefaultDuration
+                flashingCellState.DefaultUpColor,
+                flashingCellState.DefautDownColor,
+                flashingCellState.DefaultDuration
               );
             }
             this.createContextMenuItemReduxAction(
@@ -69,12 +68,12 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
     }
   }
 
-  protected InitState() {}
+  public abstract initStyles(): void;
 
   protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo) {
-    let flashingCell: IFlashingCell = this.FlashingCellState.FlashingCells.find(
-      f => f.ColumnId == dataChangedInfo.ColumnId
-    );
+    let flashingCell: IFlashingCell = this.blotter.api.flashingCellApi
+      .getAllFlashingCell()
+      .find(f => f.ColumnId == dataChangedInfo.ColumnId);
     if (flashingCell && flashingCell.IsLive) {
       this.FlashCell(dataChangedInfo, flashingCell);
     }

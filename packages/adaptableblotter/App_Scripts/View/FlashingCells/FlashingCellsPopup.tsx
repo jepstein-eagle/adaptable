@@ -103,7 +103,6 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
           cssClassName={cssClassName}
           AdaptableBlotterObject={flashingcell}
           key={flashingcell.ColumnId}
-          Index={index}
           Columns={this.props.Columns}
           UserFilters={null}
           colItems={colItems}

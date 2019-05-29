@@ -103,7 +103,7 @@ class FloatingFilterFormComponent extends React.Component<
       // no filter so make sure our stuff is clear
       if (this.state.placeholder != 'TEMP') {
         if (
-          ExpressionHelper.IsNotEmptyExpression(this.state.filterExpression) ||
+          ExpressionHelper.IsNotNullOrEmptyExpression(this.state.filterExpression) ||
           StringExtensions.IsNotNullOrEmpty(this.state.placeholder) ||
           StringExtensions.IsNotNullOrEmpty(this.state.floatingFilterFormText)
         ) {
@@ -149,12 +149,13 @@ class FloatingFilterFormComponent extends React.Component<
   OnTextChange(searchText: string) {
     // as soon as anything changes clear existing column filter
     if (searchText.trim() != this.state.floatingFilterFormText.trim()) {
-      this.clearExistingColumnFilter();
+      //   this.clearExistingColumnFilter();
     }
 
     // if text is empty then clear our state
     if (StringExtensions.IsNullOrEmpty(searchText.trim())) {
       this.clearState();
+      this.clearExistingColumnFilter();
       return;
     }
 
@@ -172,10 +173,18 @@ class FloatingFilterFormComponent extends React.Component<
   }
 
   createColumnFilter(expression: Expression, searchText: string): void {
-    let columnFilter: IColumnFilter = ObjectFactory.CreateColumnFilter(
-      this.props.CurrentColumn.ColumnId,
-      expression
+    let columnFilter: IColumnFilter = this.props.ColumnFilters.find(
+      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
+    if (columnFilter == null) {
+      columnFilter = ObjectFactory.CreateColumnFilter(
+        this.props.CurrentColumn.ColumnId,
+        expression
+      );
+    } else {
+      columnFilter.Filter = expression;
+    }
+
     this.setState({
       floatingFilterFormText: searchText,
       filterExpression: expression,

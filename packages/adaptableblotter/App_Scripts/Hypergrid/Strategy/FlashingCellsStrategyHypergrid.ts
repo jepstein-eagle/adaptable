@@ -11,6 +11,10 @@ export class FlashingCellsStrategyHypergrid extends FlashingCellsStrategy
     super(blotter);
   }
 
+  public initStyles(): void {
+    // no implemenation as we handle data source changed
+  }
+
   protected shouldHandleDataSourceChanged(): boolean {
     return true;
   }

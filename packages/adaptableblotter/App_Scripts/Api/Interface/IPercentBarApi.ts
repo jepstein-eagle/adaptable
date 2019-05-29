@@ -13,7 +13,6 @@ export interface IPercentBarApi {
     negativeColor: string,
     showValue: boolean
   ): void;
-  editPercentBarByIndex(index: number, percentBar: IPercentBar): void;
   editPercentBar(percentBar: IPercentBar): void;
   editPercentBarMinValue(minValue: number, columnId: string): void;
   editPercentBarMaxValue(maxValue: number, columnId: string): void;

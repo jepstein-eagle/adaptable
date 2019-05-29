@@ -24,7 +24,7 @@ export class DataSourceEntityRow extends React.Component<DataSourceEntityRowProp
     colItems[2].Content = (
       <EntityListActionButtons
         cssClassName={this.props.cssClassName}
-        editClick={() => this.props.onEdit(this.props.Index, dataSource)}
+        editClick={() => this.props.onEdit(dataSource)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
         ConfirmDeleteAction={this.props.onDeleteConfirm}

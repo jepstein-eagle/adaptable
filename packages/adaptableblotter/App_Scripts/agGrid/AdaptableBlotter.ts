@@ -77,7 +77,7 @@ import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IVendorGridInfo } from '../Utilities/Interface/IVendorGridInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { IGridSort } from '../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../Utilities/Interface/IColumnSort';
 import { IPercentBar } from '../Utilities/Interface/BlotterObjects/IPercentBar';
 import { IFreeTextColumn } from '../Utilities/Interface/BlotterObjects/IFreeTextColumn';
 import { ICustomSort } from '../Utilities/Interface/BlotterObjects/ICustomSort';
@@ -127,6 +127,8 @@ import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
 import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState';
 import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
+import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
+import { SearchService } from '../Utilities/Services/SearchService';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;
@@ -158,6 +160,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public LicenceService: ILicenceService;
 
   public ScheduleService: IScheduleService;
+  public SearchService: ISearchService;
 
   public embedColumnMenu: boolean;
 
@@ -218,6 +221,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.ChartService = new ChartService(this);
     this.FreeTextColumnService = new FreeTextColumnService(this);
     this.ScheduleService = new ScheduleService(this);
+    this.SearchService = new SearchService(this);
     this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
       this,
       (columnId, record) => this.gridOptions.api.getValue(columnId, record)
@@ -1448,7 +1452,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       const conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.strategies.get(
         StrategyConstants.ConditionalStyleStrategyId
       ) as IConditionalStyleStrategy;
-      conditionalStyleagGridStrategy.InitStyles();
+      conditionalStyleagGridStrategy.initStyles();
     }
   }
 
@@ -1838,25 +1842,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
       // first we assess AdvancedSearch (if its running locally)
       if (this.blotterOptions.generalOptions.serverSearchOption == 'None') {
-        const currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
-        if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
-          // Get the actual Advanced Search object and check it exists
-          const currentSearch = this.getState().AdvancedSearch.AdvancedSearches.find(
-            s => s.Name == currentSearchName
-          );
-          if (currentSearch) {
-            // See if our record passes the Expression - using Expression Helper; if not then return false
-            if (
-              !ExpressionHelper.checkForExpressionFromRecord(
-                currentSearch.Expression,
-                node,
-                columns,
-                this
-              )
-            ) {
-              // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
-              return false;
-            }
+        const currentSearch = this.api.advancedSearchApi.getCurrentAdvancedSearch();
+        if (currentSearch) {
+          // See if our record passes the Expression - using Expression Helper; if not then return false
+          if (
+            !ExpressionHelper.checkForExpressionFromRecord(
+              currentSearch.Expression,
+              node,
+              columns,
+              this
+            )
+          ) {
+            return false;
           }
         }
       }
@@ -2018,7 +2015,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private onSortChanged(): void {
     const sortModel: any[] = this.gridOptions.api.getSortModel();
 
-    const gridSorts: IGridSort[] = [];
+    const columnSorts: IColumnSort[] = [];
     if (sortModel != null) {
       if (sortModel.length > 0) {
         sortModel.forEach(sm => {
@@ -2033,7 +2030,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               if (customSort) {
                 // check that not already applied
                 if (
-                  !this.getState().Grid.GridSorts.find(gs =>
+                  !this.getState().Grid.ColumnSorts.find(gs =>
                     ColumnHelper.isSpecialColumn(gs.Column)
                   )
                 ) {
@@ -2052,15 +2049,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               }
             }
           }
-          const gridSort: IGridSort = {
+          const columnSort: IColumnSort = {
             Column: sm.colId,
             SortOrder: sm.sort == 'asc' ? SortOrder.Ascending : SortOrder.Descending,
           };
-          gridSorts.push(gridSort);
+          columnSorts.push(columnSort);
         });
       }
     }
-    this.dispatchAction(GridRedux.GridSetSort(gridSorts));
+    this.dispatchAction(GridRedux.GridSetSort(columnSorts));
   }
 
   public getRowCount(): number {
@@ -2094,10 +2091,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.gridOptions.api.addRangeSelection(rangeSelectionParams);
   }
 
-  public setGridSort(gridSorts: IGridSort[]): void {
+  public setColumnSort(columnSorts: IColumnSort[]): void {
     // get the sort model
     const sortModel: any[] = [];
-    gridSorts.forEach(gs => {
+    columnSorts.forEach(gs => {
       const sortDescription: string = gs.SortOrder == SortOrder.Ascending ? 'asc' : 'desc';
       sortModel.push({ colId: gs.Column, sort: sortDescription });
     });

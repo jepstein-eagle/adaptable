@@ -22,7 +22,7 @@ export class AlertSelectQueryWizard
   constructor(props: AlertSelectQueryWizardProps) {
     super(props);
     this.state = {
-      HasExpression: ExpressionHelper.IsNotEmptyExpression(this.props.Data.Expression),
+      HasExpression: ExpressionHelper.IsNotNullOrEmptyExpression(this.props.Data.Expression),
     };
   }
 

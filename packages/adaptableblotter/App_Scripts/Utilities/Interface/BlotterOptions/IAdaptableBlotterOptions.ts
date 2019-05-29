@@ -6,6 +6,8 @@ import { IFilterOptions } from './IFilterOptions';
 import { IQueryOptions } from './IQueryOptions';
 import { IGeneralOptions } from './IGeneralOptions';
 import { IChartOptions } from './IChartOptions';
+import { IConfigDashboardOptions } from './ConfigOptions/IConfigDashboardOptions';
+import { IConfigLayoutOptions } from './ConfigOptions/IConfigLayoutOptions';
 
 /**
  * The class injected into the Adaptable Blotter at startup
@@ -42,6 +44,14 @@ export interface IAdaptableBlotterOptions {
    * Only used when Config Server is not enabled
    */
   predefinedConfig?: any;
+  // Dashboard?: IConfigDashboardOptions;
+  //   Layout?: IConfigLayoutOptions;
+  // };
+  // TODO we should list them all here
+  // and fill in all those config types,
+  // so people using TS can get validation
+  // for the config they are passing
+
   /**
    * A unique key - provided by the Adaptable Tools team that uniquely identifies the user / team
    * Required to get access to Standard or Enterprise functionality.

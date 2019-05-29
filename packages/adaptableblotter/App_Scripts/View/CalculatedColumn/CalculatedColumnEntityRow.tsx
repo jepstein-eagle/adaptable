@@ -38,7 +38,7 @@ export class CalculatedColumnEntityRow extends React.Component<
       <EntityListActionButtons
         cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        editClick={() => this.props.onEdit(this.props.Index, calculatedColumn)}
+        editClick={() => this.props.onEdit(calculatedColumn)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
         EntityType={StrategyConstants.CalculatedColumnStrategyName}

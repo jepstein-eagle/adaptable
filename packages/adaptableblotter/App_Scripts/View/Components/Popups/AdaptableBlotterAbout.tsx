@@ -13,12 +13,10 @@ import { Modal, Button, Row, Col, Radio } from 'react-bootstrap';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../../UIHelper';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import { PanelWithButton } from '../Panels/PanelWithButton';
 import { ButtonMaximise } from '../Buttons/ButtonMaximise';
 import { ButtonMinimise } from '../Buttons/ButtonMinimise';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { IGridSort } from '../../../Utilities/Interface/IGridSort';
 
 interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlotterAbout> {
   AdaptableBlotter: IAdaptableBlotter;
@@ -471,7 +469,7 @@ export class AdaptableBlotterAbout extends React.Component<
         columns,
         this.props.AdaptableBlotter
       );
-      let sorts: any = this.props.AdaptableBlotter.api.gridApi.getGridSorts().map(gs => {
+      let sorts: any = this.props.AdaptableBlotter.api.gridApi.getColumnSorts().map(gs => {
         return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ': ' + gs.SortOrder;
       });
       let licenceInDate: string = this.props.AdaptableBlotter.LicenceService.LicenceInfo

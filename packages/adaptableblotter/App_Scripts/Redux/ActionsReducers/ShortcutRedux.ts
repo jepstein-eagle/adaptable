@@ -4,11 +4,12 @@ import * as Redux from 'redux';
 import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
 import { IShortcut } from '../../Utilities/Interface/BlotterObjects/IShortcut';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';
 export const SHORTCUT_ADD = 'SHORTCUT_ADD';
-export const SHORTCUT_DELETE = 'SHORTCUT_DELETE';
 export const SHORTCUT_EDIT = 'SHORTCUT_EDIT';
+export const SHORTCUT_DELETE = 'SHORTCUT_DELETE';
 
 export interface ShortcutApplyAction extends Redux.Action {
   Shortcut: IShortcut;
@@ -17,19 +18,15 @@ export interface ShortcutApplyAction extends Redux.Action {
   NewValue: any;
 }
 
-export interface ShortcutAddAction extends Redux.Action {
-  Shortcut: IShortcut;
+export interface ShortcutAction extends Redux.Action {
+  shortcut: IShortcut;
 }
 
-export interface ShortcutEditAction extends Redux.Action {
-  index: number;
-  Shortcut: IShortcut;
-}
+export interface ShortcutAddAction extends ShortcutAction {}
 
-export interface ShortcutDeleteAction extends Redux.Action {
-  index: number;
-  Shortcut: IShortcut;
-}
+export interface ShortcutEditAction extends ShortcutAction {}
+
+export interface ShortcutDeleteAction extends ShortcutAction {}
 
 export const ShortcutApply = (
   Shortcut: IShortcut,
@@ -44,21 +41,18 @@ export const ShortcutApply = (
   NewValue,
 });
 
-export const ShortcutAdd = (Shortcut: IShortcut): ShortcutAddAction => ({
+export const ShortcutAdd = (shortcut: IShortcut): ShortcutAddAction => ({
   type: SHORTCUT_ADD,
-  Shortcut,
+  shortcut,
 });
 
-export const ShortcutEdit = (index: number, Shortcut: IShortcut): ShortcutEditAction => ({
+export const ShortcutEdit = (shortcut: IShortcut): ShortcutEditAction => ({
   type: SHORTCUT_EDIT,
-  index,
-  Shortcut,
+  shortcut,
 });
-
-export const ShortcutDelete = (index: number, Shortcut: IShortcut): ShortcutDeleteAction => ({
+export const ShortcutDelete = (shortcut: IShortcut): ShortcutDeleteAction => ({
   type: SHORTCUT_DELETE,
-  index,
-  Shortcut,
+  shortcut,
 });
 
 const initialShortcutState: ShortcutState = {
@@ -77,23 +71,31 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (
       return Object.assign({}, state);
 
     case SHORTCUT_ADD: {
-      let newShortcut = (<ShortcutAddAction>action).Shortcut;
+      const actionShortcut: IShortcut = (action as ShortcutAction).shortcut;
+
+      if (!actionShortcut.Uuid) {
+        actionShortcut.Uuid = createUuid();
+      }
       shortcuts = [].concat(state.Shortcuts);
-      shortcuts.push(newShortcut);
-      return Object.assign({}, state, { Shortcuts: shortcuts });
+      shortcuts.push(actionShortcut);
+      return { ...state, Shortcuts: shortcuts };
     }
+
     case SHORTCUT_EDIT: {
-      shortcuts = [].concat(state.Shortcuts);
-      let actionTyped = <ShortcutEditAction>action;
-      shortcuts[actionTyped.index] = actionTyped.Shortcut;
-      return Object.assign({}, state, { Shortcuts: shortcuts });
+      const actionShortcut: IShortcut = (action as ShortcutAction).shortcut;
+      return {
+        ...state,
+        Shortcuts: state.Shortcuts.map(abObject =>
+          abObject.Uuid === actionShortcut.Uuid ? actionShortcut : abObject
+        ),
+      };
     }
     case SHORTCUT_DELETE: {
-      let deletedShortcut = (<ShortcutDeleteAction>action).Shortcut;
-      shortcuts = [].concat(state.Shortcuts);
-      let index = shortcuts.findIndex(x => x.ShortcutKey == deletedShortcut.ShortcutKey);
-      shortcuts.splice(index, 1);
-      return Object.assign({}, state, { Shortcuts: shortcuts });
+      const actionShortcut: IShortcut = (action as ShortcutAction).shortcut;
+      return {
+        ...state,
+        Shortcuts: state.Shortcuts.filter(abObject => abObject.Uuid !== actionShortcut.Uuid),
+      };
     }
     default:
       return state;

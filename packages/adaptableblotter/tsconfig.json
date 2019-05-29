@@ -10,6 +10,7 @@
     "noUnusedLocals": false,
     "downlevelIteration": true,
     "emitDecoratorMetadata": false,
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
   "include": ["App_Scripts/**/*", "Hypergrid/**/*", "agGrid/**/*"],

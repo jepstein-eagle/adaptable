@@ -23,7 +23,10 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -37,7 +40,6 @@ import { AccessLevel } from '../../Utilities/Enums';
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
   onAddChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddAction;
   onEditChartDefinition: (
-    index: number,
     chartDefinition: IChartDefinition
   ) => ChartRedux.ChartDefinitionEditAction;
   onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction;
@@ -67,7 +69,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
           let index: number = this.props.ChartDefinitions.findIndex(
             cd => cd.Name == this.props.CurrentChartDefinition.Name
           );
-          this.onEdit(index, this.props.CurrentChartDefinition);
+          this.onEdit(this.props.CurrentChartDefinition);
         }
       }
     }
@@ -94,8 +96,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
           colItems={colItems}
           AdaptableBlotterObject={Chart}
           key={Chart.Name}
-          Index={index}
-          onEdit={(index, Chart) => this.onEdit(index, Chart as IChartDefinition)}
+          onEdit={() => this.onEdit(Chart as IChartDefinition)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onShare={() => this.props.onShare(Chart)}
           onDeleteConfirm={ChartRedux.ChartDefinitionDelete(Chart)}
@@ -222,12 +223,12 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     this.props.onShowChart();
   }
 
-  onEdit(index: number, Chart: IChartDefinition) {
+  onEdit(Chart: IChartDefinition) {
     //so we dont mutate original object
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(Chart),
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -239,7 +240,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     this.setState({
       EditedAdaptableBlotterObject: emptyChartDefinition,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
@@ -248,35 +249,32 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let index: number = this.state.EditedAdaptableBlotterObjectIndex;
     let clonedObject: IChartDefinition = Helper.cloneObject(
       this.state.EditedAdaptableBlotterObject
     );
-    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-      this.props.onEditChartDefinition(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
+    if (this.state.WizardStatus == WizardStatus.Edit) {
+      this.props.onEditChartDefinition(clonedObject);
     } else {
       this.props.onAddChartDefinition(clonedObject);
     }
 
+    let shouldSelectChart: boolean =
+      this.state.WizardStatus == WizardStatus.New ||
+      this.props.CurrentChartDefinition.Uuid == clonedObject.Uuid;
+
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
-    let currentChartIndex: number =
-      this.props.CurrentChartDefinition == null
-        ? -1
-        : this.props.ChartDefinitions.findIndex(
-            as => as.Name == this.props.CurrentChartDefinition.Name
-          );
 
-    if (index == -1 || index == currentChartIndex) {
-      // its new so make it the new chart or we are editing the current chart (but might have changed the title)
+    if (shouldSelectChart) {
+      // its new so make it the new chart or we are editing the current chart
       this.props.onSelectChartDefinition(clonedObject.Name);
     }
   }
@@ -300,8 +298,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddChartDefinition: (chartDefinition: IChartDefinition) =>
       dispatch(ChartRedux.ChartDefinitionAdd(chartDefinition)),
-    onEditChartDefinition: (index: number, chartDefinition: IChartDefinition) =>
-      dispatch(ChartRedux.ChartDefinitionEdit(index, chartDefinition)),
+    onEditChartDefinition: (chartDefinition: IChartDefinition) =>
+      dispatch(ChartRedux.ChartDefinitionEdit(chartDefinition)),
     onSelectChartDefinition: (chartDefinition: string) =>
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
     onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),

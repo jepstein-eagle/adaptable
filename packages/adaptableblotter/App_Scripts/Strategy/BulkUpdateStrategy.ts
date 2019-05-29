@@ -129,8 +129,4 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
       PreviewValidationSummary: PreviewHelper.GetPreviewValidationSummary(previewResults),
     };
   }
-
-  private GetBulkUpdateState(): BulkUpdateState {
-    return this.blotter.api.bulkUpdateApi.getBulkUpdateState();
-  }
 }

@@ -33,7 +33,7 @@ export class FormatColumnEntityRow extends React.Component<
     colItems[2].Content = (
       <EntityListActionButtons
         cssClassName={this.props.cssClassName}
-        editClick={() => this.props.onEdit(this.props.Index, formatColumn)}
+        editClick={() => this.props.onEdit(formatColumn)}
         showShare={this.props.TeamSharingActivated}
         shareClick={() => this.props.onShare()}
         ConfirmDeleteAction={this.props.onDeleteConfirm}

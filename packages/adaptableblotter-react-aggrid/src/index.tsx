@@ -13,7 +13,6 @@ import {
   IAdaptableBlotterOptions,
   ISearchChangedEventArgs,
   IThemeChangedEventArgs,
-  IStateChangedEventArgs,
   IColumnStateChangedEventArgs,
   IAlertFiredEventArgs,
 } from '../../adaptableblotter/types';

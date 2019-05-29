@@ -5,7 +5,8 @@ import { ExportState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export interface IExportApi {
   getExportState(): ExportState;
-  getCurrentReport(): string;
+  getCurrentReport(): IReport;
+  getCurrentReportName(): string;
   getAllReports(): IReport[];
   sendReport(reportName: string, destination: ExportDestination): void;
 }

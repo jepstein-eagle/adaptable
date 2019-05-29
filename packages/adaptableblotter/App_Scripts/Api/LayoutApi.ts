@@ -1,6 +1,6 @@
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
-import { IGridSort } from '../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../Utilities/Interface/IColumnSort';
 import { ILayout } from '../Utilities/Interface/BlotterObjects/ILayout';
 import { ApiBase } from './ApiBase';
 import { DEFAULT_LAYOUT } from '../Utilities/Constants/GeneralConstants';
@@ -51,20 +51,20 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
       let currentLayoutObject: ILayout = this.getBlotterState().Layout.Layouts.find(
         l => l.Name == currentLayoutName
       );
-      let currentLayoutIndex: number = this.getBlotterState().Layout.Layouts.findIndex(
-        l => l.Name == currentLayoutName
-      );
-      if (currentLayoutIndex != -1) {
+      if (currentLayoutObject) {
         let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
         let visibleColumns: IColumn[] = this.getBlotterState().Grid.Columns.filter(c => c.Visible);
-        let gridSorts: IGridSort[] = this.getBlotterState().Grid.GridSorts;
-        let layoutToSave = ObjectFactory.CreateLayout(
-          visibleColumns,
-          gridSorts,
-          gridState,
-          currentLayoutName
-        );
-        this.dispatchAction(LayoutRedux.LayoutSave(currentLayoutIndex, layoutToSave));
+        let columSorts: IColumnSort[] = this.getBlotterState().Grid.ColumnSorts;
+
+        let layoutToSave: ILayout = {
+          Uuid: currentLayoutObject.Uuid,
+          Name: currentLayoutName,
+          Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
+          ColumnSorts: columSorts,
+          VendorGridInfo: gridState,
+        };
+
+        this.dispatchAction(LayoutRedux.LayoutSave(layoutToSave));
       }
     }
   }

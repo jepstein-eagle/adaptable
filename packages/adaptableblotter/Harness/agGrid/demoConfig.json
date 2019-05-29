@@ -4,7 +4,7 @@
     "Layouts": [
       {
         "Columns": ["ask", "bid"],
-        "GridSorts": [],
+        "ColumnSorts": [],
         "Name": "Citi Price"
       }
     ]

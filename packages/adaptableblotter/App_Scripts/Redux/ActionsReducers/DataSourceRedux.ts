@@ -2,50 +2,45 @@ import { DataSourceState } from './Interface/IState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 import { IDataSource } from '../../Utilities/Interface/BlotterObjects/IDataSource';
+import { createUuid } from '../../Utilities/Uuid';
 
 export const DATA_SOURCE_SELECT = 'DATA_SOURCE_SELECT';
-export const DATASOURCE_ADD = 'DATASOURCE_ADD';
-export const DATASOURCE_EDIT = 'DATASOURCE_EDIT';
-export const DATASOURCE_DELETE = 'DATASOURCE_DELETE';
+export const DATA_SOURCE_ADD = 'DATA_SOURCE_ADD';
+export const DATA_SOURCE_EDIT = 'DATA_SOURCE_EDIT';
+export const DATA_SOURCE_DELETE = 'DATA_SOURCE_DELETE';
 
 export interface DataSourceSelectAction extends Redux.Action {
   SelectedDataSource: string;
 }
 
-export interface DataSourceAddAction extends Redux.Action {
-  DataSource: IDataSource;
+export interface DataSourceAction extends Redux.Action {
+  dataSource: IDataSource;
 }
 
-export interface DataSourceEditAction extends Redux.Action {
-  index: number;
-  DataSource: IDataSource;
-}
+export interface DataSourceAddAction extends DataSourceAction {}
 
-export interface DataSourceDeleteAction extends Redux.Action {
-  DataSource: IDataSource;
-}
+export interface DataSourceEditAction extends DataSourceAction {}
+
+export interface DataSourceDeleteAction extends DataSourceAction {}
 
 export const DataSourceSelect = (SelectedDataSource: string): DataSourceSelectAction => ({
   type: DATA_SOURCE_SELECT,
   SelectedDataSource,
 });
 
-export const DataSourceAdd = (DataSource: IDataSource): DataSourceAddAction => ({
-  type: DATASOURCE_ADD,
-  DataSource,
+export const DataSourceAdd = (dataSource: IDataSource): DataSourceAddAction => ({
+  type: DATA_SOURCE_ADD,
+  dataSource,
 });
 
-export const DataSourceEdit = (index: number, DataSource: IDataSource): DataSourceEditAction => ({
-  type: DATASOURCE_EDIT,
-  index,
-  DataSource,
+export const DataSourceEdit = (dataSource: IDataSource): DataSourceEditAction => ({
+  type: DATA_SOURCE_EDIT,
+  dataSource,
 });
-
-export const DataSourceDelete = (DataSource: IDataSource): DataSourceDeleteAction => ({
-  type: DATASOURCE_DELETE,
-  DataSource,
+export const DataSourceDelete = (dataSource: IDataSource): DataSourceDeleteAction => ({
+  type: DATA_SOURCE_DELETE,
+  dataSource,
 });
-
 const initialDataSourceState: DataSourceState = {
   DataSources: EMPTY_ARRAY,
   CurrentDataSource: EMPTY_STRING,
@@ -62,22 +57,32 @@ export const DataSourceReducer: Redux.Reducer<DataSourceState> = (
       return Object.assign({}, state, {
         CurrentDataSource: (<DataSourceSelectAction>action).SelectedDataSource,
       });
-    case DATASOURCE_ADD:
-      let actionTypedAdd = <DataSourceAddAction>action;
+    case DATA_SOURCE_ADD: {
+      const actionDataSource: IDataSource = (action as DataSourceAction).dataSource;
+
+      if (!actionDataSource.Uuid) {
+        actionDataSource.Uuid = createUuid();
+      }
       dataSources = [].concat(state.DataSources);
-      dataSources.push(actionTypedAdd.DataSource);
-      return Object.assign({}, state, { DataSources: dataSources });
-    case DATASOURCE_EDIT:
-      let actionTypedAddUpdate = <DataSourceEditAction>action;
-      dataSources = [].concat(state.DataSources);
-      dataSources[actionTypedAddUpdate.index] = actionTypedAddUpdate.DataSource;
-      return Object.assign({}, state, { DataSources: dataSources });
-    case DATASOURCE_DELETE: {
-      let deletedDataSource = (<DataSourceDeleteAction>action).DataSource;
-      dataSources = [].concat(state.DataSources);
-      let index = dataSources.findIndex(x => x.Name == deletedDataSource.Name);
-      dataSources.splice(index, 1);
-      return Object.assign({}, state, { DataSources: dataSources });
+      dataSources.push(actionDataSource);
+      return { ...state, DataSources: dataSources };
+    }
+
+    case DATA_SOURCE_EDIT: {
+      const actionDataSource: IDataSource = (action as DataSourceAction).dataSource;
+      return {
+        ...state,
+        DataSources: state.DataSources.map(abObject =>
+          abObject.Uuid === actionDataSource.Uuid ? actionDataSource : abObject
+        ),
+      };
+    }
+    case DATA_SOURCE_DELETE: {
+      const actionDataSource: IDataSource = (action as DataSourceAction).dataSource;
+      return {
+        ...state,
+        DataSources: state.DataSources.filter(abObject => abObject.Uuid !== actionDataSource.Uuid),
+      };
     }
     default:
       return state;

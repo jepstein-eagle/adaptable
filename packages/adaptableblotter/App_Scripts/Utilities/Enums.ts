@@ -268,6 +268,7 @@ export enum LicenceUserType {
   EndUser = 'End User',
   Team = 'Team',
   Universal = 'Universal',
+  Development = 'Development',
 }
 
 export enum DashboardSize {

@@ -1,7 +1,7 @@
 import { ISharedEntity } from '../../../Utilities/Interface/ISharedEntity';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { IEntitlement } from '../../../Utilities/Interface/IEntitlement';
-import { IGridSort } from '../../../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../../../Utilities/Interface/IColumnSort';
 import { IStyle } from '../../../Utilities/Interface/IStyle';
 import { IPermittedColumnValues } from '../../../Utilities/Interface/IPermittedColumnValues';
 import { ISystemStatus } from '../../../Utilities/Interface/ISystemStatus';
@@ -47,23 +47,33 @@ import { IDataSource } from '../../../Utilities/Interface/BlotterObjects/IDataSo
 import { IRange } from '../../../Utilities/Interface/Expression/IRange';
 import { Expression } from '../../../Utilities/Expression';
 
-// Base interface
+/**
+ * Base Interface for all State objects
+ */
 export interface IState {}
 
 /**
  * Interface for System related State elements
  * This is created by the system at run-time and NOT part of predefined or user config.
  * Therefore it is not saved nor included in State events
-
  */
 export interface ISystemState extends IState {}
 
-// Interface for State elements which are provided at Design time and never modified in the Blotter
+/**
+ * Interface for State elements which are provided ONLY at Design time and NEVER modified by Users in the Blotter
+ */
+
 export interface IDesignTimeState extends IState {}
 
-// Interface for State elements which the User is able to modify during the lifetime of the application
+/**
+ * Interface for State elements which the User is able to modify during the lifetime of the application
+ * These can also be provided in Predefined Config
+ */
 export interface IUserState extends IState {}
 
+/**
+ * ISYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
+ */
 export interface SystemState extends ISystemState {
   SystemStatus: ISystemStatus;
   Alerts: IAdaptableAlert[];
@@ -85,7 +95,7 @@ export interface SystemState extends ISystemState {
 
 export interface GridState extends ISystemState {
   Columns: IColumn[];
-  GridSorts: IGridSort[];
+  ColumnSorts: IColumnSort[];
   SelectedCellInfo: ISelectedCellInfo;
   CellSummary: ICellSummmary;
   IsFloatingFilterActive: boolean;
@@ -110,13 +120,9 @@ export interface TeamSharingState extends ISystemState {
   SharedEntities: ISharedEntity[];
 }
 
-export interface HomeState extends ISystemState {}
-
-/*
-Predefined Config Only 
-This can be set by users in Predefined Config at design-time but never editable by users at runtime
-Therefore it is not saved nor included in State events
-*/
+/**
+ * DESIGN TIME STATE IMPLEMENTATIONS - Entitlement, UserInterface, SystemFilter
+ */
 export interface EntitlementsState extends IDesignTimeState {
   FunctionEntitlements: IEntitlement[];
 }
@@ -133,10 +139,9 @@ export interface SystemFilterState extends IDesignTimeState {
 
 export interface ApplicationState extends IDesignTimeState {}
 
-/* 
-Full Config 
-Can bet set at design time and also editable at run time by users 
-*/
+/**
+ * USER STATE IMPLEMENTATIONS - Each of the individual Application state
+ */
 export interface AdvancedSearchState extends IUserState {
   AdvancedSearches: IAdvancedSearch[];
   CurrentAdvancedSearch: string;

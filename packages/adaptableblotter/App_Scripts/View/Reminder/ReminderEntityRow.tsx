@@ -27,7 +27,7 @@ export class ReminderEntityRow extends React.Component<
     let buttons: any = (
       <EntityListActionButtons
         cssClassName={this.props.cssClassName}
-        editClick={() => this.props.onEdit(this.props.Index, reminder)}
+        editClick={() => this.props.onEdit(reminder)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
         ConfirmDeleteAction={this.props.onDeleteConfirm}

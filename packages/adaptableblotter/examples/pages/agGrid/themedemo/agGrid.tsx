@@ -22,12 +22,12 @@ function InitAdaptableBlotter() {
     gridOptions,
     'theme demo'
   );
-  adaptableBlotterOptions.predefinedConfig = themeJson;
+  adaptableBlotterOptions.predefinedConfig = demoConfig;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-let themeJson = {
+let demoConfig = {
   Theme: {
     CurrentTheme: 'Dark Theme',
   },

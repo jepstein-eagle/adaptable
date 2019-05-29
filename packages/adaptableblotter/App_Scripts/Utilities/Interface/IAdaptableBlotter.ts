@@ -4,7 +4,7 @@ import { IVendorGridInfo } from './IVendorGridInfo';
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
-import { IGridSort } from './IGridSort';
+import { IColumnSort } from './IColumnSort';
 import { IPercentBar } from './BlotterObjects/IPercentBar';
 import { IFreeTextColumn } from './BlotterObjects/IFreeTextColumn';
 import { ICalculatedColumn } from './BlotterObjects/ICalculatedColumn';
@@ -22,6 +22,7 @@ import { IStrategyCollection } from '../../Strategy/Interface/IStrategy';
 import { ILicenceService } from '../Services/Interface/ILicenceService';
 import { IScheduleService } from '../Services/Interface/IScheduleService';
 import { IAuditLogService } from '../Services/Interface/IAuditLogService';
+import { ISearchService } from '../Services/Interface/ISearchService';
 
 /**
  *  The only interface for the AdaptableBlotter
@@ -86,6 +87,7 @@ export interface IAdaptableBlotter {
   ChartService: IChartService;
   LicenceService: ILicenceService;
   ScheduleService: IScheduleService;
+  SearchService: ISearchService;
 
   /**
    * These are INTERNAL events which the blotter raises and other strategies listen to
@@ -149,7 +151,7 @@ export interface IAdaptableBlotter {
   //  Sort
   setCustomSort(columnId: string, comparer: Function): void;
   removeCustomSort(columnId: string): void;
-  setGridSort(gridSorts: IGridSort[]): void;
+  setColumnSort(columnSorts: IColumnSort[]): void;
 
   //FreeTextColumn
   addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn): void;
