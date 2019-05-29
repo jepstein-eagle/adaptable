@@ -479,7 +479,7 @@ export class AdaptableBlotterAbout extends React.Component<
       returnRows.push(
         this.createColItem(colItems, 'Vendor Grid', this.props.AdaptableBlotter.vendorGridName)
       );
-      returnRows.push(this.createColItem(colItems, 'Adaptable Blotter Version', '3.3'));
+      returnRows.push(this.createColItem(colItems, 'Adaptable Blotter Version', '4.0'));
       returnRows.push(
         this.createColItem(
           colItems,

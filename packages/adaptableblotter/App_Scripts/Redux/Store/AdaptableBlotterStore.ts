@@ -111,6 +111,7 @@ import {
   IStateObjectChangedDetails,
   StateObjectChangeType,
 } from '../../Utilities/Interface/IAuditEvents';
+import LayoutHelper from '../../Utilities/Helpers/LayoutHelper';
 
 /*
 This is the main store for the Adaptable Blotter
@@ -2088,6 +2089,16 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let layoutState = middlewareAPI.getState().Layout;
             let isExistingLayout: boolean =
               layoutState.Layouts.find(l => l.Uuid == actionTyped.layout.Uuid) != null;
+
+            // if its default layout then we need to use the id for that one to prevent 2 layouts being created
+            // - this is all a bit messy and needs refactoring
+            if (layout.Name == DEFAULT_LAYOUT) {
+              let currentDefaultLayout = layoutState.Layouts.find(l => l.Name == DEFAULT_LAYOUT);
+              if (currentDefaultLayout) {
+                layout.Uuid = currentDefaultLayout.Uuid;
+                isExistingLayout = true;
+              }
+            }
 
             if (isExistingLayout) {
               middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));

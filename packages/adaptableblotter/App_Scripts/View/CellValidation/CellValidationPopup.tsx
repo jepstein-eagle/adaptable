@@ -197,7 +197,7 @@ class CellValidationPopupComponent extends React.Component<
     let cellValidationRule: ICellValidationRule = Helper.cloneObject(
       this.state.EditedAdaptableBlotterObject
     );
-    console.log(cellValidationRule);
+
     if (this.state.WizardStatus == WizardStatus.New) {
       this.props.onAddCellValidation(cellValidationRule);
     } else {
