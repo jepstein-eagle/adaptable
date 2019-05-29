@@ -2,14 +2,19 @@ const fs = require('fs');
 const chalk = require('chalk');
 const resolve = require('path').resolve;
 const sourcePackagePath = resolve(process.cwd(), './package.json');
+const topLevelPackageJSONPath = resolve(process.cwd(), '../../package.json');
 
 const packageJSON = require(sourcePackagePath);
+const topLevelPackageJSON = require(topLevelPackageJSONPath);
 
 function buildGlobalPackageJSON() {
   return new Promise((res, reject) => {
     const toDelete = ['devDependencies', 'scripts', 'private'];
     toDelete.forEach(key => delete packageJSON[key]);
+
+    packageJSON.version = topLevelPackageJSON.version;
     const content = JSON.stringify(packageJSON, null, 2);
+
     const path = resolve(process.cwd(), 'dist', 'package.json');
     fs.writeFile(path, content, 'utf8', err => {
       if (err) {

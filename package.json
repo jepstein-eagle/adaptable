@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter-monorepo",
-  "version": "1.0.0",
+  "version": "4.0.1",
   "private": true,
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -8,19 +8,25 @@
     "chalk": "^2.4.2",
     "copyfiles": "^2.1.0",
     "cpy-cli": "^2.0.0",
-    "lerna": "^3.10.8",
-    "next": "^8.1.0",
-    "rimraf": "^2.6.3",
     "husky": ">=1",
+    "lerna": "^3.10.8",
     "lint-staged": ">=8",
-    "prettier": "^1.17.0"
+    "next": "^8.1.0",
+    "prettier": "^1.17.0",
+    "release": "^6.0.1",
+    "rimraf": "^2.6.3"
   },
   "scripts": {
+    "release": "npm run release:patch",
+    "canaryrelease": "npm run build && release pre && npm run registry-publish",
+    "release:patch": "npm run build && release patch && npm run registry-publish",
+    "release:minor": "npm run build && release minor && npm run registry-publish",
+    "release:major": "npm run build && release major && npm run registry-publish",
+    "registry-publish": "npm run --prefix packages/adaptableblotter registry-publish && npm run --prefix packages/adaptableblotter-react-aggrid registry-publish",
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\"",
-    "cleanup": "lerna clean --yes",
-    "publish": "lerna publish",
-    "build-main": "npm run --prefix packages/adaptableblotter build-prod",
-    "pack-ab": "npm pack ./packages/adaptableblotter"
+    "build-core": "npm run --prefix packages/adaptableblotter build",
+    "build-react": "npm run --prefix packages/adaptableblotter-react-aggrid build",
+    "build": "npm run build-core && npm run build-react"
   },
   "husky": {
     "hooks": {
