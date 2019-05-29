@@ -2099,8 +2099,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 isExistingLayout = true;
               }
             }
-            console.log(isExistingLayout);
-            console.log(layout);
+
             if (isExistingLayout) {
               middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
             } else {
