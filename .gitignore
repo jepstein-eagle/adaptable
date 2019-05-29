@@ -4,6 +4,7 @@ node_modules/
 .awcache
 /packages/adaptableblotter/dist
 /packages/adaptableblotter/examples/package-lock.json
+/packages/adaptableblotter-react-aggrid/package-lock.json
 .DS_Store
 .env
 /packages/adaptableblotter/App_Scripts/**/*.d.ts
