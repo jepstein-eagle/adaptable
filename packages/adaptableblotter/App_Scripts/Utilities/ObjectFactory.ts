@@ -336,6 +336,7 @@ export function CreateLayout(
   name: string
 ): ILayout {
   return {
+    Uuid: createUuid(),
     Columns: columns ? columns.map(x => x.ColumnId) : [],
     GridSorts: gridSorts,
     Name: name,

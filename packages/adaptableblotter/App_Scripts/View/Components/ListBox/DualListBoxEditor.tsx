@@ -295,6 +295,7 @@ export class DualListBoxEditor extends React.Component<
               cssClassName={cssClassName}
               overrideText={'Add All'}
               DisplayMode={'Text+Glyph'}
+              iconPosition="end"
               glyph={'fast-forward'}
               style={{ width: '110px', marginBottom: '10px' }}
               overrideDisableButton={this.state.AvailableValues.length == 0}

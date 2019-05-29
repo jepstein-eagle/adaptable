@@ -25,9 +25,17 @@
   --ab-color-white: white;
   --ab-icon-fill: black;
   --ab-info-gradient: linear-gradient(180deg, #337ab7 0, #2e6da4);
+  --ab-focus-outline: 5px auto -webkit-focus-ring-color;
+}
+
+*:focus {
+  outline: var(--ab-focus-outline) !important;
+  outline-offset: -2px !important;
 }
 
 @import './components/Panel/base.scss';
 @import './components/Modal/base.scss';
 @import './components/Dialog/base.scss';
 @import './components/EmptyContent/base.scss';
+@import './components/Dropdown/base.scss';
+@import './View/Components/Buttons/ButtonBase/base.scss';

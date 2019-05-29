@@ -1,11 +1,12 @@
 import * as React from 'react';
 
-import { useState, useLayoutEffect, useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import join from '../utils/join';
-import usePrevious from '../utils/usePrevious';
+
 import { BoxProps, Box } from 'rebass';
 import { ModalProps, default as Modal } from '../Modal';
 import useIsOpen from './useIsOpen';
+import useAutoFocus from '../utils/useAutoFocus';
 
 export type DialogProps = BoxProps &
   React.HTMLProps<HTMLElement> & {
@@ -25,26 +26,20 @@ const Dialog = (props: DialogProps) => {
   let { modal, fixed, autoFocus, className, children, modalProps, ...boxProps } = props;
   modal = props.modal === undefined ? true : props.modal;
   fixed = props.fixed === undefined ? true : props.fixed;
-  autoFocus = props.autoFocus === undefined ? true : props.autoFocus;
+
+  const boxRef = useRef<HTMLElement>(null);
+  useAutoFocus(
+    {
+      autoFocus: props.autoFocus,
+      previous: ({ autoFocus }) => autoFocus && isOpen,
+      shouldFocus: ({ autoFocus }) => autoFocus && isOpen,
+    },
+    boxRef
+  );
 
   const showCloseButton = props.showCloseButton === undefined ? true : props.showCloseButton;
 
   const [isOpen, setIsOpen] = useIsOpen(props);
-
-  const boxRef = useRef<HTMLElement>(null);
-
-  const prevAutoFocus = usePrevious(isOpen && autoFocus, undefined);
-
-  useEffect(() => {
-    if (
-      boxRef.current &&
-      isOpen &&
-      autoFocus &&
-      (prevAutoFocus === undefined || prevAutoFocus !== autoFocus)
-    ) {
-      boxRef.current.focus();
-    }
-  }, []);
 
   const onKeyDown = (e: any) => {
     if (e.key === 'Escape') {

@@ -1,0 +1,27 @@
+.ab-Dropdown {
+  background: var(--ab-color-white);
+  border: var(--ab-cmp-dropdown-border);
+  position: relative;
+  min-width: 120px;
+
+  &--focused {
+    outline: var(--ab-focus-outline);
+    outline-offset: -2px;
+  }
+
+  &__text {
+    padding: var(--ab-space-2);
+    pointer-events: none;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+
+  }
+
+  select {
+    position: absolute;
+    
+  }
+}

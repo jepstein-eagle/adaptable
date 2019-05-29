@@ -1,0 +1,15 @@
+.ab-Button.ab-Button {
+  border-radius: var(--ab-cmp-button-border-radius);
+  padding: var(--ab-space-2);
+  
+  &--enabled {
+    cursor: pointer;
+    background: var(--ab-cmp-button-background);
+  }
+
+  &--disabled {
+    opacity: var(--ab-cmp-button-disabled-opacity);
+    background: var(--ab-cmp-button-disabled-background);
+  }
+
+}

@@ -20,6 +20,9 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ILayout } from '../../Utilities/Interface/BlotterObjects/ILayout';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { AccessLevel, DashboardSize } from '../../Utilities/Enums';
+import Dropdown from '../../components/Dropdown';
+import { ButtonBase } from '../Components/Buttons/ButtonBase';
+import { Flex } from 'rebass';
 
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
@@ -39,9 +42,12 @@ class LayoutToolbarControlComponent extends React.Component<
     let nonDefaultLayouts = this.props.Layouts.filter(
       l => l.Name != GeneralConstants.DEFAULT_LAYOUT
     );
-    let layoutEntity = nonDefaultLayouts.find(x => x.Name == this.props.CurrentLayout);
+    let layoutEntity = nonDefaultLayouts.find(
+      x => x.Name == this.props.CurrentLayout || x.Uuid == this.props.CurrentLayout
+    );
     let currentLayoutTitle = layoutEntity ? layoutEntity.Name : 'Select a Layout';
 
+    console.log(nonDefaultLayouts);
     let availableLayouts: any = nonDefaultLayouts
       .filter(l => l.Name != currentLayoutTitle)
       .map((layout, index) => {
@@ -52,43 +58,48 @@ class LayoutToolbarControlComponent extends React.Component<
         );
       });
 
+    let availableLayoutOptions: any = nonDefaultLayouts.map((layout, index) => {
+      return {
+        ...layout,
+        label: layout.Name,
+        value: layout.Name,
+      };
+    });
+
     if (this.isLayoutModified(layoutEntity)) {
       currentLayoutTitle += ' (Modified)';
     }
 
     let content = (
-      <span>
-        <InputGroup>
-          <DropdownButton
-            disabled={availableLayouts.length == 0}
-            style={{ minWidth: '120px' }}
-            className={cssClassName}
-            bsSize={this.props.DashboardSize}
-            bsStyle={'default'}
-            title={currentLayoutTitle}
-            id="layout"
-          >
-            {availableLayouts}
-          </DropdownButton>
+      <Flex flexDirection="row">
+        <Dropdown
+          disabled={availableLayouts.length == 0}
+          style={{ minWidth: 120 }}
+          className={cssClassName}
+          bsSize={this.props.DashboardSize}
+          bsStyle={'default'}
+          value={layoutEntity ? layoutEntity.Name : null}
+          id="layout"
+          options={availableLayoutOptions}
+          onChange={(layoutName: any) => {
+            if (layoutName) {
+              this.onLayoutChanged(layoutName as string);
+              return;
+            }
 
-          {this.props.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT && (
-            <InputGroup.Button>
-              <ButtonClear
-                bsStyle={'default'}
-                cssClassName={cssClassName}
-                onClick={() => this.onLayoutChanged(GeneralConstants.DEFAULT_LAYOUT)}
-                size={this.props.DashboardSize}
-                overrideTooltip="Clear layout"
-                overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
-                DisplayMode="Glyph"
-                AccessLevel={this.props.AccessLevel}
-                showDefaultStyle={this.props.UseSingleColourForButtons}
-              />
-            </InputGroup.Button>
-          )}
-        </InputGroup>
+            this.onLayoutChanged(GeneralConstants.DEFAULT_LAYOUT);
+          }}
+          clearButtonProps={{
+            tooltip: 'Clear layout',
+            overrideDisableButton: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT,
+            AccessLevel: this.props.AccessLevel,
+            showDefaultStyle: this.props.UseSingleColourForButtons,
+          }}
+          showClearButton={this.props.CurrentLayout !== GeneralConstants.DEFAULT_LAYOUT}
+        />
 
-        <span
+        <Flex
+          flexDirection="row"
           className={
             this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
           }
@@ -141,8 +152,8 @@ class LayoutToolbarControlComponent extends React.Component<
             AccessLevel={this.props.AccessLevel}
             showDefaultStyle={this.props.UseSingleColourForButtons}
           />
-        </span>
-      </span>
+        </Flex>
+      </Flex>
     );
 
     return (
