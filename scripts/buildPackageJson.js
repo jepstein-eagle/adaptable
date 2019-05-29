@@ -1,7 +1,7 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const resolve = require('path').resolve;
-const sourcePackagePath = resolve(process.cwd(), './package.json')
+const sourcePackagePath = resolve(process.cwd(), './package.json');
 
 const packageJSON = require(sourcePackagePath);
 
@@ -16,10 +16,7 @@ function buildGlobalPackageJSON() {
         console.log(chalk.red(err));
         reject(err);
       } else {
-        console.log(
-          'DONE building package.json with version ',
-          chalk.green(packageJSON.version)
-        );
+        console.log('DONE building package.json with version ', chalk.green(packageJSON.version));
         res(true);
       }
     });
