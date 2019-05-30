@@ -794,8 +794,8 @@ export class AdaptableBlotterAbout extends React.Component<
       returnRows.push(
         this.createColItem(
           colItems,
-          'useAdaptableBlotterFloatingFilter',
-          options.filterOptions.useAdaptableBlotterFloatingFilter == true ? 'Yes' : 'No',
+          'useAdaptableBlotterQuickFilter',
+          options.filterOptions.useAdaptableBlotterQuickFilter == true ? 'Yes' : 'No',
           'Use the Adaptable Blotter quick filter row (or that provided by the vendor grid).'
         )
       );

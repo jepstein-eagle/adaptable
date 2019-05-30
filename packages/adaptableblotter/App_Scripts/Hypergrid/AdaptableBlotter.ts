@@ -159,7 +159,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private throttleOnDataChangedUser: (() => void) & _.Cancelable;
   private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
-  public hasFloatingFilter: boolean;
+  public hasQuickFilter: boolean;
 
   constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
     //we init with defaults then overrides with options passed in the constructor
@@ -168,7 +168,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.hyperGrid = this.blotterOptions.vendorGrid;
     this.vendorGridName = 'Hypergrid';
     this.embedColumnMenu = false;
-    this.hasFloatingFilter = true;
+    this.hasQuickFilter = true;
 
     // Create licencing
     this.LicenceService = new LicenceService(this);
@@ -1787,11 +1787,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return true;
   }
 
-  public showFloatingFilter(): void {
+  public showQuickFilter(): void {
     // todo
   }
 
-  public hideFloatingFilter(): void {
+  public hideQuickFilter(): void {
     // todo
   }
 

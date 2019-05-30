@@ -16,8 +16,8 @@ export const GRID_SET_SORT = 'GRID_SET_SORT';
 export const GRID_SET_SELECTED_CELLS = 'GRID_SET_SELECTED_CELLS';
 export const GRID_CREATE_CELLS_SUMMARY = 'GRID_CREATE_CELLS_SUMMARY';
 export const GRID_SET_CELLS_SUMMARY = 'GRID_SET_CELLS_SUMMARY';
-export const GRID_FLOATING_FILTER_BAR_SHOW = 'GRID_FLOATING_FILTER_BAR_SHOW';
-export const GRID_FLOATING_FILTER_BAR_HIDE = 'GRID_FLOATING_FILTER_BAR_HIDE';
+export const GRID_QUICK_FILTER_BAR_SHOW = 'GRID_QUICK_FILTER_BAR_SHOW';
+export const GRID_QUICK_FILTER_BAR_HIDE = 'GRID_QUICK_FILTER_BAR_HIDE';
 export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
 
 export interface GridSetColumnsAction extends Redux.Action {
@@ -57,9 +57,9 @@ export interface GridSetCellSummaryAction extends Redux.Action {
   CellSummary: ICellSummmary;
 }
 
-export interface FloatingFilterBarShowAction extends Redux.Action {}
+export interface QuickFilterBarShowAction extends Redux.Action {}
 
-export interface FloatingFilterBarHideAction extends Redux.Action {}
+export interface QuickFilterBarHideAction extends Redux.Action {}
 
 export interface FilterFormHideAction extends Redux.Action {}
 
@@ -113,12 +113,12 @@ export const GridSetCellSummary = (CellSummary: ICellSummmary): GridSetCellSumma
   CellSummary,
 });
 
-export const FloatingilterBarShow = (): FloatingFilterBarShowAction => ({
-  type: GRID_FLOATING_FILTER_BAR_SHOW,
+export const QuickFilterBarShow = (): QuickFilterBarShowAction => ({
+  type: GRID_QUICK_FILTER_BAR_SHOW,
 });
 
-export const FloatingFilterBarHide = (): FloatingFilterBarHideAction => ({
-  type: GRID_FLOATING_FILTER_BAR_HIDE,
+export const QuickFilterBarHide = (): QuickFilterBarHideAction => ({
+  type: GRID_QUICK_FILTER_BAR_HIDE,
 });
 
 export const FilterFormHide = (): FilterFormHideAction => ({
@@ -130,7 +130,7 @@ const initialGridState: GridState = {
   ColumnSorts: EMPTY_ARRAY,
   SelectedCellInfo: null,
   CellSummary: null,
-  IsFloatingFilterActive: false,
+  IsQuickFilterActive: false,
 };
 
 export const GridReducer: Redux.Reducer<GridState> = (
@@ -157,10 +157,10 @@ export const GridReducer: Redux.Reducer<GridState> = (
       return Object.assign({}, state, {
         CellSummary: (<GridSetCellSummaryAction>action).CellSummary,
       });
-    case GRID_FLOATING_FILTER_BAR_SHOW:
-      return Object.assign({}, state, { IsFloatingFilterActive: true });
-    case GRID_FLOATING_FILTER_BAR_HIDE:
-      return Object.assign({}, state, { IsFloatingFilterActive: false });
+    case GRID_QUICK_FILTER_BAR_SHOW:
+      return Object.assign({}, state, { IsQuickFilterActive: true });
+    case GRID_QUICK_FILTER_BAR_HIDE:
+      return Object.assign({}, state, { IsQuickFilterActive: false });
 
     default:
       return state;

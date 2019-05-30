@@ -23,12 +23,12 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
       );
     }
 
-    if (this.canCreateContextMenuItem(column, this.blotter, 'floatingfilter')) {
-      let isFilterActive: boolean = this.blotter.api.gridApi.getGridState().IsFloatingFilterActive;
+    if (this.canCreateContextMenuItem(column, this.blotter, 'quickfilter')) {
+      let isFilterActive: boolean = this.blotter.api.gridApi.getGridState().IsQuickFilterActive;
       this.createContextMenuItemReduxAction(
-        isFilterActive ? 'Hide Floating Filter Bar' : 'Show Floating Filter Bar',
+        isFilterActive ? 'Hide Quick Filter Bar' : 'Show Quick Filter Bar',
         isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH,
-        isFilterActive ? GridRedux.FloatingFilterBarHide() : GridRedux.FloatingilterBarShow()
+        isFilterActive ? GridRedux.QuickFilterBarHide() : GridRedux.QuickFilterBarShow()
       );
     }
 

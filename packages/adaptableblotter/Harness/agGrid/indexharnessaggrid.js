@@ -155,7 +155,7 @@ function InitAdaptableBlotter() {
       },
       filterOptions: {
         useAdaptableBlotterFilterForm: true,
-        useAdaptableBlotterFloatingFilter: true,
+        useAdaptableBlotterQuickFilter: true,
       },
       chartOptions: {
         displayOnStartUp: true,

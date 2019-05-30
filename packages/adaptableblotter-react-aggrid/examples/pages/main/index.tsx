@@ -321,7 +321,7 @@ const App = () => {
     },
     filterOptions: {
       useAdaptableBlotterFilterForm: true,
-      useAdaptableBlotterFloatingFilter: true,
+      useAdaptableBlotterQuickFilter: true,
     },
     chartOptions: {
       displayOnStartUp: true,

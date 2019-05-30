@@ -5,7 +5,7 @@ import {
   IFloatingFilterComp,
   IFloatingFilterParams,
 } from 'ag-grid-community/dist/lib/filter/floatingFilter';
-import { FloatingFilterFormReact } from '../View/Components/FilterForm/FloatingFilterForm';
+import { QuickFilterFormReact } from '../View/Components/FilterForm/QuickFilterForm';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
@@ -22,7 +22,7 @@ export let FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) => {
         Blotter: blotter,
         ShowCloseButton: false,
       };
-      ReactDOM.render(FloatingFilterFormReact(filterContext), this.filterContainer);
+      ReactDOM.render(QuickFilterFormReact(filterContext), this.filterContainer);
     }
 
     onParentModelChanged(parentModel: any): void {

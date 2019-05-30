@@ -188,10 +188,10 @@ export interface IAdaptableBlotter {
   // vendor grid related
   isSelectable(): boolean;
 
-  // floating filter
-  hasFloatingFilter: boolean;
-  showFloatingFilter(): void;
-  hideFloatingFilter(): void;
+  // quick filter
+  hasQuickFilter: boolean;
+  showQuickFilter(): void;
+  hideQuickFilter(): void;
 
   //Theme
   applyLightTheme(): void;

@@ -15,7 +15,7 @@ export interface IFilterOptions {
    * If false, the one supplied by the vendor grid will be used
    * Only applicable in grids where the vendor offers a filter row
    */
-  useAdaptableBlotterFloatingFilter?: boolean;
+  useAdaptableBlotterQuickFilter?: boolean;
   /**
    * Whether to re-filter the grid when the user edits data
    * The choice is 'Always' (the default), 'Never' or 'Throttle'

@@ -2725,13 +2725,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           /*******************
            * HOME (INTERNAL) ACTIONS (Filter Bar)
            *******************/
-          case GridRedux.GRID_FLOATING_FILTER_BAR_SHOW: {
-            blotter.showFloatingFilter();
+          case GridRedux.GRID_QUICK_FILTER_BAR_SHOW: {
+            blotter.showQuickFilter();
             return next(action);
           }
 
-          case GridRedux.GRID_FLOATING_FILTER_BAR_HIDE: {
-            blotter.hideFloatingFilter();
+          case GridRedux.GRID_QUICK_FILTER_BAR_HIDE: {
+            blotter.hideQuickFilter();
             return next(action);
           }
 
@@ -2845,8 +2845,8 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.GRID_SET_SELECTED_CELLS,
     GridRedux.GRID_CREATE_CELLS_SUMMARY,
     GridRedux.GRID_SET_CELLS_SUMMARY,
-    GridRedux.GRID_FLOATING_FILTER_BAR_SHOW,
-    GridRedux.GRID_FLOATING_FILTER_BAR_HIDE,
+    GridRedux.GRID_QUICK_FILTER_BAR_SHOW,
+    GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
 
     MenuRedux.SET_MENUITEMS,
     MenuRedux.BUILD_COLUMN_CONTEXT_MENU,

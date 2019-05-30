@@ -21,7 +21,7 @@ import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
 
-interface FloatingFilterFormProps extends StrategyViewPopupProps<FloatingFilterFormComponent> {
+interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: IColumn;
   Blotter: IAdaptableBlotter;
   Columns: IColumn[];
@@ -33,8 +33,8 @@ interface FloatingFilterFormProps extends StrategyViewPopupProps<FloatingFilterF
   onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
 }
 
-export interface FloatingFilterFormState {
-  floatingFilterFormText: string;
+export interface QuickFilterFormState {
+  quickFilterFormText: string;
   filterExpression: Expression;
   numberOperatorPairs: IKeyValuePair[];
   stringOperatorPairs: IKeyValuePair[];
@@ -42,14 +42,11 @@ export interface FloatingFilterFormState {
   placeholder: string;
 }
 
-class FloatingFilterFormComponent extends React.Component<
-  FloatingFilterFormProps,
-  FloatingFilterFormState
-> {
-  constructor(props: FloatingFilterFormProps) {
+class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, QuickFilterFormState> {
+  constructor(props: QuickFilterFormProps) {
     super(props);
     this.state = {
-      floatingFilterFormText: '',
+      quickFilterFormText: '',
       filterExpression: ExpressionHelper.CreateEmptyExpression(),
       numberOperatorPairs: RangeHelper.GetNumberOperatorPairs(),
       stringOperatorPairs: RangeHelper.GetStringOperatorPairs(),
@@ -95,7 +92,7 @@ class FloatingFilterFormComponent extends React.Component<
           this.setState({
             filterExpression: existingColumnFilter.Filter,
             placeholder: expressionDescription,
-            floatingFilterFormText: '',
+            quickFilterFormText: '',
           });
         }
       }
@@ -105,7 +102,7 @@ class FloatingFilterFormComponent extends React.Component<
         if (
           ExpressionHelper.IsNotNullOrEmptyExpression(this.state.filterExpression) ||
           StringExtensions.IsNotNullOrEmpty(this.state.placeholder) ||
-          StringExtensions.IsNotNullOrEmpty(this.state.floatingFilterFormText)
+          StringExtensions.IsNotNullOrEmpty(this.state.quickFilterFormText)
         ) {
           this.clearState();
         }
@@ -114,7 +111,7 @@ class FloatingFilterFormComponent extends React.Component<
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '__floatingFilterForm';
+    let cssClassName: string = this.props.cssClassName + '__quickFilterForm';
     let controlType: string = this.props.CurrentColumn.DataType == DataType.Date ? 'date' : 'text';
 
     return (
@@ -135,7 +132,7 @@ class FloatingFilterFormComponent extends React.Component<
               bsSize={'small'}
               type={controlType}
               placeholder={this.state.placeholder}
-              value={this.state.floatingFilterFormText}
+              value={this.state.quickFilterFormText}
               onChange={x => this.OnTextChange((x.target as HTMLInputElement).value)}
             />
           )}
@@ -148,7 +145,7 @@ class FloatingFilterFormComponent extends React.Component<
 
   OnTextChange(searchText: string) {
     // as soon as anything changes clear existing column filter
-    if (searchText.trim() != this.state.floatingFilterFormText.trim()) {
+    if (searchText.trim() != this.state.quickFilterFormText.trim()) {
       //   this.clearExistingColumnFilter();
     }
 
@@ -186,7 +183,7 @@ class FloatingFilterFormComponent extends React.Component<
     }
 
     this.setState({
-      floatingFilterFormText: searchText,
+      quickFilterFormText: searchText,
       filterExpression: expression,
       placeholder: '',
     });
@@ -275,7 +272,7 @@ class FloatingFilterFormComponent extends React.Component<
 
   clearState(): void {
     this.setState({
-      floatingFilterFormText: '',
+      quickFilterFormText: '',
       filterExpression: ExpressionHelper.CreateEmptyExpression(),
       placeholder: '',
     });
@@ -283,7 +280,7 @@ class FloatingFilterFormComponent extends React.Component<
 
   clearExpressionState(searchText: string): void {
     this.setState({
-      floatingFilterFormText: searchText,
+      quickFilterFormText: searchText,
       filterExpression: ExpressionHelper.CreateEmptyExpression(),
       placeholder: 'TEMP',
     });
@@ -322,14 +319,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   };
 }
 
-export let FloatingFilterForm = connect(
+export let QuickFilterForm = connect(
   mapStateToProps,
   mapDispatchToProps
-)(FloatingFilterFormComponent);
+)(QuickFilterFormComponent);
 
-export const FloatingFilterFormReact = (FilterContext: IColumnFilterContext) => (
+export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
   <Provider store={FilterContext.Blotter.adaptableBlotterStore.TheStore}>
-    <FloatingFilterForm
+    <QuickFilterForm
       Blotter={FilterContext.Blotter}
       CurrentColumn={FilterContext.Column}
       TeamSharingActivated={false}

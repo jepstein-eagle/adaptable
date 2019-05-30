@@ -180,7 +180,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
 
-  public hasFloatingFilter: boolean;
+  public hasQuickFilter: boolean;
 
   private agGridHelper: agGridHelper;
 
@@ -195,7 +195,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.vendorGridName = 'agGrid';
     this.embedColumnMenu = true;
     this.isInitialised = false;
-    this.hasFloatingFilter = true;
+    this.hasQuickFilter = true;
     this.useRowNodeLookUp = false; // we will set later in instantiate if possible to be true
 
     // set the licence first
@@ -400,7 +400,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     col.initialise();
   }
 
-  private createFloatingFilterWrapper(col: Column) {
+  private createQuickFilterWrapper(col: Column) {
     this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = {
       suppressFilterButton: false,
     };
@@ -584,9 +584,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     if (
       this.gridOptions.floatingFilter &&
-      this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter
+      this.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter
     ) {
-      this.createFloatingFilterWrapper(vendorColumn);
+      this.createQuickFilterWrapper(vendorColumn);
     }
   }
 
@@ -1436,8 +1436,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       Filterable: true, // why not?  need to test...
     };
 
-    if (this.isFloatingFilterActive()) {
-      this.createFloatingFilterWrapper(vendorColumn);
+    if (this.isQuickFilterActive()) {
+      this.createQuickFilterWrapper(vendorColumn);
       this.gridOptions.api.refreshHeader();
     }
 
@@ -2233,26 +2233,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return false;
   }
 
-  private isFloatingFilterActive(): boolean {
+  private isQuickFilterActive(): boolean {
     return (
       this.gridOptions.floatingFilter != null &&
       this.gridOptions.floatingFilter == true &&
-      this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter
+      this.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter
     );
   }
 
-  public showFloatingFilter(): void {
-    if (this.blotterOptions.filterOptions!.useAdaptableBlotterFloatingFilter) {
+  public showQuickFilter(): void {
+    if (this.blotterOptions.filterOptions!.useAdaptableBlotterQuickFilter) {
       this.gridOptions.floatingFilter = true;
       this.gridOptions.columnApi!.getAllGridColumns().forEach(col => {
-        this.createFloatingFilterWrapper(col);
+        this.createQuickFilterWrapper(col);
       });
       this.gridOptions.api!.refreshHeader();
     }
   }
 
-  public hideFloatingFilter(): void {
-    if (this.blotterOptions.filterOptions!.useAdaptableBlotterFloatingFilter) {
+  public hideQuickFilter(): void {
+    if (this.blotterOptions.filterOptions!.useAdaptableBlotterQuickFilter) {
       this.gridOptions.floatingFilter = false;
       this.gridOptions.api!.refreshHeader();
     }
@@ -2322,9 +2322,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       document.body.appendChild(css);
     }
 
-    // sometimes the header row looks wrong when using floating filter so to be sure...
-    if (this.isFloatingFilterActive()) {
-      this.dispatchAction(GridRedux.FloatingilterBarShow());
+    // sometimes the header row looks wrong when using quick filter so to be sure...
+    if (this.isQuickFilterActive()) {
+      this.dispatchAction(GridRedux.QuickFilterBarShow());
       this.gridOptions.api!.refreshHeader();
     }
 
