@@ -1,6 +1,6 @@
 // import styles - ab and 2 default agGrid
 
-import { Grid } from 'ag-grid-community';
+import { Grid, CellRange } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
 import * as Redux from 'redux';
@@ -697,13 +697,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public setSelectedCells(): void {
     const selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
 
-    const selected = this.gridOptions.api.getRangeSelections();
+    const selected: CellRange[] = this.gridOptions.api.getCellRanges();
     const columns: IColumn[] = [];
     if (selected) {
       // we iterate for each ranges
       selected.forEach((rangeSelection, index) => {
-        const y1 = Math.min(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex);
-        const y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex);
+        const y1 = Math.min(rangeSelection.startRow.rowIndex, rangeSelection.endRow.rowIndex);
+        const y2 = Math.max(rangeSelection.startRow.rowIndex, rangeSelection.endRow.rowIndex);
         for (const column of rangeSelection.columns) {
           const colId: string = column.getColId();
           if (index == 0) {

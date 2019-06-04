@@ -121,7 +121,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             <FormControl
               style={{
                 padding: '1px',
-                marginTop: '5px',
+                marginTop: '1px',
                 minHeight: '20px',
                 maxHeight: '20px',
                 fontSize: 'x-small',
