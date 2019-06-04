@@ -29,8 +29,8 @@
     "uuid": "^3.3.2"
   },
   "peerDependencies": {
-    "ag-grid-community": ">=20.2.0",
-    "ag-grid-enterprise": ">=20.2.0"
+    "ag-grid-community": ">=21.0.0",
+    "ag-grid-enterprise": ">=21.0.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
