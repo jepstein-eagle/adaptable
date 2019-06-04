@@ -86,7 +86,7 @@ import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICell
 import { ICalculatedColumn } from '../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { IRange } from '../Utilities/Interface/Expression/IRange';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../Utilities/Interface/blotterOptions/IAdaptableblotterOptions';
+import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';

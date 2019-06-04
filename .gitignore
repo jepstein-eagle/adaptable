@@ -8,5 +8,9 @@ node_modules/
 .DS_Store
 .env
 /packages/adaptableblotter/App_Scripts/**/*.d.ts
+
+# ignore symlink in angular project
+
+/packages/adaptableblotter-ng-aggrid/projects/adaptableblotter-angular-aggrid/src/adaptableblotter 
 **/package-lock.json
 package-lock.json

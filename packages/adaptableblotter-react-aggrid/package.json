@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/JonnyAdaptableTools/adaptableblotter/issues"
   },
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE.md",
   "engines": {
     "node": ">=6.0.0"
   },
@@ -85,7 +85,6 @@
     "prompt": "^1.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "release": "^6.0.1",
     "replace-in-file": "^3.0.0-beta.2",
     "rimraf": "^2.6.3",
     "ts-jest": "^22.0.0",
@@ -96,9 +95,7 @@
     "typedoc": "^0.12.0",
     "typescript": "^3.3.3"
   },
-  "dependencies": {
-    "resize-observer-polyfill": "^1.5.1"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "mathjs": "^5.1.1",
     "react": "=>16.0.0",
@@ -108,11 +105,6 @@
   },
   "scripts": {
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\" --fix",
-    "release": "npm run build && npm run registry-publish",
-    "canaryrelease": "npm run build && release pre && npm run registry-publish",
-    "release:patch": "npm run build && release patch && npm run registry-publish",
-    "release:minor": "npm run build && release minor && npm run registry-publish",
-    "release:major": "npm run build && release major && npm run registry-publish",
     "registry-publish": "npm run build-package-json && npm publish dist",
     "build": "rimraf dist && npm run tsc && npm run build-package-json && npm run sass && npm run copy-assets",
     "build-package-json": "node ./scripts/buildPackageJson",

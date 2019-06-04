@@ -26,7 +26,8 @@
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "build-core": "npm run --prefix packages/adaptableblotter build",
     "build-react": "npm run --prefix packages/adaptableblotter-react-aggrid build",
-    "build": "npm run build-core && npm run build-react"
+    "build-angular": "npm run --prefix packages/adaptableblotter-ng-aggrid build",
+    "build": "npm run build-core && npm run build-react && npm run build-angular"
   },
   "husky": {
     "hooks": {

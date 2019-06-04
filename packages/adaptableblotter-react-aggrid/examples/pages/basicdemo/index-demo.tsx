@@ -18,7 +18,7 @@ import 'ag-grid-community/dist/styles/ag-theme-balham-dark.css';
 LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
 
 const dataGen = new DataGenerator();
-const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
+const gridOptions: GridOptions = dataGen.getGridOptionsTrade(50);
 
 const adaptableBlotterOptions: IAdaptableBlotterOptions = {
   primaryKey: 'tradeId',
@@ -29,7 +29,7 @@ const adaptableBlotterOptions: IAdaptableBlotterOptions = {
 
 export default () => (
   <AdaptableBlotterReact
-    style={{ height: '100vh' }}
+    style={{ height: '80vh' }}
     gridOptions={gridOptions}
     blotterOptions={adaptableBlotterOptions}
   />
