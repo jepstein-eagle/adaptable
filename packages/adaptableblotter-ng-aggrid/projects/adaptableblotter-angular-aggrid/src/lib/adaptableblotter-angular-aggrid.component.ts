@@ -33,7 +33,7 @@ const getRandomInt = (max: number): number =>
     `,
   ],
 })
-export class AdaptableblotterAngularAggridComponent implements OnInit {
+export class AdaptableBlotterAngularAggridComponent implements OnInit {
   @Input() blotterOptions: IAdaptableBlotterOptions;
   @Input() gridOptions: GridOptions;
 

@@ -27,8 +27,8 @@ function buildGlobalPackageJSON() {
 
     Object.assign(packageJSON.dependencies, abPackageJSON.dependencies || {});
     packageJSON.version = topLevelPackageJSON.version;
-    packageJSON.main = 'esm5/adaptableblotter-angular-aggrid.js';
-    packageJSON.module = 'esm5/adaptableblotter-angular-aggrid.js';
+    packageJSON.main = 'esm5/public-api.js';
+    packageJSON.module = 'esm5/public-api.js';
 
     const content = JSON.stringify(packageJSON, null, 2);
     const path = resolve(

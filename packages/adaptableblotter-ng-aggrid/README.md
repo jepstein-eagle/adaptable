@@ -1,4 +1,4 @@
-# Adaptable Blotter React ag-Grid
+# Adaptable Blotter Angular ag-Grid
 
 Repository for the Adaptable Blotter Angular ag-Grid Wrapper.
 
@@ -10,6 +10,19 @@ To install Adaptable Blotter React ag-Grid via npm, run:
 
 ```javascript
 npm install adaptableblotter-angular-aggrid
+```
+
+## Usage
+
+`import { AdaptableBlotterAngularAggridComponent } from 'adaptableblotter-angular-aggrid'`
+
+```html
+<adaptableblotter-angular-aggrid
+  style="height: 100vh"
+  [blotterOptions]="..."
+  [gridOptions]="..."
+>
+</adaptableblotter-angular-aggrid>
 ```
 
 ## Licences

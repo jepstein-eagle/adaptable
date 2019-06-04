@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { AdaptableblotterAngularAggridComponent } from './adaptableblotter-angular-aggrid.component';
+import { AdaptableBlotterAngularAggridComponent } from './adaptableblotter-angular-aggrid.component';
 
 @NgModule({
-  declarations: [AdaptableblotterAngularAggridComponent],
+  declarations: [AdaptableBlotterAngularAggridComponent],
   imports: [],
-  exports: [AdaptableblotterAngularAggridComponent],
+  exports: [AdaptableBlotterAngularAggridComponent],
 })
-export class AdaptableblotterAngularAggridModule {}
+export class AdaptableBlotterAngularAggridModule {}

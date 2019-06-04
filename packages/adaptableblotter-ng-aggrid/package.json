@@ -65,6 +65,6 @@
     "build-package-json": "node ./scripts/buildPackageJson",
     "tsc": "tsc --outDir dist",
     "sass": "node-sass ./src/index.scss ./dist/adaptableblotter-angular-aggrid/index.css && node-sass ./src/base.scss ./dist/adaptableblotter-angular-aggrid/base.css && node-sass ./src/themes/light.scss ./dist/adaptableblotter-angular-aggrid/themes/light.css && node-sass ./src/themes/dark.scss ./dist/adaptableblotter-angular-aggrid/themes/dark.css",
-    "copy-assets": "cp -R ../adaptableblotter/App_Scripts/fonts ./dist/adaptableblotter-angular-aggrid/fonts/ && cp README.md ./dist/adaptableblotter-angular-aggrid/"
+    "copy-assets": "cp .npmignore ./dist/adaptableblotter-angular-aggrid && cp -R ../adaptableblotter/App_Scripts/fonts ./dist/adaptableblotter-angular-aggrid/fonts/ && cp README.md ./dist/adaptableblotter-angular-aggrid/"
   }
 }

@@ -2,10 +2,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { AdaptableblotterAngularAggridComponent } from '../../projects/adaptableblotter-angular-aggrid/src/public-api';
+import { AdaptableBlotterAngularAggridComponent } from '../../projects/adaptableblotter-angular-aggrid/src/public-api';
 
 @NgModule({
-  declarations: [AppComponent, AdaptableblotterAngularAggridComponent],
+  declarations: [AppComponent, AdaptableBlotterAngularAggridComponent],
   imports: [BrowserModule],
   providers: [],
   bootstrap: [AppComponent],
