@@ -6,8 +6,8 @@
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
     "adaptableblotter": "^3.3.1",
     "react-dom": "^16.7.0",
-    "ag-grid-community": "^20.1.0",
-    "ag-grid-angular": "^20.1.0",
+    "ag-grid-community": "^21.0.0",
+    "ag-grid-angular": "^21.0.0",
     "ag-grid-enterprise": "^20.1.0"
   },
   "devDependencies": {
