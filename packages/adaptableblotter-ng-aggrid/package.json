@@ -61,7 +61,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\" --fix",
-    "registry-publish": "npm run build-package-json && npm publish dist",
+    "registry-publish": "npm run build-package-json && npm publish dist/adaptableblotter-angular-aggrid",
     "build-package-json": "node ./scripts/buildPackageJson",
     "tsc": "tsc --outDir dist",
     "sass": "node-sass ./src/index.scss ./dist/adaptableblotter-angular-aggrid/index.css && node-sass ./src/base.scss ./dist/adaptableblotter-angular-aggrid/base.css && node-sass ./src/themes/light.scss ./dist/adaptableblotter-angular-aggrid/themes/light.css && node-sass ./src/themes/dark.scss ./dist/adaptableblotter-angular-aggrid/themes/dark.css",
