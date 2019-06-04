@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
     "target": "es5",
-    "importHelpers": false,
+    "importHelpers": true,
     "declaration": true,
     "inlineSources": true,
     "types": [],
