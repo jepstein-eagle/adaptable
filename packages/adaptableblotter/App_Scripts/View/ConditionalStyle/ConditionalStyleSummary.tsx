@@ -1,7 +1,10 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard';
@@ -33,7 +36,6 @@ export interface ConditionalStyleSummaryProps
     conditionalStyle: IConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleAddAction;
   onEditConditionalStyle: (
-    index: number,
     conditionalStyle: IConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
 }
@@ -86,7 +88,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             ConfigEnity={item}
             EntityType={StrategyConstants.ConditionalStyleStrategyName}
             showShare={this.props.TeamSharingActivated}
-            onEdit={() => this.onEdit(index, item)}
+            onEdit={() => this.onEdit(item)}
             onShare={() => this.props.onShare(item)}
             onDelete={ConditionalStyleRedux.ConditionalStyleDelete(item)}
           />
@@ -131,15 +133,15 @@ export class ConditionalStyleSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
-  onEdit(index: number, ConditionalStyle: IConditionalStyle) {
+  onEdit(ConditionalStyle: IConditionalStyle) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(ConditionalStyle),
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -147,13 +149,13 @@ export class ConditionalStyleSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-      this.props.onEditConditionalStyle(this.state.EditedAdaptableBlotterObjectIndex, this.state
+    if (this.state.WizardStatus == WizardStatus.Edit) {
+      this.props.onEditConditionalStyle(this.state
         .EditedAdaptableBlotterObject as IConditionalStyle);
     } else {
       this.props.onAddConditionalStyle(this.state
@@ -163,7 +165,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 

@@ -13,15 +13,16 @@ export class FormatColumnStrategyagGrid extends FormatColumnStrategy
     this.blotterBypass = blotterBypass;
   }
 
-  protected InitStyles(): void {
+  public initStyles(): void {
     let columns = this.blotter.api.gridApi.getColumns();
+    let formatColumns = this.blotter.api.formatColumnApi.getAllFormatColumn();
     let theBlotter = this.blotter as AdaptableBlotter;
 
     // adding this check as things can get mixed up during 'clean user data'
-    if (columns.length > 0 && this.FormatColumnState.FormatColumns.length > 0) {
+    if (columns.length > 0 && formatColumns.length > 0) {
       for (let column of columns) {
         let cellClassRules: any = {};
-        this.FormatColumnState.FormatColumns.forEach((fc, index) => {
+        formatColumns.forEach((fc, index) => {
           if (fc.ColumnId == column.ColumnId) {
             let styleName: string = StringExtensions.IsNullOrEmpty(fc.Style.ClassName)
               ? StyleHelper.CreateIndexedStyleName(

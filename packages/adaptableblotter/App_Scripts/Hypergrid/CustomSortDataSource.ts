@@ -1,7 +1,7 @@
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { SortOrder } from '../Utilities/Enums';
 import { DataSourceIndexed } from './DataSourceIndexed';
-import { IGridSort } from '../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../Utilities/Interface/IColumnSort';
 import * as _ from 'lodash';
 import { SortHelper } from '../Utilities/Helpers/SortHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -17,9 +17,9 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) =>
     blotter: blotter,
     // This function is called on every reIndex call if this object is in the pipelne
     apply: function() {
-      let gridSorts = blotter.api.gridApi.getGridSorts();
+      let columnSorts = blotter.api.gridApi.getColumnSorts();
 
-      if (ArrayExtensions.IsNullOrEmpty(gridSorts)) {
+      if (ArrayExtensions.IsNullOrEmpty(columnSorts)) {
         this.clearIndex();
         return;
       }
@@ -79,26 +79,26 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) =>
 
       let functionsArray: any[] = [];
       let directionArray: number[] = [];
-      gridSorts.forEach((gridSort: IGridSort) => {
-        let hypergridColumn = blotter.getHypergridColumn(gridSort.Column);
+      columnSorts.forEach((columnSort: IColumnSort) => {
+        let hypergridColumn = blotter.getHypergridColumn(columnSort.Column);
         hypergridColumns.push(hypergridColumn);
         let customSort = blotter.api.customSortApi
           .getAllCustomSort()
-          .find(x => x.ColumnId == gridSort.Column);
+          .find(x => x.ColumnId == columnSort.Column);
         if (customSort) {
-          let direction: number = gridSort.SortOrder === SortOrder.Ascending ? 1 : -1;
+          let direction: number = columnSort.SortOrder === SortOrder.Ascending ? 1 : -1;
           let formatter = blotter.getColumnFormatter(customSort.ColumnId);
 
           customSortInfoList.push({ SortedValues: customSort.SortedValues, Formatter: formatter });
           directionArray.push(direction);
           functionsArray.push(customSortFunction);
         } else {
-          let direction = gridSort.SortOrder == SortOrder.Ascending ? 1 : -1;
+          let direction = columnSort.SortOrder == SortOrder.Ascending ? 1 : -1;
           directionArray.push(direction);
           functionsArray.push(basicSortFunction);
         }
       });
-      let sortCount = gridSorts.length;
+      let sortCount = columnSorts.length;
 
       for (let i = 0; i < dataToSort.length; i++) {
         let dataRow = this.dataSource.getRow(i);

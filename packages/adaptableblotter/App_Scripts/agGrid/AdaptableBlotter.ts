@@ -1,6 +1,6 @@
 // import styles - ab and 2 default agGrid
 
-import { Grid } from 'ag-grid-community';
+import { Grid, CellRange } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
 import * as Redux from 'redux';
@@ -77,7 +77,7 @@ import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IVendorGridInfo } from '../Utilities/Interface/IVendorGridInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { IGridSort } from '../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../Utilities/Interface/IColumnSort';
 import { IPercentBar } from '../Utilities/Interface/BlotterObjects/IPercentBar';
 import { IFreeTextColumn } from '../Utilities/Interface/BlotterObjects/IFreeTextColumn';
 import { ICustomSort } from '../Utilities/Interface/BlotterObjects/ICustomSort';
@@ -86,7 +86,7 @@ import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICell
 import { ICalculatedColumn } from '../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { IRange } from '../Utilities/Interface/Expression/IRange';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../Utilities/Interface/blotterOptions/IAdaptableblotterOptions';
+import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
@@ -127,6 +127,8 @@ import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
 import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState';
 import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
+import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
+import { SearchService } from '../Utilities/Services/SearchService';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;
@@ -158,6 +160,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public LicenceService: ILicenceService;
 
   public ScheduleService: IScheduleService;
+  public SearchService: ISearchService;
 
   public embedColumnMenu: boolean;
 
@@ -177,7 +180,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
 
-  public hasFloatingFilter: boolean;
+  public hasQuickFilter: boolean;
 
   private agGridHelper: agGridHelper;
 
@@ -192,7 +195,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.vendorGridName = 'agGrid';
     this.embedColumnMenu = true;
     this.isInitialised = false;
-    this.hasFloatingFilter = true;
+    this.hasQuickFilter = true;
     this.useRowNodeLookUp = false; // we will set later in instantiate if possible to be true
 
     // set the licence first
@@ -218,6 +221,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.ChartService = new ChartService(this);
     this.FreeTextColumnService = new FreeTextColumnService(this);
     this.ScheduleService = new ScheduleService(this);
+    this.SearchService = new SearchService(this);
     this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
       this,
       (columnId, record) => this.gridOptions.api.getValue(columnId, record)
@@ -396,7 +400,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     col.initialise();
   }
 
-  private createFloatingFilterWrapper(col: Column) {
+  private createQuickFilterWrapper(col: Column) {
     this.gridOptions.api.getColumnDef(col).floatingFilterComponentParams = {
       suppressFilterButton: false,
     };
@@ -580,9 +584,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     if (
       this.gridOptions.floatingFilter &&
-      this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter
+      this.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter
     ) {
-      this.createFloatingFilterWrapper(vendorColumn);
+      this.createQuickFilterWrapper(vendorColumn);
     }
   }
 
@@ -693,13 +697,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public setSelectedCells(): void {
     const selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
 
-    const selected = this.gridOptions.api.getRangeSelections();
+    const selected: CellRange[] = this.gridOptions.api.getCellRanges();
     const columns: IColumn[] = [];
     if (selected) {
       // we iterate for each ranges
       selected.forEach((rangeSelection, index) => {
-        const y1 = Math.min(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex);
-        const y2 = Math.max(rangeSelection.start.rowIndex, rangeSelection.end.rowIndex);
+        const y1 = Math.min(rangeSelection.startRow.rowIndex, rangeSelection.endRow.rowIndex);
+        const y2 = Math.max(rangeSelection.startRow.rowIndex, rangeSelection.endRow.rowIndex);
         for (const column of rangeSelection.columns) {
           const colId: string = column.getColId();
           if (index == 0) {
@@ -1432,8 +1436,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       Filterable: true, // why not?  need to test...
     };
 
-    if (this.isFloatingFilterActive()) {
-      this.createFloatingFilterWrapper(vendorColumn);
+    if (this.isQuickFilterActive()) {
+      this.createQuickFilterWrapper(vendorColumn);
       this.gridOptions.api.refreshHeader();
     }
 
@@ -1448,7 +1452,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       const conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.strategies.get(
         StrategyConstants.ConditionalStyleStrategyId
       ) as IConditionalStyleStrategy;
-      conditionalStyleagGridStrategy.InitStyles();
+      conditionalStyleagGridStrategy.initStyles();
     }
   }
 
@@ -1838,25 +1842,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
       // first we assess AdvancedSearch (if its running locally)
       if (this.blotterOptions.generalOptions.serverSearchOption == 'None') {
-        const currentSearchName = this.getState().AdvancedSearch.CurrentAdvancedSearch;
-        if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
-          // Get the actual Advanced Search object and check it exists
-          const currentSearch = this.getState().AdvancedSearch.AdvancedSearches.find(
-            s => s.Name == currentSearchName
-          );
-          if (currentSearch) {
-            // See if our record passes the Expression - using Expression Helper; if not then return false
-            if (
-              !ExpressionHelper.checkForExpressionFromRecord(
-                currentSearch.Expression,
-                node,
-                columns,
-                this
-              )
-            ) {
-              // if (!ExpressionHelper.checkForExpression(currentSearch.Expression, rowId, columns, this)) {
-              return false;
-            }
+        const currentSearch = this.api.advancedSearchApi.getCurrentAdvancedSearch();
+        if (currentSearch) {
+          // See if our record passes the Expression - using Expression Helper; if not then return false
+          if (
+            !ExpressionHelper.checkForExpressionFromRecord(
+              currentSearch.Expression,
+              node,
+              columns,
+              this
+            )
+          ) {
+            return false;
           }
         }
       }
@@ -2018,7 +2015,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private onSortChanged(): void {
     const sortModel: any[] = this.gridOptions.api.getSortModel();
 
-    const gridSorts: IGridSort[] = [];
+    const columnSorts: IColumnSort[] = [];
     if (sortModel != null) {
       if (sortModel.length > 0) {
         sortModel.forEach(sm => {
@@ -2033,7 +2030,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               if (customSort) {
                 // check that not already applied
                 if (
-                  !this.getState().Grid.GridSorts.find(gs =>
+                  !this.getState().Grid.ColumnSorts.find(gs =>
                     ColumnHelper.isSpecialColumn(gs.Column)
                   )
                 ) {
@@ -2052,15 +2049,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               }
             }
           }
-          const gridSort: IGridSort = {
+          const columnSort: IColumnSort = {
             Column: sm.colId,
             SortOrder: sm.sort == 'asc' ? SortOrder.Ascending : SortOrder.Descending,
           };
-          gridSorts.push(gridSort);
+          columnSorts.push(columnSort);
         });
       }
     }
-    this.dispatchAction(GridRedux.GridSetSort(gridSorts));
+    this.dispatchAction(GridRedux.GridSetSort(columnSorts));
   }
 
   public getRowCount(): number {
@@ -2094,10 +2091,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.gridOptions.api.addRangeSelection(rangeSelectionParams);
   }
 
-  public setGridSort(gridSorts: IGridSort[]): void {
+  public setColumnSort(columnSorts: IColumnSort[]): void {
     // get the sort model
     const sortModel: any[] = [];
-    gridSorts.forEach(gs => {
+    columnSorts.forEach(gs => {
       const sortDescription: string = gs.SortOrder == SortOrder.Ascending ? 'asc' : 'desc';
       sortModel.push({ colId: gs.Column, sort: sortDescription });
     });
@@ -2236,26 +2233,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return false;
   }
 
-  private isFloatingFilterActive(): boolean {
+  private isQuickFilterActive(): boolean {
     return (
       this.gridOptions.floatingFilter != null &&
       this.gridOptions.floatingFilter == true &&
-      this.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter
+      this.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter
     );
   }
 
-  public showFloatingFilter(): void {
-    if (this.blotterOptions.filterOptions!.useAdaptableBlotterFloatingFilter) {
+  public showQuickFilter(): void {
+    if (this.blotterOptions.filterOptions!.useAdaptableBlotterQuickFilter) {
       this.gridOptions.floatingFilter = true;
       this.gridOptions.columnApi!.getAllGridColumns().forEach(col => {
-        this.createFloatingFilterWrapper(col);
+        this.createQuickFilterWrapper(col);
       });
       this.gridOptions.api!.refreshHeader();
     }
   }
 
-  public hideFloatingFilter(): void {
-    if (this.blotterOptions.filterOptions!.useAdaptableBlotterFloatingFilter) {
+  public hideQuickFilter(): void {
+    if (this.blotterOptions.filterOptions!.useAdaptableBlotterQuickFilter) {
       this.gridOptions.floatingFilter = false;
       this.gridOptions.api!.refreshHeader();
     }
@@ -2325,9 +2322,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       document.body.appendChild(css);
     }
 
-    // sometimes the header row looks wrong when using floating filter so to be sure...
-    if (this.isFloatingFilterActive()) {
-      this.dispatchAction(GridRedux.FloatingilterBarShow());
+    // sometimes the header row looks wrong when using quick filter so to be sure...
+    if (this.isQuickFilterActive()) {
+      this.dispatchAction(GridRedux.QuickFilterBarShow());
       this.gridOptions.api!.refreshHeader();
     }
 

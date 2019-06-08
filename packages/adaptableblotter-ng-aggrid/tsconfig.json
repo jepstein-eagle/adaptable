@@ -1,0 +1,22 @@
+{
+  "extends": "../adaptableblotter/tsconfig.json",
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2018", "dom"],
+    "paths": {
+      "adaptableblotter-angular-aggrid": [
+        "dist/adaptableblotter-angular-aggrid"
+      ],
+      "adaptableblotter-angular-aggrid/*": [
+        "dist/adaptableblotter-angular-aggrid/*"
+      ]
+    }
+  },
+  "include": ["src/**/*", "../adaptableblotter/App_Scripts/**/*"]
+}

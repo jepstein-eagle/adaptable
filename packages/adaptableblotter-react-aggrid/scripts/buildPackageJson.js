@@ -5,8 +5,11 @@ const resolve = require('path').resolve;
 const sourcePackagePath = resolve(process.cwd(), './package.json');
 const abBlotterPackagePath = resolve(process.cwd(), '../adaptableblotter/package.json');
 
+const topLevelPackageJSONPath = resolve(process.cwd(), '../../package.json');
+
 const packageJSON = require(sourcePackagePath);
 const abPackageJSON = require(abBlotterPackagePath);
+const topLevelPackageJSON = require(topLevelPackageJSONPath);
 
 function buildGlobalPackageJSON() {
   console.log('Preparing package');
@@ -19,6 +22,7 @@ function buildGlobalPackageJSON() {
     Object.assign(packageJSON.dependencies, abPackageJSON.dependencies || {});
     delete packageJSON.dependencies.react;
     delete packageJSON.dependencies['react-dom'];
+    packageJSON.version = topLevelPackageJSON.version;
 
     const content = JSON.stringify(packageJSON, null, 2);
     const path = resolve(process.cwd(), './dist', 'package.json');

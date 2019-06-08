@@ -21,20 +21,14 @@ export class CalculatedColumnApi extends ApiBase implements ICalculatedColumnApi
     let calcColumn: ICalculatedColumn = this.getAllCalculatedColumn().find(
       cc => cc.ColumnId == column
     );
-    let calcColumnIndex: number = this.getAllCalculatedColumn().findIndex(
-      cc => cc.ColumnId == column
-    );
     calcColumn.ColumnExpression = columnExpression;
-    this.dispatchAction(CalculatedColumnRedux.CalculatedColumnEdit(calcColumnIndex, calcColumn));
+    this.dispatchAction(CalculatedColumnRedux.CalculatedColumnEdit(calcColumn));
   }
 
   public deleteCalculatedColumn(column: string): void {
-    let calcColumnIndex: number = this.getAllCalculatedColumn().findIndex(
-      cc => cc.ColumnId == column
-    );
     let calcColumn: ICalculatedColumn = this.getAllCalculatedColumn().find(
       cc => cc.ColumnId == column
     );
-    this.dispatchAction(CalculatedColumnRedux.CalculatedColumnDelete(calcColumnIndex, calcColumn));
+    this.dispatchAction(CalculatedColumnRedux.CalculatedColumnDelete(calcColumn));
   }
 }

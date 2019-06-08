@@ -43,7 +43,7 @@ export class ConditionalStyleEntityRow extends React.Component<
     let buttons: any = (
       <EntityListActionButtons
         cssClassName={this.props.cssClassName}
-        editClick={() => this.props.onEdit(this.props.Index, conditionalStyle)}
+        editClick={() => this.props.onEdit(conditionalStyle)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
         overrideDisableEdit={

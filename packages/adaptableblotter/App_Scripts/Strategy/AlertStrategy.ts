@@ -54,7 +54,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
 
       // first check the rules which have expressions
       let expressionAlertDefinitions: IAlertDefinition[] = relatedAlertDefinitions.filter(r =>
-        ExpressionHelper.IsNotEmptyExpression(r.Expression)
+        ExpressionHelper.IsNotNullOrEmptyExpression(r.Expression)
       );
 
       if (expressionAlertDefinitions.length > 0) {
@@ -76,7 +76,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
 
       // now check the rules without expressions//
       let noExpressionRules: IAlertDefinition[] = relatedAlertDefinitions.filter(r =>
-        ExpressionHelper.IsEmptyExpression(r.Expression)
+        ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
       );
       for (let noExpressionRule of noExpressionRules) {
         if (this.IsAlertTriggered(noExpressionRule, dataChangedEvent, columns)) {

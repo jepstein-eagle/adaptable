@@ -2,24 +2,44 @@ import { IAdvancedSearch } from '../../Utilities/Interface/BlotterObjects/IAdvan
 import { AdvancedSearchState } from '../../Redux/ActionsReducers/Interface/IState';
 
 export interface IAdvancedSearchApi {
+  /**
+   * Retrieves the Advanced Search State
+   */
   getAdvancedSearchState(): AdvancedSearchState;
+
+  /**
+   * Replaces the Advanced Search state with the inputted one
+   * @param advancedSearchState
+   */
   setAdvancedSearchState(advancedSearchState: AdvancedSearchState): void;
 
   /**
-   * Sets Advanced Search
+   * Applies Advanced Search on the given Advanced Search name
    * @param advancedSearchName
    */
   setAdvancedSearch(advancedSearchName: string): void;
-  clearAdvancedSearch(): void;
-  addAdvancedSearch(advancedSearch: IAdvancedSearch): void;
+
   /**
-   * Updates an existing Advanced Search.
-   * The first parameter is the name of the Search that is being edited.
-   * Its required in order to identify the object because the name property itself can be edited and there is no UID.
-   * @param advancedSearchName
+   * Clears the Advanced Search
+   */
+  clearAdvancedSearch(): void;
+
+  /**
+   * Adds a new Advanced Search to the State
+   * @param advancedSearch advanced search to add
+   */
+  addAdvancedSearch(advancedSearch: IAdvancedSearch): void;
+
+  /**
+   * Updates an existing Advanced Search with the provided object
    * @param advancedSearch
    */
-  editAdvancedSearch(advancedSearchName: string, advancedSearch: IAdvancedSearch): void;
+  editAdvancedSearch(advancedSearch: IAdvancedSearch): void;
+
+  /**
+   *
+   * @param advancedSearchName
+   */
   deleteAdvancedSearch(advancedSearchName: string): void;
   getCurrentAdvancedSearch(): IAdvancedSearch;
   getCurrentAdvancedSearchName(): string;

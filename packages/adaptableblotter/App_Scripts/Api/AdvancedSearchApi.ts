@@ -6,6 +6,7 @@ import { IAdvancedSearchApi } from './Interface/IAdvancedSearchApi';
 import { AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
+import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
 
 export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
   public getAdvancedSearchState(): AdvancedSearchState {
@@ -15,11 +16,11 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
   public setAdvancedSearchState(advancedSearchState: AdvancedSearchState): void {
     // add/update each advanced search where the states are different
     const advancedSearches: IAdvancedSearch[] = this.getAllAdvancedSearch();
-    //  let advancedSearchNmes: string[]=
+
     if (advancedSearches != advancedSearchState.AdvancedSearches) {
       advancedSearchState.AdvancedSearches.forEach((advancedSearch: IAdvancedSearch) => {
-        if (ArrayExtensions.ContainsItem(advancedSearches, advancedSearch)) {
-          this.editAdvancedSearch(advancedSearch.Name, advancedSearch);
+        if (BlotterHelper.BlotterObjectExistsInState(advancedSearches, advancedSearch)) {
+          this.editAdvancedSearch(advancedSearch);
         } else {
           this.addAdvancedSearch(advancedSearch);
         }
@@ -61,7 +62,7 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAdd(advancedSearch));
   }
 
-  public editAdvancedSearch(advancedSearchName: string, advancedSearch: IAdvancedSearch): void {
+  public editAdvancedSearch(advancedSearch: IAdvancedSearch): void {
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchEdit(advancedSearch));
   }
 
@@ -71,9 +72,7 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
   }
 
   public getCurrentAdvancedSearch(): IAdvancedSearch {
-    const currentAdvancedSearchName: string = this.getBlotterState().AdvancedSearch
-      .CurrentAdvancedSearch;
-    return this.getAdvancedSearchByName(currentAdvancedSearchName);
+    return this.getAdvancedSearchByName(this.getCurrentAdvancedSearchName());
   }
 
   public getCurrentAdvancedSearchName(): string {

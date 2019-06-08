@@ -414,12 +414,19 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       userFilters,
       rangeExpressions
     );
-
-    let columnFilter: IColumnFilter = ObjectFactory.CreateColumnFilter(
-      this.props.CurrentColumn.ColumnId,
-      expression
+    let columnFilter: IColumnFilter = this.props.ColumnFilters.find(
+      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
+    let alreadyExists: boolean = columnFilter != null;
 
+    if (alreadyExists) {
+      columnFilter.Filter = expression;
+    } else {
+      columnFilter = ObjectFactory.CreateColumnFilter(
+        this.props.CurrentColumn.ColumnId,
+        expression
+      );
+    }
     //delete if empty
     if (
       columnDisplayValues.length == 0 &&
@@ -429,7 +436,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     ) {
       this.props.onClearColumnFilter(columnFilter.ColumnId);
     } else {
-      if (this.props.ColumnFilters.find(cf => cf.ColumnId == columnFilter.ColumnId)) {
+      if (alreadyExists) {
         this.props.onEditColumnFilter(columnFilter);
       } else {
         this.props.onAddColumnFilter(columnFilter);

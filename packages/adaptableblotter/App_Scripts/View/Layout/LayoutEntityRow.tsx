@@ -46,7 +46,7 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
         cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.TeamSharingActivated}
-        editClick={() => this.props.onEdit(this.props.Index, layout)}
+        editClick={() => this.props.onEdit(layout)}
         shareClick={() => this.props.onShare()}
         overrideDisableEdit={false}
         overrideDisableDelete={layout.Name == DEFAULT_LAYOUT}

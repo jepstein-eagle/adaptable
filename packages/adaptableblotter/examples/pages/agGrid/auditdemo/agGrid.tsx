@@ -26,6 +26,7 @@ function InitAdaptableBlotter() {
     userName: 'demo user',
     blotterId: 'audit demo',
     licenceKey: examplesHelper.getEnterpriseLicenceKey(),
+
     auditOptions: {
       auditUserStateChanges: {
         auditToConsole: true,

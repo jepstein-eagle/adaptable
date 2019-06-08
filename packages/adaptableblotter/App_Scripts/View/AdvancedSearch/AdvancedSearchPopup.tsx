@@ -15,7 +15,10 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -100,8 +103,7 @@ class AdvancedSearchPopupComponent extends React.Component<
             AdaptableBlotterObject={advancedSearch}
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
-            Index={index}
-            onEdit={(index, advancedSearch) => this.onEdit(advancedSearch as IAdvancedSearch)}
+            onEdit={advancedSearch => this.onEdit(advancedSearch as IAdvancedSearch)}
             onShare={() => this.props.onShare(advancedSearch)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)}
@@ -173,7 +175,7 @@ class AdvancedSearchPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyAdvancedSearch(),
       WizardStartIndex: 0,
-      EditIsNew: true,
+      WizardStatus: WizardStatus.New,
     });
   }
 
@@ -182,7 +184,7 @@ class AdvancedSearchPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 0,
-      EditIsNew: false,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -191,7 +193,7 @@ class AdvancedSearchPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditIsNew: true,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -200,16 +202,21 @@ class AdvancedSearchPopupComponent extends React.Component<
     let currentSearch: IAdvancedSearch = this.props.AdvancedSearches.filter(
       s => s.Name === this.props.CurrentAdvancedSearchName
     )[0];
-    if (this.state.EditIsNew) {
+    if (this.state.WizardStatus == WizardStatus.New) {
       this.props.onAddAdvancedSearch(clonedObject);
-    } else {
+    } else if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditAdvancedSearch(clonedObject);
     }
+    let wizardStatus = this.state.WizardStatus; // need this?
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
+      WizardStatus: WizardStatus.None,
     });
-    if (this.state.EditIsNew || (currentSearch && currentSearch.Uuid === clonedObject.Uuid)) {
+    if (
+      wizardStatus == WizardStatus.New ||
+      (currentSearch && currentSearch.Uuid === clonedObject.Uuid)
+    ) {
       // it its new - make it the new search
       // or if we are editing the current search - but might have changed the name
       this.props.onSelectAdvancedSearch(clonedObject.Name);

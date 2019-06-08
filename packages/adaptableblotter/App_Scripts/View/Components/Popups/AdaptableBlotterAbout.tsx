@@ -13,12 +13,13 @@ import { Modal, Button, Row, Col, Radio } from 'react-bootstrap';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../../UIHelper';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import { PanelWithButton } from '../Panels/PanelWithButton';
 import { ButtonMaximise } from '../Buttons/ButtonMaximise';
 import { ButtonMinimise } from '../Buttons/ButtonMinimise';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { IGridSort } from '../../../Utilities/Interface/IGridSort';
+import PACKAGE from '../../../../../../package.json';
+
+const version = PACKAGE.version;
 
 interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlotterAbout> {
   AdaptableBlotter: IAdaptableBlotter;
@@ -471,7 +472,7 @@ export class AdaptableBlotterAbout extends React.Component<
         columns,
         this.props.AdaptableBlotter
       );
-      let sorts: any = this.props.AdaptableBlotter.api.gridApi.getGridSorts().map(gs => {
+      let sorts: any = this.props.AdaptableBlotter.api.gridApi.getColumnSorts().map(gs => {
         return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ': ' + gs.SortOrder;
       });
       let licenceInDate: string = this.props.AdaptableBlotter.LicenceService.LicenceInfo
@@ -481,7 +482,7 @@ export class AdaptableBlotterAbout extends React.Component<
       returnRows.push(
         this.createColItem(colItems, 'Vendor Grid', this.props.AdaptableBlotter.vendorGridName)
       );
-      returnRows.push(this.createColItem(colItems, 'Adaptable Blotter Version', '3.3'));
+      returnRows.push(this.createColItem(colItems, 'Adaptable Blotter Version', version));
       returnRows.push(
         this.createColItem(
           colItems,
@@ -796,8 +797,8 @@ export class AdaptableBlotterAbout extends React.Component<
       returnRows.push(
         this.createColItem(
           colItems,
-          'useAdaptableBlotterFloatingFilter',
-          options.filterOptions.useAdaptableBlotterFloatingFilter == true ? 'Yes' : 'No',
+          'useAdaptableBlotterQuickFilter',
+          options.filterOptions.useAdaptableBlotterQuickFilter == true ? 'Yes' : 'No',
           'Use the Adaptable Blotter quick filter row (or that provided by the vendor grid).'
         )
       );

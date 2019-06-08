@@ -155,7 +155,7 @@ function InitAdaptableBlotter() {
       },
       filterOptions: {
         useAdaptableBlotterFilterForm: true,
-        useAdaptableBlotterFloatingFilter: true,
+        useAdaptableBlotterQuickFilter: true,
       },
       chartOptions: {
         displayOnStartUp: true,
@@ -806,7 +806,7 @@ let reportJson = {
     Layouts: [
       {
         Columns: ['ask', 'bid', 'bidOfferSpread'],
-        GridSorts: [],
+        ColumnSorts: [],
         Name: 'Citi Price',
       },
     ],

@@ -32,13 +32,13 @@ interface ColumnFilterToolbarControlComponentProps
   onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction;
   onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
-  onHideFloatingFilterBar: () => GridRedux.FloatingFilterBarHideAction;
-  onShowFloatingFilterBar: () => GridRedux.FloatingFilterBarShowAction;
+  onHideQuickFilterBar: () => GridRedux.QuickFilterBarHideAction;
+  onShowQuickFilterBar: () => GridRedux.QuickFilterBarShowAction;
   ColumnFilters: IColumnFilter[];
   Columns: IColumn[];
   UserFilters: IUserFilter[];
   Entitlements: IEntitlement[];
-  IsFloatingFilterActive: boolean;
+  IsQuickFilterActive: boolean;
 }
 
 class ColumnFilterToolbarControlComponent extends React.Component<
@@ -102,17 +102,17 @@ class ColumnFilterToolbarControlComponent extends React.Component<
               />
             </span>
           )}
-          {this.props.IsFloatingFilterActive ? (
+          {this.props.IsQuickFilterActive ? (
             <ButtonHide
               style={{ marginLeft: '2px' }}
               cssClassName={cssClassName}
-              onClick={() => this.props.onHideFloatingFilterBar()}
+              onClick={() => this.props.onHideQuickFilterBar()}
               size={this.props.DashboardSize}
-              overrideTooltip="Hide Floating Filter"
+              overrideTooltip="Hide Quick Filter"
               DisplayMode="Glyph"
               AccessLevel={this.props.AccessLevel}
               overrideDisableButton={
-                !this.props.Blotter.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter
+                !this.props.Blotter.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter
               }
               showDefaultStyle={this.props.UseSingleColourForButtons}
             />
@@ -120,13 +120,13 @@ class ColumnFilterToolbarControlComponent extends React.Component<
             <ButtonShow
               style={{ marginLeft: '2px' }}
               cssClassName={cssClassName}
-              onClick={() => this.props.onShowFloatingFilterBar()}
+              onClick={() => this.props.onShowQuickFilterBar()}
               size={this.props.DashboardSize}
-              overrideTooltip="Show Floating Filter"
+              overrideTooltip="Show Quick Filter"
               DisplayMode="Glyph"
               AccessLevel={this.props.AccessLevel}
               overrideDisableButton={
-                !this.props.Blotter.blotterOptions.filterOptions.useAdaptableBlotterFloatingFilter
+                !this.props.Blotter.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter
               }
               showDefaultStyle={this.props.UseSingleColourForButtons}
             />
@@ -181,7 +181,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   return {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
     Entitlements: state.Entitlements.FunctionEntitlements,
-    IsFloatingFilterActive: state.Grid.IsFloatingFilterActive,
+    IsQuickFilterActive: state.Grid.IsQuickFilterActive,
   };
 }
 
@@ -191,8 +191,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
     onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
-    onHideFloatingFilterBar: () => dispatch(GridRedux.FloatingFilterBarHide()),
-    onShowFloatingFilterBar: () => dispatch(GridRedux.FloatingilterBarShow()),
+    onHideQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarHide()),
+    onShowQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarShow()),
     onClose: (dashboardControl: string) =>
       dispatch(DashboardRedux.DashboardHideToolbar(dashboardControl)),
     onConfigure: () =>

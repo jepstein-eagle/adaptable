@@ -12,7 +12,10 @@ import { DataSourceWizard } from './Wizard/DataSourceWizard';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
@@ -26,10 +29,7 @@ import EmptyContent from '../../components/EmptyContent';
 
 interface DataSourcePopupProps extends StrategyViewPopupProps<DataSourcePopupComponent> {
   onAddDataSource: (DataSource: IDataSource) => DataSourceRedux.DataSourceAddAction;
-  onEditDataSource: (
-    Index: number,
-    DataSource: IDataSource
-  ) => DataSourceRedux.DataSourceEditAction;
+  onEditDataSource: (DataSource: IDataSource) => DataSourceRedux.DataSourceEditAction;
 
   onSelectDataSource: (SelectedDataSource: string) => DataSourceRedux.DataSourceSelectAction;
   DataSources: Array<IDataSource>;
@@ -66,8 +66,7 @@ class DataSourcePopupComponent extends React.Component<
           cssClassName={cssClassName}
           AdaptableBlotterObject={dataSource}
           key={'ns' + index}
-          Index={index}
-          onEdit={(index, dataSource) => this.onEdit(index, dataSource as IDataSource)}
+          onEdit={() => this.onEdit(dataSource)}
           colItems={colItems}
           onShare={() => this.props.onShare(dataSource)}
           TeamSharingActivated={this.props.TeamSharingActivated}
@@ -136,25 +135,23 @@ class DataSourcePopupComponent extends React.Component<
   }
 
   onChangeName(dataSource: IDataSource, name: string): void {
-    let currentIndex: number = this.props.DataSources.findIndex(ds => ds.Name == dataSource.Name);
     let clonedDataSource: IDataSource = Helper.cloneObject(dataSource);
     clonedDataSource.Name = name;
-    this.props.onEditDataSource(currentIndex, clonedDataSource);
+    this.props.onEditDataSource(clonedDataSource);
   }
 
   onChangeDescription(dataSource: IDataSource, description: string): void {
-    let currentIndex: number = this.props.DataSources.findIndex(ds => ds.Name == dataSource.Name);
     let clonedDataSource: IDataSource = Helper.cloneObject(dataSource);
     clonedDataSource.Description = description;
-    this.props.onEditDataSource(currentIndex, clonedDataSource);
+    this.props.onEditDataSource(clonedDataSource);
   }
 
-  onEdit(index: number, dataSource: IDataSource) {
+  onEdit(dataSource: IDataSource) {
     let clonedObject: IDataSource = Helper.cloneObject(dataSource);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -163,18 +160,18 @@ class DataSourcePopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let searchIndex: number = this.state.EditedAdaptableBlotterObjectIndex;
-    let currentSearchIndex: number = this.props.DataSources.findIndex(
-      as => as.Name == this.props.CurrentDataSource
-    );
+    //  let searchIndex: number = this.state.EditedAdaptableBlotterObjectIndex;
+    //  let currentSearchIndex: number = this.props.DataSources.findIndex(
+    //    as => as.Name == this.props.CurrentDataSource
+    //  );
     let clonedObject: IDataSource = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
-    if (this.state.EditedAdaptableBlotterObject != -1) {
-      this.props.onEditDataSource(this.state.EditedAdaptableBlotterObjectIndex, clonedObject);
+    if (this.state.WizardStatus == WizardStatus.Edit) {
+      this.props.onEditDataSource(clonedObject);
     } else {
       this.props.onAddDataSource(clonedObject);
     }
@@ -182,12 +179,12 @@ class DataSourcePopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
-    if (searchIndex == -1 || searchIndex == currentSearchIndex) {
-      // its new so make it the new search or we are editing the current search (but might have changed the name)
-      this.props.onSelectDataSource(clonedObject.Name);
-    }
+    //  if (searchIndex == -1 || searchIndex == currentSearchIndex) {
+    // its new so make it the new search or we are editing the current search (but might have changed the name)
+    //  this.props.onSelectDataSource(clonedObject.Name);
+    //  }
   }
 
   canFinishWizard() {
@@ -218,8 +215,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddDataSource: (DataSource: IDataSource) =>
       dispatch(DataSourceRedux.DataSourceAdd(DataSource)),
-    onEditSource: (Index: number, DataSource: IDataSource) =>
-      dispatch(DataSourceRedux.DataSourceEdit(Index, DataSource)),
+    onEditDataSource: (DataSource: IDataSource) =>
+      dispatch(DataSourceRedux.DataSourceEdit(DataSource)),
     onSelectDataSource: (SelectedDataSource: string) =>
       dispatch(DataSourceRedux.DataSourceSelect(SelectedDataSource)),
     onShare: (entity: IAdaptableBlotterObject) =>

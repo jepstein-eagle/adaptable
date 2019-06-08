@@ -16,7 +16,10 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -60,6 +63,7 @@ class ConditionalStylePopupComponent extends React.Component<
         this.setState({
           EditedAdaptableBlotterObject: _editedConditionalStyle,
           WizardStartIndex: 1,
+          WizardStatus: WizardStatus.New,
         });
       }
     }
@@ -90,12 +94,11 @@ class ConditionalStylePopupComponent extends React.Component<
             AdaptableBlotterObject={conditionalStyle}
             colItems={colItems}
             key={'CS' + (conditionalStyle.Uuid || index)}
-            Index={index}
             onShare={() => this.props.onShare(conditionalStyle)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             UserFilters={this.props.UserFilters}
             Columns={this.props.Columns}
-            onEdit={(index, conditionalStyle) => this.onEdit(conditionalStyle as IConditionalStyle)}
+            onEdit={() => this.onEdit(conditionalStyle)}
             onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(conditionalStyle)}
           />
         );
@@ -166,7 +169,7 @@ class ConditionalStylePopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyConditionalStyle(),
       WizardStartIndex: 0,
-      EditIsNew: true,
+      WizardStatus: WizardStatus.New,
     });
   }
 
@@ -175,7 +178,7 @@ class ConditionalStylePopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 0,
-      EditIsNew: false,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -184,20 +187,22 @@ class ConditionalStylePopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
     const conditionalStyle = this.state.EditedAdaptableBlotterObject as IConditionalStyle;
-    if (this.state.EditIsNew) {
+    if (this.state.WizardStatus == WizardStatus.New) {
       this.props.onAddConditionalStyle(conditionalStyle);
-    } else {
+    } else if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditConditionalStyle(conditionalStyle);
     }
 
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
+      WizardStatus: WizardStatus.None,
     });
   }
 

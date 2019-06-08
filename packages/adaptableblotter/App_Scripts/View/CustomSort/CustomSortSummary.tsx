@@ -1,7 +1,10 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { CustomSortWizard } from './Wizard/CustomSortWizard';
@@ -119,13 +122,18 @@ export class CustomSortSummaryComponent extends React.Component<
   onNew() {
     let configEntity: ICustomSort = ObjectFactory.CreateEmptyCustomSort();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-    this.setState({ EditedAdaptableBlotterObject: configEntity, WizardStartIndex: 1 });
+    this.setState({
+      EditedAdaptableBlotterObject: configEntity,
+      WizardStartIndex: 1,
+      WizardStatus: WizardStatus.New,
+    });
   }
 
   onEdit(customSort: ICustomSort) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(customSort),
       WizardStartIndex: 1,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -133,7 +141,7 @@ export class CustomSortSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -147,7 +155,7 @@ export class CustomSortSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 

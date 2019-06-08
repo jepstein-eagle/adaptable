@@ -9,6 +9,7 @@
     "jsx": "react",
     "noUnusedLocals": false,
     "downlevelIteration": true,
+    "importHelpers": true,
     "emitDecoratorMetadata": false,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true

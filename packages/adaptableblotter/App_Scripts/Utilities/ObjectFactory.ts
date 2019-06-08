@@ -1,5 +1,5 @@
 import { ExpressionHelper, IRangeEvaluation } from './Helpers/ExpressionHelper';
-import { IGridSort } from './Interface/IGridSort';
+import { IColumnSort } from './Interface/IColumnSort';
 import { IStyle } from './Interface/IStyle';
 import { IColumnCategory } from './Interface/BlotterObjects/IColumnCategory';
 import { IFormatColumn } from './Interface/BlotterObjects/IFormatColumn';
@@ -83,15 +83,16 @@ export function CreateLicenceInfo(
 }
 
 export function CreateEmptyCustomSort(): ICustomSort {
-  return { ColumnId: EMPTY_STRING, SortedValues: [] };
+  return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
 }
 
 export function CreateEmptyDataSource(): IDataSource {
-  return { Name: EMPTY_STRING, Description: EMPTY_STRING };
+  return { Uuid: createUuid(), Name: EMPTY_STRING, Description: EMPTY_STRING };
 }
 
 export function CreateEmptyPieChartDefinition(): IPieChartDefinition {
   return {
+    Uuid: createUuid(),
     Name: EMPTY_STRING,
     Description: EMPTY_STRING,
     PrimaryColumnId: EMPTY_STRING,
@@ -104,6 +105,7 @@ export function CreateEmptyPieChartDefinition(): IPieChartDefinition {
 }
 export function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition {
   return {
+    Uuid: createUuid(),
     Name: EMPTY_STRING,
     Description: EMPTY_STRING,
     YAxisColumnIds: [],
@@ -117,11 +119,12 @@ export function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition {
 }
 
 export function CreateEmptyCalculatedColumn(): ICalculatedColumn {
-  return { ColumnId: EMPTY_STRING, ColumnExpression: EMPTY_STRING };
+  return { Uuid: createUuid(), ColumnId: EMPTY_STRING, ColumnExpression: EMPTY_STRING };
 }
 
 export function CreateEmptyPlusMinusRule(): IPlusMinusRule {
   return {
+    Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
     IsDefaultNudge: false,
     NudgeValue: PLUS_MINUS_DEFAULT_NUDGE_VALUE,
@@ -140,6 +143,7 @@ export function CreateEmptyAlert(): IAdaptableAlert {
 
 export function CreateEmptyAlertDefinition(): IAlertDefinition {
   return {
+    Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
     Range: {
       Operator: ALERT_DEFAULT_OPERATOR,
@@ -164,6 +168,7 @@ export function CreateEmptyAdvancedSearch(): IAdvancedSearch {
 
 export function CreateEmptyColumnCategory(): IColumnCategory {
   return {
+    Uuid: createUuid(),
     ColumnCategoryId: EMPTY_STRING,
     ColumnIds: [],
   };
@@ -179,7 +184,7 @@ export function CreateEmptyRange(): IRange {
   };
 }
 
-export function CreateEmptyGridSort(): IGridSort {
+export function CreateEmptyColumnSort(): IColumnSort {
   return {
     Column: EMPTY_STRING,
     SortOrder: SortOrder.Unknown,
@@ -188,6 +193,7 @@ export function CreateEmptyGridSort(): IGridSort {
 
 export function CreateEmptyCellValidation(): ICellValidationRule {
   return {
+    Uuid: createUuid(),
     ActionMode: 'Stop Edit',
     ColumnId: EMPTY_STRING,
     Range: {
@@ -203,6 +209,7 @@ export function CreateEmptyCellValidation(): ICellValidationRule {
 
 export function CreateEmptyPercentBar(): IPercentBar {
   return {
+    Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
     MaxValue: 100,
     MinValue: 0,
@@ -216,6 +223,7 @@ export function CreateEmptyPercentBar(): IPercentBar {
 
 export function CreateEmptyUserFilter(): IUserFilter {
   return {
+    Uuid: createUuid(),
     Name: EMPTY_STRING,
     Expression: ExpressionHelper.CreateEmptyExpression(),
     ColumnId: EMPTY_STRING,
@@ -224,6 +232,7 @@ export function CreateEmptyUserFilter(): IUserFilter {
 
 export function CreateEmptyReport(): IReport {
   return {
+    Uuid: createUuid(),
     Name: EMPTY_STRING,
     Expression: ExpressionHelper.CreateEmptyExpression(),
     ColumnIds: [],
@@ -239,6 +248,7 @@ export function CreateDefaultFlashingCell(
   duration: number
 ): IFlashingCell {
   return {
+    Uuid: createUuid(),
     IsLive: false,
     ColumnId: column.ColumnId,
     FlashingCellDuration: duration,
@@ -249,6 +259,7 @@ export function CreateDefaultFlashingCell(
 
 export function CreateEmptyReminder(): IReminder {
   return {
+    Uuid: createUuid(),
     Alert: CreateEmptyAlert(),
     Schedule: CreateEmptySchedule(),
   };
@@ -256,6 +267,7 @@ export function CreateEmptyReminder(): IReminder {
 
 export function CreateEmptyAutoExport(): IAutoExport {
   return {
+    Uuid: createUuid(),
     ExportDestination: ExportDestination.CSV,
     Schedule: CreateEmptySchedule(),
   };
@@ -264,6 +276,7 @@ export function CreateEmptyAutoExport(): IAutoExport {
 export function CreateEmptySchedule(): ISchedule {
   return {
     // todo: base of tommorrow?
+    Uuid: createUuid(),
     OneOffDate: undefined,
     DaysOfWeek: [],
     Hour: 17,
@@ -273,6 +286,7 @@ export function CreateEmptySchedule(): ISchedule {
 
 export function CreateEmptyShortcut(): IShortcut {
   return {
+    Uuid: createUuid(),
     ShortcutKey: EMPTY_STRING,
     ShortcutResult: undefined,
     ColumnType: DataType.Number,
@@ -290,7 +304,7 @@ export function CreateCellValidationMessage(
     CellValidation.ColumnId,
     columns
   );
-  let expressionDescription: string = ExpressionHelper.IsNotEmptyExpression(
+  let expressionDescription: string = ExpressionHelper.IsNotNullOrEmptyExpression(
     CellValidation.Expression
   )
     ? ' when ' + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns)
@@ -316,6 +330,7 @@ export function CreateEmptyConditionalStyle(): IConditionalStyle {
 
 export function CreateEmptyFormatColumn(): IFormatColumn {
   return {
+    Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
     Style: CreateEmptyStyle(),
   };
@@ -323,6 +338,7 @@ export function CreateEmptyFormatColumn(): IFormatColumn {
 
 export function CreateEmptyFreeTextColumn(): IFreeTextColumn {
   return {
+    Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
     DefaultValue: EMPTY_STRING,
     FreeTextStoredValues: [],
@@ -331,14 +347,14 @@ export function CreateEmptyFreeTextColumn(): IFreeTextColumn {
 
 export function CreateLayout(
   columns: IColumn[],
-  gridSorts: IGridSort[],
+  columnSorts: IColumnSort[],
   vendorGridInfo: IVendorGridInfo,
   name: string
 ): ILayout {
   return {
     Uuid: createUuid(),
     Columns: columns ? columns.map(x => x.ColumnId) : [],
-    GridSorts: gridSorts,
+    ColumnSorts: columnSorts,
     Name: name,
     VendorGridInfo: vendorGridInfo,
   };
@@ -346,21 +362,9 @@ export function CreateLayout(
 
 export function CreateColumnFilter(columnId: string, expression: Expression): IColumnFilter {
   return {
+    Uuid: createUuid(),
     ColumnId: columnId,
     Filter: expression,
-  };
-}
-
-export function CreateColumnFilterFromUserFilter(userFilter: IUserFilter): IColumnFilter {
-  return {
-    ColumnId: userFilter.ColumnId,
-    Filter: ExpressionHelper.CreateSingleColumnExpression(
-      userFilter.ColumnId,
-      [],
-      [],
-      [userFilter.Name],
-      []
-    ),
   };
 }
 
@@ -369,6 +373,7 @@ export function CreateUserFilterFromColumnFilter(
   name: string
 ): IUserFilter {
   return {
+    Uuid: createUuid(),
     Name: name,
     ColumnId: columnFilter.ColumnId,
     Expression: columnFilter.Filter,
@@ -415,6 +420,7 @@ export function CreateCellValidationRule(
   expression: Expression
 ): ICellValidationRule {
   return {
+    Uuid: createUuid(),
     ColumnId: columnId,
     Range: range,
     ActionMode: actionMode,
@@ -460,7 +466,7 @@ export const ObjectFactory = {
   CreateEmptyAdvancedSearch,
   CreateEmptyColumnCategory,
   CreateEmptyRange,
-  CreateEmptyGridSort,
+  CreateEmptyColumnSort,
   CreateEmptyCellValidation,
   CreateEmptyPercentBar,
   CreateEmptyUserFilter,
@@ -476,7 +482,6 @@ export const ObjectFactory = {
   CreateEmptyFreeTextColumn,
   CreateLayout,
   CreateColumnFilter,
-  CreateColumnFilterFromUserFilter,
   CreateUserFilterFromColumnFilter,
   CreateRange,
   CreateRangeEvaluation,

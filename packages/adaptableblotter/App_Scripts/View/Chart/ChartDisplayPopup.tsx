@@ -35,7 +35,6 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
 
   onAddChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddAction;
   onEditChartDefinition: (
-    index: number,
     chartDefinition: IChartDefinition
   ) => ChartRedux.ChartDefinitionEditAction;
   onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction;
@@ -43,7 +42,7 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
     chartVisibility: ChartVisibility
   ) => SystemRedux.ChartSetChartVisibiityAction;
   onUpdateChartProperties: (
-    chartTitle: string,
+    chartUuid: string,
     chartProperties: IChartProperties
   ) => ChartRedux.ChartPropertiesUpdateAction;
 }
@@ -145,8 +144,8 @@ class ChartDisplayPopupComponent extends React.Component<
                     ColorPalette={this.props.ColorPalette}
                     Columns={this.props.Columns}
                     cssClassName={this.props.cssClassName}
-                    onUpdateChartProperties={(chartTitle, chartProperties) =>
-                      this.props.onUpdateChartProperties(chartTitle, chartProperties)
+                    onUpdateChartProperties={(chartUuid, chartProperties) =>
+                      this.props.onUpdateChartProperties(chartUuid, chartProperties)
                     }
                   />
                 ) : (
@@ -158,8 +157,8 @@ class ChartDisplayPopupComponent extends React.Component<
                     //   ColorPalette={this.props.ColorPalette}
                     //   Columns={this.props.Columns}
                     cssClassName={this.props.cssClassName}
-                    onUpdateChartProperties={(chartTitle, chartProperties) =>
-                      this.props.onUpdateChartProperties(chartTitle, chartProperties)
+                    onUpdateChartProperties={(chartUuid, chartProperties) =>
+                      this.props.onUpdateChartProperties(chartUuid, chartProperties)
                     }
                   />
                 )}
@@ -224,13 +223,13 @@ class ChartDisplayPopupComponent extends React.Component<
 
   onFinishWizard() {
     let clonedObject: IChartDefinition = Helper.cloneObject(this.state.EditedChartDefinition);
-    let index: number = this.props.ChartDefinitions.findIndex(
-      cd => cd.Name == this.state.EditedChartDefinition.Name
-    );
-    if (index != -1) {
-      this.props.onEditChartDefinition(index, clonedObject);
-    } else {
+    let isNew: boolean =
+      this.props.ChartDefinitions.find(cd => cd.Uuid == this.state.EditedChartDefinition.Uuid) ==
+      null;
+    if (isNew) {
       this.props.onAddChartDefinition(clonedObject);
+    } else {
+      this.props.onEditChartDefinition(clonedObject);
     }
     this.setState({ EditedChartDefinition: null });
     this.props.onSelectChartDefinition(clonedObject.Name);
@@ -256,14 +255,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddChartDefinition: (chartDefinition: IChartDefinition) =>
       dispatch(ChartRedux.ChartDefinitionAdd(chartDefinition)),
-    onEditChartDefinition: (index: number, chartDefinition: IChartDefinition) =>
-      dispatch(ChartRedux.ChartDefinitionEdit(index, chartDefinition)),
+    onEditChartDefinition: (chartDefinition: IChartDefinition) =>
+      dispatch(ChartRedux.ChartDefinitionEdit(chartDefinition)),
     onSelectChartDefinition: (chartDefinition: string) =>
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
     onSetChartVisibility: (chartVisibility: ChartVisibility) =>
       dispatch(SystemRedux.ChartSetChartVisibility(chartVisibility)),
-    onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) =>
-      dispatch(ChartRedux.ChartPropertiesUpdate(chartTitle, chartProperties)),
+    onUpdateChartProperties: (chartUuid: string, chartProperties: IChartProperties) =>
+      dispatch(ChartRedux.ChartPropertiesUpdate(chartUuid, chartProperties)),
   };
 }
 

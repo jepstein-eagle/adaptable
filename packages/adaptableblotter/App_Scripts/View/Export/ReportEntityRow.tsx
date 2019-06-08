@@ -35,7 +35,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
         {'Export to Clipboard'}
       </MenuItem>
     );
-    let openfinExcelMenuItem = this.props.LiveReports.find(x => x.Report == report.Name) ? (
+    let openfinExcelMenuItem = this.props.LiveReports.find(x => x.Report.Uuid == report.Uuid) ? (
       <MenuItem
         onClick={() => this.props.onReportStopLive(ExportDestination.OpenfinExcel)}
         key={'OpenfinExcel'}
@@ -54,7 +54,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
     );
 
     let iPushPullExcelMenuItem = this.props.LiveReports.find(
-      x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull
+      x => x.Report.Uuid == report.Uuid && x.ExportDestination == ExportDestination.iPushPull
     ) ? (
       <MenuItem
         onClick={() => this.props.onReportStopLive(ExportDestination.iPushPull)}
@@ -113,7 +113,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       <EntityListActionButtons
         cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        editClick={() => this.props.onEdit(this.props.Index, report)}
+        editClick={() => this.props.onEdit(report)}
         overrideDisableEdit={isSystemReport}
         overrideDisableDelete={isSystemReport}
         overrideDisableShare={isSystemReport}

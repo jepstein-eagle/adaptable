@@ -49,7 +49,7 @@ export const DefaultAdaptableBlotterOptions: IAdaptableBlotterOptions = {
   filterOptions: {
     indicateFilteredColumns: true,
     useAdaptableBlotterFilterForm: true,
-    useAdaptableBlotterFloatingFilter: true,
+    useAdaptableBlotterQuickFilter: true,
     filterActionOnUserDataChange: {
       RunFilter: GeneralConstants.FILTER_ALWAYS,
       ThrottleDelay: 0,

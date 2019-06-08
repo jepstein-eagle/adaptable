@@ -1,18 +1,29 @@
 import * as ReactDOM from 'react-dom';
 import { IColumnFilterContext } from '../Utilities/Interface/IColumnFilterContext';
 import { AdaptableBlotter } from './AdaptableBlotter';
+
+import { QuickFilterFormReact } from '../View/Components/FilterForm/QuickFilterForm';
+import { IColumn } from '../Utilities/Interface/IColumn';
+import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import {
   IFloatingFilterComp,
   IFloatingFilterParams,
-} from 'ag-grid-community/dist/lib/filter/floatingFilter';
-import { FloatingFilterFormReact } from '../View/Components/FilterForm/FloatingFilterForm';
-import { IColumn } from '../Utilities/Interface/IColumn';
-import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
+  FilterChangedEvent,
+  IAfterGuiAttachedParams,
+} from 'ag-grid-community';
 
 export let FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) => {
-  return <any>class FloatingFilterWrapper implements IFloatingFilterComp<any, any, any> {
+  return <any>class FloatingFilterWrapper implements IFloatingFilterComp {
+    onParentModelChanged(parentModel: any, filterChangedEvent?: FilterChangedEvent): void {
+      // todo?
+    }
+
+    afterGuiAttached?(params?: IAfterGuiAttachedParams): void {
+      // todo?
+    }
+
     private filterContainer: HTMLSpanElement;
-    init(params: IFloatingFilterParams<any, any>): void {
+    init(params: IFloatingFilterParams): void {
       let colId = params.column.getColId();
       this.filterContainer = document.createElement('div');
       this.filterContainer.id = 'floatingFilter_' + colId + '_' + blotter.blotterOptions.blotterId;
@@ -22,11 +33,7 @@ export let FloatingFilterWrapperFactory = (blotter: AdaptableBlotter) => {
         Blotter: blotter,
         ShowCloseButton: false,
       };
-      ReactDOM.render(FloatingFilterFormReact(filterContext), this.filterContainer);
-    }
-
-    onParentModelChanged(parentModel: any): void {
-      //  console.log(parentModel)
+      ReactDOM.render(QuickFilterFormReact(filterContext), this.filterContainer);
     }
 
     getGui(): HTMLElement {

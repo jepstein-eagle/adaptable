@@ -10,13 +10,13 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { IGridSort } from '../../../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../../../Utilities/Interface/IColumnSort';
 import { ILayout } from '../../../Utilities/Interface/BlotterObjects/ILayout';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<ILayout> {
   Layouts: Array<ILayout>;
-  GridSorts: IGridSort[];
+  ColumnSorts: IColumnSort[];
 }
 
 export interface LayoutSelectionWizardState {
@@ -114,7 +114,7 @@ export class LayoutSelectionWizard
       // need to popuplate the layout
       let visibleColumns = this.props.Columns.filter(c => c.Visible).map(c => c.ColumnId);
       this.props.Data.Columns = visibleColumns;
-      this.props.Data.GridSorts = this.props.GridSorts;
+      this.props.Data.ColumnSorts = this.props.ColumnSorts;
     }
   }
   public Back(): void {

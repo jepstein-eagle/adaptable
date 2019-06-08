@@ -1,7 +1,7 @@
 import { ISharedEntity } from '../../../Utilities/Interface/ISharedEntity';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { IEntitlement } from '../../../Utilities/Interface/IEntitlement';
-import { IGridSort } from '../../../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../../../Utilities/Interface/IColumnSort';
 import { IStyle } from '../../../Utilities/Interface/IStyle';
 import { IPermittedColumnValues } from '../../../Utilities/Interface/IPermittedColumnValues';
 import { ISystemStatus } from '../../../Utilities/Interface/ISystemStatus';
@@ -95,10 +95,10 @@ export interface SystemState extends ISystemState {
 
 export interface GridState extends ISystemState {
   Columns: IColumn[];
-  GridSorts: IGridSort[];
+  ColumnSorts: IColumnSort[];
   SelectedCellInfo: ISelectedCellInfo;
   CellSummary: ICellSummmary;
-  IsFloatingFilterActive: boolean;
+  IsQuickFilterActive: boolean;
 }
 
 export interface MenuState extends ISystemState {

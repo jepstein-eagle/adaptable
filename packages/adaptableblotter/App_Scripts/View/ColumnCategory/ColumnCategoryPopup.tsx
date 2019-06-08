@@ -12,7 +12,10 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -26,11 +29,10 @@ import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard';
 interface ColumnCategoryPopupProps extends StrategyViewPopupProps<ColumnCategoryPopupComponent> {
   ColumnCategorys: IColumnCategory[];
   onAddColumnCategory: (
-    ColumnCategory: IColumnCategory
+    columnCategory: IColumnCategory
   ) => ColumnCategoryRedux.ColumnCategoryAddAction;
   onEditColumnCategory: (
-    Index: number,
-    ColumnCategory: IColumnCategory
+    columnCategory: IColumnCategory
   ) => ColumnCategoryRedux.ColumnCategoryEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
@@ -67,20 +69,19 @@ class ColumnCategoryPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let ColumnCategoryRows = this.props.ColumnCategorys.map((x, index) => {
+    let ColumnCategoryRows = this.props.ColumnCategorys.map((item, index) => {
       return (
         <ColumnCategoryEntityRow
           key={index}
           cssClassName={cssClassName}
           colItems={colItems}
-          AdaptableBlotterObject={x}
+          AdaptableBlotterObject={item}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
-          Index={index}
-          onEdit={(index, x) => this.onEdit(index, x as IColumnCategory)}
-          onShare={() => this.props.onShare(x)}
+          onEdit={() => this.onEdit(item)}
+          onShare={() => this.props.onShare(item)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          onDeleteConfirm={ColumnCategoryRedux.ColumnCategoryDelete(index, x)}
+          onDeleteConfirm={ColumnCategoryRedux.ColumnCategoryDelete(item)}
         />
       );
     });
@@ -143,16 +144,16 @@ class ColumnCategoryPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyColumnCategory(),
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
-  onEdit(index: number, ColumnCategory: IColumnCategory) {
-    let clonedObject: IColumnCategory = Helper.cloneObject(ColumnCategory);
+  onEdit(columnCategory: IColumnCategory) {
+    let clonedObject: IColumnCategory = Helper.cloneObject(columnCategory);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -161,18 +162,22 @@ class ColumnCategoryPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let ColumnCategory = this.state.EditedAdaptableBlotterObject as IColumnCategory;
-    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-      this.props.onEditColumnCategory(this.state.EditedAdaptableBlotterObjectIndex, ColumnCategory);
+    let columnCategory = this.state.EditedAdaptableBlotterObject as IColumnCategory;
+    if (this.state.WizardStatus == WizardStatus.Edit) {
+      this.props.onEditColumnCategory(columnCategory);
     } else {
-      this.props.onAddColumnCategory(ColumnCategory);
+      this.props.onAddColumnCategory(columnCategory);
     }
-    this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0 });
+    this.setState({
+      EditedAdaptableBlotterObject: null,
+      WizardStartIndex: 0,
+      WizardStatus: WizardStatus.None,
+    });
   }
 
   canFinishWizard() {
@@ -194,8 +199,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddColumnCategory: (ColumnCategory: IColumnCategory) =>
       dispatch(ColumnCategoryRedux.ColumnCategoryAdd(ColumnCategory)),
-    onEditColumnCategory: (Index: number, ColumnCategory: IColumnCategory) =>
-      dispatch(ColumnCategoryRedux.ColumnCategoryEdit(Index, ColumnCategory)),
+    onEditColumnCategory: (columnCategory: IColumnCategory) =>
+      dispatch(ColumnCategoryRedux.ColumnCategoryEdit(columnCategory)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnCategoryStrategyId)

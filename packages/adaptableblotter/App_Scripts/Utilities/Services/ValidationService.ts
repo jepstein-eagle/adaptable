@@ -17,6 +17,7 @@ import {
 import { IColumn } from '../Interface/IColumn';
 import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
+import { IFunctionAppliedDetails } from '../Interface/IAuditEvents';
 
 export class ValidationService implements IValidationService {
   constructor(private blotter: IAdaptableBlotter) {
@@ -72,7 +73,7 @@ export class ValidationService implements IValidationService {
 
       // first check the rules which have expressions
       let expressionRules: ICellValidationRule[] = editingRules.filter(r =>
-        ExpressionHelper.IsNotEmptyExpression(r.Expression)
+        ExpressionHelper.IsNotNullOrEmptyExpression(r.Expression)
       );
 
       if (expressionRules.length > 0) {
@@ -106,7 +107,7 @@ export class ValidationService implements IValidationService {
 
       // now check the rules without expressions
       let noExpressionRules: ICellValidationRule[] = editingRules.filter(r =>
-        ExpressionHelper.IsEmptyExpression(r.Expression)
+        ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
       );
       for (let noExpressionRule of noExpressionRules) {
         if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedEvent, columns)) {
@@ -163,13 +164,14 @@ export class ValidationService implements IValidationService {
   }
 
   private logAuditValidationEvent(action: string, info: string, data?: any): void {
-    if (this.blotter.AuditLogService.IsAuditFunctionEventsEnabled) {
-      this.blotter.AuditLogService.AddAdaptableBlotterFunctionLog(
-        StrategyConstants.CellValidationStrategyId,
-        action,
-        info,
-        data
-      );
+    if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
+      let functionAppliedDetails: IFunctionAppliedDetails = {
+        name: StrategyConstants.CellValidationStrategyId,
+        action: action,
+        info: info,
+        data: data,
+      };
+      this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
     }
   }
 }

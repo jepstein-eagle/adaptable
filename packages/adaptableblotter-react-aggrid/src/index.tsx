@@ -6,14 +6,13 @@ import { GridOptions } from 'ag-grid-community';
 import { AdaptableBlotterApp } from '../../adaptableblotter/App_Scripts/View/AdaptableBlotterView';
 import AdaptableBlotter from '../../adaptableblotter/App_Scripts/agGrid';
 
-import DefiniteHeight from './DefiniteHeight';
+import AbsoluteFlexContainer from './AbsoluteFlexContainer';
 
 import {
   IEventApi,
   IAdaptableBlotterOptions,
   ISearchChangedEventArgs,
   IThemeChangedEventArgs,
-  IStateChangedEventArgs,
   IColumnStateChangedEventArgs,
   IAlertFiredEventArgs,
 } from '../../adaptableblotter/types';
@@ -77,7 +76,7 @@ const AdaptableBlotterReact = ({
   ) : null;
 
   const gridWrapperNode = (
-    <DefiniteHeight
+    <AbsoluteFlexContainer
       key="agGridWrapper"
       style={{ flex: 1 }}
       className={getAgGridWrapperClassName(agGridTheme)}

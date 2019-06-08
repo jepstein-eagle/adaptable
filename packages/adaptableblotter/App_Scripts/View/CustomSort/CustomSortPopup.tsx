@@ -17,7 +17,10 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
@@ -51,7 +54,7 @@ class CustomSortPopupComponent extends React.Component<
       if (arrayParams.length == 2 && arrayParams[0] == 'New') {
         let newCustomSort = ObjectFactory.CreateEmptyCustomSort();
         newCustomSort.ColumnId = arrayParams[1];
-        this.onEdit(newCustomSort);
+        this.onNewFromColumn(newCustomSort);
       }
       if (arrayParams.length == 2 && arrayParams[0] == 'Edit') {
         let editCustomSort = this.props.CustomSorts.find(x => x.ColumnId == arrayParams[1]);
@@ -88,9 +91,8 @@ class CustomSortPopupComponent extends React.Component<
           cssClassName={cssClassName}
           colItems={colItems}
           AdaptableBlotterObject={customSort}
-          key={customSort.ColumnId}
-          Index={index}
-          onEdit={(index, customSort) => this.onEdit(customSort as ICustomSort)}
+          key={customSort.Uuid}
+          onEdit={() => this.onEdit(customSort)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onShare={() => this.props.onShare(customSort)}
           onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
@@ -162,6 +164,7 @@ class CustomSortPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(customSort),
       WizardStartIndex: 1,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -169,6 +172,16 @@ class CustomSortPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: ObjectFactory.CreateEmptyCustomSort(),
       WizardStartIndex: 0,
+      WizardStatus: WizardStatus.New,
+    });
+  }
+
+  onNewFromColumn(customsort: ICustomSort) {
+    let clonedObject: ICustomSort = Helper.cloneObject(customsort);
+    this.setState({
+      EditedAdaptableBlotterObject: clonedObject,
+      WizardStatus: WizardStatus.New,
+      WizardStartIndex: 1,
     });
   }
 
@@ -177,13 +190,13 @@ class CustomSortPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
     let customSort: ICustomSort = this.state.EditedAdaptableBlotterObject as ICustomSort;
-    if (this.props.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)) {
+    if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditCustomSort(customSort);
     } else {
       this.props.onAddCustomSort(customSort);
@@ -191,7 +204,7 @@ class CustomSortPopupComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 

@@ -1,7 +1,10 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
+import {
+  EditableConfigEntityState,
+  WizardStatus,
+} from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard';
@@ -23,10 +26,7 @@ import { IPlusMinusRule } from '../../Utilities/Interface/BlotterObjects/IPlusMi
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
   PlusMinusRules: IPlusMinusRule[];
   onAddPlusMinusRule: (PlusMinus: IPlusMinusRule) => PlusMinusRedux.PlusMinusRuleAddAction;
-  onEditPlusMinusRule: (
-    Index: number,
-    PlusMinus: IPlusMinusRule
-  ) => PlusMinusRedux.PlusMinusRuleEditAction;
+  onEditPlusMinusRule: (PlusMinus: IPlusMinusRule) => PlusMinusRedux.PlusMinusRuleEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -76,9 +76,9 @@ export class PlusMinusSummaryComponent extends React.Component<
             ConfigEnity={item}
             showShare={this.props.TeamSharingActivated}
             EntityType={StrategyConstants.PlusMinusStrategyName}
-            onEdit={() => this.onEdit(index, item)}
+            onEdit={() => this.onEdit(item)}
             onShare={() => this.props.onShare(item)}
-            onDelete={PlusMinusRedux.PlusMinusRuleDelete(index, item)}
+            onDelete={PlusMinusRedux.PlusMinusRuleDelete(item)}
           />
         );
         strategySummaries.push(detailRow);
@@ -116,15 +116,15 @@ export class PlusMinusSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.New,
     });
   }
 
-  onEdit(index: number, PlusMinus: IPlusMinusRule) {
+  onEdit(PlusMinus: IPlusMinusRule) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(PlusMinus),
       WizardStartIndex: 1,
-      EditedAdaptableBlotterObjectIndex: index,
+      WizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -132,15 +132,15 @@ export class PlusMinusSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
     let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusRule;
 
-    if (this.state.EditedAdaptableBlotterObjectIndex != -1) {
-      this.props.onEditPlusMinusRule(this.state.EditedAdaptableBlotterObjectIndex, plusMinus);
+    if (this.state.WizardStatus == WizardStatus.Edit) {
+      this.props.onEditPlusMinusRule(plusMinus);
     } else {
       this.props.onAddPlusMinusRule(plusMinus);
     }
@@ -148,7 +148,7 @@ export class PlusMinusSummaryComponent extends React.Component<
     this.setState({
       EditedAdaptableBlotterObject: null,
       WizardStartIndex: 0,
-      EditedAdaptableBlotterObjectIndex: -1,
+      WizardStatus: WizardStatus.None,
     });
   }
 
@@ -180,8 +180,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddPlusMinusRule: (PlusMinusRule: IPlusMinusRule) =>
       dispatch(PlusMinusRedux.PlusMinusRuleAdd(PlusMinusRule)),
-    onEditPlusMinusRule: (Index: number, PlusMinusRule: IPlusMinusRule) =>
-      dispatch(PlusMinusRedux.PlusMinusRuleEdit(Index, PlusMinusRule)),
+    onEditPlusMinusRule: (PlusMinusRule: IPlusMinusRule) =>
+      dispatch(PlusMinusRedux.PlusMinusRuleEdit(PlusMinusRule)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),

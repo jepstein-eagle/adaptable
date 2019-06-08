@@ -114,8 +114,8 @@ export class ExpressionBuilderPage
   }
 
   getQueryBuildStatus(): QueryBuildStatus {
-    // if now expression then assume its new  - fair?
-    if (ExpressionHelper.IsEmptyExpression(this.state.Expression)) {
+    // if no expression then assume its new  - fair?
+    if (ExpressionHelper.IsNullOrEmptyExpression(this.state.Expression)) {
       if (StringExtensions.IsNullOrEmpty(this.state.SelectedColumnId)) {
         return QueryBuildStatus.SelectFirstColumn; // you neeed to select a column
       } else {

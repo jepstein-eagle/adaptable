@@ -27,7 +27,7 @@ import { Flex } from 'rebass';
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
   onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
-  onSaveLayout: (index: number, layout: ILayout) => LayoutRedux.LayoutSaveAction;
+  onSaveLayout: (layout: ILayout) => LayoutRedux.LayoutSaveAction;
   onNewLayout: () => PopupRedux.PopupShowScreenAction;
   Layouts: ILayout[];
   CurrentLayout: string;
@@ -146,7 +146,7 @@ class LayoutToolbarControlComponent extends React.Component<
             overrideTooltip="Delete Layout"
             overrideDisableButton={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
             DisplayMode="Glyph"
-            ConfirmAction={LayoutRedux.LayoutDelete(this.props.CurrentLayout)}
+            ConfirmAction={LayoutRedux.LayoutDelete(layoutEntity)}
             ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
             ConfirmationTitle={'Delete Layout'}
             AccessLevel={this.props.AccessLevel}
@@ -182,8 +182,8 @@ class LayoutToolbarControlComponent extends React.Component<
       }
       if (
         !ArrayExtensions.areArraysEqualWithOrderandProperties(
-          layoutEntity.GridSorts,
-          this.props.GridSorts
+          layoutEntity.ColumnSorts,
+          this.props.ColumnSorts
         )
       ) {
         return true;
@@ -207,16 +207,15 @@ class LayoutToolbarControlComponent extends React.Component<
     );
     let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
 
-    let layoutToSave = ObjectFactory.CreateLayout(
-      this.props.Columns.filter(c => c.Visible),
-      this.props.GridSorts,
-      gridState,
-      this.props.CurrentLayout
-    );
-    let currentLayoutIndex = this.props.Layouts.findIndex(l => l.Name == this.props.CurrentLayout);
-    if (currentLayoutIndex != -1) {
-      this.props.onSaveLayout(currentLayoutIndex, layoutToSave);
-    }
+    let visibleColumns = this.props.Columns.filter(c => c.Visible);
+    let layoutToSave: ILayout = {
+      Uuid: currentLayoutObject.Uuid,
+      Name: this.props.CurrentLayout,
+      Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
+      ColumnSorts: this.props.ColumnSorts,
+      VendorGridInfo: gridState,
+    };
+    this.props.onSaveLayout(layoutToSave);
   }
 
   private onUndo() {
@@ -234,8 +233,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
-    onSaveLayout: (index: number, layout: ILayout) =>
-      dispatch(LayoutRedux.LayoutSave(index, layout)),
+    onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.LayoutSave(layout)),
     onNewLayout: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

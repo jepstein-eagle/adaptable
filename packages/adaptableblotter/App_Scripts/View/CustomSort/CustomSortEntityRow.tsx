@@ -23,7 +23,7 @@ export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProp
       <EntityListActionButtons
         cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        editClick={() => this.props.onEdit(this.props.Index, customSort)}
+        editClick={() => this.props.onEdit(customSort)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
         overrideDisableEdit={this.props.ColumnLabel.includes(GeneralConstants.MISSING_COLUMN)}

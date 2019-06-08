@@ -41,7 +41,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
       { Key: 'Alert Type', Value: this.props.Data.MessageType },
       {
         Key: 'Query',
-        Value: ExpressionHelper.IsNotEmptyExpression(this.props.Data.Expression)
+        Value: ExpressionHelper.IsNotNullOrEmptyExpression(this.props.Data.Expression)
           ? ExpressionHelper.ConvertExpressionToString(
               this.props.Data.Expression,
               this.props.Columns
@@ -79,6 +79,6 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
     return 1;
   }
   public GetIndexStepDecrement() {
-    return ExpressionHelper.IsEmptyExpression(this.props.Data.Expression) ? 2 : 1;
+    return ExpressionHelper.IsNullOrEmptyExpression(this.props.Data.Expression) ? 2 : 1;
   }
 }

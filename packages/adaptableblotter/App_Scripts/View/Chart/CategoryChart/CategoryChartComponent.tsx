@@ -46,7 +46,7 @@ interface CategoryChartComponentProps {
   Columns: IColumn[];
   cssClassName: string;
   ColorPalette: string[];
-  onUpdateChartProperties: (chartTitle: string, chartProperties: IChartProperties) => void;
+  onUpdateChartProperties: (chartUuid: string, chartProperties: IChartProperties) => void;
 }
 
 export class CategoryChartComponent extends React.Component<
@@ -1610,7 +1610,7 @@ export class CategoryChartComponent extends React.Component<
 
   private updateChartProperties(chartProperties: ICategoryChartProperties): void {
     this.setState({ ChartProperties: chartProperties } as CategoryChartComponentState);
-    this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Name, chartProperties);
+    this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Uuid, chartProperties);
   }
 
   private onXAxisVisibilityOptionChanged(event: React.FormEvent<any>) {

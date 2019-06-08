@@ -1,5 +1,4 @@
 ﻿import { ColDef, GridOptions } from 'ag-grid-community';
-import { IAdaptableAlert } from '../../App_Scripts/Utilities/Interface/IMessage';
 import { IAdaptableBlotter } from '../../App_Scripts/types';
 
 interface ITrade {
@@ -36,7 +35,13 @@ export interface IFtse {
   end: number;
   low: number;
   high: number;
+  details: IFtseDayDetails[];
+}
+
+export interface IFtseDayDetails {
   volume: number;
+  peakHour: number;
+  location: string;
 }
 
 export interface IBond {
@@ -208,14 +213,25 @@ export class ExamplesHelper {
       start > end
         ? this.roundTo2Dp(start + this.generateRandomInt(0, 10) + this.generateRandomDouble())
         : this.roundTo2Dp(end + this.generateRandomInt(0, 10) + this.generateRandomDouble());
-    let volume = this.generateRandomInt(3423, 6978);
+
+    let ftseDayDetails: IFtseDayDetails[] = [];
+    let detailsCount = this.generateRandomInt(1, 10);
+    for (let i = 0; i <= detailsCount; i++) {
+      let dayDetails: IFtseDayDetails = {
+        volume: this.generateRandomInt(3423, 6978),
+        peakHour: this.generateRandomInt(0, 12),
+        location: this.getRandomItem(this.getCountries()),
+      };
+      ftseDayDetails.push(dayDetails);
+    }
+
     let ftse = {
       date: newDate,
       start: start,
       end: end,
       low: low,
       high: high,
-      volume: volume,
+      details: ftseDayDetails,
     };
     return ftse;
   }
@@ -808,6 +824,48 @@ export class ExamplesHelper {
     };
   }
 
+  public getMasterGridOptionsFTSE(rowCount: number): GridOptions {
+    return {
+      columnDefs: this.getFTSESchema(),
+      rowData: this.getFtseData(rowCount),
+      masterDetail: true,
+      detailCellRendererParams: {
+        // provide detail grid options
+        detailGridOptions: this.getDetailGridOptionsFTSE(),
+
+        // extract and supply row data for detail
+        getDetailRowData: function(params: any) {
+          params.successCallback(params.data.details);
+        },
+      },
+      enableRangeSelection: true,
+      floatingFilter: true,
+      suppressColumnVirtualisation: false,
+      suppressMenuHide: true,
+      sideBar: undefined,
+      columnTypes: {
+        abColDefNumber: {},
+        abColDefString: {},
+        abColDefBoolean: {},
+        abColDefDate: {},
+        abColDefObject: {},
+      },
+    };
+  }
+
+  public getDetailGridOptionsFTSE(): GridOptions {
+    return {
+      columnDefs: this.getFTSEDetailsSchema(),
+      columnTypes: {
+        abColDefNumber: {},
+        abColDefString: {},
+        abColDefBoolean: {},
+        abColDefDate: {},
+        abColDefObject: {},
+      },
+    };
+  }
+
   public getFTSESchema(): ColDef[] {
     var schema: any[] = [];
     schema.push({
@@ -820,6 +878,8 @@ export class ExamplesHelper {
       },
       valueParser: this.dateParseragGrid,
       valueFormatter: this.shortDateFormatteragGrid,
+      cellRenderer: 'agGroupCellRenderer',
+      type: 'abColDefDate',
     });
 
     schema.push({
@@ -828,6 +888,7 @@ export class ExamplesHelper {
       filter: true,
       editable: true,
       cellClass: 'number-cell',
+      type: 'abColDefNumber',
     });
     schema.push({
       headerName: 'End',
@@ -835,6 +896,7 @@ export class ExamplesHelper {
       filter: true,
       editable: true,
       cellClass: 'number-cell',
+      type: 'abColDefNumber',
     });
     schema.push({
       headerName: 'Low',
@@ -842,19 +904,44 @@ export class ExamplesHelper {
       filter: true,
       editable: true,
       cellClass: 'number-cell',
+      type: 'abColDefNumber',
     });
     schema.push({
       headerName: 'High',
       field: 'high',
       editable: true,
       cellClass: 'number-cell',
+      type: 'abColDefNumber',
     });
+
+    return schema;
+  }
+
+  public getFTSEDetailsSchema(): ColDef[] {
+    var schema: any[] = [];
+
     schema.push({
       headerName: 'Volume',
       field: 'volume',
       filter: true,
       editable: true,
       cellClass: 'number-cell',
+      type: 'abColDefNumber',
+    });
+    schema.push({
+      headerName: 'Peak Hour',
+      field: 'peakHour',
+      filter: true,
+      editable: true,
+      cellClass: 'number-cell',
+      type: 'abColDefNumber',
+    });
+    schema.push({
+      headerName: 'Location',
+      field: 'location',
+      filter: true,
+      editable: true,
+      type: 'abColDefString',
     });
 
     return schema;

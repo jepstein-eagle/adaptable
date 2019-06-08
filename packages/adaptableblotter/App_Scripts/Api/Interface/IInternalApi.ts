@@ -12,7 +12,7 @@ export interface IInternalApi {
   // System Redux
   GetSystemState(): SystemState;
   ReportStartLive(
-    reportName: string,
+    report: IReport,
     workbookName: string,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ): void;

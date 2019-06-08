@@ -8,12 +8,12 @@ import { LayoutGridSortWizard } from './LayoutGridSortWizard';
 import { LayoutSummaryWizard } from './LayoutSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IGridSort } from '../../../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../../../Utilities/Interface/IColumnSort';
 import { ILayout } from '../../../Utilities/Interface/BlotterObjects/ILayout';
 
 export interface LayoutWizardProps
   extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {
-  GridSorts: IGridSort[];
+  ColumnSorts: IColumnSort[];
 }
 
 export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
@@ -31,7 +31,9 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
             {
               StepName: 'Source',
               Index: 0,
-              Element: <LayoutSelectionWizard Layouts={layouts} GridSorts={this.props.GridSorts} />,
+              Element: (
+                <LayoutSelectionWizard Layouts={layouts} ColumnSorts={this.props.ColumnSorts} />
+              ),
             },
             {
               StepName: 'Columns',

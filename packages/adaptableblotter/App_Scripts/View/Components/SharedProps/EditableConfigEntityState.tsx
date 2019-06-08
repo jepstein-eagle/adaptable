@@ -2,9 +2,14 @@ import { IAdaptableBlotterObject } from '../../../Utilities/Interface/BlotterObj
 
 /// <reference path="../../typings/.d.ts" />
 
+export enum WizardStatus {
+  New = 'New',
+  Edit = 'Edit',
+  None = 'None',
+}
+
 export interface EditableConfigEntityState {
   EditedAdaptableBlotterObject: IAdaptableBlotterObject;
   WizardStartIndex: number;
-  EditedAdaptableBlotterObjectIndex: number;
-  EditIsNew?: boolean;
+  WizardStatus: WizardStatus;
 }

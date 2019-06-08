@@ -152,7 +152,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
               {CellValidationHelper.createCellValidationDescription(cellVal, this.props.Columns)}
             </Col>
             <Col xs={4}>
-              {ExpressionHelper.IsNotEmptyExpression(cellVal.Expression)
+              {ExpressionHelper.IsNotNullOrEmptyExpression(cellVal.Expression)
                 ? ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Columns)
                 : 'No Expression'}
             </Col>

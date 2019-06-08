@@ -7,7 +7,7 @@ export interface IColumnCategoryApi {
   getColumnCategoryById(columnCategoryId: string): IColumnCategory;
   addColumnCategory(columnCategory: IColumnCategory): void;
   createColumnCategory(columnCategoryId: string, columns: string[]): void;
-  editColumnCategory(previousColumnCategoryId: string, columnCategory: IColumnCategory): void;
+  editColumnCategory(columnCategory: IColumnCategory): void;
   deleteColumnCategory(columnCategoryId: string): void;
   addColumnsToColumnCategory(columnCategoryId: string, columns: string[]): void;
   removeColumnsFromColumnCategory(columnCategoryId: string, columns: string[]): void;

@@ -3,14 +3,11 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IFormatColumnStrategy } from './Interface/IFormatColumnStrategy';
-import { FormatColumnState } from '../Redux/ActionsReducers/Interface/IState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { StateChangedTrigger } from '../Utilities/Enums';
 import { IColumn } from '../Utilities/Interface/IColumn';
 
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   implements IFormatColumnStrategy {
-  protected FormatColumnState: FormatColumnState;
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.FormatColumnStrategyId, blotter);
   }
@@ -26,7 +23,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   public addContextMenuItem(column: IColumn): void {
     if (this.canCreateContextMenuItem(column, this.blotter)) {
       let formatExists: boolean = ArrayExtensions.ContainsItem(
-        this.FormatColumnState.FormatColumns.map(f => f.ColumnId),
+        this.blotter.api.formatColumnApi.getAllFormatColumn().map(f => f.ColumnId),
         column.ColumnId
       );
       let label = formatExists ? 'Edit ' : 'Create ';
@@ -41,13 +38,5 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
     }
   }
 
-  protected InitState() {
-    if (this.FormatColumnState != this.blotter.api.formatColumnApi.getFormatColumnState()) {
-      this.FormatColumnState = this.blotter.api.formatColumnApi.getFormatColumnState();
-
-      this.InitStyles();
-    }
-  }
-
-  protected abstract InitStyles(): void;
+  public abstract initStyles(): void;
 }

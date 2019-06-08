@@ -61,7 +61,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         ModalContainer: modalContainer,
         ColorPalette: this.props.Blotter.adaptableBlotterStore.TheStore.getState().UserInterface
           .ColorPalette,
-        GridSorts: this.props.Blotter.adaptableBlotterStore.TheStore.getState().Grid.GridSorts,
+        ColumnSorts: this.props.Blotter.adaptableBlotterStore.TheStore.getState().Grid.ColumnSorts,
         cssClassName: cssClassName + StyleConstants.MODAL_BODY,
         AccessLevel: accessLevel,
         Blotter: this.props.Blotter,

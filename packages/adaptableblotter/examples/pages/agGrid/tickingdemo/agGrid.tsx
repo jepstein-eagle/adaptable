@@ -49,7 +49,7 @@ let flashingJson = {
       {
         IsLive: true,
         ColumnId: 'price',
-        FlashingCellDuration: 500,
+        FlashingCellDuration: 1000,
         UpColor: 'Blue',
         DownColor: 'Yellow',
       },

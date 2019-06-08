@@ -1,6 +1,6 @@
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { GridState } from '../../Redux/ActionsReducers/Interface/IState';
-import { IGridSort } from '../../Utilities/Interface/IGridSort';
+import { IColumnSort } from '../../Utilities/Interface/IColumnSort';
 import { ISelectedCellInfo } from '../../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 
 export interface IGridApi {
@@ -17,7 +17,7 @@ export interface IGridApi {
 
   getNumericColumns(): IColumn[];
 
-  getGridSorts(): IGridSort[];
+  getColumnSorts(): IColumnSort[];
 
   getSelectedCellInfo(): ISelectedCellInfo;
 }

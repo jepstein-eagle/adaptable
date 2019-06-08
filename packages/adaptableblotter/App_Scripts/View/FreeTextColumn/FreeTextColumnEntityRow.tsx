@@ -41,7 +41,7 @@ export class FreeTextColumnEntityRow extends React.Component<
     colItems[3].Content = (
       <EntityListActionButtons
         cssClassName={this.props.cssClassName}
-        editClick={() => this.props.onEdit(this.props.Index, FreeTextColumn)}
+        editClick={() => this.props.onEdit(FreeTextColumn)}
         showShare={this.props.TeamSharingActivated}
         shareClick={() => this.props.onShare()}
         ConfirmDeleteAction={this.props.onDeleteConfirm}

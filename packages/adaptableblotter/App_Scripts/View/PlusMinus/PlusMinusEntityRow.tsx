@@ -16,39 +16,42 @@ import { EntityRowItem } from '../Components/EntityRowItem';
 export interface PlusMinusEntityRowProps
   extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
   Column: IColumn;
-  onColumnDefaultNudgeValueChange: (index: number, event: React.FormEvent<any>) => void;
+  onColumnDefaultNudgeValueChange: (
+    plusMinusRule: IPlusMinusRule,
+    event: React.FormEvent<any>
+  ) => void;
 }
 
 export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps, {}> {
   render(): any {
-    let x: IPlusMinusRule = this.props.AdaptableBlotterObject as IPlusMinusRule;
+    let plusMinusRule: IPlusMinusRule = this.props.AdaptableBlotterObject as IPlusMinusRule;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = (
       <EntityRowItem
-        Content={ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, this.props.Column)}
+        Content={ColumnHelper.getFriendlyNameFromColumn(plusMinusRule.ColumnId, this.props.Column)}
       />
     );
     colItems[1].Content = (
       <EntityRowItem
         Content={
           <FormControl
-            value={x.NudgeValue.toString()}
+            value={plusMinusRule.NudgeValue.toString()}
             bsSize={'small'}
             type="number"
             placeholder="Enter a Number"
-            onChange={e => this.props.onColumnDefaultNudgeValueChange(this.props.Index, e)}
+            onChange={e => this.props.onColumnDefaultNudgeValueChange(plusMinusRule, e)}
           />
         }
       />
     );
-    colItems[2].Content = <EntityRowItem Content={this.wrapExpressionDescription(x)} />;
+    colItems[2].Content = <EntityRowItem Content={this.wrapExpressionDescription(plusMinusRule)} />;
 
     let buttons: any = (
       <EntityListActionButtons
         cssClassName={this.props.cssClassName}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        editClick={() => this.props.onEdit(this.props.Index, x)}
+        editClick={() => this.props.onEdit(plusMinusRule)}
         shareClick={() => this.props.onShare()}
         showShare={this.props.TeamSharingActivated}
         overrideDisableEdit={false}

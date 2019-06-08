@@ -2,7 +2,6 @@ import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditional
 import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy';
 import { ConditionalStyleScope } from '../../Utilities/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 import { IColumnCategory } from '../../Utilities/Interface/BlotterObjects/IColumnCategory';
 import { IConditionalStyle } from '../../Utilities/Interface/BlotterObjects/IConditionalStyle';
@@ -17,7 +16,8 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy
 
   // Called when a single piece of data changes, ie. usually the result of an inline edit
   protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
-    if (ArrayExtensions.IsNotEmpty(this.ConditionalStyleState.ConditionalStyles)) {
+    let conditionalStyles: IConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
+    if (ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)) {
       let theBlotter = this.blotter as AdaptableBlotter;
       let columns = this.blotter.api.gridApi.getColumns();
       //here we don't call Repaint as we consider that we already are in the repaint loop
@@ -34,7 +34,7 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy
         );
       }
 
-      this.ConditionalStyleState.ConditionalStyles.forEach((c, index) => {
+      conditionalStyles.forEach(c => {
         if (c.Expression) {
           if (dataChangedEvent.Record) {
             if (
@@ -98,21 +98,22 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy
     }
   }
 
-  public InitStyles(): void {
+  public initStyles(): void {
     let theBlotter = this.blotter as AdaptableBlotter;
     let columns = this.blotter.api.gridApi.getColumns();
+    let conditionalStyles: IConditionalStyle[] = theBlotter.api.conditionalStyleApi.getAllConditionalStyle();
     theBlotter.removeAllCellStyleHypergrid('csColumn');
     theBlotter.removeAllCellStyleHypergrid('csRow');
 
     // adding this check as things can get mixed up during 'clean user data'
-    if (columns.length > 0 && this.ConditionalStyleState.ConditionalStyles.length > 0) {
-      let rowConditionalStyles = this.ConditionalStyleState.ConditionalStyles.filter(
+    if (columns.length > 0 && conditionalStyles.length > 0) {
+      let rowConditionalStyles = conditionalStyles.filter(
         x => x.ConditionalStyleScope == ConditionalStyleScope.Row
       );
 
-      let columnConditionalStyles = this.ConditionalStyleState.ConditionalStyles.filter(
-        x => x.ConditionalStyleScope == ConditionalStyleScope.Column
-      ).map(cs => cs);
+      let columnConditionalStyles = conditionalStyles
+        .filter(x => x.ConditionalStyleScope == ConditionalStyleScope.Column)
+        .map(cs => cs);
 
       let columnConditionalStylesGroupedByColumn = ArrayExtensions.groupArrayBy(
         columnConditionalStyles,

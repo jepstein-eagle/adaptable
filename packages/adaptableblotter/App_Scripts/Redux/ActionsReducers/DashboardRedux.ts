@@ -237,16 +237,10 @@ const initialDashboardState: DashboardState = {
     StrategyConstants.ThemeStrategyId,
   ],
   VisibleToolbars: [
-    StrategyConstants.AdvancedSearchStrategyId,
     StrategyConstants.QuickSearchStrategyId,
     StrategyConstants.LayoutStrategyId,
     StrategyConstants.ExportStrategyId,
     StrategyConstants.ColumnFilterStrategyId,
-    //  StrategyConstants.SmartEditStrategyId,
-    // StrategyConstants.ChartStrategyId,
-    //   StrategyConstants.AlertStrategyId,
-    // StrategyConstants.CellSummaryStrategyId,
-    // StrategyConstants.BulkUpdateStrategyId
   ],
   VisibleButtons: [
     StrategyConstants.DashboardStrategyId,
