@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { SelectionMode, DistinctCriteriaPairValue } from '../../Utilities/Enums';
 import { SingleListBox } from '../Components/ListBox/SingleListBox';
-import { Panel } from 'react-bootstrap';
+import Panel from '../../components/Panel';
 
 export interface ExpressionBuilderColumnValuesProps
   extends React.ClassAttributes<ExpressionBuilderColumnValues> {
@@ -22,6 +22,9 @@ export class ExpressionBuilderColumnValues extends React.Component<
         <Panel
           className="ab_no-padding-anywhere-panel ab_small-padding-panel-header"
           style={divStyle}
+          bodyProps={{
+            style: { border: 'none' },
+          }}
         >
           <SingleListBox
             Values={this.props.ColumnValues}

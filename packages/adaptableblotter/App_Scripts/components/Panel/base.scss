@@ -10,6 +10,7 @@
   &__header {
     display: flex;
     flex-flow: row;
+    align-items: center;
     background: var(--ab-cmp-panel_header-bg);
     color: var(--ab-cmp-panel_header-color);
     padding: var(--ab-cmp-panel_header-padding);

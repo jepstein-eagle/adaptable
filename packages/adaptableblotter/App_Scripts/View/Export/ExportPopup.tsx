@@ -29,6 +29,7 @@ import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObject
 import { IReport } from '../../Utilities/Interface/BlotterObjects/IReport';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ReportWizard } from './Wizard/ReportWizard';
+import SimpleButton from '../../components/SimpleButton';
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
   Reports: IReport[];
@@ -110,14 +111,15 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     );
 
     let newButton = (
-      <ButtonNew
-        cssClassName={cssClassName}
+      <SimpleButton
         onClick={() => this.onNew()}
-        overrideTooltip="Create Report"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Report"
+        icon="plus"
+        variant="raised"
         AccessLevel={this.props.AccessLevel}
-      />
+      >
+        ADD
+      </SimpleButton>
     );
 
     return (

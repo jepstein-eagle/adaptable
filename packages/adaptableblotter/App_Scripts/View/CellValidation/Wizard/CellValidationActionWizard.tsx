@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Radio, Col, Panel, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { Radio } from 'react-bootstrap';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -9,6 +9,8 @@ import { MessageType, ActionMode } from '../../../Utilities/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ICellValidationRule } from '../../../Utilities/Interface/BlotterObjects/ICellValidationRule';
+import Panel from '../../../components/Panel';
+import { Flex, Box } from 'rebass';
 
 export interface CellValidationActionWizardProps
   extends AdaptableWizardStepProps<ICellValidationRule> {}
@@ -30,26 +32,26 @@ export class CellValidationActionWizard
     let cssClassName: string = this.props.cssClassName + '-action';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Action When Validation Fails" bsStyle="primary">
+      <Flex className={cssClassName} flex={1} flexDirection="column">
+        <Panel
+          header="Action When Validation Fails"
+          borderRadius="none"
+          border="none"
+          bsStyle="primary"
+        >
           <AdaptableBlotterForm inline>
-            <Col xs={12}>
-              <HelpBlock>
-                Choose what should happen to an edit when cell validation fails.
-              </HelpBlock>
-            </Col>
-            <Col xs={12}>
-              <HelpBlock>
+            <Box color="textgray">
+              <p>Choose what should happen to an edit when cell validation fails.</p>
+              <p>
                 <i>Prevent cell edit</i> ensures that no edits which fail validation will occur.
-              </HelpBlock>
-            </Col>
-            <Col xs={12}>
-              <HelpBlock>
+              </p>
+              <p>
                 <i>Show a warning</i> gives you the option to allow the edit after providing a
                 reason (which will be audited).
-              </HelpBlock>
-            </Col>
-            <Col xs={12} className="ab_large_margin">
+              </p>
+            </Box>
+
+            <div className="ab_large_margin">
               <Radio
                 inline
                 value={ActionMode.StopEdit}
@@ -65,8 +67,8 @@ export class CellValidationActionWizard
                   'Disallows all cell edits that break the validation rule with no override available.',
                 ]}
               />
-            </Col>
-            <Col xs={12} className="ab_large_margin">
+            </div>
+            <div className="ab_large_margin">
               <Radio
                 inline
                 value={ActionMode.WarnUser}
@@ -82,10 +84,10 @@ export class CellValidationActionWizard
                   'Displays a warning that the validation rule has been broken.  If this is overriden, the edit will be allowed.',
                 ]}
               />
-            </Col>
+            </div>
           </AdaptableBlotterForm>
         </Panel>
-      </div>
+      </Flex>
     );
   }
 

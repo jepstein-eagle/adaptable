@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Panel } from 'react-bootstrap';
+
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
@@ -9,6 +9,8 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { SelectionMode } from '../../../Utilities/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { ICellValidationRule } from '../../../Utilities/Interface/BlotterObjects/ICellValidationRule';
+import { Flex } from 'rebass';
+import Panel from '../../../components/Panel';
 
 export interface CellValidationSelectColumnWizardProps
   extends AdaptableWizardStepProps<ICellValidationRule> {}
@@ -33,8 +35,8 @@ export class CellValidationSelectColumnWizard
     let cssClassName: string = this.props.cssClassName + '-selectcolumn';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Select a Column" bsStyle="primary">
+      <Flex className={cssClassName} flex={1} flexDirection="column">
+        <Panel header="Select a Column" borderRadius={'none'} border="none" bsStyle="primary">
           <ColumnSelector
             cssClassName={cssClassName}
             SelectedColumnIds={[this.state.ColumnId]}
@@ -43,7 +45,7 @@ export class CellValidationSelectColumnWizard
             SelectionMode={SelectionMode.Single}
           />
         </Panel>
-      </div>
+      </Flex>
     );
   }
 

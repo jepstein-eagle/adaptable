@@ -35,6 +35,7 @@ import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
 import { IMenuItem } from '../../Utilities/Interface/IMenu';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { UIHelper } from '../UIHelper';
+import SimpleButton from '../../components/SimpleButton';
 
 interface HomeToolbarComponentProps
   extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
@@ -187,19 +188,14 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     // about button
     let aboutButton = (
-      <OverlayTrigger key={'about'} overlay={<Tooltip id="tooltipButton"> {'About'}</Tooltip>}>
-        <ButtonDashboard
-          glyph={'info-sign'}
-          cssClassName={cssClassName}
-          bsStyle={'default'}
-          DisplayMode={'Glyph'}
-          bsSize={this.props.DashboardSize}
-          ToolTipAndText={'About'}
-          overrideDisableButton={false}
-          onClick={() => this.onClickAbout()}
-          AccessLevel={AccessLevel.Full}
-        />
-      </OverlayTrigger>
+      <SimpleButton
+        tooltip="About"
+        icon={'info'}
+        className={cssClassName}
+        variant="text"
+        onClick={() => this.onClickAbout()}
+        AccessLevel={AccessLevel.Full}
+      />
     );
 
     // functions dropdown

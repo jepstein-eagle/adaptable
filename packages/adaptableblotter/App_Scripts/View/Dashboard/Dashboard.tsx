@@ -1,15 +1,7 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
-import {
-  Navbar,
-  Nav,
-  Button,
-  Glyphicon,
-  OverlayTrigger,
-  ButtonToolbar,
-  Tooltip,
-} from 'react-bootstrap';
+import { Navbar, Nav, Button, Glyphicon, OverlayTrigger, ButtonToolbar } from 'react-bootstrap';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
 import {
@@ -26,6 +18,8 @@ import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
 import { IEntitlement } from '../../Utilities/Interface/IEntitlement';
+import SimpleButton from '../../components/SimpleButton';
+import { Box, Flex } from 'rebass';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
@@ -110,6 +104,18 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
         {this.props.DashboardState.DashboardVisibility != Visibility.Hidden && (
           <div className="ab_no_margin">
             {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ? (
+              <SimpleButton
+                variant="outlined"
+                margin={1}
+                padding={1}
+                icon="arrow-down"
+                tooltip={showBlotterName}
+                onClick={() => this.props.onSetDashboardVisibility(Visibility.Visible)}
+              >
+                {blotterName}
+              </SimpleButton>
+            ) : (
+              /*
               <ButtonToolbar bsSize={'small'} bsStyle={style} className="ab_no_padding_no_margin">
                 <OverlayTrigger
                   overlay={<Tooltip id="tooltipShowButton">{showBlotterName} </Tooltip>}
@@ -122,14 +128,11 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                     {blotterName} <Glyphicon glyph={'chevron-down'} />
                   </Button>
                 </OverlayTrigger>
-              </ButtonToolbar>
-            ) : (
-              <Navbar key={'mainnavbar'} fluid style={{ zoom: this.props.DashboardState.Zoom }}>
-                <div className="ab_no_margin">
-                  {homeToolbarElement}
-                  {visibleDashboardElements}
-                </div>
-              </Navbar>
+              </ButtonToolbar>*/
+              <Flex className="ab-Dashboard" style={{ zoom: this.props.DashboardState.Zoom }}>
+                {homeToolbarElement}
+                {visibleDashboardElements}
+              </Flex>
             )}
           </div>
         )}

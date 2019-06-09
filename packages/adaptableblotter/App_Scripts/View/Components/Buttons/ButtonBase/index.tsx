@@ -123,7 +123,8 @@ export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
 
     let button = (
       <Button
-        style={this.props.style}
+        {...this.props}
+        style={{ color: 'currentColor', ...this.props.style }}
         className={join(
           this.props.cssClassName,
           baseClassName,

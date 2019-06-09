@@ -24,6 +24,7 @@ import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilte
 import { IRange } from '../../Utilities/Interface/Expression/IRange';
 import { Expression } from '../../Utilities/Expression';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
+import SimpleButton from '../../components/SimpleButton';
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.
@@ -309,6 +310,11 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
               padding: 0,
               paddingTop: 2,
             }}
+            button={
+              <SimpleButton style={{ visibility: 'hidden' }} variant="text">
+                {'\u00a0'}
+              </SimpleButton>
+            } //whitespace
             headerText="Preview"
             bsStyle="info"
           >

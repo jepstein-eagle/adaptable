@@ -28,6 +28,9 @@ import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObject
 import { ICellValidationRule } from '../../Utilities/Interface/BlotterObjects/ICellValidationRule';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
+import SimpleButton from '../../components/SimpleButton';
+import { Flex } from 'rebass';
+import EmptyContent from '../../components/EmptyContent';
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
   CellValidations: ICellValidationRule[];
@@ -104,18 +107,20 @@ class CellValidationPopupComponent extends React.Component<
       );
     });
     let newButton = (
-      <ButtonNew
-        cssClassName={cssClassName}
+      <SimpleButton
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create Cell Validation Rule"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Cell Validation Rule"
+        icon="plus"
+        variant="raised"
         AccessLevel={this.props.AccessLevel}
-      />
+      >
+        NEW
+      </SimpleButton>
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.CellValidationStrategyName}
           bsStyle="primary"
@@ -131,13 +136,13 @@ class CellValidationPopupComponent extends React.Component<
               items={CellValidationItems}
             />
           ) : (
-            <div>
-              <HelpBlock>Click 'New' to start creating rules for valid cell edits.</HelpBlock>
-              <HelpBlock>
+            <EmptyContent>
+              <p>Click 'New' to start creating rules for valid cell edits.</p>
+              <p>
                 Edits that fail validation can be either prevented altogether or allowed (after
                 over-riding a warning and providing a reason).
-              </HelpBlock>
-            </div>
+              </p>
+            </EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -159,7 +164,7 @@ class CellValidationPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

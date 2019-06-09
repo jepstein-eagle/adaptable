@@ -26,6 +26,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { Waiting } from '../Components/FilterForm/Waiting';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
+import SimpleButton from '../../components/SimpleButton';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -299,22 +300,20 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         : 'Column: ' + selectedColumnFriendlyName;
 
     let clearButton = (
-      <ButtonClear
-        cssClassName={this.props.cssClassName + ' pull-right '}
+      <SimpleButton
+        className={this.props.cssClassName + ' pull-right '}
         onClick={() => this.onSelectedColumnChanged()}
-        bsStyle={'default'}
-        size={'xsmall'}
-        overrideDisableButton={
+        disabled={
           this.props.ExpressionMode == ExpressionMode.SingleColumn ||
           this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn ||
           this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn
         }
-        overrideText={'Clear'}
-        overrideTooltip="Clear"
-        DisplayMode="Text"
-      />
+        tooltip="Clear"
+        variant="text"
+      >
+        Clear
+      </SimpleButton>
     );
-
     return (
       <PanelWithButton
         cssClassName={cssClassName}

@@ -7,6 +7,7 @@ import { Flex, Box, BoxProps } from 'rebass';
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import useTheme from '../../../components/utils/useTheme';
+import SimpleButton from '../../../components/SimpleButton';
 
 export interface PanelWithButtonProps extends PanelProps {
   //use either button content + buttonClick OR button
@@ -72,14 +73,14 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Type
           <Box style={{ flex: 1 }} />
           <Box>
             {buttonContent ? (
-              <Button
-                bsSize="small"
-                bsStyle={buttonStyle}
+              <SimpleButton
+                variant="raised"
+                tone="success"
                 disabled={this.props.buttonDisabled}
                 onClick={() => this.props.buttonClick()}
               >
                 {buttonContent}
-              </Button>
+              </SimpleButton>
             ) : null}
 
             {this.props.button ? React.cloneElement(this.props.button) : null}

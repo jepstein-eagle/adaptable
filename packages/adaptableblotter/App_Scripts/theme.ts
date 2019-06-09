@@ -12,6 +12,7 @@ export default {
   ],
   colors: {
     blue: '#07c',
+    accent: '#07c',
     lightgray: 'var(--ab-color-lightgray)',
     textgray: 'var(--ab-color-textgray)',
     gray: 'var(--ab-color-gray)',

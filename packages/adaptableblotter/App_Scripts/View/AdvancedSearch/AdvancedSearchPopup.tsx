@@ -29,6 +29,7 @@ import { IAdvancedSearch } from '../../Utilities/Interface/BlotterObjects/IAdvan
 import { PRIMARY_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { AccessLevel } from '../../Utilities/Enums';
 import EmptyContent from '../../components/EmptyContent';
+import SimpleButton from '../../components/SimpleButton';
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
   AdvancedSearches: IAdvancedSearch[];
@@ -114,14 +115,15 @@ class AdvancedSearchPopupComponent extends React.Component<
     );
 
     let newSearchButton = (
-      <ButtonNew
-        cssClassName={cssClassName}
+      <SimpleButton
         onClick={() => this.onNew()}
-        overrideTooltip="Create New Advanced Search"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create New Advanced Search"
+        icon="plus"
+        variant="raised"
         AccessLevel={this.props.AccessLevel}
-      />
+      >
+        ADD
+      </SimpleButton>
     );
 
     return (

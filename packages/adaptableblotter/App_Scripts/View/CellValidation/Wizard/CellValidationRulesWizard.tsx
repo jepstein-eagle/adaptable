@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Radio, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
+import { Radio, FormGroup, FormControl, Col } from 'react-bootstrap';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
@@ -18,6 +18,9 @@ import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterFor
 import { ICellValidationRule } from '../../../Utilities/Interface/BlotterObjects/ICellValidationRule';
 import { IRange } from '../../../Utilities/Interface/Expression/IRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import { Box } from 'rebass';
+import Dropdown from '../../../components/Dropdown';
+import Panel from '../../../components/Panel';
 
 export interface CellValidationRulesWizardProps
   extends AdaptableWizardStepProps<ICellValidationRule> {}
@@ -40,7 +43,8 @@ export class CellValidationRulesWizard
   }
 
   render(): any {
-    let operatorTypes = this.getAvailableOperators().map((operator: LeafExpressionOperator) => {
+    const availableOperators = this.getAvailableOperators();
+    let operatorTypes = availableOperators.map((operator: LeafExpressionOperator) => {
       return (
         <option key={operator} value={operator.toString()}>
           {ExpressionHelper.OperatorToLongFriendlyString(
@@ -49,6 +53,15 @@ export class CellValidationRulesWizard
           )}
         </option>
       );
+    });
+    let operatorOptions = availableOperators.map((operator: LeafExpressionOperator) => {
+      return {
+        value: operator.toString(),
+        label: ExpressionHelper.OperatorToLongFriendlyString(
+          operator,
+          ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns)
+        ),
+      };
     });
 
     let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
@@ -64,12 +77,12 @@ export class CellValidationRulesWizard
 
     return (
       <div className={cssClassName}>
-        <Panel header={validationRuleHeader} bsStyle="primary">
+        <Panel header={validationRuleHeader} bsStyle="primary" border="none" borderRadius="none">
           <AdaptableBlotterForm>
-            <Col xs={12}>
-              <HelpBlock>{helpText}</HelpBlock>
-            </Col>
-            <Col xs={12} className="ab_large_margin">
+            <Box color="textgray">
+              <p>{helpText}</p>
+            </Box>
+            <Box className="ab_large_margin">
               <Radio
                 inline
                 value="None"
@@ -83,8 +96,8 @@ export class CellValidationRulesWizard
                 headerText={'Validation Rule: No Edits Allowed'}
                 bodyText={['Any edit is invalid - effectively makes the column read-only.']}
               />
-            </Col>
-            <Col xs={12} className="ab_large_margin">
+            </Box>
+            <Box className="ab_large_margin">
               <Radio
                 inline
                 value="others"
@@ -98,22 +111,20 @@ export class CellValidationRulesWizard
                 headerText={'Validation Rule: Custom'}
                 bodyText={['Disallow edits that match the rule defined in the dropdown below.']}
               />
-            </Col>
+            </Box>
           </AdaptableBlotterForm>
 
           {/* if not None operator then show operator dropdown */}
           <FormGroup className="ab_large_margin">
             <Col xs={1} />
             <Col xs={6}>
-              <FormControl
+              <Dropdown
+                options={operatorOptions}
                 disabled={this.checkOperator(LeafExpressionOperator.None)}
-                componentClass="select"
                 placeholder="select"
-                value={this.state.Operator.toString()}
-                onChange={x => this.onOperatorChanged(x)}
-              >
-                {operatorTypes}
-              </FormControl>
+                value={this.state.Operator ? this.state.Operator.toString() : ''}
+                onChange={(x: any) => this.onOperatorChanged(x)}
+              />
             </Col>
 
             {/* if  numeric then show a numeric control */}
@@ -193,10 +204,9 @@ export class CellValidationRulesWizard
     );
   }
 
-  private onOperatorChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  private onOperatorChanged(value: any) {
     this.setState(
-      { Operator: e.value, Operand1: '', Operand2: '' } as CellValidationSettingsWizardState,
+      { Operator: value, Operand1: '', Operand2: '' } as CellValidationSettingsWizardState,
       () => this.props.UpdateGoBackState()
     );
   }

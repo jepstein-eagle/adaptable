@@ -1,7 +1,6 @@
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import * as React from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import { Box, Flex } from 'rebass';
+import { Flex } from 'rebass';
 import { AccessLevel } from '../../../Utilities/Enums';
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
@@ -12,6 +11,7 @@ import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
 import { BlotterHelper } from '../../../Utilities/Helpers/BlotterHelper';
 import { UIHelper } from '../../UIHelper';
 import Dialog from '../../../components/Dialog';
+import SimpleButton from '../../../components/SimpleButton';
 
 /**
  * This is the main popup that we use - so all function popups will appear here.
@@ -104,12 +104,9 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
             padding={2}
             backgroundColor="lightgray"
           >
-            <Button
-              className={cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON}
-              onClick={() => this.props.onHide()}
-            >
-              Close
-            </Button>
+            <SimpleButton onClick={() => this.props.onHide()} variant="text">
+              CLOSE
+            </SimpleButton>
           </Flex>
         </Flex>
       </Dialog>

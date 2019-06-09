@@ -3,6 +3,7 @@
   border: var(--ab-cmp-dropdown-border);
   position: relative;
   min-width: 120px;
+  max-width: 300px;
 
   &--focused {
     outline: var(--ab-focus-outline);
@@ -12,12 +13,17 @@
   &__text {
     padding: var(--ab-space-2);
     pointer-events: none;
-    max-width: 200px;
+    
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 1;
 
+  }
+  &--empty {
+    .ab-Dropdown__text {
+      color: var(--ab-color-textgray);
+    }
   }
 
   select {

@@ -22,6 +22,7 @@ import { Expression } from '../../Utilities/Expression';
 import { IAdaptableBlotterOptions } from '../../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
+import SimpleButton from '../../components/SimpleButton';
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
   UserFilters: Array<IUserFilter>;
@@ -49,31 +50,35 @@ export class ExpressionBuilderPage
     let queryBuildStatus: QueryBuildStatus = this.getQueryBuildStatus();
 
     let newButton = (
-      <ButtonCondition
-        cssClassName={cssClassName}
+      <SimpleButton
+        className={cssClassName}
         onClick={() => this.onSelectedColumnChanged()}
-        overrideDisableButton={
+        disabled={
           this.props.ExpressionMode == ExpressionMode.SingleColumn ||
           queryBuildStatus == QueryBuildStatus.SelectFirstColumn ||
           queryBuildStatus == QueryBuildStatus.SelectFurtherColumn ||
           queryBuildStatus == QueryBuildStatus.SingleConditionsAdded
         }
-        overrideTooltip="Add Condition"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Add Condition"
+        variant="raised"
+        kind="success"
+        icon="plus"
         AccessLevel={AccessLevel.Full}
-      />
+      >
+        Add Column Condition
+      </SimpleButton>
     );
 
     return (
-      <div className={cssClassName}>
+      <div className={cssClassName} style={{ height: '100%' }}>
         <PanelWithButton
           cssClassName={cssClassName}
           headerText="Query Builder"
           button={newButton}
           bsStyle="primary"
+          style={{ height: '100%' }}
         >
-          <Flex flexDirection="row">
+          <Flex flexDirection="row" style={{ height: '100%' }}>
             <ExpressionBuilderConditionSelector
               ColumnsList={this.props.Columns}
               cssClassName={cssClassName}

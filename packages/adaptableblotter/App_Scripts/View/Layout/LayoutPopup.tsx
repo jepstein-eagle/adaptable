@@ -28,6 +28,7 @@ import { ILayout } from '../../Utilities/Interface/BlotterObjects/ILayout';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
+import SimpleButton from '../../components/SimpleButton';
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
   Layouts: ILayout[];
@@ -98,14 +99,15 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     );
 
     let newSearchButton = (
-      <ButtonNew
-        cssClassName={cssClassName}
+      <SimpleButton
         onClick={() => this.onNew()}
-        overrideTooltip="Create New Advanced Search"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create New Layout"
+        icon="plus"
+        variant="raised"
         AccessLevel={this.props.AccessLevel}
-      />
+      >
+        ADD
+      </SimpleButton>
     );
 
     return (

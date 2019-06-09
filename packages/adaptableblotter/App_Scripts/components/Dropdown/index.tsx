@@ -21,6 +21,7 @@ export type DropdownProps = BoxProps &
     multiple?: boolean;
     allowSearch?: boolean;
     emptyText?: ReactNode;
+    placeholder?: ReactNode;
     clearButtonProps?: any;
 
     renderLabel?: (label: string, option?: DropdownOption) => ReactNode;
@@ -48,6 +49,7 @@ const Dropdown = (props: DropdownProps) => {
     clearButtonProps,
     value: _,
     onChange: __,
+    style,
     ...reactSelectProps
   } = props;
 
@@ -101,7 +103,7 @@ const Dropdown = (props: DropdownProps) => {
     : defaultLabel;
 
   if (!selectedOption) {
-    selectedText = props.emptyText || 'Please select an option';
+    selectedText = props.emptyText || props.placeholder || 'Please select an option';
   }
 
   const renderClearButton = () => (
@@ -126,6 +128,7 @@ const Dropdown = (props: DropdownProps) => {
         !selectedOption ? `${baseClassName}--empty` : `${baseClassName}--not-empty`,
         focused ? `${baseClassName}--focused` : `${baseClassName}--not-focused`
       )}
+      style={style}
       tabIndex={focused ? -1 : props.tabIndex || 0}
       onFocus={onFocus}
       onBlur={onBlur}

@@ -15,6 +15,7 @@ import { ButtonClose } from '../Buttons/ButtonClose';
 import { ButtonConfigure } from '../Buttons/ButtonConfigure';
 import { ButtonMinimise } from '../Buttons/ButtonMinimise';
 import { FontSize } from '../../../Utilities/Enums';
+import { Flex } from 'rebass';
 
 export interface PanelDashboardProps extends PanelProps {
   headerText: string;
@@ -56,39 +57,20 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
 
     let header = (
       <>
-        <span
-          style={{
-            verticalAlign: 'middle',
-            marginRight: '10px',
-            padding: '0px',
-            fontSize: 'xsmall',
-          }}
-        >
-          {this.props.showMinimiseButton ? (
-            <span>
-              <ButtonMinimise
-                cssClassName={cssClassName}
-                size={'xs'}
-                bsStyle={panelStyle}
-                DisplayMode={'Glyph'}
-                style={{
-                  float: 'left',
-                  marginLeft: '0px',
-                  marginRight: '20px',
-                  border: '0px',
-                  background: 'none',
-                  borderRadius: '0px',
-                  boxShadow: 'none',
-                }}
-                onClick={() => this.props.onMinimise()}
-              />{' '}
-            </span>
-          ) : null}
-          {this.props.showGlyphIcon ? (
-            <Glyphicon style={{ fontSize: 'small' }} glyph={this.props.glyphicon} />
-          ) : null}
-        </span>{' '}
-        <div style={{ flex: 1 }}>{this.props.headerText}</div>
+        {this.props.showMinimiseButton ? (
+          <ButtonMinimise
+            className={cssClassName}
+            onClick={() => this.props.onMinimise()}
+            marginRight={2}
+          />
+        ) : null}
+        {this.props.showGlyphIcon ? (
+          <Glyphicon style={{ fontSize: 'small' }} glyph={this.props.glyphicon} />
+        ) : null}
+
+        <Flex flex={1} alignItems="center">
+          {this.props.headerText}
+        </Flex>
         {this.props.showConfigureButton ? (
           <ButtonConfigure
             cssClassName={cssClassName}
@@ -97,6 +79,8 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
             bsStyle={panelStyle}
             DisplayMode={'Glyph'}
             style={{
+              paddingTop: 0,
+              paddingBottom: 0,
               float: 'right',
               marginLeft: '0px',
               marginRight: '0px',
@@ -116,6 +100,8 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
             bsStyle={panelStyle}
             DisplayMode={'Glyph'}
             style={{
+              paddingTop: 0,
+              paddingBottom: 0,
               float: 'right',
               marginLeft: '0px',
               marginRight: '0px',
