@@ -9,6 +9,7 @@ export class ButtonMinimise extends React.Component<SimpleButtonProps, {}> {
       <SimpleButton
         px={2}
         py={0}
+        tooltip="Minimise"
         {...this.props}
         style={this.props.style}
         variant="text"

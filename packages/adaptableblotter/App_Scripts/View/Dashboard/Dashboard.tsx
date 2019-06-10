@@ -106,8 +106,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ? (
               <SimpleButton
                 variant="outlined"
-                margin={1}
-                padding={1}
+                m={1}
+                px={1}
+                py={1}
                 icon="arrow-down"
                 tooltip={showBlotterName}
                 onClick={() => this.props.onSetDashboardVisibility(Visibility.Visible)}
