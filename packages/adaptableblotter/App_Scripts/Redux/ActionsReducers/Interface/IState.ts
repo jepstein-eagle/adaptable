@@ -46,7 +46,6 @@ import { IReminder } from '../../../Utilities/Interface/BlotterObjects/IReminder
 import { IDataSource } from '../../../Utilities/Interface/BlotterObjects/IDataSource';
 import { IRange } from '../../../Utilities/Interface/Expression/IRange';
 import { Expression } from '../../../Utilities/Expression';
-import { Alert } from 'react-bootstrap';
 
 /**
  * Main Predefined Config object

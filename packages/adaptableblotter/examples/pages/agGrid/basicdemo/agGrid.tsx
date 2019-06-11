@@ -54,7 +54,7 @@ let demoConfig: IPredefinedConfig = {
   },
 
   Export: {
-    CurrentReport: '',
+    CurrentReport: 'sssss',
     Reports: [
       {
         Name: 'sssss',
