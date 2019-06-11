@@ -10,6 +10,7 @@ import '../../../../App_Scripts/themes/light.scss';
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { IPredefinedConfig } from '../../../../App_Scripts/Redux/ActionsReducers/Interface/IState';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -26,19 +27,19 @@ function InitAdaptableBlotter() {
     blotterId: 'cell validation demo',
     licenceKey: examplesHelper.getEnterpriseLicenceKey(),
   };
-  adaptableBlotterOptions.predefinedConfig = demoConfig;
+  adaptableBlotterOptions.predefinedConfig = demoConfig as IPredefinedConfig;
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-let demoConfig = {
+let demoConfig: IPredefinedConfig = {
   CellValidation: {
     CellValidations: [
       {
         ColumnId: 'price',
-        Expression: null,
+        Expression: undefined,
         Range: {
           Operand1: '100',
           Operand1Type: 'Value',

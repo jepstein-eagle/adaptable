@@ -4,6 +4,6 @@ import { IColumnSort } from '../IColumnSort';
 export interface ILayout extends IAdaptableBlotterObject {
   Name: string;
   Columns: string[];
-  ColumnSorts: IColumnSort[];
+  ColumnSorts?: IColumnSort[];
   VendorGridInfo?: IVendorGridInfo;
 }

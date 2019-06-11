@@ -46,6 +46,48 @@ import { IReminder } from '../../../Utilities/Interface/BlotterObjects/IReminder
 import { IDataSource } from '../../../Utilities/Interface/BlotterObjects/IDataSource';
 import { IRange } from '../../../Utilities/Interface/Expression/IRange';
 import { Expression } from '../../../Utilities/Expression';
+import { Alert } from 'react-bootstrap';
+
+/**
+ * Main Predefined Config object
+ * Made up a sereis of nullable IState objects
+ */
+export interface IPredefinedConfig {
+  // First add the IDesignTimeState properties
+  Entitlement?: EntitlementsState;
+  UserInterface?: UserInterfaceState;
+  SystemFilter?: SystemFilterState;
+  Application?: ApplicationState;
+
+  // Now addd the IUserState properties
+  AdvancedSearch?: AdvancedSearchState;
+  Alert?: AlertState;
+  BulkUpdate?: BulkUpdateState;
+  CalculatedColumn?: CalculatedColumnState;
+  Calendar?: CalendarState;
+  CellSummary?: CellSummaryState;
+  CellValidation?: CellValidationState;
+  Chart?: ChartState;
+  ColumnCategory?: ColumnCategoryState;
+  ColumnFilter?: ColumnFilterState;
+  ConditionalStyle?: ConditionalStyleState;
+  CustomSort?: CustomSortState;
+  Dashboard?: DashboardState;
+  DataSource?: DataSourceState;
+  Export?: ExportState;
+  FlashingCell?: FlashingCellState;
+  FormatColumn?: FormatColumnState;
+  FreeTextColumn?: FreeTextColumnState;
+  Layout?: LayoutState;
+  PercentBar?: PercentBarState;
+  PlusMinus?: PlusMinusState;
+  QuickSearch?: QuickSearchState;
+  Reminder?: ReminderState;
+  Shortcut?: ShortcutState;
+  SmartEdit?: SmartEditState;
+  Theme?: ThemeState;
+  UserFilter?: UserFilterState;
+}
 
 /**
  * Base Interface for all State objects
@@ -149,8 +191,8 @@ export interface AdvancedSearchState extends IUserState {
 
 export interface AlertState extends IUserState {
   AlertDefinitions: IAlertDefinition[];
-  MaxAlertsInStore: number;
-  AlertPopupDiv: string;
+  MaxAlertsInStore?: number;
+  AlertPopupDiv?: string;
 }
 
 export interface BulkUpdateState extends IUserState {
@@ -166,7 +208,7 @@ export interface CalendarState extends IUserState {
 }
 
 export interface CellSummaryState extends IUserState {
-  SummaryOperation:
+  SummaryOperation?:
     | 'Sum'
     | 'Average'
     | 'Mode'
@@ -177,7 +219,7 @@ export interface CellSummaryState extends IUserState {
     | 'Count'
     | 'VWap'
     | 'Only';
-  OptionalSummaryOperations: string[]; // for now just 'VWaP' and 'Only' are available
+  OptionalSummaryOperations?: string[]; // for now just 'VWaP' and 'Only' are available
 }
 
 export interface CellValidationState extends IUserState {
@@ -187,7 +229,7 @@ export interface CellValidationState extends IUserState {
 export interface ChartState extends IUserState {
   ChartDefinitions: IChartDefinition[];
   CurrentChartName: string; // this will change as we might show more than one?
-  RefreshRate: number;
+  RefreshRate?: number;
 }
 
 export interface ColumnCategoryState extends IUserState {
@@ -207,20 +249,20 @@ export interface CustomSortState extends IUserState {
 }
 
 export interface DashboardState extends IUserState {
-  AvailableToolbars: string[];
-  VisibleToolbars: string[];
-  VisibleButtons: string[];
-  Zoom: number;
-  DashboardVisibility: 'Minimised' | 'Visible' | 'Hidden';
-  ShowSystemStatusButton: boolean;
-  ShowAboutButton: boolean;
-  ShowFunctionsDropdown: boolean;
-  ShowColumnsDropdown: boolean;
-  ShowToolbarsDropdown: boolean;
-  HomeToolbarTitle: string;
-  ApplicationToolbarTitle: string;
-  UseSingleColourForButtons: boolean;
-  UseExtraSmallButtons: boolean;
+  AvailableToolbars?: string[];
+  VisibleToolbars?: string[];
+  VisibleButtons?: string[];
+  Zoom?: number;
+  DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
+  ShowSystemStatusButton?: boolean;
+  ShowAboutButton?: boolean;
+  ShowFunctionsDropdown?: boolean;
+  ShowColumnsDropdown?: boolean;
+  ShowToolbarsDropdown?: boolean;
+  HomeToolbarTitle?: string;
+  ApplicationToolbarTitle?: string;
+  UseSingleColourForButtons?: boolean;
+  UseExtraSmallButtons?: boolean;
 }
 
 export interface DataSourceState extends IUserState {
@@ -263,8 +305,8 @@ export interface PlusMinusState extends IUserState {
 
 export interface QuickSearchState extends IUserState {
   QuickSearchText: string;
-  DisplayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
-  Style: IStyle;
+  DisplayAction?: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
+  Style?: IStyle;
 }
 
 export interface ReminderState extends IUserState {
@@ -276,14 +318,14 @@ export interface ShortcutState extends IUserState {
 }
 
 export interface SmartEditState extends IUserState {
-  SmartEditValue: number;
-  MathOperation: 'Add' | 'Subtract' | 'Multiply' | 'Divide';
+  SmartEditValue?: number;
+  MathOperation?: 'Add' | 'Subtract' | 'Multiply' | 'Divide';
 }
 
 export interface ThemeState extends IUserState {
   CurrentTheme: string;
-  SystemThemes: string[];
-  UserThemes: IUserTheme[];
+  SystemThemes?: string[];
+  UserThemes?: IUserTheme[];
 }
 
 export interface UserFilterState extends IUserState {

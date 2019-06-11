@@ -81,7 +81,12 @@ export class CellValidationSelectQueryWizard
     return true;
   }
   public Next(): void {
-    // this.props.Data.HasExpression = this.state.HasExpression;
+    if (
+      !this.state.HasExpression ||
+      (this.state.HasExpression && this.props.Data.Expression == null)
+    ) {
+      this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
+    }
   }
 
   public Back(): void {

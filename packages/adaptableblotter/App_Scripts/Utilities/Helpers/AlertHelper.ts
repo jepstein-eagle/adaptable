@@ -14,11 +14,14 @@ export function createAlertDescription(
     columns
   );
   let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
-    alertDefinition.Range.Operator,
+    alertDefinition.Range.Operator as LeafExpressionOperator,
     dataType
   );
 
-  if (!ExpressionHelper.OperatorRequiresValue(alertDefinition.Range.Operator)) {
+  if (
+    !ExpressionHelper.OperatorRequiresValue(alertDefinition.Range
+      .Operator as LeafExpressionOperator)
+  ) {
     return valueDescription;
   }
 

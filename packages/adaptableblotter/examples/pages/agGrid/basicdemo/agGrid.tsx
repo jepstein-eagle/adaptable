@@ -14,6 +14,7 @@ import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { IPredefinedConfig } from '../../../../App_Scripts/Redux/ActionsReducers/Interface/IState';
 
 /*
 Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
@@ -29,11 +30,58 @@ function InitAdaptableBlotter() {
     gridOptions,
     'basic demo'
   );
-
+  adaptableBlotterOptions.predefinedConfig = demoConfig;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
   adaptableblotter.applyLightTheme();
 }
+
+let demoConfig: IPredefinedConfig = {
+  CellValidation: {
+    CellValidations: [
+      {
+        ActionMode: 'Stop Edit',
+        ColumnId: 'changeOnYear',
+        Range: {
+          Operator: 'None',
+          Operand1: '',
+          Operand2: '',
+          Operand1Type: 'Value',
+          Operand2Type: 'Value',
+        },
+      },
+    ],
+  },
+
+  Export: {
+    CurrentReport: '',
+    Reports: [
+      {
+        Name: 'sssss',
+        ReportColumnScope: 'AllColumns',
+        ReportRowScope: 'VisibleRows',
+      },
+    ],
+  },
+
+  Alert: {
+    AlertDefinitions: [
+      {
+        ColumnId: 'currency',
+        MessageType: 'Info',
+        Range: {
+          Operator: 'None',
+          Operand1: '',
+          Operand2: '',
+          Operand1Type: 'Value',
+          Operand2Type: 'Value',
+        },
+
+        ShowAsPopup: true,
+      },
+    ],
+  },
+};
 
 export default () => {
   useEffect(() => {

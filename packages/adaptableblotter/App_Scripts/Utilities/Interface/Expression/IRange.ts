@@ -4,9 +4,34 @@ import { LeafExpressionOperator } from '../../Enums';
  */
 export interface IRange {
   /**
-   * Operator for the range (e.g. Greater Than, Equals), varies according to the column data type
+   * Operator for the range (e.g. Greater Than, Equals), sometimes varies according to the column data type
    */
-  Operator: LeafExpressionOperator;
+  Operator:
+    | 'Unknown'
+    | 'GreaterThan'
+    | 'LessThan'
+    | 'Equals'
+    | 'NotEquals'
+    | 'GreaterThanOrEqual'
+    | 'LessThanOrEqual'
+    | 'Between'
+    | 'Contains'
+    | 'NotContains'
+    | 'StartsWith'
+    | 'EndsWith'
+    | 'Regex'
+    | 'None'
+    | 'ValueChange'
+    | 'PercentChange'
+    | 'NotBetween'
+    | 'IsPositive'
+    | 'IsNegative'
+    | 'IsNotNumber'
+    | 'IsTrue'
+    | 'IsFalse'
+    | 'NoDuplicateValues'
+    | 'ExistingValuesOnly'
+    | 'PrimaryKeyDuplicate';
   /**
    * Comparison value - can either be a static column valur or name of another column (set in Operand1Type property)
    */

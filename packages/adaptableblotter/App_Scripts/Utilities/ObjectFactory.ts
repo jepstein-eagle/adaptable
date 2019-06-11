@@ -128,7 +128,7 @@ export function CreateEmptyPlusMinusRule(): IPlusMinusRule {
     ColumnId: EMPTY_STRING,
     IsDefaultNudge: false,
     NudgeValue: PLUS_MINUS_DEFAULT_NUDGE_VALUE,
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: null,
   };
 }
 
@@ -152,7 +152,7 @@ export function CreateEmptyAlertDefinition(): IAlertDefinition {
       Operand1Type: ALERT_DEFAULT_RANGE_OPERAND_TYPE,
       Operand2Type: ALERT_DEFAULT_RANGE_OPERAND_TYPE,
     },
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: null,
     MessageType: ALERT_DEFAULT_MESSAGE_TYPE,
     ShowAsPopup: ALERT_DEFAULT_SHOW_AS_POPUP,
   };
@@ -203,7 +203,7 @@ export function CreateEmptyCellValidation(): ICellValidationRule {
       Operand1Type: RangeOperandType.Column,
       Operand2Type: RangeOperandType.Column,
     },
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: null,
   };
 }
 
@@ -234,10 +234,11 @@ export function CreateEmptyReport(): IReport {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
-    Expression: ExpressionHelper.CreateEmptyExpression(),
-    ColumnIds: [],
+    Expression: null,
+    ColumnIds: null,
     ReportColumnScope: ReportColumnScope.AllColumns,
     ReportRowScope: ReportRowScope.AllRows,
+    AutoExport: null,
   };
 }
 

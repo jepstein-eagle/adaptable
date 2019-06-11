@@ -134,7 +134,8 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
       if (columnRanges) {
         columnRangesListgroupItems = columnRanges.Ranges.map((y, index) => {
-          if (y.Operator == LeafExpressionOperator.Between) {
+          let operator: LeafExpressionOperator = y.Operator as LeafExpressionOperator;
+          if (operator == LeafExpressionOperator.Between) {
             if (StringExtensions.IsEmpty(y.Operand1) || StringExtensions.IsEmpty(y.Operand2)) {
               return (
                 <ListGroupItem
@@ -148,7 +149,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     style={{ cursor: 'pointer' }}
                   >
                     <AdaptableBlotterForm inline>
-                      {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}
+                      {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
                       {this.getOperand1Value(y)} And {this.getOperand2Value(y)}
                       <ButtonPreviewDelete
                         cssClassName={cssClassName}
@@ -172,7 +173,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     style={{ cursor: 'pointer' }}
                   >
                     <AdaptableBlotterForm inline>
-                      {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}
+                      {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
                       {this.getOperand1Value(y)} And {this.getOperand2Value(y)}
                       <ButtonPreviewDelete
                         cssClassName={cssClassName}
@@ -205,7 +206,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     style={{ cursor: 'pointer' }}
                   >
                     <AdaptableBlotterForm inline>
-                      {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}
+                      {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
                       {this.getOperand1Value(y)}
                       <ButtonPreviewDelete
                         cssClassName={cssClassName}
@@ -229,7 +230,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                     style={{ cursor: 'pointer' }}
                   >
                     <AdaptableBlotterForm inline>
-                      {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}
+                      {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
                       {this.getOperand1Value(y)}
                       <ButtonPreviewDelete
                         cssClassName={cssClassName}

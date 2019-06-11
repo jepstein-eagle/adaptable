@@ -7,8 +7,8 @@ export interface IReport extends IAdaptableBlotterObject {
   Name: string;
   ReportColumnScope: 'AllColumns' | 'VisibleColumns' | 'SelectedColumns' | 'BespokeColumns';
   ReportRowScope: 'AllRows' | 'VisibleRows' | 'SelectedRows' | 'ExpressionRows';
-  ColumnIds: string[];
-  Expression: Expression;
+  ColumnIds?: string[];
+  Expression?: Expression;
   AutoExport?: IAutoExport;
 }
 

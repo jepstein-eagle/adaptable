@@ -10,6 +10,7 @@ import '../../../../App_Scripts/themes/light.scss';
 import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { IPredefinedConfig } from '../../../../App_Scripts/Redux/ActionsReducers/Interface/IState';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -33,7 +34,7 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-let demoConfig = {
+let demoConfig: IPredefinedConfig = {
   AdvancedSearch: {
     AdvancedSearches: [
       {

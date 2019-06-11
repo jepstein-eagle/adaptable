@@ -9,7 +9,7 @@ import RangeHelper from '../Utilities/Helpers/RangeHelper';
 import { Expression } from '../Utilities/Expression';
 import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
-import { DisplayAction } from '../Utilities/Enums';
+import { DisplayAction, LeafExpressionOperator } from '../Utilities/Enums';
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -43,7 +43,12 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
       // we dont keep this updated - just set once as good for majority of use cases
       let quickSearchVisibleColumnExpressions: Expression[] = [];
       for (let column of this.blotter.api.gridApi.getVisibleColumns()) {
-        if (RangeHelper.IsColumnAppropriateForRange(quickSearchRange.Operator, column)) {
+        if (
+          RangeHelper.IsColumnAppropriateForRange(
+            quickSearchRange.Operator as LeafExpressionOperator,
+            column
+          )
+        ) {
           let quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(
             column.ColumnId,
             null,

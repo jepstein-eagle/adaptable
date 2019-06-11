@@ -2,7 +2,7 @@ import { AdaptableBlotter } from './AdaptableBlotter';
 import { DataSourceIndexed } from './DataSourceIndexed';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { DisplayAction } from '../Utilities/Enums';
+import { DisplayAction, LeafExpressionOperator } from '../Utilities/Enums';
 import { IColumnFilter } from '../Utilities/Interface/BlotterObjects/IColumnFilter';
 import { IAdvancedSearch } from '../Utilities/Interface/BlotterObjects/IAdvancedSearch';
 import { IRange } from '../Utilities/Interface/Expression/IRange';
@@ -118,7 +118,12 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) =>
           // only check on visible columns for quick search
           for (let column of columns.filter(c => c.Visible)) {
             let isMatch: boolean = false;
-            if (RangeHelper.IsColumnAppropriateForRange(range.Operator, column)) {
+            if (
+              RangeHelper.IsColumnAppropriateForRange(
+                range.Operator as LeafExpressionOperator,
+                column
+              )
+            ) {
               let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
                 column.ColumnId,
                 null,

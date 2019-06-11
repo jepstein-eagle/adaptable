@@ -5,7 +5,7 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-//import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
+
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ReportRowScope, MessageType, ReportColumnScope } from '../../../Utilities/Enums';
@@ -132,7 +132,10 @@ export class ReportRowTypeWizard
   }
   public Next(): void {
     this.props.Data.ReportRowScope = this.state.ReportRowScope;
-    if (this.state.ReportRowScope != ReportRowScope.ExpressionRows) {
+    if (
+      this.props.Data.Expression == null ||
+      this.state.ReportRowScope != ReportRowScope.ExpressionRows
+    ) {
       this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
     }
   }

@@ -213,7 +213,7 @@ class PlusMinusPopupComponent extends React.Component<
       StringExtensions.IsNotNullOrEmpty(plusMinus.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(plusMinus.NudgeValue.toString()) && // check its a number??
       (plusMinus.IsDefaultNudge ||
-        ExpressionHelper.IsNotEmptyOrInvalidExpression(plusMinus.Expression))
+        ExpressionHelper.IsNullOrEmptyOrValidExpression(plusMinus.Expression))
     );
   }
 

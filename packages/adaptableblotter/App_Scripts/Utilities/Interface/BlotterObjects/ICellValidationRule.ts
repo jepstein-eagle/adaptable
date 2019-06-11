@@ -5,5 +5,5 @@ export interface ICellValidationRule extends IAdaptableBlotterObject {
   ColumnId: string;
   Range: IRange;
   ActionMode: 'Warn User' | 'Stop Edit';
-  Expression: Expression;
+  Expression?: Expression;
 }

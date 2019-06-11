@@ -5,7 +5,7 @@ import { IAdaptableBlotterObject } from './IAdaptableBlotterObject';
 export interface IAlertDefinition extends IAdaptableBlotterObject {
   ColumnId: string;
   Range: IRange;
-  Expression: Expression;
+  Expression?: Expression;
   MessageType: 'Success' | 'Info' | 'Warning' | 'Error';
   ShowAsPopup: boolean;
 }

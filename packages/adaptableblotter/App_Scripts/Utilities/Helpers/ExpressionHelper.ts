@@ -322,12 +322,13 @@ function RangesToString(
     if (returnValue != '') {
       returnValue += ' OR ';
     }
-    if (range.Operator == LeafExpressionOperator.Between) {
+    let operator = range.Operator as LeafExpressionOperator;
+    if (operator == LeafExpressionOperator.Between) {
       if (includeColumnName) {
         returnValue += '[' + columnFriendlyName + '] ';
       }
       returnValue +=
-        OperatorToShortFriendlyString(range.Operator) +
+        OperatorToShortFriendlyString(operator) +
         ' ' +
         getOperandValue(range.Operand1Type, range.Operand1, columns) +
         ' AND ' +
@@ -337,7 +338,7 @@ function RangesToString(
         returnValue += '[' + columnFriendlyName + '] ';
       }
       returnValue +=
-        OperatorToShortFriendlyString(range.Operator) +
+        OperatorToShortFriendlyString(operator) +
         ' ' +
         getOperandValue(range.Operand1Type, range.Operand1, columns);
     }
@@ -620,7 +621,7 @@ export function GetRangeEvaluation(
   getOtherColumnValue: (columnId: string) => any
 ): IRangeEvaluation {
   let rangeEvaluation: IRangeEvaluation = ObjectFactory.CreateRangeEvaluation(
-    rangeExpression.Operator,
+    rangeExpression.Operator as LeafExpressionOperator,
     rangeExpression.Operand1,
     rangeExpression.Operand2,
     newValue,

@@ -14,12 +14,15 @@ export function createCellValidationDescription(
   if (cellValidationRule.Range.Operator == LeafExpressionOperator.PrimaryKeyDuplicate) {
     return 'Primary Key column cannot contain duplicate values';
   }
+
+  let operator: LeafExpressionOperator = cellValidationRule.Range
+    .Operator as LeafExpressionOperator;
   let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
-    cellValidationRule.Range.Operator,
+    operator,
     ColumnHelper.getColumnDataTypeFromColumnId(cellValidationRule.ColumnId, columns)
   );
 
-  if (!ExpressionHelper.OperatorRequiresValue(cellValidationRule.Range.Operator)) {
+  if (!ExpressionHelper.OperatorRequiresValue(operator)) {
     return valueDescription;
   }
   let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(

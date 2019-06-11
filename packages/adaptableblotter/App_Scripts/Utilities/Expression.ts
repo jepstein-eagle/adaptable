@@ -8,9 +8,9 @@ import { createUuid, TypeUuid } from './Uuid';
  */
 export class Expression {
   /**
-   * @property {Uuid} - unique identifier for the expression
+   * @property {Uuid} - unique identifier for the expression - nullable and created automatically by the Adaptable Blotter
    */
-  public Uuid: TypeUuid;
+  public Uuid?: TypeUuid;
 
   /**
    * @property {ColumnValueExpressions} - Column values (as displayed in the Grid)

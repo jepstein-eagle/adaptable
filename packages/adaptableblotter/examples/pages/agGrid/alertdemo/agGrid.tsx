@@ -14,6 +14,7 @@ import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { IPredefinedConfig } from '../../../../App_Scripts/Redux/ActionsReducers/Interface/IState';
 
 /*
 Demo for checking alerts work
@@ -33,12 +34,12 @@ function InitAdaptableBlotter() {
   adaptableblotter.applyLightTheme();
 }
 
-let demoConfig = {
+let demoConfig: IPredefinedConfig = {
   Alert: {
     AlertDefinitions: [
       {
         ColumnId: 'price',
-        Expression: null,
+        Expression: undefined,
         MessageType: 'Warning',
         Range: {
           Operand1: '100',

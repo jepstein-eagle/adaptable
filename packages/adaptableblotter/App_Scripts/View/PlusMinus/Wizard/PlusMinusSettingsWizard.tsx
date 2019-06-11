@@ -111,7 +111,7 @@ export class PlusMinusSettingsWizard
   public Next(): void {
     this.props.Data.NudgeValue = this.state.NudgeValue;
     this.props.Data.IsDefaultNudge = this.state.IsDefaultNudge;
-    if (this.props.Data.IsDefaultNudge) {
+    if (this.props.Data.Expression == null || this.props.Data.IsDefaultNudge) {
       this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
     }
   }

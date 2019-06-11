@@ -17,6 +17,7 @@ import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import config from './config';
 
 import jsonData from './dataset.json';
+import { IPredefinedConfig } from '../../../../types';
 
 LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
 
@@ -231,7 +232,7 @@ function InitAdaptableBlotter() {
     userName: 'demo user',
     blotterId: 'config blotter demo',
     licenceKey: process.env.ENTERPRISE_LICENSE,
-    predefinedConfig: config,
+    predefinedConfig: config as IPredefinedConfig,
   };
 
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);

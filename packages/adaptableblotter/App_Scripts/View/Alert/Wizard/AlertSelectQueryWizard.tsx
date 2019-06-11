@@ -77,7 +77,13 @@ export class AlertSelectQueryWizard
     return true;
   }
   public Next(): void {
-    // this.props.Data.HasExpression = this.state.HasExpression;
+    // if we have an expression and its null then create an empty one
+    if (
+      !this.state.HasExpression ||
+      (this.state.HasExpression && this.props.Data.Expression == null)
+    ) {
+      this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
+    }
   }
 
   public Back(): void {

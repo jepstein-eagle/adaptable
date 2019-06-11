@@ -33,7 +33,7 @@ export class CellValidationRulesWizard
   constructor(props: CellValidationRulesWizardProps) {
     super(props);
     this.state = {
-      Operator: this.props.Data.Range.Operator,
+      Operator: this.props.Data.Range.Operator as LeafExpressionOperator,
       Operand1: this.props.Data.Range.Operand1,
       Operand2: this.props.Data.Range.Operand2,
     };

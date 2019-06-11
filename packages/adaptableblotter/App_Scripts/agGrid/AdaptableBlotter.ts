@@ -1,5 +1,3 @@
-// import styles - ab and 2 default agGrid
-
 import { Grid, CellRange } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
@@ -70,6 +68,7 @@ import {
   DisplayAction,
   DistinctCriteriaPairValue,
   FilterOnDataChangeOptions,
+  LeafExpressionOperator,
 } from '../Utilities/Enums';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
@@ -613,7 +612,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
         if (range) {
           // not right but just checking...
-          if (RangeHelper.IsColumnAppropriateForRange(range.Operator, col)) {
+          if (
+            RangeHelper.IsColumnAppropriateForRange(range.Operator as LeafExpressionOperator, col)
+          ) {
             const expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
               columnId,
               null,
@@ -705,29 +706,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         const y1 = Math.min(rangeSelection.startRow.rowIndex, rangeSelection.endRow.rowIndex);
         const y2 = Math.max(rangeSelection.startRow.rowIndex, rangeSelection.endRow.rowIndex);
         for (const column of rangeSelection.columns) {
-          const colId: string = column.getColId();
-          if (index == 0) {
-            const selectedColumn: IColumn = ColumnHelper.getColumnFromId(
-              colId,
-              this.api.gridApi.getColumns()
-            );
-            columns.push(selectedColumn);
-          }
+          if (column != null) {
+            const colId: string = column.getColId();
+            if (index == 0) {
+              const selectedColumn: IColumn = ColumnHelper.getColumnFromId(
+                colId,
+                this.api.gridApi.getColumns()
+              );
+              columns.push(selectedColumn);
+            }
 
-          for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
-            const rowNode = this.gridOptions.api.getModel().getRow(rowIndex);
-            // if the selected cells are from a group cell we don't return it
-            // that's a design choice as this is used only when editing and you cant edit those cells
-            if (rowNode && !rowNode.group) {
-              const primaryKey = this.getPrimaryKeyValueFromRecord(rowNode);
-              const value = this.gridOptions.api.getValue(column, rowNode);
-              let valueArray: ISelectedCell[] = selectionMap.get(primaryKey);
-              if (valueArray == undefined) {
-                valueArray = [];
-                selectionMap.set(primaryKey, valueArray);
+            for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
+              const rowNode = this.gridOptions.api.getModel().getRow(rowIndex);
+              // if the selected cells are from a group cell we don't return it
+              // that's a design choice as this is used only when editing and you cant edit those cells
+              if (rowNode && !rowNode.group) {
+                const primaryKey = this.getPrimaryKeyValueFromRecord(rowNode);
+                const value = this.gridOptions.api.getValue(column, rowNode);
+                let valueArray: ISelectedCell[] = selectionMap.get(primaryKey);
+                if (valueArray == undefined) {
+                  valueArray = [];
+                  selectionMap.set(primaryKey, valueArray);
+                }
+                const selectedCellInfo: ISelectedCell = { columnId: colId, value };
+                valueArray.push(selectedCellInfo);
               }
-              const selectedCellInfo: ISelectedCell = { columnId: colId, value };
-              valueArray.push(selectedCellInfo);
             }
           }
         }
@@ -2121,7 +2124,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         );
 
         if (quickSearchRange != null) {
-          if (RangeHelper.IsColumnAppropriateForRange(quickSearchRange.Operator, column)) {
+          if (
+            RangeHelper.IsColumnAppropriateForRange(
+              quickSearchRange.Operator as LeafExpressionOperator,
+              column
+            )
+          ) {
             const quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(
               column.ColumnId,
               null,

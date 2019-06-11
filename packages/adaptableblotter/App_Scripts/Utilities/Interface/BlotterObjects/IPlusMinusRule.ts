@@ -4,5 +4,5 @@ export interface IPlusMinusRule extends IAdaptableBlotterObject {
   ColumnId: string;
   IsDefaultNudge: boolean;
   NudgeValue: number;
-  Expression: Expression;
+  Expression?: Expression;
 }
