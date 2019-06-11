@@ -17,9 +17,11 @@ import { PanelWithButton } from '../Panels/PanelWithButton';
 import { ButtonMaximise } from '../Buttons/ButtonMaximise';
 import { ButtonMinimise } from '../Buttons/ButtonMinimise';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import PACKAGE from '../../../../../../package.json';
 
-const version = PACKAGE.version;
+// this json will be correctly configured at build time to contain the correct version
+import VERSION from '../../../version.json';
+
+const version = VERSION.version;
 
 interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlotterAbout> {
   AdaptableBlotter: IAdaptableBlotter;
