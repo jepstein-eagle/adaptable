@@ -17,10 +17,8 @@ import { PanelWithButton } from '../Panels/PanelWithButton';
 import { ButtonMaximise } from '../Buttons/ButtonMaximise';
 import { ButtonMinimise } from '../Buttons/ButtonMinimise';
 import { AdaptablePopover } from '../../AdaptablePopover';
-// this json will be correctly configured at build time to contain the correct version
-const VERSION_JSON = require('../../../version');
-
-const version = VERSION_JSON.version;
+// this will be correctly configured at build time to contain the correct version
+const version = require('../../../version');
 
 interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlotterAbout> {
   AdaptableBlotter: IAdaptableBlotter;
@@ -483,9 +481,8 @@ export class AdaptableBlotterAbout extends React.Component<
       returnRows.push(
         this.createColItem(colItems, 'Vendor Grid', this.props.AdaptableBlotter.vendorGridName)
       );
-      // commenting out until we fix this.  at teh moment VERSION_JSON is returning 3.0.3
       //   returnRows.push(this.createColItem(colItems, 'Adaptable Blotter Version', version));
-      returnRows.push(this.createColItem(colItems, 'Adaptable Blotter Version', '4.0'));
+      returnRows.push(this.createColItem(colItems, 'Adaptable Blotter Version', version));
       returnRows.push(
         this.createColItem(
           colItems,
