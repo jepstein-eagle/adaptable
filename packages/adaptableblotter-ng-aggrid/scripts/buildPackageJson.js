@@ -17,39 +17,45 @@ const packageJSON = require(sourcePackagePath);
 const abPackageJSON = require(abBlotterPackagePath);
 const topLevelPackageJSON = require(topLevelPackageJSONPath);
 
-function buildGlobalPackageJSON() {
-  console.log('Preparing package for angular-aggrid wrapper');
-  return new Promise((res, reject) => {
-    const toDelete = ['devDependencies', 'scripts', 'private'];
-    toDelete.forEach(key => delete packageJSON[key]);
+console.log('Preparing package for angular-aggrid wrapper');
 
-    packageJSON.dependencies = packageJSON.dependencies || {};
+const toDelete = ['devDependencies', 'scripts', 'private'];
+toDelete.forEach(key => delete packageJSON[key]);
 
-    Object.assign(packageJSON.dependencies, abPackageJSON.dependencies || {});
-    packageJSON.version = topLevelPackageJSON.version;
-    packageJSON.main = 'esm5/public-api.js';
-    packageJSON.module = 'esm5/public-api.js';
+packageJSON.dependencies = packageJSON.dependencies || {};
 
-    const content = JSON.stringify(packageJSON, null, 2);
-    const path = resolve(
+Object.assign(packageJSON.dependencies, abPackageJSON.dependencies || {});
+packageJSON.version = topLevelPackageJSON.version;
+packageJSON.main = 'esm5/public-api.js';
+packageJSON.module = 'esm5/public-api.js';
+
+const content = JSON.stringify(packageJSON, null, 2);
+const path = resolve(
+  process.cwd(),
+  './dist/adaptableblotter-angular-aggrid/package.json'
+);
+fs.writeFile(path, content, 'utf8', err => {
+  if (err) {
+    console.log(chalk.red(err));
+    throw err;
+  } else {
+    const versionFilePath = resolve(
       process.cwd(),
-      './dist/adaptableblotter-angular-aggrid/package.json'
+      './dist/adaptableblotter-angular-aggrid/adaptableblotter',
+      'version.d.ts'
     );
-    fs.writeFile(path, content, 'utf8', err => {
-      if (err) {
-        console.log(chalk.red(err));
-        reject(err);
-      } else {
-        console.log(
-          'DONE building package.json with version ',
-          packageJSON.version
-        );
-        res(true);
-      }
-    });
-  });
-}
+    let versionContent = fs.readFileSync(versionFilePath, { encoding: 'utf8' });
 
-buildGlobalPackageJSON();
+    if (versionContent.indexOf('x.y.z') === -1) {
+      throw 'Cannot find version to replace';
+    }
+    versionContent = versionContent.replace('x.y.z', packageJSON.version);
 
-module.exports = buildGlobalPackageJSON;
+    fs.writeFileSync(versionFilePath, versionContent, 'utf8');
+
+    console.log(
+      'DONE building package.json with version ',
+      packageJSON.version
+    );
+  }
+});

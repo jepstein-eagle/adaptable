@@ -18,7 +18,8 @@ import { ButtonMaximise } from '../Buttons/ButtonMaximise';
 import { ButtonMinimise } from '../Buttons/ButtonMinimise';
 import { AdaptablePopover } from '../../AdaptablePopover';
 // this will be correctly configured at build time to contain the correct version
-const version = require('../../../version');
+
+import version from '../../../../version';
 
 interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlotterAbout> {
   AdaptableBlotter: IAdaptableBlotter;
@@ -481,7 +482,7 @@ export class AdaptableBlotterAbout extends React.Component<
       returnRows.push(
         this.createColItem(colItems, 'Vendor Grid', this.props.AdaptableBlotter.vendorGridName)
       );
-      //   returnRows.push(this.createColItem(colItems, 'Adaptable Blotter Version', version));
+
       returnRows.push(this.createColItem(colItems, 'Adaptable Blotter Version', version));
       returnRows.push(
         this.createColItem(

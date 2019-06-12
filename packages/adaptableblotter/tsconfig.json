@@ -14,6 +14,13 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["App_Scripts/**/*", "Hypergrid/**/*", "agGrid/**/*"],
+  "include": [
+    "App_Scripts/**/*",
+    "Hypergrid/**/*",
+    "agGrid/**/*",
+    "agGrid.ts",
+    "types.ts",
+    "version.ts"
+  ],
   "exclude": ["node_modules", ".next"]
 }
