@@ -8,6 +8,7 @@ import { IColumn } from '../Interface/IColumn';
 import { ReportColumnScope, MessageType, ReportRowScope } from '../Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { createUuid } from '../Uuid';
+import ColumnHelper from './ColumnHelper';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -31,7 +32,10 @@ export function GetReportColumnsDescription(Report: IReport, cols: IColumn[]): s
     case ReportColumnScope.SelectedColumns:
       return '[Selected Columns]';
     case ReportColumnScope.BespokeColumns:
-      return Report.ColumnIds.map(c => cols.find(col => col.ColumnId == c).FriendlyName).join(', ');
+      return ColumnHelper.getFriendlyNamesFromColumnIds(
+        this.props.Data.ColumnIds,
+        this.props.Columns
+      ).join(', ');
   }
 }
 

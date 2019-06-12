@@ -44,6 +44,9 @@ export function getFriendlyNameFromColumnId(columnId: string, columns: IColumn[]
 
 export function getFriendlyNamesFromColumnIds(columnIds: string[], columns: IColumn[]): string[] {
   let friendlyNames: string[] = [];
+  if (ArrayExtensions.IsNullOrEmpty(columnIds)) {
+    return friendlyNames;
+  }
   columnIds.forEach(c => {
     friendlyNames.push(getFriendlyNameFromColumnId(c, columns));
   });
@@ -68,6 +71,9 @@ export function getColumnIdsFromFriendlyNames(
   columns: IColumn[]
 ): string[] {
   let columnIds: string[] = [];
+  if (ArrayExtensions.IsNullOrEmpty(friendlyNames)) {
+    return columnIds;
+  }
   friendlyNames.forEach(c => {
     columnIds.push(getColumnIdFromFriendlyName(c, columns));
   });

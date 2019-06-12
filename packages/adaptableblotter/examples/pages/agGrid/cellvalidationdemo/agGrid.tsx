@@ -27,7 +27,7 @@ function InitAdaptableBlotter() {
     blotterId: 'cell validation demo',
     licenceKey: examplesHelper.getEnterpriseLicenceKey(),
   };
-  adaptableBlotterOptions.predefinedConfig = demoConfig as IPredefinedConfig;
+  adaptableBlotterOptions.predefinedConfig = demoConfig;
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
