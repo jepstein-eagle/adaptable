@@ -7,7 +7,7 @@ import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 import { GridOptions } from 'ag-grid-community';
-import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { IAdaptableBlotterOptions, IPredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 /*
@@ -27,7 +27,7 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-let demoConfig = {
+let demoConfig: IPredefinedConfig = {
   Theme: {
     CurrentTheme: 'Dark Theme',
   },

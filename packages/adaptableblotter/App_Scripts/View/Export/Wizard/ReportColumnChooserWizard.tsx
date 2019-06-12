@@ -7,6 +7,7 @@ import {
 import { ReportColumnScope } from '../../../Utilities/Enums';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { IReport } from '../../../Utilities/Interface/BlotterObjects/IReport';
+import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
 
 export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<IReport> {}
 export interface ReportColumnsWizardState {
@@ -21,8 +22,9 @@ export class ReportColumnChooserWizard
     super(props);
     this.state = {
       AllColumnValues: this.props.Columns.map(c => c.FriendlyName),
-      SelectedColumnValues: this.props.Data.ColumnIds.map(
-        c => this.props.Columns.find(col => col.ColumnId == c).FriendlyName
+      SelectedColumnValues: ColumnHelper.getFriendlyNamesFromColumnIds(
+        this.props.Data.ColumnIds,
+        this.props.Columns
       ),
     };
   }
