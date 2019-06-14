@@ -1,1 +1,3 @@
-export * from './App_Scripts/agGrid';
+import AdaptableBlotter from './App_Scripts/agGrid';
+
+export default AdaptableBlotter;
