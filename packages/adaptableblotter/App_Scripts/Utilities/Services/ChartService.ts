@@ -10,7 +10,7 @@ import { IPieChartDataItem } from '../Interface/BlotterObjects/Charting/IPieChar
 import { IColumnValueExpression } from '../Interface/Expression/IColumnValueExpression';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
-import { DistinctCriteriaPairValue, DataType, ConditionalStyleScope } from '../Enums';
+import { DistinctCriteriaPairValue } from '../Enums';
 import { IKeyValuePair } from '../Interface/IKeyValuePair';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { Expression } from '../../Utilities/Expression';
@@ -158,6 +158,7 @@ export class ChartService implements IChartService {
           DistinctCriteriaPairValue.DisplayValue,
           chartDefinition.VisibleRowsOnly
         )
+        .filter(cv => Helper.objectExists(cv.RawValue))
         .map(cv => {
           return cv.DisplayValue;
         });
@@ -373,6 +374,9 @@ export class ChartService implements IChartService {
       row,
       chartDefinition.SecondaryColumnId
     );
+    if (Helper.objectNotExists(secondaryCellValue)) {
+      return valueTotal;
+    }
 
     let group: string = '';
     let count: number = 0;
@@ -400,6 +404,9 @@ export class ChartService implements IChartService {
     valueTotal: number
   ): number {
     let cellValue = this.blotter.getRawValueFromRecord(row, chartDefinition.PrimaryColumnId);
+    if (Helper.objectNotExists(cellValue)) {
+      return valueTotal;
+    }
     if (dataCounter.has(cellValue)) {
       dataCounter.set(cellValue, dataCounter.get(cellValue) + 1);
     } else {
