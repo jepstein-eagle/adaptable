@@ -165,17 +165,17 @@ export interface TeamSharingState extends ISystemState {
  * DESIGN TIME STATE IMPLEMENTATIONS - Entitlement, UserInterface, SystemFilter
  */
 export interface EntitlementsState extends IDesignTimeState {
-  FunctionEntitlements: IEntitlement[];
+  FunctionEntitlements?: IEntitlement[];
 }
 
 export interface UserInterfaceState extends IDesignTimeState {
-  ColorPalette: string[];
-  StyleClassNames: string[];
-  PermittedColumnValues: IPermittedColumnValues[];
+  ColorPalette?: string[];
+  StyleClassNames?: string[];
+  PermittedColumnValues?: IPermittedColumnValues[];
 }
 
 export interface SystemFilterState extends IDesignTimeState {
-  SystemFilters: string[];
+  SystemFilters?: string[];
 }
 
 export interface ApplicationState extends IDesignTimeState {}
@@ -184,26 +184,26 @@ export interface ApplicationState extends IDesignTimeState {}
  * USER STATE IMPLEMENTATIONS - Each of the individual Application state
  */
 export interface AdvancedSearchState extends IUserState {
-  AdvancedSearches: IAdvancedSearch[];
-  CurrentAdvancedSearch: string;
+  AdvancedSearches?: IAdvancedSearch[];
+  CurrentAdvancedSearch?: string;
 }
 
 export interface AlertState extends IUserState {
-  AlertDefinitions: IAlertDefinition[];
+  AlertDefinitions?: IAlertDefinition[];
   MaxAlertsInStore?: number;
   AlertPopupDiv?: string;
 }
 
 export interface BulkUpdateState extends IUserState {
-  BulkUpdateValue: string;
+  BulkUpdateValue?: string;
 }
 
 export interface CalculatedColumnState extends IUserState {
-  CalculatedColumns: ICalculatedColumn[];
+  CalculatedColumns?: ICalculatedColumn[];
 }
 
 export interface CalendarState extends IUserState {
-  CurrentCalendar: string;
+  CurrentCalendar?: string;
 }
 
 export interface CellSummaryState extends IUserState {
@@ -222,29 +222,29 @@ export interface CellSummaryState extends IUserState {
 }
 
 export interface CellValidationState extends IUserState {
-  CellValidations: ICellValidationRule[];
+  CellValidations?: ICellValidationRule[];
 }
 
 export interface ChartState extends IUserState {
-  ChartDefinitions: IChartDefinition[];
-  CurrentChartName: string; // this will change as we might show more than one?
+  ChartDefinitions?: IChartDefinition[];
+  CurrentChartName?: string; // this will change as we might show more than one?
   RefreshRate?: number;
 }
 
 export interface ColumnCategoryState extends IUserState {
-  ColumnCategories: IColumnCategory[];
+  ColumnCategories?: IColumnCategory[];
 }
 
 export interface ColumnFilterState extends IUserState {
-  ColumnFilters: IColumnFilter[];
+  ColumnFilters?: IColumnFilter[];
 }
 
 export interface ConditionalStyleState extends IUserState {
-  ConditionalStyles: IConditionalStyle[];
+  ConditionalStyles?: IConditionalStyle[];
 }
 
 export interface CustomSortState extends IUserState {
-  CustomSorts: ICustomSort[];
+  CustomSorts?: ICustomSort[];
 }
 
 export interface DashboardState extends IUserState {
@@ -265,55 +265,55 @@ export interface DashboardState extends IUserState {
 }
 
 export interface DataSourceState extends IUserState {
-  DataSources: IDataSource[];
-  CurrentDataSource: string;
+  DataSources?: IDataSource[];
+  CurrentDataSource?: string;
 }
 
 export interface ExportState extends IUserState {
-  CurrentReport: string;
-  Reports: IReport[];
+  CurrentReport?: string;
+  Reports?: IReport[];
 }
 
 export interface FlashingCellState extends IUserState {
-  FlashingCells: IFlashingCell[];
+  FlashingCells?: IFlashingCell[];
   DefaultUpColor?: string;
   DefautDownColor?: string;
   DefaultDuration?: 250 | 500 | 750 | 1000;
 }
 
 export interface FormatColumnState extends IUserState {
-  FormatColumns: IFormatColumn[];
+  FormatColumns?: IFormatColumn[];
 }
 
 export interface FreeTextColumnState extends IUserState {
-  FreeTextColumns: IFreeTextColumn[];
+  FreeTextColumns?: IFreeTextColumn[];
 }
 
 export interface LayoutState extends IUserState {
-  CurrentLayout: string;
-  Layouts: ILayout[];
+  CurrentLayout?: string;
+  Layouts?: ILayout[];
 }
 
 export interface PercentBarState extends IUserState {
-  PercentBars: IPercentBar[];
+  PercentBars?: IPercentBar[];
 }
 
 export interface PlusMinusState extends IUserState {
-  PlusMinusRules: IPlusMinusRule[];
+  PlusMinusRules?: IPlusMinusRule[];
 }
 
 export interface QuickSearchState extends IUserState {
-  QuickSearchText: string;
+  QuickSearchText?: string;
   DisplayAction?: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
   Style?: IStyle;
 }
 
 export interface ReminderState extends IUserState {
-  Reminders: IReminder[];
+  Reminders?: IReminder[];
 }
 
 export interface ShortcutState extends IUserState {
-  Shortcuts: IShortcut[];
+  Shortcuts?: IShortcut[];
 }
 
 export interface SmartEditState extends IUserState {
@@ -322,11 +322,11 @@ export interface SmartEditState extends IUserState {
 }
 
 export interface ThemeState extends IUserState {
-  CurrentTheme: string;
+  CurrentTheme?: string;
   SystemThemes?: string[];
   UserThemes?: IUserTheme[];
 }
 
 export interface UserFilterState extends IUserState {
-  UserFilters: IUserFilter[];
+  UserFilters?: IUserFilter[];
 }

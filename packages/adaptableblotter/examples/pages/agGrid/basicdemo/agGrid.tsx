@@ -53,6 +53,10 @@ let demoConfig: IPredefinedConfig = {
     ],
   },
 
+  UserInterface: {
+    StyleClassNames: ['first', 'secod'],
+  },
+
   Export: {
     CurrentReport: 'sssss',
     Reports: [
@@ -65,21 +69,7 @@ let demoConfig: IPredefinedConfig = {
   },
 
   Alert: {
-    AlertDefinitions: [
-      {
-        ColumnId: 'currency',
-        MessageType: 'Info',
-        Range: {
-          Operator: 'None',
-          Operand1: '',
-          Operand2: '',
-          Operand1Type: 'Value',
-          Operand2Type: 'Value',
-        },
-
-        ShowAsPopup: true,
-      },
-    ],
+    MaxAlertsInStore: 500,
   },
 };
 
