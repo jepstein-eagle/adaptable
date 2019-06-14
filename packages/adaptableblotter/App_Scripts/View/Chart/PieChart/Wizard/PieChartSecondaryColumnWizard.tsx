@@ -15,9 +15,7 @@ import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensi
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 
 export interface PieChartSecondaryColumnWizardProps
-  extends AdaptableWizardStepProps<IPieChartDefinition> {
-  //  ChartDefinitions: IChartDefinition[]
-}
+  extends AdaptableWizardStepProps<IPieChartDefinition> {}
 
 export interface PieChartSecondaryColumnWizardState {
   SecondaryColumnId?: string;
@@ -30,8 +28,8 @@ export class PieChartSecondaryColumnWizard
   constructor(props: PieChartSecondaryColumnWizardProps) {
     super(props);
     this.state = {
-      SecondaryColumnId: props.Data.SecondaryColumnId,
-      SecondaryColumnOperation: props.Data.SecondaryColumnOperation as SecondaryColumnOperation,
+      SecondaryColumnId: props.Data!.SecondaryColumnId,
+      SecondaryColumnOperation: props.Data!.SecondaryColumnOperation as SecondaryColumnOperation,
     };
   }
 
@@ -51,7 +49,9 @@ export class PieChartSecondaryColumnWizard
               <Row>
                 <Col xs={1} />
                 <Col xs={10}>
-                  <HelpBlock>Select a Secondary Column for the Pie Chart.</HelpBlock>
+                  <HelpBlock>
+                    Select a Secondary Column for the Pie Chart (Note: this is optional).
+                  </HelpBlock>
                 </Col>
                 <Col xs={1} />
               </Row>
