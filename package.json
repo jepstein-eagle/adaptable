@@ -27,7 +27,8 @@
     "build-core": "npm run --prefix packages/adaptableblotter build",
     "build-react": "npm run --prefix packages/adaptableblotter-react-aggrid build",
     "build-angular": "npm run --prefix packages/adaptableblotter-ng-aggrid build",
-    "build": "npm run build-core && npm run build-react && npm run build-angular"
+    "build": "npm run build-core && npm run build-react && npm run build-angular",
+    "build-apidoc": "typedoc --out ./apidoc ./packages/adaptableblotter/app_scripts/BlotterOptions  --ignoreCompilerErrors --exclude node_modules --mode modules"
   },
   "husky": {
     "hooks": {
