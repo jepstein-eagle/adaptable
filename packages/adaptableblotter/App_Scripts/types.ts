@@ -6,11 +6,9 @@ import {
 } from './Utilities/Interface/IBlotterEvents';
 import { ISearchChangedEventArgs } from './Utilities/Interface/SearchChanged/ISearchChangedEventArgs';
 
-export { IPredefinedConfig } from './Redux/ActionsReducers/Interface/IState';
+export { IPredefinedConfig } from './PredefinedConfig/IPredefinedConfig';
 export { IAdaptableBlotter } from './Utilities/Interface/IAdaptableBlotter';
-export {
-  IAdaptableBlotterOptions,
-} from './Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
+export { IAdaptableBlotterOptions } from './BlotterOptions/IAdaptableBlotterOptions';
 
 export {
   IEventApi,

@@ -21,8 +21,8 @@ import {
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IFreeTextColumn } from '../../Utilities/Interface/BlotterObjects/IFreeTextColumn';
+import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { IFreeTextColumn } from '../../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
 
 interface FreeTextColumnPopupProps extends StrategyViewPopupProps<FreeTextColumnPopupComponent> {
   FreeTextColumns: Array<IFreeTextColumn>;

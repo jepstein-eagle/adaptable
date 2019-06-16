@@ -10,14 +10,14 @@ import {
   LeafExpressionOperator,
   MessageType,
   RangeOperandType,
-} from '../../../Utilities/Enums';
+} from '../../../PredefinedConfig/Common Objects/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IAlertDefinition } from '../../../Utilities/Interface/BlotterObjects/IAlertDefinition';
-import { IRange } from '../../../Utilities/Interface/Expression/IRange';
+import { IRange } from '../../../PredefinedConfig/Common Objects/Expression/IRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import { IAlertDefinition } from '../../../PredefinedConfig/IUserState Interfaces/AlertState';
 
 export interface AlertRulesWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {}
 export interface AlertSettingsWizardState {

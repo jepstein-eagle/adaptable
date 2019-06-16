@@ -1,16 +1,14 @@
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import {
-  FlashingCellState,
-  ConditionalStyleState,
-  QuickSearchState,
-  FormatColumnState,
-  PercentBarState,
-} from '../../Redux/ActionsReducers/Interface/IState';
+import { QuickSearchState } from '../../PredefinedConfig/IUserState Interfaces/QuickSearchState';
+import { PercentBarState } from '../../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { FormatColumnState } from '../../PredefinedConfig/IUserState Interfaces/FormatColumnState';
+import { FlashingCellState } from '../../PredefinedConfig/IUserState Interfaces/FlashingCellState';
+import { ConditionalStyleState } from '../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { StyleHelper } from '../Helpers/StyleHelper';
 import { EnumExtensions } from '../Extensions/EnumExtensions';
-import { ConditionalStyleScope } from '../Enums';
+import { ConditionalStyleScope } from '../../PredefinedConfig/Common Objects/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IFormatColumnStrategy } from '../../Strategy/Interface/IFormatColumnStrategy';
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy';

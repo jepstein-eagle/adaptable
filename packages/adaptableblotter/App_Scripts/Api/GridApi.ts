@@ -1,10 +1,10 @@
 import { ApiBase } from './ApiBase';
 import { IGridApi } from './Interface/IGridApi';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { GridState } from '../Redux/ActionsReducers/Interface/IState';
-import { DataType } from '../Utilities/Enums';
-import { IColumnSort } from '../Utilities/Interface/IColumnSort';
+import { GridState } from '../PredefinedConfig/ISystemState Interfaces/GridState';
+import { DataType } from '../PredefinedConfig/Common Objects/Enums';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
+import { IColumnSort } from '../PredefinedConfig/IUserState Interfaces/LayoutState';
 
 export class GridApi extends ApiBase implements IGridApi {
   public getGridState(): GridState {

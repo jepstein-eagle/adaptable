@@ -6,7 +6,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { FormGroup, Col, Checkbox } from 'react-bootstrap';
-import { DataType, SortOrder } from '../../Utilities/Enums';
+import { DataType, SortOrder } from '../../PredefinedConfig/Common Objects/Enums';
 import { FlashingCellEntityRow } from './FlashingCellEntityRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -15,10 +15,10 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
-import { IFlashingCell } from '../../Utilities/Interface/BlotterObjects/IFlashingCell';
-import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
+import { IFlashingCell } from '../../PredefinedConfig/IUserState Interfaces/FlashingCellState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { FlashingCellState } from '../../Redux/ActionsReducers/Interface/IState';
+import { FlashingCellState } from '../../PredefinedConfig/IUserState Interfaces/FlashingCellState';
+import { ICalculatedColumn } from '../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
   FlashingCells: IFlashingCell[];

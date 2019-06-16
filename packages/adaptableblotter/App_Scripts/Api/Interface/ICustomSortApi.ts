@@ -1,5 +1,7 @@
-import { ICustomSort } from '../../Utilities/Interface/BlotterObjects/ICustomSort';
-import { CustomSortState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  CustomSortState,
+  ICustomSort,
+} from '../../PredefinedConfig/IUserState Interfaces/CustomSortState';
 
 export interface ICustomSortApi {
   getCustomSortState(): CustomSortState;

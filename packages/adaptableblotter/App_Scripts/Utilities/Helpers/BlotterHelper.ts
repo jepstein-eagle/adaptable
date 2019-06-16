@@ -1,15 +1,15 @@
 import { cloneDeepWith, isPlainObject } from 'lodash';
-import { IAdaptableBlotterOptions } from '../Interface/BlotterOptions/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../../BlotterOptions/IAdaptableBlotterOptions';
 import { DefaultAdaptableBlotterOptions } from '../Defaults/DefaultAdaptableBlotterOptions';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ILicenceInfo } from '../Interface/ILicenceInfo';
-import { LicenceScopeType } from '../Enums';
+import { LicenceScopeType } from '../../PredefinedConfig/Common Objects/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { createUuid } from '../Uuid';
-import { IAdaptableBlotterObject } from '../Interface/BlotterObjects/IAdaptableBlotterObject';
+import { createUuid } from '../../PredefinedConfig/Uuid';
+import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 export function assignBlotterOptions(
   blotterOptions: IAdaptableBlotterOptions

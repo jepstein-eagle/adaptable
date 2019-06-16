@@ -1,8 +1,9 @@
-import * as UserFilterRedux from '../Redux/ActionsReducers/UserFilterRedux';
-import { ApiBase } from './ApiBase';
-import { IUserFilter } from '../Utilities/Interface/BlotterObjects/IUserFilter';
 import { IUserFilterApi } from './Interface/IUserFilterApi';
-import { UserFilterState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  UserFilterState,
+  IUserFilter,
+} from '../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { ApiBase } from './ApiBase';
 
 export class UserFilterApi extends ApiBase implements IUserFilterApi {
   public getUserFilterState(): UserFilterState {

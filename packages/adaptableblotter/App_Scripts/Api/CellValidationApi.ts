@@ -1,8 +1,10 @@
 import * as CellValidationRedux from '../Redux/ActionsReducers/CellValidationRedux';
 import { ApiBase } from './ApiBase';
-import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICellValidationRule';
 import { ICellValidationApi } from './Interface/ICellValidationApi';
-import { CellValidationState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  CellValidationState,
+  ICellValidationRule,
+} from '../PredefinedConfig/IUserState Interfaces/CellValidationState';
 
 export class CellValidationApi extends ApiBase implements ICellValidationApi {
   public getCellValidationState(): CellValidationState {

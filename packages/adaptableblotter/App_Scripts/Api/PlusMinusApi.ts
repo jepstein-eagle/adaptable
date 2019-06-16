@@ -1,6 +1,8 @@
 import { ApiBase } from './ApiBase';
-import { PlusMinusState } from '../Redux/ActionsReducers/Interface/IState';
-import { IPlusMinusRule } from '../Utilities/Interface/BlotterObjects/IPlusMinusRule';
+import {
+  PlusMinusState,
+  IPlusMinusRule,
+} from '../PredefinedConfig/IUserState Interfaces/PlusMinusState';
 import { IPlusMinusApi } from './Interface/IPlusMinusApi';
 
 export class PlusMinusApi extends ApiBase implements IPlusMinusApi {

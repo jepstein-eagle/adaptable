@@ -1,10 +1,10 @@
 import { AdaptableBlotter } from './AdaptableBlotter';
-import { SortOrder } from '../Utilities/Enums';
+import { SortOrder } from '../PredefinedConfig/Common Objects/Enums';
 import { DataSourceIndexed } from './DataSourceIndexed';
-import { IColumnSort } from '../Utilities/Interface/IColumnSort';
 import * as _ from 'lodash';
 import { SortHelper } from '../Utilities/Helpers/SortHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { IColumnSort } from '../PredefinedConfig/IUserState Interfaces/LayoutState';
 
 export interface ICustomSortInfo {
   SortedValues: any[];

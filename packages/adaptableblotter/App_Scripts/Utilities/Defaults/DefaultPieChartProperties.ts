@@ -1,10 +1,10 @@
-import { IPieChartProperties } from '../Interface/BlotterObjects/Charting/IChartDefinition';
 import {
   PieChartLabelPosition,
   SliceLabelOption,
   SliceSortOption,
   OthersCategoryType,
-} from '../ChartEnums';
+} from '../../PredefinedConfig/Common Objects/ChartEnums';
+import { IPieChartProperties } from '../../PredefinedConfig/IUserState Interfaces/ChartState';
 
 export const DefaultPieChartProperties: IPieChartProperties = {
   OthersCategoryThreshold: 2,

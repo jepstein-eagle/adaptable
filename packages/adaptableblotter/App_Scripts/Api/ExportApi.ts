@@ -1,11 +1,8 @@
 import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux';
-import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
-import { ApiBase } from './ApiBase';
-import { IReport } from '../Utilities/Interface/BlotterObjects/IReport';
-import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
-import { ExportDestination } from '../Utilities/Enums';
+import { ExportDestination } from '../PredefinedConfig/Common Objects/Enums';
 import { IExportApi } from './Interface/IExportApi';
-import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
+import { ExportState, IReport } from '../PredefinedConfig/IUserState Interfaces/ExportState';
+import { ApiBase } from './ApiBase';
 
 export class ExportApi extends ApiBase implements IExportApi {
   public getExportState(): ExportState {

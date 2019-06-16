@@ -1,6 +1,6 @@
 import { IMenuItem } from '../../Utilities/Interface/IMenu';
-import { IEntitlement } from '../../Utilities/Interface/IEntitlement';
 import { IColumn } from '../../Utilities/Interface/IColumn';
+import { IEntitlement } from '../../PredefinedConfig/IDesignTime State Interfaces/EntitlementsState';
 
 /**
  * This is the interface that all Strategies implement (as well as all deriving from AdaptableStrategyBase).

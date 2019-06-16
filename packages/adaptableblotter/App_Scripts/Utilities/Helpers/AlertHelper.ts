@@ -1,9 +1,9 @@
-import { IAlertDefinition } from '../Interface/BlotterObjects/IAlertDefinition';
 import { ExpressionHelper } from './ExpressionHelper';
 import { ColumnHelper } from './ColumnHelper';
-import { DataType, LeafExpressionOperator } from '../Enums';
+import { DataType, LeafExpressionOperator } from '../../PredefinedConfig/Common Objects/Enums';
 import { IColumn } from '../Interface/IColumn';
 import { StringExtensions } from '../Extensions/StringExtensions';
+import { IAlertDefinition } from '../../PredefinedConfig/IUserState Interfaces/AlertState';
 
 export function createAlertDescription(
   alertDefinition: IAlertDefinition,

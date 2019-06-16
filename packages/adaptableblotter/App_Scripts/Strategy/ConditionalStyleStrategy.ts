@@ -1,4 +1,4 @@
-import { ConditionalStyleState } from '../Redux/ActionsReducers/Interface/IState';
+import { ConditionalStyleState } from '../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
 import { IConditionalStyleStrategy } from './Interface/IConditionalStyleStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';

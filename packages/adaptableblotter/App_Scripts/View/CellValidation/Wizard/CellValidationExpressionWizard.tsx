@@ -3,7 +3,7 @@ import {
   ExpressionWizardProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
-import { ICellValidationRule } from '../../../Utilities/Interface/BlotterObjects/ICellValidationRule';
+import { ICellValidationRule } from '../../../PredefinedConfig/IUserState Interfaces/CellValidationState';
 import { UIHelper } from '../../UIHelper';
 
 export class CellValidationExpressionWizard extends ExpressionBuilderPage

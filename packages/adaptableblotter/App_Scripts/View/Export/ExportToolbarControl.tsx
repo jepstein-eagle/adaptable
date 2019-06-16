@@ -27,12 +27,17 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { ExportDestination, SortOrder, AccessLevel, DashboardSize } from '../../Utilities/Enums';
+import {
+  ExportDestination,
+  SortOrder,
+  AccessLevel,
+  DashboardSize,
+} from '../../PredefinedConfig/Common Objects/Enums';
 import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IReport } from '../../Utilities/Interface/BlotterObjects/IReport';
+import { IReport } from '../../PredefinedConfig/IUserState Interfaces/ExportState';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 import { PRIMARY_BSSTYLE, DEFAULT_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { Glue42Helper } from '../../Utilities/Helpers/Glue42Helper';

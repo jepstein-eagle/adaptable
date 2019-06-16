@@ -1,11 +1,11 @@
-import { FreeTextColumnState } from './Interface/IState';
-import * as Redux from 'redux';
 import {
+  FreeTextColumnState,
   IFreeTextColumn,
   IFreeTextStoredValue,
-} from '../../Utilities/Interface/BlotterObjects/IFreeTextColumn';
+} from '../../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
+import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const FREE_TEXT_COLUMN_ADD = 'FREE_TEXT_COLUMN_ADD';
 export const FREE_TEXT_COLUMN_EDIT = 'FREE_TEXT_COLUMN_EDIT';

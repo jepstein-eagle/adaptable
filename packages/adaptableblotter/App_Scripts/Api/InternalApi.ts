@@ -5,17 +5,17 @@ import { ApiBase } from './ApiBase';
 import { IInternalApi } from './Interface/IInternalApi';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
-import { ExportDestination } from '../Utilities/Enums';
-import { SystemState } from '../Redux/ActionsReducers/Interface/IState';
-import { ICalendar } from '../Utilities/Interface/BlotterObjects/ICalendar';
-import { IChartData } from '../Utilities/Interface/BlotterObjects/Charting/IChartData';
-import { ChartVisibility } from '../Utilities/ChartEnums';
-import { IReport } from '../Utilities/Interface/BlotterObjects/IReport';
+import { ExportDestination } from '../PredefinedConfig/Common Objects/Enums';
 import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
+import { IReport } from '../PredefinedConfig/IUserState Interfaces/ExportState';
+import { SystemState } from '../PredefinedConfig/ISystemState Interfaces/SystemState';
+import { ICalendar } from '../PredefinedConfig/IUserState Interfaces/CalendarState';
+import { IChartData } from '../PredefinedConfig/IUserState Interfaces/ChartState';
+import { ChartVisibility } from '../PredefinedConfig/Common Objects/ChartEnums';
 
 export class InternalApi extends ApiBase implements IInternalApi {
   // System Redux Actions
-  public ReportStartLive(
+  public startLiveReport(
     report: IReport,
     workbookName: string,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
@@ -23,41 +23,41 @@ export class InternalApi extends ApiBase implements IInternalApi {
     this.dispatchAction(SystemRedux.ReportStartLive(report, workbookName, exportDestination));
   }
 
-  public GetSystemState(): SystemState {
+  public getSystemState(): SystemState {
     return this.getBlotterState().System;
   }
 
-  public GetAvailableCalendars(): ICalendar[] {
-    return this.GetSystemState().AvailableCalendars;
+  public getAvailableCalendars(): ICalendar[] {
+    return this.getSystemState().AvailableCalendars;
   }
 
-  public SetChartData(chartData: IChartData): void {
+  public setChartData(chartData: IChartData): void {
     this.dispatchAction(SystemRedux.ChartSetChartData(chartData));
   }
 
-  public SetChartVisibility(chartVisbility: ChartVisibility): void {
+  public setChartVisibility(chartVisbility: ChartVisibility): void {
     this.dispatchAction(SystemRedux.ChartSetChartVisibility(chartVisbility));
   }
 
   public getSystemReports(): IReport[] {
-    return this.GetSystemState().SystemReports;
+    return this.getSystemState().SystemReports;
   }
 
   public getLiveReports(): ILiveReport[] {
-    return this.GetSystemState().CurrentLiveReports;
+    return this.getSystemState().CurrentLiveReports;
   }
 
   // Menu Redux Actions
-  public ColumnContextMenuClear(): void {
+  public clearColumnContextMenu(): void {
     this.dispatchAction(MenuRedux.ClearColumnContextMenu());
   }
 
-  public ColumnContextMenuAddItem(menuItem: IMenuItem): void {
+  public addColumnContextMenuItem(menuItem: IMenuItem): void {
     this.dispatchAction(MenuRedux.AddItemColumnContextMenu(menuItem));
   }
 
   // Popup Redux Actions
-  public PopupShowConfirmation(confirmation: IUIConfirmation): void {
+  public showPopupConfirmation(confirmation: IUIConfirmation): void {
     this.dispatchAction(PopupRedux.PopupShowConfirmation(confirmation));
   }
 }

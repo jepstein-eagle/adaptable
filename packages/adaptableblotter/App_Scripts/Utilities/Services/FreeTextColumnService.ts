@@ -1,10 +1,12 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
-import { IFreeTextColumn, IFreeTextStoredValue } from '../Interface/BlotterObjects/IFreeTextColumn';
-import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import * as FreeTextColumnRedux from '../../Redux/ActionsReducers/FreeTextColumnRedux';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
+import { IAdaptableBlotter } from '../../types';
+import {
+  IFreeTextColumn,
+  IFreeTextStoredValue,
+} from '../../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
+import ArrayExtensions from '../Extensions/ArrayExtensions';
 
 export class FreeTextColumnService implements IFreeTextColumnService {
   constructor(private blotter: IAdaptableBlotter) {

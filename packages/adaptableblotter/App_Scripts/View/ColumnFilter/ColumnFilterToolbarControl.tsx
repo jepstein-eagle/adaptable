@@ -14,11 +14,9 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { AccessLevel, DashboardSize } from '../../Utilities/Enums';
+import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common Objects/Enums';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IEntitlement } from '../../Utilities/Interface/IEntitlement';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IColumnFilter } from '../../Utilities/Interface/BlotterObjects/IColumnFilter';
+import { IColumnFilter } from '../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
 import { Label } from 'react-bootstrap';
 import { ActiveFiltersPanel } from './ActiveFiltersPanel';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
@@ -26,6 +24,8 @@ import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 import { SUCCESS_BSSTYLE, DEFAULT_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { ButtonHide } from '../Components/Buttons/ButtonHide';
 import { ButtonShow } from '../Components/Buttons/ButtonShow';
+import { IUserFilter } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { IEntitlement } from '../../PredefinedConfig/IDesignTime State Interfaces/EntitlementsState';
 
 interface ColumnFilterToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {

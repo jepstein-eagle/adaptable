@@ -5,10 +5,12 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux';
-import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  FlashingCellState,
+  IFlashingCell,
+} from '../PredefinedConfig/IUserState Interfaces/FlashingCellState';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { DataType } from '../Utilities/Enums';
-import { IFlashingCell } from '../Utilities/Interface/BlotterObjects/IFlashingCell';
+import { DataType } from '../PredefinedConfig/Common Objects/Enums';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase

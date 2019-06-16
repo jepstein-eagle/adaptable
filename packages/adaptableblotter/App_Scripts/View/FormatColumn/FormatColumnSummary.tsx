@@ -22,8 +22,8 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IFormatColumn } from '../../Utilities/Interface/BlotterObjects/IFormatColumn';
+import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { IFormatColumn } from '../../PredefinedConfig/IUserState Interfaces/FormatColumnState';
 
 export interface FormatColumnSummaryProps
   extends StrategySummaryProps<FormatColumnSummaryComponent> {

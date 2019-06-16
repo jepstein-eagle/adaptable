@@ -1,4 +1,4 @@
-import { SmartEditState } from '../../Redux/ActionsReducers/Interface/IState';
+import { SmartEditState } from '../../PredefinedConfig/IUserState Interfaces/SmartEditState';
 
 export interface ISmartEditApi {
   getSmartEditState(): SmartEditState;

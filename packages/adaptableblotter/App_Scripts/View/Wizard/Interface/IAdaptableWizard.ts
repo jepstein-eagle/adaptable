@@ -1,7 +1,7 @@
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IAdaptableBlotterObject } from '../../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+import { IUserFilter } from '../../../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { IAdaptableBlotterObject } from '../../../PredefinedConfig/IAdaptableBlotterObject';
 
 export interface AdaptableWizardStep {
   canNext(): boolean;

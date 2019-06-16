@@ -1,8 +1,10 @@
 import * as CalculatedColumnRedux from '../Redux/ActionsReducers/CalculatedColumnRedux';
 import { ApiBase } from './ApiBase';
-import { ICalculatedColumn } from '../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { ICalculatedColumnApi } from './Interface/ICalculatedColumnApi';
-import { CalculatedColumnState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  CalculatedColumnState,
+  ICalculatedColumn,
+} from '../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
 
 export class CalculatedColumnApi extends ApiBase implements ICalculatedColumnApi {
   public getCalculatedColumnState(): CalculatedColumnState {

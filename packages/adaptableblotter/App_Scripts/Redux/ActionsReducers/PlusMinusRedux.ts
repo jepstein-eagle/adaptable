@@ -1,9 +1,11 @@
-import { PlusMinusState } from './Interface/IState';
+import {
+  PlusMinusState,
+  IPlusMinusRule,
+} from '../../PredefinedConfig/IUserState Interfaces/PlusMinusState';
 import * as Redux from 'redux';
 import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
-import { IPlusMinusRule } from '../../Utilities/Interface/BlotterObjects/IPlusMinusRule';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const PLUS_MINUS_APPLY = 'PLUS_MINUS_APPLY';
 export const PLUS_MINUS_RULE_ADD = 'PLUS_MINUS_RULE_ADD';

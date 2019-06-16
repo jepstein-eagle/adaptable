@@ -1,8 +1,10 @@
-import { CustomSortState } from './Interface/IState';
+import {
+  CustomSortState,
+  ICustomSort,
+} from '../../PredefinedConfig/IUserState Interfaces/CustomSortState';
 import * as Redux from 'redux';
-import { ICustomSort } from '../../Utilities/Interface/BlotterObjects/ICustomSort';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const CUSTOM_SORT_ADD = 'CUSTOM_SORT_ADD';
 export const CUSTOM_SORT_EDIT = 'CUSTOM_SORT_EDIT';

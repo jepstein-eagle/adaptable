@@ -36,9 +36,9 @@ import { IBulkUpdateApi } from './IBulkUpdateApi';
 import { IAuditEventApi } from './IAuditEventApi';
 
 /**
- * The main interface between users (devs) and the Blotter while the system is up and running
- * Contains all the functionality provided by the Adaptable Blotter UI in function form
- * Allows users to access our Store in a 'safe' way
+ * The Blotter API is designed to be the run-time interface between developers and the Adaptable Blotter.
+ * The aim is that is provides ALL the functionality provided by the Adaptable Blotter UI in code form.
+ * This means that developers can access the Adaptable Blotter Store at a run-time in a 'safe' way, and also allows them to access all the functionality in the Adaptable Blotter while bypassing the UI screens altogether if they so wish.
  */
 export interface IBlotterApi {
   advancedSearchApi: IAdvancedSearchApi;

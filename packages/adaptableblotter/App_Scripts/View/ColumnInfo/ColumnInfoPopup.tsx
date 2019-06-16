@@ -16,22 +16,22 @@ import { PlusMinusSummary } from '../PlusMinus/PlusMinusSummary';
 import { FormatColumnSummary } from '../FormatColumn/FormatColumnSummary';
 import { FlashingCellSummary } from '../FlashingCells/FlashingCellSummary';
 import { CalculatedColumnSummary } from '../CalculatedColumn/CalculatedColumnSummary';
-import { DataType, SelectionMode, AccessLevel } from '../../Utilities/Enums';
+import { DataType, SelectionMode, AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IEntitlement } from '../../Utilities/Interface/IEntitlement';
-import { IColumnCategory } from '../../Utilities/Interface/BlotterObjects/IColumnCategory';
-import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnCategorySummary } from '../ColumnCategory/ColumnCategorySummary';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { PercentBarSummary } from '../PercentBar/PercentBarSummary';
 import { FreeTextColumnSummary } from '../FreeTextColumn/FreeTextColumnSummary';
 import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
+import { ICalculatedColumn } from '../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
+import { IEntitlement } from '../../PredefinedConfig/IDesignTime State Interfaces/EntitlementsState';
+import { IColumnCategory } from '../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
   CalculatedColumns: Array<ICalculatedColumn>;

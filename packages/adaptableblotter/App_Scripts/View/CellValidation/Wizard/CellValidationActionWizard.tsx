@@ -5,10 +5,10 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType, ActionMode } from '../../../Utilities/Enums';
+import { MessageType, ActionMode } from '../../../PredefinedConfig/Common Objects/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { ICellValidationRule } from '../../../Utilities/Interface/BlotterObjects/ICellValidationRule';
+import { ICellValidationRule } from '../../../PredefinedConfig/IUserState Interfaces/CellValidationState';
 
 export interface CellValidationActionWizardProps
   extends AdaptableWizardStepProps<ICellValidationRule> {}

@@ -1,20 +1,23 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { MathOperation, DataType, MessageType, StateChangedTrigger } from '../Utilities/Enums';
+import {
+  MathOperation,
+  DataType,
+  MessageType,
+  StateChangedTrigger,
+} from '../PredefinedConfig/Common Objects/Enums';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
-import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState';
-import { ICellInfo } from '../Utilities/Interface/ICellInfo';
-import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICellValidationRule';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
-import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
 import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';
+import { ICellInfo } from '../Utilities/Interface/ICellInfo';
+import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
+import { ICellValidationRule } from '../PredefinedConfig/IUserState Interfaces/CellValidationState';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(blotter: IAdaptableBlotter) {

@@ -1,7 +1,6 @@
-import { IReminder } from '../Utilities/Interface/BlotterObjects/IReminder';
 import { ApiBase } from './ApiBase';
 import { IReminderApi } from './Interface/IReminderApi';
-import { ReminderState } from '../Redux/ActionsReducers/Interface/IState';
+import { ReminderState, IReminder } from '../PredefinedConfig/IUserState Interfaces/ReminderState';
 
 export class ReminderApi extends ApiBase implements IReminderApi {
   public getReminderState(): ReminderState {

@@ -1,5 +1,7 @@
-import { IConditionalStyle } from '../../Utilities/Interface/BlotterObjects/IConditionalStyle';
-import { ConditionalStyleState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  ConditionalStyleState,
+  IConditionalStyle,
+} from '../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
 
 export interface IConditionalStyleApi {
   getConditionalStyleState(): ConditionalStyleState;

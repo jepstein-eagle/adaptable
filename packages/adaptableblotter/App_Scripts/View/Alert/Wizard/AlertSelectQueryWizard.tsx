@@ -5,11 +5,10 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { IAlertDefinition } from '../../../Utilities/Interface/BlotterObjects/IAlertDefinition';
-import { MessageType } from '../../../Utilities/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
+import { IAlertDefinition } from '../../../PredefinedConfig/IUserState Interfaces/AlertState';
 
 export interface AlertSelectQueryWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {}
 export interface AlertSelectQueryWizardState {

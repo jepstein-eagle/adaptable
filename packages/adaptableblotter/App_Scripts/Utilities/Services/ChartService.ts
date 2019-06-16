@@ -1,26 +1,30 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import {
-  IChartDefinition,
-  ICategoryChartDefinition,
-  IPieChartDefinition,
-} from '../Interface/BlotterObjects/Charting/IChartDefinition';
-import { IChartData } from '../Interface/BlotterObjects/Charting/IChartData';
-import { IPieChartDataItem } from '../Interface/BlotterObjects/Charting/IPieChartDataItem';
-import { IColumnValueExpression } from '../Interface/Expression/IColumnValueExpression';
+
+import { IColumnValueExpression } from '../../PredefinedConfig/Common Objects/Expression/IColumnValueExpression';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
-import { DistinctCriteriaPairValue } from '../Enums';
+import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common Objects/Enums';
 import { IKeyValuePair } from '../Interface/IKeyValuePair';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { Expression } from '../../Utilities/Expression';
+import { Expression } from '../../PredefinedConfig/Common Objects/Expression/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
-import { AxisTotal, SecondaryColumnOperation } from '../ChartEnums';
+import {
+  AxisTotal,
+  SecondaryColumnOperation,
+} from '../../PredefinedConfig/Common Objects/ChartEnums';
 import { Helper } from '../Helpers/Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { NumberExtensions } from '../Extensions/NumberExtensions';
-import { createUuid } from '../Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
+import {
+  ICategoryChartDefinition,
+  IChartData,
+  IChartDefinition,
+  IPieChartDefinition,
+  IPieChartDataItem,
+} from '../../PredefinedConfig/IUserState Interfaces/ChartState';
 
 /*
 Class that buils the chart - probably needs some refactoring but working for the time being.

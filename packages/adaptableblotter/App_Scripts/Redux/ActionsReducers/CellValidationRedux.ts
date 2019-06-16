@@ -1,9 +1,10 @@
 import * as Redux from 'redux';
-import { CellValidationState } from './Interface/IState';
-import { ICellValidationRule } from '../../Utilities/Interface/BlotterObjects/ICellValidationRule';
-import { ActionMode } from '../../Utilities/Enums';
+import {
+  CellValidationState,
+  ICellValidationRule,
+} from '../../PredefinedConfig/IUserState Interfaces/CellValidationState';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const CELL_VALIDATION_ADD = 'CELL_VALIDATION_ADD';
 export const CELL_VALIDATION_EDIT = 'CELL_VALIDATION_EDIT';

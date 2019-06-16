@@ -5,11 +5,11 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SelectionMode } from '../../../Utilities/Enums';
+import { SelectionMode } from '../../../PredefinedConfig/Common Objects/Enums';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
+import { IUserFilter } from '../../../PredefinedConfig/IUserState Interfaces/UserFilterState';
 
 export interface UserFilterSelectColumnWizardProps extends AdaptableWizardStepProps<IUserFilter> {}
 export interface UserFilterSelectColumnWizardState {

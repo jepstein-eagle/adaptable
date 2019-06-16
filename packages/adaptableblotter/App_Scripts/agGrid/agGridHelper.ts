@@ -7,7 +7,6 @@ import {
   ToolPanelDef,
 } from 'ag-grid-community';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { IPercentBar } from '../Utilities/Interface/BlotterObjects/IPercentBar';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import { IStrategy } from '../Strategy/Interface/IStrategy';
@@ -47,6 +46,7 @@ import { UserFilterStrategy } from '../Strategy/UserFilterStrategy';
 import { ReminderStrategy } from '../Strategy/ReminderStrategy';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
+import { IPercentBar } from '../PredefinedConfig/IUserState Interfaces/PercentBarState';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy

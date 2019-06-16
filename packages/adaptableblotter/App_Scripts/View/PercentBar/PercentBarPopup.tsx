@@ -21,10 +21,10 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IPercentBar } from '../../Utilities/Interface/BlotterObjects/IPercentBar';
+import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { IPercentBar } from '../../PredefinedConfig/IUserState Interfaces/PercentBarState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { DistinctCriteriaPairValue } from '../../Utilities/Enums';
+import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common Objects/Enums';
 
 interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {
   PercentBars: IPercentBar[];

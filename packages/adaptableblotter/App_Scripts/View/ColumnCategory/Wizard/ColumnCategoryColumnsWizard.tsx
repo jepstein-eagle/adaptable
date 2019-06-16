@@ -8,7 +8,7 @@ import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { IColumnCategory } from '../../../Utilities/Interface/BlotterObjects/IColumnCategory';
+import { IColumnCategory } from '../../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
 
 export interface ColumnCategoryColumnsWizardProps
   extends AdaptableWizardStepProps<IColumnCategory> {

@@ -1,8 +1,10 @@
-import { PercentBarState } from './Interface/IState';
+import {
+  PercentBarState,
+  IPercentBar,
+} from '../../PredefinedConfig/IUserState Interfaces/PercentBarState';
 import * as Redux from 'redux';
-import { IPercentBar } from '../../Utilities/Interface/BlotterObjects/IPercentBar';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const PERCENT_BAR_ADD = 'PERCENT_BAR_ADD';
 export const PERCENT_BAR_EDIT = 'PERCENT_BAR_EDIT';

@@ -4,15 +4,14 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { IExportStrategy } from './Interface/IExportStrategy';
-import { ExportDestination } from '../Utilities/Enums';
+import { ExportDestination } from '../PredefinedConfig/Common Objects/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ReportHelper } from '../Utilities/Helpers/ReportHelper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash';
-import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
+import { ExportState, IReport } from '../PredefinedConfig/IUserState Interfaces/ExportState';
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
-import { IReport } from '../Utilities/Interface/BlotterObjects/IReport';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
@@ -246,7 +245,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         break;
       case ExportDestination.iPushPull:
         iPushPullHelper.LoadPage(folder, page).then(() => {
-          this.blotter.api.internalApi.ReportStartLive(report, page, ExportDestination.iPushPull);
+          this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.iPushPull);
           setTimeout(() => {
             this.throttledRecomputeAndSendLiveExcelEvent();
           }, 500);

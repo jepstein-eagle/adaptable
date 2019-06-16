@@ -1,4 +1,4 @@
-import { CellSummaryState } from '../../Redux/ActionsReducers/Interface/IState';
+import { CellSummaryState } from '../../PredefinedConfig/IUserState Interfaces/CellSummaryState';
 
 export interface ICellSummaryApi {
   getCellSummaryState(): CellSummaryState;

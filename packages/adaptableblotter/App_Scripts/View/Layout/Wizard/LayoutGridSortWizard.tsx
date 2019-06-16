@@ -17,7 +17,7 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { SortOrder, SelectionMode } from '../../../Utilities/Enums';
+import { SortOrder, SelectionMode } from '../../../PredefinedConfig/Common Objects/Enums';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { GridSortRow } from '../GridSortRow';
 import { IColItem } from '../../UIInterfaces';
@@ -25,8 +25,7 @@ import { AdaptableObjectCollection } from '../../Components/AdaptableObjectColle
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { PanelWithButton } from '../../Components/Panels/PanelWithButton';
-import { IColumnSort } from '../../../Utilities/Interface/IColumnSort';
-import { ILayout } from '../../../Utilities/Interface/BlotterObjects/ILayout';
+import { ILayout, IColumnSort } from '../../../PredefinedConfig/IUserState Interfaces/LayoutState';
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<ILayout> {}
 

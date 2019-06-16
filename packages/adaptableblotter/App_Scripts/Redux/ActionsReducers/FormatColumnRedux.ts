@@ -1,8 +1,10 @@
-import { FormatColumnState } from './Interface/IState';
+import {
+  FormatColumnState,
+  IFormatColumn,
+} from '../../PredefinedConfig/IUserState Interfaces/FormatColumnState';
 import * as Redux from 'redux';
-import { IFormatColumn } from '../../Utilities/Interface/BlotterObjects/IFormatColumn';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const FORMAT_COLUMN_ADD = 'FORMAT_COLUMN_ADD';
 export const FORMAT_COLUMN_EDIT = 'FORMAT_COLUMN_EDIT';

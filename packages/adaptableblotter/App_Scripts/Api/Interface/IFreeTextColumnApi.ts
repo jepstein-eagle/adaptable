@@ -1,5 +1,7 @@
-import { IFreeTextColumn } from '../../Utilities/Interface/BlotterObjects/IFreeTextColumn';
-import { FreeTextColumnState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  FreeTextColumnState,
+  IFreeTextColumn,
+} from '../../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
 export interface IFreeTextColumnApi {
   getFreeTextColumnState(): FreeTextColumnState;
   getAllFreeTextColumn(): IFreeTextColumn[];

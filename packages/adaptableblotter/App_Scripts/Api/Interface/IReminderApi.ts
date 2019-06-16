@@ -1,6 +1,7 @@
-import { IStyle } from '../../Utilities/Interface/IStyle';
-import { IReminder } from '../../Utilities/Interface/BlotterObjects/IReminder';
-import { ReminderState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  ReminderState,
+  IReminder,
+} from '../../PredefinedConfig/IUserState Interfaces/ReminderState';
 export interface IReminderApi {
   getReminderState(): ReminderState;
   getAllReminder(): IReminder[];

@@ -1,8 +1,10 @@
 import * as Redux from 'redux';
-import { ConditionalStyleState } from './Interface/IState';
-import { IConditionalStyle } from '../../Utilities/Interface/BlotterObjects/IConditionalStyle';
+import {
+  ConditionalStyleState,
+  IConditionalStyle,
+} from '../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const CONDITIONAL_STYLE_ADD = 'CONDITIONAL_STYLE_ADD';
 export const CONDITIONAL_STYLE_EDIT = 'CONDITIONAL_STYLE_EDIT';

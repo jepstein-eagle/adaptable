@@ -3,8 +3,8 @@ import {
   ExpressionWizardProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
 import { UIHelper } from '../../UIHelper';
+import { IUserFilter } from '../../../PredefinedConfig/IUserState Interfaces/UserFilterState';
 
 export class UserFilterExpressionWizard extends ExpressionBuilderPage
   implements AdaptableWizardStep {

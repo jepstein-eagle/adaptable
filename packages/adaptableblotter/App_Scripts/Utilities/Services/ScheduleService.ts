@@ -2,14 +2,16 @@ import { IScheduleService } from './Interface/IScheduleService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import * as NodeSchedule from 'node-schedule';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { ISchedule } from '../Interface/BlotterObjects/ISchedule';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DateExtensions } from '../Extensions/DateExtensions';
-import { IReport } from '../Interface/BlotterObjects/IReport';
-import { IReminder } from '../Interface/BlotterObjects/IReminder';
-import { ReminderState, ExportState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  ReminderState,
+  IReminder,
+} from '../../PredefinedConfig/IUserState Interfaces/ReminderState';
+import { ExportState, IReport } from '../../PredefinedConfig/IUserState Interfaces/ExportState';
 import { IReminderStrategy } from '../../Strategy/Interface/IReminderStrategy';
 import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
+import { ISchedule } from '../../PredefinedConfig/Common Objects/ISchedule';
 
 /**
  * This class is used for managing scheduling of Reports and Reminders

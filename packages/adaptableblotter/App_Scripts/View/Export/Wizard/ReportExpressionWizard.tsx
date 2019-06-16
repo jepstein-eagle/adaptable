@@ -5,8 +5,8 @@ import {
   ExpressionWizardProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
-import { ReportColumnScope } from '../../../Utilities/Enums';
-import { IReport } from '../../../Utilities/Interface/BlotterObjects/IReport';
+import { ReportColumnScope } from '../../../PredefinedConfig/Common Objects/Enums';
+import { IReport } from '../../../PredefinedConfig/IUserState Interfaces/ExportState';
 import { UIHelper } from '../../UIHelper';
 
 export class ReportExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {

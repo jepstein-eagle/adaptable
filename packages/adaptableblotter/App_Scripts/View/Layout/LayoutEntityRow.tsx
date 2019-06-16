@@ -8,9 +8,9 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { IColItem } from '../UIInterfaces';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { SortOrder } from '../../Utilities/Enums';
+import { SortOrder } from '../../PredefinedConfig/Common Objects/Enums';
 import { LayoutHelper } from '../../Utilities/Helpers/LayoutHelper';
-import { ILayout } from '../../Utilities/Interface/BlotterObjects/ILayout';
+import { ILayout } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
 export interface LayoutEntityRowProps<LayoutEntityRow>

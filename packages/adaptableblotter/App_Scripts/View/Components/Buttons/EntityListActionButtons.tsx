@@ -5,8 +5,8 @@ import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
 import { ButtonShare } from './ButtonShare';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { AccessLevel } from '../../../Utilities/Enums';
+import { IAdaptableBlotterObject } from '../../../PredefinedConfig/IAdaptableBlotterObject';
+import { AccessLevel } from '../../../PredefinedConfig/Common Objects/Enums';
 
 export interface EntityListActionButtonsProps
   extends React.ClassAttributes<EntityListActionButtons> {

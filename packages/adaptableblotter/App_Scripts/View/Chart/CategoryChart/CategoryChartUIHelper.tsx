@@ -1,7 +1,7 @@
 import {
   ICategoryChartDefinition,
   ICategoryChartProperties,
-} from '../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
+} from '../../../PredefinedConfig/IUserState Interfaces/ChartState';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import {
   HorizontalAlignment,
@@ -13,7 +13,7 @@ import {
   AxisLabelsLocation,
   MarkerType,
   CalloutsType,
-} from '../../../Utilities/ChartEnums';
+} from '../../../PredefinedConfig/Common Objects/ChartEnums';
 
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import * as React from 'react';

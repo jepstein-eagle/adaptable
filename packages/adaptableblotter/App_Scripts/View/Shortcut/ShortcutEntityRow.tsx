@@ -1,15 +1,15 @@
 import * as React from 'react';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { FormGroup, FormControl } from 'react-bootstrap';
-import { DataType } from '../../Utilities/Enums';
-import { MathOperation } from '../../Utilities/Enums';
+import { DataType } from '../../PredefinedConfig/Common Objects/Enums';
+import { MathOperation } from '../../PredefinedConfig/Common Objects/Enums';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
-import { IShortcut } from '../../Utilities/Interface/BlotterObjects/IShortcut';
 import { EntityRowItem } from '../Components/EntityRowItem';
+import { IShortcut } from '../../PredefinedConfig/IUserState Interfaces/ShortcutState';
 
 export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEntityRow> {
   onChangeKey: (shortcut: IShortcut, NewShortcutKey: string) => void;

@@ -12,16 +12,20 @@ import {
   InputGroup,
 } from 'react-bootstrap';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { LeafExpressionOperator, RangeOperandType, QueryTab } from '../../Utilities/Enums';
+import {
+  LeafExpressionOperator,
+  RangeOperandType,
+  QueryTab,
+} from '../../PredefinedConfig/Common Objects/Enums';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IRange } from '../../Utilities/Interface/Expression/IRange';
-import { Expression } from '../../Utilities/Expression';
+import { IUserFilter } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { IRange } from '../../PredefinedConfig/Common Objects/Expression/IRange';
+import { Expression } from '../../PredefinedConfig/Common Objects/Expression/Expression';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning

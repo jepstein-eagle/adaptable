@@ -2,7 +2,7 @@ import {
   IChartDefinition,
   IChartProperties,
   ICategoryChartProperties,
-} from '../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
+} from '../../../PredefinedConfig/IUserState Interfaces/ChartState';
 
 // dont normally do this but Component was getting so bid and unwieldy...
 

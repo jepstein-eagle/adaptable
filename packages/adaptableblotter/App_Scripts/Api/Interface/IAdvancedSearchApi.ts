@@ -1,5 +1,7 @@
-import { IAdvancedSearch } from '../../Utilities/Interface/BlotterObjects/IAdvancedSearch';
-import { AdvancedSearchState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  AdvancedSearchState,
+  IAdvancedSearch,
+} from '../../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
 
 export interface IAdvancedSearchApi {
   /**

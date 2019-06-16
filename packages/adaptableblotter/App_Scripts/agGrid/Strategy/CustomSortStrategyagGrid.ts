@@ -1,7 +1,7 @@
 import { CustomSortStrategy } from '../../Strategy/CustomSortStrategy';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { RowNode } from 'ag-grid-community';
-import { ICustomSort } from '../../Utilities/Interface/BlotterObjects/ICustomSort';
+import { ICustomSort } from '../../PredefinedConfig/IUserState Interfaces/CustomSortState';
 
 export class CustomSortStrategyagGrid extends CustomSortStrategy {
   constructor(blotter: IAdaptableBlotter) {

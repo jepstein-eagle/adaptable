@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { MessageType } from '../../Utilities/Enums';
+import { MessageType } from '../../PredefinedConfig/Common Objects/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { Glyphicon, Panel, Table } from 'react-bootstrap';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { ICellValidationRule } from '../../Utilities/Interface/BlotterObjects/ICellValidationRule';
+import { IUserFilter } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
+import { ICellValidationRule } from '../../PredefinedConfig/IUserState Interfaces/CellValidationState';
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   UpdateValue: string;

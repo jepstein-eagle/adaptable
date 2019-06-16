@@ -6,7 +6,7 @@ import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { IFormatColumn } from '../../Utilities/Interface/BlotterObjects/IFormatColumn';
+import { IFormatColumn } from '../../PredefinedConfig/IUserState Interfaces/FormatColumnState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 

@@ -1,8 +1,8 @@
 import * as Redux from 'redux';
-import { DashboardState } from './Interface/IState';
+import { DashboardState } from '../../PredefinedConfig/IUserState Interfaces/DashboardState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { Visibility } from '../../Utilities/Enums';
+import { Visibility } from '../../PredefinedConfig/Common Objects/Enums';
 
 const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
 const DASHBOARD_SET_TOOLBARS = 'DASHBOARD_SET_TOOLBARS';

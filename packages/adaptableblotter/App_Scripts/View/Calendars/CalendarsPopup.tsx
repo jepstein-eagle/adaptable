@@ -11,8 +11,11 @@ import { Button } from 'react-bootstrap';
 import { CalendarsEntryRow } from './CalendarsEntryRow';
 import { CalendarEntryItem } from './CalendarEntryItem';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { ICalendar, ICalendarEntry } from '../../Utilities/Interface/BlotterObjects/ICalendar';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
+import {
+  ICalendar,
+  ICalendarEntry,
+} from '../../PredefinedConfig/IUserState Interfaces/CalendarState';
 
 interface CalendarsPopupProps extends StrategyViewPopupProps<CalendarsPopupComponent> {
   CurrentCalendar: string;

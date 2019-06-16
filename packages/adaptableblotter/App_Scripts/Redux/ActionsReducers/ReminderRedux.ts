@@ -1,8 +1,10 @@
-import { ReminderState } from './Interface/IState';
+import {
+  ReminderState,
+  IReminder,
+} from '../../PredefinedConfig/IUserState Interfaces/ReminderState';
 import * as Redux from 'redux';
-import { IReminder } from '../../Utilities/Interface/BlotterObjects/IReminder';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const REMINDER_ADD = 'REMINDER_ADD';
 export const REMINDER_EDIT = 'REMINDER_EDIT';

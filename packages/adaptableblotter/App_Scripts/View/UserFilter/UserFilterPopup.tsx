@@ -24,8 +24,8 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
+import { IUserFilter } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
   onAddUserFilter: (userFilter: IUserFilter) => UserFilterRedux.UserFilterAddAction;

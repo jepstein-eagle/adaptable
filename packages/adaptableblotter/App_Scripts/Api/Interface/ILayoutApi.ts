@@ -1,5 +1,4 @@
-import { ILayout } from '../../Utilities/Interface/BlotterObjects/ILayout';
-import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState';
+import { LayoutState, ILayout } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
 export interface ILayoutApi {
   getLayoutState(): LayoutState;
   /**

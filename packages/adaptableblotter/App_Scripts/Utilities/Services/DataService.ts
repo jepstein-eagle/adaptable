@@ -3,7 +3,8 @@ import { IDataService, ChangeDirection } from './Interface/IDataService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 import { IEvent } from '../Interface/IEvent';
-import { ConditionalStyleState, IState } from '../../Redux/ActionsReducers/Interface/IState';
+import { ConditionalStyleState } from '../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
+import { IState } from '../../PredefinedConfig/Interfaces/IState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 
 // Used to be the Audit Service - now much reduced

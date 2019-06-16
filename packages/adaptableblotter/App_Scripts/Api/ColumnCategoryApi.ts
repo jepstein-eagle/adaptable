@@ -1,8 +1,10 @@
 import * as ColumnCategoryRedux from '../Redux/ActionsReducers/ColumnCategoryRedux';
 import { ApiBase } from './ApiBase';
 import { IColumnCategoryApi } from './Interface/IColumnCategoryApi';
-import { IColumnCategory } from '../Utilities/Interface/BlotterObjects/IColumnCategory';
-import { ColumnCategoryState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  ColumnCategoryState,
+  IColumnCategory,
+} from '../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
 
 export class ColumnCategoryApi extends ApiBase implements IColumnCategoryApi {
   public getColumnCategoryState(): ColumnCategoryState {

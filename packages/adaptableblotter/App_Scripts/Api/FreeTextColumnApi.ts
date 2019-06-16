@@ -1,10 +1,12 @@
-import { IFreeTextColumn } from '../Utilities/Interface/BlotterObjects/IFreeTextColumn';
 import * as FreeTextColumnRedux from '../Redux/ActionsReducers/FreeTextColumnRedux';
 import { ApiBase } from './ApiBase';
 import { IFreeTextColumnApi } from './Interface/IFreeTextColumnApi';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
-import { FreeTextColumnState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  FreeTextColumnState,
+  IFreeTextColumn,
+} from '../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
 
 export class FreeTextColumnApi extends ApiBase implements IFreeTextColumnApi {
   public getFreeTextColumnState(): FreeTextColumnState {

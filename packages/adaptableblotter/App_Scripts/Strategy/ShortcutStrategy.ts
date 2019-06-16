@@ -5,19 +5,19 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { DataType, MathOperation, ActionMode } from '../Utilities/Enums';
+import { DataType, MathOperation, ActionMode } from '../PredefinedConfig/Common Objects/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
-import { IShortcut } from '../Utilities/Interface/BlotterObjects/IShortcut';
-import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICellValidationRule';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
+import { IShortcut } from '../PredefinedConfig/IUserState Interfaces/ShortcutState';
+import { ICellValidationRule } from '../PredefinedConfig/IUserState Interfaces/CellValidationState';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -213,6 +213,6 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       cancelAction,
       warningMessage
     );
-    this.blotter.api.internalApi.PopupShowConfirmation(confirmation);
+    this.blotter.api.internalApi.showPopupConfirmation(confirmation);
   }
 }

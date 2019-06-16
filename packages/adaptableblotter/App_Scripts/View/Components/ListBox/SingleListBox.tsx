@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Helper } from '../../../Utilities/Helpers/Helper';
-import { SortOrder, SelectionMode } from '../../../Utilities/Enums';
+import { SortOrder, SelectionMode } from '../../../PredefinedConfig/Common Objects/Enums';
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
 import { ListGroupItem, ListGroup, ListGroupProps } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';

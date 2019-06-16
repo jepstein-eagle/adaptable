@@ -14,12 +14,12 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { SortOrder, AccessLevel, DashboardSize } from '../../Utilities/Enums';
+import { SortOrder, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common Objects/Enums';
 import { InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IAdvancedSearch } from '../../Utilities/Interface/BlotterObjects/IAdvancedSearch';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import { IAdvancedSearch } from '../../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
 
 interface AdvancedSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {

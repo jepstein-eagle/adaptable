@@ -9,7 +9,7 @@ import {
   IAuditLogEventData,
   IAuditLogEventArgs,
 } from '../Interface/IAuditEvents';
-import { IAuditDestinationOptions, IAuditOptions } from '../Interface/BlotterOptions/IAuditOptions';
+import { IAuditDestinationOptions, IAuditOptions } from '../../BlotterOptions/IAuditOptions';
 
 export class AuditLogService implements IAuditLogService {
   private auditLogQueue: Array<IAuditLogEntry>;

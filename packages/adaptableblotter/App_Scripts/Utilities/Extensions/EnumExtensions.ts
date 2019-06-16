@@ -1,4 +1,4 @@
-import { FontSize } from '../Enums';
+import { FontSize } from '../../PredefinedConfig/Common Objects/Enums';
 
 // export function getNamesAndValues<T extends number>(e: any) {
 //     return EnumExtensions.getNames(e).map(n => ({ name: n, value: e[n] as T }));

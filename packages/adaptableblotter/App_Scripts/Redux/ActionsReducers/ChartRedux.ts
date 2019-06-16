@@ -1,14 +1,14 @@
 import * as Redux from 'redux';
-import { ChartState } from './Interface/IState';
 import {
+  ChartState,
   IChartDefinition,
   IChartProperties,
-} from '../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
+} from '../../PredefinedConfig/IUserState Interfaces/ChartState';
 import {
   EMPTY_STRING,
   CHART_DEFAULT_REFRESH_RATE,
 } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const CHART_DEFINITION_SELECT = 'CHART_DEFINITION_SELECT';
 export const CHART_DEFINITION_ADD = 'CHART_DEFINITION_ADD';

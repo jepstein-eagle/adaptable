@@ -3,14 +3,14 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { IAlertDefinition } from '../Utilities/Interface/BlotterObjects/IAlertDefinition';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
-import { LeafExpressionOperator } from '../Utilities/Enums';
+import { LeafExpressionOperator } from '../PredefinedConfig/Common Objects/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { IAlertDefinition } from '../PredefinedConfig/IUserState Interfaces/AlertState';
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(blotter: IAdaptableBlotter) {

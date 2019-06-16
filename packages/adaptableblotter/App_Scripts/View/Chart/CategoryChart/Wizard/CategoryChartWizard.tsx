@@ -4,12 +4,12 @@ import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../
 import {
   ICategoryChartDefinition,
   IChartDefinition,
-} from '../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
+} from '../../../../PredefinedConfig/IUserState Interfaces/ChartState';
 import { AdaptableWizard } from '../../../Wizard/AdaptableWizard';
 import { CategoryChartYAxisWizard } from './CategoryChartYAxisWizard';
 import { CategoryChartXAxisWizard } from './CategoryChartXAxisWizard';
 import { CategoryChartXAxisExpressionWizard } from './CategoryChartXAxisExpressionWizard';
-import { ExpressionMode } from '../../../../Utilities/Enums';
+import { ExpressionMode } from '../../../../PredefinedConfig/Common Objects/Enums';
 import { CategoryChartSummaryWizard } from './CategoryChartSummaryWizard';
 import { CategoryChartSettingsWizard } from './CategoryChartSettingsWizard';
 

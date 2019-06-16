@@ -11,11 +11,15 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { IAlertDefinition } from '../../Utilities/Interface/BlotterObjects/IAlertDefinition';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { MessageType, AccessLevel, DashboardSize } from '../../Utilities/Enums';
+import {
+  MessageType,
+  AccessLevel,
+  DashboardSize,
+} from '../../PredefinedConfig/Common Objects/Enums';
 import { AlertsPanel } from './AlertsPanel';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { IAlertDefinition } from '../../PredefinedConfig/IUserState Interfaces/AlertState';
 
 interface AlertToolbarControlProps
   extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {

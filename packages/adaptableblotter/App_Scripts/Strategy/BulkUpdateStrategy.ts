@@ -1,20 +1,24 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { DataType, MessageType, StateChangedTrigger } from '../Utilities/Enums';
+import {
+  DataType,
+  MessageType,
+  StateChangedTrigger,
+} from '../PredefinedConfig/Common Objects/Enums';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy';
-import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState';
+import { BulkUpdateState } from '../PredefinedConfig/IUserState Interfaces/BulkUpdateState';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICellValidationRule';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
 import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
+import { ICellValidationRule } from '../PredefinedConfig/IUserState Interfaces/CellValidationState';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
   constructor(blotter: IAdaptableBlotter) {

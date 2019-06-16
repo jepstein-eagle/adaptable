@@ -6,7 +6,7 @@ import { ICellSummaryStrategy } from './Interface/ICellSummaryStrategy';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ICellSummmary } from '../Utilities/Interface/SelectedCell/ICellSummmary';
 import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
-import { DataType, CellSummaryOptionalOperation } from '../Utilities/Enums';
+import { DataType, CellSummaryOptionalOperation } from '../PredefinedConfig/Common Objects/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
 

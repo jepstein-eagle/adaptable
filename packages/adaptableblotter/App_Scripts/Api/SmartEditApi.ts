@@ -1,8 +1,8 @@
 import * as SmartEditRedux from '../Redux/ActionsReducers/SmartEditRedux';
 import { ApiBase } from './ApiBase';
-import { MathOperation } from '../Utilities/Enums';
+import { MathOperation } from '../PredefinedConfig/Common Objects/Enums';
 import { ISmartEditApi } from './Interface/ISmartEditApi';
-import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState';
+import { SmartEditState } from '../PredefinedConfig/IUserState Interfaces/SmartEditState';
 
 export class SmartEditApi extends ApiBase implements ISmartEditApi {
   public getSmartEditState(): SmartEditState {

@@ -1,10 +1,10 @@
 import * as SystemFilterRedux from '../Redux/ActionsReducers/SystemFilterRedux';
 import * as UserFilterRedux from '../Redux/ActionsReducers/UserFilterRedux';
 import { ApiBase } from './ApiBase';
-import { IUserFilter } from '../Utilities/Interface/BlotterObjects/IUserFilter';
 import { FilterHelper } from '../Utilities/Helpers/FilterHelper';
 import { ISystemFilterApi } from './Interface/ISystemFilterApi';
-import { SystemFilterState } from '../Redux/ActionsReducers/Interface/IState';
+import { SystemFilterState } from '../PredefinedConfig/IDesignTime State Interfaces/SystemFilterState';
+import { IUserFilter } from '../PredefinedConfig/IUserState Interfaces/UserFilterState';
 
 export class SystemFilterApi extends ApiBase implements ISystemFilterApi {
   public getSystemFilterState(): SystemFilterState {

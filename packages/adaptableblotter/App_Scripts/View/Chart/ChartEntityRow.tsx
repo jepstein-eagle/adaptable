@@ -7,11 +7,11 @@ import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowP
 import {
   IChartDefinition,
   ICategoryChartDefinition,
-} from '../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
+} from '../../PredefinedConfig/IUserState Interfaces/ChartState';
 import { ButtonShowChart } from '../Components/Buttons/ButtonShowChart';
-import { AccessLevel } from '../../Utilities/Enums';
+import { AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { ChartType } from '../../Utilities/ChartEnums';
+import { ChartType } from '../../PredefinedConfig/Common Objects/ChartEnums';
 
 export interface ChartEntityRowProps extends SharedEntityRowProps<ChartEntityRow> {
   onShowChart: (chart: string) => void;

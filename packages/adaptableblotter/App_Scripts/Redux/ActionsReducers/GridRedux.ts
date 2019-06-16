@@ -1,11 +1,11 @@
 import * as Redux from 'redux';
-import { GridState } from './Interface/IState';
+import { GridState } from '../../PredefinedConfig/ISystemState Interfaces/GridState';
 import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { IColumnSort } from '../../Utilities/Interface/IColumnSort';
 import { ISelectedCellInfo } from '../../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { IColumnSort } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';

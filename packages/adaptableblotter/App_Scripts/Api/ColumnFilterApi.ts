@@ -1,10 +1,11 @@
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
 import { ApiBase } from './ApiBase';
-import { IUserFilter } from '../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IColumnFilter } from '../Utilities/Interface/BlotterObjects/IColumnFilter';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IColumnFilterApi } from './Interface/IColumnFilterApi';
-import { ColumnFilterState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  ColumnFilterState,
+  IColumnFilter,
+} from '../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
 
 export class ColumnFilterApi extends ApiBase implements IColumnFilterApi {
   public getColumnFilterState(): ColumnFilterState {

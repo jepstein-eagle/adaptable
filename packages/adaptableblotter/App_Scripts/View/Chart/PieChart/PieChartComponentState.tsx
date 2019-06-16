@@ -1,6 +1,8 @@
-import { IPieChartProperties } from '../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
-import { IPieChartDataItem } from '../../../Utilities/Interface/BlotterObjects/Charting/IPieChartDataItem';
-import { SliceSortOption } from '../../../Utilities/ChartEnums';
+import {
+  IPieChartProperties,
+  IPieChartDataItem,
+} from '../../../PredefinedConfig/IUserState Interfaces/ChartState';
+import { SliceSortOption } from '../../../PredefinedConfig/Common Objects/ChartEnums';
 
 export interface PieChartComponentState {
   DataSource: IPieChartDataItem[];

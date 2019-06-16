@@ -7,7 +7,7 @@ import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { MessageType, DataType } from '../../Utilities/Enums';
+import { MessageType, DataType } from '../../PredefinedConfig/Common Objects/Enums';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { AdaptablePopover } from '../AdaptablePopover';

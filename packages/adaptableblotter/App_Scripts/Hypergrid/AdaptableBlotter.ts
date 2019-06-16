@@ -35,7 +35,7 @@ import {
   DistinctCriteriaPairValue,
   SortOrder,
   FilterOnDataChangeOptions,
-} from '../Utilities/Enums';
+} from '../PredefinedConfig/Common Objects/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { CustomSortDataSource } from './CustomSortDataSource';
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource';
@@ -44,18 +44,8 @@ import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
-import { IVendorGridInfo } from '../Utilities/Interface/IVendorGridInfo';
-import { IColumn } from '../Utilities/Interface/IColumn';
-import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
-import { IColumnSort } from '../Utilities/Interface/IColumnSort';
-import { IStyle } from '../Utilities/Interface/IStyle';
-import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
-import { IPercentBar } from '../Utilities/Interface/BlotterObjects/IPercentBar';
-import { IFreeTextColumn } from '../Utilities/Interface/BlotterObjects/IFreeTextColumn';
-import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICellValidationRule';
-import { ICalculatedColumn } from '../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../BlotterOptions/IAdaptableBlotterOptions';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import * as _ from 'lodash';
 import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
@@ -106,6 +96,18 @@ import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { SearchService } from '../Utilities/Services/SearchService';
+import { IStyle } from '../PredefinedConfig/Common Objects/IStyle';
+import { IColumn } from '../Utilities/Interface/IColumn';
+import {
+  IColumnSort,
+  IVendorGridInfo,
+} from '../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
+import { ICalculatedColumn } from '../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
+import { IFreeTextColumn } from '../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
+import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
+import { ICellValidationRule } from '../PredefinedConfig/IUserState Interfaces/CellValidationState';
+import { IPercentBar } from '../PredefinedConfig/IUserState Interfaces/PercentBarState';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'

@@ -13,7 +13,8 @@
     "next": "^8.1.0",
     "prettier": "^1.17.0",
     "release": "^6.0.1",
-    "rimraf": "^2.6.3"
+    "rimraf": "^2.6.3",
+    "typedoc": "^0.14.2"
   },
   "scripts": {
     "release": "npm run release:patch",

@@ -2,9 +2,9 @@ import {
   AdaptableWizardStep,
   ExpressionWizardProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
-import { IAlertDefinition } from '../../../Utilities/Interface/BlotterObjects/IAlertDefinition';
 import { UIHelper } from '../../UIHelper';
+import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
+import { IAlertDefinition } from '../../../PredefinedConfig/IUserState Interfaces/AlertState';
 
 export class AlertExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
   constructor(private props2: ExpressionWizardProps<IAlertDefinition>) {

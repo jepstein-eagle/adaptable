@@ -1,6 +1,6 @@
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { ApiBase } from './ApiBase';
-import { StatusColour } from '../Utilities/Enums';
+import { StatusColour } from '../PredefinedConfig/Common Objects/Enums';
 import { ISystemStatusApi } from './Interface/ISystemStatusApi';
 import { ISystemStatus } from '../Utilities/Interface/ISystemStatus';
 

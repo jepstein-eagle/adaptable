@@ -15,7 +15,12 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { StatusColour, AccessLevel, MessageType, DashboardSize } from '../../Utilities/Enums';
+import {
+  StatusColour,
+  AccessLevel,
+  MessageType,
+  DashboardSize,
+} from '../../PredefinedConfig/Common Objects/Enums';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { UIHelper } from '../UIHelper';

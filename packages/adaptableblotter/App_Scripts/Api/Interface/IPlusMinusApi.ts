@@ -1,5 +1,7 @@
-import { PlusMinusState } from '../../Redux/ActionsReducers/Interface/IState';
-import { IPlusMinusRule } from '../../Utilities/Interface/BlotterObjects/IPlusMinusRule';
+import {
+  PlusMinusState,
+  IPlusMinusRule,
+} from '../../PredefinedConfig/IUserState Interfaces/PlusMinusState';
 
 export interface IPlusMinusApi {
   getPlusMinusState(): PlusMinusState;

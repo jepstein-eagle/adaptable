@@ -69,23 +69,15 @@ import {
   DistinctCriteriaPairValue,
   FilterOnDataChangeOptions,
   LeafExpressionOperator,
-} from '../Utilities/Enums';
+} from '../PredefinedConfig/Common Objects/Enums';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
-import { IVendorGridInfo } from '../Utilities/Interface/IVendorGridInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { IColumnSort } from '../Utilities/Interface/IColumnSort';
-import { IPercentBar } from '../Utilities/Interface/BlotterObjects/IPercentBar';
-import { IFreeTextColumn } from '../Utilities/Interface/BlotterObjects/IFreeTextColumn';
-import { ICustomSort } from '../Utilities/Interface/BlotterObjects/ICustomSort';
-import { IColumnFilter } from '../Utilities/Interface/BlotterObjects/IColumnFilter';
-import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICellValidationRule';
-import { ICalculatedColumn } from '../Utilities/Interface/BlotterObjects/ICalculatedColumn';
-import { IRange } from '../Utilities/Interface/Expression/IRange';
+import { IRange } from '../PredefinedConfig/Common Objects/Expression/IRange';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../BlotterOptions/IAdaptableBlotterOptions';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
@@ -102,7 +94,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 
 // ag-Grid
 // if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { Expression } from '../Utilities/Expression';
+import { Expression } from '../PredefinedConfig/Common Objects/Expression/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
@@ -123,11 +115,21 @@ import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdapt
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
-import { QuickSearchState } from '../Redux/ActionsReducers/Interface/IState';
+import { QuickSearchState } from '../PredefinedConfig/IUserState Interfaces/QuickSearchState';
 import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { SearchService } from '../Utilities/Services/SearchService';
+import { IPercentBar } from '../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { ICalculatedColumn } from '../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
+import { IFreeTextColumn } from '../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
+import { ICellValidationRule } from '../PredefinedConfig/IUserState Interfaces/CellValidationState';
+import { IColumnFilter } from '../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
+import {
+  IColumnSort,
+  IVendorGridInfo,
+} from '../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { ICustomSort } from '../PredefinedConfig/IUserState Interfaces/CustomSortState';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;
@@ -2033,7 +2035,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               if (customSort) {
                 // check that not already applied
                 if (
-                  !this.getState().Grid.ColumnSorts.find(gs =>
+                  !this.getState().Grid.ColumnSorts.find((gs: IColumnSort) =>
                     ColumnHelper.isSpecialColumn(gs.Column)
                   )
                 ) {

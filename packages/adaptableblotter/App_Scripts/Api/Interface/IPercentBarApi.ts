@@ -1,5 +1,7 @@
-import { IPercentBar } from '../../Utilities/Interface/BlotterObjects/IPercentBar';
-import { PercentBarState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  PercentBarState,
+  IPercentBar,
+} from '../../PredefinedConfig/IUserState Interfaces/PercentBarState';
 export interface IPercentBarApi {
   getPercentBarState(): PercentBarState;
   getAllPercentBar(): IPercentBar[];

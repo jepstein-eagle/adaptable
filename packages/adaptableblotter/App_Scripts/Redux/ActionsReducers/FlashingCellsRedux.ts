@@ -1,6 +1,8 @@
-import { FlashingCellState } from './Interface/IState';
+import {
+  FlashingCellState,
+  IFlashingCell,
+} from '../../PredefinedConfig/IUserState Interfaces/FlashingCellState';
 import * as Redux from 'redux';
-import { IFlashingCell } from '../../Utilities/Interface/BlotterObjects/IFlashingCell';
 import {
   FLASHING_CELLS_DEFAULT_DURATION,
   EMPTY_ARRAY,

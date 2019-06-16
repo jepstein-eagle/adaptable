@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { FormGroup, FormControl, Row, Col, Panel, Checkbox, HelpBlock } from 'react-bootstrap';
-import { FontWeight, FontStyle, FontSize } from '../../Utilities/Enums';
+import { FontWeight, FontStyle, FontSize } from '../../PredefinedConfig/Common Objects/Enums';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ColorPicker } from '../ColorPicker';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { AdaptableBlotterForm } from './Forms/AdaptableBlotterForm';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IStyle } from '../../Utilities/Interface/IStyle';
+import { IStyle } from '../../PredefinedConfig/Common Objects/IStyle';
 
 export interface StyleComponentProps extends React.ClassAttributes<StyleComponent> {
   ColorPalette: string[];

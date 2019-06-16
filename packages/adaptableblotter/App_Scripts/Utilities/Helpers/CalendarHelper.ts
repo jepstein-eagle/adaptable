@@ -1,4 +1,4 @@
-import { ICalendar } from '../Interface/BlotterObjects/ICalendar';
+import { ICalendar } from '../../PredefinedConfig/IUserState Interfaces/CalendarState';
 
 export function getSystemCalendars(): ICalendar[] {
   return [

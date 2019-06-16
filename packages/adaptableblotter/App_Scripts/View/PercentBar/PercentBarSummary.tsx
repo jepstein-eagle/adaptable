@@ -21,9 +21,9 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IPercentBar } from '../../Utilities/Interface/BlotterObjects/IPercentBar';
-import { DistinctCriteriaPairValue } from '../../Utilities/Enums';
+import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { IPercentBar } from '../../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common Objects/Enums';
 
 export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarSummaryComponent> {
   PercentBars: IPercentBar[];

@@ -1,13 +1,15 @@
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
-import { IColumnSort } from '../Utilities/Interface/IColumnSort';
-import { ILayout } from '../Utilities/Interface/BlotterObjects/ILayout';
 import { ApiBase } from './ApiBase';
 import { DEFAULT_LAYOUT } from '../Utilities/Constants/GeneralConstants';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { ILayoutApi } from './Interface/ILayoutApi';
-import { LayoutState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  LayoutState,
+  ILayout,
+  IColumnSort,
+} from '../PredefinedConfig/IUserState Interfaces/LayoutState';
 
 export class LayoutApi extends ApiBase implements ILayoutApi {
   public getLayoutState(): LayoutState {

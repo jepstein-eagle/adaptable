@@ -1,7 +1,7 @@
 import * as StrategyConstants from '../Constants/StrategyConstants';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { IEntitlement } from '../Interface/IEntitlement';
-import { AccessLevel } from '../Enums';
+import { AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
+import { IEntitlement } from '../../PredefinedConfig/IDesignTime State Interfaces/EntitlementsState';
 
 export function IsEditStrategy(strategyId: string): boolean {
   return strategyId != StrategyConstants.SmartEditStrategyId;

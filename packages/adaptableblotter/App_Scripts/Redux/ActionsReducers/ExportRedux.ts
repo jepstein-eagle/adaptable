@@ -1,9 +1,12 @@
-import { ExportState } from './Interface/IState';
-import { ExportDestination } from '../../Utilities/Enums';
+import {
+  ExportState,
+  IReport,
+  IAutoExport,
+} from '../../PredefinedConfig/IUserState Interfaces/ExportState';
+import { ExportDestination } from '../../PredefinedConfig/Common Objects/Enums';
 import * as Redux from 'redux';
-import { IReport, IAutoExport } from '../../Utilities/Interface/BlotterObjects/IReport';
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const EXPORT_APPLY = 'EXPORT_APPLY';
 export const REPORT_SELECT = 'REPORT_SELECT';

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IColumnFilter } from '../../../Utilities/Interface/BlotterObjects/IColumnFilter';
+import { IUserFilter } from '../../../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { IColumnFilter } from '../../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
-import { AccessLevel } from '../../../Utilities/Enums';
+import { AccessLevel } from '../../../PredefinedConfig/Common Objects/Enums';
 
 export interface BaseProps<View> extends React.ClassAttributes<View> {
   cssClassName: string;

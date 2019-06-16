@@ -1,5 +1,6 @@
-import { IColumnSort } from '../IColumnSort';
-import { ICustomSort } from '../BlotterObjects/ICustomSort';
+import { IColumnSort } from '../../../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { ICustomSort } from '../../../PredefinedConfig/IUserState Interfaces/CustomSortState';
+
 /**
  * Overview of the current sorting state in the grid
  */

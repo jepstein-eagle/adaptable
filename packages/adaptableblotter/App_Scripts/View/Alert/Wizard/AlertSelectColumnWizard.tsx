@@ -6,10 +6,10 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SelectionMode } from '../../../Utilities/Enums';
+import { SelectionMode } from '../../../PredefinedConfig/Common Objects/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { IAlertDefinition } from '../../../Utilities/Interface/BlotterObjects/IAlertDefinition';
 import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
+import { IAlertDefinition } from '../../../PredefinedConfig/IUserState Interfaces/AlertState';
 
 export interface AlertSelectColumnWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {}
 export interface AlertSelectColumnWizardState {

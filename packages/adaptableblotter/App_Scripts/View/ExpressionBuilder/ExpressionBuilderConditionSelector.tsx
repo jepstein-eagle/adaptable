@@ -14,18 +14,18 @@ import {
   QueryBuildStatus,
   QueryTab,
   SortOrder,
-} from '../../Utilities/Enums';
+} from '../../PredefinedConfig/Common Objects/Enums';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IRawValueDisplayValuePair } from '../UIInterfaces';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IRange } from '../../Utilities/Interface/Expression/IRange';
-import { Expression } from '../../Utilities/Expression';
+import { IRange } from '../../PredefinedConfig/Common Objects/Expression/IRange';
+import { Expression } from '../../PredefinedConfig/Common Objects/Expression/Expression';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { Waiting } from '../Components/FilterForm/Waiting';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
+import { IUserFilter } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {

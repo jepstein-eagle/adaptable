@@ -12,9 +12,9 @@ import {
   IChartProperties,
   IPieChartDefinition,
   IPieChartProperties,
-} from '../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
-import { IChartData } from '../../../Utilities/Interface/BlotterObjects/Charting/IChartData';
-import { IPieChartDataItem } from '../../../Utilities/Interface/BlotterObjects/Charting/IPieChartDataItem';
+  IChartData,
+  IPieChartDataItem,
+} from '../../../PredefinedConfig/IUserState Interfaces/ChartState';
 import { PieChartUIHelper } from './PieChartUIHelper';
 import { PieChartComponentState } from './PieChartComponentState';
 import { ButtonMaximise } from '../../Components/Buttons/ButtonMaximise';
@@ -33,7 +33,7 @@ import {
   SliceLabelOption,
   SliceSortOption,
   OthersCategoryType,
-} from '../../../Utilities/ChartEnums';
+} from '../../../PredefinedConfig/Common Objects/ChartEnums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';

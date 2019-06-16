@@ -1,6 +1,5 @@
-import { IAdaptableAlert } from '../../Interface/IMessage';
-import { IAutoExport, IReport } from '../../Interface/BlotterObjects/IReport';
-import { IReminder } from '../../Interface/BlotterObjects/IReminder';
+import { IReminder } from '../../../PredefinedConfig/IUserState Interfaces/ReminderState';
+import { IReport } from '../../../PredefinedConfig/IUserState Interfaces/ExportState';
 
 export interface IScheduleService {
   AddReminderSchedule(reminder: IReminder): void;

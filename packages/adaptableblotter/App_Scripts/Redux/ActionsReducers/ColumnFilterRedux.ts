@@ -1,8 +1,10 @@
-import { ColumnFilterState } from './Interface/IState';
+import {
+  ColumnFilterState,
+  IColumnFilter,
+} from '../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
 import * as Redux from 'redux';
-import { IColumnFilter } from '../../Utilities/Interface/BlotterObjects/IColumnFilter';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const COLUMN_FILTER_ADD = 'COLUMN_FILTER_ADD';
 export const COLUMN_FILTER_EDIT = 'COLUMN_FILTER_EDIT';

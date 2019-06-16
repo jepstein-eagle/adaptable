@@ -1,10 +1,11 @@
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
-import { IAdvancedSearch } from '../Utilities/Interface/BlotterObjects/IAdvancedSearch';
 import * as AdvancedSearchRedux from '../Redux/ActionsReducers/AdvancedSearchRedux';
 import { ApiBase } from './ApiBase';
 import { IAdvancedSearchApi } from './Interface/IAdvancedSearchApi';
-import { AdvancedSearchState } from '../Redux/ActionsReducers/Interface/IState';
-import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
+import {
+  AdvancedSearchState,
+  IAdvancedSearch,
+} from '../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
 
@@ -41,7 +42,7 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
 
   public setAdvancedSearch(advancedSearchName: string): void {
     const advancedSearch: IAdvancedSearch = this.getBlotterState().AdvancedSearch.AdvancedSearches.find(
-      a => a.Name == advancedSearchName
+      (a: IAdvancedSearch) => a.Name == advancedSearchName
     );
     if (
       this.checkItemExists(

@@ -5,14 +5,14 @@ import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { IAlertDefinition } from '../../Utilities/Interface/BlotterObjects/IAlertDefinition';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { MessageType } from '../../Utilities/Enums';
+import { MessageType } from '../../PredefinedConfig/Common Objects/Enums';
 import { FormControl } from 'react-bootstrap';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AlertHelper } from '../../Utilities/Helpers/AlertHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
+import { IAlertDefinition } from '../../PredefinedConfig/IUserState Interfaces/AlertState';
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
   Column: IColumn;

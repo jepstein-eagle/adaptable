@@ -4,12 +4,11 @@ import {
   DataType,
   DistinctCriteriaPairValue,
   RangeOperandType,
-} from '../Enums';
-import { IUserFilter } from '../Interface/BlotterObjects/IUserFilter';
-import { IRange } from '../Interface/Expression/IRange';
-import { IRangeExpression } from '../Interface/Expression/IRangeExpression';
-import { IColumnValueExpression } from '../Interface/Expression/IColumnValueExpression';
-import { Expression } from '../Expression';
+} from '../../PredefinedConfig/Common Objects/Enums';
+import { IRange } from '../../PredefinedConfig/Common Objects/Expression/IRange';
+import { IRangeExpression } from '../../PredefinedConfig/Common Objects/Expression/IRangeExpression';
+import { IColumnValueExpression } from '../../PredefinedConfig/Common Objects/Expression/IColumnValueExpression';
+import { Expression } from '../../PredefinedConfig/Common Objects/Expression/Expression';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
@@ -18,6 +17,7 @@ import { LoggingHelper } from './LoggingHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
+import { IUserFilter } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
 
 export interface IRangeEvaluation {
   operand1: any;

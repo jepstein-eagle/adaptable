@@ -1,9 +1,8 @@
 import {
   ICategoryChartDefinition,
+  IChartData,
   IPieChartDefinition,
-} from '../../Interface/BlotterObjects/Charting/IChartDefinition';
-import { IChartData } from '../../Interface/BlotterObjects/Charting/IChartData';
-import { IPieChartDataItem } from '../../Interface/BlotterObjects/Charting/IPieChartDataItem';
+} from '../../../PredefinedConfig/IUserState Interfaces/ChartState';
 import { IColumn } from '../../Interface/IColumn';
 
 export interface IChartService {

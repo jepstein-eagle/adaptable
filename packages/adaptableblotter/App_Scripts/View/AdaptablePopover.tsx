@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Label, OverlayTrigger, Glyphicon, Popover, Button } from 'react-bootstrap';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { MessageType } from '../Utilities/Enums';
+import { MessageType } from '../PredefinedConfig/Common Objects/Enums';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import { ButtonApply } from './Components/Buttons/ButtonApply';
 import { ButtonInfo } from './Components/Buttons/ButtonInfo';

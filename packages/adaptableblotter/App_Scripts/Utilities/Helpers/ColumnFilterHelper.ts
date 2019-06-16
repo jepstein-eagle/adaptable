@@ -1,10 +1,10 @@
 import { ExpressionHelper } from './ExpressionHelper';
-import { IColumnFilter } from '../Interface/BlotterObjects/IColumnFilter';
 import { IColumn } from '../Interface/IColumn';
 import { IKeyValuePair } from '../Interface/IKeyValuePair';
 import { ColumnHelper } from './ColumnHelper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
+import { IColumnFilter } from '../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
 
 export function convertColumnFiltersToKVPArray(
   columnFilters: IColumnFilter[],

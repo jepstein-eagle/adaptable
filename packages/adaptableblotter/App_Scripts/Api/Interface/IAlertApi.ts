@@ -1,5 +1,5 @@
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { AlertState } from '../../Redux/ActionsReducers/Interface/IState';
+import { AlertState } from '../../PredefinedConfig/IUserState Interfaces/AlertState';
 
 export interface IAlertApi {
   getAlertState(): AlertState;

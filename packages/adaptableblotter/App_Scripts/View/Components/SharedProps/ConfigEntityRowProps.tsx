@@ -2,8 +2,8 @@ import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from 'redux';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IAdaptableBlotterObject } from '../../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
+import { IAdaptableBlotterObject } from '../../../PredefinedConfig/IAdaptableBlotterObject';
+import { IUserFilter } from '../../../PredefinedConfig/IUserState Interfaces/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
 
 // base props

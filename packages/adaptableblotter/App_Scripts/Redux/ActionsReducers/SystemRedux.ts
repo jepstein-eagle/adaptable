@@ -1,12 +1,12 @@
 import * as Redux from 'redux';
-import { SystemState } from './Interface/IState';
+import { SystemState } from '../../PredefinedConfig/ISystemState Interfaces/SystemState';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
-import { ExportDestination } from '../../Utilities/Enums';
+import { ExportDestination } from '../../PredefinedConfig/Common Objects/Enums';
 import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
-import { ChartVisibility } from '../../Utilities/ChartEnums';
+import { ChartVisibility } from '../../PredefinedConfig/Common Objects/ChartEnums';
 import {
   EMPTY_ARRAY,
   SYSTEM_DEFAULT_CHART_VISIBILITY,
@@ -15,12 +15,12 @@ import {
 } from '../../Utilities/Constants/GeneralConstants';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
-import { IChartData } from '../../Utilities/Interface/BlotterObjects/Charting/IChartData';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IRange } from '../../Utilities/Interface/Expression/IRange';
-import { Expression } from '../../Utilities/Expression';
+import { IRange } from '../../PredefinedConfig/Common Objects/Expression/IRange';
+import { Expression } from '../../PredefinedConfig/Common Objects/Expression/Expression';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { IReport } from '../../Utilities/Interface/BlotterObjects/IReport';
+import { IReport } from '../../PredefinedConfig/IUserState Interfaces/ExportState';
+import { IChartData } from '../../PredefinedConfig/IUserState Interfaces/ChartState';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state

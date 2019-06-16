@@ -1,4 +1,4 @@
-import { ICellValidationRule } from './BlotterObjects/ICellValidationRule';
+import { ICellValidationRule } from '../../PredefinedConfig/IUserState Interfaces/CellValidationState';
 
 export interface IPreviewInfo {
   ColumnId: string;

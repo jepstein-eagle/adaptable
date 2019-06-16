@@ -6,8 +6,8 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IColItem } from '../UIInterfaces';
-import { IAdvancedSearch } from '../../Utilities/Interface/BlotterObjects/IAdvancedSearch';
 import { EntityRowItem } from '../Components/EntityRowItem';
+import { IAdvancedSearch } from '../../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow>
   extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {

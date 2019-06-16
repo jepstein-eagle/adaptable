@@ -1,6 +1,6 @@
 import { IStrategy } from './IStrategy';
 import { IStrategyActionReturn } from './IStrategyActionReturn';
-import { MathOperation } from '../../Utilities/Enums';
+import { MathOperation } from '../../PredefinedConfig/Common Objects/Enums';
 import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 

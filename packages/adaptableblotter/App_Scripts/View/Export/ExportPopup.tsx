@@ -6,7 +6,11 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
-import { ExportDestination, ReportColumnScope, ReportRowScope } from '../../Utilities/Enums';
+import {
+  ExportDestination,
+  ReportColumnScope,
+  ReportRowScope,
+} from '../../PredefinedConfig/Common Objects/Enums';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -25,8 +29,8 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IReport } from '../../Utilities/Interface/BlotterObjects/IReport';
+import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { IReport } from '../../PredefinedConfig/IUserState Interfaces/ExportState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ReportWizard } from './Wizard/ReportWizard';
 

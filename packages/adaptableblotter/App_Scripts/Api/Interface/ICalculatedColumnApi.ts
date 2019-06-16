@@ -1,5 +1,7 @@
-import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
-import { CalculatedColumnState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  CalculatedColumnState,
+  ICalculatedColumn,
+} from '../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
 
 export interface ICalculatedColumnApi {
   getCalculatedColumnState(): CalculatedColumnState;

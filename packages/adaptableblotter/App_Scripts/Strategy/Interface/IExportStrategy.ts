@@ -1,6 +1,6 @@
 import { IStrategy } from './IStrategy';
-import { ExportDestination } from '../../Utilities/Enums';
-import { IReport } from '../../Utilities/Interface/BlotterObjects/IReport';
+import { ExportDestination } from '../../PredefinedConfig/Common Objects/Enums';
+import { IReport } from '../../PredefinedConfig/IUserState Interfaces/ExportState';
 
 export interface IExportStrategy extends IStrategy {
   Export(

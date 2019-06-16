@@ -7,8 +7,8 @@ import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { DataType, AccessLevel } from '../../Utilities/Enums';
-import { MathOperation } from '../../Utilities/Enums';
+import { DataType, AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
+import { MathOperation } from '../../PredefinedConfig/Common Objects/Enums';
 import { ShortcutEntityRow } from './ShortcutEntityRow';
 import { ShortcutWizard } from './Wizard/ShortcutWizard';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -23,9 +23,9 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IShortcut } from '../../Utilities/Interface/BlotterObjects/IShortcut';
 import Helper from '../../Utilities/Helpers/Helper';
+import { IShortcut } from '../../PredefinedConfig/IUserState Interfaces/ShortcutState';
+import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {
   onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction;

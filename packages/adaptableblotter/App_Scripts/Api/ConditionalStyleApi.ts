@@ -1,7 +1,9 @@
 import { ApiBase } from './ApiBase';
 import { IConditionalStyleApi } from './Interface/IConditionalStyleApi';
-import { IConditionalStyle } from '../Utilities/Interface/BlotterObjects/IConditionalStyle';
-import { ConditionalStyleState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  ConditionalStyleState,
+  IConditionalStyle,
+} from '../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
 
 export class ConditionalStyleApi extends ApiBase implements IConditionalStyleApi {
   public getConditionalStyleState(): ConditionalStyleState {

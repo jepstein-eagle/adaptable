@@ -1,4 +1,4 @@
-import { SortOrder } from '../Enums';
+import { SortOrder } from '../../PredefinedConfig/Common Objects/Enums';
 
 export function GetLength(arrayToCheck: any[]): number {
   return arrayToCheck.length;

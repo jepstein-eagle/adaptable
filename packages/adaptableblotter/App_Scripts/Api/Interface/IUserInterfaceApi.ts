@@ -1,5 +1,5 @@
 import { IPermittedColumnValues } from '../../Utilities/Interface/IPermittedColumnValues';
-import { UserInterfaceState } from '../../Redux/ActionsReducers/Interface/IState';
+import { UserInterfaceState } from '../../PredefinedConfig/IDesignTime State Interfaces/UserInterfaceState';
 
 export interface IUserInterfaceApi {
   getUserInterfaceState(): UserInterfaceState;

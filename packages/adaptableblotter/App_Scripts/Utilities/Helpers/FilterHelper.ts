@@ -1,8 +1,8 @@
-import { IUserFilter } from '../Interface/BlotterObjects/IUserFilter';
 import { IColumn } from '../Interface/IColumn';
-import { DataType } from '../Enums';
+import { DataType } from '../../PredefinedConfig/Common Objects/Enums';
 import { Helper } from './Helper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { IUserFilter } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
 
 // String, Numeric and Date
 export const BLANKS_SYSTEM_FILTER = 'Blanks';

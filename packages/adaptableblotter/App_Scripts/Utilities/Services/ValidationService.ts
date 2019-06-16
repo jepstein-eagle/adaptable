@@ -1,6 +1,5 @@
 import { IValidationService } from './Interface/IValidationService';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { ICellValidationRule } from '../Interface/BlotterObjects/ICellValidationRule';
 import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
@@ -13,9 +12,12 @@ import {
   RangeOperandType,
   ActionMode,
   DisplayAction,
-} from '../Enums';
+} from '../../PredefinedConfig/Common Objects/Enums';
 import { IColumn } from '../Interface/IColumn';
-import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  CellValidationState,
+  ICellValidationRule,
+} from '../../PredefinedConfig/IUserState Interfaces/CellValidationState';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 import { IFunctionAppliedDetails } from '../Interface/IAuditEvents';
 

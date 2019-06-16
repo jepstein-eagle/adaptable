@@ -1,5 +1,7 @@
-import { IColumnCategory } from '../../Utilities/Interface/BlotterObjects/IColumnCategory';
-import { ColumnCategoryState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  ColumnCategoryState,
+  IColumnCategory,
+} from '../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
 
 export interface IColumnCategoryApi {
   getColumnCategoryState(): ColumnCategoryState;

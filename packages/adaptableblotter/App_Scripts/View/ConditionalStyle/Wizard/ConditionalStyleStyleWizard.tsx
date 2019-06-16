@@ -5,8 +5,8 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StyleComponent } from '../../Components/StyleComponent';
 import { UIHelper } from '../../UIHelper';
-import { IStyle } from '../../../Utilities/Interface/IStyle';
-import { IConditionalStyle } from '../../../Utilities/Interface/BlotterObjects/IConditionalStyle';
+import { IStyle } from '../../../PredefinedConfig/Common Objects/IStyle';
+import { IConditionalStyle } from '../../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
 
 export interface ConditionalStyleStyleWizardProps
   extends AdaptableWizardStepProps<IConditionalStyle> {

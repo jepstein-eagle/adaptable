@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { FormControl } from 'react-bootstrap';
-import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 
 export interface ColorPickerProps extends React.HTMLProps<ColorPicker> {
   ColorPalette: string[];

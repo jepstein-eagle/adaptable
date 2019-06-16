@@ -6,9 +6,12 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SelectionMode, DistinctCriteriaPairValue } from '../../../Utilities/Enums';
+import {
+  SelectionMode,
+  DistinctCriteriaPairValue,
+} from '../../../PredefinedConfig/Common Objects/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { IPercentBar } from '../../../Utilities/Interface/BlotterObjects/IPercentBar';
+import { IPercentBar } from '../../../PredefinedConfig/IUserState Interfaces/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
 export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepProps<IPercentBar> {}

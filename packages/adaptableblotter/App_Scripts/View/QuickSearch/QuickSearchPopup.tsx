@@ -3,7 +3,11 @@ import * as Redux from 'redux';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { FormControl, ControlLabel, Panel, FormGroup, Col, Checkbox } from 'react-bootstrap';
-import { LeafExpressionOperator, DisplayAction, MessageType } from '../../Utilities/Enums';
+import {
+  LeafExpressionOperator,
+  DisplayAction,
+  MessageType,
+} from '../../PredefinedConfig/Common Objects/Enums';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
@@ -15,7 +19,7 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
-import { IStyle } from '../../Utilities/Interface/IStyle';
+import { IStyle } from '../../PredefinedConfig/Common Objects/IStyle';
 import {
   QUICK_SEARCH_DEFAULT_BACK_COLOR,
   QUICK_SEARCH_DEFAULT_FORE_COLOR,

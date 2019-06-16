@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { UserInterfaceState } from './Interface/IState';
+import { UserInterfaceState } from '../../PredefinedConfig/IDesignTime State Interfaces/UserInterfaceState';
 import { IPermittedColumnValues } from '../../Utilities/Interface/IPermittedColumnValues';
 import { UIHelper } from '../../View/UIHelper';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';

@@ -1,8 +1,7 @@
 import * as Redux from 'redux';
-import { LayoutState } from './Interface/IState';
-import { ILayout } from '../../Utilities/Interface/BlotterObjects/ILayout';
+import { LayoutState, ILayout } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
 import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const LAYOUT_ADD = 'LAYOUT_ADD';
 export const LAYOUT_EDIT = 'LAYOUT_EDIT';

@@ -1,19 +1,14 @@
-import { DistinctCriteriaPairValue } from '../Enums';
+import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common Objects/Enums';
 import { ICellInfo } from './ICellInfo';
-import { IVendorGridInfo } from './IVendorGridInfo';
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
-import { IColumnSort } from './IColumnSort';
-import { IPercentBar } from './BlotterObjects/IPercentBar';
-import { IFreeTextColumn } from './BlotterObjects/IFreeTextColumn';
-import { ICalculatedColumn } from './BlotterObjects/ICalculatedColumn';
+
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from './BlotterOptions/IAdaptableBlotterOptions';
+import { IAdaptableBlotterOptions } from '../../BlotterOptions/IAdaptableBlotterOptions';
 import { ICalendarService } from '../Services/Interface/ICalendarService';
 import { IDataService } from '../Services/Interface/IDataService';
 import { IValidationService } from '../Services/Interface/IValidationService';
-import { AuditLogService } from '../Services/AuditLogService';
 import { ICalculatedColumnExpressionService } from '../Services/Interface/ICalculatedColumnExpressionService';
 import { IChartService } from '../Services/Interface/IChartService';
 import { IPPStyle } from './Reports/IPPStyle';
@@ -23,6 +18,13 @@ import { ILicenceService } from '../Services/Interface/ILicenceService';
 import { IScheduleService } from '../Services/Interface/IScheduleService';
 import { IAuditLogService } from '../Services/Interface/IAuditLogService';
 import { ISearchService } from '../Services/Interface/ISearchService';
+import {
+  IColumnSort,
+  IVendorGridInfo,
+} from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { IFreeTextColumn } from '../../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
+import { ICalculatedColumn } from '../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
+import { IPercentBar } from '../../PredefinedConfig/IUserState Interfaces/PercentBarState';
 
 /**
  *  The only interface for the AdaptableBlotter

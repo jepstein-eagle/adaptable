@@ -1,5 +1,7 @@
-import { IColumnFilter } from '../../Utilities/Interface/BlotterObjects/IColumnFilter';
-import { ColumnFilterState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  ColumnFilterState,
+  IColumnFilter,
+} from '../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
 
 export interface IColumnFilterApi {
   getColumnFilterState(): ColumnFilterState;

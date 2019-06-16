@@ -3,7 +3,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { IPieChartDefinition } from '../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
+import { IPieChartDefinition } from '../../../../PredefinedConfig/IUserState Interfaces/ChartState';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 import {
   Panel,

@@ -8,7 +8,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
-import { IColumnCategory } from '../../../Utilities/Interface/BlotterObjects/IColumnCategory';
+import { IColumnCategory } from '../../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
 
 export interface ColumnCategorySettingsWizardProps
   extends AdaptableWizardStepProps<IColumnCategory> {

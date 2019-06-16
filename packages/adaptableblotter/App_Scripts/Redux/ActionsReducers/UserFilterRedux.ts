@@ -1,10 +1,12 @@
-import { UserFilterState } from './Interface/IState';
+import {
+  UserFilterState,
+  IUserFilter,
+} from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
 import * as Redux from 'redux';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IColumnFilter } from '../../Utilities/Interface/BlotterObjects/IColumnFilter';
 import { InputAction } from '../../Utilities/Interface/IMessage';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
+import { IColumnFilter } from '../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
 
 export const USER_FILTER_ADD = 'USER_FILTER_ADD';
 export const USER_FILTER_EDIT = 'USER_FILTER_EDIT';

@@ -1,26 +1,28 @@
 import { IAdaptableBlotter, ISearchChangedEventArgs } from '../../types';
 import { ISearchService } from './Interface/ISearchService';
 import * as StrategyConstants from '../Constants/StrategyConstants';
-import { SearchChangedTrigger, DisplayAction } from '../Enums';
-import { IDataSource } from '../Interface/BlotterObjects/IDataSource';
-import { IAdvancedSearch } from '../Interface/BlotterObjects/IAdvancedSearch';
+import { SearchChangedTrigger, DisplayAction } from '../../PredefinedConfig/Common Objects/Enums';
 import { IBlotterSearchState } from '../Interface/SearchChanged/IBlotterSearchState';
 import { IBlotterSortState } from '../Interface/SearchChanged/IBlotterSortState';
 import { ISearchChangedInfo } from '../Interface/SearchChanged/ISearchChangedInfo';
 import { ISearchEventData } from '../Interface/SearchChanged/ISearchEventData';
+import { UserFilterState } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { QuickSearchState } from '../../PredefinedConfig/IUserState Interfaces/QuickSearchState';
 import {
-  ColumnFilterState,
-  QuickSearchState,
-  AdvancedSearchState,
   DataSourceState,
-  UserFilterState,
-} from '../../Redux/ActionsReducers/Interface/IState';
+  IDataSource,
+} from '../../PredefinedConfig/IUserState Interfaces/DataSourceState';
+import { ColumnFilterState } from '../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
+import {
+  AdvancedSearchState,
+  IAdvancedSearch,
+} from '../../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
 import StringExtensions from '../Extensions/StringExtensions';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
-import { IColumnSort } from '../Interface/IColumnSort';
 import { LayoutHelper } from '../Helpers/LayoutHelper';
 import { IColumn } from '../Interface/IColumn';
+import { IColumnSort } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
 
 export class SearchService implements ISearchService {
   private blotter: IAdaptableBlotter;

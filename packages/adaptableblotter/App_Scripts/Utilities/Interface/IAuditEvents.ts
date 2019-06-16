@@ -1,7 +1,7 @@
-import { IState } from '../../Redux/ActionsReducers/Interface/IState';
-import { IAdaptableBlotterObject } from './BlotterObjects/IAdaptableBlotterObject';
+import { IState } from '../../PredefinedConfig/Interfaces/IState';
 import { IFDC3Schema, IAdaptableBlotterEventData } from './IBlotterEvents';
 import { IAuditLogEntry } from './IAuditLogEntry';
+import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 export interface IAuditLogEventArgs extends IFDC3Schema {
   data: IAuditLogEventData[];

@@ -10,7 +10,7 @@ import {
   Checkbox,
   FormControl,
 } from 'react-bootstrap';
-import { SelectionMode } from '../../Utilities/Enums';
+import { SelectionMode } from '../../PredefinedConfig/Common Objects/Enums';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -32,15 +32,17 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
-import { IPieChartDefinition } from '../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
-import { IChartData } from '../../Utilities/Interface/BlotterObjects/Charting/IChartData';
-import { IPieChartDataItem } from '../../Utilities/Interface/BlotterObjects/Charting/IPieChartDataItem';
+import {
+  IPieChartDefinition,
+  IPieChartDataItem,
+  IChartData,
+} from '../../PredefinedConfig/IUserState Interfaces/ChartState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import {
   PieChartLabelPosition,
   SliceSortOption,
   OthersCategoryType,
-} from '../../Utilities/ChartEnums';
+} from '../../PredefinedConfig/Common Objects/ChartEnums';
 import { PieChartUIHelper } from '../Chart/PieChart/PieChartUIHelper';
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {}

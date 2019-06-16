@@ -1,8 +1,10 @@
-import { CalculatedColumnState } from './Interface/IState';
+import {
+  CalculatedColumnState,
+  ICalculatedColumn,
+} from '../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
 import * as Redux from 'redux';
-import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const CALCULATEDCOLUMN_ADD = 'CALCULATEDCOLUMN_ADD';
 export const CALCULATEDCOLUMN_EDIT = 'CALCULATEDCOLUMN_EDIT';

@@ -4,10 +4,10 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ReportColumnScope } from '../../../Utilities/Enums';
+import { ReportColumnScope } from '../../../PredefinedConfig/Common Objects/Enums';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
-import { IReport } from '../../../Utilities/Interface/BlotterObjects/IReport';
 import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
+import { IReport } from '../../../PredefinedConfig/IUserState Interfaces/ExportState';
 
 export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<IReport> {}
 export interface ReportColumnsWizardState {

@@ -14,7 +14,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard';
-import { SortOrder } from '../../Utilities/Enums';
+import { SortOrder } from '../../PredefinedConfig/Common Objects/Enums';
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import {
@@ -24,9 +24,9 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import { ICalculatedColumn } from '../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
+import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 interface CalculatedColumnPopupProps
   extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {

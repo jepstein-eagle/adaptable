@@ -17,17 +17,17 @@ import {
   LeafExpressionOperator,
   ContextMenuTab,
   AccessLevel,
-} from '../../../Utilities/Enums';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IColumnFilter } from '../../../Utilities/Interface/BlotterObjects/IColumnFilter';
-import { IRange } from '../../../Utilities/Interface/Expression/IRange';
+} from '../../../PredefinedConfig/Common Objects/Enums';
+import { IUserFilter } from '../../../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { IColumnFilter } from '../../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
+import { IRange } from '../../../PredefinedConfig/Common Objects/Expression/IRange';
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { ButtonClose } from '../Buttons/ButtonClose';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import { Expression } from '../../../Utilities/Expression';
+import { Expression } from '../../../PredefinedConfig/Common Objects/Expression/Expression';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ButtonClear } from '../Buttons/ButtonClear';
 import { Waiting } from './Waiting';

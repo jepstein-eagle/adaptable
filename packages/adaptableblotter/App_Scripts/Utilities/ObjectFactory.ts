@@ -1,72 +1,74 @@
-import { ExpressionHelper, IRangeEvaluation } from './Helpers/ExpressionHelper';
-import { IColumnSort } from './Interface/IColumnSort';
-import { IStyle } from './Interface/IStyle';
-import { IColumnCategory } from './Interface/BlotterObjects/IColumnCategory';
-import { IFormatColumn } from './Interface/BlotterObjects/IFormatColumn';
-import { ILayout } from './Interface/BlotterObjects/ILayout';
-import { IPlusMinusRule } from './Interface/BlotterObjects/IPlusMinusRule';
-import { IShortcut } from './Interface/BlotterObjects/IShortcut';
-import { IUserFilter } from './Interface/BlotterObjects/IUserFilter';
-import { IPercentBar } from './Interface/BlotterObjects/IPercentBar';
-import { IFreeTextColumn } from './Interface/BlotterObjects/IFreeTextColumn';
-import { IReport, IAutoExport } from './Interface/BlotterObjects/IReport';
-import { IFlashingCell } from './Interface/BlotterObjects/IFlashingCell';
-import { ICustomSort } from './Interface/BlotterObjects/ICustomSort';
-import { IConditionalStyle } from './Interface/BlotterObjects/IConditionalStyle';
-import { IColumnFilter } from './Interface/BlotterObjects/IColumnFilter';
-import { ICellValidationRule } from './Interface/BlotterObjects/ICellValidationRule';
-import { ICalculatedColumn } from './Interface/BlotterObjects/ICalculatedColumn';
-import { IAdvancedSearch } from './Interface/BlotterObjects/IAdvancedSearch';
 import {
-  ICategoryChartDefinition,
-  IPieChartDefinition,
-} from './Interface/BlotterObjects/Charting/IChartDefinition';
-import { IAlertDefinition } from './Interface/BlotterObjects/IAlertDefinition';
-import { IRange } from './Interface/Expression/IRange';
-import {
+  LicenceScopeType,
+  LicenceUserType,
+  MessageType,
   LeafExpressionOperator,
+  RangeOperandType,
   SortOrder,
   ReportColumnScope,
   ReportRowScope,
-  MathOperation,
-  DataType,
-  ConditionalStyleScope,
-  FontStyle,
-  FontWeight,
-  RangeOperandType,
-  MessageType,
-  ActionMode,
-  LicenceScopeType,
-  LicenceUserType,
   ExportDestination,
-} from './Enums';
-import { IColumn } from './Interface/IColumn';
-import { IAdaptableBlotter } from './Interface/IAdaptableBlotter';
-import { ColumnHelper } from './Helpers/ColumnHelper';
-import { ICellSummmary } from './Interface/SelectedCell/ICellSummmary';
-import { Expression } from '../Utilities/Expression';
-import { IVendorGridInfo } from './Interface/IVendorGridInfo';
-import { CellValidationHelper } from './Helpers/CellValidationHelper';
+  DataType,
+  MathOperation,
+  ConditionalStyleScope,
+  ActionMode,
+  FontWeight,
+  FontStyle,
+} from '../PredefinedConfig/Common Objects/Enums';
+import { ILicenceInfo } from './Interface/ILicenceInfo';
+import { ICustomSort } from '../PredefinedConfig/IUserState Interfaces/CustomSortState';
 import {
   EMPTY_STRING,
   CHART_DEFAULT_YAXIS_TOTAL,
   PLUS_MINUS_DEFAULT_NUDGE_VALUE,
+  ALERT_DEFAULT_SHOW_AS_POPUP,
   ALERT_DEFAULT_OPERATOR,
   ALERT_DEFAULT_RANGE_OPERAND_TYPE,
   ALERT_DEFAULT_MESSAGE_TYPE,
-  ALERT_DEFAULT_SHOW_AS_POPUP,
   DEFAULT_DARK_GREEN_COLOR,
   DEFAULT_DARK_RED_COLOR,
 } from './Constants/GeneralConstants';
-import { DefaultCategoryChartProperties } from './Defaults/DefaultCategoryChartProperties';
-import { ILicenceInfo } from './Interface/ILicenceInfo';
-import { ChartType, SecondaryColumnOperation } from './ChartEnums';
+import { IDataSource } from '../PredefinedConfig/IUserState Interfaces/DataSourceState';
+import {
+  IPieChartDefinition,
+  ICategoryChartDefinition,
+} from '../PredefinedConfig/IUserState Interfaces/ChartState';
+import { SecondaryColumnOperation, ChartType } from '../PredefinedConfig/Common Objects/ChartEnums';
 import { DefaultPieChartProperties } from './Defaults/DefaultPieChartProperties';
-import { IDataSource } from './Interface/BlotterObjects/IDataSource';
-import { ISchedule } from './Interface/BlotterObjects/ISchedule';
-import { IReminder } from './Interface/BlotterObjects/IReminder';
+import { DefaultCategoryChartProperties } from './Defaults/DefaultCategoryChartProperties';
+import { ICalculatedColumn } from '../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
+import { IPlusMinusRule } from '../PredefinedConfig/IUserState Interfaces/PlusMinusState';
 import { IAdaptableAlert } from './Interface/IMessage';
-import { createUuid } from './Uuid';
+import { IAlertDefinition } from '../PredefinedConfig/IUserState Interfaces/AlertState';
+import { IAdvancedSearch } from '../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
+import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
+import { IColumnCategory } from '../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
+import { IRange } from '../PredefinedConfig/Common Objects/Expression/IRange';
+import {
+  IColumnSort,
+  IVendorGridInfo,
+  ILayout,
+} from '../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { ICellValidationRule } from '../PredefinedConfig/IUserState Interfaces/CellValidationState';
+import { IPercentBar } from '../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { IUserFilter } from '../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { IReport, IAutoExport } from '../PredefinedConfig/IUserState Interfaces/ExportState';
+import { IColumn } from './Interface/IColumn';
+import { IFlashingCell } from '../PredefinedConfig/IUserState Interfaces/FlashingCellState';
+import { IReminder } from '../PredefinedConfig/IUserState Interfaces/ReminderState';
+import { ISchedule } from '../PredefinedConfig/Common Objects/ISchedule';
+import { IShortcut } from '../PredefinedConfig/IUserState Interfaces/ShortcutState';
+import { IAdaptableBlotter } from '../types';
+import ColumnHelper from './Helpers/ColumnHelper';
+import CellValidationHelper from './Helpers/CellValidationHelper';
+import { IConditionalStyle } from '../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
+import { IFormatColumn } from '../PredefinedConfig/IUserState Interfaces/FormatColumnState';
+import { IFreeTextColumn } from '../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
+import { Expression } from '../PredefinedConfig/Common Objects/Expression/Expression';
+import { IColumnFilter } from '../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
+import { IStyle } from '../PredefinedConfig/Common Objects/IStyle';
+import { ICellSummmary } from './Interface/SelectedCell/ICellSummmary';
+import { createUuid } from '../PredefinedConfig/Uuid';
 
 export function CreateLicenceInfo(
   licenceScopeType: LicenceScopeType,
@@ -246,7 +248,7 @@ export function CreateDefaultFlashingCell(
   column: IColumn,
   upColor: string,
   downColor: string,
-  duration: number
+  duration: 250 | 500 | 750 | 1000
 ): IFlashingCell {
   return {
     Uuid: createUuid(),

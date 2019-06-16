@@ -1,4 +1,4 @@
-import { DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
+import { DashboardState } from '../../PredefinedConfig/IUserState Interfaces/DashboardState';
 
 export interface IDashboardApi {
   GetState(): DashboardState;

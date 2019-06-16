@@ -1,4 +1,4 @@
-import { IReport } from '../../../Utilities/Interface/BlotterObjects/IReport';
+import { IReport } from '../../../PredefinedConfig/IUserState Interfaces/ExportState';
 import * as React from 'react';
 import { Panel, Col, Radio, ControlLabel } from 'react-bootstrap';
 import {
@@ -8,7 +8,11 @@ import {
 
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ReportRowScope, MessageType, ReportColumnScope } from '../../../Utilities/Enums';
+import {
+  ReportRowScope,
+  MessageType,
+  ReportColumnScope,
+} from '../../../PredefinedConfig/Common Objects/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 

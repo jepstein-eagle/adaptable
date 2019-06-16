@@ -1,4 +1,4 @@
-import { IReport, IAutoExport } from '../../../Utilities/Interface/BlotterObjects/IReport';
+import { IReport, IAutoExport } from '../../../PredefinedConfig/IUserState Interfaces/ExportState';
 import * as React from 'react';
 import {
   Panel,
@@ -14,11 +14,15 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ExportDestination, DayOfWeek, ReportRowScope } from '../../../Utilities/Enums';
+import {
+  ExportDestination,
+  DayOfWeek,
+  ReportRowScope,
+} from '../../../PredefinedConfig/Common Objects/Enums';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { ISchedule } from '../../../Utilities/Interface/BlotterObjects/ISchedule';
+import { ISchedule } from '../../../PredefinedConfig/Common Objects/ISchedule';
 
 export interface ReportScheduleWizardProps extends AdaptableWizardStepProps<IReport> {}
 

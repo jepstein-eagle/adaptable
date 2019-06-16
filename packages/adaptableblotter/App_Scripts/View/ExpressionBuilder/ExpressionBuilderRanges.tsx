@@ -1,6 +1,10 @@
 import * as React from 'react';
-import { DataType, SelectionMode, RangeOperandType } from '../../Utilities/Enums';
-import { LeafExpressionOperator } from '../../Utilities/Enums';
+import {
+  DataType,
+  SelectionMode,
+  RangeOperandType,
+} from '../../PredefinedConfig/Common Objects/Enums';
+import { LeafExpressionOperator } from '../../PredefinedConfig/Common Objects/Enums';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import {
@@ -23,7 +27,7 @@ import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { IRange } from '../../Utilities/Interface/Expression/IRange';
+import { IRange } from '../../PredefinedConfig/Common Objects/Expression/IRange';
 
 export interface ExpressionBuilderRangesPropsExpressionBuilderRanges
   extends React.ClassAttributes<ExpressionBuilderRanges> {

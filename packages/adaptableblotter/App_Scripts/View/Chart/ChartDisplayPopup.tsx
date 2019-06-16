@@ -7,9 +7,9 @@ import {
   ICategoryChartDefinition,
   IChartProperties,
   IPieChartDefinition,
-} from '../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
-import { IChartData } from '../../Utilities/Interface/BlotterObjects/Charting/IChartData';
-import { ChartVisibility, ChartType } from '../../Utilities/ChartEnums';
+  IChartData,
+} from '../../PredefinedConfig/IUserState Interfaces/ChartState';
+import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common Objects/ChartEnums';
 import { ButtonClose } from '../Components/Buttons/ButtonClose';
 import { PRIMARY_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';

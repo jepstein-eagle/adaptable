@@ -1,5 +1,6 @@
-import { ExportDestination } from '../../Enums';
-import { IReport } from '../BlotterObjects/IReport';
+import { ExportDestination } from '../../../PredefinedConfig/Common Objects/Enums';
+import { IReport } from '../../../PredefinedConfig/IUserState Interfaces/ExportState';
+
 export interface ILiveReport {
   WorkbookName: string;
   Report: IReport;

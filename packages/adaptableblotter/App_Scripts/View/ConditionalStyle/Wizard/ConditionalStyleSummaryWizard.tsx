@@ -8,11 +8,11 @@ import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { ConditionalStyleScope } from '../../../Utilities/Enums';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IConditionalStyle } from '../../../Utilities/Interface/BlotterObjects/IConditionalStyle';
+import { ConditionalStyleScope } from '../../../PredefinedConfig/Common Objects/Enums';
+import { IConditionalStyle } from '../../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { IUserFilter } from '../../../PredefinedConfig/IUserState Interfaces/UserFilterState';
 
 export interface ConditionalStyleSummaryWizardProps
   extends AdaptableWizardStepProps<IConditionalStyle> {

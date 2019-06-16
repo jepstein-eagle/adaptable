@@ -1,12 +1,14 @@
-import { AlertState } from './Interface/IState';
+import {
+  AlertState,
+  IAlertDefinition,
+} from '../../PredefinedConfig/IUserState Interfaces/AlertState';
 import * as Redux from 'redux';
-import { IAlertDefinition } from '../../Utilities/Interface/BlotterObjects/IAlertDefinition';
 import {
   EMPTY_ARRAY,
   EMPTY_STRING,
   ALERT_DEFAULT_MAX_ALERTS_IN_STORE,
 } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const ALERT_DEFIINITION_ADD = 'ALERT_DEFIINITION_ADD';
 export const ALERT_DEFIINITION_EDIT = 'ALERT_DEFIINITION_EDIT';

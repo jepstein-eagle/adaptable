@@ -1,8 +1,7 @@
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux';
 import { ApiBase } from './ApiBase';
-import { IShortcut } from '../Utilities/Interface/BlotterObjects/IShortcut';
 import { IShortcutApi } from './Interface/IShortcutApi';
-import { ShortcutState } from '../Redux/ActionsReducers/Interface/IState';
+import { ShortcutState, IShortcut } from '../PredefinedConfig/IUserState Interfaces/ShortcutState';
 
 export class ShortcutApi extends ApiBase implements IShortcutApi {
   public getShortcutState(): ShortcutState {

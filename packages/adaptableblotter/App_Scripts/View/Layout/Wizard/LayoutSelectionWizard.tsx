@@ -5,13 +5,16 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { SelectionMode, LayoutSource, MessageType } from '../../../Utilities/Enums';
+import {
+  SelectionMode,
+  LayoutSource,
+  MessageType,
+} from '../../../PredefinedConfig/Common Objects/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { IColumnSort } from '../../../Utilities/Interface/IColumnSort';
-import { ILayout } from '../../../Utilities/Interface/BlotterObjects/ILayout';
+import { ILayout, IColumnSort } from '../../../PredefinedConfig/IUserState Interfaces/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<ILayout> {

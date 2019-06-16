@@ -22,7 +22,7 @@ import {
   AccessLevel,
   MessageType,
   DashboardSize,
-} from '../../Utilities/Enums';
+} from '../../PredefinedConfig/Common Objects/Enums';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';

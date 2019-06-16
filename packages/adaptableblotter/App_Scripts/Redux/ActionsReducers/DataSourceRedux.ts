@@ -1,8 +1,10 @@
-import { DataSourceState } from './Interface/IState';
+import {
+  DataSourceState,
+  IDataSource,
+} from '../../PredefinedConfig/IUserState Interfaces/DataSourceState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
-import { IDataSource } from '../../Utilities/Interface/BlotterObjects/IDataSource';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const DATA_SOURCE_SELECT = 'DATA_SOURCE_SELECT';
 export const DATA_SOURCE_ADD = 'DATA_SOURCE_ADD';

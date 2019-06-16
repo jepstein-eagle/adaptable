@@ -3,9 +3,8 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IThemeStrategy } from './Interface/IThemeStrategy';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
+import { ThemeState } from '../PredefinedConfig/IUserState Interfaces/ThemeState';
 import * as GeneralConstants from '../Utilities/Constants/GeneralConstants';
-import { StateChangedTrigger } from '../Utilities/Enums';
 import { IThemeChangedEventArgs } from '../Utilities/Interface/IBlotterEvents';
 
 const WARNINGS: { [key: string]: boolean } = {};

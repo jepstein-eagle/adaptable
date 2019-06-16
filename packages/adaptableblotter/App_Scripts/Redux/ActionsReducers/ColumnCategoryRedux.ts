@@ -1,8 +1,10 @@
-import { ColumnCategoryState } from './Interface/IState';
+import {
+  ColumnCategoryState,
+  IColumnCategory,
+} from '../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
 import * as Redux from 'redux';
-import { IColumnCategory } from '../../Utilities/Interface/BlotterObjects/IColumnCategory';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const COLUMN_CATEGORY_ADD = 'COLUMN_CATEGORY_ADD';
 export const COLUMN_CATEGORY_EDIT = 'COLUMN_CATEGORY_EDIT';

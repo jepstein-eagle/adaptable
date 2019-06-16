@@ -1,8 +1,10 @@
 import * as Redux from 'redux';
-import { AdvancedSearchState } from './Interface/IState';
-import { IAdvancedSearch } from '../../Utilities/Interface/BlotterObjects/IAdvancedSearch';
+import {
+  AdvancedSearchState,
+  IAdvancedSearch,
+} from '../../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const ADVANCED_SEARCH_ADD = 'ADVANCED_SEARCH_ADD';
 export const ADVANCED_SEARCH_EDIT = 'ADVANCED_SEARCH_EDIT';

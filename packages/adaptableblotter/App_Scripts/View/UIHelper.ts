@@ -9,12 +9,12 @@ import {
   StatusColour,
   MessageType,
   DayOfWeek,
-} from '../Utilities/Enums';
+} from '../PredefinedConfig/Common Objects/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
-import { IStyle } from '../Utilities/Interface/IStyle';
+import { IAdaptableBlotterOptions } from '../BlotterOptions/IAdaptableBlotterOptions';
+import { IStyle } from '../PredefinedConfig/Common Objects/IStyle';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
-import { Expression } from '../Utilities/Expression';
+import { Expression } from '../PredefinedConfig/Common Objects/Expression/Expression';
 import {
   SUCCESS_BSSTYLE,
   WARNING_BSSTYLE,
@@ -22,11 +22,8 @@ import {
   INFO_BSSTYLE,
 } from '../Utilities/Constants/StyleConstants';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
-import * as React from 'react';
-import { Radio } from 'react-bootstrap';
-import { ISchedule } from '../Utilities/Interface/BlotterObjects/ISchedule';
-import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { number } from 'prop-types';
+import { ISchedule } from '../PredefinedConfig/Common Objects/ISchedule';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export function getDefaultColors(): string[] {
   return [

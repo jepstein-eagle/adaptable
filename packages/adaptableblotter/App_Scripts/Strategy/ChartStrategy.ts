@@ -4,19 +4,21 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
-import { ChartState, SystemState } from '../Redux/ActionsReducers/Interface/IState';
-import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import {
+  ChartState,
   IChartDefinition,
   ICategoryChartDefinition,
   IPieChartDefinition,
-} from '../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
-import { IChartData } from '../Utilities/Interface/BlotterObjects/Charting/IChartData';
-import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { ChartVisibility, ChartType } from '../Utilities/ChartEnums';
+  IChartData,
+} from '../PredefinedConfig/IUserState Interfaces/ChartState';
+import { SystemState } from '../PredefinedConfig/ISystemState Interfaces/SystemState';
+import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+
+import { ChartVisibility, ChartType } from '../PredefinedConfig/Common Objects/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../Utilities/Interface/IColumn';
+import StringExtensions from '../Utilities/Extensions/StringExtensions';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
   private ChartState: ChartState;
@@ -96,11 +98,11 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         this.ChartState.CurrentChartName == null &&
         this.SystemState.ChartVisibility == ChartVisibility.Maximised
       ) {
-        this.blotter.api.internalApi.SetChartVisibility(ChartVisibility.Hidden);
+        this.blotter.api.internalApi.setChartVisibility(ChartVisibility.Hidden);
       }
 
       if (displayChartAtStartUp) {
-        this.blotter.api.internalApi.SetChartVisibility(ChartVisibility.Maximised);
+        this.blotter.api.internalApi.setChartVisibility(ChartVisibility.Maximised);
         this.setChartData();
       }
     }
@@ -248,18 +250,18 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
           chartDefinition as IPieChartDefinition
         );
       }
-      this.blotter.api.internalApi.SetChartData(chartData);
+      this.blotter.api.internalApi.setChartData(chartData);
     }
   }
 
   private clearChartData() {
     if (this.GetSystemState().ChartData != null) {
-      this.blotter.api.internalApi.SetChartData(null);
+      this.blotter.api.internalApi.setChartData(null);
     }
   }
 
   private GetSystemState(): SystemState {
-    return this.blotter.api.internalApi.GetSystemState();
+    return this.blotter.api.internalApi.getSystemState();
   }
 
   private GetChartState(): ChartState {

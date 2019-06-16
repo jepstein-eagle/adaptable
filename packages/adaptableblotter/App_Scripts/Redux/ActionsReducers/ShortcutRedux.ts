@@ -1,10 +1,11 @@
-import { ShortcutState } from './Interface/IState';
-import { MathOperation } from '../../Utilities/Enums';
+import {
+  ShortcutState,
+  IShortcut,
+} from '../../PredefinedConfig/IUserState Interfaces/ShortcutState';
 import * as Redux from 'redux';
 import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
-import { IShortcut } from '../../Utilities/Interface/BlotterObjects/IShortcut';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const SHORTCUT_APPLY = 'SHORTCUT_APPLY';
 export const SHORTCUT_ADD = 'SHORTCUT_ADD';
