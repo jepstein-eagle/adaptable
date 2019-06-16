@@ -41,10 +41,13 @@ export interface IAdaptableBlotterOptions {
    */
   userName?: string;
   /**
-   * Configuration properties and objects set at design-time
-   * Only used when Config Server is not enabled
+   * Configuration properties and objects set at design-time.
+   *
+   * Only used when Config Server is not enabled.
+   *
+   * Can be either an IPredefinedConfig object or a url to a file which contains the config.
    */
-  predefinedConfig?: IPredefinedConfig;
+  predefinedConfig?: IPredefinedConfig | string;
   /**
    * A unique key - provided by the Adaptable Tools team that uniquely identifies the user / team
    * Required to get access to Standard or Enterprise functionality.
