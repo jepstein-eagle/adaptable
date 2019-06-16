@@ -18,7 +18,7 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { ICellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -63,8 +63,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
         let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
-        let failedPreventEdits: ICellValidationRule[] = [];
-        let failedWarningEdits: ICellValidationRule[] = [];
+        let failedPreventEdits: CellValidationRule[] = [];
+        let failedWarningEdits: CellValidationRule[] = [];
         let warningValues: ICellInfo[] = [];
 
         for (var keyValuePair of selectedCellInfo.Selection) {
@@ -128,7 +128,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 Record: null,
               };
 
-              let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+              let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
                 dataChangedEvent
               );
 
@@ -165,7 +165,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     }
   }
 
-  private ShowErrorPreventMessage(failedRules: ICellValidationRule[]): void {
+  private ShowErrorPreventMessage(failedRules: CellValidationRule[]): void {
     if (failedRules.length > 0) {
       let failedMessages: string[] = [];
       failedRules.forEach(fr => {
@@ -185,7 +185,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
   }
 
   private ShowWarningMessages(
-    failedRules: ICellValidationRule[],
+    failedRules: CellValidationRule[],
     warningValues: ICellInfo[],
     successfulValues: ICellInfo[],
     keyEventString: string

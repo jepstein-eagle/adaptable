@@ -120,13 +120,13 @@ import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnV
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { SearchService } from '../Utilities/Services/SearchService';
-import { IPercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
-import { ICalculatedColumn } from '../PredefinedConfig/IUserState/CalculatedColumnState';
-import { IFreeTextColumn } from '../PredefinedConfig/IUserState/FreeTextColumnState';
-import { ICellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
-import { IColumnFilter } from '../PredefinedConfig/IUserState/ColumnFilterState';
-import { IColumnSort, IVendorGridInfo } from '../PredefinedConfig/IUserState/LayoutState';
-import { ICustomSort } from '../PredefinedConfig/IUserState/CustomSortState';
+import { PercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
+import { CalculatedColumn } from '../PredefinedConfig/IUserState/CalculatedColumnState';
+import { FreeTextColumn } from '../PredefinedConfig/IUserState/FreeTextColumnState';
+import { CellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
+import { ColumnFilter } from '../PredefinedConfig/IUserState/ColumnFilterState';
+import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/IUserState/LayoutState';
+import { CustomSort } from '../PredefinedConfig/IUserState/CustomSortState';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;
@@ -906,7 +906,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     var dataChangedEvents: IDataChangedInfo[] = [];
     const nodesToRefresh: RowNode[] = [];
     const refreshColumnList: string[] = [];
-    const percentBars: IPercentBar[] = this.api.percentBarApi.getAllPercentBar();
+    const percentBars: PercentBar[] = this.api.percentBarApi.getAllPercentBar();
 
     // now two ways to do this - one using pk lookup and other using foreach on row node
     if (this.useRowNodeLookUp) {
@@ -960,7 +960,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     nodesToRefresh: RowNode[],
     refreshColumnList: string[],
     dataChangedEvents: IDataChangedInfo[],
-    percentBars: IPercentBar[]
+    percentBars: PercentBar[]
   ): void {
     const colId: string = cellInfo.ColumnId;
     refreshColumnList.push(colId);
@@ -1149,7 +1149,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private useRawValueForColumn(columnId: string): boolean {
     // will add more in due course I'm sure but for now only percent bar columns return false...
-    const percentBars: IPercentBar[] = this.api.percentBarApi.getAllPercentBar();
+    const percentBars: PercentBar[] = this.api.percentBarApi.getAllPercentBar();
     if (ArrayExtensions.IsEmpty(percentBars)) {
       return false;
     }
@@ -1306,7 +1306,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //     this.gridOptions.api.flashCells({ rowNodes: [rowNode], columns: columnIds });
   }
 
-  public editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void {
+  public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
     // first change the value getter in the coldefs - nothing else needs to change
     const colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef());
     const colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumn.ColumnId);
@@ -1364,7 +1364,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.setColumnIntoStore();
   }
 
-  public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
+  public addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn) {
     const venderCols = this.gridOptions.columnApi.getAllColumns();
     const colDefs: ColDef[] = venderCols.map(x => x.getColDef());
 
@@ -1406,7 +1406,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.addSpecialColumnToState(calculatedColumn.ColumnId, true);
   }
 
-  public addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn) {
+  public addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn) {
     const venderCols: Column[] = this.gridOptions.columnApi.getAllColumns();
     const colDefs: ColDef[] = venderCols.map(x => x.getColDef());
     const newColDef: ColDef = {
@@ -1660,7 +1660,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           Record: null,
         };
 
-        const failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(
+        const failedRules: CellValidationRule[] = this.ValidationService.ValidateCellChanging(
           dataChangedInfo
         );
         if (failedRules.length > 0) {
@@ -1811,7 +1811,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // We plug our filter mecanism and if there is already something like external widgets... we save ref to the function
     const originalisExternalFilterPresent = this.gridOptions.isExternalFilterPresent;
     this.gridOptions.isExternalFilterPresent = () => {
-      const columnFilters: IColumnFilter[] = this.getState().ColumnFilter.ColumnFilters;
+      const columnFilters: ColumnFilter[] = this.getState().ColumnFilter.ColumnFilters;
       const isFilterActive = ArrayExtensions.IsNotNullOrEmpty(columnFilters);
       if (isFilterActive) {
         // used in particular at init time to show the filter icon correctly
@@ -1864,7 +1864,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.blotterOptions.generalOptions.serverSearchOption == 'None' ||
         this.blotterOptions.generalOptions.serverSearchOption == 'AdvancedSearch'
       ) {
-        const columnFilters: IColumnFilter[] = this.api.columnFilterApi.getAllColumnFilter();
+        const columnFilters: ColumnFilter[] = this.api.columnFilterApi.getAllColumnFilter();
         if (columnFilters.length > 0) {
           for (const columnFilter of columnFilters) {
             if (
@@ -1971,7 +1971,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 */
   }
 
-  public addPercentBar(pcr: IPercentBar): void {
+  public addPercentBar(pcr: PercentBar): void {
     const renderedColumn = ColumnHelper.getColumnFromId(
       pcr.ColumnId,
       this.api.gridApi.getColumns()
@@ -1991,7 +1991,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public removePercentBar(pcr: IPercentBar): void {
+  public removePercentBar(pcr: PercentBar): void {
     const renderedColumn = ColumnHelper.getColumnFromId(
       pcr.ColumnId,
       this.api.gridApi.getColumns()
@@ -2009,7 +2009,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public editPercentBar(pcr: IPercentBar): void {
+  public editPercentBar(pcr: PercentBar): void {
     this.removePercentBar(pcr);
     this.addPercentBar(pcr);
   }
@@ -2017,7 +2017,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private onSortChanged(): void {
     const sortModel: any[] = this.gridOptions.api.getSortModel();
 
-    const columnSorts: IColumnSort[] = [];
+    const columnSorts: ColumnSort[] = [];
     if (sortModel != null) {
       if (sortModel.length > 0) {
         sortModel.forEach(sm => {
@@ -2026,20 +2026,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               .getAllColumns()
               .find(c => c.isRowGroupActive() == true);
             if (groupedColumn) {
-              const customSort: ICustomSort = this.api.customSortApi
+              const customSort: CustomSort = this.api.customSortApi
                 .getAllCustomSort()
                 .find(cs => cs.ColumnId == groupedColumn.getColId());
               if (customSort) {
                 // check that not already applied
                 if (
-                  !this.getState().Grid.ColumnSorts.find((gs: IColumnSort) =>
+                  !this.getState().Grid.ColumnSorts.find((gs: ColumnSort) =>
                     ColumnHelper.isSpecialColumn(gs.Column)
                   )
                 ) {
                   const customSortStrategy: CustomSortStrategyagGrid = this.strategies.get(
                     StrategyConstants.CustomSortStrategyId
                   ) as CustomSortStrategyagGrid;
-                  const groupCustomSort: ICustomSort = ObjectFactory.CreateEmptyCustomSort();
+                  const groupCustomSort: CustomSort = ObjectFactory.CreateEmptyCustomSort();
                   groupCustomSort.ColumnId = sm.colId;
                   groupCustomSort.SortedValues = customSort.SortedValues;
                   const comparator: any = customSortStrategy.getComparerFunction(
@@ -2051,7 +2051,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
               }
             }
           }
-          const columnSort: IColumnSort = {
+          const columnSort: ColumnSort = {
             Column: sm.colId,
             SortOrder: sm.sort == 'asc' ? SortOrder.Ascending : SortOrder.Descending,
           };
@@ -2093,7 +2093,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.gridOptions.api.addRangeSelection(rangeSelectionParams);
   }
 
-  public setColumnSort(columnSorts: IColumnSort[]): void {
+  public setColumnSort(columnSorts: ColumnSort[]): void {
     // get the sort model
     const sortModel: any[] = [];
     columnSorts.forEach(gs => {
@@ -2159,7 +2159,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
   }
 
-  public getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo {
+  public getVendorGridState(visibleCols: string[], forceFetch: boolean): VendorGridInfo {
     // forceFetch is used for default layout and just gets everything in the grid's state - not nice and can be refactored
     if (forceFetch) {
       return {
@@ -2201,7 +2201,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return null; // need this?
   }
 
-  public setVendorGridState(vendorGridState: IVendorGridInfo): void {
+  public setVendorGridState(vendorGridState: VendorGridInfo): void {
     if (vendorGridState) {
       const columnState: any = JSON.parse(vendorGridState.ColumnState);
       if (columnState) {

@@ -7,16 +7,16 @@ import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
-import { IReport } from '../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../PredefinedConfig/IUserState/ExportState';
 import { SystemState } from '../PredefinedConfig/ISystemState/SystemState';
-import { ICalendar } from '../PredefinedConfig/IUserState/CalendarState';
-import { IChartData } from '../PredefinedConfig/IUserState/ChartState';
+import { Calendar } from '../PredefinedConfig/IUserState/CalendarState';
+import { ChartData } from '../PredefinedConfig/IUserState/ChartState';
 import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 
 export class InternalApi extends ApiBase implements IInternalApi {
   // System Redux Actions
   public startLiveReport(
-    report: IReport,
+    report: Report,
     workbookName: string,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ): void {
@@ -27,11 +27,11 @@ export class InternalApi extends ApiBase implements IInternalApi {
     return this.getBlotterState().System;
   }
 
-  public getAvailableCalendars(): ICalendar[] {
+  public getAvailableCalendars(): Calendar[] {
     return this.getSystemState().AvailableCalendars;
   }
 
-  public setChartData(chartData: IChartData): void {
+  public setChartData(chartData: ChartData): void {
     this.dispatchAction(SystemRedux.ChartSetChartData(chartData));
   }
 
@@ -39,7 +39,7 @@ export class InternalApi extends ApiBase implements IInternalApi {
     this.dispatchAction(SystemRedux.ChartSetChartVisibility(chartVisbility));
   }
 
-  public getSystemReports(): IReport[] {
+  public getSystemReports(): Report[] {
     return this.getSystemState().SystemReports;
   }
 

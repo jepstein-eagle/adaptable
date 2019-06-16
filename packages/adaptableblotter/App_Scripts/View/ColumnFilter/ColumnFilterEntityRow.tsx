@@ -4,7 +4,7 @@ import { ExpressionEntityRowProps } from '../Components/SharedProps/ConfigEntity
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { IColItem } from '../UIInterfaces';
-import { IColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
@@ -14,9 +14,9 @@ import { EntityRowItem } from '../Components/EntityRowItem';
 
 export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow>
   extends ExpressionEntityRowProps<AdvancedSearchEntityRow> {
-  onClear: (columnFilter: IColumnFilter) => void;
-  onSaveColumnFilterasUserFilter: (columnFilter: IColumnFilter) => void;
-  ColumnFilter: IColumnFilter;
+  onClear: (columnFilter: ColumnFilter) => void;
+  onSaveColumnFilterasUserFilter: (columnFilter: ColumnFilter) => void;
+  ColumnFilter: ColumnFilter;
   AccessLevel: AccessLevel;
 }
 

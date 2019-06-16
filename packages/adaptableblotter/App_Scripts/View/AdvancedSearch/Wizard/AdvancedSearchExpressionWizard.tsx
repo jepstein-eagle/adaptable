@@ -4,11 +4,11 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
 import { UIHelper } from '../../UIHelper';
-import { IAdvancedSearch } from '../../../PredefinedConfig/IUserState/AdvancedSearchState';
+import { AdvancedSearch } from '../../../PredefinedConfig/IUserState/AdvancedSearchState';
 
 export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage
   implements AdaptableWizardStep {
-  constructor(public props2: ExpressionWizardProps<IAdvancedSearch>) {
+  constructor(public props2: ExpressionWizardProps<AdvancedSearch>) {
     super(props2);
     this.Data = props2.Data;
     this.state = UIHelper.getExpressionBuilderState(props2.Data.Expression);

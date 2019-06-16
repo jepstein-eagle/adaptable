@@ -8,18 +8,18 @@ import { ISearchChangedInfo } from '../Interface/SearchChanged/ISearchChangedInf
 import { ISearchEventData } from '../Interface/SearchChanged/ISearchEventData';
 import { UserFilterState } from '../../PredefinedConfig/IUserState/UserFilterState';
 import { QuickSearchState } from '../../PredefinedConfig/IUserState/QuickSearchState';
-import { DataSourceState, IDataSource } from '../../PredefinedConfig/IUserState/DataSourceState';
+import { DataSourceState, DataSource } from '../../PredefinedConfig/IUserState/DataSourceState';
 import { ColumnFilterState } from '../../PredefinedConfig/IUserState/ColumnFilterState';
 import {
   AdvancedSearchState,
-  IAdvancedSearch,
+  AdvancedSearch,
 } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
 import StringExtensions from '../Extensions/StringExtensions';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
 import { LayoutHelper } from '../Helpers/LayoutHelper';
 import { IColumn } from '../Interface/IColumn';
-import { IColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
+import { ColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
 
 export class SearchService implements ISearchService {
   private blotter: IAdaptableBlotter;
@@ -29,7 +29,7 @@ export class SearchService implements ISearchService {
   private dataSourceState: DataSourceState;
   private quickSearchState: QuickSearchState;
   private userFilterState: UserFilterState;
-  private columnSorts: IColumnSort[];
+  private columnSorts: ColumnSort[];
   private columns: IColumn[];
 
   constructor(blotter: IAdaptableBlotter) {
@@ -151,7 +151,7 @@ export class SearchService implements ISearchService {
     return this.blotter.api.gridApi.getColumns();
   }
 
-  private getGridColumnSorts(): IColumnSort[] {
+  private getGridColumnSorts(): ColumnSort[] {
     return this.blotter.api.gridApi.getColumnSorts();
   }
 
@@ -162,8 +162,8 @@ export class SearchService implements ISearchService {
    */
   publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void {
     if (this.blotter.isInitialised) {
-      let currentDataSource: IDataSource = this.blotter.api.dataSourceApi.getCurrentDataSource();
-      let currentAdvancedSearch: IAdvancedSearch = this.blotter.api.advancedSearchApi.getCurrentAdvancedSearch();
+      let currentDataSource: DataSource = this.blotter.api.dataSourceApi.getCurrentDataSource();
+      let currentAdvancedSearch: AdvancedSearch = this.blotter.api.advancedSearchApi.getCurrentAdvancedSearch();
 
       // lets get the searchstate
       let blotterSearchState: IBlotterSearchState = {

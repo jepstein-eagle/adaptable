@@ -8,9 +8,9 @@ import {
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { IAlertDefinition } from '../../../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../../../PredefinedConfig/IUserState/AlertState';
 
-export interface AlertSelectQueryWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {}
+export interface AlertSelectQueryWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 export interface AlertSelectQueryWizardState {
   HasExpression: boolean;
 }

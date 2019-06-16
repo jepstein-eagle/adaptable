@@ -1,7 +1,7 @@
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { GridState } from '../../PredefinedConfig/ISystemState/GridState';
 import { ISelectedCellInfo } from '../../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { IColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
+import { ColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
 
 export interface IGridApi {
   getGridState(): GridState;
@@ -17,7 +17,7 @@ export interface IGridApi {
 
   getNumericColumns(): IColumn[];
 
-  getColumnSorts(): IColumnSort[];
+  getColumnSorts(): ColumnSort[];
 
   getSelectedCellInfo(): ISelectedCellInfo;
 }

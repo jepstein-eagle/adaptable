@@ -19,12 +19,12 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
-  onAddUserFilter: (UserFilter: IUserFilter) => UserFilterRedux.UserFilterAddAction;
-  onEditUserFilter: (UserFilter: IUserFilter) => UserFilterRedux.UserFilterEditAction;
+  onAddUserFilter: (UserFilter: UserFilter) => UserFilterRedux.UserFilterAddAction;
+  onEditUserFilter: (UserFilter: UserFilter) => UserFilterRedux.UserFilterEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -85,7 +85,7 @@ export class UserFilterSummaryComponent extends React.Component<
         {this.state.EditedAdaptableBlotterObject && (
           <UserFilterWizard
             cssClassName={cssWizardClassName}
-            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
+            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as UserFilter}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
@@ -114,7 +114,7 @@ export class UserFilterSummaryComponent extends React.Component<
     );
   }
 
-  getDescription(userFilter: IUserFilter): string {
+  getDescription(userFilter: UserFilter): string {
     if (!this.isColumnFilterable()) {
       return 'Column is not filterable';
     }
@@ -137,7 +137,7 @@ export class UserFilterSummaryComponent extends React.Component<
   }
 
   onNew() {
-    let configEntity: IUserFilter = ObjectFactory.CreateEmptyUserFilter();
+    let configEntity: UserFilter = ObjectFactory.CreateEmptyUserFilter();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
@@ -146,7 +146,7 @@ export class UserFilterSummaryComponent extends React.Component<
     });
   }
 
-  onEdit(UserFilter: IUserFilter) {
+  onEdit(UserFilter: UserFilter) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(UserFilter),
       WizardStartIndex: 1,
@@ -163,7 +163,7 @@ export class UserFilterSummaryComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter;
+    let userFilter = this.state.EditedAdaptableBlotterObject as UserFilter;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditUserFilter(userFilter);
     } else {
@@ -178,7 +178,7 @@ export class UserFilterSummaryComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter;
+    let userFilter = this.state.EditedAdaptableBlotterObject as UserFilter;
     return (
       StringExtensions.IsNotNullOrEmpty(userFilter.Name) &&
       StringExtensions.IsNotEmpty(userFilter.ColumnId) &&
@@ -197,9 +197,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddUserFilter: (UserFilter: IUserFilter) =>
+    onAddUserFilter: (UserFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterAdd(UserFilter)),
-    onEditUserFilter: (UserFilter: IUserFilter) =>
+    onEditUserFilter: (UserFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterEdit(UserFilter)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId)),

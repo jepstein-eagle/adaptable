@@ -46,7 +46,7 @@ import { UserFilterStrategy } from '../Strategy/UserFilterStrategy';
 import { ReminderStrategy } from '../Strategy/ReminderStrategy';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
-import { IPercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
+import { PercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -140,7 +140,7 @@ export class agGridHelper {
     return true;
   }
 
-  public createPercentBarCellRendererFunc(pcr: IPercentBar, blotterId: string): ICellRendererFunc {
+  public createPercentBarCellRendererFunc(pcr: PercentBar, blotterId: string): ICellRendererFunc {
     let showNegatives: boolean = pcr.MinValue < 0;
     let showPositives: boolean = pcr.MaxValue > 0;
 
@@ -225,7 +225,7 @@ export class agGridHelper {
     }
   }
 
-  public getRenderedValue(percentBars: IPercentBar[], colDef: ColDef, valueToRender: any): any {
+  public getRenderedValue(percentBars: PercentBar[], colDef: ColDef, valueToRender: any): any {
     let isRenderedColumn = ArrayExtensions.ContainsItem(percentBars, colDef.field);
     if (isRenderedColumn) {
       return valueToRender;

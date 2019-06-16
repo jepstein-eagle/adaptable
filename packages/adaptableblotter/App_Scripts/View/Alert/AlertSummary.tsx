@@ -18,13 +18,13 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AlertHelper } from '../../Utilities/Helpers/AlertHelper';
-import { IAlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComponent> {
-  Alerts: IAlertDefinition[];
-  onAddAlert: (Alert: IAlertDefinition) => AlertRedux.AlertDefinitionAddAction;
-  onEditAlert: (Alert: IAlertDefinition) => AlertRedux.AlertDefinitionEditAction;
+  Alerts: AlertDefinition[];
+  onAddAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionAddAction;
+  onEditAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -87,7 +87,7 @@ export class AlertSummaryComponent extends React.Component<
           <AlertWizard
             cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={
-              this.state.EditedAdaptableBlotterObject as IAlertDefinition
+              this.state.EditedAdaptableBlotterObject as AlertDefinition
             }
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
@@ -106,7 +106,7 @@ export class AlertSummaryComponent extends React.Component<
   }
 
   onNew() {
-    let configEntity: IAlertDefinition = ObjectFactory.CreateEmptyAlertDefinition();
+    let configEntity: AlertDefinition = ObjectFactory.CreateEmptyAlertDefinition();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
@@ -115,7 +115,7 @@ export class AlertSummaryComponent extends React.Component<
     });
   }
 
-  onEdit(Alert: IAlertDefinition) {
+  onEdit(Alert: AlertDefinition) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(Alert),
       WizardStartIndex: 1,
@@ -133,9 +133,9 @@ export class AlertSummaryComponent extends React.Component<
 
   onFinishWizard() {
     if (this.state.WizardStatus == WizardStatus.New) {
-      this.props.onAddAlert(this.state.EditedAdaptableBlotterObject as IAlertDefinition);
+      this.props.onAddAlert(this.state.EditedAdaptableBlotterObject as AlertDefinition);
     } else {
-      this.props.onEditAlert(this.state.EditedAdaptableBlotterObject as IAlertDefinition);
+      this.props.onEditAlert(this.state.EditedAdaptableBlotterObject as AlertDefinition);
     }
 
     this.setState({
@@ -146,7 +146,7 @@ export class AlertSummaryComponent extends React.Component<
   }
 
   canFinishWizard() {
-    //  let alertDefinition = this.state.EditedAdaptableBlotterObject as IAlertDefinition
+    //  let alertDefinition = this.state.EditedAdaptableBlotterObject as AlertDefinition
     return true;
   }
 }
@@ -163,8 +163,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddAlert: (Alert: IAlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(Alert)),
-    onEditAlert: (Alert: IAlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(Alert)),
+    onAddAlert: (Alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(Alert)),
+    onEditAlert: (Alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(Alert)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId)),
   };

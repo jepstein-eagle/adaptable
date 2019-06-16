@@ -5,7 +5,7 @@ import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ISelectedCellInfo } from '../../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { IColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
+import { ColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';
@@ -40,7 +40,7 @@ export interface GridSelectColumnAction extends Redux.Action {
 }
 
 export interface GridSetSortAction extends Redux.Action {
-  ColumnSorts: IColumnSort[];
+  ColumnSorts: ColumnSort[];
 }
 
 export interface GridSetBlotterRestrictionsAction extends Redux.Action {
@@ -92,7 +92,7 @@ export const GridSelectColumn = (ColumnId: string): GridSelectColumnAction => ({
   ColumnId,
 });
 
-export const GridSetSort = (ColumnSorts: IColumnSort[]): GridSetSortAction => ({
+export const GridSetSort = (ColumnSorts: ColumnSort[]): GridSetSortAction => ({
   type: GRID_SET_SORT,
   ColumnSorts,
 });

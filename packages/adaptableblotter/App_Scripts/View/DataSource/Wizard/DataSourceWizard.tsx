@@ -4,14 +4,14 @@ import { DataSourceSettingsWizard } from './DataSourceSettingsWizard';
 import { DataSourceSummaryWizard } from './DataSourceSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IDataSource } from '../../../PredefinedConfig/IUserState/DataSourceState';
+import { DataSource } from '../../../PredefinedConfig/IUserState/DataSourceState';
 
 export interface DataSourceWizardProps
   extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<DataSourceWizard> {}
 
 export class DataSourceWizard extends React.Component<DataSourceWizardProps, {}> {
   render() {
-    let dataSources: IDataSource[] = this.props.ConfigEntities as IDataSource[];
+    let dataSources: DataSource[] = this.props.ConfigEntities as DataSource[];
     let dataSourceNames: string[] = dataSources.map(s => s.Name);
     return (
       <div className={this.props.cssClassName}>

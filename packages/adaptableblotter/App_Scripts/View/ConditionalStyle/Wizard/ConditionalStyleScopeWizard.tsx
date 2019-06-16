@@ -14,13 +14,13 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IColumnCategory } from '../../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ColumnCategory } from '../../../PredefinedConfig/IUserState/ColumnCategoryState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { IConditionalStyle } from '../../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { ConditionalStyle } from '../../../PredefinedConfig/IUserState/ConditionalStyleState';
 
 export interface ConditionalStyleScopeWizardProps
-  extends AdaptableWizardStepProps<IConditionalStyle> {
-  ColumnCategories: Array<IColumnCategory>;
+  extends AdaptableWizardStepProps<ConditionalStyle> {
+  ColumnCategories: Array<ColumnCategory>;
 }
 
 export interface ConditionalStyleScopeWizardState {

@@ -1,4 +1,4 @@
-import { IReminder } from '../../../PredefinedConfig/IUserState/ReminderState';
+import { Reminder } from '../../../PredefinedConfig/IUserState/ReminderState';
 import * as React from 'react';
 import {
   Panel,
@@ -18,7 +18,7 @@ import { DayOfWeek, StateChangedTrigger } from '../../../PredefinedConfig/Common
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ISchedule } from '../../../PredefinedConfig/Common/ISchedule';
 
-export interface ReminderScheduleWizardProps extends AdaptableWizardStepProps<IReminder> {}
+export interface ReminderScheduleWizardProps extends AdaptableWizardStepProps<Reminder> {}
 
 export interface ReminderScheduleWizardState {
   IsRecurringDate: boolean;

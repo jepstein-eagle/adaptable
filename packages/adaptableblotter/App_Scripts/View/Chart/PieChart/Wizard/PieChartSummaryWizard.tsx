@@ -4,13 +4,13 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { IPieChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { PieChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../../Utilities/Interface/IKeyValuePair';
 import { WizardSummaryPage } from '../../../Components/WizardSummaryPage';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 
-export interface PieChartSummaryWizardProps extends AdaptableWizardStepProps<IPieChartDefinition> {}
+export interface PieChartSummaryWizardProps extends AdaptableWizardStepProps<PieChartDefinition> {}
 
 export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizardProps, {}>
   implements AdaptableWizardStep {

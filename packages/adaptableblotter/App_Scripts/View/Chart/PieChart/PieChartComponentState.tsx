@@ -1,14 +1,14 @@
 import {
-  IPieChartProperties,
-  IPieChartDataItem,
+  PieChartProperties,
+  PieChartDataItem,
 } from '../../../PredefinedConfig/IUserState/ChartState';
 import { SliceSortOption } from '../../../PredefinedConfig/Common/ChartEnums';
 
 export interface PieChartComponentState {
-  DataSource: IPieChartDataItem[];
+  DataSource: PieChartDataItem[];
 
   IsChartSettingsVisible: boolean;
-  ChartProperties: IPieChartProperties;
+  ChartProperties: PieChartProperties;
   IsGeneralMinimised: boolean;
   SliceBrushes: string[];
   SliceSortOption: SliceSortOption;

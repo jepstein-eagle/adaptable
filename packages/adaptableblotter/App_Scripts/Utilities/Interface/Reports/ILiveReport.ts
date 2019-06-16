@@ -1,8 +1,8 @@
 import { ExportDestination } from '../../../PredefinedConfig/Common/Enums';
-import { IReport } from '../../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../../PredefinedConfig/IUserState/ExportState';
 
 export interface ILiveReport {
   WorkbookName: string;
-  Report: IReport;
+  Report: Report;
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull;
 }

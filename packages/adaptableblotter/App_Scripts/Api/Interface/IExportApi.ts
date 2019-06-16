@@ -1,10 +1,10 @@
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import { ExportState, IReport } from '../../PredefinedConfig/IUserState/ExportState';
+import { ExportState, Report } from '../../PredefinedConfig/IUserState/ExportState';
 
 export interface IExportApi {
   getExportState(): ExportState;
-  getCurrentReport(): IReport;
+  getCurrentReport(): Report;
   getCurrentReportName(): string;
-  getAllReports(): IReport[];
+  getAllReports(): Report[];
   sendReport(reportName: string, destination: ExportDestination): void;
 }

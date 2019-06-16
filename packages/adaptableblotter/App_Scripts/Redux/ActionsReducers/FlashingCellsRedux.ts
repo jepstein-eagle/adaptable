@@ -1,6 +1,6 @@
 import {
   FlashingCellState,
-  IFlashingCell,
+  FlashingCell,
 } from '../../PredefinedConfig/IUserState/FlashingCellState';
 import * as Redux from 'redux';
 import {
@@ -17,37 +17,37 @@ export const FLASHING_CELL_CHANGE_DOWN_COLOR = 'FLASHING_CELL_CHANGE_DOWN_COLOR'
 export const FLASHING_CELL_CHANGE_DURATION = 'FLASHING_CELL_CHANGE_DURATION';
 
 export interface FlashingCellSelectAction extends Redux.Action {
-  FlashingCell: IFlashingCell;
+  FlashingCell: FlashingCell;
 }
 
 export interface FlashingCellSelectAllAction extends Redux.Action {
-  FlashingCells: IFlashingCell[];
+  FlashingCells: FlashingCell[];
   shouldTurnOn: boolean;
 }
 
 export interface FlashingCellChangeDurationAction extends Redux.Action {
-  FlashingCell: IFlashingCell;
+  FlashingCell: FlashingCell;
   NewFlashDuration: number;
 }
 
 export interface FlashingCellChangeUpColorAction extends Redux.Action {
-  FlashingCell: IFlashingCell;
+  FlashingCell: FlashingCell;
   UpColor: string;
 }
 
 export interface FlashingCellChangeDownColorAction extends Redux.Action {
-  FlashingCell: IFlashingCell;
+  FlashingCell: FlashingCell;
   DownColor: string;
 }
 
-export const FlashingCellSelect = (FlashingCell: IFlashingCell): FlashingCellSelectAction => ({
+export const FlashingCellSelect = (FlashingCell: FlashingCell): FlashingCellSelectAction => ({
   type: FLASHING_CELL_SELECT,
   FlashingCell,
 });
 
 export const FlashingCellSelectAll = (
   shouldTurnOn: boolean,
-  FlashingCells: IFlashingCell[]
+  FlashingCells: FlashingCell[]
 ): FlashingCellSelectAllAction => ({
   type: FLASHING_CELL_SELECT_ALL,
   shouldTurnOn,
@@ -55,7 +55,7 @@ export const FlashingCellSelectAll = (
 });
 
 export const FlashingCellChangeDuration = (
-  FlashingCell: IFlashingCell,
+  FlashingCell: FlashingCell,
   NewFlashDuration: number
 ): FlashingCellChangeDurationAction => ({
   type: FLASHING_CELL_CHANGE_DURATION,
@@ -64,7 +64,7 @@ export const FlashingCellChangeDuration = (
 });
 
 export const FlashingCellChangeUpColor = (
-  FlashingCell: IFlashingCell,
+  FlashingCell: FlashingCell,
   UpColor: string
 ): FlashingCellChangeUpColorAction => ({
   type: FLASHING_CELL_CHANGE_UP_COLOR,
@@ -73,7 +73,7 @@ export const FlashingCellChangeUpColor = (
 });
 
 export const FlashingCellChangeDownColor = (
-  FlashingCell: IFlashingCell,
+  FlashingCell: FlashingCell,
   DownColor: string
 ): FlashingCellChangeDownColorAction => ({
   type: FLASHING_CELL_CHANGE_DOWN_COLOR,
@@ -95,7 +95,7 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
   switch (action.type) {
     case FLASHING_CELL_SELECT: {
       let selectedFlashingCell = (<FlashingCellSelectAction>action).FlashingCell;
-      let items: Array<IFlashingCell> = [].concat(state.FlashingCells);
+      let items: Array<FlashingCell> = [].concat(state.FlashingCells);
       selectedFlashingCell = Object.assign({}, selectedFlashingCell, {
         IsLive: !selectedFlashingCell.IsLive,
       });
@@ -111,9 +111,9 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
       });
     }
     case FLASHING_CELL_SELECT_ALL: {
-      let flashingCells: Array<IFlashingCell> = (<FlashingCellSelectAllAction>action).FlashingCells;
+      let flashingCells: Array<FlashingCell> = (<FlashingCellSelectAllAction>action).FlashingCells;
       let shouldTurnOn = (<FlashingCellSelectAllAction>action).shouldTurnOn;
-      let items: Array<IFlashingCell> = [].concat(state.FlashingCells);
+      let items: Array<FlashingCell> = [].concat(state.FlashingCells);
       flashingCells.forEach(column => {
         let index = items.findIndex(i => i.ColumnId == column.ColumnId);
         if (index != -1) {
@@ -130,7 +130,7 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
     case FLASHING_CELL_CHANGE_DURATION: {
       let actionTyped = <FlashingCellChangeDurationAction>action;
       let flashingCell = actionTyped.FlashingCell;
-      let items: Array<IFlashingCell> = [].concat(state.FlashingCells);
+      let items: Array<FlashingCell> = [].concat(state.FlashingCells);
       let index = items.findIndex(i => i == flashingCell);
       if (index != -1) {
         // it exists
@@ -150,7 +150,7 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
     case FLASHING_CELL_CHANGE_UP_COLOR: {
       let actionTyped = <FlashingCellChangeUpColorAction>action;
       let flashingCell = actionTyped.FlashingCell;
-      let items: Array<IFlashingCell> = [].concat(state.FlashingCells);
+      let items: Array<FlashingCell> = [].concat(state.FlashingCells);
       let index = items.findIndex(i => i == flashingCell);
       if (index != -1) {
         // it exists
@@ -166,7 +166,7 @@ export const FlashingCellReducer: Redux.Reducer<FlashingCellState> = (
     case FLASHING_CELL_CHANGE_DOWN_COLOR: {
       let actionTyped = <FlashingCellChangeDownColorAction>action;
       let flashingCell = actionTyped.FlashingCell;
-      let items: Array<IFlashingCell> = [].concat(state.FlashingCells);
+      let items: Array<FlashingCell> = [].concat(state.FlashingCells);
       let index = items.findIndex(i => i == flashingCell);
       if (index != -1) {
         // it exists

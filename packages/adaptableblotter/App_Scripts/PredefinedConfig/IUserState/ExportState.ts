@@ -6,19 +6,19 @@ import { ISchedule } from '../Common/ISchedule';
 
 export interface ExportState extends IUserState {
   CurrentReport?: string;
-  Reports?: IReport[];
+  Reports?: Report[];
 }
 
-export interface IReport extends IAdaptableBlotterObject {
+export interface Report extends IAdaptableBlotterObject {
   Name: string;
   ReportColumnScope: 'AllColumns' | 'VisibleColumns' | 'SelectedColumns' | 'BespokeColumns';
   ReportRowScope: 'AllRows' | 'VisibleRows' | 'SelectedRows' | 'ExpressionRows';
   ColumnIds?: string[];
   Expression?: Expression;
-  AutoExport?: IAutoExport;
+  AutoExport?: AutoExport;
 }
 
-export interface IAutoExport extends IAdaptableBlotterObject {
+export interface AutoExport extends IAdaptableBlotterObject {
   Schedule: ISchedule;
   ExportDestination: ExportDestination;
 }

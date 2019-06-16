@@ -16,7 +16,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
 import { Label } from 'react-bootstrap';
 import { ActiveFiltersPanel } from './ActiveFiltersPanel';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
@@ -24,7 +24,7 @@ import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 import { SUCCESS_BSSTYLE, DEFAULT_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { ButtonHide } from '../Components/Buttons/ButtonHide';
 import { ButtonShow } from '../Components/Buttons/ButtonShow';
-import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
 import { IEntitlement } from '../../PredefinedConfig/IDesignTimeState/EntitlementsState';
 
 interface ColumnFilterToolbarControlComponentProps
@@ -34,9 +34,9 @@ interface ColumnFilterToolbarControlComponentProps
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
   onHideQuickFilterBar: () => GridRedux.QuickFilterBarHideAction;
   onShowQuickFilterBar: () => GridRedux.QuickFilterBarShowAction;
-  ColumnFilters: IColumnFilter[];
+  ColumnFilters: ColumnFilter[];
   Columns: IColumn[];
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   Entitlements: IEntitlement[];
   IsQuickFilterActive: boolean;
 }
@@ -59,8 +59,8 @@ class ColumnFilterToolbarControlComponent extends React.Component<
         Columns={this.props.Columns}
         ColumnFilters={this.props.ColumnFilters}
         AccessLevel={this.props.AccessLevel}
-        onClear={(columnFilter: IColumnFilter) => this.onClearColumnFilter(columnFilter)}
-        onSaveColumnFilterasUserFilter={(columnFilter: IColumnFilter) =>
+        onClear={(columnFilter: ColumnFilter) => this.onClearColumnFilter(columnFilter)}
+        onSaveColumnFilterasUserFilter={(columnFilter: ColumnFilter) =>
           this.onSaveColumnFilterasUserFilter(columnFilter)
         }
       />
@@ -155,12 +155,12 @@ class ColumnFilterToolbarControlComponent extends React.Component<
     this.props.Blotter.clearGridFiltering();
   }
 
-  private onClearColumnFilter(columnFilter: IColumnFilter) {
+  private onClearColumnFilter(columnFilter: ColumnFilter) {
     this.props.onClearColumnFilter(columnFilter.ColumnId);
     this.props.Blotter.clearColumnFiltering([columnFilter.ColumnId]);
   }
 
-  private onSaveColumnFilterasUserFilter(columnFilter: IColumnFilter): void {
+  private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {
     let prompt: IUIPrompt = {
       Header: 'Enter name for User Filter',
       Msg: '',

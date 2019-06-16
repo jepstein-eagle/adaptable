@@ -3,7 +3,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { ICategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { CategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
 import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
 import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from 'react-bootstrap';
@@ -15,7 +15,7 @@ import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtension
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 
 export interface CategoryChartXAxisWizardProps
-  extends AdaptableWizardStepProps<ICategoryChartDefinition> {}
+  extends AdaptableWizardStepProps<CategoryChartDefinition> {}
 
 export interface CategoryChartXAxisWizardState {
   XAxisColumnId: string;

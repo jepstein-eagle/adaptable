@@ -8,11 +8,11 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
-import { IColumnCategory } from '../../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ColumnCategory } from '../../../PredefinedConfig/IUserState/ColumnCategoryState';
 
 export interface ColumnCategorySettingsWizardProps
-  extends AdaptableWizardStepProps<IColumnCategory> {
-  ColumnCategorys: IColumnCategory[];
+  extends AdaptableWizardStepProps<ColumnCategory> {
+  ColumnCategorys: ColumnCategory[];
 }
 
 export interface ColumnCategorySettingsWizardState {

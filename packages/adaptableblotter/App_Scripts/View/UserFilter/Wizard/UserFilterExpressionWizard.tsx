@@ -4,11 +4,11 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
 import { UIHelper } from '../../UIHelper';
-import { IUserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
 
 export class UserFilterExpressionWizard extends ExpressionBuilderPage
   implements AdaptableWizardStep {
-  constructor(private props2: ExpressionWizardProps<IUserFilter>) {
+  constructor(private props2: ExpressionWizardProps<UserFilter>) {
     super(props2);
     this.Data = props2.Data;
     this.state = UIHelper.getExpressionBuilderStateWithColumn(

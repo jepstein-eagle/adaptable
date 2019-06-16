@@ -8,9 +8,9 @@ import {
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { IFormatColumn } from '../../../PredefinedConfig/IUserState/FormatColumnState';
+import { FormatColumn } from '../../../PredefinedConfig/IUserState/FormatColumnState';
 
-export interface FormatColumnScopeWizardProps extends AdaptableWizardStepProps<IFormatColumn> {}
+export interface FormatColumnScopeWizardProps extends AdaptableWizardStepProps<FormatColumn> {}
 
 export interface FormatColumnScopeWizardState {
   ColumnId: string;

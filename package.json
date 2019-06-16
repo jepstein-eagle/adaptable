@@ -28,7 +28,7 @@
     "build-react": "npm run --prefix packages/adaptableblotter-react-aggrid build",
     "build-angular": "npm run --prefix packages/adaptableblotter-ng-aggrid build",
     "build": "npm run build-core && npm run build-react && npm run build-angular",
-    "build-apidoc": "typedoc --out ./apidoc ./packages/adaptableblotter/App_Scripts  --ignoreCompilerErrors --exclude node_modules ./packages/adaptableblotter/App_Scripts/agGrid ./packages/adaptableblotter/App_Scripts/fonts ./packages/adaptableblotter/App_Scripts/Hypergrid ./packages/adaptableblotter/App_Scripts/View --mode modules"
+    "build-apidoc": "typedoc --readme ./helpdocs/Readme.md  --name 'Adaptable Blotter Code Documentation' --out ./apidoc ./packages/adaptableblotter/App_Scripts --exclude './packages/adaptableblotter/App_Scripts/agGrid'   --ignoreCompilerErrors  --mode modules"
   },
   "husky": {
     "hooks": {

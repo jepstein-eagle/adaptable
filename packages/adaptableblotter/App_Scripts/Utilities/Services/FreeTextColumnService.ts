@@ -3,8 +3,8 @@ import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 import { IAdaptableBlotter } from '../../types';
 import {
-  IFreeTextColumn,
-  IFreeTextStoredValue,
+  FreeTextColumn,
+  FreeTextStoredValue,
 } from '../../PredefinedConfig/IUserState/FreeTextColumnState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 
@@ -13,14 +13,14 @@ export class FreeTextColumnService implements IFreeTextColumnService {
     this.blotter = blotter;
   }
 
-  GetFreeTextValue(freeTextColumn: IFreeTextColumn, record: any): any {
+  GetFreeTextValue(freeTextColumn: FreeTextColumn, record: any): any {
     try {
       if (this.blotter.isGroupRecord(record)) {
         return null;
       }
       if (ArrayExtensions.IsNotNullOrEmpty(freeTextColumn.FreeTextStoredValues)) {
         let pkValue: any = this.blotter.getPrimaryKeyValueFromRecord(record);
-        let freeTextStoredValue: IFreeTextStoredValue = freeTextColumn.FreeTextStoredValues.find(
+        let freeTextStoredValue: FreeTextStoredValue = freeTextColumn.FreeTextStoredValues.find(
           fdx => fdx.PrimaryKey == pkValue
         );
         if (freeTextStoredValue) {
@@ -35,11 +35,11 @@ export class FreeTextColumnService implements IFreeTextColumnService {
   }
 
   CheckIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedInfo): void {
-    let freeTextColumn: IFreeTextColumn = this.blotter.api.freeTextColumnApi
+    let freeTextColumn: FreeTextColumn = this.blotter.api.freeTextColumnApi
       .getAllFreeTextColumn()
       .find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
     if (freeTextColumn) {
-      let freeTextStoredValue: IFreeTextStoredValue = {
+      let freeTextStoredValue: FreeTextStoredValue = {
         PrimaryKey: dataChangedEvent.IdentifierValue,
         FreeText: dataChangedEvent.NewValue,
       };

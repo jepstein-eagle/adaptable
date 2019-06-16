@@ -7,9 +7,9 @@ import {
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IAlertDefinition } from '../../../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../../../PredefinedConfig/IUserState/AlertState';
 
-export interface AlertTypeWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {}
+export interface AlertTypeWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 
 export interface AlertTypeWizardState {
   MessageType: MessageType;

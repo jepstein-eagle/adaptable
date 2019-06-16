@@ -16,7 +16,7 @@ import {
 } from '../Common/ChartEnums';
 import { Expression } from '../Common/Expression/Expression';
 export interface ChartState extends IUserState {
-  ChartDefinitions?: IChartDefinition[];
+  ChartDefinitions?: ChartDefinition[];
   CurrentChartName?: string;
   RefreshRate?: number;
 }
@@ -27,32 +27,32 @@ export interface ChartState extends IUserState {
  * These chart properties are specialised for each chart type: they are all nullable types because we use defaults in the DefaultXXXProperties that we assign
  */
 
-export interface IChartDefinition extends IAdaptableBlotterObject {
+export interface ChartDefinition extends IAdaptableBlotterObject {
   Name: string;
   Description: string;
-  ChartProperties: IChartProperties;
+  ChartProperties: ChartProperties;
   ChartType: ChartType;
   VisibleRowsOnly: boolean;
 }
 
-export interface IChartProperties extends IAdaptableBlotterObject {
+export interface ChartProperties extends IAdaptableBlotterObject {
   // empty inteface that is overriden for each individual chart type
 }
 
-export interface IPieChartDefinition extends IChartDefinition {
+export interface PieChartDefinition extends ChartDefinition {
   PrimaryColumnId: string;
   SecondaryColumnId?: string;
   SecondaryColumnOperation: 'Sum' | 'Count';
 }
 
-export interface ICategoryChartDefinition extends IChartDefinition {
+export interface CategoryChartDefinition extends ChartDefinition {
   YAxisColumnIds: string[];
   YAxisTotal: 'Sum' | 'Average';
   XAxisColumnId: string;
   XAxisExpression?: Expression;
 }
 
-export interface IPieChartProperties extends IChartProperties {
+export interface PieChartProperties extends ChartProperties {
   OthersCategoryThreshold?: number;
   OthersCategoryType?: OthersCategoryType;
   PieChartLabelPosition?: PieChartLabelPosition;
@@ -62,7 +62,7 @@ export interface IPieChartProperties extends IChartProperties {
   ShowAsDoughnut?: boolean;
 }
 
-export interface ICategoryChartProperties extends IChartProperties {
+export interface CategoryChartProperties extends ChartProperties {
   // General
   CategoryChartType?: CategoryChartType;
   SeriesThickness?: number; // and bind it to
@@ -112,7 +112,7 @@ export interface ICategoryChartProperties extends IChartProperties {
   EnableItemHighlighting?: boolean;
 }
 
-export interface IPieChartDataItem {
+export interface PieChartDataItem {
   Name: string;
   Value: any; // ?? number?
   Ratio: number;
@@ -121,7 +121,7 @@ export interface IPieChartDataItem {
   ErrorMessage?: string;
 }
 
-export interface IChartData {
+export interface ChartData {
   Data: any;
   ErrorMessage: string;
 }

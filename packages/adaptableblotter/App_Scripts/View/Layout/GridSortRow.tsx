@@ -8,10 +8,10 @@ import { SelectionMode, SortOrder, AccessLevel } from '../../PredefinedConfig/Co
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { IColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
+import { ColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
 
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {
-  ColumnSort: IColumnSort;
+  ColumnSort: ColumnSort;
   onColumnSortColumnChanged: (column: IColumn) => void;
   onColumnSortOrderChanged: (sortOrder: SortOrder) => void;
   onDeleteColumnSort: () => void;

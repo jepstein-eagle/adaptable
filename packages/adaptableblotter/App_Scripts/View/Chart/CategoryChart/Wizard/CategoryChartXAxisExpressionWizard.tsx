@@ -3,12 +3,12 @@ import {
   AdaptableWizardStep,
   ExpressionWizardProps,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { ICategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { CategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
 import { UIHelper } from '../../../UIHelper';
 
 export class CategoryChartXAxisExpressionWizard extends ExpressionBuilderPage
   implements AdaptableWizardStep {
-  constructor(private props2: ExpressionWizardProps<ICategoryChartDefinition>) {
+  constructor(private props2: ExpressionWizardProps<CategoryChartDefinition>) {
     super(props2);
     this.Data = props2.Data;
     this.state = UIHelper.getExpressionBuilderStateWithColumn(

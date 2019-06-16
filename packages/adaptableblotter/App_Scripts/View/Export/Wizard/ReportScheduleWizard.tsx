@@ -1,4 +1,4 @@
-import { IReport, IAutoExport } from '../../../PredefinedConfig/IUserState/ExportState';
+import { Report, AutoExport } from '../../../PredefinedConfig/IUserState/ExportState';
 import * as React from 'react';
 import {
   Panel,
@@ -24,7 +24,7 @@ import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ISchedule } from '../../../PredefinedConfig/Common/ISchedule';
 
-export interface ReportScheduleWizardProps extends AdaptableWizardStepProps<IReport> {}
+export interface ReportScheduleWizardProps extends AdaptableWizardStepProps<Report> {}
 
 export interface ReportScheduleWizardState {
   HasAutoExport: boolean;
@@ -41,7 +41,7 @@ export class ReportScheduleWizard
   implements AdaptableWizardStep {
   constructor(props: ReportScheduleWizardProps) {
     super(props);
-    let autoExport: IAutoExport = this.props.Data.AutoExport
+    let autoExport: AutoExport = this.props.Data.AutoExport
       ? this.props.Data.AutoExport
       : ObjectFactory.CreateEmptyAutoExport();
 
@@ -393,7 +393,7 @@ export class ReportScheduleWizard
         DaysOfWeek: this.state.IsRecurringDate ? this.state.DaysOfWeek : [],
       };
 
-      let autoExport: IAutoExport = {
+      let autoExport: AutoExport = {
         Schedule: schedule,
         ExportDestination: this.state.ExportDestination,
       };

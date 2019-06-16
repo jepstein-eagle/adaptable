@@ -11,11 +11,11 @@ import { DualListBoxEditor } from '../Components/ListBox/DualListBoxEditor';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IMasterChildren } from '../../Utilities/Interface/IMasterChildren';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {
   onNewColumnListOrder: (VisibleColumnList: IColumn[]) => SystemRedux.SetNewColumnListOrderAction;
-  ColumnCategories: Array<IColumnCategory>;
+  ColumnCategories: Array<ColumnCategory>;
 }
 
 class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProps, {}> {

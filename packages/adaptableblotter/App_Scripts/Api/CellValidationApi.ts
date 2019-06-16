@@ -3,7 +3,7 @@ import { ApiBase } from './ApiBase';
 import { ICellValidationApi } from './Interface/ICellValidationApi';
 import {
   CellValidationState,
-  ICellValidationRule,
+  CellValidationRule,
 } from '../PredefinedConfig/IUserState/CellValidationState';
 
 export class CellValidationApi extends ApiBase implements ICellValidationApi {
@@ -11,15 +11,15 @@ export class CellValidationApi extends ApiBase implements ICellValidationApi {
     return this.getBlotterState().CellValidation;
   }
 
-  public getAllCellValidation(): ICellValidationRule[] {
+  public getAllCellValidation(): CellValidationRule[] {
     return this.getCellValidationState().CellValidations;
   }
 
-  public addCellValidation(cellValidationRule: ICellValidationRule): void {
+  public addCellValidation(cellValidationRule: CellValidationRule): void {
     this.dispatchAction(CellValidationRedux.CellValidationAdd(cellValidationRule));
   }
 
-  public deleteCellValidation(cellValidationRule: ICellValidationRule): void {
+  public deleteCellValidation(cellValidationRule: CellValidationRule): void {
     this.dispatchAction(CellValidationRedux.CellValidationDelete(cellValidationRule));
   }
 }

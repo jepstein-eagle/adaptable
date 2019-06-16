@@ -1,13 +1,13 @@
 import { IUserState } from './IUserState';
 import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 export interface ShortcutState extends IUserState {
-  Shortcuts?: IShortcut[];
+  Shortcuts?: Shortcut[];
 }
 
 /**
  * Used to define a Keyboard Shortcut as used in the Shortcuts function
  */
-export interface IShortcut extends IAdaptableBlotterObject {
+export interface Shortcut extends IAdaptableBlotterObject {
   /**
    * Key which when pressed on keyboard triggers the shortcut
    */

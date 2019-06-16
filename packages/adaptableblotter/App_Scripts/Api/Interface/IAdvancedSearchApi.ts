@@ -1,6 +1,6 @@
 import {
   AdvancedSearchState,
-  IAdvancedSearch,
+  AdvancedSearch,
 } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
 
 export interface IAdvancedSearchApi {
@@ -30,21 +30,21 @@ export interface IAdvancedSearchApi {
    * Adds a new Advanced Search to the State
    * @param advancedSearch advanced search to add
    */
-  addAdvancedSearch(advancedSearch: IAdvancedSearch): void;
+  addAdvancedSearch(advancedSearch: AdvancedSearch): void;
 
   /**
    * Updates an existing Advanced Search with the provided object
    * @param advancedSearch
    */
-  editAdvancedSearch(advancedSearch: IAdvancedSearch): void;
+  editAdvancedSearch(advancedSearch: AdvancedSearch): void;
 
   /**
    *
    * @param advancedSearchName
    */
   deleteAdvancedSearch(advancedSearchName: string): void;
-  getCurrentAdvancedSearch(): IAdvancedSearch;
+  getCurrentAdvancedSearch(): AdvancedSearch;
   getCurrentAdvancedSearchName(): string;
-  getAdvancedSearchByName(advancedSearchName: string): IAdvancedSearch | undefined;
-  getAllAdvancedSearch(): IAdvancedSearch[];
+  getAdvancedSearchByName(advancedSearchName: string): AdvancedSearch | undefined;
+  getAllAdvancedSearch(): AdvancedSearch[];
 }

@@ -15,12 +15,12 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { ICellValidationRule } from '../../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../../PredefinedConfig/IUserState/CellValidationState';
 import { IRange } from '../../../PredefinedConfig/Common/Expression/IRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
 export interface CellValidationRulesWizardProps
-  extends AdaptableWizardStepProps<ICellValidationRule> {}
+  extends AdaptableWizardStepProps<CellValidationRule> {}
 export interface CellValidationSettingsWizardState {
   Operator: LeafExpressionOperator;
   Operand1: string;

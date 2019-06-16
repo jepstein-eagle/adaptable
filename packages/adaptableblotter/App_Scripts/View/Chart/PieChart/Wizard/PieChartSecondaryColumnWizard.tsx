@@ -3,7 +3,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { IPieChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { PieChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
 import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from 'react-bootstrap';
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
@@ -15,7 +15,7 @@ import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensi
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 
 export interface PieChartSecondaryColumnWizardProps
-  extends AdaptableWizardStepProps<IPieChartDefinition> {}
+  extends AdaptableWizardStepProps<PieChartDefinition> {}
 
 export interface PieChartSecondaryColumnWizardState {
   SecondaryColumnId?: string;

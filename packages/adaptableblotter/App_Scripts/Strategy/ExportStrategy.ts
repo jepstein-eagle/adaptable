@@ -10,7 +10,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { ReportHelper } from '../Utilities/Helpers/ReportHelper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash';
-import { ExportState, IReport } from '../PredefinedConfig/IUserState/ExportState';
+import { ExportState, Report } from '../PredefinedConfig/IUserState/ExportState';
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -220,7 +220,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   public Export(
-    report: IReport,
+    report: Report,
     exportDestination: ExportDestination,
     folder?: string,
     page?: string
@@ -260,7 +260,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
   }
 
-  private convertReportToCsv(report: IReport): void {
+  private convertReportToCsv(report: Report): void {
     let csvContent: string = this.createCSVContent(report);
     if (csvContent) {
       let csvFileName: string = report.Name + '.csv';
@@ -268,14 +268,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
   }
 
-  private copyToClipboard(report: IReport) {
+  private copyToClipboard(report: Report) {
     let csvContent: string = this.createTabularContent(report);
     if (csvContent) {
       Helper.copyToClipboard(csvContent);
     }
   }
 
-  private createCSVContent(report: IReport): string {
+  private createCSVContent(report: Report): string {
     let ReportAsArray: any[] = this.ConvertReportToArray(report);
     if (ReportAsArray) {
       return Helper.convertArrayToCsv(ReportAsArray, ',');
@@ -283,7 +283,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     return null;
   }
 
-  private createTabularContent(report: IReport): string {
+  private createTabularContent(report: Report): string {
     let ReportAsArray: any[] = this.ConvertReportToArray(report);
     if (ReportAsArray) {
       return Helper.convertArrayToCsv(ReportAsArray, '\t');
@@ -292,7 +292,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   // Converts a Report into an array of array - first array is the column names and subsequent arrays are the values
-  private ConvertReportToArray(report: IReport): any[] {
+  private ConvertReportToArray(report: Report): any[] {
     let actionReturnObj = ReportHelper.ConvertReportToArray(this.blotter, report);
     if (actionReturnObj.Alert) {
       // assume that the MessageType is error - if not then refactor
@@ -309,7 +309,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     this.blotter.ScheduleService.ClearAllExportJobs();
 
     this.blotter.adaptableBlotterStore.TheStore.getState().Export.Reports.forEach(
-      (report: IReport) => {
+      (report: Report) => {
         if (report.AutoExport) {
           this.blotter.ScheduleService.AddReportSchedule(report);
         }

@@ -15,12 +15,12 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
 import { IEntitlement } from '../../PredefinedConfig/IDesignTimeState/EntitlementsState';
 
 export interface ColumnFilterSummaryProps
   extends StrategySummaryProps<ColumnFilterSummaryComponent> {
-  ColumnFilters: IColumnFilter[];
+  ColumnFilters: ColumnFilter[];
   onClearFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
   Entitlements: IEntitlement[];
@@ -37,7 +37,7 @@ export class ColumnFilterSummaryComponent extends React.Component<
 
   render(): any {
     let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__columnfilter';
-    let columnFilter: IColumnFilter = this.props.ColumnFilters.find(
+    let columnFilter: ColumnFilter = this.props.ColumnFilters.find(
       c => c.ColumnId == this.props.SummarisedColumn.ColumnId
     );
     let description: string = this.getDescription(columnFilter);
@@ -69,7 +69,7 @@ export class ColumnFilterSummaryComponent extends React.Component<
     return <SummaryRowItem cssClassName={cssWizardClassName} SummaryItems={summaryItems} />;
   }
 
-  getDescription(columnFilter: IColumnFilter): string {
+  getDescription(columnFilter: ColumnFilter): string {
     if (this.props.SummarisedColumn && !this.props.SummarisedColumn.Filterable) {
       return 'Column is not filterable';
     }

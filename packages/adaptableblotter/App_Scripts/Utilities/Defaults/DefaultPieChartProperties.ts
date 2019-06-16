@@ -4,9 +4,9 @@ import {
   SliceSortOption,
   OthersCategoryType,
 } from '../../PredefinedConfig/Common/ChartEnums';
-import { IPieChartProperties } from '../../PredefinedConfig/IUserState/ChartState';
+import { PieChartProperties } from '../../PredefinedConfig/IUserState/ChartState';
 
-export const DefaultPieChartProperties: IPieChartProperties = {
+export const DefaultPieChartProperties: PieChartProperties = {
   OthersCategoryThreshold: 2,
   OthersCategoryType: OthersCategoryType.Percent,
   PieChartLabelPosition: PieChartLabelPosition.BestFit,

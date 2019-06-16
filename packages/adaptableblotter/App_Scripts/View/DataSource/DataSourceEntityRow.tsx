@@ -4,17 +4,17 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { IDataSource } from '../../PredefinedConfig/IUserState/DataSourceState';
+import { DataSource } from '../../PredefinedConfig/IUserState/DataSourceState';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
 export interface DataSourceEntityRowProps extends SharedEntityRowProps<DataSourceEntityRow> {
-  onChangeName: (DataSource: IDataSource, Name: string) => void;
-  onChangeDescription: (DataSource: IDataSource, Description: string) => void;
+  onChangeName: (DataSource: DataSource, Name: string) => void;
+  onChangeDescription: (DataSource: DataSource, Description: string) => void;
 }
 
 export class DataSourceEntityRow extends React.Component<DataSourceEntityRowProps, {}> {
   render(): any {
-    let dataSource: IDataSource = this.props.AdaptableBlotterObject as IDataSource;
+    let dataSource: DataSource = this.props.AdaptableBlotterObject as DataSource;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     // put in the ability to change name / description later...
@@ -37,11 +37,11 @@ export class DataSourceEntityRow extends React.Component<DataSourceEntityRowProp
 
   onDescriptionChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onChangeDescription(this.props.AdaptableBlotterObject as IDataSource, e.value);
+    this.props.onChangeDescription(this.props.AdaptableBlotterObject as DataSource, e.value);
   }
 
   onNameChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onChangeName(this.props.AdaptableBlotterObject as IDataSource, e.value);
+    this.props.onChangeName(this.props.AdaptableBlotterObject as DataSource, e.value);
   }
 }

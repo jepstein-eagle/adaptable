@@ -5,11 +5,11 @@ import { ColumnCategoryColumnsWizard } from './ColumnCategoryColumnsWizard';
 import { ColumnCategorySummaryWizard } from './ColumnCategorySummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumnCategory } from '../../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ColumnCategory } from '../../../PredefinedConfig/IUserState/ColumnCategoryState';
 
 export interface ColumnCategoryWizardProps
   extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ColumnCategoryWizard> {
-  ColumnCategorys: IColumnCategory[];
+  ColumnCategorys: ColumnCategory[];
 }
 
 export class ColumnCategoryWizard extends React.Component<ColumnCategoryWizardProps, {}> {

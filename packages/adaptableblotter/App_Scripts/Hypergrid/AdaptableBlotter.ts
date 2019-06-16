@@ -98,13 +98,13 @@ import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { SearchService } from '../Utilities/Services/SearchService';
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { IColumnSort, IVendorGridInfo } from '../PredefinedConfig/IUserState/LayoutState';
+import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/IUserState/LayoutState';
 import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
-import { ICalculatedColumn } from '../PredefinedConfig/IUserState/CalculatedColumnState';
-import { IFreeTextColumn } from '../PredefinedConfig/IUserState/FreeTextColumnState';
+import { CalculatedColumn } from '../PredefinedConfig/IUserState/CalculatedColumnState';
+import { FreeTextColumn } from '../PredefinedConfig/IUserState/FreeTextColumnState';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
-import { ICellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
-import { IPercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
+import { CellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
+import { PercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
@@ -865,7 +865,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public setCustomSort(columnId: string): void {
     //nothing to do except the reindex so the CustomSortSource does it's job if needed
-    let columnSort: IColumnSort = this.adaptableBlotterStore.TheStore.getState().Grid.ColumnSorts.find(
+    let columnSort: ColumnSort = this.adaptableBlotterStore.TheStore.getState().Grid.ColumnSorts.find(
       x => x.Column == columnId
     );
     if (columnSort) {
@@ -875,7 +875,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public removeCustomSort(columnId: string): void {
     //nothing to do except the reindex so the CustomSortSource does it's job if needed
-    let columnSort: IColumnSort = this.adaptableBlotterStore.TheStore.getState().Grid.ColumnSorts.find(
+    let columnSort: ColumnSort = this.adaptableBlotterStore.TheStore.getState().Grid.ColumnSorts.find(
       x => x.Column == columnId
     );
     if (columnSort) {
@@ -1190,7 +1190,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.setColumnIntoStore();
   }
 
-  public editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void {
+  public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
     let newSchema = {
       name: calculatedColumn.ColumnId,
       header: calculatedColumn.ColumnId,
@@ -1223,7 +1223,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.hyperGrid.behavior.changed();
   }
 
-  public addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn) {
+  public addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn) {
     let schema = {
       name: calculatedColumn.ColumnId,
       header: calculatedColumn.ColumnId,
@@ -1251,7 +1251,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.setColumnIntoStore();
   }
 
-  public addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn): void {
+  public addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn): void {
     let schema = {
       name: freeTextColumn.ColumnId,
       header: freeTextColumn.ColumnId,
@@ -1438,7 +1438,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       };
 
       // first free text column
-      let freeTextColumn: IFreeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(
+      let freeTextColumn: FreeTextColumn = this.getState().FreeTextColumn.FreeTextColumns.find(
         fc => fc.ColumnId == dataChangedEvent.ColumnId
       );
       if (freeTextColumn) {
@@ -1446,7 +1446,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
 
       // then check validation
-      let failedRules: ICellValidationRule[] = this.ValidationService.ValidateCellChanging(
+      let failedRules: CellValidationRule[] = this.ValidationService.ValidateCellChanging(
         dataChangedEvent
       );
       if (failedRules.length > 0) {
@@ -1508,10 +1508,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.hyperGrid.behavior.dataModel.getSortImageForColumn = (columnIndex: number) => {
       var icon = '';
 
-      let columnSorts: IColumnSort[] = this.adaptableBlotterStore.TheStore.getState().Grid
+      let columnSorts: ColumnSort[] = this.adaptableBlotterStore.TheStore.getState().Grid
         .ColumnSorts;
       let cols: any[] = this.hyperGrid.behavior.getActiveColumns();
-      columnSorts.forEach((gs: IColumnSort, index: number) => {
+      columnSorts.forEach((gs: ColumnSort, index: number) => {
         let foundCol = cols.find(c => c.name == gs.Column);
 
         if (foundCol && foundCol.index == columnIndex) {
@@ -1721,14 +1721,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public onSortSaved(gridColumnIndex: number) {
-    let currentColumnSorts: IColumnSort[] = this.adaptableBlotterStore.TheStore.getState().Grid
+    let currentColumnSorts: ColumnSort[] = this.adaptableBlotterStore.TheStore.getState().Grid
       .ColumnSorts;
-    let newColumnSorts: IColumnSort[] = [].concat(currentColumnSorts);
+    let newColumnSorts: ColumnSort[] = [].concat(currentColumnSorts);
 
     let column = this.hyperGrid.behavior.getActiveColumns()[gridColumnIndex].name;
 
     // not rigth for existing sorts in terms of turning off...
-    let currentColumnSort: IColumnSort = newColumnSorts.find(gs => gs.Column == column);
+    let currentColumnSort: ColumnSort = newColumnSorts.find(gs => gs.Column == column);
     if (currentColumnSort) {
       // if exists and ascending make descending
       if (currentColumnSort.SortOrder == SortOrder.Ascending) {
@@ -1739,7 +1739,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         newColumnSorts.splice(index, 1);
       }
     } else {
-      let newcColumnSort: IColumnSort = { Column: column, SortOrder: SortOrder.Ascending };
+      let newcColumnSort: ColumnSort = { Column: column, SortOrder: SortOrder.Ascending };
       newColumnSorts.push(newcColumnSort);
     }
 
@@ -1759,11 +1759,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.ReindexAndRepaint();
   }
 
-  public getVendorGridState(): IVendorGridInfo {
+  public getVendorGridState(): VendorGridInfo {
     return null;
   }
 
-  public setVendorGridState(vendorGridState: IVendorGridInfo): void {
+  public setVendorGridState(vendorGridState: VendorGridInfo): void {
     // todo - but we dont know how to ;(
   }
 
@@ -1821,14 +1821,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     };
   }
 
-  public addPercentBar(pcr: IPercentBar): void {
+  public addPercentBar(pcr: PercentBar): void {
     // to do
   }
-  public removePercentBar(pcr: IPercentBar): void {
+  public removePercentBar(pcr: PercentBar): void {
     // todo
   }
 
-  public editPercentBar(pcr: IPercentBar): void {
+  public editPercentBar(pcr: PercentBar): void {
     // todo
   }
 

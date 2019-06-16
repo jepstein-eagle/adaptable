@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { IAdaptableBlotterObject } from '../../../PredefinedConfig/IAdaptableBlotterObject';
-import { IUserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
 
 // base props
@@ -27,11 +27,11 @@ export interface SharedEntityRowProps<View> extends BaseEntityRowProps<View> {
 // Expression props
 export interface ExpressionEntityRowProps<View> extends BaseEntityRowProps<View> {
   Columns: IColumn[];
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
 }
 
 // Shared and Expression Props
 export interface SharedEntityExpressionRowProps<View> extends SharedEntityRowProps<View> {
   Columns: IColumn[];
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
 }

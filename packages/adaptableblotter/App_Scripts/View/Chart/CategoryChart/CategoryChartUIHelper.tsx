@@ -1,6 +1,6 @@
 import {
-  ICategoryChartDefinition,
-  ICategoryChartProperties,
+  CategoryChartDefinition,
+  CategoryChartProperties,
 } from '../../../PredefinedConfig/IUserState/ChartState';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import {
@@ -26,10 +26,10 @@ import { DefaultCategoryChartProperties } from '../../../Utilities/Defaults/Defa
  */
 
 export function setChartDisplayPopupState(
-  chartDefinition: ICategoryChartDefinition,
+  chartDefinition: CategoryChartDefinition,
   columns: IColumn[]
 ): CategoryChartComponentState {
-  let categoryChartProperties: ICategoryChartProperties = Object.assign(
+  let categoryChartProperties: CategoryChartProperties = Object.assign(
     {},
     DefaultCategoryChartProperties,
     chartDefinition.ChartProperties
@@ -67,10 +67,10 @@ export function setChartDisplayPopupState(
 }
 
 function isDefaultYAxisTitle(
-  chartDefinition: ICategoryChartDefinition,
+  chartDefinition: CategoryChartDefinition,
   columns: IColumn[]
 ): boolean {
-  let categoryChartProperties: ICategoryChartProperties = chartDefinition.ChartProperties as ICategoryChartProperties;
+  let categoryChartProperties: CategoryChartProperties = chartDefinition.ChartProperties as CategoryChartProperties;
   return (
     StringExtensions.IsNullOrEmpty(categoryChartProperties.YAxisTitle) ||
     categoryChartProperties.YAxisTitle == createDefaultYAxisTitle(chartDefinition, columns)
@@ -78,10 +78,10 @@ function isDefaultYAxisTitle(
 }
 
 function isDefaultXAxisTitle(
-  chartDefinition: ICategoryChartDefinition,
+  chartDefinition: CategoryChartDefinition,
   columns: IColumn[]
 ): boolean {
-  let categoryChartProperties: ICategoryChartProperties = chartDefinition.ChartProperties as ICategoryChartProperties;
+  let categoryChartProperties: CategoryChartProperties = chartDefinition.ChartProperties as CategoryChartProperties;
   return (
     StringExtensions.IsNullOrEmpty(categoryChartProperties.XAxisTitle) ||
     categoryChartProperties.XAxisTitle == createDefaultXAxisTitle(chartDefinition, columns)
@@ -89,7 +89,7 @@ function isDefaultXAxisTitle(
 }
 
 export function createDefaultYAxisTitle(
-  chartDefinition: ICategoryChartDefinition,
+  chartDefinition: CategoryChartDefinition,
   columns: IColumn[]
 ): string {
   return chartDefinition.YAxisColumnIds.map(c => {
@@ -98,7 +98,7 @@ export function createDefaultYAxisTitle(
 }
 
 export function createDefaultXAxisTitle(
-  chartDefinition: ICategoryChartDefinition,
+  chartDefinition: CategoryChartDefinition,
   columns: IColumn[]
 ): string {
   return ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns);
@@ -178,7 +178,7 @@ export function getMarkerTypeOptions(): JSX.Element[] {
   return options;
 }
 
-export function getMarkerFromProps(chartProps: ICategoryChartProperties): string {
+export function getMarkerFromProps(chartProps: CategoryChartProperties): string {
   let chartType = chartProps.CategoryChartType;
   let markerType = chartProps.MarkerType;
   // resolves marker for specified chart type since some chart types should hide markers by default
@@ -274,7 +274,7 @@ export function getDataProperties(chartData: any): string[] {
   return dataProps;
 }
 
-// TODO ideally we should get names of numeric using IChartDefinition.YAxisColumnIds instead of:
+// TODO ideally we should get names of numeric using ChartDefinition.YAxisColumnIds instead of:
 export function getNumericProperties(chartData: any): string[] {
   if (chartData === undefined || chartData === null) {
     return [];
@@ -295,8 +295,8 @@ export function getNumericProperties(chartData: any): string[] {
   return dataProps;
 }
 
-export function getCalloutsData(chartData: any, chartProps: ICategoryChartProperties): any[] {
-  // TODO ideally we should get names of numeric using IChartDefinition.YAxisColumnIds instead of this:
+export function getCalloutsData(chartData: any, chartProps: CategoryChartProperties): any[] {
+  // TODO ideally we should get names of numeric using ChartDefinition.YAxisColumnIds instead of this:
   let numericProps = getNumericProperties(chartData);
 
   let callouts: any[] = [];
@@ -315,8 +315,8 @@ export function getCalloutsData(chartData: any, chartProps: ICategoryChartProper
     // TODO implement a function for getting values a column named dataColumn from chartData
   }
 
-  // users can filter out callouts and thus improve chart performance using IChartProperties.CalloutsInterval
-  // perhaps this should depend on IChartProperties.XAxisInterval (when added) so that callouts align with labels on XAxis
+  // users can filter out callouts and thus improve chart performance using ChartProperties.CalloutsInterval
+  // perhaps this should depend on ChartProperties.XAxisInterval (when added) so that callouts align with labels on XAxis
   let filtered: any[] = [];
   for (let i = 0; i < callouts.length; i++) {
     if (i % chartProps.CalloutsInterval == 0) {

@@ -26,7 +26,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IReport } from '../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../PredefinedConfig/IUserState/ExportState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ReportWizard } from './Wizard/ReportWizard';
 import {
@@ -36,18 +36,18 @@ import {
 } from '../../PredefinedConfig/Common/Enums';
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
-  Reports: IReport[];
-  SystemReports: IReport[];
+  Reports: Report[];
+  SystemReports: Report[];
   LiveReports: ILiveReport[];
   CurrentReport: string;
   onApplyExport: (
-    report: IReport,
+    report: Report,
     exportDestination: ExportDestination
   ) => ExportRedux.ExportApplyAction;
-  onAddReport: (report: IReport) => ExportRedux.ReportAddAction;
-  onEditReport: (report: IReport) => ExportRedux.ReportEditAction;
+  onAddReport: (report: Report) => ExportRedux.ReportAddAction;
+  onEditReport: (report: Report) => ExportRedux.ReportEditAction;
   onReportStopLive: (
-    Report: IReport,
+    Report: Report,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ) => SystemRedux.ReportStopLiveAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
@@ -64,9 +64,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
       this.onNew();
     }
     if (this.props.PopupParams == 'Edit') {
-      let selectedReport: IReport = this.props.Reports.find(
-        a => a.Name == this.props.CurrentReport
-      );
+      let selectedReport: Report = this.props.Reports.find(a => a.Name == this.props.CurrentReport);
       this.onEdit(selectedReport);
     }
   }
@@ -90,7 +88,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     ];
 
     let Reports = this.props.SystemReports.concat(this.props.Reports).map(
-      (report: IReport, index) => {
+      (report: Report, index) => {
         let reportIndex = index - this.props.SystemReports.length;
         return (
           <ReportEntityRow
@@ -152,7 +150,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
           {this.state.EditedAdaptableBlotterObject && (
             <ReportWizard
               cssClassName={cssWizardClassName}
-              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IReport}
+              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as Report}
               ModalContainer={this.props.ModalContainer}
               ConfigEntities={this.props.Reports}
               Columns={this.props.Columns}
@@ -180,7 +178,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
   }
 
   onFinishWizard() {
-    let report: IReport = this.state.EditedAdaptableBlotterObject as IReport;
+    let report: Report = this.state.EditedAdaptableBlotterObject as Report;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditReport(report);
     } else {
@@ -195,7 +193,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
   }
 
   canFinishWizard() {
-    let report = this.state.EditedAdaptableBlotterObject as IReport;
+    let report = this.state.EditedAdaptableBlotterObject as Report;
     if (StringExtensions.IsNullOrEmpty(report.Name)) {
       return false;
     }
@@ -233,7 +231,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     });
   }
 
-  onEdit(ReportToEdit: IReport) {
+  onEdit(ReportToEdit: Report) {
     let clonedReportToEdit = Helper.cloneObject(ReportToEdit);
     this.setState({
       EditedAdaptableBlotterObject: clonedReportToEdit,
@@ -242,7 +240,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     });
   }
 
-  onApplyExport(Report: IReport, exportDestination: ExportDestination) {
+  onApplyExport(Report: Report, exportDestination: ExportDestination) {
     this.props.onApplyExport(Report, exportDestination);
   }
 }
@@ -258,12 +256,12 @@ function mapStateToProps(state: AdaptableBlotterState) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onApplyExport: (report: IReport, exportDestination: ExportDestination) =>
+    onApplyExport: (report: Report, exportDestination: ExportDestination) =>
       dispatch(ExportRedux.ExportApply(report, exportDestination)),
-    onAddReport: (report: IReport) => dispatch(ExportRedux.ReportAdd(report)),
-    onEditReport: (report: IReport) => dispatch(ExportRedux.ReportEdit(report)),
+    onAddReport: (report: Report) => dispatch(ExportRedux.ReportAdd(report)),
+    onEditReport: (report: Report) => dispatch(ExportRedux.ReportEdit(report)),
     onReportStopLive: (
-      Report: IReport,
+      Report: Report,
       exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
     ) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
     onShare: (entity: IAdaptableBlotterObject) =>

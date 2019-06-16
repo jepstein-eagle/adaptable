@@ -1,10 +1,10 @@
-import { CustomSortState, ICustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
+import { CustomSortState, CustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
 
 export interface ICustomSortApi {
   getCustomSortState(): CustomSortState;
-  getAllCustomSort(): ICustomSort[];
-  getCustomSortByColumn(column: string): ICustomSort;
-  addCustomSort(customSort: ICustomSort): void;
+  getAllCustomSort(): CustomSort[];
+  getCustomSortByColumn(column: string): CustomSort;
+  addCustomSort(customSort: CustomSort): void;
   createCustomSort(column: string, values: string[]): void;
   editCustomSort(column: string, values: string[]): void;
   deleteCustomSort(column: string): void;

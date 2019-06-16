@@ -1,6 +1,6 @@
-import { IDataSource } from '../../../PredefinedConfig/IUserState/DataSourceState';
-import { IAdvancedSearch } from '../../../PredefinedConfig/IUserState/AdvancedSearchState';
-import { IColumnFilter } from '../../../PredefinedConfig/IUserState/ColumnFilterState';
+import { DataSource } from '../../../PredefinedConfig/IUserState/DataSourceState';
+import { AdvancedSearch } from '../../../PredefinedConfig/IUserState/AdvancedSearchState';
+import { ColumnFilter } from '../../../PredefinedConfig/IUserState/ColumnFilterState';
 
 /**
  * The current Search and Filter in the Blotter
@@ -9,11 +9,11 @@ export interface IBlotterSearchState {
   /**
    * Current Static Data Source (if any selected)
    */
-  dataSource: IDataSource;
+  dataSource: DataSource;
   /**
    * Current Advanced Search (if any selected)
    */
-  advancedSearch: IAdvancedSearch;
+  advancedSearch: AdvancedSearch;
   /**
    * Current live Quick Search text. (Value can be null)
    */
@@ -21,5 +21,5 @@ export interface IBlotterSearchState {
   /**
    * Details of any column filters currently applied
    */
-  columnFilters: IColumnFilter[];
+  columnFilters: ColumnFilter[];
 }

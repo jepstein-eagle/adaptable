@@ -1,5 +1,5 @@
 import { IUserFilterApi } from './Interface/IUserFilterApi';
-import { UserFilterState, IUserFilter } from '../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilterState, UserFilter } from '../PredefinedConfig/IUserState/UserFilterState';
 import { ApiBase } from './ApiBase';
 
 export class UserFilterApi extends ApiBase implements IUserFilterApi {
@@ -7,7 +7,7 @@ export class UserFilterApi extends ApiBase implements IUserFilterApi {
     return this.getBlotterState().UserFilter;
   }
 
-  public getAllUserFilter(): IUserFilter[] {
+  public getAllUserFilter(): UserFilter[] {
     return this.getUserFilterState().UserFilters;
   }
 }

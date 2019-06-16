@@ -3,10 +3,10 @@ import { ColumnHelper } from './ColumnHelper';
 import { DataType, LeafExpressionOperator } from '../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../Interface/IColumn';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IAlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
 
 export function createAlertDescription(
-  alertDefinition: IAlertDefinition,
+  alertDefinition: AlertDefinition,
   columns: IColumn[]
 ): string {
   let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(

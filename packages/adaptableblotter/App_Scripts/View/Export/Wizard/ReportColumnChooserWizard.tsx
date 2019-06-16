@@ -7,9 +7,9 @@ import {
 import { ReportColumnScope } from '../../../PredefinedConfig/Common/Enums';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
-import { IReport } from '../../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../../PredefinedConfig/IUserState/ExportState';
 
-export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<IReport> {}
+export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<Report> {}
 export interface ReportColumnsWizardState {
   AllColumnValues: string[];
   SelectedColumnValues: string[];

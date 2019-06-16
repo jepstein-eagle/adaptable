@@ -1,5 +1,5 @@
-import { UserFilterState, IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilterState, UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
 export interface IUserFilterApi {
   getUserFilterState(): UserFilterState;
-  getAllUserFilter(): IUserFilter[];
+  getAllUserFilter(): UserFilter[];
 }

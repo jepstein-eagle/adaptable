@@ -12,13 +12,13 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-import { IUserTheme } from '../../PredefinedConfig/IUserState/ThemeState';
+import { UserTheme } from '../../PredefinedConfig/IUserState/ThemeState';
 
 interface ThemeToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ThemeToolbarControlComponent> {
   onSelectTheme: (theme: string) => ThemeRedux.ThemeSelectAction;
   SystemThemes: string[];
-  UserThemes: IUserTheme[];
+  UserThemes: UserTheme[];
   CurrentTheme: string;
 }
 

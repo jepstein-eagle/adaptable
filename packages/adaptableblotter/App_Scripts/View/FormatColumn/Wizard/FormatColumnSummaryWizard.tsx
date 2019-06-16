@@ -7,11 +7,11 @@ import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IFormatColumn } from '../../../PredefinedConfig/IUserState/FormatColumnState';
+import { FormatColumn } from '../../../PredefinedConfig/IUserState/FormatColumnState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 
-export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<IFormatColumn> {}
+export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<FormatColumn> {}
 export class FormatColumnSummaryWizard extends React.Component<FormatColumnSummaryWizardProps, {}>
   implements AdaptableWizardStep {
   constructor(props: FormatColumnSummaryWizardProps) {

@@ -4,7 +4,7 @@ import { IColumn } from '../Interface/IColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
 
 // Single place for all column mapping functions so can be dealt with consistetly re error handling
 
@@ -159,7 +159,7 @@ export function getBooleanColumns(columns: IColumn[]): IColumn[] {
 
 export function getColumnCategoryFromColumnCategories(
   columnId: string,
-  ColumnCategoryns: IColumnCategory[]
+  ColumnCategoryns: ColumnCategory[]
 ): string {
   let returnValue: string = '';
   ColumnCategoryns.forEach(c => {

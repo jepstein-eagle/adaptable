@@ -4,8 +4,8 @@ import {
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
 import {
-  ICategoryChartDefinition,
-  IPieChartDefinition,
+  CategoryChartDefinition,
+  PieChartDefinition,
 } from '../../../../PredefinedConfig/IUserState/ChartState';
 import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
@@ -19,8 +19,8 @@ import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensi
 import { SecondaryColumnOperation } from '../../../../PredefinedConfig/Common/ChartEnums';
 
 export interface PieChartPrimaryColumnWizardProps
-  extends AdaptableWizardStepProps<IPieChartDefinition> {
-  //  ChartDefinitions: IChartDefinition[]
+  extends AdaptableWizardStepProps<PieChartDefinition> {
+  //  ChartDefinitions: ChartDefinition[]
 }
 
 export interface PieChartPrimaryColumnWizardState {

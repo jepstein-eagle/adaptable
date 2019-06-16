@@ -1,8 +1,8 @@
 import * as Redux from 'redux';
 import {
   ChartState,
-  IChartDefinition,
-  IChartProperties,
+  ChartDefinition,
+  ChartProperties,
 } from '../../PredefinedConfig/IUserState/ChartState';
 import {
   EMPTY_STRING,
@@ -17,7 +17,7 @@ export const CHART_DEFINITION_DELETE = 'CHART_DEFINITION_DELETE';
 export const CHART_PROPERTIES_UPDATE = 'CHART_PROPERTIES_UPDATE';
 
 export interface ChartDefinitionAction extends Redux.Action {
-  chartDefinition: IChartDefinition;
+  chartDefinition: ChartDefinition;
 }
 export interface ChartDefinitionAddAction extends ChartDefinitionAction {}
 
@@ -31,25 +31,23 @@ export interface ChartDefinitionSelectAction extends Redux.Action {
 
 export interface ChartPropertiesUpdateAction extends Redux.Action {
   chartUuid: string;
-  chartProperties: IChartProperties;
+  chartProperties: ChartProperties;
 }
 
-export const ChartDefinitionAdd = (
-  chartDefinition: IChartDefinition
-): ChartDefinitionAddAction => ({
+export const ChartDefinitionAdd = (chartDefinition: ChartDefinition): ChartDefinitionAddAction => ({
   type: CHART_DEFINITION_ADD,
   chartDefinition,
 });
 
 export const ChartDefinitionEdit = (
-  chartDefinition: IChartDefinition
+  chartDefinition: ChartDefinition
 ): ChartDefinitionEditAction => ({
   type: CHART_DEFINITION_EDIT,
   chartDefinition,
 });
 
 export const ChartDefinitionDelete = (
-  chartDefinition: IChartDefinition
+  chartDefinition: ChartDefinition
 ): ChartDefinitionDeleteAction => ({
   type: CHART_DEFINITION_DELETE,
   chartDefinition,
@@ -62,7 +60,7 @@ export const ChartDefinitionSelect = (chartName: string): ChartDefinitionSelectA
 
 export const ChartPropertiesUpdate = (
   chartUuid: string,
-  chartProperties: IChartProperties
+  chartProperties: ChartProperties
 ): ChartPropertiesUpdateAction => ({
   type: CHART_PROPERTIES_UPDATE,
   chartUuid,
@@ -79,11 +77,11 @@ export const ChartReducer: Redux.Reducer<ChartState> = (
   state: ChartState = initialChartState,
   action: Redux.Action
 ): ChartState => {
-  let chartDefinitions: IChartDefinition[];
+  let chartDefinitions: ChartDefinition[];
 
   switch (action.type) {
     case CHART_DEFINITION_ADD: {
-      const actionChartDefinition: IChartDefinition = (action as ChartDefinitionAction)
+      const actionChartDefinition: ChartDefinition = (action as ChartDefinitionAction)
         .chartDefinition;
 
       if (!actionChartDefinition.Uuid) {
@@ -94,7 +92,7 @@ export const ChartReducer: Redux.Reducer<ChartState> = (
       return { ...state, ChartDefinitions: chartDefinitions };
     }
     case CHART_DEFINITION_EDIT: {
-      const actionChartDefinition: IChartDefinition = (action as ChartDefinitionAction)
+      const actionChartDefinition: ChartDefinition = (action as ChartDefinitionAction)
         .chartDefinition;
 
       return {
@@ -106,7 +104,7 @@ export const ChartReducer: Redux.Reducer<ChartState> = (
     }
 
     case CHART_DEFINITION_DELETE: {
-      const actionChartDefinition: IChartDefinition = (action as ChartDefinitionAction)
+      const actionChartDefinition: ChartDefinition = (action as ChartDefinitionAction)
         .chartDefinition;
       return {
         ...state,
@@ -119,7 +117,7 @@ export const ChartReducer: Redux.Reducer<ChartState> = (
     case CHART_PROPERTIES_UPDATE: {
       let actionTypedPropertiesUpdate = <ChartPropertiesUpdateAction>action;
       chartDefinitions = [].concat(state.ChartDefinitions);
-      let chartDefinition: IChartDefinition = chartDefinitions.find(
+      let chartDefinition: ChartDefinition = chartDefinitions.find(
         c => c.Uuid == actionTypedPropertiesUpdate.chartUuid
       );
       chartDefinition.ChartProperties = actionTypedPropertiesUpdate.chartProperties;

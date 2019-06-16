@@ -1,14 +1,14 @@
 import {
   ColumnFilterState,
-  IColumnFilter,
+  ColumnFilter,
 } from '../../PredefinedConfig/IUserState/ColumnFilterState';
 
 export interface IColumnFilterApi {
   getColumnFilterState(): ColumnFilterState;
-  setColumnFilter(columnFilters: IColumnFilter[]): void;
-  clearColumnFilter(columnFilter: IColumnFilter): void;
+  setColumnFilter(columnFilters: ColumnFilter[]): void;
+  clearColumnFilter(columnFilter: ColumnFilter): void;
   clearColumnFilterByColumn(column: string): void;
   clearColumnFilterByColumns(columns: string[]): void;
   clearAllColumnFilter(): void;
-  getAllColumnFilter(): IColumnFilter[];
+  getAllColumnFilter(): ColumnFilter[];
 }

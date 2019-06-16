@@ -33,9 +33,9 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import {
-  IPieChartDefinition,
-  IPieChartDataItem,
-  IChartData,
+  PieChartDefinition,
+  PieChartDataItem,
+  ChartData,
 } from '../../PredefinedConfig/IUserState/ChartState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import {
@@ -48,10 +48,10 @@ import { PieChartUIHelper } from '../Chart/PieChart/PieChartUIHelper';
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {}
 
 interface PieChartPopupState {
-  PieChartDefinition: IPieChartDefinition;
+  PieChartDefinition: PieChartDefinition;
 
   ErrorMessage: string;
-  DataSource: IPieChartDataItem[];
+  DataSource: PieChartDataItem[];
   OthersCategoryType: OthersCategoryType;
   OthersCategoryThreshold: number;
   ShowAsDoughnut: boolean;
@@ -417,14 +417,14 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
   }
 
   private updateDataSource(valueColumn: string, labelColumn: string) {
-    let pieChartDefinition: IPieChartDefinition = this.state.PieChartDefinition;
+    let pieChartDefinition: PieChartDefinition = this.state.PieChartDefinition;
     pieChartDefinition.PrimaryColumnId = labelColumn;
     pieChartDefinition.SecondaryColumnId = valueColumn;
 
-    let chartData: IChartData = this.props.Blotter.ChartService.BuildPieChartData(
+    let chartData: ChartData = this.props.Blotter.ChartService.BuildPieChartData(
       pieChartDefinition
     );
-    let dataSource: IPieChartDataItem[] = chartData.Data;
+    let dataSource: PieChartDataItem[] = chartData.Data;
     let errorMessage: string = chartData.ErrorMessage;
     dataSource = PieChartUIHelper.sortDataSource(this.state.SliceSortOption, dataSource);
 
@@ -508,7 +508,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     let e = event.target as HTMLInputElement;
     let sliceSortOption: SliceSortOption = e.value as SliceSortOption;
     let oldData = this.state.DataSource;
-    let newData: IPieChartDataItem[] = PieChartUIHelper.sortDataSource(sliceSortOption, oldData);
+    let newData: PieChartDataItem[] = PieChartUIHelper.sortDataSource(sliceSortOption, oldData);
 
     this.setState({ DataSource: newData, SliceSortOption: sliceSortOption });
   }

@@ -8,10 +8,10 @@ import {
 import { MessageType, ActionMode } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { ICellValidationRule } from '../../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../../PredefinedConfig/IUserState/CellValidationState';
 
 export interface CellValidationActionWizardProps
-  extends AdaptableWizardStepProps<ICellValidationRule> {}
+  extends AdaptableWizardStepProps<CellValidationRule> {}
 export interface CellValidationSettingsWizardState {
   ActionMode: ActionMode;
 }

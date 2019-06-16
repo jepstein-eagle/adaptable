@@ -14,11 +14,11 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from '../UIInterfaces';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
-  ColumnFilters: IColumnFilter[];
+  ColumnFilters: ColumnFilter[];
   onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
@@ -96,7 +96,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
     this.props.Blotter.clearColumnFiltering([columnId]);
   }
 
-  private onSaveColumnFilterasUserFilter(columnFilter: IColumnFilter): void {
+  private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {
     let prompt: IUIPrompt = {
       Header: 'Enter name for User Filter',
       Msg: '',

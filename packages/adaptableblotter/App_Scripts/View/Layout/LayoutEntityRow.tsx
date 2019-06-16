@@ -10,18 +10,18 @@ import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { LayoutHelper } from '../../Utilities/Helpers/LayoutHelper';
-import { ILayout } from '../../PredefinedConfig/IUserState/LayoutState';
+import { Layout } from '../../PredefinedConfig/IUserState/LayoutState';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
 export interface LayoutEntityRowProps<LayoutEntityRow>
   extends SharedEntityExpressionRowProps<LayoutEntityRow> {
   IsCurrentLayout: boolean;
-  onSelect: (Layout: ILayout) => void;
+  onSelect: (Layout: Layout) => void;
 }
 
 export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<LayoutEntityRow>, {}> {
   render(): any {
-    let layout: ILayout = this.props.AdaptableBlotterObject as ILayout;
+    let layout: Layout = this.props.AdaptableBlotterObject as Layout;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 

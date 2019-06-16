@@ -31,8 +31,10 @@ import { UserFilterState } from './IUserState/UserFilterState';
 import { ChartState } from './IUserState/ChartState';
 
 /**
- * Main Predefined Config object
- * Made up a sereis of nullable IState objects
+ * Main Predefined Config object which users will populate if they wish to ship the Adaptable Botter with initial state
+ *
+ * The object consists of a series of (nullable) properties that all implememt IState
+ *
  */
 export interface IPredefinedConfig {
   // First add the IDesignTimeState properties

@@ -4,8 +4,8 @@ import * as NodeSchedule from 'node-schedule';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DateExtensions } from '../Extensions/DateExtensions';
-import { ReminderState, IReminder } from '../../PredefinedConfig/IUserState/ReminderState';
-import { ExportState, IReport } from '../../PredefinedConfig/IUserState/ExportState';
+import { ReminderState, Reminder } from '../../PredefinedConfig/IUserState/ReminderState';
+import { ExportState, Report } from '../../PredefinedConfig/IUserState/ExportState';
 import { ISchedule } from '../../PredefinedConfig/Common/ISchedule';
 import { IReminderStrategy } from '../../Strategy/Interface/IReminderStrategy';
 import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
@@ -65,7 +65,7 @@ export class ScheduleService implements IScheduleService {
     }
   }
 
-  public AddReminderSchedule(reminder: IReminder): void {
+  public AddReminderSchedule(reminder: Reminder): void {
     let date: Date = this.getDateFromSchedule(reminder.Schedule);
     if (date != null) {
       var alertJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
@@ -75,7 +75,7 @@ export class ScheduleService implements IScheduleService {
     }
   }
 
-  public AddReportSchedule(report: IReport): void {
+  public AddReportSchedule(report: Report): void {
     if (report.AutoExport) {
       let date: Date = this.getDateFromSchedule(report.AutoExport.Schedule);
       if (date != null) {

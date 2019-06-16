@@ -21,18 +21,18 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnCategoryEntityRow } from './ColumnCategoryEntityRow';
 import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard';
 
 interface ColumnCategoryPopupProps extends StrategyViewPopupProps<ColumnCategoryPopupComponent> {
-  ColumnCategorys: IColumnCategory[];
+  ColumnCategorys: ColumnCategory[];
   onAddColumnCategory: (
-    columnCategory: IColumnCategory
+    columnCategory: ColumnCategory
   ) => ColumnCategoryRedux.ColumnCategoryAddAction;
   onEditColumnCategory: (
-    columnCategory: IColumnCategory
+    columnCategory: ColumnCategory
   ) => ColumnCategoryRedux.ColumnCategoryEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
@@ -148,8 +148,8 @@ class ColumnCategoryPopupComponent extends React.Component<
     });
   }
 
-  onEdit(columnCategory: IColumnCategory) {
-    let clonedObject: IColumnCategory = Helper.cloneObject(columnCategory);
+  onEdit(columnCategory: ColumnCategory) {
+    let clonedObject: ColumnCategory = Helper.cloneObject(columnCategory);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 1,
@@ -167,7 +167,7 @@ class ColumnCategoryPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let columnCategory = this.state.EditedAdaptableBlotterObject as IColumnCategory;
+    let columnCategory = this.state.EditedAdaptableBlotterObject as ColumnCategory;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditColumnCategory(columnCategory);
     } else {
@@ -181,7 +181,7 @@ class ColumnCategoryPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let ColumnCategory = this.state.EditedAdaptableBlotterObject as IColumnCategory;
+    let ColumnCategory = this.state.EditedAdaptableBlotterObject as ColumnCategory;
     return (
       StringExtensions.IsNotEmpty(ColumnCategory.ColumnCategoryId) &&
       ArrayExtensions.IsNotEmpty(ColumnCategory.ColumnIds)
@@ -197,9 +197,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddColumnCategory: (ColumnCategory: IColumnCategory) =>
+    onAddColumnCategory: (ColumnCategory: ColumnCategory) =>
       dispatch(ColumnCategoryRedux.ColumnCategoryAdd(ColumnCategory)),
-    onEditColumnCategory: (columnCategory: IColumnCategory) =>
+    onEditColumnCategory: (columnCategory: ColumnCategory) =>
       dispatch(ColumnCategoryRedux.ColumnCategoryEdit(columnCategory)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(

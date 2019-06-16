@@ -29,14 +29,14 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { PercentBarSummary } from '../PercentBar/PercentBarSummary';
 import { FreeTextColumnSummary } from '../FreeTextColumn/FreeTextColumnSummary';
 import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
-import { ICalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { CalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
+import { ColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
 import { IEntitlement } from '../../PredefinedConfig/IDesignTimeState/EntitlementsState';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
-  CalculatedColumns: Array<ICalculatedColumn>;
+  CalculatedColumns: Array<CalculatedColumn>;
   FunctionEntitlements: IEntitlement[];
-  ColumnCategory: IColumnCategory[];
+  ColumnCategory: ColumnCategory[];
 }
 
 export interface ColumnInfoState {

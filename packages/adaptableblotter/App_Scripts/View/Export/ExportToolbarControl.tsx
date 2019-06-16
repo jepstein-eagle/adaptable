@@ -32,7 +32,7 @@ import { OpenfinHelper } from '../../Utilities/Helpers/OpenfinHelper';
 import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IReport } from '../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../PredefinedConfig/IUserState/ExportState';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 import { PRIMARY_BSSTYLE, DEFAULT_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { Glue42Helper } from '../../Utilities/Helpers/Glue42Helper';
@@ -41,19 +41,19 @@ import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/En
 interface ExportToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
   onApplyExport: (
-    Report: IReport,
+    Report: Report,
     exportDestination: ExportDestination
   ) => ExportRedux.ExportApplyAction;
   onSelectReport: (Report: string) => ExportRedux.ReportSelectAction;
   onNewReport: () => PopupRedux.PopupShowScreenAction;
   onEditReport: () => PopupRedux.PopupShowScreenAction;
   onReportStopLive: (
-    Report: IReport,
+    Report: Report,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ) => SystemRedux.ReportStopLiveAction;
   Columns: IColumn[];
-  Reports: IReport[];
-  SystemReports: IReport[];
+  Reports: Report[];
+  SystemReports: Report[];
   CurrentReport: string;
   LiveReports: ILiveReport[];
 }
@@ -64,12 +64,12 @@ class ExportToolbarControlComponent extends React.Component<
 > {
   render(): any {
     const selectReportString: string = 'Select a Report';
-    let allReports: IReport[] = this.props.SystemReports.concat(this.props.Reports);
+    let allReports: Report[] = this.props.SystemReports.concat(this.props.Reports);
 
-    let currentReport: IReport = this.props.Blotter.api.exportApi.getCurrentReport();
+    let currentReport: Report = this.props.Blotter.api.exportApi.getCurrentReport();
 
     let cssClassName: string = this.props.cssClassName + '__export';
-    let savedReport: IReport = allReports.find(s => s.Name == this.props.CurrentReport);
+    let savedReport: Report = allReports.find(s => s.Name == this.props.CurrentReport);
     let savedReportIndex = this.props.Reports.findIndex(s => s.Name == this.props.CurrentReport);
 
     let currentReportId = StringExtensions.IsNullOrEmpty(this.props.CurrentReport)
@@ -320,11 +320,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onApplyExport: (Report: IReport, exportDestination: ExportDestination) =>
+    onApplyExport: (Report: Report, exportDestination: ExportDestination) =>
       dispatch(ExportRedux.ExportApply(Report, exportDestination)),
     onSelectReport: (Report: string) => dispatch(ExportRedux.ReportSelect(Report)),
     onReportStopLive: (
-      Report: IReport,
+      Report: Report,
       exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
     ) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
     onNewReport: () =>

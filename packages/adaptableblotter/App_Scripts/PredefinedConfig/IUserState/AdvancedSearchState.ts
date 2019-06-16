@@ -6,7 +6,7 @@ import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
  * The Predefined Configuration for Advanced Search
  */
 export interface AdvancedSearchState extends IUserState {
-  AdvancedSearches?: IAdvancedSearch[];
+  AdvancedSearches?: AdvancedSearch[];
   CurrentAdvancedSearch?: string;
 }
 
@@ -14,7 +14,7 @@ export interface AdvancedSearchState extends IUserState {
  * The Advanced Search entity.
  * Contains the name of the Search and an Expression (the query object used in many IAdaptableBlotterObjects)
  */
-export interface IAdvancedSearch extends IAdaptableBlotterObject {
+export interface AdvancedSearch extends IAdaptableBlotterObject {
   Name: string;
   Expression: Expression;
 }

@@ -9,8 +9,8 @@ import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilter
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { FormControl } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { IUserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
-import { IColumnFilter } from '../../../PredefinedConfig/IUserState/ColumnFilterState';
+import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/IUserState/ColumnFilterState';
 import { IRange } from '../../../PredefinedConfig/Common/Expression/IRange';
 import { Expression } from '../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
@@ -25,11 +25,11 @@ interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormCom
   CurrentColumn: IColumn;
   Blotter: IAdaptableBlotter;
   Columns: IColumn[];
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SystemFilters: string[];
-  ColumnFilters: IColumnFilter[];
-  onAddColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
-  onEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
+  ColumnFilters: ColumnFilter[];
+  onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
+  onEditColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
   onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
 }
 
@@ -64,7 +64,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   reconcileFilters(): void {
-    let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(
+    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
     if (existingColumnFilter) {
@@ -141,7 +141,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   // debouncedRunQuickSearch = _.debounce((searchText: string) => this.runTextchanged(searchText), 250);
-  // debouncedSetFilter = _.debounce((columnFilter: IColumnFilter) => this.props.onAddEditColumnFilter(columnFilter), 1000);
+  // debouncedSetFilter = _.debounce((columnFilter: ColumnFilter) => this.props.onAddEditColumnFilter(columnFilter), 1000);
 
   OnTextChange(searchText: string) {
     // as soon as anything changes clear existing column filter
@@ -161,7 +161,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   clearExistingColumnFilter(): void {
-    let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(
+    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
     if (existingColumnFilter) {
@@ -170,7 +170,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   createColumnFilter(expression: Expression, searchText: string): void {
-    let columnFilter: IColumnFilter = this.props.ColumnFilters.find(
+    let columnFilter: ColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
     if (columnFilter == null) {
@@ -310,9 +310,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddColumnFilter: (columnFilter: IColumnFilter) =>
+    onAddColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
-    onEditColumnFilter: (columnFilter: IColumnFilter) =>
+    onEditColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter)),
     onClearColumnFilter: (columnId: string) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),

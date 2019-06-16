@@ -3,12 +3,12 @@ import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 import { IRange } from '../Common/Expression/IRange';
 import { Expression } from '../Common/Expression/Expression';
 export interface AlertState extends IUserState {
-  AlertDefinitions?: IAlertDefinition[];
+  AlertDefinitions?: AlertDefinition[];
   MaxAlertsInStore?: number;
   AlertPopupDiv?: string;
 }
 
-export interface IAlertDefinition extends IAdaptableBlotterObject {
+export interface AlertDefinition extends IAdaptableBlotterObject {
   ColumnId: string;
   Range: IRange;
   Expression?: Expression;

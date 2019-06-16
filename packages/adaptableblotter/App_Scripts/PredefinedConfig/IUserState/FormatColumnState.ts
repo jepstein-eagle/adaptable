@@ -2,10 +2,10 @@ import { IUserState } from './IUserState';
 import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 import { IStyle } from '../Common/IStyle';
 export interface FormatColumnState extends IUserState {
-  FormatColumns?: IFormatColumn[];
+  FormatColumns?: FormatColumn[];
 }
 
-export interface IFormatColumn extends IAdaptableBlotterObject {
+export interface FormatColumn extends IAdaptableBlotterObject {
   ColumnId: string;
   Style: IStyle;
 }

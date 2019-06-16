@@ -23,20 +23,20 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
-import { IConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { ColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
 
 export interface ConditionalStyleSummaryProps
   extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
-  ConditionalStyles: IConditionalStyle[];
+  ConditionalStyles: ConditionalStyle[];
   ColorPalette: string[];
-  ColumnCategories: IColumnCategory[];
+  ColumnCategories: ColumnCategory[];
   StyleClassNames: string[];
   onAddConditionalStyle: (
-    conditionalStyle: IConditionalStyle
+    conditionalStyle: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleAddAction;
   onEditConditionalStyle: (
-    conditionalStyle: IConditionalStyle
+    conditionalStyle: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
 }
 
@@ -105,7 +105,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
           <ConditionalStyleWizard
             cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={
-              this.state.EditedAdaptableBlotterObject as IConditionalStyle
+              this.state.EditedAdaptableBlotterObject as ConditionalStyle
             }
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
@@ -127,7 +127,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
   }
 
   onNew() {
-    let configEntity: IConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
+    let configEntity: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
     configEntity.ConditionalStyleScope = ConditionalStyleScope.Column;
     this.setState({
@@ -137,7 +137,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
     });
   }
 
-  onEdit(ConditionalStyle: IConditionalStyle) {
+  onEdit(ConditionalStyle: ConditionalStyle) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(ConditionalStyle),
       WizardStartIndex: 1,
@@ -156,10 +156,9 @@ export class ConditionalStyleSummaryComponent extends React.Component<
   onFinishWizard() {
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditConditionalStyle(this.state
-        .EditedAdaptableBlotterObject as IConditionalStyle);
+        .EditedAdaptableBlotterObject as ConditionalStyle);
     } else {
-      this.props.onAddConditionalStyle(this.state
-        .EditedAdaptableBlotterObject as IConditionalStyle);
+      this.props.onAddConditionalStyle(this.state.EditedAdaptableBlotterObject as ConditionalStyle);
     }
 
     this.setState({
@@ -170,7 +169,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let conditionalStyle = this.state.EditedAdaptableBlotterObject as IConditionalStyle;
+    let conditionalStyle = this.state.EditedAdaptableBlotterObject as ConditionalStyle;
     return (
       (conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Row ||
         StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
@@ -195,9 +194,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddConditionalStyle: (conditionalStyle: IConditionalStyle) =>
+    onAddConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
-    onEditConditionalStyle: (conditionalStyle: IConditionalStyle) =>
+    onEditConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(

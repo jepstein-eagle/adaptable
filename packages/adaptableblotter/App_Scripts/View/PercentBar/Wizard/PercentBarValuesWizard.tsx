@@ -17,12 +17,12 @@ import {
 import { MessageType, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IPercentBar } from '../../../PredefinedConfig/IUserState/PercentBarState';
+import { PercentBar } from '../../../PredefinedConfig/IUserState/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
-export interface PercentBarValuesWizardProps extends AdaptableWizardStepProps<IPercentBar> {}
+export interface PercentBarValuesWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 
 export interface PercentBarValuesWizardState {
   MinValue: number;

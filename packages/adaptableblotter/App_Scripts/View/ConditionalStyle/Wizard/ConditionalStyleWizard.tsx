@@ -7,13 +7,13 @@ import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWi
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumnCategory } from '../../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ColumnCategory } from '../../../PredefinedConfig/IUserState/ColumnCategoryState';
 
 export interface ConditionalStyleWizardProps
   extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
   ColorPalette: string[];
   StyleClassNames: string[];
-  ColumnCategories: IColumnCategory[];
+  ColumnCategories: ColumnCategory[];
 }
 
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {

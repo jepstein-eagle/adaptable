@@ -9,7 +9,7 @@ import { iPushPullHelper } from '../../Utilities/Helpers/iPushPullHelper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { IReport } from '../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../PredefinedConfig/IUserState/ExportState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
@@ -23,7 +23,7 @@ export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<Rep
 
 export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
   render(): any {
-    let report: IReport = this.props.AdaptableBlotterObject as IReport;
+    let report: Report = this.props.AdaptableBlotterObject as Report;
     let csvMenuItem: any = (
       <MenuItem onClick={() => this.props.onExport(ExportDestination.CSV)} key={'csv'}>
         {'Export to CSV'}

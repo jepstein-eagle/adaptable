@@ -1,4 +1,4 @@
-import { ExportState, IReport, IAutoExport } from '../../PredefinedConfig/IUserState/ExportState';
+import { ExportState, Report, AutoExport } from '../../PredefinedConfig/IUserState/ExportState';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
@@ -12,14 +12,14 @@ export const REPORT_DELETE = 'REPORT_DELETE';
 export const IPP_LOGIN = 'IPP_LOGIN';
 
 export interface ExportApplyAction extends Redux.Action {
-  Report: IReport;
+  Report: Report;
   ExportDestination: ExportDestination;
   Folder?: string;
   Page?: string;
 }
 
 export interface ReportAction extends Redux.Action {
-  report: IReport;
+  report: Report;
 }
 
 export interface ReportSelectAction extends Redux.Action {
@@ -34,7 +34,7 @@ export interface ReportDeleteAction extends ReportAction {}
 
 export interface AutoExportAddUpdateAction extends Redux.Action {
   Index: number;
-  AutoExport: IAutoExport;
+  AutoExport: AutoExport;
 }
 
 export interface AutoExportDeleteAction extends Redux.Action {
@@ -51,23 +51,23 @@ export const ReportSelect = (SelectedReport: string): ReportSelectAction => ({
   SelectedReport,
 });
 
-export const ReportAdd = (report: IReport): ReportAddAction => ({
+export const ReportAdd = (report: Report): ReportAddAction => ({
   type: REPORT_ADD,
   report,
 });
 
-export const ReportEdit = (report: IReport): ReportEditAction => ({
+export const ReportEdit = (report: Report): ReportEditAction => ({
   type: REPORT_EDIT,
   report,
 });
 
-export const ReportDelete = (report: IReport): ReportDeleteAction => ({
+export const ReportDelete = (report: Report): ReportDeleteAction => ({
   type: REPORT_DELETE,
   report,
 });
 
 export const ExportApply = (
-  Report: IReport,
+  Report: Report,
   ExportDestination: ExportDestination,
   Folder?: string,
   Page?: string
@@ -94,7 +94,7 @@ export const ExportReducer: Redux.Reducer<ExportState> = (
   state: ExportState = initialExportState,
   action: Redux.Action
 ): ExportState => {
-  let reports: IReport[];
+  let reports: Report[];
 
   switch (action.type) {
     case REPORT_SELECT:
@@ -103,7 +103,7 @@ export const ExportReducer: Redux.Reducer<ExportState> = (
       });
 
     case REPORT_ADD: {
-      const actionReport: IReport = (action as ReportAction).report;
+      const actionReport: Report = (action as ReportAction).report;
 
       if (!actionReport.Uuid) {
         actionReport.Uuid = createUuid();
@@ -114,7 +114,7 @@ export const ExportReducer: Redux.Reducer<ExportState> = (
     }
 
     case REPORT_EDIT:
-      const actionReport: IReport = (action as ReportAction).report;
+      const actionReport: Report = (action as ReportAction).report;
       return {
         ...state,
         Reports: state.Reports.map(abObject =>
@@ -123,7 +123,7 @@ export const ExportReducer: Redux.Reducer<ExportState> = (
       };
 
     case REPORT_DELETE: {
-      const actionReport: IReport = (action as ReportAction).report;
+      const actionReport: Report = (action as ReportAction).report;
       return {
         ...state,
         Reports: state.Reports.filter(abObject => abObject.Uuid !== actionReport.Uuid),

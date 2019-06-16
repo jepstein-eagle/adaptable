@@ -28,9 +28,11 @@ export interface IEventApi {
   onThemeChanged(): IEvent<IAdaptableBlotter, IThemeChangedEventArgs>;
 
   /**
-   * Event fired whenever column order (and visiblity) and column sorts in the Blotter change.
-   * Only fires when in a user layout and currently just passes the name of the layout.
-   * @returns IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>
+   * Event fired whenever column order, visibility and sorts are changed in the Blotter.
+   *
+   * The event only fires when in a user (as opposed to the default) layout.
+   *
+   * @returns Column State Changed args - which at present just return the name of the current layout.
    */
   onColumnStateChanged(): IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>;
 

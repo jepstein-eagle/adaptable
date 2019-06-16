@@ -1,10 +1,10 @@
 import { IUserState } from './IUserState';
 import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 export interface ColumnCategoryState extends IUserState {
-  ColumnCategories?: IColumnCategory[];
+  ColumnCategories?: ColumnCategory[];
 }
 
-export interface IColumnCategory extends IAdaptableBlotterObject {
+export interface ColumnCategory extends IAdaptableBlotterObject {
   ColumnCategoryId: string;
   ColumnIds: string[];
 }

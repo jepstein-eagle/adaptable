@@ -1,8 +1,8 @@
 import { IDataChangedInfo } from '../../Interface/IDataChangedInfo';
-import { IFreeTextColumn } from '../../../PredefinedConfig/IUserState/FreeTextColumnState';
+import { FreeTextColumn } from '../../../PredefinedConfig/IUserState/FreeTextColumnState';
 
 export interface IFreeTextColumnService {
-  GetFreeTextValue(column: IFreeTextColumn, record: any): any;
+  GetFreeTextValue(column: FreeTextColumn, record: any): any;
 
   CheckIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedInfo): void;
 

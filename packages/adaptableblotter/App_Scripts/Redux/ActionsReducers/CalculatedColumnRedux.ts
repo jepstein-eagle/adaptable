@@ -1,6 +1,6 @@
 import {
   CalculatedColumnState,
-  ICalculatedColumn,
+  CalculatedColumn,
 } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
@@ -11,7 +11,7 @@ export const CALCULATEDCOLUMN_EDIT = 'CALCULATEDCOLUMN_EDIT';
 export const CALCULATEDCOLUMN_DELETE = 'CALCULATEDCOLUMN_DELETE';
 
 export interface CalculatedColumnAction extends Redux.Action {
-  calculatedColumn: ICalculatedColumn;
+  calculatedColumn: CalculatedColumn;
 }
 
 export interface CalculatedColumnAddAction extends CalculatedColumnAction {}
@@ -21,21 +21,21 @@ export interface CalculatedColumnEditAction extends CalculatedColumnAction {}
 export interface CalculatedColumnDeleteAction extends CalculatedColumnAction {}
 
 export const CalculatedColumnAdd = (
-  calculatedColumn: ICalculatedColumn
+  calculatedColumn: CalculatedColumn
 ): CalculatedColumnAddAction => ({
   type: CALCULATEDCOLUMN_ADD,
   calculatedColumn,
 });
 
 export const CalculatedColumnEdit = (
-  calculatedColumn: ICalculatedColumn
+  calculatedColumn: CalculatedColumn
 ): CalculatedColumnEditAction => ({
   type: CALCULATEDCOLUMN_EDIT,
   calculatedColumn,
 });
 
 export const CalculatedColumnDelete = (
-  calculatedColumn: ICalculatedColumn
+  calculatedColumn: CalculatedColumn
 ): CalculatedColumnDeleteAction => ({
   type: CALCULATEDCOLUMN_DELETE,
   calculatedColumn,
@@ -49,11 +49,11 @@ export const CalculatedColumnReducer: Redux.Reducer<CalculatedColumnState> = (
   state: CalculatedColumnState = initialCalculatedColumnState,
   action: Redux.Action
 ): CalculatedColumnState => {
-  let calculatedColumns: ICalculatedColumn[];
+  let calculatedColumns: CalculatedColumn[];
 
   switch (action.type) {
     case CALCULATEDCOLUMN_ADD: {
-      const actionCalculatedColumn: ICalculatedColumn = (action as CalculatedColumnAction)
+      const actionCalculatedColumn: CalculatedColumn = (action as CalculatedColumnAction)
         .calculatedColumn;
 
       if (!actionCalculatedColumn.Uuid) {
@@ -65,7 +65,7 @@ export const CalculatedColumnReducer: Redux.Reducer<CalculatedColumnState> = (
     }
 
     case CALCULATEDCOLUMN_EDIT: {
-      const actionCalculatedColumn: ICalculatedColumn = (action as CalculatedColumnAction)
+      const actionCalculatedColumn: CalculatedColumn = (action as CalculatedColumnAction)
         .calculatedColumn;
       return {
         ...state,
@@ -76,7 +76,7 @@ export const CalculatedColumnReducer: Redux.Reducer<CalculatedColumnState> = (
     }
 
     case CALCULATEDCOLUMN_DELETE: {
-      const actionCalculatedColumn: ICalculatedColumn = (action as CalculatedColumnAction)
+      const actionCalculatedColumn: CalculatedColumn = (action as CalculatedColumnAction)
         .calculatedColumn;
       return {
         ...state,

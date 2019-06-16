@@ -17,14 +17,14 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonCondition } from '../Components/Buttons/ButtonCondition';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { IAdaptableBlotterOptions } from '../../BlotterOptions/IAdaptableBlotterOptions';
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
-  UserFilters: Array<IUserFilter>;
+  UserFilters: Array<UserFilter>;
   SystemFilters: Array<string>;
   ExpressionMode?: ExpressionMode;
   // these all need to be ptional because of wizard compatibility - todo: fix...

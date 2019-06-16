@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
 import {
-  ICategoryChartDefinition,
-  IChartDefinition,
+  CategoryChartDefinition,
+  ChartDefinition,
 } from '../../../../PredefinedConfig/IUserState/ChartState';
 import { AdaptableWizard } from '../../../Wizard/AdaptableWizard';
 import { CategoryChartYAxisWizard } from './CategoryChartYAxisWizard';
@@ -18,7 +18,7 @@ export interface CategoryChartWizardProps
 
 export class CategoryChartWizard extends React.Component<CategoryChartWizardProps, {}> {
   render() {
-    let chartDefinitions: IChartDefinition[] = this.props.ConfigEntities as IChartDefinition[];
+    let chartDefinitions: ChartDefinition[] = this.props.ConfigEntities as ChartDefinition[];
     let chartNames: string[] = chartDefinitions.map(s => s.Name);
     return (
       <div className={this.props.cssClassName}>

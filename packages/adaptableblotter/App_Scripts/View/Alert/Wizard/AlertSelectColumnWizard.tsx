@@ -9,9 +9,9 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
-import { IAlertDefinition } from '../../../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../../../PredefinedConfig/IUserState/AlertState';
 
-export interface AlertSelectColumnWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {}
+export interface AlertSelectColumnWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 export interface AlertSelectColumnWizardState {
   ColumnId: string;
 }

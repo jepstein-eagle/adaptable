@@ -23,7 +23,7 @@ import {
 } from 'react-bootstrap';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IChartDefinition } from '../../PredefinedConfig/IUserState/ChartState';
+import { ChartDefinition } from '../../PredefinedConfig/IUserState/ChartState';
 import { ButtonShowChart } from '../Components/Buttons/ButtonShowChart';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
@@ -32,8 +32,8 @@ import { DEFAULT_BSSTYLE, INFO_BSSTYLE } from '../../Utilities/Constants/StyleCo
 
 interface ChartToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ChartToolbarControlComponent> {
-  ChartDefinitions: IChartDefinition[];
-  CurrentChartDefinition: IChartDefinition;
+  ChartDefinitions: ChartDefinition[];
+  CurrentChartDefinition: ChartDefinition;
 
   onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction;
   onNewChartDefinition: (popupParams: string) => PopupRedux.PopupShowScreenAction;
@@ -51,7 +51,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
         ? selectChartString
         : this.props.CurrentChartDefinition.Name;
 
-    let sortedChartDefinitions: IChartDefinition[] = ArrayExtensions.sortArrayWithProperty(
+    let sortedChartDefinitions: ChartDefinition[] = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Ascending,
       this.props.ChartDefinitions,
       'Title'

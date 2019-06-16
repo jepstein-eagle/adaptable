@@ -10,9 +10,9 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptablePopover } from '../../AdaptablePopover';
 import * as CalendarConstants from '../../../Utilities/Constants/CalendarConstants';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IShortcut } from '../../../PredefinedConfig/IUserState/ShortcutState';
+import { Shortcut } from '../../../PredefinedConfig/IUserState/ShortcutState';
 
-export interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut> {
+export interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<Shortcut> {
   NumericKeysAvailable: Array<string>;
   DateKeysAvailable: Array<string>;
 }

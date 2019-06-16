@@ -23,15 +23,15 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IFormatColumn } from '../../PredefinedConfig/IUserState/FormatColumnState';
+import { FormatColumn } from '../../PredefinedConfig/IUserState/FormatColumnState';
 
 export interface FormatColumnSummaryProps
   extends StrategySummaryProps<FormatColumnSummaryComponent> {
-  FormatColumns: IFormatColumn[];
+  FormatColumns: FormatColumn[];
   ColorPalette: string[];
   StyleClassNames: string[];
-  onAddFormatColumn: (FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnAddAction;
-  onEditFormatColumn: (FormatColumn: IFormatColumn) => FormatColumnRedux.FormatColumnEditAction;
+  onAddFormatColumn: (FormatColumn: FormatColumn) => FormatColumnRedux.FormatColumnAddAction;
+  onEditFormatColumn: (FormatColumn: FormatColumn) => FormatColumnRedux.FormatColumnEditAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -47,7 +47,7 @@ export class FormatColumnSummaryComponent extends React.Component<
   render(): any {
     let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__formatcolumn';
 
-    let formatColumn: IFormatColumn = this.props.FormatColumns.find(
+    let formatColumn: FormatColumn = this.props.FormatColumns.find(
       c => c.ColumnId == this.props.SummarisedColumn.ColumnId
     );
     let noFormatColumn: boolean = formatColumn == null;
@@ -96,7 +96,7 @@ export class FormatColumnSummaryComponent extends React.Component<
         {this.state.EditedAdaptableBlotterObject && (
           <FormatColumnWizard
             cssClassName={cssWizardClassName}
-            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IFormatColumn}
+            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as FormatColumn}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
             ConfigEntities={this.props.FormatColumns}
@@ -116,7 +116,7 @@ export class FormatColumnSummaryComponent extends React.Component<
   }
 
   onNew() {
-    let configEntity: IFormatColumn = ObjectFactory.CreateEmptyFormatColumn();
+    let configEntity: FormatColumn = ObjectFactory.CreateEmptyFormatColumn();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
@@ -125,8 +125,8 @@ export class FormatColumnSummaryComponent extends React.Component<
     });
   }
 
-  onEdit(formatColumn: IFormatColumn) {
-    let clonedObject: IFormatColumn = Helper.cloneObject(formatColumn);
+  onEdit(formatColumn: FormatColumn) {
+    let clonedObject: FormatColumn = Helper.cloneObject(formatColumn);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 1,
@@ -143,7 +143,7 @@ export class FormatColumnSummaryComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let formatColumn: IFormatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn;
+    let formatColumn: FormatColumn = this.state.EditedAdaptableBlotterObject as FormatColumn;
     if (this.props.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)) {
       this.props.onEditFormatColumn(formatColumn);
     } else {
@@ -157,7 +157,7 @@ export class FormatColumnSummaryComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let formatColumn = this.state.EditedAdaptableBlotterObject as IFormatColumn;
+    let formatColumn = this.state.EditedAdaptableBlotterObject as FormatColumn;
     return (
       StringExtensions.IsNotNullOrEmpty(formatColumn.ColumnId) &&
       UIHelper.IsNotEmptyStyle(formatColumn.Style)
@@ -176,9 +176,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddFormatColumn: (FormatColumn: IFormatColumn) =>
+    onAddFormatColumn: (FormatColumn: FormatColumn) =>
       dispatch(FormatColumnRedux.FormatColumnAdd(FormatColumn)),
-    onEditFormatColumn: (FormatColumn: IFormatColumn) =>
+    onEditFormatColumn: (FormatColumn: FormatColumn) =>
       dispatch(FormatColumnRedux.FormatColumnEdit(FormatColumn)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId)),

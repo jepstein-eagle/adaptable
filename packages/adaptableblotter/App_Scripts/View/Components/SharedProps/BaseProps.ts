@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IUserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
-import { IColumnFilter } from '../../../PredefinedConfig/IUserState/ColumnFilterState';
+import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/IUserState/ColumnFilterState';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 
@@ -10,9 +10,9 @@ export interface BaseProps<View> extends React.ClassAttributes<View> {
   AccessLevel: AccessLevel;
 
   Columns: IColumn[];
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SystemFilters: string[];
-  ColumnFilters: IColumnFilter[];
+  ColumnFilters: ColumnFilter[];
   ModalContainer: HTMLElement;
   ColorPalette: string[];
 

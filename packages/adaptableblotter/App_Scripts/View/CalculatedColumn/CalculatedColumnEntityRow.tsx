@@ -7,7 +7,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { CalculatedColumnHelper } from '../../Utilities/Helpers/CalculatedColumnHelper';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { ICalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
+import { CalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
 
 interface CalculatedColumnEntityRowProps<CalculatedColumnEntityRow>
   extends SharedEntityRowProps<CalculatedColumnEntityRow> {
@@ -19,8 +19,7 @@ export class CalculatedColumnEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let calculatedColumn: ICalculatedColumn = this.props
-      .AdaptableBlotterObject as ICalculatedColumn;
+    let calculatedColumn: CalculatedColumn = this.props.AdaptableBlotterObject as CalculatedColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 

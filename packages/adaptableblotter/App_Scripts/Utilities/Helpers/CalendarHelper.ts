@@ -1,6 +1,6 @@
-import { ICalendar } from '../../PredefinedConfig/IUserState/CalendarState';
+import { Calendar } from '../../PredefinedConfig/IUserState/CalendarState';
 
-export function getSystemCalendars(): ICalendar[] {
+export function getSystemCalendars(): Calendar[] {
   return [
     {
       Name: 'United Kingdom',

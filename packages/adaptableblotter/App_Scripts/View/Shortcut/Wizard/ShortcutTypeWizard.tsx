@@ -1,4 +1,4 @@
-import { IShortcut } from '../../../PredefinedConfig/IUserState/ShortcutState';
+import { Shortcut } from '../../../PredefinedConfig/IUserState/ShortcutState';
 /// <reference path="../../typings/index.d.ts" />
 import * as React from 'react';
 import { Radio, Panel, Col, HelpBlock } from 'react-bootstrap';
@@ -9,7 +9,7 @@ import {
 import { DataType, MathOperation } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 
-export interface ShortcutTypeWizardProps extends AdaptableWizardStepProps<IShortcut> {}
+export interface ShortcutTypeWizardProps extends AdaptableWizardStepProps<Shortcut> {}
 export interface ShortcutTypeWizardState {
   ColumnType: 'Number' | 'Date';
 }

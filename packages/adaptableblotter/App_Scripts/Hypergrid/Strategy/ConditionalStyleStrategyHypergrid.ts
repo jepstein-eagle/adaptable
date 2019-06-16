@@ -5,8 +5,8 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { IConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { ColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
 
 export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
@@ -16,7 +16,7 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy
 
   // Called when a single piece of data changes, ie. usually the result of an inline edit
   protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
-    let conditionalStyles: IConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
+    let conditionalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
     if (ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)) {
       let theBlotter = this.blotter as AdaptableBlotter;
       let columns = this.blotter.api.gridApi.getColumns();
@@ -50,7 +50,7 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy
                   conditionalStyleRow: c.Style,
                 });
               } else if (c.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                let columnCategory: IColumnCategory = this.blotter.api.columnCategoryApi
+                let columnCategory: ColumnCategory = this.blotter.api.columnCategoryApi
                   .getAllColumnCategory()
                   .find(lc => lc.ColumnCategoryId == c.ColumnCategoryId);
                 columnCategory.ColumnIds.forEach(cc => {
@@ -78,7 +78,7 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy
                   conditionalStyleRow: c.Style,
                 });
               } else if (c.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-                let columnCategory: IColumnCategory = this.blotter.api.columnCategoryApi.getColumnCategoryById(
+                let columnCategory: ColumnCategory = this.blotter.api.columnCategoryApi.getColumnCategoryById(
                   c.ColumnCategoryId
                 );
                 columnCategory.ColumnIds.forEach(cc => {
@@ -101,7 +101,7 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy
   public initStyles(): void {
     let theBlotter = this.blotter as AdaptableBlotter;
     let columns = this.blotter.api.gridApi.getColumns();
-    let conditionalStyles: IConditionalStyle[] = theBlotter.api.conditionalStyleApi.getAllConditionalStyle();
+    let conditionalStyles: ConditionalStyle[] = theBlotter.api.conditionalStyleApi.getAllConditionalStyle();
     theBlotter.removeAllCellStyleHypergrid('csColumn');
     theBlotter.removeAllCellStyleHypergrid('csRow');
 
@@ -125,7 +125,7 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy
         for (let column in columnConditionalStylesGroupedByColumn) {
           //we just need to find one that match....
           for (let columnCS of columnConditionalStylesGroupedByColumn[column]) {
-            let localCS: IConditionalStyle = columnCS;
+            let localCS: ConditionalStyle = columnCS;
             if (
               ExpressionHelper.checkForExpressionFromRecord(
                 localCS.Expression,

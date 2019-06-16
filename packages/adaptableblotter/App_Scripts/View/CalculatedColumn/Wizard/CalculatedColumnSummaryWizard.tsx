@@ -7,10 +7,10 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { CalculatedColumnHelper } from '../../../Utilities/Helpers/CalculatedColumnHelper';
-import { ICalculatedColumn } from '../../../PredefinedConfig/IUserState/CalculatedColumnState';
+import { CalculatedColumn } from '../../../PredefinedConfig/IUserState/CalculatedColumnState';
 
 export interface CalculatedColumnSummaryWizardProps
-  extends AdaptableWizardStepProps<ICalculatedColumn> {}
+  extends AdaptableWizardStepProps<CalculatedColumn> {}
 
 export class CalculatedColumnSummaryWizard
   extends React.Component<CalculatedColumnSummaryWizardProps, {}>

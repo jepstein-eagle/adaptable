@@ -3,11 +3,11 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { ChartDisplayPopupPropsBase } from '../Components/SharedProps/ChartDisplayPopupPropsBase';
 import {
-  IChartDefinition,
-  ICategoryChartDefinition,
-  IChartProperties,
-  IPieChartDefinition,
-  IChartData,
+  ChartDefinition,
+  CategoryChartDefinition,
+  ChartProperties,
+  PieChartDefinition,
+  ChartData,
 } from '../../PredefinedConfig/IUserState/ChartState';
 import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonClose } from '../Components/Buttons/ButtonClose';
@@ -28,27 +28,25 @@ import { PieChartComponent } from './PieChart/PieChartComponent';
 import { PieChartWizard } from './PieChart/Wizard/PieChartWizard';
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
-  ChartDefinitions: IChartDefinition[];
-  CurrentChartDefinition: IChartDefinition;
-  ChartData: IChartData;
+  ChartDefinitions: ChartDefinition[];
+  CurrentChartDefinition: ChartDefinition;
+  ChartData: ChartData;
   ChartVisibility: ChartVisibility;
 
-  onAddChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddAction;
-  onEditChartDefinition: (
-    chartDefinition: IChartDefinition
-  ) => ChartRedux.ChartDefinitionEditAction;
+  onAddChartDefinition: (chartDefinition: ChartDefinition) => ChartRedux.ChartDefinitionAddAction;
+  onEditChartDefinition: (chartDefinition: ChartDefinition) => ChartRedux.ChartDefinitionEditAction;
   onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction;
   onSetChartVisibility: (
     chartVisibility: ChartVisibility
   ) => SystemRedux.ChartSetChartVisibiityAction;
   onUpdateChartProperties: (
     chartUuid: string,
-    chartProperties: IChartProperties
+    chartProperties: ChartProperties
   ) => ChartRedux.ChartPropertiesUpdateAction;
 }
 
 export interface ChartDisplayPopupState {
-  EditedChartDefinition: IChartDefinition;
+  EditedChartDefinition: ChartDefinition;
 }
 
 class ChartDisplayPopupComponent extends React.Component<
@@ -138,7 +136,7 @@ class ChartDisplayPopupComponent extends React.Component<
                 {currentChartType == ChartType.CategoryChart ? (
                   <CategoryChartComponent
                     CurrentChartDefinition={
-                      this.props.CurrentChartDefinition as ICategoryChartDefinition
+                      this.props.CurrentChartDefinition as CategoryChartDefinition
                     }
                     ChartData={this.props.ChartData}
                     ColorPalette={this.props.ColorPalette}
@@ -150,9 +148,7 @@ class ChartDisplayPopupComponent extends React.Component<
                   />
                 ) : (
                   <PieChartComponent
-                    CurrentChartDefinition={
-                      this.props.CurrentChartDefinition as IPieChartDefinition
-                    }
+                    CurrentChartDefinition={this.props.CurrentChartDefinition as PieChartDefinition}
                     ChartData={this.props.ChartData}
                     //   ColorPalette={this.props.ColorPalette}
                     //   Columns={this.props.Columns}
@@ -222,7 +218,7 @@ class ChartDisplayPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let clonedObject: IChartDefinition = Helper.cloneObject(this.state.EditedChartDefinition);
+    let clonedObject: ChartDefinition = Helper.cloneObject(this.state.EditedChartDefinition);
     let isNew: boolean =
       this.props.ChartDefinitions.find(cd => cd.Uuid == this.state.EditedChartDefinition.Uuid) ==
       null;
@@ -253,15 +249,15 @@ function mapStateToProps(state: AdaptableBlotterState) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddChartDefinition: (chartDefinition: IChartDefinition) =>
+    onAddChartDefinition: (chartDefinition: ChartDefinition) =>
       dispatch(ChartRedux.ChartDefinitionAdd(chartDefinition)),
-    onEditChartDefinition: (chartDefinition: IChartDefinition) =>
+    onEditChartDefinition: (chartDefinition: ChartDefinition) =>
       dispatch(ChartRedux.ChartDefinitionEdit(chartDefinition)),
     onSelectChartDefinition: (chartDefinition: string) =>
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
     onSetChartVisibility: (chartVisibility: ChartVisibility) =>
       dispatch(SystemRedux.ChartSetChartVisibility(chartVisibility)),
-    onUpdateChartProperties: (chartUuid: string, chartProperties: IChartProperties) =>
+    onUpdateChartProperties: (chartUuid: string, chartProperties: ChartProperties) =>
       dispatch(ChartRedux.ChartPropertiesUpdate(chartUuid, chartProperties)),
   };
 }

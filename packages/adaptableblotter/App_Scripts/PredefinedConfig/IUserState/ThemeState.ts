@@ -3,10 +3,10 @@ import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 export interface ThemeState extends IUserState {
   CurrentTheme?: string;
   SystemThemes?: string[];
-  UserThemes?: IUserTheme[];
+  UserThemes?: UserTheme[];
 }
 
-export interface IUserTheme extends IAdaptableBlotterObject {
+export interface UserTheme extends IAdaptableBlotterObject {
   Name: string;
   Url: string;
 }

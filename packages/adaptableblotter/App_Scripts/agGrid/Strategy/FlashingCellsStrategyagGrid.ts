@@ -5,7 +5,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
-import { IFlashingCell } from '../../PredefinedConfig/IUserState/FlashingCellState';
+import { FlashingCell } from '../../PredefinedConfig/IUserState/FlashingCellState';
 
 export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
   implements IFlashingCellsStrategy {
@@ -19,7 +19,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
     return false;
   }
 
-  protected FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: IFlashingCell): void {
+  protected FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: FlashingCell): void {
     // dont handle
   }
 
@@ -27,7 +27,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
     let numericColumns = ColumnHelper.getNumericColumns(this.blotter.api.gridApi.getColumns());
     let theBlotter = this.blotter as AdaptableBlotter;
     let currentFlashing = this.currentFlashing;
-    let flashingCells: IFlashingCell[] = this.blotter.api.flashingCellApi.getAllFlashingCell();
+    let flashingCells: FlashingCell[] = this.blotter.api.flashingCellApi.getAllFlashingCell();
     numericColumns.forEach(col => {
       let fc = flashingCells.find(x => x.ColumnId == col.ColumnId && x.IsLive);
       let index = flashingCells.indexOf(fc);

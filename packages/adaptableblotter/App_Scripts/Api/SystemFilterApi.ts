@@ -4,14 +4,14 @@ import { ApiBase } from './ApiBase';
 import { FilterHelper } from '../Utilities/Helpers/FilterHelper';
 import { ISystemFilterApi } from './Interface/ISystemFilterApi';
 import { SystemFilterState } from '../PredefinedConfig/IDesignTimeState/SystemFilterState';
-import { IUserFilter } from '../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../PredefinedConfig/IUserState/UserFilterState';
 
 export class SystemFilterApi extends ApiBase implements ISystemFilterApi {
   public getSystemFilterState(): SystemFilterState {
     return this.getBlotterState().SystemFilter;
   }
 
-  public setSystemFilterByUserFilters(userFilters: IUserFilter[]): void {
+  public setSystemFilterByUserFilters(userFilters: UserFilter[]): void {
     userFilters.forEach(uf => {
       this.dispatchAction(UserFilterRedux.UserFilterAdd(uf));
     });

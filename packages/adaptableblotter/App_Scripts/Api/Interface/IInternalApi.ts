@@ -3,23 +3,23 @@ import { IMenuItem } from '../../Utilities/Interface/IMenu';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { SystemState } from '../../PredefinedConfig/ISystemState/SystemState';
-import { IReport } from '../../PredefinedConfig/IUserState/ExportState';
-import { ICalendar } from '../../PredefinedConfig/IUserState/CalendarState';
-import { IChartData } from '../../PredefinedConfig/IUserState/ChartState';
+import { Report } from '../../PredefinedConfig/IUserState/ExportState';
+import { Calendar } from '../../PredefinedConfig/IUserState/CalendarState';
+import { ChartData } from '../../PredefinedConfig/IUserState/ChartState';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 
 export interface IInternalApi {
   // System Redux
   getSystemState(): SystemState;
   startLiveReport(
-    report: IReport,
+    report: Report,
     workbookName: string,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ): void;
-  getAvailableCalendars(): ICalendar[];
-  setChartData(chartData: IChartData): void;
+  getAvailableCalendars(): Calendar[];
+  setChartData(chartData: ChartData): void;
   setChartVisibility(chartVisbility: ChartVisibility): void;
-  getSystemReports(): IReport[];
+  getSystemReports(): Report[];
   getLiveReports(): ILiveReport[];
 
   // Menu Redux

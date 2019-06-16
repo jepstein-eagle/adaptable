@@ -3,7 +3,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { ICategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { CategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
 import { AxisTotal } from '../../../../PredefinedConfig/Common/ChartEnums';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
@@ -13,7 +13,7 @@ import { AdaptablePopover } from '../../../AdaptablePopover';
 import { DualListBoxEditor, DisplaySize } from '../../../Components/ListBox/DualListBoxEditor';
 
 export interface CategoryChartYAxisWizardProps
-  extends AdaptableWizardStepProps<ICategoryChartDefinition> {}
+  extends AdaptableWizardStepProps<CategoryChartDefinition> {}
 
 export interface CategoryChartYAxisWizardState {
   YAxisColumnIds: string[];

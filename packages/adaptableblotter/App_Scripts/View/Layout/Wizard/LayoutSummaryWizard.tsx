@@ -7,11 +7,11 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { LayoutHelper } from '../../../Utilities/Helpers/LayoutHelper';
-import { ILayout } from '../../../PredefinedConfig/IUserState/LayoutState';
+import { Layout } from '../../../PredefinedConfig/IUserState/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 
-export interface LayoutSummaryWizardProps extends AdaptableWizardStepProps<ILayout> {}
+export interface LayoutSummaryWizardProps extends AdaptableWizardStepProps<Layout> {}
 
 export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProps, {}>
   implements AdaptableWizardStep {

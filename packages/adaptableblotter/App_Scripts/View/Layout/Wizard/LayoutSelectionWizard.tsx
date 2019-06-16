@@ -10,12 +10,12 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ILayout, IColumnSort } from '../../../PredefinedConfig/IUserState/LayoutState';
+import { Layout, ColumnSort } from '../../../PredefinedConfig/IUserState/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
-export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<ILayout> {
-  Layouts: Array<ILayout>;
-  ColumnSorts: IColumnSort[];
+export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<Layout> {
+  Layouts: Array<Layout>;
+  ColumnSorts: ColumnSort[];
 }
 
 export interface LayoutSelectionWizardState {

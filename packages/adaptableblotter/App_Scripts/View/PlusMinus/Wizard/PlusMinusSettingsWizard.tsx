@@ -8,9 +8,9 @@ import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IPlusMinusRule } from '../../../PredefinedConfig/IUserState/PlusMinusState';
+import { PlusMinusRule } from '../../../PredefinedConfig/IUserState/PlusMinusState';
 
-export interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {}
+export interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {}
 export interface PlusMinusSettingsWizardState {
   NudgeValue: number;
   IsDefaultNudge: boolean;

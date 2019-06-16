@@ -4,7 +4,7 @@ import { IColumn } from '../Utilities/Interface/IColumn';
 import { GridState } from '../PredefinedConfig/ISystemState/GridState';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { IColumnSort } from '../PredefinedConfig/IUserState/LayoutState';
+import { ColumnSort } from '../PredefinedConfig/IUserState/LayoutState';
 
 export class GridApi extends ApiBase implements IGridApi {
   public getGridState(): GridState {
@@ -31,7 +31,7 @@ export class GridApi extends ApiBase implements IGridApi {
     return this.getColumns().filter(c => c.DataType == DataType.Number);
   }
 
-  public getColumnSorts(): IColumnSort[] {
+  public getColumnSorts(): ColumnSort[] {
     return this.getGridState().ColumnSorts;
   }
 }

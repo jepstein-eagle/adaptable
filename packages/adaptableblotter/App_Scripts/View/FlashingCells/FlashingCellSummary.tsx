@@ -12,14 +12,14 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IFlashingCell } from '../../PredefinedConfig/IUserState/FlashingCellState';
+import { FlashingCell } from '../../PredefinedConfig/IUserState/FlashingCellState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { FlashingCellState } from '../../PredefinedConfig/IUserState/FlashingCellState';
 
 export interface FlashingCellSummaryProps
   extends StrategySummaryProps<FlashingCellSummaryComponent> {
-  FlashingCells: IFlashingCell[];
-  onSelectFlashingCell: (flashingCell: IFlashingCell) => FlashingCellRedux.FlashingCellSelectAction;
+  FlashingCells: FlashingCell[];
+  onSelectFlashingCell: (flashingCell: FlashingCell) => FlashingCellRedux.FlashingCellSelectAction;
 }
 
 export class FlashingCellSummaryComponent extends React.Component<
@@ -28,7 +28,7 @@ export class FlashingCellSummaryComponent extends React.Component<
 > {
   render(): any {
     let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__flashingcells';
-    let flashingCell: IFlashingCell = this.props.FlashingCells.find(
+    let flashingCell: FlashingCell = this.props.FlashingCells.find(
       fc => fc.ColumnId == this.props.SummarisedColumn.ColumnId
     );
     let isFlashingCellColumn: boolean = flashingCell && flashingCell.IsLive;
@@ -60,7 +60,7 @@ export class FlashingCellSummaryComponent extends React.Component<
     return <AdaptableObjectRow cssClassName={cssWizardClassName} colItems={colItems} />;
   }
 
-  onFlashingSelectedChanged(flashingCell: IFlashingCell) {
+  onFlashingSelectedChanged(flashingCell: FlashingCell) {
     let existingfc = this.props.FlashingCells.find(
       e => e.ColumnId == this.props.SummarisedColumn.ColumnId
     );
@@ -92,7 +92,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onSelectFlashingCell: (flashingCell: IFlashingCell) =>
+    onSelectFlashingCell: (flashingCell: FlashingCell) =>
       dispatch(FlashingCellRedux.FlashingCellSelect(flashingCell)),
   };
 }

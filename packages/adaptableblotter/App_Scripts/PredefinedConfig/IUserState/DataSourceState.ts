@@ -1,11 +1,11 @@
 import { IUserState } from './IUserState';
 import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 export interface DataSourceState extends IUserState {
-  DataSources?: IDataSource[];
+  DataSources?: DataSource[];
   CurrentDataSource?: string;
 }
 
-export interface IDataSource extends IAdaptableBlotterObject {
+export interface DataSource extends IAdaptableBlotterObject {
   Name: string;
   Description: string;
   Params?: any[];

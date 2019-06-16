@@ -16,7 +16,7 @@ import {
 import { IColumn } from '../Interface/IColumn';
 import {
   CellValidationState,
-  ICellValidationRule,
+  CellValidationRule,
 } from '../../PredefinedConfig/IUserState/CellValidationState';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 import { IFunctionAppliedDetails } from '../Interface/IAuditEvents';
@@ -27,8 +27,8 @@ export class ValidationService implements IValidationService {
   }
 
   // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...
-  public ValidateCellChanging(dataChangedEvent: IDataChangedInfo): ICellValidationRule[] {
-    let failedWarningRules: ICellValidationRule[] = [];
+  public ValidateCellChanging(dataChangedEvent: IDataChangedInfo): CellValidationRule[] {
+    let failedWarningRules: CellValidationRule[] = [];
     // if the new value is the same as the old value then we can get out as we dont see it as an edit?
     if (dataChangedEvent.OldValue == dataChangedEvent.NewValue) {
       return failedWarningRules;
@@ -54,7 +54,7 @@ export class ValidationService implements IValidationService {
               RangeOperandType.Column,
               null
             );
-            let cellValidationRule: ICellValidationRule = ObjectFactory.CreateCellValidationRule(
+            let cellValidationRule: CellValidationRule = ObjectFactory.CreateCellValidationRule(
               dataChangedEvent.ColumnId,
               range,
               ActionMode.StopEdit,
@@ -74,7 +74,7 @@ export class ValidationService implements IValidationService {
       let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
 
       // first check the rules which have expressions
-      let expressionRules: ICellValidationRule[] = editingRules.filter(r =>
+      let expressionRules: CellValidationRule[] = editingRules.filter(r =>
         ExpressionHelper.IsNotNullOrEmptyExpression(r.Expression)
       );
 
@@ -108,7 +108,7 @@ export class ValidationService implements IValidationService {
       }
 
       // now check the rules without expressions
-      let noExpressionRules: ICellValidationRule[] = editingRules.filter(r =>
+      let noExpressionRules: CellValidationRule[] = editingRules.filter(r =>
         ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
       );
       for (let noExpressionRule of noExpressionRules) {
@@ -140,7 +140,7 @@ export class ValidationService implements IValidationService {
 
   // changing this so that it now checks the opposite!
   private IsCellValidationRuleBroken(
-    cellValidationRule: ICellValidationRule,
+    cellValidationRule: CellValidationRule,
     dataChangedEvent: IDataChangedInfo,
     columns: IColumn[]
   ): boolean {

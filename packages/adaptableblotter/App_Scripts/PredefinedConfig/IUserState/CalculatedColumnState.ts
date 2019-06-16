@@ -1,10 +1,10 @@
 import { IUserState } from './IUserState';
 import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 export interface CalculatedColumnState extends IUserState {
-  CalculatedColumns?: ICalculatedColumn[];
+  CalculatedColumns?: CalculatedColumn[];
 }
 
-export interface ICalculatedColumn extends IAdaptableBlotterObject {
+export interface CalculatedColumn extends IAdaptableBlotterObject {
   ColumnId: string;
   ColumnExpression: string;
 }

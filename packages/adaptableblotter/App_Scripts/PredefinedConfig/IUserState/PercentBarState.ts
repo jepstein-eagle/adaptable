@@ -1,10 +1,10 @@
 import { IUserState } from './IUserState';
 import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 export interface PercentBarState extends IUserState {
-  PercentBars?: IPercentBar[];
+  PercentBars?: PercentBar[];
 }
 
-export interface IPercentBar extends IAdaptableBlotterObject {
+export interface PercentBar extends IAdaptableBlotterObject {
   ColumnId: string;
   MinValue?: number;
   MaxValue?: number;

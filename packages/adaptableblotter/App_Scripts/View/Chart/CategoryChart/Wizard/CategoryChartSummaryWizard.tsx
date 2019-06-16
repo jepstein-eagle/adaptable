@@ -4,7 +4,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { ICategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { CategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../../Utilities/Interface/IKeyValuePair';
 import { WizardSummaryPage } from '../../../Components/WizardSummaryPage';
@@ -12,7 +12,7 @@ import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expre
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
 
 export interface CategoryChartSummaryWizardProps
-  extends AdaptableWizardStepProps<ICategoryChartDefinition> {}
+  extends AdaptableWizardStepProps<CategoryChartDefinition> {}
 
 export class CategoryChartSummaryWizard extends React.Component<CategoryChartSummaryWizardProps, {}>
   implements AdaptableWizardStep {

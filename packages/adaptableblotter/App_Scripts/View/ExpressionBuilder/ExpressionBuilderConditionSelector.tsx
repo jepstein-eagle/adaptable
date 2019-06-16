@@ -25,7 +25,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { Waiting } from '../Components/FilterForm/Waiting';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
-import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -34,7 +34,7 @@ export interface ExpressionBuilderConditionSelectorProps
   ExpressionMode: ExpressionMode;
   onExpressionChange: (Expression: Expression) => void;
   onSelectedColumnChange: (ColumnId: string, Tab: QueryTab) => void;
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SystemFilters: string[];
   SelectedColumnId: string;
   SelectedTab: QueryTab;
@@ -121,7 +121,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         if (filterExpressions) {
           filterExpressions.Filters.forEach((fe: string) => {
             // if its a userfilter add it to that list
-            let userFilter: IUserFilter = this.props.UserFilters.find(uf => uf.Name == fe);
+            let userFilter: UserFilter = this.props.UserFilters.find(uf => uf.Name == fe);
             if (userFilter) {
               selectedColumnFilterExpressions.push(fe);
             }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
-import { IChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { ChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
 import { AdaptableWizard } from '../../../Wizard/AdaptableWizard';
 import { PieChartSettingsWizard } from './PieChartSettingsWizard';
 import { PieChartSummaryWizard } from './PieChartSummaryWizard';
@@ -13,7 +13,7 @@ export interface PieChartWizardProps
 
 export class PieChartWizard extends React.Component<PieChartWizardProps, {}> {
   render() {
-    let chartDefinitions: IChartDefinition[] = this.props.ConfigEntities as IChartDefinition[];
+    let chartDefinitions: ChartDefinition[] = this.props.ConfigEntities as ChartDefinition[];
     let chartNames: string[] = chartDefinitions.map(s => s.Name);
     return (
       <div className={this.props.cssClassName}>

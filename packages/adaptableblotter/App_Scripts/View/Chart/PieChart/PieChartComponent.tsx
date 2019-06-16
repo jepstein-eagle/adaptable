@@ -9,11 +9,11 @@ import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
 import { IgrPieChartModule } from 'igniteui-react-charts/ES2015/igr-pie-chart-module';
 import { SliceClickEventArgs } from 'igniteui-react-charts/ES2015/igr-slice-click-event-args';
 import {
-  IChartProperties,
-  IPieChartDefinition,
-  IPieChartProperties,
-  IChartData,
-  IPieChartDataItem,
+  ChartProperties,
+  PieChartDefinition,
+  PieChartProperties,
+  ChartData,
+  PieChartDataItem,
 } from '../../../PredefinedConfig/IUserState/ChartState';
 import { PieChartUIHelper } from './PieChartUIHelper';
 import { PieChartComponentState } from './PieChartComponentState';
@@ -44,9 +44,9 @@ As we add other chart types we will need to rethink this and some of the assumpt
 */
 interface PieChartComponentProps {
   cssClassName: string;
-  CurrentChartDefinition: IPieChartDefinition;
-  ChartData: IChartData;
-  onUpdateChartProperties: (chartUuid: string, chartProperties: IChartProperties) => void;
+  CurrentChartDefinition: PieChartDefinition;
+  ChartData: ChartData;
+  onUpdateChartProperties: (chartUuid: string, chartProperties: ChartProperties) => void;
 }
 
 export class PieChartComponent extends React.Component<
@@ -476,31 +476,31 @@ export class PieChartComponent extends React.Component<
     // first update our state
     this.setState(PieChartUIHelper.setDefaultChartDisplayPopupState() as PieChartComponentState);
     // then update the properties
-    let chartProperties: IPieChartProperties = Helper.cloneObject(DefaultPieChartProperties);
+    let chartProperties: PieChartProperties = Helper.cloneObject(DefaultPieChartProperties);
     this.updateChartProperties(chartProperties);
   }
 
-  private updateChartProperties(chartProperties: IChartProperties): void {
+  private updateChartProperties(chartProperties: ChartProperties): void {
     this.setState({ ChartProperties: chartProperties } as PieChartComponentState);
     this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Uuid, chartProperties);
   }
 
   private onPieOrDoughnutViewChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    let chartProperties: IPieChartProperties = this.state.ChartProperties;
+    let chartProperties: PieChartProperties = this.state.ChartProperties;
     chartProperties.ShowAsDoughnut = e.checked;
     this.updateChartProperties(chartProperties);
   }
 
   private onOthersCategoryThresholdChanged = (e: any) => {
-    let chartProperties: IPieChartProperties = this.state.ChartProperties;
+    let chartProperties: PieChartProperties = this.state.ChartProperties;
     chartProperties.OthersCategoryThreshold = e.target.value;
     this.updateChartProperties(chartProperties);
   };
 
   private onThresholdAsPercentChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    let chartProperties: IPieChartProperties = this.state.ChartProperties;
+    let chartProperties: PieChartProperties = this.state.ChartProperties;
     chartProperties.OthersCategoryType = e.checked
       ? OthersCategoryType.Percent
       : OthersCategoryType.Number;
@@ -509,7 +509,7 @@ export class PieChartComponent extends React.Component<
 
   private onSliceLabelsPositionChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    let chartProperties: IPieChartProperties = this.state.ChartProperties;
+    let chartProperties: PieChartProperties = this.state.ChartProperties;
     chartProperties.PieChartLabelPosition = e.value as PieChartLabelPosition;
     this.updateChartProperties(chartProperties);
   }
@@ -521,7 +521,7 @@ export class PieChartComponent extends React.Component<
       ? SliceLabelOption.RatioAndName
       : SliceLabelOption.ValueAndName;
 
-    let chartProperties: IPieChartProperties = this.state.ChartProperties;
+    let chartProperties: PieChartProperties = this.state.ChartProperties;
     chartProperties.SliceLabelsMapping = labelMapping as SliceLabelOption;
     chartProperties.SliceLegendMapping = legendMapping;
     this.updateChartProperties(chartProperties);
@@ -530,8 +530,8 @@ export class PieChartComponent extends React.Component<
   onSliceSortByColumnChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     let sliceSortOption = e.value as SliceSortOption;
-    let oldData: IPieChartDataItem[] = this.state.DataSource;
-    let newData: IPieChartDataItem[] = PieChartUIHelper.sortDataSource(sliceSortOption, oldData);
+    let oldData: PieChartDataItem[] = this.state.DataSource;
+    let newData: PieChartDataItem[] = PieChartUIHelper.sortDataSource(sliceSortOption, oldData);
     this.setState({
       SliceSortOption: sliceSortOption,
       DataSource: newData,

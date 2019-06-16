@@ -1,12 +1,12 @@
 import {
-  ICategoryChartDefinition,
-  IChartData,
-  IPieChartDefinition,
+  CategoryChartDefinition,
+  ChartData,
+  PieChartDefinition,
 } from '../../../PredefinedConfig/IUserState/ChartState';
 import { IColumn } from '../../Interface/IColumn';
 
 export interface IChartService {
-  BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): IChartData;
+  BuildCategoryChartData(chartDefinition: CategoryChartDefinition, columns: IColumn[]): ChartData;
 
-  BuildPieChartData(chartDefinition: IPieChartDefinition): IChartData;
+  BuildPieChartData(chartDefinition: PieChartDefinition): ChartData;
 }

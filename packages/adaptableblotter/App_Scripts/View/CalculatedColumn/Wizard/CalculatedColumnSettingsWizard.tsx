@@ -9,10 +9,10 @@ import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
-import { ICalculatedColumn } from '../../../PredefinedConfig/IUserState/CalculatedColumnState';
+import { CalculatedColumn } from '../../../PredefinedConfig/IUserState/CalculatedColumnState';
 
 export interface CalculatedColumnSettingsWizardProps
-  extends AdaptableWizardStepProps<ICalculatedColumn> {}
+  extends AdaptableWizardStepProps<CalculatedColumn> {}
 export interface CalculatedColumnSettingsWizardState {
   ColumnId: string;
   ErrorMessage: string;

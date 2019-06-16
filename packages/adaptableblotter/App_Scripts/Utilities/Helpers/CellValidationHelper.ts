@@ -5,10 +5,10 @@ import { IColumn } from '../Interface/IColumn';
 import { LeafExpressionOperator, DataType, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { IUIConfirmation } from '../Interface/IMessage';
 import * as Redux from 'redux';
-import { ICellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
 
 export function createCellValidationDescription(
-  cellValidationRule: ICellValidationRule,
+  cellValidationRule: CellValidationRule,
   columns: IColumn[]
 ): string {
   if (cellValidationRule.Range.Operator == LeafExpressionOperator.PrimaryKeyDuplicate) {

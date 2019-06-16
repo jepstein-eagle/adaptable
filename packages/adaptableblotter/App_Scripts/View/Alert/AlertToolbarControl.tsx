@@ -15,11 +15,11 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { MessageType, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import { AlertsPanel } from './AlertsPanel';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { IAlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
 
 interface AlertToolbarControlProps
   extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
-  AlertDefinitions: IAlertDefinition[];
+  AlertDefinitions: AlertDefinition[];
   Alerts: IAdaptableAlert[];
 
   onDeleteAlert: (index: number) => SystemRedux.SystemAlertDeleteAction;

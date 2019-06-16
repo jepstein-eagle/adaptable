@@ -1,16 +1,16 @@
 import { IUserState } from './IUserState';
 import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 export interface FreeTextColumnState extends IUserState {
-  FreeTextColumns?: IFreeTextColumn[];
+  FreeTextColumns?: FreeTextColumn[];
 }
 
-export interface IFreeTextColumn extends IAdaptableBlotterObject {
+export interface FreeTextColumn extends IAdaptableBlotterObject {
   ColumnId: string;
   DefaultValue: any;
-  FreeTextStoredValues: IFreeTextStoredValue[];
+  FreeTextStoredValues: FreeTextStoredValue[];
 }
 
-export interface IFreeTextStoredValue {
+export interface FreeTextStoredValue {
   PrimaryKey: any;
   FreeText: any;
 }

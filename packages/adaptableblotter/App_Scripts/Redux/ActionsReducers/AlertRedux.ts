@@ -1,4 +1,4 @@
-import { AlertState, IAlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
+import { AlertState, AlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
 import * as Redux from 'redux';
 import {
   EMPTY_ARRAY,
@@ -12,7 +12,7 @@ export const ALERT_DEFIINITION_EDIT = 'ALERT_DEFIINITION_EDIT';
 export const ALERT_DEFIINITION_DELETE = 'ALERT_DEFIINITION_DELETE';
 
 export interface AlertDefinitionAction extends Redux.Action {
-  alertDefinition: IAlertDefinition;
+  alertDefinition: AlertDefinition;
 }
 
 export interface AlertDefinitionAddAction extends AlertDefinitionAction {}
@@ -21,22 +21,20 @@ export interface AlertDefinitionEditAction extends AlertDefinitionAction {}
 
 export interface AlertDefinitionDeleteAction extends AlertDefinitionAction {}
 
-export const AlertDefinitionAdd = (
-  alertDefinition: IAlertDefinition
-): AlertDefinitionAddAction => ({
+export const AlertDefinitionAdd = (alertDefinition: AlertDefinition): AlertDefinitionAddAction => ({
   type: ALERT_DEFIINITION_ADD,
   alertDefinition,
 });
 
 export const AlertDefinitionEdit = (
-  alertDefinition: IAlertDefinition
+  alertDefinition: AlertDefinition
 ): AlertDefinitionEditAction => ({
   type: ALERT_DEFIINITION_EDIT,
   alertDefinition,
 });
 
 export const AlertDefinitionDelete = (
-  alertDefinition: IAlertDefinition
+  alertDefinition: AlertDefinition
 ): AlertDefinitionDeleteAction => ({
   type: ALERT_DEFIINITION_DELETE,
   alertDefinition,
@@ -52,11 +50,11 @@ export const AlertReducer: Redux.Reducer<AlertState> = (
   state: AlertState = initialAlertState,
   action: Redux.Action
 ): AlertState => {
-  let alertDefinitions: IAlertDefinition[];
+  let alertDefinitions: AlertDefinition[];
 
   switch (action.type) {
     case ALERT_DEFIINITION_ADD: {
-      const actionAlertDefinition: IAlertDefinition = (action as AlertDefinitionAction)
+      const actionAlertDefinition: AlertDefinition = (action as AlertDefinitionAction)
         .alertDefinition;
 
       if (!actionAlertDefinition.Uuid) {
@@ -68,7 +66,7 @@ export const AlertReducer: Redux.Reducer<AlertState> = (
     }
 
     case ALERT_DEFIINITION_EDIT: {
-      const actionAlertDefinition: IAlertDefinition = (action as AlertDefinitionAction)
+      const actionAlertDefinition: AlertDefinition = (action as AlertDefinitionAction)
         .alertDefinition;
       return {
         ...state,
@@ -79,7 +77,7 @@ export const AlertReducer: Redux.Reducer<AlertState> = (
     }
 
     case ALERT_DEFIINITION_DELETE: {
-      const actionAlertDefinition: IAlertDefinition = (action as AlertDefinitionAction)
+      const actionAlertDefinition: AlertDefinition = (action as AlertDefinitionAction)
         .alertDefinition;
       return {
         ...state,

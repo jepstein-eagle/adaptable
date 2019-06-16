@@ -3,10 +3,10 @@ import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 import { Expression } from '../Common/Expression/Expression';
 import { IStyle } from '../Common/IStyle';
 export interface ConditionalStyleState extends IUserState {
-  ConditionalStyles?: IConditionalStyle[];
+  ConditionalStyles?: ConditionalStyle[];
 }
 
-export interface IConditionalStyle extends IAdaptableBlotterObject {
+export interface ConditionalStyle extends IAdaptableBlotterObject {
   ColumnId?: string;
   ColumnCategoryId?: string;
   ConditionalStyleScope?: 'Column' | 'Row' | 'ColumnCategory';

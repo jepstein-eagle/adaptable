@@ -3,22 +3,22 @@ import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 
 export interface LayoutState extends IUserState {
   CurrentLayout?: string;
-  Layouts?: ILayout[];
+  Layouts?: Layout[];
 }
 
-export interface ILayout extends IAdaptableBlotterObject {
+export interface Layout extends IAdaptableBlotterObject {
   Name: string;
   Columns: string[];
-  ColumnSorts?: IColumnSort[];
-  VendorGridInfo?: IVendorGridInfo;
+  ColumnSorts?: ColumnSort[];
+  VendorGridInfo?: VendorGridInfo;
 }
 
-export interface IColumnSort {
+export interface ColumnSort {
   Column: string;
   SortOrder: 'Unknown' | 'Ascending' | 'Descending';
 }
 
-export interface IVendorGridInfo {
+export interface VendorGridInfo {
   GroupState: any;
   ColumnState: any;
 }

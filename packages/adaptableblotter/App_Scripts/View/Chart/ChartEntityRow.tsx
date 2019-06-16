@@ -5,8 +5,8 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from '../UIInterfaces';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import {
-  IChartDefinition,
-  ICategoryChartDefinition,
+  ChartDefinition,
+  CategoryChartDefinition,
 } from '../../PredefinedConfig/IUserState/ChartState';
 import { ButtonShowChart } from '../Components/Buttons/ButtonShowChart';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
@@ -21,8 +21,8 @@ export interface ChartEntityRowProps extends SharedEntityRowProps<ChartEntityRow
 export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
   render(): any {
     // assuming only category charts for now - silly assumption to make in due course...
-    let Chart: ICategoryChartDefinition = this.props
-      .AdaptableBlotterObject as ICategoryChartDefinition;
+    let Chart: CategoryChartDefinition = this.props
+      .AdaptableBlotterObject as CategoryChartDefinition;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = <EntityRowItem Content={Chart.Name} />;

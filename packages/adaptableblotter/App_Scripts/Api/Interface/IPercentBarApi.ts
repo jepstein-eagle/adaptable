@@ -1,9 +1,9 @@
-import { PercentBarState, IPercentBar } from '../../PredefinedConfig/IUserState/PercentBarState';
+import { PercentBarState, PercentBar } from '../../PredefinedConfig/IUserState/PercentBarState';
 export interface IPercentBarApi {
   getPercentBarState(): PercentBarState;
-  getAllPercentBar(): IPercentBar[];
-  getPercentBarByColumn(columnId: string): IPercentBar;
-  addPercentBar(percentBar: IPercentBar): void;
+  getAllPercentBar(): PercentBar[];
+  getPercentBarByColumn(columnId: string): PercentBar;
+  addPercentBar(percentBar: PercentBar): void;
   createPercentBar(
     columnId: string,
     minValue: number,
@@ -12,7 +12,7 @@ export interface IPercentBarApi {
     negativeColor: string,
     showValue: boolean
   ): void;
-  editPercentBar(percentBar: IPercentBar): void;
+  editPercentBar(percentBar: PercentBar): void;
   editPercentBarMinValue(minValue: number, columnId: string): void;
   editPercentBarMaxValue(maxValue: number, columnId: string): void;
   editPercentBarPositiveColor(positiveColor: string, columnId: string): void;

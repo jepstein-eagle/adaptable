@@ -26,14 +26,14 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { ICustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
+import { CustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 
 interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupComponent> {
-  onAddCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortAddAction;
-  onEditCustomSort: (customSort: ICustomSort) => CustomSortRedux.CustomSortEditAction;
-  CustomSorts: Array<ICustomSort>;
+  onAddCustomSort: (customSort: CustomSort) => CustomSortRedux.CustomSortAddAction;
+  onEditCustomSort: (customSort: CustomSort) => CustomSortRedux.CustomSortEditAction;
+  CustomSorts: Array<CustomSort>;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -83,7 +83,7 @@ class CustomSortPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let customSorts = this.props.CustomSorts.map((customSort: ICustomSort, index) => {
+    let customSorts = this.props.CustomSorts.map((customSort: CustomSort, index) => {
       return (
         <CustomSortEntityRow
           cssClassName={cssClassName}
@@ -137,7 +137,7 @@ class CustomSortPopupComponent extends React.Component<
           {this.state.EditedAdaptableBlotterObject && (
             <CustomSortWizard
               cssClassName={cssWizardClassName}
-              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ICustomSort}
+              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as CustomSort}
               ConfigEntities={this.props.CustomSorts}
               ModalContainer={this.props.ModalContainer}
               Columns={this.props.Columns}
@@ -155,7 +155,7 @@ class CustomSortPopupComponent extends React.Component<
     );
   }
 
-  onEdit(customSort: ICustomSort) {
+  onEdit(customSort: CustomSort) {
     //so we dont mutate original object
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(customSort),
@@ -172,8 +172,8 @@ class CustomSortPopupComponent extends React.Component<
     });
   }
 
-  onNewFromColumn(customsort: ICustomSort) {
-    let clonedObject: ICustomSort = Helper.cloneObject(customsort);
+  onNewFromColumn(customsort: CustomSort) {
+    let clonedObject: CustomSort = Helper.cloneObject(customsort);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStatus: WizardStatus.New,
@@ -191,7 +191,7 @@ class CustomSortPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let customSort: ICustomSort = this.state.EditedAdaptableBlotterObject as ICustomSort;
+    let customSort: CustomSort = this.state.EditedAdaptableBlotterObject as CustomSort;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditCustomSort(customSort);
     } else {
@@ -205,7 +205,7 @@ class CustomSortPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let customSort = this.state.EditedAdaptableBlotterObject as ICustomSort;
+    let customSort = this.state.EditedAdaptableBlotterObject as CustomSort;
     return (
       StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&
       ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)
@@ -221,9 +221,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddCustomSort: (customSort: ICustomSort) =>
+    onAddCustomSort: (customSort: CustomSort) =>
       dispatch(CustomSortRedux.CustomSortAdd(customSort)),
-    onEditCustomSort: (customSort: ICustomSort) =>
+    onEditCustomSort: (customSort: CustomSort) =>
       dispatch(CustomSortRedux.CustomSortEdit(customSort)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: IAdaptableBlotterObject) =>

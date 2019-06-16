@@ -8,16 +8,16 @@ import { LayoutGridSortWizard } from './LayoutGridSortWizard';
 import { LayoutSummaryWizard } from './LayoutSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { ILayout, IColumnSort } from '../../../PredefinedConfig/IUserState/LayoutState';
+import { Layout, ColumnSort } from '../../../PredefinedConfig/IUserState/LayoutState';
 
 export interface LayoutWizardProps
   extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {
-  ColumnSorts: IColumnSort[];
+  ColumnSorts: ColumnSort[];
 }
 
 export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
   render() {
-    let layouts: ILayout[] = this.props.ConfigEntities as ILayout[];
+    let layouts: Layout[] = this.props.ConfigEntities as Layout[];
     return (
       <div className={this.props.cssClassName}>
         <AdaptableWizard

@@ -6,12 +6,12 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
-import { IColumnCategory } from '../../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ColumnCategory } from '../../../PredefinedConfig/IUserState/ColumnCategoryState';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
 export interface ColumnCategorySummaryWizardProps
-  extends AdaptableWizardStepProps<IColumnCategory> {}
+  extends AdaptableWizardStepProps<ColumnCategory> {}
 
 export class ColumnCategorySummaryWizard
   extends React.Component<ColumnCategorySummaryWizardProps, {}>

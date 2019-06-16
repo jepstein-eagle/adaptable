@@ -2,7 +2,7 @@ import { ApiBase } from './ApiBase';
 import { IConditionalStyleApi } from './Interface/IConditionalStyleApi';
 import {
   ConditionalStyleState,
-  IConditionalStyle,
+  ConditionalStyle,
 } from '../PredefinedConfig/IUserState/ConditionalStyleState';
 
 export class ConditionalStyleApi extends ApiBase implements IConditionalStyleApi {
@@ -10,7 +10,7 @@ export class ConditionalStyleApi extends ApiBase implements IConditionalStyleApi
     return this.getBlotterState().ConditionalStyle;
   }
 
-  public getAllConditionalStyle(): IConditionalStyle[] {
+  public getAllConditionalStyle(): ConditionalStyle[] {
     return this.getConditionalStyleState().ConditionalStyles;
   }
 }

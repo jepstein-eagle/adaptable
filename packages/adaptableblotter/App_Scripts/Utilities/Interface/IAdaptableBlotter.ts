@@ -18,10 +18,10 @@ import { ILicenceService } from '../Services/Interface/ILicenceService';
 import { IScheduleService } from '../Services/Interface/IScheduleService';
 import { IAuditLogService } from '../Services/Interface/IAuditLogService';
 import { ISearchService } from '../Services/Interface/ISearchService';
-import { IColumnSort, IVendorGridInfo } from '../../PredefinedConfig/IUserState/LayoutState';
-import { IFreeTextColumn } from '../../PredefinedConfig/IUserState/FreeTextColumnState';
-import { ICalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
-import { IPercentBar } from '../../PredefinedConfig/IUserState/PercentBarState';
+import { ColumnSort, VendorGridInfo } from '../../PredefinedConfig/IUserState/LayoutState';
+import { FreeTextColumn } from '../../PredefinedConfig/IUserState/FreeTextColumnState';
+import { CalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
+import { PercentBar } from '../../PredefinedConfig/IUserState/PercentBarState';
 
 /**
  *  The only interface for the AdaptableBlotter
@@ -150,20 +150,20 @@ export interface IAdaptableBlotter {
   //  Sort
   setCustomSort(columnId: string, comparer: Function): void;
   removeCustomSort(columnId: string): void;
-  setColumnSort(columnSorts: IColumnSort[]): void;
+  setColumnSort(columnSorts: ColumnSort[]): void;
 
   //FreeTextColumn
-  addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn): void;
+  addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn): void;
 
   //CalculatedColumn
-  addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void;
+  addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn): void;
   removeCalculatedColumnFromGrid(calculatedColumnID: string): void;
-  editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void;
+  editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void;
 
   // percentBar
-  removePercentBar(percentBar: IPercentBar): void;
-  addPercentBar(percentBar: IPercentBar): void;
-  editPercentBar(percentBar: IPercentBar): void;
+  removePercentBar(percentBar: PercentBar): void;
+  addPercentBar(percentBar: PercentBar): void;
+  editPercentBar(percentBar: PercentBar): void;
 
   // Filtering
   hideFilterForm(): void;
@@ -181,8 +181,8 @@ export interface IAdaptableBlotter {
   getVisibleColumnCount(): number;
 
   // layout
-  getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo;
-  setVendorGridState(vendorGridState: IVendorGridInfo): void;
+  getVendorGridState(visibleCols: string[], forceFetch: boolean): VendorGridInfo;
+  setVendorGridState(vendorGridState: VendorGridInfo): void;
 
   // vendor grid related
   isSelectable(): boolean;

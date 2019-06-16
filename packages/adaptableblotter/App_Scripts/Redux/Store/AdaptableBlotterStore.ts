@@ -56,13 +56,13 @@ import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants';
 import { LayoutState } from '../../PredefinedConfig/IUserState/LayoutState';
 import { GridState } from '../../PredefinedConfig/ISystemState/GridState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { IFormatColumn } from '../../PredefinedConfig/IUserState/FormatColumnState';
-import { ILayout } from '../../PredefinedConfig/IUserState/LayoutState';
-import { IPlusMinusRule } from '../../PredefinedConfig/IUserState/PlusMinusState';
-import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
-import { IFreeTextColumn } from '../../PredefinedConfig/IUserState/FreeTextColumnState';
-import { IReport } from '../../PredefinedConfig/IUserState/ExportState';
-import { ICustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
+import { FormatColumn } from '../../PredefinedConfig/IUserState/FormatColumnState';
+import { Layout } from '../../PredefinedConfig/IUserState/LayoutState';
+import { PlusMinusRule } from '../../PredefinedConfig/IUserState/PlusMinusState';
+import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { FreeTextColumn } from '../../PredefinedConfig/IUserState/FreeTextColumnState';
+import { Report } from '../../PredefinedConfig/IUserState/ExportState';
+import { CustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
@@ -107,12 +107,12 @@ import {
   StateObjectChangeType,
 } from '../../Utilities/Interface/IAuditEvents';
 import LayoutHelper from '../../Utilities/Helpers/LayoutHelper';
-import { ICalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
-import { IConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
-import { IColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
-import { ICellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
-import { IShortcut } from '../../PredefinedConfig/IUserState/ShortcutState';
-import { IAdvancedSearch } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
+import { CalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
+import { ConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { ColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
+import { CellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
+import { Shortcut } from '../../PredefinedConfig/IUserState/ShortcutState';
+import { AdvancedSearch } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
 import { IState } from '../../PredefinedConfig/IState';
 
 /*
@@ -1903,7 +1903,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            */
           case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
             let returnAction = next(action);
-            let calculatedColumn: ICalculatedColumn = (<
+            let calculatedColumn: CalculatedColumn = (<
               CalculatedColumnRedux.CalculatedColumnAddAction
             >action).calculatedColumn;
             blotter.addCalculatedColumnToGrid(calculatedColumn);
@@ -1965,7 +1965,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            *******************/
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_ADD: {
             let returnAction = next(action);
-            let freeTextColumn: IFreeTextColumn = (<FreeTextColumnRedux.FreeTextColumnAddAction>(
+            let freeTextColumn: FreeTextColumn = (<FreeTextColumnRedux.FreeTextColumnAddAction>(
               action
             )).freeTextColumn;
             blotter.addFreeTextColumnToGrid(freeTextColumn);
@@ -1992,7 +1992,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             let returnAction = next(action);
             let actionTyped = <ColumnCategoryRedux.ColumnCategoryDeleteAction>action;
             let conditionalStyleState = middlewareAPI.getState().ConditionalStyle;
-            conditionalStyleState.ConditionalStyles.forEach((cs: IConditionalStyle) => {
+            conditionalStyleState.ConditionalStyles.forEach((cs: ConditionalStyle) => {
               if (cs.ColumnCategoryId == actionTyped.columnCategory.ColumnCategoryId) {
                 // some warning?
                 middlewareAPI.dispatch(ConditionalStyleRedux.ConditionalStyleDelete(cs));
@@ -2084,7 +2084,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           case LayoutRedux.LAYOUT_SAVE: {
             let returnAction = next(action);
             let actionTyped = <LayoutRedux.LayoutSaveAction>action;
-            let layout: ILayout = Helper.cloneObject(actionTyped.layout);
+            let layout: Layout = Helper.cloneObject(actionTyped.layout);
 
             let forceFetch = layout.Name == DEFAULT_LAYOUT;
             layout.VendorGridInfo = blotter.getVendorGridState(layout.Columns, forceFetch);
@@ -2381,14 +2381,14 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           case UserFilterRedux.USER_FILTER_CREATE_FROM_COLUMN_FILTER: {
             let actionTyped = <UserFilterRedux.CreateUserFilterFromColumnFilterAction>action;
             // first create a new user filter based on the column filter and input name
-            let userFilter: IUserFilter = ObjectFactory.CreateUserFilterFromColumnFilter(
+            let userFilter: UserFilter = ObjectFactory.CreateUserFilterFromColumnFilter(
               actionTyped.ColumnFilter,
               actionTyped.InputText
             );
             middlewareAPI.dispatch(UserFilterRedux.UserFilterAdd(userFilter));
 
             // then update a new column filter from the user filter - so that it will display the user filter name
-            let columnFilter: IColumnFilter = actionTyped.ColumnFilter;
+            let columnFilter: ColumnFilter = actionTyped.ColumnFilter;
             columnFilter.Filter = ExpressionHelper.CreateSingleColumnExpression(
               userFilter.ColumnId,
               [],
@@ -2501,11 +2501,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             switch (actionTyped.Strategy) {
               case StrategyConstants.CellValidationStrategyId:
                 importAction = CellValidationRedux.CellValidationAdd(
-                  actionTyped.Entity as ICellValidationRule
+                  actionTyped.Entity as CellValidationRule
                 );
                 break;
               case StrategyConstants.CalculatedColumnStrategyId: {
-                let calcCol = actionTyped.Entity as ICalculatedColumn;
+                let calcCol = actionTyped.Entity as CalculatedColumn;
                 let idx = middlewareAPI
                   .getState()
                   .CalculatedColumn.CalculatedColumns.findIndex(
@@ -2521,11 +2521,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               }
               case StrategyConstants.ConditionalStyleStrategyId:
                 importAction = ConditionalStyleRedux.ConditionalStyleAdd(
-                  actionTyped.Entity as IConditionalStyle
+                  actionTyped.Entity as ConditionalStyle
                 );
                 break;
               case StrategyConstants.CustomSortStrategyId: {
-                let customSort = actionTyped.Entity as ICustomSort;
+                let customSort = actionTyped.Entity as CustomSort;
                 if (
                   middlewareAPI
                     .getState()
@@ -2539,7 +2539,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 break;
               }
               case StrategyConstants.FormatColumnStrategyId: {
-                let formatColumn = actionTyped.Entity as IFormatColumn;
+                let formatColumn = actionTyped.Entity as FormatColumn;
                 if (
                   middlewareAPI
                     .getState()
@@ -2553,13 +2553,13 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 break;
               }
               case StrategyConstants.PlusMinusStrategyId: {
-                let plusMinus = actionTyped.Entity as IPlusMinusRule;
+                let plusMinus = actionTyped.Entity as PlusMinusRule;
                 importAction = PlusMinusRedux.PlusMinusRuleAdd(plusMinus);
                 break;
               }
               case StrategyConstants.ShortcutStrategyId: {
-                let shortcut = actionTyped.Entity as IShortcut;
-                let shortcuts: IShortcut[];
+                let shortcut = actionTyped.Entity as Shortcut;
+                let shortcuts: Shortcut[];
                 shortcuts = middlewareAPI.getState().Shortcut.Shortcuts;
                 if (shortcuts) {
                   if (shortcuts.find(x => x.ShortcutKey == shortcut.ShortcutKey)) {
@@ -2573,7 +2573,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 break;
               }
               case StrategyConstants.UserFilterStrategyId: {
-                let filter = actionTyped.Entity as IUserFilter;
+                let filter = actionTyped.Entity as UserFilter;
                 //For now not too worry about that but I think we'll need to check ofr filter that have same name
                 //currently the reducer checks for UID
                 if (
@@ -2586,7 +2586,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 break;
               }
               case StrategyConstants.AdvancedSearchStrategyId: {
-                let search = actionTyped.Entity as IAdvancedSearch;
+                let search = actionTyped.Entity as AdvancedSearch;
                 if (
                   middlewareAPI
                     .getState()
@@ -2598,7 +2598,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 break;
               }
               case StrategyConstants.LayoutStrategyId: {
-                let layout = actionTyped.Entity as ILayout;
+                let layout = actionTyped.Entity as Layout;
                 let layoutIndex: number = middlewareAPI
                   .getState()
                   .Layout.Layouts.findIndex(x => x.Name == layout.Name);
@@ -2609,7 +2609,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
                 break;
               }
               case StrategyConstants.ExportStrategyId: {
-                let report = actionTyped.Entity as IReport;
+                let report = actionTyped.Entity as Report;
                 let idx = middlewareAPI
                   .getState()
                   .Export.Reports.findIndex(x => x.Name == report.Name);
@@ -2760,7 +2760,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
 
             //create the default layout (if not there) so we can revert to it if needed
             let currentLayout = DEFAULT_LAYOUT;
-            let defaultLayout: ILayout = ObjectFactory.CreateLayout(
+            let defaultLayout: Layout = ObjectFactory.CreateLayout(
               gridState.Columns,
               [],
               blotter.getVendorGridState(visibleColumnNames, true),

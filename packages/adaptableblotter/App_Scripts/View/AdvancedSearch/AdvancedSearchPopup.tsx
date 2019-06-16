@@ -25,17 +25,17 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { PRIMARY_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { IAdvancedSearch } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
+import { AdvancedSearch } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
-  AdvancedSearches: IAdvancedSearch[];
+  AdvancedSearches: AdvancedSearch[];
   CurrentAdvancedSearchName: string;
   onAddAdvancedSearch: (
-    advancedSearch: IAdvancedSearch
+    advancedSearch: AdvancedSearch
   ) => AdvancedSearchRedux.AdvancedSearchAddAction;
   onEditAdvancedSearch: (
-    advancedSearch: IAdvancedSearch
+    advancedSearch: AdvancedSearch
   ) => AdvancedSearchRedux.AdvancedSearchEditAction;
   onSelectAdvancedSearch: (
     SelectedSearchName: string
@@ -91,7 +91,7 @@ class AdvancedSearchPopupComponent extends React.Component<
     ];
 
     let advancedSearchRows = this.props.AdvancedSearches.map(
-      (advancedSearch: IAdvancedSearch, index) => {
+      (advancedSearch: AdvancedSearch, index) => {
         return (
           <AdvancedSearchEntityRow
             cssClassName={cssClassName}
@@ -101,7 +101,7 @@ class AdvancedSearchPopupComponent extends React.Component<
             AdaptableBlotterObject={advancedSearch}
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
-            onEdit={advancedSearch => this.onEdit(advancedSearch as IAdvancedSearch)}
+            onEdit={advancedSearch => this.onEdit(advancedSearch as AdvancedSearch)}
             onShare={() => this.props.onShare(advancedSearch)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)}
@@ -177,8 +177,8 @@ class AdvancedSearchPopupComponent extends React.Component<
     });
   }
 
-  onEdit(advancedSearch: IAdvancedSearch) {
-    let clonedObject: IAdvancedSearch = Helper.cloneObject(advancedSearch);
+  onEdit(advancedSearch: AdvancedSearch) {
+    let clonedObject: AdvancedSearch = Helper.cloneObject(advancedSearch);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 0,
@@ -196,8 +196,8 @@ class AdvancedSearchPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let clonedObject: IAdvancedSearch = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
-    let currentSearch: IAdvancedSearch = this.props.AdvancedSearches.filter(
+    let clonedObject: AdvancedSearch = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+    let currentSearch: AdvancedSearch = this.props.AdvancedSearches.filter(
       s => s.Name === this.props.CurrentAdvancedSearchName
     )[0];
     if (this.state.WizardStatus == WizardStatus.New) {
@@ -222,7 +222,7 @@ class AdvancedSearchPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let advancedSearch = this.state.EditedAdaptableBlotterObject as IAdvancedSearch;
+    let advancedSearch = this.state.EditedAdaptableBlotterObject as AdvancedSearch;
     return (
       StringExtensions.IsNotNullOrEmpty(advancedSearch.Name) &&
       ExpressionHelper.IsNotEmptyOrInvalidExpression(advancedSearch.Expression)
@@ -239,9 +239,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddAdvancedSearch: (advancedSearch: IAdvancedSearch) =>
+    onAddAdvancedSearch: (advancedSearch: AdvancedSearch) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchAdd(advancedSearch)),
-    onEditAdvancedSearch: (advancedSearch: IAdvancedSearch) =>
+    onEditAdvancedSearch: (advancedSearch: AdvancedSearch) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchEdit(advancedSearch)),
     onSelectAdvancedSearch: (selectedSearchName: string) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),

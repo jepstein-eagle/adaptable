@@ -10,7 +10,7 @@ import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
-import { IAlertDefinition } from '../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../PredefinedConfig/IUserState/AlertState';
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -29,7 +29,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
   }
 
   protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
-    let alertDefinitions: IAlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
+    let alertDefinitions: AlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
     if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
       let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
       alertDefinitions.forEach(fr => {
@@ -44,16 +44,16 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     }
   }
 
-  public CheckDataChanged(dataChangedEvent: IDataChangedInfo): IAlertDefinition[] {
+  public CheckDataChanged(dataChangedEvent: IDataChangedInfo): AlertDefinition[] {
     let relatedAlertDefinitions = this.blotter.api.alertApi
       .getAlertState()
       .AlertDefinitions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
-    let triggeredAlerts: IAlertDefinition[] = [];
+    let triggeredAlerts: AlertDefinition[] = [];
     if (relatedAlertDefinitions.length > 0) {
       let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
 
       // first check the rules which have expressions
-      let expressionAlertDefinitions: IAlertDefinition[] = relatedAlertDefinitions.filter(r =>
+      let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(r =>
         ExpressionHelper.IsNotNullOrEmptyExpression(r.Expression)
       );
 
@@ -75,7 +75,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
       }
 
       // now check the rules without expressions//
-      let noExpressionRules: IAlertDefinition[] = relatedAlertDefinitions.filter(r =>
+      let noExpressionRules: AlertDefinition[] = relatedAlertDefinitions.filter(r =>
         ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
       );
       for (let noExpressionRule of noExpressionRules) {
@@ -88,7 +88,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
   }
 
   private IsAlertTriggered(
-    alert: IAlertDefinition,
+    alert: AlertDefinition,
     dataChangedEvent: IDataChangedInfo,
     columns: IColumn[]
   ): boolean {

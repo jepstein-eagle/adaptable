@@ -8,10 +8,10 @@ import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { SHORTCUT_ADD } from '../../../Redux/ActionsReducers/ShortcutRedux';
-import { ILayout } from '../../../PredefinedConfig/IUserState/LayoutState';
+import { Layout } from '../../../PredefinedConfig/IUserState/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
-export interface LayoutColumnWizardProps extends AdaptableWizardStepProps<ILayout> {}
+export interface LayoutColumnWizardProps extends AdaptableWizardStepProps<Layout> {}
 export interface LayoutColumnWizardState {
   SelectedColumns: Array<string>;
 }

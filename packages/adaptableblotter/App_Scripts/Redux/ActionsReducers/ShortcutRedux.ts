@@ -1,4 +1,4 @@
-import { ShortcutState, IShortcut } from '../../PredefinedConfig/IUserState/ShortcutState';
+import { ShortcutState, Shortcut } from '../../PredefinedConfig/IUserState/ShortcutState';
 import * as Redux from 'redux';
 import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
@@ -10,14 +10,14 @@ export const SHORTCUT_EDIT = 'SHORTCUT_EDIT';
 export const SHORTCUT_DELETE = 'SHORTCUT_DELETE';
 
 export interface ShortcutApplyAction extends Redux.Action {
-  Shortcut: IShortcut;
+  Shortcut: Shortcut;
   CellInfo: ICellInfo;
   KeyEventString: string;
   NewValue: any;
 }
 
 export interface ShortcutAction extends Redux.Action {
-  shortcut: IShortcut;
+  shortcut: Shortcut;
 }
 
 export interface ShortcutAddAction extends ShortcutAction {}
@@ -27,7 +27,7 @@ export interface ShortcutEditAction extends ShortcutAction {}
 export interface ShortcutDeleteAction extends ShortcutAction {}
 
 export const ShortcutApply = (
-  Shortcut: IShortcut,
+  Shortcut: Shortcut,
   CellInfo: ICellInfo,
   KeyEventString: string,
   NewValue: any
@@ -39,16 +39,16 @@ export const ShortcutApply = (
   NewValue,
 });
 
-export const ShortcutAdd = (shortcut: IShortcut): ShortcutAddAction => ({
+export const ShortcutAdd = (shortcut: Shortcut): ShortcutAddAction => ({
   type: SHORTCUT_ADD,
   shortcut,
 });
 
-export const ShortcutEdit = (shortcut: IShortcut): ShortcutEditAction => ({
+export const ShortcutEdit = (shortcut: Shortcut): ShortcutEditAction => ({
   type: SHORTCUT_EDIT,
   shortcut,
 });
-export const ShortcutDelete = (shortcut: IShortcut): ShortcutDeleteAction => ({
+export const ShortcutDelete = (shortcut: Shortcut): ShortcutDeleteAction => ({
   type: SHORTCUT_DELETE,
   shortcut,
 });
@@ -61,7 +61,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (
   state: ShortcutState = initialShortcutState,
   action: Redux.Action
 ): ShortcutState => {
-  let shortcuts: IShortcut[];
+  let shortcuts: Shortcut[];
 
   switch (action.type) {
     case SHORTCUT_APPLY:
@@ -69,7 +69,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (
       return Object.assign({}, state);
 
     case SHORTCUT_ADD: {
-      const actionShortcut: IShortcut = (action as ShortcutAction).shortcut;
+      const actionShortcut: Shortcut = (action as ShortcutAction).shortcut;
 
       if (!actionShortcut.Uuid) {
         actionShortcut.Uuid = createUuid();
@@ -80,7 +80,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (
     }
 
     case SHORTCUT_EDIT: {
-      const actionShortcut: IShortcut = (action as ShortcutAction).shortcut;
+      const actionShortcut: Shortcut = (action as ShortcutAction).shortcut;
       return {
         ...state,
         Shortcuts: state.Shortcuts.map(abObject =>
@@ -89,7 +89,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (
       };
     }
     case SHORTCUT_DELETE: {
-      const actionShortcut: IShortcut = (action as ShortcutAction).shortcut;
+      const actionShortcut: Shortcut = (action as ShortcutAction).shortcut;
       return {
         ...state,
         Shortcuts: state.Shortcuts.filter(abObject => abObject.Uuid !== actionShortcut.Uuid),

@@ -6,11 +6,11 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
 import { ReportColumnScope } from '../../../PredefinedConfig/Common/Enums';
-import { IReport } from '../../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../../PredefinedConfig/IUserState/ExportState';
 import { UIHelper } from '../../UIHelper';
 
 export class ReportExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-  constructor(private props2: ExpressionWizardProps<IReport>) {
+  constructor(private props2: ExpressionWizardProps<Report>) {
     super(props2);
     this.Data = props2.Data;
     this.state = UIHelper.getExpressionBuilderState(props2.Data.Expression);

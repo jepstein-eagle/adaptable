@@ -6,10 +6,10 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IChartStrategy } from './Interface/IChartStrategy';
 import {
   ChartState,
-  IChartDefinition,
-  ICategoryChartDefinition,
-  IPieChartDefinition,
-  IChartData,
+  ChartDefinition,
+  CategoryChartDefinition,
+  PieChartDefinition,
+  ChartData,
 } from '../PredefinedConfig/IUserState/ChartState';
 import { SystemState } from '../PredefinedConfig/ISystemState/SystemState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -59,8 +59,8 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
           displayChartAtStartUp = true;
         }
       } else {
-        let chartStateDefinition: IChartDefinition = this.GetCurrentChartDefinition();
-        let storeStateDefinition: IChartDefinition = this.GetChartState().ChartDefinitions.find(
+        let chartStateDefinition: ChartDefinition = this.GetCurrentChartDefinition();
+        let storeStateDefinition: ChartDefinition = this.GetChartState().ChartDefinitions.find(
           c => c.Name == this.GetChartState().CurrentChartName
         );
 
@@ -109,8 +109,8 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
   }
 
   private doChartDefinitionChangesRequireDataUpdate(
-    cd1: IChartDefinition,
-    cd2: IChartDefinition
+    cd1: ChartDefinition,
+    cd2: ChartDefinition
   ): boolean {
     if (cd1 == null && cd2 !== null) {
       return true;
@@ -128,21 +128,21 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     if (cd1.ChartType == ChartType.CategoryChart) {
       return this.doCategoryChartDefinitionChangesRequireDataUpdate(
-        cd1 as ICategoryChartDefinition,
-        cd2 as ICategoryChartDefinition
+        cd1 as CategoryChartDefinition,
+        cd2 as CategoryChartDefinition
       );
     }
     if (cd1.ChartType == ChartType.PieChart) {
       return this.doPieChartDefinitionChangesRequireDataUpdate(
-        cd1 as IPieChartDefinition,
-        cd2 as IPieChartDefinition
+        cd1 as PieChartDefinition,
+        cd2 as PieChartDefinition
       );
     }
   }
 
   private doCategoryChartDefinitionChangesRequireDataUpdate(
-    cd1: ICategoryChartDefinition,
-    cd2: ICategoryChartDefinition
+    cd1: CategoryChartDefinition,
+    cd2: CategoryChartDefinition
   ): boolean {
     if (cd1.XAxisColumnId != cd2.XAxisColumnId) {
       return true;
@@ -164,8 +164,8 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
   }
 
   private doPieChartDefinitionChangesRequireDataUpdate(
-    cd1: IPieChartDefinition,
-    cd2: IPieChartDefinition
+    cd1: PieChartDefinition,
+    cd2: PieChartDefinition
   ): boolean {
     if (cd1.PrimaryColumnId != cd2.PrimaryColumnId) {
       return true;
@@ -183,7 +183,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     // weÎ always redraw a chart if its visible when a search has been applied as its relatively rare...
     // might need to rethink if that is too OTT
     if (this.isCurrentChartVisibiilityMaximised()) {
-      let currentChartDefinition: IChartDefinition = this.GetCurrentChartDefinition();
+      let currentChartDefinition: ChartDefinition = this.GetCurrentChartDefinition();
       if (currentChartDefinition != null && currentChartDefinition.VisibleRowsOnly) {
         this.throttleSetChartData();
       }
@@ -194,7 +194,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     if (this.isCurrentChartVisibiilityMaximised()) {
       let columnChangedId: string = dataChangedInfo.ColumnId;
       if (StringExtensions.IsNotNullOrEmpty(columnChangedId)) {
-        let currentChartDefinition: IChartDefinition = this.GetCurrentChartDefinition();
+        let currentChartDefinition: ChartDefinition = this.GetCurrentChartDefinition();
         if (this.isChartDataChanged(currentChartDefinition, columnChangedId)) {
           this.throttleSetChartData();
         }
@@ -213,7 +213,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
   }
 
   private isChartDataChanged(
-    currentChartDefinition: IChartDefinition,
+    currentChartDefinition: ChartDefinition,
     columnChangedId: string
   ): boolean {
     if (currentChartDefinition == null) {
@@ -221,14 +221,14 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
     switch (currentChartDefinition.ChartType) {
       case ChartType.CategoryChart:
-        let categoryChartDefinition: ICategoryChartDefinition = currentChartDefinition as ICategoryChartDefinition;
+        let categoryChartDefinition: CategoryChartDefinition = currentChartDefinition as CategoryChartDefinition;
         return (
           ArrayExtensions.ContainsItem(categoryChartDefinition.YAxisColumnIds, columnChangedId) ||
           categoryChartDefinition.XAxisColumnId == columnChangedId
         );
 
       case ChartType.PieChart:
-        let pieChartDefinition: IPieChartDefinition = currentChartDefinition as IPieChartDefinition;
+        let pieChartDefinition: PieChartDefinition = currentChartDefinition as PieChartDefinition;
         return (
           pieChartDefinition.PrimaryColumnId == columnChangedId ||
           pieChartDefinition.SecondaryColumnId == columnChangedId
@@ -237,17 +237,17 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
   }
 
   private setChartData() {
-    let chartDefinition: IChartDefinition = this.GetCurrentChartDefinition();
+    let chartDefinition: ChartDefinition = this.GetCurrentChartDefinition();
     if (chartDefinition) {
-      let chartData: IChartData;
+      let chartData: ChartData;
       if (chartDefinition.ChartType == ChartType.CategoryChart) {
         chartData = this.blotter.ChartService.BuildCategoryChartData(
-          chartDefinition as ICategoryChartDefinition,
+          chartDefinition as CategoryChartDefinition,
           this.GetColumnState()
         );
       } else if (chartDefinition.ChartType == ChartType.PieChart) {
         chartData = this.blotter.ChartService.BuildPieChartData(
-          chartDefinition as IPieChartDefinition
+          chartDefinition as PieChartDefinition
         );
       }
       this.blotter.api.internalApi.setChartData(chartData);
@@ -272,7 +272,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     return this.blotter.api.gridApi.getColumns();
   }
 
-  private GetCurrentChartDefinition(): IChartDefinition {
+  private GetCurrentChartDefinition(): ChartDefinition {
     return this.ChartState.ChartDefinitions.find(c => c.Name == this.ChartState.CurrentChartName);
   }
 }

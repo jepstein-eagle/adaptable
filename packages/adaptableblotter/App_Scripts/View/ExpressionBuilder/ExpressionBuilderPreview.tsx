@@ -8,7 +8,7 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
-import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
 import {
   QueryTab,
   LeafExpressionOperator,
@@ -31,7 +31,7 @@ import { IRange } from '../../PredefinedConfig/Common/Expression/IRange';
 export interface ExpressionBuilderPreviewProps
   extends React.ClassAttributes<ExpressionBuilderPreview> {
   Expression: Expression;
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   onSelectedColumnChange: (ColumnId: string, tab: QueryTab) => void;
   ColumnsList: Array<IColumn>;
   DeleteRange: (ColumnId: string, index: number) => void;

@@ -4,10 +4,10 @@ import { IKeyValuePair } from '../Interface/IKeyValuePair';
 import { ColumnHelper } from './ColumnHelper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { IColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
 
 export function convertColumnFiltersToKVPArray(
-  columnFilters: IColumnFilter[],
+  columnFilters: ColumnFilter[],
   columns: IColumn[]
 ): IKeyValuePair[] {
   let infoBody: IKeyValuePair[] = [];
@@ -25,7 +25,7 @@ export function convertColumnFiltersToKVPArray(
 }
 
 export function getColumnFiltersDescription(
-  columnFilters: IColumnFilter[],
+  columnFilters: ColumnFilter[],
   columns: IColumn[],
   blotter: IAdaptableBlotter
 ): string {

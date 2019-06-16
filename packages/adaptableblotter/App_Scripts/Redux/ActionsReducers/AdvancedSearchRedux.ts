@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import {
   AdvancedSearchState,
-  IAdvancedSearch,
+  AdvancedSearch,
 } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
@@ -12,7 +12,7 @@ export const ADVANCED_SEARCH_DELETE = 'ADVANCED_SEARCH_DELETE';
 export const ADVANCED_SEARCH_SELECT = 'ADVANCED_SEARCH_SELECT';
 
 export interface AdvancedSearchAction extends Redux.Action {
-  advancedSearch: IAdvancedSearch;
+  advancedSearch: AdvancedSearch;
 }
 export interface AdvancedSearchAddAction extends AdvancedSearchAction {}
 
@@ -24,18 +24,18 @@ export interface AdvancedSearchSelectAction extends Redux.Action {
   selectedSearchName: string;
 }
 
-export const AdvancedSearchAdd = (advancedSearch: IAdvancedSearch): AdvancedSearchAddAction => ({
+export const AdvancedSearchAdd = (advancedSearch: AdvancedSearch): AdvancedSearchAddAction => ({
   type: ADVANCED_SEARCH_ADD,
   advancedSearch,
 });
 
-export const AdvancedSearchEdit = (advancedSearch: IAdvancedSearch): AdvancedSearchEditAction => ({
+export const AdvancedSearchEdit = (advancedSearch: AdvancedSearch): AdvancedSearchEditAction => ({
   type: ADVANCED_SEARCH_EDIT,
   advancedSearch,
 });
 
 export const AdvancedSearchDelete = (
-  advancedSearch: IAdvancedSearch
+  advancedSearch: AdvancedSearch
 ): AdvancedSearchDeleteAction => ({
   type: ADVANCED_SEARCH_DELETE,
   advancedSearch,
@@ -75,7 +75,7 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (
     }
     case ADVANCED_SEARCH_DELETE: {
       const actionAdvancedSearch = (action as AdvancedSearchEditAction).advancedSearch;
-      const currentActiveSearch: IAdvancedSearch = state.AdvancedSearches.filter(
+      const currentActiveSearch: AdvancedSearch = state.AdvancedSearches.filter(
         s => s.Name === state.CurrentAdvancedSearch
       )[0];
 

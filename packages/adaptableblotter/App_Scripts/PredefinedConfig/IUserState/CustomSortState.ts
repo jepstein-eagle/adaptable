@@ -1,10 +1,10 @@
 import { IUserState } from './IUserState';
 import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
 export interface CustomSortState extends IUserState {
-  CustomSorts?: ICustomSort[];
+  CustomSorts?: CustomSort[];
 }
 
-export interface ICustomSort extends IAdaptableBlotterObject {
+export interface CustomSort extends IAdaptableBlotterObject {
   ColumnId: string;
   SortedValues: string[];
 }

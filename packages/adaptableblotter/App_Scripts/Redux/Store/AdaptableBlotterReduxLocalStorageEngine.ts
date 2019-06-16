@@ -5,6 +5,7 @@ import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { ILicenceInfo } from '../../Utilities/Interface/ILicenceInfo';
 
 import IStorageEngine from './Interface/IStorageEngine';
+import { IPredefinedConfig } from '../../PredefinedConfig/IPredefinedConfig';
 
 const checkStatus = (response: Response) => {
   const error = new Error(response.statusText);
@@ -18,7 +19,7 @@ const checkStatus = (response: Response) => {
 class AdaptableBlotterReduxLocalStorageEngine implements IStorageEngine {
   constructor(
     private key: string,
-    private predefinedConfig: object,
+    private predefinedConfig: IPredefinedConfig | string,
     private licenceInfo: ILicenceInfo
   ) {
     this.key = key;
@@ -70,7 +71,7 @@ function rejectWithMessage(error: any) {
 
 export function createEngine(
   key: string,
-  predefinedConfig: object,
+  predefinedConfig: IPredefinedConfig | string,
   licenceInfo: ILicenceInfo
 ): IStorageEngine {
   return new AdaptableBlotterReduxLocalStorageEngine(key, predefinedConfig, licenceInfo);

@@ -24,13 +24,13 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import Helper from '../../Utilities/Helpers/Helper';
-import { IShortcut } from '../../PredefinedConfig/IUserState/ShortcutState';
+import { Shortcut } from '../../PredefinedConfig/IUserState/ShortcutState';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupComponent> {
-  onAddShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutAddAction;
-  onEditShortcut: (shortcut: IShortcut) => ShortcutRedux.ShortcutEditAction;
-  Shortcuts: Array<IShortcut>;
+  onAddShortcut: (shortcut: Shortcut) => ShortcutRedux.ShortcutAddAction;
+  onEditShortcut: (shortcut: Shortcut) => ShortcutRedux.ShortcutEditAction;
+  Shortcuts: Array<Shortcut>;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
@@ -72,7 +72,7 @@ class ShortcutPopupComponent extends React.Component<
       MathOperation.Divide,
     ];
 
-    let shortcuts = this.props.Shortcuts.map((shortcut: IShortcut, index: number) => {
+    let shortcuts = this.props.Shortcuts.map((shortcut: Shortcut, index: number) => {
       return (
         <ShortcutEntityRow
           cssClassName={cssClassName}
@@ -105,7 +105,7 @@ class ShortcutPopupComponent extends React.Component<
       />
     );
 
-    let shortcut: IShortcut = this.state.EditedAdaptableBlotterObject as IShortcut;
+    let shortcut: Shortcut = this.state.EditedAdaptableBlotterObject as Shortcut;
 
     return (
       <div className={cssClassName}>
@@ -185,18 +185,18 @@ class ShortcutPopupComponent extends React.Component<
     );
   }
 
-  onChangeKeyShortcut(shortcut: IShortcut, newKey: string): void {
-    let clonedShortcut: IShortcut = Helper.cloneObject(shortcut);
+  onChangeKeyShortcut(shortcut: Shortcut, newKey: string): void {
+    let clonedShortcut: Shortcut = Helper.cloneObject(shortcut);
     clonedShortcut.ShortcutKey = newKey;
     this.props.onEditShortcut(clonedShortcut);
   }
-  onChangeOperationShortcut(shortcut: IShortcut, newMathOperation: MathOperation): void {
-    let clonedShortcut: IShortcut = Helper.cloneObject(shortcut);
+  onChangeOperationShortcut(shortcut: Shortcut, newMathOperation: MathOperation): void {
+    let clonedShortcut: Shortcut = Helper.cloneObject(shortcut);
     clonedShortcut.ShortcutOperation = newMathOperation;
     this.props.onEditShortcut(clonedShortcut);
   }
-  onChangeResultShortcut(shortcut: IShortcut, newResult: any): void {
-    let clonedShortcut: IShortcut = Helper.cloneObject(shortcut);
+  onChangeResultShortcut(shortcut: Shortcut, newResult: any): void {
+    let clonedShortcut: Shortcut = Helper.cloneObject(shortcut);
     clonedShortcut.ShortcutResult = newResult;
     this.props.onEditShortcut(clonedShortcut);
   }
@@ -211,7 +211,7 @@ class ShortcutPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let shortcut = this.state.EditedAdaptableBlotterObject as IShortcut;
+    let shortcut = this.state.EditedAdaptableBlotterObject as Shortcut;
     this.props.onAddShortcut(shortcut);
     this.setState({
       EditedAdaptableBlotterObject: null,
@@ -221,7 +221,7 @@ class ShortcutPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let shortcut = this.state.EditedAdaptableBlotterObject as IShortcut;
+    let shortcut = this.state.EditedAdaptableBlotterObject as Shortcut;
 
     return (
       StringExtensions.IsNotNullOrEmpty(shortcut.ShortcutResult) &&
@@ -237,7 +237,7 @@ class ShortcutPopupComponent extends React.Component<
     });
   }
 
-  getAvailableKeys(shortcut: IShortcut): string[] {
+  getAvailableKeys(shortcut: Shortcut): string[] {
     return shortcut.ColumnType == DataType.Number
       ? keys
           .filter(
@@ -268,8 +268,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.ShortcutAdd(shortcut)),
-    onEditShortcut: (shortcut: IShortcut) => dispatch(ShortcutRedux.ShortcutEdit(shortcut)),
+    onAddShortcut: (shortcut: Shortcut) => dispatch(ShortcutRedux.ShortcutAdd(shortcut)),
+    onEditShortcut: (shortcut: Shortcut) => dispatch(ShortcutRedux.ShortcutEdit(shortcut)),
     onShare: (entity: IAdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ShortcutStrategyId)),
   };

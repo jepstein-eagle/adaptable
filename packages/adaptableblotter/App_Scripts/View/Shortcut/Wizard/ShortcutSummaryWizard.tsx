@@ -6,9 +6,9 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
-import { IShortcut } from '../../../PredefinedConfig/IUserState/ShortcutState';
+import { Shortcut } from '../../../PredefinedConfig/IUserState/ShortcutState';
 
-export interface ShortcutSummaryWizardProps extends AdaptableWizardStepProps<IShortcut> {}
+export interface ShortcutSummaryWizardProps extends AdaptableWizardStepProps<Shortcut> {}
 
 export class ShortcutSummaryWizard extends React.Component<ShortcutSummaryWizardProps, {}>
   implements AdaptableWizardStep {

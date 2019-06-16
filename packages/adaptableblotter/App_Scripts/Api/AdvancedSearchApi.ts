@@ -4,7 +4,7 @@ import { ApiBase } from './ApiBase';
 import { IAdvancedSearchApi } from './Interface/IAdvancedSearchApi';
 import {
   AdvancedSearchState,
-  IAdvancedSearch,
+  AdvancedSearch,
 } from '../PredefinedConfig/IUserState/AdvancedSearchState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
@@ -16,10 +16,10 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
 
   public setAdvancedSearchState(advancedSearchState: AdvancedSearchState): void {
     // add/update each advanced search where the states are different
-    const advancedSearches: IAdvancedSearch[] = this.getAllAdvancedSearch();
+    const advancedSearches: AdvancedSearch[] = this.getAllAdvancedSearch();
 
     if (advancedSearches != advancedSearchState.AdvancedSearches) {
-      advancedSearchState.AdvancedSearches.forEach((advancedSearch: IAdvancedSearch) => {
+      advancedSearchState.AdvancedSearches.forEach((advancedSearch: AdvancedSearch) => {
         if (BlotterHelper.BlotterObjectExistsInState(advancedSearches, advancedSearch)) {
           this.editAdvancedSearch(advancedSearch);
         } else {
@@ -41,8 +41,8 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
   }
 
   public setAdvancedSearch(advancedSearchName: string): void {
-    const advancedSearch: IAdvancedSearch = this.getBlotterState().AdvancedSearch.AdvancedSearches.find(
-      (a: IAdvancedSearch) => a.Name == advancedSearchName
+    const advancedSearch: AdvancedSearch = this.getBlotterState().AdvancedSearch.AdvancedSearches.find(
+      (a: AdvancedSearch) => a.Name == advancedSearchName
     );
     if (
       this.checkItemExists(
@@ -59,11 +59,11 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(''));
   }
 
-  public addAdvancedSearch(advancedSearch: IAdvancedSearch): void {
+  public addAdvancedSearch(advancedSearch: AdvancedSearch): void {
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchAdd(advancedSearch));
   }
 
-  public editAdvancedSearch(advancedSearch: IAdvancedSearch): void {
+  public editAdvancedSearch(advancedSearch: AdvancedSearch): void {
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchEdit(advancedSearch));
   }
 
@@ -72,7 +72,7 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchDelete(searchToDelete));
   }
 
-  public getCurrentAdvancedSearch(): IAdvancedSearch {
+  public getCurrentAdvancedSearch(): AdvancedSearch {
     return this.getAdvancedSearchByName(this.getCurrentAdvancedSearchName());
   }
 
@@ -80,11 +80,11 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
     return this.getBlotterState().AdvancedSearch.CurrentAdvancedSearch;
   }
 
-  public getAdvancedSearchByName(advancedSearchName: string): IAdvancedSearch | undefined {
+  public getAdvancedSearchByName(advancedSearchName: string): AdvancedSearch | undefined {
     return this.getAllAdvancedSearch().find(a => a.Name == advancedSearchName);
   }
 
-  public getAllAdvancedSearch(): IAdvancedSearch[] {
+  public getAllAdvancedSearch(): AdvancedSearch[] {
     return this.getBlotterState().AdvancedSearch.AdvancedSearches;
   }
 }

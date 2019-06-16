@@ -1,7 +1,7 @@
 import {
-  IChartDefinition,
-  IChartProperties,
-  ICategoryChartProperties,
+  ChartDefinition,
+  ChartProperties,
+  CategoryChartProperties,
 } from '../../../PredefinedConfig/IUserState/ChartState';
 
 // dont normally do this but Component was getting so bid and unwieldy...
@@ -9,7 +9,7 @@ import {
 export interface CategoryChartComponentState {
   // Global
   IsChartSettingsVisible: boolean;
-  ChartProperties: ICategoryChartProperties;
+  ChartProperties: CategoryChartProperties;
   // General
   IsGeneralMinimised: boolean;
   // Y Axis

@@ -1,10 +1,10 @@
 import { IStrategy } from './IStrategy';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import { IReport } from '../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../PredefinedConfig/IUserState/ExportState';
 
 export interface IExportStrategy extends IStrategy {
   Export(
-    report: IReport,
+    report: Report,
     exportDestination: ExportDestination,
     folder?: string,
     page?: string

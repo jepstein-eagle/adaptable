@@ -2,7 +2,7 @@ import { IColumn } from '../Interface/IColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { Helper } from './Helper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
 
 // String, Numeric and Date
 export const BLANKS_SYSTEM_FILTER = 'Blanks';
@@ -46,10 +46,7 @@ export function GetAllSystemFilters(): string[] {
   ];
 }
 
-export function GetUserFilters(
-  userFilters: IUserFilter[],
-  userFilterNames: string[]
-): IUserFilter[] {
+export function GetUserFilters(userFilters: UserFilter[], userFilterNames: string[]): UserFilter[] {
   return userFilters.filter(f => userFilterNames.find(u => u == f.Name) != null);
 }
 
@@ -69,13 +66,10 @@ export function GetSystemFiltersForColumn(column: IColumn, systemFilters: string
   return appropriateSystemFilters;
 }
 
-export function GetUserFiltersForColumn(
-  column: IColumn,
-  userFilters: IUserFilter[]
-): IUserFilter[] {
-  let appropriateUserFilters: IUserFilter[] = [];
+export function GetUserFiltersForColumn(column: IColumn, userFilters: UserFilter[]): UserFilter[] {
+  let appropriateUserFilters: UserFilter[] = [];
   if (column != null) {
-    userFilters.forEach((userFilter: IUserFilter) => {
+    userFilters.forEach((userFilter: UserFilter) => {
       if (userFilter.ColumnId == column.ColumnId) {
         appropriateUserFilters.push(userFilter);
       }
@@ -85,15 +79,15 @@ export function GetUserFiltersForColumn(
 }
 
 export function ShowUserFilterForColumn(
-  UserFilters: IUserFilter[],
+  UserFilters: UserFilter[],
   name: string,
   column: IColumn
 ): boolean {
-  let userFilter: IUserFilter = UserFilters.find(f => f.Name == name);
+  let userFilter: UserFilter = UserFilters.find(f => f.Name == name);
   return userFilter.ColumnId == column.ColumnId;
 }
 
-export function GetColumnIdForUserFilter(userFilter: IUserFilter): string {
+export function GetColumnIdForUserFilter(userFilter: UserFilter): string {
   // see if there are any columnvalues and then get the first only
   if (
     userFilter.Expression.ColumnValueExpressions != null &&

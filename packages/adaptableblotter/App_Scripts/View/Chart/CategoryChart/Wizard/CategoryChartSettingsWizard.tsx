@@ -16,10 +16,10 @@ import {
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
-import { ICategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { CategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
 
 export interface CategoryChartSettingsWizardProps
-  extends AdaptableWizardStepProps<ICategoryChartDefinition> {
+  extends AdaptableWizardStepProps<CategoryChartDefinition> {
   ChartNames: string[];
 }
 

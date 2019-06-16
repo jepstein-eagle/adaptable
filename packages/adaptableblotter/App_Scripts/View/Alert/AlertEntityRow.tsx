@@ -12,16 +12,16 @@ import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AlertHelper } from '../../Utilities/Helpers/AlertHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { IAlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
   Column: IColumn;
-  onChangeMessageType: (alertDefinition: IAlertDefinition, Type: MessageType) => void;
+  onChangeMessageType: (alertDefinition: AlertDefinition, Type: MessageType) => void;
 }
 
 export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
   render(): any {
-    let alertDefinition: IAlertDefinition = this.props.AdaptableBlotterObject as IAlertDefinition;
+    let alertDefinition: AlertDefinition = this.props.AdaptableBlotterObject as AlertDefinition;
 
     let MessageTypes = EnumExtensions.getNames(MessageType).map(type => {
       return (
@@ -63,13 +63,13 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
     return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
   }
 
-  setExpressionDescription(Alert: IAlertDefinition): string {
+  setExpressionDescription(Alert: AlertDefinition): string {
     return ExpressionHelper.IsNotNullOrEmptyExpression(Alert.Expression)
       ? ExpressionHelper.ConvertExpressionToString(Alert.Expression, this.props.Columns)
       : 'No Expression';
   }
 
-  private getColumnandRule(Alert: IAlertDefinition): string {
+  private getColumnandRule(Alert: AlertDefinition): string {
     let columnInfo: string = ColumnHelper.getFriendlyNameFromColumn(
       Alert.ColumnId,
       this.props.Column
@@ -78,7 +78,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
     return columnInfo;
   }
 
-  onMessageTypeChanged(alertDefinition: IAlertDefinition, event: React.FormEvent<any>) {
+  onMessageTypeChanged(alertDefinition: AlertDefinition, event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     let messageType: MessageType;
     if (e.value == 'Info') {

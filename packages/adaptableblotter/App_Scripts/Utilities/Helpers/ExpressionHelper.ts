@@ -17,7 +17,7 @@ import { LoggingHelper } from './LoggingHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
-import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -175,7 +175,7 @@ export function IsSatisfied(
   getDisplayColumnValue: (columnId: string) => string,
   getOtherColumnValue: (columnId: string) => any,
   columnBlotterList: IColumn[],
-  userFilters: IUserFilter[],
+  userFilters: UserFilter[],
   systemFilters: string[],
   blotter: IAdaptableBlotter
 ): boolean {
@@ -208,7 +208,7 @@ export function IsSatisfied(
       let columnFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
       if (columnFilters) {
         // first evaluate any user filters
-        let filteredUserFilters: IUserFilter[] = FilterHelper.GetUserFilters(
+        let filteredUserFilters: UserFilter[] = FilterHelper.GetUserFilters(
           userFilters,
           columnFilters.Filters
         );
@@ -774,7 +774,7 @@ export function TestRangeEvaluation(
   return false;
 }
 
-export function ExpressionContainsFilter(expression: Expression, filter: IUserFilter): boolean {
+export function ExpressionContainsFilter(expression: Expression, filter: UserFilter): boolean {
   let hasFilter: boolean = false;
   if (expression != null && expression.FilterExpressions.length > 0) {
     expression.FilterExpressions.forEach(fe => {

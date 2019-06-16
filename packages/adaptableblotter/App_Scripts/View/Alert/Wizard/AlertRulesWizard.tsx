@@ -17,9 +17,9 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { IRange } from '../../../PredefinedConfig/Common/Expression/IRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { IAlertDefinition } from '../../../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../../../PredefinedConfig/IUserState/AlertState';
 
-export interface AlertRulesWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {}
+export interface AlertRulesWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 export interface AlertSettingsWizardState {
   Operator: LeafExpressionOperator;
   Operand1: string;

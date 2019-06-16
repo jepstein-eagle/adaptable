@@ -7,7 +7,7 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from './ExpressionHelper';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
-import { ICellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
 
 declare var Glue4Office: any;
 
@@ -149,11 +149,11 @@ function isValidEdit(
   };
 
   // check for any validation issues
-  let cellValidationRules: ICellValidationRule[] = blotter.ValidationService.ValidateCellChanging(
+  let cellValidationRules: CellValidationRule[] = blotter.ValidationService.ValidateCellChanging(
     dataChangedInfo
   );
   if (ArrayExtensions.IsNotNullOrEmpty(cellValidationRules)) {
-    cellValidationRules.forEach((cv: ICellValidationRule) => {
+    cellValidationRules.forEach((cv: CellValidationRule) => {
       let failedvalidationMessage: string =
         'Validation failed for ' +
         column.FriendlyName +

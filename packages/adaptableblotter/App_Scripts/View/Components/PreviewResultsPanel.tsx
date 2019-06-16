@@ -5,16 +5,16 @@ import { Glyphicon, Panel, Table } from 'react-bootstrap';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
-import { ICellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   UpdateValue: string;
   PreviewInfo: IPreviewInfo;
   Columns: IColumn[];
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SelectedColumn: IColumn;
   ShowPanel: boolean;
   cssClassName: string;
@@ -102,7 +102,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
   }
 
   private getValidationErrorMessage(
-    CellValidations: ICellValidationRule[],
+    CellValidations: CellValidationRule[],
     columns: IColumn[]
   ): string {
     let returnString: string[] = [];

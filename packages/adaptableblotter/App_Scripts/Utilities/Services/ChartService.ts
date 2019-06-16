@@ -15,11 +15,11 @@ import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { NumberExtensions } from '../Extensions/NumberExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import {
-  ICategoryChartDefinition,
-  IChartData,
-  IChartDefinition,
-  IPieChartDefinition,
-  IPieChartDataItem,
+  CategoryChartDefinition,
+  ChartData,
+  ChartDefinition,
+  PieChartDefinition,
+  PieChartDataItem,
 } from '../../PredefinedConfig/IUserState/ChartState';
 import { AxisTotal, SecondaryColumnOperation } from '../../PredefinedConfig/Common/ChartEnums';
 
@@ -34,9 +34,9 @@ export class ChartService implements IChartService {
   }
 
   public BuildCategoryChartData(
-    chartDefinition: ICategoryChartDefinition,
+    chartDefinition: CategoryChartDefinition,
     columns: IColumn[]
-  ): IChartData {
+  ): ChartData {
     // NOTE this method is need only when we using Segmented column(s) otherwise,
     // you can assign chart.dataSource to the whole data (e.g. whatever the grid is displaying)
     // and then set chart.includedProperties to array of strings that contain selected data columns:
@@ -76,7 +76,7 @@ export class ChartService implements IChartService {
     });
 
     // no error message built yet but need to add
-    let chartData: IChartData = {
+    let chartData: ChartData = {
       Data: returnData,
       ErrorMessage: null,
     };
@@ -84,7 +84,7 @@ export class ChartService implements IChartService {
   }
 
   private buildYAxisTotal(
-    chartDefinition: IChartDefinition,
+    chartDefinition: ChartDefinition,
     yAxisColumn: string,
     kvps: IKeyValuePair[],
     columns: IColumn[],
@@ -148,7 +148,7 @@ export class ChartService implements IChartService {
 
   // Gets the unique values in the (horizontal) X Axis column - either through an expression or getting the distinct values
   private getXAxisColumnValues(
-    chartDefinition: ICategoryChartDefinition,
+    chartDefinition: CategoryChartDefinition,
     columns: IColumn[]
   ): string[] {
     let xAxisColValues: string[] = [];
@@ -178,7 +178,7 @@ export class ChartService implements IChartService {
   }
 
   private addXAxisFromExpression(
-    chartDefinition: ICategoryChartDefinition,
+    chartDefinition: CategoryChartDefinition,
     columns: IColumn[],
     row: any,
     xAxisColValues: string[]
@@ -196,7 +196,7 @@ export class ChartService implements IChartService {
     }
   }
 
-  public BuildPieChartData(chartDefinition: IPieChartDefinition): IChartData {
+  public BuildPieChartData(chartDefinition: PieChartDefinition): ChartData {
     let dataCounter = new Map<any, number>();
 
     if (StringExtensions.IsNullOrEmpty(chartDefinition.PrimaryColumnId)) {
@@ -225,7 +225,7 @@ export class ChartService implements IChartService {
       });
     }
 
-    let dataItems: IPieChartDataItem[] = [];
+    let dataItems: PieChartDataItem[] = [];
 
     let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
     // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
@@ -256,7 +256,7 @@ export class ChartService implements IChartService {
 
     if (!useRanges) {
       dataCounter.forEach((value, name) => {
-        let sliceItem: IPieChartDataItem = this.createNonRangeDataItem(value, name, valueTotal);
+        let sliceItem: PieChartDataItem = this.createNonRangeDataItem(value, name, valueTotal);
         dataItems.push(sliceItem);
       });
     } else {
@@ -305,7 +305,7 @@ export class ChartService implements IChartService {
       //   console.log("ChartService grouped data items into " + dataRanges.size + " ranges of " + dataRangeDivisions)
       // finally we can generate slice items based on data ranges
       dataRanges.forEach((range, key) => {
-        let sliceItem: IPieChartDataItem = {
+        let sliceItem: PieChartDataItem = {
           Name: '[' + range.min + ' to ' + range.max + ']',
           Value: range.values.length,
           // calculating ratio of number of values in this range to total number of all data rows and rounded to 1 decimal place
@@ -325,8 +325,8 @@ export class ChartService implements IChartService {
     };
   }
 
-  private createNonRangeDataItem(value: number, name: any, valueTotal: number): IPieChartDataItem {
-    let pieChartDataItem: IPieChartDataItem = {
+  private createNonRangeDataItem(value: number, name: any, valueTotal: number): PieChartDataItem {
+    let pieChartDataItem: PieChartDataItem = {
       Name: name.toString(),
       Value: Helper.RoundNumber(value, 1),
       // calculating ratio of column value to total values of all columns and rounded to 1 decimal place
@@ -351,7 +351,7 @@ export class ChartService implements IChartService {
 
   private shouldUseRange(
     dataCounter: Map<any, number>,
-    chartDefinition: IPieChartDefinition,
+    chartDefinition: PieChartDefinition,
     columns: IColumn[]
   ): boolean {
     let returnValue: boolean = false;
@@ -366,7 +366,7 @@ export class ChartService implements IChartService {
 
   private getGroupValueTotalForRow(
     row: any,
-    chartDefinition: IPieChartDefinition,
+    chartDefinition: PieChartDefinition,
     dataCounter: Map<any, number>,
     valueTotal: number
   ): number {
@@ -400,7 +400,7 @@ export class ChartService implements IChartService {
 
   private getSingleValueTotalForRow(
     row: any,
-    chartDefinition: IPieChartDefinition,
+    chartDefinition: PieChartDefinition,
     dataCounter: Map<any, number>,
     valueTotal: number
   ): number {

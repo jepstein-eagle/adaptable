@@ -25,13 +25,13 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { ILayout } from '../../PredefinedConfig/IUserState/LayoutState';
+import { Layout } from '../../PredefinedConfig/IUserState/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
-  Layouts: ILayout[];
+  Layouts: Layout[];
   CurrentLayoutName: string;
-  onSaveLayout: (layout: ILayout) => LayoutRedux.LayoutSaveAction;
+  onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
   onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction;
   onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
@@ -158,8 +158,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     });
   }
 
-  onEdit(layout: ILayout) {
-    let clonedObject: ILayout = Helper.cloneObject(layout);
+  onEdit(layout: Layout) {
+    let clonedObject: Layout = Helper.cloneObject(layout);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 1,
@@ -177,7 +177,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   onFinishWizard() {
-    let clonedObject: ILayout = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+    let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
 
     this.props.onSaveLayout(clonedObject);
 
@@ -198,7 +198,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   canFinishWizard() {
-    let layout = this.state.EditedAdaptableBlotterObject as ILayout;
+    let layout = this.state.EditedAdaptableBlotterObject as Layout;
     if (ArrayExtensions.IsNotNullOrEmpty(layout.ColumnSorts)) {
       let canFinish: boolean = true;
       layout.ColumnSorts.forEach(gs => {
@@ -226,7 +226,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.LayoutSave(layout)),
+    onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
     onSelectLayout: (selectedSearchName: string) =>
       dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
     onShare: (entity: IAdaptableBlotterObject) =>

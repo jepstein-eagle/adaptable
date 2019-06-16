@@ -5,7 +5,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from '../UIInterfaces';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { ICustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
+import { CustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
 export interface CustomSortEntityRowProps extends SharedEntityRowProps<CustomSortEntityRow> {
@@ -14,7 +14,7 @@ export interface CustomSortEntityRowProps extends SharedEntityRowProps<CustomSor
 
 export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProps, {}> {
   render(): any {
-    let customSort: ICustomSort = this.props.AdaptableBlotterObject as ICustomSort;
+    let customSort: CustomSort = this.props.AdaptableBlotterObject as CustomSort;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = <EntityRowItem Content={this.props.ColumnLabel} />;

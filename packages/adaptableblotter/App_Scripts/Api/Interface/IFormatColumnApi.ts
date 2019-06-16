@@ -1,13 +1,13 @@
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import {
   FormatColumnState,
-  IFormatColumn,
+  FormatColumn,
 } from '../../PredefinedConfig/IUserState/FormatColumnState';
 export interface IFormatColumnApi {
   getFormatColumnState(): FormatColumnState;
-  getAllFormatColumn(): IFormatColumn[];
+  getAllFormatColumn(): FormatColumn[];
   addFormatColumn(column: string, style: IStyle): void;
   updateFormatColumn(column: string, style: IStyle): void;
-  deleteFormatColumn(formatColumn: IFormatColumn): void;
+  deleteFormatColumn(formatColumn: FormatColumn): void;
   deleteAllFormatColumn(): void;
 }

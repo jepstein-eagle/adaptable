@@ -7,12 +7,12 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IColItem } from '../UIInterfaces';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { IAdvancedSearch } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
+import { AdvancedSearch } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow>
   extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {
   IsCurrentAdvancedSearch: boolean;
-  onSelect: (advancedSearch: IAdvancedSearch) => void;
+  onSelect: (advancedSearch: AdvancedSearch) => void;
 }
 
 export class AdvancedSearchEntityRow extends React.Component<
@@ -20,7 +20,7 @@ export class AdvancedSearchEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let advancedSearch: IAdvancedSearch = this.props.AdaptableBlotterObject as IAdvancedSearch;
+    let advancedSearch: AdvancedSearch = this.props.AdaptableBlotterObject as AdvancedSearch;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 

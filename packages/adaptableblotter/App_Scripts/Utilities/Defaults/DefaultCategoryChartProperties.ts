@@ -8,9 +8,9 @@ import {
   AxisAngle,
   AxisScale,
 } from '../../PredefinedConfig/Common/ChartEnums';
-import { ICategoryChartProperties } from '../../PredefinedConfig/IUserState/ChartState';
+import { CategoryChartProperties } from '../../PredefinedConfig/IUserState/ChartState';
 
-export const DefaultCategoryChartProperties: ICategoryChartProperties = {
+export const DefaultCategoryChartProperties: CategoryChartProperties = {
   // General
   CategoryChartType: CategoryChartType.Line,
   SeriesThickness: 1,

@@ -5,7 +5,7 @@ import { DEFAULT_LAYOUT } from '../Utilities/Constants/GeneralConstants';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { ILayoutApi } from './Interface/ILayoutApi';
-import { LayoutState, ILayout, IColumnSort } from '../PredefinedConfig/IUserState/LayoutState';
+import { LayoutState, Layout, ColumnSort } from '../PredefinedConfig/IUserState/LayoutState';
 
 export class LayoutApi extends ApiBase implements ILayoutApi {
   public getLayoutState(): LayoutState {
@@ -13,7 +13,7 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
   }
 
   public setLayout(layoutName: string): void {
-    let layout: ILayout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
+    let layout: Layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
     if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
       this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
     }
@@ -23,7 +23,7 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
     this.dispatchAction(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT));
   }
 
-  public getCurrentLayout(): ILayout {
+  public getCurrentLayout(): Layout {
     let layoutName = this.getBlotterState().Layout.CurrentLayout;
     return this.getLayoutByName(layoutName);
   }
@@ -32,29 +32,29 @@ export class LayoutApi extends ApiBase implements ILayoutApi {
     return this.getBlotterState().Layout.CurrentLayout;
   }
 
-  public getLayoutByName(layoutName: string): ILayout {
-    let layout: ILayout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
+  public getLayoutByName(layoutName: string): Layout {
+    let layout: Layout = this.getBlotterState().Layout.Layouts.find(l => l.Name == layoutName);
     if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyName)) {
       return layout;
     }
   }
 
-  public getAllLayout(): ILayout[] {
+  public getAllLayout(): Layout[] {
     return this.getBlotterState().Layout.Layouts;
   }
 
   public saveLayout(): void {
     let currentLayoutName: string = this.getBlotterState().Layout.CurrentLayout;
     if (currentLayoutName != DEFAULT_LAYOUT) {
-      let currentLayoutObject: ILayout = this.getBlotterState().Layout.Layouts.find(
+      let currentLayoutObject: Layout = this.getBlotterState().Layout.Layouts.find(
         l => l.Name == currentLayoutName
       );
       if (currentLayoutObject) {
         let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
         let visibleColumns: IColumn[] = this.getBlotterState().Grid.Columns.filter(c => c.Visible);
-        let columSorts: IColumnSort[] = this.getBlotterState().Grid.ColumnSorts;
+        let columSorts: ColumnSort[] = this.getBlotterState().Grid.ColumnSorts;
 
-        let layoutToSave: ILayout = {
+        let layoutToSave: Layout = {
           Uuid: currentLayoutObject.Uuid,
           Name: currentLayoutName,
           Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],

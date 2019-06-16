@@ -7,13 +7,13 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IPlusMinusRule } from '../../../PredefinedConfig/IUserState/PlusMinusState';
-import { IUserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
+import { PlusMinusRule } from '../../../PredefinedConfig/IUserState/PlusMinusState';
+import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 
-export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
-  UserFilters: IUserFilter[];
+export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {
+  UserFilters: UserFilter[];
 }
 
 export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWizardProps, {}>

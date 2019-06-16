@@ -5,7 +5,7 @@ import { AdvancedSearchExpressionWizard } from './AdvancedSearchExpressionWizard
 import { AdvancedSearchSummaryWizard } from './AdvancedSearchSummaryWizard';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdvancedSearch } from '../../../PredefinedConfig/IUserState/AdvancedSearchState';
+import { AdvancedSearch } from '../../../PredefinedConfig/IUserState/AdvancedSearchState';
 
 export class AdvancedSearchWizard extends React.Component<
   IAdaptableBlotterObjectExpressionAdaptableWizardProps<AdvancedSearchWizard>,
@@ -37,7 +37,7 @@ export class AdvancedSearchWizard extends React.Component<
               Index: 1,
               Element: (
                 <AdvancedSearchSettingsWizard
-                  AdvancedSearches={this.props.ConfigEntities as IAdvancedSearch[]}
+                  AdvancedSearches={this.props.ConfigEntities as AdvancedSearch[]}
                 />
               ),
             },
@@ -47,7 +47,7 @@ export class AdvancedSearchWizard extends React.Component<
               Element: <AdvancedSearchSummaryWizard UserFilters={this.props.UserFilters} />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject as IAdvancedSearch}
+          Data={this.props.EditedAdaptableBlotterObject as AdvancedSearch}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}

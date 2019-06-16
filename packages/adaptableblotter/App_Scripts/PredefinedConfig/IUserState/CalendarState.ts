@@ -4,13 +4,13 @@ export interface CalendarState extends IUserState {
   CurrentCalendar?: string;
 }
 
-export interface ICalendar extends IAdaptableBlotterObject {
+export interface Calendar extends IAdaptableBlotterObject {
   Name: string;
   YearName: Number;
-  CalendarEntries: ICalendarEntry[];
+  CalendarEntries: CalendarEntry[];
 }
 
-export interface ICalendarEntry {
+export interface CalendarEntry {
   HolidayName: string;
   HolidayDate: string;
 }

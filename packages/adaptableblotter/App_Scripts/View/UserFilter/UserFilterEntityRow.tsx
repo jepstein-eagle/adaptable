@@ -8,14 +8,14 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { IColItem } from '../UIInterfaces';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
 
 export class UserFilterEntityRow extends React.Component<
   SharedEntityExpressionRowProps<UserFilterEntityRow>,
   {}
 > {
   render(): any {
-    let userFilter: IUserFilter = this.props.AdaptableBlotterObject as IUserFilter;
+    let userFilter: UserFilter = this.props.AdaptableBlotterObject as UserFilter;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 

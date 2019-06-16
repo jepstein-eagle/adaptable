@@ -14,7 +14,7 @@ import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelected
 import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
 import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
-import { ICellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -110,7 +110,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             Record: null,
           };
 
-          let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+          let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
             dataChangedEvent
           );
           let previewResult: IPreviewResult = {

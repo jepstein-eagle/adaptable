@@ -16,7 +16,7 @@ import {
   FontStyle,
 } from '../PredefinedConfig/Common/Enums';
 import { ILicenceInfo } from './Interface/ILicenceInfo';
-import { ICustomSort } from '../PredefinedConfig/IUserState/CustomSortState';
+import { CustomSort } from '../PredefinedConfig/IUserState/CustomSortState';
 import {
   EMPTY_STRING,
   CHART_DEFAULT_YAXIS_TOTAL,
@@ -28,40 +28,40 @@ import {
   DEFAULT_DARK_GREEN_COLOR,
   DEFAULT_DARK_RED_COLOR,
 } from './Constants/GeneralConstants';
-import { IDataSource } from '../PredefinedConfig/IUserState/DataSourceState';
+import { DataSource } from '../PredefinedConfig/IUserState/DataSourceState';
 import {
-  IPieChartDefinition,
-  ICategoryChartDefinition,
+  PieChartDefinition,
+  CategoryChartDefinition,
 } from '../PredefinedConfig/IUserState/ChartState';
 import { SecondaryColumnOperation, ChartType } from '../PredefinedConfig/Common/ChartEnums';
 import { DefaultPieChartProperties } from './Defaults/DefaultPieChartProperties';
 import { DefaultCategoryChartProperties } from './Defaults/DefaultCategoryChartProperties';
-import { ICalculatedColumn } from '../PredefinedConfig/IUserState/CalculatedColumnState';
-import { IPlusMinusRule } from '../PredefinedConfig/IUserState/PlusMinusState';
+import { CalculatedColumn } from '../PredefinedConfig/IUserState/CalculatedColumnState';
+import { PlusMinusRule } from '../PredefinedConfig/IUserState/PlusMinusState';
 import { IAdaptableAlert } from './Interface/IMessage';
-import { IAlertDefinition } from '../PredefinedConfig/IUserState/AlertState';
-import { IAdvancedSearch } from '../PredefinedConfig/IUserState/AdvancedSearchState';
+import { AlertDefinition } from '../PredefinedConfig/IUserState/AlertState';
+import { AdvancedSearch } from '../PredefinedConfig/IUserState/AdvancedSearchState';
 import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
-import { IColumnCategory } from '../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ColumnCategory } from '../PredefinedConfig/IUserState/ColumnCategoryState';
 import { IRange } from '../PredefinedConfig/Common/Expression/IRange';
-import { IColumnSort, IVendorGridInfo, ILayout } from '../PredefinedConfig/IUserState/LayoutState';
-import { ICellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
-import { IPercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
-import { IUserFilter } from '../PredefinedConfig/IUserState/UserFilterState';
-import { IReport, IAutoExport } from '../PredefinedConfig/IUserState/ExportState';
+import { ColumnSort, VendorGridInfo, Layout } from '../PredefinedConfig/IUserState/LayoutState';
+import { CellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
+import { PercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
+import { UserFilter } from '../PredefinedConfig/IUserState/UserFilterState';
+import { Report, AutoExport } from '../PredefinedConfig/IUserState/ExportState';
 import { IColumn } from './Interface/IColumn';
-import { IFlashingCell } from '../PredefinedConfig/IUserState/FlashingCellState';
-import { IReminder } from '../PredefinedConfig/IUserState/ReminderState';
+import { FlashingCell } from '../PredefinedConfig/IUserState/FlashingCellState';
+import { Reminder } from '../PredefinedConfig/IUserState/ReminderState';
 import { ISchedule } from '../PredefinedConfig/Common/ISchedule';
-import { IShortcut } from '../PredefinedConfig/IUserState/ShortcutState';
+import { Shortcut } from '../PredefinedConfig/IUserState/ShortcutState';
 import { IAdaptableBlotter } from '../types';
 import ColumnHelper from './Helpers/ColumnHelper';
 import CellValidationHelper from './Helpers/CellValidationHelper';
-import { IConditionalStyle } from '../PredefinedConfig/IUserState/ConditionalStyleState';
-import { IFormatColumn } from '../PredefinedConfig/IUserState/FormatColumnState';
-import { IFreeTextColumn } from '../PredefinedConfig/IUserState/FreeTextColumnState';
+import { ConditionalStyle } from '../PredefinedConfig/IUserState/ConditionalStyleState';
+import { FormatColumn } from '../PredefinedConfig/IUserState/FormatColumnState';
+import { FreeTextColumn } from '../PredefinedConfig/IUserState/FreeTextColumnState';
 import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
-import { IColumnFilter } from '../PredefinedConfig/IUserState/ColumnFilterState';
+import { ColumnFilter } from '../PredefinedConfig/IUserState/ColumnFilterState';
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { ICellSummmary } from './Interface/SelectedCell/ICellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
@@ -80,15 +80,15 @@ export function CreateLicenceInfo(
   };
 }
 
-export function CreateEmptyCustomSort(): ICustomSort {
+export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
 }
 
-export function CreateEmptyDataSource(): IDataSource {
+export function CreateEmptyDataSource(): DataSource {
   return { Uuid: createUuid(), Name: EMPTY_STRING, Description: EMPTY_STRING };
 }
 
-export function CreateEmptyPieChartDefinition(): IPieChartDefinition {
+export function CreateEmptyPieChartDefinition(): PieChartDefinition {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
@@ -101,7 +101,7 @@ export function CreateEmptyPieChartDefinition(): IPieChartDefinition {
     VisibleRowsOnly: true,
   };
 }
-export function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition {
+export function CreateEmptyCategoryChartDefinition(): CategoryChartDefinition {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
@@ -116,11 +116,11 @@ export function CreateEmptyCategoryChartDefinition(): ICategoryChartDefinition {
   };
 }
 
-export function CreateEmptyCalculatedColumn(): ICalculatedColumn {
+export function CreateEmptyCalculatedColumn(): CalculatedColumn {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, ColumnExpression: EMPTY_STRING };
 }
 
-export function CreateEmptyPlusMinusRule(): IPlusMinusRule {
+export function CreateEmptyPlusMinusRule(): PlusMinusRule {
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
@@ -139,7 +139,7 @@ export function CreateEmptyAlert(): IAdaptableAlert {
   };
 }
 
-export function CreateEmptyAlertDefinition(): IAlertDefinition {
+export function CreateEmptyAlertDefinition(): AlertDefinition {
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
@@ -156,7 +156,7 @@ export function CreateEmptyAlertDefinition(): IAlertDefinition {
   };
 }
 
-export function CreateEmptyAdvancedSearch(): IAdvancedSearch {
+export function CreateEmptyAdvancedSearch(): AdvancedSearch {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
@@ -164,7 +164,7 @@ export function CreateEmptyAdvancedSearch(): IAdvancedSearch {
   };
 }
 
-export function CreateEmptyColumnCategory(): IColumnCategory {
+export function CreateEmptyColumnCategory(): ColumnCategory {
   return {
     Uuid: createUuid(),
     ColumnCategoryId: EMPTY_STRING,
@@ -182,14 +182,14 @@ export function CreateEmptyRange(): IRange {
   };
 }
 
-export function CreateEmptyColumnSort(): IColumnSort {
+export function CreateEmptyColumnSort(): ColumnSort {
   return {
     Column: EMPTY_STRING,
     SortOrder: SortOrder.Unknown,
   };
 }
 
-export function CreateEmptyCellValidation(): ICellValidationRule {
+export function CreateEmptyCellValidation(): CellValidationRule {
   return {
     Uuid: createUuid(),
     ActionMode: 'Stop Edit',
@@ -205,7 +205,7 @@ export function CreateEmptyCellValidation(): ICellValidationRule {
   };
 }
 
-export function CreateEmptyPercentBar(): IPercentBar {
+export function CreateEmptyPercentBar(): PercentBar {
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
@@ -219,7 +219,7 @@ export function CreateEmptyPercentBar(): IPercentBar {
   };
 }
 
-export function CreateEmptyUserFilter(): IUserFilter {
+export function CreateEmptyUserFilter(): UserFilter {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
@@ -228,7 +228,7 @@ export function CreateEmptyUserFilter(): IUserFilter {
   };
 }
 
-export function CreateEmptyReport(): IReport {
+export function CreateEmptyReport(): Report {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
@@ -245,7 +245,7 @@ export function CreateDefaultFlashingCell(
   upColor: string,
   downColor: string,
   duration: 250 | 500 | 750 | 1000
-): IFlashingCell {
+): FlashingCell {
   return {
     Uuid: createUuid(),
     IsLive: false,
@@ -256,7 +256,7 @@ export function CreateDefaultFlashingCell(
   };
 }
 
-export function CreateEmptyReminder(): IReminder {
+export function CreateEmptyReminder(): Reminder {
   return {
     Uuid: createUuid(),
     Alert: CreateEmptyAlert(),
@@ -264,7 +264,7 @@ export function CreateEmptyReminder(): IReminder {
   };
 }
 
-export function CreateEmptyAutoExport(): IAutoExport {
+export function CreateEmptyAutoExport(): AutoExport {
   return {
     Uuid: createUuid(),
     ExportDestination: ExportDestination.CSV,
@@ -283,7 +283,7 @@ export function CreateEmptySchedule(): ISchedule {
   };
 }
 
-export function CreateEmptyShortcut(): IShortcut {
+export function CreateEmptyShortcut(): Shortcut {
   return {
     Uuid: createUuid(),
     ShortcutKey: EMPTY_STRING,
@@ -295,7 +295,7 @@ export function CreateEmptyShortcut(): IShortcut {
 }
 
 export function CreateCellValidationMessage(
-  CellValidation: ICellValidationRule,
+  CellValidation: CellValidationRule,
   blotter: IAdaptableBlotter
 ): string {
   let columns: IColumn[] = blotter.api.gridApi.getColumns();
@@ -316,7 +316,7 @@ export function CreateCellValidationMessage(
   );
 }
 
-export function CreateEmptyConditionalStyle(): IConditionalStyle {
+export function CreateEmptyConditionalStyle(): ConditionalStyle {
   return {
     Uuid: createUuid(),
     ColumnId: undefined,
@@ -327,7 +327,7 @@ export function CreateEmptyConditionalStyle(): IConditionalStyle {
   };
 }
 
-export function CreateEmptyFormatColumn(): IFormatColumn {
+export function CreateEmptyFormatColumn(): FormatColumn {
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
@@ -335,7 +335,7 @@ export function CreateEmptyFormatColumn(): IFormatColumn {
   };
 }
 
-export function CreateEmptyFreeTextColumn(): IFreeTextColumn {
+export function CreateEmptyFreeTextColumn(): FreeTextColumn {
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
@@ -346,10 +346,10 @@ export function CreateEmptyFreeTextColumn(): IFreeTextColumn {
 
 export function CreateLayout(
   columns: IColumn[],
-  columnSorts: IColumnSort[],
-  vendorGridInfo: IVendorGridInfo,
+  columnSorts: ColumnSort[],
+  vendorGridInfo: VendorGridInfo,
   name: string
-): ILayout {
+): Layout {
   return {
     Uuid: createUuid(),
     Columns: columns ? columns.map(x => x.ColumnId) : [],
@@ -359,7 +359,7 @@ export function CreateLayout(
   };
 }
 
-export function CreateColumnFilter(columnId: string, expression: Expression): IColumnFilter {
+export function CreateColumnFilter(columnId: string, expression: Expression): ColumnFilter {
   return {
     Uuid: createUuid(),
     ColumnId: columnId,
@@ -368,9 +368,9 @@ export function CreateColumnFilter(columnId: string, expression: Expression): IC
 }
 
 export function CreateUserFilterFromColumnFilter(
-  columnFilter: IColumnFilter,
+  columnFilter: ColumnFilter,
   name: string
-): IUserFilter {
+): UserFilter {
   return {
     Uuid: createUuid(),
     Name: name,
@@ -417,7 +417,7 @@ export function CreateCellValidationRule(
   range: IRange,
   actionMode: ActionMode,
   expression: Expression
-): ICellValidationRule {
+): CellValidationRule {
   return {
     Uuid: createUuid(),
     ColumnId: columnId,

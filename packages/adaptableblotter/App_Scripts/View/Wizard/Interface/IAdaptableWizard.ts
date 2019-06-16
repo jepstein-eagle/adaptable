@@ -1,6 +1,6 @@
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
-import { IUserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
 import { IAdaptableBlotterObject } from '../../../PredefinedConfig/IAdaptableBlotterObject';
 
 export interface AdaptableWizardStep {
@@ -22,7 +22,7 @@ export interface AdaptableWizardStepProps<T> {
 
 // props for an Expression Wizard Page
 export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SystemFilters: string[];
 }
 
@@ -30,7 +30,7 @@ export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
 export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View>
   extends IAdaptableBlotterObjectAdaptableWizardProps<View> {
   Columns: Array<IColumn>;
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SystemFilters: string[];
   Blotter: IAdaptableBlotter;
 }

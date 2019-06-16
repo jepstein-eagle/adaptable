@@ -9,14 +9,14 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ConditionalStyleScope } from '../../../PredefinedConfig/Common/Enums';
-import { IConditionalStyle } from '../../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { ConditionalStyle } from '../../../PredefinedConfig/IUserState/ConditionalStyleState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
-import { IUserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
 
 export interface ConditionalStyleSummaryWizardProps
-  extends AdaptableWizardStepProps<IConditionalStyle> {
-  UserFilters: IUserFilter[];
+  extends AdaptableWizardStepProps<ConditionalStyle> {
+  UserFilters: UserFilter[];
 }
 
 export class ConditionalStyleSummaryWizard

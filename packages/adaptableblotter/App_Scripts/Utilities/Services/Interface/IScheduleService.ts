@@ -1,9 +1,9 @@
-import { IReminder } from '../../../PredefinedConfig/IUserState/ReminderState';
-import { IReport } from '../../../PredefinedConfig/IUserState/ExportState';
+import { Reminder } from '../../../PredefinedConfig/IUserState/ReminderState';
+import { Report } from '../../../PredefinedConfig/IUserState/ExportState';
 
 export interface IScheduleService {
-  AddReminderSchedule(reminder: IReminder): void;
-  AddReportSchedule(report: IReport): void;
+  AddReminderSchedule(reminder: Reminder): void;
+  AddReportSchedule(report: Report): void;
 
   ClearAllAlertJobs(): void;
   ClearAllExportJobs(): void;

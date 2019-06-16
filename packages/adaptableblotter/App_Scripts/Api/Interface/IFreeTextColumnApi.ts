@@ -1,12 +1,12 @@
 import {
   FreeTextColumnState,
-  IFreeTextColumn,
+  FreeTextColumn,
 } from '../../PredefinedConfig/IUserState/FreeTextColumnState';
 export interface IFreeTextColumnApi {
   getFreeTextColumnState(): FreeTextColumnState;
-  getAllFreeTextColumn(): IFreeTextColumn[];
-  addFreeTextColumn(freeTextColumn: IFreeTextColumn): void;
+  getAllFreeTextColumn(): FreeTextColumn[];
+  addFreeTextColumn(freeTextColumn: FreeTextColumn): void;
   createFreeTextColumn(columnId: string, defaultValue: string): void;
   deleteFreeTextColumn(columnId: string): void;
-  addEditFreeTextColumnStoredValue(freeTextColumn: IFreeTextColumn, storedValue: any): void;
+  addEditFreeTextColumnStoredValue(freeTextColumn: FreeTextColumn, storedValue: any): void;
 }

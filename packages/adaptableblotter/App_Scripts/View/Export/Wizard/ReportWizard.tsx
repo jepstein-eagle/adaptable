@@ -7,7 +7,7 @@ import { ReportSettingsWizard } from './ReportSettingsWizard';
 import { ReportSummaryWizard } from './ReportSummaryWizard';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IReport } from '../../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../../PredefinedConfig/IUserState/ExportState';
 import { ReportRowTypeWizard } from './ReportRowTypeWizard';
 import { ReportScheduleWizard } from './ReportScheduleWizard';
 
@@ -58,7 +58,7 @@ export class ReportWizard extends React.Component<
             {
               StepName: 'Settings',
               Index: 5,
-              Element: <ReportSettingsWizard Reports={this.props.ConfigEntities as IReport[]} />,
+              Element: <ReportSettingsWizard Reports={this.props.ConfigEntities as Report[]} />,
             },
             {
               StepName: 'Summary',
@@ -66,7 +66,7 @@ export class ReportWizard extends React.Component<
               Element: <ReportSummaryWizard UserFilters={this.props.UserFilters} />,
             },
           ]}
-          Data={this.props.EditedAdaptableBlotterObject as IReport}
+          Data={this.props.EditedAdaptableBlotterObject as Report}
           StepStartIndex={this.props.WizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
