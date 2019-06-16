@@ -5,11 +5,11 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { SelectionMode } from '../../../PredefinedConfig/Common Objects/Enums';
+import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { ICustomSort } from '../../../PredefinedConfig/IUserState Interfaces/CustomSortState';
+import { ICustomSort } from '../../../PredefinedConfig/IUserState/CustomSortState';
 
 export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {
   SortedColumns: IColumn[];

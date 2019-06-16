@@ -1,4 +1,4 @@
-import { IShortcut } from '../../../PredefinedConfig/IUserState Interfaces/ShortcutState';
+import { IShortcut } from '../../../PredefinedConfig/IUserState/ShortcutState';
 /// <reference path="../../typings/index.d.ts" />
 import * as React from 'react';
 import { Radio, Panel, Col, HelpBlock } from 'react-bootstrap';
@@ -6,7 +6,7 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { DataType, MathOperation } from '../../../PredefinedConfig/Common Objects/Enums';
+import { DataType, MathOperation } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 
 export interface ShortcutTypeWizardProps extends AdaptableWizardStepProps<IShortcut> {}

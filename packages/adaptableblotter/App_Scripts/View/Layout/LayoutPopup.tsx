@@ -23,9 +23,9 @@ import { UIHelper } from '../UIHelper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
+import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { ILayout } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { ILayout } from '../../PredefinedConfig/IUserState/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {

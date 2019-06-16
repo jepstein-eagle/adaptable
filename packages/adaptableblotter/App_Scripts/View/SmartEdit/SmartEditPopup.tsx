@@ -17,7 +17,7 @@ import * as SmartEditRedux from '../../Redux/ActionsReducers/SmartEditRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { MathOperation, MessageType } from '../../PredefinedConfig/Common Objects/Enums';
+import { MathOperation, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IColumn } from '../../Utilities/Interface/IColumn';

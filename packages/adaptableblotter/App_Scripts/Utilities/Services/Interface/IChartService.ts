@@ -2,7 +2,7 @@ import {
   ICategoryChartDefinition,
   IChartData,
   IPieChartDefinition,
-} from '../../../PredefinedConfig/IUserState Interfaces/ChartState';
+} from '../../../PredefinedConfig/IUserState/ChartState';
 import { IColumn } from '../../Interface/IColumn';
 
 export interface IChartService {

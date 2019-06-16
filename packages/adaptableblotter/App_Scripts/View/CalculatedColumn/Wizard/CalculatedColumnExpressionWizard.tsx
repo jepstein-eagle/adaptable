@@ -6,7 +6,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { ICalculatedColumn } from '../../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
+import { ICalculatedColumn } from '../../../PredefinedConfig/IUserState/CalculatedColumnState';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<ICalculatedColumn> {

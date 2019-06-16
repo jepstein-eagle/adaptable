@@ -1,12 +1,12 @@
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { IMenuItem } from '../../Utilities/Interface/IMenu';
-import { ExportDestination } from '../../PredefinedConfig/Common Objects/Enums';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
-import { SystemState } from '../../PredefinedConfig/ISystemState Interfaces/SystemState';
-import { IReport } from '../../PredefinedConfig/IUserState Interfaces/ExportState';
-import { ICalendar } from '../../PredefinedConfig/IUserState Interfaces/CalendarState';
-import { IChartData } from '../../PredefinedConfig/IUserState Interfaces/ChartState';
-import { ChartVisibility } from '../../PredefinedConfig/Common Objects/ChartEnums';
+import { SystemState } from '../../PredefinedConfig/ISystemState/SystemState';
+import { IReport } from '../../PredefinedConfig/IUserState/ExportState';
+import { ICalendar } from '../../PredefinedConfig/IUserState/CalendarState';
+import { IChartData } from '../../PredefinedConfig/IUserState/ChartState';
+import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 
 export interface IInternalApi {
   // System Redux

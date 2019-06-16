@@ -6,7 +6,7 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
-import { IShortcut } from '../../../PredefinedConfig/IUserState Interfaces/ShortcutState';
+import { IShortcut } from '../../../PredefinedConfig/IUserState/ShortcutState';
 
 export interface ShortcutSummaryWizardProps extends AdaptableWizardStepProps<IShortcut> {}
 

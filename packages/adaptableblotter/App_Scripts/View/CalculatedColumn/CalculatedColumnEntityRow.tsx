@@ -7,7 +7,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { CalculatedColumnHelper } from '../../Utilities/Helpers/CalculatedColumnHelper';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { ICalculatedColumn } from '../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
+import { ICalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
 
 interface CalculatedColumnEntityRowProps<CalculatedColumnEntityRow>
   extends SharedEntityRowProps<CalculatedColumnEntityRow> {

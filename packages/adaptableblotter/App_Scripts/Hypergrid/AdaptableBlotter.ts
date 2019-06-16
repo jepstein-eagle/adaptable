@@ -35,7 +35,7 @@ import {
   DistinctCriteriaPairValue,
   SortOrder,
   FilterOnDataChangeOptions,
-} from '../PredefinedConfig/Common Objects/Enums';
+} from '../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { CustomSortDataSource } from './CustomSortDataSource';
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource';
@@ -96,18 +96,15 @@ import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { SearchService } from '../Utilities/Services/SearchService';
-import { IStyle } from '../PredefinedConfig/Common Objects/IStyle';
+import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import {
-  IColumnSort,
-  IVendorGridInfo,
-} from '../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { IColumnSort, IVendorGridInfo } from '../PredefinedConfig/IUserState/LayoutState';
 import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
-import { ICalculatedColumn } from '../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
-import { IFreeTextColumn } from '../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
+import { ICalculatedColumn } from '../PredefinedConfig/IUserState/CalculatedColumnState';
+import { IFreeTextColumn } from '../PredefinedConfig/IUserState/FreeTextColumnState';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
-import { ICellValidationRule } from '../PredefinedConfig/IUserState Interfaces/CellValidationState';
-import { IPercentBar } from '../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { ICellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
+import { IPercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'

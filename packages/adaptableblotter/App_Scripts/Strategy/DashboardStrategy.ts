@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IDashboardStrategy } from './Interface/IDashboardStrategy';
-import { Visibility } from '../PredefinedConfig/Common Objects/Enums';
+import { Visibility } from '../PredefinedConfig/Common/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {

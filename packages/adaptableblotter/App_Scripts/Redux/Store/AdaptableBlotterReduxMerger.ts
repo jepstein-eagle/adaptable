@@ -1,9 +1,9 @@
 import * as _ from 'lodash';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { LicenceScopeType } from '../../PredefinedConfig/Common Objects/Enums';
+import { LicenceScopeType } from '../../PredefinedConfig/Common/Enums';
 import { ILicenceInfo } from '../../Utilities/Interface/ILicenceInfo';
 import { AdaptableBlotterState } from './Interface/IAdaptableStore';
-import { IState } from '../../PredefinedConfig/Interfaces/IState';
+import { IState } from '../../PredefinedConfig/IState';
 
 function customizer(objValue: any, srcValue: any) {
   if (_.isArray(objValue)) {

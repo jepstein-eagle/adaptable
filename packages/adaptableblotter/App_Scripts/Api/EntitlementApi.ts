@@ -4,7 +4,7 @@ import { IEntitlementApi } from './Interface/IEntitlementApi';
 import {
   EntitlementsState,
   IEntitlement,
-} from '../PredefinedConfig/IDesignTime State Interfaces/EntitlementsState';
+} from '../PredefinedConfig/IDesignTimeState/EntitlementsState';
 
 export class EntitlementApi extends ApiBase implements IEntitlementApi {
   public getEntitlementState(): EntitlementsState {

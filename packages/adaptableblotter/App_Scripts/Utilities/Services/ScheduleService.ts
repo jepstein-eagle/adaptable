@@ -4,14 +4,11 @@ import * as NodeSchedule from 'node-schedule';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DateExtensions } from '../Extensions/DateExtensions';
-import {
-  ReminderState,
-  IReminder,
-} from '../../PredefinedConfig/IUserState Interfaces/ReminderState';
-import { ExportState, IReport } from '../../PredefinedConfig/IUserState Interfaces/ExportState';
+import { ReminderState, IReminder } from '../../PredefinedConfig/IUserState/ReminderState';
+import { ExportState, IReport } from '../../PredefinedConfig/IUserState/ExportState';
+import { ISchedule } from '../../PredefinedConfig/Common/ISchedule';
 import { IReminderStrategy } from '../../Strategy/Interface/IReminderStrategy';
 import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
-import { ISchedule } from '../../PredefinedConfig/Common Objects/ISchedule';
 
 /**
  * This class is used for managing scheduling of Reports and Reminders

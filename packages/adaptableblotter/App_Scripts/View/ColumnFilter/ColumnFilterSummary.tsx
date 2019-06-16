@@ -15,8 +15,8 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IColumnFilter } from '../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
-import { IEntitlement } from '../../PredefinedConfig/IDesignTime State Interfaces/EntitlementsState';
+import { IColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
+import { IEntitlement } from '../../PredefinedConfig/IDesignTimeState/EntitlementsState';
 
 export interface ColumnFilterSummaryProps
   extends StrategySummaryProps<ColumnFilterSummaryComponent> {

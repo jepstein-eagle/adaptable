@@ -14,9 +14,9 @@ import {
   ActionMode,
   FontWeight,
   FontStyle,
-} from '../PredefinedConfig/Common Objects/Enums';
+} from '../PredefinedConfig/Common/Enums';
 import { ILicenceInfo } from './Interface/ILicenceInfo';
-import { ICustomSort } from '../PredefinedConfig/IUserState Interfaces/CustomSortState';
+import { ICustomSort } from '../PredefinedConfig/IUserState/CustomSortState';
 import {
   EMPTY_STRING,
   CHART_DEFAULT_YAXIS_TOTAL,
@@ -28,45 +28,41 @@ import {
   DEFAULT_DARK_GREEN_COLOR,
   DEFAULT_DARK_RED_COLOR,
 } from './Constants/GeneralConstants';
-import { IDataSource } from '../PredefinedConfig/IUserState Interfaces/DataSourceState';
+import { IDataSource } from '../PredefinedConfig/IUserState/DataSourceState';
 import {
   IPieChartDefinition,
   ICategoryChartDefinition,
-} from '../PredefinedConfig/IUserState Interfaces/ChartState';
-import { SecondaryColumnOperation, ChartType } from '../PredefinedConfig/Common Objects/ChartEnums';
+} from '../PredefinedConfig/IUserState/ChartState';
+import { SecondaryColumnOperation, ChartType } from '../PredefinedConfig/Common/ChartEnums';
 import { DefaultPieChartProperties } from './Defaults/DefaultPieChartProperties';
 import { DefaultCategoryChartProperties } from './Defaults/DefaultCategoryChartProperties';
-import { ICalculatedColumn } from '../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
-import { IPlusMinusRule } from '../PredefinedConfig/IUserState Interfaces/PlusMinusState';
+import { ICalculatedColumn } from '../PredefinedConfig/IUserState/CalculatedColumnState';
+import { IPlusMinusRule } from '../PredefinedConfig/IUserState/PlusMinusState';
 import { IAdaptableAlert } from './Interface/IMessage';
-import { IAlertDefinition } from '../PredefinedConfig/IUserState Interfaces/AlertState';
-import { IAdvancedSearch } from '../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
+import { IAlertDefinition } from '../PredefinedConfig/IUserState/AlertState';
+import { IAdvancedSearch } from '../PredefinedConfig/IUserState/AdvancedSearchState';
 import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
-import { IColumnCategory } from '../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
-import { IRange } from '../PredefinedConfig/Common Objects/Expression/IRange';
-import {
-  IColumnSort,
-  IVendorGridInfo,
-  ILayout,
-} from '../PredefinedConfig/IUserState Interfaces/LayoutState';
-import { ICellValidationRule } from '../PredefinedConfig/IUserState Interfaces/CellValidationState';
-import { IPercentBar } from '../PredefinedConfig/IUserState Interfaces/PercentBarState';
-import { IUserFilter } from '../PredefinedConfig/IUserState Interfaces/UserFilterState';
-import { IReport, IAutoExport } from '../PredefinedConfig/IUserState Interfaces/ExportState';
+import { IColumnCategory } from '../PredefinedConfig/IUserState/ColumnCategoryState';
+import { IRange } from '../PredefinedConfig/Common/Expression/IRange';
+import { IColumnSort, IVendorGridInfo, ILayout } from '../PredefinedConfig/IUserState/LayoutState';
+import { ICellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
+import { IPercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
+import { IUserFilter } from '../PredefinedConfig/IUserState/UserFilterState';
+import { IReport, IAutoExport } from '../PredefinedConfig/IUserState/ExportState';
 import { IColumn } from './Interface/IColumn';
-import { IFlashingCell } from '../PredefinedConfig/IUserState Interfaces/FlashingCellState';
-import { IReminder } from '../PredefinedConfig/IUserState Interfaces/ReminderState';
-import { ISchedule } from '../PredefinedConfig/Common Objects/ISchedule';
-import { IShortcut } from '../PredefinedConfig/IUserState Interfaces/ShortcutState';
+import { IFlashingCell } from '../PredefinedConfig/IUserState/FlashingCellState';
+import { IReminder } from '../PredefinedConfig/IUserState/ReminderState';
+import { ISchedule } from '../PredefinedConfig/Common/ISchedule';
+import { IShortcut } from '../PredefinedConfig/IUserState/ShortcutState';
 import { IAdaptableBlotter } from '../types';
 import ColumnHelper from './Helpers/ColumnHelper';
 import CellValidationHelper from './Helpers/CellValidationHelper';
-import { IConditionalStyle } from '../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
-import { IFormatColumn } from '../PredefinedConfig/IUserState Interfaces/FormatColumnState';
-import { IFreeTextColumn } from '../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
-import { Expression } from '../PredefinedConfig/Common Objects/Expression/Expression';
-import { IColumnFilter } from '../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
-import { IStyle } from '../PredefinedConfig/Common Objects/IStyle';
+import { IConditionalStyle } from '../PredefinedConfig/IUserState/ConditionalStyleState';
+import { IFormatColumn } from '../PredefinedConfig/IUserState/FormatColumnState';
+import { IFreeTextColumn } from '../PredefinedConfig/IUserState/FreeTextColumnState';
+import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
+import { IColumnFilter } from '../PredefinedConfig/IUserState/ColumnFilterState';
+import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { ICellSummmary } from './Interface/SelectedCell/ICellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 

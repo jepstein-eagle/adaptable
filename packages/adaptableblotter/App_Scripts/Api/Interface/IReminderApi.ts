@@ -1,7 +1,4 @@
-import {
-  ReminderState,
-  IReminder,
-} from '../../PredefinedConfig/IUserState Interfaces/ReminderState';
+import { ReminderState, IReminder } from '../../PredefinedConfig/IUserState/ReminderState';
 export interface IReminderApi {
   getReminderState(): ReminderState;
   getAllReminder(): IReminder[];

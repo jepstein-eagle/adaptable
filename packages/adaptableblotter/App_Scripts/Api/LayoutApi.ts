@@ -5,11 +5,7 @@ import { DEFAULT_LAYOUT } from '../Utilities/Constants/GeneralConstants';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { ILayoutApi } from './Interface/ILayoutApi';
-import {
-  LayoutState,
-  ILayout,
-  IColumnSort,
-} from '../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { LayoutState, ILayout, IColumnSort } from '../PredefinedConfig/IUserState/LayoutState';
 
 export class LayoutApi extends ApiBase implements ILayoutApi {
   public getLayoutState(): LayoutState {

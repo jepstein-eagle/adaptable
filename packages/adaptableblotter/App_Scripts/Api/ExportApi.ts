@@ -1,7 +1,7 @@
 import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux';
-import { ExportDestination } from '../PredefinedConfig/Common Objects/Enums';
+import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { IExportApi } from './Interface/IExportApi';
-import { ExportState, IReport } from '../PredefinedConfig/IUserState Interfaces/ExportState';
+import { ExportState, IReport } from '../PredefinedConfig/IUserState/ExportState';
 import { ApiBase } from './ApiBase';
 
 export class ExportApi extends ApiBase implements IExportApi {

@@ -12,8 +12,8 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { DashboardSize } from '../../PredefinedConfig/Common Objects/Enums';
-import { IDataSource } from '../../PredefinedConfig/IUserState Interfaces/DataSourceState';
+import { DashboardSize } from '../../PredefinedConfig/Common/Enums';
+import { IDataSource } from '../../PredefinedConfig/IUserState/DataSourceState';
 
 interface DataSourceToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<DataSourceToolbarControlComponent> {

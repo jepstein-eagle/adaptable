@@ -3,8 +3,8 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { ICategoryChartDefinition } from '../../../../PredefinedConfig/IUserState Interfaces/ChartState';
-import { AxisTotal } from '../../../../PredefinedConfig/Common Objects/ChartEnums';
+import { ICategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { AxisTotal } from '../../../../PredefinedConfig/Common/ChartEnums';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { Panel, FormGroup, Row, Col, ControlLabel, Radio } from 'react-bootstrap';

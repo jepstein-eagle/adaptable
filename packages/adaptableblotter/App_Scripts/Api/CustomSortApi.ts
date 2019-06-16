@@ -2,10 +2,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux';
 import { ApiBase } from './ApiBase';
 import { ICustomSortApi } from './Interface/ICustomSortApi';
-import {
-  CustomSortState,
-  ICustomSort,
-} from '../PredefinedConfig/IUserState Interfaces/CustomSortState';
+import { CustomSortState, ICustomSort } from '../PredefinedConfig/IUserState/CustomSortState';
 
 export class CustomSortApi extends ApiBase implements ICustomSortApi {
   public getCustomSortState(): CustomSortState {

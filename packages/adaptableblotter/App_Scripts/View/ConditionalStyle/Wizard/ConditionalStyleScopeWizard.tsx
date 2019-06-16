@@ -9,14 +9,14 @@ import {
   ConditionalStyleScope,
   SelectionMode,
   MessageType,
-} from '../../../PredefinedConfig/Common Objects/Enums';
+} from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IColumnCategory } from '../../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
+import { IColumnCategory } from '../../../PredefinedConfig/IUserState/ColumnCategoryState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { IConditionalStyle } from '../../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
+import { IConditionalStyle } from '../../../PredefinedConfig/IUserState/ConditionalStyleState';
 
 export interface ConditionalStyleScopeWizardProps
   extends AdaptableWizardStepProps<IConditionalStyle> {

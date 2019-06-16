@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { IAdaptableBlotterObject } from '../../../PredefinedConfig/IAdaptableBlotterObject';
-import { IUserFilter } from '../../../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { IUserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
 
 // base props

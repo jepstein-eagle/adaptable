@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { MenuState } from '../../PredefinedConfig/ISystemState Interfaces/MenuState';
+import { MenuState } from '../../PredefinedConfig/ISystemState/MenuState';
 import { IMenuItem } from '../../Utilities/Interface/IMenu';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 

@@ -1,9 +1,9 @@
-import { IStyle } from '../PredefinedConfig/Common Objects/IStyle';
-import { DisplayAction } from '../PredefinedConfig/Common Objects/Enums';
+import { IStyle } from '../PredefinedConfig/Common/IStyle';
+import { DisplayAction } from '../PredefinedConfig/Common/Enums';
 import * as QuickSearchRedux from '../Redux/ActionsReducers/QuickSearchRedux';
 import { ApiBase } from './ApiBase';
 import { IQuickSearchApi } from './Interface/IQuickSearchApi';
-import { QuickSearchState } from '../PredefinedConfig/IUserState Interfaces/QuickSearchState';
+import { QuickSearchState } from '../PredefinedConfig/IUserState/QuickSearchState';
 
 export class QuickSearchApi extends ApiBase implements IQuickSearchApi {
   public getQuickSearchState(): QuickSearchState {

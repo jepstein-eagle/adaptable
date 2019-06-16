@@ -1,8 +1,5 @@
 import { IUserFilterApi } from './Interface/IUserFilterApi';
-import {
-  UserFilterState,
-  IUserFilter,
-} from '../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { UserFilterState, IUserFilter } from '../PredefinedConfig/IUserState/UserFilterState';
 import { ApiBase } from './ApiBase';
 
 export class UserFilterApi extends ApiBase implements IUserFilterApi {

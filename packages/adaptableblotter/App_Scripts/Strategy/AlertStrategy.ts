@@ -5,12 +5,12 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
-import { LeafExpressionOperator } from '../PredefinedConfig/Common Objects/Enums';
+import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
-import { IAlertDefinition } from '../PredefinedConfig/IUserState Interfaces/AlertState';
+import { IAlertDefinition } from '../PredefinedConfig/IUserState/AlertState';
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(blotter: IAdaptableBlotter) {

@@ -26,10 +26,10 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IPlusMinusRule } from '../../PredefinedConfig/IUserState Interfaces/PlusMinusState';
+import { IPlusMinusRule } from '../../PredefinedConfig/IUserState/PlusMinusState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
-import { MessageType } from '../../PredefinedConfig/Common Objects/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
   DefaultNudgeValue: number;

@@ -1,33 +1,29 @@
 import * as React from 'react';
+import { IColumn } from '../../Utilities/Interface/IColumn';
+import { IRange } from '../../PredefinedConfig/Common/Expression/IRange';
 import {
-  DataType,
-  SelectionMode,
-  RangeOperandType,
-} from '../../PredefinedConfig/Common Objects/Enums';
-import { LeafExpressionOperator } from '../../PredefinedConfig/Common Objects/Enums';
-import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import {
-  DropdownButton,
+  Button,
+  Glyphicon,
   MenuItem,
+  FormGroup,
   InputGroup,
   FormControl,
-  Button,
-  FormGroup,
   OverlayTrigger,
   Tooltip,
-  Glyphicon,
+  DropdownButton,
   Panel,
-  Checkbox,
-  Radio,
 } from 'react-bootstrap';
-import { IColumn } from '../../Utilities/Interface/IColumn';
-import { UIHelper } from '../UIHelper';
-import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
+import ExpressionHelper from '../../Utilities/Helpers/ExpressionHelper';
+import {
+  LeafExpressionOperator,
+  RangeOperandType,
+  SelectionMode,
+} from '../../PredefinedConfig/Common/Enums';
+import EnumExtensions from '../../Utilities/Extensions/EnumExtensions';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
-import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
-import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { IRange } from '../../PredefinedConfig/Common Objects/Expression/IRange';
+import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
+import UIHelper from '../UIHelper';
+import ObjectFactory from '../../Utilities/ObjectFactory';
 
 export interface ExpressionBuilderRangesPropsExpressionBuilderRanges
   extends React.ClassAttributes<ExpressionBuilderRanges> {

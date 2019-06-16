@@ -8,8 +8,8 @@ import {
   IChartProperties,
   IPieChartDefinition,
   IChartData,
-} from '../../PredefinedConfig/IUserState Interfaces/ChartState';
-import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common Objects/ChartEnums';
+} from '../../PredefinedConfig/IUserState/ChartState';
+import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonClose } from '../Components/Buttons/ButtonClose';
 import { PRIMARY_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';

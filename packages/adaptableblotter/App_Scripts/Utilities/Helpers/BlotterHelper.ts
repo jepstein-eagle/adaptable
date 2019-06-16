@@ -6,7 +6,7 @@ import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ILicenceInfo } from '../Interface/ILicenceInfo';
-import { LicenceScopeType } from '../../PredefinedConfig/Common Objects/Enums';
+import { LicenceScopeType } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';

@@ -1,4 +1,4 @@
-import { IReminder } from '../../../PredefinedConfig/IUserState Interfaces/ReminderState';
+import { IReminder } from '../../../PredefinedConfig/IUserState/ReminderState';
 import * as React from 'react';
 import {
   Panel,
@@ -14,9 +14,9 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { DayOfWeek, StateChangedTrigger } from '../../../PredefinedConfig/Common Objects/Enums';
+import { DayOfWeek, StateChangedTrigger } from '../../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { ISchedule } from '../../../PredefinedConfig/Common Objects/ISchedule';
+import { ISchedule } from '../../../PredefinedConfig/Common/ISchedule';
 
 export interface ReminderScheduleWizardProps extends AdaptableWizardStepProps<IReminder> {}
 

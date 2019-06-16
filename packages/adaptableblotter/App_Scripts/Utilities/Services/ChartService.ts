@@ -1,18 +1,14 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 
-import { IColumnValueExpression } from '../../PredefinedConfig/Common Objects/Expression/IColumnValueExpression';
+import { IColumnValueExpression } from '../../PredefinedConfig/Common/Expression/IColumnValueExpression';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
-import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common Objects/Enums';
+import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 import { IKeyValuePair } from '../Interface/IKeyValuePair';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { Expression } from '../../PredefinedConfig/Common Objects/Expression/Expression';
+import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
-import {
-  AxisTotal,
-  SecondaryColumnOperation,
-} from '../../PredefinedConfig/Common Objects/ChartEnums';
 import { Helper } from '../Helpers/Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
@@ -24,7 +20,8 @@ import {
   IChartDefinition,
   IPieChartDefinition,
   IPieChartDataItem,
-} from '../../PredefinedConfig/IUserState Interfaces/ChartState';
+} from '../../PredefinedConfig/IUserState/ChartState';
+import { AxisTotal, SecondaryColumnOperation } from '../../PredefinedConfig/Common/ChartEnums';
 
 /*
 Class that buils the chart - probably needs some refactoring but working for the time being.

@@ -1,7 +1,4 @@
-import {
-  DataSourceState,
-  IDataSource,
-} from '../../PredefinedConfig/IUserState Interfaces/DataSourceState';
+import { DataSourceState, IDataSource } from '../../PredefinedConfig/IUserState/DataSourceState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

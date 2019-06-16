@@ -1,4 +1,4 @@
-import { ICalendar } from '../../PredefinedConfig/IUserState Interfaces/CalendarState';
+import { ICalendar } from '../../PredefinedConfig/IUserState/CalendarState';
 
 export function getSystemCalendars(): ICalendar[] {
   return [

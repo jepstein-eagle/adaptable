@@ -27,7 +27,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { ICellValidationRule } from '../../PredefinedConfig/IUserState Interfaces/CellValidationState';
+import { ICellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
   CellValidations: ICellValidationRule[];

@@ -1,28 +1,25 @@
 import { IAdaptableBlotter, ISearchChangedEventArgs } from '../../types';
 import { ISearchService } from './Interface/ISearchService';
 import * as StrategyConstants from '../Constants/StrategyConstants';
-import { SearchChangedTrigger, DisplayAction } from '../../PredefinedConfig/Common Objects/Enums';
+import { SearchChangedTrigger, DisplayAction } from '../../PredefinedConfig/Common/Enums';
 import { IBlotterSearchState } from '../Interface/SearchChanged/IBlotterSearchState';
 import { IBlotterSortState } from '../Interface/SearchChanged/IBlotterSortState';
 import { ISearchChangedInfo } from '../Interface/SearchChanged/ISearchChangedInfo';
 import { ISearchEventData } from '../Interface/SearchChanged/ISearchEventData';
-import { UserFilterState } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
-import { QuickSearchState } from '../../PredefinedConfig/IUserState Interfaces/QuickSearchState';
-import {
-  DataSourceState,
-  IDataSource,
-} from '../../PredefinedConfig/IUserState Interfaces/DataSourceState';
-import { ColumnFilterState } from '../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
+import { UserFilterState } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { QuickSearchState } from '../../PredefinedConfig/IUserState/QuickSearchState';
+import { DataSourceState, IDataSource } from '../../PredefinedConfig/IUserState/DataSourceState';
+import { ColumnFilterState } from '../../PredefinedConfig/IUserState/ColumnFilterState';
 import {
   AdvancedSearchState,
   IAdvancedSearch,
-} from '../../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
+} from '../../PredefinedConfig/IUserState/AdvancedSearchState';
 import StringExtensions from '../Extensions/StringExtensions';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
 import { LayoutHelper } from '../Helpers/LayoutHelper';
 import { IColumn } from '../Interface/IColumn';
-import { IColumnSort } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { IColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
 
 export class SearchService implements ISearchService {
   private blotter: IAdaptableBlotter;

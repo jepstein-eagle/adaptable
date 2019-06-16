@@ -1,7 +1,7 @@
 import {
   AdvancedSearchState,
   IAdvancedSearch,
-} from '../../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
+} from '../../PredefinedConfig/IUserState/AdvancedSearchState';
 
 export interface IAdvancedSearchApi {
   /**

@@ -5,10 +5,10 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { SelectionMode } from '../../../PredefinedConfig/Common Objects/Enums';
+import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { IFormatColumn } from '../../../PredefinedConfig/IUserState Interfaces/FormatColumnState';
+import { IFormatColumn } from '../../../PredefinedConfig/IUserState/FormatColumnState';
 
 export interface FormatColumnScopeWizardProps extends AdaptableWizardStepProps<IFormatColumn> {}
 

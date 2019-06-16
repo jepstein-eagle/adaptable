@@ -23,10 +23,10 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { MessageType, AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
+import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
-import { IAlertDefinition } from '../../PredefinedConfig/IUserState Interfaces/AlertState';
+import { IAlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {

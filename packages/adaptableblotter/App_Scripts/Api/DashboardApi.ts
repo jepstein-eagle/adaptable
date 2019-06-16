@@ -1,8 +1,8 @@
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
 import { ApiBase } from './ApiBase';
-import { Visibility } from '../PredefinedConfig/Common Objects/Enums';
+import { Visibility } from '../PredefinedConfig/Common/Enums';
 import { IDashboardApi } from './Interface/IDashboardApi';
-import { DashboardState } from '../PredefinedConfig/IUserState Interfaces/DashboardState';
+import { DashboardState } from '../PredefinedConfig/IUserState/DashboardState';
 
 export class DashboardApi extends ApiBase implements IDashboardApi {
   public GetState(): DashboardState {

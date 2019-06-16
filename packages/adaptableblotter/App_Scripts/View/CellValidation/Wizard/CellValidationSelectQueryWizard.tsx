@@ -5,8 +5,8 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ICellValidationRule } from '../../../PredefinedConfig/IUserState Interfaces/CellValidationState';
-import { MessageType } from '../../../PredefinedConfig/Common Objects/Enums';
+import { ICellValidationRule } from '../../../PredefinedConfig/IUserState/CellValidationState';
+import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';

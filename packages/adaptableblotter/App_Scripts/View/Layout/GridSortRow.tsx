@@ -4,11 +4,11 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { SelectionMode, SortOrder, AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
+import { SelectionMode, SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { IColumnSort } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { IColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
 
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {
   ColumnSort: IColumnSort;

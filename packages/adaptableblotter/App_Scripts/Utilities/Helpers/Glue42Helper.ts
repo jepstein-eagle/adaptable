@@ -4,10 +4,10 @@ import { ICellInfo } from '../Interface/ICellInfo';
 import { ColumnHelper } from './ColumnHelper';
 import { IColumn } from '../Interface/IColumn';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { DataType, ActionMode } from '../../PredefinedConfig/Common Objects/Enums';
+import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from './ExpressionHelper';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
-import { ICellValidationRule } from '../../PredefinedConfig/IUserState Interfaces/CellValidationState';
+import { ICellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
 
 declare var Glue4Office: any;
 

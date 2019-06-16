@@ -1,6 +1,6 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { ConditionalStyleScope } from '../../PredefinedConfig/Common Objects/Enums';
+import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -8,7 +8,7 @@ import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { IConditionalStyle } from '../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
+import { IConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { IColumn } from '../../Utilities/Interface/IColumn';

@@ -1,10 +1,10 @@
 import { ApiBase } from './ApiBase';
 import { IGridApi } from './Interface/IGridApi';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { GridState } from '../PredefinedConfig/ISystemState Interfaces/GridState';
-import { DataType } from '../PredefinedConfig/Common Objects/Enums';
+import { GridState } from '../PredefinedConfig/ISystemState/GridState';
+import { DataType } from '../PredefinedConfig/Common/Enums';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { IColumnSort } from '../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { IColumnSort } from '../PredefinedConfig/IUserState/LayoutState';
 
 export class GridApi extends ApiBase implements IGridApi {
   public getGridState(): GridState {

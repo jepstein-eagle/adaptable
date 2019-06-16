@@ -16,7 +16,7 @@ import { PlusMinusSummary } from '../PlusMinus/PlusMinusSummary';
 import { FormatColumnSummary } from '../FormatColumn/FormatColumnSummary';
 import { FlashingCellSummary } from '../FlashingCells/FlashingCellSummary';
 import { CalculatedColumnSummary } from '../CalculatedColumn/CalculatedColumnSummary';
-import { DataType, SelectionMode, AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
+import { DataType, SelectionMode, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { ControlLabel, Col, Row, FormGroup } from 'react-bootstrap';
@@ -29,9 +29,9 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { PercentBarSummary } from '../PercentBar/PercentBarSummary';
 import { FreeTextColumnSummary } from '../FreeTextColumn/FreeTextColumnSummary';
 import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
-import { ICalculatedColumn } from '../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
-import { IEntitlement } from '../../PredefinedConfig/IDesignTime State Interfaces/EntitlementsState';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
+import { ICalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
+import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { IEntitlement } from '../../PredefinedConfig/IDesignTimeState/EntitlementsState';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
   CalculatedColumns: Array<ICalculatedColumn>;

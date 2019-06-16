@@ -1,7 +1,7 @@
 import {
   FlashingCellState,
   IFlashingCell,
-} from '../../PredefinedConfig/IUserState Interfaces/FlashingCellState';
+} from '../../PredefinedConfig/IUserState/FlashingCellState';
 
 export interface IFlashingCellApi {
   getFlashingCellState(): FlashingCellState;

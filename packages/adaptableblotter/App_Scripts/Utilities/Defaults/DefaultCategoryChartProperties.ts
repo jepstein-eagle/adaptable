@@ -7,8 +7,8 @@ import {
   HorizontalAlignment,
   AxisAngle,
   AxisScale,
-} from '../../PredefinedConfig/Common Objects/ChartEnums';
-import { ICategoryChartProperties } from '../../PredefinedConfig/IUserState Interfaces/ChartState';
+} from '../../PredefinedConfig/Common/ChartEnums';
+import { ICategoryChartProperties } from '../../PredefinedConfig/IUserState/ChartState';
 
 export const DefaultCategoryChartProperties: ICategoryChartProperties = {
   // General

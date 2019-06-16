@@ -4,8 +4,8 @@ import {
   StatusColour,
   LeafExpressionOperator,
   CellSummaryOperation,
-} from '../../PredefinedConfig/Common Objects/Enums';
-import { ChartVisibility, AxisTotal } from '../../PredefinedConfig/Common Objects/ChartEnums';
+} from '../../PredefinedConfig/Common/Enums';
+import { ChartVisibility, AxisTotal } from '../../PredefinedConfig/Common/ChartEnums';
 
 export const MISSING_COLUMN: string = ' [MISSING]';
 export const DEFAULT_LAYOUT: string = 'Ab_Default_Layout';

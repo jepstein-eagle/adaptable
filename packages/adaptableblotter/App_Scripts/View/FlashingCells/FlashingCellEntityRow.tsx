@@ -4,7 +4,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ColorPicker } from '../ColorPicker';
 import { IColItem } from '../UIInterfaces';
-import { IFlashingCell } from '../../PredefinedConfig/IUserState Interfaces/FlashingCellState';
+import { IFlashingCell } from '../../PredefinedConfig/IUserState/FlashingCellState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 

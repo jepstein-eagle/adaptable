@@ -1,4 +1,4 @@
-import { TeamSharingState } from '../../PredefinedConfig/ISystemState Interfaces/TeamSharingState';
+import { TeamSharingState } from '../../PredefinedConfig/ISystemState/TeamSharingState';
 import * as Redux from 'redux';
 import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';

@@ -6,7 +6,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import {
   FreeTextColumnState,
   IFreeTextColumn,
-} from '../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
+} from '../PredefinedConfig/IUserState/FreeTextColumnState';
 
 export class FreeTextColumnApi extends ApiBase implements IFreeTextColumnApi {
   public getFreeTextColumnState(): FreeTextColumnState {

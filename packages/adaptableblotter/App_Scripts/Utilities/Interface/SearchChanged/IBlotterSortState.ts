@@ -1,5 +1,5 @@
-import { IColumnSort } from '../../../PredefinedConfig/IUserState Interfaces/LayoutState';
-import { ICustomSort } from '../../../PredefinedConfig/IUserState Interfaces/CustomSortState';
+import { IColumnSort } from '../../../PredefinedConfig/IUserState/LayoutState';
+import { ICustomSort } from '../../../PredefinedConfig/IUserState/CustomSortState';
 
 /**
  * Overview of the current sorting state in the grid

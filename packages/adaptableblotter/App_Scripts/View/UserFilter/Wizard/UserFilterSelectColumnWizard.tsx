@@ -6,10 +6,10 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SelectionMode } from '../../../PredefinedConfig/Common Objects/Enums';
+import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { IUserFilter } from '../../../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { IUserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
 
 export interface UserFilterSelectColumnWizardProps extends AdaptableWizardStepProps<IUserFilter> {}
 export interface UserFilterSelectColumnWizardState {

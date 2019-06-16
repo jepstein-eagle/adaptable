@@ -26,7 +26,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { ICustomSort } from '../../PredefinedConfig/IUserState Interfaces/CustomSortState';
+import { ICustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 

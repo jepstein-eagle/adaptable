@@ -3,7 +3,7 @@ import {
   ChartState,
   IChartDefinition,
   IChartProperties,
-} from '../../PredefinedConfig/IUserState Interfaces/ChartState';
+} from '../../PredefinedConfig/IUserState/ChartState';
 import {
   EMPTY_STRING,
   CHART_DEFAULT_REFRESH_RATE,

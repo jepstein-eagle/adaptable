@@ -4,12 +4,12 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
+import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
+import { ControlLabel } from 'react-bootstrap';
 import {
   CellSummaryOperation,
   CellSummaryOptionalOperation,
-} from '../../PredefinedConfig/Common Objects/Enums';
-import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
-import { ControlLabel } from 'react-bootstrap';
+} from '../../PredefinedConfig/Common/Enums';
 
 interface CellSummaryDetailsProps extends React.ClassAttributes<CellSummaryDetails> {
   CellSummary: ICellSummmary;

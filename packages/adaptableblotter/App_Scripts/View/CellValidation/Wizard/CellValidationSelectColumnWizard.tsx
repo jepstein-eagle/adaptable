@@ -6,9 +6,9 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SelectionMode } from '../../../PredefinedConfig/Common Objects/Enums';
+import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { ICellValidationRule } from '../../../PredefinedConfig/IUserState Interfaces/CellValidationState';
+import { ICellValidationRule } from '../../../PredefinedConfig/IUserState/CellValidationState';
 
 export interface CellValidationSelectColumnWizardProps
   extends AdaptableWizardStepProps<ICellValidationRule> {}

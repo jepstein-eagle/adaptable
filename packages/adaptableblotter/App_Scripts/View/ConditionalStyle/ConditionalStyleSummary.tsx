@@ -12,7 +12,7 @@ import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalS
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { ConditionalStyleScope, AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
+import { ConditionalStyleScope, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StyleVisualItem } from '../Components/StyleVisualItem';
@@ -23,8 +23,8 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
-import { IConditionalStyle } from '../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
+import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { IConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
 
 export interface ConditionalStyleSummaryProps
   extends StrategySummaryProps<ConditionalStyleSummaryComponent> {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SelectionMode, SortOrder } from '../../../PredefinedConfig/Common Objects/Enums';
+import { SelectionMode, SortOrder } from '../../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { Sizes, InputGroup } from 'react-bootstrap';

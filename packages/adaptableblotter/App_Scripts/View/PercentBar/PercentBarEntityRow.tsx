@@ -5,7 +5,7 @@ import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { IPercentBar } from '../../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { IPercentBar } from '../../PredefinedConfig/IUserState/PercentBarState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ColorPicker } from '../ColorPicker';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';

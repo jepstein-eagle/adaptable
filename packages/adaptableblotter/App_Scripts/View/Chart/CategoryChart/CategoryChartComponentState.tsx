@@ -2,7 +2,7 @@ import {
   IChartDefinition,
   IChartProperties,
   ICategoryChartProperties,
-} from '../../../PredefinedConfig/IUserState Interfaces/ChartState';
+} from '../../../PredefinedConfig/IUserState/ChartState';
 
 // dont normally do this but Component was getting so bid and unwieldy...
 

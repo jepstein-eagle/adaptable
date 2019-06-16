@@ -3,8 +3,8 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { LayoutState } from '../PredefinedConfig/IUserState Interfaces/LayoutState';
-import { StateChangedTrigger } from '../PredefinedConfig/Common Objects/Enums';
+import { LayoutState } from '../PredefinedConfig/IUserState/LayoutState';
+import { StateChangedTrigger } from '../PredefinedConfig/Common/Enums';
 
 export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStrategy {
   public CurrentLayout: string;

@@ -17,9 +17,9 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { ILayout } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { ILayout } from '../../PredefinedConfig/IUserState/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common Objects/Enums';
+import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {

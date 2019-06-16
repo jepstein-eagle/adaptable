@@ -4,10 +4,10 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common Objects/Enums';
+import { DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
-import { ICustomSort } from '../../../PredefinedConfig/IUserState Interfaces/CustomSortState';
+import { ICustomSort } from '../../../PredefinedConfig/IUserState/CustomSortState';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 

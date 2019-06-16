@@ -1,6 +1,6 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { ExpressionHelper } from './ExpressionHelper';
-import { Expression } from '../../PredefinedConfig/Common Objects/Expression/Expression';
+import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { ISelectedCellInfo } from '../Interface/SelectedCell/ISelectedCellInfo';
 import { ISelectedCell } from '../Interface/SelectedCell/ISelectedCell';
 import { IColumn } from '../Interface/IColumn';
@@ -8,11 +8,11 @@ import {
   ReportColumnScope,
   MessageType,
   ReportRowScope,
-} from '../../PredefinedConfig/Common Objects/Enums';
+} from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import ColumnHelper from './ColumnHelper';
-import { IReport } from '../../PredefinedConfig/IUserState Interfaces/ExportState';
+import { IReport } from '../../PredefinedConfig/IUserState/ExportState';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';

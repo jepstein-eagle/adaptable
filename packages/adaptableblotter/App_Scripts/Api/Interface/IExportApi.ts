@@ -1,5 +1,5 @@
-import { ExportDestination } from '../../PredefinedConfig/Common Objects/Enums';
-import { ExportState, IReport } from '../../PredefinedConfig/IUserState Interfaces/ExportState';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
+import { ExportState, IReport } from '../../PredefinedConfig/IUserState/ExportState';
 
 export interface IExportApi {
   getExportState(): ExportState;

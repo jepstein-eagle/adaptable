@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { AccessLevel } from '../../../PredefinedConfig/Common Objects/Enums';
+import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 
 export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
   onClick?: () => void;

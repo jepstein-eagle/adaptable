@@ -10,12 +10,12 @@ import {
   ICategoryChartDefinition,
   IPieChartDefinition,
   IChartData,
-} from '../PredefinedConfig/IUserState Interfaces/ChartState';
-import { SystemState } from '../PredefinedConfig/ISystemState Interfaces/SystemState';
+} from '../PredefinedConfig/IUserState/ChartState';
+import { SystemState } from '../PredefinedConfig/ISystemState/SystemState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 
-import { ChartVisibility, ChartType } from '../PredefinedConfig/Common Objects/ChartEnums';
+import { ChartVisibility, ChartType } from '../PredefinedConfig/Common/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';

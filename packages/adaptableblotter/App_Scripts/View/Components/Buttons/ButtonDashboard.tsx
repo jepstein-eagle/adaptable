@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ButtonBase, ButtonProps, ButtonBaseProps } from './ButtonBase';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import { AccessLevel } from '../../../PredefinedConfig/Common Objects/Enums';
+import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 
 export class ButtonDashboard extends React.Component<ButtonBaseProps, {}> {
   render() {

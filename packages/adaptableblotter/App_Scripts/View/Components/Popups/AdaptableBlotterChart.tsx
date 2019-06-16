@@ -2,7 +2,7 @@ import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotte
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Modal, Button } from 'react-bootstrap';
-import { AccessLevel } from '../../../PredefinedConfig/Common Objects/Enums';
+import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import { UIHelper } from '../../UIHelper';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';

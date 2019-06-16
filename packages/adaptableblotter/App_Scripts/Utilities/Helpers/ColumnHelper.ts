@@ -1,10 +1,10 @@
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { LoggingHelper } from './LoggingHelper';
 import { IColumn } from '../Interface/IColumn';
-import { DataType } from '../../PredefinedConfig/Common Objects/Enums';
+import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
+import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
 
 // Single place for all column mapping functions so can be dealt with consistetly re error handling
 

@@ -1,7 +1,7 @@
 import {
   CalculatedColumnState,
   ICalculatedColumn,
-} from '../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
+} from '../../PredefinedConfig/IUserState/CalculatedColumnState';
 
 export interface ICalculatedColumnApi {
   getCalculatedColumnState(): CalculatedColumnState;

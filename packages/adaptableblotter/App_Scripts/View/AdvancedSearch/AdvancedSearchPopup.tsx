@@ -24,8 +24,8 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { PRIMARY_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
-import { AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
-import { IAdvancedSearch } from '../../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { IAdvancedSearch } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {

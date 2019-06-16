@@ -12,14 +12,10 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptablePopover } from '../AdaptablePopover';
-import {
-  MessageType,
-  AccessLevel,
-  DashboardSize,
-} from '../../PredefinedConfig/Common Objects/Enums';
+import { MessageType, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import { AlertsPanel } from './AlertsPanel';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { IAlertDefinition } from '../../PredefinedConfig/IUserState Interfaces/AlertState';
+import { IAlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
 
 interface AlertToolbarControlProps
   extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {

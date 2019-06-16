@@ -1,11 +1,11 @@
-import { PlusMinusState } from '../PredefinedConfig/IUserState Interfaces/PlusMinusState';
+import { PlusMinusState } from '../PredefinedConfig/IUserState/PlusMinusState';
 import { IPlusMinusStrategy } from './Interface/IPlusMinusStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as Redux from 'redux';
 import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { DataType } from '../PredefinedConfig/Common Objects/Enums';
+import { DataType } from '../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
@@ -18,7 +18,7 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { ICellValidationRule } from '../PredefinedConfig/IUserState Interfaces/CellValidationState';
+import { ICellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(blotter: IAdaptableBlotter) {

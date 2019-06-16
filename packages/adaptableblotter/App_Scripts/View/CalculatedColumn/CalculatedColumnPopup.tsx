@@ -14,7 +14,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard';
-import { SortOrder } from '../../PredefinedConfig/Common Objects/Enums';
+import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import {
@@ -25,7 +25,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { ICalculatedColumn } from '../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
+import { ICalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 interface CalculatedColumnPopupProps

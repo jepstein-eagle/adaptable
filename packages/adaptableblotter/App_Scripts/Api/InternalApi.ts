@@ -5,13 +5,13 @@ import { ApiBase } from './ApiBase';
 import { IInternalApi } from './Interface/IInternalApi';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
-import { ExportDestination } from '../PredefinedConfig/Common Objects/Enums';
+import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
-import { IReport } from '../PredefinedConfig/IUserState Interfaces/ExportState';
-import { SystemState } from '../PredefinedConfig/ISystemState Interfaces/SystemState';
-import { ICalendar } from '../PredefinedConfig/IUserState Interfaces/CalendarState';
-import { IChartData } from '../PredefinedConfig/IUserState Interfaces/ChartState';
-import { ChartVisibility } from '../PredefinedConfig/Common Objects/ChartEnums';
+import { IReport } from '../PredefinedConfig/IUserState/ExportState';
+import { SystemState } from '../PredefinedConfig/ISystemState/SystemState';
+import { ICalendar } from '../PredefinedConfig/IUserState/CalendarState';
+import { IChartData } from '../PredefinedConfig/IUserState/ChartState';
+import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 
 export class InternalApi extends ApiBase implements IInternalApi {
   // System Redux Actions

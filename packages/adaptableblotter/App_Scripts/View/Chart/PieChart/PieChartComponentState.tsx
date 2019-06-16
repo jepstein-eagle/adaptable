@@ -1,8 +1,8 @@
 import {
   IPieChartProperties,
   IPieChartDataItem,
-} from '../../../PredefinedConfig/IUserState Interfaces/ChartState';
-import { SliceSortOption } from '../../../PredefinedConfig/Common Objects/ChartEnums';
+} from '../../../PredefinedConfig/IUserState/ChartState';
+import { SliceSortOption } from '../../../PredefinedConfig/Common/ChartEnums';
 
 export interface PieChartComponentState {
   DataSource: IPieChartDataItem[];

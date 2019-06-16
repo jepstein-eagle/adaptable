@@ -1,4 +1,4 @@
-import { IReport } from '../../../PredefinedConfig/IUserState Interfaces/ExportState';
+import { IReport } from '../../../PredefinedConfig/IUserState/ExportState';
 import * as React from 'react';
 import { Panel, Col, Radio, ControlLabel } from 'react-bootstrap';
 import {
@@ -12,7 +12,7 @@ import {
   ReportRowScope,
   MessageType,
   ReportColumnScope,
-} from '../../../PredefinedConfig/Common Objects/Enums';
+} from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 

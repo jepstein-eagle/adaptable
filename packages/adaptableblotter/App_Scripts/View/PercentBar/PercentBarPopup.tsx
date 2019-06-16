@@ -22,9 +22,9 @@ import {
 import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IPercentBar } from '../../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { IPercentBar } from '../../PredefinedConfig/IUserState/PercentBarState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common Objects/Enums';
+import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 
 interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {
   PercentBars: IPercentBar[];

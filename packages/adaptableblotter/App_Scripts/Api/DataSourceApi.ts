@@ -2,10 +2,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as DataSourceRedux from '../Redux/ActionsReducers/DataSourceRedux';
 import { ApiBase } from './ApiBase';
 import { IDataSourceApi } from './Interface/IDataSourceApi';
-import {
-  DataSourceState,
-  IDataSource,
-} from '../PredefinedConfig/IUserState Interfaces/DataSourceState';
+import { DataSourceState, IDataSource } from '../PredefinedConfig/IUserState/DataSourceState';
 
 export class DataSourceApi extends ApiBase implements IDataSourceApi {
   public getDataSourceState(): DataSourceState {

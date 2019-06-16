@@ -12,7 +12,7 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
+import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import {
   InputGroup,
   DropdownButton,
@@ -23,9 +23,9 @@ import {
 } from 'react-bootstrap';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IChartDefinition } from '../../PredefinedConfig/IUserState Interfaces/ChartState';
+import { IChartDefinition } from '../../PredefinedConfig/IUserState/ChartState';
 import { ButtonShowChart } from '../Components/Buttons/ButtonShowChart';
-import { ChartVisibility } from '../../PredefinedConfig/Common Objects/ChartEnums';
+import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { DEFAULT_BSSTYLE, INFO_BSSTYLE } from '../../Utilities/Constants/StyleConstants';

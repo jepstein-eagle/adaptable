@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { LayoutState, ILayout } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { LayoutState, ILayout } from '../../PredefinedConfig/IUserState/LayoutState';
 import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 

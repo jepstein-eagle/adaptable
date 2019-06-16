@@ -1,11 +1,8 @@
-import { IStyle } from '../PredefinedConfig/Common Objects/IStyle';
+import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import * as FormatColumnRedux from '../Redux/ActionsReducers/FormatColumnRedux';
 import { ApiBase } from './ApiBase';
 import { IFormatColumnApi } from './Interface/IFormatColumnApi';
-import {
-  FormatColumnState,
-  IFormatColumn,
-} from '../PredefinedConfig/IUserState Interfaces/FormatColumnState';
+import { FormatColumnState, IFormatColumn } from '../PredefinedConfig/IUserState/FormatColumnState';
 
 export class FormatColumnApi extends ApiBase implements IFormatColumnApi {
   public getFormatColumnState(): FormatColumnState {

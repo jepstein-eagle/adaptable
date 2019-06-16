@@ -5,7 +5,7 @@ import { WizardLegend } from './WizardLegend';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ButtonCancel } from '../Components/Buttons/ButtonCancel';
 import { ButtonWizardAction } from '../Components/Buttons/ButtonWizardAction';
-import { AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';

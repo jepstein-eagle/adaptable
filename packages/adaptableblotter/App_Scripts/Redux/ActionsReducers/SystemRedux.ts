@@ -1,12 +1,12 @@
 import * as Redux from 'redux';
-import { SystemState } from '../../PredefinedConfig/ISystemState Interfaces/SystemState';
+import { SystemState } from '../../PredefinedConfig/ISystemState/SystemState';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
-import { ExportDestination } from '../../PredefinedConfig/Common Objects/Enums';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
-import { ChartVisibility } from '../../PredefinedConfig/Common Objects/ChartEnums';
+import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import {
   EMPTY_ARRAY,
   SYSTEM_DEFAULT_CHART_VISIBILITY,
@@ -16,11 +16,11 @@ import {
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IRange } from '../../PredefinedConfig/Common Objects/Expression/IRange';
-import { Expression } from '../../PredefinedConfig/Common Objects/Expression/Expression';
+import { IRange } from '../../PredefinedConfig/Common/Expression/IRange';
+import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { IReport } from '../../PredefinedConfig/IUserState Interfaces/ExportState';
-import { IChartData } from '../../PredefinedConfig/IUserState Interfaces/ChartState';
+import { IReport } from '../../PredefinedConfig/IUserState/ExportState';
+import { IChartData } from '../../PredefinedConfig/IUserState/ChartState';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state

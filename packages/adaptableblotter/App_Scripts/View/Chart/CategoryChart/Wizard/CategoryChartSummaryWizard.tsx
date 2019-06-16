@@ -4,11 +4,11 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { ICategoryChartDefinition } from '../../../../PredefinedConfig/IUserState Interfaces/ChartState';
+import { ICategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../../Utilities/Interface/IKeyValuePair';
 import { WizardSummaryPage } from '../../../Components/WizardSummaryPage';
-import { Expression } from '../../../../PredefinedConfig/Common Objects/Expression/Expression';
+import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
 
 export interface CategoryChartSummaryWizardProps

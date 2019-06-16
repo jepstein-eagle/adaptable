@@ -1,8 +1,4 @@
-import {
-  ExportDestination,
-  MathOperation,
-  MessageType,
-} from '../../PredefinedConfig/Common Objects/Enums';
+import { ExportDestination, MathOperation, MessageType } from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
 import * as DeepDiff from 'deep-diff';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -57,17 +53,16 @@ import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants';
-import { LayoutState } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
-import { GridState } from '../../PredefinedConfig/ISystemState Interfaces/GridState';
-import { IState } from '../../PredefinedConfig/Interfaces/IState';
+import { LayoutState } from '../../PredefinedConfig/IUserState/LayoutState';
+import { GridState } from '../../PredefinedConfig/ISystemState/GridState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { IFormatColumn } from '../../PredefinedConfig/IUserState Interfaces/FormatColumnState';
-import { ILayout } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
-import { IPlusMinusRule } from '../../PredefinedConfig/IUserState Interfaces/PlusMinusState';
-import { IUserFilter } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
-import { IFreeTextColumn } from '../../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
-import { IReport } from '../../PredefinedConfig/IUserState Interfaces/ExportState';
-import { ICustomSort } from '../../PredefinedConfig/IUserState Interfaces/CustomSortState';
+import { IFormatColumn } from '../../PredefinedConfig/IUserState/FormatColumnState';
+import { ILayout } from '../../PredefinedConfig/IUserState/LayoutState';
+import { IPlusMinusRule } from '../../PredefinedConfig/IUserState/PlusMinusState';
+import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { IFreeTextColumn } from '../../PredefinedConfig/IUserState/FreeTextColumnState';
+import { IReport } from '../../PredefinedConfig/IUserState/ExportState';
+import { ICustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
@@ -100,7 +95,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { BlotterHelper } from '../../Utilities/Helpers/BlotterHelper';
 import { IUIConfirmation, InputAction } from '../../Utilities/Interface/IMessage';
-import { ChartVisibility } from '../../PredefinedConfig/Common Objects/ChartEnums';
+import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import IStorageEngine from './Interface/IStorageEngine';
@@ -112,12 +107,13 @@ import {
   StateObjectChangeType,
 } from '../../Utilities/Interface/IAuditEvents';
 import LayoutHelper from '../../Utilities/Helpers/LayoutHelper';
-import { ICalculatedColumn } from '../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
-import { IConditionalStyle } from '../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
-import { IColumnFilter } from '../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
-import { ICellValidationRule } from '../../PredefinedConfig/IUserState Interfaces/CellValidationState';
-import { IShortcut } from '../../PredefinedConfig/IUserState Interfaces/ShortcutState';
-import { IAdvancedSearch } from '../../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
+import { ICalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
+import { IConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { IColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
+import { ICellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
+import { IShortcut } from '../../PredefinedConfig/IUserState/ShortcutState';
+import { IAdvancedSearch } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
+import { IState } from '../../PredefinedConfig/IState';
 
 /*
 This is the main store for the Adaptable Blotter

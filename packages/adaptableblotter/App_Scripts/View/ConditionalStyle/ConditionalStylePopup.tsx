@@ -7,7 +7,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { HelpBlock } from 'react-bootstrap';
-import { ConditionalStyleScope } from '../../PredefinedConfig/Common Objects/Enums';
+import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -25,8 +25,8 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
-import { IConditionalStyle } from '../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
+import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { IConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
 
 interface ConditionalStylePopupProps
   extends StrategyViewPopupProps<ConditionalStylePopupComponent> {

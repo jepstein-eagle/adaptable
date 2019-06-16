@@ -1,4 +1,4 @@
-import { ActionMode } from '../../PredefinedConfig/Common Objects/Enums';
+import { ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { ICellInfo } from '../Interface/ICellInfo';
 import { IPreviewResult, IPreviewValidationSummary, IPreviewInfo } from '../Interface/IPreview';

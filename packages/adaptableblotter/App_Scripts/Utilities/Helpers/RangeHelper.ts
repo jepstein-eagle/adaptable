@@ -1,6 +1,6 @@
 import { IKeyValuePair } from '../Interface/IKeyValuePair';
-import { LeafExpressionOperator, DataType } from '../../PredefinedConfig/Common Objects/Enums';
-import { IRange } from '../../PredefinedConfig/Common Objects/Expression/IRange';
+import { LeafExpressionOperator, DataType } from '../../PredefinedConfig/Common/Enums';
+import { IRange } from '../../PredefinedConfig/Common/Expression/IRange';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IColumn } from '../Interface/IColumn';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';

@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import {
   AdvancedSearchState,
   IAdvancedSearch,
-} from '../../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
+} from '../../PredefinedConfig/IUserState/AdvancedSearchState';
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 

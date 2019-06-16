@@ -5,7 +5,7 @@ import { IAdvancedSearchApi } from './Interface/IAdvancedSearchApi';
 import {
   AdvancedSearchState,
   IAdvancedSearch,
-} from '../PredefinedConfig/IUserState Interfaces/AdvancedSearchState';
+} from '../PredefinedConfig/IUserState/AdvancedSearchState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
 

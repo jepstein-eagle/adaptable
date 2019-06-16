@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IReminderStrategy } from './Interface/IReminderStrategy';
-import { ReminderState } from '../PredefinedConfig/IUserState Interfaces/ReminderState';
+import { ReminderState } from '../PredefinedConfig/IUserState/ReminderState';
 
 export class ReminderStrategy extends AdaptableStrategyBase implements IReminderStrategy {
   protected ReminderState: ReminderState;

@@ -1,7 +1,7 @@
 import * as ThemeRedux from '../Redux/ActionsReducers/ThemeRedux';
 import { ApiBase } from './ApiBase';
 import { IThemeApi } from './Interface/IThemeApi';
-import { ThemeState, IUserTheme } from '../PredefinedConfig/IUserState Interfaces/ThemeState';
+import { ThemeState, IUserTheme } from '../PredefinedConfig/IUserState/ThemeState';
 
 export class ThemeApi extends ApiBase implements IThemeApi {
   public getThemeState(): ThemeState {

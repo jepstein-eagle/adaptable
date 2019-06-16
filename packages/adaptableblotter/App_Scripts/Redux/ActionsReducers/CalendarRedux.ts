@@ -1,4 +1,4 @@
-import { CalendarState } from '../../PredefinedConfig/IUserState Interfaces/CalendarState';
+import { CalendarState } from '../../PredefinedConfig/IUserState/CalendarState';
 import * as Redux from 'redux';
 import { CALENDAR_DEFAULT_CURRENT_CALENDER } from '../../Utilities/Constants/GeneralConstants';
 

@@ -3,7 +3,7 @@ import {
   LeafExpressionOperator,
   DataType,
   DistinctCriteriaPairValue,
-} from '../../../PredefinedConfig/Common Objects/Enums';
+} from '../../../PredefinedConfig/Common/Enums';
 import {
   MenuItem,
   DropdownButton,
@@ -21,7 +21,7 @@ import { AdaptableBlotterFormControlTextClear } from '../Forms/AdaptableBlotterF
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import { UIHelper } from '../../UIHelper';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IRange } from '../../../PredefinedConfig/Common Objects/Expression/IRange';
+import { IRange } from '../../../PredefinedConfig/Common/Expression/IRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
 export interface ListBoxFilterFormProps extends ListGroupProps {

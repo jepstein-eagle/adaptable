@@ -1,4 +1,4 @@
-import { BulkUpdateState } from '../../PredefinedConfig/IUserState Interfaces/BulkUpdateState';
+import { BulkUpdateState } from '../../PredefinedConfig/IUserState/BulkUpdateState';
 import * as Redux from 'redux';
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 

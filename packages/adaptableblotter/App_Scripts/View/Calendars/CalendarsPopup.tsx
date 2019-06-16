@@ -12,10 +12,7 @@ import { CalendarsEntryRow } from './CalendarsEntryRow';
 import { CalendarEntryItem } from './CalendarEntryItem';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import {
-  ICalendar,
-  ICalendarEntry,
-} from '../../PredefinedConfig/IUserState Interfaces/CalendarState';
+import { ICalendar, ICalendarEntry } from '../../PredefinedConfig/IUserState/CalendarState';
 
 interface CalendarsPopupProps extends StrategyViewPopupProps<CalendarsPopupComponent> {
   CurrentCalendar: string;

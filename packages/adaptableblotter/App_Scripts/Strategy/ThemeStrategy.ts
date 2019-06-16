@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IThemeStrategy } from './Interface/IThemeStrategy';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { ThemeState } from '../PredefinedConfig/IUserState Interfaces/ThemeState';
+import { ThemeState } from '../PredefinedConfig/IUserState/ThemeState';
 import * as GeneralConstants from '../Utilities/Constants/GeneralConstants';
 import { IThemeChangedEventArgs } from '../Utilities/Interface/IBlotterEvents';
 

@@ -6,7 +6,7 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IFreeTextColumn } from '../../../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
+import { IFreeTextColumn } from '../../../PredefinedConfig/IUserState/FreeTextColumnState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';

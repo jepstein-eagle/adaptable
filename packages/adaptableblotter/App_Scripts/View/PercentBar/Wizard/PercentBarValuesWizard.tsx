@@ -14,10 +14,10 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType, SelectionMode } from '../../../PredefinedConfig/Common Objects/Enums';
+import { MessageType, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IPercentBar } from '../../../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { IPercentBar } from '../../../PredefinedConfig/IUserState/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';

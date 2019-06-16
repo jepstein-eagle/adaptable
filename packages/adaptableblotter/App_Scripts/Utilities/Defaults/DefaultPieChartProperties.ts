@@ -3,8 +3,8 @@ import {
   SliceLabelOption,
   SliceSortOption,
   OthersCategoryType,
-} from '../../PredefinedConfig/Common Objects/ChartEnums';
-import { IPieChartProperties } from '../../PredefinedConfig/IUserState Interfaces/ChartState';
+} from '../../PredefinedConfig/Common/ChartEnums';
+import { IPieChartProperties } from '../../PredefinedConfig/IUserState/ChartState';
 
 export const DefaultPieChartProperties: IPieChartProperties = {
   OthersCategoryThreshold: 2,

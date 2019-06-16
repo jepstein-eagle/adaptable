@@ -17,7 +17,7 @@ import {
   CellSummaryOperation,
   CellSummaryOptionalOperation,
   DashboardSize,
-} from '../../PredefinedConfig/Common Objects/Enums';
+} from '../../PredefinedConfig/Common/Enums';
 import { DropdownButton, MenuItem, InputGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';

@@ -1,4 +1,4 @@
-import { BulkUpdateState } from '../../PredefinedConfig/IUserState Interfaces/BulkUpdateState';
+import { BulkUpdateState } from '../../PredefinedConfig/IUserState/BulkUpdateState';
 
 export interface IBulkUpdateApi {
   /**

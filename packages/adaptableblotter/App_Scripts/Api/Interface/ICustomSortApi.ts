@@ -1,7 +1,4 @@
-import {
-  CustomSortState,
-  ICustomSort,
-} from '../../PredefinedConfig/IUserState Interfaces/CustomSortState';
+import { CustomSortState, ICustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
 
 export interface ICustomSortApi {
   getCustomSortState(): CustomSortState;

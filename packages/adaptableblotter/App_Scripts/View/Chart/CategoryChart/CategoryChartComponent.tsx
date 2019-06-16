@@ -19,7 +19,7 @@ import {
   ToolTipType,
   AxisAngle,
   AxisScale,
-} from '../../../PredefinedConfig/Common Objects/ChartEnums';
+} from '../../../PredefinedConfig/Common/ChartEnums';
 import { PanelWithButton } from '../../Components/Panels/PanelWithButton';
 import { ColorPicker } from '../../ColorPicker';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
@@ -31,7 +31,7 @@ import {
   ICategoryChartProperties,
   IChartProperties,
   IChartData,
-} from '../../../PredefinedConfig/IUserState Interfaces/ChartState';
+} from '../../../PredefinedConfig/IUserState/ChartState';
 import { CategoryChartUIHelper } from './CategoryChartUIHelper';
 import { CategoryChartComponentState } from './CategoryChartComponentState';
 import { IColumn } from '../../../Utilities/Interface/IColumn';

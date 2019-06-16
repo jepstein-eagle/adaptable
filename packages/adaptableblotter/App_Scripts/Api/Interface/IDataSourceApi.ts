@@ -1,7 +1,4 @@
-import {
-  DataSourceState,
-  IDataSource,
-} from '../../PredefinedConfig/IUserState Interfaces/DataSourceState';
+import { DataSourceState, IDataSource } from '../../PredefinedConfig/IUserState/DataSourceState';
 
 export interface IDataSourceApi {
   getDataSourceState(): DataSourceState;

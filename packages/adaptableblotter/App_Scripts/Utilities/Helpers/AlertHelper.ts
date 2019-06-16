@@ -1,9 +1,9 @@
 import { ExpressionHelper } from './ExpressionHelper';
 import { ColumnHelper } from './ColumnHelper';
-import { DataType, LeafExpressionOperator } from '../../PredefinedConfig/Common Objects/Enums';
+import { DataType, LeafExpressionOperator } from '../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../Interface/IColumn';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IAlertDefinition } from '../../PredefinedConfig/IUserState Interfaces/AlertState';
+import { IAlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
 
 export function createAlertDescription(
   alertDefinition: IAlertDefinition,

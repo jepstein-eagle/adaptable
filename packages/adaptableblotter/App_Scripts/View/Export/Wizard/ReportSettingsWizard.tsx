@@ -1,4 +1,4 @@
-import { IReport } from '../../../PredefinedConfig/IUserState Interfaces/ExportState';
+import { IReport } from '../../../PredefinedConfig/IUserState/ExportState';
 import * as React from 'react';
 import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import {
@@ -7,7 +7,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { ReportRowScope } from '../../../PredefinedConfig/Common Objects/Enums';
+import { ReportRowScope } from '../../../PredefinedConfig/Common/Enums';
 
 export interface ReportSettingsWizardProps extends AdaptableWizardStepProps<IReport> {
   Reports: IReport[];

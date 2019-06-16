@@ -10,13 +10,13 @@ import {
   LeafExpressionOperator,
   MessageType,
   RangeOperandType,
-} from '../../../PredefinedConfig/Common Objects/Enums';
+} from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { ICellValidationRule } from '../../../PredefinedConfig/IUserState Interfaces/CellValidationState';
-import { IRange } from '../../../PredefinedConfig/Common Objects/Expression/IRange';
+import { ICellValidationRule } from '../../../PredefinedConfig/IUserState/CellValidationState';
+import { IRange } from '../../../PredefinedConfig/Common/Expression/IRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
 export interface CellValidationRulesWizardProps

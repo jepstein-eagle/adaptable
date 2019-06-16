@@ -1,10 +1,7 @@
 import * as React from 'react';
-import {
-  SelectionMode,
-  DistinctCriteriaPairValue,
-} from '../../PredefinedConfig/Common Objects/Enums';
 import { SingleListBox } from '../Components/ListBox/SingleListBox';
 import { Panel } from 'react-bootstrap';
+import { DistinctCriteriaPairValue, SelectionMode } from '../../PredefinedConfig/Common/Enums';
 
 export interface ExpressionBuilderColumnValuesProps
   extends React.ClassAttributes<ExpressionBuilderColumnValues> {

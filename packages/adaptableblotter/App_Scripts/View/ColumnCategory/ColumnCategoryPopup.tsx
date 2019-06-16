@@ -21,7 +21,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
+import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnCategoryEntityRow } from './ColumnCategoryEntityRow';
 import { ColumnCategoryWizard } from './Wizard/ColumnCategoryWizard';

@@ -1,4 +1,4 @@
-import { LayoutState, ILayout } from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { LayoutState, ILayout } from '../../PredefinedConfig/IUserState/LayoutState';
 export interface ILayoutApi {
   getLayoutState(): LayoutState;
   /**

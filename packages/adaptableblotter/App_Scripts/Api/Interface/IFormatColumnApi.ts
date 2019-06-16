@@ -1,8 +1,8 @@
-import { IStyle } from '../../PredefinedConfig/Common Objects/IStyle';
+import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import {
   FormatColumnState,
   IFormatColumn,
-} from '../../PredefinedConfig/IUserState Interfaces/FormatColumnState';
+} from '../../PredefinedConfig/IUserState/FormatColumnState';
 export interface IFormatColumnApi {
   getFormatColumnState(): FormatColumnState;
   getAllFormatColumn(): IFormatColumn[];

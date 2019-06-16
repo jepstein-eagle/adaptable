@@ -6,7 +6,7 @@ import {
   DataType,
   MessageType,
   StateChangedTrigger,
-} from '../PredefinedConfig/Common Objects/Enums';
+} from '../PredefinedConfig/Common/Enums';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
@@ -17,7 +17,7 @@ import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
 import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { ICellValidationRule } from '../PredefinedConfig/IUserState Interfaces/CellValidationState';
+import { ICellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(blotter: IAdaptableBlotter) {

@@ -12,12 +12,12 @@ import {
   RangeOperandType,
   ActionMode,
   DisplayAction,
-} from '../../PredefinedConfig/Common Objects/Enums';
+} from '../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../Interface/IColumn';
 import {
   CellValidationState,
   ICellValidationRule,
-} from '../../PredefinedConfig/IUserState Interfaces/CellValidationState';
+} from '../../PredefinedConfig/IUserState/CellValidationState';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 import { IFunctionAppliedDetails } from '../Interface/IAuditEvents';
 

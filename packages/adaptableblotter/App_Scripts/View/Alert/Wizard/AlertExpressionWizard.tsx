@@ -4,7 +4,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { UIHelper } from '../../UIHelper';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
-import { IAlertDefinition } from '../../../PredefinedConfig/IUserState Interfaces/AlertState';
+import { IAlertDefinition } from '../../../PredefinedConfig/IUserState/AlertState';
 
 export class AlertExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
   constructor(private props2: ExpressionWizardProps<IAlertDefinition>) {

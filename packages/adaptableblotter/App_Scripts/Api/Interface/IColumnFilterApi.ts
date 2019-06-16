@@ -1,7 +1,7 @@
 import {
   ColumnFilterState,
   IColumnFilter,
-} from '../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
+} from '../../PredefinedConfig/IUserState/ColumnFilterState';
 
 export interface IColumnFilterApi {
   getColumnFilterState(): ColumnFilterState;

@@ -1,12 +1,12 @@
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IStrategy } from './Interface/IStrategy';
 import { Action } from 'redux';
-import { DataType } from '../PredefinedConfig/Common Objects/Enums';
+import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
-import { IEntitlement } from '../PredefinedConfig/IDesignTime State Interfaces/EntitlementsState';
+import { IEntitlement } from '../PredefinedConfig/IDesignTimeState/EntitlementsState';
 
 /**
  * Base class for all strategies and does most of the work of creating menus

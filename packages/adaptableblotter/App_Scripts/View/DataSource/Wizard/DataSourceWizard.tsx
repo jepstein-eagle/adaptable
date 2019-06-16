@@ -4,7 +4,7 @@ import { DataSourceSettingsWizard } from './DataSourceSettingsWizard';
 import { DataSourceSummaryWizard } from './DataSourceSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IDataSource } from '../../../PredefinedConfig/IUserState Interfaces/DataSourceState';
+import { IDataSource } from '../../../PredefinedConfig/IUserState/DataSourceState';
 
 export interface DataSourceWizardProps
   extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<DataSourceWizard> {}

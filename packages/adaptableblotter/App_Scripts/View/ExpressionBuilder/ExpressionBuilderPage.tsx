@@ -11,14 +11,14 @@ import {
   QueryBuildStatus,
   QueryTab,
   AccessLevel,
-} from '../../PredefinedConfig/Common Objects/Enums';
+} from '../../PredefinedConfig/Common/Enums';
 import { IRawValueDisplayValuePair } from '../UIInterfaces';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonCondition } from '../Components/Buttons/ButtonCondition';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IUserFilter } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
-import { Expression } from '../../PredefinedConfig/Common Objects/Expression/Expression';
+import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { IAdaptableBlotterOptions } from '../../BlotterOptions/IAdaptableBlotterOptions';
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';

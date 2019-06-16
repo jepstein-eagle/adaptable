@@ -1,7 +1,7 @@
 import {
   CalculatedColumnState,
   ICalculatedColumn,
-} from '../../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
+} from '../../PredefinedConfig/IUserState/CalculatedColumnState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

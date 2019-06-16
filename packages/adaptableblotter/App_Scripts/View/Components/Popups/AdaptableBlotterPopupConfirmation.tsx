@@ -5,7 +5,7 @@ import { Modal, ControlLabel, FormControl, Row, Col, Button } from 'react-bootst
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { PanelWithImage } from '../Panels/PanelWithImage';
-import { MessageType } from '../../../PredefinedConfig/Common Objects/Enums';
+import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 
 /**
  * Used when giving the user 2 choices with the option of adding text also

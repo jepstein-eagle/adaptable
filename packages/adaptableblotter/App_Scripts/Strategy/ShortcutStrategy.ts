@@ -5,7 +5,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { DataType, MathOperation, ActionMode } from '../PredefinedConfig/Common Objects/Enums';
+import { DataType, MathOperation, ActionMode } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
@@ -16,8 +16,8 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
-import { IShortcut } from '../PredefinedConfig/IUserState Interfaces/ShortcutState';
-import { ICellValidationRule } from '../PredefinedConfig/IUserState Interfaces/CellValidationState';
+import { IShortcut } from '../PredefinedConfig/IUserState/ShortcutState';
+import { ICellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {

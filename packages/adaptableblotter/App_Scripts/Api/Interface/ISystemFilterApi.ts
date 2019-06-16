@@ -1,5 +1,6 @@
-import { SystemFilterState } from '../../PredefinedConfig/IDesignTime State Interfaces/SystemFilterState';
-import { IUserFilter } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { SystemFilterState } from '../../PredefinedConfig/IDesignTimeState/SystemFilterState';
+import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+
 export interface ISystemFilterApi {
   getSystemFilterState(): SystemFilterState;
   setSystemFilterByUserFilters(userFilters: IUserFilter[]): void;

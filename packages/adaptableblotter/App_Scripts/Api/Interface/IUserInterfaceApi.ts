@@ -1,5 +1,5 @@
 import { IPermittedColumnValues } from '../../Utilities/Interface/IPermittedColumnValues';
-import { UserInterfaceState } from '../../PredefinedConfig/IDesignTime State Interfaces/UserInterfaceState';
+import { UserInterfaceState } from '../../PredefinedConfig/IDesignTimeState/UserInterfaceState';
 
 export interface IUserInterfaceApi {
   getUserInterfaceState(): UserInterfaceState;

@@ -16,7 +16,7 @@ import {
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
-import { ICategoryChartDefinition } from '../../../../PredefinedConfig/IUserState Interfaces/ChartState';
+import { ICategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
 
 export interface CategoryChartSettingsWizardProps
   extends AdaptableWizardStepProps<ICategoryChartDefinition> {

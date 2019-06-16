@@ -1,12 +1,12 @@
 import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy';
-import { ConditionalStyleScope } from '../../PredefinedConfig/Common Objects/Enums';
+import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { IConditionalStyle } from '../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
+import { IConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
 
 export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {

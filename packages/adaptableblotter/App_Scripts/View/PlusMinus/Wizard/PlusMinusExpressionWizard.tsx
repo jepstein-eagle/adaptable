@@ -3,7 +3,7 @@ import {
   ExpressionWizardProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
-import { IPlusMinusRule } from '../../../PredefinedConfig/IUserState Interfaces/PlusMinusState';
+import { IPlusMinusRule } from '../../../PredefinedConfig/IUserState/PlusMinusState';
 import { UIHelper } from '../../UIHelper';
 
 export class PlusMinusExpressionWizard extends ExpressionBuilderPage

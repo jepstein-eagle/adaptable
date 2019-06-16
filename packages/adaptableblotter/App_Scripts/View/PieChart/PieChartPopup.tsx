@@ -10,7 +10,7 @@ import {
   Checkbox,
   FormControl,
 } from 'react-bootstrap';
-import { SelectionMode } from '../../PredefinedConfig/Common Objects/Enums';
+import { SelectionMode } from '../../PredefinedConfig/Common/Enums';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -36,13 +36,13 @@ import {
   IPieChartDefinition,
   IPieChartDataItem,
   IChartData,
-} from '../../PredefinedConfig/IUserState Interfaces/ChartState';
+} from '../../PredefinedConfig/IUserState/ChartState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import {
   PieChartLabelPosition,
   SliceSortOption,
   OthersCategoryType,
-} from '../../PredefinedConfig/Common Objects/ChartEnums';
+} from '../../PredefinedConfig/Common/ChartEnums';
 import { PieChartUIHelper } from '../Chart/PieChart/PieChartUIHelper';
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {}

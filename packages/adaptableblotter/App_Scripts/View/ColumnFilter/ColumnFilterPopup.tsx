@@ -14,7 +14,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from '../UIInterfaces';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IColumnFilter } from '../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
+import { IColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {

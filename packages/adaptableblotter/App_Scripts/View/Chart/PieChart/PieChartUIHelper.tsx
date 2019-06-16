@@ -3,9 +3,9 @@ import {
   IPieChartProperties,
   IChartData,
   IPieChartDataItem,
-} from '../../../PredefinedConfig/IUserState Interfaces/ChartState';
+} from '../../../PredefinedConfig/IUserState/ChartState';
 import { PieChartComponentState } from './PieChartComponentState';
-import { SliceSortOption } from '../../../PredefinedConfig/Common Objects/ChartEnums';
+import { SliceSortOption } from '../../../PredefinedConfig/Common/ChartEnums';
 import { DefaultPieChartProperties } from '../../../Utilities/Defaults/DefaultPieChartProperties';
 
 /* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class

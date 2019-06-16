@@ -1,9 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { IFlashingCellApi } from './Interface/IFlashingCellApi';
-import {
-  FlashingCellState,
-  IFlashingCell,
-} from '../PredefinedConfig/IUserState Interfaces/FlashingCellState';
+import { FlashingCellState, IFlashingCell } from '../PredefinedConfig/IUserState/FlashingCellState';
 
 export class FlashingCellApi extends ApiBase implements IFlashingCellApi {
   public getFlashingCellState(): FlashingCellState {

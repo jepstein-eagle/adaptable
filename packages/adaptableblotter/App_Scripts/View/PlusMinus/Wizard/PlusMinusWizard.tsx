@@ -5,10 +5,10 @@ import { PlusMinusColumnWizard } from './PlusMinusColumnWizard';
 import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard';
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard';
 import { PlusMinusSummaryWizard } from './PlusMinusSummaryWizard';
-import { IUserFilter } from '../../../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { IUserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { DataType } from '../../../PredefinedConfig/Common Objects/Enums';
+import { DataType } from '../../../PredefinedConfig/Common/Enums';
 
 export interface PlusMinusWizardProps
   extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<PlusMinusWizard> {

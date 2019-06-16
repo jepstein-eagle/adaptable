@@ -4,7 +4,7 @@ import { ICalculatedColumnApi } from './Interface/ICalculatedColumnApi';
 import {
   CalculatedColumnState,
   ICalculatedColumn,
-} from '../PredefinedConfig/IUserState Interfaces/CalculatedColumnState';
+} from '../PredefinedConfig/IUserState/CalculatedColumnState';
 
 export class CalculatedColumnApi extends ApiBase implements ICalculatedColumnApi {
   public getCalculatedColumnState(): CalculatedColumnState {

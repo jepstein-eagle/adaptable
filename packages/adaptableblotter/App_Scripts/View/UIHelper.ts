@@ -9,12 +9,12 @@ import {
   StatusColour,
   MessageType,
   DayOfWeek,
-} from '../PredefinedConfig/Common Objects/Enums';
+} from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterOptions } from '../BlotterOptions/IAdaptableBlotterOptions';
-import { IStyle } from '../PredefinedConfig/Common Objects/IStyle';
+import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
-import { Expression } from '../PredefinedConfig/Common Objects/Expression/Expression';
+import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
 import {
   SUCCESS_BSSTYLE,
   WARNING_BSSTYLE,
@@ -22,7 +22,7 @@ import {
   INFO_BSSTYLE,
 } from '../Utilities/Constants/StyleConstants';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
-import { ISchedule } from '../PredefinedConfig/Common Objects/ISchedule';
+import { ISchedule } from '../PredefinedConfig/Common/ISchedule';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export function getDefaultColors(): string[] {

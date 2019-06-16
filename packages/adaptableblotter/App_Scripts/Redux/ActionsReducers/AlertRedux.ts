@@ -1,7 +1,4 @@
-import {
-  AlertState,
-  IAlertDefinition,
-} from '../../PredefinedConfig/IUserState Interfaces/AlertState';
+import { AlertState, IAlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
 import * as Redux from 'redux';
 import {
   EMPTY_ARRAY,

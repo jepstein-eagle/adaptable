@@ -4,10 +4,10 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType } from '../../../PredefinedConfig/Common Objects/Enums';
+import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IReminder } from '../../../PredefinedConfig/IUserState Interfaces/ReminderState';
+import { IReminder } from '../../../PredefinedConfig/IUserState/ReminderState';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 

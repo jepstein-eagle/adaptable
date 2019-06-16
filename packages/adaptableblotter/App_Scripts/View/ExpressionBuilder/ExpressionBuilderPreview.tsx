@@ -2,31 +2,24 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import {
-  ListGroupItem,
-  ListGroup,
-  Button,
-  OverlayTrigger,
-  Tooltip,
-  Glyphicon,
-  InputGroup,
-} from 'react-bootstrap';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import {
-  LeafExpressionOperator,
-  RangeOperandType,
-  QueryTab,
-} from '../../PredefinedConfig/Common Objects/Enums';
+
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
+import { IUserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import {
+  QueryTab,
+  LeafExpressionOperator,
+  RangeOperandType,
+} from '../../PredefinedConfig/Common/Enums';
+import ExpressionHelper from '../../Utilities/Helpers/ExpressionHelper';
+import { ListGroupItem, InputGroup, Button, Glyphicon, ListGroup } from 'react-bootstrap';
+import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
-import { IUserFilter } from '../../PredefinedConfig/IUserState Interfaces/UserFilterState';
-import { IRange } from '../../PredefinedConfig/Common Objects/Expression/IRange';
-import { Expression } from '../../PredefinedConfig/Common Objects/Expression/Expression';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
+import ColumnHelper from '../../Utilities/Helpers/ColumnHelper';
+import { IRange } from '../../PredefinedConfig/Common/Expression/IRange';
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.

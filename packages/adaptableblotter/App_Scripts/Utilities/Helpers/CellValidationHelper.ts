@@ -2,14 +2,10 @@ import { ExpressionHelper } from './ExpressionHelper';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IColumn } from '../Interface/IColumn';
-import {
-  LeafExpressionOperator,
-  DataType,
-  MessageType,
-} from '../../PredefinedConfig/Common Objects/Enums';
+import { LeafExpressionOperator, DataType, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { IUIConfirmation } from '../Interface/IMessage';
 import * as Redux from 'redux';
-import { ICellValidationRule } from '../../PredefinedConfig/IUserState Interfaces/CellValidationState';
+import { ICellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
 
 export function createCellValidationDescription(
   cellValidationRule: ICellValidationRule,

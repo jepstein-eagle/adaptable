@@ -46,7 +46,7 @@ import { UserFilterStrategy } from '../Strategy/UserFilterStrategy';
 import { ReminderStrategy } from '../Strategy/ReminderStrategy';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
-import { IPercentBar } from '../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { IPercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy

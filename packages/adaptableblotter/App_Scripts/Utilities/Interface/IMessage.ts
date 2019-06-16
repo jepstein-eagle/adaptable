@@ -1,4 +1,4 @@
-import { MessageType } from '../../PredefinedConfig/Common Objects/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { Action } from 'redux';
 
 export interface IAdaptableAlert {

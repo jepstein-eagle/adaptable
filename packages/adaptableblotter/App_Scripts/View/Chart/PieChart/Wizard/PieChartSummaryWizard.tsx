@@ -4,7 +4,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { IPieChartDefinition } from '../../../../PredefinedConfig/IUserState Interfaces/ChartState';
+import { IPieChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../../Utilities/Interface/IKeyValuePair';
 import { WizardSummaryPage } from '../../../Components/WizardSummaryPage';

@@ -7,7 +7,7 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { IUserFilter } from '../../../PredefinedConfig/IUserState Interfaces/UserFilterState';
+import { IUserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
 
 export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {
   UserFilters: IUserFilter[];

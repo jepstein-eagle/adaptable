@@ -1,9 +1,5 @@
-import {
-  ExportState,
-  IReport,
-  IAutoExport,
-} from '../../PredefinedConfig/IUserState Interfaces/ExportState';
-import { ExportDestination } from '../../PredefinedConfig/Common Objects/Enums';
+import { ExportState, IReport, IAutoExport } from '../../PredefinedConfig/IUserState/ExportState';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

@@ -1,4 +1,4 @@
-import { DataType } from '../../PredefinedConfig/Common Objects/Enums';
+import { DataType } from '../../PredefinedConfig/Common/Enums';
 
 export interface IColumn {
   ColumnId: string;

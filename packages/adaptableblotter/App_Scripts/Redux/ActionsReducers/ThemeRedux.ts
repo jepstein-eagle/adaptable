@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { ThemeState } from '../../PredefinedConfig/IUserState Interfaces/ThemeState';
+import { ThemeState } from '../../PredefinedConfig/IUserState/ThemeState';
 import { StaticThemes } from '../../themes';
 import {
   LIGHT_THEME,

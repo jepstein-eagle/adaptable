@@ -1,7 +1,7 @@
 import {
   FreeTextColumnState,
   IFreeTextColumn,
-} from '../../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
+} from '../../PredefinedConfig/IUserState/FreeTextColumnState';
 export interface IFreeTextColumnApi {
   getFreeTextColumnState(): FreeTextColumnState;
   getAllFreeTextColumn(): IFreeTextColumn[];

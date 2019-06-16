@@ -2,7 +2,7 @@ import {
   FreeTextColumnState,
   IFreeTextColumn,
   IFreeTextStoredValue,
-} from '../../PredefinedConfig/IUserState Interfaces/FreeTextColumnState';
+} from '../../PredefinedConfig/IUserState/FreeTextColumnState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

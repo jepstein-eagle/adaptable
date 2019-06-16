@@ -1,7 +1,4 @@
-import {
-  PercentBarState,
-  IPercentBar,
-} from '../../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { PercentBarState, IPercentBar } from '../../PredefinedConfig/IUserState/PercentBarState';
 export interface IPercentBarApi {
   getPercentBarState(): PercentBarState;
   getAllPercentBar(): IPercentBar[];

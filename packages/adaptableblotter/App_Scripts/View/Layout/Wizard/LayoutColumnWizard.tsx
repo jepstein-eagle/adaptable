@@ -8,7 +8,7 @@ import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { SHORTCUT_ADD } from '../../../Redux/ActionsReducers/ShortcutRedux';
-import { ILayout } from '../../../PredefinedConfig/IUserState Interfaces/LayoutState';
+import { ILayout } from '../../../PredefinedConfig/IUserState/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
 export interface LayoutColumnWizardProps extends AdaptableWizardStepProps<ILayout> {}

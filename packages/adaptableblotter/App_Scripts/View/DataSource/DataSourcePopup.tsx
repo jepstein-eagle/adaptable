@@ -22,7 +22,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IDataSource } from '../../PredefinedConfig/IUserState Interfaces/DataSourceState';
+import { IDataSource } from '../../PredefinedConfig/IUserState/DataSourceState';
 import { Helper } from '../../Utilities/Helpers/Helper';
 
 interface DataSourcePopupProps extends StrategyViewPopupProps<DataSourcePopupComponent> {

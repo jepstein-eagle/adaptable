@@ -22,7 +22,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IReminder } from '../../PredefinedConfig/IUserState Interfaces/ReminderState';
+import { IReminder } from '../../PredefinedConfig/IUserState/ReminderState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 interface ReminderPopupProps extends StrategyViewPopupProps<ReminderPopupComponent> {

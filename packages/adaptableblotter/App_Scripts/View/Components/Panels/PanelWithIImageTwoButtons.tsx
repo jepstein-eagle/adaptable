@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { PanelProps, Panel, Row, Col, Button, Glyphicon, Radio } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { MessageType, ContextMenuTab } from '../../../PredefinedConfig/Common Objects/Enums';
+import { MessageType, ContextMenuTab } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 

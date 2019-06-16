@@ -1,5 +1,5 @@
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { AlertState } from '../../PredefinedConfig/IUserState Interfaces/AlertState';
+import { AlertState } from '../../PredefinedConfig/IUserState/AlertState';
 
 export interface IAlertApi {
   getAlertState(): AlertState;

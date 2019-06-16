@@ -31,11 +31,11 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { IChartDefinition } from '../../PredefinedConfig/IUserState Interfaces/ChartState';
-import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common Objects/ChartEnums';
+import { IChartDefinition } from '../../PredefinedConfig/IUserState/ChartState';
+import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { CategoryChartWizard } from './CategoryChart/Wizard/CategoryChartWizard';
 import { PieChartWizard } from './PieChart/Wizard/PieChartWizard';
-import { AccessLevel } from '../../PredefinedConfig/Common Objects/Enums';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
   onAddChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddAction;

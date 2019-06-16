@@ -1,7 +1,4 @@
-import {
-  CustomSortState,
-  ICustomSort,
-} from '../../PredefinedConfig/IUserState Interfaces/CustomSortState';
+import { CustomSortState, ICustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

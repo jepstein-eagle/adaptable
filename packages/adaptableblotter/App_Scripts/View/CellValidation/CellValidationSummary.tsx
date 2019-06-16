@@ -21,7 +21,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
-import { ICellValidationRule } from '../../PredefinedConfig/IUserState Interfaces/CellValidationState';
+import { ICellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
 
 export interface CellValidationSummaryProps
   extends StrategySummaryProps<CellValidationSummaryComponent> {

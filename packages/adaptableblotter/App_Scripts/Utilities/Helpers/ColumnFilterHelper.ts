@@ -4,7 +4,7 @@ import { IKeyValuePair } from '../Interface/IKeyValuePair';
 import { ColumnHelper } from './ColumnHelper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { IColumnFilter } from '../../PredefinedConfig/IUserState Interfaces/ColumnFilterState';
+import { IColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
 
 export function convertColumnFiltersToKVPArray(
   columnFilters: IColumnFilter[],

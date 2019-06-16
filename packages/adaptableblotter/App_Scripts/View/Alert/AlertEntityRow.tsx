@@ -6,13 +6,13 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { MessageType } from '../../PredefinedConfig/Common Objects/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { FormControl } from 'react-bootstrap';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AlertHelper } from '../../Utilities/Helpers/AlertHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { IAlertDefinition } from '../../PredefinedConfig/IUserState Interfaces/AlertState';
+import { IAlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
   Column: IColumn;

@@ -6,8 +6,8 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IStyle } from '../../../PredefinedConfig/Common Objects/IStyle';
-import { IPercentBar } from '../../../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
+import { IPercentBar } from '../../../PredefinedConfig/IUserState/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';

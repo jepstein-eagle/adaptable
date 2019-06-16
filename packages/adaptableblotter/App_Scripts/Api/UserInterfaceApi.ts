@@ -3,7 +3,7 @@ import { ApiBase } from './ApiBase';
 import { IUserInterfaceApi } from './Interface/IUserInterfaceApi';
 import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { UserInterfaceState } from '../PredefinedConfig/IDesignTime State Interfaces/UserInterfaceState';
+import { UserInterfaceState } from '../PredefinedConfig/IDesignTimeState/UserInterfaceState';
 
 export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
   public getUserInterfaceState(): UserInterfaceState {

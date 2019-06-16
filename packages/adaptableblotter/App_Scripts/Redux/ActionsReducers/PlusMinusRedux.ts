@@ -1,7 +1,4 @@
-import {
-  PlusMinusState,
-  IPlusMinusRule,
-} from '../../PredefinedConfig/IUserState Interfaces/PlusMinusState';
+import { PlusMinusState, IPlusMinusRule } from '../../PredefinedConfig/IUserState/PlusMinusState';
 import * as Redux from 'redux';
 import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';

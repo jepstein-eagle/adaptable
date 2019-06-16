@@ -8,11 +8,11 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { ActionMode } from '../../PredefinedConfig/Common Objects/Enums';
+import { ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { ICellValidationRule } from '../../PredefinedConfig/IUserState Interfaces/CellValidationState';
+import { ICellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
 
 export interface CellValidationEntityRowProps
   extends SharedEntityExpressionRowProps<CellValidationEntityRow> {

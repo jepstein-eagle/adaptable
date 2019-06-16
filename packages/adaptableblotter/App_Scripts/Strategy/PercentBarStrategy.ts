@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IPercentBarStrategy } from './Interface/IPercentBarStrategy';
-import { PercentBarState } from '../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { PercentBarState } from '../PredefinedConfig/IUserState/PercentBarState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IColumn } from '../Utilities/Interface/IColumn';
 

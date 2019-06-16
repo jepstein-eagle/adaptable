@@ -1,14 +1,10 @@
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
-import { SortOrder } from '../../PredefinedConfig/Common Objects/Enums';
+import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import {
-  LayoutState,
-  ILayout,
-  IColumnSort,
-} from '../../PredefinedConfig/IUserState Interfaces/LayoutState';
-import { GridState } from '../../PredefinedConfig/ISystemState Interfaces/GridState';
+import { LayoutState, ILayout, IColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
+import { GridState } from '../../PredefinedConfig/ISystemState/GridState';
 import { ObjectFactory } from '../ObjectFactory';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
 

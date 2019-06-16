@@ -3,14 +3,14 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { IPieChartDefinition } from '../../../../PredefinedConfig/IUserState Interfaces/ChartState';
+import { IPieChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
 import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from 'react-bootstrap';
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
-import { SelectionMode, DataType } from '../../../../PredefinedConfig/Common Objects/Enums';
+import { SelectionMode, DataType } from '../../../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../../../../Utilities/Interface/IColumn';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
-import { SecondaryColumnOperation } from '../../../../PredefinedConfig/Common Objects/ChartEnums';
+import { SecondaryColumnOperation } from '../../../../PredefinedConfig/Common/ChartEnums';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 

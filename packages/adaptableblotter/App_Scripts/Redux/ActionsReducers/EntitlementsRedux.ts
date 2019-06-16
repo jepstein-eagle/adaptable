@@ -1,7 +1,7 @@
 import {
   EntitlementsState,
   IEntitlement,
-} from '../../PredefinedConfig/IDesignTime State Interfaces/EntitlementsState';
+} from '../../PredefinedConfig/IDesignTimeState/EntitlementsState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 

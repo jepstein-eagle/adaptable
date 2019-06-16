@@ -1,7 +1,4 @@
-import {
-  PercentBarState,
-  IPercentBar,
-} from '../../PredefinedConfig/IUserState Interfaces/PercentBarState';
+import { PercentBarState, IPercentBar } from '../../PredefinedConfig/IUserState/PercentBarState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

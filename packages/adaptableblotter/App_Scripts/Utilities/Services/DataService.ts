@@ -3,9 +3,7 @@ import { IDataService, ChangeDirection } from './Interface/IDataService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 import { IEvent } from '../Interface/IEvent';
-import { ConditionalStyleState } from '../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
-import { IState } from '../../PredefinedConfig/Interfaces/IState';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
+import { ConditionalStyleState } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
 
 // Used to be the Audit Service - now much reduced
 // Doesnt store any data (other than for flashing cell) - simply responsible for publishing DataChanged Events

@@ -12,9 +12,9 @@ import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ExportDestination } from '../../PredefinedConfig/Common Objects/Enums';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IReport } from '../../PredefinedConfig/IUserState Interfaces/ExportState';
+import { IReport } from '../../PredefinedConfig/IUserState/ExportState';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {

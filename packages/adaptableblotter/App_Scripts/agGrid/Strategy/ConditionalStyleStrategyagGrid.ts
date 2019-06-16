@@ -1,6 +1,6 @@
 import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy';
-import { ConditionalStyleScope } from '../../PredefinedConfig/Common Objects/Enums';
+import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
@@ -8,8 +8,8 @@ import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
-import { IConditionalStyle } from '../../PredefinedConfig/IUserState Interfaces/ConditionalStyleState';
-import { IColumnCategory } from '../../PredefinedConfig/IUserState Interfaces/ColumnCategoryState';
+import { IConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { IColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {

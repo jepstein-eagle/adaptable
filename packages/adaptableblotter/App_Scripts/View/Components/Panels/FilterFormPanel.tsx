@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PanelProps, Panel, Row, Col, Radio } from 'react-bootstrap';
-import { ContextMenuTab } from '../../../PredefinedConfig/Common Objects/Enums';
+import { ContextMenuTab } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
