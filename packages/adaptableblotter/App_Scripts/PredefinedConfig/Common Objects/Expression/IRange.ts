@@ -1,4 +1,3 @@
-import { LeafExpressionOperator } from '../Enums';
 /**
  * Objects which performs comparisons on values or other columns
  */
