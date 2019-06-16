@@ -4,7 +4,7 @@ import {
   SliceSortOption,
   OthersCategoryType,
 } from '../../PredefinedConfig/Common/ChartEnums';
-import { PieChartProperties } from '../../PredefinedConfig/IUserState/ChartState';
+import { PieChartProperties } from '../../PredefinedConfig/RunTimeState/ChartState';
 
 export const DefaultPieChartProperties: PieChartProperties = {
   OthersCategoryThreshold: 2,

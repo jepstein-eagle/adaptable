@@ -10,7 +10,7 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { ReportHelper } from '../Utilities/Helpers/ReportHelper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash';
-import { ExportState, Report } from '../PredefinedConfig/IUserState/ExportState';
+import { ExportState, Report } from '../PredefinedConfig/RunTimeState/ExportState';
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';

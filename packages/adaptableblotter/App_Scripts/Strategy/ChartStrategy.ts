@@ -10,8 +10,8 @@ import {
   CategoryChartDefinition,
   PieChartDefinition,
   ChartData,
-} from '../PredefinedConfig/IUserState/ChartState';
-import { SystemState } from '../PredefinedConfig/ISystemState/SystemState';
+} from '../PredefinedConfig/RunTimeState/ChartState';
+import { SystemState } from '../PredefinedConfig/InternalState/SystemState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 

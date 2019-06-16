@@ -17,7 +17,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { Layout } from '../../PredefinedConfig/IUserState/LayoutState';
+import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 

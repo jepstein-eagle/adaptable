@@ -1,7 +1,7 @@
 import {
   PieChartProperties,
   PieChartDataItem,
-} from '../../../PredefinedConfig/IUserState/ChartState';
+} from '../../../PredefinedConfig/RunTimeState/ChartState';
 import { SliceSortOption } from '../../../PredefinedConfig/Common/ChartEnums';
 
 export interface PieChartComponentState {

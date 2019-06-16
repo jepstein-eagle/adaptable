@@ -1,6 +1,6 @@
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
-import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import { IAdaptableBlotterObject } from '../../../PredefinedConfig/IAdaptableBlotterObject';
 
 export interface AdaptableWizardStep {

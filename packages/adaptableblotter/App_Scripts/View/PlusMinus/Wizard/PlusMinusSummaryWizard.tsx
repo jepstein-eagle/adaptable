@@ -7,8 +7,8 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { PlusMinusRule } from '../../../PredefinedConfig/IUserState/PlusMinusState';
-import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
+import { PlusMinusRule } from '../../../PredefinedConfig/RunTimeState/PlusMinusState';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 

@@ -1,5 +1,5 @@
 import { IDataChangedInfo } from '../../Interface/IDataChangedInfo';
-import { FreeTextColumn } from '../../../PredefinedConfig/IUserState/FreeTextColumnState';
+import { FreeTextColumn } from '../../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 
 export interface IFreeTextColumnService {
   GetFreeTextValue(column: FreeTextColumn, record: any): any;

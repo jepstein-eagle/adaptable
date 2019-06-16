@@ -5,7 +5,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { FreeTextColumn } from '../../PredefinedConfig/IUserState/FreeTextColumnState';
+import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { EntityRowItem } from '../Components/EntityRowItem';

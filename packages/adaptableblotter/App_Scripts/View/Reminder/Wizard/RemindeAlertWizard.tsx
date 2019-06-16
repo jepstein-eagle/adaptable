@@ -7,7 +7,7 @@ import {
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { Reminder } from '../../../PredefinedConfig/IUserState/ReminderState';
+import { Reminder } from '../../../PredefinedConfig/RunTimeState/ReminderState';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 

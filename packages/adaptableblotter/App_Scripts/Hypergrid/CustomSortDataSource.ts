@@ -4,7 +4,7 @@ import { DataSourceIndexed } from './DataSourceIndexed';
 import * as _ from 'lodash';
 import { SortHelper } from '../Utilities/Helpers/SortHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { ColumnSort } from '../PredefinedConfig/IUserState/LayoutState';
+import { ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
 
 export interface ICustomSortInfo {
   SortedValues: any[];

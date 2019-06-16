@@ -10,7 +10,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptablePopover } from '../../AdaptablePopover';
 import * as CalendarConstants from '../../../Utilities/Constants/CalendarConstants';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { Shortcut } from '../../../PredefinedConfig/IUserState/ShortcutState';
+import { Shortcut } from '../../../PredefinedConfig/RunTimeState/ShortcutState';
 
 export interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<Shortcut> {
   NumericKeysAvailable: Array<string>;

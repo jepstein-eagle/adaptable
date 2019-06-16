@@ -6,7 +6,7 @@ import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { IAdaptableAlert } from '../Utilities/Interface/IMessage';
 import { IAlertApi } from './Interface/IAlertApi';
-import { AlertState } from '../PredefinedConfig/IUserState/AlertState';
+import { AlertState } from '../PredefinedConfig/RunTimeState/AlertState';
 
 export class AlertApi extends ApiBase implements IAlertApi {
   public getAlertState(): AlertState {

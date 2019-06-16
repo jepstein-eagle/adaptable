@@ -12,7 +12,7 @@ import { ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { CellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
 export interface CellValidationEntityRowProps
   extends SharedEntityExpressionRowProps<CellValidationEntityRow> {

@@ -4,7 +4,7 @@ import { IColumnCategoryApi } from './Interface/IColumnCategoryApi';
 import {
   ColumnCategoryState,
   ColumnCategory,
-} from '../PredefinedConfig/IUserState/ColumnCategoryState';
+} from '../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export class ColumnCategoryApi extends ApiBase implements IColumnCategoryApi {
   public getColumnCategoryState(): ColumnCategoryState {

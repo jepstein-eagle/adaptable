@@ -8,7 +8,7 @@ import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { PlusMinusRule } from '../../../PredefinedConfig/IUserState/PlusMinusState';
+import { PlusMinusRule } from '../../../PredefinedConfig/RunTimeState/PlusMinusState';
 
 export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {
   NumericColumns: Array<IColumn>;

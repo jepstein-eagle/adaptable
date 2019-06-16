@@ -17,7 +17,7 @@ import { LoggingHelper } from './LoggingHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
-import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 
 export interface IRangeEvaluation {
   operand1: any;

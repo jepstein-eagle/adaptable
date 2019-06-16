@@ -8,7 +8,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import { IColItem } from '../UIInterfaces';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 
 export class UserFilterEntityRow extends React.Component<
   SharedEntityExpressionRowProps<UserFilterEntityRow>,

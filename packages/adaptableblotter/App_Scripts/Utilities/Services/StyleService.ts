@@ -1,10 +1,10 @@
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { QuickSearchState } from '../../PredefinedConfig/IUserState/QuickSearchState';
-import { PercentBarState } from '../../PredefinedConfig/IUserState/PercentBarState';
-import { FormatColumnState } from '../../PredefinedConfig/IUserState/FormatColumnState';
-import { FlashingCellState } from '../../PredefinedConfig/IUserState/FlashingCellState';
-import { ConditionalStyleState } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { QuickSearchState } from '../../PredefinedConfig/RunTimeState/QuickSearchState';
+import { PercentBarState } from '../../PredefinedConfig/RunTimeState/PercentBarState';
+import { FormatColumnState } from '../../PredefinedConfig/RunTimeState/FormatColumnState';
+import { FlashingCellState } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
+import { ConditionalStyleState } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { StyleHelper } from '../Helpers/StyleHelper';
 import { EnumExtensions } from '../Extensions/EnumExtensions';

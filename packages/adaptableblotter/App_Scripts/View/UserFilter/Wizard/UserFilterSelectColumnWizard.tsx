@@ -9,7 +9,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 
 export interface UserFilterSelectColumnWizardProps extends AdaptableWizardStepProps<UserFilter> {}
 export interface UserFilterSelectColumnWizardState {

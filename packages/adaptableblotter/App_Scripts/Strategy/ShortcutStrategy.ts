@@ -16,8 +16,8 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
-import { Shortcut } from '../PredefinedConfig/IUserState/ShortcutState';
-import { CellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
+import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
+import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {

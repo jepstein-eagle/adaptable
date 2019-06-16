@@ -15,7 +15,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { CellValidationRule } from '../../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
 import { IRange } from '../../../PredefinedConfig/Common/Expression/IRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 

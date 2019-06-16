@@ -12,7 +12,7 @@ import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AlertHelper } from '../../Utilities/Helpers/AlertHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { AlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
 
 export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
   Column: IColumn;

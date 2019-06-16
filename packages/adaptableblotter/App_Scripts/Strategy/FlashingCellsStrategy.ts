@@ -5,7 +5,10 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux';
-import { FlashingCellState, FlashingCell } from '../PredefinedConfig/IUserState/FlashingCellState';
+import {
+  FlashingCellState,
+  FlashingCell,
+} from '../PredefinedConfig/RunTimeState/FlashingCellState';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';

@@ -1,4 +1,4 @@
-import { SmartEditState } from '../../PredefinedConfig/IUserState/SmartEditState';
+import { SmartEditState } from '../../PredefinedConfig/RunTimeState/SmartEditState';
 import { MathOperation } from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
 import {

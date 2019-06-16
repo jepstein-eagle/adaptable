@@ -5,10 +5,10 @@ import { Glyphicon, Panel, Table } from 'react-bootstrap';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
-import { CellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   UpdateValue: string;

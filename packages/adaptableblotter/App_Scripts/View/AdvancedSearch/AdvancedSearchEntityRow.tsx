@@ -7,7 +7,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IColItem } from '../UIInterfaces';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { AdvancedSearch } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
+import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow>
   extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {

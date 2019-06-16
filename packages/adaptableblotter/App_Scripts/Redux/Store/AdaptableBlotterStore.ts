@@ -53,16 +53,16 @@ import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
 import { AdaptableBlotterState, IAdaptableBlotterStore } from './Interface/IAdaptableStore';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants';
-import { LayoutState } from '../../PredefinedConfig/IUserState/LayoutState';
-import { GridState } from '../../PredefinedConfig/ISystemState/GridState';
+import { LayoutState } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { GridState } from '../../PredefinedConfig/InternalState/GridState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { FormatColumn } from '../../PredefinedConfig/IUserState/FormatColumnState';
-import { Layout } from '../../PredefinedConfig/IUserState/LayoutState';
-import { PlusMinusRule } from '../../PredefinedConfig/IUserState/PlusMinusState';
-import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
-import { FreeTextColumn } from '../../PredefinedConfig/IUserState/FreeTextColumnState';
-import { Report } from '../../PredefinedConfig/IUserState/ExportState';
-import { CustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
+import { FormatColumn } from '../../PredefinedConfig/RunTimeState/FormatColumnState';
+import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
+import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
@@ -107,12 +107,12 @@ import {
   StateObjectChangeType,
 } from '../../Utilities/Interface/IAuditEvents';
 import LayoutHelper from '../../Utilities/Helpers/LayoutHelper';
-import { CalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
-import { ConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
-import { ColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
-import { CellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
-import { Shortcut } from '../../PredefinedConfig/IUserState/ShortcutState';
-import { AdvancedSearch } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
+import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import { Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
+import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 import { IState } from '../../PredefinedConfig/IState';
 
 /*

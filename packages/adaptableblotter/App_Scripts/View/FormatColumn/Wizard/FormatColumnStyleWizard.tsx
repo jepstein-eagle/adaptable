@@ -8,7 +8,7 @@ import { StyleComponent } from '../../Components/StyleComponent';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { UIHelper } from '../../UIHelper';
 import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
-import { FormatColumn } from '../../../PredefinedConfig/IUserState/FormatColumnState';
+import { FormatColumn } from '../../../PredefinedConfig/RunTimeState/FormatColumnState';
 
 export interface FormatColumnStyleWizardProps extends AdaptableWizardStepProps<FormatColumn> {
   ColorPalette: string[];

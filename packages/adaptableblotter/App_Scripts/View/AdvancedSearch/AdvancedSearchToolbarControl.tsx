@@ -19,7 +19,7 @@ import { InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { AdvancedSearch } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
+import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 
 interface AdvancedSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {

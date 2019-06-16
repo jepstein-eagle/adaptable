@@ -8,7 +8,7 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode, DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { PercentBar } from '../../../PredefinedConfig/IUserState/PercentBarState';
+import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
 export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepProps<PercentBar> {}

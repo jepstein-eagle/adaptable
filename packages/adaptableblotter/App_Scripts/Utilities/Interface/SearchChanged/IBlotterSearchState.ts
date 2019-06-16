@@ -1,6 +1,6 @@
-import { DataSource } from '../../../PredefinedConfig/IUserState/DataSourceState';
-import { AdvancedSearch } from '../../../PredefinedConfig/IUserState/AdvancedSearchState';
-import { ColumnFilter } from '../../../PredefinedConfig/IUserState/ColumnFilterState';
+import { DataSource } from '../../../PredefinedConfig/RunTimeState/DataSourceState';
+import { AdvancedSearch } from '../../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
 
 /**
  * The current Search and Filter in the Blotter

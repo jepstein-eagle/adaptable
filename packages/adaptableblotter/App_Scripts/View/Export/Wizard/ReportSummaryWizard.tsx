@@ -1,4 +1,4 @@
-import { Report } from '../../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
 import * as React from 'react';
 import {
   AdaptableWizardStep,
@@ -10,7 +10,7 @@ import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { ReportHelper } from '../../../Utilities/Helpers/ReportHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { UIHelper } from '../../UIHelper';
-import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 
 export interface ReportSummaryWizardProps extends AdaptableWizardStepProps<Report> {
   UserFilters: UserFilter[];

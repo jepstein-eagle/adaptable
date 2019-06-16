@@ -1,34 +1,34 @@
-import { EntitlementsState } from './IDesignTimeState/EntitlementsState';
-import { UserInterfaceState } from './IDesignTimeState/UserInterfaceState';
-import { SystemFilterState } from './IDesignTimeState/SystemFilterState';
-import { ApplicationState } from './IDesignTimeState/ApplicationState';
-import { AdvancedSearchState } from './IUserState/AdvancedSearchState';
-import { AlertState } from './IUserState/AlertState';
-import { BulkUpdateState } from './IUserState/BulkUpdateState';
-import { CalculatedColumnState } from './IUserState/CalculatedColumnState';
-import { CalendarState } from './IUserState/CalendarState';
-import { CellSummaryState } from './IUserState/CellSummaryState';
-import { CellValidationState } from './IUserState/CellValidationState';
-import { ColumnCategoryState } from './IUserState/ColumnCategoryState';
-import { ColumnFilterState } from './IUserState/ColumnFilterState';
-import { ConditionalStyleState } from './IUserState/ConditionalStyleState';
-import { CustomSortState } from './IUserState/CustomSortState';
-import { DashboardState } from './IUserState/DashboardState';
-import { DataSourceState } from './IUserState/DataSourceState';
-import { ExportState } from './IUserState/ExportState';
-import { FlashingCellState } from './IUserState/FlashingCellState';
-import { FormatColumnState } from './IUserState/FormatColumnState';
-import { FreeTextColumnState } from './IUserState/FreeTextColumnState';
-import { LayoutState } from './IUserState/LayoutState';
-import { PercentBarState } from './IUserState/PercentBarState';
-import { PlusMinusState } from './IUserState/PlusMinusState';
-import { QuickSearchState } from './IUserState/QuickSearchState';
-import { ReminderState } from './IUserState/ReminderState';
-import { ShortcutState } from './IUserState/ShortcutState';
-import { SmartEditState } from './IUserState/SmartEditState';
-import { ThemeState } from './IUserState/ThemeState';
-import { UserFilterState } from './IUserState/UserFilterState';
-import { ChartState } from './IUserState/ChartState';
+import { EntitlementsState } from './DesignTimeState/EntitlementsState';
+import { UserInterfaceState } from './DesignTimeState/UserInterfaceState';
+import { SystemFilterState } from './DesignTimeState/SystemFilterState';
+import { ApplicationState } from './DesignTimeState/ApplicationState';
+import { AdvancedSearchState } from './RunTimeState/AdvancedSearchState';
+import { AlertState } from './RunTimeState/AlertState';
+import { BulkUpdateState } from './RunTimeState/BulkUpdateState';
+import { CalculatedColumnState } from './RunTimeState/CalculatedColumnState';
+import { CalendarState } from './RunTimeState/CalendarState';
+import { CellSummaryState } from './RunTimeState/CellSummaryState';
+import { CellValidationState } from './RunTimeState/CellValidationState';
+import { ColumnCategoryState } from './RunTimeState/ColumnCategoryState';
+import { ColumnFilterState } from './RunTimeState/ColumnFilterState';
+import { ConditionalStyleState } from './RunTimeState/ConditionalStyleState';
+import { CustomSortState } from './RunTimeState/CustomSortState';
+import { DashboardState } from './RunTimeState/DashboardState';
+import { DataSourceState } from './RunTimeState/DataSourceState';
+import { ExportState } from './RunTimeState/ExportState';
+import { FlashingCellState } from './RunTimeState/FlashingCellState';
+import { FormatColumnState } from './RunTimeState/FormatColumnState';
+import { FreeTextColumnState } from './RunTimeState/FreeTextColumnState';
+import { LayoutState } from './RunTimeState/LayoutState';
+import { PercentBarState } from './RunTimeState/PercentBarState';
+import { PlusMinusState } from './RunTimeState/PlusMinusState';
+import { QuickSearchState } from './RunTimeState/QuickSearchState';
+import { ReminderState } from './RunTimeState/ReminderState';
+import { ShortcutState } from './RunTimeState/ShortcutState';
+import { SmartEditState } from './RunTimeState/SmartEditState';
+import { ThemeState } from './RunTimeState/ThemeState';
+import { UserFilterState } from './RunTimeState/UserFilterState';
+import { ChartState } from './RunTimeState/ChartState';
 
 /**
  * Main Predefined Config object which users will populate if they wish to ship the Adaptable Botter with initial state
@@ -37,13 +37,13 @@ import { ChartState } from './IUserState/ChartState';
  *
  */
 export interface IPredefinedConfig {
-  // First add the IDesignTimeState properties
+  // First add the DesignTimeState properties
   Entitlement?: EntitlementsState;
   UserInterface?: UserInterfaceState;
   SystemFilter?: SystemFilterState;
   Application?: ApplicationState;
 
-  // Now addd the IUserState properties
+  // Now addd the RunTimeState properties
   AdvancedSearch?: AdvancedSearchState;
   Alert?: AlertState;
   BulkUpdate?: BulkUpdateState;

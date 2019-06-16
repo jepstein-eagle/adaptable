@@ -1,7 +1,7 @@
 import {
   FlashingCellState,
   FlashingCell,
-} from '../../PredefinedConfig/IUserState/FlashingCellState';
+} from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 import * as Redux from 'redux';
 import {
   FLASHING_CELLS_DEFAULT_DURATION,

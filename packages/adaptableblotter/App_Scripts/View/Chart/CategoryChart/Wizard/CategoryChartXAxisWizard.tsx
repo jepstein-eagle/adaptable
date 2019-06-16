@@ -3,7 +3,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { CategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { CategoryChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
 import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
 import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from 'react-bootstrap';

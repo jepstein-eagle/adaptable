@@ -3,8 +3,8 @@ import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
-import { GridState } from '../../PredefinedConfig/ISystemState/GridState';
+import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { GridState } from '../../PredefinedConfig/InternalState/GridState';
 import { ObjectFactory } from '../ObjectFactory';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
 

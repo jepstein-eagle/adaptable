@@ -1,7 +1,7 @@
 import {
   ConditionalStyleState,
   ConditionalStyle,
-} from '../../PredefinedConfig/IUserState/ConditionalStyleState';
+} from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 
 export interface IConditionalStyleApi {
   getConditionalStyleState(): ConditionalStyleState;

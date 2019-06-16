@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
-import { ColumnFilter } from '../../../PredefinedConfig/IUserState/ColumnFilterState';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 

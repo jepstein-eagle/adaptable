@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import {
   ConditionalStyleState,
   ConditionalStyle,
-} from '../../PredefinedConfig/IUserState/ConditionalStyleState';
+} from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 

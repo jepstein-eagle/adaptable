@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants';
 import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
-import { ChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { ChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
 import { AdaptableWizard } from '../../../Wizard/AdaptableWizard';
 import { PieChartSettingsWizard } from './PieChartSettingsWizard';
 import { PieChartSummaryWizard } from './PieChartSummaryWizard';

@@ -7,7 +7,7 @@ import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowP
 import {
   ChartDefinition,
   CategoryChartDefinition,
-} from '../../PredefinedConfig/IUserState/ChartState';
+} from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ButtonShowChart } from '../Components/Buttons/ButtonShowChart';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { EntityRowItem } from '../Components/EntityRowItem';

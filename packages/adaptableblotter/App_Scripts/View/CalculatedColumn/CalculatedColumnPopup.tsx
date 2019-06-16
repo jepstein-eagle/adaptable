@@ -25,7 +25,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { CalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
+import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 interface CalculatedColumnPopupProps

@@ -7,7 +7,7 @@ import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { FormatColumn } from '../../../PredefinedConfig/IUserState/FormatColumnState';
+import { FormatColumn } from '../../../PredefinedConfig/RunTimeState/FormatColumnState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 

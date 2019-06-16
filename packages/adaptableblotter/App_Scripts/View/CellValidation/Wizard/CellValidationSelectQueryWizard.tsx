@@ -5,7 +5,7 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { CellValidationRule } from '../../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';

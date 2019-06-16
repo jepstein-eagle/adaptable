@@ -9,7 +9,7 @@ import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowP
 import { IColItem } from '../UIInterfaces';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { Shortcut } from '../../PredefinedConfig/IUserState/ShortcutState';
+import { Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
 
 export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEntityRow> {
   onChangeKey: (shortcut: Shortcut, NewShortcutKey: string) => void;

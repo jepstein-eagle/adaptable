@@ -5,7 +5,7 @@ import { IAdaptableBlotter } from '../../types';
 import {
   FreeTextColumn,
   FreeTextStoredValue,
-} from '../../PredefinedConfig/IUserState/FreeTextColumnState';
+} from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 
 export class FreeTextColumnService implements IFreeTextColumnService {

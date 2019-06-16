@@ -15,10 +15,10 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
-import { FlashingCell } from '../../PredefinedConfig/IUserState/FlashingCellState';
+import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { FlashingCellState } from '../../PredefinedConfig/IUserState/FlashingCellState';
-import { CalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
+import { FlashingCellState } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
+import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
   FlashingCells: FlashingCell[];

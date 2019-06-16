@@ -1,4 +1,4 @@
-import { Report } from '../../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
 import * as React from 'react';
 import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import {

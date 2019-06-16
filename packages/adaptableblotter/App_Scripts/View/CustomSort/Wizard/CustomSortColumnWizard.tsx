@@ -9,7 +9,7 @@ import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { CustomSort } from '../../../PredefinedConfig/IUserState/CustomSortState';
+import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortState';
 
 export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<CustomSort> {
   SortedColumns: IColumn[];

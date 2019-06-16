@@ -9,8 +9,8 @@ import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilter
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { FormControl } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
-import { ColumnFilter } from '../../../PredefinedConfig/IUserState/ColumnFilterState';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { IRange } from '../../../PredefinedConfig/Common/Expression/IRange';
 import { Expression } from '../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';

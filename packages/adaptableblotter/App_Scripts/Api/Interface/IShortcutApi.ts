@@ -1,4 +1,4 @@
-import { ShortcutState, Shortcut } from '../../PredefinedConfig/IUserState/ShortcutState';
+import { ShortcutState, Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
 export interface IShortcutApi {
   getShortcutState(): ShortcutState;
   getAllShortcut(): Shortcut[];

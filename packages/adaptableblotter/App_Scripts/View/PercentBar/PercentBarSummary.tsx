@@ -22,7 +22,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { PercentBar } from '../../PredefinedConfig/IUserState/PercentBarState';
+import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 
 export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarSummaryComponent> {

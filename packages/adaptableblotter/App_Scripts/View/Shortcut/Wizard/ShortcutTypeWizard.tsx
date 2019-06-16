@@ -1,4 +1,4 @@
-import { Shortcut } from '../../../PredefinedConfig/IUserState/ShortcutState';
+import { Shortcut } from '../../../PredefinedConfig/RunTimeState/ShortcutState';
 /// <reference path="../../typings/index.d.ts" />
 import * as React from 'react';
 import { Radio, Panel, Col, HelpBlock } from 'react-bootstrap';

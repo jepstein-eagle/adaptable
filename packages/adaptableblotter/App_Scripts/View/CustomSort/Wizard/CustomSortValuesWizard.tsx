@@ -7,7 +7,7 @@ import {
 import { DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
-import { CustomSort } from '../../../PredefinedConfig/IUserState/CustomSortState';
+import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortState';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 

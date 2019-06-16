@@ -25,7 +25,7 @@ import { AdaptableObjectCollection } from '../../Components/AdaptableObjectColle
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { PanelWithButton } from '../../Components/Panels/PanelWithButton';
-import { Layout, ColumnSort } from '../../../PredefinedConfig/IUserState/LayoutState';
+import { Layout, ColumnSort } from '../../../PredefinedConfig/RunTimeState/LayoutState';
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<Layout> {}
 

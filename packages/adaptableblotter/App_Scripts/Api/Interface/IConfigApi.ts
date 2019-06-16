@@ -1,28 +1,28 @@
-import { ChartState } from '../../PredefinedConfig/IUserState/ChartState';
-import { UserFilterState } from '../../PredefinedConfig/IUserState/UserFilterState';
-import { ThemeState } from '../../PredefinedConfig/IUserState/ThemeState';
-import { SmartEditState } from '../../PredefinedConfig/IUserState/SmartEditState';
-import { ShortcutState } from '../../PredefinedConfig/IUserState/ShortcutState';
-import { QuickSearchState } from '../../PredefinedConfig/IUserState/QuickSearchState';
-import { LayoutState } from '../../PredefinedConfig/IUserState/LayoutState';
-import { FormatColumnState } from '../../PredefinedConfig/IUserState/FormatColumnState';
-import { FlashingCellState } from '../../PredefinedConfig/IUserState/FlashingCellState';
-import { ExportState } from '../../PredefinedConfig/IUserState/ExportState';
-import { DataSourceState } from '../../PredefinedConfig/IUserState/DataSourceState';
-import { DashboardState } from '../../PredefinedConfig/IUserState/DashboardState';
-import { CustomSortState } from '../../PredefinedConfig/IUserState/CustomSortState';
-import { ConditionalStyleState } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
-import { ColumnFilterState } from '../../PredefinedConfig/IUserState/ColumnFilterState';
-import { CellValidationState } from '../../PredefinedConfig/IUserState/CellValidationState';
-import { CellSummaryState } from '../../PredefinedConfig/IUserState/CellSummaryState';
-import { CalendarState } from '../../PredefinedConfig/IUserState/CalendarState';
-import { CalculatedColumnState } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
-import { BulkUpdateState } from '../../PredefinedConfig/IUserState/BulkUpdateState';
-import { AlertState } from '../../PredefinedConfig/IUserState/AlertState';
-import { AdvancedSearchState } from '../../PredefinedConfig/IUserState/AdvancedSearchState';
-import { IUserState } from '../../PredefinedConfig/IUserState/IUserState';
+import { ChartState } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { UserFilterState } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { ThemeState } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import { SmartEditState } from '../../PredefinedConfig/RunTimeState/SmartEditState';
+import { ShortcutState } from '../../PredefinedConfig/RunTimeState/ShortcutState';
+import { QuickSearchState } from '../../PredefinedConfig/RunTimeState/QuickSearchState';
+import { LayoutState } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { FormatColumnState } from '../../PredefinedConfig/RunTimeState/FormatColumnState';
+import { FlashingCellState } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
+import { ExportState } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { DataSourceState } from '../../PredefinedConfig/RunTimeState/DataSourceState';
+import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
+import { CustomSortState } from '../../PredefinedConfig/RunTimeState/CustomSortState';
+import { ConditionalStyleState } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ColumnFilterState } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { CellValidationState } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellSummaryState } from '../../PredefinedConfig/RunTimeState/CellSummaryState';
+import { CalendarState } from '../../PredefinedConfig/RunTimeState/CalendarState';
+import { CalculatedColumnState } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { BulkUpdateState } from '../../PredefinedConfig/RunTimeState/BulkUpdateState';
+import { AlertState } from '../../PredefinedConfig/RunTimeState/AlertState';
+import { AdvancedSearchState } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { RunTimeState } from '../../PredefinedConfig/RunTimeState/RunTimeState';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
-import { PlusMinusState } from '../../PredefinedConfig/IUserState/PlusMinusState';
+import { PlusMinusState } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
 
 export interface IConfigApi {
   // General Config
@@ -34,11 +34,11 @@ export interface IConfigApi {
   configClear(): void;
   configDeleteLocalStorage(): void;
 
-  configloadUserState(state: { [s: string]: IUserState }): void;
+  configloadUserState(state: { [s: string]: RunTimeState }): void;
 
   configGetAllState(): AdaptableBlotterState;
 
-  configGetAllUserState(): IUserState[];
+  configGetAllUserState(): RunTimeState[];
   configGetUserStateByFunction(
     functionName:
       | 'AdvancedSearch'
@@ -65,7 +65,7 @@ export interface IConfigApi {
       | 'Theme'
       | 'UserFilter',
     returnJson: boolean
-  ): IUserState;
+  ): RunTimeState;
 
   configGetAdvancedSearchState(returnJson: boolean): AdvancedSearchState;
   configGetAlertSearchState(returnJson: boolean): AlertState;

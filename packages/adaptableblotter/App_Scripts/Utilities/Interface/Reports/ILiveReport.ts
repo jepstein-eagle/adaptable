@@ -1,5 +1,5 @@
 import { ExportDestination } from '../../../PredefinedConfig/Common/Enums';
-import { Report } from '../../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
 
 export interface ILiveReport {
   WorkbookName: string;

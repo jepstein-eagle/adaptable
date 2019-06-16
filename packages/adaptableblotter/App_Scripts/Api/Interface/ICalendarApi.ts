@@ -1,4 +1,4 @@
-import { CalendarState } from '../../PredefinedConfig/IUserState/CalendarState';
+import { CalendarState } from '../../PredefinedConfig/RunTimeState/CalendarState';
 
 export interface ICalendarApi {
   getCalendarState(): CalendarState;

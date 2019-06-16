@@ -3,7 +3,7 @@ import { AdaptableBlotter } from '../AdaptableBlotter';
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
-import { FlashingCell } from '../../PredefinedConfig/IUserState/FlashingCellState';
+import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 
 export class FlashingCellsStrategyHypergrid extends FlashingCellsStrategy
   implements IFlashingCellsStrategy {

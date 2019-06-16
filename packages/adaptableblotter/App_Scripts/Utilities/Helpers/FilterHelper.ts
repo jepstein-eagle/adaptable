@@ -2,7 +2,7 @@ import { IColumn } from '../Interface/IColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { Helper } from './Helper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 
 // String, Numeric and Date
 export const BLANKS_SYSTEM_FILTER = 'Blanks';

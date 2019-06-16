@@ -2,7 +2,7 @@ import * as Redux from 'redux';
 import {
   CellValidationState,
   CellValidationRule,
-} from '../../PredefinedConfig/IUserState/CellValidationState';
+} from '../../PredefinedConfig/RunTimeState/CellValidationState';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 

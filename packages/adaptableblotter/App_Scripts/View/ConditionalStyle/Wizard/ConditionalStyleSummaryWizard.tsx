@@ -9,10 +9,10 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ConditionalStyleScope } from '../../../PredefinedConfig/Common/Enums';
-import { ConditionalStyle } from '../../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { ConditionalStyle } from '../../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
-import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 
 export interface ConditionalStyleSummaryWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {

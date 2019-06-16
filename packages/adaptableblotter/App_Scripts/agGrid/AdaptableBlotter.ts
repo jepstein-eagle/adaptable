@@ -115,18 +115,18 @@ import { IAdaptableBlotterToolPanelContext } from '../Utilities/Interface/IAdapt
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
-import { QuickSearchState } from '../PredefinedConfig/IUserState/QuickSearchState';
+import { QuickSearchState } from '../PredefinedConfig/RunTimeState/QuickSearchState';
 import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { SearchService } from '../Utilities/Services/SearchService';
-import { PercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
-import { CalculatedColumn } from '../PredefinedConfig/IUserState/CalculatedColumnState';
-import { FreeTextColumn } from '../PredefinedConfig/IUserState/FreeTextColumnState';
-import { CellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
-import { ColumnFilter } from '../PredefinedConfig/IUserState/ColumnFilterState';
-import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/IUserState/LayoutState';
-import { CustomSort } from '../PredefinedConfig/IUserState/CustomSortState';
+import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
+import { CalculatedColumn } from '../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { FreeTextColumn } from '../PredefinedConfig/RunTimeState/FreeTextColumnState';
+import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
+import { ColumnFilter } from '../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/RunTimeState/LayoutState';
+import { CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;

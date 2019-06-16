@@ -12,7 +12,7 @@ import {
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import ColumnHelper from './ColumnHelper';
-import { Report } from '../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';

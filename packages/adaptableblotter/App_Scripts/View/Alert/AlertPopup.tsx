@@ -26,7 +26,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
-import { AlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {

@@ -7,10 +7,10 @@ import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
-import { Report } from '../PredefinedConfig/IUserState/ExportState';
-import { SystemState } from '../PredefinedConfig/ISystemState/SystemState';
-import { Calendar } from '../PredefinedConfig/IUserState/CalendarState';
-import { ChartData } from '../PredefinedConfig/IUserState/ChartState';
+import { Report } from '../PredefinedConfig/RunTimeState/ExportState';
+import { SystemState } from '../PredefinedConfig/InternalState/SystemState';
+import { Calendar } from '../PredefinedConfig/RunTimeState/CalendarState';
+import { ChartData } from '../PredefinedConfig/RunTimeState/ChartState';
 import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 
 export class InternalApi extends ApiBase implements IInternalApi {

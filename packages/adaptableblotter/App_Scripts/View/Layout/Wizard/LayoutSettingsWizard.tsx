@@ -6,7 +6,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { Layout } from '../../../PredefinedConfig/IUserState/LayoutState';
+import { Layout } from '../../../PredefinedConfig/RunTimeState/LayoutState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
 export interface LayoutSettingsWizardProps extends AdaptableWizardStepProps<Layout> {

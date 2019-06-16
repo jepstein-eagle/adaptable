@@ -8,7 +8,7 @@ import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { PlusMinusRule } from '../../../PredefinedConfig/IUserState/PlusMinusState';
+import { PlusMinusRule } from '../../../PredefinedConfig/RunTimeState/PlusMinusState';
 
 export interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {}
 export interface PlusMinusSettingsWizardState {

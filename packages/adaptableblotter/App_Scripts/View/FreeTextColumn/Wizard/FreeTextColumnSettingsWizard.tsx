@@ -7,7 +7,7 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { FreeTextColumn } from '../../../PredefinedConfig/IUserState/FreeTextColumnState';
+import { FreeTextColumn } from '../../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
 export interface FreeTextColumnSettingsWizardProps

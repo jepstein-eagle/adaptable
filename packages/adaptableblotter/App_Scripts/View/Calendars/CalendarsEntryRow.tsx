@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from '../UIInterfaces';
-import { Calendar } from '../../PredefinedConfig/IUserState/CalendarState';
+import { Calendar } from '../../PredefinedConfig/RunTimeState/CalendarState';
 
 export interface CalendarsEntryRowProps extends React.ClassAttributes<CalendarsEntryRow> {
   Calendar: Calendar;

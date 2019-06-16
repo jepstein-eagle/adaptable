@@ -1,5 +1,5 @@
-import { SystemFilterState } from '../../PredefinedConfig/IDesignTimeState/SystemFilterState';
-import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { SystemFilterState } from '../../PredefinedConfig/DesignTimeState/SystemFilterState';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 
 export interface ISystemFilterApi {
   getSystemFilterState(): SystemFilterState;

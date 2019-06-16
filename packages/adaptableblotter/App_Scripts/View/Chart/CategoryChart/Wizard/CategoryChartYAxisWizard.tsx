@@ -3,7 +3,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { CategoryChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { CategoryChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
 import { AxisTotal } from '../../../../PredefinedConfig/Common/ChartEnums';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';

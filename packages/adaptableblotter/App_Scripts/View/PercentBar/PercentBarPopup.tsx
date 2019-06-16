@@ -22,7 +22,7 @@ import {
 import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { PercentBar } from '../../PredefinedConfig/IUserState/PercentBarState';
+import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 

@@ -9,7 +9,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColItem } from '../UIInterfaces';
-import { PlusMinusRule } from '../../PredefinedConfig/IUserState/PlusMinusState';
+import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 

@@ -17,7 +17,7 @@ import {
 import { MessageType, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { PercentBar } from '../../../PredefinedConfig/IUserState/PercentBarState';
+import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';

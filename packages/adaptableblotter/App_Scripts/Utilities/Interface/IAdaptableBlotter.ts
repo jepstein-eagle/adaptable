@@ -18,10 +18,10 @@ import { ILicenceService } from '../Services/Interface/ILicenceService';
 import { IScheduleService } from '../Services/Interface/IScheduleService';
 import { IAuditLogService } from '../Services/Interface/IAuditLogService';
 import { ISearchService } from '../Services/Interface/ISearchService';
-import { ColumnSort, VendorGridInfo } from '../../PredefinedConfig/IUserState/LayoutState';
-import { FreeTextColumn } from '../../PredefinedConfig/IUserState/FreeTextColumnState';
-import { CalculatedColumn } from '../../PredefinedConfig/IUserState/CalculatedColumnState';
-import { PercentBar } from '../../PredefinedConfig/IUserState/PercentBarState';
+import { ColumnSort, VendorGridInfo } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
+import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 
 /**
  *  The only interface for the AdaptableBlotter

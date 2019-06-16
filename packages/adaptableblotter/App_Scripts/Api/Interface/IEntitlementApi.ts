@@ -1,7 +1,7 @@
 import {
   EntitlementsState,
   IEntitlement,
-} from '../../PredefinedConfig/IDesignTimeState/EntitlementsState';
+} from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 
 export interface IEntitlementApi {
   getEntitlementState(): EntitlementsState;

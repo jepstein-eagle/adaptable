@@ -5,7 +5,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { DataSource } from '../../../PredefinedConfig/IUserState/DataSourceState';
+import { DataSource } from '../../../PredefinedConfig/RunTimeState/DataSourceState';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 
 export interface DataSourceSummaryWizardProps extends AdaptableWizardStepProps<DataSource> {}

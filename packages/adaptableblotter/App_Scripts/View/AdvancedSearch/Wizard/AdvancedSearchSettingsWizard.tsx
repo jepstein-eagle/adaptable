@@ -6,7 +6,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { AdvancedSearch } from '../../../PredefinedConfig/IUserState/AdvancedSearchState';
+import { AdvancedSearch } from '../../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
 

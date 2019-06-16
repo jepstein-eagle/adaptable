@@ -23,7 +23,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { FormatColumn } from '../../PredefinedConfig/IUserState/FormatColumnState';
+import { FormatColumn } from '../../PredefinedConfig/RunTimeState/FormatColumnState';
 
 export interface FormatColumnSummaryProps
   extends StrategySummaryProps<FormatColumnSummaryComponent> {

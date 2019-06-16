@@ -10,7 +10,7 @@ import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { LayoutHelper } from '../../Utilities/Helpers/LayoutHelper';
-import { Layout } from '../../PredefinedConfig/IUserState/LayoutState';
+import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
 export interface LayoutEntityRowProps<LayoutEntityRow>

@@ -1,7 +1,7 @@
 import {
   CellValidationState,
   CellValidationRule,
-} from '../../PredefinedConfig/IUserState/CellValidationState';
+} from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
 export interface ICellValidationApi {
   getCellValidationState(): CellValidationState;

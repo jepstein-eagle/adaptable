@@ -1,5 +1,5 @@
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';
-import { QuickSearchState } from '../../PredefinedConfig/IUserState/QuickSearchState';
+import { QuickSearchState } from '../../PredefinedConfig/RunTimeState/QuickSearchState';
 export interface IQuickSearchApi {
   /**
    * Retrieves all the Quick Search State

@@ -8,7 +8,7 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
-import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import {
   QueryTab,
   LeafExpressionOperator,

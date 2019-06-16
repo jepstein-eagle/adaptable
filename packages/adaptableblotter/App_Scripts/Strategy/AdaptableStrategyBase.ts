@@ -6,7 +6,7 @@ import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
-import { IEntitlement } from '../PredefinedConfig/IDesignTimeState/EntitlementsState';
+import { IEntitlement } from '../PredefinedConfig/DesignTimeState/EntitlementsState';
 
 /**
  * Base class for all strategies and does most of the work of creating menus

@@ -17,7 +17,7 @@ import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
 import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { CellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(blotter: IAdaptableBlotter) {

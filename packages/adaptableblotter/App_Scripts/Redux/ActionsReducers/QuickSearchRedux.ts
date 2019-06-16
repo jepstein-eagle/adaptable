@@ -1,4 +1,4 @@
-import { QuickSearchState } from '../../PredefinedConfig/IUserState/QuickSearchState';
+import { QuickSearchState } from '../../PredefinedConfig/RunTimeState/QuickSearchState';
 import { DisplayAction } from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
 import { IStyle } from '../../PredefinedConfig/Common/IStyle';

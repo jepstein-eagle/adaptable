@@ -11,7 +11,7 @@ import { DualListBoxEditor } from '../Components/ListBox/DualListBoxEditor';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IMasterChildren } from '../../Utilities/Interface/IMasterChildren';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { ColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {
   onNewColumnListOrder: (VisibleColumnList: IColumn[]) => SystemRedux.SetNewColumnListOrderAction;

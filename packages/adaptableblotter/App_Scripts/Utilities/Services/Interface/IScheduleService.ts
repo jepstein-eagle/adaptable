@@ -1,5 +1,5 @@
-import { Reminder } from '../../../PredefinedConfig/IUserState/ReminderState';
-import { Report } from '../../../PredefinedConfig/IUserState/ExportState';
+import { Reminder } from '../../../PredefinedConfig/RunTimeState/ReminderState';
+import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
 
 export interface IScheduleService {
   AddReminderSchedule(reminder: Reminder): void;

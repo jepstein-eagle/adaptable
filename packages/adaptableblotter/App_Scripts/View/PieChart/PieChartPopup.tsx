@@ -36,7 +36,7 @@ import {
   PieChartDefinition,
   PieChartDataItem,
   ChartData,
-} from '../../PredefinedConfig/IUserState/ChartState';
+} from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import {
   PieChartLabelPosition,

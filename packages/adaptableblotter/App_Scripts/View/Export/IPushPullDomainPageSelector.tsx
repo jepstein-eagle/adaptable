@@ -14,7 +14,7 @@ import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { Report } from '../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 
 interface IPushPullDomainPageSelectorProps
   extends StrategyViewPopupProps<IPushPullDomainPageSelectorComponent> {

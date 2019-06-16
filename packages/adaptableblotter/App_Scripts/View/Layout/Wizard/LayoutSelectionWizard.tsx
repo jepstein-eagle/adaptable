@@ -10,7 +10,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { Layout, ColumnSort } from '../../../PredefinedConfig/IUserState/LayoutState';
+import { Layout, ColumnSort } from '../../../PredefinedConfig/RunTimeState/LayoutState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<Layout> {

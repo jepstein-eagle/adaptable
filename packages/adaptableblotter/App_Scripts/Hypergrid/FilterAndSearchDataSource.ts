@@ -7,8 +7,8 @@ import { IRange } from '../PredefinedConfig/Common/Expression/IRange';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
-import { ColumnFilter } from '../PredefinedConfig/IUserState/ColumnFilterState';
-import { AdvancedSearch } from '../PredefinedConfig/IUserState/AdvancedSearchState';
+import { ColumnFilter } from '../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { AdvancedSearch } from '../PredefinedConfig/RunTimeState/AdvancedSearchState';
 
 /* There are 3 possible reasons why we might need to filter / search the grid:
 1. If there is an Advanced Search (i.e. CurrentAdvancedSearch is not empty)

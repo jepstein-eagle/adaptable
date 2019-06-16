@@ -14,7 +14,7 @@ import {
   PieChartProperties,
   ChartData,
   PieChartDataItem,
-} from '../../../PredefinedConfig/IUserState/ChartState';
+} from '../../../PredefinedConfig/RunTimeState/ChartState';
 import { PieChartUIHelper } from './PieChartUIHelper';
 import { PieChartComponentState } from './PieChartComponentState';
 import { ButtonMaximise } from '../../Components/Buttons/ButtonMaximise';

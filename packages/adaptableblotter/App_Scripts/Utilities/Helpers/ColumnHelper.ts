@@ -4,7 +4,7 @@ import { IColumn } from '../Interface/IColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { ColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 // Single place for all column mapping functions so can be dealt with consistetly re error handling
 

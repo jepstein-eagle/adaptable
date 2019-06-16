@@ -1,7 +1,7 @@
 import {
   ColumnCategoryState,
   ColumnCategory,
-} from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+} from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export interface IColumnCategoryApi {
   getColumnCategoryState(): ColumnCategoryState;

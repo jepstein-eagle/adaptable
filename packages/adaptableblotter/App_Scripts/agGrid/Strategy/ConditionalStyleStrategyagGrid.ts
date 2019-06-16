@@ -8,8 +8,8 @@ import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
-import { ConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
-import { ColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {

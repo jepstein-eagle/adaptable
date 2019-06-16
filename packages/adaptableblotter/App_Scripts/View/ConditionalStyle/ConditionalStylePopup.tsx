@@ -25,8 +25,8 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { ColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
-import { ConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 
 interface ConditionalStylePopupProps
   extends StrategyViewPopupProps<ConditionalStylePopupComponent> {

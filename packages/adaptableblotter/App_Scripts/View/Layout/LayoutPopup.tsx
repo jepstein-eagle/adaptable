@@ -25,7 +25,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { Layout } from '../../PredefinedConfig/IUserState/LayoutState';
+import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {

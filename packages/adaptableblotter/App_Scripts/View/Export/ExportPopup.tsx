@@ -26,7 +26,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { Report } from '../../PredefinedConfig/IUserState/ExportState';
+import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ReportWizard } from './Wizard/ReportWizard';
 import {

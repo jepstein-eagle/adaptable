@@ -1,4 +1,4 @@
-import { ReminderState, Reminder } from '../../PredefinedConfig/IUserState/ReminderState';
+import { ReminderState, Reminder } from '../../PredefinedConfig/RunTimeState/ReminderState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

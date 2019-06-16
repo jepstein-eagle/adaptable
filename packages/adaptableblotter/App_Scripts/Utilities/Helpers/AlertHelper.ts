@@ -3,7 +3,7 @@ import { ColumnHelper } from './ColumnHelper';
 import { DataType, LeafExpressionOperator } from '../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../Interface/IColumn';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { AlertDefinition } from '../../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
 
 export function createAlertDescription(
   alertDefinition: AlertDefinition,

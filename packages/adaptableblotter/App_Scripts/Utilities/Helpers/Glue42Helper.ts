@@ -7,7 +7,7 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from './ExpressionHelper';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
-import { CellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
 declare var Glue4Office: any;
 

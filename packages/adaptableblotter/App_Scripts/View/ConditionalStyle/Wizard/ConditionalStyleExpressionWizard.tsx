@@ -3,7 +3,7 @@ import {
   ExpressionWizardProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
-import { ConditionalStyle } from '../../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { ConditionalStyle } from '../../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 import { UIHelper } from '../../UIHelper';
 
 export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage

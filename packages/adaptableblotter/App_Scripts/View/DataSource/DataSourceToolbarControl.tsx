@@ -13,7 +13,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { DashboardSize } from '../../PredefinedConfig/Common/Enums';
-import { DataSource } from '../../PredefinedConfig/IUserState/DataSourceState';
+import { DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
 
 interface DataSourceToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<DataSourceToolbarControlComponent> {

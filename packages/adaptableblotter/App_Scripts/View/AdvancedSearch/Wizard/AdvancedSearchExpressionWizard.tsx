@@ -4,7 +4,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
 import { UIHelper } from '../../UIHelper';
-import { AdvancedSearch } from '../../../PredefinedConfig/IUserState/AdvancedSearchState';
+import { AdvancedSearch } from '../../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 
 export class AdvancedSearchExpressionWizard extends ExpressionBuilderPage
   implements AdaptableWizardStep {

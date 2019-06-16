@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from 'react-bootstrap';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { DashboardState } from '../../PredefinedConfig/IUserState/DashboardState';
+import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
 
 import {
   AdaptableDashboardViewFactory,
@@ -29,7 +29,7 @@ import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
 import {
   EntitlementsState,
   IEntitlement,
-} from '../../PredefinedConfig/IDesignTimeState/EntitlementsState';
+} from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;

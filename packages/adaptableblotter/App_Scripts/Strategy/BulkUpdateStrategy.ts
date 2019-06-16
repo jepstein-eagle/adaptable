@@ -5,7 +5,7 @@ import { DataType, MessageType, StateChangedTrigger } from '../PredefinedConfig/
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy';
-import { BulkUpdateState } from '../PredefinedConfig/IUserState/BulkUpdateState';
+import { BulkUpdateState } from '../PredefinedConfig/RunTimeState/BulkUpdateState';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
@@ -14,7 +14,7 @@ import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelected
 import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
 import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
-import { CellValidationRule } from '../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
   constructor(blotter: IAdaptableBlotter) {

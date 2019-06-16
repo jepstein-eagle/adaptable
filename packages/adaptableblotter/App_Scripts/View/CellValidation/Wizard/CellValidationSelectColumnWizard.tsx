@@ -8,7 +8,7 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { CellValidationRule } from '../../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
 
 export interface CellValidationSelectColumnWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}

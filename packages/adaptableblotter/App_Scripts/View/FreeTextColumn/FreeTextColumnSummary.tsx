@@ -20,7 +20,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { FreeTextColumn } from '../../PredefinedConfig/IUserState/FreeTextColumnState';
+import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 export interface FreeTextColumnSummaryProps

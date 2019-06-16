@@ -10,7 +10,7 @@ import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
 import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
-import { AlertDefinition } from '../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(blotter: IAdaptableBlotter) {

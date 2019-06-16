@@ -23,7 +23,7 @@ import {
 } from 'react-bootstrap';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { ChartDefinition } from '../../PredefinedConfig/IUserState/ChartState';
+import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ButtonShowChart } from '../Components/Buttons/ButtonShowChart';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';

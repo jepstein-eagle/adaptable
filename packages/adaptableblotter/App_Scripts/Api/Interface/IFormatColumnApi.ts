@@ -2,7 +2,7 @@ import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import {
   FormatColumnState,
   FormatColumn,
-} from '../../PredefinedConfig/IUserState/FormatColumnState';
+} from '../../PredefinedConfig/RunTimeState/FormatColumnState';
 export interface IFormatColumnApi {
   getFormatColumnState(): FormatColumnState;
   getAllFormatColumn(): FormatColumn[];

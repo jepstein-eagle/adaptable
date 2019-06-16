@@ -1,4 +1,4 @@
-import { SmartEditState } from '../../PredefinedConfig/IUserState/SmartEditState';
+import { SmartEditState } from '../../PredefinedConfig/RunTimeState/SmartEditState';
 
 export interface ISmartEditApi {
   getSmartEditState(): SmartEditState;

@@ -4,7 +4,7 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { DataSource } from '../../PredefinedConfig/IUserState/DataSourceState';
+import { DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
 export interface DataSourceEntityRowProps extends SharedEntityRowProps<DataSourceEntityRow> {

@@ -6,7 +6,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { DataSource } from '../../../PredefinedConfig/IUserState/DataSourceState';
+import { DataSource } from '../../../PredefinedConfig/RunTimeState/DataSourceState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
 export interface DataSourceSettingsWizardProps extends AdaptableWizardStepProps<DataSource> {

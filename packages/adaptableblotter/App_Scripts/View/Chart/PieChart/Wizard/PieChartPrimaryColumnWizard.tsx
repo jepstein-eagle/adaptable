@@ -6,7 +6,7 @@ import {
 import {
   CategoryChartDefinition,
   PieChartDefinition,
-} from '../../../../PredefinedConfig/IUserState/ChartState';
+} from '../../../../PredefinedConfig/RunTimeState/ChartState';
 import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
 import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from 'react-bootstrap';

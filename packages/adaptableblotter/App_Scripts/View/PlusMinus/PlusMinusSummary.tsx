@@ -21,7 +21,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { PlusMinusRule } from '../../PredefinedConfig/IUserState/PlusMinusState';
+import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
   PlusMinusRules: PlusMinusRule[];

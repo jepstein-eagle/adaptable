@@ -6,20 +6,20 @@ import { IBlotterSearchState } from '../Interface/SearchChanged/IBlotterSearchSt
 import { IBlotterSortState } from '../Interface/SearchChanged/IBlotterSortState';
 import { ISearchChangedInfo } from '../Interface/SearchChanged/ISearchChangedInfo';
 import { ISearchEventData } from '../Interface/SearchChanged/ISearchEventData';
-import { UserFilterState } from '../../PredefinedConfig/IUserState/UserFilterState';
-import { QuickSearchState } from '../../PredefinedConfig/IUserState/QuickSearchState';
-import { DataSourceState, DataSource } from '../../PredefinedConfig/IUserState/DataSourceState';
-import { ColumnFilterState } from '../../PredefinedConfig/IUserState/ColumnFilterState';
+import { UserFilterState } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { QuickSearchState } from '../../PredefinedConfig/RunTimeState/QuickSearchState';
+import { DataSourceState, DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
+import { ColumnFilterState } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import {
   AdvancedSearchState,
   AdvancedSearch,
-} from '../../PredefinedConfig/IUserState/AdvancedSearchState';
+} from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 import StringExtensions from '../Extensions/StringExtensions';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
 import { LayoutHelper } from '../Helpers/LayoutHelper';
 import { IColumn } from '../Interface/IColumn';
-import { ColumnSort } from '../../PredefinedConfig/IUserState/LayoutState';
+import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
 
 export class SearchService implements ISearchService {
   private blotter: IAdaptableBlotter;

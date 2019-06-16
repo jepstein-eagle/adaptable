@@ -1,7 +1,7 @@
 import * as PercentBarRedux from '../Redux/ActionsReducers/PercentBarRedux';
 import { ApiBase } from './ApiBase';
 import { IPercentBarApi } from './Interface/IPercentBarApi';
-import { PercentBarState, PercentBar } from '../PredefinedConfig/IUserState/PercentBarState';
+import { PercentBarState, PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 
 export class PercentBarApi extends ApiBase implements IPercentBarApi {
   public getPercentBarState(): PercentBarState {

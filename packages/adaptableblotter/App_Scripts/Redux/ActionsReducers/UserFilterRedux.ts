@@ -1,9 +1,9 @@
-import { UserFilterState, UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilterState, UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import * as Redux from 'redux';
 import { InputAction } from '../../Utilities/Interface/IMessage';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
-import { ColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 
 export const USER_FILTER_ADD = 'USER_FILTER_ADD';
 export const USER_FILTER_EDIT = 'USER_FILTER_EDIT';

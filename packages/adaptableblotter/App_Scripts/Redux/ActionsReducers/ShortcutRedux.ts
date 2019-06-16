@@ -1,4 +1,4 @@
-import { ShortcutState, Shortcut } from '../../PredefinedConfig/IUserState/ShortcutState';
+import { ShortcutState, Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
 import * as Redux from 'redux';
 import { ICellInfo } from '../../Utilities/Interface/ICellInfo';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';

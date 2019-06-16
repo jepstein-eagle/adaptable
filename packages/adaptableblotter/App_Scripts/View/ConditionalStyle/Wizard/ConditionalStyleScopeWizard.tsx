@@ -14,9 +14,9 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { ColumnCategory } from '../../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { ConditionalStyle } from '../../../PredefinedConfig/IUserState/ConditionalStyleState';
+import { ConditionalStyle } from '../../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 
 export interface ConditionalStyleScopeWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {

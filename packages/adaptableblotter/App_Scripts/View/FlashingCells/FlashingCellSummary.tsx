@@ -12,9 +12,9 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { FlashingCell } from '../../PredefinedConfig/IUserState/FlashingCellState';
+import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { FlashingCellState } from '../../PredefinedConfig/IUserState/FlashingCellState';
+import { FlashingCellState } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 
 export interface FlashingCellSummaryProps
   extends StrategySummaryProps<FlashingCellSummaryComponent> {

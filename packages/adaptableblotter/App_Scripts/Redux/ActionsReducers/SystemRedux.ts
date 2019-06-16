@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { SystemState } from '../../PredefinedConfig/ISystemState/SystemState';
+import { SystemState } from '../../PredefinedConfig/InternalState/SystemState';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
@@ -19,8 +19,8 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IRange } from '../../PredefinedConfig/Common/Expression/IRange';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { Report } from '../../PredefinedConfig/IUserState/ExportState';
-import { ChartData } from '../../PredefinedConfig/IUserState/ChartState';
+import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state

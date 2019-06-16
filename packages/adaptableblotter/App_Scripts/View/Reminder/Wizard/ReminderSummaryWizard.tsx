@@ -5,8 +5,8 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
-import { Reminder } from '../../../PredefinedConfig/IUserState/ReminderState';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { Reminder } from '../../../PredefinedConfig/RunTimeState/ReminderState';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { UIHelper } from '../../UIHelper';
 

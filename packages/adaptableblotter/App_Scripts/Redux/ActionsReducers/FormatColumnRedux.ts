@@ -1,7 +1,7 @@
 import {
   FormatColumnState,
   FormatColumn,
-} from '../../PredefinedConfig/IUserState/FormatColumnState';
+} from '../../PredefinedConfig/RunTimeState/FormatColumnState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

@@ -3,7 +3,7 @@ import { DisplayAction } from '../PredefinedConfig/Common/Enums';
 import * as QuickSearchRedux from '../Redux/ActionsReducers/QuickSearchRedux';
 import { ApiBase } from './ApiBase';
 import { IQuickSearchApi } from './Interface/IQuickSearchApi';
-import { QuickSearchState } from '../PredefinedConfig/IUserState/QuickSearchState';
+import { QuickSearchState } from '../PredefinedConfig/RunTimeState/QuickSearchState';
 
 export class QuickSearchApi extends ApiBase implements IQuickSearchApi {
   public getQuickSearchState(): QuickSearchState {

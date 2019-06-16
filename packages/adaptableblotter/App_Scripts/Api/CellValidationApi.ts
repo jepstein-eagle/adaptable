@@ -4,7 +4,7 @@ import { ICellValidationApi } from './Interface/ICellValidationApi';
 import {
   CellValidationState,
   CellValidationRule,
-} from '../PredefinedConfig/IUserState/CellValidationState';
+} from '../PredefinedConfig/RunTimeState/CellValidationState';
 
 export class CellValidationApi extends ApiBase implements ICellValidationApi {
   public getCellValidationState(): CellValidationState {

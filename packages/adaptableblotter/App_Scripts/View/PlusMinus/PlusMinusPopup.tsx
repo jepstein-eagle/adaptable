@@ -26,7 +26,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { PlusMinusRule } from '../../PredefinedConfig/IUserState/PlusMinusState';
+import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';

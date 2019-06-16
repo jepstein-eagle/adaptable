@@ -18,8 +18,8 @@ import {
   ContextMenuTab,
   AccessLevel,
 } from '../../../PredefinedConfig/Common/Enums';
-import { UserFilter } from '../../../PredefinedConfig/IUserState/UserFilterState';
-import { ColumnFilter } from '../../../PredefinedConfig/IUserState/ColumnFilterState';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { IRange } from '../../../PredefinedConfig/Common/Expression/IRange';
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { ListBoxFilterForm } from './ListBoxFilterForm';

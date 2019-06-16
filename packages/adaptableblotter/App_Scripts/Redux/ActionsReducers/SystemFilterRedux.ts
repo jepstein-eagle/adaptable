@@ -1,4 +1,4 @@
-import { SystemFilterState } from '../../PredefinedConfig/IDesignTimeState/SystemFilterState';
+import { SystemFilterState } from '../../PredefinedConfig/DesignTimeState/SystemFilterState';
 import { FilterHelper } from '../../Utilities/Helpers/FilterHelper';
 import * as Redux from 'redux';
 

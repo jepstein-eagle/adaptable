@@ -1,4 +1,4 @@
-import { ThemeState, UserTheme } from '../../PredefinedConfig/IUserState/ThemeState';
+import { ThemeState, UserTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
 
 export interface IThemeApi {
   getThemeState(): ThemeState;

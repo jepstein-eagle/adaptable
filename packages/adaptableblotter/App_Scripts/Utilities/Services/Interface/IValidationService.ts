@@ -1,5 +1,5 @@
 import { IDataChangedInfo } from '../../Interface/IDataChangedInfo';
-import { CellValidationRule } from '../../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
 
 export interface IValidationService {
   ValidateCellChanging(dataChangedEvent: IDataChangedInfo): CellValidationRule[];

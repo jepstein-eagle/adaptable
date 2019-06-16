@@ -1,4 +1,4 @@
-import { DashboardState } from '../../PredefinedConfig/IUserState/DashboardState';
+import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
 
 export interface IDashboardApi {
   GetState(): DashboardState;

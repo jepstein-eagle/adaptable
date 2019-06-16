@@ -8,7 +8,7 @@ import {
   ChartProperties,
   PieChartDefinition,
   ChartData,
-} from '../../PredefinedConfig/IUserState/ChartState';
+} from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonClose } from '../Components/Buttons/ButtonClose';
 import { PRIMARY_BSSTYLE } from '../../Utilities/Constants/StyleConstants';

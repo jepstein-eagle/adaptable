@@ -1,5 +1,5 @@
 import { ApiBase } from './ApiBase';
-import { PlusMinusState, PlusMinusRule } from '../PredefinedConfig/IUserState/PlusMinusState';
+import { PlusMinusState, PlusMinusRule } from '../PredefinedConfig/RunTimeState/PlusMinusState';
 import { IPlusMinusApi } from './Interface/IPlusMinusApi';
 
 export class PlusMinusApi extends ApiBase implements IPlusMinusApi {

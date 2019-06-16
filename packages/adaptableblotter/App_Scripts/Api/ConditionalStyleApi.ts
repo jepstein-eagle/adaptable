@@ -3,7 +3,7 @@ import { IConditionalStyleApi } from './Interface/IConditionalStyleApi';
 import {
   ConditionalStyleState,
   ConditionalStyle,
-} from '../PredefinedConfig/IUserState/ConditionalStyleState';
+} from '../PredefinedConfig/RunTimeState/ConditionalStyleState';
 
 export class ConditionalStyleApi extends ApiBase implements IConditionalStyleApi {
   public getConditionalStyleState(): ConditionalStyleState {

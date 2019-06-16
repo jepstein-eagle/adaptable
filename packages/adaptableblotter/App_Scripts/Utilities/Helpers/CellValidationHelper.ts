@@ -5,7 +5,7 @@ import { IColumn } from '../Interface/IColumn';
 import { LeafExpressionOperator, DataType, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { IUIConfirmation } from '../Interface/IMessage';
 import * as Redux from 'redux';
-import { CellValidationRule } from '../../PredefinedConfig/IUserState/CellValidationState';
+import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
 export function createCellValidationDescription(
   cellValidationRule: CellValidationRule,

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { ColumnFilter } from '../../PredefinedConfig/IUserState/ColumnFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';

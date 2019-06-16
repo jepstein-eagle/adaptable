@@ -20,7 +20,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
-import { CustomSort } from '../../PredefinedConfig/IUserState/CustomSortState';
+import { CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 export interface CustomSortSummaryProps extends StrategySummaryProps<CustomSortSummaryComponent> {

@@ -31,7 +31,7 @@ import {
   CategoryChartProperties,
   ChartProperties,
   ChartData,
-} from '../../../PredefinedConfig/IUserState/ChartState';
+} from '../../../PredefinedConfig/RunTimeState/ChartState';
 import { CategoryChartUIHelper } from './CategoryChartUIHelper';
 import { CategoryChartComponentState } from './CategoryChartComponentState';
 import { IColumn } from '../../../Utilities/Interface/IColumn';

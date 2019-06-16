@@ -20,7 +20,7 @@ import {
   ChartDefinition,
   PieChartDefinition,
   PieChartDataItem,
-} from '../../PredefinedConfig/IUserState/ChartState';
+} from '../../PredefinedConfig/RunTimeState/ChartState';
 import { AxisTotal, SecondaryColumnOperation } from '../../PredefinedConfig/Common/ChartEnums';
 
 /*

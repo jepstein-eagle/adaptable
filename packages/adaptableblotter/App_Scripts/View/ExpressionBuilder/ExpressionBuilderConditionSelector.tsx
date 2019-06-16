@@ -25,7 +25,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { Waiting } from '../Components/FilterForm/Waiting';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
-import { UserFilter } from '../../PredefinedConfig/IUserState/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {

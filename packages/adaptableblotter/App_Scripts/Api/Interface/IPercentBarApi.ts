@@ -1,4 +1,4 @@
-import { PercentBarState, PercentBar } from '../../PredefinedConfig/IUserState/PercentBarState';
+import { PercentBarState, PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 export interface IPercentBarApi {
   getPercentBarState(): PercentBarState;
   getAllPercentBar(): PercentBar[];

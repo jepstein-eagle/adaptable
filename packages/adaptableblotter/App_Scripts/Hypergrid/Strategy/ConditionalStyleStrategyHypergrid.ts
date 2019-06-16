@@ -5,8 +5,8 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { ConditionalStyle } from '../../PredefinedConfig/IUserState/ConditionalStyleState';
-import { ColumnCategory } from '../../PredefinedConfig/IUserState/ColumnCategoryState';
+import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {

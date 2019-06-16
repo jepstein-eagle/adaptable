@@ -7,7 +7,7 @@ import {
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { AlertDefinition } from '../../../PredefinedConfig/IUserState/AlertState';
+import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
 
 export interface AlertTypeWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 

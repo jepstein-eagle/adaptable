@@ -4,7 +4,7 @@ import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../
 import {
   CategoryChartDefinition,
   ChartDefinition,
-} from '../../../../PredefinedConfig/IUserState/ChartState';
+} from '../../../../PredefinedConfig/RunTimeState/ChartState';
 import { AdaptableWizard } from '../../../Wizard/AdaptableWizard';
 import { CategoryChartYAxisWizard } from './CategoryChartYAxisWizard';
 import { CategoryChartXAxisWizard } from './CategoryChartXAxisWizard';

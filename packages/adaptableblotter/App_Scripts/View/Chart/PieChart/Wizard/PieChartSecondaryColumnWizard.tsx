@@ -3,7 +3,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { PieChartDefinition } from '../../../../PredefinedConfig/IUserState/ChartState';
+import { PieChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
 import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from 'react-bootstrap';
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';

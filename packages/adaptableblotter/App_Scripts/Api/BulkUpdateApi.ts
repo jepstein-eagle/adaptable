@@ -1,5 +1,5 @@
 import { ApiBase } from './ApiBase';
-import { BulkUpdateState } from '../PredefinedConfig/IUserState/BulkUpdateState';
+import { BulkUpdateState } from '../PredefinedConfig/RunTimeState/BulkUpdateState';
 import { IBulkUpdateApi } from './Interface/IBulkUpdateApi';
 
 export class BulkUpdateApi extends ApiBase implements IBulkUpdateApi {

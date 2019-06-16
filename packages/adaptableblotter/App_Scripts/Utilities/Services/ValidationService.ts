@@ -17,7 +17,7 @@ import { IColumn } from '../Interface/IColumn';
 import {
   CellValidationState,
   CellValidationRule,
-} from '../../PredefinedConfig/IUserState/CellValidationState';
+} from '../../PredefinedConfig/RunTimeState/CellValidationState';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
 import { IFunctionAppliedDetails } from '../Interface/IAuditEvents';
 
