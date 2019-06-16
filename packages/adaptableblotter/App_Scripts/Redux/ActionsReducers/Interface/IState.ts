@@ -162,7 +162,7 @@ export interface TeamSharingState extends ISystemState {
 }
 
 /**
- * DESIGN TIME STATE IMPLEMENTATIONS - Entitlement, UserInterface, SystemFilter
+ * DESIGN TIME STATE IMPLEMENTATIONS - Entitlement, UserInterface, SystemFilter, Application
  */
 export interface EntitlementsState extends IDesignTimeState {
   FunctionEntitlements?: IEntitlement[];
@@ -181,7 +181,7 @@ export interface SystemFilterState extends IDesignTimeState {
 export interface ApplicationState extends IDesignTimeState {}
 
 /**
- * USER STATE IMPLEMENTATIONS - Each of the individual Application state
+ * USER STATE IMPLEMENTATIONS - Each of the individual User state implementations
  */
 export interface AdvancedSearchState extends IUserState {
   AdvancedSearches?: IAdvancedSearch[];
@@ -227,7 +227,7 @@ export interface CellValidationState extends IUserState {
 
 export interface ChartState extends IUserState {
   ChartDefinitions?: IChartDefinition[];
-  CurrentChartName?: string; // this will change as we might show more than one?
+  CurrentChartName?: string;
   RefreshRate?: number;
 }
 
