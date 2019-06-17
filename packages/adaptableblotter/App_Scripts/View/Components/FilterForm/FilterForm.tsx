@@ -20,7 +20,7 @@ import {
 } from '../../../PredefinedConfig/Common/Enums';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
-import { IRange } from '../../../PredefinedConfig/Common/Expression/IRange';
+import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
@@ -194,7 +194,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         ? existingColumnFilter.Filter.FilterExpressions[0].Filters
         : [];
 
-    let uiSelectedRangeExpression: IRange =
+    let uiSelectedRangeExpression: QueryRange =
       existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0
         ? existingColumnFilter.Filter.RangeExpressions[0].Ranges[0]
         : ExpressionHelper.CreateEmptyRange();
@@ -377,7 +377,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     this.persistFilter(columnDisplayValues, columnRawValues, userFilters, rangeExpressions);
   }
 
-  onSetCustomExpression(rangeExpression: IRange) {
+  onSetCustomExpression(rangeExpression: QueryRange) {
     let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
@@ -404,7 +404,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     columnDisplayValues: string[],
     columnRawValues: string[],
     userFilters: string[],
-    rangeExpressions: IRange[]
+    rangeExpressions: QueryRange[]
   ): void {
     let expression: Expression;
     expression = ExpressionHelper.CreateSingleColumnExpression(

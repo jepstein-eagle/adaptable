@@ -12,7 +12,7 @@ export default () => {
     <>
       <div id="adaptableBlotter" style={{ margin: 0 }} />
 
-      {/*  <!-- div for the underlying grid - please always call this 'grid' or set the 'vendorContainer' property in IAdaptableBlotterOptions-- >*/}
+      {/*  <!-- div for the underlying grid - please always call this 'grid' or set the 'vendorContainer' property in AdaptableBlotterOptions-- >*/}
 
       <div id="grid" />
 

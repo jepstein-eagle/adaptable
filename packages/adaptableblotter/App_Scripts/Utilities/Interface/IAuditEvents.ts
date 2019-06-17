@@ -1,6 +1,6 @@
 import { IFDC3Schema, IAdaptableBlotterEventData } from './IBlotterEvents';
 import { IAuditLogEntry } from './IAuditLogEntry';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { IState } from '../../PredefinedConfig/IState';
 
 export interface IAuditLogEventArgs extends IFDC3Schema {
@@ -25,7 +25,7 @@ export interface IStatePropertyChangedDetails extends IStateChangedDetails {
 }
 
 export interface IStateObjectChangedDetails extends IStateChangedDetails {
-  objectChanged: IAdaptableBlotterObject;
+  objectChanged: AdaptableBlotterObject;
   stateObjectChangeType: StateObjectChangeType;
 }
 

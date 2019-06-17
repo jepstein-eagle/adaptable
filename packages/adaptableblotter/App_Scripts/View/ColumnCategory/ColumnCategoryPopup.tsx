@@ -20,7 +20,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnCategoryEntityRow } from './ColumnCategoryEntityRow';
@@ -34,7 +34,7 @@ interface ColumnCategoryPopupProps extends StrategyViewPopupProps<ColumnCategory
   onEditColumnCategory: (
     columnCategory: ColumnCategory
   ) => ColumnCategoryRedux.ColumnCategoryEditAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ColumnCategoryPopupComponent extends React.Component<
@@ -201,7 +201,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(ColumnCategoryRedux.ColumnCategoryAdd(ColumnCategory)),
     onEditColumnCategory: (columnCategory: ColumnCategory) =>
       dispatch(ColumnCategoryRedux.ColumnCategoryEdit(columnCategory)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnCategoryStrategyId)
       ),

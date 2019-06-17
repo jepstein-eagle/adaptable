@@ -26,7 +26,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
@@ -38,7 +38,7 @@ interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidation
     cellValidationRule: CellValidationRule
   ) => CellValidationRedux.CellValidationEditAction;
 
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class CellValidationPopupComponent extends React.Component<
@@ -235,7 +235,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(CellValidationRedux.CellValidationAdd(cellValidationRule)),
     onEditCellValidation: (cellValidationRule: CellValidationRule) =>
       dispatch(CellValidationRedux.CellValidationEdit(cellValidationRule)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CellValidationStrategyId)
       ),

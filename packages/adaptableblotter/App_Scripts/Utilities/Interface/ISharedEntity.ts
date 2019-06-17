@@ -1,7 +1,7 @@
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 export interface ISharedEntity {
-  entity: IAdaptableBlotterObject;
+  entity: AdaptableBlotterObject;
   strategy: string;
   timestamp: Date;
   user: string;

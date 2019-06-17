@@ -24,7 +24,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
@@ -33,7 +33,7 @@ interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> 
   CurrentLayoutName: string;
   onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
   onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableConfigEntityState> {
@@ -229,7 +229,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
     onSelectLayout: (selectedSearchName: string) =>
       dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.LayoutStrategyId)),
   };
 }

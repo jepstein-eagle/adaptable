@@ -45,7 +45,7 @@ import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../BlotterOptions/IAdaptableBlotterOptions';
+import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import * as _ from 'lodash';
 import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
@@ -144,7 +144,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public ScheduleService: IScheduleService;
   public SearchService: ISearchService;
 
-  public blotterOptions: IAdaptableBlotterOptions;
+  public blotterOptions: AdaptableBlotterOptions;
   public vendorGridName: any;
   public embedColumnMenu: boolean;
 
@@ -160,7 +160,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
   public hasQuickFilter: boolean;
 
-  constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
+  constructor(blotterOptions: AdaptableBlotterOptions, renderGrid: boolean = true) {
     //we init with defaults then overrides with options passed in the constructor
     this.blotterOptions = BlotterHelper.assignBlotterOptions(blotterOptions);
 

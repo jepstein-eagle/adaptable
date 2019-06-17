@@ -1,4 +1,3 @@
-import * as AdaptableBlotterStates from '../../../PredefinedConfig/IPredefinedConfig';
 import * as Redux from 'redux';
 import { PopupState } from '../../../PredefinedConfig/InternalState/PopupState';
 import { MenuState } from '../../../PredefinedConfig/InternalState/MenuState';

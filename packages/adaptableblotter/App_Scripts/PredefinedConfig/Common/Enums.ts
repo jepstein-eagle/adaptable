@@ -210,7 +210,7 @@ export enum Visibility {
 export enum QueryTab {
   ColumnValue = 'ColumnValue',
   Filter = 'Filter',
-  Range = 'Range',
+  QueryRange = 'QueryRange',
 }
 
 export enum ContextMenuTab {

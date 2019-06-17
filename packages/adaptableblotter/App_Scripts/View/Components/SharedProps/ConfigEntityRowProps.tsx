@@ -2,7 +2,7 @@ import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from 'redux';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IAdaptableBlotterObject } from '../../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
 
@@ -13,9 +13,9 @@ export interface BaseRowProps<View> extends React.ClassAttributes<View> {
 }
 
 export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
-  AdaptableBlotterObject: IAdaptableBlotterObject;
+  AdaptableBlotterObject: AdaptableBlotterObject;
   onDeleteConfirm: Redux.Action;
-  onEdit: (adaptableBlotterObject: IAdaptableBlotterObject) => void;
+  onEdit: (adaptableBlotterObject: AdaptableBlotterObject) => void;
 }
 
 // shared props

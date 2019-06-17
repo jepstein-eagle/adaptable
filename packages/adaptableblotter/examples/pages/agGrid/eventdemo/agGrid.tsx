@@ -5,7 +5,7 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
-import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { IAdaptableBlotter, AdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import {
   IColumnStateChangedEventArgs,
@@ -21,7 +21,7 @@ function InitAdaptableBlotter() {
 
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
 
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
     'state listen demo'
   );

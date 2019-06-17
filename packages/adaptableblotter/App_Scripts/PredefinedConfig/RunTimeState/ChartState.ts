@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 import {
   ChartType,
   OthersCategoryType,
@@ -27,7 +27,7 @@ export interface ChartState extends RunTimeState {
  * These chart properties are specialised for each chart type: they are all nullable types because we use defaults in the DefaultXXXProperties that we assign
  */
 
-export interface ChartDefinition extends IAdaptableBlotterObject {
+export interface ChartDefinition extends AdaptableBlotterObject {
   Name: string;
   Description: string;
   ChartProperties: ChartProperties;
@@ -35,7 +35,7 @@ export interface ChartDefinition extends IAdaptableBlotterObject {
   VisibleRowsOnly: boolean;
 }
 
-export interface ChartProperties extends IAdaptableBlotterObject {
+export interface ChartProperties extends AdaptableBlotterObject {
   // empty inteface that is overriden for each individual chart type
 }
 

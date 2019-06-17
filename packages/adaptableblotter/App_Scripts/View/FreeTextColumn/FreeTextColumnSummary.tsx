@@ -19,7 +19,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
@@ -32,7 +32,7 @@ export interface FreeTextColumnSummaryProps
   onEditFreeTextColumn: (
     FreeTextColumn: FreeTextColumn
   ) => FreeTextColumnRedux.FreeTextColumnEditAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class FreeTextColumnSummaryComponent extends React.Component<
@@ -167,7 +167,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(FreeTextColumnRedux.FreeTextColumnAdd(FreeTextColumn)),
     onEditFreeTextColumn: (FreeTextColumn: FreeTextColumn) =>
       dispatch(FreeTextColumnRedux.FreeTextColumnEdit(FreeTextColumn)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FreeTextColumnStrategyId)
       ),

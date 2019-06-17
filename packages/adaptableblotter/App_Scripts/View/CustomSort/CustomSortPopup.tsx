@@ -25,7 +25,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
@@ -34,7 +34,7 @@ interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupCom
   onAddCustomSort: (customSort: CustomSort) => CustomSortRedux.CustomSortAddAction;
   onEditCustomSort: (customSort: CustomSort) => CustomSortRedux.CustomSortEditAction;
   CustomSorts: Array<CustomSort>;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class CustomSortPopupComponent extends React.Component<
@@ -226,7 +226,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     onEditCustomSort: (customSort: CustomSort) =>
       dispatch(CustomSortRedux.CustomSortEdit(customSort)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CustomSortStrategyId)),
   };
 }

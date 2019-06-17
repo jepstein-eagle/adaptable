@@ -21,7 +21,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 
@@ -31,7 +31,7 @@ export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarS
   StyleClassNames: string[];
   onAddPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarAddAction;
   onEditPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarEditAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class PercentBarSummaryComponent extends React.Component<
@@ -189,7 +189,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(PercentBarRedux.PercentBarAdd(percentBar)),
     onEditPercentBar: (percentBar: PercentBar) =>
       dispatch(PercentBarRedux.PercentBarEdit(percentBar)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PercentBarStrategyId)),
   };
 }

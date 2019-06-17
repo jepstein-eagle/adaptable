@@ -1,7 +1,7 @@
-import { IRangeExpression } from './IRangeExpression';
-import { IFilterExpression } from './IFilterExpression';
-import { IColumnValueExpression } from './IColumnValueExpression';
+import { FilterExpression } from './FilterExpression';
+import { ColumnValueExpression } from './ColumnValueExpression';
 import { createUuid, TypeUuid } from '../../Uuid';
+import { RangeExpression } from './RangeExpression';
 
 /**
  * The main Expression object - comprised of 3 collections: Column Values, Filters and Ranges
@@ -22,9 +22,9 @@ export class Expression {
    * @property {RangeExpressions} - Ranges contained in the expression
    */
   constructor(
-    public ColumnValueExpressions: IColumnValueExpression[],
-    public FilterExpressions: IFilterExpression[],
-    public RangeExpressions: IRangeExpression[]
+    public ColumnValueExpressions: ColumnValueExpression[],
+    public FilterExpressions: FilterExpression[],
+    public RangeExpressions: RangeExpression[]
   ) {
     this.ColumnValueExpressions = ColumnValueExpressions;
     this.FilterExpressions = FilterExpressions;

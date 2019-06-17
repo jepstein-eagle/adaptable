@@ -9,7 +9,7 @@ import {
   IAuditLogEventData,
   IAuditLogEventArgs,
 } from '../Interface/IAuditEvents';
-import { IAuditDestinationOptions, IAuditOptions } from '../../BlotterOptions/IAuditOptions';
+import { IAuditDestinationOptions, AuditOptions } from '../../BlotterOptions/AuditOptions';
 
 export class AuditLogService implements IAuditLogService {
   private auditLogQueue: Array<IAuditLogEntry>;
@@ -329,7 +329,7 @@ export class AuditLogService implements IAuditLogService {
     );
   }
 
-  private shouldAuditToHttpChannel(auditLogOptions: IAuditOptions | undefined): boolean {
+  private shouldAuditToHttpChannel(auditLogOptions: AuditOptions | undefined): boolean {
     if (auditLogOptions) {
       if (auditLogOptions.auditCellEdits) {
         if (auditLogOptions.auditCellEdits.auditToHttpChannel) {

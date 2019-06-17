@@ -1,4 +1,4 @@
-import { IPredefinedConfig } from '../../../../App_Scripts/types';
+import { PredefinedConfig } from '../../../../App_Scripts/types';
 
 export default {
   Dashboard: {
@@ -38,4 +38,4 @@ export default {
       },
     ],
   },
-} as IPredefinedConfig;
+} as PredefinedConfig;

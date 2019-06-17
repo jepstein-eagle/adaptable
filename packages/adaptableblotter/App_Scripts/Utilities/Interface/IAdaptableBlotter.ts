@@ -5,7 +5,7 @@ import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
 
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../../BlotterOptions/IAdaptableBlotterOptions';
+import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 import { ICalendarService } from '../Services/Interface/ICalendarService';
 import { IDataService } from '../Services/Interface/IDataService';
 import { IValidationService } from '../Services/Interface/IValidationService';
@@ -26,7 +26,7 @@ import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState'
 /**
  *  The only interface for the AdaptableBlotter
  *  Contains all the properties and methods that each implemenation must include
- *  Each implemenation has a constructor that contains an IAdaptableBlotterOptions object.
+ *  Each implemenation has a constructor that contains an AdaptableBlotterOptions object.
  *  This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use
  */
 export interface IAdaptableBlotter {
@@ -39,10 +39,10 @@ export interface IAdaptableBlotter {
   /**
    * The main configuration object which contains all the options that users needs to set up the Blotter
    * Most properties are nullable with sensible defaults provided in DefaultBlotterOptions that is merged at initialisation
-   * Each implementation of the Adaptable Blotter has a constructor that contains an IAdaptableBlotterOptions object.
+   * Each implementation of the Adaptable Blotter has a constructor that contains an AdaptableBlotterOptions object.
    * This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use and the way that we can access the underlying grid and its data
    */
-  blotterOptions: IAdaptableBlotterOptions;
+  blotterOptions: AdaptableBlotterOptions;
 
   /**
    * The redux store that we use to manage state

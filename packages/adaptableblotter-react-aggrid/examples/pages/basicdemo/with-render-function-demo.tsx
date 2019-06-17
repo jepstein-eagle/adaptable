@@ -6,7 +6,7 @@ import { GridOptions } from 'ag-grid-community';
 import AdaptableBlotterReact from '../../../src';
 import '../../../src/index.scss';
 
-import { IAdaptableBlotterOptions } from '../../../../adaptableblotter/App_Scripts/types';
+import { AdaptableBlotterOptions } from '../../../../adaptableblotter/App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -16,7 +16,7 @@ const examplesHelper = new ExamplesHelper();
 
 const gridOptions: GridOptions = getGridOptionsTrade(200);
 
-const adaptableBlotterOptions: IAdaptableBlotterOptions = {
+const adaptableBlotterOptions: AdaptableBlotterOptions = {
   vendorGrid: gridOptions,
   primaryKey: 'tradeId',
   userName: 'demo user',

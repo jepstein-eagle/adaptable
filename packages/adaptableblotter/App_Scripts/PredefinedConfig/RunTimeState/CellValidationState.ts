@@ -1,14 +1,14 @@
 import { RunTimeState } from './RunTimeState';
-import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
-import { IRange } from '../Common/Expression/IRange';
+import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 import { Expression } from '../Common/Expression/Expression';
+import { QueryRange } from '../Common/Expression/QueryRange';
 export interface CellValidationState extends RunTimeState {
   CellValidations?: CellValidationRule[];
 }
 
-export interface CellValidationRule extends IAdaptableBlotterObject {
+export interface CellValidationRule extends AdaptableBlotterObject {
   ColumnId: string;
-  Range: IRange;
+  Range: QueryRange;
   ActionMode: 'Warn User' | 'Stop Edit';
   Expression?: Expression;
 }

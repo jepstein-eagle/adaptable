@@ -21,7 +21,7 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { Reminder } from '../../PredefinedConfig/RunTimeState/ReminderState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
@@ -29,7 +29,7 @@ interface ReminderPopupProps extends StrategyViewPopupProps<ReminderPopupCompone
   Reminders: Reminder[];
   onAddReminder: (reminder: Reminder) => ReminderRedux.ReminderAddAction;
   onEditReminder: (reminder: Reminder) => ReminderRedux.ReminderEditAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ReminderPopupComponent extends React.Component<
@@ -198,7 +198,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddReminder: (reminder: Reminder) => dispatch(ReminderRedux.ReminderAdd(reminder)),
     onEditReminder: (reminder: Reminder) => dispatch(ReminderRedux.ReminderEdit(reminder)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ReminderStrategyId)),
   };
 }

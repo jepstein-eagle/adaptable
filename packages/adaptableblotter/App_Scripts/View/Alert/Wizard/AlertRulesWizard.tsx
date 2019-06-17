@@ -15,7 +15,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IRange } from '../../../PredefinedConfig/Common/Expression/IRange';
+import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
 
@@ -294,7 +294,7 @@ export class AlertRulesWizard
     return true;
   }
   public Next(): void {
-    let rangeExpression: IRange = {
+    let rangeExpression: QueryRange = {
       Operator: this.state.Operator,
       Operand1: this.state.Operand1,
       Operand2: this.state.Operand2,

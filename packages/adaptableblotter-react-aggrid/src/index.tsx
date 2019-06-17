@@ -10,7 +10,7 @@ import AbsoluteFlexContainer from './AbsoluteFlexContainer';
 
 import {
   IEventApi,
-  IAdaptableBlotterOptions,
+  AdaptableBlotterOptions,
   ISearchChangedEventArgs,
   IThemeChangedEventArgs,
   IColumnStateChangedEventArgs,
@@ -54,7 +54,7 @@ const AdaptableBlotterReact = ({
 }: {
   onReady?: (ab: AdaptableBlotter) => void;
   agGridTheme?: string;
-  blotterOptions: IAdaptableBlotterOptions;
+  blotterOptions: AdaptableBlotterOptions;
   gridOptions: GridOptions;
   onSearchChanged?: (blotter: AdaptableBlotter, args: ISearchChangedEventArgs) => void;
   onThemeChanged?: (blotter: AdaptableBlotter, args: IThemeChangedEventArgs) => void;

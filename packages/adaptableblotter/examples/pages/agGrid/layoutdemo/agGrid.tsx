@@ -12,7 +12,7 @@ import '../../../../App_Scripts/themes/light.scss';
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 /*
@@ -26,7 +26,7 @@ function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(200);
 
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = {
+  const adaptableBlotterOptions: AdaptableBlotterOptions = {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',

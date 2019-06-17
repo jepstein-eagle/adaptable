@@ -14,7 +14,7 @@ import { StrategyProfile } from '../Components/StrategyProfile';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 
@@ -22,7 +22,7 @@ export interface ColumnFilterSummaryProps
   extends StrategySummaryProps<ColumnFilterSummaryComponent> {
   ColumnFilters: ColumnFilter[];
   onClearFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
   Entitlements: IEntitlement[];
 }
 
@@ -93,7 +93,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onClearFilter: (columnId: string) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnFilterStrategyId)),
   };
 }

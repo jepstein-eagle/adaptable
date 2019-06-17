@@ -5,7 +5,7 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
 import { GridOptions } from 'ag-grid-community';
-import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 /*
@@ -20,7 +20,7 @@ function InitAdaptableBlotter() {
   // turn on mimicing ticking data
   examplesHelper.startTickingDataagGrid(gridOptions);
 
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
     'ticking demo'
   );
@@ -29,7 +29,7 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-let flashingJson = {
+let flashingJson: PredefinedConfig = {
   FlashingCell: {
     FlashingCells: [
       {

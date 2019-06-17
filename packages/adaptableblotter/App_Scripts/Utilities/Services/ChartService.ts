@@ -1,7 +1,7 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 
-import { IColumnValueExpression } from '../../PredefinedConfig/Common/Expression/IColumnValueExpression';
+import { ColumnValueExpression } from '../../PredefinedConfig/Common/Expression/ColumnValueExpression';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
@@ -90,7 +90,7 @@ export class ChartService implements IChartService {
     columns: IColumn[],
     showAverageTotal: boolean
   ): number {
-    let columnValueExpressions: IColumnValueExpression[] = kvps.map(kvp => {
+    let columnValueExpressions: ColumnValueExpression[] = kvps.map(kvp => {
       return {
         ColumnId: kvp.Key,
         ColumnDisplayValues: [kvp.Value],

@@ -6,9 +6,9 @@ import {
 } from './Utilities/Interface/IBlotterEvents';
 import { ISearchChangedEventArgs } from './Utilities/Interface/SearchChanged/ISearchChangedEventArgs';
 
-export { IPredefinedConfig } from './PredefinedConfig/IPredefinedConfig';
+export { PredefinedConfig } from './PredefinedConfig/PredefinedConfig';
 export { IAdaptableBlotter } from './Utilities/Interface/IAdaptableBlotter';
-export { IAdaptableBlotterOptions } from './BlotterOptions/IAdaptableBlotterOptions';
+export { AdaptableBlotterOptions } from './BlotterOptions/AdaptableBlotterOptions';
 
 export {
   IEventApi,

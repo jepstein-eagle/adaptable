@@ -16,11 +16,11 @@ import {
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IRange } from '../../PredefinedConfig/Common/Expression/IRange';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -147,7 +147,7 @@ export interface ReportSetErrorMessageAction extends Redux.Action {
   ErrorMessage: string;
 }
 export interface QuickSearchSetRangeAction extends Redux.Action {
-  Range: IRange;
+  QueryRange: QueryRange;
 }
 export interface QuickSearchClearRangeAction extends Redux.Action {}
 export interface QuickSearchSetVisibleColumnExpressionsAction extends Redux.Action {
@@ -279,9 +279,9 @@ export const ReportSetErrorMessage = (ErrorMessage: string): ReportSetErrorMessa
   type: REPORT_SET_ERROR_MESSAGE,
   ErrorMessage,
 });
-export const QuickSearchSetRange = (Range: IRange): QuickSearchSetRangeAction => ({
+export const QuickSearchSetRange = (QueryRange: QueryRange): QuickSearchSetRangeAction => ({
   type: QUICK_SEARCH_SET_RANGE,
-  Range,
+  QueryRange,
 });
 
 export const QuickSearchClearRange = (): QuickSearchClearRangeAction => ({
@@ -421,7 +421,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
     }
     case QUICK_SEARCH_SET_RANGE: {
       return Object.assign({}, state, {
-        QuickSearchRange: (<QuickSearchSetRangeAction>action).Range,
+        QuickSearchRange: (<QuickSearchSetRangeAction>action).QueryRange,
       });
     }
     case QUICK_SEARCH_CLEAR_RANGE: {

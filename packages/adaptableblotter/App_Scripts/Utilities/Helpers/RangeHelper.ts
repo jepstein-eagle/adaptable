@@ -1,15 +1,15 @@
 import { IKeyValuePair } from '../Interface/IKeyValuePair';
 import { LeafExpressionOperator, DataType } from '../../PredefinedConfig/Common/Enums';
-import { IRange } from '../../PredefinedConfig/Common/Expression/IRange';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IColumn } from '../Interface/IColumn';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
+import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 
 export function CreateValueRange(
   operator: LeafExpressionOperator,
   operand1: any,
   operand2: any
-): IRange {
+): QueryRange {
   return {
     Operator: operator,
     Operand1: operand1 == null ? null : operand1.trim(),
@@ -45,7 +45,7 @@ export function GetDateOperatorPairs(): IKeyValuePair[] {
   return [];
 }
 
-export function CreateValueRangeFromOperand(rangeText: string): IRange {
+export function CreateValueRangeFromOperand(rangeText: string): QueryRange {
   // if its empty then return null
   if (StringExtensions.IsNullOrEmpty(rangeText)) {
     return null;

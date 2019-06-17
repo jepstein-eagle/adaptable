@@ -1,13 +1,13 @@
 import { RunTimeState } from './RunTimeState';
-import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { ISchedule } from '../Common/ISchedule';
+import { Schedule } from '../Common/Schedule';
 
 export interface ReminderState extends RunTimeState {
   Reminders?: Reminder[];
 }
 
-export interface Reminder extends IAdaptableBlotterObject {
+export interface Reminder extends AdaptableBlotterObject {
   Alert: IAdaptableAlert;
-  Schedule: ISchedule;
+  Schedule: Schedule;
 }

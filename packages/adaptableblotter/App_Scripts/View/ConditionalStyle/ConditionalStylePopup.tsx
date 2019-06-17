@@ -24,7 +24,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 
@@ -39,7 +39,7 @@ interface ConditionalStylePopupProps
   onEditConditionalStyle: (
     condiditionalStyleCondition: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ConditionalStylePopupComponent extends React.Component<
@@ -239,7 +239,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
     onEditConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)
       ),

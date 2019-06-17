@@ -12,12 +12,12 @@ import '../../../../App_Scripts/themes/light.scss';
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
 
 import config from './config';
 
 import jsonData from './dataset.json';
-import { IPredefinedConfig } from '../../../../types';
+import { PredefinedConfig } from '../../../../types';
 
 LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
 
@@ -226,13 +226,13 @@ function InitAdaptableBlotter() {
       abColDefObject: {},
     },
   };
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = {
+  const adaptableBlotterOptions: AdaptableBlotterOptions = {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
     blotterId: 'config blotter demo',
     licenceKey: process.env.ENTERPRISE_LICENSE,
-    predefinedConfig: config as IPredefinedConfig,
+    predefinedConfig: config as PredefinedConfig,
   };
 
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);

@@ -1,5 +1,5 @@
 import { RunTimeState } from './RunTimeState';
-import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 export interface ShortcutState extends RunTimeState {
   Shortcuts?: Shortcut[];
 }
@@ -7,7 +7,7 @@ export interface ShortcutState extends RunTimeState {
 /**
  * Used to define a Keyboard Shortcut as used in the Shortcuts function
  */
-export interface Shortcut extends IAdaptableBlotterObject {
+export interface Shortcut extends AdaptableBlotterObject {
   /**
    * Key which when pressed on keyboard triggers the shortcut
    */

@@ -5,7 +5,7 @@ import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
 import { ButtonShare } from './ButtonShare';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 
 export interface EntityListActionButtonsProps

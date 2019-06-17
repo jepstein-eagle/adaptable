@@ -19,7 +19,7 @@ import { ListGroupItem, InputGroup, Button, Glyphicon, ListGroup } from 'react-b
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
 import ColumnHelper from '../../Utilities/Helpers/ColumnHelper';
-import { IRange } from '../../PredefinedConfig/Common/Expression/IRange';
+import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.
@@ -142,7 +142,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 >
                   <div
                     className="ab_div_like_button"
-                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)}
+                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                     style={{ cursor: 'pointer' }}
                   >
                     <AdaptableBlotterForm inline>
@@ -166,7 +166,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 <ListGroupItem key={columnId + index} style={previewListBoxItemStyle}>
                   <div
                     className="ab_div_like_button"
-                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)}
+                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                     style={{ cursor: 'pointer' }}
                   >
                     <AdaptableBlotterForm inline>
@@ -199,7 +199,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 >
                   <div
                     className="ab_div_like_button"
-                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)}
+                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                     style={{ cursor: 'pointer' }}
                   >
                     <AdaptableBlotterForm inline>
@@ -223,7 +223,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 <ListGroupItem key={columnId + index} style={previewListBoxItemStyle}>
                   <div
                     className="ab_div_like_button"
-                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)}
+                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                     style={{ cursor: 'pointer' }}
                   >
                     <AdaptableBlotterForm inline>
@@ -326,7 +326,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
       this.props.onSelectedColumnChange(columnId, QueryTab.Filter);
       return;
     }
-    this.props.onSelectedColumnChange(columnId, QueryTab.Range);
+    this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange);
   }
 
   ensureSelectedColumnVisible(columnId: string) {
@@ -337,7 +337,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     }
   }
 
-  private getOperand1Value(range: IRange): string {
+  private getOperand1Value(range: QueryRange): string {
     if (range.Operand1Type == RangeOperandType.Column) {
       let col: IColumn = this.props.ColumnsList.find(c => c.ColumnId == range.Operand1);
       return col ? '[' + col.FriendlyName + ']' : '';
@@ -346,7 +346,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     }
   }
 
-  private getOperand2Value(range: IRange): string {
+  private getOperand2Value(range: QueryRange): string {
     if (range.Operand2Type == RangeOperandType.Column) {
       let col: IColumn = this.props.ColumnsList.find(c => c.ColumnId == range.Operand2);
       return col ? '[' + col.FriendlyName + ']' : '';

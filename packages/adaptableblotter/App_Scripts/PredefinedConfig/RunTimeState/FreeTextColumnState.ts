@@ -1,10 +1,10 @@
 import { RunTimeState } from './RunTimeState';
-import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 export interface FreeTextColumnState extends RunTimeState {
   FreeTextColumns?: FreeTextColumn[];
 }
 
-export interface FreeTextColumn extends IAdaptableBlotterObject {
+export interface FreeTextColumn extends AdaptableBlotterObject {
   ColumnId: string;
   DefaultValue: any;
   FreeTextStoredValues: FreeTextStoredValue[];

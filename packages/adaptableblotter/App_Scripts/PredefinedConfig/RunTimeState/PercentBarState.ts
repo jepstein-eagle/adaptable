@@ -1,10 +1,10 @@
 import { RunTimeState } from './RunTimeState';
-import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 export interface PercentBarState extends RunTimeState {
   PercentBars?: PercentBar[];
 }
 
-export interface PercentBar extends IAdaptableBlotterObject {
+export interface PercentBar extends AdaptableBlotterObject {
   ColumnId: string;
   MinValue?: number;
   MaxValue?: number;

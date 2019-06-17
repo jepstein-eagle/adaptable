@@ -16,7 +16,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { DayOfWeek, StateChangedTrigger } from '../../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { ISchedule } from '../../../PredefinedConfig/Common/ISchedule';
+import { Schedule } from '../../../PredefinedConfig/Common/Schedule';
 
 export interface ReminderScheduleWizardProps extends AdaptableWizardStepProps<Reminder> {}
 
@@ -297,7 +297,7 @@ export class ReminderScheduleWizard
     return true;
   }
   public Next(): void {
-    let schedule: ISchedule = {
+    let schedule: Schedule = {
       Hour: this.state.Hour,
       Minute: this.state.Minute,
       OneOffDate: this.state.IsRecurringDate ? null : this.state.OneOffDate,

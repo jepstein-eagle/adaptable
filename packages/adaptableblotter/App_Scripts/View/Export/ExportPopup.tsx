@@ -25,7 +25,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ReportWizard } from './Wizard/ReportWizard';
@@ -50,7 +50,7 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
     Report: Report,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ) => SystemRedux.ReportStopLiveAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ExportPopupComponent extends React.Component<ExportPopupProps, EditableConfigEntityState> {
@@ -264,7 +264,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       Report: Report,
       exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
     ) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId)),
   };
 }

@@ -1,9 +1,9 @@
 import { AdaptableBlotter } from './AdaptableBlotter';
-import { IAdaptableBlotterOptions } from '../BlotterOptions/IAdaptableBlotterOptions';
+import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 
 export module BlotterFactoryHypergrid {
   export function CreateAdaptableBlotter(
-    blotterOptions: IAdaptableBlotterOptions,
+    blotterOptions: AdaptableBlotterOptions,
     renderGrid: boolean
   ): AdaptableBlotter {
     return new AdaptableBlotter(blotterOptions, renderGrid);

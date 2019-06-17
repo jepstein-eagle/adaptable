@@ -25,7 +25,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
@@ -39,7 +39,7 @@ interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupCompo
   onConfirmWarningCellValidation: (
     confirmation: IUIConfirmation
   ) => PopupRedux.PopupShowConfirmationAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class PlusMinusPopupComponent extends React.Component<
@@ -282,7 +282,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(PlusMinusRedux.PlusMinusRuleEdit(plusMinusRule)),
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),
   };
 }

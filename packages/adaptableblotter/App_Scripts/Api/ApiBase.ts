@@ -14,8 +14,8 @@ export abstract class ApiBase {
   }
 
   /**
-   * Base api Helper method to ensure that the IAdaptableBlotterObject being mutated is not null or undefined
-   * @param item the IAdaptableBlotterObject being checked
+   * Base api Helper method to ensure that the AdaptableBlotterObject being mutated is not null or undefined
+   * @param item the AdaptableBlotterObject being checked
    * @param name the name of the object if it has one (e.g. if its a search)
    * @param type the actual type of the object being checked
    */

@@ -75,9 +75,8 @@ import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/Reports/IPPStyle';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { IRange } from '../PredefinedConfig/Common/Expression/IRange';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from '../BlotterOptions/IAdaptableBlotterOptions';
+import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
@@ -127,6 +126,7 @@ import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidat
 import { ColumnFilter } from '../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/RunTimeState/LayoutState';
 import { CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
+import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;
@@ -135,7 +135,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public adaptableBlotterStore: IAdaptableBlotterStore;
 
-  public blotterOptions: IAdaptableBlotterOptions;
+  public blotterOptions: AdaptableBlotterOptions;
 
   public vendorGridName: any;
 
@@ -184,7 +184,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private renderGrid: boolean;
 
-  constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
+  constructor(blotterOptions: AdaptableBlotterOptions, renderGrid: boolean = true) {
     this.renderGrid = renderGrid;
     // we create the Blotter Options by merging the values provided by the user with the defaults (where no value has been set)
     this.blotterOptions = BlotterHelper.assignBlotterOptions(blotterOptions);
@@ -2116,7 +2116,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         quickSearchState.DisplayAction != DisplayAction.HighlightCell &&
         StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
       ) {
-        const quickSearchRange: IRange = this.getState().System.QuickSearchRange;
+        const quickSearchRange: QueryRange = this.getState().System.QuickSearchRange;
         const column: IColumn = ColumnHelper.getColumnFromId(
           columnId,
           this.api.gridApi.getColumns()

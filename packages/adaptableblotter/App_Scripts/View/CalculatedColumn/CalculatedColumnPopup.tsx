@@ -26,7 +26,7 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 interface CalculatedColumnPopupProps
   extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {
@@ -39,7 +39,7 @@ interface CalculatedColumnPopupProps
   CalculatedColumns: Array<CalculatedColumn>;
   CalculatedColumnErrorMessage: string;
   IsExpressionValid: (expression: string) => SystemRedux.CalculatedColumnIsExpressionValidAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class CalculatedColumnPopupComponent extends React.Component<
@@ -231,7 +231,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(CalculatedColumnRedux.CalculatedColumnEdit(calculatedColumn)),
     IsExpressionValid: (expression: string) =>
       dispatch(SystemRedux.CalculatedColumnIsExpressionValid(expression)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CalculatedColumnStrategyId)
       ),

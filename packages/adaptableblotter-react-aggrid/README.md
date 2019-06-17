@@ -24,7 +24,7 @@ import 'adaptableblotter-react-aggrid/themes/light.css'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 
-const adaptableBlotterOptions: IAdaptableBlotterOptions = {
+const adaptableBlotterOptions: AdaptableBlotterOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
   blotterId: 'react demo',
@@ -44,7 +44,7 @@ export default () => <AdaptableBlotterReact
 #### Mandatory:
 
 - gridOptions: ag-Grid GridOptions object
-- blotterOptions: IAdaptableBlotterOptions object
+- blotterOptions: AdaptableBlotterOptions object
 
 #### Optional
 

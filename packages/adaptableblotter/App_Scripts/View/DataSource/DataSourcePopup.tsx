@@ -21,7 +21,7 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
 import { Helper } from '../../Utilities/Helpers/Helper';
 
@@ -32,7 +32,7 @@ interface DataSourcePopupProps extends StrategyViewPopupProps<DataSourcePopupCom
   onSelectDataSource: (SelectedDataSource: string) => DataSourceRedux.DataSourceSelectAction;
   DataSources: Array<DataSource>;
   CurrentDataSource: string;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class DataSourcePopupComponent extends React.Component<
@@ -217,7 +217,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(DataSourceRedux.DataSourceEdit(DataSource)),
     onSelectDataSource: (SelectedDataSource: string) =>
       dispatch(DataSourceRedux.DataSourceSelect(SelectedDataSource)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.DataSourceStrategyId)),
   };
 }

@@ -25,12 +25,12 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
   onAddUserFilter: (userFilter: UserFilter) => UserFilterRedux.UserFilterAddAction;
   onEditUserFilter: (userFilter: UserFilter) => UserFilterRedux.UserFilterEditAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class UserFilterPopupComponent extends React.Component<
@@ -229,7 +229,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(UserFilterRedux.UserFilterAdd(userFilter)),
     onEditUserFilter: (userFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterEdit(userFilter)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId)),
   };
 }

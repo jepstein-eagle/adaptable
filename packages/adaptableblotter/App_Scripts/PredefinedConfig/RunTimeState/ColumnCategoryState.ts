@@ -1,10 +1,10 @@
 import { RunTimeState } from './RunTimeState';
-import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 export interface ColumnCategoryState extends RunTimeState {
   ColumnCategories?: ColumnCategory[];
 }
 
-export interface ColumnCategory extends IAdaptableBlotterObject {
+export interface ColumnCategory extends AdaptableBlotterObject {
   ColumnCategoryId: string;
   ColumnIds: string[];
 }

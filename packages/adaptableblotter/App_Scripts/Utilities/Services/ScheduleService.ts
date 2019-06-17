@@ -6,7 +6,7 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DateExtensions } from '../Extensions/DateExtensions';
 import { ReminderState, Reminder } from '../../PredefinedConfig/RunTimeState/ReminderState';
 import { ExportState, Report } from '../../PredefinedConfig/RunTimeState/ExportState';
-import { ISchedule } from '../../PredefinedConfig/Common/ISchedule';
+import { Schedule } from '../../PredefinedConfig/Common/Schedule';
 import { IReminderStrategy } from '../../Strategy/Interface/IReminderStrategy';
 import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
 
@@ -31,7 +31,7 @@ export class ScheduleService implements IScheduleService {
     this.exportJobs = [];
 
     // create the midnight reload job
-    let reloadSchedule: ISchedule = {
+    let reloadSchedule: Schedule = {
       Hour: 0,
       Minute: 1,
       DaysOfWeek: [0, 1, 2, 3, 4, 5, 6],
@@ -87,7 +87,7 @@ export class ScheduleService implements IScheduleService {
     }
   }
 
-  private getDateFromSchedule(schedule: ISchedule): Date {
+  private getDateFromSchedule(schedule: Schedule): Date {
     let date: Date = null;
     if (schedule.OneOffDate != null) {
       date = new Date(schedule.OneOffDate);

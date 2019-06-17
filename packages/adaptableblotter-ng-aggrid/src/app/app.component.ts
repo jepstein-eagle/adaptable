@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GridOptions } from 'ag-grid-community';
-import { IAdaptableBlotterOptions } from '../../../adaptableblotter/App_Scripts/types';
+import { AdaptableBlotterOptions } from '../../../adaptableblotter/App_Scripts/types';
 
 @Component({
   selector: 'app-root',
@@ -308,7 +308,7 @@ export class AppComponent {
     ],
   };
 
-  theOptions: IAdaptableBlotterOptions = {
+  theOptions: AdaptableBlotterOptions = {
     primaryKey: 'OrderId',
     userName: 'demo user',
     blotterId: 'angular wrapper',

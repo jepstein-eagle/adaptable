@@ -12,8 +12,7 @@ import '../../../src/base.scss';
 import '../../../src/themes/light.scss';
 import '../../../src/themes/dark.scss';
 
-import { DataGenerator } from '../../../../adaptableblotter/Harness/DataGenerator';
-import { IAdaptableBlotterOptions } from '../../../../adaptableblotter/App_Scripts/types';
+import { AdaptableBlotterOptions } from '../../../../adaptableblotter/App_Scripts/types';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
@@ -26,7 +25,7 @@ LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
 const dataGen = new DataGenerator();
 const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
 
-const adaptableBlotterOptions: IAdaptableBlotterOptions = {
+const adaptableBlotterOptions: AdaptableBlotterOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
   blotterId: 'basic demo',

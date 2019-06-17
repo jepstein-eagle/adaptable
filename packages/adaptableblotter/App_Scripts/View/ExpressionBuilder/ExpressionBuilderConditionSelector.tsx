@@ -18,7 +18,6 @@ import {
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IRawValueDisplayValuePair } from '../UIInterfaces';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
-import { IRange } from '../../PredefinedConfig/Common/Expression/IRange';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
@@ -26,6 +25,7 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { Waiting } from '../Components/FilterForm/Waiting';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -49,7 +49,7 @@ export interface ExpressionBuilderConditionSelectorState {
   SelectedColumnDisplayValues: Array<any>;
   AllFilterExpresions: Array<string>;
   SelectedFilterExpressions: Array<string>;
-  SelectedColumnRanges: Array<IRange>;
+  SelectedColumnRanges: Array<QueryRange>;
   QueryBuildStatus: QueryBuildStatus;
   ShowWaitingMessage: boolean;
   SelectedTab: QueryTab;
@@ -101,7 +101,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
       } else {
         let selectedColumnDisplayValues: Array<any>;
         let selectedColumnFilterExpressions: Array<string>;
-        let selectedColumnRanges: Array<IRange>;
+        let selectedColumnRanges: Array<QueryRange>;
 
         // get selected column values
         let keyValuePair = theProps.Expression.ColumnValueExpressions.find(
@@ -364,8 +364,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                           Filters
                         </NavItem>
                         <NavItem
-                          eventKey={QueryTab.Range}
-                          onClick={() => this.onTabChanged(QueryTab.Range)}
+                          eventKey={QueryTab.QueryRange}
+                          onClick={() => this.onTabChanged(QueryTab.QueryRange)}
                         >
                           Ranges
                         </NavItem>
@@ -403,8 +403,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                             />
                           )}
                         </Tab.Pane>
-                        <Tab.Pane eventKey={QueryTab.Range}>
-                          {this.state.SelectedTab == QueryTab.Range && (
+                        <Tab.Pane eventKey={QueryTab.QueryRange}>
+                          {this.state.SelectedTab == QueryTab.QueryRange && (
                             <ExpressionBuilderRanges
                               cssClassName={cssClassName}
                               SelectedColumn={selectedColumn}
@@ -438,7 +438,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     this.props.onSelectedColumnChange('', QueryTab.ColumnValue);
   }
 
-  onSelectedColumnRangesChange(selectedRanges: Array<IRange>) {
+  onSelectedColumnRangesChange(selectedRanges: Array<QueryRange>) {
     //we assume that we manipulate a cloned object. i.e we are not mutating the state
     let colRangesExpression = this.props.Expression.RangeExpressions;
     let rangesCol = colRangesExpression.find(x => x.ColumnId == this.props.SelectedColumnId);

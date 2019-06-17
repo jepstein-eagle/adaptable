@@ -1,5 +1,5 @@
 import { cloneDeepWith, isPlainObject } from 'lodash';
-import { IAdaptableBlotterOptions } from '../../BlotterOptions/IAdaptableBlotterOptions';
+import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 import { DefaultAdaptableBlotterOptions } from '../Defaults/DefaultAdaptableBlotterOptions';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
@@ -9,11 +9,11 @@ import { ILicenceInfo } from '../Interface/ILicenceInfo';
 import { LicenceScopeType } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 export function assignBlotterOptions(
-  blotterOptions: IAdaptableBlotterOptions
-): IAdaptableBlotterOptions {
+  blotterOptions: AdaptableBlotterOptions
+): AdaptableBlotterOptions {
   const returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions);
   returnBlotterOptions.auditOptions = Object.assign(
     {},
@@ -95,7 +95,7 @@ export function isValidPrimaryKey(blotter: IAdaptableBlotter, columns: IColumn[]
   return true;
 }
 
-export function isConfigServerEnabled(blotterOptions: IAdaptableBlotterOptions): boolean {
+export function isConfigServerEnabled(blotterOptions: AdaptableBlotterOptions): boolean {
   return (
     blotterOptions.configServerOptions != null &&
     blotterOptions.configServerOptions.enableConfigServer != null &&
@@ -153,8 +153,8 @@ export function checkLicenceKey(licenceInfo: ILicenceInfo): void {
 }
 
 export function BlotterObjectExistsInState(
-  array: IAdaptableBlotterObject[],
-  itemToCheck: IAdaptableBlotterObject
+  array: AdaptableBlotterObject[],
+  itemToCheck: AdaptableBlotterObject
 ): boolean {
   if (array == null) {
     return false;

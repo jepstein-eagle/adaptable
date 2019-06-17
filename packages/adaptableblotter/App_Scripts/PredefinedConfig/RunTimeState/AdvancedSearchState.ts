@@ -1,6 +1,6 @@
 import { RunTimeState } from './RunTimeState';
 import { Expression } from '../Common/Expression/Expression';
-import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 
 /**
  * The Predefined Configuration for Advanced Search
@@ -14,7 +14,7 @@ export interface AdvancedSearchState extends RunTimeState {
  * The Advanced Search entity.
  * Contains the name of the Search and an Expression (the query object used in many IAdaptableBlotterObjects)
  */
-export interface AdvancedSearch extends IAdaptableBlotterObject {
+export interface AdvancedSearch extends AdaptableBlotterObject {
   Name: string;
   Expression: Expression;
 }

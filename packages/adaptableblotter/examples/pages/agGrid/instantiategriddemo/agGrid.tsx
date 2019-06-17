@@ -5,7 +5,7 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
 import { GridOptions, Grid } from 'ag-grid-community';
-import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 /*
@@ -24,7 +24,7 @@ function InitAdaptableBlotter() {
   gridcontainer.innerHTML = '';
   const grid = new Grid(gridcontainer, gridOptions);
 
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
     'instantiate demo'
   );

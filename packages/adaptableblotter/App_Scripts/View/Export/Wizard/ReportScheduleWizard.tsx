@@ -22,7 +22,7 @@ import {
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { ISchedule } from '../../../PredefinedConfig/Common/ISchedule';
+import { Schedule } from '../../../PredefinedConfig/Common/Schedule';
 
 export interface ReportScheduleWizardProps extends AdaptableWizardStepProps<Report> {}
 
@@ -386,7 +386,7 @@ export class ReportScheduleWizard
   public Next(): void {
     // TODO:  need to build up the object ;(
     if (this.state.HasAutoExport) {
-      let schedule: ISchedule = {
+      let schedule: Schedule = {
         Hour: this.state.Hour,
         Minute: this.state.Minute,
         OneOffDate: this.state.IsRecurringDate ? null : this.state.OneOffDate,

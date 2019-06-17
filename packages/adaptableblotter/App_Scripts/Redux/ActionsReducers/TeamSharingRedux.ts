@@ -2,7 +2,7 @@ import { TeamSharingState } from '../../PredefinedConfig/InternalState/TeamShari
 import * as Redux from 'redux';
 import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 export const TEAMSHARING_SHARE = 'TEAMSHARING_SHARE';
 export const TEAMSHARING_SET = 'TEAMSHARING_SET';
@@ -10,7 +10,7 @@ export const TEAMSHARING_IMPORT_ITEM = 'TEAMSHARING_IMPORT_ITEM';
 export const TEAMSHARING_GET = 'TEAMSHARING_GET';
 
 export interface TeamSharingShareAction extends Redux.Action {
-  Entity: IAdaptableBlotterObject;
+  Entity: AdaptableBlotterObject;
   Strategy: string;
 }
 
@@ -19,14 +19,14 @@ export interface TeamSharingSetAction extends Redux.Action {
 }
 
 export interface TeamSharingImportItemAction extends Redux.Action {
-  Entity: IAdaptableBlotterObject;
+  Entity: AdaptableBlotterObject;
   Strategy: string;
 }
 
 export interface TeamSharingGetAction extends Redux.Action {}
 
 export const TeamSharingShare = (
-  Entity: IAdaptableBlotterObject,
+  Entity: AdaptableBlotterObject,
   Strategy: string
 ): TeamSharingShareAction => ({
   type: TEAMSHARING_SHARE,
@@ -40,7 +40,7 @@ export const TeamSharingSet = (Entities: ISharedEntity[]): TeamSharingSetAction 
 });
 
 export const TeamSharingImportItem = (
-  Entity: IAdaptableBlotterObject,
+  Entity: AdaptableBlotterObject,
   Strategy: string
 ): TeamSharingImportItemAction => ({
   type: TEAMSHARING_IMPORT_ITEM,

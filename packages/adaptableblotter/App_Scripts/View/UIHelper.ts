@@ -11,7 +11,7 @@ import {
   DayOfWeek,
 } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterOptions } from '../BlotterOptions/IAdaptableBlotterOptions';
+import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
@@ -22,7 +22,7 @@ import {
   INFO_BSSTYLE,
 } from '../Utilities/Constants/StyleConstants';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
-import { ISchedule } from '../PredefinedConfig/Common/ISchedule';
+import { Schedule } from '../PredefinedConfig/Common/Schedule';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export function getDefaultColors(): string[] {
@@ -103,7 +103,7 @@ export function getPlaceHolderforDataType(dataType: DataType) {
 }
 
 export function getModalContainer(
-  blotterOptions: IAdaptableBlotterOptions,
+  blotterOptions: AdaptableBlotterOptions,
   document: Document
 ): HTMLElement {
   let modalContainer: HTMLElement;
@@ -124,7 +124,7 @@ export function getModalContainer(
 }
 
 export function getChartContainer(
-  blotterOptions: IAdaptableBlotterOptions,
+  blotterOptions: AdaptableBlotterOptions,
   document: Document,
   showModal: boolean
 ): HTMLElement {
@@ -153,7 +153,7 @@ export function getChartContainer(
 }
 
 export function isValidUserChartContainer(
-  blotterOptions: IAdaptableBlotterOptions,
+  blotterOptions: AdaptableBlotterOptions,
   document: Document
 ): boolean {
   if (StringExtensions.IsNotNullOrEmpty(blotterOptions.containerOptions.chartContainer)) {
@@ -251,7 +251,7 @@ export function getGlyphForSystemStatusButton(statusColour: StatusColour): strin
   }
 }
 
-export function GetScheduleDescription(schedule: ISchedule): string {
+export function GetScheduleDescription(schedule: Schedule): string {
   if (schedule == null) {
     return '[No Schedule]';
   }

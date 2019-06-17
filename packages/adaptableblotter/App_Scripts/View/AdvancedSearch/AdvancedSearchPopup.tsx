@@ -26,7 +26,7 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { PRIMARY_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
   AdvancedSearches: AdvancedSearch[];
@@ -40,7 +40,7 @@ interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearch
   onSelectAdvancedSearch: (
     SelectedSearchName: string
   ) => AdvancedSearchRedux.AdvancedSearchSelectAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class AdvancedSearchPopupComponent extends React.Component<
@@ -245,7 +245,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(AdvancedSearchRedux.AdvancedSearchEdit(advancedSearch)),
     onSelectAdvancedSearch: (selectedSearchName: string) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AdvancedSearchStrategyId)
       ),

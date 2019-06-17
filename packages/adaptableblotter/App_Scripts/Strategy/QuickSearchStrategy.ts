@@ -4,7 +4,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
-import { IRange } from '../PredefinedConfig/Common/Expression/IRange';
+import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 import RangeHelper from '../Utilities/Helpers/RangeHelper';
 import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
 import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
@@ -32,7 +32,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         SystemRedux.QuickSearchClearVisibleColumnExpressions()
       );
     } else {
-      let quickSearchRange: IRange = RangeHelper.CreateValueRangeFromOperand(
+      let quickSearchRange: QueryRange = RangeHelper.CreateValueRangeFromOperand(
         this.blotter.api.quickSearchApi.getQuickSearchValue()
       );
       this.blotter.adaptableBlotterStore.TheStore.dispatch(

@@ -27,13 +27,13 @@ import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import BlotterHelper from '../../Utilities/Helpers/BlotterHelper';
 import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
   AlertDefinitions: AlertDefinition[];
   onAddAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionAddAction;
   onEditAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionEditAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfigEntityState> {
@@ -223,7 +223,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(alert)),
     onEditAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(alert)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId)),
   };
 }

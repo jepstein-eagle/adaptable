@@ -1,7 +1,7 @@
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
-import { IAdaptableBlotterObject } from '../../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
 
 export interface AdaptableWizardStep {
   canNext(): boolean;
@@ -48,6 +48,6 @@ export interface IAdaptableWizardProps<View> extends React.ClassAttributes<View>
 // props for a wizard that wraps a config entity (without an expression)
 export interface IAdaptableBlotterObjectAdaptableWizardProps<View>
   extends IAdaptableWizardProps<View> {
-  ConfigEntities: IAdaptableBlotterObject[];
-  EditedAdaptableBlotterObject: IAdaptableBlotterObject;
+  ConfigEntities: AdaptableBlotterObject[];
+  EditedAdaptableBlotterObject: AdaptableBlotterObject;
 }

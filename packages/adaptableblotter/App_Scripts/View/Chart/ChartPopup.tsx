@@ -30,7 +30,7 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { CategoryChartWizard } from './CategoryChart/Wizard/CategoryChartWizard';
@@ -44,7 +44,7 @@ interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
   onShowChart: () => SystemRedux.ChartSetChartVisibiityAction;
   ChartDefinitions: Array<ChartDefinition>;
   CurrentChartDefinition: ChartDefinition;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfigEntityState> {
@@ -300,7 +300,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
     onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId)),
   };
 }

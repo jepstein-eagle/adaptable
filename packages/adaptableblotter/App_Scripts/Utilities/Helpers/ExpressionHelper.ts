@@ -5,9 +5,8 @@ import {
   DistinctCriteriaPairValue,
   RangeOperandType,
 } from '../../PredefinedConfig/Common/Enums';
-import { IRange } from '../../PredefinedConfig/Common/Expression/IRange';
-import { IRangeExpression } from '../../PredefinedConfig/Common/Expression/IRangeExpression';
-import { IColumnValueExpression } from '../../PredefinedConfig/Common/Expression/IColumnValueExpression';
+
+import { ColumnValueExpression } from '../../PredefinedConfig/Common/Expression/ColumnValueExpression';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
@@ -18,6 +17,8 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
+import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -39,7 +40,7 @@ export function CreateSingleColumnExpression(
   columnDisplayValues: Array<string>,
   columnRawValues: Array<string>,
   userFilters: Array<string>,
-  ranges: Array<IRange>
+  ranges: Array<QueryRange>
 ) {
   return new Expression(
     (columnDisplayValues && columnDisplayValues.length > 0) ||
@@ -74,7 +75,7 @@ export function ConvertExpressionToString(
     let columnToString = '';
 
     // Column Display Values
-    let columnValueExpression: IColumnValueExpression = Expression.ColumnValueExpressions.find(
+    let columnValueExpression: ColumnValueExpression = Expression.ColumnValueExpressions.find(
       x => x.ColumnId == columnId
     );
     if (columnValueExpression) {
@@ -99,7 +100,7 @@ export function ConvertExpressionToString(
     }
 
     // Column Ranges
-    let columnRange: IRangeExpression = Expression.RangeExpressions.find(
+    let columnRange: RangeExpression = Expression.RangeExpressions.find(
       x => x.ColumnId == columnId
     );
     if (columnRange) {
@@ -123,8 +124,8 @@ export function ConvertExpressionToString(
   return returnValue;
 }
 
-// Converts a Range to a readable string
-export function ConvertRangeToString(range: IRange, columns: IColumn[]): string {
+// Converts a QueryRange to a readable string
+export function ConvertRangeToString(range: QueryRange, columns: IColumn[]): string {
   let returnValue: string = range.Operator + ' ' + range.Operand1;
   if (StringExtensions.IsNotNullOrEmpty(range.Operand2)) {
     returnValue += range.Operand2;
@@ -275,7 +276,7 @@ export function IsSatisfied(
 }
 
 function ColumnValueExpressionToString(
-  columnValueExpression: IColumnValueExpression,
+  columnValueExpression: ColumnValueExpression,
   columnFriendlyName: string,
   includeColumnName: boolean
 ): string {
@@ -312,7 +313,7 @@ function UserFiltersToString(
 }
 
 function RangesToString(
-  rangeExpression: IRangeExpression,
+  rangeExpression: RangeExpression,
   columnFriendlyName: string,
   columns: IColumn[],
   includeColumnName: boolean
@@ -592,7 +593,7 @@ export function IsExpressionValid(expression: Expression): boolean {
   });
 }
 
-export function IsEmptyRange(range: IRange): boolean {
+export function IsEmptyRange(range: QueryRange): boolean {
   return (
     StringExtensions.IsNullOrEmpty(range.Operand1) && StringExtensions.IsNullOrEmpty(range.Operand2)
   );
@@ -602,7 +603,7 @@ export function CreateEmptyExpression(): Expression {
   return new Expression([], [], []);
 }
 
-export function CreateEmptyRange(): IRange {
+export function CreateEmptyRange(): QueryRange {
   return {
     Operator: LeafExpressionOperator.Unknown,
     Operand1: '',
@@ -613,7 +614,7 @@ export function CreateEmptyRange(): IRange {
 }
 
 export function GetRangeEvaluation(
-  rangeExpression: IRange,
+  rangeExpression: QueryRange,
   newValue: any,
   initialValue: any,
   column: IColumn,

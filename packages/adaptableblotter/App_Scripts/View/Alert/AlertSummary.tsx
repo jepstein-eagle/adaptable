@@ -19,13 +19,13 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AlertHelper } from '../../Utilities/Helpers/AlertHelper';
 import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
-import { IAdaptableBlotterObject } from '../../PredefinedConfig/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComponent> {
   Alerts: AlertDefinition[];
   onAddAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionAddAction;
   onEditAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionEditAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class AlertSummaryComponent extends React.Component<
@@ -165,7 +165,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onAddAlert: (Alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(Alert)),
     onEditAlert: (Alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(Alert)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId)),
   };
 }

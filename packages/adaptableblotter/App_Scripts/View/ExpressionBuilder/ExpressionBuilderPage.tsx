@@ -19,7 +19,7 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
-import { IAdaptableBlotterOptions } from '../../BlotterOptions/IAdaptableBlotterOptions';
+import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 

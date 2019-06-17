@@ -1,16 +1,16 @@
 import { RunTimeState } from './RunTimeState';
-import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
-import { IRange } from '../Common/Expression/IRange';
+import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 import { Expression } from '../Common/Expression/Expression';
+import { QueryRange } from '../Common/Expression/QueryRange';
 export interface AlertState extends RunTimeState {
   AlertDefinitions?: AlertDefinition[];
   MaxAlertsInStore?: number;
   AlertPopupDiv?: string;
 }
 
-export interface AlertDefinition extends IAdaptableBlotterObject {
+export interface AlertDefinition extends AdaptableBlotterObject {
   ColumnId: string;
-  Range: IRange;
+  Range: QueryRange;
   Expression?: Expression;
   MessageType: 'Success' | 'Info' | 'Warning' | 'Error';
   ShowAsPopup: boolean;

@@ -11,7 +11,6 @@ import { FormControl } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
-import { IRange } from '../../../PredefinedConfig/Common/Expression/IRange';
 import { Expression } from '../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
@@ -20,6 +19,7 @@ import { DataType, LeafExpressionOperator } from '../../../PredefinedConfig/Comm
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
+import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: IColumn;
@@ -210,7 +210,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         operand1 = values[0];
         operand2 = values[1];
       }
-      let range: IRange = RangeHelper.CreateValueRange(operatorKVP.Value, operand1, operand2);
+      let range: QueryRange = RangeHelper.CreateValueRange(operatorKVP.Value, operand1, operand2);
       let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
         this.props.CurrentColumn.ColumnId,
         [],

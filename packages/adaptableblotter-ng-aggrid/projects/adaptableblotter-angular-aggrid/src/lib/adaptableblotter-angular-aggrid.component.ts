@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import AdaptableBlotter from '../adaptableblotter/App_Scripts/agGrid';
 import {
   IAdaptableBlotter,
-  IAdaptableBlotterOptions,
+  AdaptableBlotterOptions,
 } from '../adaptableblotter/types';
 
 import { GridOptions } from 'ag-grid-community/dist/lib/entities/gridOptions';
@@ -34,7 +34,7 @@ const getRandomInt = (max: number): number =>
   ],
 })
 export class AdaptableBlotterAngularAggridComponent implements OnInit {
-  @Input() blotterOptions: IAdaptableBlotterOptions;
+  @Input() blotterOptions: AdaptableBlotterOptions;
   @Input() gridOptions: GridOptions;
 
   public blotterContainerId: string;

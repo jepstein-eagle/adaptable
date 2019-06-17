@@ -23,7 +23,7 @@ export interface IDashboardApi {
   // The Columns dropdown appears on the right of the Home Toolbar and lists all the columns in the grid.
   ShowColumnsDropdown(): void;
   HideColumnsDropdown(): void;
-  // If no value is set, the title of the Home Toolbar will be the ​​blotterId​​ property in IAdaptableBlotterOptions
+  // If no value is set, the title of the Home Toolbar will be the ​​blotterId​​ property in AdaptableBlotterOptions
   SetHomeToolbarTitle(title: string): void;
   SetApplicationToolbarTitle(title: string): void;
   UseSingleColourForButtons(): void;

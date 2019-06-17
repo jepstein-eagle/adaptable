@@ -1,11 +1,11 @@
 import { RunTimeState } from './RunTimeState';
-import { IAdaptableBlotterObject } from '../IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 export interface DataSourceState extends RunTimeState {
   DataSources?: DataSource[];
   CurrentDataSource?: string;
 }
 
-export interface DataSource extends IAdaptableBlotterObject {
+export interface DataSource extends AdaptableBlotterObject {
   Name: string;
   Description: string;
   Params?: any[];

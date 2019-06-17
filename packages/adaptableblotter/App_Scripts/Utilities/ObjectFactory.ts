@@ -43,7 +43,6 @@ import { AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
 import { AdvancedSearch } from '../PredefinedConfig/RunTimeState/AdvancedSearchState';
 import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { ColumnCategory } from '../PredefinedConfig/RunTimeState/ColumnCategoryState';
-import { IRange } from '../PredefinedConfig/Common/Expression/IRange';
 import { ColumnSort, VendorGridInfo, Layout } from '../PredefinedConfig/RunTimeState/LayoutState';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
@@ -52,7 +51,7 @@ import { Report, AutoExport } from '../PredefinedConfig/RunTimeState/ExportState
 import { IColumn } from './Interface/IColumn';
 import { FlashingCell } from '../PredefinedConfig/RunTimeState/FlashingCellState';
 import { Reminder } from '../PredefinedConfig/RunTimeState/ReminderState';
-import { ISchedule } from '../PredefinedConfig/Common/ISchedule';
+import { Schedule } from '../PredefinedConfig/Common/Schedule';
 import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
 import { IAdaptableBlotter } from '../types';
 import ColumnHelper from './Helpers/ColumnHelper';
@@ -65,6 +64,7 @@ import { ColumnFilter } from '../PredefinedConfig/RunTimeState/ColumnFilterState
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { ICellSummmary } from './Interface/SelectedCell/ICellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
+import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 
 export function CreateLicenceInfo(
   licenceScopeType: LicenceScopeType,
@@ -172,7 +172,7 @@ export function CreateEmptyColumnCategory(): ColumnCategory {
   };
 }
 
-export function CreateEmptyRange(): IRange {
+export function CreateEmptyRange(): QueryRange {
   return {
     Operator: LeafExpressionOperator.Unknown,
     Operand1: EMPTY_STRING,
@@ -272,7 +272,7 @@ export function CreateEmptyAutoExport(): AutoExport {
   };
 }
 
-export function CreateEmptySchedule(): ISchedule {
+export function CreateEmptySchedule(): Schedule {
   return {
     // todo: base of tommorrow?
     Uuid: createUuid(),
@@ -385,7 +385,7 @@ export function CreateRange(
   operand2: any,
   rangeOperandType: RangeOperandType,
   rangeOperandType2: RangeOperandType
-): IRange {
+): QueryRange {
   return {
     Operator: operator,
     Operand1: operand1,
@@ -414,7 +414,7 @@ export function CreateRangeEvaluation(
 }
 export function CreateCellValidationRule(
   columnId: string,
-  range: IRange,
+  range: QueryRange,
   actionMode: ActionMode,
   expression: Expression
 ): CellValidationRule {
