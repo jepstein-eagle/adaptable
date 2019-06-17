@@ -14,3 +14,9 @@
 .ab--flex-fill {
   flex: 100;
 }
+
+.ab__react-wrapper [data-ab-name='ab__aggrid-container'] > div:not(.ag-root-wrapper) {
+  // a div with height: 100% is generated before the ag grid root - where it would have been rendered
+  // by the default aggrid wrapper
+  display: none;
+}
