@@ -113,7 +113,7 @@ import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterSt
 import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 import { Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
 import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
-import { IState } from '../../PredefinedConfig/IState';
+import { ConfigState } from '../../PredefinedConfig/ConfigState';
 
 /*
 This is the main store for the Adaptable Blotter
@@ -177,7 +177,7 @@ const NON_PERSIST_ACTIONS: { [key: string]: boolean } = {
 export interface ResetUserDataAction extends Redux.Action {}
 export interface InitStateAction extends Redux.Action {}
 export interface LoadStateAction extends Redux.Action {
-  State: { [s: string]: IState };
+  State: { [s: string]: ConfigState };
 }
 
 export const ResetUserData = (): ResetUserDataAction => ({
@@ -186,7 +186,7 @@ export const ResetUserData = (): ResetUserDataAction => ({
 export const InitState = (): ResetUserDataAction => ({
   type: INIT_STATE,
 });
-export const LoadState = (State: { [s: string]: IState }): LoadStateAction => ({
+export const LoadState = (State: { [s: string]: ConfigState }): LoadStateAction => ({
   type: LOAD_STATE,
   State,
 });

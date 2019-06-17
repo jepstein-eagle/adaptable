@@ -33,7 +33,7 @@ import { ChartState } from './RunTimeState/ChartState';
 /**
  * Main Predefined Config object which users will populate if they wish to ship the Adaptable Botter with initial state
  *
- * The object consists of a series of (nullable) properties that all implememt IState
+ * The object consists of a series of (nullable) properties that all implememt ConfigState
  *
  */
 export interface PredefinedConfig {

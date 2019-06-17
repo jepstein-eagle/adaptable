@@ -31,13 +31,13 @@ import { TeamSharingState } from '../../../PredefinedConfig/InternalState/TeamSh
 import { ThemeState } from '../../../PredefinedConfig/RunTimeState/ThemeState';
 import { UserFilterState } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import { ReminderState } from '../../../PredefinedConfig/RunTimeState/ReminderState';
-import { IState } from '../../../PredefinedConfig/IState';
+import { ConfigState } from '../../../PredefinedConfig/ConfigState';
 import { EntitlementsState } from '../../../PredefinedConfig/DesignTimeState/EntitlementsState';
 import { UserInterfaceState } from '../../../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { SystemFilterState } from '../../../PredefinedConfig/DesignTimeState/SystemFilterState';
 
 export interface AdaptableBlotterState {
-  [s: string]: IState;
+  [s: string]: ConfigState;
 
   // internal state
   Popup: PopupState;

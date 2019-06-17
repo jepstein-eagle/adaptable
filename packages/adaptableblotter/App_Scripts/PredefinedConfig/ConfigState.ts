@@ -1,4 +1,4 @@
 /**
  * Base Interface for all State objects
  */
-export interface IState {}
+export interface ConfigState {}

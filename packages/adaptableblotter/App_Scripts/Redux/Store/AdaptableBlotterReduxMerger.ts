@@ -3,7 +3,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { LicenceScopeType } from '../../PredefinedConfig/Common/Enums';
 import { ILicenceInfo } from '../../Utilities/Interface/ILicenceInfo';
 import { AdaptableBlotterState } from './Interface/IAdaptableStore';
-import { IState } from '../../PredefinedConfig/IState';
+import { ConfigState } from '../../PredefinedConfig/ConfigState';
 
 function customizer(objValue: any, srcValue: any) {
   if (_.isArray(objValue)) {
@@ -79,7 +79,7 @@ const LICENSE_MERGER_MAP = {
 
 type TypeReducer = (
   state: AdaptableBlotterState,
-  action: { type: string; State?: { [s: string]: IState } }
+  action: { type: string; State?: { [s: string]: ConfigState } }
 ) => AdaptableBlotterState;
 
 export const licenseMergeReducer = (
@@ -94,7 +94,7 @@ export const licenseMergeReducer = (
   if (filterMergeStateByLicense) {
     finalReducer = (
       state: AdaptableBlotterState,
-      action: { type: string; State: { [s: string]: IState } }
+      action: { type: string; State: { [s: string]: ConfigState } }
     ) => {
       if (action.type === LOAD_STATE_TYPE) {
         state = filterMergeStateByLicense(state, action.State);
