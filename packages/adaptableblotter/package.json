@@ -34,6 +34,7 @@
     "ag-grid-enterprise": ">=21.0.0"
   },
   "devDependencies": {
+    "typedoc": "^0.14.2",
     "@types/body-parser": "^1.17.0",
     "@types/bunyan": "^1.8.4",
     "@types/deep-diff": "0.0.31",
@@ -92,6 +93,7 @@
     "webpack-fail-plugin": "^1.0.6"
   },
   "scripts": {
+    "build-apidoc": "typedoc --options ./typedocconfig.ts",
     "pretty": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "registry-publish": "npm run build-package-json && npm publish dist",
     "rmdist": "rimraf ./dist",

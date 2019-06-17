@@ -1,8 +1,8 @@
 module.exports = {
-  src: ['./packages/adaptableblotter/App_Scripts'],
+  src: ['./App_Scripts/'],
   mode: 'modules',
   includeDeclarations: true,
-  exclude: ['./packages/adaptableblotter/App_Scripts/agGrid'],
+  exclude: ['./App_Scripts/agGrid/**/*'],
   tsconfig: 'tsconfig.json',
   out: './apidoc',
   excludePrivate: true,

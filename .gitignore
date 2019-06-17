@@ -14,4 +14,5 @@ node_modules/
 /packages/adaptableblotter-ng-aggrid/projects/adaptableblotter-angular-aggrid/src/adaptableblotter 
 **/package-lock.json
 package-lock.json
+/packages/adaptableblotter/apidoc
 /apidoc
