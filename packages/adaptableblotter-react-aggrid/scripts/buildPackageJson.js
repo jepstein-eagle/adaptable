@@ -43,6 +43,7 @@ fs.writeFile(
       console.log(chalk.red(err));
       throw err;
     } else {
+      /*
       const versionFilePath = resolve(process.cwd(), './dist/adaptableblotter', 'version.js');
       let versionContent = fs.readFileSync(versionFilePath, { encoding: 'utf8' });
 
@@ -51,7 +52,7 @@ fs.writeFile(
       }
       versionContent = versionContent.replace('x.y.z', packageJSON.version);
 
-      fs.writeFileSync(versionFilePath, versionContent, 'utf8');
+      fs.writeFileSync(versionFilePath, versionContent, 'utf8');*/
       console.log('DONE building package.json with version ', chalk.green(packageJSON.version));
     }
   }
