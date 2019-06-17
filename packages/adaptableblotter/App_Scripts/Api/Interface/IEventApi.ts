@@ -9,6 +9,10 @@ import { IEvent } from '../../Utilities/Interface/IEvent';
 import { EventDispatcher } from '../../Utilities/EventDispatcher';
 
 export interface IEventApi {
+  /**
+   * The Adaptable Blotter publishes 4 events that users can subscribe to as required.
+   */
+
   _onSearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
   _onThemeChanged: EventDispatcher<IAdaptableBlotter, IThemeChangedEventArgs>;
   _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
@@ -16,13 +20,16 @@ export interface IEventApi {
 
   /**
    * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
+   *
    * Used in association with server searching.
+   *
    * @returns IEvent<IAdaptableBlotter, ISearchChangedEventArgs>
    */
   onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
 
   /**
    * Event fired whenever the theme of the Blotter has been changed
+   *
    * @returns IEvent<IAdaptableBlotter, IThemeChangedEventArgs>
    */
   onThemeChanged(): IEvent<IAdaptableBlotter, IThemeChangedEventArgs>;
@@ -38,7 +45,9 @@ export interface IEventApi {
 
   /**
    * Event fired whenever an Alert is raised.
+   *
    * Contains the full Alert itself.
+   *
    * @returns IEvent<IAdaptableBlotter, IAlertFiredEventArgs>
    */
   onAlertFired(): IEvent<IAdaptableBlotter, IAlertFiredEventArgs>;

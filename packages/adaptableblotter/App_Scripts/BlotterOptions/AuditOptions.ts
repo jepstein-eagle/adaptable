@@ -11,25 +11,25 @@ export interface AuditOptions {
    * These include any edits made to the data in the grid but not outside (e.g. not a ticking stream)
    * Default Value: false
    */
-  auditCellEdits?: IAuditDestinationOptions;
+  auditCellEdits?: AuditDestinationOptions;
   /**
    * Whether to audit function events in the Blotter
    * (e.g. 'Advanced Search Selected', 'Smart Edit Applied' etc.)
    */
-  auditFunctionEvents?: IAuditDestinationOptions;
+  auditFunctionEvents?: AuditDestinationOptions;
   /**
    * Whether to audit all changes to the User State
    * Includes any objects (e.g. Conditional Styles) created, edited or deleted
    * Default Value: false
    */
-  auditUserStateChanges?: IAuditDestinationOptions;
+  auditUserStateChanges?: AuditDestinationOptions;
   /**
    * Whether to audit changes to the Adaptable Blotter's state
    * Includes things like which popups are active, what are the selected cells
    * Can potentially be very verbose
    * Default Value: false
    */
-  auditInternalStateChanges?: IAuditDestinationOptions;
+  auditInternalStateChanges?: AuditDestinationOptions;
   /**
    * How often (in seconds) the Audit Log should ping to check that the listening service is up and running (if its been set)
    * Note: the Audit Log will only ping if at least one of the 4 audit optios has 'auditToHttpChannel' as set to true
@@ -47,7 +47,7 @@ export interface AuditOptions {
  * Interface which determines WHERE Audit messages get sent.
  * Each property is a boolean (defaulting to false), enabling you to choose more than one option
  */
-export interface IAuditDestinationOptions {
+export interface AuditDestinationOptions {
   /**
    * Sends the Audit Messages to an (internal) HTTP channel for you to listen to
    * This is the most popular option though requires additional software like Elastic
