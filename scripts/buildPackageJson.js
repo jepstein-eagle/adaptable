@@ -19,19 +19,6 @@ fs.writeFile(path, content, 'utf8', err => {
     console.log(chalk.red(err));
     throw err;
   } else {
-    const versionFilePath = resolve(process.cwd(), 'dist', 'version.js');
-    let versionContent = fs.readFileSync(versionFilePath, { encoding: 'utf8' });
-
-    if (
-      versionContent.indexOf('x.y.z') === -1 &&
-      versionContent.indexOf(packageJSON.version) === -1
-    ) {
-      throw 'Cannot find version to replace - ' + versionContent;
-    }
-    versionContent = versionContent.replace('x.y.z', packageJSON.version);
-
-    fs.writeFileSync(versionFilePath, versionContent, 'utf8');
-
     console.log('DONE building package.json with version ', chalk.green(packageJSON.version));
   }
 });

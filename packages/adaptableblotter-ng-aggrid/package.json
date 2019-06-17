@@ -61,8 +61,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\" --fix",
-    "registry-publish": "npm run build-package-json && npm publish dist/adaptableblotter-angular-aggrid",
+    "registry-publish": "npm run build-package-json && npm run update-version-file && npm publish dist/adaptableblotter-angular-aggrid",
     "build-package-json": "node ./scripts/buildPackageJson",
+    "update-version-file": "node ./scripts/updateVersionFile",
     "sass": "node-sass ./src/index.scss ./dist/adaptableblotter-angular-aggrid/index.css && node-sass ./src/base.scss ./dist/adaptableblotter-angular-aggrid/base.css && node-sass ./src/themes/light.scss ./dist/adaptableblotter-angular-aggrid/themes/light.css && node-sass ./src/themes/dark.scss ./dist/adaptableblotter-angular-aggrid/themes/dark.css",
     "copy-assets": "cp .npmignore ./dist/adaptableblotter-angular-aggrid && cp -R ../adaptableblotter/App_Scripts/fonts ./dist/adaptableblotter-angular-aggrid/fonts/ && cp README.md ./dist/adaptableblotter-angular-aggrid/"
   }
