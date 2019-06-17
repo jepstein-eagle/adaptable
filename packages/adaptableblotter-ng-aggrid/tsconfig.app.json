@@ -4,6 +4,6 @@
     "outDir": "./out-tsc/app",
     "types": []
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "../adaptableblotter/App_Scripts/**/*"],
   "exclude": ["src/test.ts", "src/**/*.spec.ts"]
 }
