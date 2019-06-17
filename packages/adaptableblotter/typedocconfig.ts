@@ -2,7 +2,7 @@ module.exports = {
   src: ['./App_Scripts/'],
   mode: 'modules',
   includeDeclarations: true,
-  exclude: ['./App_Scripts/agGrid/**/*'],
+  exclude: ['./App_Scripts/agGrid/**/*', './App_Scripts/View/**/*', './App_Scripts/Hypergrid/**/*'],
   tsconfig: 'tsconfig.json',
   out: './apidoc',
   excludePrivate: true,
