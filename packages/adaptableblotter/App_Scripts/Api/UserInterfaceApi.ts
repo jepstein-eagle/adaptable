@@ -1,9 +1,11 @@
 import * as UserInterfaceRedux from '../Redux/ActionsReducers/UserInterfaceRedux';
 import { ApiBase } from './ApiBase';
 import { IUserInterfaceApi } from './Interface/IUserInterfaceApi';
-import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { UserInterfaceState } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
+import {
+  UserInterfaceState,
+  IPermittedColumnValues,
+} from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 
 export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
   public getUserInterfaceState(): UserInterfaceState {

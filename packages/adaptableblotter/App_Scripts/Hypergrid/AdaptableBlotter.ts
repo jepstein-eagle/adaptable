@@ -99,12 +99,12 @@ import { SearchService } from '../Utilities/Services/SearchService';
 import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/RunTimeState/LayoutState';
-import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
 import { CalculatedColumn } from '../PredefinedConfig/RunTimeState/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/RunTimeState/FreeTextColumnState';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
+import { IPermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'

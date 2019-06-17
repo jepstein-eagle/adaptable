@@ -115,7 +115,6 @@ import { IScheduleService } from '../Utilities/Services/Interface/IScheduleServi
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
 import { QuickSearchState } from '../PredefinedConfig/RunTimeState/QuickSearchState';
-import { IPermittedColumnValues } from '../Utilities/Interface/IPermittedColumnValues';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { SearchService } from '../Utilities/Services/SearchService';
@@ -127,6 +126,7 @@ import { ColumnFilter } from '../PredefinedConfig/RunTimeState/ColumnFilterState
 import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/RunTimeState/LayoutState';
 import { CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
 import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
+import { IPermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;
