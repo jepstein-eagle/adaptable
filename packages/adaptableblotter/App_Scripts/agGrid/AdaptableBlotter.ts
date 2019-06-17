@@ -129,6 +129,9 @@ import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogServi
 import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { SearchService } from '../Utilities/Services/SearchService';
 
+type RuntimeConfig = {
+  instantiateGrid?: (...args: any[]) => any;
+};
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;
 
@@ -171,7 +174,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private gridContainerElement: HTMLElement;
 
-  private gridOptions: GridOptions;
+  public gridOptions: GridOptions;
 
   public isInitialised: boolean;
 
@@ -185,10 +188,17 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private renderGrid: boolean;
 
-  constructor(blotterOptions: IAdaptableBlotterOptions, renderGrid: boolean = true) {
+  private runtimeConfig?: RuntimeConfig;
+
+  constructor(
+    blotterOptions: IAdaptableBlotterOptions,
+    renderGrid: boolean = true,
+    runtimeConfig?: RuntimeConfig
+  ) {
     this.renderGrid = renderGrid;
     // we create the Blotter Options by merging the values provided by the user with the defaults (where no value has been set)
     this.blotterOptions = BlotterHelper.assignBlotterOptions(blotterOptions);
+    this.runtimeConfig = runtimeConfig;
 
     this.gridOptions = this.blotterOptions.vendorGrid;
     this.vendorGridName = 'agGrid';
@@ -352,7 +362,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
     // now create the grid itself - we have to do it this way as previously when we instantiated the Grid 'properly' it got created as J.Grid
     // console.log('creating the grid as not created by user')
-    const grid: any = new Grid(vendorContainer, this.gridOptions);
+
+    let grid: any;
+    if (this.runtimeConfig && this.runtimeConfig.instantiateGrid) {
+      grid = this.runtimeConfig.instantiateGrid(vendorContainer, this.gridOptions);
+    } else {
+      grid = new Grid(vendorContainer, this.gridOptions);
+    }
+
     return grid != null;
   }
 
@@ -1567,9 +1584,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       if (this.abContainerElement == null) {
         LoggingHelper.LogAdaptableBlotterError(
-          `There is no Div called ${
-            this.blotterOptions.containerOptions.adaptableBlotterContainer
-          } so cannot render the Adaptable Blotter`
+          `There is no Div called ${this.blotterOptions.containerOptions.adaptableBlotterContainer} so cannot render the Adaptable Blotter`
         );
         return;
       }
