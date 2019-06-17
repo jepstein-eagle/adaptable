@@ -9,17 +9,29 @@ import { ChartOptions } from './ChartOptions';
 import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
 
 /**
- * The class injected into the Adaptable Blotter at startup.
+ * This is the class injected into the Adaptable Blotter at startup.
+ *
  * It forms the ONLY parameter requried by the Adaptable Blotter constructor.
+ *
  * It provides all the layout, DataGrid, config and other nformation required to ensure a full user experience.
- * The class contains a few properties of which 2 (vendorGrid and primaryKey) are mandatory - and a number of 'xxxOptions' classes.
- * Any property that is not supplied by the user when populating the object, will use the default value as supplied in 'DefaultAdaptableBlotterOptions'.
+ *
+ * The class contains a few properties of which 2 (*vendorGrid* and *primaryKey*) are mandatory - and a number of *xxxOptions* classes.
+ *
+ * Typically users will ony populate a few of the classes in this object, and only a few properties in each class.
+ *
+ * Any property that is not supplied by the user when populating the object, will use the default value (which is listed here for each property).
  */
 export interface AdaptableBlotterOptions {
   /**
    * MANDATORY property
-   * The underlying vendor grid or grid object
-   * This is the actual grid that the Blotter interacts with
+   *
+   * This is the underlying vendor grid or grid object which the Adaptable Blotter will interact with.
+   *
+   * Depending on the vendor it is either a Grid or an Options object.
+   *
+   * The vendor Grid should contain all the column definitions and data sources required.
+   *
+   * *Default value* - N/A
    */
   vendorGrid?: any;
   /**

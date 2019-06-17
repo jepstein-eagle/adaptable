@@ -1,10 +1,8 @@
 # Adaptable Blotter Code Docs
 
-Read me for the Adaptable Blotter Code Documentation.
-
 There are 3 main ways that developers / users 'interact' with the code in the Adaptable Blotter:
 
-- Setting **Blotter Options** when first instantianting the Adaptable Blotter
+- Setting **Blotter Options** when instantianting the Adaptable Blotter
 
 - Providing the Adaptable Blotter at startup with **Predefined Configuration**
 
