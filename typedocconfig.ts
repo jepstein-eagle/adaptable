@@ -1,0 +1,16 @@
+module.exports = {
+  src: ['./packages/adaptableblotter/App_Scripts'],
+  mode: 'modules',
+  includeDeclarations: true,
+  exclude: ['./packages/adaptableblotter/App_Scripts/agGrid'],
+  tsconfig: 'tsconfig.json',
+  out: './apidoc',
+  excludePrivate: true,
+  excludeProtected: true,
+  excludeExternals: true,
+  readme: 'HelpREADME.md',
+  name: 'Adaptable Blotter Code Documentation',
+  ignoreCompilerErrors: true,
+  plugin: 'none',
+  listInvalidSymbolLinks: true,
+};

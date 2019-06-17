@@ -45,7 +45,7 @@ export class ExpressionBuilderRanges extends React.Component<
     let selectedColumnDataType = this.props.SelectedColumn.DataType;
     let addButton = (
       <Button bsSize={'small'} bsStyle={'default'} onClick={() => this.addRange()}>
-        <Glyphicon glyph="plus" /> Add QueryRange
+        <Glyphicon glyph="plus" /> Add Range
       </Button>
     );
 
