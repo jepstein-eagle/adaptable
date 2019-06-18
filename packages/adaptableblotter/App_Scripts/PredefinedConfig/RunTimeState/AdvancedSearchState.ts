@@ -75,7 +75,7 @@ export interface AdvancedSearchState extends RunTimeState {
 
 /**
  * The Advanced Search entity.
- * Contains the name of the Search and an Expression (the query object used in many IAdaptableBlotterObjects)
+ * Contains the name of the Search and an Expression (the query object used in many AdaptableBlotterObjects)
  */
 export interface AdvancedSearch extends AdaptableBlotterObject {
   Name: string;

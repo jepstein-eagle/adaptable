@@ -6,10 +6,10 @@ import { UserFilterExpressionWizard } from './UserFilterExpressionWizard';
 import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard';
 import { UserFilterSummaryWizard } from './UserFilterSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface UserFilterWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<UserFilterWizard> {
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<UserFilterWizard> {
   SelectedColumnId: string;
 }
 

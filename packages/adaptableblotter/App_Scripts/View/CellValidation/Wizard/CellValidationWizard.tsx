@@ -7,10 +7,10 @@ import { CellValidationRulesWizard } from './CellValidationRulesWizard';
 import { CellValidationSummaryWizard } from './CellValidationSummaryWizard';
 import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface CellValidationWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CellValidationWizard> {}
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<CellValidationWizard> {}
 
 export class CellValidationWizard extends React.Component<CellValidationWizardProps, {}> {
   render() {

@@ -3,11 +3,11 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { DataSourceSettingsWizard } from './DataSourceSettingsWizard';
 import { DataSourceSummaryWizard } from './DataSourceSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { DataSource } from '../../../PredefinedConfig/RunTimeState/DataSourceState';
 
 export interface DataSourceWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<DataSourceWizard> {}
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<DataSourceWizard> {}
 
 export class DataSourceWizard extends React.Component<DataSourceWizardProps, {}> {
   render() {

@@ -27,8 +27,8 @@ export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
 }
 
 // props for a wizard that wraps a config entity that contans an Expression
-export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View>
-  extends IAdaptableBlotterObjectAdaptableWizardProps<View> {
+export interface AdaptableBlotterObjectExpressionAdaptableWizardProps<View>
+  extends AdaptableBlotterObjectAdaptableWizardProps<View> {
   Columns: Array<IColumn>;
   UserFilters: UserFilter[];
   SystemFilters: string[];
@@ -36,7 +36,7 @@ export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View>
 }
 
 // props for a basic wizard
-export interface IAdaptableWizardProps<View> extends React.ClassAttributes<View> {
+export interface AdaptableWizardProps<View> extends React.ClassAttributes<View> {
   WizardStartIndex: number;
   onCloseWizard: () => void;
   onFinishWizard: () => void;
@@ -46,8 +46,8 @@ export interface IAdaptableWizardProps<View> extends React.ClassAttributes<View>
 }
 
 // props for a wizard that wraps a config entity (without an expression)
-export interface IAdaptableBlotterObjectAdaptableWizardProps<View>
-  extends IAdaptableWizardProps<View> {
+export interface AdaptableBlotterObjectAdaptableWizardProps<View>
+  extends AdaptableWizardProps<View> {
   ConfigEntities: AdaptableBlotterObject[];
   EditedAdaptableBlotterObject: AdaptableBlotterObject;
 }

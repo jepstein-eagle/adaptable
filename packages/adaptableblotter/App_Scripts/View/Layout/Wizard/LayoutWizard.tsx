@@ -7,11 +7,11 @@ import { LayoutSettingsWizard } from './LayoutSettingsWizard';
 import { LayoutGridSortWizard } from './LayoutGridSortWizard';
 import { LayoutSummaryWizard } from './LayoutSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { Layout, ColumnSort } from '../../../PredefinedConfig/RunTimeState/LayoutState';
 
 export interface LayoutWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<LayoutWizard> {
   ColumnSorts: ColumnSort[];
 }
 

@@ -4,10 +4,10 @@ import { ShortcutSettingsWizard } from './ShortcutSettingsWizard';
 import { ShortcutSummaryWizard } from './ShortcutSummaryWizard';
 import { ShortcutTypeWizard } from './ShortcutTypeWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface ShortcutWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ShortcutWizard> {
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<ShortcutWizard> {
   NumericKeysAvailable: Array<string>;
   DateKeysAvailable: Array<string>;
 }
