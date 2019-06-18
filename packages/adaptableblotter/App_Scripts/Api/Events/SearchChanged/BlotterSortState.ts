@@ -4,7 +4,7 @@ import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortSta
 /**
  * Overview of the current sorting state in the grid
  */
-export interface IBlotterSortState {
+export interface BlotterSortState {
   /**
    * Which columns (if any) have sorting applied and,if so, which direction
    */

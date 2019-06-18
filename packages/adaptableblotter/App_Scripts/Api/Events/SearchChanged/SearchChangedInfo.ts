@@ -1,6 +1,6 @@
-import { IBlotterSortState } from './IBlotterSortState';
-import { IBlotterSearchState } from './IBlotterSearchState';
-export interface ISearchChangedInfo {
+import { BlotterSortState } from './BlotterSortState';
+import { BlotterSearchState } from './BlotterSearchState';
+export interface SearchChangedInfo {
   /**
    * Which action in the grid caused the Search state to chagne
    */
@@ -15,11 +15,11 @@ export interface ISearchChangedInfo {
   /**
    * All current active search and filters in the Grid
    */
-  blotterSearchState: IBlotterSearchState;
+  blotterSearchState: BlotterSearchState;
   /**
    * The current sort state in the Grid
    */
-  blotterSortState: IBlotterSortState;
+  blotterSortState: BlotterSortState;
   /**
    * Date the search should use - defaults to now
    * Uuseful if getting historical data

@@ -15,7 +15,7 @@ import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
-import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
+import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 
@@ -166,7 +166,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       { Id: activeCell.Id, ColumnId: activeCell.ColumnId, Value: newValue },
     ]);
 
-    let functionAppliedDetails: IFunctionAppliedDetails = {
+    let functionAppliedDetails: FunctionAppliedDetails = {
       name: StrategyConstants.ShortcutStrategyId,
       action: ShortcutRedux.SHORTCUT_APPLY,
       info: 'KeyPressed:' + keyEventString,

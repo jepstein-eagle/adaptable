@@ -12,10 +12,10 @@ import AbsoluteFlexContainer from './AbsoluteFlexContainer';
 import {
   IEventApi,
   AdaptableBlotterOptions,
-  ISearchChangedEventArgs,
-  IThemeChangedEventArgs,
-  IColumnStateChangedEventArgs,
-  IAlertFiredEventArgs,
+  SearchChangedEventArgs,
+  ThemeChangedEventArgs,
+  ColumnStateChangedEventArgs,
+  AlertFiredEventArgs,
 } from '../../adaptableblotter/types';
 
 import useEventListener from './useEventListener';
@@ -127,10 +127,10 @@ const AdaptableBlotterReact = ({
   agGridTheme?: string;
   blotterOptions: AdaptableBlotterOptions;
   gridOptions: AgGrid.GridOptions;
-  onSearchChanged?: (blotter: AdaptableBlotter, args: ISearchChangedEventArgs) => void;
-  onThemeChanged?: (blotter: AdaptableBlotter, args: IThemeChangedEventArgs) => void;
-  onColumnStateChanged?: (blotter: AdaptableBlotter, args: IColumnStateChangedEventArgs) => void;
-  onAlertFired?: (blotter: AdaptableBlotter, args: IAlertFiredEventArgs) => void;
+  onSearchChanged?: (blotter: AdaptableBlotter, args: SearchChangedEventArgs) => void;
+  onThemeChanged?: (blotter: AdaptableBlotter, args: ThemeChangedEventArgs) => void;
+  onColumnStateChanged?: (blotter: AdaptableBlotter, args: ColumnStateChangedEventArgs) => void;
+  onAlertFired?: (blotter: AdaptableBlotter, args: AlertFiredEventArgs) => void;
   tagName?: TypeFactory;
 } & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
   const seedId = useMemo(() => `${getRandomInt(1000)}-${Date.now()}`, []);

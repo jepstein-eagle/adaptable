@@ -50,9 +50,9 @@ export default () => <AdaptableBlotterReact
 
 - render|children: ({ grid, blotter}) => ReactNode - can specify a custom render function that is called with the rendered grid and blotter, and can be used to change the layout of the component, and render additional elements or change blotter/grid order
 - onReady(blotter) - function prop called after the blotter is instantiated and ready to use
-- onThemeChanged: (blotter, arg: IThemeChangedEventArgs)
-- onSearchChanged: (blotter, arg: ISearchChangedEventArgs)
-- onColumnStateChanged: (blotter, arg: IColumnStateChangedEventArgs)
+- onThemeChanged: (blotter, arg: ThemeChangedEventArgs)
+- onSearchChanged: (blotter, arg: SearchChangedEventArgs)
+- onColumnStateChanged: (blotter, arg: ColumnStateChangedEventArgs)
 - onAlertFired: (blotter, arg: IAlertFiredEventArgs)
 
 ## Licences

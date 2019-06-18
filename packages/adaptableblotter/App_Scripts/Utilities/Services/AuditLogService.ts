@@ -1,18 +1,18 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
-import { IAuditLogEntry, AuditLogType } from '../Interface/IAuditLogEntry';
+import { AuditLogEntry, AuditLogType } from '../Interface/AuditLogEntry';
 import { IAuditLogService } from './Interface/IAuditLogService';
 import { IAdaptableBlotter } from '../../types';
 import {
-  IFunctionAppliedDetails,
-  IStateChangedDetails,
-  IAuditLogEventData,
-  IAuditLogEventArgs,
-} from '../Interface/IAuditEvents';
-import { IAuditDestinationOptions, AuditOptions } from '../../BlotterOptions/AuditOptions';
+  StateChangedDetails,
+  FunctionAppliedDetails,
+  AuditLogEventData,
+  AuditLogEventArgs,
+} from '../../Api/Events/AuditEvents';
+import { AuditDestinationOptions, AuditOptions } from '../../BlotterOptions/AuditOptions';
 
 export class AuditLogService implements IAuditLogService {
-  private auditLogQueue: Array<IAuditLogEntry>;
+  private auditLogQueue: Array<AuditLogEntry>;
   private canSendLog: boolean = true;
   private numberOfMissedPing: number = 0;
   private blotter: IAdaptableBlotter;
@@ -114,7 +114,7 @@ export class AuditLogService implements IAuditLogService {
 
   public addEditCellAuditLog(dataChangedEvent: IDataChangedInfo) {
     if (this.isAuditCellEditsEnabled) {
-      let auditLogEntry: IAuditLogEntry = {
+      let auditLogEntry: AuditLogEntry = {
         auditlog_type: AuditLogType.CellEdit,
         client_timestamp: new Date(),
         username: this.blotter.blotterOptions.userName!,
@@ -141,9 +141,9 @@ export class AuditLogService implements IAuditLogService {
     }
   }
 
-  public addUserStateChangeAuditLog(stateChangeDetails: IStateChangedDetails) {
+  public addUserStateChangeAuditLog(stateChangeDetails: StateChangedDetails) {
     if (this.isAuditUserStateChangesEnabled) {
-      let auditLogEntry: IAuditLogEntry = {
+      let auditLogEntry: AuditLogEntry = {
         auditlog_type: AuditLogType.UserStateChange,
         client_timestamp: new Date(),
         username: this.blotter.blotterOptions.userName!,
@@ -164,9 +164,9 @@ export class AuditLogService implements IAuditLogService {
       }
     }
   }
-  public addInternalStateChangeAuditLog(stateChangeDetails: IStateChangedDetails) {
+  public addInternalStateChangeAuditLog(stateChangeDetails: StateChangedDetails) {
     if (this.isAuditInternalStateChangesEnabled) {
-      let auditLogEntry: IAuditLogEntry = {
+      let auditLogEntry: AuditLogEntry = {
         auditlog_type: AuditLogType.InternalStateChange,
         client_timestamp: new Date(),
         username: this.blotter.blotterOptions.userName!,
@@ -188,9 +188,9 @@ export class AuditLogService implements IAuditLogService {
     }
   }
 
-  public addFunctionAppliedAuditLog(functionAppliedDetails: IFunctionAppliedDetails) {
+  public addFunctionAppliedAuditLog(functionAppliedDetails: FunctionAppliedDetails) {
     if (this.isAuditFunctionEventsEnabled) {
-      let auditLogEntry: IAuditLogEntry = {
+      let auditLogEntry: AuditLogEntry = {
         auditlog_type: AuditLogType.FunctionApplied,
         client_timestamp: new Date(),
         username: this.blotter.blotterOptions.userName!,
@@ -220,7 +220,7 @@ export class AuditLogService implements IAuditLogService {
   }
 
   private ping() {
-    let pingMessage: IAuditLogEntry = {
+    let pingMessage: AuditLogEntry = {
       auditlog_type: AuditLogType.Ping,
       client_timestamp: new Date(),
       username: this.blotter.blotterOptions.userName,
@@ -321,7 +321,7 @@ export class AuditLogService implements IAuditLogService {
     return stringArray.join(',');
   }
 
-  private isAuditOptionEnabled(auditDestinationOptions: IAuditDestinationOptions): boolean {
+  private isAuditOptionEnabled(auditDestinationOptions: AuditDestinationOptions): boolean {
     return (
       auditDestinationOptions.auditAsEvent ||
       auditDestinationOptions.auditToConsole ||
@@ -356,14 +356,14 @@ export class AuditLogService implements IAuditLogService {
   }
 
   // not sure this is best place to put this but it shouldnt be in Strategy Base
-  publishStateChanged(auditLogEntry: IAuditLogEntry, auditLogType: AuditLogType): void {
-    let stateEventData: IAuditLogEventData = {
+  publishStateChanged(auditLogEntry: AuditLogEntry, auditLogType: AuditLogType): void {
+    let stateEventData: AuditLogEventData = {
       name: 'Adaptable Blotter',
       type: 'Audit Log Event',
       id: auditLogEntry,
     };
 
-    let stateChangedArgs: IAuditLogEventArgs = {
+    let stateChangedArgs: AuditLogEventArgs = {
       object: 'fdc3-context',
       definition: 'https://fdc3.org/context/1.0.0/',
       version: '1.0.0',

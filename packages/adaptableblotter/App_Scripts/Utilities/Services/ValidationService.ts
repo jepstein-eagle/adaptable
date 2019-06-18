@@ -19,7 +19,7 @@ import {
   CellValidationRule,
 } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
-import { IFunctionAppliedDetails } from '../Interface/IAuditEvents';
+import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
 
 export class ValidationService implements IValidationService {
   constructor(private blotter: IAdaptableBlotter) {
@@ -167,7 +167,7 @@ export class ValidationService implements IValidationService {
 
   private logAuditValidationEvent(action: string, info: string, data?: any): void {
     if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
-      let functionAppliedDetails: IFunctionAppliedDetails = {
+      let functionAppliedDetails: FunctionAppliedDetails = {
         name: StrategyConstants.CellValidationStrategyId,
         action: action,
         info: info,

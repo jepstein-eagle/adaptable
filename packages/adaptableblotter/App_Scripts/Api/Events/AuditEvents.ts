@@ -1,30 +1,30 @@
-import { IFDC3Schema, IAdaptableBlotterEventData } from './IBlotterEvents';
-import { IAuditLogEntry } from './IAuditLogEntry';
+import { FDC3Schema, AdaptableBlotterEventData } from './BlotterEvents';
+import { AuditLogEntry } from '../../Utilities/Interface/AuditLogEntry';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 
-export interface IAuditLogEventArgs extends IFDC3Schema {
-  data: IAuditLogEventData[];
+export interface AuditLogEventArgs extends FDC3Schema {
+  data: AuditLogEventData[];
 }
 
-export interface IAuditLogEventData extends IAdaptableBlotterEventData {
-  id: IAuditLogEntry;
+export interface AuditLogEventData extends AdaptableBlotterEventData {
+  id: AuditLogEntry;
 }
 
-export interface IStateChangedDetails {
+export interface StateChangedDetails {
   name: string;
   actionType: any;
   state: ConfigState;
   diffInfo: any;
 }
 
-export interface IStatePropertyChangedDetails extends IStateChangedDetails {
+export interface StatePropertyChangedDetails extends StateChangedDetails {
   propertyName: string;
   oldValue: string;
   newValue: string;
 }
 
-export interface IStateObjectChangedDetails extends IStateChangedDetails {
+export interface StateObjectChangedDetails extends StateChangedDetails {
   objectChanged: AdaptableBlotterObject;
   stateObjectChangeType: StateObjectChangeType;
 }
@@ -35,14 +35,14 @@ export enum StateObjectChangeType {
   Deleted = 'Deleted',
 }
 
-export interface IFunctionAppliedDetails {
+export interface FunctionAppliedDetails {
   name: string;
   action: string;
   info?: string;
   data?: any;
 }
 
-export interface ICellEditDetails {
+export interface CellEditDetails {
   primarykey_column_value: string;
   primarykey_column_id: string;
   column_id: string;
