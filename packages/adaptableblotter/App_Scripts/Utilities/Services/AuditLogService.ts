@@ -1,5 +1,5 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
-import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { AuditLogEntry, AuditLogType } from '../Interface/AuditLogEntry';
 import { IAuditLogService } from './Interface/IAuditLogService';
 import { IAdaptableBlotter } from '../../types';
@@ -106,13 +106,13 @@ export class AuditLogService implements IAuditLogService {
     }
   }
 
-  public addEditCellAuditLogBatch(dataChangedEvents: IDataChangedInfo[]) {
+  public addEditCellAuditLogBatch(dataChangedEvents: DataChangedInfo[]) {
     dataChangedEvents.forEach(dce => {
       this.addEditCellAuditLog(dce);
     });
   }
 
-  public addEditCellAuditLog(dataChangedEvent: IDataChangedInfo) {
+  public addEditCellAuditLog(dataChangedEvent: DataChangedInfo) {
     if (this.isAuditCellEditsEnabled) {
       let auditLogEntry: AuditLogEntry = {
         auditlog_type: AuditLogType.CellEdit,

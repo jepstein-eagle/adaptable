@@ -11,7 +11,7 @@ import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
@@ -96,7 +96,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       }
 
       if (activeShortcut) {
-        let dataChangedEvent: IDataChangedInfo = {
+        let dataChangedEvent: DataChangedInfo = {
           OldValue: activeCell.Value,
           NewValue: valueToReplace,
           ColumnId: activeCell.ColumnId,

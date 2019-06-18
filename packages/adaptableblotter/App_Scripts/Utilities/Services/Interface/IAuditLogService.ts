@@ -1,9 +1,9 @@
-import { IDataChangedInfo } from '../../Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../../Interface/DataChangedInfo';
 import { StateChangedDetails, FunctionAppliedDetails } from '../../../Api/Events/AuditEvents';
 
 export interface IAuditLogService {
-  addEditCellAuditLogBatch(dataChangedEvents: IDataChangedInfo[]): void;
-  addEditCellAuditLog(dataChangedEvent: IDataChangedInfo): void;
+  addEditCellAuditLogBatch(dataChangedEvents: DataChangedInfo[]): void;
+  addEditCellAuditLog(dataChangedEvent: DataChangedInfo): void;
   addUserStateChangeAuditLog(stateChangeDetails: StateChangedDetails): void;
   addInternalStateChangeAuditLog(stateChangeDetails: StateChangedDetails): void;
   addFunctionAppliedAuditLog(functionAppliedDetails: FunctionAppliedDetails): void;

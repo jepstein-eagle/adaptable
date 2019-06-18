@@ -18,7 +18,7 @@ import {
   CellValidationState,
   CellValidationRule,
 } from '../../PredefinedConfig/RunTimeState/CellValidationState';
-import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
 
 export class ValidationService implements IValidationService {
@@ -27,7 +27,7 @@ export class ValidationService implements IValidationService {
   }
 
   // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...
-  public ValidateCellChanging(dataChangedEvent: IDataChangedInfo): CellValidationRule[] {
+  public ValidateCellChanging(dataChangedEvent: DataChangedInfo): CellValidationRule[] {
     let failedWarningRules: CellValidationRule[] = [];
     // if the new value is the same as the old value then we can get out as we dont see it as an edit?
     if (dataChangedEvent.OldValue == dataChangedEvent.NewValue) {
@@ -141,7 +141,7 @@ export class ValidationService implements IValidationService {
   // changing this so that it now checks the opposite!
   private IsCellValidationRuleBroken(
     cellValidationRule: CellValidationRule,
-    dataChangedEvent: IDataChangedInfo,
+    dataChangedEvent: DataChangedInfo,
     columns: IColumn[]
   ): boolean {
     // if its none then validation fails immediately

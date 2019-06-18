@@ -1,7 +1,7 @@
 import { EventDispatcher } from '../EventDispatcher';
 import { IDataService, ChangeDirection } from './Interface/IDataService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { IEvent } from '../Interface/IEvent';
 import { ConditionalStyleState } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 
@@ -20,7 +20,7 @@ export class DataService implements IDataService {
     this._columnValueList = new Map();
   }
 
-  public CreateDataChangedEvent(dataChangedInfo: IDataChangedInfo): void {
+  public CreateDataChangedEvent(dataChangedInfo: DataChangedInfo): void {
     if (dataChangedInfo.NewValue != dataChangedInfo.OldValue) {
       this._onDataSourceChanged.Dispatch(this, dataChangedInfo);
     }
@@ -28,10 +28,10 @@ export class DataService implements IDataService {
 
   private _onDataSourceChanged: EventDispatcher<
     IDataService,
-    IDataChangedInfo
-  > = new EventDispatcher<IDataService, IDataChangedInfo>();
+    DataChangedInfo
+  > = new EventDispatcher<IDataService, DataChangedInfo>();
 
-  OnDataSourceChanged(): IEvent<IDataService, IDataChangedInfo> {
+  OnDataSourceChanged(): IEvent<IDataService, DataChangedInfo> {
     return this._onDataSourceChanged;
   }
 

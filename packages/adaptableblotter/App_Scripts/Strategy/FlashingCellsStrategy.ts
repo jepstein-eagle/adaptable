@@ -11,7 +11,7 @@ import {
 } from '../PredefinedConfig/RunTimeState/FlashingCellState';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   implements IFlashingCellsStrategy {
@@ -72,7 +72,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
 
   public abstract initStyles(): void;
 
-  protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo) {
+  protected handleDataSourceChanged(dataChangedInfo: DataChangedInfo) {
     let flashingCell: FlashingCell = this.blotter.api.flashingCellApi
       .getAllFlashingCell()
       .find(f => f.ColumnId == dataChangedInfo.ColumnId);
@@ -83,5 +83,5 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
 
   protected abstract shouldHandleDataSourceChanged(): boolean;
 
-  protected abstract FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: FlashingCell): void;
+  protected abstract FlashCell(dataChangedInfo: DataChangedInfo, flashingCell: FlashingCell): void;
 }

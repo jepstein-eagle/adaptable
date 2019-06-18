@@ -6,7 +6,7 @@ import { IColumn } from '../Interface/IColumn';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from './ExpressionHelper';
-import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
 declare var Glue4Office: any;
@@ -140,7 +140,7 @@ function isValidEdit(
     }
   }
 
-  let dataChangedInfo: IDataChangedInfo = {
+  let dataChangedInfo: DataChangedInfo = {
     OldValue: originalValue,
     NewValue: returnedValue,
     ColumnId: column.ColumnId,

@@ -1,6 +1,6 @@
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IFreeTextColumnService } from './Interface/IFreeTextColumnService';
-import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { IAdaptableBlotter } from '../../types';
 import {
   FreeTextColumn,
@@ -34,7 +34,7 @@ export class FreeTextColumnService implements IFreeTextColumnService {
     }
   }
 
-  CheckIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedInfo): void {
+  CheckIfDataChangingColumnIsFreeText(dataChangedEvent: DataChangedInfo): void {
     let freeTextColumn: FreeTextColumn = this.blotter.api.freeTextColumnApi
       .getAllFreeTextColumn()
       .find(fc => fc.ColumnId == dataChangedEvent.ColumnId);
@@ -50,7 +50,7 @@ export class FreeTextColumnService implements IFreeTextColumnService {
     }
   }
 
-  CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents: IDataChangedInfo[]): void {
+  CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents: DataChangedInfo[]): void {
     if (
       ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.freeTextColumnApi.getAllFreeTextColumn())
     ) {

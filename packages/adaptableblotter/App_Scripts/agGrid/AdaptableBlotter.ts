@@ -97,7 +97,7 @@ import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { BlotterApi } from '../Api/BlotterApi';
 import { DEFAULT_LAYOUT, HALF_SECOND } from '../Utilities/Constants/GeneralConstants';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
@@ -901,7 +901,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const oldValue = this.gridOptions.api.getValue(cellInfo.ColumnId, rowNode);
     rowNode.setDataValue(cellInfo.ColumnId, cellInfo.Value);
 
-    const dataChangedEvent: IDataChangedInfo = {
+    const dataChangedEvent: DataChangedInfo = {
       OldValue: oldValue,
       NewValue: cellInfo.Value,
       ColumnId: cellInfo.ColumnId,
@@ -920,7 +920,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       return;
     }
 
-    var dataChangedEvents: IDataChangedInfo[] = [];
+    var dataChangedEvents: DataChangedInfo[] = [];
     const nodesToRefresh: RowNode[] = [];
     const refreshColumnList: string[] = [];
     const percentBars: PercentBar[] = this.api.percentBarApi.getAllPercentBar();
@@ -976,7 +976,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     rowNode: RowNode,
     nodesToRefresh: RowNode[],
     refreshColumnList: string[],
-    dataChangedEvents: IDataChangedInfo[],
+    dataChangedEvents: DataChangedInfo[],
     percentBars: PercentBar[]
   ): void {
     const colId: string = cellInfo.ColumnId;
@@ -990,7 +990,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     var data: any = rowNode.data;
     data[colId] = cellInfo.Value;
 
-    const dataChangedEvent: IDataChangedInfo = {
+    const dataChangedEvent: DataChangedInfo = {
       OldValue: oldValue,
       NewValue: cellInfo.Value,
       ColumnId: colId,
@@ -1583,7 +1583,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       if (this.abContainerElement == null) {
         LoggingHelper.LogAdaptableBlotterError(
-          `There is no Div called ${this.blotterOptions.containerOptions.adaptableBlotterContainer} so cannot render the Adaptable Blotter`
+          `There is no Div called ${
+            this.blotterOptions.containerOptions.adaptableBlotterContainer
+          } so cannot render the Adaptable Blotter`
         );
         return;
       }
@@ -1667,7 +1669,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // if there was already an implementation set by the dev we keep the reference to it and execute it at the end
       const oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
       const isCancelAfterEnd = () => {
-        const dataChangedInfo: IDataChangedInfo = {
+        const dataChangedInfo: DataChangedInfo = {
           OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
           NewValue: this._currentEditor.getValue(),
           ColumnId: params.column.getColId(),
@@ -1770,7 +1772,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       (params: NewValueParams) => {
         const identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
         const colId: string = params.colDef.field;
-        const dataChangedInfo: IDataChangedInfo = {
+        const dataChangedInfo: DataChangedInfo = {
           OldValue: params.oldValue,
           NewValue: params.newValue,
           ColumnId: colId,
@@ -1785,7 +1787,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         const columnList = this.calculatedColumnPathMap.get(colId);
         if (columnList) {
           columnList.forEach(columnId => {
-            const dataChangedInfo: IDataChangedInfo = {
+            const dataChangedInfo: DataChangedInfo = {
               OldValue: params.oldValue,
               NewValue: this.gridOptions.api.getValue(columnId, params.node),
               ColumnId: columnId,

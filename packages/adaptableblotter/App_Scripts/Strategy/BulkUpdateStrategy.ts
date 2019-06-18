@@ -8,7 +8,7 @@ import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy';
 import { BulkUpdateState } from '../PredefinedConfig/RunTimeState/BulkUpdateState';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
@@ -102,7 +102,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
 
       for (let pair of selectedCells.Selection) {
         for (let selectedCell of pair[1]) {
-          let dataChangedEvent: IDataChangedInfo = {
+          let dataChangedEvent: DataChangedInfo = {
             OldValue: selectedCell.value,
             NewValue: typedBulkUpdateValue,
             ColumnId: selectedCell.columnId,

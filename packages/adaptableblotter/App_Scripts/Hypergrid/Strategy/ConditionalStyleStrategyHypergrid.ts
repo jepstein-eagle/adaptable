@@ -3,7 +3,7 @@ import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrateg
 import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotter } from '../AdaptableBlotter';
-import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
@@ -15,7 +15,7 @@ export class ConditionalStyleStrategyHypergrid extends ConditionalStyleStrategy
   }
 
   // Called when a single piece of data changes, ie. usually the result of an inline edit
-  protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
+  protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
     let conditionalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
     if (ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)) {
       let theBlotter = this.blotter as AdaptableBlotter;

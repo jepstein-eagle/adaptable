@@ -72,7 +72,7 @@ import { FreeTextColumnStrategy } from '../Strategy/FreeTextColumnStrategy';
 import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTextColumnService';
 import { FreeTextColumnService } from '../Utilities/Services/FreeTextColumnService';
 import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { IDataService, ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import { DataService } from '../Utilities/Services/DataService';
 import { BlotterApi } from '../Api/BlotterApi';
@@ -705,7 +705,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     let oldValue = row[cellInfo.ColumnId];
     row[cellInfo.ColumnId] = cellInfo.Value;
 
-    let dataChangedEvent: IDataChangedInfo = {
+    let dataChangedEvent: DataChangedInfo = {
       OldValue: oldValue,
       NewValue: cellInfo.Value,
       ColumnId: cellInfo.ColumnId,
@@ -724,7 +724,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public setValueBatch(batchValues: ICellInfo[]): void {
     //no need to have a batch mode so far.... we'll see in the future performance
-    let dataChangedEvents: IDataChangedInfo[] = [];
+    let dataChangedEvents: DataChangedInfo[] = [];
     for (let element of batchValues) {
       let row = this.hyperGrid.behavior.dataModel.dataSource.findRow(
         this.blotterOptions.primaryKey,
@@ -733,7 +733,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       let oldValue = row[element.ColumnId];
       row[element.ColumnId] = element.Value;
 
-      let dataChangedEvent: IDataChangedInfo = {
+      let dataChangedEvent: DataChangedInfo = {
         OldValue: oldValue,
         NewValue: element.Value,
         ColumnId: element.ColumnId,
@@ -1429,7 +1429,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         event.detail.input.event.visibleRow.rowIndex
       );
 
-      let dataChangedEvent: IDataChangedInfo = {
+      let dataChangedEvent: DataChangedInfo = {
         OldValue: event.detail.oldValue,
         NewValue: event.detail.newValue,
         ColumnId: event.detail.input.column.name,
@@ -1561,7 +1561,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             );
 
             if (olddValue != null && olddValue != newValue) {
-              let dataChangedInfo: IDataChangedInfo = {
+              let dataChangedInfo: DataChangedInfo = {
                 OldValue: olddValue,
                 NewValue: newValue,
                 ColumnId: columnId,

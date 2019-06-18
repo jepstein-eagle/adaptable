@@ -11,7 +11,7 @@ import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';
@@ -124,7 +124,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         //avoid the 0.0000000000x
         newValue = parseFloat(newValue.toFixed(12));
 
-        let dataChangedEvent: IDataChangedInfo = {
+        let dataChangedEvent: DataChangedInfo = {
           OldValue: Number(selectedCell.value),
           NewValue: newValue,
           ColumnId: selectedCell.columnId,

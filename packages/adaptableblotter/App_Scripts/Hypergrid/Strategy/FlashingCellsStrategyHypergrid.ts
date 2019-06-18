@@ -1,7 +1,7 @@
 import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy';
-import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 
@@ -19,7 +19,7 @@ export class FlashingCellsStrategyHypergrid extends FlashingCellsStrategy
     return true;
   }
 
-  protected FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: FlashingCell): void {
+  protected FlashCell(dataChangedInfo: DataChangedInfo, flashingCell: FlashingCell): void {
     let theBlotter = this.blotter as AdaptableBlotter;
     if (dataChangedInfo.OldValue == null) {
       // currently should never happen

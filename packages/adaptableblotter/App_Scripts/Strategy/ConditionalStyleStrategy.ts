@@ -5,7 +5,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
@@ -39,7 +39,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   }
 
   // Called when a single piece of data changes, ie. usually the result of an inline edit
-  protected abstract handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void;
+  protected abstract handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void;
 
   // Called when we have re-bound the grid e.g. after sorting a column or even after a smart edit or plus / minus :(
   private handleGridDataBound() {

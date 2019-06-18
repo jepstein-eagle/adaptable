@@ -59,7 +59,7 @@ export interface AuditDestinationOptions {
    */
   auditToConsole?: boolean;
   /**
-   * Fires the Audit Message as an Audit Log (IAuditLogEventArgs) event
+   * Fires the Audit Message as an Audit Log (AuditLogEventArgs) event
    * You listen to this Event the same way that you would all other Adaptable Blotter events
    */
   auditAsEvent?: boolean;
