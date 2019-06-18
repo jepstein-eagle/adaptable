@@ -20,9 +20,9 @@ export class FreeTextColumnService implements IFreeTextColumnService {
       }
       if (ArrayExtensions.IsNotNullOrEmpty(freeTextColumn.FreeTextStoredValues)) {
         let pkValue: any = this.blotter.getPrimaryKeyValueFromRecord(record);
-        let freeTextStoredValue: FreeTextStoredValue = freeTextColumn.FreeTextStoredValues.find(
-          fdx => fdx.PrimaryKey == pkValue
-        );
+        let freeTextStoredValue:
+          | FreeTextStoredValue
+          | undefined = freeTextColumn.FreeTextStoredValues.find(fdx => fdx.PrimaryKey == pkValue);
         if (freeTextStoredValue) {
           return freeTextStoredValue.FreeText;
         }

@@ -11,9 +11,6 @@ import { ConditionalStyleState } from '../../PredefinedConfig/RunTimeState/Condi
 export class DataService implements IDataService {
   private _columnValueList: Map<string, Map<any, number>>;
 
-  // to move to another...
-  private ConditionalStyleState: ConditionalStyleState;
-
   constructor(private blotter: IAdaptableBlotter) {
     this.blotter = blotter;
     // create the _columnValueList - will be empty - used currrently only for flashing cell
