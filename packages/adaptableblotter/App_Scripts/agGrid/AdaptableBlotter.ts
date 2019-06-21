@@ -2287,7 +2287,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     ) {
       const container = this.getGridContainerElement();
       if (container != null) {
-        container.className = this.agGridHelper.getLightThemeName();
+        const light = this.agGridHelper.getLightThemeName();
+        const dark = this.agGridHelper.getDarkThemeName();
+
+        container.classList.remove(light);
+        container.classList.remove(dark);
+
+        container.classList.add(light);
       }
     }
 
@@ -2309,7 +2315,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     ) {
       const container = this.getGridContainerElement();
       if (container != null) {
-        container.className = this.agGridHelper.getDarkThemeName();
+        const light = this.agGridHelper.getLightThemeName();
+        const dark = this.agGridHelper.getDarkThemeName();
+
+        container.classList.remove(light);
+        container.classList.remove(dark);
+
+        container.classList.add(dark);
       }
     }
 
