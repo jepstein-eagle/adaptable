@@ -1,4 +1,8 @@
-import { ICellEditDetails, IFunctionAppliedDetails, IStateChangedDetails } from './IAuditEvents';
+import {
+  CellEditDetails,
+  FunctionAppliedDetails,
+  StateChangedDetails,
+} from '../../Api/Events/AuditEvents';
 
 export enum AuditLogType {
   CellEdit = 'Cell Edit',
@@ -8,13 +12,13 @@ export enum AuditLogType {
   Ping = 'Ping',
 }
 
-export interface IAuditLogEntry {
+export interface AuditLogEntry {
   auditlog_type: AuditLogType;
   client_timestamp: Date;
   username: string;
   blotter_id: string;
-  cell_edit_details?: ICellEditDetails;
-  function_applied_details?: IFunctionAppliedDetails;
-  state_change_details?: IStateChangedDetails;
+  cell_edit_details?: CellEditDetails;
+  function_applied_details?: FunctionAppliedDetails;
+  state_change_details?: StateChangedDetails;
   number_of_missed_ping?: number;
 }

@@ -5,10 +5,10 @@ import { CalculatedColumnExpressionWizard } from './CalculatedColumnExpressionWi
 import { CalculatedColumnSettingsWizard } from './CalculatedColumnSettingsWizard';
 import { CalculatedColumnSummaryWizard } from './CalculatedColumnSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface CalculatedColumnWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CalculatedColumnWizard> {
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<CalculatedColumnWizard> {
   IsExpressionValid: (expression: string) => void;
   GetErrorMessage: () => string;
 }

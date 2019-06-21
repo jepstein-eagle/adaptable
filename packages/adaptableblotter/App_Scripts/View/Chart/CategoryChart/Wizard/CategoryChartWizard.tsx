@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
 import {
   CategoryChartDefinition,
   ChartDefinition,
@@ -14,7 +14,7 @@ import { CategoryChartSummaryWizard } from './CategoryChartSummaryWizard';
 import { CategoryChartSettingsWizard } from './CategoryChartSettingsWizard';
 
 export interface CategoryChartWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CategoryChartWizard> {}
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<CategoryChartWizard> {}
 
 export class CategoryChartWizard extends React.Component<CategoryChartWizardProps, {}> {
   render() {

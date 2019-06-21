@@ -7,7 +7,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
 import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
@@ -17,7 +17,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
     super(blotter);
   }
 
-  protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
+  protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
     //we refresh all columns that need to be refreshed
     //this method needs to be optimised and probably cached as well. Will do when doing perf monitor
     let conditionalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();

@@ -2,7 +2,7 @@ import { FlashingCellsStrategy } from '../../Strategy/FlashingCellsStrategy';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsStrategy';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
@@ -19,7 +19,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
     return false;
   }
 
-  protected FlashCell(dataChangedInfo: IDataChangedInfo, flashingCell: FlashingCell): void {
+  protected FlashCell(dataChangedInfo: DataChangedInfo, flashingCell: FlashingCell): void {
     // dont handle
   }
 

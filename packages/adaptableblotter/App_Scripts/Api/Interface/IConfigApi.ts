@@ -25,20 +25,33 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import { PlusMinusState } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
 
 export interface IConfigApi {
-  // General Config
   configInit(): void;
+
   /**
    * Clears the  configuration for the current user, reverting everyting to system defaults.
+   *
    * This includes clearing all predefined items that have been created fo the users (though they will subsequently be re-applied if the local cache is cleared).
    *  */
   configClear(): void;
+
   configDeleteLocalStorage(): void;
 
+  /**
+   * Loads the user state that is supplied.
+   *
+   * This will **replace** the existing User State; it is **not** a merge function.
+   *
+   * @param state
+   */
   configloadUserState(state: { [s: string]: RunTimeState }): void;
 
+  /**
+   * Some of the state retrieved by this function will be internal state that is required by the System but not relevant to users so be careful - it is preferable to use the configGetAllUserState method which will only retrieve run-time state that can be amended by users (and is persisted into local storage or remote config).
+   */
   configGetAllState(): AdaptableBlotterState;
 
   configGetAllUserState(): RunTimeState[];
+
   configGetUserStateByFunction(
     functionName:
       | 'AdvancedSearch'
@@ -67,6 +80,14 @@ export interface IConfigApi {
     returnJson: boolean
   ): RunTimeState;
 
+  /*
+
+Need to include this bit:
+By default the method (and all those below) will return the actual object that we store.  
+
+However if you pass in true for the returnJson parameter, then the method will return a JSON string.
+
+  */
   configGetAdvancedSearchState(returnJson: boolean): AdvancedSearchState;
   configGetAlertSearchState(returnJson: boolean): AlertState;
   configGetBulkUpdateState(returnJson: boolean): BulkUpdateState;

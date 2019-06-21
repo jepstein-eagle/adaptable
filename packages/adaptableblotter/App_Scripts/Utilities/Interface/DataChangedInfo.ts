@@ -1,4 +1,4 @@
-export interface IDataChangedInfo {
+export interface DataChangedInfo {
   OldValue: any;
   NewValue: any;
   ColumnId: string;

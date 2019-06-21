@@ -14,7 +14,6 @@ import {
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { AuditLogEventArgs } from '../../../../App_Scripts/Api/Events/AuditEvents';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -30,33 +29,20 @@ function InitAdaptableBlotter() {
     userName: 'demo user',
     blotterId: 'audit demo',
     licenceKey: examplesHelper.getEnterpriseLicenceKey(),
-
-    auditOptions: {
-      auditUserStateChanges: {
-        auditToConsole: true,
-        auditAsEvent: false,
-      },
-      auditFunctionEvents: {
-        auditToConsole: true,
-      },
-      auditCellEdits: {
-        auditToConsole: true,
-      },
-    },
   };
 
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
-  adaptableblotter.api.auditEventApi
-    .onAuditStateChanged()
-    .Subscribe((sender, columnChangedArgs) => listenToAuditLogEvent(columnChangedArgs));
+  adaptableblotter.api.eventApi
+    .onSearchedChanged()
+    .Subscribe((sender, searchChangedArgs) => listenToSearchedChangedEvent(searchChangedArgs));
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-function listenToAuditLogEvent(auditLogEventArgs: AuditLogEventArgs) {
-  console.log('audit event received');
-  console.log(auditLogEventArgs);
+function listenToSearchedChangedEvent(searchChangedArgs: SearchChangedEventArgs) {
+  console.log('searched changed event received');
+  console.log(searchChangedArgs);
 }
 
 export default () => {

@@ -5,14 +5,14 @@ import { ReportColumnTypeWizard } from './ReportColumnTypeWizard';
 import { ReportExpressionWizard } from './ReportExpressionWizard';
 import { ReportSettingsWizard } from './ReportSettingsWizard';
 import { ReportSummaryWizard } from './ReportSummaryWizard';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
 import { ReportRowTypeWizard } from './ReportRowTypeWizard';
 import { ReportScheduleWizard } from './ReportScheduleWizard';
 
 export class ReportWizard extends React.Component<
-  IAdaptableBlotterObjectExpressionAdaptableWizardProps<ReportWizard>,
+  AdaptableBlotterObjectExpressionAdaptableWizardProps<ReportWizard>,
   {}
 > {
   render() {

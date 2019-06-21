@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ReminderSummaryWizard } from './ReminderSummaryWizard';
 import { ReminderAlertWizard } from './RemindeAlertWizard';
 import { ReminderScheduleWizard } from './ReminderScheduleWizard';
 
 export interface ReminderWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ReminderWizard> {}
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<ReminderWizard> {}
 
 export class ReminderWizard extends React.Component<ReminderWizardProps, {}> {
   render() {

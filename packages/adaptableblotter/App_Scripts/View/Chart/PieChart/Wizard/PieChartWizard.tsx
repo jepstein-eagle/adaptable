@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
 import { ChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
 import { AdaptableWizard } from '../../../Wizard/AdaptableWizard';
 import { PieChartSettingsWizard } from './PieChartSettingsWizard';
@@ -9,7 +9,7 @@ import { PieChartPrimaryColumnWizard } from './PieChartPrimaryColumnWizard';
 import { PieChartSecondaryColumnWizard } from './PieChartSecondaryColumnWizard';
 
 export interface PieChartWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<PieChartWizard> {}
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<PieChartWizard> {}
 
 export class PieChartWizard extends React.Component<PieChartWizardProps, {}> {
   render() {

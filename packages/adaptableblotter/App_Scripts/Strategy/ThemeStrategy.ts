@@ -5,7 +5,7 @@ import { IThemeStrategy } from './Interface/IThemeStrategy';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ThemeState } from '../PredefinedConfig/RunTimeState/ThemeState';
 import * as GeneralConstants from '../Utilities/Constants/GeneralConstants';
-import { IThemeChangedEventArgs } from '../Utilities/Interface/IBlotterEvents';
+import { ThemeChangedEventArgs } from '../Api/Events/BlotterEvents';
 
 const WARNINGS: { [key: string]: boolean } = {};
 const warnTheme = (themeName: string) => {
@@ -60,7 +60,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
   publishThemeChanged(themeState: ThemeState) {
     const themeName = themeState.CurrentTheme;
 
-    const themeChangedInfo: IThemeChangedEventArgs = {
+    const themeChangedInfo: ThemeChangedEventArgs = {
       themeName,
     };
     this.blotter.api.eventApi._onThemeChanged.Dispatch(this.blotter, themeChangedInfo);

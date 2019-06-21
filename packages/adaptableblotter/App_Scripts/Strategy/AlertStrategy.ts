@@ -9,7 +9,7 @@ import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
@@ -28,7 +28,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     );
   }
 
-  protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
+  protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
     let alertDefinitions: AlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
     if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
       let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
@@ -44,7 +44,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     }
   }
 
-  public CheckDataChanged(dataChangedEvent: IDataChangedInfo): AlertDefinition[] {
+  public CheckDataChanged(dataChangedEvent: DataChangedInfo): AlertDefinition[] {
     let relatedAlertDefinitions = this.blotter.api.alertApi
       .getAlertState()
       .AlertDefinitions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
@@ -89,7 +89,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
 
   private IsAlertTriggered(
     alert: AlertDefinition,
-    dataChangedEvent: IDataChangedInfo,
+    dataChangedEvent: DataChangedInfo,
     columns: IColumn[]
   ): boolean {
     // if its none then alert triggers immediately

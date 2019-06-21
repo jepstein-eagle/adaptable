@@ -5,7 +5,7 @@ import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilte
 /**
  * The current Search and Filter in the Blotter
  */
-export interface IBlotterSearchState {
+export interface BlotterSearchState {
   /**
    * Current Static Data Source (if any selected)
    */

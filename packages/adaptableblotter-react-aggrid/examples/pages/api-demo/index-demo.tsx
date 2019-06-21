@@ -3,10 +3,7 @@ import React from 'react';
 import { LicenseManager } from 'ag-grid-enterprise';
 import { GridOptions } from 'ag-grid-community';
 
-import AdaptableBlotterReact, {
-  IThemeChangedEventArgs,
-  ISearchChangedEventArgs,
-} from '../../../src';
+import AdaptableBlotterReact, { ThemeChangedEventArgs, SearchChangedEventArgs } from '../../../src';
 
 import '../../../src/base.scss';
 import '../../../src/themes/light.scss';
@@ -32,7 +29,7 @@ const adaptableBlotterOptions: AdaptableBlotterOptions = {
   licenceKey: process.env.ENTERPRISE_LICENSE,
 };
 
-function listenToSearchChange(searchChangedArgs: ISearchChangedEventArgs) {
+function listenToSearchChange(searchChangedArgs: SearchChangedEventArgs) {
   console.log('search changed event received');
   console.log(searchChangedArgs.data[0].id);
 }
@@ -52,7 +49,7 @@ export default () => {
       blotterOptions={adaptableBlotterOptions}
       onReady={onReady}
       onSearchChanged={(sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs)}
-      onThemeChanged={(sender, arg: IThemeChangedEventArgs) => {
+      onThemeChanged={(sender, arg: ThemeChangedEventArgs) => {
         console.log('theme:', arg.themeName);
       }}
     />

@@ -13,7 +13,7 @@ import {
 } from '../PredefinedConfig/RunTimeState/ChartState';
 import { SystemState } from '../PredefinedConfig/InternalState/SystemState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 
 import { ChartVisibility, ChartType } from '../PredefinedConfig/Common/ChartEnums';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
@@ -190,7 +190,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
   }
 
-  protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo): void {
+  protected handleDataSourceChanged(dataChangedInfo: DataChangedInfo): void {
     if (this.isCurrentChartVisibiilityMaximised()) {
       let columnChangedId: string = dataChangedInfo.ColumnId;
       if (StringExtensions.IsNotNullOrEmpty(columnChangedId)) {

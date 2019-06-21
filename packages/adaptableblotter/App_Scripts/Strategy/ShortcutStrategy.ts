@@ -11,11 +11,11 @@ import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
-import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
+import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 
@@ -96,7 +96,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       }
 
       if (activeShortcut) {
-        let dataChangedEvent: IDataChangedInfo = {
+        let dataChangedEvent: DataChangedInfo = {
           OldValue: activeCell.Value,
           NewValue: valueToReplace,
           ColumnId: activeCell.ColumnId,
@@ -166,7 +166,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       { Id: activeCell.Id, ColumnId: activeCell.ColumnId, Value: newValue },
     ]);
 
-    let functionAppliedDetails: IFunctionAppliedDetails = {
+    let functionAppliedDetails: FunctionAppliedDetails = {
       name: StrategyConstants.ShortcutStrategyId,
       action: ShortcutRedux.SHORTCUT_APPLY,
       info: 'KeyPressed:' + keyEventString,

@@ -13,7 +13,7 @@ import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
@@ -120,7 +120,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
               //avoid the 0.0000000000x
               newValue.Value = parseFloat(newValue.Value.toFixed(12));
 
-              let dataChangedEvent: IDataChangedInfo = {
+              let dataChangedEvent: DataChangedInfo = {
                 OldValue: Number(selectedCell.value),
                 NewValue: newValue.Value,
                 ColumnId: selectedCell.columnId,

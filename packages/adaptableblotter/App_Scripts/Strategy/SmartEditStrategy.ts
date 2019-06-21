@@ -11,9 +11,9 @@ import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
-import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
+import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
@@ -35,7 +35,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
   public ApplySmartEdit(newValues: ICellInfo[]): void {
     if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
       // logging audit log function here as there is no obvious Action to listen to in the Store - not great but not end of the world...
-      let functionAppliedDetails: IFunctionAppliedDetails = {
+      let functionAppliedDetails: FunctionAppliedDetails = {
         name: StrategyConstants.SmartEditStrategyId,
         action: SMARTEDIT_APPLY,
         info: 'Smart Edit Applied',
@@ -124,7 +124,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         //avoid the 0.0000000000x
         newValue = parseFloat(newValue.toFixed(12));
 
-        let dataChangedEvent: IDataChangedInfo = {
+        let dataChangedEvent: DataChangedInfo = {
           OldValue: Number(selectedCell.value),
           NewValue: newValue,
           ColumnId: selectedCell.columnId,

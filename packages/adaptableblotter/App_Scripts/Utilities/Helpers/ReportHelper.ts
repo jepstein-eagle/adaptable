@@ -27,8 +27,8 @@ export function IsSystemReport(Report: Report): boolean {
   );
 }
 
-export function GetReportColumnsDescription(Report: Report, cols: IColumn[]): string {
-  switch (Report.ReportColumnScope) {
+export function GetReportColumnsDescription(report: Report, cols: IColumn[]): string {
+  switch (report.ReportColumnScope) {
     case ReportColumnScope.AllColumns:
       return '[All Columns]';
     case ReportColumnScope.VisibleColumns:
@@ -36,10 +36,7 @@ export function GetReportColumnsDescription(Report: Report, cols: IColumn[]): st
     case ReportColumnScope.SelectedColumns:
       return '[Selected Columns]';
     case ReportColumnScope.BespokeColumns:
-      return ColumnHelper.getFriendlyNamesFromColumnIds(
-        this.props.Data.ColumnIds,
-        this.props.Columns
-      ).join(', ');
+      return ColumnHelper.getFriendlyNamesFromColumnIds(report.ColumnIds, cols).join(', ');
   }
 }
 

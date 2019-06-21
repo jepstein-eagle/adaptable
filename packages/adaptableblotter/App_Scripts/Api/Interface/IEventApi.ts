@@ -1,31 +1,38 @@
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
-import {
-  IColumnStateChangedEventArgs,
-  IAlertFiredEventArgs,
-  IThemeChangedEventArgs,
-} from '../../Utilities/Interface/IBlotterEvents';
-import { ISearchChangedEventArgs } from '../../Utilities/Interface/SearchChanged/ISearchChangedEventArgs';
-import { IEvent } from '../../Utilities/Interface/IEvent';
 import { EventDispatcher } from '../../Utilities/EventDispatcher';
+import { SearchChangedEventArgs } from '../Events/SearchChanged/SearchChangedEventArgs';
+import {
+  ThemeChangedEventArgs,
+  ColumnStateChangedEventArgs,
+  AlertFiredEventArgs,
+} from '../Events/BlotterEvents';
+import { IEvent } from '../../Utilities/Interface/IEvent';
 
 export interface IEventApi {
-  _onSearchedChanged: EventDispatcher<IAdaptableBlotter, ISearchChangedEventArgs>;
-  _onThemeChanged: EventDispatcher<IAdaptableBlotter, IThemeChangedEventArgs>;
-  _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, IColumnStateChangedEventArgs>;
-  _onAlertFired: EventDispatcher<IAdaptableBlotter, IAlertFiredEventArgs>;
+  /**
+   * The Adaptable Blotter publishes 4 events that users can subscribe to as required.
+   */
+
+  _onSearchedChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
+  _onThemeChanged: EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>;
+  _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, ColumnStateChangedEventArgs>;
+  _onAlertFired: EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>;
 
   /**
    * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
+   *
    * Used in association with server searching.
-   * @returns IEvent<IAdaptableBlotter, ISearchChangedEventArgs>
+   *
+   * @returns IEvent<IAdaptableBlotter, SearchChangedEventArgs>
    */
-  onSearchedChanged(): IEvent<IAdaptableBlotter, ISearchChangedEventArgs>;
+  onSearchedChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs>;
 
   /**
    * Event fired whenever the theme of the Blotter has been changed
-   * @returns IEvent<IAdaptableBlotter, IThemeChangedEventArgs>
+   *
+   * @returns IEvent<IAdaptableBlotter, ThemeChangedEventArgs>
    */
-  onThemeChanged(): IEvent<IAdaptableBlotter, IThemeChangedEventArgs>;
+  onThemeChanged(): IEvent<IAdaptableBlotter, ThemeChangedEventArgs>;
 
   /**
    * Event fired whenever column order, visibility and sorts are changed in the Blotter.
@@ -34,12 +41,14 @@ export interface IEventApi {
    *
    * @returns Column State Changed args - which at present just return the name of the current layout.
    */
-  onColumnStateChanged(): IEvent<IAdaptableBlotter, IColumnStateChangedEventArgs>;
+  onColumnStateChanged(): IEvent<IAdaptableBlotter, ColumnStateChangedEventArgs>;
 
   /**
    * Event fired whenever an Alert is raised.
+   *
    * Contains the full Alert itself.
+   *
    * @returns IEvent<IAdaptableBlotter, IAlertFiredEventArgs>
    */
-  onAlertFired(): IEvent<IAdaptableBlotter, IAlertFiredEventArgs>;
+  onAlertFired(): IEvent<IAdaptableBlotter, AlertFiredEventArgs>;
 }
