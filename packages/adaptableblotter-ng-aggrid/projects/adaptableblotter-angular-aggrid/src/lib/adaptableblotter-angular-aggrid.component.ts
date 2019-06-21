@@ -1,17 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import AdaptableBlotter from '../adaptableblotter/App_Scripts/agGrid';
-import {
-  IAdaptableBlotter,
-  AdaptableBlotterOptions,
-} from '../adaptableblotter/types';
+import { AdaptableBlotterOptions } from '../adaptableblotter/types';
 
-import { GridOptions } from 'ag-grid-community/dist/lib/entities/gridOptions';
+import { GridOptions } from 'ag-grid-community';
+import blotterFactory from './createBlotter';
 
 const getRandomInt = (max: number): number =>
   Math.floor(Math.random() * Math.floor(max));
 
 @Component({
+  entryComponents: [],
   selector: 'adaptableblotter-angular-aggrid',
   template: `
     <div [id]="blotterContainerId" [class]="wrapperClassName"></div>
@@ -19,7 +17,11 @@ const getRandomInt = (max: number): number =>
       <div
         style="position: absolute; left: 0; right: 0; width: 100%; height:100%"
       >
-        <ng-content></ng-content>
+        <ag-grid-override
+          [gridContainerId]="gridContainerId"
+          [blotterFactory]="blotterFactory"
+          [gridOptions]="gridOptions"
+        ></ag-grid-override>
       </div>
     </div>
   `,
@@ -33,16 +35,16 @@ const getRandomInt = (max: number): number =>
     `,
   ],
 })
-export class AdaptableBlotterAngularAggridComponent implements OnInit {
+export class AdaptableBlotterAngularAgGridComponent implements OnInit {
   @Input() blotterOptions: AdaptableBlotterOptions;
   @Input() gridOptions: GridOptions;
 
   public blotterContainerId: string;
-
   public gridContainerId: string;
+
   public wrapperClassName: string = 'ab__ng-wrapper';
 
-  private adaptableBlotter: IAdaptableBlotter;
+  private blotterFactory: any;
 
   constructor() {
     const seedId = `${getRandomInt(1000)}-${Date.now()}`;
@@ -51,20 +53,11 @@ export class AdaptableBlotterAngularAggridComponent implements OnInit {
     this.gridContainerId = `grid-${seedId}`;
   }
 
-  ngOnInit() {}
-
-  ngAfterViewInit() {
-    this.adaptableBlotter = new AdaptableBlotter(
-      {
-        ...this.blotterOptions,
-        containerOptions: {
-          ...this.blotterOptions.containerOptions,
-          adaptableBlotterContainer: this.blotterContainerId,
-          vendorContainer: this.gridContainerId,
-        },
-        vendorGrid: this.gridOptions,
-      },
-      true
-    );
+  ngOnInit() {
+    this.blotterFactory = blotterFactory({
+      blotterOptions: this.blotterOptions,
+      blotterContainerId: this.blotterContainerId,
+      gridContainerId: this.gridContainerId,
+    });
   }
 }

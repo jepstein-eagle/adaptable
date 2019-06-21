@@ -14,7 +14,7 @@ npm install adaptableblotter-angular-aggrid
 
 ## Usage
 
-`import { AdaptableBlotterAngularAggridComponent } from 'adaptableblotter-angular-aggrid'`
+`import { AdaptableBlotterAngularAgGridComponent } from 'adaptableblotter-angular-aggrid'`
 
 ```html
 <adaptableblotter-angular-aggrid

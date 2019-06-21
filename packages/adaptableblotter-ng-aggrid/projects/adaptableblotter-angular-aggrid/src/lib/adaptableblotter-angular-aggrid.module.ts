@@ -1,9 +1,21 @@
+// https://stackblitz.com/edit/angular-ag-grid-angular?file=app%2Fmy-grid-application%2Fmy-grid-application.component.ts
+// https://stackblitz.com/edit/angular-ag-grid-custom?file=src%2Fgrid%2Fgrid.module.ts
+
 import { NgModule } from '@angular/core';
-import { AdaptableBlotterAngularAggridComponent } from './adaptableblotter-angular-aggrid.component';
+import { AdaptableBlotterAngularAgGridComponent } from './adaptableblotter-angular-aggrid.component';
+import { AgGridOverrideComponent } from './aggrid-angular-override.component';
+
+export {
+  AdaptableBlotterAngularAgGridComponent,
+} from './adaptableblotter-angular-aggrid.component';
 
 @NgModule({
-  declarations: [AdaptableBlotterAngularAggridComponent],
+  declarations: [
+    AgGridOverrideComponent,
+    AdaptableBlotterAngularAgGridComponent,
+  ],
   imports: [],
-  exports: [AdaptableBlotterAngularAggridComponent],
+  exports: [AdaptableBlotterAngularAgGridComponent],
+  providers: [],
 })
-export class AdaptableBlotterAngularAggridModule {}
+export class AdaptableBlotterAngularAgGridModule {}
