@@ -3,6 +3,7 @@ import { GridOptions } from 'ag-grid-community';
 
 import rowData from './rowData';
 import columns from './columns';
+import { AdaptableBlotterOptions } from '../../../adaptableblotter/App_Scripts/types';
 
 @Component({
   selector: 'app-root',
@@ -16,14 +17,15 @@ export class AppComponent {
 
   private gridOptions: GridOptions;
 
-  theOptions: any = {
+  theOptions: AdaptableBlotterOptions = {
     primaryKey: 'OrderId',
     userName: 'demo user',
-    blotterId: 'THE angular wrapper',
+    blotterId: 'an angular wrapper',
     licenceKey: 'abc5834u-yt5a4esp1-r1oq9jclf1',
     containerOptions: {
       vendorContainer: 'adaptableBlotter',
     },
+    predefinedConfig: {},
   };
   constructor() {
     this.gridOptions = {
@@ -36,6 +38,9 @@ export class AppComponent {
       rowData,
       onRowClicked: event => {
         console.log('row clicked', event);
+      },
+      onGridReady: params => {
+        console.log(params);
       },
       columnDefs: columns,
       columnTypes: {

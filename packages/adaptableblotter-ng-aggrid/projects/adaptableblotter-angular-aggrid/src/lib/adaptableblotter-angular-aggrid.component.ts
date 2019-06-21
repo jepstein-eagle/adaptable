@@ -13,9 +13,11 @@ const getRandomInt = (max: number): number =>
   selector: 'adaptableblotter-angular-aggrid',
   template: `
     <div [id]="blotterContainerId" [class]="wrapperClassName"></div>
-    <div [id]="gridContainerId" style="position: relative; flex: 1">
+    <div class="ab__ng-wrapper-aggrid">
       <div
-        style="position: absolute; left: 0; right: 0; width: 100%; height:100%"
+        [id]="gridContainerId"
+        style="position: relative; flex: 1"
+        [class]="agGridContainerClassName"
       >
         <ag-grid-override
           [gridContainerId]="gridContainerId"
@@ -27,6 +29,11 @@ const getRandomInt = (max: number): number =>
   `,
   styles: [
     `
+      .ab__ng-wrapper-aggrid {
+        flex: 1;
+        display: flex;
+        flex-flow: column;
+      }
       :host {
         display: flex;
         flex-flow: var(--ab_flex-direction, column);
@@ -38,13 +45,14 @@ const getRandomInt = (max: number): number =>
 export class AdaptableBlotterAngularAgGridComponent implements OnInit {
   @Input() blotterOptions: AdaptableBlotterOptions;
   @Input() gridOptions: GridOptions;
+  @Input() agGridContainerClassName: string;
 
   public blotterContainerId: string;
   public gridContainerId: string;
 
   public wrapperClassName: string = 'ab__ng-wrapper';
 
-  private blotterFactory: any;
+  public blotterFactory: any;
 
   constructor() {
     const seedId = `${getRandomInt(1000)}-${Date.now()}`;

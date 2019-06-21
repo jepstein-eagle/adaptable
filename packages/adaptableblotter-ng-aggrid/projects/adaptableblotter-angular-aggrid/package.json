@@ -10,8 +10,6 @@
     "ag-grid-angular": ">=21.0.0"
   },
   "devDependencies": {
-    "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0",
     "mathjs": "^5.1.1",
     "ag-grid-community": ">=21.0.0",
     "ag-grid-enterprise": ">=21.0.0",

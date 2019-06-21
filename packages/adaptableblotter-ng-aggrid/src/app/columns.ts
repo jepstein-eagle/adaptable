@@ -1,3 +1,5 @@
+import { RedComponentComponent } from './red-component/red-component.component';
+
 export default [
   {
     headerName: 'Order Id',
@@ -22,6 +24,7 @@ export default [
     editable: true,
     filter: true,
     sortable: true,
+    cellRendererFramework: RedComponentComponent,
     enableRowGroup: true,
     type: 'abColDefString',
   },
