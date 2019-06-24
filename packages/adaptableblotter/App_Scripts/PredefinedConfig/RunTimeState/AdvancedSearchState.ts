@@ -5,8 +5,6 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 /**
  * The Predefined Configuration for Advanced Search
  *
- * **Warning: if you don't specify an output in the configuration your input file will be overridden !**
- *
  * Basic usage example:
  *
  * ```ts
@@ -68,8 +66,27 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * Note that 'Big Dollar Notionals' (which is also set to be the Current Advanced Search) uses both Column Values and Ranges.
  */
+
+/**
+ *
+ */
 export interface AdvancedSearchState extends RunTimeState {
+  /**
+   * A collection of Advanced Searches - which will appear in the Advanced Search toolbar dropdown.
+   *
+   *An IAdvancedSearch consists of just 2 properties: (see section below for more information).
+   *
+   *Name: The name of the Advanced Search
+   *
+   *Expression: An expression containing the search - see Expression Object Config for more information
+   */
   AdvancedSearches?: AdvancedSearch[];
+
+  /**
+   * The name of the Advanced Search that should be in use when the Blotter starts.
+   *
+   * Make sure that the value appears in the name property of one of the Advanced Searches.
+   */
   CurrentAdvancedSearch?: string;
 }
 

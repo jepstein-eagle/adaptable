@@ -26,6 +26,8 @@ import { Waiting } from '../Components/FilterForm/Waiting';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
+import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
+import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -114,12 +116,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         }
 
         // get selected filter expressions
-        let filterExpressions = theProps.Expression.FilterExpressions.find(
-          x => x.ColumnId == theProps.SelectedColumnId
-        );
+        let filterExpression: FilterExpression = null;
+        if (ArrayExtensions.IsNotNullOrEmpty(theProps.Expression.FilterExpressions)) {
+          filterExpression = theProps.Expression.FilterExpressions.find(
+            x => x.ColumnId == theProps.SelectedColumnId
+          );
+        }
         selectedColumnFilterExpressions = [];
-        if (filterExpressions) {
-          filterExpressions.Filters.forEach((fe: string) => {
+        if (filterExpression) {
+          filterExpression.Filters.forEach((fe: string) => {
             // if its a userfilter add it to that list
             let userFilter: UserFilter = this.props.UserFilters.find(uf => uf.Name == fe);
             if (userFilter) {
@@ -137,10 +142,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         );
 
         // get ranges
-        let ranges = theProps.Expression.RangeExpressions.find(
-          x => x.ColumnId == theProps.SelectedColumnId
-        );
-        selectedColumnRanges = ranges ? ranges.Ranges : [];
+        let range: RangeExpression = null;
+        if (ArrayExtensions.IsNotNullOrEmpty(theProps.Expression.RangeExpressions)) {
+          range = theProps.Expression.RangeExpressions.find(
+            x => x.ColumnId == theProps.SelectedColumnId
+          );
+        }
+        selectedColumnRanges = range ? range.Ranges : [];
 
         return {
           SelectedColumnId: this.state.SelectedColumnId,
@@ -441,15 +449,19 @@ export class ExpressionBuilderConditionSelector extends React.Component<
   onSelectedColumnRangesChange(selectedRanges: Array<QueryRange>) {
     //we assume that we manipulate a cloned object. i.e we are not mutating the state
     let colRangesExpression = this.props.Expression.RangeExpressions;
-    let rangesCol = colRangesExpression.find(x => x.ColumnId == this.props.SelectedColumnId);
-    if (rangesCol) {
+
+    let rangeExpression: RangeExpression = null;
+    if (ArrayExtensions.IsNotNullOrEmpty(colRangesExpression)) {
+      rangeExpression = colRangesExpression.find(x => x.ColumnId == this.props.SelectedColumnId);
+    }
+    if (rangeExpression) {
       if (selectedRanges.length == 0) {
         let keyValuePairIndex = colRangesExpression.findIndex(
           x => x.ColumnId == this.props.SelectedColumnId
         );
         colRangesExpression.splice(keyValuePairIndex, 1);
       } else {
-        rangesCol.Ranges = selectedRanges;
+        rangeExpression.Ranges = selectedRanges;
       }
     } else {
       colRangesExpression.push({ ColumnId: this.props.SelectedColumnId, Ranges: selectedRanges });
@@ -494,6 +506,9 @@ export class ExpressionBuilderConditionSelector extends React.Component<
   onSelectedFiltersChanged(selectedFilters: Array<string>) {
     //we assume that we manipulate a cloned object. i.e we are not mutating the state
     let colUserFilterExpression = this.props.Expression.FilterExpressions;
+    if (ArrayExtensions.IsNullOrEmpty(colUserFilterExpression)) {
+      colUserFilterExpression = [];
+    }
     let userFilterExpressionCol = colUserFilterExpression.find(
       x => x.ColumnId == this.props.SelectedColumnId
     );

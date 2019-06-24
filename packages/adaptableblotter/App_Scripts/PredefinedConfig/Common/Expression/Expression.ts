@@ -22,13 +22,13 @@ export class Expression {
    * @property {RangeExpressions} - Ranges contained in the expression
    */
   constructor(
-    public ColumnValueExpressions: ColumnValueExpression[],
-    public FilterExpressions: FilterExpression[],
-    public RangeExpressions: RangeExpression[]
+    public ColumnValueExpressions?: ColumnValueExpression[],
+    public FilterExpressions?: FilterExpression[],
+    public RangeExpressions?: RangeExpression[]
   ) {
-    this.ColumnValueExpressions = ColumnValueExpressions;
-    this.FilterExpressions = FilterExpressions;
-    this.RangeExpressions = RangeExpressions;
+    this.ColumnValueExpressions = ColumnValueExpressions == undefined ? [] : ColumnValueExpressions;
+    this.FilterExpressions = FilterExpressions == undefined ? [] : FilterExpressions;
+    this.RangeExpressions = RangeExpressions == undefined ? [] : RangeExpressions;
     this.Uuid = createUuid();
   }
 }

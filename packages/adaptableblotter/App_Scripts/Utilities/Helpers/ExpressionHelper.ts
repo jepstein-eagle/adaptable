@@ -19,6 +19,7 @@ import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
+import Helper from './Helper';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -75,39 +76,50 @@ export function ConvertExpressionToString(
     let columnToString = '';
 
     // Column Display Values
-    let columnValueExpression: ColumnValueExpression = Expression.ColumnValueExpressions.find(
-      x => x.ColumnId == columnId
-    );
-    if (columnValueExpression) {
-      columnToString = ColumnValueExpressionToString(
-        columnValueExpression,
-        columnFriendlyName,
-        includeColumnName
+    if (ArrayExtensions.IsNotNullOrEmpty(Expression.ColumnValueExpressions)) {
+      let columnValueExpression: ColumnValueExpression = Expression.ColumnValueExpressions.find(
+        x => x.ColumnId == columnId
       );
+      if (columnValueExpression) {
+        columnToString = ColumnValueExpressionToString(
+          columnValueExpression,
+          columnFriendlyName,
+          includeColumnName
+        );
+      }
     }
 
     // User Filters
-    let columnUserFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
-    if (columnUserFilters) {
-      if (columnToString != '') {
-        columnToString += ' OR ';
+    if (ArrayExtensions.IsNotNullOrEmpty(Expression.FilterExpressions)) {
+      let columnUserFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
+      if (columnUserFilters) {
+        if (columnToString != '') {
+          columnToString += ' OR ';
+        }
+        columnToString += UserFiltersToString(
+          columnUserFilters.Filters,
+          columnFriendlyName,
+          includeColumnName
+        );
       }
-      columnToString += UserFiltersToString(
-        columnUserFilters.Filters,
-        columnFriendlyName,
-        includeColumnName
-      );
     }
 
     // Column Ranges
-    let columnRange: RangeExpression = Expression.RangeExpressions.find(
-      x => x.ColumnId == columnId
-    );
-    if (columnRange) {
-      if (columnToString != '') {
-        columnToString += ' OR ';
+    if (ArrayExtensions.IsNotNullOrEmpty(Expression.RangeExpressions)) {
+      let columnRange: RangeExpression = Expression.RangeExpressions.find(
+        x => x.ColumnId == columnId
+      );
+      if (columnRange) {
+        if (columnToString != '') {
+          columnToString += ' OR ';
+        }
+        columnToString += RangesToString(
+          columnRange,
+          columnFriendlyName,
+          columns,
+          includeColumnName
+        );
       }
-      columnToString += RangesToString(columnRange, columnFriendlyName, columns, includeColumnName);
     }
     if (returnValue != '') {
       returnValue += ' AND ';
@@ -193,7 +205,7 @@ export function IsSatisfied(
     }
 
     // check for display column values
-    if (!isColumnSatisfied) {
+    if (!isColumnSatisfied && ArrayExtensions.IsNotNullOrEmpty(Expression.ColumnValueExpressions)) {
       let columnValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId);
       if (columnValues) {
         let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnId);
@@ -205,7 +217,7 @@ export function IsSatisfied(
     }
 
     // Check for filter expressions if column fails
-    if (!isColumnSatisfied) {
+    if (!isColumnSatisfied && ArrayExtensions.IsNotNullOrEmpty(Expression.FilterExpressions)) {
       let columnFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
       if (columnFilters) {
         // first evaluate any user filters
@@ -247,7 +259,7 @@ export function IsSatisfied(
     }
 
     // Check for ranges if column and user filter expressions have failed
-    if (!isColumnSatisfied) {
+    if (!isColumnSatisfied && ArrayExtensions.IsNotNullOrEmpty(Expression.RangeExpressions)) {
       let columnRanges = Expression.RangeExpressions.find(x => x.ColumnId == columnId);
       if (columnRanges) {
         let column = columnBlotterList.find(x => x.ColumnId == columnRanges.ColumnId);
@@ -528,22 +540,32 @@ function getOperandValue(rangeOperandType: string, operand: string, columns: ICo
 export function GetColumnListFromExpression(expression: Expression): Array<string> {
   return Array.from(
     new Set(
-      expression.ColumnValueExpressions.map(x => x.ColumnId)
-        .concat(expression.FilterExpressions.map(x => x.ColumnId))
-        .concat(expression.RangeExpressions.map(x => x.ColumnId))
+      expression.ColumnValueExpressions == undefined
+        ? []
+        : expression.ColumnValueExpressions.map(x => x.ColumnId)
+            .concat(
+              expression.FilterExpressions == undefined
+                ? []
+                : expression.FilterExpressions.map(x => x.ColumnId)
+            )
+            .concat(
+              expression.RangeExpressions == undefined
+                ? []
+                : expression.RangeExpressions.map(x => x.ColumnId)
+            )
     )
   );
 }
 
 export function IsNullOrEmptyExpression(expression: Expression): boolean {
-  return expression == null || IsEmptyExpression(expression);
+  return expression == null || expression == undefined || IsEmptyExpression(expression);
 }
 
 export function IsEmptyExpression(expression: Expression): boolean {
   return (
-    expression.ColumnValueExpressions.length == 0 &&
-    expression.FilterExpressions.length == 0 &&
-    expression.RangeExpressions.length == 0
+    ArrayExtensions.IsNullOrEmpty(expression.ColumnValueExpressions) &&
+    ArrayExtensions.IsNullOrEmpty(expression.FilterExpressions) &&
+    ArrayExtensions.IsNullOrEmpty(expression.RangeExpressions)
   );
 }
 
@@ -580,6 +602,9 @@ export function IsEmptyOrValidExpression(expression: Expression): boolean {
 export function IsExpressionValid(expression: Expression): boolean {
   //nothing to check for ColumnValues or Filters
   //we check that all ranges are properly populated
+  if (ArrayExtensions.IsNullOrEmpty(expression.RangeExpressions)) {
+    return true;
+  }
   return expression.RangeExpressions.every(x => {
     return x.Ranges.every(range => {
       if (range.Operator == LeafExpressionOperator.Unknown) {
@@ -800,6 +825,18 @@ export function OperatorRequiresValue(operator: LeafExpressionOperator): boolean
   );
 }
 
+export function AddMissingProperties(expression: Expression): void {
+  if (ArrayExtensions.IsNullOrEmpty(expression.ColumnValueExpressions)) {
+    expression.ColumnValueExpressions = [];
+  }
+  if (ArrayExtensions.IsNullOrEmpty(expression.FilterExpressions)) {
+    expression.FilterExpressions = [];
+  }
+  if (ArrayExtensions.IsNullOrEmpty(expression.RangeExpressions)) {
+    expression.RangeExpressions = [];
+  }
+}
+
 function getExistingItem(blotter: IAdaptableBlotter, rangeEvaluation: IRangeEvaluation): any {
   let displayValuePairs: IRawValueDisplayValuePair[] = blotter.getColumnValueDisplayValuePairDistinctList(
     rangeEvaluation.columnId,
@@ -839,5 +876,6 @@ export const ExpressionHelper = {
   TestRangeEvaluation,
   ExpressionContainsFilter,
   OperatorRequiresValue,
+  AddMissingProperties,
 };
 export default ExpressionHelper;
