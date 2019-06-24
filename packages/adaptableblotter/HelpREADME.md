@@ -1,4 +1,4 @@
-# Adaptable Blotter Code Docs
+# Accessing Adaptable Blotter through code
 
 There are 3 main ways that developers / users 'interact' with the code in the Adaptable Blotter:
 
@@ -26,6 +26,10 @@ You can provide the Adaptable Blotter at start-up with _Predefined Configuration
 
 The Adaptable Blotter API provides full safe, run-time access - through code - to all the functionality and state of the Adaptable Blotter. This allows you to create, save and delete Adaptable Blotter objects in your our screens bypassing the Blotter's UI, or to access the Store in a safe non-mutable manner.
 
-# Additional Help Resources
+# Additional Resources
 
-list them here.
+You can find further information about the Adaptable Blotter at these sites:
+
+- [Demo Site](https://demo.adaptableblotter.com)
+- [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
+- [Web Site](http://www.adaptabletools.com)
