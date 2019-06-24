@@ -7,14 +7,62 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * Basic usage example:
  *
+ * ```ts
+ * export default {
+ * AdvancedSearch: {
+ *  CurrentAdvancedSearch:"Big Dollar Notionals",
+ *  AdvancedSearches:[
+ *    {
+ *    Name:"Benelux",
+ *    Expression:{
+ *      ColumnValueExpressions:[
+ *      {
+ *        ColumnId:"country",
+ *        ColumnDisplayValues:["Belgium","Holland","Luxembourg"]
+ *      }],
+ *      }
+ *    },
+ *    {
+ *    Name:"Trades This Year",
+ *    Expression:{
+ *      FilterExpressions:[
+ *      {
+ *        ColumnId:"tradeDate",
+ *        Filters:["This Year"]
+ *      }],
+ *     },
+ *     {
+ *     Name:"Big Dollar Notionals",
+ *     Expression:{
+ *         ColumnValueExpressions:[
+ *          {
+ *           ColumnId:"currency",
+ *           ColumnDisplayValues:["USD"]
+ *        }],
+ *       RangeExpressions:[
+ *        {
+ *          ColumnId:"notional",
+ *          Ranges:[
+ *           {
+ *            Operator:"GreaterThan",
+ *            Operand1:"6000000",
+ *            Operand2:"",
+ *            Operand1Type:"Value",
+ *            Operand2Type:"Value"
+ *             }
+ *           ]
+ *        }
+ *        ]}
+ *       }
+ *    ],
+ *  }
+ * } as PredefinedConfig;
+ * ```
  * In this example we have created 3 Advanced Searches: 'Benelux', 'Trades This Year', and 'Big Dollar Notionals'.
  *
  * Note that 'Big Dollar Notionals' (which is also set to be the Current Advanced Search) uses both Column Values and Ranges.
  */
 
-/**
- *
- */
 export interface AdvancedSearchState extends RunTimeState {
   /**
    * A collection of Advanced Searches - which will appear in the Advanced Search toolbar dropdown.
