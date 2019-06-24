@@ -11,3 +11,10 @@ export interface Reminder extends AdaptableBlotterObject {
   Alert: IAdaptableAlert;
   Schedule: Schedule;
 }
+
+/*
+	
+A collection of IReminder objects (see below for more details).
+
+Each Percent Bar object contains an Alert and a Schedule.
+*/
