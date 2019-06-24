@@ -34,6 +34,7 @@ export default () => <AdaptableBlotterReact
   style={{ height: '100vh' }}
   gridOptions={ ... }
   blotterOptions={adaptableBlotterOptions}
+  onBlotterReady={(blotterApi) => { ... }}
 />
 
 
