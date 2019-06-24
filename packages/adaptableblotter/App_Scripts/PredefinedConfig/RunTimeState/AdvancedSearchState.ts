@@ -21,20 +21,16 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *        "ColumnId":"country",
  *        "ColumnDisplayValues":["Belgium","Holland","Luxembourg"]
  *      }],
- *      "FilterExpressions":[],
- *      "RangeExpressions":[]
  *      }
  *    },
  *    {
  *    "Name":"Trades This Year",
  *    "Expression":{
- *      "ColumnValueExpressions":[],
  *      "FilterExpressions":[
  *      {
  *        "ColumnId":"tradeDate",
  *        "Filters":["This Year"]
  *      }],
- *      "RangeExpressions":[]}
  *     },
  *     {
  *     "Name":"Big Dollar Notionals",
@@ -44,7 +40,6 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *           "ColumnId":"currency",
  *           "ColumnDisplayValues":["USD"]
  *        }],
- *       "FilterExpressions":[],
  *       "RangeExpressions":[
  *        {
  *          "ColumnId":"notional",
