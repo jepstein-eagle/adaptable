@@ -48,9 +48,9 @@ If you want, you can import those two files above separately. You can also impor
 So, for both the structural styles and the light and dark themes, you can import the following:
 
 ```
-@import '~adaptableblotter-angular-aggrid/base.css'
-@import '~adaptableblotter-angular-aggrid/themes/light.css'
-@import '~adaptableblotter-angular-aggrid/themes/dark.css'
+@import '~adaptableblotter-angular-aggrid/base.css';
+@import '~adaptableblotter-angular-aggrid/themes/light.css';
+@import '~adaptableblotter-angular-aggrid/themes/dark.css';
 ```
 
 ## Inputs

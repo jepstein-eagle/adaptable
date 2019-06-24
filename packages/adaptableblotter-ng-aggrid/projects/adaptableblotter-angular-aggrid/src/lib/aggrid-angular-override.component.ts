@@ -51,8 +51,6 @@ export class AgGridOverrideComponent extends AgGridAngular {
       (this as any).gridParams
     );
 
-    this.api = blotter.gridOptions.api;
-    this.columnApi = blotter.gridOptions.columnApi;
     // new Grid(
     //   (this as any)._nativeElement,
     //   this.gridOptions,
