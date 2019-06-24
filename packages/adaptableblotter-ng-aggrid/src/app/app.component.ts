@@ -55,6 +55,6 @@ export class AppComponent {
   }
 
   onBlotterReady(api: IBlotterApi) {
-    console.log('blotter ready', api);
+    console.log('blotter ready!!!', api);
   }
 }
