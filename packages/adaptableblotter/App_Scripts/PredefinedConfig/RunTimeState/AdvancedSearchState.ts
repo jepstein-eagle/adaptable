@@ -109,6 +109,13 @@ export interface AdvancedSearchState extends RunTimeState {
  *- Expression: An expression which the Advanced Search will run to evaluate which rows are displayed.
  */
 export interface AdvancedSearch extends AdaptableBlotterObject {
+  /**
+   * The name of the Advanced Search - used for *external* identification purposes
+   */
   Name: string;
+
+  /**
+   * The Expression (or Query) that the Advanced Search implements when its run.  Only rows that satisfy the Expression are displayed.
+   */
   Expression: Expression;
 }
