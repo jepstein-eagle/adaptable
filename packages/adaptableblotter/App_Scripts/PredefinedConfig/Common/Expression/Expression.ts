@@ -4,7 +4,15 @@ import { createUuid, TypeUuid } from '../../Uuid';
 import { RangeExpression } from './RangeExpression';
 
 /**
- * The main Expression object - comprised of 3 collections: Column Values, Filters and Ranges
+ * The main Expression (or Query) object used in multiple Adaptable Blotter functions
+ *
+ * It is comprised of 3 (nullable) collections:
+ *
+ * - Column Values: actual cell value in the a Column - can be either Display or Raw Values
+ *
+ * - Filters: can be a mix of *Column Filters* (created by the user at run-time), *System Filters* (filters which are shipped by the Adaptable Blotter) and *User Filters* (special filters which the user creates and names and can then re-use as required).
+ *
+ * - Ranges: an evaluation (e.g. 'GreaterThan 15', 'LessThan [Bid]' etc.)
  */
 export class Expression {
   /**

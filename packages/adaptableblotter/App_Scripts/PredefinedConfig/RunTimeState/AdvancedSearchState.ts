@@ -3,9 +3,19 @@ import { Expression } from '../Common/Expression/Expression';
 import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 
 /**
- * The Predefined Configuration for Advanced Search
+ * The Predefined Configuration for the Advanced Search function
  *
- * Basic usage example:
+ * Advanced Search enables you to build saveable searches using *Queries* that can be run across multiple columns using a wide variety of *Search Criteria*.
+ *
+ * **Further Resources**
+ *
+ * [Advanced Search Help](interfaces/_api_interface_iblotterapi_.iblotterapi.html)
+ *
+ * [Advanced Search Demo](interfaces/_api_interface_iblotterapi_.iblotterapi.html)
+ *
+ * [Blotter API for Advanced Search](_api_interface_iadvancedsearchapi_.iadvancedsearchapi.html)
+ *
+ * **Basic usage example**
  *
  * ```ts
  * export default {
@@ -58,34 +68,45 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *  }
  * } as PredefinedConfig;
  * ```
- * In this example we have created 3 Advanced Searches: 'Benelux', 'Trades This Year', and 'Big Dollar Notionals'.
+ * In this example we have created 3 Advanced Searches:
  *
- * Note that 'Big Dollar Notionals' (which is also set to be the Current Advanced Search) uses both Column Values and Ranges.
+ * - 'Benelux' (which uses **Column Values**)
+ *
+ * - 'Trades This Year' (which uses **Filters**)
+ *
+ * - 'Big Dollar Notionals' (which uses both ColumnValues and **Ranges**) and is also set to be the Current Advanced Search.
  */
 
 export interface AdvancedSearchState extends RunTimeState {
   /**
-   * A collection of Advanced Searches - which will appear in the Advanced Search toolbar dropdown.
+   * A collection of AdvancedSearch objects - which will appear in the Advanced Search toolbar dropdown.
    *
-   *An IAdvancedSearch consists of just 2 properties: (see section below for more information).
+   *An AdvancedSearch consists of just 2 properties:
    *
-   *Name: The name of the Advanced Search
+   *- Name: The name of the Advanced Search
    *
-   *Expression: An expression containing the search - see Expression Object Config for more information
+   *- Expression: An expression containing the search
    */
   AdvancedSearches?: AdvancedSearch[];
 
   /**
-   * The name of the Advanced Search that should be in use when the Blotter starts.
+   * The name of the Advanced Search which will be in use when the Blotter starts.
    *
-   * Make sure that the value appears in the name property of one of the Advanced Searches.
+   * It will be the selected value in the Advanced Search Toolbar and the Adaptable Blotter will apply it automatically.
+   *
+   * **Make sure that the value appears in the name property of one of the Advanced Searches that you provide**
    */
   CurrentAdvancedSearch?: string;
 }
 
 /**
- * The Advanced Search entity.
- * Contains the name of the Search and an Expression (the query object used in many AdaptableBlotterObjects)
+ * The AdvancedSearch object used in the Advanced Search function.
+ *
+ * An AdvancedSearch consists of just 2 properties:
+ *
+ *- Name: The name of the Advanced Search
+ *
+ *- Expression: An expression which the Advanced Search will run to evaluate which rows are displayed.
  */
 export interface AdvancedSearch extends AdaptableBlotterObject {
   Name: string;

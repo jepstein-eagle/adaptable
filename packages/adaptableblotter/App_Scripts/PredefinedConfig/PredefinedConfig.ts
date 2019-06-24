@@ -39,7 +39,7 @@ import { ChartState } from './RunTimeState/ChartState';
  *
  * This object when populated forms the **predefinedConfig** property in *BlotterOptions*.
  *
- * ## Predefined Config example:
+ * ## Predefined Config example
  *
  * ```ts
  * export default {
@@ -229,7 +229,7 @@ export interface PredefinedConfig {
    *
    * The default is that all functions are fully availalbe so apply Entitlements Config if you wish to restrict access.
    *
-   * **This section can only be populated at Design Timee and is never updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
    */
   Entitlement?: EntitlementsState;
 
@@ -238,7 +238,7 @@ export interface PredefinedConfig {
    *
    * Also allows users to specify css class names which can then be used in Styling functions (e.g. Conditional Style) in place of having to define the style.
    *
-   *  **This section can only be populated at Design Timee and is never updated or amended by the User at Run Time.**
+   *  **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
    */
   UserInterface?: UserInterfaceState;
 
@@ -247,14 +247,14 @@ export interface PredefinedConfig {
    *
    * If no values are listed, then **all System Filters** are available.
    *
-   *  **This section can only be populated at Design Timee and is never updated or amended by the User at Run Time.**
+   *  **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
    */
   SystemFilter?: SystemFilterState;
 
   /**
    * A deliberately empty state section, thereby available for the User to manage their own additional values (or whatever form they want) with the rest of the Adaptable Blotter state.
    *
-   * **This section can only be populated at Design Timee and is never updated or amended by the User at Run Time.**
+   * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
    */
   Application?: ApplicationState;
 
@@ -327,7 +327,15 @@ export interface PredefinedConfig {
    * Supplies a collection of *DataSource* objects to facilitate replacing the DataSource in the Grid with an alternate set of data (e.g. a Book or Stored Proc name).
    */
   DataSource?: DataSourceState;
+
+  /**
+   * Supplies a collection of *Report* objects, together with name of the Current Report, as part of the Adaptable Blotter export Function.
+   */
   Export?: ExportState;
+
+  /**
+   * Supplies a collection of *FlashingCell* objects to set up which columns should flash when their contents change and how.  Also includes default values to facilitiate creating new flashing cell columns.
+   */
   FlashingCell?: FlashingCellState;
 
   /**
