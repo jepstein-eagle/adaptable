@@ -34,6 +34,7 @@ export default () => <AdaptableBlotterReact
   style={{ height: '100vh' }}
   gridOptions={ ... }
   blotterOptions={adaptableBlotterOptions}
+  onBlotterReady={(blotterApi) => { ... }}
 />
 
 
@@ -48,8 +49,8 @@ export default () => <AdaptableBlotterReact
 
 #### Optional
 
+- onBlotterReady: (blotterApi: IBlotterApi) - gives you access to the blotter api object
 - render|children: ({ grid, blotter}) => ReactNode - can specify a custom render function that is called with the rendered grid and blotter, and can be used to change the layout of the component, and render additional elements or change blotter/grid order
-- onReady(blotter) - function prop called after the blotter is instantiated and ready to use
 - onThemeChanged: (blotter, arg: ThemeChangedEventArgs)
 - onSearchChanged: (blotter, arg: SearchChangedEventArgs)
 - onColumnStateChanged: (blotter, arg: ColumnStateChangedEventArgs)

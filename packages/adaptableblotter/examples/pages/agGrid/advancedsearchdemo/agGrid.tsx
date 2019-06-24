@@ -38,6 +38,10 @@ function InitAdaptableBlotter() {
 }
 
 let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['AdvancedSearch'],
+  },
+
   AdvancedSearch: {
     AdvancedSearches: [
       {
@@ -49,8 +53,6 @@ let demoConfig: PredefinedConfig = {
               ColumnRawValues: ['Goldman Sachs', 'JP Morgan'],
             },
           ],
-          FilterExpressions: [],
-          RangeExpressions: [],
         },
         Name: 'hello',
       },

@@ -32,8 +32,6 @@ export default {
               ColumnRawValues: ["La maison d'Asie"],
             },
           ],
-          FilterExpressions: [],
-          RangeExpressions: [],
         },
       },
     ],

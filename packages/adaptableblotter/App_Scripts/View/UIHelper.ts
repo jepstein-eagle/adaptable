@@ -24,6 +24,7 @@ import {
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { Schedule } from '../PredefinedConfig/Common/Schedule';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
+import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
 
 export function getDefaultColors(): string[] {
   return [
@@ -62,6 +63,9 @@ export function getEmptyConfigState(): EditableConfigEntityState {
 }
 
 export function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState {
+  // add any missing arrays here to avoid issues later
+  ExpressionHelper.AddMissingProperties(expression);
+
   return {
     Expression: expression,
     SelectedColumnId: '',

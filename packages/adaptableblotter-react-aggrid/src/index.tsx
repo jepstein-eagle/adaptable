@@ -6,6 +6,7 @@ import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 
 import { AdaptableBlotterApp } from '../../adaptableblotter/App_Scripts/View/AdaptableBlotterView';
 import AdaptableBlotter from '../../adaptableblotter/App_Scripts/agGrid';
+import { IBlotterApi } from '../../adaptableblotter/types';
 
 import AbsoluteFlexContainer from './AbsoluteFlexContainer';
 
@@ -122,6 +123,7 @@ const AdaptableBlotterReact = ({
   onThemeChanged,
   onColumnStateChanged,
   onAlertFired,
+  onBlotterReady,
   ...props
 }: {
   agGridTheme?: string;
@@ -131,6 +133,7 @@ const AdaptableBlotterReact = ({
   onThemeChanged?: (blotter: AdaptableBlotter, args: ThemeChangedEventArgs) => void;
   onColumnStateChanged?: (blotter: AdaptableBlotter, args: ColumnStateChangedEventArgs) => void;
   onAlertFired?: (blotter: AdaptableBlotter, args: AlertFiredEventArgs) => void;
+  onBlotterReady?: (api: IBlotterApi) => void;
   tagName?: TypeFactory;
 } & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
   const seedId = useMemo(() => `${getRandomInt(1000)}-${Date.now()}`, []);
@@ -179,6 +182,12 @@ const AdaptableBlotterReact = ({
       {mounted ? <AgGridReactOverride {...overrideProps} /> : null}
     </AbsoluteFlexContainer>
   );
+
+  useEffect(() => {
+    if (onBlotterReady && blotter) {
+      onBlotterReady(blotter.api);
+    }
+  }, [blotter]);
 
   useEffect(() => {
     setMounted(true);

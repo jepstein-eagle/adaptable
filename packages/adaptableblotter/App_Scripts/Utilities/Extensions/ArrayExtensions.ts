@@ -34,7 +34,7 @@ export function RetrieveDistinct(array: any[]): any[] {
 }
 
 export function IsNull(arrayToCheck: any[]): boolean {
-  return arrayToCheck == null;
+  return arrayToCheck == null || arrayToCheck == undefined;
 }
 
 export function IsNotNull(arrayToCheck: any[]): boolean {

@@ -24,6 +24,9 @@ export default () => (
     onSearchChanged={(...args: any[]) => {
       console.warn('search changed', args);
     }}
+    onBlotterReady={api => {
+      console.log('blotter ready!!!', api);
+    }}
     gridOptions={{
       columnDefs: examplesHelper.getTradeSchema().map(c => {
         if (c.field === 'status') {

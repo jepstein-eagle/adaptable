@@ -8,6 +8,7 @@ import {
 } from '../PredefinedConfig/RunTimeState/AdvancedSearchState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import BlotterHelper from '../Utilities/Helpers/BlotterHelper';
+import { TypeUuid } from '../PredefinedConfig/Uuid';
 
 export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
   public getAdvancedSearchState(): AdvancedSearchState {
@@ -41,7 +42,7 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
   }
 
   public setAdvancedSearch(advancedSearchName: string): void {
-    const advancedSearch: AdvancedSearch = this.getBlotterState().AdvancedSearch.AdvancedSearches.find(
+    const advancedSearch: AdvancedSearch = this.getBlotterState().AdvancedSearch.AdvancedSearches!.find(
       (a: AdvancedSearch) => a.Name == advancedSearchName
     );
     if (
@@ -67,24 +68,47 @@ export class AdvancedSearchApi extends ApiBase implements IAdvancedSearchApi {
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchEdit(advancedSearch));
   }
 
-  public deleteAdvancedSearch(advancedSearchName: string): void {
-    const searchToDelete = this.getAdvancedSearchByName(advancedSearchName);
-    this.dispatchAction(AdvancedSearchRedux.AdvancedSearchDelete(searchToDelete));
+  public deleteAdvancedSearch(advancedSearch: AdvancedSearch | undefined): void {
+    // todo something if doesnt exist?
+    if (advancedSearch) {
+      this.dispatchAction(AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch));
+    }
   }
 
-  public getCurrentAdvancedSearch(): AdvancedSearch {
+  public deleteAdvancedSearchByName(advancedSearchName: string): void {
+    const searchToDelete = this.getAdvancedSearchByName(advancedSearchName);
+    this.deleteAdvancedSearch(searchToDelete);
+  }
+
+  public deleteAdvancedSearchByUuid(uid: TypeUuid): void {
+    const searchToDelete = this.getAdvancedSearchByUuid(uid);
+    this.deleteAdvancedSearch(searchToDelete);
+  }
+
+  public getCurrentAdvancedSearch(): AdvancedSearch | undefined {
     return this.getAdvancedSearchByName(this.getCurrentAdvancedSearchName());
   }
 
-  public getCurrentAdvancedSearchName(): string {
+  public getCurrentAdvancedSearchName(): string | undefined {
     return this.getBlotterState().AdvancedSearch.CurrentAdvancedSearch;
   }
 
-  public getAdvancedSearchByName(advancedSearchName: string): AdvancedSearch | undefined {
+  public getAdvancedSearchByName(
+    advancedSearchName: string | undefined
+  ): AdvancedSearch | undefined {
     return this.getAllAdvancedSearch().find(a => a.Name == advancedSearchName);
   }
 
+  public getAdvancedSearchByUuid(uuid: TypeUuid): AdvancedSearch | undefined {
+    return this.getAllAdvancedSearch().find(a => a.Uuid == uuid);
+  }
+
   public getAllAdvancedSearch(): AdvancedSearch[] {
-    return this.getBlotterState().AdvancedSearch.AdvancedSearches;
+    let searches: AdvancedSearch[] | undefined = this.getBlotterState().AdvancedSearch
+      .AdvancedSearches;
+    if (searches == undefined) {
+      searches = [];
+    }
+    return searches;
   }
 }

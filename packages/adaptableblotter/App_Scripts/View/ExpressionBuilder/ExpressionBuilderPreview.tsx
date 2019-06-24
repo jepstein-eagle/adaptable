@@ -20,6 +20,10 @@ import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
 import ColumnHelper from '../../Utilities/Helpers/ColumnHelper';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
+import { ColumnValueExpression } from '../../PredefinedConfig/Common/Expression/ColumnValueExpression';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
+import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
 // since html cannot render a button within a button.
@@ -52,9 +56,12 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     let columnList = ExpressionHelper.GetColumnListFromExpression(this.props.Expression);
     let previewLists = columnList.map(columnId => {
       // First lets do the column values
-      let columnValues = this.props.Expression.ColumnValueExpressions.find(
-        colValues => colValues.ColumnId == columnId
-      );
+      let columnValues: ColumnValueExpression = null;
+      if (ArrayExtensions.IsNotNullOrEmpty(this.props.Expression.ColumnValueExpressions)) {
+        columnValues = this.props.Expression.ColumnValueExpressions.find(
+          colValues => colValues.ColumnId == columnId
+        );
+      }
       let columnValuesListgroupItems: JSX.Element[];
       if (columnValues) {
         columnValuesListgroupItems = columnValues.ColumnDisplayValues.map(y => {
@@ -90,12 +97,16 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
       // Next do the user filter expressions
 
-      let columnUserFilterExpressions = this.props.Expression.FilterExpressions.find(
-        ne => ne.ColumnId == columnId
-      );
+      let columnUserFilterExpression: FilterExpression = null;
+
+      if (ArrayExtensions.IsNotNullOrEmpty(this.props.Expression.FilterExpressions)) {
+        columnUserFilterExpression = this.props.Expression.FilterExpressions.find(
+          ne => ne.ColumnId == columnId
+        );
+      }
       let columnUserFilterExpressionsListgroupItems: JSX.Element[];
-      if (columnUserFilterExpressions) {
-        columnUserFilterExpressionsListgroupItems = columnUserFilterExpressions.Filters.map(
+      if (columnUserFilterExpression) {
+        columnUserFilterExpressionsListgroupItems = columnUserFilterExpression.Filters.map(
           (filter, index) => {
             return (
               <ListGroupItem key={filter} style={previewListBoxItemStyle}>
@@ -123,14 +134,18 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         );
       }
       // Finally do the column ranges
-      let columnRanges = this.props.Expression.RangeExpressions.find(
-        colValues => colValues.ColumnId == columnId
-      );
+      let columnRange: RangeExpression = null;
+
+      if (ArrayExtensions.IsNotNullOrEmpty(this.props.Expression.RangeExpressions)) {
+        columnRange = this.props.Expression.RangeExpressions.find(
+          colValues => colValues.ColumnId == columnId
+        );
+      }
       let columnRangesListgroupItems: JSX.Element[];
       /* Note: these used to say:  this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation();  - do we need that? */
 
-      if (columnRanges) {
-        columnRangesListgroupItems = columnRanges.Ranges.map((y, index) => {
+      if (columnRange) {
+        columnRangesListgroupItems = columnRange.Ranges.map((y, index) => {
           let operator: LeafExpressionOperator = y.Operator as LeafExpressionOperator;
           if (operator == LeafExpressionOperator.Between) {
             if (StringExtensions.IsEmpty(y.Operand1) || StringExtensions.IsEmpty(y.Operand2)) {
