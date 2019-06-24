@@ -4,7 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "adaptableblotter-ng-aggrid": {
-      "projectType": "library",
+      "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"

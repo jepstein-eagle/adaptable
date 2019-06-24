@@ -2,3 +2,5 @@
 /esm2015/
 /fesm5/
 /fesm2015/
+/node_modules/
+/package-lock.json
