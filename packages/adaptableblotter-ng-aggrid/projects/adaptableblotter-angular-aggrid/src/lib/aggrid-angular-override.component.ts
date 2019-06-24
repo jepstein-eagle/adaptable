@@ -21,7 +21,7 @@ import { IBlotterApi } from '../adaptableblotter/types';
 export class AgGridOverrideComponent extends AgGridAngular {
   @Input() blotterFactory: (...args: any) => AdaptableBlotter;
   @Input() gridContainerId: string;
-  @Input() onReady?: (api: IBlotterApi) => void;
+  @Input() onBlotterReady?: (api: IBlotterApi) => void;
 
   ngAfterViewInit(): void {
     (this as any).checkForDeprecatedEvents();
@@ -74,8 +74,8 @@ export class AgGridOverrideComponent extends AgGridAngular {
     // the actual containing component's ngAfterViewInit will fire just after agGridAngular's
     (this as any)._fullyReady.resolveNow(null, (resolve: any) => resolve);
 
-    if (this.onReady) {
-      this.onReady(blotter.api);
+    if (this.onBlotterReady) {
+      this.onBlotterReady(blotter.api);
     }
   }
 }

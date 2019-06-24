@@ -29,7 +29,7 @@ After that, you can use the blotter component in your app
   style="height: 100vh"
   [blotterOptions]="..."
   [gridOptions]="..."
-  [onReady]="..."
+  [onBlotterReady]="..."
 >
 </adaptableblotter-angular-aggrid>
 ```
@@ -62,7 +62,7 @@ So, for both the structural styles and the light and dark themes, you can import
 
 #### Optional
 
-- onReady: (blotterApi: IBlotterApi) - gives you access to the blotter api object
+- onBlotterReady: (blotterApi: IBlotterApi) - gives you access to the blotter api object
 
 ## Licences
 

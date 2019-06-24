@@ -123,7 +123,7 @@ const AdaptableBlotterReact = ({
   onThemeChanged,
   onColumnStateChanged,
   onAlertFired,
-  onReady,
+  onBlotterReady,
   ...props
 }: {
   agGridTheme?: string;
@@ -133,7 +133,7 @@ const AdaptableBlotterReact = ({
   onThemeChanged?: (blotter: AdaptableBlotter, args: ThemeChangedEventArgs) => void;
   onColumnStateChanged?: (blotter: AdaptableBlotter, args: ColumnStateChangedEventArgs) => void;
   onAlertFired?: (blotter: AdaptableBlotter, args: AlertFiredEventArgs) => void;
-  onReady?: (api: IBlotterApi) => void;
+  onBlotterReady?: (api: IBlotterApi) => void;
   tagName?: TypeFactory;
 } & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
   const seedId = useMemo(() => `${getRandomInt(1000)}-${Date.now()}`, []);
@@ -184,8 +184,8 @@ const AdaptableBlotterReact = ({
   );
 
   useEffect(() => {
-    if (onReady && blotter) {
-      onReady(blotter.api);
+    if (onBlotterReady && blotter) {
+      onBlotterReady(blotter.api);
     }
   }, [blotter]);
 
