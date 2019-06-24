@@ -3,7 +3,8 @@ import { GridOptions } from 'ag-grid-community';
 
 import rowData from './rowData';
 import columns from './columns';
-import { AdaptableBlotterOptions } from '../../../adaptableblotter/App_Scripts/types';
+import { AdaptableBlotterOptions } from '../../../adaptableblotter/types';
+import { IBlotterApi } from '../../../adaptableblotter/types';
 
 @Component({
   selector: 'app-root',
@@ -51,5 +52,9 @@ export class AppComponent {
         abColDefObject: {},
       },
     };
+  }
+
+  onBlotterReady(api: IBlotterApi) {
+    console.log('blotter ready', api);
   }
 }

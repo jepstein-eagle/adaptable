@@ -4,6 +4,8 @@ Repository for the Adaptable Blotter Angular ag-Grid Wrapper.
 
 This allows you to install, instantiate and reference the Adaptable Blotter using ag-Grid in an "Angular-friendly" manner.
 
+The AdaptableBlotter angular package wraps the ag-Grid angular wrapper - so you can use all the goodies of angular custom rendering wherever the ag-Grid angular wrapper supports them.
+
 ## Installation
 
 To install Adaptable Blotter React ag-Grid via npm, run:
@@ -14,16 +16,53 @@ npm install adaptableblotter-angular-aggrid
 
 ## Usage
 
-`import { AdaptableBlotterAngularAgGridComponent } from 'adaptableblotter-angular-aggrid'`
+In your app module, import the AdaptableBlotterAngularAgGridModule module
+
+```
+import { AdaptableBlotterAngularAgGridModule } from 'adaptableblotter-angular-aggrid';
+```
+
+After that, you can use the blotter component in your app
 
 ```html
 <adaptableblotter-angular-aggrid
   style="height: 100vh"
   [blotterOptions]="..."
   [gridOptions]="..."
+  [onReady]="..."
 >
 </adaptableblotter-angular-aggrid>
 ```
+
+### Styling
+
+Don't forget to import the styles in your app: `@import '~adaptableblotter-angular-aggrid/index.css'`
+
+The `index.css` file contains both the structural styles, as well as the default light theme:
+
+- `adaptableblotter-angular-aggrid/base.css`
+- `adaptableblotter-angular-aggrid/themes/light.css`
+
+If you want, you can import those two files above separately. You can also import the dark theme as well.
+
+So, for both the structural styles and the light and dark themes, you can import the following:
+
+```
+@import '~adaptableblotter-angular-aggrid/base.css'
+@import '~adaptableblotter-angular-aggrid/themes/light.css'
+@import '~adaptableblotter-angular-aggrid/themes/dark.css'
+```
+
+## Inputs
+
+#### Mandatory:
+
+- gridOptions: ag-Grid GridOptions object
+- blotterOptions: AdaptableBlotterOptions object
+
+#### Optional
+
+- onReady: (blotterApi: IBlotterApi) - gives you access to the blotter api object
 
 ## Licences
 
