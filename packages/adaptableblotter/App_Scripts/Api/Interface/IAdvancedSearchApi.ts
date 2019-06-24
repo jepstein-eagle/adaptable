@@ -5,7 +5,7 @@ import {
 import { TypeUuid } from '../../PredefinedConfig/Uuid';
 
 /**
- * Provides comprehensive run-time access to the Advanced Search function and associated state.
+ * Provides full and comprehensive run-time access to the Advanced Search function and associated state.
  */
 export interface IAdvancedSearchApi {
   /**
