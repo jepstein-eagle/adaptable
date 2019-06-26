@@ -9,13 +9,17 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * **Further Resources**
  *
- * [Advanced Search Help](interfaces/_api_interface_iblotterapi_.iblotterapi.html)
+ * [Advanced Search Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005167931-Advanced-Search)
  *
- * [Advanced Search Demo](interfaces/_api_interface_iblotterapi_.iblotterapi.html)
+ * [Advanced Search Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360028637652-Advanced-Search-Videos)
  *
- * [Blotter API for Advanced Search](_api_interface_iadvancedsearchapi_.iadvancedsearchapi.html)
+ * [Advanced Search Demo](https://demo.adaptableblotter.com/search/aggridadvancedsearchdemo/)
  *
- * **Basic usage example**
+ * [Advanced Search Blotter API](_api_interface_iadvancedsearchapi_.iadvancedsearchapi.html)
+ *
+ * [Advanced Search FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360009004951-Advanced-Search-FAQ)
+ *
+ * **Advanced Search Predefined Config Example**
  *
  * ```ts
  * export default {
@@ -81,11 +85,7 @@ export interface AdvancedSearchState extends RunTimeState {
   /**
    * A collection of AdvancedSearch objects - which will appear in the Advanced Search toolbar dropdown.
    *
-   *An AdvancedSearch consists of just 2 properties:
-   *
-   *- Name: The name of the Advanced Search
-   *
-   *- Expression: An expression containing the search
+   * **Default Value**:  Empty array
    */
   AdvancedSearches?: AdvancedSearch[];
 
@@ -95,18 +95,14 @@ export interface AdvancedSearchState extends RunTimeState {
    * It will be the selected value in the Advanced Search Toolbar and the Adaptable Blotter will apply it automatically.
    *
    * **Make sure that the value appears in the name property of one of the Advanced Searches that you provide**
+   *
+   * **Default Value**:  Empty string
    */
   CurrentAdvancedSearch?: string;
 }
 
 /**
  * The AdvancedSearch object used in the Advanced Search function.
- *
- * An AdvancedSearch consists of just 2 properties:
- *
- *- Name: The name of the Advanced Search
- *
- *- Expression: An expression which the Advanced Search will run to evaluate which rows are displayed.
  */
 export interface AdvancedSearch extends AdaptableBlotterObject {
   /**

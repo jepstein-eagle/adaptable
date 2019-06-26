@@ -35,7 +35,9 @@ export function getSortOrder(sortOrder: 'Unknown' | 'Ascending' | 'Descending'):
 
 export function autoSaveLayout(blotter: IAdaptableBlotter): void {
   let layoutState: LayoutState = blotter.api.layoutApi.getLayoutState();
+  console.log('pre test');
   if (blotter.isInitialised && layoutState.CurrentLayout != GeneralConstants.DEFAULT_LAYOUT) {
+    console.log('post test');
     if (
       blotter.blotterOptions.layoutOptions != null &&
       blotter.blotterOptions.layoutOptions.autoSaveLayouts != null &&
