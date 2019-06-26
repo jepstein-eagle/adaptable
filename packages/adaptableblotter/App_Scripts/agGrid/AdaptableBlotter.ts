@@ -1206,27 +1206,31 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   public getDisplayValueFromRawValue(columnId: string, rawValue: any): any {
     const colDef = this.gridOptions.api.getColumnDef(columnId);
-    if (colDef.valueFormatter) {
-      const column = this.gridOptions.columnApi.getAllColumns().find(c => c.getColId() == columnId);
-      const formatter = colDef.valueFormatter;
-      const params: ValueFormatterParams = {
-        value: rawValue,
-        node: null,
-        data: null,
-        colDef,
-        column,
-        api: this.gridOptions.api,
-        columnApi: this.gridOptions.columnApi,
-        context: null,
-      };
-      const formattedValue = formatter(params);
-      if (colDef.cellRenderer) {
-        return this.getRenderedValue(colDef, formattedValue);
+    if (colDef) {
+      if (colDef.valueFormatter) {
+        const column = this.gridOptions.columnApi
+          .getAllColumns()
+          .find(c => c.getColId() == columnId);
+        const formatter = colDef.valueFormatter;
+        const params: ValueFormatterParams = {
+          value: rawValue,
+          node: null,
+          data: null,
+          colDef,
+          column,
+          api: this.gridOptions.api,
+          columnApi: this.gridOptions.columnApi,
+          context: null,
+        };
+        const formattedValue = formatter(params);
+        if (colDef.cellRenderer) {
+          return this.getRenderedValue(colDef, formattedValue);
+        }
+        return formattedValue || '';
       }
-      return formattedValue || '';
-    }
-    if (colDef.cellRenderer) {
-      return this.getRenderedValue(colDef, rawValue);
+      if (colDef.cellRenderer) {
+        return this.getRenderedValue(colDef, rawValue);
+      }
     }
     return this.agGridHelper.getCleanValue(rawValue);
   }
