@@ -4,6 +4,7 @@ import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { CalculatedColumnHelper } from '../Helpers/CalculatedColumnHelper';
 import { IColumn } from '../Interface/IColumn';
+import { DataType } from '../../PredefinedConfig/Common/Enums';
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
   constructor(
@@ -12,6 +13,25 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
   ) {
     this.blotter = blotter;
     this.colFunctionValue = colFunctionValue;
+  }
+
+  GetCalculatedColumnDataType(expression: string): DataType {
+    try {
+      let firstRecord = this.blotter.getFirstRecord();
+      let firstRowValue: any = math.eval(expression, {
+        Col: (columnId: string) => {
+          try {
+            return this.colFunctionValue(columnId, firstRecord);
+          } catch (e) {
+            throw Error('Unknown column ' + columnId);
+          }
+        },
+      });
+      return !isNaN(Number(firstRowValue)) ? DataType.Number : DataType.String;
+    } catch (e) {
+      LoggingHelper.LogAdaptableBlotterWarning(e);
+      return DataType.Number;
+    }
   }
 
   IsExpressionValid(expression: string): { IsValid: Boolean; ErrorMsg?: string } {

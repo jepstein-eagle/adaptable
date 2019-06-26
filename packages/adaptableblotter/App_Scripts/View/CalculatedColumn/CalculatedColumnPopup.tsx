@@ -195,6 +195,7 @@ class CalculatedColumnPopupComponent extends React.Component<
     let calculatedColumn: CalculatedColumn = Helper.cloneObject(
       this.state.EditedAdaptableBlotterObject
     );
+    console.log(this.state.WizardStatus);
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditCalculatedColumn(calculatedColumn);
     } else {

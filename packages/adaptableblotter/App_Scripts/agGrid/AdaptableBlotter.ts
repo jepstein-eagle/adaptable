@@ -1426,7 +1426,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       childrenColumnList.push(calculatedColumn.ColumnId);
     }
-    this.addSpecialColumnToState(calculatedColumn.ColumnId, true);
+    let dataType: DataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
+      cleanedExpression
+    );
+    console.log('in blotter we returned');
+    console.log(dataType);
+    this.addSpecialColumnToState(calculatedColumn.ColumnId, true, dataType);
   }
 
   public addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn) {
@@ -1446,15 +1451,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.addSpecialColumnToState(freeTextColumn.ColumnId, false);
   }
 
-  private addSpecialColumnToState(columnId: string, isReadOnly: boolean): void {
+  private addSpecialColumnToState(
+    columnId: string,
+    isReadOnly: boolean,
+    dataType?: DataType
+  ): void {
     const vendorColumn = this.gridOptions.columnApi
       .getAllColumns()
       .find(vc => vc.getColId() == columnId);
 
+    if (!dataType) {
+      dataType = this.getColumnDataType(vendorColumn);
+    }
+
     const specialColumn: IColumn = {
       ColumnId: columnId,
       FriendlyName: columnId,
-      DataType: this.getColumnDataType(vendorColumn),
+      DataType: dataType,
       Visible: false,
       ReadOnly: isReadOnly,
       Sortable: true,
