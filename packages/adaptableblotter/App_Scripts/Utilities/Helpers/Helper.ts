@@ -226,6 +226,8 @@ export function RoundValueIfNumeric(numberToRound: any, decimalPlaces: number): 
   let returnValue: any;
   if (!isNaN(Number(numberToRound))) {
     returnValue = RoundNumber(numberToRound, decimalPlaces);
+  } else {
+    returnValue = numberToRound;
   }
   return returnValue;
 }

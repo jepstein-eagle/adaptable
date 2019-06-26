@@ -571,7 +571,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
     });
     this.dispatchAction(GridRedux.GridSetColumns(allColumns));
-    // always do this?
+    // Save the layout if required
     LayoutHelper.autoSaveLayout(this);
   }
 
