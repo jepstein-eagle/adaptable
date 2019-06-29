@@ -1,14 +1,16 @@
 import { ApiBase } from './ApiBase';
 import { IFlashingCellApi } from './Interface/IFlashingCellApi';
-import { IFlashingCell } from '../Utilities/Interface/BlotterObjects/IFlashingCell';
-import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  FlashingCellState,
+  FlashingCell,
+} from '../PredefinedConfig/RunTimeState/FlashingCellState';
 
 export class FlashingCellApi extends ApiBase implements IFlashingCellApi {
   public getFlashingCellState(): FlashingCellState {
     return this.getBlotterState().FlashingCell;
   }
 
-  public getAllFlashingCell(): IFlashingCell[] {
+  public getAllFlashingCell(): FlashingCell[] {
     return this.getFlashingCellState().FlashingCells;
   }
 }

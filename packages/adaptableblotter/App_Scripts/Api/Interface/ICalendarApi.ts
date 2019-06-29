@@ -1,4 +1,4 @@
-import { CalendarState } from '../../Redux/ActionsReducers/Interface/IState';
+import { CalendarState } from '../../PredefinedConfig/RunTimeState/CalendarState';
 
 export interface ICalendarApi {
   getCalendarState(): CalendarState;

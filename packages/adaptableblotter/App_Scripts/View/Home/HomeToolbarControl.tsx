@@ -14,7 +14,8 @@ import {
 } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
-import { MenuState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
+import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
+import { MenuState } from '../../PredefinedConfig/InternalState/MenuState';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
@@ -27,7 +28,7 @@ import {
   MessageType,
   AccessLevel,
   DashboardSize,
-} from '../../Utilities/Enums';
+} from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';

@@ -2,11 +2,11 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { ICustomSort } from '../Utilities/Interface/BlotterObjects/ICustomSort';
 import { IColumn } from '../Utilities/Interface/IColumn';
+import { CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
 
 export class CustomSortStrategy extends AdaptableStrategyBase {
-  private CustomSorts: ICustomSort[];
+  private CustomSorts: CustomSort[];
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.CustomSortStrategyId, blotter);
   }
@@ -58,7 +58,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     });
   }
 
-  public getComparerFunction(customSort: ICustomSort, blotter: IAdaptableBlotter): Function {
+  public getComparerFunction(customSort: CustomSort, blotter: IAdaptableBlotter): Function {
     return function compareItemsOfCustomSort(firstElement: any, secondElement: any): number {
       let firstElementValueString = blotter.getDisplayValue(
         blotter.getPrimaryKeyValueFromRecord(firstElement),

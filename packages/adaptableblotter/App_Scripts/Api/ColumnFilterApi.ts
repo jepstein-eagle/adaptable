@@ -1,17 +1,18 @@
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
 import { ApiBase } from './ApiBase';
-import { IUserFilter } from '../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IColumnFilter } from '../Utilities/Interface/BlotterObjects/IColumnFilter';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IColumnFilterApi } from './Interface/IColumnFilterApi';
-import { ColumnFilterState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  ColumnFilterState,
+  ColumnFilter,
+} from '../PredefinedConfig/RunTimeState/ColumnFilterState';
 
 export class ColumnFilterApi extends ApiBase implements IColumnFilterApi {
   public getColumnFilterState(): ColumnFilterState {
     return this.getBlotterState().ColumnFilter;
   }
 
-  public setColumnFilter(columnFilters: IColumnFilter[]): void {
+  public setColumnFilter(columnFilters: ColumnFilter[]): void {
     columnFilters.forEach(columnFilter => {
       if (this.getAllColumnFilter().find(cf => cf.ColumnId == columnFilter.ColumnId)) {
         this.dispatchAction(ColumnFilterRedux.ColumnFilterEdit(columnFilter));
@@ -21,7 +22,7 @@ export class ColumnFilterApi extends ApiBase implements IColumnFilterApi {
     });
   }
 
-  public clearColumnFilter(columnFilter: IColumnFilter): void {
+  public clearColumnFilter(columnFilter: ColumnFilter): void {
     this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(columnFilter.ColumnId));
   }
 
@@ -39,7 +40,7 @@ export class ColumnFilterApi extends ApiBase implements IColumnFilterApi {
     this.dispatchAction(ColumnFilterRedux.ColumnFilterClearAll());
   }
 
-  public getAllColumnFilter(): IColumnFilter[] {
+  public getAllColumnFilter(): ColumnFilter[] {
     return this.getBlotterState().ColumnFilter.ColumnFilters;
   }
 }

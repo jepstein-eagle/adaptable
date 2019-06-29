@@ -1,32 +1,30 @@
-import {
-  IUserState,
-  AdvancedSearchState,
-  AlertState,
-  BulkUpdateState,
-  CalculatedColumnState,
-  CalendarState,
-  CellValidationState,
-  ChartState,
-  ColumnFilterState,
-  ConditionalStyleState,
-  CustomSortState,
-  DashboardState,
-  DataSourceState,
-  ExportState,
-  FlashingCellState,
-  FormatColumnState,
-  LayoutState,
-  PlusMinusState,
-  QuickSearchState,
-  ShortcutState,
-  SmartEditState,
-  ThemeState,
-  UserFilterState,
-  CellSummaryState,
-} from '../Redux/ActionsReducers/Interface/IState';
+import { ChartState } from '../PredefinedConfig/RunTimeState/ChartState';
+import { UserFilterState } from '../PredefinedConfig/RunTimeState/UserFilterState';
+import { ThemeState } from '../PredefinedConfig/RunTimeState/ThemeState';
+import { SmartEditState } from '../PredefinedConfig/RunTimeState/SmartEditState';
+import { ShortcutState } from '../PredefinedConfig/RunTimeState/ShortcutState';
+import { QuickSearchState } from '../PredefinedConfig/RunTimeState/QuickSearchState';
+import { PlusMinusState } from '../PredefinedConfig/RunTimeState/PlusMinusState';
+import { LayoutState } from '../PredefinedConfig/RunTimeState/LayoutState';
+import { FormatColumnState } from '../PredefinedConfig/RunTimeState/FormatColumnState';
+import { FlashingCellState } from '../PredefinedConfig/RunTimeState/FlashingCellState';
+import { ExportState } from '../PredefinedConfig/RunTimeState/ExportState';
+import { DataSourceState } from '../PredefinedConfig/RunTimeState/DataSourceState';
+import { DashboardState } from '../PredefinedConfig/RunTimeState/DashboardState';
+import { CustomSortState } from '../PredefinedConfig/RunTimeState/CustomSortState';
+import { ConditionalStyleState } from '../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ColumnFilterState } from '../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { CellValidationState } from '../PredefinedConfig/RunTimeState/CellValidationState';
+import { CellSummaryState } from '../PredefinedConfig/RunTimeState/CellSummaryState';
+import { CalendarState } from '../PredefinedConfig/RunTimeState/CalendarState';
+import { CalculatedColumnState } from '../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { BulkUpdateState } from '../PredefinedConfig/RunTimeState/BulkUpdateState';
+import { AlertState } from '../PredefinedConfig/RunTimeState/AlertState';
+import { AdvancedSearchState } from '../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { RunTimeState } from '../PredefinedConfig/RunTimeState/RunTimeState';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { ResetUserData, LoadState, InitState } from '../Redux/Store/AdaptableBlotterStore';
-import { StateChangedTrigger } from '../Utilities/Enums';
+import { StateChangedTrigger } from '../PredefinedConfig/Common/Enums';
 import { ApiBase } from './ApiBase';
 import { IConfigApi } from './Interface/IConfigApi';
 
@@ -78,13 +76,13 @@ export class ConfigApi extends ApiBase implements IConfigApi {
     ];
   }
 
-  public configGetAllUserState(): IUserState[] {
+  public configGetAllUserState(): RunTimeState[] {
     const userStateKeys = this.getUserStateKeys();
     const allState = this.configGetAllState();
     return userStateKeys.map(k => allState[k]);
   }
 
-  public configloadUserState(state: { [s: string]: IUserState }): void {
+  public configloadUserState(state: { [s: string]: RunTimeState }): void {
     const userStateKeys = this.getUserStateKeys();
     const userState = Object.keys(state).reduce(
       (xs, x) => (userStateKeys.indexOf(x) !== -1 ? { ...xs, [x]: state[x] } : xs),
@@ -119,7 +117,7 @@ export class ConfigApi extends ApiBase implements IConfigApi {
       | 'Theme'
       | 'UserFilter',
     returnJson: boolean = false
-  ): IUserState {
+  ): RunTimeState {
     switch (functionName as StateChangedTrigger) {
       case StateChangedTrigger.AdvancedSearch:
         return returnJson

@@ -9,13 +9,13 @@ import {
 } from 'react-bootstrap';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from '../UIInterfaces';
-import { ICalendar } from '../../Utilities/Interface/BlotterObjects/ICalendar';
+import { Calendar } from '../../PredefinedConfig/RunTimeState/CalendarState';
 
 export interface CalendarsEntryRowProps extends React.ClassAttributes<CalendarsEntryRow> {
-  Calendar: ICalendar;
+  Calendar: Calendar;
   CurrentCalendar: string;
-  onSelect: (calendar: ICalendar) => void;
-  onShowInformation: (calendar: ICalendar) => void;
+  onSelect: (calendar: Calendar) => void;
+  onShowInformation: (calendar: Calendar) => void;
   cssClassName: string;
 }
 

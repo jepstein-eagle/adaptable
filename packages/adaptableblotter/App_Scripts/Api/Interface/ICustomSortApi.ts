@@ -1,11 +1,10 @@
-import { ICustomSort } from '../../Utilities/Interface/BlotterObjects/ICustomSort';
-import { CustomSortState } from '../../Redux/ActionsReducers/Interface/IState';
+import { CustomSortState, CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
 
 export interface ICustomSortApi {
   getCustomSortState(): CustomSortState;
-  getAllCustomSort(): ICustomSort[];
-  getCustomSortByColumn(column: string): ICustomSort;
-  addCustomSort(customSort: ICustomSort): void;
+  getAllCustomSort(): CustomSort[];
+  getCustomSortByColumn(column: string): CustomSort;
+  addCustomSort(customSort: CustomSort): void;
   createCustomSort(column: string, values: string[]): void;
   editCustomSort(column: string, values: string[]): void;
   deleteCustomSort(column: string): void;

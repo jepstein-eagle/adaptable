@@ -33,6 +33,7 @@ const AbsoluteFlexContainer = ({
           height: '100%',
           ...childProps.style,
         }}
+        data-ab-name="ab__aggrid-container"
       >
         {props.children}
       </div>

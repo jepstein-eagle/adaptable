@@ -24,15 +24,15 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
-  onAddUserFilter: (userFilter: IUserFilter) => UserFilterRedux.UserFilterAddAction;
-  onEditUserFilter: (userFilter: IUserFilter) => UserFilterRedux.UserFilterEditAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onAddUserFilter: (userFilter: UserFilter) => UserFilterRedux.UserFilterAddAction;
+  onEditUserFilter: (userFilter: UserFilter) => UserFilterRedux.UserFilterEditAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class UserFilterPopupComponent extends React.Component<
@@ -47,7 +47,7 @@ class UserFilterPopupComponent extends React.Component<
     if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
       let arrayParams = this.props.PopupParams.split('|');
       if (arrayParams.length == 2 && arrayParams[0] == 'New') {
-        let userFilter: IUserFilter = ObjectFactory.CreateEmptyUserFilter();
+        let userFilter: UserFilter = ObjectFactory.CreateEmptyUserFilter();
         userFilter.ColumnId = arrayParams[1];
         this.setState({
           EditedAdaptableBlotterObject: userFilter,
@@ -76,7 +76,7 @@ class UserFilterPopupComponent extends React.Component<
 
     let selectedColumnId: string = '';
     if (this.state.EditedAdaptableBlotterObject != null) {
-      let filter: IUserFilter = this.state.EditedAdaptableBlotterObject as IUserFilter;
+      let filter: UserFilter = this.state.EditedAdaptableBlotterObject as UserFilter;
       let editedColumn: string = filter.ColumnId;
       if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
         selectedColumnId = editedColumn;
@@ -153,7 +153,7 @@ class UserFilterPopupComponent extends React.Component<
           {this.state.EditedAdaptableBlotterObject != null && (
             <UserFilterWizard
               cssClassName={cssWizardClassName}
-              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IUserFilter}
+              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as UserFilter}
               Columns={this.props.Columns}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
@@ -180,8 +180,8 @@ class UserFilterPopupComponent extends React.Component<
     });
   }
 
-  onEdit(userFilter: IUserFilter) {
-    let clonedObject: IUserFilter = Helper.cloneObject(userFilter);
+  onEdit(userFilter: UserFilter) {
+    let clonedObject: UserFilter = Helper.cloneObject(userFilter);
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(clonedObject),
       WizardStartIndex: 1,
@@ -199,7 +199,7 @@ class UserFilterPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter;
+    let userFilter = this.state.EditedAdaptableBlotterObject as UserFilter;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditUserFilter(userFilter);
     } else {
@@ -214,7 +214,7 @@ class UserFilterPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let userFilter = this.state.EditedAdaptableBlotterObject as IUserFilter;
+    let userFilter = this.state.EditedAdaptableBlotterObject as UserFilter;
     return (
       StringExtensions.IsNotNullOrEmpty(userFilter.Name) &&
       StringExtensions.IsNotEmpty(userFilter.ColumnId) &&
@@ -229,11 +229,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddUserFilter: (userFilter: IUserFilter) =>
+    onAddUserFilter: (userFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterAdd(userFilter)),
-    onEditUserFilter: (userFilter: IUserFilter) =>
+    onEditUserFilter: (userFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterEdit(userFilter)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId)),
   };
 }

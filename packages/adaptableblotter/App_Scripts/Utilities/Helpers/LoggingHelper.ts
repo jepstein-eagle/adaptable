@@ -1,5 +1,5 @@
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { MessageType } from '../Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 
 export function LogAlert(
   message: string,

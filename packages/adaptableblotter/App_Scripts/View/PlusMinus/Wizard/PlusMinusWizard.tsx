@@ -5,13 +5,13 @@ import { PlusMinusColumnWizard } from './PlusMinusColumnWizard';
 import { PlusMinusSettingsWizard } from './PlusMinusSettingsWizard';
 import { PlusMinusExpressionWizard } from './PlusMinusExpressionWizard';
 import { PlusMinusSummaryWizard } from './PlusMinusSummaryWizard';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { DataType } from '../../../Utilities/Enums';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { DataType } from '../../../PredefinedConfig/Common/Enums';
 
 export interface PlusMinusWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<PlusMinusWizard> {
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<PlusMinusWizard> {
   SelectedColumnId: string;
 }
 

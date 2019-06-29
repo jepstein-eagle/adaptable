@@ -1,30 +1,32 @@
-import { IStyle } from '../Utilities/Interface/IStyle';
-import { IFormatColumn } from '../Utilities/Interface/BlotterObjects/IFormatColumn';
+import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import * as FormatColumnRedux from '../Redux/ActionsReducers/FormatColumnRedux';
 import { ApiBase } from './ApiBase';
 import { IFormatColumnApi } from './Interface/IFormatColumnApi';
-import { FormatColumnState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  FormatColumnState,
+  FormatColumn,
+} from '../PredefinedConfig/RunTimeState/FormatColumnState';
 
 export class FormatColumnApi extends ApiBase implements IFormatColumnApi {
   public getFormatColumnState(): FormatColumnState {
     return this.getBlotterState().FormatColumn;
   }
 
-  public getAllFormatColumn(): IFormatColumn[] {
+  public getAllFormatColumn(): FormatColumn[] {
     return this.getBlotterState().FormatColumn.FormatColumns;
   }
 
   public addFormatColumn(column: string, style: IStyle): void {
-    let formatColumn: IFormatColumn = { ColumnId: column, Style: style };
+    let formatColumn: FormatColumn = { ColumnId: column, Style: style };
     this.dispatchAction(FormatColumnRedux.FormatColumnAdd(formatColumn));
   }
 
   public updateFormatColumn(column: string, style: IStyle): void {
-    let formatColumn: IFormatColumn = { ColumnId: column, Style: style };
+    let formatColumn: FormatColumn = { ColumnId: column, Style: style };
     this.dispatchAction(FormatColumnRedux.FormatColumnEdit(formatColumn));
   }
 
-  public deleteFormatColumn(formatColumn: IFormatColumn): void {
+  public deleteFormatColumn(formatColumn: FormatColumn): void {
     this.dispatchAction(FormatColumnRedux.FormatColumnDelete(formatColumn));
   }
 

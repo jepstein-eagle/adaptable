@@ -24,7 +24,7 @@ import 'adaptableblotter-react-aggrid/themes/light.css'
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 
-const adaptableBlotterOptions: IAdaptableBlotterOptions = {
+const adaptableBlotterOptions: AdaptableBlotterOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
   blotterId: 'react demo',
@@ -34,6 +34,7 @@ export default () => <AdaptableBlotterReact
   style={{ height: '100vh' }}
   gridOptions={ ... }
   blotterOptions={adaptableBlotterOptions}
+  onBlotterReady={(blotterApi) => { ... }}
 />
 
 
@@ -44,15 +45,15 @@ export default () => <AdaptableBlotterReact
 #### Mandatory:
 
 - gridOptions: ag-Grid GridOptions object
-- blotterOptions: IAdaptableBlotterOptions object
+- blotterOptions: AdaptableBlotterOptions object
 
 #### Optional
 
+- onBlotterReady: (blotterApi: IBlotterApi) - gives you access to the blotter api object
 - render|children: ({ grid, blotter}) => ReactNode - can specify a custom render function that is called with the rendered grid and blotter, and can be used to change the layout of the component, and render additional elements or change blotter/grid order
-- onReady(blotter) - function prop called after the blotter is instantiated and ready to use
-- onThemeChanged: (blotter, arg: IThemeChangedEventArgs)
-- onSearchChanged: (blotter, arg: ISearchChangedEventArgs)
-- onColumnStateChanged: (blotter, arg: IColumnStateChangedEventArgs)
+- onThemeChanged: (blotter, arg: ThemeChangedEventArgs)
+- onSearchChanged: (blotter, arg: SearchChangedEventArgs)
+- onColumnStateChanged: (blotter, arg: ColumnStateChangedEventArgs)
 - onAlertFired: (blotter, arg: IAlertFiredEventArgs)
 
 ## Licences
@@ -68,7 +69,7 @@ The Adaptable Blotter licence covers both AdaptableBlotter.NET and AdaptableBlot
 
 It is free to use the Evaluation for an evaulation (a Community licence will be given).
 
-Licences are sold to end-users (they are free for developers), typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
+Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
 
 Note: The Adaptable Blotter licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
 
@@ -81,6 +82,8 @@ To see AdaptableBlotter.JS in action visit https://demo.adaptableblotter.com whe
 ## Help
 
 Further information about AdaptableBlotter.JS is available at www.adaptabletools.com. And there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
+
+Developers can see how to access the Adaptable Blotter programmatically at https://api.adaptableblotter.com
 
 For all enquiries please email the Adaptable Tools Support Team at support@adaptabletools.com.
 

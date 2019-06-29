@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IColumnFilter } from '../../../Utilities/Interface/BlotterObjects/IColumnFilter';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
-import { AccessLevel } from '../../../Utilities/Enums';
+import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 
 export interface BaseProps<View> extends React.ClassAttributes<View> {
   cssClassName: string;
   AccessLevel: AccessLevel;
 
   Columns: IColumn[];
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SystemFilters: string[];
-  ColumnFilters: IColumnFilter[];
+  ColumnFilters: ColumnFilter[];
   ModalContainer: HTMLElement;
   ColorPalette: string[];
 

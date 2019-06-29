@@ -1,5 +1,8 @@
-import { CellSummaryState } from './Interface/IState';
-import { CellSummaryOperation, CellSummaryOptionalOperation } from '../../Utilities/Enums';
+import { CellSummaryState } from '../../PredefinedConfig/RunTimeState/CellSummaryState';
+import {
+  CellSummaryOperation,
+  CellSummaryOptionalOperation,
+} from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
 import { CELL_SUMMARY_DEFAULT_OPERATION } from '../../Utilities/Constants/GeneralConstants';
 

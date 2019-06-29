@@ -1,6 +1,6 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { ConditionalStyleScope } from '../../Utilities/Enums';
+import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -8,7 +8,7 @@ import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { IConditionalStyle } from '../../Utilities/Interface/BlotterObjects/IConditionalStyle';
+import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { IColumn } from '../../Utilities/Interface/IColumn';
@@ -18,8 +18,7 @@ export class ConditionalStyleEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let conditionalStyle: IConditionalStyle = this.props
-      .AdaptableBlotterObject as IConditionalStyle;
+    let conditionalStyle: ConditionalStyle = this.props.AdaptableBlotterObject as ConditionalStyle;
 
     let column: IColumn | undefined =
       conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column
@@ -58,7 +57,7 @@ export class ConditionalStyleEntityRow extends React.Component<
     return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
   }
 
-  private getScope(conditionalStyle: IConditionalStyle): string {
+  private getScope(conditionalStyle: ConditionalStyle): string {
     switch (conditionalStyle.ConditionalStyleScope) {
       case ConditionalStyleScope.Row:
         return 'Row';

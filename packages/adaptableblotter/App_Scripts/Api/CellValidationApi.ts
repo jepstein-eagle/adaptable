@@ -1,23 +1,25 @@
 import * as CellValidationRedux from '../Redux/ActionsReducers/CellValidationRedux';
 import { ApiBase } from './ApiBase';
-import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICellValidationRule';
 import { ICellValidationApi } from './Interface/ICellValidationApi';
-import { CellValidationState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  CellValidationState,
+  CellValidationRule,
+} from '../PredefinedConfig/RunTimeState/CellValidationState';
 
 export class CellValidationApi extends ApiBase implements ICellValidationApi {
   public getCellValidationState(): CellValidationState {
     return this.getBlotterState().CellValidation;
   }
 
-  public getAllCellValidation(): ICellValidationRule[] {
+  public getAllCellValidation(): CellValidationRule[] {
     return this.getCellValidationState().CellValidations;
   }
 
-  public addCellValidation(cellValidationRule: ICellValidationRule): void {
+  public addCellValidation(cellValidationRule: CellValidationRule): void {
     this.dispatchAction(CellValidationRedux.CellValidationAdd(cellValidationRule));
   }
 
-  public deleteCellValidation(cellValidationRule: ICellValidationRule): void {
+  public deleteCellValidation(cellValidationRule: CellValidationRule): void {
     this.dispatchAction(CellValidationRedux.CellValidationDelete(cellValidationRule));
   }
 }

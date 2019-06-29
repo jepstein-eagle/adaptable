@@ -1,4 +1,4 @@
-import { IReminder } from '../../../Utilities/Interface/BlotterObjects/IReminder';
+import { Reminder } from '../../../PredefinedConfig/RunTimeState/ReminderState';
 import * as React from 'react';
 import {
   Panel,
@@ -14,11 +14,11 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { DayOfWeek, StateChangedTrigger } from '../../../Utilities/Enums';
+import { DayOfWeek, StateChangedTrigger } from '../../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { ISchedule } from '../../../Utilities/Interface/BlotterObjects/ISchedule';
+import { Schedule } from '../../../PredefinedConfig/Common/Schedule';
 
-export interface ReminderScheduleWizardProps extends AdaptableWizardStepProps<IReminder> {}
+export interface ReminderScheduleWizardProps extends AdaptableWizardStepProps<Reminder> {}
 
 export interface ReminderScheduleWizardState {
   IsRecurringDate: boolean;
@@ -297,7 +297,7 @@ export class ReminderScheduleWizard
     return true;
   }
   public Next(): void {
-    let schedule: ISchedule = {
+    let schedule: Schedule = {
       Hour: this.state.Hour,
       Minute: this.state.Minute,
       OneOffDate: this.state.IsRecurringDate ? null : this.state.OneOffDate,

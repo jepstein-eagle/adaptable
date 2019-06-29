@@ -1,3 +1,5 @@
+import { PredefinedConfig } from '../../../../App_Scripts/types';
+
 export default {
   Dashboard: {
     Zoom: 2,
@@ -6,17 +8,19 @@ export default {
     UseSingleColourForButtons: true,
     ShowSystemStatusButton: false,
   },
+  DataSource: {
+    DataSources: [],
+    CurrentDataSource: '',
+  },
   ConditionalStyle: {
     ConditionalStyles: [
       {
-        ColumnId: '',
-        ColumnCategoryId: '',
         Style: {
           BackColor: '#0000ff',
-          ForeColor: null,
+          ForeColor: undefined,
           FontWeight: 'Normal',
           FontStyle: 'Normal',
-          FontSize: null,
+          FontSize: undefined,
           ClassName: '',
         },
         ConditionalStyleScope: 'Row',
@@ -28,10 +32,8 @@ export default {
               ColumnRawValues: ["La maison d'Asie"],
             },
           ],
-          FilterExpressions: [],
-          RangeExpressions: [],
         },
       },
     ],
   },
-};
+} as PredefinedConfig;

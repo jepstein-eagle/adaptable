@@ -5,14 +5,14 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ICellValidationRule } from '../../../Utilities/Interface/BlotterObjects/ICellValidationRule';
-import { MessageType } from '../../../Utilities/Enums';
+import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
+import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 
 export interface CellValidationSelectQueryWizardProps
-  extends AdaptableWizardStepProps<ICellValidationRule> {}
+  extends AdaptableWizardStepProps<CellValidationRule> {}
 export interface CellValidationSelectQueryWizardState {
   HasExpression: boolean;
 }
@@ -81,7 +81,12 @@ export class CellValidationSelectQueryWizard
     return true;
   }
   public Next(): void {
-    // this.props.Data.HasExpression = this.state.HasExpression;
+    if (
+      !this.state.HasExpression ||
+      (this.state.HasExpression && this.props.Data.Expression == null)
+    ) {
+      this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
+    }
   }
 
   public Back(): void {

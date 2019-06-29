@@ -1,8 +1,7 @@
-import { DataSourceState } from './Interface/IState';
+import { DataSourceState, DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
-import { IDataSource } from '../../Utilities/Interface/BlotterObjects/IDataSource';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const DATA_SOURCE_SELECT = 'DATA_SOURCE_SELECT';
 export const DATA_SOURCE_ADD = 'DATA_SOURCE_ADD';
@@ -14,7 +13,7 @@ export interface DataSourceSelectAction extends Redux.Action {
 }
 
 export interface DataSourceAction extends Redux.Action {
-  dataSource: IDataSource;
+  dataSource: DataSource;
 }
 
 export interface DataSourceAddAction extends DataSourceAction {}
@@ -28,16 +27,16 @@ export const DataSourceSelect = (SelectedDataSource: string): DataSourceSelectAc
   SelectedDataSource,
 });
 
-export const DataSourceAdd = (dataSource: IDataSource): DataSourceAddAction => ({
+export const DataSourceAdd = (dataSource: DataSource): DataSourceAddAction => ({
   type: DATA_SOURCE_ADD,
   dataSource,
 });
 
-export const DataSourceEdit = (dataSource: IDataSource): DataSourceEditAction => ({
+export const DataSourceEdit = (dataSource: DataSource): DataSourceEditAction => ({
   type: DATA_SOURCE_EDIT,
   dataSource,
 });
-export const DataSourceDelete = (dataSource: IDataSource): DataSourceDeleteAction => ({
+export const DataSourceDelete = (dataSource: DataSource): DataSourceDeleteAction => ({
   type: DATA_SOURCE_DELETE,
   dataSource,
 });
@@ -50,7 +49,7 @@ export const DataSourceReducer: Redux.Reducer<DataSourceState> = (
   state: DataSourceState = initialDataSourceState,
   action: Redux.Action
 ): DataSourceState => {
-  let dataSources: IDataSource[];
+  let dataSources: DataSource[];
 
   switch (action.type) {
     case DATA_SOURCE_SELECT:
@@ -58,7 +57,7 @@ export const DataSourceReducer: Redux.Reducer<DataSourceState> = (
         CurrentDataSource: (<DataSourceSelectAction>action).SelectedDataSource,
       });
     case DATA_SOURCE_ADD: {
-      const actionDataSource: IDataSource = (action as DataSourceAction).dataSource;
+      const actionDataSource: DataSource = (action as DataSourceAction).dataSource;
 
       if (!actionDataSource.Uuid) {
         actionDataSource.Uuid = createUuid();
@@ -69,7 +68,7 @@ export const DataSourceReducer: Redux.Reducer<DataSourceState> = (
     }
 
     case DATA_SOURCE_EDIT: {
-      const actionDataSource: IDataSource = (action as DataSourceAction).dataSource;
+      const actionDataSource: DataSource = (action as DataSourceAction).dataSource;
       return {
         ...state,
         DataSources: state.DataSources.map(abObject =>
@@ -78,7 +77,7 @@ export const DataSourceReducer: Redux.Reducer<DataSourceState> = (
       };
     }
     case DATA_SOURCE_DELETE: {
-      const actionDataSource: IDataSource = (action as DataSourceAction).dataSource;
+      const actionDataSource: DataSource = (action as DataSourceAction).dataSource;
       return {
         ...state,
         DataSources: state.DataSources.filter(abObject => abObject.Uuid !== actionDataSource.Uuid),

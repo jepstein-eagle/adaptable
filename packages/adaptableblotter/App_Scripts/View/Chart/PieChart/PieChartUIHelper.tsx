@@ -1,11 +1,11 @@
 import {
-  IPieChartDefinition,
-  IPieChartProperties,
-} from '../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
-import { IChartData } from '../../../Utilities/Interface/BlotterObjects/Charting/IChartData';
-import { IPieChartDataItem } from '../../../Utilities/Interface/BlotterObjects/Charting/IPieChartDataItem';
+  PieChartDefinition,
+  PieChartProperties,
+  ChartData,
+  PieChartDataItem,
+} from '../../../PredefinedConfig/RunTimeState/ChartState';
 import { PieChartComponentState } from './PieChartComponentState';
-import { SliceSortOption } from '../../../Utilities/ChartEnums';
+import { SliceSortOption } from '../../../PredefinedConfig/Common/ChartEnums';
 import { DefaultPieChartProperties } from '../../../Utilities/Defaults/DefaultPieChartProperties';
 
 /* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
@@ -30,16 +30,16 @@ export function getBrushesOdd(): string[] {
 }
 
 export function setChartDisplayPopupState(
-  chartDefinition: IPieChartDefinition,
-  dataSource: IChartData
+  chartDefinition: PieChartDefinition,
+  dataSource: ChartData
 ): PieChartComponentState {
-  let pieChartProperties: IPieChartProperties = Object.assign(
+  let pieChartProperties: PieChartProperties = Object.assign(
     {},
     DefaultPieChartProperties,
     chartDefinition.ChartProperties
   );
 
-  let data: IPieChartDataItem[] = dataSource != null ? dataSource.Data : [];
+  let data: PieChartDataItem[] = dataSource != null ? dataSource.Data : [];
   return {
     DataSource: data,
     ChartProperties: pieChartProperties,
@@ -61,12 +61,12 @@ export function setDefaultChartDisplayPopupState(): PieChartComponentState {
 
 export function sortDataSource(
   sliceSortOption: SliceSortOption,
-  oldData: IPieChartDataItem[]
-): IPieChartDataItem[] {
+  oldData: PieChartDataItem[]
+): PieChartDataItem[] {
   if (oldData == null || oldData.length == 0) {
     return [];
   }
-  let newData: IPieChartDataItem[] = [...oldData];
+  let newData: PieChartDataItem[] = [...oldData];
   switch (sliceSortOption) {
     case SliceSortOption.ValueAscending:
       newData.sort(sortByValueAscending);
@@ -84,7 +84,7 @@ export function sortDataSource(
   return newData;
 }
 
-export function sortByNameAscending(a: IPieChartDataItem, b: IPieChartDataItem): number {
+export function sortByNameAscending(a: PieChartDataItem, b: PieChartDataItem): number {
   let nameA = a.Name.toLowerCase();
   let nameB = b.Name.toLowerCase();
   if (nameA > nameB) {
@@ -96,7 +96,7 @@ export function sortByNameAscending(a: IPieChartDataItem, b: IPieChartDataItem):
   return 0;
 }
 
-export function sortByNameDescending(a: IPieChartDataItem, b: IPieChartDataItem): number {
+export function sortByNameDescending(a: PieChartDataItem, b: PieChartDataItem): number {
   let nameA = a.Name.toLowerCase();
   let nameB = b.Name.toLowerCase();
   if (nameA > nameB) {
@@ -108,7 +108,7 @@ export function sortByNameDescending(a: IPieChartDataItem, b: IPieChartDataItem)
   return 0;
 }
 
-export function sortByValueAscending(a: IPieChartDataItem, b: IPieChartDataItem): number {
+export function sortByValueAscending(a: PieChartDataItem, b: PieChartDataItem): number {
   if (a.Value > b.Value) {
     return 1;
   }
@@ -118,7 +118,7 @@ export function sortByValueAscending(a: IPieChartDataItem, b: IPieChartDataItem)
   return 0;
 }
 
-export function sortByValueDescending(a: IPieChartDataItem, b: IPieChartDataItem): number {
+export function sortByValueDescending(a: PieChartDataItem, b: PieChartDataItem): number {
   if (a.Value > b.Value) {
     return -1;
   }

@@ -2,29 +2,28 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as DataSourceRedux from '../Redux/ActionsReducers/DataSourceRedux';
 import { ApiBase } from './ApiBase';
 import { IDataSourceApi } from './Interface/IDataSourceApi';
-import { IDataSource } from '../Utilities/Interface/BlotterObjects/IDataSource';
-import { DataSourceState } from '../Redux/ActionsReducers/Interface/IState';
+import { DataSourceState, DataSource } from '../PredefinedConfig/RunTimeState/DataSourceState';
 
 export class DataSourceApi extends ApiBase implements IDataSourceApi {
   public getDataSourceState(): DataSourceState {
     return this.getBlotterState().DataSource;
   }
 
-  public getAllDataSource(): IDataSource[] {
+  public getAllDataSource(): DataSource[] {
     return this.getDataSourceState().DataSources;
   }
 
-  public getCurrentDataSource(): IDataSource {
+  public getCurrentDataSource(): DataSource {
     let currentDataSourceName: string = this.getDataSourceState().CurrentDataSource;
     return this.getDataSourceByName(currentDataSourceName);
   }
 
-  public getDataSourceByName(dataSourceName: string): IDataSource {
+  public getDataSourceByName(dataSourceName: string): DataSource {
     return this.getAllDataSource().find(a => a.Name == dataSourceName);
   }
 
   public setDataSource(dataSourceName: string): void {
-    let dataSource: IDataSource = this.getBlotterState().DataSource.DataSources.find(
+    let dataSource: DataSource = this.getBlotterState().DataSource.DataSources.find(
       a => a.Name == dataSourceName
     );
     if (
@@ -35,14 +34,14 @@ export class DataSourceApi extends ApiBase implements IDataSourceApi {
   }
 
   public createDataSource(dataSourceName: string, dataSourceDescription: string): void {
-    let dataSource: IDataSource = {
+    let dataSource: DataSource = {
       Name: dataSourceName,
       Description: dataSourceDescription,
     };
     this.addDataSource(dataSource);
   }
 
-  public addDataSource(dataSource: IDataSource): void {
+  public addDataSource(dataSource: DataSource): void {
     this.dispatchAction(DataSourceRedux.DataSourceAdd(dataSource));
   }
 

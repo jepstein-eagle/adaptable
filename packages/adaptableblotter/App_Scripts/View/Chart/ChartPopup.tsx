@@ -30,23 +30,21 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IChartDefinition } from '../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
-import { ChartVisibility, ChartType } from '../../Utilities/ChartEnums';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartEnums';
 import { CategoryChartWizard } from './CategoryChart/Wizard/CategoryChartWizard';
 import { PieChartWizard } from './PieChart/Wizard/PieChartWizard';
-import { AccessLevel } from '../../Utilities/Enums';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
-  onAddChartDefinition: (chartDefinition: IChartDefinition) => ChartRedux.ChartDefinitionAddAction;
-  onEditChartDefinition: (
-    chartDefinition: IChartDefinition
-  ) => ChartRedux.ChartDefinitionEditAction;
+  onAddChartDefinition: (chartDefinition: ChartDefinition) => ChartRedux.ChartDefinitionAddAction;
+  onEditChartDefinition: (chartDefinition: ChartDefinition) => ChartRedux.ChartDefinitionEditAction;
   onSelectChartDefinition: (chartDefinition: string) => ChartRedux.ChartDefinitionSelectAction;
   onShowChart: () => SystemRedux.ChartSetChartVisibiityAction;
-  ChartDefinitions: Array<IChartDefinition>;
-  CurrentChartDefinition: IChartDefinition;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  ChartDefinitions: Array<ChartDefinition>;
+  CurrentChartDefinition: ChartDefinition;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfigEntityState> {
@@ -89,14 +87,14 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       { Content: '', Size: 2 },
     ];
 
-    let Charts = this.props.ChartDefinitions.map((Chart: IChartDefinition, index) => {
+    let Charts = this.props.ChartDefinitions.map((Chart: ChartDefinition, index) => {
       return (
         <ChartEntityRow
           cssClassName={cssClassName}
           colItems={colItems}
           AdaptableBlotterObject={Chart}
           key={Chart.Name}
-          onEdit={() => this.onEdit(Chart as IChartDefinition)}
+          onEdit={() => this.onEdit(Chart as ChartDefinition)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onShare={() => this.props.onShare(Chart)}
           onDeleteConfirm={ChartRedux.ChartDefinitionDelete(Chart)}
@@ -150,7 +148,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       </DropdownButton>
     );
 
-    let editedChartDefinition = this.state.EditedAdaptableBlotterObject as IChartDefinition;
+    let editedChartDefinition = this.state.EditedAdaptableBlotterObject as ChartDefinition;
 
     return (
       <div className={cssClassName}>
@@ -223,7 +221,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     this.props.onShowChart();
   }
 
-  onEdit(Chart: IChartDefinition) {
+  onEdit(Chart: ChartDefinition) {
     //so we dont mutate original object
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(Chart),
@@ -233,7 +231,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   }
 
   onNew(chartType: ChartType) {
-    let emptyChartDefinition: IChartDefinition =
+    let emptyChartDefinition: ChartDefinition =
       chartType == ChartType.CategoryChart
         ? ObjectFactory.CreateEmptyCategoryChartDefinition()
         : ObjectFactory.CreateEmptyPieChartDefinition();
@@ -254,9 +252,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   }
 
   onFinishWizard() {
-    let clonedObject: IChartDefinition = Helper.cloneObject(
-      this.state.EditedAdaptableBlotterObject
-    );
+    let clonedObject: ChartDefinition = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditChartDefinition(clonedObject);
     } else {
@@ -280,7 +276,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   }
 
   canFinishWizard() {
-    let Chart = this.state.EditedAdaptableBlotterObject as IChartDefinition;
+    let Chart = this.state.EditedAdaptableBlotterObject as ChartDefinition;
     return StringExtensions.IsNotNullOrEmpty(Chart.Name);
   }
 }
@@ -296,15 +292,15 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddChartDefinition: (chartDefinition: IChartDefinition) =>
+    onAddChartDefinition: (chartDefinition: ChartDefinition) =>
       dispatch(ChartRedux.ChartDefinitionAdd(chartDefinition)),
-    onEditChartDefinition: (chartDefinition: IChartDefinition) =>
+    onEditChartDefinition: (chartDefinition: ChartDefinition) =>
       dispatch(ChartRedux.ChartDefinitionEdit(chartDefinition)),
     onSelectChartDefinition: (chartDefinition: string) =>
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
     onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId)),
   };
 }

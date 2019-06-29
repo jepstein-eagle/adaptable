@@ -1,12 +1,10 @@
-import { IReport } from '../../Utilities/Interface/BlotterObjects/IReport';
-import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
-import { ExportDestination } from '../../Utilities/Enums';
-import { ExportState } from '../../Redux/ActionsReducers/Interface/IState';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
+import { ExportState, Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 
 export interface IExportApi {
   getExportState(): ExportState;
-  getCurrentReport(): IReport;
+  getCurrentReport(): Report;
   getCurrentReportName(): string;
-  getAllReports(): IReport[];
+  getAllReports(): Report[];
   sendReport(reportName: string, destination: ExportDestination): void;
 }

@@ -7,10 +7,10 @@ import {
   HorizontalAlignment,
   AxisAngle,
   AxisScale,
-} from '../ChartEnums';
-import { ICategoryChartProperties } from '../Interface/BlotterObjects/Charting/IChartDefinition';
+} from '../../PredefinedConfig/Common/ChartEnums';
+import { CategoryChartProperties } from '../../PredefinedConfig/RunTimeState/ChartState';
 
-export const DefaultCategoryChartProperties: ICategoryChartProperties = {
+export const DefaultCategoryChartProperties: CategoryChartProperties = {
   // General
   CategoryChartType: CategoryChartType.Line,
   SeriesThickness: 1,

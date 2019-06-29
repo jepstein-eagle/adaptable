@@ -9,7 +9,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColItem } from '../UIInterfaces';
-import { IPlusMinusRule } from '../../Utilities/Interface/BlotterObjects/IPlusMinusRule';
+import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
@@ -17,14 +17,14 @@ export interface PlusMinusEntityRowProps
   extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
   Column: IColumn;
   onColumnDefaultNudgeValueChange: (
-    plusMinusRule: IPlusMinusRule,
+    plusMinusRule: PlusMinusRule,
     event: React.FormEvent<any>
   ) => void;
 }
 
 export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps, {}> {
   render(): any {
-    let plusMinusRule: IPlusMinusRule = this.props.AdaptableBlotterObject as IPlusMinusRule;
+    let plusMinusRule: PlusMinusRule = this.props.AdaptableBlotterObject as PlusMinusRule;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = (
@@ -63,7 +63,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
     return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
   }
 
-  private wrapExpressionDescription(PlusMinusRule: IPlusMinusRule): string {
+  private wrapExpressionDescription(PlusMinusRule: PlusMinusRule): string {
     return PlusMinusRule.IsDefaultNudge
       ? '[Default Column Nudge Value]'
       : ExpressionHelper.ConvertExpressionToString(PlusMinusRule.Expression, this.props.Columns);

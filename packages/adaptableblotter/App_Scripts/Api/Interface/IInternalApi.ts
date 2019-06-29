@@ -1,31 +1,31 @@
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { IMenuItem } from '../../Utilities/Interface/IMenu';
-import { ExportDestination } from '../../Utilities/Enums';
-import { SystemState } from '../../Redux/ActionsReducers/Interface/IState';
-import { ICalendar } from '../../Utilities/Interface/BlotterObjects/ICalendar';
-import { IChartData } from '../../Utilities/Interface/BlotterObjects/Charting/IChartData';
-import { ChartVisibility } from '../../Utilities/ChartEnums';
-import { IReport } from '../../Utilities/Interface/BlotterObjects/IReport';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
+import { SystemState } from '../../PredefinedConfig/InternalState/SystemState';
+import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { Calendar } from '../../PredefinedConfig/RunTimeState/CalendarState';
+import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 
 export interface IInternalApi {
   // System Redux
-  GetSystemState(): SystemState;
-  ReportStartLive(
-    report: IReport,
+  getSystemState(): SystemState;
+  startLiveReport(
+    report: Report,
     workbookName: string,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
   ): void;
-  GetAvailableCalendars(): ICalendar[];
-  SetChartData(chartData: IChartData): void;
-  SetChartVisibility(chartVisbility: ChartVisibility): void;
-  getSystemReports(): IReport[];
+  getAvailableCalendars(): Calendar[];
+  setChartData(chartData: ChartData): void;
+  setChartVisibility(chartVisbility: ChartVisibility): void;
+  getSystemReports(): Report[];
   getLiveReports(): ILiveReport[];
 
   // Menu Redux
-  ColumnContextMenuClear(): void;
-  ColumnContextMenuAddItem(menuItem: IMenuItem): void;
+  clearColumnContextMenu(): void;
+  addColumnContextMenuItem(menuItem: IMenuItem): void;
 
   // Popup Redux
-  PopupShowConfirmation(confirmation: IUIConfirmation): void;
+  showPopupConfirmation(confirmation: IUIConfirmation): void;
 }

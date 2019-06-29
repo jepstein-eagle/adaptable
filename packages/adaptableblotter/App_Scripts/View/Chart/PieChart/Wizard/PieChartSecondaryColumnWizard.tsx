@@ -3,21 +3,19 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { IPieChartDefinition } from '../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
+import { PieChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
 import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from 'react-bootstrap';
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
-import { SelectionMode, DataType } from '../../../../Utilities/Enums';
+import { SelectionMode, DataType } from '../../../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../../../../Utilities/Interface/IColumn';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
-import { SecondaryColumnOperation } from '../../../../Utilities/ChartEnums';
+import { SecondaryColumnOperation } from '../../../../PredefinedConfig/Common/ChartEnums';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 
 export interface PieChartSecondaryColumnWizardProps
-  extends AdaptableWizardStepProps<IPieChartDefinition> {
-  //  ChartDefinitions: IChartDefinition[]
-}
+  extends AdaptableWizardStepProps<PieChartDefinition> {}
 
 export interface PieChartSecondaryColumnWizardState {
   SecondaryColumnId?: string;
@@ -30,8 +28,8 @@ export class PieChartSecondaryColumnWizard
   constructor(props: PieChartSecondaryColumnWizardProps) {
     super(props);
     this.state = {
-      SecondaryColumnId: props.Data.SecondaryColumnId,
-      SecondaryColumnOperation: props.Data.SecondaryColumnOperation as SecondaryColumnOperation,
+      SecondaryColumnId: props.Data!.SecondaryColumnId,
+      SecondaryColumnOperation: props.Data!.SecondaryColumnOperation as SecondaryColumnOperation,
     };
   }
 
@@ -51,7 +49,9 @@ export class PieChartSecondaryColumnWizard
               <Row>
                 <Col xs={1} />
                 <Col xs={10}>
-                  <HelpBlock>Select a Secondary Column for the Pie Chart.</HelpBlock>
+                  <HelpBlock>
+                    Select a Secondary Column for the Pie Chart (Note: this is optional).
+                  </HelpBlock>
                 </Col>
                 <Col xs={1} />
               </Row>

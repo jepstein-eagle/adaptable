@@ -8,7 +8,7 @@ import {
   SelectionMode,
   DistinctCriteriaPairValue,
   DataType,
-} from '../../../Utilities/Enums';
+} from '../../../PredefinedConfig/Common/Enums';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';

@@ -5,12 +5,12 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { ICalculatedColumn } from '../../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { CalculatedColumnHelper } from '../../../Utilities/Helpers/CalculatedColumnHelper';
+import { CalculatedColumn } from '../../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 
 export interface CalculatedColumnSummaryWizardProps
-  extends AdaptableWizardStepProps<ICalculatedColumn> {}
+  extends AdaptableWizardStepProps<CalculatedColumn> {}
 
 export class CalculatedColumnSummaryWizard
   extends React.Component<CalculatedColumnSummaryWizardProps, {}>

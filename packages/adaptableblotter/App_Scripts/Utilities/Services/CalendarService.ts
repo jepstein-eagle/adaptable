@@ -1,7 +1,7 @@
 import * as CalendarConstants from '../../Utilities/Constants/CalendarConstants';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ICalendarService } from './Interface/ICalendarService';
-import { CalendarState } from '../../Redux/ActionsReducers/Interface/IState';
+import { CalendarState } from '../../PredefinedConfig/RunTimeState/CalendarState';
 
 // Similar service to the one in WPF version
 // This service is responsible for reading the calendars and for making them available and also for doing data calculations
@@ -66,7 +66,7 @@ export class CalendarService implements ICalendarService {
   private isNotWorkingDay(dateToCheck: Date): Boolean {
     let calendarStore: CalendarState = this.blotter.api.calendarApi.getCalendarState();
     let currentHoliday = this.blotter.api.internalApi
-      .GetAvailableCalendars()
+      .getAvailableCalendars()
       .find(c => c.Name == calendarStore.CurrentCalendar);
     for (var holiday of currentHoliday.CalendarEntries) {
       let holidayDate = new Date(holiday.HolidayDate);

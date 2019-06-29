@@ -5,7 +5,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { IFreeTextColumn } from '../../Utilities/Interface/BlotterObjects/IFreeTextColumn';
+import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { EntityRowItem } from '../Components/EntityRowItem';
@@ -15,7 +15,7 @@ export class FreeTextColumnEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let FreeTextColumn = this.props.AdaptableBlotterObject as IFreeTextColumn;
+    let FreeTextColumn = this.props.AdaptableBlotterObject as FreeTextColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 

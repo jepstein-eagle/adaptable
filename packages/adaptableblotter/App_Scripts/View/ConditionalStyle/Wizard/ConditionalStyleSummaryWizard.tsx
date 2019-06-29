@@ -8,15 +8,15 @@ import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { ConditionalStyleScope } from '../../../Utilities/Enums';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IConditionalStyle } from '../../../Utilities/Interface/BlotterObjects/IConditionalStyle';
+import { ConditionalStyleScope } from '../../../PredefinedConfig/Common/Enums';
+import { ConditionalStyle } from '../../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 
 export interface ConditionalStyleSummaryWizardProps
-  extends AdaptableWizardStepProps<IConditionalStyle> {
-  UserFilters: IUserFilter[];
+  extends AdaptableWizardStepProps<ConditionalStyle> {
+  UserFilters: UserFilter[];
 }
 
 export class ConditionalStyleSummaryWizard

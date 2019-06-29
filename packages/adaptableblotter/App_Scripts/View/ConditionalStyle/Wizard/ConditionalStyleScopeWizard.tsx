@@ -5,18 +5,22 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ConditionalStyleScope, SelectionMode, MessageType } from '../../../Utilities/Enums';
+import {
+  ConditionalStyleScope,
+  SelectionMode,
+  MessageType,
+} from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IColumnCategory } from '../../../Utilities/Interface/BlotterObjects/IColumnCategory';
-import { IConditionalStyle } from '../../../Utilities/Interface/BlotterObjects/IConditionalStyle';
+import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
+import { ConditionalStyle } from '../../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 
 export interface ConditionalStyleScopeWizardProps
-  extends AdaptableWizardStepProps<IConditionalStyle> {
-  ColumnCategories: Array<IColumnCategory>;
+  extends AdaptableWizardStepProps<ConditionalStyle> {
+  ColumnCategories: Array<ColumnCategory>;
 }
 
 export interface ConditionalStyleScopeWizardState {

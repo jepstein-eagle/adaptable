@@ -6,11 +6,11 @@ import {
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { ICustomSort } from '../../../Utilities/Interface/BlotterObjects/ICustomSort';
+import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 
-export interface CustomSortSummaryWizardProps extends AdaptableWizardStepProps<ICustomSort> {}
+export interface CustomSortSummaryWizardProps extends AdaptableWizardStepProps<CustomSort> {}
 
 export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWizardProps, {}>
   implements AdaptableWizardStep {

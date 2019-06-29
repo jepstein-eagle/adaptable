@@ -5,10 +5,10 @@ import { FormatColumnScopeWizard } from './FormatColumnScopeWizard';
 import { FormatColumnStyleWizard } from './FormatColumnStyleWizard';
 import { FormatColumnSummaryWizard } from './FormatColumnSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface FormatColumnWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<FormatColumnWizard> {
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<FormatColumnWizard> {
   ColorPalette: string[];
   StyleClassNames: string[];
 }

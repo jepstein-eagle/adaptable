@@ -1,7 +1,6 @@
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import * as React from 'react';
-import { Flex } from 'rebass';
-import { AccessLevel } from '../../../Utilities/Enums';
+import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
@@ -12,6 +11,7 @@ import { BlotterHelper } from '../../../Utilities/Helpers/BlotterHelper';
 import { UIHelper } from '../../UIHelper';
 import Dialog from '../../../components/Dialog';
 import SimpleButton from '../../../components/SimpleButton';
+import { Flex } from 'rebass';
 
 /**
  * This is the main popup that we use - so all function popups will appear here.

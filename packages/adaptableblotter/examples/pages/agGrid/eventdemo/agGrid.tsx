@@ -5,13 +5,14 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
-import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
-import { GridOptions } from 'ag-grid-community';
 import {
-  IColumnStateChangedEventArgs,
-  IAlertFiredEventArgs,
-} from '../../../../App_Scripts/Utilities/Interface/IBlotterEvents';
-import { ISearchChangedEventArgs } from '../../../../App_Scripts/Utilities/Interface/SearchChanged/ISearchChangedEventArgs';
+  IAdaptableBlotter,
+  AdaptableBlotterOptions,
+  AlertFiredEventArgs,
+  ColumnStateChangedEventArgs,
+  SearchChangedEventArgs,
+} from '../../../../App_Scripts/types';
+import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 var adaptableblotter: IAdaptableBlotter;
@@ -21,7 +22,7 @@ function InitAdaptableBlotter() {
 
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
 
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
     'state listen demo'
   );
@@ -40,17 +41,17 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-function listenToColumnStateChange(columnChangedArgs: IColumnStateChangedEventArgs) {
+function listenToColumnStateChange(columnChangedArgs: ColumnStateChangedEventArgs) {
   console.log('column event received');
   console.log(columnChangedArgs.currentLayout);
 }
 
-function listenToSearchChange(searchChangedArgs: ISearchChangedEventArgs) {
+function listenToSearchChange(searchChangedArgs: SearchChangedEventArgs) {
   console.log('search changed event received');
   console.log(searchChangedArgs.data[0].id);
 }
 
-function listenToAlertFired(alertFiredArgs: IAlertFiredEventArgs) {
+function listenToAlertFired(alertFiredArgs: AlertFiredEventArgs) {
   console.log('alert fired event received');
   console.log(alertFiredArgs.alert);
 }

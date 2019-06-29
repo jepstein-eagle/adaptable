@@ -3,12 +3,12 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { PercentBarSelectColumnWizard } from '././PercentBarSelectColumnWizard';
 import { PercentBarSummaryWizard } from '././PercentBarSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { PercentBarSettingsWizard } from './PercentBarSettingsWizard';
 import { PercentBarValuesWizard } from './PercentBarValuesWizard';
 
 export interface PercentBarWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<PercentBarWizard> {
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<PercentBarWizard> {
   ColorPalette: Array<string>;
 }
 

@@ -4,23 +4,23 @@ import {
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
 import {
-  ICategoryChartDefinition,
-  IPieChartDefinition,
-} from '../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
-import { Expression } from '../../../../Utilities/Expression';
+  CategoryChartDefinition,
+  PieChartDefinition,
+} from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
 import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from 'react-bootstrap';
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
-import { SelectionMode } from '../../../../Utilities/Enums';
+import { SelectionMode } from '../../../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../../../../Utilities/Interface/IColumn';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
-import { SecondaryColumnOperation } from '../../../../Utilities/ChartEnums';
+import { SecondaryColumnOperation } from '../../../../PredefinedConfig/Common/ChartEnums';
 
 export interface PieChartPrimaryColumnWizardProps
-  extends AdaptableWizardStepProps<IPieChartDefinition> {
-  //  ChartDefinitions: IChartDefinition[]
+  extends AdaptableWizardStepProps<PieChartDefinition> {
+  //  ChartDefinitions: ChartDefinition[]
 }
 
 export interface PieChartPrimaryColumnWizardState {

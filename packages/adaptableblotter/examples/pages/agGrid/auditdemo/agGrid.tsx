@@ -7,10 +7,14 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
 
-import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import {
+  IAdaptableBlotter,
+  AdaptableBlotterOptions,
+  SearchChangedEventArgs,
+} from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { IAuditLogEventArgs } from '../../../../App_Scripts/Utilities/Interface/IAuditEvents';
+import { AuditLogEventArgs } from '../../../../App_Scripts/Api/Events/AuditEvents';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -20,7 +24,7 @@ function InitAdaptableBlotter() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
 
   // creating blotter options here so we can add audit
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = {
+  const adaptableBlotterOptions: AdaptableBlotterOptions = {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
@@ -50,7 +54,7 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-function listenToAuditLogEvent(auditLogEventArgs: IAuditLogEventArgs) {
+function listenToAuditLogEvent(auditLogEventArgs: AuditLogEventArgs) {
   console.log('audit event received');
   console.log(auditLogEventArgs);
 }

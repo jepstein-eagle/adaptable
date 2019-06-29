@@ -5,12 +5,12 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IReminder } from '../../../Utilities/Interface/BlotterObjects/IReminder';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { Reminder } from '../../../PredefinedConfig/RunTimeState/ReminderState';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { UIHelper } from '../../UIHelper';
 
-export interface ReminderSummaryWizardProps extends AdaptableWizardStepProps<IReminder> {}
+export interface ReminderSummaryWizardProps extends AdaptableWizardStepProps<Reminder> {}
 
 export class ReminderSummaryWizard extends React.Component<ReminderSummaryWizardProps, {}>
   implements AdaptableWizardStep {

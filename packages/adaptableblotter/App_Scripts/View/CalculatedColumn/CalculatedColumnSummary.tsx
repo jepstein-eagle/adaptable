@@ -17,12 +17,12 @@ import { UIHelper } from '../UIHelper';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
+import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 
 export interface CalculatedColumnSummaryProps
   extends StrategySummaryProps<CalculatedColumnSummaryComponent> {
-  CalculatedColumns: ICalculatedColumn[];
-  onEdit: (calculatedColumn: ICalculatedColumn) => void;
+  CalculatedColumns: CalculatedColumn[];
+  onEdit: (calculatedColumn: CalculatedColumn) => void;
   onDeleteConfirm: Redux.Action;
   CalculatedColumnErrorMessage: string;
   IsExpressionValid: (expression: string) => SystemRedux.CalculatedColumnIsExpressionValidAction;
@@ -70,7 +70,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<
           <CalculatedColumnWizard
             cssClassName={cssWizardClassName}
             EditedAdaptableBlotterObject={
-              this.state.EditedAdaptableBlotterObject as ICalculatedColumn
+              this.state.EditedAdaptableBlotterObject as CalculatedColumn
             }
             ConfigEntities={this.props.CalculatedColumns}
             Columns={this.props.Columns}
@@ -90,7 +90,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<
     );
   }
 
-  onEdit(calculatedColumn: ICalculatedColumn) {
+  onEdit(calculatedColumn: CalculatedColumn) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(calculatedColumn),
       WizardStartIndex: 1,
@@ -107,7 +107,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let calculatedColumn: ICalculatedColumn = Helper.cloneObject(
+    let calculatedColumn: CalculatedColumn = Helper.cloneObject(
       this.state.EditedAdaptableBlotterObject
     );
     this.props.onEdit(calculatedColumn);
@@ -119,7 +119,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let calculatedColumn = this.state.EditedAdaptableBlotterObject as ICalculatedColumn;
+    let calculatedColumn = this.state.EditedAdaptableBlotterObject as CalculatedColumn;
     return (
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnExpression)
@@ -136,7 +136,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onEdit: (calculatedColumn: ICalculatedColumn) =>
+    onEdit: (calculatedColumn: CalculatedColumn) =>
       dispatch(CalculatedColumnRedux.CalculatedColumnEdit(calculatedColumn)),
     IsExpressionValid: (expression: string) =>
       dispatch(SystemRedux.CalculatedColumnIsExpressionValid(expression)),

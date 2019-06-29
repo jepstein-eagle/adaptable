@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { PanelProps, Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { MessageType } from '../../../Utilities/Enums';
-import Panel, { PanelProps as TypePanelProps } from '../../../components/Panel';
-import { Flex, Box, BoxProps } from 'rebass';
+import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import useTheme from '../../../components/utils/useTheme';
 import SimpleButton from '../../../components/SimpleButton';
+import Panel, { PanelProps as TypePanelProps } from '../../../components/Panel';
+import { Flex, Box, BoxProps } from 'rebass';
 
 export interface PanelWithButtonProps extends PanelProps {
   //use either button content + buttonClick OR button

@@ -1,12 +1,12 @@
-import { IPieChartProperties } from '../Interface/BlotterObjects/Charting/IChartDefinition';
 import {
   PieChartLabelPosition,
   SliceLabelOption,
   SliceSortOption,
   OthersCategoryType,
-} from '../ChartEnums';
+} from '../../PredefinedConfig/Common/ChartEnums';
+import { PieChartProperties } from '../../PredefinedConfig/RunTimeState/ChartState';
 
-export const DefaultPieChartProperties: IPieChartProperties = {
+export const DefaultPieChartProperties: PieChartProperties = {
   OthersCategoryThreshold: 2,
   OthersCategoryType: OthersCategoryType.Percent,
   PieChartLabelPosition: PieChartLabelPosition.BestFit,

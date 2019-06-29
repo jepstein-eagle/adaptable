@@ -7,14 +7,14 @@ import {
 import Panel from '../../../components/Panel';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IAdvancedSearch } from '../../../Utilities/Interface/BlotterObjects/IAdvancedSearch';
+import { AdvancedSearch } from '../../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
 import { Flex, Box } from 'rebass';
 
 export interface AdvancedSearchSettingsWizardProps
-  extends AdaptableWizardStepProps<IAdvancedSearch> {
-  AdvancedSearches: IAdvancedSearch[];
+  extends AdaptableWizardStepProps<AdvancedSearch> {
+  AdvancedSearches: AdvancedSearch[];
 }
 
 export interface AdvancedSearchSettingsWizardState {

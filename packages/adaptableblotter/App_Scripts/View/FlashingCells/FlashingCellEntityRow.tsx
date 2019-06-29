@@ -4,7 +4,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ColorPicker } from '../ColorPicker';
 import { IColItem } from '../UIInterfaces';
-import { IFlashingCell } from '../../Utilities/Interface/BlotterObjects/IFlashingCell';
+import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
@@ -12,15 +12,15 @@ export interface FlashingCellEntityRowProps
   extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {
   FlashingCellDurations: any[];
   ColorPalette: string[];
-  onSelect: (flashingCell: IFlashingCell) => void;
-  onChangeFlashingDuration: (flashingCell: IFlashingCell, NewFlashDuration: number) => void;
-  onChangeDownColorFlashingCell: (flashingCell: IFlashingCell, DownColor: string) => void;
-  onChangeUpColorFlashingCell: (flashingCell: IFlashingCell, UpColor: string) => void;
+  onSelect: (flashingCell: FlashingCell) => void;
+  onChangeFlashingDuration: (flashingCell: FlashingCell, NewFlashDuration: number) => void;
+  onChangeDownColorFlashingCell: (flashingCell: FlashingCell, DownColor: string) => void;
+  onChangeUpColorFlashingCell: (flashingCell: FlashingCell, UpColor: string) => void;
 }
 
 export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRowProps, {}> {
   render(): any {
-    let flashingCell: IFlashingCell = this.props.AdaptableBlotterObject as IFlashingCell;
+    let flashingCell: FlashingCell = this.props.AdaptableBlotterObject as FlashingCell;
 
     let durations = this.props.FlashingCellDurations.map(flashingCellDuration => {
       return (
@@ -98,7 +98,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
   onActionChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.props.onChangeFlashingDuration(
-      this.props.AdaptableBlotterObject as IFlashingCell,
+      this.props.AdaptableBlotterObject as FlashingCell,
       Number.parseInt(e.value)
     );
   }
@@ -106,7 +106,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
   onDownColorChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.props.onChangeDownColorFlashingCell(
-      this.props.AdaptableBlotterObject as IFlashingCell,
+      this.props.AdaptableBlotterObject as FlashingCell,
       e.value
     );
   }
@@ -114,7 +114,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
   onUpColorChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.props.onChangeUpColorFlashingCell(
-      this.props.AdaptableBlotterObject as IFlashingCell,
+      this.props.AdaptableBlotterObject as FlashingCell,
       e.value
     );
   }

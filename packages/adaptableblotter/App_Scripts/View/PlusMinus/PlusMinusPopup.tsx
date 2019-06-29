@@ -25,23 +25,23 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IPlusMinusRule } from '../../Utilities/Interface/BlotterObjects/IPlusMinusRule';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
-import { MessageType } from '../../Utilities/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
   DefaultNudgeValue: number;
-  PlusMinusRules: IPlusMinusRule[];
-  onAddPlusMinusRule: (plusMinusRule: IPlusMinusRule) => PlusMinusRedux.PlusMinusRuleAddAction;
-  onEditPlusMinusRule: (plusMinusRule: IPlusMinusRule) => PlusMinusRedux.PlusMinusRuleEditAction;
+  PlusMinusRules: PlusMinusRule[];
+  onAddPlusMinusRule: (plusMinusRule: PlusMinusRule) => PlusMinusRedux.PlusMinusRuleAddAction;
+  onEditPlusMinusRule: (plusMinusRule: PlusMinusRule) => PlusMinusRedux.PlusMinusRuleEditAction;
   onConfirmWarningCellValidation: (
     confirmation: IUIConfirmation
   ) => PopupRedux.PopupShowConfirmationAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class PlusMinusPopupComponent extends React.Component<
@@ -150,7 +150,7 @@ class PlusMinusPopupComponent extends React.Component<
             <PlusMinusWizard
               cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={
-                this.state.EditedAdaptableBlotterObject as IPlusMinusRule
+                this.state.EditedAdaptableBlotterObject as PlusMinusRule
               }
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
@@ -177,8 +177,8 @@ class PlusMinusPopupComponent extends React.Component<
       WizardStartIndex: 0,
     });
   }
-  onEdit(plusMinusRule: IPlusMinusRule) {
-    let clonedObject: IPlusMinusRule = Helper.cloneObject(plusMinusRule);
+  onEdit(plusMinusRule: PlusMinusRule) {
+    let clonedObject: PlusMinusRule = Helper.cloneObject(plusMinusRule);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStatus: WizardStatus.Edit,
@@ -196,7 +196,7 @@ class PlusMinusPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusRule;
+    let plusMinus = this.state.EditedAdaptableBlotterObject as PlusMinusRule;
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditPlusMinusRule(plusMinus);
     } else {
@@ -210,17 +210,17 @@ class PlusMinusPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusRule;
+    let plusMinus = this.state.EditedAdaptableBlotterObject as PlusMinusRule;
     return (
       StringExtensions.IsNotNullOrEmpty(plusMinus.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(plusMinus.NudgeValue.toString()) && // check its a number??
       (plusMinus.IsDefaultNudge ||
-        ExpressionHelper.IsNotEmptyOrInvalidExpression(plusMinus.Expression))
+        ExpressionHelper.IsNullOrEmptyOrValidExpression(plusMinus.Expression))
     );
   }
 
-  onColumnDefaultNudgeValueChange(plusMinusRule: IPlusMinusRule, event: React.FormEvent<any>) {
-    let clonedObject: IPlusMinusRule = Helper.cloneObject(plusMinusRule);
+  onColumnDefaultNudgeValueChange(plusMinusRule: PlusMinusRule, event: React.FormEvent<any>) {
+    let clonedObject: PlusMinusRule = Helper.cloneObject(plusMinusRule);
 
     let e = event.target as HTMLInputElement;
     clonedObject.NudgeValue = parseFloat(e.value);
@@ -228,7 +228,7 @@ class PlusMinusPopupComponent extends React.Component<
     this.props.onEditPlusMinusRule(clonedObject);
   }
 
-  onAddPlusMinusRule(index: number, plusMinusRule: IPlusMinusRule) {
+  onAddPlusMinusRule(index: number, plusMinusRule: PlusMinusRule) {
     // check if its a default nudge value that there is not one already set for that column
     if (plusMinusRule.IsDefaultNudge) {
       let existingIndex: number = this.props.PlusMinusRules.findIndex(
@@ -255,7 +255,7 @@ class PlusMinusPopupComponent extends React.Component<
     }
   }
 
-  private onConfirmWarningCellValidation(index: number, plusMinusRule: IPlusMinusRule) {
+  private onConfirmWarningCellValidation(index: number, plusMinusRule: PlusMinusRule) {
     let confirmation: IUIConfirmation = {
       CancelButtonText: 'Cancel',
       Header: 'Existing Default Column Nudge Value for: ' + plusMinusRule.ColumnId,
@@ -278,13 +278,13 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddPlusMinusRule: (plusMinusRule: IPlusMinusRule) =>
+    onAddPlusMinusRule: (plusMinusRule: PlusMinusRule) =>
       dispatch(PlusMinusRedux.PlusMinusRuleAdd(plusMinusRule)),
-    onEditPlusMinusRule: (plusMinusRule: IPlusMinusRule) =>
+    onEditPlusMinusRule: (plusMinusRule: PlusMinusRule) =>
       dispatch(PlusMinusRedux.PlusMinusRuleEdit(plusMinusRule)),
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),
   };
 }

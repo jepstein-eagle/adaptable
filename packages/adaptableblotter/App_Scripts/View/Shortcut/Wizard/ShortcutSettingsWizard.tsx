@@ -4,15 +4,15 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { DataType, MessageType, MathOperation } from '../../../Utilities/Enums';
+import { DataType, MessageType, MathOperation } from '../../../PredefinedConfig/Common/Enums';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import * as CalendarConstants from '../../../Utilities/Constants/CalendarConstants';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IShortcut } from '../../../Utilities/Interface/BlotterObjects/IShortcut';
+import { Shortcut } from '../../../PredefinedConfig/RunTimeState/ShortcutState';
 
-export interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<IShortcut> {
+export interface ShortcutSettingsWizardProps extends AdaptableWizardStepProps<Shortcut> {
   NumericKeysAvailable: Array<string>;
   DateKeysAvailable: Array<string>;
 }

@@ -1,6 +1,5 @@
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { UserFilterState } from '../../Redux/ActionsReducers/Interface/IState';
+import { UserFilterState, UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 export interface IUserFilterApi {
   getUserFilterState(): UserFilterState;
-  getAllUserFilter(): IUserFilter[];
+  getAllUserFilter(): UserFilter[];
 }

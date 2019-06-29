@@ -2,12 +2,11 @@ import { IScheduleService } from './Interface/IScheduleService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import * as NodeSchedule from 'node-schedule';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { ISchedule } from '../Interface/BlotterObjects/ISchedule';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { DateExtensions } from '../Extensions/DateExtensions';
-import { IReport } from '../Interface/BlotterObjects/IReport';
-import { IReminder } from '../Interface/BlotterObjects/IReminder';
-import { ReminderState, ExportState } from '../../Redux/ActionsReducers/Interface/IState';
+import { ReminderState, Reminder } from '../../PredefinedConfig/RunTimeState/ReminderState';
+import { ExportState, Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { Schedule } from '../../PredefinedConfig/Common/Schedule';
 import { IReminderStrategy } from '../../Strategy/Interface/IReminderStrategy';
 import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
 
@@ -32,7 +31,7 @@ export class ScheduleService implements IScheduleService {
     this.exportJobs = [];
 
     // create the midnight reload job
-    let reloadSchedule: ISchedule = {
+    let reloadSchedule: Schedule = {
       Hour: 0,
       Minute: 1,
       DaysOfWeek: [0, 1, 2, 3, 4, 5, 6],
@@ -66,17 +65,17 @@ export class ScheduleService implements IScheduleService {
     }
   }
 
-  public AddReminderSchedule(reminder: IReminder): void {
+  public AddReminderSchedule(reminder: Reminder): void {
     let date: Date = this.getDateFromSchedule(reminder.Schedule);
     if (date != null) {
       var alertJob: NodeSchedule.Job = NodeSchedule.scheduleJob(date, () => {
-        this.blotter.api.alertApi.showAlert(reminder.Alert);
+        this.blotter.api.alertApi.displayAlert(reminder.Alert);
       });
       this.alertJobs.push(alertJob);
     }
   }
 
-  public AddReportSchedule(report: IReport): void {
+  public AddReportSchedule(report: Report): void {
     if (report.AutoExport) {
       let date: Date = this.getDateFromSchedule(report.AutoExport.Schedule);
       if (date != null) {
@@ -88,7 +87,7 @@ export class ScheduleService implements IScheduleService {
     }
   }
 
-  private getDateFromSchedule(schedule: ISchedule): Date {
+  private getDateFromSchedule(schedule: Schedule): Date {
     let date: Date = null;
     if (schedule.OneOffDate != null) {
       date = new Date(schedule.OneOffDate);

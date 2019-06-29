@@ -4,13 +4,13 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType } from '../../../Utilities/Enums';
+import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IPlusMinusRule } from '../../../Utilities/Interface/BlotterObjects/IPlusMinusRule';
+import { PlusMinusRule } from '../../../PredefinedConfig/RunTimeState/PlusMinusState';
 
-export interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {}
+export interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {}
 export interface PlusMinusSettingsWizardState {
   NudgeValue: number;
   IsDefaultNudge: boolean;
@@ -111,7 +111,7 @@ export class PlusMinusSettingsWizard
   public Next(): void {
     this.props.Data.NudgeValue = this.state.NudgeValue;
     this.props.Data.IsDefaultNudge = this.state.IsDefaultNudge;
-    if (this.props.Data.IsDefaultNudge) {
+    if (this.props.Data.Expression == null || this.props.Data.IsDefaultNudge) {
       this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
     }
   }

@@ -4,12 +4,12 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
-import { IRange } from '../Utilities/Interface/Expression/IRange';
+import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 import RangeHelper from '../Utilities/Helpers/RangeHelper';
-import { Expression } from '../Utilities/Expression';
+import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
 import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
-import { DisplayAction } from '../Utilities/Enums';
+import { DisplayAction, LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -32,7 +32,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
         SystemRedux.QuickSearchClearVisibleColumnExpressions()
       );
     } else {
-      let quickSearchRange: IRange = RangeHelper.CreateValueRangeFromOperand(
+      let quickSearchRange: QueryRange = RangeHelper.CreateValueRangeFromOperand(
         this.blotter.api.quickSearchApi.getQuickSearchValue()
       );
       this.blotter.adaptableBlotterStore.TheStore.dispatch(
@@ -43,7 +43,12 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
       // we dont keep this updated - just set once as good for majority of use cases
       let quickSearchVisibleColumnExpressions: Expression[] = [];
       for (let column of this.blotter.api.gridApi.getVisibleColumns()) {
-        if (RangeHelper.IsColumnAppropriateForRange(quickSearchRange.Operator, column)) {
+        if (
+          RangeHelper.IsColumnAppropriateForRange(
+            quickSearchRange.Operator as LeafExpressionOperator,
+            column
+          )
+        ) {
           let quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(
             column.ColumnId,
             null,

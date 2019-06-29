@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, OverlayTrigger, Tooltip, Glyphicon } from 'react-bootstrap';
-import { AccessLevel } from '../../../Utilities/Enums';
+import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 
 export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
   onClick?: () => void;
@@ -9,7 +9,7 @@ export interface ButtonProps extends React.ClassAttributes<ButtonBase> {
   //Override normal tooltip i.e. Edit
   overrideTooltip?: string;
   //The entity we pass in to check normal disabled status
-  //  ConfigEntity?: IAdaptableBlotterObject
+  //  ConfigEntity?: AdaptableBlotterObject
   style?: React.CSSProperties;
   size?: ReactBootstrap.Sizes;
   //Override normal Text i.e. Edit

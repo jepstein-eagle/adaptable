@@ -10,20 +10,20 @@ import {
   LeafExpressionOperator,
   MessageType,
   RangeOperandType,
-} from '../../../Utilities/Enums';
+} from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { ICellValidationRule } from '../../../Utilities/Interface/BlotterObjects/ICellValidationRule';
-import { IRange } from '../../../Utilities/Interface/Expression/IRange';
+import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { Box } from 'rebass';
 import Dropdown from '../../../components/Dropdown';
 import Panel from '../../../components/Panel';
 
 export interface CellValidationRulesWizardProps
-  extends AdaptableWizardStepProps<ICellValidationRule> {}
+  extends AdaptableWizardStepProps<CellValidationRule> {}
 export interface CellValidationSettingsWizardState {
   Operator: LeafExpressionOperator;
   Operand1: string;
@@ -36,7 +36,7 @@ export class CellValidationRulesWizard
   constructor(props: CellValidationRulesWizardProps) {
     super(props);
     this.state = {
-      Operator: this.props.Data.Range.Operator,
+      Operator: this.props.Data.Range.Operator as LeafExpressionOperator,
       Operand1: this.props.Data.Range.Operand1,
       Operand2: this.props.Data.Range.Operand2,
     };
@@ -314,7 +314,7 @@ export class CellValidationRulesWizard
     return true;
   }
   public Next(): void {
-    let rangeExpression: IRange = {
+    let rangeExpression: QueryRange = {
       Operator: this.state.Operator,
       Operand1: this.state.Operand1,
       Operand2: this.state.Operand2,

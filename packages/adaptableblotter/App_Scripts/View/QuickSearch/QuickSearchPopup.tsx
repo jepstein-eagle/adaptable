@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { FormControl, ControlLabel, Panel, FormGroup, Col, Checkbox } from 'react-bootstrap';
-import { LeafExpressionOperator, DisplayAction, MessageType } from '../../Utilities/Enums';
+
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
@@ -11,15 +11,18 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ColorPicker } from '../ColorPicker';
-import { AdaptablePopover } from '../AdaptablePopover';
+
 import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/AdaptableBlotterFormControlTextClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
-import { IStyle } from '../../Utilities/Interface/IStyle';
+
 import {
   QUICK_SEARCH_DEFAULT_BACK_COLOR,
   QUICK_SEARCH_DEFAULT_FORE_COLOR,
 } from '../../Utilities/Constants/GeneralConstants';
+import { DisplayAction, LeafExpressionOperator } from '../../PredefinedConfig/Common/Enums';
+import { IStyle } from '../../PredefinedConfig/Common/IStyle';
+import { AdaptablePopover } from '../AdaptablePopover';
 
 import NewPanel from '../../components/Panel';
 

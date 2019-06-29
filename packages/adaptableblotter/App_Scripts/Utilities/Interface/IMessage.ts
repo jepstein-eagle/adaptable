@@ -1,5 +1,5 @@
-import * as Redux from 'redux';
-import { MessageType } from '../../Utilities/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
+import { Action } from 'redux';
 
 export interface IAdaptableAlert {
   Header: string;
@@ -13,13 +13,13 @@ export interface IUIConfirmation {
   Msg: string;
   ConfirmButtonText: string;
   CancelButtonText: string;
-  ConfirmAction: Redux.Action;
-  CancelAction: Redux.Action;
+  ConfirmAction: Action;
+  CancelAction: Action;
   ShowInputBox: boolean;
   MessageType: MessageType;
 }
 
-export interface InputAction extends Redux.Action {
+export interface InputAction extends Action {
   InputText: string;
 }
 
@@ -61,8 +61,8 @@ export interface IConfirmationPopup {
   Msg: string;
   ConfirmButtonText: string;
   CancelButtonText: string;
-  ConfirmAction: Redux.Action;
-  CancelAction: Redux.Action;
+  ConfirmAction: Action;
+  CancelAction: Action;
   ShowInputBox: boolean;
   ConfirmationComment: string;
   MessageType: MessageType;

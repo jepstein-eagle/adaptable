@@ -9,27 +9,27 @@ import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilter
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { FormControl } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IColumnFilter } from '../../../Utilities/Interface/BlotterObjects/IColumnFilter';
-import { IRange } from '../../../Utilities/Interface/Expression/IRange';
-import { Expression } from '../../../Utilities/Expression';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { Expression } from '../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
-import { DataType, LeafExpressionOperator } from '../../../Utilities/Enums';
+import { DataType, LeafExpressionOperator } from '../../../PredefinedConfig/Common/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
+import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: IColumn;
   Blotter: IAdaptableBlotter;
   Columns: IColumn[];
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SystemFilters: string[];
-  ColumnFilters: IColumnFilter[];
-  onAddColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
-  onEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
+  ColumnFilters: ColumnFilter[];
+  onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
+  onEditColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
   onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
 }
 
@@ -64,7 +64,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   reconcileFilters(): void {
-    let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(
+    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
     if (existingColumnFilter) {
@@ -141,7 +141,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   // debouncedRunQuickSearch = _.debounce((searchText: string) => this.runTextchanged(searchText), 250);
-  // debouncedSetFilter = _.debounce((columnFilter: IColumnFilter) => this.props.onAddEditColumnFilter(columnFilter), 1000);
+  // debouncedSetFilter = _.debounce((columnFilter: ColumnFilter) => this.props.onAddEditColumnFilter(columnFilter), 1000);
 
   OnTextChange(searchText: string) {
     // as soon as anything changes clear existing column filter
@@ -161,7 +161,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   clearExistingColumnFilter(): void {
-    let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(
+    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
     if (existingColumnFilter) {
@@ -170,7 +170,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   createColumnFilter(expression: Expression, searchText: string): void {
-    let columnFilter: IColumnFilter = this.props.ColumnFilters.find(
+    let columnFilter: ColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
     if (columnFilter == null) {
@@ -210,7 +210,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         operand1 = values[0];
         operand2 = values[1];
       }
-      let range: IRange = RangeHelper.CreateValueRange(operatorKVP.Value, operand1, operand2);
+      let range: QueryRange = RangeHelper.CreateValueRange(operatorKVP.Value, operand1, operand2);
       let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
         this.props.CurrentColumn.ColumnId,
         [],
@@ -310,9 +310,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddColumnFilter: (columnFilter: IColumnFilter) =>
+    onAddColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
-    onEditColumnFilter: (columnFilter: IColumnFilter) =>
+    onEditColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter)),
     onClearColumnFilter: (columnId: string) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),

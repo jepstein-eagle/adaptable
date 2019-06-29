@@ -1,6 +1,8 @@
-import { EntitlementsState } from './Interface/IState';
+import {
+  EntitlementsState,
+  IEntitlement,
+} from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 import * as Redux from 'redux';
-import { IEntitlement } from '../../Utilities/Interface/IEntitlement';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
 export const ENTITLEMENT_ADD = 'ENTITLEMENT_ADD';

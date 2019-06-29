@@ -17,7 +17,7 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { SortOrder, SelectionMode } from '../../../Utilities/Enums';
+import { SortOrder, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { GridSortRow } from '../GridSortRow';
 import { IColItem } from '../../UIInterfaces';
@@ -25,13 +25,12 @@ import { AdaptableObjectCollection } from '../../Components/AdaptableObjectColle
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { PanelWithButton } from '../../Components/Panels/PanelWithButton';
-import { IColumnSort } from '../../../Utilities/Interface/IColumnSort';
-import { ILayout } from '../../../Utilities/Interface/BlotterObjects/ILayout';
+import { Layout, ColumnSort } from '../../../PredefinedConfig/RunTimeState/LayoutState';
 
-export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<ILayout> {}
+export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<Layout> {}
 
 export interface LayoutGridSortWizardState {
-  ColumnSorts: IColumnSort[];
+  ColumnSorts: ColumnSort[];
 }
 
 export class LayoutGridSortWizard
@@ -112,7 +111,7 @@ export class LayoutGridSortWizard
   }
 
   addSort(): any {
-    let sorts: IColumnSort[] = [].concat(
+    let sorts: ColumnSort[] = [].concat(
       this.state.ColumnSorts,
       ObjectFactory.CreateEmptyColumnSort()
     );
@@ -122,8 +121,8 @@ export class LayoutGridSortWizard
   }
 
   private onColumnSelectedChanged(index: number, column: IColumn) {
-    let sorts: IColumnSort[] = [].concat(this.state.ColumnSorts);
-    let sort: IColumnSort = sorts[index];
+    let sorts: ColumnSort[] = [].concat(this.state.ColumnSorts);
+    let sort: ColumnSort = sorts[index];
     sort.Column = column.ColumnId;
     this.setState({ ColumnSorts: sorts } as LayoutGridSortWizardState, () =>
       this.props.UpdateGoBackState()
@@ -131,8 +130,8 @@ export class LayoutGridSortWizard
   }
 
   private onSortOrderChanged(index: number, sortOrder: SortOrder) {
-    let sorts: IColumnSort[] = [].concat(this.state.ColumnSorts);
-    let sort: IColumnSort = sorts[index];
+    let sorts: ColumnSort[] = [].concat(this.state.ColumnSorts);
+    let sort: ColumnSort = sorts[index];
     sort.SortOrder = sortOrder;
     this.setState({ ColumnSorts: sorts } as LayoutGridSortWizardState, () =>
       this.props.UpdateGoBackState()
@@ -140,7 +139,7 @@ export class LayoutGridSortWizard
   }
 
   private onDeleteGridSort(index: number): any {
-    let sorts: IColumnSort[] = [].concat(this.state.ColumnSorts);
+    let sorts: ColumnSort[] = [].concat(this.state.ColumnSorts);
     sorts.splice(index, 1);
     this.setState({ ColumnSorts: sorts } as LayoutGridSortWizardState, () =>
       this.props.UpdateGoBackState()

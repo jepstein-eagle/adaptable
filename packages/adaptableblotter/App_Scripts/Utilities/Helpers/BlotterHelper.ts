@@ -1,19 +1,19 @@
 import { cloneDeepWith, isPlainObject } from 'lodash';
-import { IAdaptableBlotterOptions } from '../Interface/BlotterOptions/IAdaptableBlotterOptions';
+import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 import { DefaultAdaptableBlotterOptions } from '../Defaults/DefaultAdaptableBlotterOptions';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ILicenceInfo } from '../Interface/ILicenceInfo';
-import { LicenceScopeType } from '../Enums';
+import { LicenceScopeType } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { createUuid } from '../Uuid';
-import { IAdaptableBlotterObject } from '../Interface/BlotterObjects/IAdaptableBlotterObject';
+import { createUuid } from '../../PredefinedConfig/Uuid';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 export function assignBlotterOptions(
-  blotterOptions: IAdaptableBlotterOptions
-): IAdaptableBlotterOptions {
+  blotterOptions: AdaptableBlotterOptions
+): AdaptableBlotterOptions {
   const returnBlotterOptions = Object.assign({}, DefaultAdaptableBlotterOptions, blotterOptions);
   returnBlotterOptions.auditOptions = Object.assign(
     {},
@@ -80,9 +80,7 @@ export function isValidPrimaryKey(blotter: IAdaptableBlotter, columns: IColumn[]
   );
 
   if (pkColumn == null) {
-    const errorMessage: string = `The PK Column '${
-      blotter.blotterOptions.primaryKey
-    }' does not exist.  This will affect many functions in the Adaptable Blotter.`;
+    const errorMessage: string = `The PK Column '${blotter.blotterOptions.primaryKey}' does not exist.  This will affect many functions in the Adaptable Blotter.`;
     if (blotter.blotterOptions.generalOptions.showMissingPrimaryKeyWarning == true) {
       // show an alert if that is the option
       blotter.api.alertApi.showAlertError('No Primary Key', errorMessage, true);
@@ -95,7 +93,7 @@ export function isValidPrimaryKey(blotter: IAdaptableBlotter, columns: IColumn[]
   return true;
 }
 
-export function isConfigServerEnabled(blotterOptions: IAdaptableBlotterOptions): boolean {
+export function isConfigServerEnabled(blotterOptions: AdaptableBlotterOptions): boolean {
   return (
     blotterOptions.configServerOptions != null &&
     blotterOptions.configServerOptions.enableConfigServer != null &&
@@ -153,8 +151,8 @@ export function checkLicenceKey(licenceInfo: ILicenceInfo): void {
 }
 
 export function BlotterObjectExistsInState(
-  array: IAdaptableBlotterObject[],
-  itemToCheck: IAdaptableBlotterObject
+  array: AdaptableBlotterObject[],
+  itemToCheck: AdaptableBlotterObject
 ): boolean {
   if (array == null) {
     return false;

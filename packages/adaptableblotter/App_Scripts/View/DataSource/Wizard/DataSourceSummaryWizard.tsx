@@ -5,10 +5,10 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IDataSource } from '../../../Utilities/Interface/BlotterObjects/IDataSource';
+import { DataSource } from '../../../PredefinedConfig/RunTimeState/DataSourceState';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 
-export interface DataSourceSummaryWizardProps extends AdaptableWizardStepProps<IDataSource> {}
+export interface DataSourceSummaryWizardProps extends AdaptableWizardStepProps<DataSource> {}
 
 export class DataSourceSummaryWizard extends React.Component<DataSourceSummaryWizardProps, {}>
   implements AdaptableWizardStep {

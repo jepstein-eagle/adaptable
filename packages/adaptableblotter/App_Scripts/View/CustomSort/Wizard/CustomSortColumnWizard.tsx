@@ -5,13 +5,13 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { SelectionMode } from '../../../Utilities/Enums';
+import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { ICustomSort } from '../../../Utilities/Interface/BlotterObjects/ICustomSort';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortState';
 
-export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<ICustomSort> {
+export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<CustomSort> {
   SortedColumns: IColumn[];
 }
 

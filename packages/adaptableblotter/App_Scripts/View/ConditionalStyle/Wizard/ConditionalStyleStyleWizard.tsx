@@ -5,11 +5,11 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StyleComponent } from '../../Components/StyleComponent';
 import { UIHelper } from '../../UIHelper';
-import { IStyle } from '../../../Utilities/Interface/IStyle';
-import { IConditionalStyle } from '../../../Utilities/Interface/BlotterObjects/IConditionalStyle';
+import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
+import { ConditionalStyle } from '../../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 
 export interface ConditionalStyleStyleWizardProps
-  extends AdaptableWizardStepProps<IConditionalStyle> {
+  extends AdaptableWizardStepProps<ConditionalStyle> {
   ColorPalette: string[];
   StyleClassNames: string[];
 }

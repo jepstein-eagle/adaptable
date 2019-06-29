@@ -1,19 +1,24 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { IReport } from '../Interface/BlotterObjects/IReport';
 import { ExpressionHelper } from './ExpressionHelper';
-import { Expression } from '../../Utilities/Expression';
+import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { ISelectedCellInfo } from '../Interface/SelectedCell/ISelectedCellInfo';
 import { ISelectedCell } from '../Interface/SelectedCell/ISelectedCell';
 import { IColumn } from '../Interface/IColumn';
-import { ReportColumnScope, MessageType, ReportRowScope } from '../Enums';
+import {
+  ReportColumnScope,
+  MessageType,
+  ReportRowScope,
+} from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { createUuid } from '../Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
+import ColumnHelper from './ColumnHelper';
+import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
 export const SELECTED_CELLS_REPORT = 'Selected Cells';
 
-export function IsSystemReport(Report: IReport): boolean {
+export function IsSystemReport(Report: Report): boolean {
   return (
     Report == null ||
     Report.Name == ALL_DATA_REPORT ||
@@ -22,8 +27,8 @@ export function IsSystemReport(Report: IReport): boolean {
   );
 }
 
-export function GetReportColumnsDescription(Report: IReport, cols: IColumn[]): string {
-  switch (Report.ReportColumnScope) {
+export function GetReportColumnsDescription(report: Report, cols: IColumn[]): string {
+  switch (report.ReportColumnScope) {
     case ReportColumnScope.AllColumns:
       return '[All Columns]';
     case ReportColumnScope.VisibleColumns:
@@ -31,11 +36,11 @@ export function GetReportColumnsDescription(Report: IReport, cols: IColumn[]): s
     case ReportColumnScope.SelectedColumns:
       return '[Selected Columns]';
     case ReportColumnScope.BespokeColumns:
-      return Report.ColumnIds.map(c => cols.find(col => col.ColumnId == c).FriendlyName).join(', ');
+      return ColumnHelper.getFriendlyNamesFromColumnIds(report.ColumnIds, cols).join(', ');
   }
 }
 
-export function GetReportExpressionDescription(Report: IReport, cols: IColumn[]): string {
+export function GetReportExpressionDescription(Report: Report, cols: IColumn[]): string {
   if (IsSystemReport(Report)) {
     if (Report.Name == ALL_DATA_REPORT) {
       return '[All Blotter Data]';
@@ -60,7 +65,7 @@ export function GetReportExpressionDescription(Report: IReport, cols: IColumn[])
 
 export function ConvertReportToArray(
   blotter: IAdaptableBlotter,
-  Report: IReport
+  Report: Report
 ): IStrategyActionReturn<any[]> {
   let ReportColumns: IColumn[] = [];
   let gridColumns: IColumn[] = blotter.api.gridApi.getColumns();
@@ -189,8 +194,8 @@ function getRowValues(row: any, ReportColumns: IColumn[], blotter: IAdaptableBlo
   return newRow;
 }
 
-export function CreateSystemReports(): Array<IReport> {
-  let _systemReports: IReport[] = [];
+export function CreateSystemReports(): Array<Report> {
+  let _systemReports: Report[] = [];
 
   _systemReports.push({
     Uuid: createUuid(),

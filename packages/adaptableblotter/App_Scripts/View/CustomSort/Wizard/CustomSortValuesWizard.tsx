@@ -4,14 +4,14 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { DistinctCriteriaPairValue } from '../../../Utilities/Enums';
+import { DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
-import { ICustomSort } from '../../../Utilities/Interface/BlotterObjects/ICustomSort';
+import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortState';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
-export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<ICustomSort> {}
+export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<CustomSort> {}
 export interface CustomSortValuesWizardState {
   ColumnValues: any[];
   SelectedValues: Array<string>;

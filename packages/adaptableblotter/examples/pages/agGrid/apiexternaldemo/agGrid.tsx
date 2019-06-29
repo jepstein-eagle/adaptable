@@ -5,7 +5,7 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
 import { GridOptions } from 'ag-grid-community';
-import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { IAdaptableBlotter, AdaptableBlotterOptions } from '../../../../App_Scripts/types';
 
 import { Button } from 'react-bootstrap';
 import { ExamplesHelper } from '../../ExamplesHelper';
@@ -30,7 +30,7 @@ export function clearQuickSearchViaAPI() {
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
     'api external demo'
   );

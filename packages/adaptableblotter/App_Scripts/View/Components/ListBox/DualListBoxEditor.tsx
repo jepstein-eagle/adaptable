@@ -13,7 +13,7 @@ import {
   ControlLabel,
   Checkbox,
 } from 'react-bootstrap';
-import { SortOrder } from '../../../Utilities/Enums';
+import { SortOrder } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ButtonDirection } from '../Buttons/ButtonDirection';

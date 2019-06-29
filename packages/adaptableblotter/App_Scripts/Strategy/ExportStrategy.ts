@@ -4,15 +4,14 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { IExportStrategy } from './Interface/IExportStrategy';
-import { ExportDestination } from '../Utilities/Enums';
+import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ReportHelper } from '../Utilities/Helpers/ReportHelper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash';
-import { ExportState } from '../Redux/ActionsReducers/Interface/IState';
+import { ExportState, Report } from '../PredefinedConfig/RunTimeState/ExportState';
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
-import { IReport } from '../Utilities/Interface/BlotterObjects/IReport';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
@@ -221,7 +220,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   public Export(
-    report: IReport,
+    report: Report,
     exportDestination: ExportDestination,
     folder?: string,
     page?: string
@@ -246,7 +245,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         break;
       case ExportDestination.iPushPull:
         iPushPullHelper.LoadPage(folder, page).then(() => {
-          this.blotter.api.internalApi.ReportStartLive(report, page, ExportDestination.iPushPull);
+          this.blotter.api.internalApi.startLiveReport(report, page, ExportDestination.iPushPull);
           setTimeout(() => {
             this.throttledRecomputeAndSendLiveExcelEvent();
           }, 500);
@@ -261,7 +260,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
   }
 
-  private convertReportToCsv(report: IReport): void {
+  private convertReportToCsv(report: Report): void {
     let csvContent: string = this.createCSVContent(report);
     if (csvContent) {
       let csvFileName: string = report.Name + '.csv';
@@ -269,14 +268,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     }
   }
 
-  private copyToClipboard(report: IReport) {
+  private copyToClipboard(report: Report) {
     let csvContent: string = this.createTabularContent(report);
     if (csvContent) {
       Helper.copyToClipboard(csvContent);
     }
   }
 
-  private createCSVContent(report: IReport): string {
+  private createCSVContent(report: Report): string {
     let ReportAsArray: any[] = this.ConvertReportToArray(report);
     if (ReportAsArray) {
       return Helper.convertArrayToCsv(ReportAsArray, ',');
@@ -284,7 +283,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     return null;
   }
 
-  private createTabularContent(report: IReport): string {
+  private createTabularContent(report: Report): string {
     let ReportAsArray: any[] = this.ConvertReportToArray(report);
     if (ReportAsArray) {
       return Helper.convertArrayToCsv(ReportAsArray, '\t');
@@ -293,7 +292,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   // Converts a Report into an array of array - first array is the column names and subsequent arrays are the values
-  private ConvertReportToArray(report: IReport): any[] {
+  private ConvertReportToArray(report: Report): any[] {
     let actionReturnObj = ReportHelper.ConvertReportToArray(this.blotter, report);
     if (actionReturnObj.Alert) {
       // assume that the MessageType is error - if not then refactor
@@ -310,7 +309,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     this.blotter.ScheduleService.ClearAllExportJobs();
 
     this.blotter.adaptableBlotterStore.TheStore.getState().Export.Reports.forEach(
-      (report: IReport) => {
+      (report: Report) => {
         if (report.AutoExport) {
           this.blotter.ScheduleService.AddReportSchedule(report);
         }

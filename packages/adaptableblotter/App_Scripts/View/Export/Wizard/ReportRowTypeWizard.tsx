@@ -1,4 +1,4 @@
-import { IReport } from '../../../Utilities/Interface/BlotterObjects/IReport';
+import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
 import * as React from 'react';
 import { Col, Radio, ControlLabel } from 'react-bootstrap';
 import Panel from '../../../components/Panel';
@@ -6,14 +6,18 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-//import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
+
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ReportRowScope, MessageType, ReportColumnScope } from '../../../Utilities/Enums';
+import {
+  ReportRowScope,
+  MessageType,
+  ReportColumnScope,
+} from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 
-export interface ReportRowTypeWizardProps extends AdaptableWizardStepProps<IReport> {}
+export interface ReportRowTypeWizardProps extends AdaptableWizardStepProps<Report> {}
 export interface ReportRowsWizardState {
   ReportRowScope: ReportRowScope;
 }
@@ -139,7 +143,10 @@ export class ReportRowTypeWizard
   }
   public Next(): void {
     this.props.Data.ReportRowScope = this.state.ReportRowScope;
-    if (this.state.ReportRowScope != ReportRowScope.ExpressionRows) {
+    if (
+      this.props.Data.Expression == null ||
+      this.state.ReportRowScope != ReportRowScope.ExpressionRows
+    ) {
       this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
     }
   }

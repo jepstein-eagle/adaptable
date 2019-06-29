@@ -1,5 +1,5 @@
-import { SmartEditState } from './Interface/IState';
-import { MathOperation } from '../../Utilities/Enums';
+import { SmartEditState } from '../../PredefinedConfig/RunTimeState/SmartEditState';
+import { MathOperation } from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
 import {
   SMART_EDIT_DEFAULT_OPERATION,

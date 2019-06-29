@@ -4,19 +4,19 @@ import { ExpressionEntityRowProps } from '../Components/SharedProps/ConfigEntity
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { IColItem } from '../UIInterfaces';
-import { IColumnFilter } from '../../Utilities/Interface/BlotterObjects/IColumnFilter';
+import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { AccessLevel } from '../../Utilities/Enums';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { DANGER_BSSTYLE, DEFAULT_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
 export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow>
   extends ExpressionEntityRowProps<AdvancedSearchEntityRow> {
-  onClear: (columnFilter: IColumnFilter) => void;
-  onSaveColumnFilterasUserFilter: (columnFilter: IColumnFilter) => void;
-  ColumnFilter: IColumnFilter;
+  onClear: (columnFilter: ColumnFilter) => void;
+  onSaveColumnFilterasUserFilter: (columnFilter: ColumnFilter) => void;
+  ColumnFilter: ColumnFilter;
   AccessLevel: AccessLevel;
 }
 

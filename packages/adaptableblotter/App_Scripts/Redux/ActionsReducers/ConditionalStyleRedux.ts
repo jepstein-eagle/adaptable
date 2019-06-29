@@ -1,36 +1,38 @@
 import * as Redux from 'redux';
-import { ConditionalStyleState } from './Interface/IState';
-import { IConditionalStyle } from '../../Utilities/Interface/BlotterObjects/IConditionalStyle';
+import {
+  ConditionalStyleState,
+  ConditionalStyle,
+} from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const CONDITIONAL_STYLE_ADD = 'CONDITIONAL_STYLE_ADD';
 export const CONDITIONAL_STYLE_EDIT = 'CONDITIONAL_STYLE_EDIT';
 export const CONDITIONAL_STYLE_DELETE = 'CONDITIONAL_STYLE_DELETE';
 
 export interface ConditionalStyleAction extends Redux.Action {
-  conditionalStyle: IConditionalStyle;
+  conditionalStyle: ConditionalStyle;
 }
 export interface ConditionalStyleAddAction extends ConditionalStyleAction {}
 export interface ConditionalStyleEditAction extends ConditionalStyleAction {}
 export interface ConditionalStyleDeleteAction extends ConditionalStyleAction {}
 
 export const ConditionalStyleAdd = (
-  conditionalStyle: IConditionalStyle
+  conditionalStyle: ConditionalStyle
 ): ConditionalStyleAction => ({
   type: CONDITIONAL_STYLE_ADD,
   conditionalStyle,
 });
 
 export const ConditionalStyleEdit = (
-  conditionalStyle: IConditionalStyle
+  conditionalStyle: ConditionalStyle
 ): ConditionalStyleAction => ({
   type: CONDITIONAL_STYLE_EDIT,
   conditionalStyle,
 });
 
 export const ConditionalStyleDelete = (
-  conditionalStyle: IConditionalStyle
+  conditionalStyle: ConditionalStyle
 ): ConditionalStyleAction => ({
   type: CONDITIONAL_STYLE_DELETE,
   conditionalStyle,
@@ -44,11 +46,11 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (
   state: ConditionalStyleState = initialConditionalStyleState,
   action: Redux.Action
 ): ConditionalStyleState => {
-  let conditions: IConditionalStyle[];
+  let conditions: ConditionalStyle[];
 
   switch (action.type) {
     case CONDITIONAL_STYLE_ADD: {
-      const actionConditionalStyle: IConditionalStyle = (action as ConditionalStyleAction)
+      const actionConditionalStyle: ConditionalStyle = (action as ConditionalStyleAction)
         .conditionalStyle;
 
       if (!actionConditionalStyle.Uuid) {
@@ -60,7 +62,7 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (
     }
 
     case CONDITIONAL_STYLE_EDIT:
-      const actionConditionalStyle: IConditionalStyle = (action as ConditionalStyleAction)
+      const actionConditionalStyle: ConditionalStyle = (action as ConditionalStyleAction)
         .conditionalStyle;
       return {
         ...state,
@@ -70,7 +72,7 @@ export const ConditionalStyleReducer: Redux.Reducer<ConditionalStyleState> = (
       };
 
     case CONDITIONAL_STYLE_DELETE: {
-      const actionConditionalStyle: IConditionalStyle = (action as ConditionalStyleAction)
+      const actionConditionalStyle: ConditionalStyle = (action as ConditionalStyleAction)
         .conditionalStyle;
       return {
         ...state,

@@ -1,13 +1,13 @@
 import { ExpressionHelper } from './ExpressionHelper';
-import { IColumnFilter } from '../Interface/BlotterObjects/IColumnFilter';
 import { IColumn } from '../Interface/IColumn';
 import { IKeyValuePair } from '../Interface/IKeyValuePair';
 import { ColumnHelper } from './ColumnHelper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
+import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 
 export function convertColumnFiltersToKVPArray(
-  columnFilters: IColumnFilter[],
+  columnFilters: ColumnFilter[],
   columns: IColumn[]
 ): IKeyValuePair[] {
   let infoBody: IKeyValuePair[] = [];
@@ -25,7 +25,7 @@ export function convertColumnFiltersToKVPArray(
 }
 
 export function getColumnFiltersDescription(
-  columnFilters: IColumnFilter[],
+  columnFilters: ColumnFilter[],
   columns: IColumn[],
   blotter: IAdaptableBlotter
 ): string {

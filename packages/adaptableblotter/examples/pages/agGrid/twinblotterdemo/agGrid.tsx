@@ -5,14 +5,11 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
 import { GridOptions } from 'ag-grid-community';
-import { IAdaptableBlotterOptions, IAdaptableBlotter } from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions, IAdaptableBlotter } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { IStateChangedEventArgs } from '../../../../App_Scripts/Utilities/Interface/StateChanged/IStateChangedEventArgs';
-import { StateChangedTrigger } from '../../../../App_Scripts/Utilities/Enums';
-import {
-  QuickSearchState,
-  AdvancedSearchState,
-} from '../../../../App_Scripts/Redux/ActionsReducers/Interface/IState';
+import { StateChangedTrigger } from '../../../../App_Scripts/PredefinedConfig/Common/Enums';
+import { QuickSearchState } from '../../../../App_Scripts/PredefinedConfig/RunTimeState/QuickSearchState';
+import { AdvancedSearchState } from '../../../../App_Scripts/PredefinedConfig/RunTimeState/AdvancedSearchState';
 
 var adaptableblotter1: IAdaptableBlotter;
 var adaptableblotter2: IAdaptableBlotter;
@@ -22,7 +19,7 @@ function InitAdaptableBlotter() {
 
   // first blotter
   const gridOptions1: GridOptions = examplesHelper.getGridOptionsTrade(500);
-  const adaptableBlotterOptions1: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableBlotterOptions1: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions1,
     'grid1'
   );
@@ -35,7 +32,7 @@ function InitAdaptableBlotter() {
 
   // second blotter
   const gridOptions2: GridOptions = examplesHelper.getGridOptionsTrade(500);
-  const adaptableBlotterOptions2: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableBlotterOptions2: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions2, //
     'grid2'
   );

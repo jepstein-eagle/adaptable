@@ -1,26 +1,25 @@
 import * as PercentBarRedux from '../Redux/ActionsReducers/PercentBarRedux';
 import { ApiBase } from './ApiBase';
-import { IPercentBar } from '../Utilities/Interface/BlotterObjects/IPercentBar';
 import { IPercentBarApi } from './Interface/IPercentBarApi';
-import { PercentBarState } from '../Redux/ActionsReducers/Interface/IState';
+import { PercentBarState, PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 
 export class PercentBarApi extends ApiBase implements IPercentBarApi {
   public getPercentBarState(): PercentBarState {
     return this.getBlotterState().PercentBar;
   }
 
-  public getAllPercentBar(): IPercentBar[] {
+  public getAllPercentBar(): PercentBar[] {
     return this.getBlotterState().PercentBar.PercentBars;
   }
 
-  public getPercentBarByColumn(columnId: string): IPercentBar {
-    let percentBar: IPercentBar = this.getBlotterState().PercentBar.PercentBars.find(
+  public getPercentBarByColumn(columnId: string): PercentBar {
+    let percentBar: PercentBar = this.getBlotterState().PercentBar.PercentBars.find(
       pcb => pcb.ColumnId == columnId
     );
     return percentBar;
   }
 
-  public addPercentBar(percentBar: IPercentBar): void {
+  public addPercentBar(percentBar: PercentBar): void {
     this.dispatchAction(PercentBarRedux.PercentBarAdd(percentBar));
   }
 
@@ -32,7 +31,7 @@ export class PercentBarApi extends ApiBase implements IPercentBarApi {
     negativeColor: string,
     showValue: boolean
   ): void {
-    let percentBar: IPercentBar = {
+    let percentBar: PercentBar = {
       ColumnId: columnId,
       MinValue: minValue,
       MaxValue: maxValue,
@@ -43,7 +42,7 @@ export class PercentBarApi extends ApiBase implements IPercentBarApi {
     this.addPercentBar(percentBar);
   }
 
-  public editPercentBar(percentBar: IPercentBar): void {
+  public editPercentBar(percentBar: PercentBar): void {
     let index: number = this.getAllPercentBar().findIndex(
       pcb => pcb.ColumnId == percentBar.ColumnId
     );
@@ -81,7 +80,7 @@ export class PercentBarApi extends ApiBase implements IPercentBarApi {
   }
 
   public deletePercentBar(columnId: string): void {
-    let percentBar: IPercentBar = this.getAllPercentBar().find(pcb => pcb.ColumnId == columnId);
+    let percentBar: PercentBar = this.getAllPercentBar().find(pcb => pcb.ColumnId == columnId);
     this.dispatchAction(PercentBarRedux.PercentBarDelete(percentBar));
   }
 }

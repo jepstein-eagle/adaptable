@@ -17,39 +17,31 @@ const packageJSON = require(sourcePackagePath);
 const abPackageJSON = require(abBlotterPackagePath);
 const topLevelPackageJSON = require(topLevelPackageJSONPath);
 
-function buildGlobalPackageJSON() {
-  console.log('Preparing package for angular-aggrid wrapper');
-  return new Promise((res, reject) => {
-    const toDelete = ['devDependencies', 'scripts', 'private'];
-    toDelete.forEach(key => delete packageJSON[key]);
+console.log('Preparing package for angular-aggrid wrapper');
 
-    packageJSON.dependencies = packageJSON.dependencies || {};
+const toDelete = ['devDependencies', 'scripts', 'private'];
+toDelete.forEach(key => delete packageJSON[key]);
 
-    Object.assign(packageJSON.dependencies, abPackageJSON.dependencies || {});
-    packageJSON.version = topLevelPackageJSON.version;
-    packageJSON.main = 'esm5/public-api.js';
-    packageJSON.module = 'esm5/public-api.js';
+packageJSON.dependencies = packageJSON.dependencies || {};
 
-    const content = JSON.stringify(packageJSON, null, 2);
-    const path = resolve(
-      process.cwd(),
-      './dist/adaptableblotter-angular-aggrid/package.json'
+Object.assign(packageJSON.dependencies, abPackageJSON.dependencies || {});
+packageJSON.version = topLevelPackageJSON.version;
+packageJSON.main = 'esm5/public-api.js';
+packageJSON.module = 'esm5/public-api.js';
+
+const content = JSON.stringify(packageJSON, null, 2);
+const path = resolve(
+  process.cwd(),
+  './dist/adaptableblotter-angular-aggrid/package.json'
+);
+fs.writeFile(path, content, 'utf8', err => {
+  if (err) {
+    console.log(chalk.red(err));
+    throw err;
+  } else {
+    console.log(
+      'DONE building package.json with version ',
+      packageJSON.version
     );
-    fs.writeFile(path, content, 'utf8', err => {
-      if (err) {
-        console.log(chalk.red(err));
-        reject(err);
-      } else {
-        console.log(
-          'DONE building package.json with version ',
-          packageJSON.version
-        );
-        res(true);
-      }
-    });
-  });
-}
-
-buildGlobalPackageJSON();
-
-module.exports = buildGlobalPackageJSON;
+  }
+});

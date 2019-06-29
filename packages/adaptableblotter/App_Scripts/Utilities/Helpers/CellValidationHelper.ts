@@ -1,25 +1,28 @@
 import { ExpressionHelper } from './ExpressionHelper';
-import { ICellValidationRule } from '../Interface/BlotterObjects/ICellValidationRule';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IColumn } from '../Interface/IColumn';
-import { LeafExpressionOperator, DataType, MessageType } from '../Enums';
+import { LeafExpressionOperator, DataType, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { IUIConfirmation } from '../Interface/IMessage';
 import * as Redux from 'redux';
+import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
 export function createCellValidationDescription(
-  cellValidationRule: ICellValidationRule,
+  cellValidationRule: CellValidationRule,
   columns: IColumn[]
 ): string {
   if (cellValidationRule.Range.Operator == LeafExpressionOperator.PrimaryKeyDuplicate) {
     return 'Primary Key column cannot contain duplicate values';
   }
+
+  let operator: LeafExpressionOperator = cellValidationRule.Range
+    .Operator as LeafExpressionOperator;
   let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
-    cellValidationRule.Range.Operator,
+    operator,
     ColumnHelper.getColumnDataTypeFromColumnId(cellValidationRule.ColumnId, columns)
   );
 
-  if (!ExpressionHelper.OperatorRequiresValue(cellValidationRule.Range.Operator)) {
+  if (!ExpressionHelper.OperatorRequiresValue(operator)) {
     return valueDescription;
   }
   let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(

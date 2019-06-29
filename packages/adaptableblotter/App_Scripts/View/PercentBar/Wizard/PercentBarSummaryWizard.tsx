@@ -6,15 +6,15 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IStyle } from '../../../Utilities/Interface/IStyle';
-import { IPercentBar } from '../../../Utilities/Interface/BlotterObjects/IPercentBar';
+import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
+import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
-export interface PercentBarSummaryWizardProps extends AdaptableWizardStepProps<IPercentBar> {}
+export interface PercentBarSummaryWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 
 export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWizardProps, {}>
   implements AdaptableWizardStep {

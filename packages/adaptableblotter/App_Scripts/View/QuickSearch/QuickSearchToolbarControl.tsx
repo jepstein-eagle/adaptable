@@ -13,7 +13,7 @@ import { AdaptableBlotterFormControlTextClear } from '../Components/Forms/Adapta
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { AccessLevel, DashboardSize } from '../../Utilities/Enums';
+import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 
 interface QuickSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<QuickSearchToolbarControlComponent> {

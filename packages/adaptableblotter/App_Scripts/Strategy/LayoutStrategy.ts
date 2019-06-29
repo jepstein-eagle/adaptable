@@ -3,8 +3,8 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { LayoutState } from '../Redux/ActionsReducers/Interface/IState';
-import { StateChangedTrigger } from '../Utilities/Enums';
+import { LayoutState } from '../PredefinedConfig/RunTimeState/LayoutState';
+import { StateChangedTrigger } from '../PredefinedConfig/Common/Enums';
 
 export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStrategy {
   public CurrentLayout: string;

@@ -5,7 +5,7 @@ import { IColItem } from '../../UIInterfaces';
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { AdaptableObjectCollection } from '../AdaptableObjectCollection';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { IAdaptableBlotterOptions } from '../../../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
+import { AdaptableBlotterOptions } from '../../../BlotterOptions/AdaptableBlotterOptions';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ColumnFilterHelper } from '../../../Utilities/Helpers/ColumnFilterHelper';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
@@ -17,9 +17,9 @@ import { PanelWithButton } from '../Panels/PanelWithButton';
 import { ButtonMaximise } from '../Buttons/ButtonMaximise';
 import { ButtonMinimise } from '../Buttons/ButtonMinimise';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import PACKAGE from '../../../../../../package.json';
+// this will be correctly configured at build time to contain the correct version
 
-const version = PACKAGE.version;
+import version from '../../../../version';
 
 interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlotterAbout> {
   AdaptableBlotter: IAdaptableBlotter;
@@ -482,6 +482,7 @@ export class AdaptableBlotterAbout extends React.Component<
       returnRows.push(
         this.createColItem(colItems, 'Vendor Grid', this.props.AdaptableBlotter.vendorGridName)
       );
+
       returnRows.push(this.createColItem(colItems, 'Adaptable Blotter Version', version));
       returnRows.push(
         this.createColItem(
@@ -549,7 +550,7 @@ export class AdaptableBlotterAbout extends React.Component<
   private CreateBaseOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
+      let options: AdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
       // base options
       returnRows.push(
@@ -584,7 +585,7 @@ export class AdaptableBlotterAbout extends React.Component<
   private CreateContainerOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
+      let options: AdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
       returnRows.push(
         this.createColItem(
           colItems,
@@ -628,7 +629,7 @@ export class AdaptableBlotterAbout extends React.Component<
   private CreateAuditOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
+      let options: AdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
       returnRows.push(
         this.createColItem(
@@ -685,7 +686,7 @@ export class AdaptableBlotterAbout extends React.Component<
   private CreateConfigServerOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
+      let options: AdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
       returnRows.push(
         this.createColItem(
@@ -710,7 +711,7 @@ export class AdaptableBlotterAbout extends React.Component<
   private CreateQueryOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
+      let options: AdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
       returnRows.push(
         this.createColItem(
@@ -751,7 +752,7 @@ export class AdaptableBlotterAbout extends React.Component<
   private CreateLayoutOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
+      let options: AdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
       returnRows.push(
         this.createColItem(
@@ -776,7 +777,7 @@ export class AdaptableBlotterAbout extends React.Component<
   private CreateFilterOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
+      let options: AdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
       returnRows.push(
         this.createColItem(
@@ -809,7 +810,7 @@ export class AdaptableBlotterAbout extends React.Component<
   private CreateGeneralOptionsInfo(colItems: IColItem[]): IColItem[][] {
     let returnRows: IColItem[][] = [];
     if (this.props.showAbout) {
-      let options: IAdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
+      let options: AdaptableBlotterOptions = this.props.AdaptableBlotter.blotterOptions;
 
       returnRows.push(
         this.createColItem(

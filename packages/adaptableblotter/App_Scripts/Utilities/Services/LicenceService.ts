@@ -1,6 +1,6 @@
 import { ILicenceService } from './Interface/ILicenceService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { LicenceScopeType, LicenceUserType } from '../Enums';
+import { LicenceScopeType, LicenceUserType } from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ILicenceInfo } from '../Interface/ILicenceInfo';

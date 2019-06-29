@@ -14,17 +14,17 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { SortOrder, AccessLevel, DashboardSize } from '../../Utilities/Enums';
+import { SortOrder, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import { InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IAdvancedSearch } from '../../Utilities/Interface/BlotterObjects/IAdvancedSearch';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 
 interface AdvancedSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
   CurrentAdvancedSearchName: string;
-  AdvancedSearches: IAdvancedSearch[];
+  AdvancedSearches: AdvancedSearch[];
   onSelectAdvancedSearch: (
     advancedSearchName: string
   ) => AdvancedSearchRedux.AdvancedSearchSelectAction;
@@ -40,7 +40,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
     const selectSearchString: string = 'Select a Search';
     let cssClassName: string = this.props.cssClassName + '__advancedsearch';
 
-    let savedSearch: IAdvancedSearch = this.props.AdvancedSearches.find(
+    let savedSearch: AdvancedSearch = this.props.AdvancedSearches.find(
       s => s.Name == this.props.CurrentAdvancedSearchName
     );
 
@@ -48,7 +48,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
       ? selectSearchString
       : this.props.CurrentAdvancedSearchName;
 
-    let sortedAdvancedSearches: IAdvancedSearch[] = ArrayExtensions.sortArrayWithProperty(
+    let sortedAdvancedSearches: AdvancedSearch[] = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Ascending,
       this.props.AdvancedSearches,
       'Name'

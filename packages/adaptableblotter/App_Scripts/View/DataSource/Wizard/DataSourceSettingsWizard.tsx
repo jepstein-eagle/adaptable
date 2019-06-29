@@ -6,10 +6,10 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IDataSource } from '../../../Utilities/Interface/BlotterObjects/IDataSource';
+import { DataSource } from '../../../PredefinedConfig/RunTimeState/DataSourceState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
-export interface DataSourceSettingsWizardProps extends AdaptableWizardStepProps<IDataSource> {
+export interface DataSourceSettingsWizardProps extends AdaptableWizardStepProps<DataSource> {
   DataSourceNames: string[];
 }
 export interface DataSourceSettingsWizardState {

@@ -11,17 +11,17 @@ import { Button } from 'react-bootstrap';
 import { CalendarsEntryRow } from './CalendarsEntryRow';
 import { CalendarEntryItem } from './CalendarEntryItem';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { ICalendar, ICalendarEntry } from '../../Utilities/Interface/BlotterObjects/ICalendar';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
+import { Calendar, CalendarEntry } from '../../PredefinedConfig/RunTimeState/CalendarState';
 
 interface CalendarsPopupProps extends StrategyViewPopupProps<CalendarsPopupComponent> {
   CurrentCalendar: string;
-  AvailableCalendars: ICalendar[];
-  onSelectCalendar: (selectedCalendar: ICalendar) => CalendarsRedux.CalendarSelectAction;
+  AvailableCalendars: Calendar[];
+  onSelectCalendar: (selectedCalendar: Calendar) => CalendarsRedux.CalendarSelectAction;
 }
 
 interface CalendarsPopupInternalState {
-  DisplayedCalendar: ICalendar;
+  DisplayedCalendar: Calendar;
   DisplayedYear: Number;
 }
 
@@ -50,7 +50,7 @@ class CalendarsPopupComponent extends React.Component<
       { Content: 'Details', Size: 4 },
     ];
 
-    let allCalendars = this.props.AvailableCalendars.map((calendar: ICalendar) => {
+    let allCalendars = this.props.AvailableCalendars.map((calendar: Calendar) => {
       return (
         <CalendarsEntryRow
           cssClassName={cssClassName}
@@ -71,7 +71,7 @@ class CalendarsPopupComponent extends React.Component<
     let displayedCalendarModalBody =
       this.state.DisplayedCalendar == null
         ? null
-        : this.state.DisplayedCalendar.CalendarEntries.map((calendarEntry: ICalendarEntry) => {
+        : this.state.DisplayedCalendar.CalendarEntries.map((calendarEntry: CalendarEntry) => {
             return (
               <CalendarEntryItem
                 cssClassName={cssClassName}
@@ -132,7 +132,7 @@ class CalendarsPopupComponent extends React.Component<
     this.setState({ DisplayedCalendar: null });
   }
 
-  private onShowInformation(calendar: ICalendar) {
+  private onShowInformation(calendar: Calendar) {
     this.setState({ DisplayedCalendar: calendar });
   }
 
@@ -154,7 +154,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onSelectCalendar: (calendar: ICalendar) =>
+    onSelectCalendar: (calendar: Calendar) =>
       dispatch(CalendarsRedux.CalendarSelect(calendar.Name)),
   };
 }

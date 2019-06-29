@@ -1,12 +1,12 @@
-import { IAlertDefinition } from '../Interface/BlotterObjects/IAlertDefinition';
 import { ExpressionHelper } from './ExpressionHelper';
 import { ColumnHelper } from './ColumnHelper';
-import { DataType, LeafExpressionOperator } from '../Enums';
+import { DataType, LeafExpressionOperator } from '../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../Interface/IColumn';
 import { StringExtensions } from '../Extensions/StringExtensions';
+import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
 
 export function createAlertDescription(
-  alertDefinition: IAlertDefinition,
+  alertDefinition: AlertDefinition,
   columns: IColumn[]
 ): string {
   let dataType: DataType = ColumnHelper.getColumnDataTypeFromColumnId(
@@ -14,11 +14,14 @@ export function createAlertDescription(
     columns
   );
   let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
-    alertDefinition.Range.Operator,
+    alertDefinition.Range.Operator as LeafExpressionOperator,
     dataType
   );
 
-  if (!ExpressionHelper.OperatorRequiresValue(alertDefinition.Range.Operator)) {
+  if (
+    !ExpressionHelper.OperatorRequiresValue(alertDefinition.Range
+      .Operator as LeafExpressionOperator)
+  ) {
     return valueDescription;
   }
 

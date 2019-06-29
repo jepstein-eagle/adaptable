@@ -1,10 +1,9 @@
 import { EventDispatcher } from '../EventDispatcher';
 import { IDataService, ChangeDirection } from './Interface/IDataService';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Interface/DataChangedInfo';
 import { IEvent } from '../Interface/IEvent';
-import { ConditionalStyleState, IState } from '../../Redux/ActionsReducers/Interface/IState';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
+import { ConditionalStyleState } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 
 // Used to be the Audit Service - now much reduced
 // Doesnt store any data (other than for flashing cell) - simply responsible for publishing DataChanged Events
@@ -12,16 +11,13 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 export class DataService implements IDataService {
   private _columnValueList: Map<string, Map<any, number>>;
 
-  // to move to another...
-  private ConditionalStyleState: ConditionalStyleState;
-
   constructor(private blotter: IAdaptableBlotter) {
     this.blotter = blotter;
     // create the _columnValueList - will be empty - used currrently only for flashing cell
     this._columnValueList = new Map();
   }
 
-  public CreateDataChangedEvent(dataChangedInfo: IDataChangedInfo): void {
+  public CreateDataChangedEvent(dataChangedInfo: DataChangedInfo): void {
     if (dataChangedInfo.NewValue != dataChangedInfo.OldValue) {
       this._onDataSourceChanged.Dispatch(this, dataChangedInfo);
     }
@@ -29,10 +25,10 @@ export class DataService implements IDataService {
 
   private _onDataSourceChanged: EventDispatcher<
     IDataService,
-    IDataChangedInfo
-  > = new EventDispatcher<IDataService, IDataChangedInfo>();
+    DataChangedInfo
+  > = new EventDispatcher<IDataService, DataChangedInfo>();
 
-  OnDataSourceChanged(): IEvent<IDataService, IDataChangedInfo> {
+  OnDataSourceChanged(): IEvent<IDataService, DataChangedInfo> {
     return this._onDataSourceChanged;
   }
 

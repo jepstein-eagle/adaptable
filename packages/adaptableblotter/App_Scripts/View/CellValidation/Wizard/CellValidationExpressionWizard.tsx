@@ -3,12 +3,12 @@ import {
   ExpressionWizardProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
-import { ICellValidationRule } from '../../../Utilities/Interface/BlotterObjects/ICellValidationRule';
+import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
 import { UIHelper } from '../../UIHelper';
 
 export class CellValidationExpressionWizard extends ExpressionBuilderPage
   implements AdaptableWizardStep {
-  constructor(private props2: ExpressionWizardProps<ICellValidationRule>) {
+  constructor(private props2: ExpressionWizardProps<CellValidationRule>) {
     super(props2);
     this.Data = props2.Data;
     this.state = UIHelper.getExpressionBuilderState(props2.Data.Expression);

@@ -14,15 +14,15 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType, SelectionMode } from '../../../Utilities/Enums';
+import { MessageType, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IPercentBar } from '../../../Utilities/Interface/BlotterObjects/IPercentBar';
+import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
-export interface PercentBarValuesWizardProps extends AdaptableWizardStepProps<IPercentBar> {}
+export interface PercentBarValuesWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 
 export interface PercentBarValuesWizardState {
   MinValue: number;

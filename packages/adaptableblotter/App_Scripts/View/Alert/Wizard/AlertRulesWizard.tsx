@@ -10,16 +10,16 @@ import {
   LeafExpressionOperator,
   MessageType,
   RangeOperandType,
-} from '../../../Utilities/Enums';
+} from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IAlertDefinition } from '../../../Utilities/Interface/BlotterObjects/IAlertDefinition';
-import { IRange } from '../../../Utilities/Interface/Expression/IRange';
+import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
 
-export interface AlertRulesWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {}
+export interface AlertRulesWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 export interface AlertSettingsWizardState {
   Operator: LeafExpressionOperator;
   Operand1: string;
@@ -32,7 +32,7 @@ export class AlertRulesWizard
   constructor(props: AlertRulesWizardProps) {
     super(props);
     this.state = {
-      Operator: this.props.Data.Range.Operator,
+      Operator: this.props.Data.Range.Operator as LeafExpressionOperator,
       Operand1: this.props.Data.Range.Operand1,
       Operand2: this.props.Data.Range.Operand2,
     };
@@ -294,7 +294,7 @@ export class AlertRulesWizard
     return true;
   }
   public Next(): void {
-    let rangeExpression: IRange = {
+    let rangeExpression: QueryRange = {
       Operator: this.state.Operator,
       Operand1: this.state.Operand1,
       Operand2: this.state.Operand2,

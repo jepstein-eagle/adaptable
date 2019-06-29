@@ -11,15 +11,15 @@ import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/Toolbar
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { IAlertDefinition } from '../../Utilities/Interface/BlotterObjects/IAlertDefinition';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { MessageType, AccessLevel, DashboardSize } from '../../Utilities/Enums';
+import { MessageType, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import { AlertsPanel } from './AlertsPanel';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
 
 interface AlertToolbarControlProps
   extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
-  AlertDefinitions: IAlertDefinition[];
+  AlertDefinitions: AlertDefinition[];
   Alerts: IAdaptableAlert[];
 
   onDeleteAlert: (index: number) => SystemRedux.SystemAlertDeleteAction;

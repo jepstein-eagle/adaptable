@@ -1,8 +1,7 @@
 import * as ThemeRedux from '../Redux/ActionsReducers/ThemeRedux';
 import { ApiBase } from './ApiBase';
-import { IUserTheme } from '../Utilities/Interface/BlotterObjects/IUserTheme';
 import { IThemeApi } from './Interface/IThemeApi';
-import { ThemeState } from '../Redux/ActionsReducers/Interface/IState';
+import { ThemeState, UserTheme } from '../PredefinedConfig/RunTimeState/ThemeState';
 
 export class ThemeApi extends ApiBase implements IThemeApi {
   public getThemeState(): ThemeState {
@@ -29,7 +28,7 @@ export class ThemeApi extends ApiBase implements IThemeApi {
     return this.getBlotterState().Theme.SystemThemes;
   }
 
-  public getAllUserTheme(): IUserTheme[] {
+  public getAllUserTheme(): UserTheme[] {
     return this.getBlotterState().Theme.UserThemes;
   }
 }

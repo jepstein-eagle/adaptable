@@ -1,5 +1,5 @@
-import { IStyle } from '../../Utilities/Interface/IStyle';
-import { QuickSearchState } from '../../Redux/ActionsReducers/Interface/IState';
+import { IStyle } from '../../PredefinedConfig/Common/IStyle';
+import { QuickSearchState } from '../../PredefinedConfig/RunTimeState/QuickSearchState';
 export interface IQuickSearchApi {
   /**
    * Retrieves all the Quick Search State

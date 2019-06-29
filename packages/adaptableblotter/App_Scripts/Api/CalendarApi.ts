@@ -1,7 +1,7 @@
 import * as CalendarRedux from '../Redux/ActionsReducers/CalendarRedux';
 import { ApiBase } from './ApiBase';
 import { ICalendarApi } from './Interface/ICalendarApi';
-import { CalendarState } from '../Redux/ActionsReducers/Interface/IState';
+import { CalendarState } from '../PredefinedConfig/RunTimeState/CalendarState';
 
 export class CalendarApi extends ApiBase implements ICalendarApi {
   public getCalendarState(): CalendarState {

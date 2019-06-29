@@ -1,15 +1,15 @@
 import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy';
-import { ConditionalStyleScope } from '../../Utilities/Enums';
+import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotter } from '../AdaptableBlotter';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { StyleHelper } from '../../Utilities/Helpers/StyleHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { IDataChangedInfo } from '../../Utilities/Interface/IDataChangedInfo';
-import { IColumnCategory } from '../../Utilities/Interface/BlotterObjects/IColumnCategory';
-import { IConditionalStyle } from '../../Utilities/Interface/BlotterObjects/IConditionalStyle';
+import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
+import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
@@ -17,10 +17,10 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
     super(blotter);
   }
 
-  protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
+  protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
     //we refresh all columns that need to be refreshed
     //this method needs to be optimised and probably cached as well. Will do when doing perf monitor
-    let conditionalStyles: IConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
+    let conditionalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
     if (ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)) {
       let listOfColumns: Array<string> = [];
       conditionalStyles.forEach(x => {
@@ -29,7 +29,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
           if (x.ConditionalStyleScope == ConditionalStyleScope.Row) {
             listOfColumns.push(...this.blotter.api.gridApi.getColumns().map(c => c.ColumnId));
           } else if (x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-            let columnCategory: IColumnCategory = this.blotter.api.columnCategoryApi
+            let columnCategory: ColumnCategory = this.blotter.api.columnCategoryApi
               .getAllColumnCategory()
               .find(lc => lc.ColumnCategoryId == x.ColumnCategoryId);
             if (columnCategory) {
@@ -55,7 +55,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   public initStyles(): void {
     let columns = this.blotter.api.gridApi.getColumns();
     let theBlotter = this.blotter as AdaptableBlotter;
-    let conditionalStyles: IConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
+    let conditionalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
     if (
       ArrayExtensions.IsNotNullOrEmpty(columns) &&
       ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)
@@ -83,7 +83,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
               );
             };
           } else if (cs.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-            let columnCategory: IColumnCategory = this.blotter.api.columnCategoryApi
+            let columnCategory: ColumnCategory = this.blotter.api.columnCategoryApi
               .getAllColumnCategory()
               .find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
             if (columnCategory) {

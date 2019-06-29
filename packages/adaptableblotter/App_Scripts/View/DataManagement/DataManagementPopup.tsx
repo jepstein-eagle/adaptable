@@ -8,8 +8,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
-import { AccessLevel } from '../../Utilities/Enums';
-import EmptyContent from '../../components/EmptyContent';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex, Box } from 'rebass';
 
 interface DataManagementPopupProps extends StrategyViewPopupProps<DataManagementPopupComponent> {}

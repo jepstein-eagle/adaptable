@@ -6,14 +6,14 @@ import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard';
 import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard';
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumnCategory } from '../../../Utilities/Interface/BlotterObjects/IColumnCategory';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export interface ConditionalStyleWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
   ColorPalette: string[];
   StyleClassNames: string[];
-  ColumnCategories: IColumnCategory[];
+  ColumnCategories: ColumnCategory[];
 }
 
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {

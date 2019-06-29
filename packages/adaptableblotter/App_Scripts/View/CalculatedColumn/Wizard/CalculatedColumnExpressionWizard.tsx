@@ -6,10 +6,10 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { ICalculatedColumn } from '../../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
+import { CalculatedColumn } from '../../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 
 export interface CalculatedColumnExpressionWizardProps
-  extends AdaptableWizardStepProps<ICalculatedColumn> {
+  extends AdaptableWizardStepProps<CalculatedColumn> {
   IsExpressionValid: (expression: string) => void;
   GetErrorMessage: () => string;
 }

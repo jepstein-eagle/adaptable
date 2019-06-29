@@ -3,8 +3,8 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { ICategoryChartDefinition } from '../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
-import { AxisTotal } from '../../../../Utilities/ChartEnums';
+import { CategoryChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { AxisTotal } from '../../../../PredefinedConfig/Common/ChartEnums';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { Panel, FormGroup, Row, Col, ControlLabel, Radio } from 'react-bootstrap';
@@ -13,7 +13,7 @@ import { AdaptablePopover } from '../../../AdaptablePopover';
 import { DualListBoxEditor, DisplaySize } from '../../../Components/ListBox/DualListBoxEditor';
 
 export interface CategoryChartYAxisWizardProps
-  extends AdaptableWizardStepProps<ICategoryChartDefinition> {}
+  extends AdaptableWizardStepProps<CategoryChartDefinition> {}
 
 export interface CategoryChartYAxisWizardState {
   YAxisColumnIds: string[];

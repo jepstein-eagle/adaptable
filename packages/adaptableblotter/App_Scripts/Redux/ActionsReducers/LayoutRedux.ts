@@ -1,8 +1,7 @@
 import * as Redux from 'redux';
-import { LayoutState } from './Interface/IState';
-import { ILayout } from '../../Utilities/Interface/BlotterObjects/ILayout';
+import { LayoutState, Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const LAYOUT_ADD = 'LAYOUT_ADD';
 export const LAYOUT_EDIT = 'LAYOUT_EDIT';
@@ -11,7 +10,7 @@ export const LAYOUT_SELECT = 'LAYOUT_SELECT';
 export const LAYOUT_SAVE = 'LAYOUT_SAVE';
 
 export interface LayoutAction extends Redux.Action {
-  layout: ILayout;
+  layout: Layout;
 }
 
 export interface LayoutAddAction extends LayoutAction {}
@@ -30,21 +29,21 @@ export interface LayoutIncludeVendorStateAction extends Redux.Action {}
 
 export interface LayoutExcludeVendorStateAction extends Redux.Action {}
 
-export const LayoutAdd = (layout: ILayout): LayoutAddAction => ({
+export const LayoutAdd = (layout: Layout): LayoutAddAction => ({
   type: LAYOUT_ADD,
   layout,
 });
 
-export const LayoutEdit = (layout: ILayout): LayoutEditAction => ({
+export const LayoutEdit = (layout: Layout): LayoutEditAction => ({
   type: LAYOUT_EDIT,
   layout,
 });
-export const LayoutDelete = (layout: ILayout): LayoutDeleteAction => ({
+export const LayoutDelete = (layout: Layout): LayoutDeleteAction => ({
   type: LAYOUT_DELETE,
   layout,
 });
 
-export const LayoutSave = (layout: ILayout): LayoutSaveAction => ({
+export const LayoutSave = (layout: Layout): LayoutSaveAction => ({
   type: LAYOUT_SAVE,
   layout,
 });
@@ -63,14 +62,14 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (
   state: LayoutState = initialLayoutState,
   action: Redux.Action
 ): LayoutState => {
-  let layouts: ILayout[];
+  let layouts: Layout[];
   switch (action.type) {
     //  case LAYOUT_SAVE: // we do nothing here as its all done in the store
     //      return state
     case LAYOUT_SELECT:
       return Object.assign({}, state, { CurrentLayout: (<LayoutSelectAction>action).LayoutName });
     case LAYOUT_ADD: {
-      const actionLayout: ILayout = (action as LayoutAction).layout;
+      const actionLayout: Layout = (action as LayoutAction).layout;
 
       if (!actionLayout.Uuid) {
         actionLayout.Uuid = createUuid();
@@ -81,7 +80,7 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (
     }
 
     case LAYOUT_EDIT: {
-      const actionLayout: ILayout = (action as LayoutAction).layout;
+      const actionLayout: Layout = (action as LayoutAction).layout;
       return {
         ...state,
         Layouts: state.Layouts.map(abObject =>
@@ -91,7 +90,7 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (
     }
 
     case LAYOUT_DELETE: {
-      const actionLayout: ILayout = (action as LayoutAction).layout;
+      const actionLayout: Layout = (action as LayoutAction).layout;
       return {
         ...state,
         Layouts: state.Layouts.filter(abObject => abObject.Uuid !== actionLayout.Uuid),

@@ -1,7 +1,7 @@
-import { QuickSearchState } from './Interface/IState';
-import { DisplayAction } from '../../Utilities/Enums';
+import { QuickSearchState } from '../../PredefinedConfig/RunTimeState/QuickSearchState';
+import { DisplayAction } from '../../PredefinedConfig/Common/Enums';
 import * as Redux from 'redux';
-import { IStyle } from '../../Utilities/Interface/IStyle';
+import { IStyle } from '../../PredefinedConfig/Common/IStyle';
 import {
   QUICK_SEARCH_DEFAULT_BACK_COLOR,
   QUICK_SEARCH_DEFAULT_FORE_COLOR,

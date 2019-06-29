@@ -5,12 +5,12 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { SelectionMode } from '../../../Utilities/Enums';
+import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { IPlusMinusRule } from '../../../Utilities/Interface/BlotterObjects/IPlusMinusRule';
+import { PlusMinusRule } from '../../../PredefinedConfig/RunTimeState/PlusMinusState';
 
-export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<IPlusMinusRule> {
+export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {
   NumericColumns: Array<IColumn>;
 }
 

@@ -1,4 +1,4 @@
-import { IDataChangedInfo } from '../../Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../../Interface/DataChangedInfo';
 import { IEvent } from '../../Interface/IEvent';
 
 export enum ChangeDirection {
@@ -8,8 +8,8 @@ export enum ChangeDirection {
 }
 
 export interface IDataService {
-  CreateDataChangedEvent(dataChangedInfo: IDataChangedInfo): void;
-  OnDataSourceChanged(): IEvent<IDataService, IDataChangedInfo>;
+  CreateDataChangedEvent(dataChangedInfo: DataChangedInfo): void;
+  OnDataSourceChanged(): IEvent<IDataService, DataChangedInfo>;
   GetPreviousColumnValue(
     columnId: string,
     identifierValue: any,

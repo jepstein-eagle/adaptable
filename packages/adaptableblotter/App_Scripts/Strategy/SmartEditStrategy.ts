@@ -1,20 +1,23 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { MathOperation, DataType, MessageType, StateChangedTrigger } from '../Utilities/Enums';
+import {
+  MathOperation,
+  DataType,
+  MessageType,
+  StateChangedTrigger,
+} from '../PredefinedConfig/Common/Enums';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ISmartEditStrategy } from './Interface/ISmartEditStrategy';
-import { SmartEditState } from '../Redux/ActionsReducers/Interface/IState';
+import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
+import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
+import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICellValidationRule';
-import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
-import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
-import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
-import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
-import { SMARTEDIT_APPLY } from '../Redux/ActionsReducers/SmartEditRedux';
+import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -32,7 +35,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
   public ApplySmartEdit(newValues: ICellInfo[]): void {
     if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
       // logging audit log function here as there is no obvious Action to listen to in the Store - not great but not end of the world...
-      let functionAppliedDetails: IFunctionAppliedDetails = {
+      let functionAppliedDetails: FunctionAppliedDetails = {
         name: StrategyConstants.SmartEditStrategyId,
         action: SMARTEDIT_APPLY,
         info: 'Smart Edit Applied',
@@ -121,7 +124,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
         //avoid the 0.0000000000x
         newValue = parseFloat(newValue.toFixed(12));
 
-        let dataChangedEvent: IDataChangedInfo = {
+        let dataChangedEvent: DataChangedInfo = {
           OldValue: Number(selectedCell.value),
           NewValue: newValue,
           ColumnId: selectedCell.columnId,
@@ -129,7 +132,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
           Record: null,
         };
 
-        let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+        let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
           dataChangedEvent
         );
 

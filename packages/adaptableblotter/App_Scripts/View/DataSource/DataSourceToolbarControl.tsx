@@ -12,13 +12,13 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { DashboardSize } from '../../Utilities/Enums';
-import { IDataSource } from '../../Utilities/Interface/BlotterObjects/IDataSource';
+import { DashboardSize } from '../../PredefinedConfig/Common/Enums';
+import { DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
 
 interface DataSourceToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<DataSourceToolbarControlComponent> {
   CurrentDataSource: string;
-  DataSources: IDataSource[];
+  DataSources: DataSource[];
 
   onSelectDataSource: (DataSourceName: string) => DataSourceRedux.DataSourceSelectAction;
 }

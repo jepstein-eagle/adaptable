@@ -3,7 +3,7 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { IPieChartDefinition } from '../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
+import { PieChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 import {
   Panel,
@@ -17,7 +17,7 @@ import {
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 
-export interface PieChartSettingsWizardProps extends AdaptableWizardStepProps<IPieChartDefinition> {
+export interface PieChartSettingsWizardProps extends AdaptableWizardStepProps<PieChartDefinition> {
   ChartNames: string[];
 }
 

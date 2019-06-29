@@ -1,10 +1,10 @@
-import { IFreeTextColumn } from '../../Interface/BlotterObjects/IFreeTextColumn';
-import { IDataChangedInfo } from '../../Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../../Interface/DataChangedInfo';
+import { FreeTextColumn } from '../../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 
 export interface IFreeTextColumnService {
-  GetFreeTextValue(column: IFreeTextColumn, record: any): any;
+  GetFreeTextValue(column: FreeTextColumn, record: any): any;
 
-  CheckIfDataChangingColumnIsFreeText(dataChangedEvent: IDataChangedInfo): void;
+  CheckIfDataChangingColumnIsFreeText(dataChangedEvent: DataChangedInfo): void;
 
-  CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents: IDataChangedInfo[]): void;
+  CheckIfDataChangingColumnIsFreeTextBatch(dataChangedEvents: DataChangedInfo[]): void;
 }

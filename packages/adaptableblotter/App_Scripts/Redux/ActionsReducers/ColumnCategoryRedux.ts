@@ -1,15 +1,17 @@
-import { ColumnCategoryState } from './Interface/IState';
+import {
+  ColumnCategoryState,
+  ColumnCategory,
+} from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 import * as Redux from 'redux';
-import { IColumnCategory } from '../../Utilities/Interface/BlotterObjects/IColumnCategory';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const COLUMN_CATEGORY_ADD = 'COLUMN_CATEGORY_ADD';
 export const COLUMN_CATEGORY_EDIT = 'COLUMN_CATEGORY_EDIT';
 export const COLUMN_CATEGORY_DELETE = 'COLUMN_CATEGORY_DELETE';
 
 export interface ColumnCategoryAction extends Redux.Action {
-  columnCategory: IColumnCategory;
+  columnCategory: ColumnCategory;
 }
 
 export interface ColumnCategoryAddAction extends ColumnCategoryAction {}
@@ -18,18 +20,18 @@ export interface ColumnCategoryEditAction extends ColumnCategoryAction {}
 
 export interface ColumnCategoryDeleteAction extends ColumnCategoryAction {}
 
-export const ColumnCategoryAdd = (columnCategory: IColumnCategory): ColumnCategoryAddAction => ({
+export const ColumnCategoryAdd = (columnCategory: ColumnCategory): ColumnCategoryAddAction => ({
   type: COLUMN_CATEGORY_ADD,
   columnCategory,
 });
 
-export const ColumnCategoryEdit = (columnCategory: IColumnCategory): ColumnCategoryEditAction => ({
+export const ColumnCategoryEdit = (columnCategory: ColumnCategory): ColumnCategoryEditAction => ({
   type: COLUMN_CATEGORY_EDIT,
   columnCategory,
 });
 
 export const ColumnCategoryDelete = (
-  columnCategory: IColumnCategory
+  columnCategory: ColumnCategory
 ): ColumnCategoryDeleteAction => ({
   type: COLUMN_CATEGORY_DELETE,
   columnCategory,
@@ -43,11 +45,11 @@ export const ColumnCategoryReducer: Redux.Reducer<ColumnCategoryState> = (
   state: ColumnCategoryState = initialColumnCategoryState,
   action: Redux.Action
 ): ColumnCategoryState => {
-  let columnCategories: IColumnCategory[];
+  let columnCategories: ColumnCategory[];
 
   switch (action.type) {
     case COLUMN_CATEGORY_ADD: {
-      const actionColumnCategory: IColumnCategory = (action as ColumnCategoryAction).columnCategory;
+      const actionColumnCategory: ColumnCategory = (action as ColumnCategoryAction).columnCategory;
 
       if (!actionColumnCategory.Uuid) {
         actionColumnCategory.Uuid = createUuid();
@@ -58,7 +60,7 @@ export const ColumnCategoryReducer: Redux.Reducer<ColumnCategoryState> = (
     }
 
     case COLUMN_CATEGORY_EDIT: {
-      const actionColumnCategory: IColumnCategory = (action as ColumnCategoryAction).columnCategory;
+      const actionColumnCategory: ColumnCategory = (action as ColumnCategoryAction).columnCategory;
 
       return {
         ...state,
@@ -69,7 +71,7 @@ export const ColumnCategoryReducer: Redux.Reducer<ColumnCategoryState> = (
     }
 
     case COLUMN_CATEGORY_DELETE: {
-      const actionColumnCategory: IColumnCategory = (action as ColumnCategoryAction).columnCategory;
+      const actionColumnCategory: ColumnCategory = (action as ColumnCategoryAction).columnCategory;
       return {
         ...state,
         ColumnCategories: state.ColumnCategories.filter(

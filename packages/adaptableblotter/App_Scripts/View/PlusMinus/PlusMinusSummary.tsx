@@ -20,14 +20,14 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IPlusMinusRule } from '../../Utilities/Interface/BlotterObjects/IPlusMinusRule';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
 
 export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSummaryComponent> {
-  PlusMinusRules: IPlusMinusRule[];
-  onAddPlusMinusRule: (PlusMinus: IPlusMinusRule) => PlusMinusRedux.PlusMinusRuleAddAction;
-  onEditPlusMinusRule: (PlusMinus: IPlusMinusRule) => PlusMinusRedux.PlusMinusRuleEditAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  PlusMinusRules: PlusMinusRule[];
+  onAddPlusMinusRule: (PlusMinus: PlusMinusRule) => PlusMinusRedux.PlusMinusRuleAddAction;
+  onEditPlusMinusRule: (PlusMinus: PlusMinusRule) => PlusMinusRedux.PlusMinusRuleEditAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class PlusMinusSummaryComponent extends React.Component<
@@ -92,7 +92,7 @@ export class PlusMinusSummaryComponent extends React.Component<
         {this.state.EditedAdaptableBlotterObject && (
           <PlusMinusWizard
             cssClassName={cssWizardClassName}
-            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPlusMinusRule}
+            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as PlusMinusRule}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
@@ -111,7 +111,7 @@ export class PlusMinusSummaryComponent extends React.Component<
   }
 
   onNew() {
-    let configEntity: IPlusMinusRule = ObjectFactory.CreateEmptyPlusMinusRule();
+    let configEntity: PlusMinusRule = ObjectFactory.CreateEmptyPlusMinusRule();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
@@ -120,7 +120,7 @@ export class PlusMinusSummaryComponent extends React.Component<
     });
   }
 
-  onEdit(PlusMinus: IPlusMinusRule) {
+  onEdit(PlusMinus: PlusMinusRule) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(PlusMinus),
       WizardStartIndex: 1,
@@ -137,7 +137,7 @@ export class PlusMinusSummaryComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusRule;
+    let plusMinus = this.state.EditedAdaptableBlotterObject as PlusMinusRule;
 
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditPlusMinusRule(plusMinus);
@@ -153,12 +153,12 @@ export class PlusMinusSummaryComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let plusMinus = this.state.EditedAdaptableBlotterObject as IPlusMinusRule;
+    let plusMinus = this.state.EditedAdaptableBlotterObject as PlusMinusRule;
     return (
       StringExtensions.IsNotNullOrEmpty(plusMinus.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(plusMinus.NudgeValue.toString()) && // check its a number??
       (plusMinus.IsDefaultNudge ||
-        ExpressionHelper.IsNotEmptyOrInvalidExpression(plusMinus.Expression))
+        ExpressionHelper.IsNullOrEmptyOrValidExpression(plusMinus.Expression))
     );
   }
 
@@ -178,12 +178,12 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddPlusMinusRule: (PlusMinusRule: IPlusMinusRule) =>
+    onAddPlusMinusRule: (PlusMinusRule: PlusMinusRule) =>
       dispatch(PlusMinusRedux.PlusMinusRuleAdd(PlusMinusRule)),
-    onEditPlusMinusRule: (PlusMinusRule: IPlusMinusRule) =>
+    onEditPlusMinusRule: (PlusMinusRule: PlusMinusRule) =>
       dispatch(PlusMinusRedux.PlusMinusRuleEdit(PlusMinusRule)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),
   };
 }

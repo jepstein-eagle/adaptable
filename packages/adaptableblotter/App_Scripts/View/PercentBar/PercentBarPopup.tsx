@@ -20,18 +20,19 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IPercentBar } from '../../Utilities/Interface/BlotterObjects/IPercentBar';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { DistinctCriteriaPairValue } from '../../Utilities/Enums';
+import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
+
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 
 interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {
-  PercentBars: IPercentBar[];
-  onAddPercentBar: (percentBar: IPercentBar) => PercentBarRedux.PercentBarAddAction;
-  onEditPercentBar: (percentBar: IPercentBar) => PercentBarRedux.PercentBarEditAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  PercentBars: PercentBar[];
+  onAddPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarAddAction;
+  onEditPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarEditAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class PercentBarPopupComponent extends React.Component<
@@ -59,7 +60,7 @@ class PercentBarPopupComponent extends React.Component<
         ).map(pair => {
           return pair.RawValue;
         });
-        let newPercentRender: IPercentBar = ObjectFactory.CreateEmptyPercentBar();
+        let newPercentRender: PercentBar = ObjectFactory.CreateEmptyPercentBar();
         newPercentRender.ColumnId = columnId;
         newPercentRender.MinValue = Math.min(...distinctColumnsValues);
         newPercentRender.MaxValue = Math.max(...distinctColumnsValues);
@@ -92,7 +93,7 @@ class PercentBarPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let PercentBarItems = this.props.PercentBars.map((percentBar: IPercentBar, index) => {
+    let PercentBarItems = this.props.PercentBars.map((percentBar: PercentBar, index) => {
       let column = ColumnHelper.getColumnFromId(percentBar.ColumnId, this.props.Columns);
       return (
         <PercentBarEntityRow
@@ -163,7 +164,7 @@ class PercentBarPopupComponent extends React.Component<
           {this.state.EditedAdaptableBlotterObject != null && (
             <PercentBarWizard
               cssClassName={cssWizardClassName}
-              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as IPercentBar}
+              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as PercentBar}
               ConfigEntities={null}
               Blotter={this.props.Blotter}
               ModalContainer={this.props.ModalContainer}
@@ -182,28 +183,28 @@ class PercentBarPopupComponent extends React.Component<
     );
   }
 
-  onMinimumValueChanged(percentBar: IPercentBar, minimumValue: number): void {
-    let clonedPercentBar: IPercentBar = Helper.cloneObject(percentBar);
+  onMinimumValueChanged(percentBar: PercentBar, minimumValue: number): void {
+    let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
     clonedPercentBar.MinValue = minimumValue;
     this.props.onEditPercentBar(clonedPercentBar);
   }
-  onMaximumValueChanged(percentBar: IPercentBar, maximumValue: number): void {
-    let clonedPercentBar: IPercentBar = Helper.cloneObject(percentBar);
+  onMaximumValueChanged(percentBar: PercentBar, maximumValue: number): void {
+    let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
     clonedPercentBar.MaxValue = maximumValue;
     this.props.onEditPercentBar(clonedPercentBar);
   }
-  onPositiveColorChanged(percentBar: IPercentBar, positiveColor: string): void {
-    let clonedPercentBar: IPercentBar = Helper.cloneObject(percentBar);
+  onPositiveColorChanged(percentBar: PercentBar, positiveColor: string): void {
+    let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
     clonedPercentBar.PositiveColor = positiveColor;
     this.props.onEditPercentBar(clonedPercentBar);
   }
-  onNegativeColorChanged(percentBar: IPercentBar, negativeColor: string): void {
-    let clonedPercentBar: IPercentBar = Helper.cloneObject(percentBar);
+  onNegativeColorChanged(percentBar: PercentBar, negativeColor: string): void {
+    let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
     clonedPercentBar.NegativeColor = negativeColor;
     this.props.onEditPercentBar(clonedPercentBar);
   }
 
-  onNewFromColumn(percentBar: IPercentBar) {
+  onNewFromColumn(percentBar: PercentBar) {
     this.setState({
       EditedAdaptableBlotterObject: percentBar,
       WizardStatus: WizardStatus.New,
@@ -219,8 +220,8 @@ class PercentBarPopupComponent extends React.Component<
     });
   }
 
-  onEdit(percentBar: IPercentBar) {
-    let clonedObject: IPercentBar = Helper.cloneObject(percentBar);
+  onEdit(percentBar: PercentBar) {
+    let clonedObject: PercentBar = Helper.cloneObject(percentBar);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 1,
@@ -238,7 +239,7 @@ class PercentBarPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let percentBar: IPercentBar = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+    let percentBar: PercentBar = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditPercentBar(percentBar);
     } else {
@@ -252,7 +253,7 @@ class PercentBarPopupComponent extends React.Component<
   }
 
   canFinishWizard(): boolean {
-    let percentBar = this.state.EditedAdaptableBlotterObject as IPercentBar;
+    let percentBar = this.state.EditedAdaptableBlotterObject as PercentBar;
     if (
       StringExtensions.IsNullOrEmpty(percentBar.ColumnId) ||
       StringExtensions.IsNullOrEmpty(percentBar.PositiveColor) ||
@@ -273,11 +274,11 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddPercentBar: (percentBar: IPercentBar) =>
+    onAddPercentBar: (percentBar: PercentBar) =>
       dispatch(PercentBarRedux.PercentBarAdd(percentBar)),
-    onEditPercentBar: (percentBar: IPercentBar) =>
+    onEditPercentBar: (percentBar: PercentBar) =>
       dispatch(PercentBarRedux.PercentBarEdit(percentBar)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PercentBarStrategyId)),
   };
 }

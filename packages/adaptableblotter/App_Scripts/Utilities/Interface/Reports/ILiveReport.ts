@@ -1,7 +1,8 @@
-import { ExportDestination } from '../../Enums';
-import { IReport } from '../BlotterObjects/IReport';
+import { ExportDestination } from '../../../PredefinedConfig/Common/Enums';
+import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
+
 export interface ILiveReport {
   WorkbookName: string;
-  Report: IReport;
+  Report: Report;
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull;
 }

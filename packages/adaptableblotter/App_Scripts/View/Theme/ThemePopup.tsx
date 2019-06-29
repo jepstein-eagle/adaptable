@@ -8,12 +8,12 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
-import { IUserTheme } from '../../Utilities/Interface/BlotterObjects/IUserTheme';
+import { UserTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
 import { Flex } from 'rebass';
 
 interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
   SystemThemes: Array<string>;
-  UserThemes: Array<IUserTheme>;
+  UserThemes: Array<UserTheme>;
   CurrentTheme: string;
   SelectTheme: (newTheme: string) => ThemeRedux.ThemeSelectAction;
 }

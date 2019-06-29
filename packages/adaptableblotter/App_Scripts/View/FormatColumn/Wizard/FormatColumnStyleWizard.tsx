@@ -3,14 +3,14 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { FontWeight, FontStyle, FontSize } from '../../../Utilities/Enums';
+import { FontWeight, FontStyle, FontSize } from '../../../PredefinedConfig/Common/Enums';
 import { StyleComponent } from '../../Components/StyleComponent';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { UIHelper } from '../../UIHelper';
-import { IStyle } from '../../../Utilities/Interface/IStyle';
-import { IFormatColumn } from '../../../Utilities/Interface/BlotterObjects/IFormatColumn';
+import { IStyle } from '../../../PredefinedConfig/Common/IStyle';
+import { FormatColumn } from '../../../PredefinedConfig/RunTimeState/FormatColumnState';
 
-export interface FormatColumnStyleWizardProps extends AdaptableWizardStepProps<IFormatColumn> {
+export interface FormatColumnStyleWizardProps extends AdaptableWizardStepProps<FormatColumn> {
   ColorPalette: string[];
   StyleClassNames: string[];
 }

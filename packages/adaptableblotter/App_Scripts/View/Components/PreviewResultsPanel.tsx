@@ -1,20 +1,20 @@
 import * as React from 'react';
-import { MessageType } from '../../Utilities/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { Glyphicon, Panel, Table } from 'react-bootstrap';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { ICellValidationRule } from '../../Utilities/Interface/BlotterObjects/ICellValidationRule';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
+import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   UpdateValue: string;
   PreviewInfo: IPreviewInfo;
   Columns: IColumn[];
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SelectedColumn: IColumn;
   ShowPanel: boolean;
   cssClassName: string;
@@ -102,7 +102,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
   }
 
   private getValidationErrorMessage(
-    CellValidations: ICellValidationRule[],
+    CellValidations: CellValidationRule[],
     columns: IColumn[]
   ): string {
     let returnString: string[] = [];

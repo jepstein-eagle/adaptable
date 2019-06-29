@@ -1,7 +1,7 @@
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IAdaptableBlotterObject } from '../../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
 
 export interface AdaptableWizardStep {
   canNext(): boolean;
@@ -22,21 +22,21 @@ export interface AdaptableWizardStepProps<T> {
 
 // props for an Expression Wizard Page
 export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SystemFilters: string[];
 }
 
 // props for a wizard that wraps a config entity that contans an Expression
-export interface IAdaptableBlotterObjectExpressionAdaptableWizardProps<View>
-  extends IAdaptableBlotterObjectAdaptableWizardProps<View> {
+export interface AdaptableBlotterObjectExpressionAdaptableWizardProps<View>
+  extends AdaptableBlotterObjectAdaptableWizardProps<View> {
   Columns: Array<IColumn>;
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SystemFilters: string[];
   Blotter: IAdaptableBlotter;
 }
 
 // props for a basic wizard
-export interface IAdaptableWizardProps<View> extends React.ClassAttributes<View> {
+export interface AdaptableWizardProps<View> extends React.ClassAttributes<View> {
   WizardStartIndex: number;
   onCloseWizard: () => void;
   onFinishWizard: () => void;
@@ -46,8 +46,8 @@ export interface IAdaptableWizardProps<View> extends React.ClassAttributes<View>
 }
 
 // props for a wizard that wraps a config entity (without an expression)
-export interface IAdaptableBlotterObjectAdaptableWizardProps<View>
-  extends IAdaptableWizardProps<View> {
-  ConfigEntities: IAdaptableBlotterObject[];
-  EditedAdaptableBlotterObject: IAdaptableBlotterObject;
+export interface AdaptableBlotterObjectAdaptableWizardProps<View>
+  extends AdaptableWizardProps<View> {
+  ConfigEntities: AdaptableBlotterObject[];
+  EditedAdaptableBlotterObject: AdaptableBlotterObject;
 }

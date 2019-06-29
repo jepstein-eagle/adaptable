@@ -6,18 +6,17 @@ import { GridOptions } from 'ag-grid-community';
 import AdaptableBlotterReact from '../../../src';
 import '../../../src/index.scss';
 
-import { DataGenerator } from '../../../../adaptableblotter/Harness/DataGenerator';
-import { IAdaptableBlotterOptions } from '../../../../adaptableblotter/App_Scripts/types';
-
+import { AdaptableBlotterOptions } from '../../../../adaptableblotter/App_Scripts/types';
+import { ExamplesHelper } from '../../ExamplesHelper';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 
 LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
+const examplesHelper = new ExamplesHelper();
 
-const dataGen = new DataGenerator();
-const gridOptions: GridOptions = dataGen.getGridOptionsTrade(500);
+const gridOptions: GridOptions = getGridOptionsTrade(200);
 
-const adaptableBlotterOptions: IAdaptableBlotterOptions = {
+const adaptableBlotterOptions: AdaptableBlotterOptions = {
   vendorGrid: gridOptions,
   primaryKey: 'tradeId',
   userName: 'demo user',

@@ -1,5 +1,4 @@
-import { ILayout } from '../../Utilities/Interface/BlotterObjects/ILayout';
-import { LayoutState } from '../../Redux/ActionsReducers/Interface/IState';
+import { LayoutState, Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
 export interface ILayoutApi {
   getLayoutState(): LayoutState;
   /**
@@ -14,7 +13,7 @@ export interface ILayoutApi {
   /**
    * Retrieves current Layout
    */
-  getCurrentLayout(): ILayout;
+  getCurrentLayout(): Layout;
   /**
    * Retrieves current Layout name
    */
@@ -22,11 +21,11 @@ export interface ILayoutApi {
   /**
    * Retrieves the layout with the inputted name
    */
-  getLayoutByName(layoutName: string): ILayout;
+  getLayoutByName(layoutName: string): Layout;
   /**
    * Retrieves all Layouts in State
    */
-  getAllLayout(): ILayout[];
+  getAllLayout(): Layout[];
   /**
    * Saves the current layout - using the column order and grid sort info currently in the grid
    */

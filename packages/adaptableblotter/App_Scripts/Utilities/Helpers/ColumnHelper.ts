@@ -1,10 +1,10 @@
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { LoggingHelper } from './LoggingHelper';
 import { IColumn } from '../Interface/IColumn';
-import { DataType } from '../Enums';
+import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { StringExtensions } from '../Extensions/StringExtensions';
-import { IColumnCategory } from '../Interface/BlotterObjects/IColumnCategory';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 // Single place for all column mapping functions so can be dealt with consistetly re error handling
 
@@ -44,6 +44,9 @@ export function getFriendlyNameFromColumnId(columnId: string, columns: IColumn[]
 
 export function getFriendlyNamesFromColumnIds(columnIds: string[], columns: IColumn[]): string[] {
   let friendlyNames: string[] = [];
+  if (ArrayExtensions.IsNullOrEmpty(columnIds)) {
+    return friendlyNames;
+  }
   columnIds.forEach(c => {
     friendlyNames.push(getFriendlyNameFromColumnId(c, columns));
   });
@@ -68,6 +71,9 @@ export function getColumnIdsFromFriendlyNames(
   columns: IColumn[]
 ): string[] {
   let columnIds: string[] = [];
+  if (ArrayExtensions.IsNullOrEmpty(friendlyNames)) {
+    return columnIds;
+  }
   friendlyNames.forEach(c => {
     columnIds.push(getColumnIdFromFriendlyName(c, columns));
   });
@@ -153,7 +159,7 @@ export function getBooleanColumns(columns: IColumn[]): IColumn[] {
 
 export function getColumnCategoryFromColumnCategories(
   columnId: string,
-  ColumnCategoryns: IColumnCategory[]
+  ColumnCategoryns: ColumnCategory[]
 ): string {
   let returnValue: string = '';
   ColumnCategoryns.forEach(c => {

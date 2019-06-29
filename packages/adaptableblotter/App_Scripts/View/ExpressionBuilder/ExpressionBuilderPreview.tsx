@@ -3,27 +3,29 @@ import * as ReactDOM from 'react-dom';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { Flex } from 'rebass';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import {
-  ListGroupItem,
-  ListGroup,
-  Button,
-  OverlayTrigger,
-  Tooltip,
-  Glyphicon,
-  InputGroup,
-} from 'react-bootstrap';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { LeafExpressionOperator, RangeOperandType, QueryTab } from '../../Utilities/Enums';
+
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import {
+  QueryTab,
+  LeafExpressionOperator,
+  RangeOperandType,
+} from '../../PredefinedConfig/Common/Enums';
+import ExpressionHelper from '../../Utilities/Helpers/ExpressionHelper';
+import { ListGroupItem, InputGroup, Button, Glyphicon, ListGroup } from 'react-bootstrap';
+import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IRange } from '../../Utilities/Interface/Expression/IRange';
-import { Expression } from '../../Utilities/Expression';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
+import ColumnHelper from '../../Utilities/Helpers/ColumnHelper';
+import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
+import { ColumnValueExpression } from '../../PredefinedConfig/Common/Expression/ColumnValueExpression';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
+import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
+
 import SimpleButton from '../../components/SimpleButton';
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
@@ -36,7 +38,7 @@ import SimpleButton from '../../components/SimpleButton';
 export interface ExpressionBuilderPreviewProps
   extends React.ClassAttributes<ExpressionBuilderPreview> {
   Expression: Expression;
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   onSelectedColumnChange: (ColumnId: string, tab: QueryTab) => void;
   ColumnsList: Array<IColumn>;
   DeleteRange: (ColumnId: string, index: number) => void;
@@ -57,9 +59,12 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     let columnList = ExpressionHelper.GetColumnListFromExpression(this.props.Expression);
     let previewLists = columnList.map(columnId => {
       // First lets do the column values
-      let columnValues = this.props.Expression.ColumnValueExpressions.find(
-        colValues => colValues.ColumnId == columnId
-      );
+      let columnValues: ColumnValueExpression = null;
+      if (ArrayExtensions.IsNotNullOrEmpty(this.props.Expression.ColumnValueExpressions)) {
+        columnValues = this.props.Expression.ColumnValueExpressions.find(
+          colValues => colValues.ColumnId == columnId
+        );
+      }
       let columnValuesListgroupItems: JSX.Element[];
       if (columnValues) {
         columnValuesListgroupItems = columnValues.ColumnDisplayValues.map(y => {
@@ -95,12 +100,16 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
       // Next do the user filter expressions
 
-      let columnUserFilterExpressions = this.props.Expression.FilterExpressions.find(
-        ne => ne.ColumnId == columnId
-      );
+      let columnUserFilterExpression: FilterExpression = null;
+
+      if (ArrayExtensions.IsNotNullOrEmpty(this.props.Expression.FilterExpressions)) {
+        columnUserFilterExpression = this.props.Expression.FilterExpressions.find(
+          ne => ne.ColumnId == columnId
+        );
+      }
       let columnUserFilterExpressionsListgroupItems: JSX.Element[];
-      if (columnUserFilterExpressions) {
-        columnUserFilterExpressionsListgroupItems = columnUserFilterExpressions.Filters.map(
+      if (columnUserFilterExpression) {
+        columnUserFilterExpressionsListgroupItems = columnUserFilterExpression.Filters.map(
           (filter, index) => {
             return (
               <ListGroupItem key={filter} style={previewListBoxItemStyle}>
@@ -128,15 +137,20 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         );
       }
       // Finally do the column ranges
-      let columnRanges = this.props.Expression.RangeExpressions.find(
-        colValues => colValues.ColumnId == columnId
-      );
+      let columnRange: RangeExpression = null;
+
+      if (ArrayExtensions.IsNotNullOrEmpty(this.props.Expression.RangeExpressions)) {
+        columnRange = this.props.Expression.RangeExpressions.find(
+          colValues => colValues.ColumnId == columnId
+        );
+      }
       let columnRangesListgroupItems: JSX.Element[];
       /* Note: these used to say:  this.props.DeleteRange(columnId, index); if (!this.props.ShowPanel) { e.stopPropagation();  - do we need that? */
 
-      if (columnRanges) {
-        columnRangesListgroupItems = columnRanges.Ranges.map((y, index) => {
-          if (y.Operator == LeafExpressionOperator.Between) {
+      if (columnRange) {
+        columnRangesListgroupItems = columnRange.Ranges.map((y, index) => {
+          let operator: LeafExpressionOperator = y.Operator as LeafExpressionOperator;
+          if (operator == LeafExpressionOperator.Between) {
             if (StringExtensions.IsEmpty(y.Operand1) || StringExtensions.IsEmpty(y.Operand2)) {
               return (
                 <ListGroupItem
@@ -146,11 +160,11 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 >
                   <div
                     className="ab_div_like_button"
-                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)}
+                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                     style={{ cursor: 'pointer' }}
                   >
                     <AdaptableBlotterForm inline>
-                      {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}
+                      {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
                       {this.getOperand1Value(y)} And {this.getOperand2Value(y)}
                       <ButtonPreviewDelete
                         cssClassName={cssClassName}
@@ -170,11 +184,11 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 <ListGroupItem key={columnId + index} style={previewListBoxItemStyle}>
                   <div
                     className="ab_div_like_button"
-                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)}
+                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                     style={{ cursor: 'pointer' }}
                   >
                     <AdaptableBlotterForm inline>
-                      {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}
+                      {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
                       {this.getOperand1Value(y)} And {this.getOperand2Value(y)}
                       <ButtonPreviewDelete
                         cssClassName={cssClassName}
@@ -203,11 +217,11 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 >
                   <div
                     className="ab_div_like_button"
-                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)}
+                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                     style={{ cursor: 'pointer' }}
                   >
                     <AdaptableBlotterForm inline>
-                      {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}
+                      {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
                       {this.getOperand1Value(y)}
                       <ButtonPreviewDelete
                         cssClassName={cssClassName}
@@ -227,11 +241,11 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
                 <ListGroupItem key={columnId + index} style={previewListBoxItemStyle}>
                   <div
                     className="ab_div_like_button"
-                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Range)}
+                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                     style={{ cursor: 'pointer' }}
                   >
                     <AdaptableBlotterForm inline>
-                      {ExpressionHelper.OperatorToShortFriendlyString(y.Operator)}{' '}
+                      {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
                       {this.getOperand1Value(y)}
                       <ButtonPreviewDelete
                         cssClassName={cssClassName}
@@ -344,7 +358,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
       this.props.onSelectedColumnChange(columnId, QueryTab.Filter);
       return;
     }
-    this.props.onSelectedColumnChange(columnId, QueryTab.Range);
+    this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange);
   }
 
   ensureSelectedColumnVisible(columnId: string) {
@@ -355,7 +369,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     }
   }
 
-  private getOperand1Value(range: IRange): string {
+  private getOperand1Value(range: QueryRange): string {
     if (range.Operand1Type == RangeOperandType.Column) {
       let col: IColumn = this.props.ColumnsList.find(c => c.ColumnId == range.Operand1);
       return col ? '[' + col.FriendlyName + ']' : '';
@@ -364,7 +378,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
     }
   }
 
-  private getOperand2Value(range: IRange): string {
+  private getOperand2Value(range: QueryRange): string {
     if (range.Operand2Type == RangeOperandType.Column) {
       let col: IColumn = this.props.ColumnsList.find(c => c.ColumnId == range.Operand2);
       return col ? '[' + col.FriendlyName + ']' : '';

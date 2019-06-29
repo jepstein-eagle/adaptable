@@ -1,36 +1,37 @@
 import * as React from 'react';
-import { DataType, SelectionMode, RangeOperandType } from '../../Utilities/Enums';
-import { LeafExpressionOperator } from '../../Utilities/Enums';
-import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
+import { IColumn } from '../../Utilities/Interface/IColumn';
+
 import {
-  DropdownButton,
+  Button,
+  Glyphicon,
   MenuItem,
+  FormGroup,
   InputGroup,
   FormControl,
-  Button,
-  FormGroup,
   OverlayTrigger,
   Tooltip,
-  Glyphicon,
+  DropdownButton,
   Panel,
-  Checkbox,
-  Radio,
 } from 'react-bootstrap';
-import { IColumn } from '../../Utilities/Interface/IColumn';
-import { UIHelper } from '../UIHelper';
-import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
+import ExpressionHelper from '../../Utilities/Helpers/ExpressionHelper';
+import {
+  LeafExpressionOperator,
+  RangeOperandType,
+  SelectionMode,
+} from '../../PredefinedConfig/Common/Enums';
+import EnumExtensions from '../../Utilities/Extensions/EnumExtensions';
 import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
-import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
-import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { IRange } from '../../Utilities/Interface/Expression/IRange';
+import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
+import UIHelper from '../UIHelper';
+import ObjectFactory from '../../Utilities/ObjectFactory';
+import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 
 export interface ExpressionBuilderRangesPropsExpressionBuilderRanges
   extends React.ClassAttributes<ExpressionBuilderRanges> {
   SelectedColumn: IColumn;
-  Ranges: Array<IRange>;
+  Ranges: Array<QueryRange>;
   Columns: Array<IColumn>;
-  onRangesChange: (Ranges: Array<IRange>) => void;
+  onRangesChange: (Ranges: Array<QueryRange>) => void;
   cssClassName: string;
 }
 
@@ -101,7 +102,7 @@ export class ExpressionBuilderRanges extends React.Component<
       return (
         <div className="ab_no_padding_medium_margin" style={betweenDivStyle} key={index}>
           <AdaptableBlotterForm horizontal key={index}>
-            <FormGroup controlId={'Range' + index}>
+            <FormGroup controlId={'QueryRange' + index}>
               <InputGroup>
                 <FormControl
                   style={dropDownStyle}
@@ -197,7 +198,7 @@ export class ExpressionBuilderRanges extends React.Component<
     );
   }
 
-  getOperand1FormControl(index: number, range: IRange): any {
+  getOperand1FormControl(index: number, range: QueryRange): any {
     return (
       <FormControl
         style={operandStyle}
@@ -209,7 +210,7 @@ export class ExpressionBuilderRanges extends React.Component<
     );
   }
 
-  getOperand2FormControl(index: number, range: IRange): any {
+  getOperand2FormControl(index: number, range: QueryRange): any {
     return (
       <FormControl
         style={operandStyle}
@@ -234,21 +235,21 @@ export class ExpressionBuilderRanges extends React.Component<
   private onLeafExpressionOperatorChanged(index: number, event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
 
-    let rangeCol: Array<IRange> = [].concat(this.props.Ranges);
+    let rangeCol: Array<QueryRange> = [].concat(this.props.Ranges);
     let range = this.props.Ranges[index];
     rangeCol[index] = Object.assign({}, range, { Operator: e.value });
     this.props.onRangesChange(rangeCol);
   }
 
   private onRangeTypeChangedOperand1(index: number, rangeOperandType: RangeOperandType): any {
-    let rangeCol: Array<IRange> = [].concat(this.props.Ranges);
+    let rangeCol: Array<QueryRange> = [].concat(this.props.Ranges);
     let range = this.props.Ranges[index];
     rangeCol[index] = Object.assign({}, range, { Operand1Type: rangeOperandType });
     this.props.onRangesChange(rangeCol);
   }
 
   private onRangeTypeChangedOperand2(index: number, rangeOperandType: RangeOperandType): any {
-    let rangeCol: Array<IRange> = [].concat(this.props.Ranges);
+    let rangeCol: Array<QueryRange> = [].concat(this.props.Ranges);
     let range = this.props.Ranges[index];
     rangeCol[index] = Object.assign({}, range, { Operand2Type: rangeOperandType });
     this.props.onRangesChange(rangeCol);
@@ -256,7 +257,7 @@ export class ExpressionBuilderRanges extends React.Component<
 
   private onOperand1Edit(index: number, x: React.FormEvent<any>) {
     let e = x.target as HTMLInputElement;
-    let rangeCol: Array<IRange> = [].concat(this.props.Ranges);
+    let rangeCol: Array<QueryRange> = [].concat(this.props.Ranges);
     let range = this.props.Ranges[index];
     rangeCol[index] = Object.assign({}, range, { Operand1: e.value });
     this.props.onRangesChange(rangeCol);
@@ -264,14 +265,14 @@ export class ExpressionBuilderRanges extends React.Component<
 
   private onOperand2Edit(index: number, x: React.FormEvent<any>) {
     let e = x.target as HTMLInputElement;
-    let rangeCol: Array<IRange> = [].concat(this.props.Ranges);
+    let rangeCol: Array<QueryRange> = [].concat(this.props.Ranges);
     let range = this.props.Ranges[index];
     rangeCol[index] = Object.assign({}, range, { Operand2: e.value });
     this.props.onRangesChange(rangeCol);
   }
 
   private onColumnOperand1SelectedChanged(index: number, columns: IColumn[]) {
-    let rangeCol: Array<IRange> = [].concat(this.props.Ranges);
+    let rangeCol: Array<QueryRange> = [].concat(this.props.Ranges);
     let range = this.props.Ranges[index];
     let selectedColumn: string = columns.length > 0 ? columns[0].ColumnId : '';
     rangeCol[index] = Object.assign({}, range, { Operand1: selectedColumn });
@@ -279,7 +280,7 @@ export class ExpressionBuilderRanges extends React.Component<
   }
 
   private onColumnOperand2SelectedChanged(index: number, columns: IColumn[]) {
-    let rangeCol: Array<IRange> = [].concat(this.props.Ranges);
+    let rangeCol: Array<QueryRange> = [].concat(this.props.Ranges);
     let range = this.props.Ranges[index];
     let selectedColumn: string = columns.length > 0 ? columns[0].ColumnId : '';
     rangeCol[index] = Object.assign({}, range, { Operand2: selectedColumn });

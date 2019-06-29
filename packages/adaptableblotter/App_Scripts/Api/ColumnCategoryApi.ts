@@ -1,40 +1,42 @@
 import * as ColumnCategoryRedux from '../Redux/ActionsReducers/ColumnCategoryRedux';
 import { ApiBase } from './ApiBase';
 import { IColumnCategoryApi } from './Interface/IColumnCategoryApi';
-import { IColumnCategory } from '../Utilities/Interface/BlotterObjects/IColumnCategory';
-import { ColumnCategoryState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  ColumnCategoryState,
+  ColumnCategory,
+} from '../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export class ColumnCategoryApi extends ApiBase implements IColumnCategoryApi {
   public getColumnCategoryState(): ColumnCategoryState {
     return this.getBlotterState().ColumnCategory;
   }
 
-  public getAllColumnCategory(): IColumnCategory[] {
+  public getAllColumnCategory(): ColumnCategory[] {
     return this.getColumnCategoryState().ColumnCategories;
   }
 
-  public getColumnCategoryById(columnCategoryId: string): IColumnCategory {
+  public getColumnCategoryById(columnCategoryId: string): ColumnCategory {
     return this.getAllColumnCategory().find(cc => cc.ColumnCategoryId == columnCategoryId);
   }
 
-  public addColumnCategory(columnCategory: IColumnCategory): void {
+  public addColumnCategory(columnCategory: ColumnCategory): void {
     this.dispatchAction(ColumnCategoryRedux.ColumnCategoryAdd(columnCategory));
   }
 
   public createColumnCategory(columnCategoryId: string, columns: string[]): void {
-    let columnCategory: IColumnCategory = {
+    let columnCategory: ColumnCategory = {
       ColumnCategoryId: columnCategoryId,
       ColumnIds: columns,
     };
     this.addColumnCategory(columnCategory);
   }
 
-  public editColumnCategory(columnCategory: IColumnCategory): void {
+  public editColumnCategory(columnCategory: ColumnCategory): void {
     this.dispatchAction(ColumnCategoryRedux.ColumnCategoryEdit(columnCategory));
   }
 
   public addColumnsToColumnCategory(columnCategoryId: string, columns: string[]): void {
-    let columnCategory: IColumnCategory = this.getColumnCategoryById(columnCategoryId);
+    let columnCategory: ColumnCategory = this.getColumnCategoryById(columnCategoryId);
     columns.forEach(c => {
       columnCategory.ColumnIds.push(c);
     });
@@ -42,7 +44,7 @@ export class ColumnCategoryApi extends ApiBase implements IColumnCategoryApi {
   }
 
   public removeColumnsFromColumnCategory(columnCategoryId: string, columns: string[]): void {
-    let columnCategory: IColumnCategory = this.getAllColumnCategory().find(
+    let columnCategory: ColumnCategory = this.getAllColumnCategory().find(
       cc => cc.ColumnCategoryId == columnCategoryId
     );
     columns.forEach(c => {
@@ -53,7 +55,7 @@ export class ColumnCategoryApi extends ApiBase implements IColumnCategoryApi {
   }
 
   public deleteColumnCategory(columnCategoryId: string): void {
-    let columnCategory: IColumnCategory = this.getAllColumnCategory().find(
+    let columnCategory: ColumnCategory = this.getAllColumnCategory().find(
       cc => cc.ColumnCategoryId == columnCategoryId
     );
     this.dispatchAction(ColumnCategoryRedux.ColumnCategoryDelete(columnCategory));

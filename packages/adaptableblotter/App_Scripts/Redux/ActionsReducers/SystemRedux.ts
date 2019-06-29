@@ -1,12 +1,12 @@
 import * as Redux from 'redux';
-import { SystemState } from './Interface/IState';
+import { SystemState } from '../../PredefinedConfig/InternalState/SystemState';
 import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
-import { ExportDestination } from '../../Utilities/Enums';
+import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { IPPDomain } from '../../Utilities/Interface/Reports/IPPDomain';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
-import { ChartVisibility } from '../../Utilities/ChartEnums';
+import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import {
   EMPTY_ARRAY,
   SYSTEM_DEFAULT_CHART_VISIBILITY,
@@ -15,12 +15,12 @@ import {
 } from '../../Utilities/Constants/GeneralConstants';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
-import { IChartData } from '../../Utilities/Interface/BlotterObjects/Charting/IChartData';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IRange } from '../../Utilities/Interface/Expression/IRange';
-import { Expression } from '../../Utilities/Expression';
+import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { IColumn } from '../../Utilities/Interface/IColumn';
-import { IReport } from '../../Utilities/Interface/BlotterObjects/IReport';
+import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
+import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -91,13 +91,13 @@ export interface SystemAlertDeleteAction extends Redux.Action {
 export interface SystemAlertDeleteAllAction extends Redux.Action {}
 
 export interface ReportStartLiveAction extends Redux.Action {
-  Report: IReport;
+  Report: Report;
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull;
   WorkbookName: string;
 }
 
 export interface ReportStopLiveAction extends Redux.Action {
-  Report: IReport;
+  Report: Report;
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull;
 }
 
@@ -124,7 +124,7 @@ export interface BulkUpdateSetValidSelectionAction extends Redux.Action {
 }
 
 export interface ChartSetChartDataAction extends Redux.Action {
-  chartData: IChartData;
+  chartData: ChartData;
 }
 
 export interface ChartSetChartVisibiityAction extends Redux.Action {
@@ -147,7 +147,7 @@ export interface ReportSetErrorMessageAction extends Redux.Action {
   ErrorMessage: string;
 }
 export interface QuickSearchSetRangeAction extends Redux.Action {
-  Range: IRange;
+  QueryRange: QueryRange;
 }
 export interface QuickSearchClearRangeAction extends Redux.Action {}
 export interface QuickSearchSetVisibleColumnExpressionsAction extends Redux.Action {
@@ -189,7 +189,7 @@ export const SystemAlertDeleteAll = (): SystemAlertDeleteAllAction => ({
 });
 
 export const ReportStartLive = (
-  Report: IReport,
+  Report: Report,
   WorkbookName: string,
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
 ): ReportStartLiveAction => ({
@@ -200,7 +200,7 @@ export const ReportStartLive = (
 });
 
 export const ReportStopLive = (
-  Report: IReport,
+  Report: Report,
   ExportDestination: ExportDestination.OpenfinExcel | ExportDestination.iPushPull
 ): ReportStopLiveAction => ({
   type: REPORT_STOP_LIVE,
@@ -244,7 +244,7 @@ export const BulkUpdateSetPreview = (
   BulkUpdatePreviewInfo,
 });
 
-export const ChartSetChartData = (chartData: IChartData): ChartSetChartDataAction => ({
+export const ChartSetChartData = (chartData: ChartData): ChartSetChartDataAction => ({
   type: CHART_SET_CHART_DATA,
   chartData,
 });
@@ -279,9 +279,9 @@ export const ReportSetErrorMessage = (ErrorMessage: string): ReportSetErrorMessa
   type: REPORT_SET_ERROR_MESSAGE,
   ErrorMessage,
 });
-export const QuickSearchSetRange = (Range: IRange): QuickSearchSetRangeAction => ({
+export const QuickSearchSetRange = (QueryRange: QueryRange): QuickSearchSetRangeAction => ({
   type: QUICK_SEARCH_SET_RANGE,
-  Range,
+  QueryRange,
 });
 
 export const QuickSearchClearRange = (): QuickSearchClearRangeAction => ({
@@ -421,7 +421,7 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
     }
     case QUICK_SEARCH_SET_RANGE: {
       return Object.assign({}, state, {
-        QuickSearchRange: (<QuickSearchSetRangeAction>action).Range,
+        QuickSearchRange: (<QuickSearchSetRangeAction>action).QueryRange,
       });
     }
     case QUICK_SEARCH_CLEAR_RANGE: {

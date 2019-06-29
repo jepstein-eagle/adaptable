@@ -1,15 +1,14 @@
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IColumnSort } from '../Interface/IColumnSort';
-import { ILayout } from '../Interface/BlotterObjects/ILayout';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
-import { SortOrder } from '../Enums';
+import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
-import { LayoutState, GridState } from '../../Redux/ActionsReducers/Interface/IState';
+import { LayoutState, Layout, ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { GridState } from '../../PredefinedConfig/InternalState/GridState';
 import { ObjectFactory } from '../ObjectFactory';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
 
-export function getLayoutDescription(layout: ILayout, columns: IColumn[]): string {
+export function getLayoutDescription(layout: Layout, columns: IColumn[]): string {
   let returnString: string = '';
   returnString += layout.Columns.length + ' Columns; ';
   returnString += '\n';
@@ -17,13 +16,13 @@ export function getLayoutDescription(layout: ILayout, columns: IColumn[]): strin
   return returnString;
 }
 
-export function getColumnSort(columnSorts: IColumnSort[], columns: IColumn[]): string {
+export function getColumnSort(columnSorts: ColumnSort[], columns: IColumn[]): string {
   if (columnSorts.length == 0) {
     return 'None';
   }
 
   let returnString: string = '';
-  columnSorts.forEach((gs: IColumnSort) => {
+  columnSorts.forEach((gs: ColumnSort) => {
     returnString +=
       ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + getSortOrder(gs.SortOrder);
   });
@@ -50,7 +49,7 @@ export function autoSaveLayout(blotter: IAdaptableBlotter): void {
           visibleColumns.map(vc => vc.ColumnId),
           false
         );
-        let layoutToSave: ILayout = {
+        let layoutToSave: Layout = {
           Uuid: layout.Uuid,
           Name: layoutState.CurrentLayout,
           Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],

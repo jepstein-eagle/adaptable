@@ -1,13 +1,15 @@
-import { IColumnCategory } from '../../Utilities/Interface/BlotterObjects/IColumnCategory';
-import { ColumnCategoryState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  ColumnCategoryState,
+  ColumnCategory,
+} from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export interface IColumnCategoryApi {
   getColumnCategoryState(): ColumnCategoryState;
-  getAllColumnCategory(): IColumnCategory[];
-  getColumnCategoryById(columnCategoryId: string): IColumnCategory;
-  addColumnCategory(columnCategory: IColumnCategory): void;
+  getAllColumnCategory(): ColumnCategory[];
+  getColumnCategoryById(columnCategoryId: string): ColumnCategory;
+  addColumnCategory(columnCategory: ColumnCategory): void;
   createColumnCategory(columnCategoryId: string, columns: string[]): void;
-  editColumnCategory(columnCategory: IColumnCategory): void;
+  editColumnCategory(columnCategory: ColumnCategory): void;
   deleteColumnCategory(columnCategoryId: string): void;
   addColumnsToColumnCategory(columnCategoryId: string, columns: string[]): void;
   removeColumnsFromColumnCategory(columnCategoryId: string, columns: string[]): void;

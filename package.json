@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter-monorepo",
-  "version": "4.0.4",
+  "version": "4.0.7",
   "private": true,
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -9,7 +9,6 @@
     "copyfiles": "^2.1.0",
     "cpy-cli": "^2.0.0",
     "husky": ">=1",
-    "lerna": "^3.10.8",
     "lint-staged": ">=8",
     "next": "^8.1.0",
     "prettier": "^1.17.0",
@@ -35,7 +34,7 @@
     }
   },
   "lint-staged": {
-    "packages/**/*.{js,jsx,ts,tsx,css}": [
+    "packages/**/*.{js,jsx,ts,tsx}": [
       "prettier --write",
       "git add"
     ]

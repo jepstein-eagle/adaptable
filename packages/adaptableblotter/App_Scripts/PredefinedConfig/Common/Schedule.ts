@@ -1,0 +1,11 @@
+import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
+
+import { DayOfWeek } from './Enums';
+
+export interface Schedule extends AdaptableBlotterObject {
+  // A schedule can be either a one off date or just a recurring day (essentially a recurrence rule)
+  Hour: number;
+  Minute: number;
+  OneOffDate?: string;
+  DaysOfWeek?: DayOfWeek[];
+}

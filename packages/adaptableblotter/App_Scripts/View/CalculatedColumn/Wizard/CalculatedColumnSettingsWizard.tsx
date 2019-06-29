@@ -7,12 +7,12 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { ICalculatedColumn } from '../../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
+import { CalculatedColumn } from '../../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 
 export interface CalculatedColumnSettingsWizardProps
-  extends AdaptableWizardStepProps<ICalculatedColumn> {}
+  extends AdaptableWizardStepProps<CalculatedColumn> {}
 export interface CalculatedColumnSettingsWizardState {
   ColumnId: string;
   ErrorMessage: string;

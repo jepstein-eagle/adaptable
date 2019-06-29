@@ -14,16 +14,16 @@ import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IColumnFilter } from '../../Utilities/Interface/BlotterObjects/IColumnFilter';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 import EmptyContent from '../../components/EmptyContent';
 
 interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
-  ColumnFilters: IColumnFilter[];
+  ColumnFilters: ColumnFilter[];
   onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps, {}> {
@@ -98,7 +98,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
     this.props.Blotter.clearColumnFiltering([columnId]);
   }
 
-  private onSaveColumnFilterasUserFilter(columnFilter: IColumnFilter): void {
+  private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {
     let prompt: IUIPrompt = {
       Header: 'Enter name for User Filter',
       Msg: '',
@@ -119,7 +119,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     onClearColumnFilter: (columnId: string) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId)),
   };
 }

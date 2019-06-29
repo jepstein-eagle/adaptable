@@ -18,16 +18,16 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IColumnCategory } from '../../Utilities/Interface/BlotterObjects/IColumnCategory';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { StrategyProfile } from '../Components/StrategyProfile';
 
 export interface ColumnCategorySummaryProps
   extends StrategySummaryProps<ColumnCategorySummaryComponent> {
-  ColumnCategorys: IColumnCategory[];
-  // onAddUpdateColumnCategory: (index: number, ColumnCategory: IColumnCategory) => ColumnCategoryRedux.ColumnCategoryAddUpdateConditionAction
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  ColumnCategorys: ColumnCategory[];
+  // onAddUpdateColumnCategory: (index: number, ColumnCategory: ColumnCategory) => ColumnCategoryRedux.ColumnCategoryAddUpdateConditionAction
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class ColumnCategorySummaryComponent extends React.Component<
@@ -40,7 +40,7 @@ export class ColumnCategorySummaryComponent extends React.Component<
   }
   render(): any {
     let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__ColumnCategory';
-    let ColumnCategory: IColumnCategory = this.props.ColumnCategorys.find(lk =>
+    let ColumnCategory: ColumnCategory = this.props.ColumnCategorys.find(lk =>
       ArrayExtensions.ContainsItem(lk.ColumnIds, this.props.SummarisedColumn.ColumnId)
     );
     let noColumnCategory: boolean = ColumnCategory == null;
@@ -88,9 +88,7 @@ export class ColumnCategorySummaryComponent extends React.Component<
         {this.state.EditedAdaptableBlotterObject && (
           <ColumnCategoryWizard
             cssClassName={cssWizardClassName}
-            EditedAdaptableBlotterObject={
-              this.state.EditedAdaptableBlotterObject as IColumnCategory
-            }
+            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as ColumnCategory}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
             Columns={this.props.Columns}
@@ -109,7 +107,7 @@ export class ColumnCategorySummaryComponent extends React.Component<
   }
 
   onNew() {
-    let configEntity: IColumnCategory = ObjectFactory.CreateEmptyColumnCategory();
+    let configEntity: ColumnCategory = ObjectFactory.CreateEmptyColumnCategory();
     this.setState({
       EditedAdaptableBlotterObject: configEntity,
       WizardStartIndex: 1,
@@ -117,7 +115,7 @@ export class ColumnCategorySummaryComponent extends React.Component<
     });
   }
 
-  onEdit(ColumnCategory: IColumnCategory) {
+  onEdit(ColumnCategory: ColumnCategory) {
     this.setState({
       EditedAdaptableBlotterObject: Helper.cloneObject(ColumnCategory),
       WizardStartIndex: 1,
@@ -134,12 +132,12 @@ export class ColumnCategorySummaryComponent extends React.Component<
   }
 
   onFinishWizard() {
-    //  this.props.onAddUpdateColumnCategory(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as IColumnCategory);
+    //  this.props.onAddUpdateColumnCategory(this.state.EditedAdaptableBlotterObjectIndex, this.state.EditedAdaptableBlotterObject as ColumnCategory);
     //  this.setState({ EditedAdaptableBlotterObject: null, WizardStartIndex: 0, EditedAdaptableBlotterObjectIndex: -1, });
   }
 
   canFinishWizard() {
-    //   let ColumnCategory = this.state.EditedAdaptableBlotterObject as IColumnCategory
+    //   let ColumnCategory = this.state.EditedAdaptableBlotterObject as ColumnCategory
     //   return StringExtensions.IsNotNullOrEmpty(ColumnCategory.ColumnId) &&
     //       StringExtensions.IsNotNullOrEmpty(ColumnCategory.NudgeValue.toString()) && // check its a number??
     //       (ColumnCategory.IsDefaultNudge || ExpressionHelper.IsNotEmptyOrInvalidExpression(ColumnCategory.Expression))
@@ -158,9 +156,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    //   onAddUpdateColumnCategory: (index: number, ColumnCategory: IColumnCategory) => dispatch(ColumnCategoryRedux.ColumnCategoryAddUpdateCondition(index, ColumnCategory)),
+    //   onAddUpdateColumnCategory: (index: number, ColumnCategory: ColumnCategory) => dispatch(ColumnCategoryRedux.ColumnCategoryAddUpdateCondition(index, ColumnCategory)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnCategoryStrategyId)
       ),

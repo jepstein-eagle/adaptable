@@ -1,20 +1,20 @@
 import { IEventApi } from './Api/Interface/IEventApi';
 import {
-  IThemeChangedEventArgs,
-  IColumnStateChangedEventArgs,
-  IAlertFiredEventArgs,
-} from './Utilities/Interface/IBlotterEvents';
-import { ISearchChangedEventArgs } from './Utilities/Interface/SearchChanged/ISearchChangedEventArgs';
+  ThemeChangedEventArgs,
+  ColumnStateChangedEventArgs,
+  AlertFiredEventArgs,
+} from './Api/Events/BlotterEvents';
+import { SearchChangedEventArgs } from './Api/Events/SearchChanged/SearchChangedEventArgs';
 
+export { PredefinedConfig } from './PredefinedConfig/PredefinedConfig';
 export { IAdaptableBlotter } from './Utilities/Interface/IAdaptableBlotter';
-export {
-  IAdaptableBlotterOptions,
-} from './Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
+export { IBlotterApi } from './Api/Interface/IBlotterApi';
+export { AdaptableBlotterOptions } from './BlotterOptions/AdaptableBlotterOptions';
 
 export {
   IEventApi,
-  ISearchChangedEventArgs,
-  IThemeChangedEventArgs,
-  IColumnStateChangedEventArgs,
-  IAlertFiredEventArgs,
+  SearchChangedEventArgs,
+  ThemeChangedEventArgs,
+  ColumnStateChangedEventArgs,
+  AlertFiredEventArgs,
 };

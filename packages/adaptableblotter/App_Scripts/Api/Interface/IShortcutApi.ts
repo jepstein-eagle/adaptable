@@ -1,9 +1,8 @@
-import { IShortcut } from '../../Utilities/Interface/BlotterObjects/IShortcut';
-import { ShortcutState } from '../../Redux/ActionsReducers/Interface/IState';
+import { ShortcutState, Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
 export interface IShortcutApi {
   getShortcutState(): ShortcutState;
-  getAllShortcut(): IShortcut[];
-  addShortcut(shortcut: IShortcut): void;
-  deleteShortcut(shortcut: IShortcut): void;
+  getAllShortcut(): Shortcut[];
+  addShortcut(shortcut: Shortcut): void;
+  deleteShortcut(shortcut: Shortcut): void;
   deleteAllShortcut(): void;
 }

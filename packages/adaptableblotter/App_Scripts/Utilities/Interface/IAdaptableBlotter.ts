@@ -1,19 +1,14 @@
-import { DistinctCriteriaPairValue } from '../Enums';
+import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 import { ICellInfo } from './ICellInfo';
-import { IVendorGridInfo } from './IVendorGridInfo';
 import { IAdaptableBlotterStore } from '../../Redux/Store/Interface/IAdaptableStore';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { IColumn } from './IColumn';
-import { IColumnSort } from './IColumnSort';
-import { IPercentBar } from './BlotterObjects/IPercentBar';
-import { IFreeTextColumn } from './BlotterObjects/IFreeTextColumn';
-import { ICalculatedColumn } from './BlotterObjects/ICalculatedColumn';
+
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
-import { IAdaptableBlotterOptions } from './BlotterOptions/IAdaptableBlotterOptions';
+import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 import { ICalendarService } from '../Services/Interface/ICalendarService';
 import { IDataService } from '../Services/Interface/IDataService';
 import { IValidationService } from '../Services/Interface/IValidationService';
-import { AuditLogService } from '../Services/AuditLogService';
 import { ICalculatedColumnExpressionService } from '../Services/Interface/ICalculatedColumnExpressionService';
 import { IChartService } from '../Services/Interface/IChartService';
 import { IPPStyle } from './Reports/IPPStyle';
@@ -23,11 +18,15 @@ import { ILicenceService } from '../Services/Interface/ILicenceService';
 import { IScheduleService } from '../Services/Interface/IScheduleService';
 import { IAuditLogService } from '../Services/Interface/IAuditLogService';
 import { ISearchService } from '../Services/Interface/ISearchService';
+import { ColumnSort, VendorGridInfo } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
+import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 
 /**
  *  The only interface for the AdaptableBlotter
  *  Contains all the properties and methods that each implemenation must include
- *  Each implemenation has a constructor that contains an IAdaptableBlotterOptions object.
+ *  Each implemenation has a constructor that contains an AdaptableBlotterOptions object.
  *  This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use
  */
 export interface IAdaptableBlotter {
@@ -40,10 +39,10 @@ export interface IAdaptableBlotter {
   /**
    * The main configuration object which contains all the options that users needs to set up the Blotter
    * Most properties are nullable with sensible defaults provided in DefaultBlotterOptions that is merged at initialisation
-   * Each implementation of the Adaptable Blotter has a constructor that contains an IAdaptableBlotterOptions object.
+   * Each implementation of the Adaptable Blotter has a constructor that contains an AdaptableBlotterOptions object.
    * This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use and the way that we can access the underlying grid and its data
    */
-  blotterOptions: IAdaptableBlotterOptions;
+  blotterOptions: AdaptableBlotterOptions;
 
   /**
    * The redux store that we use to manage state
@@ -151,20 +150,20 @@ export interface IAdaptableBlotter {
   //  Sort
   setCustomSort(columnId: string, comparer: Function): void;
   removeCustomSort(columnId: string): void;
-  setColumnSort(columnSorts: IColumnSort[]): void;
+  setColumnSort(columnSorts: ColumnSort[]): void;
 
   //FreeTextColumn
-  addFreeTextColumnToGrid(freeTextColumn: IFreeTextColumn): void;
+  addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn): void;
 
   //CalculatedColumn
-  addCalculatedColumnToGrid(calculatedColumn: ICalculatedColumn): void;
+  addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn): void;
   removeCalculatedColumnFromGrid(calculatedColumnID: string): void;
-  editCalculatedColumnInGrid(calculatedColumn: ICalculatedColumn): void;
+  editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void;
 
   // percentBar
-  removePercentBar(percentBar: IPercentBar): void;
-  addPercentBar(percentBar: IPercentBar): void;
-  editPercentBar(percentBar: IPercentBar): void;
+  removePercentBar(percentBar: PercentBar): void;
+  addPercentBar(percentBar: PercentBar): void;
+  editPercentBar(percentBar: PercentBar): void;
 
   // Filtering
   hideFilterForm(): void;
@@ -182,8 +181,8 @@ export interface IAdaptableBlotter {
   getVisibleColumnCount(): number;
 
   // layout
-  getVendorGridState(visibleCols: string[], forceFetch: boolean): IVendorGridInfo;
-  setVendorGridState(vendorGridState: IVendorGridInfo): void;
+  getVendorGridState(visibleCols: string[], forceFetch: boolean): VendorGridInfo;
+  setVendorGridState(vendorGridState: VendorGridInfo): void;
 
   // vendor grid related
   isSelectable(): boolean;

@@ -5,19 +5,19 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as ShortcutRedux from '../Redux/ActionsReducers/ShortcutRedux';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { DataType, MathOperation, ActionMode } from '../Utilities/Enums';
+import { DataType, MathOperation, ActionMode } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
-import { IShortcut } from '../Utilities/Interface/BlotterObjects/IShortcut';
-import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICellValidationRule';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
-import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
+import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
+import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
+import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -49,7 +49,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     if (activeCell && !selectedColumn.ReadOnly) {
       let columnDataType: DataType = selectedColumn.DataType;
       let keyEventString: string = Helper.getStringRepresentionFromKey(keyEvent);
-      let activeShortcut: IShortcut;
+      let activeShortcut: Shortcut;
       let valueToReplace: any;
       switch (columnDataType) {
         case DataType.Number: {
@@ -96,7 +96,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       }
 
       if (activeShortcut) {
-        let dataChangedEvent: IDataChangedInfo = {
+        let dataChangedEvent: DataChangedInfo = {
           OldValue: activeCell.Value,
           NewValue: valueToReplace,
           ColumnId: activeCell.ColumnId,
@@ -104,7 +104,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
           Record: null,
         };
 
-        let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+        let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
           dataChangedEvent
         );
         let hasErrorPrevent: boolean =
@@ -157,7 +157,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
   }
 
   private applyShortcut(
-    activeShortcut: IShortcut,
+    activeShortcut: Shortcut,
     activeCell: ICellInfo,
     newValue: any,
     keyEventString: string
@@ -166,7 +166,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       { Id: activeCell.Id, ColumnId: activeCell.ColumnId, Value: newValue },
     ]);
 
-    let functionAppliedDetails: IFunctionAppliedDetails = {
+    let functionAppliedDetails: FunctionAppliedDetails = {
       name: StrategyConstants.ShortcutStrategyId,
       action: ShortcutRedux.SHORTCUT_APPLY,
       info: 'KeyPressed:' + keyEventString,
@@ -180,7 +180,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     this.blotter.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
   }
 
-  private ShowErrorPreventMessage(failedRule: ICellValidationRule): void {
+  private ShowErrorPreventMessage(failedRule: CellValidationRule): void {
     this.blotter.api.alertApi.showAlertError(
       'Shortcut Failed',
       ObjectFactory.CreateCellValidationMessage(failedRule, this.blotter),
@@ -189,8 +189,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
   }
 
   private ShowWarningMessages(
-    failedRules: ICellValidationRule[],
-    shortcut: IShortcut,
+    failedRules: CellValidationRule[],
+    shortcut: Shortcut,
     activeCell: ICellInfo,
     keyEventString: string,
     newValue: any
@@ -213,6 +213,6 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       cancelAction,
       warningMessage
     );
-    this.blotter.api.internalApi.PopupShowConfirmation(confirmation);
+    this.blotter.api.internalApi.showPopupConfirmation(confirmation);
   }
 }

@@ -10,15 +10,15 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { AccessLevel, DashboardSize } from '../../Utilities/Enums';
+import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
-import { IUserTheme } from '../../Utilities/Interface/BlotterObjects/IUserTheme';
+import { UserTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
 
 interface ThemeToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ThemeToolbarControlComponent> {
   onSelectTheme: (theme: string) => ThemeRedux.ThemeSelectAction;
   SystemThemes: string[];
-  UserThemes: IUserTheme[];
+  UserThemes: UserTheme[];
   CurrentTheme: string;
 }
 

@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
-import { MenuState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
+import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
+import { MenuState } from '../../PredefinedConfig/InternalState/MenuState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { DualListBoxEditor, DisplaySize } from '../Components/ListBox/DualListBoxEditor';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -20,7 +21,7 @@ import {
   Panel,
   Form,
 } from 'react-bootstrap';
-import { IEntitlement } from '../../Utilities/Interface/IEntitlement';
+import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {
   DashboardState: DashboardState;

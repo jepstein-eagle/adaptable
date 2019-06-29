@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap';
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard';
 import { WizardLegend } from './WizardLegend';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { AccessLevel } from '../../Utilities/Enums';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';

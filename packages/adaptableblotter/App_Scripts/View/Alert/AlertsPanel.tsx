@@ -5,7 +5,7 @@ import { UIHelper } from '../UIHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AccessLevel } from '../../Utilities/Enums';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 

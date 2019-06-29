@@ -4,12 +4,12 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType } from '../../../Utilities/Enums';
+import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IAlertDefinition } from '../../../Utilities/Interface/BlotterObjects/IAlertDefinition';
+import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
 
-export interface AlertTypeWizardProps extends AdaptableWizardStepProps<IAlertDefinition> {}
+export interface AlertTypeWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 
 export interface AlertTypeWizardState {
   MessageType: MessageType;

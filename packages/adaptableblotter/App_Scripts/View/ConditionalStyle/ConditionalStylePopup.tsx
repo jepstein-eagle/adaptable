@@ -7,7 +7,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { HelpBlock } from 'react-bootstrap';
-import { ConditionalStyleScope } from '../../Utilities/Enums';
+import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -24,24 +24,24 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IColumnCategory } from '../../Utilities/Interface/BlotterObjects/IColumnCategory';
-import { IConditionalStyle } from '../../Utilities/Interface/BlotterObjects/IConditionalStyle';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
 
 interface ConditionalStylePopupProps
   extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
-  ConditionalStyles: IConditionalStyle[];
+  ConditionalStyles: ConditionalStyle[];
   StyleClassNames: string[];
-  ColumnCategories: IColumnCategory[];
+  ColumnCategories: ColumnCategory[];
   onAddConditionalStyle: (
-    condiditionalStyleCondition: IConditionalStyle
+    condiditionalStyleCondition: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleAddAction;
   onEditConditionalStyle: (
-    condiditionalStyleCondition: IConditionalStyle
+    condiditionalStyleCondition: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ConditionalStylePopupComponent extends React.Component<
@@ -57,7 +57,7 @@ class ConditionalStylePopupComponent extends React.Component<
     if (StringExtensions.IsNotNullOrEmpty(this.props.PopupParams)) {
       let arrayParams = this.props.PopupParams.split('|');
       if (arrayParams.length == 2 && arrayParams[0] == 'New') {
-        let _editedConditionalStyle: IConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
+        let _editedConditionalStyle: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
         _editedConditionalStyle.ColumnId = arrayParams[1];
         _editedConditionalStyle.ConditionalStyleScope = ConditionalStyleScope.Column;
         this.setState({
@@ -87,7 +87,7 @@ class ConditionalStylePopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
     let conditionalStyles = this.props.ConditionalStyles.map(
-      (conditionalStyle: IConditionalStyle, index) => {
+      (conditionalStyle: ConditionalStyle, index) => {
         return (
           <ConditionalStyleEntityRow
             cssClassName={cssClassName}
@@ -143,7 +143,7 @@ class ConditionalStylePopupComponent extends React.Component<
             <ConditionalStyleWizard
               cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={
-                this.state.EditedAdaptableBlotterObject as IConditionalStyle
+                this.state.EditedAdaptableBlotterObject as ConditionalStyle
               }
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
@@ -173,8 +173,8 @@ class ConditionalStylePopupComponent extends React.Component<
     });
   }
 
-  onEdit(condition: IConditionalStyle) {
-    let clonedObject: IConditionalStyle = Helper.cloneObject(condition);
+  onEdit(condition: ConditionalStyle) {
+    let clonedObject: ConditionalStyle = Helper.cloneObject(condition);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 0,
@@ -192,7 +192,7 @@ class ConditionalStylePopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    const conditionalStyle = this.state.EditedAdaptableBlotterObject as IConditionalStyle;
+    const conditionalStyle = this.state.EditedAdaptableBlotterObject as ConditionalStyle;
     if (this.state.WizardStatus == WizardStatus.New) {
       this.props.onAddConditionalStyle(conditionalStyle);
     } else if (this.state.WizardStatus == WizardStatus.Edit) {
@@ -207,7 +207,7 @@ class ConditionalStylePopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let conditionalStyle = this.state.EditedAdaptableBlotterObject as IConditionalStyle;
+    let conditionalStyle = this.state.EditedAdaptableBlotterObject as ConditionalStyle;
     if (
       conditionalStyle.ConditionalStyleScope == ConditionalStyleScope.Column &&
       StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnId)
@@ -237,11 +237,11 @@ function mapStateToProps(state: AdaptableBlotterState) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddConditionalStyle: (conditionalStyle: IConditionalStyle) =>
+    onAddConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
-    onEditConditionalStyle: (conditionalStyle: IConditionalStyle) =>
+    onEditConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)
       ),

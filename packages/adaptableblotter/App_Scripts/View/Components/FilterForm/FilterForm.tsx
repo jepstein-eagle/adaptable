@@ -17,17 +17,17 @@ import {
   LeafExpressionOperator,
   ContextMenuTab,
   AccessLevel,
-} from '../../../Utilities/Enums';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IColumnFilter } from '../../../Utilities/Interface/BlotterObjects/IColumnFilter';
-import { IRange } from '../../../Utilities/Interface/Expression/IRange';
+} from '../../../PredefinedConfig/Common/Enums';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { ButtonClose } from '../Buttons/ButtonClose';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import { Expression } from '../../../Utilities/Expression';
+import { Expression } from '../../../PredefinedConfig/Common/Expression/Expression';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ButtonClear } from '../Buttons/ButtonClear';
 import { Waiting } from './Waiting';
@@ -45,15 +45,15 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: IColumn;
   Blotter: IAdaptableBlotter;
   Columns: IColumn[];
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SystemFilters: string[];
-  ColumnFilters: IColumnFilter[];
+  ColumnFilters: ColumnFilter[];
   ContextMenuItems: IMenuItem[];
   EmbedColumnMenu: boolean;
   ShowCloseButton: boolean;
   onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
-  onAddColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
-  onEditColumnFilter: (columnFilter: IColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
+  onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
+  onEditColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
   onHideFilterForm: () => GridRedux.FilterFormHideAction;
   onContextMenuItemClick: (action: Redux.Action) => Redux.Action;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
@@ -180,7 +180,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       return { RawValue: uf, DisplayValue: uf };
     });
 
-    let existingColumnFilter: IColumnFilter =
+    let existingColumnFilter: ColumnFilter =
       this.props.CurrentColumn.DataType != DataType.Boolean &&
       this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
@@ -194,7 +194,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         ? existingColumnFilter.Filter.FilterExpressions[0].Filters
         : [];
 
-    let uiSelectedRangeExpression: IRange =
+    let uiSelectedRangeExpression: QueryRange =
       existingColumnFilter && existingColumnFilter.Filter.RangeExpressions.length > 0
         ? existingColumnFilter.Filter.RangeExpressions[0].Ranges[0]
         : ExpressionHelper.CreateEmptyRange();
@@ -337,7 +337,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       }
     });
 
-    let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(
+    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
 
@@ -355,7 +355,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   }
 
   onClickUserFilter(userFilters: string[]) {
-    let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(
+    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
 
@@ -377,8 +377,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     this.persistFilter(columnDisplayValues, columnRawValues, userFilters, rangeExpressions);
   }
 
-  onSetCustomExpression(rangeExpression: IRange) {
-    let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(
+  onSetCustomExpression(rangeExpression: QueryRange) {
+    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
 
@@ -404,7 +404,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     columnDisplayValues: string[],
     columnRawValues: string[],
     userFilters: string[],
-    rangeExpressions: IRange[]
+    rangeExpressions: QueryRange[]
   ): void {
     let expression: Expression;
     expression = ExpressionHelper.CreateSingleColumnExpression(
@@ -414,7 +414,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       userFilters,
       rangeExpressions
     );
-    let columnFilter: IColumnFilter = this.props.ColumnFilters.find(
+    let columnFilter: ColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
     let alreadyExists: boolean = columnFilter != null;
@@ -445,7 +445,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   }
 
   onSaveFilter() {
-    let existingColumnFilter: IColumnFilter = this.props.ColumnFilters.find(
+    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
 
@@ -489,9 +489,9 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
     onContextMenuItemClick: (action: Redux.Action) => dispatch(action),
     onClearColumnFilter: (columnId: string) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
-    onAddColumnFilter: (columnFilter: IColumnFilter) =>
+    onAddColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
-    onEditColumnFilter: (columnFilter: IColumnFilter) =>
+    onEditColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter)),
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
     onHideFilterForm: () => dispatch(GridRedux.FilterFormHide()),

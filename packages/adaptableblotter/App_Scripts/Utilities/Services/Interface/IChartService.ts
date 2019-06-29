@@ -1,13 +1,12 @@
 import {
-  ICategoryChartDefinition,
-  IPieChartDefinition,
-} from '../../Interface/BlotterObjects/Charting/IChartDefinition';
-import { IChartData } from '../../Interface/BlotterObjects/Charting/IChartData';
-import { IPieChartDataItem } from '../../Interface/BlotterObjects/Charting/IPieChartDataItem';
+  CategoryChartDefinition,
+  ChartData,
+  PieChartDefinition,
+} from '../../../PredefinedConfig/RunTimeState/ChartState';
 import { IColumn } from '../../Interface/IColumn';
 
 export interface IChartService {
-  BuildCategoryChartData(chartDefinition: ICategoryChartDefinition, columns: IColumn[]): IChartData;
+  BuildCategoryChartData(chartDefinition: CategoryChartDefinition, columns: IColumn[]): ChartData;
 
-  BuildPieChartData(chartDefinition: IPieChartDefinition): IChartData;
+  BuildPieChartData(chartDefinition: PieChartDefinition): ChartData;
 }

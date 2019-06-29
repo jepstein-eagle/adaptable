@@ -1,4 +1,4 @@
-import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
+import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { BlotterFactoryAgGrid } from '../agGrid/BlotterFactoryAgGrid';
 import { BlotterFactoryHypergrid } from '../Hypergrid/BlotterFactoryHypergrid';
@@ -10,7 +10,7 @@ import { BlotterFactoryHypergrid } from '../Hypergrid/BlotterFactoryHypergrid';
  */
 export module BlotterFactory {
   export function CreateAdaptableBlotter(
-    adaptableBlotterOptions: IAdaptableBlotterOptions,
+    adaptableBlotterOptions: AdaptableBlotterOptions,
     vendorGridName: 'agGrid' | 'Hypergrid'
   ): IAdaptableBlotter {
     switch (vendorGridName) {

@@ -1,12 +1,12 @@
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IStrategy } from './Interface/IStrategy';
 import { Action } from 'redux';
-import { DataType } from '../Utilities/Enums';
+import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { IEntitlement } from '../Utilities/Interface/IEntitlement';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
+import { IEntitlement } from '../PredefinedConfig/DesignTimeState/EntitlementsState';
 
 /**
  * Base class for all strategies and does most of the work of creating menus
@@ -138,7 +138,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   }
 
   private addContextMenuItemToStore(menuItem: IMenuItem): void {
-    this.blotter.api.internalApi.ColumnContextMenuAddItem(menuItem);
+    this.blotter.api.internalApi.addColumnContextMenuItem(menuItem);
   }
 
   canCreateContextMenuItem(

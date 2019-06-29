@@ -1,8 +1,10 @@
 import * as EntitlementsRedux from '../Redux/ActionsReducers/EntitlementsRedux';
 import { ApiBase } from './ApiBase';
 import { IEntitlementApi } from './Interface/IEntitlementApi';
-import { IEntitlement } from '../Utilities/Interface/IEntitlement';
-import { EntitlementsState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  EntitlementsState,
+  IEntitlement,
+} from '../PredefinedConfig/DesignTimeState/EntitlementsState';
 
 export class EntitlementApi extends ApiBase implements IEntitlementApi {
   public getEntitlementState(): EntitlementsState {

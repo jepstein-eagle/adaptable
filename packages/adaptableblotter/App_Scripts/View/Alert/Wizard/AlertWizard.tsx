@@ -6,11 +6,11 @@ import { AlertRulesWizard } from './AlertRulesWizard';
 import { AlertSummaryWizard } from './AlertSummaryWizard';
 import { AlertSelectQueryWizard } from './AlertSelectQueryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { AlertTypeWizard } from './AlertTypeWizard';
 
 export interface AlertWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<AlertWizard> {}
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<AlertWizard> {}
 
 export class AlertWizard extends React.Component<AlertWizardProps, {}> {
   render() {

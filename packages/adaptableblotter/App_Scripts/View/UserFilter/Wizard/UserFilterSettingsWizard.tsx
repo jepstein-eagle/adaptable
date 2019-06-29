@@ -4,13 +4,13 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 
-export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<IUserFilter> {
-  UserFilters: IUserFilter[];
+export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<UserFilter> {
+  UserFilters: UserFilter[];
 }
 export interface UserFilterSettingsWizardState {
   FilterName: string;

@@ -8,11 +8,10 @@ import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { IColumnCategory } from '../../../Utilities/Interface/BlotterObjects/IColumnCategory';
+import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
-export interface ColumnCategoryColumnsWizardProps
-  extends AdaptableWizardStepProps<IColumnCategory> {
-  ColumnCategorys: IColumnCategory[];
+export interface ColumnCategoryColumnsWizardProps extends AdaptableWizardStepProps<ColumnCategory> {
+  ColumnCategorys: ColumnCategory[];
 }
 export interface ColumnCategoryColumnsWizardState {
   AvailableColumns: string[];

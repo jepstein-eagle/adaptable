@@ -1,4 +1,4 @@
-import { IAdaptableBlotterObject } from '../../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
+import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
 
 /// <reference path="../../typings/.d.ts" />
 
@@ -9,7 +9,7 @@ export enum WizardStatus {
 }
 
 export interface EditableConfigEntityState {
-  EditedAdaptableBlotterObject: IAdaptableBlotterObject;
+  EditedAdaptableBlotterObject: AdaptableBlotterObject;
   WizardStartIndex: number;
   WizardStatus: WizardStatus;
 }

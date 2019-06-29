@@ -1,4 +1,4 @@
-import { ICellValidationRule } from './BlotterObjects/ICellValidationRule';
+import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
 export interface IPreviewInfo {
   ColumnId: string;
@@ -16,5 +16,5 @@ export interface IPreviewResult {
   Id: any;
   InitialValue: number;
   ComputedValue: number;
-  ValidationRules: ICellValidationRule[];
+  ValidationRules: CellValidationRule[];
 }

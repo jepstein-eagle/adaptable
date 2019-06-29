@@ -10,14 +10,14 @@ import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 
-import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { IAdaptableBlotter, AdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsFTSE(50);
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsFtse(
+  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsFtse(
     gridOptions,
     'ftse demo'
   );

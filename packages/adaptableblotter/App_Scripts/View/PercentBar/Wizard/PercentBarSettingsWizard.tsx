@@ -14,16 +14,16 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType, SelectionMode } from '../../../Utilities/Enums';
+import { MessageType, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
-import { IPercentBar } from '../../../Utilities/Interface/BlotterObjects/IPercentBar';
+import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColorPicker } from '../../ColorPicker';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
-export interface PercentBarSettingsWizardProps extends AdaptableWizardStepProps<IPercentBar> {
+export interface PercentBarSettingsWizardProps extends AdaptableWizardStepProps<PercentBar> {
   ColorPalette: Array<string>;
 }
 export interface PercentBarSettingsWizardState {

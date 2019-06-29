@@ -11,21 +11,21 @@ import {
   QueryBuildStatus,
   QueryTab,
   AccessLevel,
-} from '../../Utilities/Enums';
+} from '../../PredefinedConfig/Common/Enums';
 import { IRawValueDisplayValuePair } from '../UIInterfaces';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonCondition } from '../Components/Buttons/ButtonCondition';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { Expression } from '../../Utilities/Expression';
-import { IAdaptableBlotterOptions } from '../../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
+import { AdaptableBlotterOptions } from '../../BlotterOptions/AdaptableBlotterOptions';
 import { IBlotterApi } from '../../Api/Interface/IBlotterApi';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import SimpleButton from '../../components/SimpleButton';
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
-  UserFilters: Array<IUserFilter>;
+  UserFilters: Array<UserFilter>;
   SystemFilters: Array<string>;
   ExpressionMode?: ExpressionMode;
   // these all need to be ptional because of wizard compatibility - todo: fix...

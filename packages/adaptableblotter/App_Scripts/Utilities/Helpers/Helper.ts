@@ -1,6 +1,14 @@
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { LoggingHelper } from './LoggingHelper';
 
+export function objectExists(item: any): boolean {
+  return item != null && item != undefined;
+}
+
+export function objectNotExists(item: any): boolean {
+  return !objectExists(item);
+}
+
 export function getStringRepresentionFromKey(event: KeyboardEvent | any): string {
   if (event.key == null) {
     return event.char; // IE
@@ -218,11 +226,15 @@ export function RoundValueIfNumeric(numberToRound: any, decimalPlaces: number): 
   let returnValue: any;
   if (!isNaN(Number(numberToRound))) {
     returnValue = RoundNumber(numberToRound, decimalPlaces);
+  } else {
+    returnValue = numberToRound;
   }
   return returnValue;
 }
 
 export const Helper = {
+  objectExists,
+  objectNotExists,
   getStringRepresentionFromKey,
   cloneObject,
   capitalize,

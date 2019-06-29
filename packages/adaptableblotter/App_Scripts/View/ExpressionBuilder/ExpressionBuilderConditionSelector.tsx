@@ -14,18 +14,20 @@ import {
   QueryBuildStatus,
   QueryTab,
   SortOrder,
-} from '../../Utilities/Enums';
+} from '../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IRawValueDisplayValuePair } from '../UIInterfaces';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IRange } from '../../Utilities/Interface/Expression/IRange';
-import { Expression } from '../../Utilities/Expression';
+import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { Waiting } from '../Components/FilterForm/Waiting';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
+import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
+import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 import SimpleButton from '../../components/SimpleButton';
 
 export interface ExpressionBuilderConditionSelectorProps
@@ -35,7 +37,7 @@ export interface ExpressionBuilderConditionSelectorProps
   ExpressionMode: ExpressionMode;
   onExpressionChange: (Expression: Expression) => void;
   onSelectedColumnChange: (ColumnId: string, Tab: QueryTab) => void;
-  UserFilters: IUserFilter[];
+  UserFilters: UserFilter[];
   SystemFilters: string[];
   SelectedColumnId: string;
   SelectedTab: QueryTab;
@@ -50,7 +52,7 @@ export interface ExpressionBuilderConditionSelectorState {
   SelectedColumnDisplayValues: Array<any>;
   AllFilterExpresions: Array<string>;
   SelectedFilterExpressions: Array<string>;
-  SelectedColumnRanges: Array<IRange>;
+  SelectedColumnRanges: Array<QueryRange>;
   QueryBuildStatus: QueryBuildStatus;
   ShowWaitingMessage: boolean;
   SelectedTab: QueryTab;
@@ -117,7 +119,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
       } else {
         let selectedColumnDisplayValues: Array<any>;
         let selectedColumnFilterExpressions: Array<string>;
-        let selectedColumnRanges: Array<IRange>;
+        let selectedColumnRanges: Array<QueryRange>;
 
         // get selected column values
         let keyValuePair = theProps.Expression.ColumnValueExpressions.find(
@@ -130,14 +132,17 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         }
 
         // get selected filter expressions
-        let filterExpressions = theProps.Expression.FilterExpressions.find(
-          x => x.ColumnId == theProps.SelectedColumnId
-        );
+        let filterExpression: FilterExpression = null;
+        if (ArrayExtensions.IsNotNullOrEmpty(theProps.Expression.FilterExpressions)) {
+          filterExpression = theProps.Expression.FilterExpressions.find(
+            x => x.ColumnId == theProps.SelectedColumnId
+          );
+        }
         selectedColumnFilterExpressions = [];
-        if (filterExpressions) {
-          filterExpressions.Filters.forEach((fe: string) => {
+        if (filterExpression) {
+          filterExpression.Filters.forEach((fe: string) => {
             // if its a userfilter add it to that list
-            let userFilter: IUserFilter = theProps.UserFilters.find(uf => uf.Name == fe);
+            let userFilter: UserFilter = theProps.UserFilters.find(uf => uf.Name == fe);
             if (userFilter) {
               selectedColumnFilterExpressions.push(fe);
             }
@@ -153,10 +158,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         );
 
         // get ranges
-        let ranges = theProps.Expression.RangeExpressions.find(
-          x => x.ColumnId == theProps.SelectedColumnId
-        );
-        selectedColumnRanges = ranges ? ranges.Ranges : [];
+        let range: RangeExpression = null;
+        if (ArrayExtensions.IsNotNullOrEmpty(theProps.Expression.RangeExpressions)) {
+          range = theProps.Expression.RangeExpressions.find(
+            x => x.ColumnId == theProps.SelectedColumnId
+          );
+        }
+        selectedColumnRanges = range ? range.Ranges : [];
 
         return {
           SelectedColumnId: state.SelectedColumnId,
@@ -390,8 +398,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                           Filters
                         </NavItem>
                         <NavItem
-                          eventKey={QueryTab.Range}
-                          onClick={() => this.onTabChanged(QueryTab.Range)}
+                          eventKey={QueryTab.QueryRange}
+                          onClick={() => this.onTabChanged(QueryTab.QueryRange)}
                         >
                           Ranges
                         </NavItem>
@@ -429,8 +437,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                             />
                           )}
                         </Tab.Pane>
-                        <Tab.Pane eventKey={QueryTab.Range}>
-                          {this.state.SelectedTab == QueryTab.Range && (
+                        <Tab.Pane eventKey={QueryTab.QueryRange}>
+                          {this.state.SelectedTab == QueryTab.QueryRange && (
                             <ExpressionBuilderRanges
                               cssClassName={cssClassName}
                               SelectedColumn={selectedColumn}
@@ -464,18 +472,22 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     this.props.onSelectedColumnChange('', QueryTab.ColumnValue);
   }
 
-  onSelectedColumnRangesChange(selectedRanges: Array<IRange>) {
+  onSelectedColumnRangesChange(selectedRanges: Array<QueryRange>) {
     //we assume that we manipulate a cloned object. i.e we are not mutating the state
     let colRangesExpression = this.props.Expression.RangeExpressions;
-    let rangesCol = colRangesExpression.find(x => x.ColumnId == this.props.SelectedColumnId);
-    if (rangesCol) {
+
+    let rangeExpression: RangeExpression = null;
+    if (ArrayExtensions.IsNotNullOrEmpty(colRangesExpression)) {
+      rangeExpression = colRangesExpression.find(x => x.ColumnId == this.props.SelectedColumnId);
+    }
+    if (rangeExpression) {
       if (selectedRanges.length == 0) {
         let keyValuePairIndex = colRangesExpression.findIndex(
           x => x.ColumnId == this.props.SelectedColumnId
         );
         colRangesExpression.splice(keyValuePairIndex, 1);
       } else {
-        rangesCol.Ranges = selectedRanges;
+        rangeExpression.Ranges = selectedRanges;
       }
     } else {
       colRangesExpression.push({ ColumnId: this.props.SelectedColumnId, Ranges: selectedRanges });
@@ -520,6 +532,9 @@ export class ExpressionBuilderConditionSelector extends React.Component<
   onSelectedFiltersChanged(selectedFilters: Array<string>) {
     //we assume that we manipulate a cloned object. i.e we are not mutating the state
     let colUserFilterExpression = this.props.Expression.FilterExpressions;
+    if (ArrayExtensions.IsNullOrEmpty(colUserFilterExpression)) {
+      colUserFilterExpression = [];
+    }
     let userFilterExpressionCol = colUserFilterExpression.find(
       x => x.ColumnId == this.props.SelectedColumnId
     );

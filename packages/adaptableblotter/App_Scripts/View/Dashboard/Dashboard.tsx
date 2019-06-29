@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import * as Redux from 'redux';
 import { Navbar, Nav, Button, Glyphicon, OverlayTrigger, ButtonToolbar } from 'react-bootstrap';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { EntitlementsState, DashboardState } from '../../Redux/ActionsReducers/Interface/IState';
+import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
+
 import {
   AdaptableDashboardViewFactory,
   AdaptableDashboardPermanentToolbarFactory,
@@ -12,12 +13,15 @@ import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableSto
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
-import { Visibility, AccessLevel, DashboardSize } from '../../Utilities/Enums';
+import { Visibility, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { StrategyHelper } from '../../Utilities/Helpers/StrategyHelper';
-import { IEntitlement } from '../../Utilities/Interface/IEntitlement';
+import {
+  EntitlementsState,
+  IEntitlement,
+} from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 import SimpleButton from '../../components/SimpleButton';
 import { Box, Flex } from 'rebass';
 

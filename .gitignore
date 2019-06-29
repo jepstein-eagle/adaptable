@@ -15,3 +15,7 @@ node_modules/
 /packages/adaptableblotter-ng-aggrid/dist
 **/package-lock.json
 package-lock.json
+
+/packages/adaptableblotter/apidoc
+/apidoc
+yarn.lock

@@ -2,13 +2,13 @@ import { AdaptableBlotter } from './AdaptableBlotter';
 import { DataSourceIndexed } from './DataSourceIndexed';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { DisplayAction } from '../Utilities/Enums';
-import { IColumnFilter } from '../Utilities/Interface/BlotterObjects/IColumnFilter';
-import { IAdvancedSearch } from '../Utilities/Interface/BlotterObjects/IAdvancedSearch';
-import { IRange } from '../Utilities/Interface/Expression/IRange';
+import { DisplayAction, LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
-import { Expression } from '../Utilities/Expression';
+import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
+import { ColumnFilter } from '../PredefinedConfig/RunTimeState/ColumnFilterState';
+import { AdvancedSearch } from '../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 
 /* There are 3 possible reasons why we might need to filter / search the grid:
 1. If there is an Advanced Search (i.e. CurrentAdvancedSearch is not empty)
@@ -27,7 +27,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) =>
 
       // Lets first get the 3 variables that indicate a filter/search is required
       let currentSearchName: string = blotter.api.advancedSearchApi.getCurrentAdvancedSearchName();
-      let columnFilters: IColumnFilter[] = blotter.api.columnFilterApi.getAllColumnFilter();
+      let columnFilters: ColumnFilter[] = blotter.api.columnFilterApi.getAllColumnFilter();
       let quickSearchText: string = blotter.api.quickSearchApi.getQuickSearchValue();
       // If any of these 3 are set then we need to build the index and color the quick search; otherwise we should clear it
       if (
@@ -60,7 +60,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) =>
         let currentSearchName = blotter.api.advancedSearchApi.getCurrentAdvancedSearchName();
         if (StringExtensions.IsNotNullOrEmpty(currentSearchName)) {
           // Get the actual Advanced Search object and check it exists
-          let currentSearch: IAdvancedSearch = blotter.api.advancedSearchApi
+          let currentSearch: AdvancedSearch = blotter.api.advancedSearchApi
             .getAllAdvancedSearch()
             .find(s => s.Name == currentSearchName);
           if (currentSearch && currentSearch.Expression) {
@@ -83,7 +83,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) =>
       // NOTE: serverSearchOption has to be 'None' or 'AdvancedSearch' because any other value then they are checking filters on the server and nothing for us to do
       if (serverSearchOption == 'None' || serverSearchOption == 'AdvancedSearch') {
         // Get the column filters
-        let columnFilters: IColumnFilter[] = blotter.api.columnFilterApi.getAllColumnFilter();
+        let columnFilters: ColumnFilter[] = blotter.api.columnFilterApi.getAllColumnFilter();
         if (ArrayExtensions.IsNotNullOrEmpty(columnFilters)) {
           for (let columnFilter of columnFilters) {
             if (columnFilter.Filter) {
@@ -105,7 +105,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) =>
         // finally, let's assess QUICK SEARCH
         let quickSearchState = blotter.api.quickSearchApi.getQuickSearchState();
         // check that we have quick search running
-        let range: IRange = RangeHelper.CreateValueRangeFromOperand(
+        let range: QueryRange = RangeHelper.CreateValueRangeFromOperand(
           quickSearchState.QuickSearchText
         );
 
@@ -118,7 +118,12 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) =>
           // only check on visible columns for quick search
           for (let column of columns.filter(c => c.Visible)) {
             let isMatch: boolean = false;
-            if (RangeHelper.IsColumnAppropriateForRange(range.Operator, column)) {
+            if (
+              RangeHelper.IsColumnAppropriateForRange(
+                range.Operator as LeafExpressionOperator,
+                column
+              )
+            ) {
               let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
                 column.ColumnId,
                 null,
@@ -170,7 +175,7 @@ export let FilterAndSearchDataSource = (blotter: AdaptableBlotter) =>
     */
     getRowCount: function() {
       let currentSearchName: string = blotter.api.advancedSearchApi.getCurrentAdvancedSearchName();
-      let columnFilters: IColumnFilter[] = blotter.api.columnFilterApi.getAllColumnFilter();
+      let columnFilters: ColumnFilter[] = blotter.api.columnFilterApi.getAllColumnFilter();
       let quickSearchText: string = blotter.api.quickSearchApi.getQuickSearchValue();
       if (
         StringExtensions.IsNotNullOrEmpty(currentSearchName) ||

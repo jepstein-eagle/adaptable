@@ -3,7 +3,7 @@ import {
   LeafExpressionOperator,
   DataType,
   DistinctCriteriaPairValue,
-} from '../../../Utilities/Enums';
+} from '../../../PredefinedConfig/Common/Enums';
 import {
   MenuItem,
   DropdownButton,
@@ -21,7 +21,7 @@ import { AdaptableBlotterFormControlTextClear } from '../Forms/AdaptableBlotterF
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import { UIHelper } from '../../UIHelper';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IRange } from '../../../Utilities/Interface/Expression/IRange';
+import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
@@ -31,10 +31,10 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
   UserFilters: Array<IRawValueDisplayValuePair>;
   UiSelectedColumnValues: Array<string>;
   UiSelectedUserFilters: Array<string>;
-  UiSelectedRange: IRange;
+  UiSelectedRange: QueryRange;
   onColumnValueSelectedChange: (SelectedValues: Array<any>) => void;
   onUserFilterSelectedChange: (SelectedValues: Array<any>) => void;
-  onCustomRangeExpressionChange: (rangeExpression: IRange) => void;
+  onCustomRangeExpressionChange: (rangeExpression: QueryRange) => void;
   Operators: Array<LeafExpressionOperator>;
   DataType: DataType;
   cssClassName: string;
@@ -44,7 +44,7 @@ export interface ListBoxFilterFormProps extends ListGroupProps {
 export interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
   UiSelectedColumnValues: Array<string>;
   UiSelectedUserFilters: Array<string>;
-  UiSelectedRange: IRange;
+  UiSelectedRange: QueryRange;
   FilterValue: string;
   DistinctCriteriaPairValue: DistinctCriteriaPairValue;
 }
@@ -238,7 +238,7 @@ export class ListBoxFilterForm extends React.Component<
   // Methods for getting the range
   private onLeafExpressionOperatorChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    let editedRange: IRange = {
+    let editedRange: QueryRange = {
       Operand1Type: this.state.UiSelectedRange.Operand1Type,
       Operand2Type: this.state.UiSelectedRange.Operand2Type,
       Operator: e.value as LeafExpressionOperator,
@@ -251,7 +251,7 @@ export class ListBoxFilterForm extends React.Component<
   }
 
   private onRangeTypeChangedOperand1(rangeOperandType: any): any {
-    let editedRange: IRange = {
+    let editedRange: QueryRange = {
       Operand1Type: rangeOperandType,
       Operand2Type: this.state.UiSelectedRange.Operand2Type,
       Operator: this.state.UiSelectedRange.Operator,
@@ -264,7 +264,7 @@ export class ListBoxFilterForm extends React.Component<
   }
 
   private onRangeTypeChangedOperand2(rangeOperandType: any): any {
-    let editedRange: IRange = {
+    let editedRange: QueryRange = {
       Operand1Type: this.state.UiSelectedRange.Operand1Type,
       Operand2Type: rangeOperandType,
       Operator: this.state.UiSelectedRange.Operator,
@@ -378,7 +378,7 @@ export class ListBoxFilterForm extends React.Component<
 
   private onOperand1Edit(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    let newRange: IRange = {
+    let newRange: QueryRange = {
       Operand1Type: this.state.UiSelectedRange.Operand1Type,
       Operand2Type: this.state.UiSelectedRange.Operand2Type,
       Operator: this.state.UiSelectedRange.Operator,
@@ -392,7 +392,7 @@ export class ListBoxFilterForm extends React.Component<
 
   private onOperand2Edit(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    let newRange: IRange = {
+    let newRange: QueryRange = {
       Operand1Type: this.state.UiSelectedRange.Operand1Type,
       Operand2Type: this.state.UiSelectedRange.Operand2Type,
       Operator: this.state.UiSelectedRange.Operator,
@@ -405,7 +405,7 @@ export class ListBoxFilterForm extends React.Component<
   }
 
   private onColumnOperand1SelectedChanged(column: IColumn) {
-    let editedRange: IRange = {
+    let editedRange: QueryRange = {
       Operand1Type: this.state.UiSelectedRange.Operand1Type,
       Operand2Type: this.state.UiSelectedRange.Operand2Type,
       Operator: this.state.UiSelectedRange.Operator,
@@ -418,7 +418,7 @@ export class ListBoxFilterForm extends React.Component<
   }
 
   private onColumnOperand2SelectedChanged(column: IColumn) {
-    let editedRange: IRange = {
+    let editedRange: QueryRange = {
       Operand1Type: this.state.UiSelectedRange.Operand1Type,
       Operand2Type: this.state.UiSelectedRange.Operand2Type,
       Operator: this.state.UiSelectedRange.Operator,

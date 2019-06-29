@@ -1,5 +1,4 @@
-import { IUserTheme } from '../../Utilities/Interface/BlotterObjects/IUserTheme';
-import { ThemeState } from '../../Redux/ActionsReducers/Interface/IState';
+import { ThemeState, UserTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
 
 export interface IThemeApi {
   getThemeState(): ThemeState;
@@ -8,5 +7,5 @@ export interface IThemeApi {
   setSystemThemes(systemThemes: string[]): void;
   setUserThemes(userThemes: string[]): void;
   getAllSystemTheme(): string[];
-  getAllUserTheme(): IUserTheme[];
+  getAllUserTheme(): UserTheme[];
 }

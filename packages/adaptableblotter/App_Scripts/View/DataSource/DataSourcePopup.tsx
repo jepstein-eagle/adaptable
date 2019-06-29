@@ -21,20 +21,20 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IDataSource } from '../../Utilities/Interface/BlotterObjects/IDataSource';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
 
 interface DataSourcePopupProps extends StrategyViewPopupProps<DataSourcePopupComponent> {
-  onAddDataSource: (DataSource: IDataSource) => DataSourceRedux.DataSourceAddAction;
-  onEditDataSource: (DataSource: IDataSource) => DataSourceRedux.DataSourceEditAction;
+  onAddDataSource: (DataSource: DataSource) => DataSourceRedux.DataSourceAddAction;
+  onEditDataSource: (DataSource: DataSource) => DataSourceRedux.DataSourceEditAction;
 
   onSelectDataSource: (SelectedDataSource: string) => DataSourceRedux.DataSourceSelectAction;
-  DataSources: Array<IDataSource>;
+  DataSources: Array<DataSource>;
   CurrentDataSource: string;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class DataSourcePopupComponent extends React.Component<
@@ -60,7 +60,7 @@ class DataSourcePopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let dataSources = this.props.DataSources.map((dataSource: IDataSource, index: number) => {
+    let dataSources = this.props.DataSources.map((dataSource: DataSource, index: number) => {
       return (
         <DataSourceEntityRow
           cssClassName={cssClassName}
@@ -90,7 +90,7 @@ class DataSourcePopupComponent extends React.Component<
       />
     );
 
-    let DataSource: IDataSource = this.state.EditedAdaptableBlotterObject as IDataSource;
+    let DataSource: DataSource = this.state.EditedAdaptableBlotterObject as DataSource;
 
     return (
       <Flex className={cssClassName} flex={1} flexDirection="column">
@@ -134,20 +134,20 @@ class DataSourcePopupComponent extends React.Component<
     );
   }
 
-  onChangeName(dataSource: IDataSource, name: string): void {
-    let clonedDataSource: IDataSource = Helper.cloneObject(dataSource);
+  onChangeName(dataSource: DataSource, name: string): void {
+    let clonedDataSource: DataSource = Helper.cloneObject(dataSource);
     clonedDataSource.Name = name;
     this.props.onEditDataSource(clonedDataSource);
   }
 
-  onChangeDescription(dataSource: IDataSource, description: string): void {
-    let clonedDataSource: IDataSource = Helper.cloneObject(dataSource);
+  onChangeDescription(dataSource: DataSource, description: string): void {
+    let clonedDataSource: DataSource = Helper.cloneObject(dataSource);
     clonedDataSource.Description = description;
     this.props.onEditDataSource(clonedDataSource);
   }
 
-  onEdit(dataSource: IDataSource) {
-    let clonedObject: IDataSource = Helper.cloneObject(dataSource);
+  onEdit(dataSource: DataSource) {
+    let clonedObject: DataSource = Helper.cloneObject(dataSource);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 0,
@@ -169,7 +169,7 @@ class DataSourcePopupComponent extends React.Component<
     //  let currentSearchIndex: number = this.props.DataSources.findIndex(
     //    as => as.Name == this.props.CurrentDataSource
     //  );
-    let clonedObject: IDataSource = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+    let clonedObject: DataSource = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditDataSource(clonedObject);
     } else {
@@ -188,7 +188,7 @@ class DataSourcePopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let DataSource = this.state.EditedAdaptableBlotterObject as IDataSource;
+    let DataSource = this.state.EditedAdaptableBlotterObject as DataSource;
 
     return (
       StringExtensions.IsNotNullOrEmpty(DataSource.Name) &&
@@ -213,13 +213,13 @@ function mapStateToProps(state: AdaptableBlotterState) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddDataSource: (DataSource: IDataSource) =>
+    onAddDataSource: (DataSource: DataSource) =>
       dispatch(DataSourceRedux.DataSourceAdd(DataSource)),
-    onEditDataSource: (DataSource: IDataSource) =>
+    onEditDataSource: (DataSource: DataSource) =>
       dispatch(DataSourceRedux.DataSourceEdit(DataSource)),
     onSelectDataSource: (SelectedDataSource: string) =>
       dispatch(DataSourceRedux.DataSourceSelect(SelectedDataSource)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.DataSourceStrategyId)),
   };
 }

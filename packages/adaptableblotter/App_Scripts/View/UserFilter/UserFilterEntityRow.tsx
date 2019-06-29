@@ -6,16 +6,16 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 
 export class UserFilterEntityRow extends React.Component<
   SharedEntityExpressionRowProps<UserFilterEntityRow>,
   {}
 > {
   render(): any {
-    let userFilter: IUserFilter = this.props.AdaptableBlotterObject as IUserFilter;
+    let userFilter: UserFilter = this.props.AdaptableBlotterObject as UserFilter;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 

@@ -14,7 +14,7 @@ import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ButtonClose } from '../Buttons/ButtonClose';
 import { ButtonConfigure } from '../Buttons/ButtonConfigure';
 import { ButtonMinimise } from '../Buttons/ButtonMinimise';
-import { FontSize } from '../../../Utilities/Enums';
+import { FontSize } from '../../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 
 export interface PanelDashboardProps extends PanelProps {

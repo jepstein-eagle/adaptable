@@ -1,17 +1,17 @@
 import * as SystemFilterRedux from '../Redux/ActionsReducers/SystemFilterRedux';
 import * as UserFilterRedux from '../Redux/ActionsReducers/UserFilterRedux';
 import { ApiBase } from './ApiBase';
-import { IUserFilter } from '../Utilities/Interface/BlotterObjects/IUserFilter';
 import { FilterHelper } from '../Utilities/Helpers/FilterHelper';
 import { ISystemFilterApi } from './Interface/ISystemFilterApi';
-import { SystemFilterState } from '../Redux/ActionsReducers/Interface/IState';
+import { SystemFilterState } from '../PredefinedConfig/DesignTimeState/SystemFilterState';
+import { UserFilter } from '../PredefinedConfig/RunTimeState/UserFilterState';
 
 export class SystemFilterApi extends ApiBase implements ISystemFilterApi {
   public getSystemFilterState(): SystemFilterState {
     return this.getBlotterState().SystemFilter;
   }
 
-  public setSystemFilterByUserFilters(userFilters: IUserFilter[]): void {
+  public setSystemFilterByUserFilters(userFilters: UserFilter[]): void {
     userFilters.forEach(uf => {
       this.dispatchAction(UserFilterRedux.UserFilterAdd(uf));
     });

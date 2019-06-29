@@ -3,11 +3,11 @@ import { Helper } from './Helper';
 import { ICellInfo } from '../Interface/ICellInfo';
 import { ColumnHelper } from './ColumnHelper';
 import { IColumn } from '../Interface/IColumn';
-import { ICellValidationRule } from '../Interface/BlotterObjects/ICellValidationRule';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { DataType, ActionMode } from '../Enums';
+import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from './ExpressionHelper';
-import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Interface/DataChangedInfo';
+import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
 declare var Glue4Office: any;
 
@@ -140,7 +140,7 @@ function isValidEdit(
     }
   }
 
-  let dataChangedInfo: IDataChangedInfo = {
+  let dataChangedInfo: DataChangedInfo = {
     OldValue: originalValue,
     NewValue: returnedValue,
     ColumnId: column.ColumnId,
@@ -149,11 +149,11 @@ function isValidEdit(
   };
 
   // check for any validation issues
-  let cellValidationRules: ICellValidationRule[] = blotter.ValidationService.ValidateCellChanging(
+  let cellValidationRules: CellValidationRule[] = blotter.ValidationService.ValidateCellChanging(
     dataChangedInfo
   );
   if (ArrayExtensions.IsNotNullOrEmpty(cellValidationRules)) {
-    cellValidationRules.forEach((cv: ICellValidationRule) => {
+    cellValidationRules.forEach((cv: CellValidationRule) => {
       let failedvalidationMessage: string =
         'Validation failed for ' +
         column.FriendlyName +

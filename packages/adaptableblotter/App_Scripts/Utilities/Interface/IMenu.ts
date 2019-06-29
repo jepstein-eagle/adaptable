@@ -1,9 +1,9 @@
-import * as Redux from 'redux';
+import { Action } from 'redux';
 
 export interface IMenuItem {
   Label: string;
   StrategyId: string;
-  Action: Redux.Action;
+  Action: Action;
   IsVisible: boolean;
   GlyphIcon: string;
 }

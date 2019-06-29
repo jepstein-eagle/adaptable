@@ -3,14 +3,14 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
-import { IAlertDefinition } from '../Utilities/Interface/BlotterObjects/IAlertDefinition';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
-import { LeafExpressionOperator } from '../Utilities/Enums';
+import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
+import { AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -28,13 +28,13 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     );
   }
 
-  protected handleDataSourceChanged(dataChangedEvent: IDataChangedInfo): void {
-    let alertDefinitions: IAlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
+  protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
+    let alertDefinitions: AlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
     if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
       let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
       alertDefinitions.forEach(fr => {
         // might be better to do a single alert with all the messages?
-        this.blotter.api.alertApi.displayAlert(
+        this.blotter.api.alertApi.showAlert(
           ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns),
           AlertHelper.createAlertDescription(fr, columns),
           fr.MessageType,
@@ -44,16 +44,16 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
     }
   }
 
-  public CheckDataChanged(dataChangedEvent: IDataChangedInfo): IAlertDefinition[] {
+  public CheckDataChanged(dataChangedEvent: DataChangedInfo): AlertDefinition[] {
     let relatedAlertDefinitions = this.blotter.api.alertApi
       .getAlertState()
       .AlertDefinitions.filter(v => v.ColumnId == dataChangedEvent.ColumnId);
-    let triggeredAlerts: IAlertDefinition[] = [];
+    let triggeredAlerts: AlertDefinition[] = [];
     if (relatedAlertDefinitions.length > 0) {
       let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
 
       // first check the rules which have expressions
-      let expressionAlertDefinitions: IAlertDefinition[] = relatedAlertDefinitions.filter(r =>
+      let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(r =>
         ExpressionHelper.IsNotNullOrEmptyExpression(r.Expression)
       );
 
@@ -75,7 +75,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
       }
 
       // now check the rules without expressions//
-      let noExpressionRules: IAlertDefinition[] = relatedAlertDefinitions.filter(r =>
+      let noExpressionRules: AlertDefinition[] = relatedAlertDefinitions.filter(r =>
         ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
       );
       for (let noExpressionRule of noExpressionRules) {
@@ -88,8 +88,8 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
   }
 
   private IsAlertTriggered(
-    alert: IAlertDefinition,
-    dataChangedEvent: IDataChangedInfo,
+    alert: AlertDefinition,
+    dataChangedEvent: DataChangedInfo,
     columns: IColumn[]
   ): boolean {
     // if its none then alert triggers immediately

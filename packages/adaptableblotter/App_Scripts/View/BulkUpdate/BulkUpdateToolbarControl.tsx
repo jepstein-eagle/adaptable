@@ -15,7 +15,6 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { StatusColour, AccessLevel, MessageType, DashboardSize } from '../../Utilities/Enums';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { UIHelper } from '../UIHelper';
@@ -24,6 +23,7 @@ import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { DEFAULT_BSSTYLE, PRIMARY_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
+import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
 interface BulkUpdateToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {

@@ -1,26 +1,26 @@
-import { IAdaptableBlotter, ISearchChangedEventArgs } from '../../types';
 import { ISearchService } from './Interface/ISearchService';
 import * as StrategyConstants from '../Constants/StrategyConstants';
-import { SearchChangedTrigger, DisplayAction } from '../Enums';
-import { IDataSource } from '../Interface/BlotterObjects/IDataSource';
-import { IAdvancedSearch } from '../Interface/BlotterObjects/IAdvancedSearch';
-import { IBlotterSearchState } from '../Interface/SearchChanged/IBlotterSearchState';
-import { IBlotterSortState } from '../Interface/SearchChanged/IBlotterSortState';
-import { ISearchChangedInfo } from '../Interface/SearchChanged/ISearchChangedInfo';
-import { ISearchEventData } from '../Interface/SearchChanged/ISearchEventData';
+import { SearchChangedTrigger, DisplayAction } from '../../PredefinedConfig/Common/Enums';
+import { UserFilterState } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { QuickSearchState } from '../../PredefinedConfig/RunTimeState/QuickSearchState';
+import { DataSourceState, DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
+import { ColumnFilterState } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import {
-  ColumnFilterState,
-  QuickSearchState,
   AdvancedSearchState,
-  DataSourceState,
-  UserFilterState,
-} from '../../Redux/ActionsReducers/Interface/IState';
+  AdvancedSearch,
+} from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 import StringExtensions from '../Extensions/StringExtensions';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
-import { IColumnSort } from '../Interface/IColumnSort';
 import { LayoutHelper } from '../Helpers/LayoutHelper';
 import { IColumn } from '../Interface/IColumn';
+import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
+import { SearchChangedEventArgs } from '../../Api/Events/SearchChanged/SearchChangedEventArgs';
+import { BlotterSearchState } from '../../Api/Events/SearchChanged/BlotterSearchState';
+import { BlotterSortState } from '../../Api/Events/SearchChanged/BlotterSortState';
+import { SearchChangedInfo } from '../../Api/Events/SearchChanged/SearchChangedInfo';
+import { SearchEventData } from '../../Api/Events/SearchChanged/ISearchEventData';
 
 export class SearchService implements ISearchService {
   private blotter: IAdaptableBlotter;
@@ -30,7 +30,7 @@ export class SearchService implements ISearchService {
   private dataSourceState: DataSourceState;
   private quickSearchState: QuickSearchState;
   private userFilterState: UserFilterState;
-  private columnSorts: IColumnSort[];
+  private columnSorts: ColumnSort[];
   private columns: IColumn[];
 
   constructor(blotter: IAdaptableBlotter) {
@@ -152,7 +152,7 @@ export class SearchService implements ISearchService {
     return this.blotter.api.gridApi.getColumns();
   }
 
-  private getGridColumnSorts(): IColumnSort[] {
+  private getGridColumnSorts(): ColumnSort[] {
     return this.blotter.api.gridApi.getColumnSorts();
   }
 
@@ -163,36 +163,36 @@ export class SearchService implements ISearchService {
    */
   publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void {
     if (this.blotter.isInitialised) {
-      let currentDataSource: IDataSource = this.blotter.api.dataSourceApi.getCurrentDataSource();
-      let currentAdvancedSearch: IAdvancedSearch = this.blotter.api.advancedSearchApi.getCurrentAdvancedSearch();
+      let currentDataSource: DataSource = this.blotter.api.dataSourceApi.getCurrentDataSource();
+      let currentAdvancedSearch: AdvancedSearch = this.blotter.api.advancedSearchApi.getCurrentAdvancedSearch();
 
       // lets get the searchstate
-      let blotterSearchState: IBlotterSearchState = {
+      let blotterSearchState: BlotterSearchState = {
         dataSource: currentDataSource == null ? null : currentDataSource,
         advancedSearch: currentAdvancedSearch == null ? null : currentAdvancedSearch,
         quickSearch: this.blotter.api.quickSearchApi.getQuickSearchValue(),
         columnFilters: this.blotter.api.columnFilterApi.getAllColumnFilter(),
       };
 
-      let blotterSortState: IBlotterSortState = {
+      let blotterSortState: BlotterSortState = {
         columnSorts: this.blotter.api.gridApi.getColumnSorts(),
         customSorts: this.blotter.api.customSortApi.getAllCustomSort(),
       };
 
-      let searchChangedInfo: ISearchChangedInfo = {
+      let searchChangedInfo: SearchChangedInfo = {
         searchChangedTrigger: searchChangedTrigger,
         blotterSearchState: blotterSearchState,
         blotterSortState: blotterSortState,
         searchAsAtDate: new Date(),
       };
 
-      let searchEventData: ISearchEventData = {
+      let searchEventData: SearchEventData = {
         name: 'Adaptable Blotter',
         type: 'Search Args',
         id: searchChangedInfo,
       };
 
-      let searchChangedArgs: ISearchChangedEventArgs = {
+      let searchChangedArgs: SearchChangedEventArgs = {
         object: 'fdc3-context',
         definition: 'https://fdc3.org/context/1.0.0/',
         version: '1.0.0',

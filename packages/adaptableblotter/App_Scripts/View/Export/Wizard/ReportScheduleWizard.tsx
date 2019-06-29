@@ -1,4 +1,4 @@
-import { IReport, IAutoExport } from '../../../Utilities/Interface/BlotterObjects/IReport';
+import { Report, AutoExport } from '../../../PredefinedConfig/RunTimeState/ExportState';
 import * as React from 'react';
 import { FormControl, Checkbox, FormGroup, Radio, Col, ControlLabel, Row } from 'react-bootstrap';
 import Panel from '../../../components/Panel';
@@ -6,13 +6,17 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ExportDestination, DayOfWeek, ReportRowScope } from '../../../Utilities/Enums';
+import {
+  ExportDestination,
+  DayOfWeek,
+  ReportRowScope,
+} from '../../../PredefinedConfig/Common/Enums';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { ISchedule } from '../../../Utilities/Interface/BlotterObjects/ISchedule';
+import { Schedule } from '../../../PredefinedConfig/Common/Schedule';
 
-export interface ReportScheduleWizardProps extends AdaptableWizardStepProps<IReport> {}
+export interface ReportScheduleWizardProps extends AdaptableWizardStepProps<Report> {}
 
 export interface ReportScheduleWizardState {
   HasAutoExport: boolean;
@@ -29,7 +33,7 @@ export class ReportScheduleWizard
   implements AdaptableWizardStep {
   constructor(props: ReportScheduleWizardProps) {
     super(props);
-    let autoExport: IAutoExport = this.props.Data.AutoExport
+    let autoExport: AutoExport = this.props.Data.AutoExport
       ? this.props.Data.AutoExport
       : ObjectFactory.CreateEmptyAutoExport();
 
@@ -380,14 +384,14 @@ export class ReportScheduleWizard
   public Next(): void {
     // TODO:  need to build up the object ;(
     if (this.state.HasAutoExport) {
-      let schedule: ISchedule = {
+      let schedule: Schedule = {
         Hour: this.state.Hour,
         Minute: this.state.Minute,
         OneOffDate: this.state.IsRecurringDate ? null : this.state.OneOffDate,
         DaysOfWeek: this.state.IsRecurringDate ? this.state.DaysOfWeek : [],
       };
 
-      let autoExport: IAutoExport = {
+      let autoExport: AutoExport = {
         Schedule: schedule,
         ExportDestination: this.state.ExportDestination,
       };

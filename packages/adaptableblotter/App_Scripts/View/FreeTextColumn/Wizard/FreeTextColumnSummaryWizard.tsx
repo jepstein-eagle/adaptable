@@ -6,13 +6,13 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { IFreeTextColumn } from '../../../Utilities/Interface/BlotterObjects/IFreeTextColumn';
+import { FreeTextColumn } from '../../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 
 export interface FreeTextColumnSummaryWizardProps
-  extends AdaptableWizardStepProps<IFreeTextColumn> {}
+  extends AdaptableWizardStepProps<FreeTextColumn> {}
 export class FreeTextColumnSummaryWizard
   extends React.Component<FreeTextColumnSummaryWizardProps, {}>
   implements AdaptableWizardStep {

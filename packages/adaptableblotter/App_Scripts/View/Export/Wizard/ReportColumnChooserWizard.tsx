@@ -4,11 +4,12 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ReportColumnScope } from '../../../Utilities/Enums';
+import { ReportColumnScope } from '../../../PredefinedConfig/Common/Enums';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
-import { IReport } from '../../../Utilities/Interface/BlotterObjects/IReport';
+import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
+import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
 
-export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<IReport> {}
+export interface ReportColumnChooserWizardProps extends AdaptableWizardStepProps<Report> {}
 export interface ReportColumnsWizardState {
   AllColumnValues: string[];
   SelectedColumnValues: string[];
@@ -21,8 +22,9 @@ export class ReportColumnChooserWizard
     super(props);
     this.state = {
       AllColumnValues: this.props.Columns.map(c => c.FriendlyName),
-      SelectedColumnValues: this.props.Data.ColumnIds.map(
-        c => this.props.Columns.find(col => col.ColumnId == c).FriendlyName
+      SelectedColumnValues: ColumnHelper.getFriendlyNamesFromColumnIds(
+        this.props.Data.ColumnIds,
+        this.props.Columns
       ),
     };
   }

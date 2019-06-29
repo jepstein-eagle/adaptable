@@ -1,10 +1,10 @@
 import { AdaptableBlotter } from './AdaptableBlotter';
-import { SortOrder } from '../Utilities/Enums';
+import { SortOrder } from '../PredefinedConfig/Common/Enums';
 import { DataSourceIndexed } from './DataSourceIndexed';
-import { IColumnSort } from '../Utilities/Interface/IColumnSort';
 import * as _ from 'lodash';
 import { SortHelper } from '../Utilities/Helpers/SortHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
+import { ColumnSort } from '../PredefinedConfig/RunTimeState/LayoutState';
 
 export interface ICustomSortInfo {
   SortedValues: any[];
@@ -79,7 +79,7 @@ export let CustomSortDataSource = (blotter: AdaptableBlotter) =>
 
       let functionsArray: any[] = [];
       let directionArray: number[] = [];
-      columnSorts.forEach((columnSort: IColumnSort) => {
+      columnSorts.forEach((columnSort: ColumnSort) => {
         let hypergridColumn = blotter.getHypergridColumn(columnSort.Column);
         hypergridColumns.push(hypergridColumn);
         let customSort = blotter.api.customSortApi

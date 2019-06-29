@@ -1,5 +1,7 @@
-import { IEntitlement } from '../../Utilities/Interface/IEntitlement';
-import { EntitlementsState } from '../../Redux/ActionsReducers/Interface/IState';
+import {
+  EntitlementsState,
+  IEntitlement,
+} from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 
 export interface IEntitlementApi {
   getEntitlementState(): EntitlementsState;

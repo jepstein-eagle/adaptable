@@ -1,6 +1,5 @@
 import { IValidationService } from './Interface/IValidationService';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { ICellValidationRule } from '../Interface/BlotterObjects/ICellValidationRule';
 import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
@@ -13,11 +12,14 @@ import {
   RangeOperandType,
   ActionMode,
   DisplayAction,
-} from '../Enums';
+} from '../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../Interface/IColumn';
-import { CellValidationState } from '../../Redux/ActionsReducers/Interface/IState';
-import { IDataChangedInfo } from '../Interface/IDataChangedInfo';
-import { IFunctionAppliedDetails } from '../Interface/IAuditEvents';
+import {
+  CellValidationState,
+  CellValidationRule,
+} from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import { DataChangedInfo } from '../Interface/DataChangedInfo';
+import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
 
 export class ValidationService implements IValidationService {
   constructor(private blotter: IAdaptableBlotter) {
@@ -25,8 +27,8 @@ export class ValidationService implements IValidationService {
   }
 
   // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...
-  public ValidateCellChanging(dataChangedEvent: IDataChangedInfo): ICellValidationRule[] {
-    let failedWarningRules: ICellValidationRule[] = [];
+  public ValidateCellChanging(dataChangedEvent: DataChangedInfo): CellValidationRule[] {
+    let failedWarningRules: CellValidationRule[] = [];
     // if the new value is the same as the old value then we can get out as we dont see it as an edit?
     if (dataChangedEvent.OldValue == dataChangedEvent.NewValue) {
       return failedWarningRules;
@@ -52,7 +54,7 @@ export class ValidationService implements IValidationService {
               RangeOperandType.Column,
               null
             );
-            let cellValidationRule: ICellValidationRule = ObjectFactory.CreateCellValidationRule(
+            let cellValidationRule: CellValidationRule = ObjectFactory.CreateCellValidationRule(
               dataChangedEvent.ColumnId,
               range,
               ActionMode.StopEdit,
@@ -72,7 +74,7 @@ export class ValidationService implements IValidationService {
       let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
 
       // first check the rules which have expressions
-      let expressionRules: ICellValidationRule[] = editingRules.filter(r =>
+      let expressionRules: CellValidationRule[] = editingRules.filter(r =>
         ExpressionHelper.IsNotNullOrEmptyExpression(r.Expression)
       );
 
@@ -106,7 +108,7 @@ export class ValidationService implements IValidationService {
       }
 
       // now check the rules without expressions
-      let noExpressionRules: ICellValidationRule[] = editingRules.filter(r =>
+      let noExpressionRules: CellValidationRule[] = editingRules.filter(r =>
         ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
       );
       for (let noExpressionRule of noExpressionRules) {
@@ -138,8 +140,8 @@ export class ValidationService implements IValidationService {
 
   // changing this so that it now checks the opposite!
   private IsCellValidationRuleBroken(
-    cellValidationRule: ICellValidationRule,
-    dataChangedEvent: IDataChangedInfo,
+    cellValidationRule: CellValidationRule,
+    dataChangedEvent: DataChangedInfo,
     columns: IColumn[]
   ): boolean {
     // if its none then validation fails immediately
@@ -165,7 +167,7 @@ export class ValidationService implements IValidationService {
 
   private logAuditValidationEvent(action: string, info: string, data?: any): void {
     if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
-      let functionAppliedDetails: IFunctionAppliedDetails = {
+      let functionAppliedDetails: FunctionAppliedDetails = {
         name: StrategyConstants.CellValidationStrategyId,
         action: action,
         info: info,

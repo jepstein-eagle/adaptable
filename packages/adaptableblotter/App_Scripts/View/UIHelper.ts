@@ -9,12 +9,12 @@ import {
   StatusColour,
   MessageType,
   DayOfWeek,
-} from '../Utilities/Enums';
+} from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
-import { IAdaptableBlotterOptions } from '../Utilities/Interface/BlotterOptions/IAdaptableBlotterOptions';
-import { IStyle } from '../Utilities/Interface/IStyle';
+import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
+import { IStyle } from '../PredefinedConfig/Common/IStyle';
 import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
-import { Expression } from '../Utilities/Expression';
+import { Expression } from '../PredefinedConfig/Common/Expression/Expression';
 import {
   SUCCESS_BSSTYLE,
   WARNING_BSSTYLE,
@@ -22,11 +22,9 @@ import {
   INFO_BSSTYLE,
 } from '../Utilities/Constants/StyleConstants';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
-import * as React from 'react';
-import { Radio } from 'react-bootstrap';
-import { ISchedule } from '../Utilities/Interface/BlotterObjects/ISchedule';
-import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { number } from 'prop-types';
+import { Schedule } from '../PredefinedConfig/Common/Schedule';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
+import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
 
 export function getDefaultColors(): string[] {
   return [
@@ -65,6 +63,9 @@ export function getEmptyConfigState(): EditableConfigEntityState {
 }
 
 export function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState {
+  // add any missing arrays here to avoid issues later
+  ExpressionHelper.AddMissingProperties(expression);
+
   return {
     Expression: expression,
     SelectedColumnId: '',
@@ -106,7 +107,7 @@ export function getPlaceHolderforDataType(dataType: DataType) {
 }
 
 export function getModalContainer(
-  blotterOptions: IAdaptableBlotterOptions,
+  blotterOptions: AdaptableBlotterOptions,
   document: Document
 ): HTMLElement {
   let modalContainer: HTMLElement;
@@ -127,7 +128,7 @@ export function getModalContainer(
 }
 
 export function getChartContainer(
-  blotterOptions: IAdaptableBlotterOptions,
+  blotterOptions: AdaptableBlotterOptions,
   document: Document,
   showModal: boolean
 ): HTMLElement {
@@ -156,7 +157,7 @@ export function getChartContainer(
 }
 
 export function isValidUserChartContainer(
-  blotterOptions: IAdaptableBlotterOptions,
+  blotterOptions: AdaptableBlotterOptions,
   document: Document
 ): boolean {
   if (StringExtensions.IsNotNullOrEmpty(blotterOptions.containerOptions.chartContainer)) {
@@ -254,7 +255,7 @@ export function getGlyphForSystemStatusButton(statusColour: StatusColour): strin
   }
 }
 
-export function GetScheduleDescription(schedule: ISchedule): string {
+export function GetScheduleDescription(schedule: Schedule): string {
   if (schedule == null) {
     return '[No Schedule]';
   }

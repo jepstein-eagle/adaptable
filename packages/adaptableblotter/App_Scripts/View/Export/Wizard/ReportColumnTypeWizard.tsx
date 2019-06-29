@@ -1,4 +1,4 @@
-import { IReport } from '../../../Utilities/Interface/BlotterObjects/IReport';
+import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
 import * as React from 'react';
 import { Col, Radio, ControlLabel } from 'react-bootstrap';
 import Panel from '../../../components/Panel';
@@ -9,10 +9,10 @@ import {
 //import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ReportColumnScope, MessageType } from '../../../Utilities/Enums';
+import { ReportColumnScope, MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 
-export interface ReportColumnTypeWizardProps extends AdaptableWizardStepProps<IReport> {}
+export interface ReportColumnTypeWizardProps extends AdaptableWizardStepProps<Report> {}
 export interface ReportColumnsWizardState {
   ReportColumnScope: ReportColumnScope;
 }

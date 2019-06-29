@@ -2,24 +2,24 @@ import * as React from 'react';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IColumnFilter } from '../../Utilities/Interface/BlotterObjects/IColumnFilter';
+import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { AccessLevel } from '../../Utilities/Enums';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IColItem } from '../UIInterfaces';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 
 export interface ActiveFiltersPanelProps extends React.ClassAttributes<ActiveFiltersPanel> {
-  ColumnFilters: IColumnFilter[];
+  ColumnFilters: ColumnFilter[];
   Columns: IColumn[];
   cssClassName: string;
   AccessLevel: AccessLevel;
-  onClear: (columnFilter: IColumnFilter) => void;
-  onSaveColumnFilterasUserFilter: (columnFilter: IColumnFilter) => void;
+  onClear: (columnFilter: ColumnFilter) => void;
+  onSaveColumnFilterasUserFilter: (columnFilter: ColumnFilter) => void;
 }
 
 export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps, {}> {
@@ -33,7 +33,7 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
     ];
 
     let rowElements: any[] = [];
-    this.props.ColumnFilters.forEach((columnFilter: IColumnFilter, index: number) => {
+    this.props.ColumnFilters.forEach((columnFilter: ColumnFilter, index: number) => {
       rowElements.push(this.createRow(colItems, columnFilter, cssClassName));
     });
 
@@ -45,7 +45,7 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
     );
   }
 
-  private createRow(colItems: IColItem[], columnFilter: IColumnFilter, cssClassName: string): any {
+  private createRow(colItems: IColItem[], columnFilter: ColumnFilter, cssClassName: string): any {
     let rowColItems: IColItem[] = Helper.cloneObject(colItems);
     rowColItems[0].Content = ColumnHelper.getFriendlyNameFromColumnId(
       columnFilter.ColumnId,

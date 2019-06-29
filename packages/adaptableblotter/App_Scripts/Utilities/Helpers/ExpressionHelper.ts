@@ -4,12 +4,10 @@ import {
   DataType,
   DistinctCriteriaPairValue,
   RangeOperandType,
-} from '../Enums';
-import { IUserFilter } from '../Interface/BlotterObjects/IUserFilter';
-import { IRange } from '../Interface/Expression/IRange';
-import { IRangeExpression } from '../Interface/Expression/IRangeExpression';
-import { IColumnValueExpression } from '../Interface/Expression/IColumnValueExpression';
-import { Expression } from '../Expression';
+} from '../../PredefinedConfig/Common/Enums';
+
+import { ColumnValueExpression } from '../../PredefinedConfig/Common/Expression/ColumnValueExpression';
+import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { IColumn } from '../Interface/IColumn';
 import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
@@ -18,6 +16,10 @@ import { LoggingHelper } from './LoggingHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
+import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
+import Helper from './Helper';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -39,7 +41,7 @@ export function CreateSingleColumnExpression(
   columnDisplayValues: Array<string>,
   columnRawValues: Array<string>,
   userFilters: Array<string>,
-  ranges: Array<IRange>
+  ranges: Array<QueryRange>
 ) {
   return new Expression(
     (columnDisplayValues && columnDisplayValues.length > 0) ||
@@ -74,39 +76,50 @@ export function ConvertExpressionToString(
     let columnToString = '';
 
     // Column Display Values
-    let columnValueExpression: IColumnValueExpression = Expression.ColumnValueExpressions.find(
-      x => x.ColumnId == columnId
-    );
-    if (columnValueExpression) {
-      columnToString = ColumnValueExpressionToString(
-        columnValueExpression,
-        columnFriendlyName,
-        includeColumnName
+    if (ArrayExtensions.IsNotNullOrEmpty(Expression.ColumnValueExpressions)) {
+      let columnValueExpression: ColumnValueExpression = Expression.ColumnValueExpressions.find(
+        x => x.ColumnId == columnId
       );
+      if (columnValueExpression) {
+        columnToString = ColumnValueExpressionToString(
+          columnValueExpression,
+          columnFriendlyName,
+          includeColumnName
+        );
+      }
     }
 
     // User Filters
-    let columnUserFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
-    if (columnUserFilters) {
-      if (columnToString != '') {
-        columnToString += ' OR ';
+    if (ArrayExtensions.IsNotNullOrEmpty(Expression.FilterExpressions)) {
+      let columnUserFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
+      if (columnUserFilters) {
+        if (columnToString != '') {
+          columnToString += ' OR ';
+        }
+        columnToString += UserFiltersToString(
+          columnUserFilters.Filters,
+          columnFriendlyName,
+          includeColumnName
+        );
       }
-      columnToString += UserFiltersToString(
-        columnUserFilters.Filters,
-        columnFriendlyName,
-        includeColumnName
-      );
     }
 
     // Column Ranges
-    let columnRange: IRangeExpression = Expression.RangeExpressions.find(
-      x => x.ColumnId == columnId
-    );
-    if (columnRange) {
-      if (columnToString != '') {
-        columnToString += ' OR ';
+    if (ArrayExtensions.IsNotNullOrEmpty(Expression.RangeExpressions)) {
+      let columnRange: RangeExpression = Expression.RangeExpressions.find(
+        x => x.ColumnId == columnId
+      );
+      if (columnRange) {
+        if (columnToString != '') {
+          columnToString += ' OR ';
+        }
+        columnToString += RangesToString(
+          columnRange,
+          columnFriendlyName,
+          columns,
+          includeColumnName
+        );
       }
-      columnToString += RangesToString(columnRange, columnFriendlyName, columns, includeColumnName);
     }
     if (returnValue != '') {
       returnValue += ' AND ';
@@ -123,8 +136,8 @@ export function ConvertExpressionToString(
   return returnValue;
 }
 
-// Converts a Range to a readable string
-export function ConvertRangeToString(range: IRange, columns: IColumn[]): string {
+// Converts a QueryRange to a readable string
+export function ConvertRangeToString(range: QueryRange, columns: IColumn[]): string {
   let returnValue: string = range.Operator + ' ' + range.Operand1;
   if (StringExtensions.IsNotNullOrEmpty(range.Operand2)) {
     returnValue += range.Operand2;
@@ -175,12 +188,11 @@ export function IsSatisfied(
   getDisplayColumnValue: (columnId: string) => string,
   getOtherColumnValue: (columnId: string) => any,
   columnBlotterList: IColumn[],
-  userFilters: IUserFilter[],
+  userFilters: UserFilter[],
   systemFilters: string[],
   blotter: IAdaptableBlotter
 ): boolean {
   let expressionColumnList = GetColumnListFromExpression(Expression);
-
   for (let columnId of expressionColumnList) {
     //we need either a column value or user filter expression or range to match the column
     let isColumnSatisfied = false;
@@ -192,7 +204,7 @@ export function IsSatisfied(
     }
 
     // check for display column values
-    if (!isColumnSatisfied) {
+    if (!isColumnSatisfied && ArrayExtensions.IsNotNullOrEmpty(Expression.ColumnValueExpressions)) {
       let columnValues = Expression.ColumnValueExpressions.find(x => x.ColumnId == columnId);
       if (columnValues) {
         let columnDisplayValue = getDisplayColumnValue(columnValues.ColumnId);
@@ -204,11 +216,11 @@ export function IsSatisfied(
     }
 
     // Check for filter expressions if column fails
-    if (!isColumnSatisfied) {
+    if (!isColumnSatisfied && ArrayExtensions.IsNotNullOrEmpty(Expression.FilterExpressions)) {
       let columnFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
       if (columnFilters) {
         // first evaluate any user filters
-        let filteredUserFilters: IUserFilter[] = FilterHelper.GetUserFilters(
+        let filteredUserFilters: UserFilter[] = FilterHelper.GetUserFilters(
           userFilters,
           columnFilters.Filters
         );
@@ -246,7 +258,7 @@ export function IsSatisfied(
     }
 
     // Check for ranges if column and user filter expressions have failed
-    if (!isColumnSatisfied) {
+    if (!isColumnSatisfied && ArrayExtensions.IsNotNullOrEmpty(Expression.RangeExpressions)) {
       let columnRanges = Expression.RangeExpressions.find(x => x.ColumnId == columnId);
       if (columnRanges) {
         let column = columnBlotterList.find(x => x.ColumnId == columnRanges.ColumnId);
@@ -275,7 +287,7 @@ export function IsSatisfied(
 }
 
 function ColumnValueExpressionToString(
-  columnValueExpression: IColumnValueExpression,
+  columnValueExpression: ColumnValueExpression,
   columnFriendlyName: string,
   includeColumnName: boolean
 ): string {
@@ -312,7 +324,7 @@ function UserFiltersToString(
 }
 
 function RangesToString(
-  rangeExpression: IRangeExpression,
+  rangeExpression: RangeExpression,
   columnFriendlyName: string,
   columns: IColumn[],
   includeColumnName: boolean
@@ -322,12 +334,13 @@ function RangesToString(
     if (returnValue != '') {
       returnValue += ' OR ';
     }
-    if (range.Operator == LeafExpressionOperator.Between) {
+    let operator = range.Operator as LeafExpressionOperator;
+    if (operator == LeafExpressionOperator.Between) {
       if (includeColumnName) {
         returnValue += '[' + columnFriendlyName + '] ';
       }
       returnValue +=
-        OperatorToShortFriendlyString(range.Operator) +
+        OperatorToShortFriendlyString(operator) +
         ' ' +
         getOperandValue(range.Operand1Type, range.Operand1, columns) +
         ' AND ' +
@@ -337,7 +350,7 @@ function RangesToString(
         returnValue += '[' + columnFriendlyName + '] ';
       }
       returnValue +=
-        OperatorToShortFriendlyString(range.Operator) +
+        OperatorToShortFriendlyString(operator) +
         ' ' +
         getOperandValue(range.Operand1Type, range.Operand1, columns);
     }
@@ -524,24 +537,28 @@ function getOperandValue(rangeOperandType: string, operand: string, columns: ICo
 }
 
 export function GetColumnListFromExpression(expression: Expression): Array<string> {
-  return Array.from(
-    new Set(
-      expression.ColumnValueExpressions.map(x => x.ColumnId)
-        .concat(expression.FilterExpressions.map(x => x.ColumnId))
-        .concat(expression.RangeExpressions.map(x => x.ColumnId))
-    )
-  );
+  let returnColumnList: string[] = [];
+  if (ArrayExtensions.IsNotNullOrEmpty(expression.ColumnValueExpressions)) {
+    returnColumnList.push(...expression.ColumnValueExpressions.map(x => x.ColumnId));
+  }
+  if (ArrayExtensions.IsNotNullOrEmpty(expression.FilterExpressions)) {
+    returnColumnList.push(...expression.FilterExpressions.map(x => x.ColumnId));
+  }
+  if (ArrayExtensions.IsNotNullOrEmpty(expression.RangeExpressions)) {
+    returnColumnList.push(...expression.RangeExpressions.map(x => x.ColumnId));
+  }
+  return returnColumnList;
 }
 
 export function IsNullOrEmptyExpression(expression: Expression): boolean {
-  return expression == null || IsEmptyExpression(expression);
+  return expression == null || expression == undefined || IsEmptyExpression(expression);
 }
 
 export function IsEmptyExpression(expression: Expression): boolean {
   return (
-    expression.ColumnValueExpressions.length == 0 &&
-    expression.FilterExpressions.length == 0 &&
-    expression.RangeExpressions.length == 0
+    ArrayExtensions.IsNullOrEmpty(expression.ColumnValueExpressions) &&
+    ArrayExtensions.IsNullOrEmpty(expression.FilterExpressions) &&
+    ArrayExtensions.IsNullOrEmpty(expression.RangeExpressions)
   );
 }
 
@@ -578,6 +595,9 @@ export function IsEmptyOrValidExpression(expression: Expression): boolean {
 export function IsExpressionValid(expression: Expression): boolean {
   //nothing to check for ColumnValues or Filters
   //we check that all ranges are properly populated
+  if (ArrayExtensions.IsNullOrEmpty(expression.RangeExpressions)) {
+    return true;
+  }
   return expression.RangeExpressions.every(x => {
     return x.Ranges.every(range => {
       if (range.Operator == LeafExpressionOperator.Unknown) {
@@ -591,7 +611,7 @@ export function IsExpressionValid(expression: Expression): boolean {
   });
 }
 
-export function IsEmptyRange(range: IRange): boolean {
+export function IsEmptyRange(range: QueryRange): boolean {
   return (
     StringExtensions.IsNullOrEmpty(range.Operand1) && StringExtensions.IsNullOrEmpty(range.Operand2)
   );
@@ -601,7 +621,7 @@ export function CreateEmptyExpression(): Expression {
   return new Expression([], [], []);
 }
 
-export function CreateEmptyRange(): IRange {
+export function CreateEmptyRange(): QueryRange {
   return {
     Operator: LeafExpressionOperator.Unknown,
     Operand1: '',
@@ -612,7 +632,7 @@ export function CreateEmptyRange(): IRange {
 }
 
 export function GetRangeEvaluation(
-  rangeExpression: IRange,
+  rangeExpression: QueryRange,
   newValue: any,
   initialValue: any,
   column: IColumn,
@@ -620,7 +640,7 @@ export function GetRangeEvaluation(
   getOtherColumnValue: (columnId: string) => any
 ): IRangeEvaluation {
   let rangeEvaluation: IRangeEvaluation = ObjectFactory.CreateRangeEvaluation(
-    rangeExpression.Operator,
+    rangeExpression.Operator as LeafExpressionOperator,
     rangeExpression.Operand1,
     rangeExpression.Operand2,
     newValue,
@@ -773,7 +793,7 @@ export function TestRangeEvaluation(
   return false;
 }
 
-export function ExpressionContainsFilter(expression: Expression, filter: IUserFilter): boolean {
+export function ExpressionContainsFilter(expression: Expression, filter: UserFilter): boolean {
   let hasFilter: boolean = false;
   if (expression != null && expression.FilterExpressions.length > 0) {
     expression.FilterExpressions.forEach(fe => {
@@ -796,6 +816,18 @@ export function OperatorRequiresValue(operator: LeafExpressionOperator): boolean
     operator != LeafExpressionOperator.NoDuplicateValues &&
     operator != LeafExpressionOperator.ExistingValuesOnly
   );
+}
+
+export function AddMissingProperties(expression: Expression): void {
+  if (ArrayExtensions.IsNullOrEmpty(expression.ColumnValueExpressions)) {
+    expression.ColumnValueExpressions = [];
+  }
+  if (ArrayExtensions.IsNullOrEmpty(expression.FilterExpressions)) {
+    expression.FilterExpressions = [];
+  }
+  if (ArrayExtensions.IsNullOrEmpty(expression.RangeExpressions)) {
+    expression.RangeExpressions = [];
+  }
 }
 
 function getExistingItem(blotter: IAdaptableBlotter, rangeEvaluation: IRangeEvaluation): any {
@@ -837,5 +869,6 @@ export const ExpressionHelper = {
   TestRangeEvaluation,
   ExpressionContainsFilter,
   OperatorRequiresValue,
+  AddMissingProperties,
 };
 export default ExpressionHelper;

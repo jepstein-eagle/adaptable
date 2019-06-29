@@ -3,19 +3,19 @@ import {
   AdaptableWizardStepProps,
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
-import { ICategoryChartDefinition } from '../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
-import { Expression } from '../../../../Utilities/Expression';
+import { CategoryChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import { Expression } from '../../../../PredefinedConfig/Common/Expression/Expression';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
 import { Panel, FormGroup, Row, Col, HelpBlock, ControlLabel, Radio } from 'react-bootstrap';
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ColumnSelector } from '../../../Components/Selectors/ColumnSelector';
-import { SelectionMode } from '../../../../Utilities/Enums';
+import { SelectionMode } from '../../../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../../../../Utilities/Interface/IColumn';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
 
 export interface CategoryChartXAxisWizardProps
-  extends AdaptableWizardStepProps<ICategoryChartDefinition> {}
+  extends AdaptableWizardStepProps<CategoryChartDefinition> {}
 
 export interface CategoryChartXAxisWizardState {
   XAxisColumnId: string;

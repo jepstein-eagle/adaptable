@@ -5,7 +5,7 @@ import { SharedEntityExpressionRowProps } from '../Components/SharedProps/Config
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IColItem } from '../UIInterfaces';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { IColumnCategory } from '../../Utilities/Interface/BlotterObjects/IColumnCategory';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 import { EntityRowItem } from '../Components/EntityRowItem';
 
 export interface ColumnCategoryEntityRowProps<ColumnCategoryEntityRow>
@@ -16,7 +16,7 @@ export class ColumnCategoryEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let ColumnCategory: IColumnCategory = this.props.AdaptableBlotterObject as IColumnCategory;
+    let ColumnCategory: ColumnCategory = this.props.AdaptableBlotterObject as ColumnCategory;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
     let columnNames: string[] = ColumnCategory.ColumnIds.map(ci => {

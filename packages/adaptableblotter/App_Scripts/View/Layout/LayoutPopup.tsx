@@ -22,20 +22,20 @@ import { UIHelper } from '../UIHelper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { SortOrder, AccessLevel } from '../../Utilities/Enums';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { ILayout } from '../../Utilities/Interface/BlotterObjects/ILayout';
+import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import SimpleButton from '../../components/SimpleButton';
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
-  Layouts: ILayout[];
+  Layouts: Layout[];
   CurrentLayoutName: string;
-  onSaveLayout: (layout: ILayout) => LayoutRedux.LayoutSaveAction;
+  onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
   onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableConfigEntityState> {
@@ -161,8 +161,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     });
   }
 
-  onEdit(layout: ILayout) {
-    let clonedObject: ILayout = Helper.cloneObject(layout);
+  onEdit(layout: Layout) {
+    let clonedObject: Layout = Helper.cloneObject(layout);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
       WizardStartIndex: 1,
@@ -180,7 +180,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   onFinishWizard() {
-    let clonedObject: ILayout = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
+    let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableBlotterObject);
 
     this.props.onSaveLayout(clonedObject);
 
@@ -201,7 +201,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   canFinishWizard() {
-    let layout = this.state.EditedAdaptableBlotterObject as ILayout;
+    let layout = this.state.EditedAdaptableBlotterObject as Layout;
     if (ArrayExtensions.IsNotNullOrEmpty(layout.ColumnSorts)) {
       let canFinish: boolean = true;
       layout.ColumnSorts.forEach(gs => {
@@ -229,10 +229,10 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.LayoutSave(layout)),
+    onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
     onSelectLayout: (selectedSearchName: string) =>
       dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.LayoutStrategyId)),
   };
 }

@@ -1,15 +1,14 @@
-import { PercentBarState } from './Interface/IState';
+import { PercentBarState, PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 import * as Redux from 'redux';
-import { IPercentBar } from '../../Utilities/Interface/BlotterObjects/IPercentBar';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const PERCENT_BAR_ADD = 'PERCENT_BAR_ADD';
 export const PERCENT_BAR_EDIT = 'PERCENT_BAR_EDIT';
 export const PERCENT_BAR_DELETE = 'PERCENT_BAR_DELETE';
 
 export interface PercentBarAction extends Redux.Action {
-  percentBar: IPercentBar;
+  percentBar: PercentBar;
 }
 
 export interface PercentBarAddAction extends PercentBarAction {}
@@ -18,16 +17,16 @@ export interface PercentBarEditAction extends PercentBarAction {}
 
 export interface PercentBarDeleteAction extends PercentBarAction {}
 
-export const PercentBarAdd = (percentBar: IPercentBar): PercentBarAddAction => ({
+export const PercentBarAdd = (percentBar: PercentBar): PercentBarAddAction => ({
   type: PERCENT_BAR_ADD,
   percentBar,
 });
 
-export const PercentBarEdit = (percentBar: IPercentBar): PercentBarEditAction => ({
+export const PercentBarEdit = (percentBar: PercentBar): PercentBarEditAction => ({
   type: PERCENT_BAR_EDIT,
   percentBar,
 });
-export const PercentBarDelete = (percentBar: IPercentBar): PercentBarDeleteAction => ({
+export const PercentBarDelete = (percentBar: PercentBar): PercentBarDeleteAction => ({
   type: PERCENT_BAR_DELETE,
   percentBar,
 });
@@ -40,11 +39,11 @@ export const PercentBarReducer: Redux.Reducer<PercentBarState> = (
   state: PercentBarState = initialPercentBarState,
   action: Redux.Action
 ): PercentBarState => {
-  let percentBars: IPercentBar[];
+  let percentBars: PercentBar[];
 
   switch (action.type) {
     case PERCENT_BAR_ADD: {
-      const actionPercentBar: IPercentBar = (action as PercentBarAction).percentBar;
+      const actionPercentBar: PercentBar = (action as PercentBarAction).percentBar;
 
       if (!actionPercentBar.Uuid) {
         actionPercentBar.Uuid = createUuid();
@@ -55,7 +54,7 @@ export const PercentBarReducer: Redux.Reducer<PercentBarState> = (
     }
 
     case PERCENT_BAR_EDIT: {
-      const actionPercentBar: IPercentBar = (action as PercentBarAction).percentBar;
+      const actionPercentBar: PercentBar = (action as PercentBarAction).percentBar;
       return {
         ...state,
         PercentBars: state.PercentBars.map(abObject =>
@@ -64,7 +63,7 @@ export const PercentBarReducer: Redux.Reducer<PercentBarState> = (
       };
     }
     case PERCENT_BAR_DELETE: {
-      const actionPercentBar: IPercentBar = (action as PercentBarAction).percentBar;
+      const actionPercentBar: PercentBar = (action as PercentBarAction).percentBar;
       return {
         ...state,
         PercentBars: state.PercentBars.filter(abObject => abObject.Uuid !== actionPercentBar.Uuid),

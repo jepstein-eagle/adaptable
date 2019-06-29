@@ -1,15 +1,14 @@
-import { CustomSortState } from './Interface/IState';
+import { CustomSortState, CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
 import * as Redux from 'redux';
-import { ICustomSort } from '../../Utilities/Interface/BlotterObjects/ICustomSort';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../Utilities/Uuid';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const CUSTOM_SORT_ADD = 'CUSTOM_SORT_ADD';
 export const CUSTOM_SORT_EDIT = 'CUSTOM_SORT_EDIT';
 export const CUSTOM_SORT_DELETE = 'CUSTOM_SORT_DELETE';
 
 export interface CustomSortAction extends Redux.Action {
-  customSort: ICustomSort;
+  customSort: CustomSort;
 }
 
 export interface CustomSortAddAction extends CustomSortAction {}
@@ -18,16 +17,16 @@ export interface CustomSortEditAction extends CustomSortAction {}
 
 export interface CustomSortDeleteAction extends CustomSortAction {}
 
-export const CustomSortAdd = (customSort: ICustomSort): CustomSortAddAction => ({
+export const CustomSortAdd = (customSort: CustomSort): CustomSortAddAction => ({
   type: CUSTOM_SORT_ADD,
   customSort,
 });
 
-export const CustomSortEdit = (customSort: ICustomSort): CustomSortEditAction => ({
+export const CustomSortEdit = (customSort: CustomSort): CustomSortEditAction => ({
   type: CUSTOM_SORT_EDIT,
   customSort,
 });
-export const CustomSortDelete = (customSort: ICustomSort): CustomSortDeleteAction => ({
+export const CustomSortDelete = (customSort: CustomSort): CustomSortDeleteAction => ({
   type: CUSTOM_SORT_DELETE,
   customSort,
 });
@@ -40,11 +39,11 @@ export const CustomSortReducer: Redux.Reducer<CustomSortState> = (
   state: CustomSortState = initialCustomSortState,
   action: Redux.Action
 ): CustomSortState => {
-  let customSorts: ICustomSort[];
+  let customSorts: CustomSort[];
 
   switch (action.type) {
     case CUSTOM_SORT_ADD: {
-      const actionCustomSort: ICustomSort = (action as CustomSortAction).customSort;
+      const actionCustomSort: CustomSort = (action as CustomSortAction).customSort;
 
       if (!actionCustomSort.Uuid) {
         actionCustomSort.Uuid = createUuid();
@@ -55,7 +54,7 @@ export const CustomSortReducer: Redux.Reducer<CustomSortState> = (
     }
 
     case CUSTOM_SORT_EDIT: {
-      const actionCustomSort: ICustomSort = (action as CustomSortAction).customSort;
+      const actionCustomSort: CustomSort = (action as CustomSortAction).customSort;
       return {
         ...state,
         CustomSorts: state.CustomSorts.map(abObject =>
@@ -64,7 +63,7 @@ export const CustomSortReducer: Redux.Reducer<CustomSortState> = (
       };
     }
     case CUSTOM_SORT_DELETE: {
-      const actionCustomSort: ICustomSort = (action as CustomSortAction).customSort;
+      const actionCustomSort: CustomSort = (action as CustomSortAction).customSort;
       return {
         ...state,
         CustomSorts: state.CustomSorts.filter(abObject => abObject.Uuid !== actionCustomSort.Uuid),

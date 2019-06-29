@@ -23,31 +23,30 @@ import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ISharedEntity } from '../../Utilities/Interface/ISharedEntity';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyProfile } from '../Components/StrategyProfile';
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { IColItem } from '../UIInterfaces';
-import { StyleVisualItem } from '../Components/StyleVisualItem';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { IFormatColumn } from '../../Utilities/Interface/BlotterObjects/IFormatColumn';
-import { ILayout } from '../../Utilities/Interface/BlotterObjects/ILayout';
-import { IPlusMinusRule } from '../../Utilities/Interface/BlotterObjects/IPlusMinusRule';
-import { IShortcut } from '../../Utilities/Interface/BlotterObjects/IShortcut';
-import { IUserFilter } from '../../Utilities/Interface/BlotterObjects/IUserFilter';
-import { IReport } from '../../Utilities/Interface/BlotterObjects/IReport';
-import { ICustomSort } from '../../Utilities/Interface/BlotterObjects/ICustomSort';
-import { IConditionalStyle } from '../../Utilities/Interface/BlotterObjects/IConditionalStyle';
-import { ICellValidationRule } from '../../Utilities/Interface/BlotterObjects/ICellValidationRule';
-import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
-import { IAdvancedSearch } from '../../Utilities/Interface/BlotterObjects/IAdvancedSearch';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { ConditionalStyleScope } from '../../Utilities/Enums';
+import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import { IColItem } from '../UIInterfaces';
+import { CustomSort } from '../../PredefinedConfig/RunTimeState/CustomSortState';
+import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { StyleVisualItem } from '../Components/StyleVisualItem';
+import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
+import { Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
+import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import { FormatColumn } from '../../PredefinedConfig/RunTimeState/FormatColumnState';
+import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
   Entities: Array<ISharedEntity>;
   onGetSharedItems: () => TeamSharingRedux.TeamSharingShareAction;
   onImportItem: (
-    entity: IAdaptableBlotterObject,
+    entity: AdaptableBlotterObject,
     strategy: string
   ) => TeamSharingRedux.TeamSharingImportItemAction;
 }
@@ -122,7 +121,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
   getSharedItemDetails(sharedEntity: ISharedEntity) {
     switch (sharedEntity.strategy) {
       case StrategyConstants.CustomSortStrategyId: {
-        let customSort = sharedEntity.entity as ICustomSort;
+        let customSort = sharedEntity.entity as CustomSort;
         return (
           <Row style={{ display: 'flex', alignItems: 'center' }}>
             <Col xs={4}>
@@ -133,7 +132,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.CalculatedColumnStrategyId: {
-        let calcCol = sharedEntity.entity as ICalculatedColumn;
+        let calcCol = sharedEntity.entity as CalculatedColumn;
         return (
           <Row style={{ display: 'flex', alignItems: 'center' }}>
             <Col xs={4}>{calcCol.ColumnId}</Col>
@@ -142,7 +141,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.CellValidationStrategyId: {
-        let cellVal = sharedEntity.entity as ICellValidationRule;
+        let cellVal = sharedEntity.entity as CellValidationRule;
         return (
           <Row style={{ display: 'flex', alignItems: 'center' }}>
             <Col xs={4}>
@@ -160,7 +159,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.ConditionalStyleStrategyId: {
-        let cs = sharedEntity.entity as IConditionalStyle;
+        let cs = sharedEntity.entity as ConditionalStyle;
         return (
           <Row style={{ display: 'flex', alignItems: 'center' }}>
             <Col md={4}>
@@ -178,7 +177,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.PlusMinusStrategyId: {
-        let plusMinus = sharedEntity.entity as IPlusMinusRule;
+        let plusMinus = sharedEntity.entity as PlusMinusRule;
         return (
           <Row style={{ display: 'flex', alignItems: 'center' }}>
             <Col xs={4}>
@@ -192,7 +191,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.ShortcutStrategyId: {
-        let shortcut = sharedEntity.entity as IShortcut;
+        let shortcut = sharedEntity.entity as Shortcut;
         return (
           <Row style={{ display: 'flex', alignItems: 'center' }}>
             <Col md={4}>{shortcut.ColumnType}</Col>
@@ -202,7 +201,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.UserFilterStrategyId: {
-        let filter = sharedEntity.entity as IUserFilter;
+        let filter = sharedEntity.entity as UserFilter;
         let expressionString = ExpressionHelper.ConvertExpressionToString(
           filter.Expression,
           this.props.Columns
@@ -215,7 +214,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.AdvancedSearchStrategyId: {
-        let search = sharedEntity.entity as IAdvancedSearch;
+        let search = sharedEntity.entity as AdvancedSearch;
         let expressionString = ExpressionHelper.ConvertExpressionToString(
           search.Expression,
           this.props.Columns
@@ -228,7 +227,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.LayoutStrategyId: {
-        let layout = sharedEntity.entity as ILayout;
+        let layout = sharedEntity.entity as Layout;
         return (
           <Row style={{ display: 'flex', alignItems: 'center' }}>
             <Col xs={4}>{layout.Name}</Col>
@@ -237,7 +236,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.FormatColumnStrategyId: {
-        let fc = sharedEntity.entity as IFormatColumn;
+        let fc = sharedEntity.entity as FormatColumn;
         return (
           <Row style={{ display: 'flex', alignItems: 'center' }}>
             <Col xs={4}>
@@ -250,7 +249,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.ExportStrategyId: {
-        let range = sharedEntity.entity as IReport;
+        let range = sharedEntity.entity as Report;
         let expressionString = ExpressionHelper.ConvertExpressionToString(
           range.Expression,
           this.props.Columns
@@ -280,7 +279,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onGetSharedItems: () => dispatch(TeamSharingRedux.TeamSharingGet()),
-    onImportItem: (entity: IAdaptableBlotterObject, strategy: string) =>
+    onImportItem: (entity: AdaptableBlotterObject, strategy: string) =>
       dispatch(TeamSharingRedux.TeamSharingImportItem(entity, strategy)),
   };
 }

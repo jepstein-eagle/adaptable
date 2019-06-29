@@ -14,7 +14,7 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard';
-import { SortOrder } from '../../Utilities/Enums';
+import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { CalculatedColumnEntityRow } from './CalculatedColumnEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import {
@@ -24,24 +24,24 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
-import { IAdaptableBlotterObject } from '../../Utilities/Interface/BlotterObjects/IAdaptableBlotterObject';
-import { ICalculatedColumn } from '../../Utilities/Interface/BlotterObjects/ICalculatedColumn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 
 interface CalculatedColumnPopupProps
   extends StrategyViewPopupProps<CalculatedColumnPopupComponent> {
   onAddCalculatedColumn: (
-    calculatedColumn: ICalculatedColumn
+    calculatedColumn: CalculatedColumn
   ) => CalculatedColumnRedux.CalculatedColumnAddAction;
   onEditCalculatedColumn: (
-    calculatedColumn: ICalculatedColumn
+    calculatedColumn: CalculatedColumn
   ) => CalculatedColumnRedux.CalculatedColumnEditAction;
-  CalculatedColumns: Array<ICalculatedColumn>;
+  CalculatedColumns: Array<CalculatedColumn>;
   CalculatedColumnErrorMessage: string;
   IsExpressionValid: (expression: string) => SystemRedux.CalculatedColumnIsExpressionValidAction;
-  onShare: (entity: IAdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class CalculatedColumnPopupComponent extends React.Component<
@@ -87,7 +87,7 @@ class CalculatedColumnPopupComponent extends React.Component<
       'ColumnId'
     );
     let calculatedColumns = propCalculatedColumns.map(
-      (calculatedColumn: ICalculatedColumn, index) => {
+      (calculatedColumn: CalculatedColumn, index) => {
         // let index = this.props.CalculatedColumns.indexOf(calculatedColumn)
 
         return (
@@ -99,7 +99,7 @@ class CalculatedColumnPopupComponent extends React.Component<
             TeamSharingActivated={this.props.TeamSharingActivated}
             AdaptableBlotterObject={calculatedColumn}
             key={calculatedColumn.ColumnId}
-            onEdit={calculatedColumn => this.onEdit(calculatedColumn as ICalculatedColumn)}
+            onEdit={calculatedColumn => this.onEdit(calculatedColumn as CalculatedColumn)}
             onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(calculatedColumn)}
           />
         );
@@ -145,7 +145,7 @@ class CalculatedColumnPopupComponent extends React.Component<
             <CalculatedColumnWizard
               cssClassName={cssWizardClassName}
               EditedAdaptableBlotterObject={
-                this.state.EditedAdaptableBlotterObject as ICalculatedColumn
+                this.state.EditedAdaptableBlotterObject as CalculatedColumn
               }
               ConfigEntities={this.props.CalculatedColumns}
               Columns={this.props.Columns}
@@ -174,7 +174,7 @@ class CalculatedColumnPopupComponent extends React.Component<
     });
   }
 
-  onEdit(calculatedColumn: ICalculatedColumn) {
+  onEdit(calculatedColumn: CalculatedColumn) {
     let clonedObject = Helper.cloneObject(calculatedColumn);
     this.setState({
       EditedAdaptableBlotterObject: clonedObject,
@@ -194,7 +194,7 @@ class CalculatedColumnPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let calculatedColumn: ICalculatedColumn = Helper.cloneObject(
+    let calculatedColumn: CalculatedColumn = Helper.cloneObject(
       this.state.EditedAdaptableBlotterObject
     );
     if (this.state.WizardStatus == WizardStatus.Edit) {
@@ -210,7 +210,7 @@ class CalculatedColumnPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let calculatedColumn = this.state.EditedAdaptableBlotterObject as ICalculatedColumn;
+    let calculatedColumn = this.state.EditedAdaptableBlotterObject as CalculatedColumn;
     return (
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnExpression)
@@ -227,13 +227,13 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onAddCalculatedColumn: (calculatedColumn: ICalculatedColumn) =>
+    onAddCalculatedColumn: (calculatedColumn: CalculatedColumn) =>
       dispatch(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn)),
-    onEditCalculatedColumn: (calculatedColumn: ICalculatedColumn) =>
+    onEditCalculatedColumn: (calculatedColumn: CalculatedColumn) =>
       dispatch(CalculatedColumnRedux.CalculatedColumnEdit(calculatedColumn)),
     IsExpressionValid: (expression: string) =>
       dispatch(SystemRedux.CalculatedColumnIsExpressionValid(expression)),
-    onShare: (entity: IAdaptableBlotterObject) =>
+    onShare: (entity: AdaptableBlotterObject) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CalculatedColumnStrategyId)
       ),

@@ -1,15 +1,15 @@
 import {
-  IChartDefinition,
-  IChartProperties,
-  ICategoryChartProperties,
-} from '../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
+  ChartDefinition,
+  ChartProperties,
+  CategoryChartProperties,
+} from '../../../PredefinedConfig/RunTimeState/ChartState';
 
 // dont normally do this but Component was getting so bid and unwieldy...
 
 export interface CategoryChartComponentState {
   // Global
   IsChartSettingsVisible: boolean;
-  ChartProperties: ICategoryChartProperties;
+  ChartProperties: CategoryChartProperties;
   // General
   IsGeneralMinimised: boolean;
   // Y Axis

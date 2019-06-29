@@ -12,9 +12,9 @@ import '../../../../App_Scripts/themes/light.scss';
 import { GridOptions } from 'ag-grid-community';
 import { LicenseManager } from 'ag-grid-enterprise';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
-import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-
+i;
 /*
 Demo for checking alerts work
 */
@@ -23,7 +23,7 @@ LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(200);
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
     'alert demo'
   );
@@ -33,14 +33,14 @@ function InitAdaptableBlotter() {
   adaptableblotter.applyLightTheme();
 }
 
-let demoConfig = {
+let demoConfig: PredefinedConfig = {
   Alert: {
     AlertDefinitions: [
       {
         ColumnId: 'price',
-        Expression: null,
+        Expression: undefined,
         MessageType: 'Warning',
-        Range: {
+        QueryRange: {
           Operand1: '100',
           Operand1Type: 'Value',
           Operand2: '',

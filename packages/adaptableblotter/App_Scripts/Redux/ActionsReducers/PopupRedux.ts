@@ -1,6 +1,6 @@
 import * as Redux from 'redux';
-import { PopupState } from './Interface/IState';
-import { MessageType } from '../../Utilities/Enums';
+import { PopupState } from '../../PredefinedConfig/InternalState/PopupState';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import {
   InputAction,
   IUIPrompt,

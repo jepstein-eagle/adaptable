@@ -7,7 +7,9 @@ import theme from '../theme';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { AdaptableBlotterPopup } from './Components/Popups/AdaptableBlotterPopup';
-import { PopupState, ChartState, SystemState } from '../Redux/ActionsReducers/Interface/IState';
+import { ChartState } from '../PredefinedConfig/RunTimeState/ChartState';
+import { PopupState } from '../PredefinedConfig/InternalState/PopupState';
+import { SystemState } from '../PredefinedConfig/InternalState/SystemState';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableBlotterPopupPrompt } from './Components/Popups/AdaptableBlotterPopupPrompt';
@@ -18,7 +20,7 @@ import { AdaptableBlotterPopupAlert } from './Components/Popups/AdaptableBlotter
 import { AdaptableBlotterChart } from './Components/Popups/AdaptableBlotterChart';
 import { AdaptableBlotterLoadingScreen } from './Components/Popups/AdaptableBlotterLoadingScreen';
 import { AdaptableBlotterAbout } from './Components/Popups/AdaptableBlotterAbout';
-import { ChartVisibility } from '../Utilities/ChartEnums';
+import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 
 interface AdaptableBlotterViewProps extends React.ClassAttributes<AdaptableBlotterView> {
   PopupState: PopupState;

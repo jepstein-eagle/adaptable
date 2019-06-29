@@ -5,13 +5,13 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { IUserFilter } from '../../../Utilities/Interface/BlotterObjects/IUserFilter';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SelectionMode } from '../../../Utilities/Enums';
+import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
+import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 
-export interface UserFilterSelectColumnWizardProps extends AdaptableWizardStepProps<IUserFilter> {}
+export interface UserFilterSelectColumnWizardProps extends AdaptableWizardStepProps<UserFilter> {}
 export interface UserFilterSelectColumnWizardState {
   ColumnId: string;
 }

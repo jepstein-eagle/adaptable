@@ -5,11 +5,13 @@ import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IFlashingCellsStrategy } from './Interface/IFlashingCellsStrategy';
 import * as FlashingCellsRedux from '../Redux/ActionsReducers/FlashingCellsRedux';
-import { FlashingCellState } from '../Redux/ActionsReducers/Interface/IState';
+import {
+  FlashingCellState,
+  FlashingCell,
+} from '../PredefinedConfig/RunTimeState/FlashingCellState';
 import { IColumn } from '../Utilities/Interface/IColumn';
-import { DataType } from '../Utilities/Enums';
-import { IFlashingCell } from '../Utilities/Interface/BlotterObjects/IFlashingCell';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataType } from '../PredefinedConfig/Common/Enums';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   implements IFlashingCellsStrategy {
@@ -70,8 +72,8 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
 
   public abstract initStyles(): void;
 
-  protected handleDataSourceChanged(dataChangedInfo: IDataChangedInfo) {
-    let flashingCell: IFlashingCell = this.blotter.api.flashingCellApi
+  protected handleDataSourceChanged(dataChangedInfo: DataChangedInfo) {
+    let flashingCell: FlashingCell = this.blotter.api.flashingCellApi
       .getAllFlashingCell()
       .find(f => f.ColumnId == dataChangedInfo.ColumnId);
     if (flashingCell && flashingCell.IsLive) {
@@ -81,8 +83,5 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
 
   protected abstract shouldHandleDataSourceChanged(): boolean;
 
-  protected abstract FlashCell(
-    dataChangedInfo: IDataChangedInfo,
-    flashingCell: IFlashingCell
-  ): void;
+  protected abstract FlashCell(dataChangedInfo: DataChangedInfo, flashingCell: FlashingCell): void;
 }

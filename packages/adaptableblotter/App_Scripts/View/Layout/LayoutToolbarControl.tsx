@@ -17,19 +17,18 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { ILayout } from '../../Utilities/Interface/BlotterObjects/ILayout';
+import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { AccessLevel, DashboardSize } from '../../Utilities/Enums';
+import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import Dropdown from '../../components/Dropdown';
-import { ButtonBase } from '../Components/Buttons/ButtonBase';
 import { Flex } from 'rebass';
 
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
   onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
-  onSaveLayout: (layout: ILayout) => LayoutRedux.LayoutSaveAction;
+  onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
   onNewLayout: () => PopupRedux.PopupShowScreenAction;
-  Layouts: ILayout[];
+  Layouts: Layout[];
   CurrentLayout: string;
 }
 
@@ -170,7 +169,7 @@ class LayoutToolbarControlComponent extends React.Component<
     );
   }
 
-  private isLayoutModified(layoutEntity: ILayout): boolean {
+  private isLayoutModified(layoutEntity: Layout): boolean {
     if (layoutEntity) {
       if (
         !ArrayExtensions.areArraysEqualWithOrder(
@@ -202,13 +201,13 @@ class LayoutToolbarControlComponent extends React.Component<
   }
 
   private onSave() {
-    let currentLayoutObject: ILayout = this.props.Layouts.find(
+    let currentLayoutObject: Layout = this.props.Layouts.find(
       l => l.Name == this.props.CurrentLayout
     );
     let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
 
     let visibleColumns = this.props.Columns.filter(c => c.Visible);
-    let layoutToSave: ILayout = {
+    let layoutToSave: Layout = {
       Uuid: currentLayoutObject.Uuid,
       Name: this.props.CurrentLayout,
       Columns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
@@ -233,7 +232,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
-    onSaveLayout: (layout: ILayout) => dispatch(LayoutRedux.LayoutSave(layout)),
+    onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
     onNewLayout: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

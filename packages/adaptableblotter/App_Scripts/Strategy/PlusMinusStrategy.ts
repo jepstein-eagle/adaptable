@@ -1,24 +1,24 @@
-import { PlusMinusState } from '../Redux/ActionsReducers/Interface/IState';
+import { PlusMinusState } from '../PredefinedConfig/RunTimeState/PlusMinusState';
 import { IPlusMinusStrategy } from './Interface/IPlusMinusStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as Redux from 'redux';
 import * as PlusMinusRedux from '../Redux/ActionsReducers/PlusMinusRedux';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { DataType } from '../Utilities/Enums';
+import { DataType } from '../PredefinedConfig/Common/Enums';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
-import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICellValidationRule';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
+import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -63,8 +63,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
         let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
-        let failedPreventEdits: ICellValidationRule[] = [];
-        let failedWarningEdits: ICellValidationRule[] = [];
+        let failedPreventEdits: CellValidationRule[] = [];
+        let failedWarningEdits: CellValidationRule[] = [];
         let warningValues: ICellInfo[] = [];
 
         for (var keyValuePair of selectedCellInfo.Selection) {
@@ -120,7 +120,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
               //avoid the 0.0000000000x
               newValue.Value = parseFloat(newValue.Value.toFixed(12));
 
-              let dataChangedEvent: IDataChangedInfo = {
+              let dataChangedEvent: DataChangedInfo = {
                 OldValue: Number(selectedCell.value),
                 NewValue: newValue.Value,
                 ColumnId: selectedCell.columnId,
@@ -128,7 +128,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
                 Record: null,
               };
 
-              let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+              let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
                 dataChangedEvent
               );
 
@@ -165,7 +165,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     }
   }
 
-  private ShowErrorPreventMessage(failedRules: ICellValidationRule[]): void {
+  private ShowErrorPreventMessage(failedRules: CellValidationRule[]): void {
     if (failedRules.length > 0) {
       let failedMessages: string[] = [];
       failedRules.forEach(fr => {
@@ -185,7 +185,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
   }
 
   private ShowWarningMessages(
-    failedRules: ICellValidationRule[],
+    failedRules: CellValidationRule[],
     warningValues: ICellInfo[],
     successfulValues: ICellInfo[],
     keyEventString: string
@@ -215,7 +215,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         cancelAction,
         warningMessage
       );
-      this.blotter.api.internalApi.PopupShowConfirmation(confirmation);
+      this.blotter.api.internalApi.showPopupConfirmation(confirmation);
     }
   }
 

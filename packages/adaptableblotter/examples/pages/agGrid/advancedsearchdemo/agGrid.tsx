@@ -7,7 +7,11 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
 
-import { IAdaptableBlotter, IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import {
+  IAdaptableBlotter,
+  AdaptableBlotterOptions,
+  PredefinedConfig,
+} from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
@@ -19,7 +23,7 @@ function InitAdaptableBlotter() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
 
   // creating blotter options here so we can add audit
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = {
+  const adaptableBlotterOptions: AdaptableBlotterOptions = {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
@@ -33,7 +37,11 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-let demoConfig = {
+let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['AdvancedSearch'],
+  },
+
   AdvancedSearch: {
     AdvancedSearches: [
       {
@@ -45,8 +53,6 @@ let demoConfig = {
               ColumnRawValues: ['Goldman Sachs', 'JP Morgan'],
             },
           ],
-          FilterExpressions: [],
-          RangeExpressions: [],
         },
         Name: 'hello',
       },

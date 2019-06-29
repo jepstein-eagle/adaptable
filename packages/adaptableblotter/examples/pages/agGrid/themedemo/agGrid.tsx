@@ -7,7 +7,7 @@ import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
 import '../../../../App_Scripts/themes/dark.scss';
 import { GridOptions } from 'ag-grid-community';
-import { IAdaptableBlotterOptions } from '../../../../App_Scripts/types';
+import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
 /*
@@ -18,7 +18,7 @@ Needs other things to work but it should be possible to stipulate a Current Them
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(10);
-  const adaptableBlotterOptions: IAdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
+  const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
     'theme demo'
   );
@@ -27,7 +27,7 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-let demoConfig = {
+let demoConfig: PredefinedConfig = {
   Theme: {
     CurrentTheme: 'Dark Theme',
   },

@@ -1,24 +1,24 @@
 import * as React from 'react';
 import * as StrategyConstants from '../../../../Utilities/Constants/StrategyConstants';
-import { IAdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableBlotterObjectExpressionAdaptableWizardProps } from '../../../Wizard/Interface/IAdaptableWizard';
 import {
-  ICategoryChartDefinition,
-  IChartDefinition,
-} from '../../../../Utilities/Interface/BlotterObjects/Charting/IChartDefinition';
+  CategoryChartDefinition,
+  ChartDefinition,
+} from '../../../../PredefinedConfig/RunTimeState/ChartState';
 import { AdaptableWizard } from '../../../Wizard/AdaptableWizard';
 import { CategoryChartYAxisWizard } from './CategoryChartYAxisWizard';
 import { CategoryChartXAxisWizard } from './CategoryChartXAxisWizard';
 import { CategoryChartXAxisExpressionWizard } from './CategoryChartXAxisExpressionWizard';
-import { ExpressionMode } from '../../../../Utilities/Enums';
+import { ExpressionMode } from '../../../../PredefinedConfig/Common/Enums';
 import { CategoryChartSummaryWizard } from './CategoryChartSummaryWizard';
 import { CategoryChartSettingsWizard } from './CategoryChartSettingsWizard';
 
 export interface CategoryChartWizardProps
-  extends IAdaptableBlotterObjectExpressionAdaptableWizardProps<CategoryChartWizard> {}
+  extends AdaptableBlotterObjectExpressionAdaptableWizardProps<CategoryChartWizard> {}
 
 export class CategoryChartWizard extends React.Component<CategoryChartWizardProps, {}> {
   render() {
-    let chartDefinitions: IChartDefinition[] = this.props.ConfigEntities as IChartDefinition[];
+    let chartDefinitions: ChartDefinition[] = this.props.ConfigEntities as ChartDefinition[];
     let chartNames: string[] = chartDefinitions.map(s => s.Name);
     return (
       <div className={this.props.cssClassName}>

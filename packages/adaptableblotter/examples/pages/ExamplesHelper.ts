@@ -956,6 +956,7 @@ export class ExamplesHelper {
       type: 'abColDefNumber',
       sortable: false,
       filter: true,
+      resizable: true,
     });
     schema.push({
       headerName: 'Notional',
@@ -967,6 +968,7 @@ export class ExamplesHelper {
       cellClass: 'number-cell',
       type: 'abColDefNumber',
       filter: true,
+      resizable: true,
     });
     schema.push({
       headerName: 'Counterparty',
@@ -976,6 +978,7 @@ export class ExamplesHelper {
       filter: true,
       sortable: true,
       type: 'abColDefString',
+      resizable: true,
     });
 
     schema.push({
@@ -993,6 +996,7 @@ export class ExamplesHelper {
       sortable: true,
       filter: 'agTextColumnFilter',
       type: 'abColDefString',
+      resizable: true,
     });
     schema.push({
       headerName: 'Status',
@@ -1002,6 +1006,7 @@ export class ExamplesHelper {
       sortable: true,
       enableRowGroup: true,
       type: 'abColDefString',
+      resizable: true,
     });
     schema.push({
       headerName: 'B/O Spread',

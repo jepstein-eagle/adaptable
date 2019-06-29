@@ -1,20 +1,20 @@
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { DataType, MessageType, StateChangedTrigger } from '../Utilities/Enums';
+import { DataType, MessageType, StateChangedTrigger } from '../PredefinedConfig/Common/Enums';
 import { IStrategyActionReturn } from './Interface/IStrategyActionReturn';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IBulkUpdateStrategy } from './Interface/IBulkUpdateStrategy';
-import { BulkUpdateState } from '../Redux/ActionsReducers/Interface/IState';
+import { BulkUpdateState } from '../PredefinedConfig/RunTimeState/BulkUpdateState';
 import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { PreviewHelper } from '../Utilities/Helpers/PreviewHelper';
-import { ICellValidationRule } from '../Utilities/Interface/BlotterObjects/ICellValidationRule';
-import { IDataChangedInfo } from '../Utilities/Interface/IDataChangedInfo';
+import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { IPreviewInfo, IPreviewResult } from '../Utilities/Interface/IPreview';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { IFunctionAppliedDetails } from '../Utilities/Interface/IAuditEvents';
+import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
+import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -32,7 +32,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
   public ApplyBulkUpdate(newValues: ICellInfo[]): void {
     if (this.blotter.AuditLogService.isAuditFunctionEventsEnabled) {
       // logging audit log function here as there is no obvious Action to listen to in the Store - not great but not end of the world...
-      let functionAppliedDetails: IFunctionAppliedDetails = {
+      let functionAppliedDetails: FunctionAppliedDetails = {
         name: StrategyConstants.BulkUpdateStrategyId,
         action: BULK_UPDATE_APPLY,
         info: 'Bulk Update Applied',
@@ -102,7 +102,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
 
       for (let pair of selectedCells.Selection) {
         for (let selectedCell of pair[1]) {
-          let dataChangedEvent: IDataChangedInfo = {
+          let dataChangedEvent: DataChangedInfo = {
             OldValue: selectedCell.value,
             NewValue: typedBulkUpdateValue,
             ColumnId: selectedCell.columnId,
@@ -110,7 +110,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
             Record: null,
           };
 
-          let validationRules: ICellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+          let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
             dataChangedEvent
           );
           let previewResult: IPreviewResult = {

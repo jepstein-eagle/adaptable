@@ -6,12 +6,12 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SelectionMode, DistinctCriteriaPairValue } from '../../../Utilities/Enums';
+import { SelectionMode, DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { IPercentBar } from '../../../Utilities/Interface/BlotterObjects/IPercentBar';
+import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 
-export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepProps<IPercentBar> {}
+export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 export interface PercentBarSelectColumnWizardState {
   ColumnId: string;
   MinValue: number;
