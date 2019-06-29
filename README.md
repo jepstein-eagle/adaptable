@@ -34,7 +34,7 @@ The Adaptable Blotter licence offers regular updates and full support.
 
 It is free to use the Evaluation for an evaulation (a Community licence will be given).
 
-Licences are sold to end-users (they are free for developers), typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
+Licences are sold to end-users typically in 'bands' so the price per user falls as volumne increases. There is also a Universal option which gives unlimited usage to unlimited users.
 
 Note: The Adaptable Blotter licence does not include the licence for the underlying grid - if you use a vendor grid that requires a commerical licence, you must purchase that separately.
 
@@ -45,6 +45,10 @@ Please contact the Adaptable Tools Sales Team at sales@adaptabletools.com for mo
 Further information about AdaptableBlotter.JS is available at www.adaptabletools.com.
 
 Additionally, there is detailed Help at https://adaptabletools.zendesk.com/hc/en-us.
+
+Developers can see how to access the Adaptable Blotter programmatically at https://api.adaptableblotter.com
+
+For all enquiries please email the Adaptable Tools Support Team at support@adaptabletools.com.
 
 ## Support
 

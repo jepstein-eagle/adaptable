@@ -34,7 +34,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
       let columns: IColumn[] = this.blotter.api.gridApi.getColumns();
       alertDefinitions.forEach(fr => {
         // might be better to do a single alert with all the messages?
-        this.blotter.api.alertApi.displayAlert(
+        this.blotter.api.alertApi.showAlert(
           ColumnHelper.getFriendlyNameFromColumnId(fr.ColumnId, columns),
           AlertHelper.createAlertDescription(fr, columns),
           fr.MessageType,

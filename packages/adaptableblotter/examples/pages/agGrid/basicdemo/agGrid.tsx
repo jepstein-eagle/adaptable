@@ -36,12 +36,35 @@ function InitAdaptableBlotter() {
 }
 
 let demoConfig: PredefinedConfig = {
+  ColumnFilter: {
+    ColumnFilters: [
+      {
+        Filter: {
+          RangeExpressions: [
+            {
+              ColumnId: 'price',
+              Ranges: [
+                {
+                  Operand1: '10',
+                  Operand1Type: 'Value',
+                  Operand2: '50',
+                  Operand2Type: 'Value',
+                  Operator: 'Between',
+                },
+              ],
+            },
+          ],
+        },
+        ColumnId: 'price',
+      },
+    ],
+  },
   CellValidation: {
     CellValidations: [
       {
         ActionMode: 'Stop Edit',
         ColumnId: 'changeOnYear',
-        QueryRange: {
+        Range: {
           Operator: 'None',
           Operand1: '',
           Operand2: '',

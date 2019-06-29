@@ -15,7 +15,7 @@ export interface AdaptableBlotterObject {
    *
    * Used to compare State objects
    *
-   * **do not provide this when creating the object in Predefined Config as the Adaptable Blotter will do it for you when the application starts up**
+   * **Do not provide this when creating the object in Predefined Config as the Adaptable Blotter will do it for you when the application starts up**
    */
   Uuid?: TypeUuid;
 }

@@ -193,7 +193,6 @@ export function IsSatisfied(
   blotter: IAdaptableBlotter
 ): boolean {
   let expressionColumnList = GetColumnListFromExpression(Expression);
-
   for (let columnId of expressionColumnList) {
     //we need either a column value or user filter expression or range to match the column
     let isColumnSatisfied = false;
@@ -538,23 +537,17 @@ function getOperandValue(rangeOperandType: string, operand: string, columns: ICo
 }
 
 export function GetColumnListFromExpression(expression: Expression): Array<string> {
-  return Array.from(
-    new Set(
-      expression.ColumnValueExpressions == undefined
-        ? []
-        : expression.ColumnValueExpressions.map(x => x.ColumnId)
-            .concat(
-              expression.FilterExpressions == undefined
-                ? []
-                : expression.FilterExpressions.map(x => x.ColumnId)
-            )
-            .concat(
-              expression.RangeExpressions == undefined
-                ? []
-                : expression.RangeExpressions.map(x => x.ColumnId)
-            )
-    )
-  );
+  let returnColumnList: string[] = [];
+  if (ArrayExtensions.IsNotNullOrEmpty(expression.ColumnValueExpressions)) {
+    returnColumnList.push(...expression.ColumnValueExpressions.map(x => x.ColumnId));
+  }
+  if (ArrayExtensions.IsNotNullOrEmpty(expression.FilterExpressions)) {
+    returnColumnList.push(...expression.FilterExpressions.map(x => x.ColumnId));
+  }
+  if (ArrayExtensions.IsNotNullOrEmpty(expression.RangeExpressions)) {
+    returnColumnList.push(...expression.RangeExpressions.map(x => x.ColumnId));
+  }
+  return returnColumnList;
 }
 
 export function IsNullOrEmptyExpression(expression: Expression): boolean {
