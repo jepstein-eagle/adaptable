@@ -107,7 +107,8 @@
   "scripts": {
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\" --fix",
     "registry-publish": "npm run build-package-json && npm run update-version-file && npm publish dist",
-    "build": "rimraf dist && npm run tsc && npm run build-package-json && npm run sass && npm run copy-assets",
+    "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i",
+    "build": "npm run clean-deps && rimraf dist && npm run tsc && npm run build-package-json && npm run sass && npm run copy-assets",
     "build-package-json": "node ./scripts/buildPackageJson",
     "update-version-file": "node ./scripts/updateVersionFile",
     "tsc": "tsc --outDir dist",

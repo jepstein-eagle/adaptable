@@ -51,13 +51,16 @@
     "ts-node": "~7.0.0",
     "tsickle": "^0.35.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.4.4"
+    "typescript": "~3.4.4",
+    "rimraf": "^2.6.2"
   },
   "scripts": {
     "ng": "ng",
     "link-core": "npm run --prefix ./projects/adaptableblotter-angular-aggrid link-core",
     "start": "npm run link-core && node --max-old-space-size=4096 ./node_modules/.bin/ng serve",
-    "build": "rm -fr dist && npm run link-core && node --max-old-space-size=4096 ./node_modules/.bin/ng build adaptableblotter-angular-aggrid && npm run build-package-json && npm run sass && npm run copy-assets",
+    "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i && npm run clean-deps-projects",
+    "clean-deps-projects": "rimraf projects/adaptableblotter-angular-aggrid/yarn.lock && rimraf projects/adaptableblotter-angular-aggrid/package-lock.json && rimraf projects/adaptableblotter-angular-aggrid/node_modules && npm --prefix projects/adaptableblotter-angular-aggrid/ i",
+    "build": "npm run clean-deps && rimraf dist && npm run link-core && node --max-old-space-size=4096 ./node_modules/.bin/ng build adaptableblotter-angular-aggrid && npm run build-package-json && npm run sass && npm run copy-assets",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
