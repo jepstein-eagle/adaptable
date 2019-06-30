@@ -1941,19 +1941,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
             let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action;
             let columnsLocalLayout = middlewareAPI.getState().Grid.Columns;
-            let isNameChanged: boolean =
-              columnsLocalLayout.find(c => c.ColumnId == actionTyped.calculatedColumn.ColumnId) ==
-              null;
-            if (isNameChanged) {
-              // name has changed so we are going to delete and then add to ensure all col names are correct
-              blotter.removeCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId);
-              blotter.addCalculatedColumnToGrid(actionTyped.calculatedColumn);
-              blotter.setColumnIntoStore();
-              columnsLocalLayout = middlewareAPI.getState().Grid.Columns; // need to get again
-            } else {
-              // it exists so just edit
-              blotter.editCalculatedColumnInGrid(actionTyped.calculatedColumn);
-            }
+            blotter.editCalculatedColumnInGrid(actionTyped.calculatedColumn);
             middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(columnsLocalLayout));
             let returnAction = next(action);
             return returnAction;
@@ -2839,6 +2827,7 @@ export function getNonPersistedReduxActions(): string[] {
 
     GridRedux.GRID_SET_COLUMNS,
     GridRedux.GRID_ADD_COLUMN,
+    GridRedux.GRID_EDIT_COLUMN,
     GridRedux.GRID_HIDE_COLUMN,
     GridRedux.GRID_SET_VALUE_LIKE_EDIT,
     GridRedux.GRID_SELECT_COLUMN,

@@ -127,6 +127,7 @@ import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/RunTimeState/Lay
 import { CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
 import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
 import { IPermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
+import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
 
 type RuntimeConfig = {
   instantiateGrid?: (...args: any[]) => any;
@@ -578,6 +579,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private createColumn(vendorColumn: Column, quickSearchClassName: string): IColumn {
     const colId: string = vendorColumn.getColId();
     const abColumn: IColumn = {
+      Uuid: createUuid(),
       ColumnId: colId,
       FriendlyName: this.gridOptions.columnApi.getDisplayNameForColumn(vendorColumn, 'header'),
       DataType: this.getColumnDataType(vendorColumn),
@@ -1330,44 +1332,63 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
-    // first change the value getter in the coldefs - nothing else needs to change
-    const colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef());
-    const colDefIndex = colDefs.findIndex(x => x.headerName == calculatedColumn.ColumnId);
+    // the name of the column might have changed so lets get the column from store as that will be the 'old' one
     const cols: IColumn[] = this.api.gridApi.getColumns();
-    const cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(
-      calculatedColumn.ColumnExpression,
-      cols
-    );
+    let existingABColumn: IColumn = cols.find(c => c.Uuid == calculatedColumn.Uuid);
+    if (existingABColumn) {
+      // now get the ag-Grid ColDef Index
+      const colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef());
+      const colDefIndex = colDefs.findIndex(x => x.headerName == existingABColumn.ColumnId);
 
-    const newColDef: ColDef = colDefs[colDefIndex];
-    newColDef.valueGetter = (params: ValueGetterParams) =>
-      Helper.RoundValueIfNumeric(
-        this.CalculatedColumnExpressionService.ComputeExpressionValue(
-          cleanedExpression,
-          params.node
-        ),
-        4
+      // clean the expression in case it got dirty
+      const cleanedExpression: string = CalculatedColumnHelper.cleanExpressionColumnNames(
+        calculatedColumn.ColumnExpression,
+        cols
       );
 
-    colDefs[colDefIndex] = newColDef;
-    this.agGridHelper.safeSetColDefs(colDefs);
+      const newColDef: ColDef = colDefs[colDefIndex];
+      //  change the value getter in the coldefs
+      newColDef.valueGetter = (params: ValueGetterParams) =>
+        Helper.RoundValueIfNumeric(
+          this.CalculatedColumnExpressionService.ComputeExpressionValue(
+            cleanedExpression,
+            params.node
+          ),
+          4
+        );
 
-    // for column list its an itnernal map only so we can first delete
-    for (const columnList of this.calculatedColumnPathMap.values()) {
-      const index = columnList.indexOf(calculatedColumn.ColumnId);
-      if (index > -1) {
-        columnList.splice(index, 1);
+      // reset the name in case its changed
+      newColDef.headerName = calculatedColumn.ColumnId;
+      newColDef.colId = calculatedColumn.ColumnId;
+
+      colDefs[colDefIndex] = newColDef;
+      this.agGridHelper.safeSetColDefs(colDefs);
+
+      // for column list its an itnernal map only so we can first delete
+      for (const columnList of this.calculatedColumnPathMap.values()) {
+        const index = columnList.indexOf(calculatedColumn.ColumnId);
+        if (index > -1) {
+          columnList.splice(index, 1);
+        }
       }
-    }
-    // and then add
-    const columnList = CalculatedColumnHelper.getColumnListFromExpression(cleanedExpression);
-    for (const column of columnList) {
-      let childrenColumnList = this.calculatedColumnPathMap.get(column);
-      if (!childrenColumnList) {
-        childrenColumnList = [];
-        this.calculatedColumnPathMap.set(column, childrenColumnList);
+      // and then add
+      const columnList = CalculatedColumnHelper.getColumnListFromExpression(cleanedExpression);
+      for (const column of columnList) {
+        let childrenColumnList = this.calculatedColumnPathMap.get(column);
+        if (!childrenColumnList) {
+          childrenColumnList = [];
+          this.calculatedColumnPathMap.set(column, childrenColumnList);
+        }
+        childrenColumnList.push(calculatedColumn.ColumnId);
       }
-      childrenColumnList.push(calculatedColumn.ColumnId);
+
+      // finally the name of the column or the datatype might have changed so lets update the column in the store to be sure
+      // re-apply the datatype in case it has been changed as a result of the expression changing
+      existingABColumn.ColumnId = calculatedColumn.ColumnId;
+      existingABColumn.DataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
+        cleanedExpression
+      );
+      this.dispatchAction(GridRedux.GridAddColumn(existingABColumn));
     }
   }
 
@@ -1429,9 +1450,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     let dataType: DataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
       cleanedExpression
     );
-    console.log('in blotter we returned');
-    console.log(dataType);
-    this.addSpecialColumnToState(calculatedColumn.ColumnId, true, dataType);
+    this.addSpecialColumnToState(calculatedColumn.Uuid, calculatedColumn.ColumnId, true, dataType);
   }
 
   public addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn) {
@@ -1448,10 +1467,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     colDefs.push(newColDef);
     this.agGridHelper.safeSetColDefs(colDefs);
 
-    this.addSpecialColumnToState(freeTextColumn.ColumnId, false);
+    this.addSpecialColumnToState(freeTextColumn.Uuid, freeTextColumn.ColumnId, false);
   }
 
   private addSpecialColumnToState(
+    uuid: TypeUuid,
     columnId: string,
     isReadOnly: boolean,
     dataType?: DataType
@@ -1465,6 +1485,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     }
 
     const specialColumn: IColumn = {
+      Uuid: uuid,
       ColumnId: columnId,
       FriendlyName: columnId,
       DataType: dataType,

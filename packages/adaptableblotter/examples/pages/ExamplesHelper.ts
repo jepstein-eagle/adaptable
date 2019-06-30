@@ -971,6 +971,16 @@ export class ExamplesHelper {
       resizable: true,
     });
     schema.push({
+      headerName: 'Also',
+      field: 'counterparty',
+      editable: true,
+      enableRowGroup: true,
+      filter: true,
+      sortable: true,
+      type: 'abColDefString',
+      resizable: true,
+    });
+    schema.push({
       headerName: 'Counterparty',
       field: 'counterparty',
       editable: true,
