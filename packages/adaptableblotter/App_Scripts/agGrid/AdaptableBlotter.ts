@@ -1,7 +1,7 @@
 import { Grid, CellRange, CellRangeParams } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
-import Emitter from 'emittery';
+import * as Emitter from 'emittery';
 
 import * as Redux from 'redux';
 import * as ReactDOM from 'react-dom';

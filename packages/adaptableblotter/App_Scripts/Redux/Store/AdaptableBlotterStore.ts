@@ -114,7 +114,7 @@ import {
   StateChangedDetails,
 } from '../../Api/Events/AuditEvents';
 
-import Emitter from 'emittery';
+import * as Emitter from 'emittery';
 
 type EmitterCallback = (data?: any) => any;
 /*
