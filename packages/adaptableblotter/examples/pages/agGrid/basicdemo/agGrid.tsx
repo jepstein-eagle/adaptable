@@ -30,6 +30,10 @@ function InitAdaptableBlotter() {
     gridOptions,
     'basic demo'
   );
+  adaptableBlotterOptions.layoutOptions = {
+    includeVendorStateInLayouts: true,
+    autoSaveLayouts: true,
+  };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);

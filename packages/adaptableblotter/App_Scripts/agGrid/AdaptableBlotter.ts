@@ -1,4 +1,4 @@
-import { Grid, CellRange } from 'ag-grid-community';
+import { Grid, CellRange, CellRangeParams } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
 import * as Redux from 'redux';
@@ -2138,16 +2138,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public selectColumn(columnId: string) {
-    this.gridOptions.api.clearRangeSelection();
-    const rangeSelectionParams: AddRangeSelectionParams = {
-      rowStart: 0,
-      rowEnd: this.gridOptions.api.getDisplayedRowCount(),
+    this.gridOptions.api!.clearRangeSelection();
+    const cellRangeParams: CellRangeParams = {
+      rowStartIndex: 0,
+      rowEndIndex: this.gridOptions.api!.getDisplayedRowCount(),
       columnStart: columnId,
       columnEnd: columnId,
-      floatingStart: 'top',
-      floatingEnd: 'bottom',
+      //floatingStart: 'top',
+      //floatingEnd: 'bottom',
     };
-    this.gridOptions.api.addRangeSelection(rangeSelectionParams);
+    this.gridOptions.api!.addCellRange(cellRangeParams);
   }
 
   public setColumnSort(columnSorts: ColumnSort[]): void {
