@@ -73,7 +73,9 @@ export class AgGridOverrideComponent extends AgGridAngular {
     (this as any)._fullyReady.resolveNow(null, (resolve: any) => resolve);
 
     if (this.onBlotterReady) {
-      this.onBlotterReady(blotter.api);
+      blotter.on('ready', () => {
+        this.onBlotterReady(blotter.api);
+      });
     }
   }
 }

@@ -1,6 +1,8 @@
 import { Grid, CellRange, CellRangeParams } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
+import Emitter from 'emittery';
+
 import * as Redux from 'redux';
 import * as ReactDOM from 'react-dom';
 import * as _ from 'lodash';
@@ -35,7 +37,7 @@ import {
   IAdaptableBlotterStore,
   AdaptableBlotterState,
 } from '../Redux/Store/Interface/IAdaptableStore';
-import { AdaptableBlotterStore } from '../Redux/Store/AdaptableBlotterStore';
+import { AdaptableBlotterStore, INIT_STATE } from '../Redux/Store/AdaptableBlotterStore';
 import * as MenuRedux from '../Redux/ActionsReducers/MenuRedux';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
@@ -132,6 +134,8 @@ import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
 type RuntimeConfig = {
   instantiateGrid?: (...args: any[]) => any;
 };
+
+type EmitterCallback = (data?: any) => any;
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;
 
@@ -190,11 +194,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private runtimeConfig?: RuntimeConfig;
 
+  private emitter: Emitter;
+
   constructor(
     blotterOptions: AdaptableBlotterOptions,
     renderGrid: boolean = true,
     runtimeConfig?: RuntimeConfig
   ) {
+    this.emitter = new Emitter();
+
     this.renderGrid = renderGrid;
     // we create the Blotter Options by merging the values provided by the user with the defaults (where no value has been set)
     this.blotterOptions = BlotterHelper.assignBlotterOptions(blotterOptions);
@@ -217,7 +225,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // the audit service needs to be created before the store
     this.AuditLogService = new AuditLogService(this);
     // create the store
-    this.adaptableBlotterStore = new AdaptableBlotterStore(this);
+    this.initStore();
 
     // set up the helper
     this.agGridHelper = new agGridHelper(this, this.gridOptions);
@@ -304,6 +312,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.applyDataChange,
       this.blotterOptions.filterOptions.filterActionOnExternalDataChange.ThrottleDelay
     );
+  }
+
+  public on = (eventName: string, callback: EmitterCallback): (() => void) => {
+    return this.emitter.on(eventName, callback);
+  };
+
+  public emit = (eventName: string, data: any): Promise<any> => {
+    return this.emitter.emit(eventName, data);
+  };
+
+  private initStore() {
+    this.adaptableBlotterStore = new AdaptableBlotterStore(this);
+
+    this.adaptableBlotterStore.onAny((eventName: string) => {
+      if (eventName == INIT_STATE) {
+        this.emitter.emit('ready');
+      }
+    });
   }
 
   private tryInstantiateAgGrid(): boolean {
@@ -1623,9 +1649,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       if (this.abContainerElement == null) {
         LoggingHelper.LogAdaptableBlotterError(
-          `There is no Div called ${
-            this.blotterOptions.containerOptions.adaptableBlotterContainer
-          } so cannot render the Adaptable Blotter`
+          `There is no Div called ${this.blotterOptions.containerOptions.adaptableBlotterContainer} so cannot render the Adaptable Blotter`
         );
         return;
       }

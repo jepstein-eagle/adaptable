@@ -151,6 +151,12 @@ const AdaptableBlotterReact = ({
         blotterContainerId,
         agGridReactWrapperInstance,
       });
+      if (onBlotterReady) {
+        blotter.on('ready', () => {
+          onBlotterReady(blotter.api);
+        });
+      }
+
       setBlotter(blotter);
       return blotter;
     };
@@ -182,12 +188,6 @@ const AdaptableBlotterReact = ({
       {mounted ? <AgGridReactOverride {...overrideProps} /> : null}
     </AbsoluteFlexContainer>
   );
-
-  useEffect(() => {
-    if (onBlotterReady && blotter) {
-      onBlotterReady(blotter.api);
-    }
-  }, [blotter]);
 
   useEffect(() => {
     setMounted(true);
