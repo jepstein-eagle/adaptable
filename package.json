@@ -1,6 +1,6 @@
 {
   "name": "adaptableblotter-monorepo",
-  "version": "4.1.0",
+  "version": "4.0.7",
   "private": true,
   "devDependencies": {
     "@babel/cli": "^7.4.4",
