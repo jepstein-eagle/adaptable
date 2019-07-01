@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { Flex } from 'rebass';
 
 export interface AdaptableObjectRowProps extends React.ClassAttributes<AdaptableObjectRow> {
   colItems: IColItem[];
@@ -24,18 +25,17 @@ export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps,
 
     return (
       <div className={cssClassName}>
-        <li style={{ padding: '5px' }} className="list-group-item">
-          <Row
+        <li style={{ padding: 5 }} className="list-group-item">
+          <Flex
+            alignItems="center"
+            padding={0}
+            margin={0}
             style={{
-              display: 'flex',
-              alignItems: 'center',
               overflowY: 'visible',
-              padding: '0px',
-              margin: '0px',
             }}
           >
             {colItems}
-          </Row>
+          </Flex>
         </li>
       </div>
     );

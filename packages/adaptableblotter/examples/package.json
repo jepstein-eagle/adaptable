@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "increase-memory-limit && next -p 8081",
+    "dev": "next -p 8081",
     "build": "next build",
     "start": "next start",
     "test-browser-w": "jest --config=jest.config.js --watch"

@@ -5,9 +5,10 @@ import { ReactNode, HTMLProps } from 'react';
 import join from '../utils/join';
 
 import icons from '../icons';
-import { AccessLevel } from '../../Utilities/Enums';
+
 import { ReactComponentLike } from 'prop-types';
 import Tooltip from '../Tooltip';
+import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
 export const baseClassName = 'ab-SimpleButton';
 
@@ -18,6 +19,7 @@ export type SimpleButtonProps = HTMLProps<HTMLElement> & {
   icon?: ReactNode;
   iconPosition?: 'start' | 'end';
   disabled?: boolean;
+  bsStyle?: any;
   AccessLevel?: AccessLevel;
 } & ButtonProps;
 
@@ -54,7 +56,7 @@ const SimpleButton = (props: SimpleButtonProps) => {
       );
   }
 
-  const button = (
+  const btn = (
     <Button
       {...buttonProps}
       disabled={disabled}
@@ -70,7 +72,8 @@ const SimpleButton = (props: SimpleButtonProps) => {
     </Button>
   );
 
-  return tooltip ? <Tooltip label={tooltip}>{button}</Tooltip> : button;
+  // return tooltip ? <Tooltip label={tooltip}>{btn}</Tooltip> : btn;
+  return btn;
 };
 
 export default SimpleButton;

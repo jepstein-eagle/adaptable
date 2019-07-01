@@ -12,6 +12,8 @@ import List from './list';
 import Edit from './edit';
 import Home from './home';
 import Justify from './justify';
+import Err from './error';
+import Warning from './warning';
 import Dashboard from './dashboard';
 import ColorDrop from './color-drop';
 import CheckCircle from './check-circle';
@@ -24,6 +26,8 @@ export default {
   'color-drop': ColorDrop,
   'check-circle': CheckCircle,
   list: List,
+  error: Err,
+  warning: Warning,
   justify: Justify,
   check: Check,
   plus: Plus,

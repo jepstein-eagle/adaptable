@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { OverlayTrigger } from 'react-bootstrap';
-import { AccessLevel } from '../../../../Utilities/Enums';
+
 import { Button, ButtonProps as BtnProps } from 'rebass';
 import Tooltip from '@reach/tooltip';
-import { ReactNode } from 'react';
 import join from '../../../../components/utils/join';
+import { AccessLevel } from '../../../../PredefinedConfig/Common/Enums';
 
 const Glyphicon = ({ glyph, style }: { style?: any; glyph: string }) => {
   return <span style={style} className={`glyphicon glyphicon-${glyph}`} />;
