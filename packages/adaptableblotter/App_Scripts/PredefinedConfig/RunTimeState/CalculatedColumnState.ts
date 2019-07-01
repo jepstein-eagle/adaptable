@@ -16,7 +16,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * [Calculated Column Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005113212-Calculated-Columns)
  *
- * [Calculated Column Videos]https://adaptabletools.zendesk.com/hc/en-us/articles/360030078491-Calculated-Column-Videos)
+ * [Calculated Column Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030078491-Calculated-Column-Videos)
  *
  * [Calculated Column Demo](https://demo.adaptableblotter.com/column/aggridcalculatedcolumndemo/)
  *
