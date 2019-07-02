@@ -2,10 +2,13 @@ import * as React from 'react';
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { SortOrder, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
-import { ListGroupItem, ListGroup, ListGroupProps } from 'react-bootstrap';
+import { ListGroupProps } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
+
+import ListGroupItem from '../../../components/List/ListGroupItem';
+import ListGroup from '../../../components/List/ListGroup';
 
 export interface SingleListBoxProps extends ListGroupProps {
   Values: Array<any>;
@@ -25,6 +28,8 @@ export interface SingleListBoxState extends React.ClassAttributes<SingleListBox>
   FilterValue: string;
   SortOrder: SortOrder;
 }
+
+const baseClassName = 'ab-SingleListBox';
 
 export class SingleListBox extends React.Component<SingleListBoxProps, SingleListBoxState> {
   constructor(props: SingleListBoxProps) {
@@ -53,7 +58,8 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     });
   }
   render() {
-    let cssClassName: string = this.props.cssClassName + StyleConstants.SINGLE_LIST_BOX;
+    let cssClassName: string =
+      this.props.cssClassName + StyleConstants.SINGLE_LIST_BOX + ` ${baseClassName}`;
     let itemsElements = this.state.Values.map(x => {
       let isActive: boolean;
       if (this.props.ValueMember) {
@@ -73,7 +79,6 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         return (
           <ListGroupItem
             key={value}
-            style={listGroupItemStyle}
             onClick={() => this.onClickItem(x)}
             active={isActive}
             value={value}
@@ -163,8 +168,3 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     }
   }
 }
-
-var listGroupItemStyle = {
-  fontSize: 'small',
-  padding: '5px',
-};

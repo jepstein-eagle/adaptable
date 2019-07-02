@@ -233,19 +233,18 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
       shortcuts = shortcutsArray.map(x => {
         let menuItem = this.props.MenuState.MenuItems.find(y => y.IsVisible && y.StrategyId == x);
         if (menuItem) {
+          console.log(menuItem.GlyphIcon);
           return (
             <OverlayTrigger
               key={x}
               overlay={<Tooltip id="tooltipButton"> {menuItem.Label}</Tooltip>}
             >
-              <ButtonDashboard
-                glyph={menuItem.GlyphIcon}
-                cssClassName={cssClassName}
-                bsStyle={'default'}
-                DisplayMode={'Glyph'}
-                bsSize={this.props.DashboardSize}
-                ToolTipAndText={menuItem.Label}
-                overrideDisableButton={this.props.AccessLevel == AccessLevel.ReadOnly}
+              <SimpleButton
+                icon={menuItem.GlyphIcon}
+                className={cssClassName}
+                variant="text"
+                tooltip={menuItem.Label}
+                disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
                 onClick={() => this.onClick(menuItem)}
                 AccessLevel={AccessLevel.Full}
               />
@@ -265,7 +264,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
+        className={cssClassName}
         useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         showCloseButton={false}
         showMinimiseButton={true}

@@ -24,7 +24,7 @@ export type DropdownProps = BoxProps &
     placeholder?: ReactNode;
     clearButtonProps?: any;
 
-    renderLabel?: (label: string, option?: DropdownOption) => ReactNode;
+    renderLabel?: (label?: string, option?: DropdownOption) => ReactNode;
 
     name?: string;
     options: (DropdownOption | string)[];
@@ -60,7 +60,7 @@ const Dropdown = (props: DropdownProps) => {
     onChange: props.onChange,
   });
 
-  let selectedOption: DropdownOption;
+  let selectedOption: DropdownOption | null = null;
   const finalOptions: DropdownOption[] = options.map(
     (option: DropdownOption | string): DropdownOption => {
       if (typeof option === 'string') {
@@ -97,9 +97,9 @@ const Dropdown = (props: DropdownProps) => {
     setFocused(false);
   };
 
-  const defaultLabel = selectedOption ? selectedOption.label : null;
+  const defaultLabel = selectedOption! ? selectedOption.label : null;
   let selectedText = props.renderLabel
-    ? props.renderLabel(defaultLabel, selectedOption)
+    ? props.renderLabel(defaultLabel, selectedOption!)
     : defaultLabel;
 
   if (!selectedOption) {

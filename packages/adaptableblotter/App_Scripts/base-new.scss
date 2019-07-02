@@ -49,6 +49,7 @@
   background: var(--ab-color-gray);
 }
 
+@import './View/Components/Panels/PanelDashboard/base.scss';
 @import './components/Panel/base.scss';
 @import './components/Modal/base.scss';
 @import './components/Dialog/base.scss';
@@ -57,5 +58,7 @@
 @import './components/SimpleButton/base.scss';
 @import './components/DropdownButton/base.scss';
 @import './components/Tooltip/base.scss';
+@import './components/List//ListGroup/base.scss';
+@import './components/List//ListGroupItem/base.scss';
 @import './View/Components/Buttons/ButtonBase/base.scss';
 @import './View/Dashboard/base.scss';

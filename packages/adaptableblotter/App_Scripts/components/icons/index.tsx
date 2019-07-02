@@ -10,10 +10,12 @@ import Clear from './clear';
 import Info from './info';
 import List from './list';
 import Edit from './edit';
+import ViewColumns from './view-columns';
 import Home from './home';
 import Justify from './justify';
 import Err from './error';
 import Warning from './warning';
+import ConditionalStyle from './conditional-style';
 import Dashboard from './dashboard';
 import ColorDrop from './color-drop';
 import CheckCircle from './check-circle';
@@ -25,6 +27,8 @@ export default {
   'arrow-left': ArrowLeft,
   'color-drop': ColorDrop,
   'check-circle': CheckCircle,
+  'view-columns': ViewColumns,
+  'conditional-style': ConditionalStyle,
   list: List,
   error: Err,
   warning: Warning,

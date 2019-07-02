@@ -1,0 +1,14 @@
+.ab-ListGroupItem {
+  width: var(--ab-cmp-listgroupitem-width);
+  text-align: start;
+  border: none;
+  padding: var(--ab-space-2);
+
+  background: var(--ab-cmp-listgroupitem-background);
+  color: var(--ab-cmp-listgroupitem-color);
+
+  &:nth-child(2n+1) {
+    background: var(--ab-cmp-listgroupitem-background-odd);
+  color: var(--ab-cmp-listgroupitem-color-odd);
+  }
+}

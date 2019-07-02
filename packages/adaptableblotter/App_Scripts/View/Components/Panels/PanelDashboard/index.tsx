@@ -8,13 +8,13 @@ import {
   OverlayTrigger,
   Tooltip,
 } from 'react-bootstrap';
-import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
-import Panel from '../../../components/Panel';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import { ButtonClose } from '../Buttons/ButtonClose';
-import { ButtonConfigure } from '../Buttons/ButtonConfigure';
-import { ButtonMinimise } from '../Buttons/ButtonMinimise';
-import { FontSize } from '../../../PredefinedConfig/Common/Enums';
+import { AdaptableBlotterForm } from '../../Forms/AdaptableBlotterForm';
+import Panel from '../../../../components/Panel';
+import * as StyleConstants from '../../../../Utilities/Constants/StyleConstants';
+import { ButtonClose } from '../../Buttons/ButtonClose';
+import { ButtonConfigure } from '../../Buttons/ButtonConfigure';
+import { ButtonMinimise } from '../../Buttons/ButtonMinimise';
+import { FontSize } from '../../../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 
 export interface PanelDashboardProps extends PanelProps {
@@ -118,8 +118,19 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     return (
       <div className={cssClassName}>
         <Panel
-          className="ab_small-padding-panel ab-panel-header-dashboard"
+          className="ab_small-padding-panel ab-DashboardPanel"
           header={header}
+          headerProps={{
+            style: {
+              background: 'var(--ab-cmp-dashboardpanel-header-background)',
+            },
+          }}
+          border="none"
+          bodyProps={{
+            style: {
+              background: 'var(--ab-cmp-dashboardpanel-body-background)',
+            },
+          }}
           style={this.props.style}
         >
           <AdaptableBlotterForm inline>{this.props.children}</AdaptableBlotterForm>

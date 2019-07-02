@@ -11,7 +11,10 @@ export class ButtonMinimise extends React.Component<SimpleButtonProps, {}> {
         py={0}
         tooltip="Minimise"
         {...this.props}
-        style={this.props.style}
+        style={{
+          ...this.props.style,
+          color: 'currentColor',
+        }}
         variant="text"
         icon="arrow-up"
       />
