@@ -963,7 +963,7 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Country',
       field: 'country',
-      editable: true,
+      editable: false,
       filter: true,
       sortable: true,
       enableRowGroup: true,
