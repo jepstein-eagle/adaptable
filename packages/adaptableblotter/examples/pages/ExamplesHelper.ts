@@ -174,7 +174,7 @@ export class ExamplesHelper {
 
   startTickingDataagGrid(gridOptions: any) {
     setInterval(() => {
-      let tradeId = this.generateRandomInt(0, 30);
+      let tradeId = this.generateRandomInt(0, 25);
       if (gridOptions != null && gridOptions.api != null) {
         gridOptions.api.forEachNode((rowNode: any, index: number) => {
           if (rowNode.group) {
@@ -185,7 +185,9 @@ export class ExamplesHelper {
             return;
           }
 
-          let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
+          let randomInt = this.generateRandomInt(1, 2);
+          let numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
+          let directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
           let trade = rowNode;
           let columnName = 'price';
           let initialPrice = gridOptions.api.getValue(columnName, trade);
@@ -196,8 +198,8 @@ export class ExamplesHelper {
           trade.setDataValue('ask', ask);
           let bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
           trade.setDataValue('bid', bid);
-          trade.setDataValue('bloombergAsk', this.roundTo4Dp(ask + 0.01));
-          trade.setDataValue('bloombergBid', this.roundTo4Dp(bid - 0.01));
+          trade.setDataValue('bloombergAsk', this.roundTo4Dp(ask + directionToAdd));
+          trade.setDataValue('bloombergBid', this.roundTo4Dp(bid - directionToAdd));
         });
       }
     }, 500);
@@ -643,29 +645,29 @@ export class ExamplesHelper {
 
   protected getCountries(): string[] {
     let countries = [
-      'Argentina',
+      //  'Argentina',
       'Australia',
       'Belgium',
       'Brazil',
       'Canada',
       'China',
       'Denmark',
-      'Egypt',
+      //   'Egypt',
       'France',
       'Germany',
       'Holland',
-      'Hungary',
-      'India',
+      //    'Hungary',
+      //     'India',
       'Ireland',
       'Italy',
       'Japan',
       'Kenya',
       'Luxembourg',
       'Portugal',
-      'Qatar',
-      'Russia',
+      //   'Qatar',
+      //   'Russia',
       'Spain',
-      'Thailand',
+      //   'Thailand',
     ];
     return countries;
   }
@@ -959,6 +961,15 @@ export class ExamplesHelper {
       resizable: true,
     });
     schema.push({
+      headerName: 'Country',
+      field: 'country',
+      editable: true,
+      filter: true,
+      sortable: true,
+      enableRowGroup: true,
+      type: 'abColDefString',
+    });
+    schema.push({
       headerName: 'Notional',
       field: 'notional',
       enableValue: true,
@@ -970,6 +981,38 @@ export class ExamplesHelper {
       filter: true,
       resizable: true,
     });
+    schema.push({
+      headerName: 'Bid',
+      field: 'bid',
+      columnGroupShow: 'closed',
+      filter: true,
+      cellClass: 'number-cell',
+      type: 'abColDefNumber',
+    });
+
+    schema.push({
+      headerName: 'Bbg Bid',
+      field: 'bloombergBid',
+      columnGroupShow: 'closed',
+      cellClass: 'number-cell',
+      type: 'abColDefNumber',
+    });
+    schema.push({
+      headerName: 'Ask',
+      field: 'ask',
+      columnGroupShow: 'closed',
+      filter: true,
+      cellClass: 'number-cell',
+      type: 'abColDefNumber',
+    });
+    schema.push({
+      headerName: 'Bbg Ask',
+      field: 'bloombergAsk',
+      columnGroupShow: 'closed',
+      cellClass: 'number-cell',
+      type: 'abColDefNumber',
+    });
+
     schema.push({
       headerName: 'Counterparty',
       field: 'counterparty',
@@ -988,6 +1031,7 @@ export class ExamplesHelper {
       editable: true,
       type: 'abColDefNumber',
     });
+
     schema.push({
       headerName: 'Currency',
       field: 'currency',
@@ -1029,23 +1073,7 @@ export class ExamplesHelper {
       filter: 'agNumberColumnFilter',
       type: 'abColDefNumber',
     });
-    schema.push({
-      headerName: 'Country',
-      field: 'country',
-      editable: true,
-      filter: true,
-      sortable: true,
-      enableRowGroup: true,
-      type: 'abColDefString',
-    });
-    schema.push({
-      headerName: 'Ask',
-      field: 'ask',
-      columnGroupShow: 'closed',
-      filter: true,
-      cellClass: 'number-cell',
-      type: 'abColDefNumber',
-    });
+
     schema.push({
       headerName: 'DV01',
       field: 'dv01',
@@ -1054,29 +1082,7 @@ export class ExamplesHelper {
       cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
-    schema.push({
-      headerName: 'Bid',
-      field: 'bid',
-      columnGroupShow: 'closed',
-      filter: true,
-      cellClass: 'number-cell',
-      type: 'abColDefNumber',
-    });
 
-    schema.push({
-      headerName: 'Bbg Ask',
-      field: 'bloombergAsk',
-      columnGroupShow: 'closed',
-      cellClass: 'number-cell',
-      type: 'abColDefNumber',
-    });
-    schema.push({
-      headerName: 'Bbg Bid',
-      field: 'bloombergBid',
-      columnGroupShow: 'closed',
-      cellClass: 'number-cell',
-      type: 'abColDefNumber',
-    });
     schema.push({
       headerName: 'Moodys',
       field: 'moodysRating',

@@ -9,6 +9,7 @@ import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
 
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';
+export const GRID_EDIT_COLUMN = 'GRID_EDIT_COLUMN';
 export const GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
 export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
@@ -24,6 +25,9 @@ export interface GridSetColumnsAction extends Redux.Action {
   Columns: IColumn[];
 }
 export interface GridAddColumnAction extends Redux.Action {
+  Column: IColumn;
+}
+export interface GridEditColumnAction extends Redux.Action {
   Column: IColumn;
 }
 export interface GridHideColumnAction extends Redux.Action {
@@ -70,6 +74,11 @@ export const GridSetColumns = (Columns: IColumn[]): GridSetColumnsAction => ({
 
 export const GridAddColumn = (Column: IColumn): GridAddColumnAction => ({
   type: GRID_ADD_COLUMN,
+  Column,
+});
+
+export const GridEditColumn = (Column: IColumn): GridEditColumnAction => ({
+  type: GRID_EDIT_COLUMN,
   Column,
 });
 
@@ -143,10 +152,19 @@ export const GridReducer: Redux.Reducer<GridState> = (
         Columns: [].concat((<GridSetColumnsAction>action).Columns),
       });
     case GRID_ADD_COLUMN:
-      let actionTypedAddUpdate = <GridAddColumnAction>action;
+      let actionTypedAdd = <GridAddColumnAction>action;
       let columns = [].concat(state.Columns);
-      columns.push(actionTypedAddUpdate.Column);
+      columns.push(actionTypedAdd.Column);
       return Object.assign({}, state, { Columns: columns });
+    case GRID_EDIT_COLUMN:
+      const actioncolumn: IColumn = (action as GridEditColumnAction).Column;
+      return {
+        ...state,
+        Columns: state.Columns.map(abObject =>
+          abObject.Uuid === actioncolumn.Uuid ? actioncolumn : abObject
+        ),
+      };
+
     case GRID_SET_SORT:
       return Object.assign({}, state, { ColumnSorts: (<GridSetSortAction>action).ColumnSorts });
     case GRID_SET_SELECTED_CELLS:

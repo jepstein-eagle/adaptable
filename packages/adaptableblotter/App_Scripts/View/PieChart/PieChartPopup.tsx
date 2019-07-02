@@ -26,7 +26,6 @@ import { IgrRingSeriesModule } from 'igniteui-react-charts/ES2015/igr-ring-serie
 import { IgrRingSeries } from 'igniteui-react-charts/ES2015/igr-ring-series';
 import { IgrPieChart } from 'igniteui-react-charts/ES2015/igr-pie-chart';
 import { IgrPieChartModule } from 'igniteui-react-charts/ES2015/igr-pie-chart-module';
-import { SliceClickEventArgs } from 'igniteui-react-charts/ES2015/igr-slice-click-event-args';
 import { DEFAULT_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';

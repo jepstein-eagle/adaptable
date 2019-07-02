@@ -114,6 +114,9 @@ import {
   StateChangedDetails,
 } from '../../Api/Events/AuditEvents';
 
+import * as Emitter from 'emittery';
+
+type EmitterCallback = (data?: any) => any;
 /*
 This is the main store for the Adaptable Blotter
 */
@@ -161,9 +164,9 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
 });
 
-const RESET_STATE = 'RESET_STATE';
-const INIT_STATE = 'INIT_STATE';
-const LOAD_STATE = 'LOAD_STATE';
+export const RESET_STATE = 'RESET_STATE';
+export const INIT_STATE = 'INIT_STATE';
+export const LOAD_STATE = 'LOAD_STATE';
 
 const NON_PERSIST_ACTIONS: { [key: string]: boolean } = {
   [LOAD_STATE]: true,
@@ -240,8 +243,23 @@ const configServerTeamSharingUrl = '/adaptableblotter-teamsharing';
 export class AdaptableBlotterStore implements IAdaptableBlotterStore {
   public TheStore: Redux.Store<AdaptableBlotterState>;
   public Load: PromiseLike<any>;
+  private emitter: Emitter;
+
+  public on = (eventName: string, callback: EmitterCallback): (() => void) => {
+    return this.emitter.on(eventName, callback);
+  };
+  public onAny = (callback: EmitterCallback): (() => void) => {
+    return this.emitter.onAny(callback);
+  };
+
+  public emit = (eventName: string, data: any): Promise<any> => {
+    return this.emitter.emit(eventName, data);
+  };
+
   constructor(blotter: IAdaptableBlotter) {
     let storageEngine: IStorageEngine;
+
+    this.emitter = new Emitter();
 
     // If the user has remote storage set then we use Remote Engine, otherwise we use Local Enginge
     // We pass into the create method the blotterId, the config, and also the Licence Info
@@ -294,6 +312,11 @@ export class AdaptableBlotterStore implements IAdaptableBlotterStore {
     const persistedReducer = (state: AdaptableBlotterState, action: Redux.Action) => {
       const init = state === undefined;
       const newState = rootReducer(state, action);
+
+      // ideally the reducer should be pure,
+      // but having the emitter emit the event here
+      // is really useful
+      this.emitter.emit(action.type, { action, state, newState });
 
       const shouldPersist = !NON_PERSIST_ACTIONS[action.type] && !init;
       if (shouldPersist) {
@@ -1941,19 +1964,7 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
           case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
             let actionTyped = <CalculatedColumnRedux.CalculatedColumnEditAction>action;
             let columnsLocalLayout = middlewareAPI.getState().Grid.Columns;
-            let isNameChanged: boolean =
-              columnsLocalLayout.find(c => c.ColumnId == actionTyped.calculatedColumn.ColumnId) ==
-              null;
-            if (isNameChanged) {
-              // name has changed so we are going to delete and then add to ensure all col names are correct
-              blotter.removeCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId);
-              blotter.addCalculatedColumnToGrid(actionTyped.calculatedColumn);
-              blotter.setColumnIntoStore();
-              columnsLocalLayout = middlewareAPI.getState().Grid.Columns; // need to get again
-            } else {
-              // it exists so just edit
-              blotter.editCalculatedColumnInGrid(actionTyped.calculatedColumn);
-            }
+            blotter.editCalculatedColumnInGrid(actionTyped.calculatedColumn);
             middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(columnsLocalLayout));
             let returnAction = next(action);
             return returnAction;
@@ -2839,6 +2850,7 @@ export function getNonPersistedReduxActions(): string[] {
 
     GridRedux.GRID_SET_COLUMNS,
     GridRedux.GRID_ADD_COLUMN,
+    GridRedux.GRID_EDIT_COLUMN,
     GridRedux.GRID_HIDE_COLUMN,
     GridRedux.GRID_SET_VALUE_LIKE_EDIT,
     GridRedux.GRID_SELECT_COLUMN,

@@ -1,6 +1,30 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 
+/**
+ * The Predefined Configuration for the Calculated Column function
+ *
+ * Calculated Columns are columns created by users where the cell value is calculated, dynamically, based off other columns in the row.
+ *
+ * Each Calculated Column contains an **Expression** which is used to evaluate the contents of the cell.
+ *
+ * The Adaptable Blotter uses an external library [mathjs](https://mathjs.org) to create the Expression.
+ *
+ * Once created a Calculated Column is treated like any other Column in the Grid - though **only the name and Expression are stored** and not the cell data.
+ *
+ * **Further Resources**
+ *
+ * [Calculated Column Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005113212-Calculated-Columns)
+ *
+ * [Calculated Column Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030078491-Calculated-Column-Videos)
+ *
+ * [Calculated Column Demo](https://demo.adaptableblotter.com/column/aggridcalculatedcolumndemo/)
+ *
+ * [Calculated Column Blotter API](_api_interface_icalculatedcolumnapi_.icalculatedcolumnpi.html)
+ *
+ * [Calculated Column FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360030078351-Calculated-Column-FAQ)
+ *
+ **/
 export interface CalculatedColumnState extends RunTimeState {
   /**
    * A collection of Calculated Columns, i.e. columns that show a value which is derived from other values in the row, and which is stored with the user's state.
@@ -19,19 +43,9 @@ export interface CalculatedColumn extends AdaptableBlotterObject {
   ColumnId: string;
 
   /**
-   * An expression which will retrieve the value to display in the Column and is re-evaluated each time cells in the columns in the expression change.
+   * An **Expression** which will retrieve the value to display in the Column and is re-evaluated each time cells in the columns in the expression change.
    *
-   * The expression (which is not the same as an Adaptable Blotter expression) evaluates using the math.js library.
+   * The expression (which is not the same as an Adaptable Blotter expression) evaluates using the [mathjs library](https://mathjs.org).
    */
   ColumnExpression: string;
 }
-
-/*
-A collection of Calculated Columns.
-
-An ICalculatedColumn consists of just 2 properties:
-
-ColumnId: 
-
-ColumnExpression: An expression which will retrieve the value - see Calculated Columns for more details.
-*/
