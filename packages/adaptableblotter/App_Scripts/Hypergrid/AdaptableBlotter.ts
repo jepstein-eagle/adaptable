@@ -1,4 +1,7 @@
 ﻿import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
+
+import * as Emitter from 'emittery';
+
 import * as Redux from 'redux';
 import * as ReactDOM from 'react-dom';
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
@@ -87,7 +90,14 @@ import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { ChartStrategy } from '../Strategy/ChartStrategy';
-import { HALF_SECOND } from '../Utilities/Constants/GeneralConstants';
+import {
+  HALF_SECOND,
+  GRID_REFRESHED_EVENT,
+  SEARCH_APPLIED_EVENT,
+  CELLS_SELECTED_EVENT,
+  GRID_RELOADED_EVENT,
+  KEY_DOWN_EVENT,
+} from '../Utilities/Constants/GeneralConstants';
 import { ILicenceService } from '../Utilities/Services/Interface/ILicenceService';
 import { LicenceService } from '../Utilities/Services/LicenceService';
 import { PieChartStrategy } from '../Strategy/PieChartStrategy';
@@ -104,7 +114,14 @@ import { FreeTextColumn } from '../PredefinedConfig/RunTimeState/FreeTextColumnS
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
-import { IPermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
+import { PermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
+
+// do I need this in both places??
+type RuntimeConfig = {
+  instantiateGrid?: (...args: any[]) => any;
+};
+
+type EmitterCallback = (data?: any) => any;
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
@@ -159,6 +176,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private throttleOnDataChangedUser: (() => void) & _.Cancelable;
   private throttleOnDataChangedExternal: (() => void) & _.Cancelable;
   public hasQuickFilter: boolean;
+
+  private runtimeConfig?: RuntimeConfig;
+
+  private emitter: Emitter;
 
   constructor(blotterOptions: AdaptableBlotterOptions, renderGrid: boolean = true) {
     //we init with defaults then overrides with options passed in the constructor
@@ -430,53 +451,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.setColumnIntoStore();
   }
 
-  private _onKeyDown: EventDispatcher<IAdaptableBlotter, KeyboardEvent | any> = new EventDispatcher<
-    IAdaptableBlotter,
-    KeyboardEvent | any
-  >();
-  public onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any> {
-    return this._onKeyDown;
-  }
+  public on = (eventName: string, callback: EmitterCallback): (() => void) => {
+    return this.emitter.on(eventName, callback);
+  };
 
-  private _onGridDataBound: EventDispatcher<
-    IAdaptableBlotter,
-    IAdaptableBlotter
-  > = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-  public onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
-    return this._onGridDataBound;
-  }
-
-  private _onSelectedCellsChanged: EventDispatcher<
-    IAdaptableBlotter,
-    IAdaptableBlotter
-  > = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-  public onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
-    return this._onSelectedCellsChanged;
-  }
-
-  private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<
-    IAdaptableBlotter,
-    IAdaptableBlotter
-  >();
-  public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
-    return this._onRefresh;
-  }
-
-  private _onGridReloaded: EventDispatcher<
-    IAdaptableBlotter,
-    IAdaptableBlotter
-  > = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-  public onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
-    return this._onGridReloaded;
-  }
-
-  private _onSearchChanged: EventDispatcher<
-    IAdaptableBlotter,
-    IAdaptableBlotter
-  > = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-  public onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
-    return this._onSearchChanged;
-  }
+  public emit = (eventName: string, data?: any): Promise<any> => {
+    return this.emitter.emit(eventName, data);
+  };
 
   public createMenu() {
     let menuItems: IMenuItem[] = [];
@@ -492,7 +473,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   }
 
   public reloadGrid(): void {
-    this._onGridReloaded.Dispatch(this, this);
+    this.emitter.emit(GRID_RELOADED_EVENT);
   }
 
   public getPrimaryKeyValueFromRecord(record: any): any {
@@ -599,7 +580,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.adaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(
       GridRedux.GridSetSelectedCells(selectedCells)
     );
-    this._onSelectedCellsChanged.Dispatch(this, this);
+    this.emitter.emit(CELLS_SELECTED_EVENT);
   }
 
   public getColumnDataType(column: any): DataType {
@@ -886,7 +867,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public ReindexAndRepaint() {
     this.hyperGrid.behavior.reindex();
     this.hyperGrid.repaint();
-    this._onRefresh.Dispatch(this, this);
+    this.emitter.emit(GRID_REFRESHED_EVENT);
   }
 
   public getColumnValueDisplayValuePairDistinctList(
@@ -897,7 +878,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // TODO: we are not checking visible rows only!
     let returnMap = new Map<string, IRawValueDisplayValuePair>();
     // check if there are permitted column values for that column
-    let permittedValues: IPermittedColumnValues[] = this.getState().UserInterface
+    let permittedValues: PermittedColumnValues[] = this.getState().UserInterface
       .PermittedColumnValues;
     let permittedValuesForColumn = permittedValues.find(pc => pc.ColumnId == columnId);
     if (permittedValuesForColumn) {
@@ -1140,8 +1121,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public applyGridFiltering(): void {
     //which call onRefresh to refresh live excel updates
     this.ReindexAndRepaint();
-    this._onRefresh.Dispatch(this, this);
-    this._onSearchChanged.Dispatch(this, this);
+    this.emitter.emit(GRID_REFRESHED_EVENT);
+    this.emitter.emit(SEARCH_APPLIED_EVENT);
   }
 
   private applyDataChange() {
@@ -1353,14 +1334,14 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.hyperGrid.addEventListener('fin-keydown', (e: any) => {
       //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
       //like that we avoid the need to have different logic for different grids....
-      this._onKeyDown.Dispatch(this, e.detail.primitiveEvent);
+      this.emitter.emit(KEY_DOWN_EVENT, e.detail.primitiveEvent);
     });
     //we'll see if we need to handle differently keydown when in edit mode internally or not....
     //I think we don't need to but hey.... you never know
     this.hyperGrid.addEventListener('fin-editor-keydown', (e: any) => {
       //we assume that the primitive event to a fin-keydown event will always be a keyboard event.
       //like that we avoid the need to have different logic for different grids....
-      this._onKeyDown.Dispatch(this, e.detail.keyEvent);
+      this.emitter.emit(KEY_DOWN_EVENT, e.detail.keyEvent);
     });
     //we hide the filterform if scrolling on the x axis
     this.hyperGrid.addEventListener('fin-scroll-x', () => {

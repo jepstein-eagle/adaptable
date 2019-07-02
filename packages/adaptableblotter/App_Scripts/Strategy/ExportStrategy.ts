@@ -16,6 +16,11 @@ import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Glue42Helper } from '../Utilities/Helpers/Glue42Helper';
 import { IColumn } from '../Utilities/Interface/IColumn';
+import {
+  CELLS_SELECTED_EVENT,
+  GRID_RELOADED_EVENT,
+  GRID_REFRESHED_EVENT,
+} from '../Utilities/Constants/GeneralConstants';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   private ExportState: ExportState;
@@ -29,7 +34,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ExportStrategyId, blotter);
-    this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded());
+    //  this.blotter.onGridReloaded().Subscribe((sender, blotter) => this.handleGridReloaded());
+
+    this.blotter.on(GRID_RELOADED_EVENT, () => {
+      this.scheduleReports();
+    });
 
     OpenfinHelper.OnExcelDisconnected().Subscribe(() => {
       LoggingHelper.LogAdaptableBlotterInfo('Excel closed stopping all Live Excel');
@@ -71,10 +80,11 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     this.blotter.DataService.OnDataSourceChanged().Subscribe(() => {
       this.throttledRecomputeAndSendLiveExcelEvent();
     });
-    this.blotter.onRefresh().Subscribe(() => {
+    this.blotter.on(GRID_REFRESHED_EVENT, () => {
       this.throttledRecomputeAndSendLiveExcelEvent();
     });
-    this.blotter.onSelectedCellsChanged().Subscribe(() => {
+
+    this.blotter.on(CELLS_SELECTED_EVENT, () => {
       if (ArrayExtensions.IsNotNullOrEmpty(this.blotter.api.internalApi.getLiveReports())) {
         let liveReport = this.blotter.api.internalApi
           .getLiveReports()
@@ -84,10 +94,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         }
       }
     });
-  }
-
-  private handleGridReloaded() {
-    this.scheduleReports();
   }
 
   protected addPopupMenuItem() {

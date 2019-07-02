@@ -15,8 +15,6 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
     this.blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) =>
       this.handleDataSourceChanged(eventText)
     );
-
-    this.blotter.onGridDataBound().Subscribe(() => this.handleGridDataBound());
   }
 
   protected addPopupMenuItem() {
@@ -40,17 +38,6 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
 
   // Called when a single piece of data changes, ie. usually the result of an inline edit
   protected abstract handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void;
-
-  // Called when we have re-bound the grid e.g. after sorting a column or even after a smart edit or plus / minus :(
-  private handleGridDataBound() {
-    if (
-      ArrayExtensions.IsNotNullOrEmpty(
-        this.blotter.api.conditionalStyleApi.getAllConditionalStyle()
-      )
-    ) {
-      this.initStyles();
-    }
-  }
 
   public abstract initStyles(): void;
 }

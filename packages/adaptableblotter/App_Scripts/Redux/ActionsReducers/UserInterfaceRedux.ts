@@ -1,7 +1,7 @@
 import * as Redux from 'redux';
 import {
   UserInterfaceState,
-  IPermittedColumnValues,
+  PermittedColumnValues,
 } from '../../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { UIHelper } from '../../View/UIHelper';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
@@ -25,7 +25,7 @@ export interface StyleClassNameAddAction extends Redux.Action {
 }
 
 export interface PermittedColumnValuesSetAction extends Redux.Action {
-  PermittedColumnValues: IPermittedColumnValues;
+  PermittedColumnValues: PermittedColumnValues;
 }
 
 export interface PermittedColumnValuesDeleteAction extends Redux.Action {
@@ -48,7 +48,7 @@ export const StyleClassNamesAdd = (StyleClassNames: string[]): StyleClassNameAdd
 });
 
 export const PermittedColumnValuesSet = (
-  PermittedColumnValues: IPermittedColumnValues
+  PermittedColumnValues: PermittedColumnValues
 ): PermittedColumnValuesSetAction => ({
   type: PERMITTED_COLUMNVALUES_SET,
   PermittedColumnValues,
@@ -68,13 +68,14 @@ const initialUserInterfaceState: UserInterfaceState = {
   ColorPalette: UIHelper.getDefaultColors(),
   StyleClassNames: EMPTY_ARRAY,
   PermittedColumnValues: EMPTY_ARRAY,
+  EditLookUpColumns: EMPTY_ARRAY,
 };
 
 export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (
   state: UserInterfaceState = initialUserInterfaceState,
   action: Redux.Action
 ): UserInterfaceState => {
-  let permittedColumnValues: IPermittedColumnValues[];
+  let permittedColumnValues: PermittedColumnValues[];
   switch (action.type) {
     case COLOR_PALETTE_SET:
       return Object.assign({}, state, {
@@ -97,7 +98,7 @@ export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (
     case PERMITTED_COLUMNVALUES_SET:
       let actionTypedSetColumnValues = <PermittedColumnValuesSetAction>action;
       permittedColumnValues = [].concat(state.PermittedColumnValues);
-      let existingPermittedColumnValues: IPermittedColumnValues = permittedColumnValues.find(
+      let existingPermittedColumnValues: PermittedColumnValues = permittedColumnValues.find(
         pcv => pcv.ColumnId == actionTypedSetColumnValues.PermittedColumnValues.ColumnId
       );
       if (existingPermittedColumnValues) {

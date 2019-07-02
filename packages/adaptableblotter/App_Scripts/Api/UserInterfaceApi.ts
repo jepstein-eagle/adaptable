@@ -4,7 +4,7 @@ import { IUserInterfaceApi } from './Interface/IUserInterfaceApi';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import {
   UserInterfaceState,
-  IPermittedColumnValues,
+  PermittedColumnValues,
 } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 
 export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
@@ -24,12 +24,12 @@ export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
     this.dispatchAction(UserInterfaceRedux.StyleClassNamesAdd(styleClassNames));
   }
 
-  public getAllPermittedValues(): IPermittedColumnValues[] {
+  public getAllPermittedValues(): PermittedColumnValues[] {
     return this.getBlotterState().UserInterface.PermittedColumnValues;
   }
 
-  public getPermittedValuesForColumn(columnId: string): IPermittedColumnValues {
-    let permittedValues: IPermittedColumnValues[] = this.getAllPermittedValues();
+  public getPermittedValuesForColumn(columnId: string): PermittedColumnValues {
+    let permittedValues: PermittedColumnValues[] = this.getAllPermittedValues();
     if (ArrayExtensions.IsNotNullOrEmpty(permittedValues)) {
       return permittedValues.find(pc => pc.ColumnId == columnId);
     }
@@ -37,7 +37,7 @@ export class UserInterfaceApi extends ApiBase implements IUserInterfaceApi {
   }
 
   public setColumnPermittedValues(column: string, permittedValues: string[]): void {
-    let permittedColumnValues: IPermittedColumnValues = {
+    let permittedColumnValues: PermittedColumnValues = {
       ColumnId: column,
       PermittedValues: permittedValues,
     };

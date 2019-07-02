@@ -1,6 +1,6 @@
 import {
   UserInterfaceState,
-  IPermittedColumnValues,
+  PermittedColumnValues,
 } from '../../PredefinedConfig/DesignTimeState/UserInterfaceState';
 
 export interface IUserInterfaceApi {
@@ -25,7 +25,7 @@ export interface IUserInterfaceApi {
    */
   clearColumnPermittedValues(column: string): void;
 
-  getAllPermittedValues(): IPermittedColumnValues[];
+  getAllPermittedValues(): PermittedColumnValues[];
 
-  getPermittedValuesForColumn(columnId: string): IPermittedColumnValues;
+  getPermittedValuesForColumn(columnId: string): PermittedColumnValues;
 }

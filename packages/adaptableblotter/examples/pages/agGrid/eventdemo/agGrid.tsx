@@ -36,7 +36,7 @@ function InitAdaptableBlotter() {
     .onAlertFired()
     .Subscribe((sender, alertFiredArgs) => listenToAlertFired(alertFiredArgs));
   adaptableblotter.api.eventApi
-    .onSearchedChanged()
+    .onSearchChanged()
     .Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }

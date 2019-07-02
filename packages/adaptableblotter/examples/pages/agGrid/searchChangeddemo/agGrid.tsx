@@ -34,14 +34,14 @@ function InitAdaptableBlotter() {
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   adaptableblotter.api.eventApi
-    .onSearchedChanged()
-    .Subscribe((sender, searchChangedArgs) => listenToSearchedChangedEvent(searchChangedArgs));
+    .onSearchChanged()
+    .Subscribe((sender, searchChangedArgs) => listenToSearchChangedEvent(searchChangedArgs));
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
-function listenToSearchedChangedEvent(searchChangedArgs: SearchChangedEventArgs) {
-  console.log('searched changed event received');
+function listenToSearchChangedEvent(searchChangedArgs: SearchChangedEventArgs) {
+  console.log('search changed event received');
   console.log(searchChangedArgs);
 }
 

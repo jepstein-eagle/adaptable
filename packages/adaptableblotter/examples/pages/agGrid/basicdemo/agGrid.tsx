@@ -26,6 +26,7 @@ function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(200);
   examplesHelper.startTickingDataagGrid(gridOptions);
+  gridOptions.singleClickEdit = true;
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
     'basic demo'
@@ -40,7 +41,14 @@ function InitAdaptableBlotter() {
   adaptableblotter.applyLightTheme();
 }
 
-let demoConfig: PredefinedConfig = {};
+let demoConfig: PredefinedConfig = {
+  UserInterface: {
+    EditLookUpColumns: [
+      { ColumnId: 'currency' },
+      { ColumnId: 'counterparty', LookUpValues: ['first', 'second'] },
+    ],
+  },
+};
 
 export default () => {
   useEffect(() => {

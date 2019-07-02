@@ -19,11 +19,15 @@ import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
+import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.PlusMinusStrategyId, blotter);
-    blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent));
+
+    this.blotter.on(KEY_DOWN_EVENT, keyEvent => {
+      this.handleKeyDown(keyEvent);
+    });
   }
 
   protected addPopupMenuItem() {

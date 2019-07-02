@@ -8,7 +8,6 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { ISelectedCellInfo } from '../../Utilities/Interface/SelectedCell/ISelectedCellInfo';
@@ -16,15 +15,15 @@ import {
   AccessLevel,
   CellSummaryOperation,
   CellSummaryOptionalOperation,
-  DashboardSize,
 } from '../../PredefinedConfig/Common/Enums';
-import { DropdownButton, MenuItem, InputGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { DropdownButton, MenuItem, InputGroup, ControlLabel } from 'react-bootstrap';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { CellSummaryPopover } from './CellSummaryPopover';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 
 interface CellSummaryToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<CellSummaryToolbarControlComponent> {
@@ -38,33 +37,27 @@ interface CellSummaryToolbarControlComponentProps
   CellSummary: ICellSummmary;
 }
 
-interface CellSummaryToolbarControlComponentState {
-  SubFunc: any;
-}
-
 class CellSummaryToolbarControlComponent extends React.Component<
   CellSummaryToolbarControlComponentProps,
-  CellSummaryToolbarControlComponentState
+  {}
 > {
   constructor(props: CellSummaryToolbarControlComponentProps) {
     super(props);
-    this.state = {
-      SubFunc: (sender: IAdaptableBlotter, event: IAdaptableBlotter) => {
-        this.onSelectionChanged();
-      },
-    };
   }
   public componentDidMount() {
     if (this.props.Blotter) {
-      this.props.Blotter.onSelectedCellsChanged().Subscribe(this.state.SubFunc);
+      this.props.Blotter.on(CELLS_SELECTED_EVENT, () => {
+        this.props.onCreateCellSummary();
+      });
     }
   }
 
-  public componentWillUnmount() {
-    if (this.props.Blotter) {
-      this.props.Blotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc);
-    }
-  }
+  // needed?
+  // public componentWillUnmount() {
+  //   if (this.props.Blotter) {
+  //     this.props.Blotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc);
+  //   }
+  // }
 
   render() {
     let cssClassName: string = this.props.cssClassName + '__CellSummary';

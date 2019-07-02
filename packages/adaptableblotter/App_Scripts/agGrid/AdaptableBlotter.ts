@@ -1,4 +1,10 @@
-import { Grid, CellRange, CellRangeParams } from 'ag-grid-community';
+import {
+  Grid,
+  CellRange,
+  CellRangeParams,
+  PopupEditorWrapper,
+  RefreshCellsParams,
+} from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
 import * as Emitter from 'emittery';
@@ -11,7 +17,6 @@ import {
   Column,
   RowNode,
   ICellEditor,
-  AddRangeSelectionParams,
   ICellRendererFunc,
   SideBarDef,
 } from 'ag-grid-community';
@@ -101,7 +106,16 @@ import { BlotterHelper } from '../Utilities/Helpers/BlotterHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { BlotterApi } from '../Api/BlotterApi';
-import { DEFAULT_LAYOUT, HALF_SECOND } from '../Utilities/Constants/GeneralConstants';
+import {
+  DEFAULT_LAYOUT,
+  HALF_SECOND,
+  BLOTTER_READY_EVENT,
+  CELLS_SELECTED_EVENT,
+  GRID_RELOADED_EVENT,
+  SEARCH_APPLIED_EVENT,
+  GRID_REFRESHED_EVENT,
+  KEY_DOWN_EVENT,
+} from '../Utilities/Constants/GeneralConstants';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { IMenuItem } from '../Utilities/Interface/IMenu';
 import { IEvent } from '../Utilities/Interface/IEvent';
@@ -128,14 +142,19 @@ import { ColumnFilter } from '../PredefinedConfig/RunTimeState/ColumnFilterState
 import { ColumnSort, VendorGridInfo } from '../PredefinedConfig/RunTimeState/LayoutState';
 import { CustomSort } from '../PredefinedConfig/RunTimeState/CustomSortState';
 import { QueryRange } from '../PredefinedConfig/Common/Expression/QueryRange';
-import { IPermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
+import {
+  PermittedColumnValues,
+  EditLookUpColumn,
+} from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
 
+// do I need this in both places??
 type RuntimeConfig = {
   instantiateGrid?: (...args: any[]) => any;
 };
 
 type EmitterCallback = (data?: any) => any;
+
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;
 
@@ -318,7 +337,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return this.emitter.on(eventName, callback);
   };
 
-  public emit = (eventName: string, data: any): Promise<any> => {
+  public emit = (eventName: string, data?: any): Promise<any> => {
     return this.emitter.emit(eventName, data);
   };
 
@@ -327,7 +346,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     this.adaptableBlotterStore.onAny((eventName: string) => {
       if (eventName == INIT_STATE) {
-        this.emitter.emit('ready');
+        this.emit(BLOTTER_READY_EVENT);
       }
     });
   }
@@ -453,73 +472,19 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   private _currentEditor: ICellEditor;
 
-  private _onKeyDown: EventDispatcher<IAdaptableBlotter, KeyboardEvent | any> = new EventDispatcher<
-    IAdaptableBlotter,
-    KeyboardEvent | any
-  >();
-
-  public onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any> {
-    return this._onKeyDown;
-  }
-
-  private _onGridDataBound: EventDispatcher<
-    IAdaptableBlotter,
-    IAdaptableBlotter
-  > = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-
-  public onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
-    return this._onGridDataBound;
-  }
-
-  private _onSelectedCellsChanged: EventDispatcher<
-    IAdaptableBlotter,
-    IAdaptableBlotter
-  > = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-
-  public onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
-    return this._onSelectedCellsChanged;
-  }
-
-  private _onRefresh: EventDispatcher<IAdaptableBlotter, IAdaptableBlotter> = new EventDispatcher<
-    IAdaptableBlotter,
-    IAdaptableBlotter
-  >();
-
-  public onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
-    return this._onRefresh;
-  }
-
-  private _onGridReloaded: EventDispatcher<
-    IAdaptableBlotter,
-    IAdaptableBlotter
-  > = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-
-  public onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
-    return this._onGridReloaded;
-  }
-
-  private _onSearchChanged: EventDispatcher<
-    IAdaptableBlotter,
-    IAdaptableBlotter
-  > = new EventDispatcher<IAdaptableBlotter, IAdaptableBlotter>();
-
-  public onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter> {
-    return this._onSearchChanged;
-  }
-
   public reloadGrid(): void {
-    this._onGridReloaded.Dispatch(this, this);
+    this.emit(GRID_RELOADED_EVENT);
   }
 
   public applyGridFiltering() {
     this.gridOptions.api.onFilterChanged();
-    this._onSearchChanged.Dispatch(this, this);
-    this._onRefresh.Dispatch(this, this);
+    this.emit(SEARCH_APPLIED_EVENT);
+    this.emit(GRID_REFRESHED_EVENT);
   }
 
   private applyDataChange() {
     this.gridOptions.api.onFilterChanged();
-    this._onRefresh.Dispatch(this, this);
+    this.emit(GRID_REFRESHED_EVENT);
   }
 
   public clearGridFiltering() {
@@ -785,7 +750,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const selectedCells: ISelectedCellInfo = { Columns: columns, Selection: selectionMap };
     this.dispatchAction(GridRedux.GridSetSelectedCells(selectedCells));
 
-    this._onSelectedCellsChanged.Dispatch(this, this);
+    // this._onSelectedCellsChanged.Dispatch(this, this);
+    this.emit(CELLS_SELECTED_EVENT);
   }
 
   // We deduce the type here, as there is no way to get it through the definition
@@ -996,9 +962,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     this.filterOnUserDataChange();
     this.gridOptions.api.clearRangeSelection();
-    nodesToRefresh.forEach(node => {
-      this.refreshCells(node, refreshColumnList);
-    });
+    this.refreshCells(nodesToRefresh, refreshColumnList);
   }
 
   private updateBatchValue(
@@ -1146,8 +1110,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const returnMap = new Map<string, IRawValueDisplayValuePair>();
 
     // check if there are permitted column values for that column
-    // NB.  this is currently a bug as we dont check for visibility so if using permitted values then ALL are returned :(
-    const permittedValuesForColumn: IPermittedColumnValues = this.api.userInterfaceApi.getPermittedValuesForColumn(
+    // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
+    const permittedValuesForColumn: PermittedColumnValues = this.api.userInterfaceApi.getPermittedValuesForColumn(
       columnId
     );
     if (permittedValuesForColumn != undefined) {
@@ -1345,16 +1309,20 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public redraw() {
     this.gridOptions.api.redrawRows();
     this.gridOptions.api.refreshHeader();
-    this._onRefresh.Dispatch(this, this);
+    this.emit(GRID_REFRESHED_EVENT);
   }
 
   public testredrawRow(rowNode: RowNode) {
     this.gridOptions.api.redrawRows({ rowNodes: [rowNode] });
   }
 
-  public refreshCells(rowNode: RowNode, columnIds: string[]) {
-    this.gridOptions.api.refreshCells({ rowNodes: [rowNode], columns: columnIds, force: true });
-    //     this.gridOptions.api.flashCells({ rowNodes: [rowNode], columns: columnIds });
+  public refreshCells(rows: RowNode[], columnIds: string[]) {
+    let refreshCellParams: RefreshCellsParams = {
+      rowNodes: rows,
+      columns: columnIds,
+      force: true,
+    };
+    this.gridOptions.api.refreshCells(refreshCellParams);
   }
 
   public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
@@ -1450,7 +1418,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       hide: true,
       enableValue: true, // makes the column 'summable'
       editable: false,
-      filter: 'agTextColumnFilter',
+      filter: true,
+      sortable: true,
       valueGetter: (params: ValueGetterParams) =>
         Helper.RoundValueIfNumeric(
           this.CalculatedColumnExpressionService.ComputeExpressionValue(
@@ -1476,68 +1445,64 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     let dataType: DataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
       cleanedExpression
     );
-    this.addSpecialColumnToState(calculatedColumn.Uuid, calculatedColumn.ColumnId, true, dataType);
+    this.addSpecialColumnToState(calculatedColumn.Uuid, calculatedColumn.ColumnId, dataType);
   }
 
   public addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn) {
-    const venderCols: Column[] = this.gridOptions.columnApi.getAllColumns();
+    const venderCols: Column[] = this.gridOptions.columnApi!.getAllColumns();
     const colDefs: ColDef[] = venderCols.map(x => x.getColDef());
     const newColDef: ColDef = {
       headerName: freeTextColumn.ColumnId,
       colId: freeTextColumn.ColumnId,
       editable: true,
       hide: true,
+      filter: true,
+      sortable: true,
+      cellEditor: 'agLargeTextCellEditor',
       valueGetter: (params: ValueGetterParams) =>
         this.FreeTextColumnService.GetFreeTextValue(freeTextColumn, params.node),
     };
     colDefs.push(newColDef);
     this.agGridHelper.safeSetColDefs(colDefs);
 
-    this.addSpecialColumnToState(freeTextColumn.Uuid, freeTextColumn.ColumnId, false);
+    this.addSpecialColumnToState(freeTextColumn.Uuid, freeTextColumn.ColumnId, DataType.String);
   }
 
-  private addSpecialColumnToState(
-    uuid: TypeUuid,
-    columnId: string,
-    isReadOnly: boolean,
-    dataType?: DataType
-  ): void {
-    const vendorColumn = this.gridOptions.columnApi
-      .getAllColumns()
+  private addSpecialColumnToState(uuid: TypeUuid, columnId: string, dataType: DataType): void {
+    const vendorColumn: Column | undefined = this.gridOptions
+      .columnApi!.getAllColumns()
       .find(vc => vc.getColId() == columnId);
 
-    if (!dataType) {
-      dataType = this.getColumnDataType(vendorColumn);
-    }
+    if (vendorColumn) {
+      const specialColumn: IColumn = {
+        Uuid: uuid,
+        ColumnId: columnId,
+        FriendlyName: columnId,
+        DataType: dataType,
+        Visible: false,
+        ReadOnly: vendorColumn.getColDef().editable as boolean,
+        Sortable: vendorColumn.getColDef().sortable as boolean,
+        Filterable: vendorColumn.getColDef().filter as boolean,
+      };
 
-    const specialColumn: IColumn = {
-      Uuid: uuid,
-      ColumnId: columnId,
-      FriendlyName: columnId,
-      DataType: dataType,
-      Visible: false,
-      ReadOnly: isReadOnly,
-      Sortable: true,
-      Filterable: true, // why not?  need to test...
-    };
+      if (this.isQuickFilterActive()) {
+        this.createQuickFilterWrapper(vendorColumn);
+        this.gridOptions.api!.refreshHeader();
+      }
 
-    if (this.isQuickFilterActive()) {
-      this.createQuickFilterWrapper(vendorColumn);
-      this.gridOptions.api.refreshHeader();
-    }
+      this.dispatchAction(GridRedux.GridAddColumn(specialColumn));
 
-    this.dispatchAction(GridRedux.GridAddColumn(specialColumn));
+      const quickSearchClassName = this.getQuickSearchClassName();
+      this.addQuickSearchStyleToColumn(specialColumn, quickSearchClassName);
 
-    const quickSearchClassName = this.getQuickSearchClassName();
-    this.addQuickSearchStyleToColumn(specialColumn, quickSearchClassName);
+      this.addFiltersToVendorColumn(vendorColumn);
 
-    this.addFiltersToVendorColumn(vendorColumn);
-
-    if (this.isInitialised) {
-      const conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.strategies.get(
-        StrategyConstants.ConditionalStyleStrategyId
-      ) as IConditionalStyleStrategy;
-      conditionalStyleagGridStrategy.initStyles();
+      if (this.isInitialised) {
+        const conditionalStyleagGridStrategy: IConditionalStyleStrategy = this.strategies.get(
+          StrategyConstants.ConditionalStyleStrategyId
+        ) as IConditionalStyleStrategy;
+        conditionalStyleagGridStrategy.initStyles();
+      }
     }
   }
 
@@ -1649,7 +1614,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       if (this.abContainerElement == null) {
         LoggingHelper.LogAdaptableBlotterError(
-          `There is no Div called ${this.blotterOptions.containerOptions.adaptableBlotterContainer} so cannot render the Adaptable Blotter`
+          `There is no Div called ${
+            this.blotterOptions.containerOptions.adaptableBlotterContainer
+          } so cannot render the Adaptable Blotter`
         );
         return;
       }
@@ -1657,9 +1624,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     const gridContainerElement = this.getGridContainerElement();
     if (gridContainerElement) {
-      gridContainerElement.addEventListener('keydown', event =>
-        this._onKeyDown.Dispatch(this, event)
-      );
+      gridContainerElement.addEventListener('keydown', event => this.emit(KEY_DOWN_EVENT, event));
     }
 
     // vendorGrid.api.addGlobalListener((type: string, event: any) => {
@@ -1714,27 +1679,36 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       Events.EVENT_DISPLAYED_COLUMNS_WIDTH_CHANGED,
       Events.EVENT_COLUMN_PINNED,
     ];
-    this.gridOptions.api.addGlobalListener((type: string) => {
+    this.gridOptions.api!.addGlobalListener((type: string) => {
       if (columnEventsThatTriggersAutoLayoutSave.indexOf(type) > -1) {
         this.debouncedSaveGridLayout();
       }
     });
 
     // this event deals with when the user makes an edit - it doesnt look at ticking data
-    this.gridOptions.api.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
+    this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
       // TODO: Jo: This is a workaround as we are accessing private members of agGrid.
+
       const editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex]
         .cellComps[params.column.getColId()].cellEditor;
+
+      // editor might be type Popup like agPopupTextCellEditor or agPopupSelectCellEditor (see: https://www.ag-grid.com/javascript-grid-cell-editing/)
+      // if so then we need to get the inner editor
+      if (editor instanceof PopupEditorWrapper) {
+        this._currentEditor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[
+          params.node.rowIndex
+        ].cellComps[params.column.getColId()].cellEditor.cellEditor;
+      } else {
+        this._currentEditor = editor;
+      }
+
       // No need to register for the keydown on the editor since we already register on the main div
-      // TODO: check that it works when edit is popup. That's why I left the line below
-      // editor.getGui().addEventListner("keydown", (event: any) => this._onKeyDown.Dispatch(this, event))
-      this._currentEditor = editor;
 
       // if there was already an implementation set by the dev we keep the reference to it and execute it at the end
       const oldIsCancelAfterEnd = this._currentEditor.isCancelAfterEnd;
       const isCancelAfterEnd = () => {
         const dataChangedInfo: DataChangedInfo = {
-          OldValue: this.gridOptions.api.getValue(params.column.getColId(), params.node),
+          OldValue: this.gridOptions.api!.getValue(params.column.getColId(), params.node),
           NewValue: this._currentEditor.getValue(),
           ColumnId: params.column.getColId(),
           IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node),
@@ -1885,7 +1859,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         this.filterOnExternalDataChange();
 
         // only if visible...
-        this.refreshCells(params.node, refreshColumnList);
+        this.refreshCells([params.node], refreshColumnList);
       }
     );
 
@@ -2413,6 +2387,36 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   // Method called after we have rendered the grid
   // where we apply our stuff but also any ag-Grid props that we control
   private applyFinalRendering(): void {
+    // not sure if this is the right place here.
+    // perhaps we need some onDataLoaded event??
+    let editLookUpCols: EditLookUpColumn[] = this.api.userInterfaceApi.getUserInterfaceState()
+      .EditLookUpColumns;
+    if (ArrayExtensions.IsNotNullOrEmpty(editLookUpCols)) {
+      const colDefs: ColDef[] = this.gridOptions.columnApi.getAllColumns().map(x => x.getColDef());
+
+      editLookUpCols.forEach((e: EditLookUpColumn) => {
+        const colDefIndex = colDefs.findIndex(x => x.field == e.ColumnId);
+
+        const newColDef: ColDef = colDefs[colDefIndex];
+        newColDef.cellEditor = 'agRichSelectCellEditor';
+        if (ArrayExtensions.IsNullOrEmpty(e.LookUpValues)) {
+          newColDef.cellEditorParams = {
+            values: this.getColumnValueDisplayValuePairDistinctList(
+              e.ColumnId,
+              DistinctCriteriaPairValue.DisplayValue,
+              false
+            ).map(t => t.DisplayValue),
+          };
+        } else {
+          newColDef.cellEditorParams = {
+            values: e.LookUpValues,
+          };
+        }
+        colDefs[colDefIndex] = newColDef;
+      });
+      this.agGridHelper.safeSetColDefs(colDefs);
+    }
+
     // add the filter header style if required
     if (this.blotterOptions.filterOptions!.indicateFilteredColumns == true) {
       var css = document.createElement('style');
