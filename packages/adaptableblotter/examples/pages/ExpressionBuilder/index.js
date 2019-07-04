@@ -16,7 +16,26 @@ const sampleData = {
 export const ExpressionContext = createContext('expression');
 
 function Root() {
-  const [config, setConfig] = useState(null);
+  const [config, setConfig] = useState({
+    type: 'round',
+    amount: {
+      type: 'sum',
+      values: [
+        {
+          type: 'column',
+          value: 'price',
+        },
+        {
+          type: 'number',
+          value: 100,
+        },
+      ],
+    },
+    precision: {
+      type: 'number',
+      value: 2,
+    },
+  });
   return (
     <ExpressionContext.Provider value={{ columns }}>
       <Builder config={config} setConfig={setConfig} />

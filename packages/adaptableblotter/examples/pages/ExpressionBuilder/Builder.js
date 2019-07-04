@@ -4,8 +4,9 @@ function Formula({ config, setConfig }) {
   const type = config ? config.type : 'none';
   const Component = formulas[type].component;
   return (
-    <div className="builder grow">
+    <div className="grow">
       <select
+        style={{ background: '#ddd' }}
         value={type}
         onChange={e => {
           setConfig(formulas[e.target.value].getDefaultConfig());

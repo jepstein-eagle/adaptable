@@ -2,9 +2,10 @@ import Builder from '../Builder';
 
 function SumBuilder({ config, setConfig }) {
   return (
-    <div>
+    <div class="box">
       {config.values.map((value, index) => (
-        <div key={index} className="flex mb-1">
+        <div key={index} className="flex" style={{ marginBottom: '6px' }}>
+          <span style={{ marginRight: '5px' }}>{index + 1}</span>
           <Builder
             config={value}
             setConfig={newValue => {
@@ -27,17 +28,18 @@ function SumBuilder({ config, setConfig }) {
           </button>
         </div>
       ))}
-      <button
-        class="full-width"
-        onClick={() => {
-          setConfig({
-            ...config,
-            values: [...config.values, null],
-          });
-        }}
-      >
-        Add
-      </button>
+      <div style={{ textAlign: 'right' }}>
+        <button
+          onClick={() => {
+            setConfig({
+              ...config,
+              values: [...config.values, null],
+            });
+          }}
+        >
+          + Add
+        </button>
+      </div>
     </div>
   );
 }
