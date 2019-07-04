@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Panel, FormGroup, FormControl, HelpBlock, Button } from 'react-bootstrap';
+import { Panel, FormGroup, FormControl, HelpBlock, Dropdown } from 'react-bootstrap';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -7,6 +7,7 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { CalculatedColumn } from '../../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {
@@ -45,12 +46,11 @@ export class CalculatedColumnExpressionWizard
                 componentClass="textarea"
                 placeholder="Enter expression"
                 onChange={e => this.handleExpressionChange(e)}
-              >
-                <Button>Hello</Button>>
-              </FormControl>
+              />
               <FormControl.Feedback />
               <HelpBlock>{this.props.GetErrorMessage()}</HelpBlock>
             </FormGroup>
+            <ColumnSelector ColumnList={this.props.Columns} SelectedColumnIds={[]} />
           </AdaptableBlotterForm>
         </Panel>
       </div>
@@ -83,5 +83,8 @@ export class CalculatedColumnExpressionWizard
   }
   public GetIndexStepDecrement() {
     return 1;
+  }
+  public insertColumn(ColumnId) {
+    alert(ColumnId);
   }
 }
