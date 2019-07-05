@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import AdaptableBlotter from '../../../../App_Scripts/Hypergrid';
-import '../../../../App_Scripts/base.css';
-import '../../../../App_Scripts/themes/light.css';
-import '../../../../ExtLibs/hypergrid/fin-hypergrid';
+import AdaptableBlotter from '../../../App_Scripts/Hypergrid';
+import '../../../../App_Scripts/base.scss';
+import '../../../../App_Scripts/themes/light.scss';
+import '../../../ExtLibs/hypergrid/fin-hypergrid';
 
 import { DataGenerator } from '../../../../Harness/DataGenerator';
 
@@ -20,16 +20,16 @@ function InitAdaptableBlotter() {
   var gridOptions = { data: trades, schema: getSchema(trades) };
   var vendorGrid = new fin.Hypergrid('#grid', gridOptions);
   dataGen.startTickingDataHypergrid(vendorGrid);
-  //Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
+  // Set to `true` to render `0` and `false`. Otherwise these value appear as blank cells.
   vendorGrid.addProperties({ renderFalsy: true });
-  //JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
-  //which causes an issue.....
+  // JO: Temporary. I still havent found a way to prevent the editor to open if a shortcut is executed and editonky is ON
+  // which causes an issue.....
   vendorGrid.addProperties({ editOnKeydown: false });
 
   // make it unsortable
   // vendorGrid.addProperties({ unsortable: true })
 
-  let behavior = vendorGrid.behavior;
+  const behavior = vendorGrid.behavior;
 
   vendorGrid.localization.add(
     'USDCurrencyFormat',
@@ -47,7 +47,7 @@ function InitAdaptableBlotter() {
     new vendorGrid.localization.DateFormatter('en-EN', shortDateOptions)
   );
 
-  //we enable the edit on some columns
+  // we enable the edit on some columns
   vendorGrid.behavior.dataModel.getCellEditorAt = function(
     columnIndex: any,
     rowIndex: any,
@@ -77,23 +77,23 @@ function InitAdaptableBlotter() {
     //   unfilterable: true
   });
 
-  //Add Format for Notional column
+  // Add Format for Notional column
   behavior.setColumnProperties(1, {
     format: 'USDCurrencyFormat',
   });
 
-  //Add Edit for Trade Date column
+  // Add Edit for Trade Date column
   behavior.setColumnProperties(18, {
     format: 'shortDateFormat',
   });
 
-  //Add Edit for Settlement Date column
+  // Add Edit for Settlement Date column
   behavior.setColumnProperties(19, {
     format: 'shortDateFormat',
   });
 
-  let adaptableBlotterOptions = {
-    vendorGrid: vendorGrid,
+  const adaptableBlotterOptions = {
+    vendorGrid,
     primaryKey: 'tradeId',
     userName: 'demo user',
     blotterId: 'hypergrid demo',
