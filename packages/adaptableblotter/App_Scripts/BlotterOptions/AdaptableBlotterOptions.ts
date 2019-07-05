@@ -34,7 +34,7 @@ export interface AdaptableBlotterOptions {
    *
    * Note: if you are using the *React Wrapper* or the *Angular Wrapper* then you do **not** need to populate this property (as *gridOptions* is a separate parameter).
    *
-   * **Default value** - N/A
+   * **Default value: N/A**
    */
   vendorGrid?: any;
 
@@ -47,7 +47,7 @@ export interface AdaptableBlotterOptions {
    *
    * Note: The column does not need to be visible but it does need to exist in the grid's data source.
    *
-   * **Default value** - N/A
+   * **Default value: N/A**
    */
   primaryKey: string;
 
@@ -58,7 +58,7 @@ export interface AdaptableBlotterOptions {
    *
    * The value provided here is also that used to name the *Home Toolbar* (the first toolbar that appears in the Dashboard).
    *
-   * **Default value** - adaptable_blotter_id
+   * **Default value: adaptable_blotter_id**
    */
   blotterId?: string;
 
@@ -69,7 +69,7 @@ export interface AdaptableBlotterOptions {
    *
    * Also used in Audit Log to identify the current user who has made edits or changed state.
    *
-   * **Default value** - anonymous
+   * **Default value: anonymous**
    */
   userName?: string;
 
@@ -84,7 +84,7 @@ export interface AdaptableBlotterOptions {
    *
    * See full details at [Predefined Configuration](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
    *
-   * **Default value** - null
+   * **Default value: null**
    */
   predefinedConfig?: PredefinedConfig | string;
 
@@ -97,7 +97,7 @@ export interface AdaptableBlotterOptions {
    *
    * See full details at [Licence Key](./interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html)
    *
-   * **Default value** - anonymous
+   * **Default value: ''**
    */
   licenceKey?: string;
 
@@ -122,43 +122,59 @@ export interface AdaptableBlotterOptions {
   auditOptions?: AuditOptions;
 
   /**
-   * Options for setting Config Server
-   * This allows you to store user state not in local storage (the default)
+   * Options for setting Config Server.
+   *
+   * This feature allows for storing user state remotely (as opposed to in local storage, which is the default).
    */
   configServerOptions?: ConfigServerOptions;
 
   /**
-   * Options for running queries
-   * Lets you specify how (and how many) values are returned
+   * Options for running queries (or Expressions) in the Adaptable Blotter.
+   *
+   * Lets you specify how (and how many) values are returned when doing a column lookup, how to deal with case and what is in the Query.
+   *
+   * Also includes a callback function allowing devs to populate column lookups dynamically.
    */
   queryOptions?: QueryOptions;
 
   /**
-   * Options for use in Layouts
-   * (ie. saveable view of column order, visibility and sorts)
+   * Options related to  Layouts (ie. saveable views of column order, visibility and sort).
+   *
+   * Includes properties for whether to include vendor state in the Layout (e.g. Column Grouping) and whether layouts shoudl save automatically on clicking save.
    */
   layoutOptions?: LayoutOptions;
 
   /**
-   * Options for running filters
-   * Whether to use Adaptable Blotter or vendor grid forms
+   * Related to creating and managing filters in the Adaptable Blotter.
+   *
+   * Includes options concerning whetehr to use the Adaptable Blotter filters (or those provided by the vendor grid).
+   *
+   * Also contains options to set if, how and when the Grid should repaint and refilter after user data edits and ticking data edits.
    */
   filterOptions?: FilterOptions;
 
   /**
-   * Manage Adaptable Blotter charting
+   * Options to manage the Adaptable Blotter charting.
+   *
+   * Primarily concerned with how and where charts appear.
    */
   chartOptions?: ChartOptions;
 
   /**
    * General options to manage the Adaptable Blotter
+   *
+   * Essentially those options that didn't fit into of the specific categories.
+   *
+   * Includes options for managing Server Searching, themes and how to manage Primary Keys.
    */
   generalOptions?: GeneralOptions;
 
   /**
-   * Configuration settings for iPushPull
+   * Configuration settings for iPushPull users.
+   *
    * Required if using iPushPull to display / send live report data
-   * NOTE: an iPushPull licence is required to access this functionality
+   *
+   * **NOTE: a valid iPushPull licence is required to access this functionality**
    */
   iPushPullConfig?: iPushPullConfig;
 }
