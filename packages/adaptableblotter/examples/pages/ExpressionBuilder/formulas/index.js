@@ -1,7 +1,8 @@
 import NoneFormula from './none';
 import ColumnFormula from './column';
 import NumberFormula from './number';
-import StringFormula from './string';
+import TextFormula from './text';
+import BooleanFormula from './boolean';
 import AddFormula from './add';
 import SubtractFormula from './subtract';
 import MultiplyFormula from './multiply';
@@ -10,7 +11,6 @@ import MinFormula from './min';
 import MaxFormula from './max';
 import AverageFormula from './average';
 import IfFormula from './if';
-import CompareFormula from './compare';
 // import RoundFormula from './round';
 
 export default {
@@ -21,10 +21,10 @@ export default {
   multiply: MultiplyFormula,
   divide: DivideFormula,
   number: NumberFormula,
-  string: StringFormula,
+  text: TextFormula,
+  boolean: BooleanFormula,
   min: MinFormula,
   max: MaxFormula,
   average: AverageFormula,
   if: IfFormula,
-  compare: CompareFormula,
 };

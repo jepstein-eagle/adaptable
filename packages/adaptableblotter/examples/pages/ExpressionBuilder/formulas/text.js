@@ -1,9 +1,9 @@
-function StringFormula({ config, setConfig }) {
+function TextFormula({ config, setConfig }) {
   return (
     <input
       type="text"
       value={config.value}
-      onChange={e => {
+      onChange={(e) => {
         setConfig({
           ...config,
           value: e.target.value,
@@ -14,10 +14,10 @@ function StringFormula({ config, setConfig }) {
 }
 
 export default {
-  label: 'String',
-  component: StringFormula,
+  label: 'Text',
+  component: TextFormula,
   getDefaultConfig() {
-    return { type: 'string', value: '' };
+    return { type: 'text', value: '' };
   },
   computeResult(config) {
     return config.value;

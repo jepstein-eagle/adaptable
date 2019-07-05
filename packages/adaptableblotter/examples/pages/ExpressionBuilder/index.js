@@ -6,11 +6,13 @@ import compute from './compute';
 const columns = [
   { name: 'orderId', label: 'Order ID' },
   { name: 'price', label: 'Price' },
+  { name: 'inStock', label: 'In Stock' },
   { name: 'companyName', label: 'Company Name' },
 ];
 const sampleData = {
   orderId: 5,
   price: 12.9,
+  inStock: true,
   companyName: 'AB',
 };
 export const ExpressionContext = createContext('expression');
@@ -18,25 +20,22 @@ export const ExpressionContext = createContext('expression');
 function Root() {
   const [config, setConfig] = useState({
     type: 'if',
-    condition: {
-      type: 'compare',
-      operator: '>',
-      operand1: {
-        type: 'column',
-        value: 'price',
-      },
-      operand2: {
-        type: 'number',
-        value: 50,
-      },
+    operator: '=',
+    operand1: {
+      type: 'column',
+      value: 'inStock',
+    },
+    operand2: {
+      type: 'boolean',
+      checked: true,
     },
     trueValue: {
-      type: 'string',
-      value: 'expensive',
+      type: 'text',
+      value: 'green',
     },
     falseValue: {
-      type: 'string',
-      value: 'cheap',
+      type: 'text',
+      value: 'red',
     },
   });
   // const [config, setConfig] = useState({
