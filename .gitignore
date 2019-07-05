@@ -18,3 +18,4 @@ package-lock.json
 /packages/adaptableblotter/apidoc
 /apidoc
 yarn.lock
+dist
