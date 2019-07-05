@@ -31,9 +31,22 @@ function InitAdaptableBlotter() {
     gridOptions,
     'basic demo'
   );
-  adaptableBlotterOptions.layoutOptions = {
-    includeVendorStateInLayouts: true,
-    autoSaveLayouts: true,
+  adaptableBlotterOptions.auditOptions = {
+    auditCellEdits: {
+      auditToHttpChannel: true,
+    },
+    auditFunctionEvents: {
+      auditToConsole: true,
+    },
+    auditInternalStateChanges: {
+      auditAsEvent: true,
+    },
+    auditUserStateChanges: {
+      auditAsEvent: true,
+      auditToHttpChannel: true,
+    },
+    pingInterval: 50,
+    auditLogsSendInterval: 3,
   };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
