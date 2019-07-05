@@ -1,5 +1,21 @@
 todo
-
 [ ] rename config to expression
 [ ] improve file names
 [x] extract array builder component
+
+functions
+  column
+  number
+  string
+  ---
+  add
+  subtract
+  multiply
+  divide
+  ---
+  min
+  max
+  avg
+  ---
+  if
+  compare

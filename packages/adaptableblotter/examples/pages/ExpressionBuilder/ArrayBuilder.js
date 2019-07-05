@@ -6,10 +6,14 @@ function ArrayBuilder({ config, setConfig }) {
       {config.values.map((value, index) => (
         <div
           key={index}
-          className="flex"
-          style={{ background: index % 2 ? '#f0f0f0' : '#fff', padding: '10px' }}
+          className="flex array-row"
+          style={{
+            background: index % 2 ? '#f0f0f0' : '#fff',
+            padding: '10px',
+            position: 'relative',
+          }}
         >
-          <span style={{ marginRight: '5px' }}>{index + 1}</span>
+          <span style={{ width: '15px' }}>{index + 1}</span>
           <Builder
             config={value}
             setConfig={newValue => {
@@ -20,7 +24,7 @@ function ArrayBuilder({ config, setConfig }) {
             }}
           />
           <button
-            style={{ marginLeft: '5px' }}
+            className="remove"
             onClick={() => {
               setConfig({
                 ...config,

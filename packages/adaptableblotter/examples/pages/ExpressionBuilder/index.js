@@ -17,27 +17,50 @@ export const ExpressionContext = createContext('expression');
 
 function Root() {
   const [config, setConfig] = useState({
-    type: 'min',
-    values: [
-      {
-        type: 'multiply',
-        values: [
-          {
-            type: 'column',
-            value: 'price',
-          },
-          {
-            type: 'number',
-            value: 2,
-          },
-        ],
+    type: 'if',
+    condition: {
+      type: 'compare',
+      operator: '>',
+      operand1: {
+        type: 'column',
+        value: 'price',
       },
-      {
+      operand2: {
         type: 'number',
-        value: 100,
+        value: 50,
       },
-    ],
+    },
+    trueValue: {
+      type: 'string',
+      value: 'expensive',
+    },
+    falseValue: {
+      type: 'string',
+      value: 'cheap',
+    },
   });
+  // const [config, setConfig] = useState({
+  //   type: 'min',
+  //   values: [
+  //     {
+  //       type: 'multiply',
+  //       values: [
+  //         {
+  //           type: 'column',
+  //           value: 'price',
+  //         },
+  //         {
+  //           type: 'number',
+  //           value: 2,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       type: 'number',
+  //       value: 100,
+  //     },
+  //   ],
+  // });
   return (
     <ExpressionContext.Provider value={{ columns }}>
       <Builder config={config} setConfig={setConfig} />
