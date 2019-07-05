@@ -613,30 +613,37 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     const blotter = this;
     const cellClassRules: any = {};
     cellClassRules[quickSearchClassName] = function(params: any) {
-      const columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
-      const quickSearchState = blotter.api.quickSearchApi.getQuickSearchState();
-      if (
-        StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText) &&
-        (quickSearchState.DisplayAction == DisplayAction.HighlightCell ||
-          quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)
-      ) {
-        const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
-        if (range) {
-          // not right but just checking...
-          if (
-            RangeHelper.IsColumnAppropriateForRange(range.Operator as LeafExpressionOperator, col)
-          ) {
-            const expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-              columnId,
-              null,
-              null,
-              null,
-              [range]
-            );
+      if (params.node && !params.node.group) {
+        const columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
+        const quickSearchState = blotter.api.quickSearchApi.getQuickSearchState();
+        if (
+          StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText) &&
+          (quickSearchState.DisplayAction == DisplayAction.HighlightCell ||
+            quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)
+        ) {
+          const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
+          if (range) {
+            // not right but just checking...
             if (
-              ExpressionHelper.checkForExpressionFromRecord(expression, params.node, [col], blotter)
+              RangeHelper.IsColumnAppropriateForRange(range.Operator as LeafExpressionOperator, col)
             ) {
-              return true;
+              const expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
+                columnId,
+                null,
+                null,
+                null,
+                [range]
+              );
+              if (
+                ExpressionHelper.checkForExpressionFromRecord(
+                  expression,
+                  params.node,
+                  [col],
+                  blotter
+                )
+              ) {
+                return true;
+              }
             }
           }
         }

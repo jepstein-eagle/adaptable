@@ -298,7 +298,7 @@ export class ExamplesHelper {
     let tradeCurrency = currency ? currency : this.getRandomItem(this.getCurrencies());
     let trade = {
       tradeId: i,
-      notional: this.generateRandomInt(0, 300), // this.getRandomItem(this.getNotionals()),
+      notional: null, // this.generateRandomInt(0, 300), // this.getRandomItem(this.getNotionals()),
       deskId: this.generateRandomInt(0, 400),
       counterparty: this.getRandomItem(this.getCounterparties()),
       currency: tradeCurrency,
@@ -963,7 +963,7 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Country',
       field: 'country',
-      editable: false,
+      editable: true,
       filter: true,
       sortable: true,
       enableRowGroup: true,
