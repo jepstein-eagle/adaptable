@@ -2,3 +2,4 @@ todo
 
 [ ] rename config to expression
 [ ] improve file names
+[x] extract array builder component

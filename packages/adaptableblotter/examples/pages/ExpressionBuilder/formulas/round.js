@@ -2,8 +2,8 @@ import Builder from '../Builder';
 
 function RoundBuilder({ config, setConfig }) {
   return (
-    <div class="box">
-      <div class="flex" style={{ marginBottom: '6px' }}>
+    <div className="box">
+      <div className="flex" style={{ marginBottom: '6px' }}>
         <div style={{ width: '60px' }}>amount</div>
         <Builder
           config={config.amount}
@@ -15,7 +15,7 @@ function RoundBuilder({ config, setConfig }) {
           }}
         />
       </div>
-      <div class="flex">
+      <div className="flex">
         <div style={{ width: '60px' }}>precision</div>
         <Builder
           config={config.precision}

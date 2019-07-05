@@ -4,16 +4,22 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 select,
-input {
-  vertical-align: middle;
+input,
+button {
+  /* vertical-align: middle; */
   display: inline-block;
-  margin-right: 5px;
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding-left: 6px;
-  height: 18px;
   box-sizing: border-box;
+}
+select,
+input {
+  margin-right: 5px;
+  height: 18px;
+}
+input {
+  padding-left: 6px;
 }
 .flex {
   display: flex;
@@ -25,8 +31,15 @@ input {
   width: 100%;
 }
 .box {
-  margin-top: -1px;
+  margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 10px;
+  overflow: hidden;
+}
+button.add {
+  border: none;
+  border-top: 1px solid #ccc;
+  border-radius: 0;
+  width: 100%;
+  display: block;
 }

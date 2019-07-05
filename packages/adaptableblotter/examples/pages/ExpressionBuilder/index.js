@@ -17,24 +17,26 @@ export const ExpressionContext = createContext('expression');
 
 function Root() {
   const [config, setConfig] = useState({
-    type: 'round',
-    amount: {
-      type: 'sum',
-      values: [
-        {
-          type: 'column',
-          value: 'price',
-        },
-        {
-          type: 'number',
-          value: 100,
-        },
-      ],
-    },
-    precision: {
-      type: 'number',
-      value: 2,
-    },
+    type: 'min',
+    values: [
+      {
+        type: 'multiply',
+        values: [
+          {
+            type: 'column',
+            value: 'price',
+          },
+          {
+            type: 'number',
+            value: 2,
+          },
+        ],
+      },
+      {
+        type: 'number',
+        value: 100,
+      },
+    ],
   });
   return (
     <ExpressionContext.Provider value={{ columns }}>

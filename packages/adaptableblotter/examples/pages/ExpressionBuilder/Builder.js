@@ -6,7 +6,7 @@ function Formula({ config, setConfig }) {
   return (
     <div className="grow">
       <select
-        style={{ background: '#ddd' }}
+        style={{ background: '#ccc' }}
         value={type}
         onChange={e => {
           setConfig(formulas[e.target.value].getDefaultConfig());
