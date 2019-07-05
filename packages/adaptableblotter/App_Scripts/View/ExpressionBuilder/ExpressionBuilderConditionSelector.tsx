@@ -331,6 +331,10 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         bodyProps={{
           padding: 0,
           paddingTop: 2,
+          style: {
+            display: 'flex',
+            flexFlow: 'column',
+          },
         }}
         style={{
           flex: '1 0 0%',

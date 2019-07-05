@@ -75,7 +75,13 @@ export class ExpressionBuilderPage
           cssClassName={cssClassName}
           headerText="Query Builder"
           button={newButton}
-          bsStyle="primary"
+          bodyProps={{
+            style: {
+              display: 'flex',
+              flexFlow: 'column',
+              overflow: 'auto',
+            },
+          }}
           style={{ height: '100%' }}
         >
           <Flex flexDirection="row" style={{ height: '100%' }}>

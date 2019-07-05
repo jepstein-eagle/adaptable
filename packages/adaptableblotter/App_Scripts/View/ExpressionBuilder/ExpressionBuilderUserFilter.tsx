@@ -79,5 +79,4 @@ export class ExpressionBuilderUserFilter extends React.Component<
 
 let divStyle: React.CSSProperties = {
   overflowY: 'auto',
-  height: '350px',
 };

@@ -17,6 +17,7 @@ import Err from './error';
 import Warning from './warning';
 import ConditionalStyle from './conditional-style';
 import Dashboard from './dashboard';
+import Calendar from './calendar';
 import ColorDrop from './color-drop';
 import CheckCircle from './check-circle';
 
@@ -35,6 +36,7 @@ export default {
   justify: Justify,
   check: Check,
   plus: Plus,
+  calendar: Calendar,
   home: Home,
   dashboard: Dashboard,
   edit: Edit,
