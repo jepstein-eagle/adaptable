@@ -1,15 +1,15 @@
 :root {
-  --ab-cmp-panel_header-bg: linear-gradient(
+  --ab-cmp-panel_header__background: linear-gradient(
     180deg,
     var(--ab-color-almost-white) 0,
     var(--ab-color-lightgray)
   );
 
-  --ab-cmp-panel-radius: var(--ab-space-1);
-  --ab-cmp-panel-padding: var(--ab-space-2);
-  --ab-cmp-panel-border: 1px solid var(--ab-color-lightgray);
-  --ab-cmp-panel-icon-fill: var(--ab-icon-fill);
+  --ab-cmp-panel__border-radius: var(--ab-space-1);
+  --ab-cmp-panel__padding: var(--ab-space-2);
+  --ab-cmp-panel__border: 1px solid var(--ab-color-lightgray);
+  --ab-cmp-panel-icon__fill: var(--ab-icon-fill);
 
-  --ab-cmp-panel_header-padding: var(--ab-space-2);
-  --ab-cmp-panel_header-color: var(--ab-color-textgray);
+  --ab-cmp-panel_header__padding: var(--ab-space-2);
+  --ab-cmp-panel_header__color: var(--ab-color-textgray);
 }

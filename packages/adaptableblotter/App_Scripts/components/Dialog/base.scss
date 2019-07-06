@@ -1,6 +1,6 @@
 .ab-Dialog {
   position: relative;
-  background: var(--ab-cmp-dialog-bg);
+  background: var(--ab-cmp-dialog__background);
   
   &__close-button {
     position: absolute;
@@ -9,7 +9,7 @@
     font-size: var(--ab-font-size-3);
     font-weight: 700;
     line-height: 1;
-    color: var(--ab-cmp-dialog-close-button-color);
+    color: var(--ab-cmp-dialog-close-button__color);
     text-shadow: 0 1px 0 #fff;
     cursor: pointer;
   }

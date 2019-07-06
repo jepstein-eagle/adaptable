@@ -47,7 +47,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Type
         style={{
           width: '100%',
           flex: 1,
-          '--ab-cmp-panel-icon-fill': theme.colors.almostwhite,
+          '--ab-cmp-panel-icon__fill': theme.colors.almostwhite,
         }}
       >
         <Flex alignItems="center">

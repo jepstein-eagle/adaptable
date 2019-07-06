@@ -27,7 +27,7 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
     let headerRow = (
       <AdaptableBlotterForm
         inline
-        style={{ flex: 1, '--ab-cmp-panel-icon-fill': this.props.theme.colors.almostwhite }}
+        style={{ flex: 1, '--ab-cmp-panel-icon__fill': this.props.theme.colors.almostwhite }}
       >
         <Flex>
           <Box>

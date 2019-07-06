@@ -73,7 +73,7 @@ const Panel = (props: PanelProps) => {
   const style: { [key: string]: any } = {};
 
   if (borderRadius !== undefined) {
-    style['--ab-cmp-panel-radius'] = borderRadius;
+    style['--ab-cmp-panel__border-radius'] = borderRadius;
   }
 
   const headerStyle = {

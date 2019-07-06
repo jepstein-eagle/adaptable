@@ -6,7 +6,7 @@
   svg {
     vertical-align: middle;
   }
-  border-radius: var(--ab-cmp-simple-button-radius);
+  border-radius: var(--ab-cmp-simple-button__border-radius);
   color: var(--ab-color-textgray);
   position: relative;
   overflow: hidden;
@@ -63,8 +63,8 @@
   }
 
   &--variant-outlined {
-    background: var(--ab-cmp-simple-button--outlined-background);
-    border-width: var(--ab-cmp-simple-button--outlined-border-width);
+    background: var(--ab-cmp-simple-button--outlined__background);
+    border-width: var(--ab-cmp-simple-button--outlined__border-width);
     border-color: currentColor;
     border-style: solid;
   }

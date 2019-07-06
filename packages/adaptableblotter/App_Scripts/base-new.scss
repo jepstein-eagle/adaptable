@@ -30,11 +30,11 @@
   --ab-color-white: white;
   --ab-icon-fill: currentColor;
   --ab-info-gradient: linear-gradient(180deg, #337ab7 0, #2e6da4);
-  --ab-focus-outline: 3px auto -webkit-focus-ring-color;
+  --ab-focus__outline: 3px auto -webkit-focus-ring-color;
 }
 
 *:focus {
-  outline: var(--ab-focus-outline);
+  outline: var(--ab-focus__outline);
   outline-offset: -2px;
 }
 

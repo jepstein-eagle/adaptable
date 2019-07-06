@@ -36,7 +36,7 @@ export type DropdownButtonProps = BoxProps &
 const baseClassName = 'ab-DropdownButton';
 
 const defaultListItemStyle = {
-  padding: 'var(--ab-cmp-dropdownbutton-list-item-padding)',
+  padding: 'var(--ab-cmp-dropdownbutton-list-item__padding)',
 };
 
 const DropdownButton = (props: DropdownButtonProps) => {
@@ -134,10 +134,10 @@ const DropdownButton = (props: DropdownButtonProps) => {
     position: 'absolute',
     overflow: 'auto',
 
-    border: 'var(--ab-cmp-dropdownbutton-list-border)',
-    borderRadius: 'var(--ab-cmp-dropdownbutton-list-border-radius)',
-    zIndex: ('var(--ab-cmp-dropdownbutton-list-zindex)' as unknown) as number,
-    background: 'var(--ab-cmp-dropdownbutton-list-background)',
+    border: 'var(--ab-cmp-dropdownbutton-list__border)',
+    borderRadius: 'var(--ab-cmp-dropdownbutton-list__border-radius)',
+    zIndex: ('var(--ab-cmp-dropdownbutton-list__z-index)' as unknown) as number,
+    background: 'var(--ab-cmp-dropdownbutton-list__background)',
 
     [where === 'top' ? 'marginBottom' : 'marginTop']: listOffset,
     [side === 'left' ? 'right' : 'left']: 0,
