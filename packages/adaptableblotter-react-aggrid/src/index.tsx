@@ -20,6 +20,7 @@ import {
 } from '../../adaptableblotter/types';
 
 import useEventListener from './useEventListener';
+import { BLOTTER_READY_EVENT } from '../../adaptableblotter/App_Scripts/Utilities/Constants/GeneralConstants';
 
 export * from '../../adaptableblotter/types';
 
@@ -152,7 +153,7 @@ const AdaptableBlotterReact = ({
         agGridReactWrapperInstance,
       });
       if (onBlotterReady) {
-        blotter.on('ready', () => {
+        blotter.on(BLOTTER_READY_EVENT, () => {
           onBlotterReady(blotter.api);
         });
       }
@@ -204,7 +205,7 @@ const AdaptableBlotterReact = ({
     });
   }
 
-  useEventListener(onSearchChanged, blotter, (eventApi: IEventApi) => eventApi.onSearchedChanged());
+  useEventListener(onSearchChanged, blotter, (eventApi: IEventApi) => eventApi.onSearchChanged());
   useEventListener(onThemeChanged, blotter, (eventApi: IEventApi) => eventApi.onThemeChanged());
   useEventListener(onColumnStateChanged, blotter, (eventApi: IEventApi) =>
     eventApi.onColumnStateChanged()

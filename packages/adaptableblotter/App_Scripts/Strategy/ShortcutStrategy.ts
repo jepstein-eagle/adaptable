@@ -18,11 +18,14 @@ import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper'
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/RunTimeState/ShortcutState';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
+import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.ShortcutStrategyId, blotter);
-    blotter.onKeyDown().Subscribe((sender, keyEvent) => this.handleKeyDown(keyEvent));
+    this.blotter.on(KEY_DOWN_EVENT, keyEvent => {
+      this.handleKeyDown(keyEvent);
+    });
   }
 
   protected addPopupMenuItem() {

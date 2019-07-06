@@ -53,7 +53,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
             }
             let timer: number = window.setTimeout(() => {
               currentFlashing.set(key, null);
-              theBlotter.refreshCells(params.node, [col.ColumnId]);
+              theBlotter.refreshCells([params.node], [col.ColumnId]);
             }, fc.FlashingCellDuration);
             currentFlashing.set(key, timer);
             return true;
@@ -81,7 +81,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
             }
             let timer: any = window.setTimeout(() => {
               currentFlashing.set(key, null);
-              theBlotter.refreshCells(params.node, [col.ColumnId]);
+              theBlotter.refreshCells([params.node], [col.ColumnId]);
             }, fc.FlashingCellDuration);
             currentFlashing.set(key, timer);
             return true;

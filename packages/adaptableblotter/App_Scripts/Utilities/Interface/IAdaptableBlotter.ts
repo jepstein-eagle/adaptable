@@ -23,6 +23,8 @@ import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColu
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 
+type EmitterCallback = (data?: any) => any;
+
 /**
  *  The only interface for the AdaptableBlotter
  *  Contains all the properties and methods that each implemenation must include
@@ -88,17 +90,9 @@ export interface IAdaptableBlotter {
   ScheduleService: IScheduleService;
   SearchService: ISearchService;
 
-  /**
-   * These are INTERNAL events which the blotter raises and other strategies listen to
-   * e.g. the key down event is used by the Shortcut and Plus Minus strategies
-   * NOTE:  There are some EXTERNAL events that the Blotter fires which are useful to users - these are all in the IEventAPI class
-   */
-  onKeyDown(): IEvent<IAdaptableBlotter, KeyboardEvent | any>;
-  onSelectedCellsChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
-  onRefresh(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
-  onGridDataBound(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
-  onGridReloaded(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
-  onSearchChanged(): IEvent<IAdaptableBlotter, IAdaptableBlotter>;
+  // Used for internal events...
+  on(eventName: string, callback: EmitterCallback): void;
+  emit(eventName: string, data?: any): Promise<any>;
 
   // General
   createMenu(): void;

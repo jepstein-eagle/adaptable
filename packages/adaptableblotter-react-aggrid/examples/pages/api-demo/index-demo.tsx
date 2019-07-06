@@ -38,7 +38,7 @@ export default () => {
   const onReady = (adaptableblotter: AdaptableBlotter) => {
     // you can subscribe to events like this
     // adaptableblotter.api.eventApi
-    //   .onSearchedChanged()
+    //   .onSearchChanged()
     //   .Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
     // but better use the react way below
   };

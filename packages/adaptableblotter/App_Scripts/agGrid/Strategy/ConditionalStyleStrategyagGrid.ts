@@ -47,7 +47,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
       }
       if (listOfColumnsToRefresh.length > 0) {
         let theBlotter = this.blotter as AdaptableBlotter;
-        theBlotter.refreshCells(dataChangedEvent.Record, listOfColumnsToRefresh);
+        theBlotter.refreshCells([dataChangedEvent.Record], listOfColumnsToRefresh);
       }
     }
   }

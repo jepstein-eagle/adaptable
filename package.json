@@ -1,7 +1,11 @@
 {
   "name": "adaptableblotter-monorepo",
-  "version": "4.0.7",
+  "version": "4.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdaptableTools/adaptableblotter.git"
+  },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/preset-typescript": "^7.3.3",
@@ -17,10 +21,10 @@
   },
   "scripts": {
     "release": "npm run release:patch",
-    "canaryrelease": "npm run build && release pre && npm run registry-publish",
-    "release:patch": "npm run build && release patch && npm run registry-publish",
-    "release:minor": "npm run build && release minor && npm run registry-publish",
-    "release:major": "npm run build && release major && npm run registry-publish",
+    "canaryrelease": "npm run build && release pre --show-url && npm run registry-publish",
+    "release:patch": "npm run build && release patch --show-url && npm run registry-publish",
+    "release:minor": "npm run build && release minor --show-url && npm run registry-publish",
+    "release:major": "npm run build && release major --show-url && npm run registry-publish",
     "registry-publish": "npm run --prefix packages/adaptableblotter registry-publish && npm run --prefix packages/adaptableblotter-react-aggrid registry-publish && npm run --prefix packages/adaptableblotter-ng-aggrid registry-publish",
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\"",
     "build-core": "npm run --prefix packages/adaptableblotter build",

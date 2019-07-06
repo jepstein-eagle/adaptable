@@ -6,11 +6,11 @@
   "main": "./adaptableblotter-react-aggrid/src/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JonnyAdaptableTools/adaptableblotter.git",
+    "url": "git+https://github.com/AdaptableTools/adaptableblotter.git",
     "directory": "packages/adaptableblotter-react-aggrid"
   },
   "bugs": {
-    "url": "https://github.com/JonnyAdaptableTools/adaptableblotter/issues"
+    "url": "https://github.com/AdaptableTools/adaptableblotter/issues"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "engines": {

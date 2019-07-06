@@ -22,7 +22,7 @@ export interface ColumnFilterEditAction extends ColumnFilterAction {}
 export interface ColumnFilterClearAllAction extends Redux.Action {}
 
 export interface ColumnFilterClearAction extends Redux.Action {
-  columnId: string;
+  columnFilter: ColumnFilter;
 }
 
 export const ColumnFilterAdd = (columnFilter: ColumnFilter): ColumnFilterAddAction => ({
@@ -39,9 +39,9 @@ export const ColumnFilterClearAll = (): ColumnFilterClearAllAction => ({
   type: COLUMN_FILTER_CLEAR_ALL,
 });
 
-export const ColumnFilterClear = (columnId: string): ColumnFilterClearAction => ({
+export const ColumnFilterClear = (columnFilter: ColumnFilter): ColumnFilterClearAction => ({
   type: COLUMN_FILTER_CLEAR,
-  columnId,
+  columnFilter,
 });
 
 const initialFilterState: ColumnFilterState = {
@@ -85,7 +85,7 @@ export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (
     case COLUMN_FILTER_CLEAR: {
       let actionTypedDelete = <ColumnFilterClearAction>action;
       columnFilters = [].concat(state.ColumnFilters);
-      let index = columnFilters.findIndex(i => i.Uuid == actionTypedDelete.columnId);
+      let index = columnFilters.findIndex(i => i.Uuid == actionTypedDelete.columnFilter.Uuid);
       columnFilters.splice(index, 1);
       return Object.assign({}, state, { ColumnFilters: columnFilters });
     }

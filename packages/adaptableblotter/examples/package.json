@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p 8081",
-    "build": "next build",
+    "dev": "increase-memory-limit && next -p 8081",
+    "build": "node --max-old-space-size=4096 ./node_modules/.bin/next build && node --max-old-space-size=4096 ./node_modules/.bin/next export -o dist && cp _headers dist && cp _redirects dist",
     "start": "next start",
     "test-browser-w": "jest --config=jest.config.js --watch"
   },

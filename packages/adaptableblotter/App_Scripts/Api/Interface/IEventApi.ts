@@ -13,7 +13,7 @@ export interface IEventApi {
    * The Adaptable Blotter publishes 4 events that users can subscribe to as required.
    */
 
-  _onSearchedChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
+  _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
   _onThemeChanged: EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>;
   _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, ColumnStateChangedEventArgs>;
   _onAlertFired: EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>;
@@ -25,7 +25,7 @@ export interface IEventApi {
    *
    * @returns IEvent<IAdaptableBlotter, SearchChangedEventArgs>
    */
-  onSearchedChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs>;
+  onSearchChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs>;
 
   /**
    * Event fired whenever the theme of the Blotter has been changed

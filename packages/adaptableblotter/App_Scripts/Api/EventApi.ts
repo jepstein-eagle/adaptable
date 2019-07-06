@@ -11,7 +11,7 @@ import {
 import { IEventApi } from './Interface/IEventApi';
 
 export class EventApi extends ApiBase implements IEventApi {
-  public _onSearchedChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
+  public _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
 
   public _onThemeChanged: EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>;
 
@@ -22,7 +22,7 @@ export class EventApi extends ApiBase implements IEventApi {
   constructor(blotter: IAdaptableBlotter) {
     super(blotter);
 
-    this._onSearchedChanged = new EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>();
+    this._onSearchChanged = new EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>();
     this._onThemeChanged = new EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>();
     this._onColumnStateChanged = new EventDispatcher<
       IAdaptableBlotter,
@@ -31,8 +31,8 @@ export class EventApi extends ApiBase implements IEventApi {
     this._onAlertFired = new EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>();
   }
 
-  public onSearchedChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs> {
-    return this._onSearchedChanged;
+  public onSearchChanged(): IEvent<IAdaptableBlotter, SearchChangedEventArgs> {
+    return this._onSearchChanged;
   }
 
   public onThemeChanged(): IEvent<IAdaptableBlotter, ThemeChangedEventArgs> {

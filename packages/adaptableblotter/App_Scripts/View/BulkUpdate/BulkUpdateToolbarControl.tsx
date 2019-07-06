@@ -24,6 +24,7 @@ import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
 import { DEFAULT_BSSTYLE, PRIMARY_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 
 interface BulkUpdateToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
@@ -41,7 +42,6 @@ interface BulkUpdateToolbarControlComponentProps
 
 interface BulkUpdateToolbarControlComponentState {
   Disabled: boolean;
-  SubFunc: any;
 }
 
 class BulkUpdateToolbarControlComponent extends React.Component<
@@ -52,20 +52,13 @@ class BulkUpdateToolbarControlComponent extends React.Component<
     super(props);
     this.state = {
       Disabled: true,
-      SubFunc: () => {
-        this.onSelectionChanged();
-      },
     };
   }
   public componentDidMount() {
     if (this.props.Blotter) {
-      this.props.Blotter.onSelectedCellsChanged().Subscribe(this.state.SubFunc);
-    }
-  }
-
-  public componentWillUnmount() {
-    if (this.props.Blotter) {
-      this.props.Blotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc);
+      this.props.Blotter.on(CELLS_SELECTED_EVENT, () => {
+        this.onSelectionChanged();
+      });
     }
   }
 

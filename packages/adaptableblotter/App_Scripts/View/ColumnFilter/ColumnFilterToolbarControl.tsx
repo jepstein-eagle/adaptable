@@ -30,7 +30,7 @@ import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/Entitlement
 interface ColumnFilterToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
   onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction;
-  onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
+  onClearColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
   onHideQuickFilterBar: () => GridRedux.QuickFilterBarHideAction;
   onShowQuickFilterBar: () => GridRedux.QuickFilterBarShowAction;
@@ -156,7 +156,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<
   }
 
   private onClearColumnFilter(columnFilter: ColumnFilter) {
-    this.props.onClearColumnFilter(columnFilter.ColumnId);
+    this.props.onClearColumnFilter(columnFilter);
     this.props.Blotter.clearColumnFiltering([columnFilter.ColumnId]);
   }
 
@@ -187,8 +187,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onClearColumnFilter: (columnId: string) =>
-      dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
+    onClearColumnFilter: (columnFilter: ColumnFilter) =>
+      dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
     onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
     onHideQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarHide()),

@@ -198,7 +198,7 @@ export class SearchService implements ISearchService {
         version: '1.0.0',
         data: [searchEventData],
       };
-      this.blotter.api.eventApi._onSearchedChanged.Dispatch(this.blotter, searchChangedArgs);
+      this.blotter.api.eventApi._onSearchChanged.Dispatch(this.blotter, searchChangedArgs);
     }
   }
 }

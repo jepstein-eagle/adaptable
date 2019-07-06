@@ -101,3 +101,12 @@ export const QUICK_SEARCH_DISPLAY_ACTION_STATE_PROPERTY: string = 'DisplayAction
 export const QUICK_SEARCH_STYLE_STATE_PROPERTY: string = 'Style';
 export const SMART_EDIT_VALUE_STATE_PROPERTY: string = 'SmartEditValue';
 export const SMART_EDIT_MATH_OPERATION_STATE_PROPERTY: string = 'MathOperationz';
+
+// these are the internal events that the AB fires that other strategies and classes listen to
+// put in another file?
+export const BLOTTER_READY_EVENT: string = 'BlotterReady';
+export const CELLS_SELECTED_EVENT: string = 'CellsSelected';
+export const SEARCH_APPLIED_EVENT: string = 'SearchApplied';
+export const GRID_REFRESHED_EVENT: string = 'GridRefreshed';
+export const GRID_RELOADED_EVENT: string = 'GridReloaded';
+export const KEY_DOWN_EVENT: string = 'KeyDown';

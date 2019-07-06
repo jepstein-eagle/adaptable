@@ -30,6 +30,7 @@ import { UIHelper } from '../UIHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
+import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
 
 interface SmartEditToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {
@@ -51,7 +52,6 @@ interface SmartEditToolbarControlComponentProps
 
 interface SmartEditToolbarControlComponentState {
   SelectedColumnId: string;
-  SubFunc: any;
 }
 
 class SmartEditToolbarControlComponent extends React.Component<
@@ -62,20 +62,13 @@ class SmartEditToolbarControlComponent extends React.Component<
     super(props);
     this.state = {
       SelectedColumnId: '',
-      SubFunc: (sender: IAdaptableBlotter, event: IAdaptableBlotter) => {
-        this.onSelectionChanged();
-      },
     };
   }
   public componentDidMount() {
     if (this.props.Blotter) {
-      this.props.Blotter.onSelectedCellsChanged().Subscribe(this.state.SubFunc);
-    }
-  }
-
-  public componentWillUnmount() {
-    if (this.props.Blotter) {
-      this.props.Blotter.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc);
+      this.props.Blotter.on(CELLS_SELECTED_EVENT, () => {
+        this.props.onSmartEditCheckSelectedCells();
+      });
     }
   }
 
@@ -205,10 +198,6 @@ class SmartEditToolbarControlComponent extends React.Component<
   private onSmartEditValueChange(event: React.FormEvent<any>) {
     const e = event.target as HTMLInputElement;
     this.props.onSmartEditValueChange(Number(e.value));
-  }
-
-  private onSelectionChanged(): void {
-    this.props.onSmartEditCheckSelectedCells();
   }
 
   private getStatusColour(): StatusColour {

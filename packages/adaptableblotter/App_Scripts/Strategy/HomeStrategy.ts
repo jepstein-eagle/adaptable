@@ -5,13 +5,19 @@ import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { IHomeStrategy } from './Interface/IHomeStrategy';
 import { IColumn } from '../Utilities/Interface/IColumn';
+import { GRID_RELOADED_EVENT } from '../Utilities/Constants/GeneralConstants';
 
 // This is a special strategy that the user can never remove but which is useful to us
 // We use it to manage internal state changes and menu items that are not directly strategy related
 export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy {
   constructor(blotter: IAdaptableBlotter) {
     super(StrategyConstants.HomeStrategyId, blotter);
-    this.blotter.onGridReloaded().Subscribe(() => this.handleGridReloaded());
+    //this.blotter.onGridReloaded().Subscribe(() => this.handleGridReloaded());
+
+    // useful for when grid reloads (e.g. at midnight);
+    this.blotter.on(GRID_RELOADED_EVENT, () => {
+      this.blotter.applyGridFiltering();
+    });
   }
 
   public addContextMenuItem(column: IColumn): void {
@@ -41,10 +47,5 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
         );
       }
     }
-  }
-
-  // useful for when grid reloads (e.g. at midnight);
-  private handleGridReloaded(): void {
-    this.blotter.applyGridFiltering();
   }
 }
