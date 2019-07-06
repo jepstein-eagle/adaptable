@@ -102,7 +102,9 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     return (
       <div className={cssClassName}>
         {header}
-        <ListGroup style={this.props.style}>{itemsElements}</ListGroup>
+        <ListGroup marginTop={2} style={{ overflow: 'auto', ...this.props.style }}>
+          {itemsElements}
+        </ListGroup>
       </div>
     );
   }

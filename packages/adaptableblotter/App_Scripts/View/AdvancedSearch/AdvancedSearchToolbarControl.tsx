@@ -116,15 +116,17 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
             showDefaultStyle={this.props.UseSingleColourForButtons}
           />
           <ButtonNew
+            variant="text"
             style={{ marginLeft: '2px' }}
             cssClassName={cssClassName}
             onClick={() => this.props.onNewAdvancedSearch()}
             size={this.props.DashboardSize}
-            overrideTooltip="Create New Advanced Search"
-            DisplayMode="Glyph"
+            tooltip="Create New Advanced Search"
             AccessLevel={this.props.AccessLevel}
             showDefaultStyle={this.props.UseSingleColourForButtons}
+            children={null}
           />
+
           <ButtonDelete
             style={{ marginLeft: '2px' }}
             cssClassName={cssClassName}

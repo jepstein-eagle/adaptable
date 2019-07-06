@@ -4,6 +4,9 @@
   --ab-cmp-listgroupitem__background: var(--ab-color-lightgray);
   --ab-cmp-listgroupitem__color: var(--ab-color-textgray);
 
-  --ab-cmp-listgroupitem-odd__background: var(--ab-color-almost-white);
-  --ab-cmp-listgroupitem-odd__color: var(--ab-color-textgray);
+  --ab-cmp-listgroupitem--odd__background: var(--ab-color-almost-white);
+  --ab-cmp-listgroupitem--odd__color: var(--ab-color-textgray);
+
+  --ab-cmp-listgroupitem--active__background: var(--ab-color-textgray);
+  --ab-cmp-listgroupitem--active__color: var(--ab-color-white);
 }

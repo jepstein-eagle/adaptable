@@ -1,7 +1,9 @@
 import * as React from 'react';
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import join from '../utils/join';
+
+import captureTabNavigation from '@rb/capture-tab-navigation';
 
 import { BoxProps, Box } from 'rebass';
 import { ModalProps, default as Modal } from '../Modal';
@@ -18,12 +20,23 @@ export type DialogProps = BoxProps &
     defaultIsOpen?: boolean;
     showCloseButton?: boolean;
     onDismiss?: () => void | Function;
+    dismissOnClickOutside?: () => void | Function;
   };
 
 const baseClassName = 'ab-Dialog';
 
 const Dialog = (props: DialogProps) => {
-  let { modal, fixed, autoFocus, className, children, modalProps, ...boxProps } = props;
+  let {
+    modal,
+    fixed,
+    autoFocus,
+    className,
+    children,
+    modalProps,
+    dismissOnClickOutside = false,
+    onDismiss,
+    ...boxProps
+  } = props;
   modal = props.modal === undefined ? true : props.modal;
   fixed = props.fixed === undefined ? true : props.fixed;
 
@@ -56,7 +69,30 @@ const Dialog = (props: DialogProps) => {
 
       setIsOpen(false);
     }
+
+    captureTabNavigation(boxRef.current, event);
   };
+
+  useEffect(() => {
+    if (dismissOnClickOutside && isOpen) {
+      const dismissDialog = (e: any) => {
+        requestAnimationFrame(() => {
+          if (e.preventDialogDismiss) {
+            return;
+          }
+
+          setIsOpen(false);
+        });
+      };
+      document.documentElement.addEventListener('click', dismissDialog, {
+        passive: true,
+        capture: false,
+      });
+      return () => {
+        document.documentElement.removeEventListener('click', dismissDialog);
+      };
+    }
+  }, [isOpen, dismissOnClickOutside]);
 
   if (!isOpen) {
     return null;
@@ -73,10 +109,22 @@ const Dialog = (props: DialogProps) => {
     </Box>
   ) : null;
 
+  const setPreventDismissFlag = (e: React.SyntheticEvent) => {
+    if (dismissOnClickOutside) {
+      (e.nativeEvent as any).preventDialogDismiss = true;
+    }
+  };
+
   const box = (
     <Box
       tabIndex={0}
       {...boxProps}
+      onClick={(e: React.SyntheticEvent) => {
+        setPreventDismissFlag(e);
+        if (boxProps && boxProps.onClick) {
+          boxProps.onClick(e as any);
+        }
+      }}
       onKeyDown={onKeyDown}
       className={join(
         baseClassName,
@@ -90,7 +138,13 @@ const Dialog = (props: DialogProps) => {
     </Box>
   );
 
-  const content = fixed ? <div className={`${baseClassName}-fixed-wrapper`}>{box}</div> : box;
+  const content = fixed ? (
+    <div onClick={setPreventDismissFlag} className={`${baseClassName}-fixed-wrapper`}>
+      {box}
+    </div>
+  ) : (
+    box
+  );
 
   return modal ? (
     <Modal {...modalProps} isOpen={isOpen}>

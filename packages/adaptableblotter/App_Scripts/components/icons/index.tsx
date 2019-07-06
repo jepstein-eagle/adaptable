@@ -17,7 +17,10 @@ import Err from './error';
 import Warning from './warning';
 import ConditionalStyle from './conditional-style';
 import Dashboard from './dashboard';
+import SortAsc from './sort-asc';
+import SortDesc from './sort-desc';
 import Calendar from './calendar';
+import Delete from './delete';
 import ColorDrop from './color-drop';
 import CheckCircle from './check-circle';
 
@@ -31,6 +34,8 @@ export default {
   'view-columns': ViewColumns,
   'conditional-style': ConditionalStyle,
   list: List,
+  delete: Delete,
+  trash: Delete,
   error: Err,
   warning: Warning,
   justify: Justify,
@@ -38,6 +43,8 @@ export default {
   plus: Plus,
   calendar: Calendar,
   home: Home,
+  'sort-asc': SortAsc,
+  'sort-desc': SortDesc,
   dashboard: Dashboard,
   edit: Edit,
   clear: Clear,

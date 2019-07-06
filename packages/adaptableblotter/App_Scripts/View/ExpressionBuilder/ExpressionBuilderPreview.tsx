@@ -5,7 +5,7 @@ import { Flex } from 'rebass';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { Helper } from '../../Utilities/Helpers/Helper';
+
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
@@ -16,9 +16,8 @@ import {
   RangeOperandType,
 } from '../../PredefinedConfig/Common/Enums';
 import ExpressionHelper from '../../Utilities/Helpers/ExpressionHelper';
-import { ListGroupItem, InputGroup, Button, Glyphicon, ListGroup } from 'react-bootstrap';
-import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
-import { ButtonPreviewDelete } from '../Components/Buttons/ButtonPreviewDelete';
+
+import ButtonPreviewDelete from '../Components/Buttons/ButtonPreviewDelete';
 import ColumnHelper from '../../Utilities/Helpers/ColumnHelper';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { ColumnValueExpression } from '../../PredefinedConfig/Common/Expression/ColumnValueExpression';
@@ -26,6 +25,8 @@ import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
 import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 
+import ListGroupItem from '../../components/List/ListGroupItem';
+import ListGroup from '../../components/List/ListGroup';
 import SimpleButton from '../../components/SimpleButton';
 
 //I removed the OnClick from the ListGroupItem as React is rendering a button and it causes a warning
@@ -74,25 +75,20 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
           // I've put the cursor to show that the item is clickable but we are loosing the hover color and stuff
           // but I can live with that for now. We could add the class "btn btn-default" to the ListGroupItem but then it looks like bad
           return (
-            <ListGroupItem bsSize={'xsmall'} key={y} style={previewListBoxItemStyle}>
-              <div
-                className="ab_div_like_button"
-                onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.ColumnValue)}
-                style={{ cursor: 'pointer', fontSize: 'small' }}
-              >
-                <AdaptableBlotterForm inline>
-                  {y}
-                  <ButtonPreviewDelete
-                    cssClassName={cssClassName}
-                    bsStyle={'default'}
-                    style={{ float: 'right' }}
-                    onClick={() => this.props.DeleteColumnValue(columnId, y)}
-                    size="xsmall"
-                    overrideDisableButton={false}
-                    DisplayMode="Glyph"
-                  />
-                </AdaptableBlotterForm>
-              </div>
+            <ListGroupItem
+              key={y}
+              style={previewListBoxItemStyle}
+              onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.ColumnValue)}
+            >
+              <div style={{ flex: 1 }}>{y}</div>
+              <ButtonPreviewDelete
+                as="div"
+                className={cssClassName}
+                onClick={(e: React.SyntheticEvent) => {
+                  e.stopPropagation();
+                  this.props.DeleteColumnValue(columnId, y);
+                }}
+              />
             </ListGroupItem>
           );
         });
@@ -112,25 +108,22 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         columnUserFilterExpressionsListgroupItems = columnUserFilterExpression.Filters.map(
           (filter, index) => {
             return (
-              <ListGroupItem key={filter} style={previewListBoxItemStyle}>
-                <div
-                  className="ab_div_like_button"
-                  onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Filter)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <AdaptableBlotterForm inline>
-                    {filter}
-                    <ButtonPreviewDelete
-                      cssClassName={cssClassName}
-                      bsStyle={'default'}
-                      style={{ float: 'right' }}
-                      onClick={() => this.props.DeleteUserFilterExpression(columnId, index)}
-                      size="xsmall"
-                      overrideDisableButton={false}
-                      DisplayMode="Glyph"
-                    />
-                  </AdaptableBlotterForm>
-                </div>
+              <ListGroupItem
+                key={filter}
+                style={previewListBoxItemStyle}
+                onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.Filter)}
+                className="ab_div_like_button"
+              >
+                <div style={{ flex: 1 }}>{filter}</div>
+                <ButtonPreviewDelete
+                  as="div"
+                  className={cssClassName}
+                  onClick={(e: React.SyntheticEvent) => {
+                    this.props.DeleteUserFilterExpression(columnId, index);
+                    e.stopPropagation();
+                  }}
+                  disabled={false}
+                />
               </ListGroupItem>
             );
           }
@@ -155,52 +148,47 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
               return (
                 <ListGroupItem
                   key={columnId + index}
-                  bsStyle={StyleConstants.DANGER_BSSTYLE}
-                  style={previewListBoxItemStyle}
+                  style={{
+                    ...previewListBoxItemStyle,
+                    ...dangerStyle,
+                  }}
+                  className="ab_div_like_button"
+                  onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                 >
-                  <div
-                    className="ab_div_like_button"
-                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <AdaptableBlotterForm inline>
-                      {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
-                      {this.getOperand1Value(y)} And {this.getOperand2Value(y)}
-                      <ButtonPreviewDelete
-                        cssClassName={cssClassName}
-                        bsStyle={'default'}
-                        style={{ float: 'right' }}
-                        onClick={() => this.props.DeleteRange(columnId, index)}
-                        size="xsmall"
-                        overrideDisableButton={false}
-                        DisplayMode="Glyph"
-                      />
-                    </AdaptableBlotterForm>
+                  <div style={{ flex: 1 }}>
+                    {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
+                    {this.getOperand1Value(y)} And {this.getOperand2Value(y)}
                   </div>
+                  <ButtonPreviewDelete
+                    as="div"
+                    className={cssClassName}
+                    onClick={(e: React.SyntheticEvent) => {
+                      this.props.DeleteRange(columnId, index);
+                      e.stopPropagation();
+                    }}
+                  />
                 </ListGroupItem>
               );
             } else {
               return (
-                <ListGroupItem key={columnId + index} style={previewListBoxItemStyle}>
-                  <div
-                    className="ab_div_like_button"
-                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <AdaptableBlotterForm inline>
-                      {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
-                      {this.getOperand1Value(y)} And {this.getOperand2Value(y)}
-                      <ButtonPreviewDelete
-                        cssClassName={cssClassName}
-                        bsStyle={'default'}
-                        style={{ float: 'right' }}
-                        onClick={() => this.props.DeleteRange(columnId, index)}
-                        size="xsmall"
-                        overrideDisableButton={false}
-                        DisplayMode="Glyph"
-                      />
-                    </AdaptableBlotterForm>
+                <ListGroupItem
+                  key={columnId + index}
+                  style={previewListBoxItemStyle}
+                  className="ab_div_like_button"
+                  onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
+                >
+                  <div style={{ flex: 1 }}>
+                    {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
+                    {this.getOperand1Value(y)} And {this.getOperand2Value(y)}
                   </div>
+                  <ButtonPreviewDelete
+                    as="div"
+                    className={cssClassName}
+                    onClick={(e: React.SyntheticEvent) => {
+                      this.props.DeleteRange(columnId, index);
+                      e.stopPropagation();
+                    }}
+                  />
                 </ListGroupItem>
               );
             }
@@ -212,52 +200,47 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
               return (
                 <ListGroupItem
                   key={columnId + index}
-                  bsStyle={StyleConstants.DANGER_BSSTYLE}
-                  style={previewListBoxItemStyle}
+                  style={{
+                    ...previewListBoxItemStyle,
+                    ...dangerStyle,
+                  }}
+                  className="ab_div_like_button"
+                  onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
                 >
-                  <div
-                    className="ab_div_like_button"
-                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <AdaptableBlotterForm inline>
-                      {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
-                      {this.getOperand1Value(y)}
-                      <ButtonPreviewDelete
-                        cssClassName={cssClassName}
-                        bsStyle={'default'}
-                        style={{ float: 'right' }}
-                        onClick={() => this.props.DeleteRange(columnId, index)}
-                        size="xsmall"
-                        overrideDisableButton={false}
-                        DisplayMode="Glyph"
-                      />
-                    </AdaptableBlotterForm>
+                  <div style={{ flex: 1 }}>
+                    {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
+                    {this.getOperand1Value(y)}
                   </div>
+                  <ButtonPreviewDelete
+                    as="div"
+                    className={cssClassName}
+                    onClick={(e: React.SyntheticEvent) => {
+                      this.props.DeleteRange(columnId, index);
+                      e.stopPropagation();
+                    }}
+                  />
                 </ListGroupItem>
               );
             } else {
               return (
-                <ListGroupItem key={columnId + index} style={previewListBoxItemStyle}>
-                  <div
-                    className="ab_div_like_button"
-                    onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <AdaptableBlotterForm inline>
-                      {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
-                      {this.getOperand1Value(y)}
-                      <ButtonPreviewDelete
-                        cssClassName={cssClassName}
-                        bsStyle={'default'}
-                        style={{ float: 'right' }}
-                        onClick={() => this.props.DeleteRange(columnId, index)}
-                        size="xsmall"
-                        overrideDisableButton={false}
-                        DisplayMode="Glyph"
-                      />
-                    </AdaptableBlotterForm>
+                <ListGroupItem
+                  key={columnId + index}
+                  style={previewListBoxItemStyle}
+                  className="ab_div_like_button"
+                  onClick={() => this.props.onSelectedColumnChange(columnId, QueryTab.QueryRange)}
+                >
+                  <div style={{ flex: 1 }}>
+                    {ExpressionHelper.OperatorToShortFriendlyString(operator)}{' '}
+                    {this.getOperand1Value(y)}
                   </div>
+                  <ButtonPreviewDelete
+                    as="div"
+                    className={cssClassName}
+                    onClick={(e: React.SyntheticEvent) => {
+                      this.props.DeleteRange(columnId, index);
+                      e.stopPropagation();
+                    }}
+                  />
                 </ListGroupItem>
               );
             }
@@ -272,41 +255,33 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 
       return (
         <div
-          key={columnId + 'div'}
+          key={columnId + '--div'}
           className={this.props.ReadOnlyMode ? GeneralConstants.READ_ONLY_STYLE : ''}
+          style={{ marginBottom: 'var(--ab-space-2)' }}
         >
-          <InputGroup>
-            <InputGroup.Button>
-              <Button
-                block
-                className={cssClassName + StyleConstants.PREVIEW_HEADER_BUTTON}
-                style={{ width: '250px' }}
-                bsStyle="success"
-                bsSize="small"
-                key={columnId + 'header'}
-                ref={columnId}
-                onClick={() => this.onColumnHeaderSelected(columnId)}
-              >
-                <u>{columnFriendlyName}</u>
-              </Button>
-            </InputGroup.Button>
-            <InputGroup.Button>
-              <Button
-                block
-                className={cssClassName + StyleConstants.PREVIEW_DELETE_COLUMN_BUTTON}
-                style={{ width: '40px' }}
-                bsStyle="success"
-                bsSize="small"
-                key={columnId + 'headerx'}
-                ref={columnId}
-                onClick={() => this.props.DeleteAllColumnExpression(columnId)}
-              >
-                <Glyphicon glyph={'trash'} />
-              </Button>
-            </InputGroup.Button>
-          </InputGroup>
+          <Flex flexDirection="row">
+            <SimpleButton
+              className={cssClassName + StyleConstants.PREVIEW_HEADER_BUTTON}
+              style={{ flex: 1 }}
+              tone="success"
+              variant="raised"
+              key={columnId + 'header'}
+              onClick={() => this.onColumnHeaderSelected(columnId)}
+            >
+              <u>{columnFriendlyName}</u>
+            </SimpleButton>
 
-          <ListGroup style={{ overflowY: 'hidden' }}>
+            <SimpleButton
+              className={cssClassName + StyleConstants.PREVIEW_DELETE_COLUMN_BUTTON}
+              style={{ marginLeft: 'var(--ab-space-2)' }}
+              key={columnId + 'headerx'}
+              onClick={() => this.props.DeleteAllColumnExpression(columnId)}
+              icon="trash"
+              variant="text"
+            ></SimpleButton>
+          </Flex>
+
+          <ListGroup style={{ overflowY: 'hidden', marginTop: ' var(--ab-space-2)' }}>
             {columnValuesListgroupItems}
             {columnUserFilterExpressionsListgroupItems}
             {columnRangesListgroupItems}
@@ -330,11 +305,8 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
               </SimpleButton>
             } //whitespace
             headerText="Preview"
-            bsStyle="info"
           >
-            <div style={{ height: '385px', overflowY: 'auto', overflowX: 'hidden' }}>
-              {previewLists}
-            </div>
+            <div style={{ overflowY: 'auto', overflowX: 'hidden' }}>{previewLists}</div>
           </PanelWithButton>
         )}
 
@@ -389,7 +361,12 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
 }
 
 let previewListBoxItemStyle: React.CSSProperties = {
-  fontSize: 'xsmall',
-  padding: '7px',
-  margin: 0,
+  paddingTop: 0,
+  paddingBottom: 0,
+  paddingRight: 0,
+};
+
+let dangerStyle = {
+  background: 'var(--ab-color-errorlight)',
+  color: 'var(--ab-color-error)',
 };

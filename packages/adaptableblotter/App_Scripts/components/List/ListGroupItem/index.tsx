@@ -4,7 +4,7 @@ import join from '../../utils/join';
 import { HTMLProps } from 'react';
 
 type TypeProps = HTMLProps<HTMLElement> & {
-  factory: string | ReactComponentLike;
+  factory?: string | ReactComponentLike;
   active?: boolean;
 };
 
@@ -19,7 +19,7 @@ const ListGroupItem = (props: TypeProps) => {
       className={join(
         className,
         baseClassName,
-        `${baseClassName}--(${active ? 'active' : 'not-active'})`
+        `${baseClassName}--${active ? 'active' : 'not-active'}`
       )}
     ></Tag>
   );

@@ -28,6 +28,7 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { AlertDefinition } from '../../PredefinedConfig/RunTimeState/AlertState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import EmptyContent from '../../components/EmptyContent';
+import SimpleButton from '../../components/SimpleButton';
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
   AlertDefinitions: AlertDefinition[];
@@ -96,12 +97,12 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     });
 
     let newButton = (
-      <ButtonNew
-        cssClassName={cssClassName}
+      <SimpleButton
+        className={cssClassName}
         onClick={() => this.createAlertDefinition()}
-        overrideTooltip="Create Alert"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Alert"
+        icon="plus"
+        variant="raised"
         AccessLevel={this.props.AccessLevel}
       />
     );

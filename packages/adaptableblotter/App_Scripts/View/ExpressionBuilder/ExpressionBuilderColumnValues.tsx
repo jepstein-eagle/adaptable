@@ -23,6 +23,7 @@ export class ExpressionBuilderColumnValues extends React.Component<
           className="ab_no-padding-anywhere-panel ab_small-padding-panel-header"
           style={divStyle}
           bodyProps={{
+            padding: 0,
             style: { border: 'none' },
           }}
         >
@@ -35,6 +36,9 @@ export class ExpressionBuilderColumnValues extends React.Component<
             SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
             onSelectedChange={list => this.props.onColumnValuesChange(list)}
             SelectionMode={SelectionMode.Multi}
+            style={{
+              maxHeight: '50vh',
+            }}
           />
         </Panel>
       </div>

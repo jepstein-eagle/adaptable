@@ -37,11 +37,12 @@ export interface ButtonBaseProps extends BtnProps {
   overrideDisableButton?: boolean;
   transformGlyph?: boolean;
   cssClassName?: string;
+  className?: string;
   AccessLevel?: AccessLevel;
   showDefaultStyle?: boolean;
   DisplayMode?: string;
   icon?: string;
-  ToolTipAndText: string;
+  ToolTipAndText?: string;
   bsStyle?: string;
   bsSize?: string;
   glyph: string;

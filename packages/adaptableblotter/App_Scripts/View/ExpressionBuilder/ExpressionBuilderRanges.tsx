@@ -25,6 +25,8 @@ import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import UIHelper from '../UIHelper';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
+import SimpleButton from '../../components/SimpleButton';
+import { Box } from 'rebass';
 
 export interface ExpressionBuilderRangesPropsExpressionBuilderRanges
   extends React.ClassAttributes<ExpressionBuilderRanges> {
@@ -44,9 +46,9 @@ export class ExpressionBuilderRanges extends React.Component<
 
     let selectedColumnDataType = this.props.SelectedColumn.DataType;
     let addButton = (
-      <Button bsSize={'small'} bsStyle={'default'} onClick={() => this.addRange()}>
-        <Glyphicon glyph="plus" /> Add Range
-      </Button>
+      <SimpleButton margin={2} icon="plus" variant="text" onClick={() => this.addRange()}>
+        Add Range
+      </SimpleButton>
     );
 
     let rangesElement: JSX.Element[] = this.props.Ranges.map((range, index) => {
@@ -88,19 +90,8 @@ export class ExpressionBuilderRanges extends React.Component<
         }
       );
 
-      let deleteButton = (
-        <Button
-          bsSize={'small'}
-          bsStyle={'default'}
-          style={deleteButtonStyle}
-          onClick={() => this.onRangeDelete(index)}
-        >
-          <Glyphicon glyph="trash" />
-        </Button>
-      );
-
       return (
-        <div className="ab_no_padding_medium_margin" style={betweenDivStyle} key={index}>
+        <Box padding={2} style={betweenDivStyle} key={index}>
           <AdaptableBlotterForm horizontal key={index}>
             <FormGroup controlId={'QueryRange' + index}>
               <InputGroup>
@@ -181,7 +172,7 @@ export class ExpressionBuilderRanges extends React.Component<
               )}
             </FormGroup>
           </AdaptableBlotterForm>
-        </div>
+        </Box>
       );
     });
 
@@ -321,8 +312,4 @@ let rangeOperatorStyle = {
   marginLeft: '10px',
   marginRight: '0px',
   marginTop: '0px',
-};
-let rangePanelStyle = {
-  margin: '0px',
-  padding: '0px',
 };

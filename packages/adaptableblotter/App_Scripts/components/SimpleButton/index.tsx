@@ -56,6 +56,28 @@ const SimpleButton = (props: SimpleButtonProps) => {
       );
   }
 
+  if (buttonProps.as == 'div') {
+    // we have some cases when we want to nest a SimpleButton inside an html Button
+    // so the SimpleButton cannot render a <button> tag
+    // so we want it to be a DIV tag
+    // but still keep the same keyboard accessibility
+
+    buttonProps.tabIndex = buttonProps.tabIndex === undefined ? 0 : buttonProps.tabIndex;
+
+    buttonProps.role = buttonProps.role || 'button';
+
+    const onKeyDown = buttonProps.onKeyDown;
+    buttonProps.onKeyDown = (e: React.SyntheticEvent) => {
+      const key = (e as any).key;
+      if (buttonProps.onClick && key === 'Enter') {
+        buttonProps.onClick(e as any);
+      }
+      if (onKeyDown) {
+        onKeyDown(e as any);
+      }
+    };
+  }
+
   const btn = (
     <Button
       {...buttonProps}

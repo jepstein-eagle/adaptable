@@ -6,6 +6,8 @@ import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter';
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges';
 import { HelpBlock, Tab, NavItem, Nav } from 'react-bootstrap';
 import { FilterHelper } from '../../Utilities/Helpers/FilterHelper';
+
+import SimpleButton from '../../components/SimpleButton';
 import {
   DataType,
   ExpressionMode,
@@ -28,7 +30,7 @@ import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState'
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
 import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
-import SimpleButton from '../../components/SimpleButton';
+import { Box } from 'rebass';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -322,6 +324,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         Clear
       </SimpleButton>
     );
+
+    const firstSelected =
+      selectedColumn &&
+      selectedColumn.DataType != DataType.Boolean &&
+      this.state.SelectedTab == QueryTab.ColumnValue;
+    const secondSelected = this.state.SelectedTab == QueryTab.Filter;
+    const thirdSelected = this.state.SelectedTab == QueryTab.QueryRange;
     return (
       <PanelWithButton
         cssClassName={cssClassName}
@@ -381,80 +390,86 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                     )}
                   </div>
                 ) : (
-                  <Tab.Container
-                    id="left-tabs-example"
-                    defaultActiveKey={this.state.SelectedTab}
-                    activeKey={this.state.SelectedTab}
-                    onSelect={() => this.onSelectTab()}
-                  >
+                  <div>
+                    <Box marginBottom={2}>
+                      <SimpleButton
+                        onClick={() => this.onTabChanged(QueryTab.ColumnValue)}
+                        marginRight={2}
+                        variant={firstSelected ? 'raised' : 'outlined'}
+                      >
+                        Column Values
+                      </SimpleButton>
+                      <SimpleButton
+                        onClick={() => this.onTabChanged(QueryTab.Filter)}
+                        marginRight={2}
+                        variant={secondSelected ? 'raised' : 'outlined'}
+                      >
+                        Filters
+                      </SimpleButton>
+                      <SimpleButton
+                        onClick={() => this.onTabChanged(QueryTab.QueryRange)}
+                        variant={thirdSelected ? 'raised' : 'outlined'}
+                      >
+                        Ranges
+                      </SimpleButton>
+                    </Box>
                     <div>
-                      <Nav bsStyle="pills">
-                        <NavItem
-                          eventKey={QueryTab.ColumnValue}
-                          onClick={() => this.onTabChanged(QueryTab.ColumnValue)}
-                        >
-                          Column Values
-                        </NavItem>
-                        <NavItem
-                          eventKey={QueryTab.Filter}
-                          onSelect={() => this.onTabChanged(QueryTab.Filter)}
-                        >
-                          Filters
-                        </NavItem>
-                        <NavItem
-                          eventKey={QueryTab.QueryRange}
-                          onClick={() => this.onTabChanged(QueryTab.QueryRange)}
-                        >
-                          Ranges
-                        </NavItem>
-                      </Nav>
-                      <Tab.Content animation>
-                        <Tab.Pane eventKey={QueryTab.ColumnValue}>
-                          {selectedColumn.DataType != DataType.Boolean &&
-                            this.state.SelectedTab == QueryTab.ColumnValue && (
-                              <div>
-                                {this.state.ShowWaitingMessage ? (
-                                  <Waiting WaitingMessage="Retrieving Column Values..." />
-                                ) : (
-                                  <ExpressionBuilderColumnValues
-                                    cssClassName={cssClassName}
-                                    ColumnValues={this.state.ColumnRawValueDisplayValuePairs}
-                                    SelectedValues={this.state.SelectedColumnDisplayValues}
-                                    onColumnValuesChange={selectedValues =>
-                                      this.onSelectedColumnValuesChange(selectedValues)
-                                    }
-                                  />
-                                )}
-                              </div>
+                      <div
+                        style={{
+                          display: firstSelected ? 'block' : 'none',
+                        }}
+                      >
+                        {firstSelected && (
+                          <div>
+                            {this.state.ShowWaitingMessage ? (
+                              <Waiting WaitingMessage="Retrieving Column Values..." />
+                            ) : (
+                              <ExpressionBuilderColumnValues
+                                cssClassName={cssClassName}
+                                ColumnValues={this.state.ColumnRawValueDisplayValuePairs}
+                                SelectedValues={this.state.SelectedColumnDisplayValues}
+                                onColumnValuesChange={selectedValues =>
+                                  this.onSelectedColumnValuesChange(selectedValues)
+                                }
+                              />
                             )}
-                        </Tab.Pane>
-                        <Tab.Pane eventKey={QueryTab.Filter}>
-                          {this.state.SelectedTab == QueryTab.Filter && (
-                            <ExpressionBuilderUserFilter
-                              cssClassName={cssClassName}
-                              AvailableSystemFilterNames={availableSystemFilterNames}
-                              AvailableUserFilterNames={availableUserFilterNames}
-                              SelectedFilterNames={this.state.SelectedFilterExpressions}
-                              onFilterNameChange={selectedValues =>
-                                this.onSelectedFiltersChanged(selectedValues)
-                              }
-                            />
-                          )}
-                        </Tab.Pane>
-                        <Tab.Pane eventKey={QueryTab.QueryRange}>
-                          {this.state.SelectedTab == QueryTab.QueryRange && (
-                            <ExpressionBuilderRanges
-                              cssClassName={cssClassName}
-                              SelectedColumn={selectedColumn}
-                              Ranges={this.state.SelectedColumnRanges}
-                              Columns={this.props.ColumnsList}
-                              onRangesChange={ranges => this.onSelectedColumnRangesChange(ranges)}
-                            />
-                          )}
-                        </Tab.Pane>
-                      </Tab.Content>
+                          </div>
+                        )}
+                      </div>
+                      <div
+                        style={{
+                          display: secondSelected ? 'block' : 'none',
+                        }}
+                      >
+                        {secondSelected && (
+                          <ExpressionBuilderUserFilter
+                            cssClassName={cssClassName}
+                            AvailableSystemFilterNames={availableSystemFilterNames}
+                            AvailableUserFilterNames={availableUserFilterNames}
+                            SelectedFilterNames={this.state.SelectedFilterExpressions}
+                            onFilterNameChange={selectedValues =>
+                              this.onSelectedFiltersChanged(selectedValues)
+                            }
+                          />
+                        )}
+                      </div>
+                      <div
+                        style={{
+                          display: thirdSelected ? 'block' : 'none',
+                        }}
+                      >
+                        {thirdSelected && (
+                          <ExpressionBuilderRanges
+                            cssClassName={cssClassName}
+                            SelectedColumn={selectedColumn}
+                            Ranges={this.state.SelectedColumnRanges}
+                            Columns={this.props.ColumnsList}
+                            onRangesChange={ranges => this.onSelectedColumnRangesChange(ranges)}
+                          />
+                        )}
+                      </div>
                     </div>
-                  </Tab.Container>
+                  </div>
                 )}
               </div>
             )}

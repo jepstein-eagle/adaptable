@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { FormGroup, InputGroup, FormControl, Glyphicon, Button } from 'react-bootstrap';
 import { SortOrder } from '../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
+import SimpleButton from '../../../components/SimpleButton';
+import Input from '../../../components/Input';
+import { Flex } from 'rebass';
+import styled from 'styled-components';
 
 export interface ListBoxFilterSortComponentProps
   extends React.ClassAttributes<ListBoxFilterSortComponent> {
@@ -12,52 +14,46 @@ export interface ListBoxFilterSortComponentProps
   DisableSort: boolean;
 }
 
+const MyFlex = styled(Flex)({
+  border: '1px solid var(--ab-color-lightgray)',
+  borderRadius: 'var(--ab-space-1)',
+  overflow: 'hidden',
+  '&:focus-within': {
+    outline: 'var(--ab-focus__outline)',
+  },
+});
+
 export class ListBoxFilterSortComponent extends React.Component<
   ListBoxFilterSortComponentProps,
   {}
 > {
   render() {
     return (
-      <div>
-        <AdaptableBlotterForm horizontal>
-          <FormGroup style={{ margin: 0 }}>
-            <InputGroup>
-              <FormControl
-                type="text"
-                bsSize={'small'}
-                value={this.props.FilterValue}
-                placeholder="Search"
-                onChange={e => this.handleChangeFilterValue(e)}
-              />
-              <InputGroup.Button>
-                <Button onClick={() => this.clearFilter()} bsSize={'small'}>
-                  <Glyphicon glyph="remove" />
-                </Button>
-              </InputGroup.Button>
-              <InputGroup.Button>
-                {this.props.SortOrder == SortOrder.Ascending ? (
-                  <Button
-                    bsSize={'small'}
-                    disabled={this.props.DisableSort}
-                    onClick={() => this.props.sortColumnValues()}
-                  >
-                    <Glyphicon glyph="sort-by-alphabet" />
-                  </Button>
-                ) : (
-                  <Button
-                    bsSize={'small'}
-                    disabled={this.props.DisableSort}
-                    onClick={() => this.props.sortColumnValues()}
-                  >
-                    <Glyphicon glyph="sort-by-alphabet-alt" />
-                  </Button>
-                )}
-              </InputGroup.Button>
-            </InputGroup>
-            <InputGroup />
-          </FormGroup>
-        </AdaptableBlotterForm>
-      </div>
+      <MyFlex>
+        <Input
+          value={this.props.FilterValue}
+          placeholder="Search"
+          style={{ flex: 1, border: 'none', outline: 'none' }}
+          onChange={(e: any) => this.handleChangeFilterValue(e)}
+        />
+        <SimpleButton onClick={() => this.clearFilter()} icon="trash" variant="text"></SimpleButton>
+
+        {this.props.SortOrder == SortOrder.Ascending ? (
+          <SimpleButton
+            disabled={this.props.DisableSort}
+            onClick={() => this.props.sortColumnValues()}
+            icon="sort-asc"
+            variant="text"
+          ></SimpleButton>
+        ) : (
+          <SimpleButton
+            disabled={this.props.DisableSort}
+            onClick={() => this.props.sortColumnValues()}
+            icon="sort-desc"
+            variant="text"
+          ></SimpleButton>
+        )}
+      </MyFlex>
     );
   }
 
