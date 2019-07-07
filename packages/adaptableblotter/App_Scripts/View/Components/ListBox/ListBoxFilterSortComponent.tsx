@@ -2,8 +2,7 @@ import * as React from 'react';
 import { SortOrder } from '../../../PredefinedConfig/Common/Enums';
 import SimpleButton from '../../../components/SimpleButton';
 import Input from '../../../components/Input';
-import { Flex } from 'rebass';
-import styled from 'styled-components';
+import FieldWrap from '../../../components/FieldWrap';
 
 export interface ListBoxFilterSortComponentProps
   extends React.ClassAttributes<ListBoxFilterSortComponent> {
@@ -14,26 +13,16 @@ export interface ListBoxFilterSortComponentProps
   DisableSort: boolean;
 }
 
-const MyFlex = styled(Flex)({
-  border: '1px solid var(--ab-color-lightgray)',
-  borderRadius: 'var(--ab-space-1)',
-  overflow: 'hidden',
-  '&:focus-within': {
-    outline: 'var(--ab-focus__outline)',
-  },
-});
-
 export class ListBoxFilterSortComponent extends React.Component<
   ListBoxFilterSortComponentProps,
   {}
 > {
   render() {
     return (
-      <MyFlex>
+      <FieldWrap>
         <Input
           value={this.props.FilterValue}
           placeholder="Search"
-          style={{ flex: 1, border: 'none', outline: 'none' }}
           onChange={(e: any) => this.handleChangeFilterValue(e)}
         />
         <SimpleButton onClick={() => this.clearFilter()} icon="trash" variant="text"></SimpleButton>
@@ -53,7 +42,7 @@ export class ListBoxFilterSortComponent extends React.Component<
             variant="text"
           ></SimpleButton>
         )}
-      </MyFlex>
+      </FieldWrap>
     );
   }
 

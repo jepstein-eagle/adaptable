@@ -89,7 +89,11 @@ const Panel = (props: PanelProps) => {
     <Box
       {...boxProps}
       style={{ ...style, ...boxProps.style }}
-      className={join(className, baseClassName)}
+      className={join(
+        className,
+        baseClassName,
+        !header ? `${baseClassName}--no-header` : `${baseClassName}--with-header`
+      )}
     >
       <Header {...headerProps} style={headerStyle} bsStyle={bsStyle}>
         {header}

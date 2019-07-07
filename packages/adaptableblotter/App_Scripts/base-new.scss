@@ -17,7 +17,10 @@
   --ab-font-size-6: 48px;
   --ab-font-size-7: 64px;
 
+  --ab__border-radius: var(--ab-space-1);
   --ab-color-lightgray: #e8e8e8;
+  
+  --ab-color-inputborder: var(--ab-color-lightgray);
   --ab-color-textgray: rgba(95, 95, 95, 0.87);
   --ab-color-darkgray: #737373;
   --ab-color-gray: #eeeeee;
@@ -32,6 +35,9 @@
   --ab-icon-fill: currentColor;
   --ab-info-gradient: linear-gradient(180deg, #337ab7 0, #2e6da4);
   --ab-focus__outline: 3px auto -webkit-focus-ring-color;
+}
+:root {
+  
 }
 
 *:focus {

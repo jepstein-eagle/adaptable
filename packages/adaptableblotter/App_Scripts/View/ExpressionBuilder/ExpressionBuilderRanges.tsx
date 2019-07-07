@@ -1,18 +1,6 @@
 import * as React from 'react';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 
-import {
-  Button,
-  Glyphicon,
-  MenuItem,
-  FormGroup,
-  InputGroup,
-  FormControl,
-  OverlayTrigger,
-  Tooltip,
-  DropdownButton,
-  Panel,
-} from 'react-bootstrap';
 import ExpressionHelper from '../../Utilities/Helpers/ExpressionHelper';
 import {
   LeafExpressionOperator,
@@ -20,13 +8,18 @@ import {
   SelectionMode,
 } from '../../PredefinedConfig/Common/Enums';
 import EnumExtensions from '../../Utilities/Extensions/EnumExtensions';
-import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import UIHelper from '../UIHelper';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import SimpleButton from '../../components/SimpleButton';
-import { Box } from 'rebass';
+import DropdownButton from '../../components/DropdownButton';
+import Dropdown from '../../components/Dropdown';
+import { Box, Flex } from 'rebass';
+import FieldWrap from '../../components/FieldWrap';
+import Input from '../../components/Input';
+import Panel from '../../components/Panel';
+import DropdownButtonItem from '../../components/DropdownButton/DropdownButtonItem';
 
 export interface ExpressionBuilderRangesPropsExpressionBuilderRanges
   extends React.ClassAttributes<ExpressionBuilderRanges> {
@@ -55,133 +48,111 @@ export class ExpressionBuilderRanges extends React.Component<
       let optionLeafOperators = ExpressionHelper.GetOperatorsForDataType(
         selectedColumnDataType
       ).map((operator: LeafExpressionOperator) => {
-        return (
-          <option key={operator} value={operator}>
-            {ExpressionHelper.OperatorToLongFriendlyString(operator, selectedColumnDataType)}
-          </option>
-        );
+        return {
+          label: ExpressionHelper.OperatorToLongFriendlyString(operator, selectedColumnDataType),
+          value: operator,
+        };
       });
 
       let rangeMenuItemsOperand1 = EnumExtensions.getNames(RangeOperandType).map(
-        (rangeOperand: RangeOperandType) => {
-          return (
-            <MenuItem
-              key={index + rangeOperand}
-              eventKey={index + rangeOperand}
-              onClick={() => this.onRangeTypeChangedOperand1(index, rangeOperand)}
-            >
-              {rangeOperand}
-            </MenuItem>
-          );
+        (rangeOperand: RangeOperandType): DropdownButtonItem => {
+          return {
+            label: rangeOperand,
+            onClick: () => this.onRangeTypeChangedOperand1(index, rangeOperand),
+          };
         }
       );
 
       let rangeMenuItemsOperand2 = EnumExtensions.getNames(RangeOperandType).map(
-        (rangeOperand: RangeOperandType) => {
-          return (
-            <MenuItem
-              key={index + rangeOperand}
-              eventKey={index + rangeOperand}
-              onClick={() => this.onRangeTypeChangedOperand2(index, rangeOperand)}
-            >
-              {rangeOperand}
-            </MenuItem>
-          );
+        (rangeOperand: RangeOperandType): DropdownButtonItem => {
+          return {
+            label: rangeOperand,
+            onClick: () => this.onRangeTypeChangedOperand2(index, rangeOperand),
+          };
         }
       );
 
       return (
         <Box padding={2} style={betweenDivStyle} key={index}>
-          <AdaptableBlotterForm horizontal key={index}>
-            <FormGroup controlId={'QueryRange' + index}>
-              <InputGroup>
-                <FormControl
-                  style={dropDownStyle}
-                  componentClass="select"
-                  placeholder="select"
-                  value={range.Operator}
-                  onChange={x => this.onLeafExpressionOperatorChanged(index, x)}
-                >
-                  {optionLeafOperators}
-                </FormControl>
-                <InputGroup.Button>
-                  <OverlayTrigger overlay={<Tooltip id="tooltipDelete">Delete</Tooltip>}>
-                    <Button style={deleteButtonStyle} onClick={() => this.onRangeDelete(index)}>
-                      <Glyphicon glyph="trash" />
-                    </Button>
-                  </OverlayTrigger>
-                </InputGroup.Button>
-              </InputGroup>
+          <FieldWrap marginBottom={1}>
+            <Dropdown
+              placeholder="select"
+              style={{ maxWidth: 'none' }}
+              value={range.Operator}
+              showClearButton={false}
+              onChange={(x: any) => this.onLeafExpressionOperatorChanged(index, x)}
+              options={optionLeafOperators}
+            />
+            <SimpleButton
+              tooltip="Delete"
+              icon="trash"
+              variant="text"
+              onClick={() => this.onRangeDelete(index)}
+            ></SimpleButton>
+          </FieldWrap>
 
-              <InputGroup>
-                <DropdownButton
-                  style={rangeOperatorStyle}
-                  title={range.Operand1Type}
-                  id="range_operand_1"
-                  componentClass={InputGroup.Button}
-                >
-                  {rangeMenuItemsOperand1}
-                </DropdownButton>
+          <Flex flexDirection="row">
+            <DropdownButton
+              marginRight={1}
+              variant="raised"
+              columns={['label']}
+              items={rangeMenuItemsOperand1}
+            >
+              {range.Operand1Type}
+            </DropdownButton>
 
-                {range.Operand1Type == RangeOperandType.Column ? (
-                  <ColumnSelector
-                    cssClassName={cssClassName}
-                    SelectedColumnIds={[range.Operand1]}
-                    ColumnList={this.props.Columns.filter(
-                      c =>
-                        c.DataType == selectedColumnDataType &&
-                        c.ColumnId != this.props.SelectedColumn.ColumnId
-                    )}
-                    onColumnChange={columns => this.onColumnOperand1SelectedChanged(index, columns)}
-                    SelectionMode={SelectionMode.Single}
-                  />
-                ) : (
-                  this.getOperand1FormControl(index, range)
+            {range.Operand1Type == RangeOperandType.Column ? (
+              <ColumnSelector
+                cssClassName={cssClassName}
+                SelectedColumnIds={[range.Operand1]}
+                ColumnList={this.props.Columns.filter(
+                  c =>
+                    c.DataType == selectedColumnDataType &&
+                    c.ColumnId != this.props.SelectedColumn.ColumnId
                 )}
-              </InputGroup>
+                onColumnChange={columns => this.onColumnOperand1SelectedChanged(index, columns)}
+                SelectionMode={SelectionMode.Single}
+              />
+            ) : (
+              this.getOperand1FormControl(index, range)
+            )}
+          </Flex>
 
-              {range.Operator == LeafExpressionOperator.Between && (
-                <InputGroup>
-                  <DropdownButton
-                    style={rangeOperatorStyle}
-                    title={range.Operand2Type}
-                    id="range_operand_2"
-                    componentClass={InputGroup.Button}
-                  >
-                    {rangeMenuItemsOperand2}
-                  </DropdownButton>
+          {range.Operator == LeafExpressionOperator.Between && (
+            <Flex flexDirection="row">
+              <DropdownButton
+                columns={['label']}
+                style={rangeOperatorStyle}
+                variant="raised"
+                items={rangeMenuItemsOperand2}
+              >
+                {range.Operand2Type}
+              </DropdownButton>
 
-                  {range.Operand2Type == RangeOperandType.Column ? (
-                    <ColumnSelector
-                      cssClassName={cssClassName}
-                      SelectedColumnIds={[range.Operand2]}
-                      ColumnList={this.props.Columns.filter(
-                        c =>
-                          c.DataType == selectedColumnDataType &&
-                          c.ColumnId != this.props.SelectedColumn.ColumnId
-                      )}
-                      onColumnChange={columns =>
-                        this.onColumnOperand2SelectedChanged(index, columns)
-                      }
-                      SelectionMode={SelectionMode.Single}
-                    />
-                  ) : (
-                    this.getOperand2FormControl(index, range)
+              {range.Operand2Type == RangeOperandType.Column ? (
+                <ColumnSelector
+                  cssClassName={cssClassName}
+                  SelectedColumnIds={[range.Operand2]}
+                  ColumnList={this.props.Columns.filter(
+                    c =>
+                      c.DataType == selectedColumnDataType &&
+                      c.ColumnId != this.props.SelectedColumn.ColumnId
                   )}
-                </InputGroup>
+                  onColumnChange={columns => this.onColumnOperand2SelectedChanged(index, columns)}
+                  SelectionMode={SelectionMode.Single}
+                />
+              ) : (
+                this.getOperand2FormControl(index, range)
               )}
-            </FormGroup>
-          </AdaptableBlotterForm>
+            </Flex>
+          )}
         </Box>
       );
     });
 
     return (
       <div className={cssClassName}>
-        <Panel
-          className="ab_no-padding-anywhere-panel ab_small-padding-panel-header"
-          style={divStyle}
-        >
+        <Panel className="ab_no-padding-anywhere-panel ab_small-padding-panel-header">
           {addButton}
           {rangesElement}
         </Panel>
@@ -191,24 +162,24 @@ export class ExpressionBuilderRanges extends React.Component<
 
   getOperand1FormControl(index: number, range: QueryRange): any {
     return (
-      <FormControl
+      <Input
         style={operandStyle}
         value={String(range.Operand1)}
         type={UIHelper.getDescriptionForDataType(this.props.SelectedColumn.DataType)}
         placeholder={UIHelper.getPlaceHolderforDataType(this.props.SelectedColumn.DataType)}
-        onChange={e => this.onOperand1Edit(index, e)}
+        onChange={(e: any) => this.onOperand1Edit(index, e)}
       />
     );
   }
 
   getOperand2FormControl(index: number, range: QueryRange): any {
     return (
-      <FormControl
+      <Input
         style={operandStyle}
         value={String(range.Operand2)}
         type={UIHelper.getDescriptionForDataType(this.props.SelectedColumn.DataType)}
         placeholder={UIHelper.getPlaceHolderforDataType(this.props.SelectedColumn.DataType)}
-        onChange={e => this.onOperand2Edit(index, e)}
+        onChange={(e: any) => this.onOperand2Edit(index, e)}
       />
     );
   }
@@ -223,12 +194,10 @@ export class ExpressionBuilderRanges extends React.Component<
     this.props.onRangesChange([].concat(this.props.Ranges, ObjectFactory.CreateEmptyRange()));
   }
 
-  private onLeafExpressionOperatorChanged(index: number, event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-
+  private onLeafExpressionOperatorChanged(index: number, Operator: string) {
     let rangeCol: Array<QueryRange> = [].concat(this.props.Ranges);
     let range = this.props.Ranges[index];
-    rangeCol[index] = Object.assign({}, range, { Operator: e.value });
+    rangeCol[index] = Object.assign({}, range, { Operator });
     this.props.onRangesChange(rangeCol);
   }
 
@@ -286,25 +255,11 @@ let divStyle: React.CSSProperties = {
 };
 
 let betweenDivStyle: React.CSSProperties = {
-  marginBottom: '20px',
-};
-
-let deleteButtonStyle = {
-  marginRight: '10px',
-};
-
-let dropDownStyle = {
-  width: '250px',
-  marginLeft: '10px',
-  marginRight: '0px',
-  marginTop: '0px',
+  marginBottom: 'var(--ab-space-2)',
 };
 
 let operandStyle = {
-  width: '190px',
-  marginLeft: '0px',
-  marginRight: '2px',
-  marginTop: '0px',
+  flex: 1,
 };
 
 let rangeOperatorStyle = {

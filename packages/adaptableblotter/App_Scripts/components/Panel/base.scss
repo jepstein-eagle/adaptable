@@ -23,9 +23,16 @@
     position: relative;
     padding: var(--ab-cmp-panel__padding);
     border: var(--ab-cmp-panel__border);
-    border-top: none;
     flex: 1;
     border-bottom-left-radius: var(--ab-cmp-panel__border-radius);
     border-bottom-right-radius: var(--ab-cmp-panel__border-radius);
+  }
+
+  &--with-header  > .ab-Panel__body {
+      border-top: none;
+  }
+  &--no-header > .ab-Panel__body {
+      border-top-left-radius: var(--ab-cmp-panel__border-radius);
+      border-top-right-radius: var(--ab-cmp-panel__border-radius);
   }
 }
