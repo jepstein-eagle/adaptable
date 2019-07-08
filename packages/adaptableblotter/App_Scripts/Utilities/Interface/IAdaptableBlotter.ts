@@ -23,7 +23,7 @@ import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColu
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 
-type EmitterCallback = (data?: any) => any;
+export type EmitterCallback = (data?: any) => any;
 
 /**
  *  The only interface for the AdaptableBlotter

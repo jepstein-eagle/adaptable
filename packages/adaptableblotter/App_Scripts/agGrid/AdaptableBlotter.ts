@@ -34,7 +34,7 @@ import {
 } from 'ag-grid-community/dist/lib/entities/gridOptions';
 import { Action } from 'redux';
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter, EmitterCallback } from '../Utilities/Interface/IAdaptableBlotter';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
@@ -153,8 +153,6 @@ import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
 type RuntimeConfig = {
   instantiateGrid?: (...args: any[]) => any;
 };
-
-type EmitterCallback = (data?: any) => any;
 
 export class AdaptableBlotter implements IAdaptableBlotter {
   public api: IBlotterApi;
@@ -1832,11 +1830,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.checkColumnsDataTypeSet();
     });
 
-    this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
-      console.log('row data updated');
-      console.log(params);
-    });
-
     // this handles ticking data
     // except it doesnt handle when data has been added to ag-Grid using updateRowData  ouch !!!
     this.gridOptions.api.addEventListener(
@@ -1853,8 +1846,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             IdentifierValue: identifierValue,
             Record: params.node,
           };
-          console.log('cell value changed');
-          console.log(params);
+
           this.DataService.CreateDataChangedEvent(dataChangedInfo);
           // 24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
           // so we manually raise.

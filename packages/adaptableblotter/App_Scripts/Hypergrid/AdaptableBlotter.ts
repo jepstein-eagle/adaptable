@@ -39,7 +39,7 @@ import {
   SortOrder,
   FilterOnDataChangeOptions,
 } from '../PredefinedConfig/Common/Enums';
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
+import { IAdaptableBlotter, EmitterCallback } from '../Utilities/Interface/IAdaptableBlotter';
 import { CustomSortDataSource } from './CustomSortDataSource';
 import { FilterAndSearchDataSource } from './FilterAndSearchDataSource';
 import { ObjectFactory } from '../Utilities/ObjectFactory';
@@ -120,8 +120,6 @@ import { PermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserI
 type RuntimeConfig = {
   instantiateGrid?: (...args: any[]) => any;
 };
-
-type EmitterCallback = (data?: any) => any;
 
 //icon to indicate toggle state
 const UPWARDS_BLACK_ARROW = '\u25b2'; // aka '▲'
