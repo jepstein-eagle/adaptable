@@ -210,11 +210,11 @@ export class StyleService {
     this.blotter.api.flashingCellApi.getAllFlashingCell().forEach(element => {
       if (element.IsLive) {
         this.addCSSRule(
-          '.' + StyleConstants.FLASH_UP_STYLE + element.Uuid,
+          '.' + StyleConstants.FLASH_UP_STYLE + '-' + element.Uuid,
           'background-color: ' + element.UpColor + ' !important'
         );
         this.addCSSRule(
-          '.' + StyleConstants.FLASH_DOWN_STYLE + element.Uuid,
+          '.' + StyleConstants.FLASH_DOWN_STYLE + '-' + element.Uuid,
           'background-color: ' + element.DownColor + ' !important'
         );
       }

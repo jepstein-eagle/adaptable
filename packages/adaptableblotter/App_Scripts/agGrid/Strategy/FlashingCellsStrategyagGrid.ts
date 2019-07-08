@@ -33,7 +33,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
       let fc = flashingCells.find(x => x.ColumnId == col.ColumnId && x.IsLive);
       let cellClassRules: any = {};
       if (fc) {
-        cellClassRules[StyleConstants.FLASH_UP_STYLE + fc.Uuid] = function(params: any) {
+        cellClassRules[StyleConstants.FLASH_UP_STYLE + '-' + fc.Uuid] = function(params: any) {
           let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node);
           let key = primaryKey + col.ColumnId + 'up';
           let currentFlashTimer = currentFlashing.get(key);
@@ -62,7 +62,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
           }
         };
 
-        cellClassRules[StyleConstants.FLASH_DOWN_STYLE + fc.Uuid] = function(params: any) {
+        cellClassRules[StyleConstants.FLASH_DOWN_STYLE + '-' + fc.Uuid] = function(params: any) {
           let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node);
           let key = primaryKey + col.ColumnId + 'down';
           let currentFlashTimer = currentFlashing.get(key);
