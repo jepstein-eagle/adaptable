@@ -24,44 +24,22 @@ Nor do we create the ag-Grid
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
-  examplesHelper.startTickingDataagGrid(gridOptions);
-  gridOptions.singleClickEdit = true;
+  const tradeData: any = examplesHelper.getTrades(10);
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+
+  //gridOptions.singleClickEdit = true;
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
     'basic demo'
   );
-  adaptableBlotterOptions.auditOptions = {
-    auditCellEdits: {
-      auditToHttpChannel: true,
-    },
-    auditFunctionEvents: {
-      auditToConsole: true,
-    },
-    auditInternalStateChanges: {
-      auditAsEvent: true,
-    },
-    auditUserStateChanges: {
-      auditAsEvent: true,
-      auditToHttpChannel: true,
-    },
-    pingInterval: 50,
-    auditLogsSendInterval: 3,
-  };
+
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
   adaptableblotter.applyLightTheme();
 }
 
-let demoConfig: PredefinedConfig = {
-  UserInterface: {
-    // EditLookUpColumns: [
-    //   { ColumnId: 'currency' },
-    //  { ColumnId: 'counterparty', LookUpValues: ['first', 'second'] },
-    // ],
-  },
-};
+let demoConfig: PredefinedConfig = {};
 
 export default () => {
   useEffect(() => {

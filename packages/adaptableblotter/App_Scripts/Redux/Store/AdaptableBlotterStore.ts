@@ -1844,7 +1844,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
               action: action.type,
               info: 'Column Filter Cleared',
               data: {
-                Column: actionTyped.columnId,
+                Column: actionTyped.columnFilter,
               },
             };
 

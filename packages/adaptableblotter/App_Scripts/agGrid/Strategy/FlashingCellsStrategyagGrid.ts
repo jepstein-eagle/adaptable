@@ -6,6 +6,7 @@ import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
+import { fixMarkup } from 'highlight.js';
 
 export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
   implements IFlashingCellsStrategy {
@@ -30,10 +31,9 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
     let flashingCells: FlashingCell[] = this.blotter.api.flashingCellApi.getAllFlashingCell();
     numericColumns.forEach(col => {
       let fc = flashingCells.find(x => x.ColumnId == col.ColumnId && x.IsLive);
-      let index = flashingCells.indexOf(fc);
       let cellClassRules: any = {};
       if (fc) {
-        cellClassRules[StyleConstants.FLASH_UP_STYLE + index] = function(params: any) {
+        cellClassRules[StyleConstants.FLASH_UP_STYLE + fc.Uuid] = function(params: any) {
           let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node);
           let key = primaryKey + col.ColumnId + 'up';
           let currentFlashTimer = currentFlashing.get(key);
@@ -62,7 +62,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
           }
         };
 
-        cellClassRules[StyleConstants.FLASH_DOWN_STYLE + index] = function(params: any) {
+        cellClassRules[StyleConstants.FLASH_DOWN_STYLE + fc.Uuid] = function(params: any) {
           let primaryKey = theBlotter.getPrimaryKeyValueFromRecord(params.node);
           let key = primaryKey + col.ColumnId + 'down';
           let currentFlashTimer = currentFlashing.get(key);

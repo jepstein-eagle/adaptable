@@ -25,10 +25,10 @@ export class FormatColumnStrategyagGrid extends FormatColumnStrategy
         formatColumns.forEach((fc, index) => {
           if (fc.ColumnId == column.ColumnId) {
             let styleName: string = StringExtensions.IsNullOrEmpty(fc.Style.ClassName)
-              ? StyleHelper.CreateIndexedStyleName(
+              ? StyleHelper.CreateUniqueStyleName(
                   StrategyConstants.FormatColumnStrategyId,
-                  index,
-                  this.blotter
+                  this.blotter,
+                  fc
                 )
               : fc.Style.ClassName;
             cellClassRules[styleName] = function(params: any) {

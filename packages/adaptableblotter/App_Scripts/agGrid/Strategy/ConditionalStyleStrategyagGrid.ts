@@ -10,52 +10,78 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { DataChangedInfo } from '../../Utilities/Interface/DataChangedInfo';
 import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { TypeUuid } from '../../PredefinedConfig/Uuid';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
   constructor(blotter: AdaptableBlotter) {
     super(blotter);
+    this.conditionalStyleColumnIds = [];
+    this.columnsForConditionalStyles = new Map<TypeUuid, string[]>();
   }
 
+  private conditionalStyleColumnIds: string[];
+  private columnsForConditionalStyles: Map<TypeUuid, string[]>;
+
+  // The sole purpose that i can see for this method is to tell the Blotter to refresh the row or other columns in the case where the Grid would not automtically do it
+  // and we need to tell the grid that the whole row has changed and not just this column
+  // Note that we can have Col A changing when Col B updates so need to look at all 3 but should make it as quick as possible: in and out.
   protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
-    //we refresh all columns that need to be refreshed
-    //this method needs to be optimised and probably cached as well. Will do when doing perf monitor
     let conditionalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
     if (ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)) {
-      let listOfColumns: Array<string> = [];
-      conditionalStyles.forEach(x => {
-        let colList = ExpressionHelper.GetColumnListFromExpression(x.Expression);
-        if (colList.indexOf(dataChangedEvent.ColumnId) > -1) {
-          if (x.ConditionalStyleScope == ConditionalStyleScope.Row) {
-            listOfColumns.push(...this.blotter.api.gridApi.getColumns().map(c => c.ColumnId));
-          } else if (x.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory) {
-            let columnCategory: ColumnCategory = this.blotter.api.columnCategoryApi
-              .getAllColumnCategory()
-              .find(lc => lc.ColumnCategoryId == x.ColumnCategoryId);
-            if (columnCategory) {
-              listOfColumns.push(...columnCategory.ColumnIds);
+      if (ArrayExtensions.ContainsItem(this.conditionalStyleColumnIds, dataChangedEvent.ColumnId)) {
+        let colsToRefresh: Array<string> = [];
+        conditionalStyles.forEach(cs => {
+          let colList = this.columnsForConditionalStyles.get(cs.Uuid);
+          if (ArrayExtensions.ContainsItem(colList, dataChangedEvent.ColumnId)) {
+            switch (cs.ConditionalStyleScope) {
+              case ConditionalStyleScope.Row:
+                colsToRefresh.push(...this.blotter.api.gridApi.getColumns().map(c => c.ColumnId));
+                break;
+
+              case ConditionalStyleScope.ColumnCategory:
+                let columnCategory: ColumnCategory = this.blotter.api.columnCategoryApi
+                  .getAllColumnCategory()
+                  .find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
+                if (columnCategory) {
+                  colsToRefresh.push(...columnCategory.ColumnIds);
+                }
+                break;
+
+              case ConditionalStyleScope.Column:
+                colsToRefresh.push(cs.ColumnId);
+                break;
             }
-          } else if (x.ConditionalStyleScope == ConditionalStyleScope.Column) {
-            listOfColumns.push(x.ColumnId);
+          }
+        });
+        if (ArrayExtensions.IsNotNullOrEmpty(colsToRefresh)) {
+          let listOfColumnsToRefresh = Array.from(new Set(colsToRefresh));
+
+          // we dont want to refresh the actual column as that has been updated
+          let index: number = listOfColumnsToRefresh.indexOf(dataChangedEvent.ColumnId);
+          if (index !== -1) {
+            listOfColumnsToRefresh.splice(index, 1);
+          }
+          console.log('after');
+          console.log(listOfColumnsToRefresh);
+          if (listOfColumnsToRefresh.length > 0) {
+            console.log('about to refresh');
+            let theBlotter = this.blotter as AdaptableBlotter;
+            theBlotter.refreshCells([dataChangedEvent.Record], listOfColumnsToRefresh);
           }
         }
-      });
-      let listOfColumnsToRefresh = Array.from(new Set(listOfColumns));
-      let index: number = listOfColumnsToRefresh.indexOf(dataChangedEvent.ColumnId);
-      if (index !== -1) {
-        listOfColumnsToRefresh.splice(index, 1);
-      }
-      if (listOfColumnsToRefresh.length > 0) {
-        let theBlotter = this.blotter as AdaptableBlotter;
-        theBlotter.refreshCells([dataChangedEvent.Record], listOfColumnsToRefresh);
       }
     }
   }
 
+  // this initialises styles and creates the list of which columns have styles (will be used in onDataChanged)
   public initStyles(): void {
     let columns = this.blotter.api.gridApi.getColumns();
     let theBlotter = this.blotter as AdaptableBlotter;
     let conditionalStyles: ConditionalStyle[] = this.blotter.api.conditionalStyleApi.getAllConditionalStyle();
+    this.conditionalStyleColumnIds = [];
+    this.columnsForConditionalStyles.clear();
+
     if (
       ArrayExtensions.IsNotNullOrEmpty(columns) &&
       ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)
@@ -64,10 +90,10 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
         let cellClassRules: any = {};
         conditionalStyles.forEach((cs, index) => {
           let styleName: string = StringExtensions.IsNullOrEmpty(cs.Style.ClassName)
-            ? StyleHelper.CreateIndexedStyleName(
+            ? StyleHelper.CreateUniqueStyleName(
                 StrategyConstants.ConditionalStyleStrategyId,
-                index,
-                this.blotter
+                this.blotter,
+                cs
               )
             : cs.Style.ClassName;
           if (
@@ -112,6 +138,18 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
         theBlotter.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');
       }
     }
+
+    //  create the list of columns that are in Expressions here so that we dont need to do it each time data updates
+    let colList: string[] = [];
+    conditionalStyles.forEach(x => {
+      let colsForCS: string[] = ExpressionHelper.GetColumnListFromExpression(x.Expression);
+      colList.push(...colsForCS);
+      this.columnsForConditionalStyles.set(x.Uuid, colsForCS);
+    });
+
+    this.conditionalStyleColumnIds = [...new Set(colList)];
+
+    // Redraw the Blotter to be on safe side (its rare use case)
     this.blotter.redraw();
   }
 }

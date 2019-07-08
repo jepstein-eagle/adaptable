@@ -1,5 +1,6 @@
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { AB_HEADER } from '../../Utilities/Constants/StyleConstants';
+import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
 export function CreateStyleName(strategyId: string, blotter: IAdaptableBlotter): string {
   return (
@@ -13,25 +14,25 @@ export function CreateStyleName(strategyId: string, blotter: IAdaptableBlotter):
   );
 }
 
-export function CreateIndexedStyleName(
+export function CreateUniqueStyleName(
   strategyId: string,
-  index: number,
-  blotter: IAdaptableBlotter
+  blotter: IAdaptableBlotter,
+  adaqptableBlotterObject: AdaptableBlotterObject
 ): string {
   return (
     AB_HEADER +
     strategyId +
     '-' +
-    index +
-    '-' +
     blotter.blotterOptions.blotterId
       .trim()
       .replace(/\s/g, '')
-      .replace('.', '')
+      .replace('.', '') +
+    '-' +
+    adaqptableBlotterObject.Uuid
   );
 }
 export const StyleHelper = {
   CreateStyleName,
-  CreateIndexedStyleName,
+  CreateUniqueStyleName,
 };
 export default StyleHelper;

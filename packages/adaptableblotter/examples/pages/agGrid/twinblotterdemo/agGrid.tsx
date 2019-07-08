@@ -5,11 +5,16 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
 import { GridOptions } from 'ag-grid-community';
-import { AdaptableBlotterOptions, IAdaptableBlotter } from '../../../../App_Scripts/types';
+import {
+  AdaptableBlotterOptions,
+  IAdaptableBlotter,
+  ColumnStateChangedEventArgs,
+} from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { StateChangedTrigger } from '../../../../App_Scripts/PredefinedConfig/Common/Enums';
 import { QuickSearchState } from '../../../../App_Scripts/PredefinedConfig/RunTimeState/QuickSearchState';
 import { AdvancedSearchState } from '../../../../App_Scripts/PredefinedConfig/RunTimeState/AdvancedSearchState';
+import { AuditLogEventArgs } from '../../../../App_Scripts/Api/Events/AuditEvents';
 
 var adaptableblotter1: IAdaptableBlotter;
 var adaptableblotter2: IAdaptableBlotter;
@@ -18,7 +23,8 @@ function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
 
   // first blotter
-  const gridOptions1: GridOptions = examplesHelper.getGridOptionsTrade(500);
+  const tradeData1: any = examplesHelper.getTrades(500);
+  const gridOptions1: GridOptions = examplesHelper.getGridOptionsTrade(tradeData1);
   const adaptableBlotterOptions1: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions1,
     'grid1'
@@ -31,7 +37,8 @@ function InitAdaptableBlotter() {
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter1, gridOptions1);
 
   // second blotter
-  const gridOptions2: GridOptions = examplesHelper.getGridOptionsTrade(500);
+  const tradeData2: any = examplesHelper.getTrades(500);
+  const gridOptions2: GridOptions = examplesHelper.getGridOptionsTrade(tradeData2);
   const adaptableBlotterOptions2: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions2, //
     'grid2'
@@ -54,7 +61,7 @@ function InitAdaptableBlotter() {
   //    .Subscribe((sender, stateChangedArgs) => listenToStateChangeBlotter2(stateChangedArgs));
 }
 
-function listenToStateChangeBlotter1(stateChangedArgs: IStateChangedEventArgs) {
+function listenToStateChangeBlotter1(stateChangedArgs: AuditLogEventArgs) {
   let stateChangedInfo = stateChangedArgs.data[0].id;
 
   if (stateChangedInfo.stateChangedTrigger == StateChangedTrigger.QuickSearch) {
@@ -66,7 +73,7 @@ function listenToStateChangeBlotter1(stateChangedArgs: IStateChangedEventArgs) {
     adaptableblotter2.api.advancedSearchApi.setAdvancedSearchState(advancedSearhState);
   }
 }
-function listenToStateChangeBlotter2(stateChangedArgs: IStateChangedEventArgs) {
+function listenToStateChangeBlotter2(stateChangedArgs: StateChangedEventArgs) {
   let stateChangedInfo = stateChangedArgs.data[0].id;
 
   if (stateChangedInfo.stateChangedTrigger == StateChangedTrigger.QuickSearch) {

@@ -17,11 +17,12 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { Column } from 'ag-grid-community';
 
 export interface ColumnFilterSummaryProps
   extends StrategySummaryProps<ColumnFilterSummaryComponent> {
   ColumnFilters: ColumnFilter[];
-  onClearFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
+  onClearFilter: (columnfilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
   onShare: (entity: AdaptableBlotterObject) => TeamSharingRedux.TeamSharingShareAction;
   Entitlements: IEntitlement[];
 }
@@ -58,7 +59,7 @@ export class ColumnFilterSummaryComponent extends React.Component<
         cssClassName={this.props.cssClassName}
         bsStyle={StyleConstants.PRIMARY_BSSTYLE}
         size={'xs'}
-        onClick={() => this.props.onClearFilter(columnFilter.ColumnId)}
+        onClick={() => this.props.onClearFilter(columnFilter)}
         overrideTooltip="Clear Column Filter"
         DisplayMode="Glyph"
         overrideDisableButton={columnFilter == null}
@@ -91,7 +92,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onClearFilter: (columnId: string) => dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
+    onClearFilter: (columnFilter: ColumnFilter) =>
+      dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: AdaptableBlotterObject) =>
       dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnFilterStrategyId)),

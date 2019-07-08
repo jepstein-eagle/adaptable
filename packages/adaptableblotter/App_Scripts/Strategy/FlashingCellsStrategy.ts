@@ -73,6 +73,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   public abstract initStyles(): void;
 
   protected handleDataSourceChanged(dataChangedInfo: DataChangedInfo) {
+    console.log('Checking Flash');
     let flashingCell: FlashingCell = this.blotter.api.flashingCellApi
       .getAllFlashingCell()
       .find(f => f.ColumnId == dataChangedInfo.ColumnId);

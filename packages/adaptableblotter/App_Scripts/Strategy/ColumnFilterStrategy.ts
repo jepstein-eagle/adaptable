@@ -28,7 +28,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
         this.createContextMenuItemReduxAction(
           'Clear Column Filter',
           StrategyConstants.ColumnFilterGlyph,
-          ColumnFilterRedux.ColumnFilterClear(column.ColumnId)
+          ColumnFilterRedux.ColumnFilterClear(existingColumnFilter)
         );
       }
     }

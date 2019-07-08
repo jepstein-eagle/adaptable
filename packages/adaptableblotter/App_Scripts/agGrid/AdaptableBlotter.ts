@@ -4,6 +4,7 @@ import {
   CellRangeParams,
   PopupEditorWrapper,
   RefreshCellsParams,
+  RedrawRowsParams,
 } from 'ag-grid-community';
 import 'ag-grid-enterprise';
 
@@ -909,7 +910,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       NewValue: cellInfo.Value,
       ColumnId: cellInfo.ColumnId,
       IdentifierValue: cellInfo.Id,
-      Record: null,
+      Record: rowNode,
     };
     if (this.AuditLogService.isAuditCellEditsEnabled) {
       this.AuditLogService.addEditCellAuditLog(dataChangedEvent);
@@ -918,6 +919,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.DataService.CreateDataChangedEvent(dataChangedEvent);
   }
 
+  // this is used by strategies to update the grid
+  // not sure why do it this way and not just get it updated through the event
   public setValueBatch(batchValues: ICellInfo[]): void {
     if (ArrayExtensions.IsNullOrEmpty(batchValues)) {
       return;
@@ -968,8 +971,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     dataChangedEvents.forEach(dc => this.DataService.CreateDataChangedEvent(dc));
 
     this.filterOnUserDataChange();
-    this.gridOptions.api.clearRangeSelection();
     this.refreshCells(nodesToRefresh, refreshColumnList);
+
+    // we want to reselect the cells that are selected so that users can repeat actions
+    // we do this by gettng the selected cells, clearing the selection and then re-applying
+    //  agGridHelper.reselectSelectedCells();
+    let selectedCellRanges: CellRange[] = this.gridOptions.api.getCellRanges();
+
+    if (ArrayExtensions.CorrectLength(selectedCellRanges, 1)) {
+      let selectedCellRange: CellRange = selectedCellRanges[0];
+      let cellRangeParams: CellRangeParams = {
+        rowStartIndex: selectedCellRange.startRow.rowIndex,
+        rowEndIndex: selectedCellRange.endRow.rowIndex,
+        columns: selectedCellRange.columns,
+      };
+      this.gridOptions.api.clearRangeSelection();
+
+      this.gridOptions.api.addCellRange(cellRangeParams);
+    }
   }
 
   private updateBatchValue(
@@ -996,7 +1015,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       NewValue: cellInfo.Value,
       ColumnId: colId,
       IdentifierValue: cellInfo.Id,
-      Record: null,
+      Record: rowNode,
     };
     dataChangedEvents.push(dataChangedEvent);
 
@@ -1328,6 +1347,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       rowNodes: rows,
       columns: columnIds,
       force: true,
+    };
+    this.gridOptions.api.refreshCells(refreshCellParams);
+  }
+
+  public refreshRows(rows: RowNode[]) {
+    console.log('refresnh rows');
+    console.log(rows);
+    let refreshCellParams: RefreshCellsParams = {
+      rowNodes: rows,
+      //   force: true,
     };
     this.gridOptions.api.refreshCells(refreshCellParams);
   }
@@ -1695,6 +1724,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // this event deals with when the user makes an edit - it doesnt look at ticking data
     this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
       // TODO: Jo: This is a workaround as we are accessing private members of agGrid.
+      // I still wonder if we can do this nicer by using :   this.gridOptions.api.getEditingCells();
+      // must be a good reason why we don't use it
 
       const editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex]
         .cellComps[params.column.getColId()].cellEditor;
@@ -1811,62 +1842,73 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       this.checkColumnsDataTypeSet();
     });
 
+    this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
+      console.log('row data updated');
+      console.log(params);
+    });
+
     // this handles ticking data
+    // except it doesnt handle when data has been added to ag-Grid using updateRowData  ouch !!!
     this.gridOptions.api.addEventListener(
       Events.EVENT_CELL_VALUE_CHANGED,
       (params: NewValueParams) => {
-        const identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
-        const colId: string = params.colDef.field;
-        const dataChangedInfo: DataChangedInfo = {
-          OldValue: params.oldValue,
-          NewValue: params.newValue,
-          ColumnId: colId,
-          IdentifierValue: identifierValue,
-          Record: params.node,
-        };
-        this.DataService.CreateDataChangedEvent(dataChangedInfo);
-        // 24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
-        // so we manually raise.
-        // https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
-        const refreshColumnList: string[] = [colId];
-        const columnList = this.calculatedColumnPathMap.get(colId);
-        if (columnList) {
-          columnList.forEach(columnId => {
-            const dataChangedInfo: DataChangedInfo = {
-              OldValue: params.oldValue,
-              NewValue: this.gridOptions.api.getValue(columnId, params.node),
-              ColumnId: columnId,
-              IdentifierValue: identifierValue,
-              Record: params.node,
-            };
-            this.DataService.CreateDataChangedEvent(dataChangedInfo);
-            ArrayExtensions.AddItem(refreshColumnList, columnId);
+        // this gets called as soon as opening editor so make sure the values are different before starting any work...
+        if (params.newValue != params.oldValue) {
+          const identifierValue = this.getPrimaryKeyValueFromRecord(params.node);
+          const colId: string = params.colDef.field;
+          const dataChangedInfo: DataChangedInfo = {
+            OldValue: params.oldValue,
+            NewValue: params.newValue,
+            ColumnId: colId,
+            IdentifierValue: identifierValue,
+            Record: params.node,
+          };
+          console.log('cell value changed');
+          console.log(params);
+          this.DataService.CreateDataChangedEvent(dataChangedInfo);
+          // 24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
+          // so we manually raise.
+          // https://github.com/JonnyAdaptableTools/adaptableblotter/issues/118
+          const refreshColumnList: string[] = [colId];
+          const columnList = this.calculatedColumnPathMap.get(colId);
+          if (columnList) {
+            columnList.forEach(columnId => {
+              const dataChangedInfo: DataChangedInfo = {
+                OldValue: params.oldValue,
+                NewValue: this.gridOptions.api.getValue(columnId, params.node),
+                ColumnId: columnId,
+                IdentifierValue: identifierValue,
+                Record: params.node,
+              };
+              this.DataService.CreateDataChangedEvent(dataChangedInfo);
+              ArrayExtensions.AddItem(refreshColumnList, columnId);
+            });
+          }
+
+          // see if we need to refresh any percent bars
+          this.api.percentBarApi.getAllPercentBar().forEach(pb => {
+            refreshColumnList.forEach(changedColId => {
+              if (
+                StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) &&
+                pb.MaxValueColumnId == changedColId
+              ) {
+                ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+              }
+              if (
+                StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) &&
+                pb.MinValueColumnId == changedColId
+              ) {
+                ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
+              }
+            });
           });
+
+          // this is new  - giving users ability to filter on external data changes
+          this.filterOnExternalDataChange();
+
+          // only if visible...
+          this.refreshCells([params.node], refreshColumnList);
         }
-
-        // see if we need to refresh any percent bars
-        this.api.percentBarApi.getAllPercentBar().forEach(pb => {
-          refreshColumnList.forEach(changedColId => {
-            if (
-              StringExtensions.IsNotNullOrEmpty(pb.MaxValueColumnId) &&
-              pb.MaxValueColumnId == changedColId
-            ) {
-              ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-            }
-            if (
-              StringExtensions.IsNotNullOrEmpty(pb.MinValueColumnId) &&
-              pb.MinValueColumnId == changedColId
-            ) {
-              ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-            }
-          });
-        });
-
-        // this is new  - giving users ability to filter on external data changes
-        this.filterOnExternalDataChange();
-
-        // only if visible...
-        this.refreshCells([params.node], refreshColumnList);
       }
     );
 

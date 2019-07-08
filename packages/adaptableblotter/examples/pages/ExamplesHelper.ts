@@ -1,7 +1,8 @@
 ﻿import { ColDef, GridOptions } from 'ag-grid-community';
 import { IAdaptableBlotter } from '../../App_Scripts/types';
+import { RowDataTransaction } from 'ag-grid-community/dist/lib/rowModels/clientSide/clientSideRowModel';
 
-interface ITrade {
+export interface ITrade {
   tradeId: number;
   notional: number;
   deskId: number;
@@ -106,7 +107,7 @@ export class ExamplesHelper {
     return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
   }
 
-  getTrades(count: number): ITrade[] {
+  public getTrades(count: number): ITrade[] {
     let trades: ITrade[] = [];
     for (let i = 1; i <= count; i++) {
       trades.push(this.createTrade(i));
@@ -149,60 +150,6 @@ export class ExamplesHelper {
       fxs.push(this.createFX(i));
     }
     return fxs;
-  }
-
-  startTickingDataHypergrid(grid: any) {
-    setInterval(() => {
-      let numberToAdd: number = this.generateRandomInt(1, 2) == 1 ? -0.5 : 0.5;
-      //pick a random trade in the first ten
-      let trade = this.getRandomItem(grid.behavior.getData(), 30);
-      //pick a random colum in the numeric col
-      let columnName = 'price'; // this.getRandomItem(this._numericCols);
-      let initialNewValue = trade[columnName];
-      let newValue = this.roundTo4Dp(initialNewValue + numberToAdd);
-      trade[columnName] = newValue;
-
-      trade['ask'] = this.roundTo4Dp(trade['price'] - trade['bidOfferSpread'] / 2);
-      trade['bid'] = this.roundTo4Dp(trade['price'] + trade['bidOfferSpread'] / 2);
-
-      trade['bloombergAsk'] = this.roundTo4Dp(trade['ask'] + 0.01);
-      trade['bloombergBid'] = this.roundTo4Dp(trade['bid'] - 0.01);
-      //grid.behavior.reindex();
-      grid.repaint();
-    }, 500);
-  }
-
-  startTickingDataagGrid(gridOptions: any) {
-    setInterval(() => {
-      let tradeId = this.generateRandomInt(0, 25);
-      if (gridOptions != null && gridOptions.api != null) {
-        gridOptions.api.forEachNode((rowNode: any, index: number) => {
-          if (rowNode.group) {
-            return;
-          }
-          let rowTradeId = gridOptions.api.getValue('tradeId', rowNode);
-          if (rowTradeId != tradeId) {
-            return;
-          }
-
-          let randomInt = this.generateRandomInt(1, 2);
-          let numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
-          let directionToAdd: number = randomInt == 1 ? -0.01 : 0.01;
-          let trade = rowNode;
-          let columnName = 'price';
-          let initialPrice = gridOptions.api.getValue(columnName, trade);
-          let newPrice = this.roundTo4Dp(initialPrice + numberToAdd);
-          trade.setDataValue(columnName, newPrice);
-          let bidOfferSpread = gridOptions.api.getValue('bidOfferSpread', trade);
-          let ask = this.roundTo4Dp(newPrice + bidOfferSpread / 2);
-          trade.setDataValue('ask', ask);
-          let bid = this.roundTo4Dp(newPrice - bidOfferSpread / 2);
-          trade.setDataValue('bid', bid);
-          trade.setDataValue('bloombergAsk', this.roundTo4Dp(ask + directionToAdd));
-          trade.setDataValue('bloombergBid', this.roundTo4Dp(bid - directionToAdd));
-        });
-      }
-    }, 500);
   }
 
   createIFtse(date: Date, index: number, start: number, end: number): IFtse {
@@ -298,7 +245,7 @@ export class ExamplesHelper {
     let tradeCurrency = currency ? currency : this.getRandomItem(this.getCurrencies());
     let trade = {
       tradeId: i,
-      notional: null, // this.generateRandomInt(0, 300), // this.getRandomItem(this.getNotionals()),
+      notional: this.generateRandomInt(0, 300), // this.getRandomItem(this.getNotionals()),
       deskId: this.generateRandomInt(0, 400),
       counterparty: this.getRandomItem(this.getCounterparties()),
       currency: tradeCurrency,
@@ -788,10 +735,10 @@ export class ExamplesHelper {
     return names;
   }
 
-  public getGridOptionsTrade(rowCount: number): GridOptions {
+  public getGridOptionsTrade(rowData: any): GridOptions {
     return {
       columnDefs: this.getTradeSchema(),
-      rowData: this.getTrades(rowCount),
+      rowData: rowData,
       enableRangeSelection: true,
       floatingFilter: true,
       suppressColumnVirtualisation: false,
@@ -1009,6 +956,7 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Bbg Ask',
       field: 'bloombergAsk',
+      editable: true,
       columnGroupShow: 'closed',
       cellClass: 'number-cell',
       type: 'abColDefNumber',

@@ -30,7 +30,7 @@ interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormCom
   ColumnFilters: ColumnFilter[];
   onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
   onEditColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
-  onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
+  onClearColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
 }
 
 export interface QuickFilterFormState {
@@ -165,7 +165,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
     if (existingColumnFilter) {
-      this.props.onClearColumnFilter(this.props.CurrentColumn.ColumnId);
+      this.props.onClearColumnFilter(existingColumnFilter);
     }
   }
 
@@ -314,8 +314,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
       dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
     onEditColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter)),
-    onClearColumnFilter: (columnId: string) =>
-      dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
+    onClearColumnFilter: (columnFilter: ColumnFilter) =>
+      dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
   };
 }
 

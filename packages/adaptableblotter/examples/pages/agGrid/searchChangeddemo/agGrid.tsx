@@ -19,8 +19,8 @@ var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-
-  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
+  const tradeData: any = examplesHelper.getTrades(500);
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // creating blotter options here so we can add audit
   const adaptableBlotterOptions: AdaptableBlotterOptions = {

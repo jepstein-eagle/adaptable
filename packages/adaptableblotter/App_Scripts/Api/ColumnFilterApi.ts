@@ -23,7 +23,7 @@ export class ColumnFilterApi extends ApiBase implements IColumnFilterApi {
   }
 
   public clearColumnFilter(columnFilter: ColumnFilter): void {
-    this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(columnFilter.ColumnId));
+    this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(columnFilter));
   }
 
   public clearColumnFilterByColumns(columns: string[]): void {
@@ -33,7 +33,12 @@ export class ColumnFilterApi extends ApiBase implements IColumnFilterApi {
   }
 
   public clearColumnFilterByColumn(column: string): void {
-    this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(column));
+    let columnFiltersForColumn: ColumnFilter[] = this.getAllColumnFilter().filter(
+      cf => cf.ColumnId == column
+    );
+    columnFiltersForColumn.forEach(cf => {
+      this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(cf));
+    });
   }
 
   public clearAllColumnFilter(): void {

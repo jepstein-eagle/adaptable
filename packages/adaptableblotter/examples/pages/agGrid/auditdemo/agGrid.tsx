@@ -7,11 +7,7 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
 
-import {
-  IAdaptableBlotter,
-  AdaptableBlotterOptions,
-  SearchChangedEventArgs,
-} from '../../../../App_Scripts/types';
+import { IAdaptableBlotter, AdaptableBlotterOptions } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AuditLogEventArgs } from '../../../../App_Scripts/Api/Events/AuditEvents';
@@ -20,8 +16,8 @@ var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-
-  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
+  const tradeData: any = examplesHelper.getTrades(500);
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // creating blotter options here so we can add audit
   const adaptableBlotterOptions: AdaptableBlotterOptions = {

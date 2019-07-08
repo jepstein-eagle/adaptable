@@ -9,8 +9,9 @@
  *
  * **The default for each option for each Audit Type is false** - meaning that audit is only triggered if you set some values to true.
  *
+ * **Advanced Search Predefined Config Example**
+ *
  * ```ts
- * export default {
  * auditOptions = {
  *  auditCellEdits: {
  *    auditToHttpChannel: true,

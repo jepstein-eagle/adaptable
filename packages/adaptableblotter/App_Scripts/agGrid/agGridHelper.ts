@@ -5,6 +5,8 @@ import {
   GridOptions,
   SideBarDef,
   ToolPanelDef,
+  CellRange,
+  CellRangeParams,
 } from 'ag-grid-community';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
@@ -288,5 +290,24 @@ export class agGridHelper {
       iconKey: 'menu',
       toolPanel: 'adaptableBlotterToolPanel',
     };
+  }
+
+  // This method reselects cells - only IF they are in a single column
+  // Might be able to change that later
+  // We do this by gettng the selected cells, clearing the selection and then re-applying
+  public reselectSelectedCells(): void {
+    let selectedCellRanges: CellRange[] = this.gridOptions.api.getCellRanges();
+
+    if (ArrayExtensions.CorrectLength(selectedCellRanges, 1)) {
+      let selectedCellRange: CellRange = selectedCellRanges[0];
+      let cellRangeParams: CellRangeParams = {
+        rowStartIndex: selectedCellRange.startRow.rowIndex,
+        rowEndIndex: selectedCellRange.endRow.rowIndex,
+        columns: selectedCellRange.columns,
+      };
+      this.gridOptions.api.clearRangeSelection();
+
+      this.gridOptions.api.addCellRange(cellRangeParams);
+    }
   }
 }

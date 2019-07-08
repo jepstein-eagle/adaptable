@@ -51,7 +51,7 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   ContextMenuItems: IMenuItem[];
   EmbedColumnMenu: boolean;
   ShowCloseButton: boolean;
-  onClearColumnFilter: (columnId: string) => ColumnFilterRedux.ColumnFilterClearAction;
+  onClearColumnFilter: (columnfilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
   onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
   onEditColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
   onHideFilterForm: () => GridRedux.FilterFormHideAction;
@@ -434,7 +434,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       userFilters.length == 0 &&
       rangeExpressions.length == 0
     ) {
-      this.props.onClearColumnFilter(columnFilter.ColumnId);
+      this.props.onClearColumnFilter(columnFilter);
     } else {
       if (alreadyExists) {
         this.props.onEditColumnFilter(columnFilter);
@@ -487,8 +487,8 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
     onContextMenuItemClick: (action: Redux.Action) => dispatch(action),
-    onClearColumnFilter: (columnId: string) =>
-      dispatch(ColumnFilterRedux.ColumnFilterClear(columnId)),
+    onClearColumnFilter: (columnFilter: ColumnFilter) =>
+      dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
     onAddColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
     onEditColumnFilter: (columnFilter: ColumnFilter) =>

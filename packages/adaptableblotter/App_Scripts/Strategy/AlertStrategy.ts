@@ -11,6 +11,8 @@ import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { AlertHelper } from '../Utilities/Helpers/AlertHelper';
 import { DataChangedInfo } from '../Utilities/Interface/DataChangedInfo';
 import { AlertDefinition } from '../PredefinedConfig/RunTimeState/AlertState';
+import AdaptableBlotter from '../agGrid';
+import * as StyleConstants from '../Utilities/Constants/StyleConstants';
 
 export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -29,6 +31,7 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
   }
 
   protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
+    console.log('ive been called in Alert Strategy...');
     let alertDefinitions: AlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
     if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
       let columns: IColumn[] = this.blotter.api.gridApi.getColumns();

@@ -16,8 +16,8 @@ Note: we DO create the grid ourselves - and instead its done in the Blotter code
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-
-  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
+  const tradeData: any = examplesHelper.getTrades(500);
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // creating ag-Grid ourselves
   const gridcontainer: HTMLElement = document.getElementById('grid') as HTMLElement;

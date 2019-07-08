@@ -7,22 +7,25 @@ import '../../../../App_Scripts/themes/light.scss';
 import { GridOptions } from 'ag-grid-community';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { TickingDataHelper } from '../../TickingDataHelper';
 
 /*
 Has pseudo ticking data together with some JSON that sets flashing in 3 columns
+This uses the agGrid setDataValue method which DOES call cell value changed
 */
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-
-  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(500);
+  const tickingDataHelper = new TickingDataHelper();
+  const tradeData: any = examplesHelper.getTrades(500);
+  const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // turn on mimicing ticking data
-  examplesHelper.startTickingDataagGrid(gridOptions);
+  tickingDataHelper.startTickingDataagGridSetDataValue(gridOptions);
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'ticking demo'
+    'ticking demo set value'
   );
   adaptableBlotterOptions.predefinedConfig = flashingJson;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
