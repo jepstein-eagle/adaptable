@@ -97,12 +97,10 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     });
 
     let newButton = (
-      <SimpleButton
+      <ButtonNew
         className={cssClassName}
         onClick={() => this.createAlertDefinition()}
         tooltip="Create Alert"
-        icon="plus"
-        variant="raised"
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -110,6 +108,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     return (
       <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
+          bodyProps={{ padding: 0 }}
           headerText={StrategyConstants.AlertStrategyName}
           bsStyle="primary"
           style={{ flex: 1 }}

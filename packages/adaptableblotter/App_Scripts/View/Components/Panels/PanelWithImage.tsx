@@ -2,7 +2,7 @@ import * as React from 'react';
 import { PanelProps, Panel, Row, Col, Glyphicon } from 'react-bootstrap';
 import { withTheme } from 'styled-components';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { MessageType } from '../../../PredefinedConfig/Common/Enums';
+
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import NewPanel from '../../../components/Panel';
@@ -25,10 +25,7 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
     let cssClassName = this.props.cssClassName + StyleConstants.PANEL_WITH_IMAGE;
 
     let headerRow = (
-      <AdaptableBlotterForm
-        inline
-        style={{ flex: 1, '--ab-cmp-panel-icon__fill': this.props.theme.colors.almostwhite }}
-      >
+      <AdaptableBlotterForm inline style={{ flex: 1 }}>
         <Flex>
           <Box>
             {<Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />}
@@ -59,7 +56,6 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
         bsStyle={this.props.bsStyle}
         bsSize={this.props.bsSize}
         style={this.props.style}
-        borderRadius={this.props.borderRadius || 'none'}
         headerProps={{ style: { border: 'none' } }}
         bodyProps={{ style: { border: 'none' } }}
       >

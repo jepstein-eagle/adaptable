@@ -119,6 +119,7 @@ class AdvancedSearchPopupComponent extends React.Component<
         onClick={() => this.onNew()}
         tooltip="Create New Advanced Search"
         icon="plus"
+        tone="success"
         variant="raised"
         AccessLevel={this.props.AccessLevel}
       >
@@ -134,6 +135,7 @@ class AdvancedSearchPopupComponent extends React.Component<
           headerText={StrategyConstants.AdvancedSearchStrategyName}
           infoBody={infoBody}
           button={newSearchButton}
+          bodyProps={{ padding: 0 }}
           glyphicon={StrategyConstants.AdvancedSearchGlyph}
           className="ab_main_popup"
         >

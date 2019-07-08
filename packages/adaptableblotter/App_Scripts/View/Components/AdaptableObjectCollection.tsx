@@ -18,24 +18,20 @@ export interface AdaptableObjectCollectionProps
 
 export class AdaptableObjectCollection extends React.Component<AdaptableObjectCollectionProps, {}> {
   render(): any {
-    let allowOverflow: any = this.props.allowOverflow ? 'visible' : 'auto';
-    let bsStyle: string = this.props.bsStyle ? this.props.bsStyle : 'info';
-    let className: string =
-      this.props.reducedPanel == true ? 'ab_object_list_item_small' : 'ab_object_list_item';
-    let bsSize: any = this.props.bsSize ? this.props.bsSize : 'small';
+    const allowOverflow: any = this.props.allowOverflow ? 'visible' : 'auto';
+
     return (
       <div className={this.props.cssClassName + StyleConstants.ITEMS_TABLE}>
         <PanelWithRow
-          className="ab_no-padding-anywhere-panel ab_small-padding-panel-header"
           cssClassName={this.props.cssClassName}
+          border="none"
           colItems={this.props.colItems}
-          bsStyle={bsStyle}
-          bsSize={bsSize}
         />
-        <div className={this.props.cssClassName + StyleConstants.ITEMS_TABLE_BODY}>
-          <ListGroup className={className} style={{ overflowY: allowOverflow }}>
-            {this.props.items}
-          </ListGroup>
+        <div
+          className={this.props.cssClassName + StyleConstants.ITEMS_TABLE_BODY}
+          style={{ overflowY: allowOverflow, boxShadow: 'none' }}
+        >
+          {this.props.items}
         </div>
       </div>
     );

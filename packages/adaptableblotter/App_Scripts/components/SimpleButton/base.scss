@@ -91,5 +91,25 @@
         }
       }
     }
+    &.ab-SimpleButton--tone-neutral {
+      background: var(--ab-color-textgray);
+      &:not(.ab-SimpleButton--disabled) {
+        opacity: 1;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+    }
+    &.ab-SimpleButton--tone-error {
+      background: var(--ab-color-error);
+      &:not(.ab-SimpleButton--disabled) {
+        opacity: 1;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+    }
   }
 }

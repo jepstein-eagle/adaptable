@@ -31,12 +31,12 @@ export class WizardSummaryPage extends React.Component<WizardSummaryPageProps, {
     return (
       <div className={this.props.cssClassName}>
         <Panel
+          border="none"
           className={this.props.cssClassName}
           header={this.props.header + ' Summary'}
           bsStyle="primary"
           borderRadius="none"
-          bodyProps={{ style: { border: 'none' } }}
-          headerProps={{ style: { border: 'none' } }}
+          bodyProps={{ padding: 0 }}
         >
           <AdaptableObjectCollection
             cssClassName={this.props.cssClassName}

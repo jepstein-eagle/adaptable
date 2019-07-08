@@ -40,6 +40,8 @@ class CellSummaryPopupComponent extends React.Component<
           bsStyle="primary"
           glyphicon={StrategyConstants.CellSummaryGlyph}
           infoBody={infoBody}
+          border="none"
+          bodyProps={{ padding: 0 }}
         >
           <div className={this.props.cssClassName + StyleConstants.ITEMS_TABLE}>
             <CellSummaryDetails cssClassName={cssClassName} CellSummary={this.props.CellSummary} />

@@ -45,7 +45,7 @@ export interface ButtonBaseProps extends BtnProps {
   ToolTipAndText?: string;
   bsStyle?: string;
   bsSize?: string;
-  glyph: string;
+  glyph?: string;
   overrideText?: string;
   overrideTooltip?: string;
   iconPosition?: string;

@@ -20,11 +20,20 @@ const Input = (props: InputProps) => {
     ...inputProps
   } = props;
 
+  let type = 'text';
+
+  if (inputProps && inputProps.type) {
+    type = inputProps.type;
+  }
+
+  if (type === 'string') {
+    type = 'text';
+  }
   return (
     <Box
       as="input"
-      type="text"
       {...inputProps}
+      type={type}
       disabled={disabled}
       className={join(className, baseClassName, disabled ? `${baseClassName}--disabled` : '')}
     />

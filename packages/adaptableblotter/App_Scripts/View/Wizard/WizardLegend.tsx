@@ -32,6 +32,7 @@ export class WizardLegend extends React.Component<WizardLegendProps, {}> {
         <div key={index} style={{ display: 'inline-block' }}>
           <SimpleButton
             variant={isActiveStep ? 'raised' : 'outlined'}
+            tone={isActiveStep ? 'success' : 'neutral'}
             disabled={isDisabled}
             onClick={() => this.onStepButtonClicked(s)}
           >

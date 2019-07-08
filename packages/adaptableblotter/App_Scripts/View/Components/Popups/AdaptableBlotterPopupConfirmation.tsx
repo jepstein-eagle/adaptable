@@ -1,11 +1,13 @@
 import * as React from 'react';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../../UIHelper';
-import { Modal, ControlLabel, FormControl, Row, Col, Button } from 'react-bootstrap';
+import { Modal, ControlLabel, FormControl } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
+import { Flex } from 'rebass';
+import SimpleButton from '../../../components/SimpleButton';
 
 /**
  * Used when giving the user 2 choices with the option of adding text also
@@ -94,22 +96,27 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
                         </div>
                       )}
                       <div style={{ marginTop: '20px' }}>
-                        <Row>
-                          <Button
-                            style={{ float: 'left', marginLeft: '15px' }}
+                        <Flex>
+                          <SimpleButton
+                            marginLeft={2}
                             bsStyle={StyleConstants.PRIMARY_BSSTYLE}
+                            tone="error"
                             className={
                               cssClassName +
                               StyleConstants.MODAL_FOOTER +
                               StyleConstants.CONFIRM_BUTTON
                             }
+                            variant="raised"
                             disabled={!this.canConfirm()}
                             onClick={() => this.onConfirmmForm()}
                           >
                             {this.props.ConfirmButtonText}
-                          </Button>
-                          <Button
-                            style={{ float: 'right', marginRight: '15px' }}
+                          </SimpleButton>
+                          <div style={{ flex: 1 }} />
+                          <SimpleButton
+                            marginRight={2}
+                            tone="neutral"
+                            variant="raised"
                             bsStyle={StyleConstants.DEFAULT_BSSTYLE}
                             className={
                               cssClassName +
@@ -119,8 +126,8 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
                             onClick={() => this.onCancelForm()}
                           >
                             {this.props.CancelButtonText}
-                          </Button>
-                        </Row>
+                          </SimpleButton>
+                        </Flex>
                       </div>
                     </div>
                   </PanelWithImage>

@@ -24,13 +24,12 @@ export class AdaptableBlotterPopupAlert extends React.Component<
   {}
 > {
   render() {
-    let headerContainsMessage: boolean = this.props.Header.indexOf(this.props.MessageType) != -1;
+    const messageType = this.props.MessageType || MessageType.Error;
+    let headerContainsMessage: boolean = this.props.Header.indexOf(messageType) != -1;
 
-    let style: string = UIHelper.getStyleNameByMessageType(this.props.MessageType);
-    let header: string = headerContainsMessage
-      ? this.props.Header
-      : this.props.MessageType.toUpperCase();
-    let glyph: string = UIHelper.getGlyphByMessageType(this.props.MessageType);
+    let style: string = UIHelper.getStyleNameByMessageType(messageType);
+    let header: string = headerContainsMessage ? this.props.Header : messageType.toUpperCase();
+    let glyph: string = UIHelper.getGlyphByMessageType(messageType);
 
     let modalContainer: HTMLElement = UIHelper.getModalContainer(
       this.props.AdaptableBlotter.blotterOptions,

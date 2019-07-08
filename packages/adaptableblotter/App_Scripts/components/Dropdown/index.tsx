@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { useState, useLayoutEffect, useRef, useEffect, ReactNode } from 'react';
-import { BoxProps, Box, Flex } from 'rebass';
+import { useState, useRef, ReactNode } from 'react';
+import { BoxProps, Flex } from 'rebass';
 import join from '../utils/join';
 import useProperty from '../utils/useProperty';
 import { ButtonBase } from '../../View/Components/Buttons/ButtonBase';
@@ -10,8 +10,9 @@ export type DropdownOption = {
   label: string;
   value: string;
 };
-export type DropdownProps = BoxProps &
-  React.HTMLProps<HTMLElement> & {
+
+export type DropdownProps = React.HTMLProps<HTMLElement> &
+  BoxProps & {
     bsSize?: string;
     bsStyle?: string;
 
@@ -30,6 +31,7 @@ export type DropdownProps = BoxProps &
     options: (DropdownOption | string)[];
     defaultExpanded?: boolean;
     showClearButton?: boolean;
+    onChange?: (value: any, e?: React.SyntheticEvent, option?: DropdownOption) => void;
     onCollapse?: () => void | Function;
     onExpand?: () => void | Function;
     onSelect?: () => void | Function;
@@ -77,8 +79,8 @@ const Dropdown = (props: DropdownProps) => {
     }
   );
 
-  const onChange = (option: DropdownOption) => {
-    setValue(option ? option.value : option, option);
+  const onChange = (option: DropdownOption, e?: React.SyntheticEvent) => {
+    setValue(option ? option.value : option, e, option);
   };
 
   const selectRef = useRef(null);
@@ -113,7 +115,7 @@ const Dropdown = (props: DropdownProps) => {
       style={{ zIndex: 10, ...(clearButtonProps ? clearButtonProps.style : null) }}
       onClick={e => {
         e.preventDefault();
-        onChange(null);
+        onChange(null, e);
       }}
     />
   );
@@ -143,7 +145,7 @@ const Dropdown = (props: DropdownProps) => {
         value={value == null ? '' : value}
         onChange={(e: React.SyntheticEvent<HTMLSelectElement>) => {
           const selected = finalOptions.filter(o => o.value === (e.target as any).value)[0];
-          onChange(selected);
+          onChange(selected, e);
         }}
         style={{ opacity: 0, width: '100%', height: '100%', top: 0, left: 0, zIndex: 1 }}
         name={name}

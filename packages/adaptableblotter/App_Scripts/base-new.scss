@@ -30,6 +30,7 @@
   --ab-color-green: #419641;
   --ab-color-blue: #07c;
   --ab-color-accent: #07c;
+  --ab-color-accentlight: #dbf0ff;
   --ab-color-almost-white: #f5f5f5;
   --ab-color-white: white;
   --ab-icon-fill: currentColor;
@@ -66,6 +67,8 @@
 @import './components/DropdownButton/base.scss';
 @import './components/Tooltip/base.scss';
 @import './components/Input/base.scss';
+@import './components/ErrorBox/base.scss';
+@import './components/HelpBlock/base.scss';
 @import './components/List/ListGroup/base.scss';
 @import './components/List/ListGroupItem/base.scss';
 @import './View/Components/Buttons/ButtonBase/base.scss';

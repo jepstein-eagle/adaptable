@@ -90,6 +90,7 @@ class ColumnCategoryPopupComponent extends React.Component<
       <ButtonNew
         cssClassName={cssClassName}
         onClick={() => this.onNew()}
+        tone="success"
         overrideTooltip="Create New Advanced Search"
         DisplayMode="Glyph+Text"
         size={'small'}

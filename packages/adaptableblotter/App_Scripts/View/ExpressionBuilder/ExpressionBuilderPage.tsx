@@ -63,6 +63,7 @@ export class ExpressionBuilderPage
         variant="raised"
         kind="success"
         icon="plus"
+        tone="success"
         AccessLevel={AccessLevel.Full}
       >
         Add Column Condition

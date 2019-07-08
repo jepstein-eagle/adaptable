@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { PanelProps, Row, Col } from 'react-bootstrap';
 
 import { IColItem } from '../../UIInterfaces';
-import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import Panel from '../../../components/Panel';
+import Panel, { PanelProps } from '../../../components/Panel';
+import { Flex, Text } from 'rebass';
 
 export interface PanelWithRowProps extends PanelProps {
   // CellInfo: [string, number][]
@@ -18,30 +17,32 @@ export interface PanelWithRowProps extends PanelProps {
 export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
   render() {
     let cssClassName = this.props.cssClassName + StyleConstants.ITEMS_TABLE_HEADER;
-    let className = 'ab_panel-with-button'; // this will change...
 
-    let headerItems = this.props.colItems.map((colItem: IColItem) => {
+    let headerItems = this.props.colItems.map((colItem: IColItem, index) => {
       return (
-        <Col key={colItem.Content + colItem.Size} xs={colItem.Size}>
+        <Text
+          key={colItem.Content || index}
+          fontSize={1}
+          paddingLeft={1}
+          paddingRight={1}
+          style={{
+            flex: colItem.Size,
+          }}
+        >
           {colItem.Content}
-        </Col>
+        </Text>
       );
     });
 
     let header = (
-      <Row style={{ display: 'flex', alignItems: 'center', fontSize: 'small', padding: '2px' }}>
+      <Flex alignItems="center" style={{ width: '100%' }}>
         {headerItems}
-      </Row>
+      </Flex>
     );
 
     return (
       <div className={cssClassName}>
-        <Panel
-          header={header}
-          bsSize={'small'}
-          className="ab_no_padding_no_margin ab_small-padding-panel-header"
-          bsStyle={this.props.bsStyle}
-        >
+        <Panel header={header} border={this.props.border} bodyProps={this.props.bodyProps}>
           {this.props.children}
         </Panel>
       </div>

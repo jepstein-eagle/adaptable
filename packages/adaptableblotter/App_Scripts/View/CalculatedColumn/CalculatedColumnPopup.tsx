@@ -128,6 +128,8 @@ class CalculatedColumnPopupComponent extends React.Component<
           infoBody={infoBody}
           button={newButton}
           bsStyle="primary"
+          border="none"
+          bodyProps={{ padding: 0 }}
           glyphicon={StrategyConstants.CalculatedColumnGlyph}
         >
           {this.props.CalculatedColumns.length > 0 ? (

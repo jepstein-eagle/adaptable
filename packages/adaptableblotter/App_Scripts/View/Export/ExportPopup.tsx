@@ -117,6 +117,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
       <SimpleButton
         onClick={() => this.onNew()}
         tooltip="Create Report"
+        tone="success"
         icon="plus"
         variant="raised"
         AccessLevel={this.props.AccessLevel}
