@@ -31,7 +31,6 @@ export class AlertStrategy extends AdaptableStrategyBase implements IAlertStrate
   }
 
   protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
-    console.log('ive been called in Alert Strategy...');
     let alertDefinitions: AlertDefinition[] = this.CheckDataChanged(dataChangedEvent);
     if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
       let columns: IColumn[] = this.blotter.api.gridApi.getColumns();

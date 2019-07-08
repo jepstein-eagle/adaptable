@@ -1351,16 +1351,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.gridOptions.api.refreshCells(refreshCellParams);
   }
 
-  public refreshRows(rows: RowNode[]) {
-    console.log('refresnh rows');
-    console.log(rows);
-    let refreshCellParams: RefreshCellsParams = {
-      rowNodes: rows,
-      //   force: true,
-    };
-    this.gridOptions.api.refreshCells(refreshCellParams);
-  }
-
   public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
     // the name of the column might have changed so lets get the column from store as that will be the 'old' one
     const cols: IColumn[] = this.api.gridApi.getColumns();

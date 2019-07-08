@@ -62,10 +62,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
           if (index !== -1) {
             listOfColumnsToRefresh.splice(index, 1);
           }
-          console.log('after');
-          console.log(listOfColumnsToRefresh);
           if (listOfColumnsToRefresh.length > 0) {
-            console.log('about to refresh');
             let theBlotter = this.blotter as AdaptableBlotter;
             theBlotter.refreshCells([dataChangedEvent.Record], listOfColumnsToRefresh);
           }
