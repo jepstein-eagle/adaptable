@@ -2,6 +2,7 @@ export interface QueryOptions {
   /**
    * How many items to display in column value listboxes when building queries
    * Useful when datasource is very large
+   * Defaults to 2000
    */
   maxColumnValueItemsDisplayed?: number;
   /**
