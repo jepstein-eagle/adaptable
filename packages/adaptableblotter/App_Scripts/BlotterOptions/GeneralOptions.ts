@@ -1,3 +1,10 @@
+/**
+ * General options section of Adaptable Blotter Options.
+ *
+ * Essentially those options that didnt fit into an obvious group (e.g. Layout, Filter etc.) but we didnt want at root.
+ *
+ * Includes options for Server Searching, Themes and managing Primary Keys.
+ */
 export interface GeneralOptions {
   /**
    * Which searching and filtering options, if any, should take place on the server.
