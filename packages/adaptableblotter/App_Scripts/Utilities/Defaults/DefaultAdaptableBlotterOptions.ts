@@ -60,7 +60,7 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
     },
   },
   queryOptions: {
-    maxColumnValueItemsDisplayed: 5000,
+    maxColumnValueItemsDisplayed: 2000,
     columnValuesOnlyInQueries: false,
     getColumnValues: undefined,
     ignoreCaseInQueries: true,

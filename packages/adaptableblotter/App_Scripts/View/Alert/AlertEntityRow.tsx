@@ -80,14 +80,6 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
 
   onMessageTypeChanged(alertDefinition: AlertDefinition, event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    let messageType: MessageType;
-    if (e.value == 'Info') {
-      messageType = MessageType.Info;
-    } else if (e.value == 'Warning') {
-      messageType = MessageType.Warning;
-    } else if (e.value == 'Error') {
-      messageType = MessageType.Error;
-    }
-    this.props.onChangeMessageType(alertDefinition, messageType);
+    this.props.onChangeMessageType(alertDefinition, e.value as MessageType);
   }
 }
