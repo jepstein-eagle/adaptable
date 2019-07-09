@@ -30,6 +30,7 @@ import {
   EntitlementsState,
   IEntitlement,
 } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
@@ -43,9 +44,15 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
     let cssClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD;
     let cssBaseClassName: string = StyleConstants.AB_STYLE + StyleConstants.DASHBOARD_BASE;
 
-    let optionsBlotterName: string = this.props.Blotter.blotterOptions.blotterId;
-    let blotterName: string =
-      optionsBlotterName == GeneralConstants.USER_NAME ? 'Blotter ' : optionsBlotterName;
+    // this logic is repeated from Home Toolbar where we get the Title  - perhaps put it one place?
+    let blotterName = this.props.DashboardState.HomeToolbarTitle;
+    if (StringExtensions.IsNullOrEmpty(blotterName)) {
+      blotterName = this.props.Blotter.blotterOptions.blotterId;
+      if (blotterName == GeneralConstants.USER_NAME) {
+        blotterName = 'Blotter ';
+      }
+    }
+
     let showBlotterName: string = 'Show ' + blotterName + ' Dashboard';
     let hiddenEntitlements: IEntitlement[] = this.props.EntitlementsState.FunctionEntitlements.filter(
       e => e.AccessLevel == 'Hidden'

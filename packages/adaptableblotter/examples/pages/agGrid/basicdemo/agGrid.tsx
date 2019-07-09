@@ -39,7 +39,11 @@ function InitAdaptableBlotter() {
   adaptableblotter.applyLightTheme();
 }
 
-let demoConfig: PredefinedConfig = {};
+let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    //  HomeToolbarTitle: 'Hello world',
+  },
+};
 
 export default () => {
   useEffect(() => {

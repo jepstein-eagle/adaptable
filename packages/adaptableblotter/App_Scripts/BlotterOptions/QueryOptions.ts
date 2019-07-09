@@ -1,5 +1,5 @@
 /**
- * Options relatd to Queries (aka Expressions) in the Adaptable Blotter.
+ * Options related to Queries (aka Expressions) in the Adaptable Blotter.
  *
  * Many functions in the Adaptable Blotter use Queries to enable users to identify a set of rows for a particular task (e.g. Search, Export, Conditional Style, Chart etc.)
  *
