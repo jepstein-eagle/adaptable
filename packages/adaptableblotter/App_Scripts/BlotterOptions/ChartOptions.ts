@@ -1,3 +1,15 @@
+/**
+ * Options for managing Charts in the Adaptable Blotter
+ *
+ * Properties to set how and where charts are displayed
+ * ```ts
+ * chartOptions = {
+ *  displayOnStartUp: true,
+ *  showModal: false,
+ *  pieChartMaxItems: 30,
+ *};
+ * ```
+ */
 export interface ChartOptions {
   /**
    * Whether or not a chart is displayed at start up.

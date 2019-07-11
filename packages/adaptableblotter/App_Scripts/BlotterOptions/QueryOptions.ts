@@ -4,6 +4,14 @@
  * Many functions in the Adaptable Blotter use Queries to enable users to identify a set of rows for a particular task (e.g. Search, Export, Conditional Style, Chart etc.)
  *
  * Each Query / Expression can include multiple column conditions and can be include any or all of Column Value Lists, Filters and Query Ranges.
+ *
+ * ```ts
+ * queryOptions = {
+ *  maxColumnValueItemsDisplayed: 1000,
+ *  columnValuesOnlyInQueries: true
+ *  ignoreCaseInQueries: false
+ *};
+ * ```
  */
 export interface QueryOptions {
   /**
@@ -57,6 +65,17 @@ export interface QueryOptions {
  * The values returned (through a Promise) will populate the Column Filter, Column Values section in Query Builder and Bulk Update.
  */
 export interface IServerColumnValues {
+  /**
+   * Whether the value being returned is the display or raw value.
+   *
+   * A raw value is used if you then convert it before dispalying it (e.g. you might have a cell formatter).
+   */
   DistinctCriteriaPairValue: 'RawValue' | 'DisplayValue';
+
+  /**
+   * The values to display in the list.
+   *
+   * Always sent as strings.
+   */
   ColumnValues: string[];
 }

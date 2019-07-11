@@ -1,10 +1,27 @@
+/**
+ * Options for managing Filters.
+ *
+ * Includes properties on how Filters should look and whether to use Adaptable Blotter or Vendor filters.
+ *
+ * ```ts
+ * filterOptions = {
+ *  indicateFilteredColumns: false,
+ *  useAdaptableBlotterFilterForm: false,
+ *  useAdaptableBlotterQuickFilter: false,
+ *  filterActionOnUserDataChange: {
+ *   RunFilter: 'Throttle',
+ *   ThrottleDelay: 50
+ *  }
+ *};
+ * ```
+ */
 export interface FilterOptions {
   /**
    * Whether to make the font in the Column header for filtered columns to be bold and italicised.
    *
    * This makes it easier for users to see at a glance which columns are currently filtered
    *
-   * Default value is true.
+   * **Default Value: true**
    */
   indicateFilteredColumns?: boolean;
   /**
@@ -14,7 +31,7 @@ export interface FilterOptions {
    *
    * Only applicable in DataGrids where the vendor offers a filter form.  If not then only the Adaptable Blotter form is used.
    *
-   * Default value is true.
+   * **Default Value: true**
    */
   useAdaptableBlotterFilterForm?: boolean;
   /**
@@ -24,7 +41,7 @@ export interface FilterOptions {
    *
    * Note: this property is onky applicable in DataGrids where the vendor offers a quick / floating filter row.  If not, then NO quick filter is used.
    *
-   * Default value is true.
+   * **Default Value: true**
    */
   useAdaptableBlotterQuickFilter?: boolean;
   /**
@@ -33,6 +50,8 @@ export interface FilterOptions {
    * The choice is 'Always' (the default value), 'Never' or 'Throttle'
    *
    * If 'Throttle' is selected, then a 'ThrottleDelay' needs to be provided
+   *
+   * **Default Value: Always**
    */
   filterActionOnUserDataChange?: IFilterActionOnDataChange;
   /**
@@ -41,6 +60,8 @@ export interface FilterOptions {
    * The choice is 'Always', 'Never' (the default value) or 'Throttle'
    *
    * If 'Throttle' is selected, then a 'ThrottleDelay' needs to be provided
+   *
+   * **Default Value: Never**
    */
   filterActionOnExternalDataChange?: IFilterActionOnDataChange;
 }
@@ -53,6 +74,13 @@ export interface FilterOptions {
  * If the 'runFilter' value is 'Throttle' then the 'throttleDelay' property should be additionally set.
  */
 export interface IFilterActionOnDataChange {
+  /**
+   * When to re-apply Filters
+   */
   RunFilter: 'Always' | 'Never' | 'Throttle';
+
+  /**
+   * The delay used (when Filter is set to Throttle)
+   */
   ThrottleDelay: number;
 }
