@@ -1,15 +1,10 @@
 import * as React from 'react';
-import {
-  ButtonToolbar,
-  Button,
-  Checkbox,
-  OverlayTrigger,
-  Tooltip,
-  Glyphicon,
-} from 'react-bootstrap';
+
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColItem } from '../UIInterfaces';
 import { Calendar } from '../../PredefinedConfig/RunTimeState/CalendarState';
+import SimpleButton from '../../components/SimpleButton';
+import Radio from '../../components/Radio';
 
 export interface CalendarsEntryRowProps extends React.ClassAttributes<CalendarsEntryRow> {
   Calendar: Calendar;
@@ -25,10 +20,7 @@ export class CalendarsEntryRow extends React.Component<CalendarsEntryRowProps, {
     colItems.push({
       Size: 3,
       Content: (
-        <Checkbox
-          onChange={() => this.props.onSelect(this.props.Calendar)}
-          checked={this.props.Calendar.Name == this.props.CurrentCalendar}
-        />
+        <Radio name="calendar" checked={this.props.Calendar.Name == this.props.CurrentCalendar} />
       ),
     });
     colItems.push({ Size: 5, Content: this.props.Calendar.Name });
@@ -36,19 +28,28 @@ export class CalendarsEntryRow extends React.Component<CalendarsEntryRowProps, {
     colItems.push({
       Size: 3,
       Content: (
-        <ButtonToolbar>
-          <OverlayTrigger
-            overlay={<Tooltip id="tooltipShowInformation">Show Calendar Dates</Tooltip>}
-          >
-            <Button onClick={() => this.props.onShowInformation(this.props.Calendar)}>
-              {' '}
-              {'Calendar Details '}
-              <Glyphicon glyph="info-sign" />
-            </Button>
-          </OverlayTrigger>
-        </ButtonToolbar>
+        <SimpleButton
+          onClick={(e: React.SyntheticEvent) => {
+            e.stopPropagation();
+            this.props.onShowInformation(this.props.Calendar);
+          }}
+          tooltip="Show Calendar Dates"
+          iconPosition="end"
+          icon="info"
+          tone="success"
+          variant="raised"
+        >
+          {'Calendar Details '}
+        </SimpleButton>
       ),
     });
-    return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
+    return (
+      <AdaptableObjectRow
+        cssClassName={this.props.cssClassName}
+        colItems={colItems}
+        style={{ width: '100%', cursor: 'pointer' }}
+        onClick={() => this.props.onSelect(this.props.Calendar)}
+      />
+    );
   }
 }

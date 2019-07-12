@@ -5,8 +5,11 @@
     var(--ab-color-lightgray)
   );
 
+  --ab-cmp-panel_body__background: var(--ab-color-almost-white);
+
   --ab-cmp-panel__border-radius: var(--ab__border-radius);
   --ab-cmp-panel__padding: var(--ab-space-2);
+  --ab-cmp-panel__max-height: 80vh;
   --ab-cmp-panel__border: 1px solid var(--ab-color-lightgray);
   --ab-cmp-panel-icon__fill: var(--ab-icon-fill);
 

@@ -6,13 +6,14 @@ import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import NewPanel from '../../../components/Panel';
-import { Box, Flex } from 'rebass';
+import { Box, Flex, BoxProps } from 'rebass';
 
 export interface PanelWithImageProps extends PanelProps {
   glyphicon?: string;
   infoBody?: any[];
   cssClassName: string;
   borderRadius?: string;
+  bodyProps?: BoxProps;
   theme: any;
   button?: React.ReactElement<any>;
 }
@@ -56,8 +57,12 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
         bsStyle={this.props.bsStyle}
         bsSize={this.props.bsSize}
         style={this.props.style}
-        headerProps={{ style: { border: 'none' } }}
-        bodyProps={{ style: { border: 'none' } }}
+        border="none"
+        borderRadius={this.props.borderRadius || 'none'}
+        bodyProps={{
+          padding: 0,
+          ...this.props.bodyProps,
+        }}
       >
         {this.props.children}
       </NewPanel>

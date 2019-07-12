@@ -31,6 +31,8 @@ export type ModalProps = React.HTMLProps<HTMLElement> &
     backdropZIndexOffset?: number;
   };
 
+let globalCounter = 0;
+
 const Modal = (props: ModalProps) => {
   ensurePortalElement();
 
@@ -39,12 +41,15 @@ const Modal = (props: ModalProps) => {
   const timestamp = isOpen ? Date.now() : 0;
   const uuid: string = useMemo(() => createUuid(), []);
 
-  const backdropZIndexOffset = props.backdropZIndexOffset || 10;
-  const zIndex = props.baseZIndex || 1000;
+  const openTimestamp = useMemo(() => (isOpen ? globalCounter++ : 0), [isOpen]);
+
+  const backdropZIndexOffset = props.backdropZIndexOffset || 1;
+  const zIndex = (props.baseZIndex || 1000) + globalCounter;
 
   return createPortal(
     isOpen ? (
       <>
+        <Backdrop timestamp={openTimestamp} uuid={uuid} zIndex={zIndex - backdropZIndexOffset} />
         <RemoveScroll>
           <Flex
             alignItems="center"
@@ -57,7 +62,6 @@ const Modal = (props: ModalProps) => {
             {children}
           </Flex>
         </RemoveScroll>
-        <Backdrop timestamp={timestamp} uuid={uuid} zIndex={zIndex - backdropZIndexOffset} />
       </>
     ) : null,
     portalElement

@@ -34,7 +34,6 @@ export class WizardSummaryPage extends React.Component<WizardSummaryPageProps, {
           border="none"
           className={this.props.cssClassName}
           header={this.props.header + ' Summary'}
-          bsStyle="primary"
           borderRadius="none"
           bodyProps={{ padding: 0 }}
         >

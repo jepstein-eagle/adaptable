@@ -42,8 +42,8 @@
 }
 
 *:focus {
-  outline: var(--ab-focus__outline);
-  outline-offset: -2px;
+  box-shadow: 0 0 5px 1px var(--ab-color-accent);
+  outline: none;
 }
 
 .ab_main_popup.ab_main_popup {
@@ -67,6 +67,7 @@
 @import './components/DropdownButton/base.scss';
 @import './components/Tooltip/base.scss';
 @import './components/Input/base.scss';
+@import './components/Textarea/base.scss';
 @import './components/ErrorBox/base.scss';
 @import './components/HelpBlock/base.scss';
 @import './components/List/ListGroup/base.scss';
