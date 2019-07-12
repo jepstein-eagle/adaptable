@@ -71,57 +71,55 @@ export class ExpressionBuilderPage
     );
 
     return (
-      <div className={cssClassName} style={{ height: '100%' }}>
-        <PanelWithButton
-          cssClassName={cssClassName}
-          headerText="Query Builder"
-          button={newButton}
-          bodyProps={{
-            style: {
-              display: 'flex',
-              flexFlow: 'column',
-              overflow: 'auto',
-            },
-          }}
-          style={{ height: '100%' }}
-        >
-          <Flex flexDirection="row" style={{ height: '100%' }}>
-            <ExpressionBuilderConditionSelector
-              ColumnsList={this.props.Columns}
-              cssClassName={cssClassName}
-              QueryBuildStatus={queryBuildStatus}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              Expression={this.state.Expression}
-              ExpressionMode={
-                this.props.ExpressionMode != null
-                  ? this.props.ExpressionMode
-                  : ExpressionMode.MultiColumn
-              }
-              onExpressionChange={expression => this.onChangeExpression(expression)}
-              onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
-              SelectedColumnId={this.state.SelectedColumnId}
-              SelectedTab={this.state.SelectedTab}
-              Blotter={this.props.Blotter}
-            />
+      <PanelWithButton
+        cssClassName={cssClassName}
+        headerText="Query Builder"
+        button={newButton}
+        bodyProps={{
+          style: {
+            display: 'flex',
+            flexFlow: 'column',
+            overflow: 'auto',
+          },
+        }}
+        style={{ height: '100%' }}
+      >
+        <Flex flexDirection="row" style={{ height: '100%' }}>
+          <ExpressionBuilderConditionSelector
+            ColumnsList={this.props.Columns}
+            cssClassName={cssClassName}
+            QueryBuildStatus={queryBuildStatus}
+            UserFilters={this.props.UserFilters}
+            SystemFilters={this.props.SystemFilters}
+            Expression={this.state.Expression}
+            ExpressionMode={
+              this.props.ExpressionMode != null
+                ? this.props.ExpressionMode
+                : ExpressionMode.MultiColumn
+            }
+            onExpressionChange={expression => this.onChangeExpression(expression)}
+            onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
+            SelectedColumnId={this.state.SelectedColumnId}
+            SelectedTab={this.state.SelectedTab}
+            Blotter={this.props.Blotter}
+          />
 
-            <ExpressionBuilderPreview
-              Expression={this.state.Expression}
-              cssClassName={cssClassName}
-              UserFilters={this.props.UserFilters}
-              onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
-              ColumnsList={this.props.Columns}
-              DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
-              DeleteUserFilterExpression={(columnId, index) =>
-                this.DeleteUserFilterExpression(columnId, index)
-              }
-              DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}
-              DeleteAllColumnExpression={columnId => this.DeleteAllColumnExpression(columnId)}
-              ShowPanel={true}
-            />
-          </Flex>
-        </PanelWithButton>
-      </div>
+          <ExpressionBuilderPreview
+            Expression={this.state.Expression}
+            cssClassName={cssClassName}
+            UserFilters={this.props.UserFilters}
+            onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
+            ColumnsList={this.props.Columns}
+            DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
+            DeleteUserFilterExpression={(columnId, index) =>
+              this.DeleteUserFilterExpression(columnId, index)
+            }
+            DeleteRange={(columnId, index) => this.DeleteRange(columnId, index)}
+            DeleteAllColumnExpression={columnId => this.DeleteAllColumnExpression(columnId)}
+            ShowPanel={true}
+          />
+        </Flex>
+      </PanelWithButton>
     );
   }
 

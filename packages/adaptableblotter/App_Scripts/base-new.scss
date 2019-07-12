@@ -34,16 +34,11 @@
   --ab-color-almost-white: #f5f5f5;
   --ab-color-white: white;
   --ab-icon-fill: currentColor;
-  --ab-info-gradient: linear-gradient(180deg, #337ab7 0, #2e6da4);
-  --ab-focus__outline: 3px auto -webkit-focus-ring-color;
+  --ab-focus__box-shadow: 0 0 5px 1px var(--ab-color-accent);
+  --ab-focus__outline: none;
 }
 :root {
   
-}
-
-*:focus {
-  box-shadow: 0 0 5px 1px var(--ab-color-accent);
-  outline: none;
 }
 
 .ab_main_popup.ab_main_popup {

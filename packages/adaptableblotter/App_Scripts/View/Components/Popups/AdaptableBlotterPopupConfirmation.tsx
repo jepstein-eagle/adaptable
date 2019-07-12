@@ -1,13 +1,14 @@
 import * as React from 'react';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../../UIHelper';
-import { Modal, ControlLabel, FormControl } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
-import { Flex } from 'rebass';
+import { Flex, Box, Text } from 'rebass';
 import SimpleButton from '../../../components/SimpleButton';
+import Input from '../../../components/Input';
 
 /**
  * Used when giving the user 2 choices with the option of adding text also
@@ -69,16 +70,16 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
                     header={header}
                     bsStyle={style}
                     glyphicon={glyph}
-                    bsSize={'small'}
+                    variant="primary"
                   >
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         {this.props.Msg.split('\n').map(function(item, index) {
                           return (
-                            <ControlLabel key={index}>
+                            <Text key={index} margin={2}>
                               {item}
                               <br />
-                            </ControlLabel>
+                            </Text>
                           );
                         })}
                       </div>
@@ -86,19 +87,18 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
                         <div style={{ marginTop: '20px' }}>
                           <span>Please enter a comment to confirm</span>
                           <br />
-                          <FormControl
-                            style={{ marginTop: '20px' }}
+                          <Input
+                            marginTop={2}
                             value={this.state.PromptText}
                             type="string"
                             placeholder="Enter text"
-                            onChange={e => this.changeContent(e)}
+                            onChange={(e: React.SyntheticEvent) => this.changeContent(e)}
                           />
                         </div>
                       )}
-                      <div style={{ marginTop: '20px' }}>
-                        <Flex>
+                      <Box marginTop={3}>
+                        <Flex padding={2}>
                           <SimpleButton
-                            marginLeft={2}
                             bsStyle={StyleConstants.PRIMARY_BSSTYLE}
                             tone="error"
                             className={
@@ -114,7 +114,6 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
                           </SimpleButton>
                           <div style={{ flex: 1 }} />
                           <SimpleButton
-                            marginRight={2}
                             tone="neutral"
                             variant="raised"
                             bsStyle={StyleConstants.DEFAULT_BSSTYLE}
@@ -128,7 +127,7 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
                             {this.props.CancelButtonText}
                           </SimpleButton>
                         </Flex>
-                      </div>
+                      </Box>
                     </div>
                   </PanelWithImage>
                 </div>

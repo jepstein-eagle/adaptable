@@ -1,8 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
-import { Flex } from 'rebass';
+
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
@@ -68,29 +67,27 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
     });
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
-        <PanelWithImage
-          cssClassName={cssClassName}
-          header={StrategyConstants.ColumnFilterStrategyName}
-          bsStyle="primary"
-          infoBody={infoBody}
-          glyphicon={StrategyConstants.ColumnFilterGlyph}
-          style={{ flex: 1 }}
-        >
-          {columnFilterItems.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={columnFilterItems}
-            />
-          ) : (
-            <EmptyContent>
-              <p>There are currently no column filters applied.</p>
-              <p>Create column filters by using the filter dropdown in each column header.</p>
-            </EmptyContent>
-          )}
-        </PanelWithImage>
-      </Flex>
+      <PanelWithImage
+        cssClassName={cssClassName}
+        header={StrategyConstants.ColumnFilterStrategyName}
+        variant="primary"
+        infoBody={infoBody}
+        glyphicon={StrategyConstants.ColumnFilterGlyph}
+        style={{ flex: 1 }}
+      >
+        {columnFilterItems.length > 0 ? (
+          <AdaptableObjectCollection
+            cssClassName={cssClassName}
+            colItems={colItems}
+            items={columnFilterItems}
+          />
+        ) : (
+          <EmptyContent>
+            <p>There are currently no column filters applied.</p>
+            <p>Create column filters by using the filter dropdown in each column header.</p>
+          </EmptyContent>
+        )}
+      </PanelWithImage>
     );
   }
 

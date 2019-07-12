@@ -58,7 +58,6 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
   }
   render() {
     let cssClassName: string = this.props.cssClassName + '__Alert';
-    let cssWizardClassName: string = StyleConstants.WIZARD_STRATEGY + '__Alert';
 
     let infoBody: any[] = [
       'Alert Definitions define which changes to the source data will trigger an Alert.',
@@ -106,58 +105,53 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
-        <PanelWithButton
-          bodyProps={{ padding: 0 }}
-          headerText={StrategyConstants.AlertStrategyName}
-          bsStyle="primary"
-          style={{ flex: 1 }}
-          cssClassName={cssClassName}
-          button={newButton}
-          glyphicon={StrategyConstants.AlertGlyph}
-          infoBody={infoBody}
-        >
-          {alertEntities.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={alertEntities}
-            />
-          ) : (
-            <EmptyContent>
-              <p>You have no Alert Definitions.</p>
-              {this.props.AccessLevel != AccessLevel.ReadOnly && (
-                <div>
-                  <p>Click 'New' to start creating alert definitions.</p>
-                  <p>
-                    An alert will be triggered whenever an edit - or external data change - matches
-                    the condition in the alert definition.
-                  </p>
-                </div>
-              )}
-            </EmptyContent>
-          )}
+      <PanelWithButton
+        bodyProps={{ padding: 0 }}
+        headerText={StrategyConstants.AlertStrategyName}
+        cssClassName={cssClassName}
+        button={newButton}
+        glyphicon={StrategyConstants.AlertGlyph}
+        infoBody={infoBody}
+      >
+        {alertEntities.length > 0 ? (
+          <AdaptableObjectCollection
+            cssClassName={cssClassName}
+            colItems={colItems}
+            items={alertEntities}
+          />
+        ) : (
+          <EmptyContent>
+            <p>You have no Alert Definitions.</p>
+            {this.props.AccessLevel != AccessLevel.ReadOnly && (
+              <div>
+                <p>Click 'New' to start creating alert definitions.</p>
+                <p>
+                  An alert will be triggered whenever an edit - or external data change - matches
+                  the condition in the alert definition.
+                </p>
+              </div>
+            )}
+          </EmptyContent>
+        )}
 
-          {this.state.WizardStatus != WizardStatus.None && (
-            <AlertWizard
-              cssClassName={cssWizardClassName}
-              EditedAdaptableBlotterObject={
-                this.state.EditedAdaptableBlotterObject as AlertDefinition
-              }
-              ConfigEntities={null}
-              ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              Blotter={this.props.Blotter}
-              WizardStartIndex={this.state.WizardStartIndex}
-              onCloseWizard={() => this.onCloseWizard()}
-              onFinishWizard={() => this.onFinishWizard()}
-              canFinishWizard={() => this.canFinishWizard()}
-            />
-          )}
-        </PanelWithButton>
-      </Flex>
+        {this.state.WizardStatus != WizardStatus.None && (
+          <AlertWizard
+            EditedAdaptableBlotterObject={
+              this.state.EditedAdaptableBlotterObject as AlertDefinition
+            }
+            ConfigEntities={null}
+            ModalContainer={this.props.ModalContainer}
+            Columns={this.props.Columns}
+            UserFilters={this.props.UserFilters}
+            SystemFilters={this.props.SystemFilters}
+            Blotter={this.props.Blotter}
+            WizardStartIndex={this.state.WizardStartIndex}
+            onCloseWizard={() => this.onCloseWizard()}
+            onFinishWizard={() => this.onFinishWizard()}
+            canFinishWizard={() => this.canFinishWizard()}
+          />
+        )}
+      </PanelWithButton>
     );
   }
 

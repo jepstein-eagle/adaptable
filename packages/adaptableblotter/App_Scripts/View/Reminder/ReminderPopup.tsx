@@ -78,11 +78,9 @@ class ReminderPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create Reminder"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Reminder"
         AccessLevel={this.props.AccessLevel}
       />
     );

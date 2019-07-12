@@ -6,7 +6,7 @@ import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalS
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { HelpBlock } from 'react-bootstrap';
+
 import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard';
@@ -107,11 +107,9 @@ class ConditionalStylePopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create Conditional Style"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Conditional Style"
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -122,6 +120,7 @@ class ConditionalStylePopupComponent extends React.Component<
           headerText={StrategyConstants.ConditionalStyleStrategyName}
           button={newButton}
           bsStyle={StyleConstants.PRIMARY_BSSTYLE}
+          bodyProps={{ padding: 0 }}
           cssClassName={cssClassName}
           glyphicon={StrategyConstants.ConditionalStyleGlyph}
           infoBody={infoBody}

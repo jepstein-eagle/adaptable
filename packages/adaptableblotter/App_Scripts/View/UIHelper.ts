@@ -305,8 +305,9 @@ export function GetScheduleDescription(schedule: Schedule): string {
 }
 
 function addLeadingZero(item: number): string {
+  item = item || 0;
   if (item < 10) {
-    return `0${item.toString()}`;
+    return `0${item && item.toString ? item.toString() : item}`;
   }
   return item.toString();
 }

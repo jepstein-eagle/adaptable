@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { IColItem } from '../UIInterfaces';
 import { WizardSummaryRow } from './WizardSummaryRow';
-import Panel from '../../components/Panel';
 import { AdaptableObjectCollection } from './AdaptableObjectCollection';
 import { IKeyValuePair } from '../../Utilities/Interface/IKeyValuePair';
+import WizardPanel from '../../components/WizardPanel';
 
 export interface WizardSummaryPageProps extends React.ClassAttributes<WizardSummaryPage> {
   KeyValuePairs: IKeyValuePair[];
@@ -29,22 +29,18 @@ export class WizardSummaryPage extends React.Component<WizardSummaryPageProps, {
     });
 
     return (
-      <div className={this.props.cssClassName}>
-        <Panel
-          border="none"
-          className={this.props.cssClassName}
-          header={this.props.header + ' Summary'}
-          borderRadius="none"
-          bodyProps={{ padding: 0 }}
-        >
-          <AdaptableObjectCollection
-            cssClassName={this.props.cssClassName}
-            colItems={colItems}
-            items={summaryRows}
-            bsSize={'medium'}
-          />
-        </Panel>
-      </div>
+      <WizardPanel
+        className={this.props.cssClassName}
+        header={this.props.header + ' Summary'}
+        bodyProps={{ padding: 0 }}
+      >
+        <AdaptableObjectCollection
+          cssClassName={this.props.cssClassName}
+          colItems={colItems}
+          items={summaryRows}
+          bsSize={'medium'}
+        />
+      </WizardPanel>
     );
   }
 }

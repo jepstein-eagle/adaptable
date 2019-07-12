@@ -10,48 +10,54 @@ export type PanelProps = HTMLProps<HTMLElement> & {
   headerProps?: BoxProps;
   bodyProps?: BoxProps;
   bsStyle?: string;
+  variant?: 'default' | 'primary';
   bsSize?: string;
   border?: string | number;
   borderRadius?: string | number;
+  bodyScroll?: string | boolean;
 } & BoxProps;
 
 const Header = ({
   children,
-  bsStyle,
+  variant = 'default',
   ...headerProps
-}: { bsStyle?: string; children?: ReactNode } & BoxProps) => {
+}: { variant?: 'default' | 'primary'; children?: ReactNode } & BoxProps) => {
   if (!children) {
     return null;
   }
 
   const style: { [key: string]: any } = {};
-  let color;
-
-  if (bsStyle === 'primary') {
-    style.background = 'var(--ab-info-gradient)';
-    color = 'almost-white';
-  }
 
   return (
     <Box
       fontSize={2}
-      color={color}
       {...headerProps}
       style={{ ...style, ...headerProps.style }}
-      className={`${baseClassName}__header`}
+      className={join(`${baseClassName}__header`, `${baseClassName}__header--variant-${variant}`)}
     >
       {children}
     </Box>
   );
 };
 
-const Body = ({ children, ...bodyProps }: { children?: ReactNode } & BoxProps) => {
+const Body = ({
+  children,
+  bodyScroll,
+  ...bodyProps
+}: { children?: ReactNode; bodyScroll?: string | boolean } & BoxProps) => {
   if (!children) {
     return null;
   }
 
+  if (bodyScroll === true) {
+    bodyScroll = 'auto';
+  }
+
   return (
-    <Box {...bodyProps} className={`${baseClassName}__body`}>
+    <Box
+      {...bodyProps}
+      className={join(`${baseClassName}__body`, `${baseClassName}__body--scroll-${bodyScroll}`)}
+    >
       {children}
     </Box>
   );
@@ -66,7 +72,8 @@ const Panel = (props: PanelProps) => {
     children,
     headerProps,
     bodyProps,
-    bsStyle,
+    bodyScroll,
+    variant = 'default',
     ...boxProps
   } = props;
 
@@ -92,13 +99,14 @@ const Panel = (props: PanelProps) => {
       className={join(
         className,
         baseClassName,
+        `${baseClassName}--variant-${variant}`,
         !header ? `${baseClassName}--no-header` : `${baseClassName}--with-header`
       )}
     >
-      <Header {...headerProps} style={headerStyle} bsStyle={bsStyle}>
+      <Header {...headerProps} style={headerStyle} variant={variant}>
         {header}
       </Header>
-      <Body {...bodyProps} style={bodyStyle}>
+      <Body {...bodyProps} style={bodyStyle} bodyScroll={bodyScroll}>
         {children}
       </Body>
     </Box>

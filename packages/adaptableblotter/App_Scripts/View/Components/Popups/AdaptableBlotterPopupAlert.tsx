@@ -5,6 +5,7 @@ import { Modal, Button, Row, Col, ControlLabel } from 'react-bootstrap';
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { UIHelper } from '../../UIHelper';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+import { Flex } from 'rebass';
 
 /**
  * The most simple of the alert type popups - just shows a message with a close button.  No user action required.
@@ -56,6 +57,7 @@ export class AdaptableBlotterPopupAlert extends React.Component<
                     bsStyle={style}
                     glyphicon={glyph}
                     bsSize={'small'}
+                    bodyProps={{ padding: 2 }}
                   >
                     <div>
                       {headerContainsMessage == false && (
@@ -64,24 +66,17 @@ export class AdaptableBlotterPopupAlert extends React.Component<
                         </div>
                       )}
                       <div style={{ display: 'flex', alignItems: 'center' }}>{this.props.Msg}</div>
-                      <div style={{ marginTop: '20px' }}>
-                        <Row>
-                          <Col xs={4} />
-                          <Col xs={7}>
-                            <Button
-                              bsStyle={style}
-                              className={
-                                cssClassName +
-                                StyleConstants.MODAL_FOOTER +
-                                StyleConstants.CLOSE_BUTTON
-                              }
-                              onClick={() => this.props.onClose()}
-                            >
-                              OK
-                            </Button>
-                          </Col>
-                        </Row>
-                      </div>
+                      <Flex flexDirection="row" marginTop={2} alignItems="center">
+                        <Button
+                          bsStyle={style}
+                          className={
+                            cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON
+                          }
+                          onClick={() => this.props.onClose()}
+                        >
+                          OK
+                        </Button>
+                      </Flex>
                     </div>
                   </PanelWithImage>
                 </div>

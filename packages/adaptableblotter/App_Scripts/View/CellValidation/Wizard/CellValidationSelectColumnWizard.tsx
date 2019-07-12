@@ -9,8 +9,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
-import { Flex } from 'rebass';
-import Panel from '../../../components/Panel';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface CellValidationSelectColumnWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -35,17 +34,15 @@ export class CellValidationSelectColumnWizard
     let cssClassName: string = this.props.cssClassName + '-selectcolumn';
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
-        <Panel header="Select a Column" borderRadius={'none'} border="none" bsStyle="primary">
-          <ColumnSelector
-            cssClassName={cssClassName}
-            SelectedColumnIds={[this.state.ColumnId]}
-            ColumnList={this.props.Columns}
-            onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-            SelectionMode={SelectionMode.Single}
-          />
-        </Panel>
-      </Flex>
+      <WizardPanel header="Select a Column" borderRadius={'none'} border="none" bsStyle="primary">
+        <ColumnSelector
+          cssClassName={cssClassName}
+          SelectedColumnIds={[this.state.ColumnId]}
+          ColumnList={this.props.Columns}
+          onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+          SelectionMode={SelectionMode.Single}
+        />
+      </WizardPanel>
     );
   }
 

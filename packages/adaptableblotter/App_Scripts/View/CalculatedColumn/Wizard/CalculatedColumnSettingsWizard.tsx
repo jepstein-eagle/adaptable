@@ -11,6 +11,7 @@ import { Flex, Box, Text } from 'rebass';
 import Input from '../../../components/Input';
 import HelpBlock from '../../../components/HelpBlock';
 import Panel from '../../../components/Panel';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface CalculatedColumnSettingsWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {}
@@ -27,32 +28,28 @@ export class CalculatedColumnSettingsWizard
     this.state = { ColumnId: this.props.Data.ColumnId, ErrorMessage: null };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-settings';
-
     let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)
       ? null
       : 'error';
     return (
-      <div className={cssClassName}>
-        <Panel header="Calculated Column Settings" border="none" borderRadius="none">
-          <Flex flexDirection="row" alignItems="center">
-            <Text>Column Name</Text>
+      <WizardPanel header="Calculated Column Settings">
+        <Flex flexDirection="row" alignItems="center">
+          <Text>Column Name</Text>
 
-            <Box style={{ flex: 1 }} marginLeft={2} marginRight={2}>
-              <Input
-                style={{ width: '100%' }}
-                value={this.state.ColumnId}
-                autoFocus
-                type="text"
-                placeholder="Enter a name"
-                onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
-              />
+          <Box style={{ flex: 1 }} marginLeft={2} marginRight={2}>
+            <Input
+              style={{ width: '100%' }}
+              value={this.state.ColumnId}
+              autoFocus
+              type="text"
+              placeholder="Enter a name"
+              onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
+            />
 
-              {validationState ? <HelpBlock>{this.state.ErrorMessage}</HelpBlock> : null}
-            </Box>
-          </Flex>
-        </Panel>
-      </div>
+            {validationState ? <HelpBlock>{this.state.ErrorMessage}</HelpBlock> : null}
+          </Box>
+        </Flex>
+      </WizardPanel>
     );
   }
 

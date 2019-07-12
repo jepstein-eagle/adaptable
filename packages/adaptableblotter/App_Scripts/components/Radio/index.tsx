@@ -25,6 +25,10 @@ const RadioInput = styled.input`
     stroke-dasharray: 50;
     stroke-dashoffset: 50;
   }
+  & input:focus {
+    box-shadow: var(--ab-focus__box-shadow);
+    outline: var(--ab-focus__outline);
+  }
 `;
 
 type TypeProps = {
@@ -47,7 +51,7 @@ const Radio = ({
   childrenPosition = 'end',
   as = 'label',
   ...props
-}: Omit<HTMLInputElement, 'children'> & TypeProps) => {
+}: HTMLElement & TypeProps) => {
   const [stateChecked, setStateChecked] = useState<boolean>(false);
 
   const computedChecked = checked !== undefined ? checked : stateChecked;
@@ -95,6 +99,7 @@ const Radio = ({
         style={{
           verticalAlign: 'middle',
           // opacity: 0,
+          borderRadius: '50%',
           cursor: 'pointer',
           position: 'relative',
           // top: -2,

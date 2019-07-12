@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Panel, ControlLabel, FormControl, Col, FormGroup, HelpBlock } from 'react-bootstrap';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -8,6 +7,10 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { DataSource } from '../../../PredefinedConfig/RunTimeState/DataSourceState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
+import WizardPanel from '../../../components/WizardPanel';
+import { Flex, Text } from 'rebass';
+import Input from '../../../components/Input';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface DataSourceSettingsWizardProps extends AdaptableWizardStepProps<DataSource> {
   DataSourceNames: string[];
@@ -39,44 +42,32 @@ export class DataSourceSettingsWizard
     let cssClassName: string = this.props.cssClassName + '-settings';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="DataSource Definition Settings" bsStyle="primary">
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="DataSourceName">
-              <Col xs={3} componentClass={ControlLabel}>
-                Name:
-              </Col>
-              <Col xs={7}>
-                <FormGroup controlId="formInlineName" validationState={validationState}>
-                  <FormControl
-                    value={this.state.Name}
-                    type="string"
-                    placeholder="Enter DataSource name"
-                    onChange={e => this.onDataSourceNameChange(e)}
-                  />
-                  <FormControl.Feedback />
-                  <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-                </FormGroup>
-              </Col>
-            </FormGroup>
-            <FormGroup controlId="DataSourceDescription">
-              <Col xs={3} componentClass={ControlLabel}>
-                Description:
-              </Col>
-              <Col xs={7}>
-                <FormGroup controlId="formInlineDescription" validationState={validationState}>
-                  <FormControl
-                    value={this.state.Description}
-                    type="string"
-                    placeholder="Enter description"
-                    onChange={e => this.onDataSourceDescriptionChange(e)}
-                  />
-                </FormGroup>
-              </Col>
-            </FormGroup>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="DataSource Definition Settings" bsStyle="primary">
+        <Flex alignItems="center" flexDirection="row">
+          <Text style={{ flex: 3 }}>Name:</Text>
+
+          <Input
+            style={{ flex: 7 }}
+            value={this.state.Name}
+            type="string"
+            placeholder="Enter DataSource name"
+            onChange={(e: React.SyntheticEvent) => this.onDataSourceNameChange(e)}
+          />
+        </Flex>
+
+        {this.state.ErrorMessage ? <HelpBlock>{this.state.ErrorMessage}</HelpBlock> : null}
+
+        <Flex alignItems="center" flexDirection="row" marginTop={3}>
+          <Text style={{ flex: 3 }}>Description:</Text>
+
+          <Input
+            style={{ flex: 7 }}
+            type="string"
+            placeholder="Enter description"
+            onChange={(e: React.SyntheticEvent) => this.onDataSourceDescriptionChange(e)}
+          />
+        </Flex>
+      </WizardPanel>
     );
   }
 

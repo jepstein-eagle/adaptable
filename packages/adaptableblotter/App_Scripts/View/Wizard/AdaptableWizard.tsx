@@ -115,7 +115,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
           <Box style={{ flex: 1 }} className={cssClassName + StyleConstants.WIZARD_BODY}>
             <div className="ab_main_wizard">{this.state.ActiveState}</div>
           </Box>
-          <Flex flexDirection="row" padding={2}>
+          <Flex flexDirection="row" padding={2} backgroundColor="lightgray">
             <SimpleButton
               tone="neutral"
               variant="text"

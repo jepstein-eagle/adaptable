@@ -6,7 +6,6 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import {
   Glyphicon,
-  MenuItem,
   OverlayTrigger,
   Tooltip,
   // DropdownButton,
@@ -39,6 +38,8 @@ import Checkbox from '../../components/CheckBox';
 import SimpleButton from '../../components/SimpleButton';
 import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
+
+const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
 interface HomeToolbarComponentProps
   extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
@@ -105,7 +106,13 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         },
         label: (
           <div className="ab_home_toolbar_column_list">
-            <Checkbox value={col.ColumnId} key={col.ColumnId} checked={col.Visible}>
+            <Checkbox
+              as="div"
+              value={col.ColumnId}
+              key={col.ColumnId}
+              checked={col.Visible}
+              onMouseDown={preventDefault}
+            >
               {col.FriendlyName}
             </Checkbox>
           </div>
@@ -141,7 +148,13 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           },
           label: (
             <div className="ab_home_toolbar_column_list" key={index}>
-              <Checkbox value={toolbar} key={toolbar} checked={isVisible}>
+              <Checkbox
+                as="div"
+                value={toolbar}
+                key={toolbar}
+                checked={isVisible}
+                onMouseDown={preventDefault}
+              >
                 {functionName}
               </Checkbox>
             </div>

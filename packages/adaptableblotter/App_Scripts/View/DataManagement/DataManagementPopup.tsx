@@ -1,15 +1,16 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
+
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
+
 import { UIHelper } from '../UIHelper';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { Flex, Box } from 'rebass';
+import SimpleButton from '../../components/SimpleButton';
 
 interface DataManagementPopupProps extends StrategyViewPopupProps<DataManagementPopupComponent> {}
 
@@ -25,16 +26,17 @@ class DataManagementPopupComponent extends React.Component<DataManagementPopupPr
     let infoBody: any[] = ['Function that clears user config - for development use only.'];
 
     let clearButton = (
-      <ButtonClear
-        cssClassName={cssClassName}
+      <SimpleButton
+        className={cssClassName}
         onClick={() => this.onClear()}
-        bsStyle={'default'}
-        overrideText={'Clear User Data'}
-        overrideTooltip="Clear User Data"
-        DisplayMode="Text"
-        size={'small'}
+        tooltip="Clear User Data"
+        tone="error"
+        variant="raised"
+        marginTop={2}
         AccessLevel={AccessLevel.Full}
-      />
+      >
+        Clear User Data
+      </SimpleButton>
     );
 
     return (

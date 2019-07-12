@@ -42,7 +42,12 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
 
     return (
       <div className={cssClassName} style={this.props.style}>
-        <Panel header={header} border={this.props.border} bodyProps={this.props.bodyProps}>
+        <Panel
+          bodyScroll
+          header={header}
+          border={this.props.border}
+          bodyProps={this.props.bodyProps}
+        >
           {this.props.children}
         </Panel>
       </div>

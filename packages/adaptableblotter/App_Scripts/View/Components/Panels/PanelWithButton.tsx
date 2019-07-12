@@ -31,16 +31,8 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Type
   render() {
     let cssClassName = this.props.cssClassName + StyleConstants.ITEMS_PANEL;
     let { buttonContent } = this.props;
-    let className = 'ab_panel-with-button';
-    if (this.props.className) {
-      className += ' ' + this.props.className;
-    }
-    //  if (buttonContent || this.props.button) {
-    className += ' ' + 'ab_panel-with-button-reduce-header-padding';
-    //   }
-    let buttonStyle: string = this.props.buttonStyle ? this.props.buttonStyle : 'default';
+    let className = this.props.className;
 
-    const theme = useTheme();
     let header = (
       <AdaptableBlotterForm
         inline
@@ -70,38 +62,36 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Type
             )}
           </Box>
           <Box style={{ flex: 1 }} />
-          <Box>
-            {buttonContent ? (
-              <SimpleButton
-                variant="raised"
-                tone="success"
-                disabled={this.props.buttonDisabled}
-                onClick={() => this.props.buttonClick()}
-              >
-                {buttonContent}
-              </SimpleButton>
-            ) : null}
 
-            {this.props.button ? React.cloneElement(this.props.button) : null}
-          </Box>
+          {buttonContent ? (
+            <SimpleButton
+              variant="raised"
+              tone="success"
+              disabled={this.props.buttonDisabled}
+              onClick={() => this.props.buttonClick()}
+            >
+              {buttonContent}
+            </SimpleButton>
+          ) : null}
+
+          {this.props.button ? React.cloneElement(this.props.button) : null}
         </Flex>
       </AdaptableBlotterForm>
     );
     return (
-      <Flex flex={1} flexDirection="column" style={this.props.style} className={cssClassName}>
-        <Panel
-          border="none"
-          flex={1}
-          bodyProps={this.props.bodyProps}
-          header={header}
-          className={className}
-          bsStyle={this.props.bsStyle}
-          bsSize={this.props.bsSize}
-          borderRadius={(this.props.borderRadius || 'none') as any}
-        >
-          {this.props.children}
-        </Panel>
-      </Flex>
+      <Panel
+        border="none"
+        flex={1}
+        bodyScroll={this.props.bodyScroll != null ? this.props.bodyScroll : true}
+        bodyProps={this.props.bodyProps}
+        variant={this.props.variant || 'primary'}
+        header={header}
+        style={this.props.style}
+        className={`${className} ${cssClassName || ''}`}
+        borderRadius={(this.props.borderRadius || 'none') as any}
+      >
+        {this.props.children}
+      </Panel>
     );
   }
 }

@@ -93,44 +93,42 @@ class DataSourcePopupComponent extends React.Component<
     let DataSource: DataSource = this.state.EditedAdaptableBlotterObject as DataSource;
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
-        <PanelWithButton
-          cssClassName={cssClassName}
-          headerText={StrategyConstants.DataSourceStrategyName}
-          className="ab_main_popup"
-          button={newButton}
-          bsStyle="primary"
-          glyphicon={StrategyConstants.DataSourceGlyph}
-          infoBody={infoBody}
-        >
-          {dataSources.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={dataSources}
-            />
-          ) : (
-            <EmptyContent>Click 'New' to add a new DataSource.</EmptyContent>
-          )}
+      <PanelWithButton
+        cssClassName={cssClassName}
+        headerText={StrategyConstants.DataSourceStrategyName}
+        className="ab_main_popup"
+        button={newButton}
+        bodyProps={{ padding: 0 }}
+        glyphicon={StrategyConstants.DataSourceGlyph}
+        infoBody={infoBody}
+      >
+        {dataSources.length > 0 ? (
+          <AdaptableObjectCollection
+            cssClassName={cssClassName}
+            colItems={colItems}
+            items={dataSources}
+          />
+        ) : (
+          <EmptyContent>Click 'New' to add a new DataSource.</EmptyContent>
+        )}
 
-          {this.state.EditedAdaptableBlotterObject != null && (
-            <DataSourceWizard
-              cssClassName={cssWizardClassName}
-              EditedAdaptableBlotterObject={DataSource}
-              ConfigEntities={this.props.DataSources}
-              ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              Blotter={this.props.Blotter}
-              WizardStartIndex={this.state.WizardStartIndex}
-              onCloseWizard={() => this.onCloseWizard()}
-              onFinishWizard={() => this.onFinishWizard()}
-              canFinishWizard={() => this.canFinishWizard()}
-            />
-          )}
-        </PanelWithButton>
-      </Flex>
+        {this.state.EditedAdaptableBlotterObject != null && (
+          <DataSourceWizard
+            cssClassName={cssWizardClassName}
+            EditedAdaptableBlotterObject={DataSource}
+            ConfigEntities={this.props.DataSources}
+            ModalContainer={this.props.ModalContainer}
+            Columns={this.props.Columns}
+            UserFilters={this.props.UserFilters}
+            SystemFilters={this.props.SystemFilters}
+            Blotter={this.props.Blotter}
+            WizardStartIndex={this.state.WizardStartIndex}
+            onCloseWizard={() => this.onCloseWizard()}
+            onFinishWizard={() => this.onFinishWizard()}
+            canFinishWizard={() => this.canFinishWizard()}
+          />
+        )}
+      </PanelWithButton>
     );
   }
 

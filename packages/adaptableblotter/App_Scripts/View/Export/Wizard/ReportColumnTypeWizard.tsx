@@ -7,7 +7,7 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 //import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ReportColumnScope, MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';

@@ -10,6 +10,7 @@ import { CalculatedColumn } from '../../../PredefinedConfig/RunTimeState/Calcula
 import Panel from '../../../components/Panel';
 import ErrorBox from '../../../components/ErrorBox';
 import Textarea from '../../../components/Textarea';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {
@@ -36,22 +37,19 @@ export class CalculatedColumnExpressionWizard
     )
       ? null
       : 'error';
-    let cssClassName: string = this.props.cssClassName + '-expression';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Calculated Column Expression" borderRadius="none" border="none">
-          <Textarea
-            value={this.state.ColumnExpression}
-            placeholder="Enter expression"
-            autoFocus
-            onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
-            style={{ width: '100%' }}
-          ></Textarea>
+      <WizardPanel header="Calculated Column Expression" borderRadius="none" border="none">
+        <Textarea
+          value={this.state.ColumnExpression}
+          placeholder="Enter expression"
+          autoFocus
+          onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
+          style={{ width: '100%' }}
+        ></Textarea>
 
-          {validationState ? <ErrorBox>{this.props.GetErrorMessage()}</ErrorBox> : null}
-        </Panel>
-      </div>
+        {validationState ? <ErrorBox>{this.props.GetErrorMessage()}</ErrorBox> : null}
+      </WizardPanel>
     );
   }
 

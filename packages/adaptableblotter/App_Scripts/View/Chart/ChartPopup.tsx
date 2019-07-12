@@ -1,14 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import {
-  HelpBlock,
-  DropdownButton,
-  OverlayTrigger,
-  Tooltip,
-  Glyphicon,
-  MenuItem,
-} from 'react-bootstrap';
+import { DropdownButton, OverlayTrigger, Tooltip, Glyphicon, MenuItem } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
@@ -36,6 +29,8 @@ import { ChartVisibility, ChartType } from '../../PredefinedConfig/Common/ChartE
 import { CategoryChartWizard } from './CategoryChart/Wizard/CategoryChartWizard';
 import { PieChartWizard } from './PieChart/Wizard/PieChartWizard';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import HelpBlock from '../../components/HelpBlock';
+import EmptyContent from '../../components/EmptyContent';
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
   onAddChartDefinition: (chartDefinition: ChartDefinition) => ChartRedux.ChartDefinitionAddAction;
@@ -158,7 +153,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
           className="ab_main_popup"
           infoBody={infoBody}
           button={dropdownButton}
-          bsStyle="primary"
+          bodyProps={{ padding: 0 }}
+          bodyScroll
           glyphicon={StrategyConstants.ChartGlyph}
         >
           {Charts.length > 0 ? (
@@ -168,12 +164,11 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
               items={Charts}
             />
           ) : (
-            <HelpBlock>
-              Click 'New' to create a new Chart.
-              <br />
-              Choose between Category and Pie Chart.
-              <br />
-            </HelpBlock>
+            <EmptyContent>
+              <p>Click 'New' to create a new Chart.</p>
+
+              <p>Choose between Category and Pie Chart.</p>
+            </EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject && (

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Panel } from 'react-bootstrap';
+
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
@@ -8,8 +8,8 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
 import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface AlertSelectColumnWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 export interface AlertSelectColumnWizardState {
@@ -30,17 +30,15 @@ export class AlertSelectColumnWizard
     let cssClassName: string = this.props.cssClassName + '-selectcolumn';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Select a Column" bsStyle={PRIMARY_BSSTYLE}>
-          <ColumnSelector
-            cssClassName={cssClassName}
-            SelectedColumnIds={[this.state.ColumnId]}
-            ColumnList={this.props.Columns}
-            onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-            SelectionMode={SelectionMode.Single}
-          />
-        </Panel>
-      </div>
+      <WizardPanel header="Select a Column">
+        <ColumnSelector
+          cssClassName={cssClassName}
+          SelectedColumnIds={[this.state.ColumnId]}
+          ColumnList={this.props.Columns}
+          onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+          SelectionMode={SelectionMode.Single}
+        />
+      </WizardPanel>
     );
   }
 

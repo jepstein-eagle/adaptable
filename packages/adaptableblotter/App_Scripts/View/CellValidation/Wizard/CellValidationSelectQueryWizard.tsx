@@ -10,6 +10,7 @@ import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface CellValidationSelectQueryWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -34,35 +35,33 @@ export class CellValidationSelectQueryWizard
     let cssClassName: string = this.props.cssClassName + '-selectquery';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Cell Validation Query" bsStyle="primary">
-          <AdaptableBlotterForm inline>
-            <Col xs={12}>
-              <HelpBlock>
-                A Query is used if the rule is dependent on other values in the row.
-                <br />
-                The rule will only be activated and checked if the Query passes.
-              </HelpBlock>
-            </Col>
-            <Col xs={12}>
-              <Checkbox
-                inline
-                onChange={e => this.onOtherExpressionOptionChanged(e)}
-                checked={this.state.HasExpression}
-              >
-                Use Validation Query
-              </Checkbox>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Validation Rule: Query'}
-                bodyText={[
-                  'Create a query (in next step) which will stipulate other cell values required for the Rule.',
-                ]}
-              />
-            </Col>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Cell Validation Query">
+        <AdaptableBlotterForm inline>
+          <Col xs={12}>
+            <HelpBlock>
+              A Query is used if the rule is dependent on other values in the row.
+              <br />
+              The rule will only be activated and checked if the Query passes.
+            </HelpBlock>
+          </Col>
+          <Col xs={12}>
+            <Checkbox
+              inline
+              onChange={e => this.onOtherExpressionOptionChanged(e)}
+              checked={this.state.HasExpression}
+            >
+              Use Validation Query
+            </Checkbox>{' '}
+            <AdaptablePopover
+              cssClassName={cssClassName}
+              headerText={'Validation Rule: Query'}
+              bodyText={[
+                'Create a query (in next step) which will stipulate other cell values required for the Rule.',
+              ]}
+            />
+          </Col>
+        </AdaptableBlotterForm>
+      </WizardPanel>
     );
   }
 

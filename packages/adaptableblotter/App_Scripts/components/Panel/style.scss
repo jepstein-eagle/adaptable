@@ -5,7 +5,7 @@
     var(--ab-color-lightgray)
   );
 
-  --ab-cmp-panel_body__background: var(--ab-color-almost-white);
+  
 
   --ab-cmp-panel__border-radius: var(--ab__border-radius);
   --ab-cmp-panel__padding: var(--ab-space-2);
@@ -13,6 +13,12 @@
   --ab-cmp-panel__border: 1px solid var(--ab-color-lightgray);
   --ab-cmp-panel-icon__fill: var(--ab-icon-fill);
 
+  --ab-cmp-panel_body__background: var(--ab-color-white);
+  --ab-cmp-panel_body__color: inherit;
+  
   --ab-cmp-panel_header__padding: var(--ab-space-2);
   --ab-cmp-panel_header__color: var(--ab-color-textgray);
+
+  --ab-cmp-panel_header--variant-primary__background: linear-gradient(180deg, #337ab7 0, #2e6da4);
+  --ab-cmp-panel_header--variant-primary__color: var(--ab-color-almost-white);
 }

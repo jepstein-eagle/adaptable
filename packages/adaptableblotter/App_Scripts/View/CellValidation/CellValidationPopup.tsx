@@ -121,51 +121,48 @@ class CellValidationPopupComponent extends React.Component<
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
-        <PanelWithButton
-          headerText={StrategyConstants.CellValidationStrategyName}
-          bsStyle="primary"
-          cssClassName={cssClassName}
-          button={newButton}
-          glyphicon={StrategyConstants.CellValidationGlyph}
-          infoBody={infoBody}
-        >
-          {CellValidationItems.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={CellValidationItems}
-            />
-          ) : (
-            <EmptyContent>
-              <p>Click 'New' to start creating rules for valid cell edits.</p>
-              <p>
-                Edits that fail validation can be either prevented altogether or allowed (after
-                over-riding a warning and providing a reason).
-              </p>
-            </EmptyContent>
-          )}
+      <PanelWithButton
+        headerText={StrategyConstants.CellValidationStrategyName}
+        cssClassName={cssClassName}
+        button={newButton}
+        glyphicon={StrategyConstants.CellValidationGlyph}
+        infoBody={infoBody}
+      >
+        {CellValidationItems.length > 0 ? (
+          <AdaptableObjectCollection
+            cssClassName={cssClassName}
+            colItems={colItems}
+            items={CellValidationItems}
+          />
+        ) : (
+          <EmptyContent>
+            <p>Click 'New' to start creating rules for valid cell edits.</p>
+            <p>
+              Edits that fail validation can be either prevented altogether or allowed (after
+              over-riding a warning and providing a reason).
+            </p>
+          </EmptyContent>
+        )}
 
-          {this.state.EditedAdaptableBlotterObject != null && (
-            <CellValidationWizard
-              cssClassName={cssWizardClassName}
-              EditedAdaptableBlotterObject={
-                this.state.EditedAdaptableBlotterObject as CellValidationRule
-              }
-              ConfigEntities={null}
-              Blotter={this.props.Blotter}
-              ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              WizardStartIndex={this.state.WizardStartIndex}
-              onCloseWizard={() => this.onCloseWizard()}
-              onFinishWizard={() => this.onFinishWizard()}
-              canFinishWizard={() => this.canFinishWizard()}
-            />
-          )}
-        </PanelWithButton>
-      </Flex>
+        {this.state.EditedAdaptableBlotterObject != null && (
+          <CellValidationWizard
+            cssClassName={cssWizardClassName}
+            EditedAdaptableBlotterObject={
+              this.state.EditedAdaptableBlotterObject as CellValidationRule
+            }
+            ConfigEntities={null}
+            Blotter={this.props.Blotter}
+            ModalContainer={this.props.ModalContainer}
+            Columns={this.props.Columns}
+            UserFilters={this.props.UserFilters}
+            SystemFilters={this.props.SystemFilters}
+            WizardStartIndex={this.state.WizardStartIndex}
+            onCloseWizard={() => this.onCloseWizard()}
+            onFinishWizard={() => this.onFinishWizard()}
+            canFinishWizard={() => this.canFinishWizard()}
+          />
+        )}
+      </PanelWithButton>
     );
   }
 

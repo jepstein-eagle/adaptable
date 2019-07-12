@@ -22,6 +22,7 @@ import HelpBlock from '../../../components/HelpBlock';
 import { Box, Flex } from 'rebass';
 import Dropdown from '../../../components/Dropdown';
 import Input from '../../../components/Input';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface AlertRulesWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 export interface AlertSettingsWizardState {
@@ -62,129 +63,124 @@ export class AlertRulesWizard
 
     let helpText: string =
       'Choose whether to show alerts for all changes to this column, or only when the change matches a rule (to be set by you).';
-    let cssClassName: string = this.props.cssClassName + '-rules';
 
     return (
-      <div className={cssClassName}>
-        <Panel header={alertHeader} bsStyle="primary">
-          <AdaptableBlotterForm>
-            <HelpBlock>{helpText}</HelpBlock>
+      <WizardPanel header={alertHeader}>
+        <AdaptableBlotterForm>
+          <HelpBlock>{helpText}</HelpBlock>
 
-            <Box className="ab_large_margin">
-              <Radio
-                value="None"
-                name="alert"
-                checked={this.state.Operator == LeafExpressionOperator.None}
-                onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
-              >
-                Show Alert for ALL changes
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Alert: All Changes'}
-                bodyText={['An alert will fire for any change.']}
-              />
-            </Box>
-            <Box className="ab_large_margin">
-              <Radio
-                value="others"
-                name="alert"
-                checked={this.state.Operator != LeafExpressionOperator.None}
-                onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
-              >
-                Show Alert when new cell value matches rule:
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Alert: Custom'}
-                bodyText={['Only show alerts that match the rule defined in the dropdown below.']}
-              />
-            </Box>
-          </AdaptableBlotterForm>
+          <Box className="ab_large_margin">
+            <Radio
+              value="None"
+              name="alert"
+              checked={this.state.Operator == LeafExpressionOperator.None}
+              onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
+            >
+              Show Alert for ALL changes
+            </Radio>{' '}
+            <AdaptablePopover
+              headerText={'Alert: All Changes'}
+              bodyText={['An alert will fire for any change.']}
+            />
+          </Box>
+          <Box className="ab_large_margin">
+            <Radio
+              value="others"
+              name="alert"
+              checked={this.state.Operator != LeafExpressionOperator.None}
+              onChange={(v: any, e: React.SyntheticEvent) => this.onDisallowEditChanged(e)}
+            >
+              Show Alert when new cell value matches rule:
+            </Radio>{' '}
+            <AdaptablePopover
+              headerText={'Alert: Custom'}
+              bodyText={['Only show alerts that match the rule defined in the dropdown below.']}
+            />
+          </Box>
+        </AdaptableBlotterForm>
 
-          {/* if not None operator then show operator dropdown */}
-          <Flex className="ab_large_margin" flexDirection="row">
-            <Box marginRight={2} style={{ flex: 1, width: '50%' }}>
-              <Dropdown
-                disabled={this.checkOperator(LeafExpressionOperator.None)}
-                placeholder="select"
-                value={this.state.Operator.toString()}
-                onChange={(operator: any) => this.onOperatorChanged(operator)}
-                options={operatorTypes}
-                style={{ maxWidth: 'inherit' }}
-              ></Dropdown>
-            </Box>
+        {/* if not None operator then show operator dropdown */}
+        <Flex className="ab_large_margin" flexDirection="row">
+          <Box marginRight={2} style={{ flex: 1, width: '50%' }}>
+            <Dropdown
+              disabled={this.checkOperator(LeafExpressionOperator.None)}
+              placeholder="select"
+              value={this.state.Operator.toString()}
+              onChange={(operator: any) => this.onOperatorChanged(operator)}
+              options={operatorTypes}
+              style={{ maxWidth: 'inherit' }}
+            ></Dropdown>
+          </Box>
 
-            {/* if  numeric then show a numeric control */}
-            {!this.checkOperator(LeafExpressionOperator.None) &&
-              !this.checkOperator(LeafExpressionOperator.Unknown) &&
-              !this.checkOperator(LeafExpressionOperator.IsPositive) &&
-              !this.checkOperator(LeafExpressionOperator.IsNegative) &&
-              !this.checkOperator(LeafExpressionOperator.IsNotNumber) &&
-              this.getColumnDataTypeFromState() == DataType.Number && (
-                <Flex flexDirection="row" flex={1}>
+          {/* if  numeric then show a numeric control */}
+          {!this.checkOperator(LeafExpressionOperator.None) &&
+            !this.checkOperator(LeafExpressionOperator.Unknown) &&
+            !this.checkOperator(LeafExpressionOperator.IsPositive) &&
+            !this.checkOperator(LeafExpressionOperator.IsNegative) &&
+            !this.checkOperator(LeafExpressionOperator.IsNotNumber) &&
+            this.getColumnDataTypeFromState() == DataType.Number && (
+              <Flex flexDirection="row" flex={1}>
+                <Input
+                  style={{ flex: 1 }}
+                  value={this.state.Operand1}
+                  type="number"
+                  placeholder="Enter Number"
+                  onChange={(x: React.SyntheticEvent) => this.onOperand1ValueChanged(x)}
+                />
+                {this.isBetweenOperator() && (
                   <Input
                     style={{ flex: 1 }}
-                    value={this.state.Operand1}
+                    marginLeft={2}
+                    value={this.state.Operand2}
                     type="number"
                     placeholder="Enter Number"
-                    onChange={(x: React.SyntheticEvent) => this.onOperand1ValueChanged(x)}
+                    onChange={(x: React.SyntheticEvent) => this.onOperand2ValueChanged(x)}
                   />
-                  {this.isBetweenOperator() && (
-                    <Input
-                      style={{ flex: 1 }}
-                      marginLeft={2}
-                      value={this.state.Operand2}
-                      type="number"
-                      placeholder="Enter Number"
-                      onChange={(x: React.SyntheticEvent) => this.onOperand2ValueChanged(x)}
-                    />
-                  )}
-                </Flex>
-              )}
+                )}
+              </Flex>
+            )}
 
-            {/* if  date then show a date control */}
-            {!this.checkOperator(LeafExpressionOperator.None) &&
-              !this.checkOperator(LeafExpressionOperator.Unknown) &&
-              this.getColumnDataTypeFromState() == DataType.Date && (
-                <Flex flexDirection="row" flex={1}>
+          {/* if  date then show a date control */}
+          {!this.checkOperator(LeafExpressionOperator.None) &&
+            !this.checkOperator(LeafExpressionOperator.Unknown) &&
+            this.getColumnDataTypeFromState() == DataType.Date && (
+              <Flex flexDirection="row" flex={1}>
+                <Input
+                  type="date"
+                  style={{ flex: 1 }}
+                  placeholder="Enter Date"
+                  value={this.state.Operand1}
+                  onChange={(x: React.SyntheticEvent) => this.onOperand1ValueChanged(x)}
+                />
+                {this.isBetweenOperator() && (
                   <Input
+                    style={{ flex: 1 }}
+                    marginLeft={2}
+                    value={this.state.Operand2}
                     type="date"
-                    style={{ flex: 1 }}
                     placeholder="Enter Date"
-                    value={this.state.Operand1}
-                    onChange={(x: React.SyntheticEvent) => this.onOperand1ValueChanged(x)}
+                    onChange={(x: React.SyntheticEvent) => this.onOperand2ValueChanged(x)}
                   />
-                  {this.isBetweenOperator() && (
-                    <Input
-                      style={{ flex: 1 }}
-                      marginLeft={2}
-                      value={this.state.Operand2}
-                      type="date"
-                      placeholder="Enter Date"
-                      onChange={(x: React.SyntheticEvent) => this.onOperand2ValueChanged(x)}
-                    />
-                  )}
-                </Flex>
-              )}
+                )}
+              </Flex>
+            )}
 
-            {/* if string then show a text control  */}
-            {!this.checkOperator(LeafExpressionOperator.None) &&
-              !this.checkOperator(LeafExpressionOperator.Unknown) &&
-              this.getColumnDataTypeFromState() == DataType.String && (
-                <Flex flex={1}>
-                  <Input
-                    style={{ flex: 1 }}
-                    value={this.state.Operand1}
-                    type="text"
-                    placeholder="Enter a Value"
-                    onChange={(x: React.SyntheticEvent) => this.onOperand1ValueChanged(x)}
-                  />
-                </Flex>
-              )}
-          </Flex>
-        </Panel>
-      </div>
+          {/* if string then show a text control  */}
+          {!this.checkOperator(LeafExpressionOperator.None) &&
+            !this.checkOperator(LeafExpressionOperator.Unknown) &&
+            this.getColumnDataTypeFromState() == DataType.String && (
+              <Flex flex={1}>
+                <Input
+                  style={{ flex: 1 }}
+                  value={this.state.Operand1}
+                  type="text"
+                  placeholder="Enter a Value"
+                  onChange={(x: React.SyntheticEvent) => this.onOperand1ValueChanged(x)}
+                />
+              </Flex>
+            )}
+        </Flex>
+      </WizardPanel>
     );
   }
 

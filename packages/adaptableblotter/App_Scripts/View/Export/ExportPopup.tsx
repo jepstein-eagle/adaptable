@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
+
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
@@ -35,6 +35,7 @@ import {
   ReportColumnScope,
 } from '../../PredefinedConfig/Common/Enums';
 import SimpleButton from '../../components/SimpleButton';
+import EmptyContent from '../../components/EmptyContent';
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
   Reports: Report[];
@@ -127,47 +128,47 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     );
 
     return (
-      <div className={cssClassName}>
-        <PanelWithButton
-          cssClassName={cssClassName}
-          headerText={StrategyConstants.ExportStrategyName}
-          bsStyle="primary"
-          glyphicon={StrategyConstants.ExportGlyph}
-          infoBody={infoBody}
-          button={newButton}
-        >
-          {Reports.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={Reports}
-              allowOverflow={true}
-            />
-          ) : (
-            <HelpBlock>
+      <PanelWithButton
+        cssClassName={cssClassName}
+        headerText={StrategyConstants.ExportStrategyName}
+        bodyProps={{ padding: 0 }}
+        glyphicon={StrategyConstants.ExportGlyph}
+        infoBody={infoBody}
+        button={newButton}
+      >
+        {Reports.length > 0 ? (
+          <AdaptableObjectCollection
+            cssClassName={cssClassName}
+            colItems={colItems}
+            items={Reports}
+            allowOverflow={true}
+          />
+        ) : (
+          <EmptyContent>
+            <p>
               Click 'New' to create a new Report. A Report is named group of columns and Unique
-              values..
-            </HelpBlock>
-          )}
+              values.
+            </p>
+          </EmptyContent>
+        )}
 
-          {this.state.EditedAdaptableBlotterObject && (
-            <ReportWizard
-              cssClassName={cssWizardClassName}
-              EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as Report}
-              ModalContainer={this.props.ModalContainer}
-              ConfigEntities={this.props.Reports}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              Blotter={this.props.Blotter}
-              WizardStartIndex={this.state.WizardStartIndex}
-              onCloseWizard={() => this.onCloseWizard()}
-              onFinishWizard={() => this.onFinishWizard()}
-              canFinishWizard={() => this.canFinishWizard()}
-            />
-          )}
-        </PanelWithButton>
-      </div>
+        {this.state.EditedAdaptableBlotterObject && (
+          <ReportWizard
+            cssClassName={cssWizardClassName}
+            EditedAdaptableBlotterObject={this.state.EditedAdaptableBlotterObject as Report}
+            ModalContainer={this.props.ModalContainer}
+            ConfigEntities={this.props.Reports}
+            Columns={this.props.Columns}
+            UserFilters={this.props.UserFilters}
+            SystemFilters={this.props.SystemFilters}
+            Blotter={this.props.Blotter}
+            WizardStartIndex={this.state.WizardStartIndex}
+            onCloseWizard={() => this.onCloseWizard()}
+            onFinishWizard={() => this.onFinishWizard()}
+            canFinishWizard={() => this.canFinishWizard()}
+          />
+        )}
+      </PanelWithButton>
     );
   }
 

@@ -89,7 +89,7 @@ class CalendarsPopupComponent extends React.Component<
       <PanelWithImage
         cssClassName={cssClassName}
         header={StrategyConstants.CalendarStrategyName}
-        bsStyle="primary"
+        variant="primary"
         glyphicon={StrategyConstants.CalendarGlyph}
         infoBody={infoBody}
       >
@@ -112,6 +112,7 @@ class CalendarsPopupComponent extends React.Component<
           >
             <Panel
               bodyProps={{ padding: 0 }}
+              bodyScroll
               border="none"
               borderRadius="none"
               header={<div>Calendar Details: {this.state.DisplayedCalendar.Name}</div>}
@@ -120,11 +121,12 @@ class CalendarsPopupComponent extends React.Component<
                 <PanelWithRow
                   style={{ flex: 1 }}
                   bodyProps={{ padding: 0 }}
+                  bodyScroll
                   border="none"
                   borderRadius="none"
                   cssClassName={cssClassName}
                   colItems={calenderEntryColItems}
-                  bsStyle="info"
+                  variant="primary"
                 />
                 {displayedCalendarModalBody}
               </Flex>

@@ -281,7 +281,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
             ></SimpleButton>
           </Flex>
 
-          <ListGroup style={{ overflowY: 'hidden', marginTop: ' var(--ab-space-2)' }}>
+          <ListGroup style={{ marginTop: ' var(--ab-space-2)' }}>
             {columnValuesListgroupItems}
             {columnUserFilterExpressionsListgroupItems}
             {columnRangesListgroupItems}
@@ -293,6 +293,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
       <Flex style={{ flex: '1 0 0%' }} flexDirection="column">
         {this.props.ShowPanel && (
           <PanelWithButton
+            variant="default"
             style={{ flex: 1 }}
             cssClassName={cssClassName}
             bodyProps={{

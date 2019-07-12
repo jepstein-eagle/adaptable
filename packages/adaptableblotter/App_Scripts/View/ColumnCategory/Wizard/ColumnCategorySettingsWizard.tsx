@@ -1,14 +1,18 @@
 import * as React from 'react';
-import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
+
 import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import WizardPanel from '../../../components/WizardPanel';
+import HelpBlock from '../../../components/HelpBlock';
+import { Flex, Box, Text } from 'rebass';
+import Input from '../../../components/Input';
 
 export interface ColumnCategorySettingsWizardProps
   extends AdaptableWizardStepProps<ColumnCategory> {
@@ -31,38 +35,27 @@ export class ColumnCategorySettingsWizard
     };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-settings';
-
     let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)
       ? null
       : 'error';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Column Category Settings" bsStyle={PRIMARY_BSSTYLE}>
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="ColumnCategoryName">
-              <Col xs={3} componentClass={ControlLabel}>
-                {' '}
-                Name:{' '}
-              </Col>
-              <Col xs={7}>
-                <FormGroup controlId="formInlineName" validationState={validationState}>
-                  <FormControl
-                    value={this.state.ColumnCategoryId}
-                    type="string"
-                    placeholder="Enter name for Column Category"
-                    onChange={e => this.onColumnCategoryNameChange(e)}
-                  />
-                  <FormControl.Feedback />
-                  <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-                </FormGroup>
-              </Col>
-            </FormGroup>
-            <Col xs={1}> </Col>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Column Category Settings">
+        <Flex flexDirection="row" alignItems="center">
+          <Text marginRight={3}>Name: </Text>
+
+          <Input
+            value={this.state.ColumnCategoryId}
+            style={{ flex: 1 }}
+            type="string"
+            placeholder="Enter name for Column Category"
+            onChange={(e: React.SyntheticEvent) => this.onColumnCategoryNameChange(e)}
+          />
+        </Flex>
+        {this.state.ErrorMessage ? (
+          <HelpBlock marginTop={3}>{this.state.ErrorMessage}</HelpBlock>
+        ) : null}
+      </WizardPanel>
     );
   }
 

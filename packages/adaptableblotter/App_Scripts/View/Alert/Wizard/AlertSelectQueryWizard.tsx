@@ -1,14 +1,17 @@
 import * as React from 'react';
-import { Col, Panel, Checkbox, HelpBlock } from 'react-bootstrap';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
+import WizardPanel from '../../../components/WizardPanel';
+import HelpBlock from '../../../components/HelpBlock';
+import CheckBox from '../../../components/CheckBox';
+import { Flex } from 'rebass';
 
 export interface AlertSelectQueryWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 export interface AlertSelectQueryWizardState {
@@ -26,44 +29,36 @@ export class AlertSelectQueryWizard
   }
 
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-selectquery';
-
     return (
-      <div className={cssClassName}>
-        <Panel header="Alert Query" bsStyle="primary">
-          <AdaptableBlotterForm inline>
-            <Col xs={12}>
-              <HelpBlock>
-                A Query is used if the alert is dependent on other values in the row.
-                <br />
-                The alert will only be triggered if the Query passes.
-              </HelpBlock>
-            </Col>
-            <Col xs={12}>
-              <Checkbox
-                inline
-                onChange={e => this.onOtherExpressionOptionChanged(e)}
-                checked={this.state.HasExpression}
-              >
-                Use Query
-              </Checkbox>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Alert: Query'}
-                bodyText={[
-                  'Create a query (in next step) which will stipulate other cell values required for the Alert to be triggered.',
-                ]}
-              />
-            </Col>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Alert Query" bsStyle="primary">
+        <HelpBlock>
+          A Query is used if the alert is dependent on other values in the row.
+          <br />
+          The alert will only be triggered if the Query passes.
+        </HelpBlock>
+
+        <Flex alignItems="center" flexDirection="row" marginTop={2}>
+          <CheckBox
+            marginRight={3}
+            marginLeft={2}
+            onChange={(checked: boolean) => this.onOtherExpressionOptionChanged(checked)}
+            checked={this.state.HasExpression}
+          >
+            Use Query
+          </CheckBox>{' '}
+          <AdaptablePopover
+            headerText={'Alert: Query'}
+            bodyText={[
+              'Create a query (in next step) which will stipulate other cell values required for the Alert to be triggered.',
+            ]}
+          />
+        </Flex>
+      </WizardPanel>
     );
   }
 
-  private onOtherExpressionOptionChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.setState({ HasExpression: e.checked } as AlertSelectQueryWizardState, () =>
+  private onOtherExpressionOptionChanged(checked: boolean) {
+    this.setState({ HasExpression: checked } as AlertSelectQueryWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }

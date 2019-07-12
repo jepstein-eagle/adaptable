@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { PanelProps, Panel, Row, Col, Glyphicon } from 'react-bootstrap';
+import { Panel, Row, Col, Glyphicon } from 'react-bootstrap';
 import { withTheme } from 'styled-components';
 import { AdaptablePopover } from '../../AdaptablePopover';
 
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import NewPanel from '../../../components/Panel';
+import NewPanel, { PanelProps } from '../../../components/Panel';
 import { Box, Flex, BoxProps } from 'rebass';
 
 export interface PanelWithImageProps extends PanelProps {
@@ -54,9 +54,9 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
       <NewPanel
         header={headerRow}
         className={cssClassName}
-        bsStyle={this.props.bsStyle}
-        bsSize={this.props.bsSize}
+        variant={this.props.variant}
         style={this.props.style}
+        bodyScroll
         border="none"
         borderRadius={this.props.borderRadius || 'none'}
         bodyProps={{

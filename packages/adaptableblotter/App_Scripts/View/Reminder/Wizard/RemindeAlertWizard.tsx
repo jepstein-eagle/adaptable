@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Radio, Col, Panel, Checkbox, FormControl, ControlLabel, Row } from 'react-bootstrap';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -10,6 +10,11 @@ import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterFor
 import { Reminder } from '../../../PredefinedConfig/RunTimeState/ReminderState';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import Dropdown from '../../../components/Dropdown';
+import { Flex, Box, Text } from 'rebass';
+import WizardPanel from '../../../components/WizardPanel';
+import Input from '../../../components/Input';
+import Checkbox from '../../../components/CheckBox';
 
 export interface ReminderAlertWizardProps extends AdaptableWizardStepProps<Reminder> {}
 
@@ -37,68 +42,60 @@ export class ReminderAlertWizard
     let cssClassName: string = this.props.cssClassName + '-scope';
 
     let messageTypes = EnumExtensions.getNames(MessageType).map(type => {
-      return (
-        <option key={type} value={type}>
-          {type}
-        </option>
-      );
+      return {
+        label: type,
+        value: type,
+      };
     });
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Alert Settings" bsStyle="primary">
-          <AdaptableBlotterForm inline>
-            <Row style={{ marginTop: '15px' }}>
-              <Col xs={3}>
-                <ControlLabel>Header:</ControlLabel>
-              </Col>
-              <Col xs={8}>
-                <FormControl
-                  value={this.state.Header}
-                  style={{ width: '100%' }}
-                  type="string"
-                  placeholder="Enter Reminder Header (optional)"
-                  onChange={e => this.onHeaderChanged(e)}
-                />
-              </Col>
-            </Row>
-            <Row style={{ marginTop: '15px' }}>
-              <Col xs={3}>
-                <ControlLabel>Message:</ControlLabel>
-              </Col>
-              <Col xs={8}>
-                <FormControl
-                  value={this.state.Msg}
-                  style={{ width: '100%' }}
-                  type="string"
-                  placeholder="Enter Reminder Message"
-                  onChange={e => this.onMessageChanged(e)}
-                />
-              </Col>
-            </Row>
-            <Row style={{ marginTop: '15px' }}>
-              <Col xs={3}>
-                <ControlLabel>Message Type:</ControlLabel>
-              </Col>
-              <Col xs={6}>
-                <FormControl
-                  componentClass="select"
+      <div className={cssClassName} style={{ height: '100%' }}>
+        <WizardPanel header="Alert Settings">
+          <Flex flexDirection="column">
+            <Flex marginTop={2} alignItems="center">
+              <Text style={{ flex: 3 }}>Header:</Text>
+
+              <Input
+                style={{ flex: 8, maxWidth: 500 }}
+                value={this.state.Header}
+                type="string"
+                placeholder="Enter Reminder Header (optional)"
+                onChange={(e: React.SyntheticEvent) => this.onHeaderChanged(e)}
+              />
+            </Flex>
+            <Flex marginTop={2} alignItems="center">
+              <Text style={{ flex: 3 }}>Message:</Text>
+
+              <Input
+                value={this.state.Msg}
+                style={{ flex: 8, maxWidth: 500 }}
+                type="string"
+                placeholder="Enter Reminder Message"
+                onChange={(e: React.SyntheticEvent) => this.onMessageChanged(e)}
+              />
+            </Flex>
+            <Flex marginTop={2} alignItems="center">
+              <Text style={{ flex: 3 }}>Message Type:</Text>
+
+              <Box style={{ flex: 8 }}>
+                <Dropdown
+                  style={{ maxWidth: 500 }}
                   placeholder="select"
                   value={this.state.MessageType}
-                  onChange={x => this.onMessageTypeChanged(x)}
+                  onChange={(value: any) => this.onMessageTypeChanged(value)}
+                  options={messageTypes}
                 >
                   {messageTypes}
-                </FormControl>
-              </Col>
-            </Row>
-            <Row style={{ marginTop: '15px' }}>
-              <Col xs={3} />
-              <Col xs={6}>
+                </Dropdown>
+              </Box>
+            </Flex>
+            <Flex marginTop={2}>
+              <div style={{ flex: 3 }} />
+              <Box style={{ flex: 8 }}>
                 <Checkbox
                   className={cssClassName + '__checkbox'}
-                  inline
                   checked={this.state.ShowAsPopup == true}
-                  onChange={e => this.onShowAsPopupChanged(e)}
+                  onChange={(checked: boolean) => this.onShowAsPopupChanged(checked)}
                 >
                   Show as Popup
                 </Checkbox>{' '}
@@ -107,10 +104,10 @@ export class ReminderAlertWizard
                   headerText={'Reminder Details'}
                   bodyText={['A popup is displayed when the Reminder is triggered.']}
                 />
-              </Col>
-            </Row>
-          </AdaptableBlotterForm>
-        </Panel>
+              </Box>
+            </Flex>
+          </Flex>
+        </WizardPanel>
       </div>
     );
   }
@@ -129,16 +126,14 @@ export class ReminderAlertWizard
     );
   }
 
-  private onMessageTypeChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.setState({ MessageType: e.value } as ReminderAlertWizardState, () =>
+  private onMessageTypeChanged(value: any) {
+    this.setState({ MessageType: value } as ReminderAlertWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
-  private onShowAsPopupChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.setState({ ShowAsPopup: e.checked } as ReminderAlertWizardState, () =>
+  private onShowAsPopupChanged(checked: boolean) {
+    this.setState({ ShowAsPopup: checked } as ReminderAlertWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }

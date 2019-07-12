@@ -52,7 +52,7 @@ const Dropdown = (props: DropdownProps) => {
     value: _,
     onChange: __,
     style,
-    ...reactSelectProps
+    ...boxProps
   } = props;
 
   if (showClearButton !== false) {
@@ -124,6 +124,7 @@ const Dropdown = (props: DropdownProps) => {
       ref={domRef}
       flexDirection="row"
       alignItems="center"
+      {...boxProps}
       className={join(
         props.className,
         baseClassName,
@@ -144,7 +145,7 @@ const Dropdown = (props: DropdownProps) => {
         disabled={disabled}
         value={value == null ? '' : value}
         onChange={(e: React.SyntheticEvent<HTMLSelectElement>) => {
-          const selected = finalOptions.filter(o => o.value === (e.target as any).value)[0];
+          const selected = finalOptions.filter(o => o.value == (e.target as any).value)[0];
           onChange(selected, e);
         }}
         style={{ opacity: 0, width: '100%', height: '100%', top: 0, left: 0, zIndex: 1 }}

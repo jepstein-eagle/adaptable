@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,

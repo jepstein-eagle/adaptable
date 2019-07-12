@@ -335,7 +335,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
       <PanelWithButton
         cssClassName={cssClassName}
         headerText={panelHeader}
-        bsStyle="info"
+        variant="default"
         button={clearButton}
         bodyProps={{
           padding: 0,

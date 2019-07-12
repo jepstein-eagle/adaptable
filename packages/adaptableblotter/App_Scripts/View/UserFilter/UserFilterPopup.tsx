@@ -127,11 +127,11 @@ class UserFilterPopupComponent extends React.Component<
       <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.UserFilterStrategyName}
-          bsStyle="primary"
           cssClassName={cssClassName}
           infoBody={infoBody}
           button={newButton}
           glyphicon={StrategyConstants.UserFilterGlyph}
+          bodyProps={{ padding: 0 }}
         >
           {UserFilterItems.length > 0 ? (
             <AdaptableObjectCollection

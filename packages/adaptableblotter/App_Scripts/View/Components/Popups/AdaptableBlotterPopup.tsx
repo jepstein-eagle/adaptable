@@ -100,7 +100,6 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
           </Flex>
           <Flex
             className={cssClassName + StyleConstants.MODAL_FOOTER}
-            justifyContent="flex-end"
             padding={2}
             backgroundColor="lightgray"
           >

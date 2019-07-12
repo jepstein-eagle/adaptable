@@ -99,11 +99,9 @@ class FreeTextColumnPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create FreeText Column"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create FreeText Column"
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -114,6 +112,7 @@ class FreeTextColumnPopupComponent extends React.Component<
           cssClassName={cssClassName}
           headerText={StrategyConstants.FreeTextColumnStrategyName}
           button={newButton}
+          bodyProps={{ padding: 0 }}
           bsStyle="primary"
           className="ab_main_popup"
           glyphicon={StrategyConstants.FreeTextColumnGlyph}

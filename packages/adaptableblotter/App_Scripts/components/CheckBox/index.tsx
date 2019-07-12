@@ -61,7 +61,7 @@ const CheckBox = ({
   name,
   gapDistance = 10,
   childrenPosition = 'end',
-  as = 'div',
+  as = 'label',
   ...props
 }: HTMLElement & TypeProps) => {
   const [stateChecked, setStateChecked] = useState<boolean>(false);

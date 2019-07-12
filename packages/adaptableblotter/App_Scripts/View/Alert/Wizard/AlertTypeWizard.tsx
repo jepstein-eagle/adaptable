@@ -5,12 +5,13 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { AlertDefinition } from '../../../PredefinedConfig/RunTimeState/AlertState';
 import Panel from '../../../components/Panel';
 import { Box } from 'rebass';
 import Radio from '../../../components/Radio';
 import Checkbox from '../../../components/CheckBox';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface AlertTypeWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 
@@ -34,7 +35,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
 
     return (
       <div className={cssClassName}>
-        <Panel header="Select The Type of the Alert" border="none">
+        <WizardPanel header="Select The Type of the Alert" border="none">
           <Box className="ab_large_margin">
             <Radio
               className={cssClassName + '__radiobutton'}
@@ -99,8 +100,8 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
               bodyText={['Sends the alert as an error.']}
             />
           </Box>
-        </Panel>
-        <Panel header="Alert Details" border="none">
+        </WizardPanel>
+        <WizardPanel header="Alert Details" border="none">
           <Box className="ab_large_margin">
             <Checkbox
               className={cssClassName + '__checkbox'}
@@ -115,7 +116,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
               bodyText={['A popup is displayed when the Alert is triggered.']}
             />
           </Box>
-        </Panel>
+        </WizardPanel>
       </div>
     );
   }

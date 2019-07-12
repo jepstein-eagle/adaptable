@@ -111,60 +111,55 @@ class CalculatedColumnPopupComponent extends React.Component<
         onClick={() => {
           this.onNew();
         }}
-        cssClassName={cssClassName}
-        overrideTooltip="Create Calculated Column"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        className={cssClassName}
+        tooltip="Create Calculated Column"
         AccessLevel={this.props.AccessLevel}
       />
     );
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
-        <PanelWithButton
-          cssClassName={cssClassName}
-          headerText={StrategyConstants.CalculatedColumnStrategyName}
-          className="ab_main_popup"
-          infoBody={infoBody}
-          button={newButton}
-          bsStyle="primary"
-          border="none"
-          bodyProps={{ padding: 0 }}
-          glyphicon={StrategyConstants.CalculatedColumnGlyph}
-        >
-          {this.props.CalculatedColumns.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={calculatedColumns}
-            />
-          ) : (
-            <EmptyContent>Click 'New' to create a new Calculated Column.</EmptyContent>
-          )}
+      <PanelWithButton
+        cssClassName={cssClassName}
+        headerText={StrategyConstants.CalculatedColumnStrategyName}
+        className="ab_main_popup"
+        infoBody={infoBody}
+        button={newButton}
+        border="none"
+        bodyProps={{ padding: 0 }}
+        glyphicon={StrategyConstants.CalculatedColumnGlyph}
+      >
+        {this.props.CalculatedColumns.length > 0 ? (
+          <AdaptableObjectCollection
+            cssClassName={cssClassName}
+            colItems={colItems}
+            items={calculatedColumns}
+          />
+        ) : (
+          <EmptyContent>Click 'New' to create a new Calculated Column.</EmptyContent>
+        )}
 
-          {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
-          {this.state.EditedAdaptableBlotterObject && (
-            <CalculatedColumnWizard
-              cssClassName={cssWizardClassName}
-              EditedAdaptableBlotterObject={
-                this.state.EditedAdaptableBlotterObject as CalculatedColumn
-              }
-              ConfigEntities={this.props.CalculatedColumns}
-              Columns={this.props.Columns}
-              ModalContainer={this.props.ModalContainer}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
-              IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
-              Blotter={this.props.Blotter}
-              WizardStartIndex={this.state.WizardStartIndex}
-              onCloseWizard={() => this.onCloseWizard()}
-              onFinishWizard={() => this.onFinishWizard()}
-              canFinishWizard={() => this.canFinishWizard()}
-            />
-          )}
-        </PanelWithButton>
-      </Flex>
+        {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
+        {this.state.EditedAdaptableBlotterObject && (
+          <CalculatedColumnWizard
+            cssClassName={cssWizardClassName}
+            EditedAdaptableBlotterObject={
+              this.state.EditedAdaptableBlotterObject as CalculatedColumn
+            }
+            ConfigEntities={this.props.CalculatedColumns}
+            Columns={this.props.Columns}
+            ModalContainer={this.props.ModalContainer}
+            UserFilters={this.props.UserFilters}
+            SystemFilters={this.props.SystemFilters}
+            GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
+            IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
+            Blotter={this.props.Blotter}
+            WizardStartIndex={this.state.WizardStartIndex}
+            onCloseWizard={() => this.onCloseWizard()}
+            onFinishWizard={() => this.onFinishWizard()}
+            canFinishWizard={() => this.canFinishWizard()}
+          />
+        )}
+      </PanelWithButton>
     );
   }
 

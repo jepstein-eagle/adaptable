@@ -8,7 +8,6 @@ import {
 import {
   DataType,
   LeafExpressionOperator,
-  MessageType,
   RangeOperandType,
 } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
@@ -76,131 +75,134 @@ export class CellValidationRulesWizard
     let cssClassName: string = this.props.cssClassName + '-rules';
 
     return (
-      <div className={cssClassName}>
-        <Panel header={validationRuleHeader} bsStyle="primary" border="none" borderRadius="none">
-          <AdaptableBlotterForm>
-            <Box color="textgray">
-              <p>{helpText}</p>
-            </Box>
-            <Box className="ab_large_margin">
-              <Radio
-                inline
-                value="None"
-                checked={this.state.Operator == LeafExpressionOperator.None}
-                onChange={e => this.onDisallowEditChanged(e)}
-              >
-                Disallow ALL edits
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Validation Rule: No Edits Allowed'}
-                bodyText={['Any edit is invalid - effectively makes the column read-only.']}
-              />
-            </Box>
-            <Box className="ab_large_margin">
-              <Radio
-                inline
-                value="others"
-                checked={this.state.Operator != LeafExpressionOperator.None}
-                onChange={e => this.onDisallowEditChanged(e)}
-              >
-                Disallow edits where the new cell value matches rule:
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Validation Rule: Custom'}
-                bodyText={['Disallow edits that match the rule defined in the dropdown below.']}
-              />
-            </Box>
-          </AdaptableBlotterForm>
+      <WizardPanel
+        header={validationRuleHeader}
+        bsStyle="primary"
+        border="none"
+        borderRadius="none"
+      >
+        <AdaptableBlotterForm>
+          <Box color="textgray">
+            <p>{helpText}</p>
+          </Box>
+          <Box className="ab_large_margin">
+            <Radio
+              inline
+              value="None"
+              checked={this.state.Operator == LeafExpressionOperator.None}
+              onChange={e => this.onDisallowEditChanged(e)}
+            >
+              Disallow ALL edits
+            </Radio>{' '}
+            <AdaptablePopover
+              cssClassName={cssClassName}
+              headerText={'Validation Rule: No Edits Allowed'}
+              bodyText={['Any edit is invalid - effectively makes the column read-only.']}
+            />
+          </Box>
+          <Box className="ab_large_margin">
+            <Radio
+              inline
+              value="others"
+              checked={this.state.Operator != LeafExpressionOperator.None}
+              onChange={e => this.onDisallowEditChanged(e)}
+            >
+              Disallow edits where the new cell value matches rule:
+            </Radio>{' '}
+            <AdaptablePopover
+              cssClassName={cssClassName}
+              headerText={'Validation Rule: Custom'}
+              bodyText={['Disallow edits that match the rule defined in the dropdown below.']}
+            />
+          </Box>
+        </AdaptableBlotterForm>
 
-          {/* if not None operator then show operator dropdown */}
-          <FormGroup className="ab_large_margin">
-            <Col xs={1} />
-            <Col xs={6}>
-              <Dropdown
-                options={operatorOptions}
-                disabled={this.checkOperator(LeafExpressionOperator.None)}
-                placeholder="select"
-                value={this.state.Operator ? this.state.Operator.toString() : ''}
-                onChange={(x: any) => this.onOperatorChanged(x)}
-              />
-            </Col>
+        {/* if not None operator then show operator dropdown */}
+        <FormGroup className="ab_large_margin">
+          <Col xs={1} />
+          <Col xs={6}>
+            <Dropdown
+              options={operatorOptions}
+              disabled={this.checkOperator(LeafExpressionOperator.None)}
+              placeholder="select"
+              value={this.state.Operator ? this.state.Operator.toString() : ''}
+              onChange={(x: any) => this.onOperatorChanged(x)}
+            />
+          </Col>
 
-            {/* if  numeric then show a numeric control */}
-            {!this.checkOperator(LeafExpressionOperator.None) &&
-              !this.checkOperator(LeafExpressionOperator.Unknown) &&
-              !this.checkOperator(LeafExpressionOperator.IsPositive) &&
-              !this.checkOperator(LeafExpressionOperator.IsNegative) &&
-              !this.checkOperator(LeafExpressionOperator.IsNotNumber) &&
-              ColumnHelper.getColumnDataTypeFromColumnId(
-                this.props.Data.ColumnId,
-                this.props.Columns
-              ) == DataType.Number && (
-                <Col xs={5}>
+          {/* if  numeric then show a numeric control */}
+          {!this.checkOperator(LeafExpressionOperator.None) &&
+            !this.checkOperator(LeafExpressionOperator.Unknown) &&
+            !this.checkOperator(LeafExpressionOperator.IsPositive) &&
+            !this.checkOperator(LeafExpressionOperator.IsNegative) &&
+            !this.checkOperator(LeafExpressionOperator.IsNotNumber) &&
+            ColumnHelper.getColumnDataTypeFromColumnId(
+              this.props.Data.ColumnId,
+              this.props.Columns
+            ) == DataType.Number && (
+              <Col xs={5}>
+                <FormControl
+                  value={this.state.Operand1}
+                  type="number"
+                  placeholder="Enter Number"
+                  onChange={x => this.onOperand1ValueChanged(x)}
+                />
+                {this.isBetweenOperator() && (
                   <FormControl
-                    value={this.state.Operand1}
+                    value={this.state.Operand2}
                     type="number"
                     placeholder="Enter Number"
-                    onChange={x => this.onOperand1ValueChanged(x)}
+                    onChange={x => this.onOperand2ValueChanged(x)}
                   />
-                  {this.isBetweenOperator() && (
-                    <FormControl
-                      value={this.state.Operand2}
-                      type="number"
-                      placeholder="Enter Number"
-                      onChange={x => this.onOperand2ValueChanged(x)}
-                    />
-                  )}
-                </Col>
-              )}
+                )}
+              </Col>
+            )}
 
-            {/* if  date then show a date control */}
-            {!this.checkOperator(LeafExpressionOperator.None) &&
-              !this.checkOperator(LeafExpressionOperator.Unknown) &&
-              ColumnHelper.getColumnDataTypeFromColumnId(
-                this.props.Data.ColumnId,
-                this.props.Columns
-              ) == DataType.Date && (
-                <Col xs={5}>
+          {/* if  date then show a date control */}
+          {!this.checkOperator(LeafExpressionOperator.None) &&
+            !this.checkOperator(LeafExpressionOperator.Unknown) &&
+            ColumnHelper.getColumnDataTypeFromColumnId(
+              this.props.Data.ColumnId,
+              this.props.Columns
+            ) == DataType.Date && (
+              <Col xs={5}>
+                <FormControl
+                  type="date"
+                  placeholder="Enter Date"
+                  value={this.state.Operand1}
+                  onChange={x => this.onOperand1ValueChanged(x)}
+                />
+                {this.isBetweenOperator() && (
                   <FormControl
+                    value={this.state.Operand2}
                     type="date"
                     placeholder="Enter Date"
-                    value={this.state.Operand1}
-                    onChange={x => this.onOperand1ValueChanged(x)}
+                    onChange={x => this.onOperand2ValueChanged(x)}
                   />
-                  {this.isBetweenOperator() && (
-                    <FormControl
-                      value={this.state.Operand2}
-                      type="date"
-                      placeholder="Enter Date"
-                      onChange={x => this.onOperand2ValueChanged(x)}
-                    />
-                  )}
-                </Col>
-              )}
+                )}
+              </Col>
+            )}
 
-            {/* if string then show a text control  */}
-            {!this.checkOperator(LeafExpressionOperator.None) &&
-              !this.checkOperator(LeafExpressionOperator.Unknown) &&
-              !this.checkOperator(LeafExpressionOperator.NoDuplicateValues) &&
-              !this.checkOperator(LeafExpressionOperator.ExistingValuesOnly) &&
-              ColumnHelper.getColumnDataTypeFromColumnId(
-                this.props.Data.ColumnId,
-                this.props.Columns
-              ) == DataType.String && (
-                <Col xs={5}>
-                  <FormControl
-                    value={this.state.Operand1}
-                    type="string"
-                    placeholder="Enter a Value"
-                    onChange={x => this.onOperand1ValueChanged(x)}
-                  />
-                </Col>
-              )}
-          </FormGroup>
-        </Panel>
-      </div>
+          {/* if string then show a text control  */}
+          {!this.checkOperator(LeafExpressionOperator.None) &&
+            !this.checkOperator(LeafExpressionOperator.Unknown) &&
+            !this.checkOperator(LeafExpressionOperator.NoDuplicateValues) &&
+            !this.checkOperator(LeafExpressionOperator.ExistingValuesOnly) &&
+            ColumnHelper.getColumnDataTypeFromColumnId(
+              this.props.Data.ColumnId,
+              this.props.Columns
+            ) == DataType.String && (
+              <Col xs={5}>
+                <FormControl
+                  value={this.state.Operand1}
+                  type="string"
+                  placeholder="Enter a Value"
+                  onChange={x => this.onOperand1ValueChanged(x)}
+                />
+              </Col>
+            )}
+        </FormGroup>
+      </WizardPanel>
     );
   }
 
