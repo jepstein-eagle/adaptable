@@ -14,7 +14,6 @@ const Backdrop = (props: { zIndex: number; uuid: string; timestamp: number }) =>
   const [zIndex, setZIndex] = useState<number>(-1);
 
   useLayoutEffect(() => {
-    console.warn('baseZIndex', props.zIndex);
     updatePositionInStack(uuid, {
       timestamp,
       baseZIndex: props.zIndex,
