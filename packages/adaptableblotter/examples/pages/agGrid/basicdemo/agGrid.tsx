@@ -24,7 +24,7 @@ Nor do we create the ag-Grid
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(10);
+  const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   //gridOptions.singleClickEdit = true;
@@ -40,8 +40,20 @@ function InitAdaptableBlotter() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    //  HomeToolbarTitle: 'Hello world',
+  ColumnFilter: {
+    ColumnFilters: [
+      {
+        Filter: {
+          ColumnValueExpressions: [
+            {
+              ColumnDisplayValues: ['EUR', 'GBP'],
+              ColumnId: 'currency',
+            },
+          ],
+        },
+        ColumnId: 'currency',
+      },
+    ],
   },
 };
 

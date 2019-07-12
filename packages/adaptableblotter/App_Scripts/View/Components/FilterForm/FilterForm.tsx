@@ -184,6 +184,19 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       this.props.CurrentColumn.DataType != DataType.Boolean &&
       this.props.ColumnFilters.find(cf => cf.ColumnId == this.props.CurrentColumn.ColumnId);
 
+    // populate any missing arrays
+    if (existingColumnFilter && existingColumnFilter.Filter) {
+      if (ArrayExtensions.IsNull(existingColumnFilter.Filter.ColumnValueExpressions)) {
+        existingColumnFilter.Filter.ColumnValueExpressions = [];
+      }
+      if (ArrayExtensions.IsNull(existingColumnFilter.Filter.FilterExpressions)) {
+        existingColumnFilter.Filter.FilterExpressions = [];
+      }
+      if (ArrayExtensions.IsNull(existingColumnFilter.Filter.RangeExpressions)) {
+        existingColumnFilter.Filter.RangeExpressions = [];
+      }
+    }
+
     let uiSelectedColumnValues: string[] =
       existingColumnFilter && existingColumnFilter.Filter.ColumnValueExpressions.length > 0
         ? existingColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues
