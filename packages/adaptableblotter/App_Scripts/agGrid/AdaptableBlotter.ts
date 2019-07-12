@@ -13,6 +13,7 @@ import * as Emitter from 'emittery';
 import * as Redux from 'redux';
 import * as ReactDOM from 'react-dom';
 import * as _ from 'lodash';
+import { Modal, ModalDialog } from 'react-bootstrap';
 import {
   GridOptions,
   Column,
@@ -1638,9 +1639,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       if (this.abContainerElement == null) {
         LoggingHelper.LogAdaptableBlotterError(
-          `There is no Div called ${
-            this.blotterOptions.containerOptions.adaptableBlotterContainer
-          } so cannot render the Adaptable Blotter`
+          `There is no Div called ${this.blotterOptions.containerOptions.adaptableBlotterContainer} so cannot render the Adaptable Blotter`
         );
         return;
       }
@@ -2368,7 +2367,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
     }
 
-    this.applyBlotterTheme(this.getBlotterLightThemeName());
+    this.applyBlotterTheme(this.getBlotterLightThemeName(), 'light');
   }
 
   public getBlotterLightThemeName() {
@@ -2396,15 +2395,23 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
     }
 
-    this.applyBlotterTheme(this.getBlotterDarkThemeName());
+    this.applyBlotterTheme(this.getBlotterDarkThemeName(), 'dark');
   }
 
-  private applyBlotterTheme(themeClassName: string) {
+  private applyBlotterTheme(themeClassName: string, themeName?: string) {
     const blotterContainer = this.getBlotterContainerElement();
     if (blotterContainer) {
       blotterContainer.classList.remove(this.getBlotterDarkThemeName());
       blotterContainer.classList.remove(this.getBlotterLightThemeName());
+      // TODO rewrite this theming once we've got the new UI approach
+      blotterContainer.classList.remove('ab--light');
+      blotterContainer.classList.remove('ab--dark');
       blotterContainer.classList.add(themeClassName);
+      blotterContainer.classList.add('ab'); // MAKE THE CONTAINER HAVE THE 'ab' className
+      blotterContainer.classList.add('ab--' + themeName);
+
+      ModalDialog.defaultProps.className = ' ab--' + themeName;
+      Modal.defaultProps.className = ' ab--' + themeName;
     }
 
     if (document.documentElement) {
