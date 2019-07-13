@@ -40,7 +40,7 @@ export interface AuditOptions {
    *
    * These include any edits made to the data in the grid but not outside (e.g. not a ticking stream).
    *
-   * **Default Value: false**
+   * **Default Value: all destinations are false**
    */
   auditCellEdits?: AuditDestinationOptions;
 
@@ -49,7 +49,7 @@ export interface AuditOptions {
    *
    * These are events that happen when a Function does something (e.g. 'Advanced Search Selected', 'Smart Edit Applied' etc.)
    *
-   * **Default Value: false**
+   * **Default Value: all destinations are false**
    */
   auditFunctionEvents?: AuditDestinationOptions;
 
@@ -58,7 +58,7 @@ export interface AuditOptions {
    *
    * Includes any objects (e.g. Conditional Styles) created, edited or deleted.
    *
-   * **Default Value: false**
+   * **Default Value: all destinations are false**
    */
   auditUserStateChanges?: AuditDestinationOptions;
 
@@ -69,14 +69,18 @@ export interface AuditOptions {
    *
    * Can potentially be very verbose so use sparingly if required.
    *
-   * **Default Value: false**
+   * **Default Value: all destinations are false**
    */
   auditInternalStateChanges?: AuditDestinationOptions;
 
   /**
    * Whether or not to audit changes to underlying Grid data (i.e. those not caused by a user edit)
    *
-   * **Default Value: false**
+   * Note: The Adaptable Blotter is NOT a ticking database so  **this option should be used sparingly if you have very high-frequency ticking data**.
+   *
+   * The primary use case is where data changes rarely in the underlying data set but the user wishes to be notified (presumably) by Alert when that does happen.
+   *
+   * **Default Value: all destinations are false**
    */
   auditTickingDataChanges?: AuditDestinationOptions;
 
