@@ -240,6 +240,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     // get the api ready
     this.api = new BlotterApi(this);
 
+    // data source needs to be created before Audit Log Service
+    this.DataService = new DataService(this);
     // the audit service needs to be created before the store
     this.AuditLogService = new AuditLogService(this);
     // create the store
@@ -250,7 +252,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
     // create the services
     this.CalendarService = new CalendarService(this);
-    this.DataService = new DataService(this);
+
     this.ValidationService = new ValidationService(this);
     this.StyleService = new StyleService(this);
     this.ChartService = new ChartService(this);
@@ -1263,6 +1265,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return this.gridOptions.api.getValue(columnId, row);
   }
 
+  public getDataRowFromRecord(record: any): any {
+    let rowNode = record as RowNode;
+    return rowNode != null && rowNode != undefined ? rowNode.data : undefined;
+  }
+
   public setCellClassRules(
     cellClassRules: any,
     columnId: string,
@@ -1738,7 +1745,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           NewValue: this._currentEditor.getValue(),
           ColumnId: params.column.getColId(),
           IdentifierValue: this.getPrimaryKeyValueFromRecord(params.node),
-          Record: null,
+          Record: params.node,
         };
 
         const failedRules: CellValidationRule[] = this.ValidationService.ValidateCellChanging(

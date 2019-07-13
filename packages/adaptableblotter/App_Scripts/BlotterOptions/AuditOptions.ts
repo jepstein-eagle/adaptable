@@ -17,7 +17,7 @@
  *    auditToHttpChannel: true,
  *  },
  *  auditFunctionEvents: {
- *    auditToConsole: true,
+ *    auditAsAlert: true,
  *  },
  *  auditInternalStateChanges: {
  *    auditAsEvent: true,
@@ -26,6 +26,9 @@
  *    auditAsEvent: true,
  *    auditToHttpChannel: true,
  *  },
+ * auditTickingDataChanges:{
+ * auditToConsole: true,
+ * }
  *  pingInterval: 50,
  *  auditLogsSendInterval: 3,
  *};
@@ -71,6 +74,13 @@ export interface AuditOptions {
   auditInternalStateChanges?: AuditDestinationOptions;
 
   /**
+   * Whether or not to audit changes to underlying Grid data (i.e. those not caused by a user edit)
+   *
+   * **Default Value: false**
+   */
+  auditTickingDataChanges?: AuditDestinationOptions;
+
+  /**
    * How often (in seconds) the Audit Log should ping to check that the listening service is up and running (if its been set).
    *
    * **Note: the Audit Log will only ping if at least one of the 4 audit options has *auditToHttpChannel* as set to true.**
@@ -87,6 +97,20 @@ export interface AuditOptions {
    * **Default Value: 1**
    */
   auditLogsSendInterval?: number;
+
+  /**
+   * What Message Type any alerts sent should be.
+   *
+   * This is only used if when sending Audit messages as Alerts
+   */
+  alertMessageType?: 'Success' | 'Info' | 'Warning' | 'Error';
+
+  /**
+   * Whether the Alert will show as a popup.
+   *
+   * This is only used if when sending Audit messages as Alerts
+   */
+  alertShowAsPopup?: boolean;
 }
 
 /**
@@ -123,4 +147,13 @@ export interface AuditDestinationOptions {
    * **Default Value: false**
    */
   auditAsEvent?: boolean;
+
+  /**
+   * Fires the Audit Message as an Alert.
+   *
+   * This Alert will appear in the Alert toolbar and, optionally, also as a popup (based on the value of the *alertShowAsPopup* property).
+   *
+   * **Default Value: false**
+   */
+  auditAsAlert?: boolean;
 }

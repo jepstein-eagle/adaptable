@@ -33,6 +33,14 @@ function InitAdaptableBlotter() {
     'basic demo'
   );
 
+  adaptableBlotterOptions.auditOptions = {
+    auditCellEdits: {
+      auditAsAlert: true,
+    },
+    auditTickingDataChanges: {
+      auditToConsole: true,
+    },
+  };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);

@@ -959,6 +959,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return this.valOrFunc(row, column);
   }
 
+  public getDataRowFromRecord(record: any): any {
+    return record; // not sure this works...
+  }
+
   public getColumnFormatter(columnId: string) {
     let column = this.getHypergridColumn(columnId);
     if (column && column.properties.format) {

@@ -28,6 +28,26 @@ function InitAdaptableBlotter() {
     'ticking demo set value'
   );
   adaptableBlotterOptions.predefinedConfig = flashingJson;
+
+  adaptableBlotterOptions.auditOptions = {
+    auditCellEdits: {
+      auditAsAlert: true,
+      auditToConsole: true,
+    },
+    auditFunctionEvents: {
+      auditAsAlert: true,
+      auditToConsole: true,
+    },
+    auditUserStateChanges: {
+      // auditAsAlert: true,
+      //  auditToConsole: true,
+    },
+    auditTickingDataChanges: {
+      //   auditAsAlert: true,
+      //   auditToConsole: true,
+    },
+  };
+
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }

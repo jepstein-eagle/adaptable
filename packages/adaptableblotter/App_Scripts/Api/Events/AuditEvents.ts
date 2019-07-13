@@ -42,10 +42,11 @@ export interface FunctionAppliedDetails {
   data?: any;
 }
 
-export interface CellEditDetails {
+export interface DataChangedDetails {
   primarykey_column_value: string;
   primarykey_column_id: string;
   column_id: string;
   previous_value: string;
   new_value: string;
+  row_data: any;
 }

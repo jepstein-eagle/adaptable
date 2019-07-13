@@ -10,6 +10,9 @@ import {
   AuditLogEventArgs,
 } from '../../Api/Events/AuditEvents';
 import { AuditDestinationOptions, AuditOptions } from '../../BlotterOptions/AuditOptions';
+import { IAdaptableAlert } from '../Interface/IMessage';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
+import { func } from '../../../examples/node_modules/@types/prop-types';
 
 export class AuditLogService implements IAuditLogService {
   private auditLogQueue: Array<AuditLogEntry>;
@@ -23,6 +26,7 @@ export class AuditLogService implements IAuditLogService {
   public isAuditFunctionEventsEnabled: boolean;
   public isAuditUserStateChangesEnabled: boolean;
   public isAuditInternalStateChangesEnabled: boolean;
+  public isAuditTickingDataChangesEnabled: boolean;
 
   constructor(blotter: IAdaptableBlotter) {
     this.auditLogQueue = [];
@@ -76,6 +80,18 @@ export class AuditLogService implements IAuditLogService {
       this.isAuditCellEditsEnabled = false;
     }
 
+    // Ticking Data Changes
+    if (
+      blotter.blotterOptions.auditOptions != null &&
+      blotter.blotterOptions.auditOptions.auditTickingDataChanges != null
+    ) {
+      this.isAuditTickingDataChangesEnabled = this.isAuditOptionEnabled(
+        blotter.blotterOptions.auditOptions.auditTickingDataChanges
+      );
+    } else {
+      this.isAuditTickingDataChangesEnabled = false;
+    }
+
     // Log State
     this.isAuditStateChangesEnabled =
       this.isAuditInternalStateChangesEnabled || this.isAuditUserStateChangesEnabled;
@@ -85,6 +101,13 @@ export class AuditLogService implements IAuditLogService {
       this.isAuditStateChangesEnabled ||
       this.isAuditFunctionEventsEnabled ||
       this.isAuditCellEditsEnabled;
+
+    // set up the listener if we are auditing Data Changes
+    if (this.isAuditTickingDataChangesEnabled) {
+      blotter.DataService.OnDataSourceChanged().Subscribe((sender, eventText) =>
+        this.handleDataSourceChanged(eventText)
+      );
+    }
 
     // set up the Audit Queue if any of the Audits is set to use HTTP Channel
     if (this.isAuditEnabled) {
@@ -112,21 +135,12 @@ export class AuditLogService implements IAuditLogService {
     });
   }
 
-  public addEditCellAuditLog(dataChangedEvent: DataChangedInfo) {
+  public addEditCellAuditLog(dataChangedInfo: DataChangedInfo) {
     if (this.isAuditCellEditsEnabled) {
-      let auditLogEntry: AuditLogEntry = {
-        auditlog_type: AuditLogType.CellEdit,
-        client_timestamp: new Date(),
-        username: this.blotter.blotterOptions.userName!,
-        blotter_id: this.blotter.blotterOptions.blotterId!,
-        cell_edit_details: {
-          primarykey_column_value: String(dataChangedEvent.IdentifierValue),
-          primarykey_column_id: this.blotter.blotterOptions.primaryKey,
-          column_id: dataChangedEvent.ColumnId,
-          previous_value: String(dataChangedEvent.OldValue),
-          new_value: String(dataChangedEvent.NewValue),
-        },
-      };
+      let auditLogEntry = this.createAuditLogEntryFromDataChangedInfo(
+        dataChangedInfo,
+        AuditLogType.CellEdit
+      );
       let auditDestinationOptions = this.blotter.blotterOptions.auditOptions!.auditCellEdits!;
 
       if (auditDestinationOptions.auditToConsole) {
@@ -137,6 +151,18 @@ export class AuditLogService implements IAuditLogService {
       }
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
+      }
+      if (auditDestinationOptions.auditAsAlert) {
+        let message: string =
+          'Column: ' +
+          dataChangedInfo.ColumnId +
+          '.  Identifier: ' +
+          dataChangedInfo.IdentifierValue +
+          '.  Old Value: ' +
+          dataChangedInfo.OldValue +
+          '.  New Value: ' +
+          dataChangedInfo.NewValue;
+        this.showAlert('Data Changed', message);
       }
     }
   }
@@ -162,6 +188,10 @@ export class AuditLogService implements IAuditLogService {
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
       }
+      if (auditDestinationOptions.auditAsAlert) {
+        let message: string = 'Action: ' + stateChangeDetails.actionType;
+        this.showAlert(stateChangeDetails.name + ' StateChange', message);
+      }
     }
   }
   public addInternalStateChangeAuditLog(stateChangeDetails: StateChangedDetails) {
@@ -185,6 +215,10 @@ export class AuditLogService implements IAuditLogService {
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
       }
+      if (auditDestinationOptions.auditAsAlert) {
+        let message: string = 'Action: ' + stateChangeDetails.actionType;
+        this.showAlert(stateChangeDetails.name + ' StateChange', message);
+      }
     }
   }
 
@@ -196,14 +230,6 @@ export class AuditLogService implements IAuditLogService {
         username: this.blotter.blotterOptions.userName!,
         blotter_id: this.blotter.blotterOptions.blotterId!,
         function_applied_details: functionAppliedDetails,
-        //  adaptableblotter_function: {
-        //   name: functionName,
-        //   action: action,
-        //   info: info,
-        //not sure if it's best to leave undefined or null.... I think null is better
-        //same as adaptableblotter_state_change we log the obj as a string
-        //   data: data ? this.convertAuditMessageToText(data) : null,
-        // },
       };
       let auditDestinationOptions = this.blotter.blotterOptions.auditOptions!.auditFunctionEvents!;
 
@@ -216,7 +242,65 @@ export class AuditLogService implements IAuditLogService {
       if (auditDestinationOptions.auditToHttpChannel) {
         this.auditLogQueue.push(auditLogEntry);
       }
+      if (auditDestinationOptions.auditAsAlert) {
+        let message: string =
+          'Action: ' + functionAppliedDetails.action + '.  Details: ' + functionAppliedDetails.info;
+        this.showAlert(functionAppliedDetails.name + ' Function Applied', message);
+      }
     }
+  }
+
+  private handleDataSourceChanged(dataChangedInfo: DataChangedInfo): void {
+    if (this.isAuditTickingDataChangesEnabled) {
+      let auditLogEntry = this.createAuditLogEntryFromDataChangedInfo(
+        dataChangedInfo,
+        AuditLogType.TickingDataChange
+      );
+
+      let auditDestinationOptions = this.blotter.blotterOptions.auditOptions!
+        .auditTickingDataChanges!;
+      if (auditDestinationOptions.auditToConsole) {
+        LoggingHelper.LogObject(auditLogEntry);
+      }
+      if (auditDestinationOptions.auditAsEvent) {
+        this.publishStateChanged(auditLogEntry, AuditLogType.FunctionApplied);
+      }
+      if (auditDestinationOptions.auditToHttpChannel) {
+        this.auditLogQueue.push(auditLogEntry);
+      }
+      if (auditDestinationOptions.auditAsAlert) {
+        let message: string =
+          'Column: ' +
+          dataChangedInfo.ColumnId +
+          '.  Identifier: ' +
+          dataChangedInfo.IdentifierValue +
+          '.  Old Value: ' +
+          dataChangedInfo.OldValue +
+          '.  New Value: ' +
+          dataChangedInfo.NewValue;
+        this.showAlert('Data Changed', message);
+      }
+    }
+  }
+
+  private createAuditLogEntryFromDataChangedInfo(
+    dataChangedInfo: DataChangedInfo,
+    auditLogType: AuditLogType
+  ): AuditLogEntry {
+    return {
+      auditlog_type: auditLogType,
+      client_timestamp: new Date(),
+      username: this.blotter.blotterOptions.userName!,
+      blotter_id: this.blotter.blotterOptions.blotterId!,
+      ticking_data_change_details: {
+        primarykey_column_value: String(dataChangedInfo.IdentifierValue),
+        primarykey_column_id: this.blotter.blotterOptions.primaryKey,
+        column_id: dataChangedInfo.ColumnId,
+        previous_value: String(dataChangedInfo.OldValue),
+        new_value: String(dataChangedInfo.NewValue),
+        row_data: this.blotter.getDataRowFromRecord(dataChangedInfo.Record),
+      },
+    };
   }
 
   private ping() {
@@ -325,7 +409,8 @@ export class AuditLogService implements IAuditLogService {
     return (
       auditDestinationOptions.auditAsEvent ||
       auditDestinationOptions.auditToConsole ||
-      auditDestinationOptions.auditToHttpChannel
+      auditDestinationOptions.auditToHttpChannel ||
+      auditDestinationOptions.auditAsAlert
     );
   }
 
@@ -355,7 +440,16 @@ export class AuditLogService implements IAuditLogService {
     return false;
   }
 
-  // not sure this is best place to put this but it shouldnt be in Strategy Base
+  showAlert(header: string, message: string) {
+    let alert: IAdaptableAlert = {
+      Header: header,
+      Msg: message,
+      MessageType: this.blotter.blotterOptions.auditOptions!.alertMessageType as MessageType,
+      ShowAsPopup: this.blotter.blotterOptions.auditOptions!.alertShowAsPopup as boolean,
+    };
+    this.blotter.api.alertApi.displayAlert(alert);
+  }
+
   publishStateChanged(auditLogEntry: AuditLogEntry, auditLogType: AuditLogType): void {
     let stateEventData: AuditLogEventData = {
       name: 'Adaptable Blotter',

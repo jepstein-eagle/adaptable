@@ -127,6 +127,7 @@ export interface IAdaptableBlotter {
     distinctCriteria: DistinctCriteriaPairValue
   ): (columnId: string) => any;
   getDisplayValueFromRawValue(columnId: string, rawValue: any): any;
+  getDataRowFromRecord(record: any): any;
 
   // editing related
   setValue(cellInfo: ICellInfo): void;

@@ -20,7 +20,7 @@ export class TickingDataHelper {
       trade['bloombergBid'] = this.roundTo4Dp(trade['bid'] - 0.01);
       //grid.behavior.reindex();
       grid.repaint();
-    }, 500);
+    }, 1000);
   }
 
   startTickingDataagGridSetDataValue(gridOptions: GridOptions) {
@@ -60,7 +60,7 @@ export class TickingDataHelper {
           }
         });
       }
-    }, 500);
+    }, 5000);
   }
 
   startTickingDataagGridThroughRowData(gridOptions: GridOptions, rowData: any) {
