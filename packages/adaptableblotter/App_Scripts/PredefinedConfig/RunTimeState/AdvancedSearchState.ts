@@ -7,6 +7,8 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * Advanced Search enables you to build saveable searches using *Queries* that can be run across multiple columns using a wide variety of *Search Criteria*.
  *
+ * Advanced Search use an [Expression](https://api.adaptableblotter.com/classes/_predefinedconfig_common_expression_expression_.expression.html) (aka Queries) for evaluation.
+ *
  * **Further Resources**
  *
  * [Advanced Search Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005167931-Advanced-Search)
@@ -17,7 +19,7 @@ import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
  *
  * [Advanced Search Blotter API](_api_interface_iadvancedsearchapi_.iadvancedsearchapi.html)
  *
- * [Advanced Search FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360009004951-Advanced-Search-FAQ)
+ * [Advanced Search FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895971-Advanced-Search-FAQ)
  *
  * **Advanced Search Predefined Config Example**
  *

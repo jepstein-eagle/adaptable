@@ -105,14 +105,14 @@ export interface AuditOptions {
   /**
    * What Message Type any alerts sent should be.
    *
-   * This is only used if when sending Audit messages as Alerts
+   * This is only used when sending Audit messages as Alerts
    */
   alertMessageType?: 'Success' | 'Info' | 'Warning' | 'Error';
 
   /**
    * Whether the Alert will show as a popup.
    *
-   * This is only used if when sending Audit messages as Alerts
+   * This is only used when sending Audit messages as Alerts
    */
   alertShowAsPopup?: boolean;
 }

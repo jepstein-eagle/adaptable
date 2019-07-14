@@ -2,14 +2,117 @@ import { RunTimeState } from './RunTimeState';
 import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 import { Expression } from '../Common/Expression/Expression';
 import { IStyle } from '../Common/IStyle';
+
+/**
+ * The Predefined Configuration for the Conditional Style function
+ *
+ * Use Conditional Styles to set rules for how columns or rows should look visualy based on the data they contain.
+ *
+ * Conditional Styles uses an [Expression](https://api.adaptableblotter.com/classes/_predefinedconfig_common_expression_expression_.expression.html) (aka Queries) for evaluation.
+ *
+ * **Further Resources**
+ *
+ * [Conditional Style Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005113372-Conditional-Styles)
+ *
+ * [Conditional Style Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030602892-Conditional-Style-Videos)
+ *
+ * [Conditional Style Demo](https://demo.adaptableblotter.com/style/aggridconditionalstyledemo/)
+ *
+ * [Conditional Style Blotter API](_api_interface_iconditionalstyleapi_.iconditionalstyleapi.html)
+ *
+ * [Conditional Style FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029742932-Conditional-Styles-FAQ)
+ *
+ * **Conditional Style Predefined Config Example**
+ *
+ * ```ts
+ * export default {
+ * ConditionalStyle: {
+ *   ConditionalStyles: [
+ *     {
+ *       ColumnId: 'ChangeLastOrder',
+ *       Style: {
+ *         ForeColor: '#008000',
+ *       },
+ *       ConditionalStyleScope: 'Column',
+ *       Expression: {
+ *         FilterExpressions: [
+ *           {
+ *             ColumnId: 'ChangeLastOrder',
+ *             Filters: ['Positive'],
+ *           },
+ *         ],
+ *       },
+ *     },
+ *     {
+ *       ColumnId: 'ChangeLastOrder',
+ *       Style: {
+ *        ForeColor: '#ff0000',
+ *       },
+ *       ConditionalStyleScope: 'Column',
+ *       Expression: {
+ *         FilterExpressions: [
+ *           {
+ *             ColumnId: 'ChangeLastOrder',
+ *             Filters: ['Negative'],
+ *           },
+ *         ],
+ *       },
+ *     },
+ *     {
+ *       Style: {
+ *         BackColor: '#ffffcc',
+ *         FontStyle: 'Italic',
+ *         ForeColor: '#000000',
+ *       },
+ *       ConditionalStyleScope: 'Row',
+ *       Expression: {
+ *         RangeExpressions: [
+ *           {
+ *             ColumnId: 'ItemCost',
+ *             Ranges: [
+ *               {
+ *                 Operand1: '80',
+ *                 Operand1Type: 'Value',
+ *                 Operand2: '',
+ *                 Operand2Type: 'Value',
+ *                 Operator: 'GreaterThan',
+ *               },
+ *             ],
+ *           },
+ *         ],
+ *       },
+ *     },
+ *   ],
+ * },
+ * } as PredefinedConfig;
+ * ```
+ **/
 export interface ConditionalStyleState extends RunTimeState {
   ConditionalStyles?: ConditionalStyle[];
 }
 
+/**
+ * The ConditionalStyle object used in the Conditional Style function.
+ */
 export interface ConditionalStyle extends AdaptableBlotterObject {
+  /**
+   * The column which will be styled (if the scope is Column)
+   */
   ColumnId?: string;
+
+  /**
+   * The Column Category which will have all its set of columns styled identically (if the scope is ColumnCategory)
+   */
   ColumnCategoryId?: string;
+
+  /**
+   * Where the Conditional Style is applied:  Either at Column, Row or (if there are any) Column Category level.
+   */
   ConditionalStyleScope?: 'Column' | 'Row' | 'ColumnCategory';
+
+  /**
+   * When the Style should be applied.  Only rows that match the Expression will be styled.  See [Expression](https://api.adaptableblotter.com/classes/_predefinedconfig_common_expression_expression_.expression.html) for more details.
+   */
   Expression?: Expression;
   Style?: IStyle;
 }
