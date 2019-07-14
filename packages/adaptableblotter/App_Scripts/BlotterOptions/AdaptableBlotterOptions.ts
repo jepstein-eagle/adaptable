@@ -113,9 +113,9 @@ export interface AdaptableBlotterOptions {
    *
    * Depending on the options you set audit messages will send details of actions in the Blotter to an Audit destination.
    *
-   * You can choose to listen to any mixture of Audits for: **CellEdit**, **FunctionEvent**, **UserStateChange** and **InternalStateChange**.
+   * You can choose to listen to any mixture of Audits for: **CellEdit**, **TickingDataChange**, **FunctionEvent**, **UserStateChange** and **InternalStateChange**.
    *
-   * You additionally choose to send each audit message (which is packaged as a simple JSON object) to any mixture of: **Http Channel**, **Console** or **Event**.
+   * You additionally choose to send each audit message (which is packaged as a simple JSON object) to any mixture of: **Http Channel**, **Console**, **Alert** or **Event**.
    *
    * If you select HttpChannel, you can subsequently see these message using reporting software such as the Elastic Stack.
    */

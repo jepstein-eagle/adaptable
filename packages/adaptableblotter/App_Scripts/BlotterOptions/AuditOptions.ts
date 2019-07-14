@@ -27,7 +27,7 @@
  *    auditToHttpChannel: true,
  *  },
  * auditTickingDataChanges:{
- * auditToConsole: true,
+ *    auditToConsole: true,
  * }
  *  pingInterval: 50,
  *  auditLogsSendInterval: 3,
