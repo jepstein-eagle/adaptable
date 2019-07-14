@@ -33,7 +33,7 @@ export function getFriendlyNameFromColumn(columnId: string, column: IColumn): st
 }
 
 export function getFriendlyNameFromColumnId(columnId: string, columns: IColumn[]): string {
-  let foundColumn: IColumn = columns.find(c => c.ColumnId == columnId);
+  let foundColumn: IColumn | undefined = columns.find(c => c.ColumnId == columnId);
   if (foundColumn) {
     return getFriendlyNameFromColumn(columnId, foundColumn);
   } else {

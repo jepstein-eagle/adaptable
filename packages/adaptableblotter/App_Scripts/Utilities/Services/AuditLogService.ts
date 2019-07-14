@@ -12,7 +12,7 @@ import {
 import { AuditDestinationOptions, AuditOptions } from '../../BlotterOptions/AuditOptions';
 import { IAdaptableAlert } from '../Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
-import { func } from '../../../examples/node_modules/@types/prop-types';
+import ColumnHelper from '../Helpers/ColumnHelper';
 
 export class AuditLogService implements IAuditLogService {
   private auditLogQueue: Array<AuditLogEntry>;
@@ -155,7 +155,10 @@ export class AuditLogService implements IAuditLogService {
       if (auditDestinationOptions.auditAsAlert) {
         let message: string =
           'Column: ' +
-          dataChangedInfo.ColumnId +
+          ColumnHelper.getFriendlyNameFromColumnId(
+            dataChangedInfo.ColumnId,
+            this.blotter.api.gridApi.getColumns()
+          ) +
           '.  Identifier: ' +
           dataChangedInfo.IdentifierValue +
           '.  Old Value: ' +
@@ -271,7 +274,10 @@ export class AuditLogService implements IAuditLogService {
       if (auditDestinationOptions.auditAsAlert) {
         let message: string =
           'Column: ' +
-          dataChangedInfo.ColumnId +
+          ColumnHelper.getFriendlyNameFromColumnId(
+            dataChangedInfo.ColumnId,
+            this.blotter.api.gridApi.getColumns()
+          ) +
           '.  Identifier: ' +
           dataChangedInfo.IdentifierValue +
           '.  Old Value: ' +

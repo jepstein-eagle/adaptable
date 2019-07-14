@@ -46,6 +46,7 @@ function InitAdaptableBlotter() {
       //   auditAsAlert: true,
       //   auditToConsole: true,
     },
+    alertShowAsPopup: true,
   };
 
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
