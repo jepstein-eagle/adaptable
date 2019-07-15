@@ -114,21 +114,21 @@ export class ExamplesHelper {
     }
     return trades;
   }
-  getDollarTrades(count: number): ITrade[] {
+  public getDollarTrades(count: number): ITrade[] {
     let trades: ITrade[] = [];
     for (let i = 1; i <= count; i++) {
       trades.push(this.createTrade(i, 'USD'));
     }
     return trades;
   }
-  getGBPTrades(count: number): ITrade[] {
+  public getGBPTrades(count: number): ITrade[] {
     let trades: ITrade[] = [];
     for (let i = 1; i <= count; i++) {
       trades.push(this.createTrade(i, 'GBP'));
     }
     return trades;
   }
-  getEuroTrades(count: number): ITrade[] {
+  public getEuroTrades(count: number): ITrade[] {
     let trades: ITrade[] = [];
     for (let i = 1; i <= count; i++) {
       trades.push(this.createTrade(i, 'EUR'));

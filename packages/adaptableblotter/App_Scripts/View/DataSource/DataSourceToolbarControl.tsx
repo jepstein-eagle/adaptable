@@ -11,32 +11,51 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import { DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
+import { AdaptablePopover } from '../AdaptablePopover';
+import { DataSourceParamsPopover } from './DataSourceParamsPopover';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import { ButtonApply } from '../Components/Buttons/ButtonApply';
 
 interface DataSourceToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<DataSourceToolbarControlComponent> {
-  CurrentDataSource: string;
+  CurrentDataSourceName: string;
   DataSources: DataSource[];
 
   onSelectDataSource: (DataSourceName: string) => DataSourceRedux.DataSourceSelectAction;
 }
 
+interface DataSourceToolbarControlComponentState {
+  CurrentDataSource: DataSource;
+}
+
 class DataSourceToolbarControlComponent extends React.Component<
   DataSourceToolbarControlComponentProps,
-  {}
+  DataSourceToolbarControlComponentState
 > {
+  constructor(props: DataSourceToolbarControlComponentProps) {
+    super(props);
+    this.state = {
+      CurrentDataSource: StringExtensions.IsNullOrEmpty(this.props.CurrentDataSourceName)
+        ? null
+        : this.props.DataSources.find(ds => ds.Name == this.props.CurrentDataSourceName),
+    };
+  }
+
   render() {
     const selectDataSourceString: string = 'Select Data Source';
     let cssClassName: string = this.props.cssClassName + '__DataSource';
 
-    let currentDataSource = StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource)
-      ? selectDataSourceString
-      : this.props.CurrentDataSource;
+    let currentDataSourceName =
+      this.state.CurrentDataSource == null
+        ? selectDataSourceString
+        : this.state.CurrentDataSource.Name;
+
+    // this will be a method that will check params...
+    let canApplyDataSource: boolean = this.canApplyDataSource();
 
     let availableDataSources: any[] = this.props.DataSources.filter(
-      s => s.Name != this.props.CurrentDataSource
+      s => s.Name != currentDataSourceName
     ).map((dataSource, index) => {
       return (
         <MenuItem
@@ -48,6 +67,15 @@ class DataSourceToolbarControlComponent extends React.Component<
         </MenuItem>
       );
     });
+
+    let dataSourceParamsPopover =
+      this.state.CurrentDataSource == null ? null : (
+        <DataSourceParamsPopover
+          cssClassName={cssClassName}
+          dataSourceParams={this.state.CurrentDataSource.DataSourceParams}
+        />
+      );
+
     let content = (
       <span>
         <InputGroup>
@@ -57,25 +85,42 @@ class DataSourceToolbarControlComponent extends React.Component<
             className={cssClassName}
             bsSize={this.props.DashboardSize}
             bsStyle={'default'}
-            title={currentDataSource}
+            title={currentDataSourceName}
             id="DataSource"
             componentClass={InputGroup.Button}
           >
             {availableDataSources}
           </DropdownButton>
+
           <InputGroup.Button>
-            <ButtonClear
-              bsStyle={'default'}
+            <ButtonApply
               cssClassName={cssClassName}
-              onClick={() => this.onSelectedDataSourceChanged('')}
+              style={{ marginLeft: '3px' }}
+              onClick={() => this.onApplyClick()}
               size={this.props.DashboardSize}
-              overrideTooltip="Clear Search"
-              overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.CurrentDataSource)}
+              glyph={'ok'}
+              bsStyle={'default'}
+              overrideTooltip="Get Data Source"
+              overrideDisableButton={!canApplyDataSource}
               DisplayMode="Glyph"
               AccessLevel={this.props.AccessLevel}
+              showDefaultStyle={this.props.UseSingleColourForButtons}
             />
           </InputGroup.Button>
         </InputGroup>
+        {this.state.CurrentDataSource != null && !canApplyDataSource && (
+          <AdaptablePopover
+            showDefaultStyle={this.props.UseSingleColourForButtons}
+            size={this.props.DashboardSize}
+            cssClassName={cssClassName}
+            headerText="Data Source Params"
+            bodyText={[dataSourceParamsPopover]}
+            tooltipText={'Get Data Source Params'}
+            useButton={true}
+            triggerAction={'click'}
+            popoverMinWidth={300}
+          />
+        )}
       </span>
     );
 
@@ -93,14 +138,38 @@ class DataSourceToolbarControlComponent extends React.Component<
     );
   }
 
-  onSelectedDataSourceChanged(searchName: string) {
-    this.props.onSelectDataSource(searchName);
+  onSelectedDataSourceChanged(dataSourceName: string) {
+    if (StringExtensions.IsNullOrEmpty(dataSourceName)) {
+      this.setState({ CurrentDataSource: null });
+    } else {
+      let newDataSource: DataSource = this.props.DataSources.find(ds => ds.Name == dataSourceName);
+      this.setState({ CurrentDataSource: newDataSource });
+    }
+  }
+
+  private onApplyClick(): void {
+    if (this.canApplyDataSource) {
+      if (this.state.CurrentDataSource != null) {
+        this.props.onSelectDataSource(this.state.CurrentDataSource.Name);
+      }
+    }
+  }
+
+  private canApplyDataSource(): boolean {
+    if (this.state.CurrentDataSource == null) {
+      return false;
+    }
+    if (ArrayExtensions.IsNotNullOrEmpty(this.state.CurrentDataSource.DataSourceParams)) {
+      return false;
+    }
+
+    return true;
   }
 }
 
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
   return {
-    CurrentDataSource: state.DataSource.CurrentDataSource,
+    CurrentDataSourceName: state.DataSource.CurrentDataSource,
     DataSources: state.DataSource.DataSources,
   };
 }
