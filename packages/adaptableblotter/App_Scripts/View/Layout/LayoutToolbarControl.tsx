@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { InputGroup, MenuItem, DropdownButton } from 'react-bootstrap';
+import { MenuItem } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';

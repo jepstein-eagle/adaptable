@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { HelpBlock } from 'react-bootstrap';
 import { FormatColumnEntityRow } from './FormatColumnEntityRow';
 import { FormatColumnWizard } from './Wizard/FormatColumnWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';

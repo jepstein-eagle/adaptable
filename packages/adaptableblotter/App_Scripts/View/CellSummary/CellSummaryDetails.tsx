@@ -5,7 +5,8 @@ import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
-import { ControlLabel } from 'react-bootstrap';
+
+import { Text } from 'rebass';
 import {
   CellSummaryOperation,
   CellSummaryOptionalOperation,
@@ -92,7 +93,7 @@ export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps,
         {this.props.CellSummary != null ? (
           <div className={cssClassName + StyleConstants.ITEMS_TABLE_BODY}>{rowElements}</div>
         ) : (
-          <ControlLabel>No cells are selected - please select some cells.</ControlLabel>
+          <Text>No cells are selected - please select some cells.</Text>
         )}
       </div>
     );

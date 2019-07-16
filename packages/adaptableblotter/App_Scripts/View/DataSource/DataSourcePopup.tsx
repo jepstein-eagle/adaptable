@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
@@ -81,11 +80,9 @@ class DataSourcePopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.CreateDataSource()}
-        overrideTooltip="Create New DataSource"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create New DataSource"
         AccessLevel={this.props.AccessLevel}
       />
     );

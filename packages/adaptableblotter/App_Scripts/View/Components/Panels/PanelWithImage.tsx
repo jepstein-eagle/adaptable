@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Panel, Row, Col, Glyphicon } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 import { withTheme } from 'styled-components';
 import { AdaptablePopover } from '../../AdaptablePopover';
 
