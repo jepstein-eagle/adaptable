@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { DropdownButton, OverlayTrigger, Tooltip, Glyphicon, MenuItem } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
@@ -13,7 +12,7 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ChartEntityRow } from './ChartEntityRow';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
+
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import {
@@ -31,6 +30,8 @@ import { PieChartWizard } from './PieChart/Wizard/PieChartWizard';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import HelpBlock from '../../components/HelpBlock';
 import EmptyContent from '../../components/EmptyContent';
+import DropdownButton from '../../components/DropdownButton';
+import PlusIcon from '../../components/icons/plus';
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
   onAddChartDefinition: (chartDefinition: ChartDefinition) => ChartRedux.ChartDefinitionAddAction;
@@ -99,115 +100,93 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       );
     });
 
-    let categoryChartMenuItem = (
-      <MenuItem
-        disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-        onClick={() => this.onNew(ChartType.CategoryChart)}
-        key={'categoryChart'}
-      >
-        {'Category Chart'}
-      </MenuItem>
-    );
-    let pieChartMenuItem = (
-      <MenuItem
-        disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-        onClick={() => this.onNew(ChartType.PieChart)}
-        key={'pieChart'}
-      >
-        {'Pie Chart'}
-      </MenuItem>
-    );
+    let categoryChartMenuItem = {
+      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      onClick: () => this.onNew(ChartType.CategoryChart),
+      label: 'Category Chart',
+    };
+    let pieChartMenuItem = {
+      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      onClick: () => this.onNew(ChartType.PieChart),
+      label: 'Pie Chart',
+    };
 
     // we need to make this a button type...
-    const plusGlyph: any = (
-      <OverlayTrigger
-        key={'exportOverlay'}
-        overlay={<Tooltip id="tooltipButton"> {'Create New Chart Definition'}</Tooltip>}
-      >
-        <span>
-          <Glyphicon glyph={'plus'} /> {'New'}{' '}
-        </span>
-      </OverlayTrigger>
-    );
 
     let dropdownButton = (
       <DropdownButton
-        style={{ float: 'right', marginRight: '0px' }}
-        bsSize={'small'}
-        bsStyle={StyleConstants.INFO_BSSTYLE}
-        title={plusGlyph}
-        id="chartDropdown"
+        tooltip="Create New Chart Definition"
+        variant="raised"
+        tone="success"
+        items={[categoryChartMenuItem, pieChartMenuItem]}
+        style={{ zIndex: 100 }}
       >
-        {categoryChartMenuItem}
-        {pieChartMenuItem}
+        <PlusIcon /> New
       </DropdownButton>
     );
 
     let editedChartDefinition = this.state.EditedAdaptableBlotterObject as ChartDefinition;
 
     return (
-      <div className={cssClassName}>
-        <PanelWithButton
-          cssClassName={cssClassName}
-          headerText={StrategyConstants.ChartStrategyName}
-          className="ab_main_popup"
-          infoBody={infoBody}
-          button={dropdownButton}
-          bodyProps={{ padding: 0 }}
-          bodyScroll
-          glyphicon={StrategyConstants.ChartGlyph}
-        >
-          {Charts.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={Charts}
-            />
-          ) : (
-            <EmptyContent>
-              <p>Click 'New' to create a new Chart.</p>
+      <PanelWithButton
+        cssClassName={cssClassName}
+        headerText={StrategyConstants.ChartStrategyName}
+        infoBody={infoBody}
+        button={dropdownButton}
+        bodyProps={{ padding: 0 }}
+        bodyScroll
+        glyphicon={StrategyConstants.ChartGlyph}
+      >
+        {Charts.length > 0 ? (
+          <AdaptableObjectCollection
+            cssClassName={cssClassName}
+            colItems={colItems}
+            items={Charts}
+          />
+        ) : (
+          <EmptyContent>
+            <p>Click 'New' to create a new Chart.</p>
 
-              <p>Choose between Category and Pie Chart.</p>
-            </EmptyContent>
-          )}
+            <p>Choose between Category and Pie Chart.</p>
+          </EmptyContent>
+        )}
 
-          {this.state.EditedAdaptableBlotterObject && (
-            <div>
-              {editedChartDefinition.ChartType == ChartType.CategoryChart ? (
-                <CategoryChartWizard
-                  cssClassName={cssWizardClassName}
-                  EditedAdaptableBlotterObject={editedChartDefinition}
-                  ConfigEntities={this.props.ChartDefinitions}
-                  ModalContainer={this.props.ModalContainer}
-                  Columns={this.props.Columns}
-                  UserFilters={this.props.UserFilters}
-                  SystemFilters={this.props.SystemFilters}
-                  Blotter={this.props.Blotter}
-                  WizardStartIndex={this.state.WizardStartIndex}
-                  onCloseWizard={() => this.onCloseWizard()}
-                  onFinishWizard={() => this.onFinishWizard()}
-                  canFinishWizard={() => this.canFinishWizard()}
-                />
-              ) : (
-                <PieChartWizard
-                  cssClassName={cssClassName}
-                  EditedAdaptableBlotterObject={editedChartDefinition}
-                  ConfigEntities={this.props.ChartDefinitions}
-                  ModalContainer={this.props.ModalContainer}
-                  Columns={this.props.Columns}
-                  UserFilters={this.props.UserFilters}
-                  SystemFilters={this.props.SystemFilters}
-                  Blotter={this.props.Blotter}
-                  WizardStartIndex={0}
-                  onCloseWizard={() => this.onCloseWizard()}
-                  onFinishWizard={() => this.onFinishWizard()}
-                  canFinishWizard={() => this.canFinishWizard()}
-                />
-              )}
-            </div>
-          )}
-        </PanelWithButton>
-      </div>
+        {this.state.EditedAdaptableBlotterObject && (
+          <div>
+            {editedChartDefinition.ChartType == ChartType.CategoryChart ? (
+              <CategoryChartWizard
+                cssClassName={cssWizardClassName}
+                EditedAdaptableBlotterObject={editedChartDefinition}
+                ConfigEntities={this.props.ChartDefinitions}
+                ModalContainer={this.props.ModalContainer}
+                Columns={this.props.Columns}
+                UserFilters={this.props.UserFilters}
+                SystemFilters={this.props.SystemFilters}
+                Blotter={this.props.Blotter}
+                WizardStartIndex={this.state.WizardStartIndex}
+                onCloseWizard={() => this.onCloseWizard()}
+                onFinishWizard={() => this.onFinishWizard()}
+                canFinishWizard={() => this.canFinishWizard()}
+              />
+            ) : (
+              <PieChartWizard
+                cssClassName={cssClassName}
+                EditedAdaptableBlotterObject={editedChartDefinition}
+                ConfigEntities={this.props.ChartDefinitions}
+                ModalContainer={this.props.ModalContainer}
+                Columns={this.props.Columns}
+                UserFilters={this.props.UserFilters}
+                SystemFilters={this.props.SystemFilters}
+                Blotter={this.props.Blotter}
+                WizardStartIndex={0}
+                onCloseWizard={() => this.onCloseWizard()}
+                onFinishWizard={() => this.onFinishWizard()}
+                canFinishWizard={() => this.canFinishWizard()}
+              />
+            )}
+          </div>
+        )}
+      </PanelWithButton>
     );
   }
 

@@ -15,6 +15,7 @@ import { Flex, Box } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 import join from '../../components/utils/join';
 import { CSSProperties } from 'react';
+import WizardPanel from '../../components/WizardPanel';
 
 export interface StyleComponentProps extends React.ClassAttributes<StyleComponent> {
   className?: string;
@@ -58,150 +59,148 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
     });
 
     return (
-      <div style={this.props.style} className={join(cssClassName, this.props.className)}>
-        <Panel header="Style" style={{ height: '100%' }} borderRadius="none" border="none">
-          {this.props.CanUseClassName && this.props.StyleClassNames.length > 0 && (
-            <Checkbox
-              onChange={checked => this.onShowClassNameChanged(checked)}
-              checked={this.state.ShowClassName}
-            >
-              Use Style Class Name
-            </Checkbox>
-          )}
+      <WizardPanel header="Style">
+        {this.props.CanUseClassName && this.props.StyleClassNames.length > 0 && (
+          <Checkbox
+            onChange={checked => this.onShowClassNameChanged(checked)}
+            checked={this.state.ShowClassName}
+          >
+            Use Style Class Name
+          </Checkbox>
+        )}
 
-          {this.state.ShowClassName ? (
-            <div>
-              <HelpBlock>{'Choose a style from the dropdown.'}</HelpBlock>
-              <HelpBlock>
+        {this.state.ShowClassName ? (
+          <div>
+            <HelpBlock>{'Choose a style from the dropdown.'}</HelpBlock>
+            <HelpBlock>
+              {
+                'Note: This assumes that you have provided a style with the same name in a stylesheet.'
+              }
+            </HelpBlock>
+            <Dropdown
+              placeholder="select"
+              value={this.state.myStyle.ClassName}
+              onChange={(value: any) => this.onStyleClassNameChanged(value)}
+              options={[
                 {
-                  'Note: This assumes that you have provided a style with the same name in a stylesheet.'
-                }
-              </HelpBlock>
-              <Dropdown
-                placeholder="select"
-                value={this.state.myStyle.ClassName}
-                onChange={(value: any) => this.onStyleClassNameChanged(value)}
-                options={[
-                  {
-                    value: 'select',
-                    label: 'Select Style Class Name',
-                  },
-                  ...optionClassNames,
-                ]}
-              ></Dropdown>
-            </div>
-          ) : (
-            <Flex>
-              <Flex flex={1}>
-                <Panel header="Cell Colours" bodyProps={{ padding: 0 }}>
-                  <Flex flexDirection="column" margin={1}>
-                    <Flex flexDirection="row" alignItems="center">
-                      <Checkbox
-                        inline
-                        value="existing"
-                        marginLeft={1}
-                        marginRight={3}
-                        checked={this.state.myStyle.BackColor ? true : false}
-                        onChange={checked => this.onUseBackColorCheckChange(checked)}
-                      >
-                        Set Back Colour
-                      </Checkbox>
-                      <div style={{ flex: 1 }} />
-                      {this.state.myStyle.BackColor != null && (
-                        <ColorPicker
-                          ColorPalette={this.props.ColorPalette}
-                          value={this.state.myStyle.BackColor}
-                          onChange={x => this.onBackColorSelectChange(x)}
-                        />
-                      )}
-                    </Flex>
-
-                    <Flex flexDirection="row" alignItems="center">
-                      <Checkbox
-                        marginLeft={1}
-                        marginRight={3}
-                        value="existing"
-                        checked={this.state.myStyle.ForeColor ? true : false}
-                        onChange={checked => this.onUseForeColorCheckChange(checked)}
-                      >
-                        Set Fore Colour
-                      </Checkbox>
-                      <div style={{ flex: 1 }} />
-                      {this.state.myStyle.ForeColor != null && (
-                        <ColorPicker
-                          ColorPalette={this.props.ColorPalette}
-                          value={this.state.myStyle.ForeColor}
-                          onChange={x => this.onForeColorSelectChange(x)}
-                        />
-                      )}
-                    </Flex>
+                  value: 'select',
+                  label: 'Select Style Class Name',
+                },
+                ...optionClassNames,
+              ]}
+            ></Dropdown>
+          </div>
+        ) : (
+          <Flex>
+            <Flex flex={1}>
+              <Panel header="Cell Colours" bodyProps={{ padding: 0 }}>
+                <Flex flexDirection="column" margin={1}>
+                  <Flex flexDirection="row" alignItems="center">
+                    <Checkbox
+                      inline
+                      value="existing"
+                      marginLeft={1}
+                      marginRight={3}
+                      checked={this.state.myStyle.BackColor ? true : false}
+                      onChange={checked => this.onUseBackColorCheckChange(checked)}
+                    >
+                      Set Back Colour
+                    </Checkbox>
+                    <div style={{ flex: 1 }} />
+                    {this.state.myStyle.BackColor != null && (
+                      <ColorPicker
+                        ColorPalette={this.props.ColorPalette}
+                        value={this.state.myStyle.BackColor}
+                        onChange={x => this.onBackColorSelectChange(x)}
+                      />
+                    )}
                   </Flex>
 
-                  <HelpBlock marginTop={2}>
-                    Set the colour by ticking a checkbox and selecting a colour from the dropdown;
-                    leave unchecked to use colours from the cell's existing style.
-                  </HelpBlock>
-                </Panel>
-              </Flex>
-
-              <Flex flex={1} marginLeft={2}>
-                <Panel header="Font Properties" style={{ width: '100%' }}>
-                  <Flex flexDirection="column">
+                  <Flex flexDirection="row" alignItems="center">
                     <Checkbox
                       marginLeft={1}
-                      value={FontWeight.Normal.toString()}
-                      checked={this.state.myStyle.FontWeight == FontWeight.Bold}
-                      onChange={checked => this.onFontWeightChange(checked)}
+                      marginRight={3}
+                      value="existing"
+                      checked={this.state.myStyle.ForeColor ? true : false}
+                      onChange={checked => this.onUseForeColorCheckChange(checked)}
                     >
-                      Bold
+                      Set Fore Colour
                     </Checkbox>
-
-                    <Checkbox
-                      marginLeft={1}
-                      value={FontStyle.Normal.toString()}
-                      checked={this.state.myStyle.FontStyle == FontStyle.Italic}
-                      onChange={checked => this.onFontStyleChange(checked)}
-                    >
-                      Italic
-                    </Checkbox>
-
-                    <Box>
-                      <Checkbox
-                        marginLeft={1}
-                        checked={this.state.myStyle.FontSize ? true : false}
-                        onChange={checked => this.onUseFontSizeCheckChange(checked)}
-                      >
-                        Set Font Size
-                      </Checkbox>
-                    </Box>
-                    <Box>
-                      {/*we use the componentclass fieldset to indicate its not a new form...*/}
-                      {this.state.myStyle.FontSize != null && (
-                        <Flex flexDirection="row" alignItems="center">
-                          <Dropdown
-                            placeholder="select"
-                            marginRight={2}
-                            value={this.state.myStyle.FontSize.toString()}
-                            onChange={(value: any) => this.onFontSizeChange(value)}
-                            options={optionFontSizes}
-                          ></Dropdown>{' '}
-                          <AdaptablePopover
-                            cssClassName={cssClassName}
-                            headerText={'Conditional Style: Font Size'}
-                            bodyText={[
-                              "Select the size of the font for the Conditional Style.  The default is 'Medium'.",
-                            ]}
-                          />
-                        </Flex>
-                      )}
-                    </Box>
+                    <div style={{ flex: 1 }} />
+                    {this.state.myStyle.ForeColor != null && (
+                      <ColorPicker
+                        ColorPalette={this.props.ColorPalette}
+                        value={this.state.myStyle.ForeColor}
+                        onChange={x => this.onForeColorSelectChange(x)}
+                      />
+                    )}
                   </Flex>
-                </Panel>
-              </Flex>
+                </Flex>
+
+                <HelpBlock marginTop={2}>
+                  Set the colour by ticking a checkbox and selecting a colour from the dropdown;
+                  leave unchecked to use colours from the cell's existing style.
+                </HelpBlock>
+              </Panel>
             </Flex>
-          )}
-        </Panel>
-      </div>
+
+            <Flex flex={1} marginLeft={2}>
+              <Panel header="Font Properties" style={{ width: '100%' }}>
+                <Flex flexDirection="column">
+                  <Checkbox
+                    marginLeft={1}
+                    value={FontWeight.Normal.toString()}
+                    checked={this.state.myStyle.FontWeight == FontWeight.Bold}
+                    onChange={checked => this.onFontWeightChange(checked)}
+                  >
+                    Bold
+                  </Checkbox>
+
+                  <Checkbox
+                    marginLeft={1}
+                    value={FontStyle.Normal.toString()}
+                    checked={this.state.myStyle.FontStyle == FontStyle.Italic}
+                    onChange={checked => this.onFontStyleChange(checked)}
+                  >
+                    Italic
+                  </Checkbox>
+
+                  <Box>
+                    <Checkbox
+                      marginLeft={1}
+                      checked={this.state.myStyle.FontSize ? true : false}
+                      onChange={checked => this.onUseFontSizeCheckChange(checked)}
+                    >
+                      Set Font Size
+                    </Checkbox>
+                  </Box>
+                  <Box>
+                    {/*we use the componentclass fieldset to indicate its not a new form...*/}
+                    {this.state.myStyle.FontSize != null && (
+                      <Flex flexDirection="row" alignItems="center">
+                        <Dropdown
+                          placeholder="select"
+                          marginRight={2}
+                          value={this.state.myStyle.FontSize.toString()}
+                          onChange={(value: any) => this.onFontSizeChange(value)}
+                          options={optionFontSizes}
+                        ></Dropdown>{' '}
+                        <AdaptablePopover
+                          cssClassName={cssClassName}
+                          headerText={'Conditional Style: Font Size'}
+                          bodyText={[
+                            "Select the size of the font for the Conditional Style.  The default is 'Medium'.",
+                          ]}
+                        />
+                      </Flex>
+                    )}
+                  </Box>
+                </Flex>
+              </Panel>
+            </Flex>
+          </Flex>
+        )}
+      </WizardPanel>
     );
   }
 

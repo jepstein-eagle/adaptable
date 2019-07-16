@@ -1,7 +1,6 @@
 import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
 import * as React from 'react';
-import { Col, Radio, ControlLabel } from 'react-bootstrap';
-import Panel from '../../../components/Panel';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -10,7 +9,10 @@ import {
 
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ReportColumnScope, MessageType } from '../../../PredefinedConfig/Common/Enums';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
+import WizardPanel from '../../../components/WizardPanel';
+import Radio from '../../../components/Radio';
+import { Flex } from 'rebass';
 
 export interface ReportColumnTypeWizardProps extends AdaptableWizardStepProps<Report> {}
 export interface ReportColumnsWizardState {
@@ -29,73 +31,57 @@ export class ReportColumnTypeWizard
   render() {
     let cssClassName: string = this.props.cssClassName + '-reportcolumns';
     return (
-      <div className={cssClassName}>
-        <Panel
-          header="Select Columns for the Report"
-          bsStyle="primary"
-          borderRadius="none"
-          bodyProps={{ style: { border: 'none' } }}
-          headerProps={{ style: { border: 'none' } }}
-        >
-          <Col xs={12} className="ab_large_margin">
-            <AdaptableBlotterForm inline>
-              <Radio
-                value="All"
-                checked={this.state.ReportColumnScope == ReportColumnScope.AllColumns}
-                onChange={e => this.onScopeSelectChanged(e)}
-              >
-                {' '}
-                All Columns in the Data Source
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Report: All Columns'}
-                bodyText={[
-                  'All columns in the datasource will be included in the report, whether visible or not at time of export.',
-                ]}
-              />
-            </AdaptableBlotterForm>
-          </Col>
-          <Col xs={12} className="ab_large_margin">
-            <AdaptableBlotterForm inline>
-              <Radio
-                value="Visible"
-                checked={this.state.ReportColumnScope == ReportColumnScope.VisibleColumns}
-                onChange={e => this.onScopeSelectChanged(e)}
-              >
-                {' '}
-                Visible Columns Only (at time that report is run)
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Report: Visible Columns'}
-                bodyText={[
-                  'Only columns that are visible at the time the Report is exported will be included in the Export.',
-                ]}
-              />
-            </AdaptableBlotterForm>
-          </Col>
-          <Col xs={12} className="ab_large_margin">
-            <AdaptableBlotterForm inline>
-              <Radio
-                value="Bespoke"
-                checked={this.state.ReportColumnScope == ReportColumnScope.BespokeColumns}
-                onChange={e => this.onScopeSelectChanged(e)}
-              >
-                {' '}
-                Bespoke Columns - selected by you in next step
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Report: Bespoke Columns'}
-                bodyText={[
-                  'Only the columns chosen in next step will be exported (visible or not).',
-                ]}
-              />
-            </AdaptableBlotterForm>
-          </Col>
-        </Panel>
-      </div>
+      <WizardPanel header="Select Columns for the Report">
+        <Flex flexDirection="row" alignItems="center">
+          <Radio
+            value="All"
+            checked={this.state.ReportColumnScope == ReportColumnScope.AllColumns}
+            onChange={(_, e: any) => this.onScopeSelectChanged(e)}
+            marginRight={3}
+          >
+            All Columns in the Data Source
+          </Radio>{' '}
+          <AdaptablePopover
+            cssClassName={cssClassName}
+            headerText={'Report: All Columns'}
+            bodyText={[
+              'All columns in the datasource will be included in the report, whether visible or not at time of export.',
+            ]}
+          />
+        </Flex>
+        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <Radio
+            value="Visible"
+            checked={this.state.ReportColumnScope == ReportColumnScope.VisibleColumns}
+            onChange={(_, e: any) => this.onScopeSelectChanged(e)}
+            marginRight={3}
+          >
+            Visible Columns Only (at time that report is run)
+          </Radio>{' '}
+          <AdaptablePopover
+            cssClassName={cssClassName}
+            headerText={'Report: Visible Columns'}
+            bodyText={[
+              'Only columns that are visible at the time the Report is exported will be included in the Export.',
+            ]}
+          />
+        </Flex>
+        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <Radio
+            value="Bespoke"
+            marginRight={3}
+            checked={this.state.ReportColumnScope == ReportColumnScope.BespokeColumns}
+            onChange={(_, e: any) => this.onScopeSelectChanged(e)}
+          >
+            Bespoke Columns - selected by you in next step
+          </Radio>{' '}
+          <AdaptablePopover
+            cssClassName={cssClassName}
+            headerText={'Report: Bespoke Columns'}
+            bodyText={['Only the columns chosen in next step will be exported (visible or not).']}
+          />
+        </Flex>
+      </WizardPanel>
     );
   }
 

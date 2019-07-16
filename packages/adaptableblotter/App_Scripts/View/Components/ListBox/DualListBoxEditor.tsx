@@ -33,6 +33,7 @@ export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBo
   HeaderSelected: string;
   //if not primitive objects all DisplayMember and ValueMember and sortmember need to be used
   DisplayMember?: string;
+  style?: React.CSSProperties;
   ValueMember?: string;
   SortMember?: string;
   DisplaySize?: DisplaySize;
@@ -261,7 +262,7 @@ export class DualListBoxEditor extends React.Component<
         className={cssClassName}
         alignItems="stretch"
         flexDirection="row"
-        style={{ maxHeight: '100%', width: '100%' }}
+        style={{ ...this.props.style, maxHeight: '100%', width: '100%' }}
       >
         <Panel
           header={this.props.HeaderAvailable}
@@ -1107,7 +1108,7 @@ var listGroupStyleAvailableLarge: React.CSSProperties = {
 
 var listGroupStyleSelectedLarge: React.CSSProperties = {
   overflowY: 'auto',
-  height: '465px',
+
   marginBottom: '0px',
 };
 var listGroupStyleAvailableSmall: React.CSSProperties = {

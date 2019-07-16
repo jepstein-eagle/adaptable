@@ -7,10 +7,13 @@ import { CategoryChartDefinition } from '../../../../PredefinedConfig/RunTimeSta
 import { AxisTotal } from '../../../../PredefinedConfig/Common/ChartEnums';
 import { ColumnHelper } from '../../../../Utilities/Helpers/ColumnHelper';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
-import { Panel, FormGroup, Row, Col, ControlLabel, Radio } from 'react-bootstrap';
+
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { AdaptablePopover } from '../../../AdaptablePopover';
 import { DualListBoxEditor, DisplaySize } from '../../../Components/ListBox/DualListBoxEditor';
+import WizardPanel from '../../../../components/WizardPanel';
+import Radio from '../../../../components/Radio';
+import { Flex, Text, Box } from 'rebass';
 
 export interface CategoryChartYAxisWizardProps
   extends AdaptableWizardStepProps<CategoryChartDefinition> {}
@@ -47,43 +50,40 @@ export class CategoryChartYAxisWizard
     });
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Chart: Y (Vertical) Axis Column(s)" bsStyle="primary">
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="yAxisColumn">
-              <Row>
-                <Col xs={3} componentClass={ControlLabel}>
-                  Display Total:
-                </Col>
-                <Col xs={7}>
-                  <Radio
-                    inline
-                    value="Sum"
-                    checked={this.state.YAxisTotal == AxisTotal.Sum}
-                    onChange={e => this.onYAisTotalChanged(e)}
-                  >
-                    Sum
-                  </Radio>
-                  <Radio
-                    inline
-                    value="Average"
-                    checked={this.state.YAxisTotal == AxisTotal.Average}
-                    onChange={e => this.onYAisTotalChanged(e)}
-                  >
-                    Average
-                  </Radio>{' '}
-                  <AdaptablePopover
-                    cssClassName={cssClassName}
-                    headerText={'Chart Y Axis: Display Total'}
-                    bodyText={[
-                      'Choose whether the X Axis is grouped according to the sum of it values (by X Axis) or their average.',
-                    ]}
-                  />
-                </Col>
-              </Row>
-            </FormGroup>
-          </AdaptableBlotterForm>
+      <WizardPanel
+        header="Chart: Y (Vertical) Axis Column(s)"
+        bodyProps={{ padding: 0, style: { display: 'flex', flexDirection: 'column' } }}
+      >
+        <Flex flexDirection="row" alignItems="center" padding={3}>
+          <Text style={{ flex: 3 }}>Display Total:</Text>
+          <Flex style={{ flex: 10 }} alignItems="center" flexDirection="row">
+            <Radio
+              value="Sum"
+              checked={this.state.YAxisTotal == AxisTotal.Sum}
+              onChange={(_: any, e: any) => this.onYAisTotalChanged(e)}
+              marginRight={3}
+            >
+              Sum
+            </Radio>
+            <Radio
+              value="Average"
+              marginRight={3}
+              checked={this.state.YAxisTotal == AxisTotal.Average}
+              onChange={(_: any, e: any) => this.onYAisTotalChanged(e)}
+            >
+              Average
+            </Radio>{' '}
+            <AdaptablePopover
+              cssClassName={cssClassName}
+              headerText={'Chart Y Axis: Display Total'}
+              bodyText={[
+                'Choose whether the X Axis is grouped according to the sum of it values (by X Axis) or their average.',
+              ]}
+            />
+          </Flex>
+        </Flex>
 
+        <Flex flex={1} padding={2}>
           <DualListBoxEditor
             AvailableValues={availableColumns}
             cssClassName={cssClassName}
@@ -93,8 +93,8 @@ export class CategoryChartYAxisWizard
             onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
             DisplaySize={DisplaySize.XSmall}
           />
-        </Panel>
-      </div>
+        </Flex>
+      </WizardPanel>
     );
   }
 

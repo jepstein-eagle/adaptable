@@ -4,19 +4,14 @@ import {
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
-import {
-  Panel,
-  FormGroup,
-  Col,
-  ControlLabel,
-  FormControl,
-  HelpBlock,
-  Radio,
-} from 'react-bootstrap';
 import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
 import { CategoryChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
+import WizardPanel from '../../../../components/WizardPanel';
+import { Flex, Text } from 'rebass';
+import Radio from '../../../../components/Radio';
+import Input from '../../../../components/Input';
 
 export interface CategoryChartSettingsWizardProps
   extends AdaptableWizardStepProps<CategoryChartDefinition> {
@@ -50,67 +45,57 @@ export class CategoryChartSettingsWizard
       : 'error';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Chart Definition Settings" bsStyle="primary">
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="chartName">
-              <Col xs={3} componentClass={ControlLabel}>
-                Name:
-              </Col>
-              <Col xs={7}>
-                <FormGroup controlId="formInlineName" validationState={validationState}>
-                  <FormControl
-                    value={this.state.Name}
-                    type="string"
-                    placeholder="Enter chart name"
-                    onChange={e => this.onChartNameChange(e)}
-                  />
-                  <FormControl.Feedback />
-                  <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-                </FormGroup>
-              </Col>
-            </FormGroup>
-            <FormGroup controlId="chartDescription">
-              <Col xs={3} componentClass={ControlLabel}>
-                Description:
-              </Col>
-              <Col xs={7}>
-                <FormGroup controlId="formInlineDescription" validationState={validationState}>
-                  <FormControl
-                    value={this.state.Description}
-                    type="string"
-                    placeholder="Enter description (optional)"
-                    onChange={e => this.onChartDescriptionChange(e)}
-                  />
-                </FormGroup>
-              </Col>
-            </FormGroup>
-            <FormGroup controlId="chartDataVisible">
-              <Col xs={3} componentClass={ControlLabel}>
-                Rows In Chart:
-              </Col>
-              <Col xs={7}>
-                <Radio
-                  inline
-                  value="Visible"
-                  checked={this.state.VisibleRowsOnly == true}
-                  onChange={e => this.onVisibleRowsChanged(e)}
-                >
-                  Visible Rows Only
-                </Radio>
-                <Radio
-                  inline
-                  value="All"
-                  checked={this.state.VisibleRowsOnly == false}
-                  onChange={e => this.onVisibleRowsChanged(e)}
-                >
-                  All Rows In Grid
-                </Radio>
-              </Col>
-            </FormGroup>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Chart Definition Settings">
+        <Flex flexDirection="row" alignItems="center">
+          <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+            Name:
+          </Text>
+
+          <Input
+            style={{ flex: 7 }}
+            value={this.state.Name}
+            type="string"
+            placeholder="Enter chart name"
+            onChange={e => this.onChartNameChange(e)}
+          />
+          {this.state.ErrorMessage ? <HelpBlock>{this.state.ErrorMessage}</HelpBlock> : null}
+        </Flex>
+        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+            Description:
+          </Text>
+
+          <Input
+            style={{ flex: 7 }}
+            value={this.state.Description}
+            type="string"
+            placeholder="Enter description (optional)"
+            onChange={(e: any) => this.onChartDescriptionChange(e)}
+          />
+        </Flex>
+        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+            Rows In Chart:
+          </Text>
+          <Flex flexDirection="row" alignItems="center" flex={7}>
+            <Radio
+              value="Visible"
+              marginRight={2}
+              checked={this.state.VisibleRowsOnly == true}
+              onChange={(_, e: any) => this.onVisibleRowsChanged(e)}
+            >
+              Visible Rows Only
+            </Radio>
+            <Radio
+              value="All"
+              checked={this.state.VisibleRowsOnly == false}
+              onChange={(_, e: any) => this.onVisibleRowsChanged(e)}
+            >
+              All Rows In Grid
+            </Radio>
+          </Flex>
+        </Flex>
+      </WizardPanel>
     );
   }
 
