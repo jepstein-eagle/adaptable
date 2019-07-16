@@ -56,7 +56,7 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
         className={cssClassName}
         variant={this.props.variant}
         style={this.props.style}
-        bodyScroll
+        bodyScroll={this.props.bodyScroll !== undefined ? this.props.bodyScroll : true}
         border="none"
         borderRadius={this.props.borderRadius || 'none'}
         bodyProps={{

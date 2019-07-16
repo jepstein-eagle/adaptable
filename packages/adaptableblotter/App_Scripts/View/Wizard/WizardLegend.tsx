@@ -1,6 +1,6 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { Glyphicon, Label, Button } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import SimpleButton from '../../components/SimpleButton';
 

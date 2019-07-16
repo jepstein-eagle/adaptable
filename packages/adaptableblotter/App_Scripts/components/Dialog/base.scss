@@ -2,6 +2,7 @@
   position: relative;
   background: var(--ab-cmp-dialog__background);
   border-radius: var(--ab-cmp-dialog__border-radius);
+  min-height: var(--ab-cmp-dialog__min-height);
   
   &__close-button {
     position: absolute;

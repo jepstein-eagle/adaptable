@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Checkbox, FormControl } from 'react-bootstrap';
+
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ColorPicker } from '../ColorPicker';
@@ -7,6 +7,8 @@ import { IColItem } from '../UIInterfaces';
 import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
+import Checkbox from '../../components/CheckBox';
+import Dropdown from '../../components/Dropdown';
 
 export interface FlashingCellEntityRowProps
   extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {
@@ -23,18 +25,16 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
     let flashingCell: FlashingCell = this.props.AdaptableBlotterObject as FlashingCell;
 
     let durations = this.props.FlashingCellDurations.map(flashingCellDuration => {
-      return (
-        <option key={flashingCellDuration} value={flashingCellDuration}>
-          {this.getFriendlyFlashingDuration(flashingCellDuration)}
-        </option>
-      );
+      return {
+        label: this.getFriendlyFlashingDuration(flashingCellDuration),
+        value: flashingCellDuration,
+      };
     });
     if (!this.props.FlashingCellDurations.find(x => x == flashingCell.FlashingCellDuration)) {
-      durations.push(
-        <option key={flashingCell.FlashingCellDuration} value={flashingCell.FlashingCellDuration}>
-          {this.getFriendlyFlashingDuration(flashingCell.FlashingCellDuration)}
-        </option>
-      );
+      durations.push({
+        value: flashingCell.FlashingCellDuration,
+        label: this.getFriendlyFlashingDuration(flashingCell.FlashingCellDuration),
+      });
     }
 
     let isDisabled = false; // TODO:  need to get from Entitlements !  flashingCell.IsReadOnly
@@ -58,15 +58,12 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
     );
     colItems[1].Content = <EntityRowItem Content={column.FriendlyName} />;
     colItems[2].Content = (
-      <FormControl
-        bsSize={'small'}
+      <Dropdown
         disabled={isDisabled}
-        componentClass="select"
         value={flashingCell.FlashingCellDuration}
-        onChange={x => this.onActionChange(x)}
-      >
-        {durations}
-      </FormControl>
+        onChange={(x: any) => this.onActionChange(x)}
+        options={durations}
+      ></Dropdown>
     );
     colItems[3].Content = (
       <EntityRowItem
@@ -95,11 +92,10 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
     return <AdaptableObjectRow cssClassName={this.props.cssClassName} colItems={colItems} />;
   }
 
-  onActionChange(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  onActionChange(value: any) {
     this.props.onChangeFlashingDuration(
       this.props.AdaptableBlotterObject as FlashingCell,
-      Number.parseInt(e.value)
+      Number.parseInt(value)
     );
   }
 

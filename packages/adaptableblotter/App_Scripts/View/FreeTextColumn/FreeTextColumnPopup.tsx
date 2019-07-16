@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as FreeTextColumnRedux from '../../Redux/ActionsReducers/FreeTextColumnRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { HelpBlock } from 'react-bootstrap';
 import { FreeTextColumnEntityRow } from './FreeTextColumnEntityRow';
 import { FreeTextColumnWizard } from './Wizard/FreeTextColumnWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';

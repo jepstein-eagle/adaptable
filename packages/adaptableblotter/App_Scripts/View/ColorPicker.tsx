@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormControl } from 'react-bootstrap';
+import Input from '../components/Input';
 
 export interface ColorPickerProps extends React.HTMLProps<ColorPicker> {
   ColorPalette: string[];
@@ -11,15 +11,10 @@ export class ColorPicker extends React.Component<ColorPickerProps, {}> {
     const { ColorPalette, ...restProps } = this.props;
     let ABcolorChoicesOptions = ColorPalette.map(x => <option key={x}>{x}</option>);
     let ABcolorChoices = <datalist id={'ABcolorChoices'}>{ABcolorChoicesOptions}</datalist>;
+    const Inpt = Input as any;
     return (
       <div className={'ColorPicker'}>
-        <FormControl
-          {...restProps}
-          type="color"
-          bsSize={'small'}
-          style={{ width: '70px' }}
-          list="ABcolorChoices"
-        />
+        <Inpt {...restProps} type="color" style={{ width: 70 }} list="ABcolorChoices" />
         {ABcolorChoices}
       </div>
     );

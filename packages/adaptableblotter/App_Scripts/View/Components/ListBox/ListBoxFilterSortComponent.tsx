@@ -19,11 +19,20 @@ export class ListBoxFilterSortComponent extends React.Component<
 > {
   render() {
     return (
-      <FieldWrap>
+      <FieldWrap
+        style={{
+          borderTop: 0,
+          borderRight: 0,
+          borderLeft: 0,
+          borderRadius: 0,
+          padding: 2 /* here just for the focus box-shadow to be visible*/,
+        }}
+      >
         <Input
           value={this.props.FilterValue}
           placeholder="Search"
           onChange={(e: any) => this.handleChangeFilterValue(e)}
+          style={{ width: 0 }}
         />
         <SimpleButton onClick={() => this.clearFilter()} icon="trash" variant="text"></SimpleButton>
 

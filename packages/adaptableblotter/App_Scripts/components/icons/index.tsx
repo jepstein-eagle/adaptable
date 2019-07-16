@@ -4,6 +4,8 @@ import ArrowRight from './arrow-right';
 import ArrowDown from './arrow-down';
 import ArrowUp from './arrow-up';
 import ArrowLeft from './arrow-left';
+import TriangleUp from './triangle-up';
+import TriangleDown from './triangle-down';
 import Check from './check';
 import Plus from './plus';
 import Clear from './clear';
@@ -17,6 +19,8 @@ import Err from './error';
 import Warning from './warning';
 import ConditionalStyle from './conditional-style';
 import Dashboard from './dashboard';
+import FastForward from './fast-forward';
+import FastBackward from './fast-backward';
 import SortAsc from './sort-asc';
 import SortDesc from './sort-desc';
 import Calendar from './calendar';
@@ -27,7 +31,9 @@ import CheckCircle from './check-circle';
 export default {
   'arrow-right': ArrowRight,
   'arrow-up': ArrowUp,
+  'triangle-up': TriangleUp,
   'arrow-down': ArrowDown,
+  'triangle-down': TriangleDown,
   'arrow-left': ArrowLeft,
   'color-drop': ColorDrop,
   'check-circle': CheckCircle,
@@ -37,6 +43,8 @@ export default {
   delete: Delete,
   trash: Delete,
   error: Err,
+  'fast-forward': FastForward,
+  'fast-backward': FastBackward,
   warning: Warning,
   justify: Justify,
   check: Check,

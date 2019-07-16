@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { Glyphicon, Panel, Table } from 'react-bootstrap';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
@@ -10,6 +9,10 @@ import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelp
 import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
 import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
+import WizardPanel from '../../components/WizardPanel';
+import CheckIcon from '../../components/icons/check';
+import styled from 'styled-components';
+
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   UpdateValue: string;
   PreviewInfo: IPreviewInfo;
@@ -17,9 +20,22 @@ export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewR
   UserFilters: UserFilter[];
   SelectedColumn: IColumn;
   ShowPanel: boolean;
+  style?: React.CSSProperties;
   cssClassName: string;
   ShowHeader: boolean;
 }
+const Table = styled.table`
+  td,
+  th {
+    padding: var(--ab-space-2);
+  }
+  th {
+    border-bottom: 2px solid var(--ab-color-darkgray);
+  }
+  tr:not(last-child) td {
+    border-bottom: 1px solid var(--ab-color-lightgray);
+  }
+`;
 
 export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProps, {}> {
   render(): any {
@@ -68,7 +84,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
             ) : (
               <td>
                 {' '}
-                <Glyphicon glyph="ok" />{' '}
+                <CheckIcon />
               </td>
             )}
           </tr>
@@ -86,16 +102,14 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
     );
 
     return (
-      <div className={cssClassName}>
+      <div className={cssClassName} style={{ ...this.props.style, flex: 1, overflow: 'auto' }}>
         {this.props.ShowPanel && (
-          <Panel header={previewHeader} bsStyle="info" className="ab_preview_panel">
-            <div>
-              <Table>
-                {header}
-                <tbody style={{ minWidth: '500px' }}>{previewItems}</tbody>
-              </Table>
-            </div>
-          </Panel>
+          <WizardPanel header={previewHeader} bodyScroll>
+            <Table style={{ width: '100%' }}>
+              {header}
+              <tbody style={{ minWidth: 500 }}>{previewItems}</tbody>
+            </Table>
+          </WizardPanel>
         )}
       </div>
     );

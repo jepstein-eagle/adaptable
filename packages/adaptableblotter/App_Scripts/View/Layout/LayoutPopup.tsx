@@ -115,12 +115,11 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
-          bsStyle="primary"
           headerText={StrategyConstants.LayoutStrategyName}
           infoBody={infoBody}
           button={newSearchButton}
           glyphicon={StrategyConstants.LayoutGlyph}
-          className="ab_main_popup"
+          bodyProps={{ padding: 0 }}
         >
           {LayoutRows.length > 0 ? (
             <AdaptableObjectCollection

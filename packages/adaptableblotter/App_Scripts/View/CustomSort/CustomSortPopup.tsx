@@ -106,11 +106,9 @@ class CustomSortPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create Custom Sort"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Custom Sort"
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -120,10 +118,10 @@ class CustomSortPopupComponent extends React.Component<
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.CustomSortStrategyName}
-          className="ab_main_popup"
           infoBody={infoBody}
           button={newButton}
-          bsStyle="primary"
+          variant="primary"
+          bodyProps={{ padding: 0 }}
           glyphicon={StrategyConstants.CustomSortGlyph}
         >
           {customSorts.length > 0 ? (

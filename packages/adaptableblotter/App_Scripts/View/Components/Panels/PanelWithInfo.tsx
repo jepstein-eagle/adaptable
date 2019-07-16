@@ -6,7 +6,7 @@ import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 
 import { PanelProps } from '../../../components/Panel';
 import WizardPanel from '../../../components/WizardPanel';
-import { Flex } from 'rebass';
+import { Flex, Box } from 'rebass';
 
 export interface PanelWithInfoProps extends PanelProps {
   infoBody: any[];
@@ -23,14 +23,15 @@ export class PanelWithInfo extends React.Component<PanelWithInfoProps, {}> {
     let headerRow = (
       <Flex flexDirection="row">
         {this.props.header}
-        <span>
+
+        <Box marginLeft={2}>
           {' '}
           <AdaptablePopover
             cssClassName={this.props.cssClassName}
             headerText=""
             bodyText={this.props.infoBody}
           />
-        </span>
+        </Box>
       </Flex>
     );
     return (

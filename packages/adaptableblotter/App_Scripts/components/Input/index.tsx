@@ -10,6 +10,7 @@ export type InputProps = HTMLProps<HTMLElement> & {
   placehoder?: string;
   type?: string;
   disabled?: boolean;
+  list?: any;
 } & BoxProps;
 
 const Input = (props: InputProps) => {

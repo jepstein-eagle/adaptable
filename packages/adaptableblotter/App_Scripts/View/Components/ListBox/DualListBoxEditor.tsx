@@ -1,25 +1,18 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Helper } from '../../../Utilities/Helpers/Helper';
-import {
-  ListGroupItem,
-  Row,
-  ListGroup,
-  Col,
-  Button,
-  Panel,
-  Glyphicon,
-  ButtonGroup,
-  ControlLabel,
-  Checkbox,
-} from 'react-bootstrap';
+
 import { SortOrder } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import { ButtonDirection } from '../Buttons/ButtonDirection';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { IMasterChildren } from '../../../Utilities/Interface/IMasterChildren';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import ListGroupItem from '../../../components/List/ListGroupItem';
+import Checkbox from '../../../components/CheckBox';
+import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
+import { Flex } from 'rebass';
+import Panel from '../../../components/Panel';
+import ListGroup from '../../../components/List/ListGroup';
 
 export enum DisplaySize {
   Large,
@@ -57,6 +50,13 @@ export interface DualListBoxEditorState extends React.ClassAttributes<DualListBo
   AllValues: Array<any>;
   MasterValues: Array<IMasterValue>;
 }
+
+const ButtonDirection = (props: SimpleButtonProps) => (
+  <SimpleButton
+    {...props}
+    style={{ whiteSpace: 'nowrap', justifyContent: 'center', ...props.style }}
+  />
+);
 
 export class DualListBoxEditor extends React.Component<
   DualListBoxEditorProps,
@@ -162,7 +162,7 @@ export class DualListBoxEditor extends React.Component<
         setRefFirstSelected = false;
         return (
           <ListGroupItem
-            key={x}
+            key={`${x}-1`}
             className="Selected"
             draggable={true}
             onClick={() => this.onClickSelectedItem(x)}
@@ -179,12 +179,11 @@ export class DualListBoxEditor extends React.Component<
       } else {
         return (
           <ListGroupItem
-            key={x}
+            key={`${x}-2`}
             className="Selected"
             style={listGroupItemStyle}
             draggable={true}
             onClick={() => this.onClickSelectedItem(x)}
-            bsSize={'small'}
             active={isActive}
             onDragStart={event => this.DragSelectedStart(event, x)}
             onDragEnd={() => this.DragSelectedEnd()}
@@ -207,47 +206,39 @@ export class DualListBoxEditor extends React.Component<
       if (this.isValueFilteredOut(display)) {
         return null;
       } else {
-        return (
-          <span key={value}>
-            {isMasterElement ? (
-              <ListGroupItem
-                bsSize={'small'}
-                className="Available"
-                style={listGroupItemStyle}
-                active={isActive}
-                bsStyle={StyleConstants.SUCCESS_BSSTYLE}
-                draggable={false}
-                onClick={() => this.onClickAvailableValuesItem(x)}
-                key={value}
-                value={value}
-              >
-                <Checkbox
-                  key={masterValue.value}
-                  checked={masterValue.isOpen}
-                  onChange={e => this.onMasterValueCheckChanged(e, x)}
-                  bsClass={'small'}
-                >
-                  {' '}
-                  {display}
-                </Checkbox>
-              </ListGroupItem>
-            ) : (
-              <ListGroupItem
-                bsSize={'small'}
-                className="Available"
-                style={listGroupItemStyle}
-                active={isActive}
-                draggable={true}
-                onClick={() => this.onClickAvailableValuesItem(x)}
-                key={value}
-                onDragStart={event => this.DragAvailableStart(event, x)}
-                onDragEnd={() => this.DragAvailableEnd()}
-                value={value}
-              >
-                {display}
-              </ListGroupItem>
-            )}
-          </span>
+        return isMasterElement ? (
+          <ListGroupItem
+            key={`${value}-master`}
+            className="Available"
+            style={listGroupItemStyle}
+            active={isActive}
+            draggable={false}
+            onClick={() => this.onClickAvailableValuesItem(x)}
+            key={value}
+            value={value}
+          >
+            <Checkbox
+              key={masterValue.value}
+              checked={masterValue.isOpen}
+              onChange={(checked: boolean) => this.onMasterValueCheckChanged(checked, x)}
+            >
+              {display}
+            </Checkbox>
+          </ListGroupItem>
+        ) : (
+          <ListGroupItem
+            className="Available"
+            style={listGroupItemStyle}
+            active={isActive}
+            draggable={true}
+            onClick={() => this.onClickAvailableValuesItem(x)}
+            key={`${value}-not-master`}
+            onDragStart={event => this.DragAvailableStart(event, x)}
+            onDragEnd={() => this.DragAvailableEnd()}
+            value={value}
+          >
+            {display}
+          </ListGroupItem>
         );
       }
     });
@@ -266,130 +257,138 @@ export class DualListBoxEditor extends React.Component<
     let listGroupSelectedStyle: any = this.getListGroupSelectedStyle(displaySize);
 
     return (
-      <div className={cssClassName}>
-        <Col xs={4}>
-          <Panel
-            header={this.props.HeaderAvailable}
-            style={{ padding: '0px', margin: '0px' }}
-            className="ab_no-padding-anywhere-panel ab_small-padding-panel-header"
-            bsStyle="info"
-            bsSize="xsmall"
+      <Flex
+        className={cssClassName}
+        alignItems="stretch"
+        flexDirection="row"
+        style={{ maxHeight: '100%', width: '100%' }}
+      >
+        <Panel
+          header={this.props.HeaderAvailable}
+          bodyProps={{ padding: 0 }}
+          marginRight={2}
+          style={{ flex: '4 0 0%' }}
+          bodyScroll
+        >
+          {headerFirstListBox}
+          <ListGroup
+            className="AvailableDropZone"
+            style={listGroupAvailableStyle}
+            onDragEnter={(event: any) => this.DragEnterAvailable(event)}
+            onDragOver={(event: any) => this.DragOverAvailable(event)}
+            onDragLeave={(event: any) => this.DragLeaveAvailable(event)}
           >
-            <div>
-              {headerFirstListBox}
-              <ListGroup
-                className="AvailableDropZone"
-                style={listGroupAvailableStyle}
-                onDragEnter={event => this.DragEnterAvailable(event)}
-                onDragOver={event => this.DragOverAvailable(event)}
-                onDragLeave={event => this.DragLeaveAvailable(event)}
-              >
-                {availableElements}
-              </ListGroup>
-            </div>
-          </Panel>
-        </Col>
-        <Col xs={2} style={colButtonStyle}>
-          <ButtonGroup>
-            <ButtonDirection
-              cssClassName={cssClassName}
-              overrideText={'Add All'}
-              DisplayMode={'Text+Glyph'}
-              iconPosition="end"
-              glyph={'fast-forward'}
-              style={{ width: '110px', marginBottom: '10px' }}
-              overrideDisableButton={this.state.AvailableValues.length == 0}
-              onClick={() => this.AddAll()}
-            />
-            <ButtonDirection
-              cssClassName={cssClassName}
-              overrideText={'Add'}
-              DisplayMode={'Text+Glyph'}
-              glyph={'step-forward'}
-              style={{ width: '110px', marginBottom: '30px' }}
-              overrideDisableButton={this.state.UiSelectedAvailableValues.length == 0}
-              onClick={() => this.Add()}
-            />
-            <ButtonDirection
-              cssClassName={cssClassName}
-              overrideText={'Remove'}
-              style={{ width: '110px', marginBottom: '10px' }}
-              glyph="step-backward"
-              DisplayMode={'Glyph+Text'}
-              overrideDisableButton={this.state.UiSelectedSelectedValues.length == 0}
-              onClick={() => this.Remove()}
-            />
-            <ButtonDirection
-              cssClassName={cssClassName}
-              overrideText={'Remove All'}
-              style={{ width: '110px', marginBottom: '10px' }}
-              DisplayMode={'Glyph+Text'}
-              glyph="fast-backward"
-              overrideDisableButton={this.state.SelectedValues.length == 0}
-              onClick={() => this.RemoveAll()}
-            />
-          </ButtonGroup>
-        </Col>
-        <Col xs={4}>
-          <Panel
-            header={this.props.HeaderSelected}
-            className="ab_no-padding-anywhere-panel ab_small-padding-panel-header"
-            bsStyle="info"
+            {availableElements}
+          </ListGroup>
+        </Panel>
+
+        <Flex flexDirection="column" justifyContent="center">
+          <ButtonDirection
+            className={cssClassName}
+            marginBottom={2}
+            icon="fast-forward"
+            iconPosition="end"
+            disabled={this.state.AvailableValues.length == 0}
+            onClick={() => this.AddAll()}
           >
-            <div>
-              <ListGroup
-                style={listGroupSelectedStyle}
-                className="SelectedDropZone"
-                onDragEnter={event => this.DragEnterSelected(event)}
-                onDragOver={event => this.DragOverSelected(event)}
-                onDragLeave={event => this.DragLeaveSelected(event)}
-              >
-                {selectedElements}
-              </ListGroup>
-            </div>
-          </Panel>
-        </Col>
-        <Col xs={2} style={colButtonStyle}>
-          <ButtonGroup>
-            <ButtonDirection
-              cssClassName={cssClassName}
-              overrideText={'Top'}
-              DisplayMode={'Glyph+Text'}
-              glyph={'triangle-top'}
-              style={{ width: '110px', marginBottom: '10px' }}
-              overrideDisableButton={!this.canGoTopOrUp()}
-              onClick={() => this.Top()}
-            />
-            <ButtonDirection
-              cssClassName={cssClassName}
-              overrideText={'Up'}
-              DisplayMode={'Glyph+Text'}
-              glyph={'menu-up'}
-              style={{ width: '110px', marginBottom: '10px' }}
-              overrideDisableButton={!this.canGoTopOrUp()}
-              onClick={() => this.Up()}
-            />
-            <ButtonDirection
-              cssClassName={cssClassName}
-              overrideText={'Down'}
-              DisplayMode={'Glyph+Text'}
-              glyph={'menu-down'}
-              style={{ width: '110px', marginBottom: '10px' }}
-              overrideDisableButton={!this.canGoDownOrBottom()}
-              onClick={() => this.Down()}
-            />
-            <ButtonDirection
-              cssClassName={cssClassName}
-              overrideText={'Bottom'}
-              DisplayMode={'Glyph+Text'}
-              glyph={'triangle-bottom'}
-              style={{ width: '110px', marginBottom: '10px' }}
-              overrideDisableButton={!this.canGoDownOrBottom()}
-              onClick={() => this.Bottom()}
-            />
-          </ButtonGroup>
-        </Col>
-      </div>
+            Add All
+          </ButtonDirection>
+          <ButtonDirection
+            className={cssClassName}
+            iconPosition="end"
+            icon={'arrow-right'}
+            marginBottom={3}
+            disabled={this.state.UiSelectedAvailableValues.length == 0}
+            onClick={() => this.Add()}
+          >
+            Add
+          </ButtonDirection>
+          <ButtonDirection
+            icon={'arrow-left'}
+            className={cssClassName}
+            marginBottom={2}
+            iconPosition="start"
+            disabled={this.state.UiSelectedSelectedValues.length == 0}
+            onClick={() => this.Remove()}
+          >
+            Remove
+          </ButtonDirection>
+          <ButtonDirection
+            className={cssClassName}
+            marginBottom={2}
+            icon="fast-backward"
+            iconPosition="start"
+            disabled={this.state.SelectedValues.length == 0}
+            onClick={() => this.RemoveAll()}
+          >
+            Remove All
+          </ButtonDirection>
+        </Flex>
+
+        <Panel
+          header={this.props.HeaderSelected}
+          bodyScroll
+          bodyProps={{
+            padding: 0,
+          }}
+          style={{ flex: '4 0 0%' }}
+          marginLeft={2}
+          marginRight={2}
+        >
+          <ListGroup
+            style={listGroupSelectedStyle}
+            className="SelectedDropZone"
+            onDragEnter={(event: any) => this.DragEnterSelected(event)}
+            onDragOver={(event: any) => this.DragOverSelected(event)}
+            onDragLeave={(event: any) => this.DragLeaveSelected(event)}
+          >
+            {selectedElements}
+          </ListGroup>
+        </Panel>
+
+        <Flex flexDirection="column" justifyContent="center">
+          <ButtonDirection
+            className={cssClassName}
+            marginBottom={2}
+            iconPosition="start"
+            icon="triangle-up"
+            disabled={!this.canGoTopOrUp()}
+            onClick={() => this.Top()}
+          >
+            Top
+          </ButtonDirection>
+          <ButtonDirection
+            className={cssClassName}
+            marginBottom={2}
+            iconPosition="start"
+            icon="arrow-up"
+            disabled={!this.canGoTopOrUp()}
+            onClick={() => this.Up()}
+          >
+            Up
+          </ButtonDirection>
+          <ButtonDirection
+            className={cssClassName}
+            marginBottom={2}
+            icon="arrow-down"
+            iconPosition="start"
+            disabled={!this.canGoDownOrBottom()}
+            onClick={() => this.Down()}
+          >
+            Down
+          </ButtonDirection>
+          <ButtonDirection
+            className={cssClassName}
+            marginBottom={2}
+            icon="triangle-down"
+            iconPosition="start"
+            disabled={!this.canGoDownOrBottom()}
+            onClick={() => this.Bottom()}
+          >
+            Bottom
+          </ButtonDirection>
+        </Flex>
+      </Flex>
     );
   }
 
@@ -426,13 +425,11 @@ export class DualListBoxEditor extends React.Component<
     });
   }
 
-  onMasterValueCheckChanged(event: React.FormEvent<any>, item: any): void {
-    let e = event.target as HTMLInputElement;
-
+  onMasterValueCheckChanged(checked: boolean, item: any): void {
     let masterValues = [].concat(this.state.MasterValues);
     let currentMasterValue: IMasterValue = masterValues.find(mv => mv.value == item);
 
-    currentMasterValue.isOpen = e.checked;
+    currentMasterValue.isOpen = checked;
     let newArray = [...this.state.UiSelectedAvailableValues];
 
     let index = this.state.UiSelectedAvailableValues.indexOf(item);
@@ -1104,7 +1101,7 @@ export class DualListBoxEditor extends React.Component<
 
 var listGroupStyleAvailableLarge: React.CSSProperties = {
   overflowY: 'auto',
-  height: '430px',
+
   marginBottom: '0px',
 };
 
@@ -1115,35 +1112,28 @@ var listGroupStyleSelectedLarge: React.CSSProperties = {
 };
 var listGroupStyleAvailableSmall: React.CSSProperties = {
   overflowY: 'auto',
-  height: '350px',
+
   marginBottom: '0px',
 };
 
 var listGroupStyleSelectedSmall: React.CSSProperties = {
   overflowY: 'auto',
-  height: '385px',
+
   marginBottom: '0px',
 };
 var listGroupStyleAvailableExtraSmall: React.CSSProperties = {
   overflowY: 'auto',
-  height: '300px',
+
   marginBottom: '0px',
 };
 
 var listGroupStyleSelectedExraSmall: React.CSSProperties = {
   overflowY: 'auto',
-  height: '335px',
+
   marginBottom: '0px',
 };
 
 var listGroupItemStyle: React.CSSProperties = {
   fontSize: 'small',
-  padding: '5px',
-};
-
-var colButtonStyle = {
-  transform: 'translateY(100px)',
-  horitzontalAlign: 'center',
-  margin: '0px',
-  padding: '0px',
+  padding: 'var(--ab-space-1)',
 };

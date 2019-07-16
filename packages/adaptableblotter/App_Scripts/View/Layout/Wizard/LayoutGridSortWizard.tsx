@@ -1,31 +1,24 @@
 import * as React from 'react';
-import {
-  ControlLabel,
-  FormGroup,
-  FormControl,
-  Col,
-  Panel,
-  HelpBlock,
-  Checkbox,
-  Glyphicon,
-  Button,
-} from 'react-bootstrap';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { SortOrder, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
-import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
+import { SortOrder } from '../../../PredefinedConfig/Common/Enums';
+
 import { GridSortRow } from '../GridSortRow';
 import { IColItem } from '../../UIInterfaces';
 import { AdaptableObjectCollection } from '../../Components/AdaptableObjectCollection';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
-import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
+
 import { PanelWithButton } from '../../Components/Panels/PanelWithButton';
 import { Layout, ColumnSort } from '../../../PredefinedConfig/RunTimeState/LayoutState';
+import SimpleButton from '../../../components/SimpleButton';
+
+import EmptyContent from '../../../components/EmptyContent';
 
 export interface LayoutGridSortWizardProps extends AdaptableWizardStepProps<Layout> {}
 
@@ -48,15 +41,15 @@ export class LayoutGridSortWizard
   }
   render(): any {
     let addButton = (
-      <Button
-        bsSize={'small'}
-        bsStyle={'default'}
-        style={{ marginBottom: '20px' }}
+      <SimpleButton
+        icon="plus"
+        iconPosition="start"
+        variant="raised"
+        tone="success"
         onClick={() => this.addSort()}
       >
-        <Glyphicon glyph="plus" />
         Add Sort
-      </Button>
+      </SimpleButton>
     );
 
     let colItems: IColItem[] = [
@@ -95,6 +88,7 @@ export class LayoutGridSortWizard
         bsStyle="primary"
         style={divStyle}
         button={addButton}
+        bodyProps={{ padding: 0 }}
       >
         {gridSortRows.length > 0 ? (
           <AdaptableObjectCollection
@@ -104,7 +98,9 @@ export class LayoutGridSortWizard
             allowOverflow={true}
           />
         ) : (
-          <HelpBlock>Click 'New' to add a Sort Order for a column in the layout.</HelpBlock>
+          <EmptyContent>
+            <p>Click 'New' to add a Sort Order for a column in the layout.</p>
+          </EmptyContent>
         )}
       </PanelWithButton>
     );
@@ -123,7 +119,7 @@ export class LayoutGridSortWizard
   private onColumnSelectedChanged(index: number, column: IColumn) {
     let sorts: ColumnSort[] = [].concat(this.state.ColumnSorts);
     let sort: ColumnSort = sorts[index];
-    sort.Column = column.ColumnId;
+    sort.Column = column ? column.ColumnId : '';
     this.setState({ ColumnSorts: sorts } as LayoutGridSortWizardState, () =>
       this.props.UpdateGoBackState()
     );

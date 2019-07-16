@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as FlashingCellsRedux from '../../Redux/ActionsReducers/FlashingCellsRedux';
-import { FormGroup, Col, Checkbox } from 'react-bootstrap';
+
 import { DataType, SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { FlashingCellEntityRow } from './FlashingCellEntityRow';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -12,12 +12,13 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
-import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
+
 import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { FlashingCellState } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
-import { Flex } from 'rebass';
+import Checkbox from '../../components/CheckBox';
+import { Flex, Box } from 'rebass';
 
 interface FlashingCellsPopupProps extends StrategyViewPopupProps<FlashingCellsPopupComponent> {
   FlashingCells: FlashingCell[];
@@ -127,30 +128,26 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
 
     let areAllLive: boolean = allPotentialFlashingCells.every(f => f.IsLive);
     let setAllOption = (
-      <AdaptableBlotterForm horizontal>
-        <FormGroup controlId="formInlineName">
-          <Col xs={12} className="ab_medium_margin">
-            <Checkbox
-              onChange={() => this.props.onSelectAllColumns(!areAllLive, allPotentialFlashingCells)}
-              checked={areAllLive}
-            >
-              {' '}
-              All Columns{' '}
-            </Checkbox>
-          </Col>
-        </FormGroup>
-      </AdaptableBlotterForm>
+      <Box>
+        <Checkbox
+          marginLeft={2}
+          onChange={() => this.props.onSelectAllColumns(!areAllLive, allPotentialFlashingCells)}
+          checked={areAllLive}
+        >
+          All Columns
+        </Checkbox>
+      </Box>
     );
 
     return (
       <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithImage
+          variant="primary"
           cssClassName={cssClassName}
           header={StrategyConstants.FlashingCellsStrategyName}
-          bsStyle="primary"
-          className="ab_main_popup"
           glyphicon={StrategyConstants.FlashingCellGlyph}
           infoBody={infoBody}
+          bodyProps={{ padding: 0 }}
         >
           {setAllOption}
           <AdaptableObjectCollection

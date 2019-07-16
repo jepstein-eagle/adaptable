@@ -80,7 +80,6 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Type
     );
     return (
       <Panel
-        border="none"
         flex={1}
         bodyScroll={this.props.bodyScroll != null ? this.props.bodyScroll : true}
         bodyProps={this.props.bodyProps}
@@ -89,6 +88,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Type
         style={this.props.style}
         className={`${className} ${cssClassName || ''}`}
         borderRadius={(this.props.borderRadius || 'none') as any}
+        border={(this.props.border || 'none') as any}
       >
         {this.props.children}
       </Panel>
