@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Panel, Table } from 'react-bootstrap';
+import { Panel } from 'react-bootstrap';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
 import { CellSummaryDetails } from './CellSummaryDetails';

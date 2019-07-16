@@ -352,7 +352,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
       >
         {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn ||
         this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn ? (
-          <div>
+          <div style={{ marginLeft: 2, marginRight: 2 }}>
             {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn ? (
               <HelpBlock>{firstTimeText}</HelpBlock>
             ) : (

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ControlLabel, Radio, FormGroup, FormControl, Col, Panel } from 'react-bootstrap';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -9,6 +9,10 @@ import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { PlusMinusRule } from '../../../PredefinedConfig/RunTimeState/PlusMinusState';
+import WizardPanel from '../../../components/WizardPanel';
+import { Flex, Text } from 'rebass';
+import Input from '../../../components/Input';
+import Radio from '../../../components/Radio';
 
 export interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {}
 export interface PlusMinusSettingsWizardState {
@@ -31,58 +35,60 @@ export class PlusMinusSettingsWizard
     let cssClassName: string = this.props.cssClassName + '-settings';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Plus/Minus Settings" bsStyle="primary">
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="nudgeColumn">
-              <Col xs={3} componentClass={ControlLabel}>
-                Nudge Value:{' '}
-              </Col>
-              <Col xs={9}>
-                <FormControl
-                  value={this.state.NudgeValue.toString()}
-                  type="number"
-                  placeholder="Enter a Number"
-                  onChange={e => this.onColumnDefaultNudgeValueChange(e)}
-                />
-              </Col>
-            </FormGroup>
-            <FormGroup controlId="applyTo">
-              <Col xs={3} componentClass={ControlLabel}>
-                Apply As:{' '}
-              </Col>
-              <Col xs={9}>
-                <Radio
-                  value="expression"
-                  checked={!this.state.IsDefaultNudge}
-                  onChange={e => this.onExpressionOptionChange(e)}
-                >
-                  Custom Plus/Minus Rule{' '}
-                  <AdaptablePopover
-                    cssClassName={cssClassName}
-                    headerText={'Plus Minus Settings: Apply As'}
-                    bodyText={[
-                      'Create a Custom Plus/Minus Rule (using the Query Builder in the next step of the wizard)',
-                    ]}
-                  />
-                </Radio>
-                <Radio
-                  value="default"
-                  checked={this.state.IsDefaultNudge}
-                  onChange={e => this.onExpressionOptionChange(e)}
-                >
-                  Default Nudge Value for Column{' '}
-                  <AdaptablePopover
-                    cssClassName={cssClassName}
-                    headerText={'Plus Minus Settings: Apply As'}
-                    bodyText={['Set default nudge value for the column']}
-                  />
-                </Radio>
-              </Col>
-            </FormGroup>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Plus/Minus Settings">
+        <Flex flexDirection="row" alignItems="center">
+          <Text style={{ flex: 2 }} marginRight={2}>
+            Nudge Value:
+          </Text>
+
+          <Input
+            style={{ flex: 9 }}
+            value={this.state.NudgeValue.toString()}
+            type="number"
+            placeholder="Enter a Number"
+            onChange={e => this.onColumnDefaultNudgeValueChange(e)}
+          />
+        </Flex>
+        <Flex flexDirection="row" marginTop={2}>
+          <Text marginRight={2} style={{ flex: 2 }}>
+            Apply As:
+          </Text>
+          <Flex flexDirection="column" flex={9}>
+            <Flex flexDirection="row" alignItems="center">
+              <Radio
+                value="expression"
+                marginRight={2}
+                checked={!this.state.IsDefaultNudge}
+                onChange={(_: any, e: any) => this.onExpressionOptionChange(e)}
+              >
+                Custom Plus/Minus Rule{' '}
+              </Radio>
+              <AdaptablePopover
+                cssClassName={cssClassName}
+                headerText={'Plus Minus Settings: Apply As'}
+                bodyText={[
+                  'Create a Custom Plus/Minus Rule (using the Query Builder in the next step of the wizard)',
+                ]}
+              />
+            </Flex>
+            <Flex flexDirection="row" alignItems="center">
+              <Radio
+                value="default"
+                marginRight={2}
+                checked={this.state.IsDefaultNudge}
+                onChange={(_, e) => this.onExpressionOptionChange(e)}
+              >
+                Default Nudge Value for Column
+              </Radio>
+              <AdaptablePopover
+                cssClassName={cssClassName}
+                headerText={'Plus Minus Settings: Apply As'}
+                bodyText={['Set default nudge value for the column']}
+              />
+            </Flex>
+          </Flex>
+        </Flex>
+      </WizardPanel>
     );
   }
 

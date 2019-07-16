@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
+
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { IColumn } from '../../Utilities/Interface/IColumn';

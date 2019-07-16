@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
-import { Navbar, Nav, Button, Glyphicon, OverlayTrigger, ButtonToolbar } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
 

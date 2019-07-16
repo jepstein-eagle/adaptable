@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { FormGroup, ControlLabel, FormControl, Col, HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
@@ -114,11 +113,9 @@ class PlusMinusPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create Plus / Minus Rule"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Plus / Minus Rule"
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -127,7 +124,8 @@ class PlusMinusPopupComponent extends React.Component<
       <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.PlusMinusStrategyName}
-          bsStyle="primary"
+          variant="primary"
+          bodyProps={{ padding: 0 }}
           cssClassName={cssClassName}
           button={newButton}
           glyphicon={StrategyConstants.PlusMinusGlyph}

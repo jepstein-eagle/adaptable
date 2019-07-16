@@ -10,8 +10,8 @@ import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview
 import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
 
 import WizardPanel from '../../components/WizardPanel';
+import Table from '../../components/Table';
 import CheckIcon from '../../components/icons/check';
-import styled from 'styled-components';
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   UpdateValue: string;
@@ -24,18 +24,6 @@ export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewR
   cssClassName: string;
   ShowHeader: boolean;
 }
-const Table = styled.table`
-  td,
-  th {
-    padding: var(--ab-space-2);
-  }
-  th {
-    border-bottom: 2px solid var(--ab-color-darkgray);
-  }
-  tr:not(last-child) td {
-    border-bottom: 1px solid var(--ab-color-lightgray);
-  }
-`;
 
 export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProps, {}> {
   render(): any {
