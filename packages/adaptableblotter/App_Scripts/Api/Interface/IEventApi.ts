@@ -5,6 +5,7 @@ import {
   ThemeChangedEventArgs,
   ColumnStateChangedEventArgs,
   AlertFiredEventArgs,
+  ActionColumnEventArgs,
 } from '../Events/BlotterEvents';
 import { IEvent } from '../../Utilities/Interface/IEvent';
 
@@ -17,6 +18,7 @@ export interface IEventApi {
   _onThemeChanged: EventDispatcher<IAdaptableBlotter, ThemeChangedEventArgs>;
   _onColumnStateChanged: EventDispatcher<IAdaptableBlotter, ColumnStateChangedEventArgs>;
   _onAlertFired: EventDispatcher<IAdaptableBlotter, AlertFiredEventArgs>;
+  _onActionColumnClicked: EventDispatcher<IAdaptableBlotter, ActionColumnEventArgs>;
 
   /**
    * Event fired whenever search criteria in the Blotter changes, providing full coverage of what triggered the change and the current Search and Filter state.
@@ -51,4 +53,6 @@ export interface IEventApi {
    * @returns IEvent<IAdaptableBlotter, IAlertFiredEventArgs>
    */
   onAlertFired(): IEvent<IAdaptableBlotter, AlertFiredEventArgs>;
+
+  onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnEventArgs>;
 }

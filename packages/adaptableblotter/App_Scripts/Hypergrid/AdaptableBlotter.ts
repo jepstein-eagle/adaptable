@@ -115,6 +115,7 @@ import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { PermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
+import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -1256,6 +1257,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       type: 'string',
       editor: 'textfield', // this is not quite right as it says undefined, but not sure how to get a cell editor added dynamically at runtime.
     });
+  }
+
+  public addActionColumnToGrid(actionColumn: ActionColumn): void {
+    // to do
   }
 
   public isGroupRecord(): boolean {

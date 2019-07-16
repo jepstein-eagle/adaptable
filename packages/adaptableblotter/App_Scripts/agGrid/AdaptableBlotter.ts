@@ -68,8 +68,8 @@ import { IConditionalStyleStrategy } from '../Strategy/Interface/IConditionalSty
 // components
 import { FilterWrapperFactory } from './FilterWrapper';
 import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
-// import other items
-import { EventDispatcher } from '../Utilities/EventDispatcher';
+import { ButtonCellRenderer } from './ButtonCellRenderer';
+
 import {
   DataType,
   SortOrder,
@@ -148,6 +148,7 @@ import {
   EditLookUpColumn,
 } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
+import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -275,6 +276,12 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         LoggingHelper.LogAdaptableBlotterError('Unable to set up ag-Grid');
         return;
       }
+    }
+
+    // add our blotter to the grid options api object
+    // this is VERY useful for when we need to access the Blotter inside of agGrid only functions
+    if (this.gridOptions.api) {
+      (this.gridOptions.api as any).__blotter = this;
     }
 
     // set up iPushPull
@@ -1497,6 +1504,24 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.agGridHelper.safeSetColDefs(colDefs);
 
     this.addSpecialColumnToState(freeTextColumn.Uuid, freeTextColumn.ColumnId, DataType.String);
+  }
+
+  public addActionColumnToGrid(actionColumn: ActionColumn) {
+    const venderCols: Column[] = this.gridOptions.columnApi!.getAllColumns();
+    const colDefs: ColDef[] = venderCols.map(x => x.getColDef());
+    const newColDef: ColDef = {
+      headerName: actionColumn.ColumnId,
+      colId: actionColumn.ColumnId,
+      editable: false,
+      hide: false,
+      filter: false,
+      sortable: false,
+      cellRenderer: ButtonCellRenderer,
+    };
+    colDefs.push(newColDef);
+    this.agGridHelper.safeSetColDefs(colDefs);
+
+    this.addSpecialColumnToState(actionColumn.Uuid, actionColumn.ColumnId, DataType.String);
   }
 
   private addSpecialColumnToState(uuid: TypeUuid, columnId: string, dataType: DataType): void {

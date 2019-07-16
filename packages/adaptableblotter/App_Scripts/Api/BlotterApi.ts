@@ -72,8 +72,11 @@ import { IBulkUpdateApi } from './Interface/IBulkUpdateApi';
 import { BulkUpdateApi } from './BulkUpdateApi';
 import { IAuditEventApi } from './Interface/IAuditEventApi';
 import { AuditEventApi } from './AuditEventApi';
+import { IActionColumnApi } from './Interface/IActionColumnApi';
+import { ActionColumnApi } from './ActionColumnApi';
 
 export class BlotterApi implements IBlotterApi {
+  public actionColumnApi: IActionColumnApi;
   public advancedSearchApi: IAdvancedSearchApi;
   public alertApi: IAlertApi;
   public auditEventApi: IAuditEventApi;
@@ -113,6 +116,7 @@ export class BlotterApi implements IBlotterApi {
 
   constructor(protected blotter: IAdaptableBlotter) {
     this.blotter = blotter;
+    this.actionColumnApi = new ActionColumnApi(blotter);
     this.advancedSearchApi = new AdvancedSearchApi(blotter);
     this.alertApi = new AlertApi(blotter);
     this.auditEventApi = new AuditEventApi(blotter);

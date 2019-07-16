@@ -22,6 +22,7 @@ import { ColumnSort, VendorGridInfo } from '../../PredefinedConfig/RunTimeState/
 import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 import { CalculatedColumn } from '../../PredefinedConfig/RunTimeState/CalculatedColumnState';
 import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
+import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
 
 export type EmitterCallback = (data?: any) => any;
 
@@ -154,6 +155,9 @@ export interface IAdaptableBlotter {
   addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn): void;
   removeCalculatedColumnFromGrid(calculatedColumnID: string): void;
   editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void;
+
+  // actionColumn
+  addActionColumnToGrid(actionColumn: ActionColumn): void;
 
   // percentBar
   removePercentBar(percentBar: PercentBar): void;

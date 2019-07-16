@@ -1,4 +1,5 @@
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
+import { ActionColumn } from '../../PredefinedConfig/DesignTimeState/ActionColumnState';
 
 export interface FDC3Schema {
   object: string;
@@ -12,6 +13,11 @@ export interface ColumnStateChangedEventArgs {
 
 export interface AlertFiredEventArgs {
   alert: IAdaptableAlert;
+}
+
+export interface ActionColumnEventArgs {
+  actionColumn: ActionColumn;
+  rowData: any;
 }
 
 export interface ThemeChangedEventArgs {

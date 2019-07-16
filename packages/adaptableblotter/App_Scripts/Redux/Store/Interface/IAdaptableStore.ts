@@ -35,6 +35,7 @@ import { ConfigState } from '../../../PredefinedConfig/ConfigState';
 import { EntitlementsState } from '../../../PredefinedConfig/DesignTimeState/EntitlementsState';
 import { UserInterfaceState } from '../../../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { SystemFilterState } from '../../../PredefinedConfig/DesignTimeState/SystemFilterState';
+import { ActionColumnState } from '../../../PredefinedConfig/DesignTimeState/ActionColumnState';
 
 export interface AdaptableBlotterState {
   [s: string]: ConfigState;
@@ -49,6 +50,7 @@ export interface AdaptableBlotterState {
   Entitlements: EntitlementsState;
   UserInterface: UserInterfaceState;
   SystemFilter: SystemFilterState;
+  ActionColumn: ActionColumnState;
 
   // Set at design time and / or run time => only state is persisted
   AdvancedSearch: AdvancedSearchState;

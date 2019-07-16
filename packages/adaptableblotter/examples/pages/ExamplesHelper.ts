@@ -561,6 +561,7 @@ export class ExamplesHelper {
       'JP Morgan',
       'Morgan Stanley',
       'BNP',
+      'UBS',
       //   "Lloyds TSB",
       //   "MUFJ",
       //   "Rabobank",

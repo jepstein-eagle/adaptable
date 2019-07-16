@@ -38,6 +38,13 @@ function InitAdaptableBlotter() {
     gridOptions,
     'Data Source demo'
   );
+  /*
+  adaptableBlotterOptions.eventOptions = {
+    onSearchChanged: searchChangedArgs => {
+      listenToSearchChange(adaptableblotter, examplesHelper, searchChangedArgs);
+    },
+    onAlertFired: () => {},
+  };*/
 
   adaptableBlotterOptions.auditOptions = {
     auditCellEdits: {
@@ -64,6 +71,7 @@ function listenToSearchChange(
   examplesHelper: ExamplesHelper,
   searchChangedArgs: SearchChangedEventArgs
 ) {
+  console.log(searchChangedArgs);
   let searchChangedInfo: SearchChangedInfo = searchChangedArgs.data[0].id;
   if (searchChangedInfo.searchChangedTrigger == 'DataSource') {
     let searchState: BlotterSearchState = searchChangedArgs.data[0].id.blotterSearchState;
@@ -105,6 +113,16 @@ let demoConfig: PredefinedConfig = {
       {
         Name: 'GBP',
         Description: 'Sterling Trades',
+        DataSourceParams: [
+          {
+            Name: 'Hello',
+            DataType: 'String',
+          },
+          {
+            Name: 'Age',
+            DataType: 'Number',
+          },
+        ],
       },
     ],
   },

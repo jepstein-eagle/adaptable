@@ -34,6 +34,7 @@ import { IUserFilterApi } from './IUserFilterApi';
 import { IPlusMinusApi } from './IPlusMinusApi';
 import { IBulkUpdateApi } from './IBulkUpdateApi';
 import { IAuditEventApi } from './IAuditEventApi';
+import { IActionColumnApi } from './IActionColumnApi';
 
 /**
  * The Blotter API (which implements the **IBlotterAPI** interface) provides developers with run-time access to the Adaptable Blotter.
@@ -52,6 +53,11 @@ import { IAuditEventApi } from './IAuditEventApi';
  */
 
 export interface IBlotterApi {
+  /**
+   * Provides access to the *Advanced Search* function, the *ActionColumn* object.
+   */
+  actionColumnApi: IActionColumnApi;
+
   /**
    * Provides access to the *Advanced Search* function, the *AdvancedSearch* object and [Advanced Search State](_predefinedconfig_runtimestate_advancedsearchstate_.advancedsearchstate.html).
    */

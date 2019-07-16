@@ -31,6 +31,7 @@ import * as SystemFilterRedux from '../ActionsReducers/SystemFilterRedux';
 import * as ReminderRedux from '../ActionsReducers/ReminderRedux';
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux';
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux';
+import * as ActionColumnRedux from '../ActionsReducers/ActionColumnRedux';
 import * as FreeTextColumnRedux from '../ActionsReducers/FreeTextColumnRedux';
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux';
 import * as ColumnCategoryRedux from '../ActionsReducers/ColumnCategoryRedux';
@@ -131,6 +132,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   Grid: GridRedux.GridReducer,
 
   // Reducers for Persisted State
+  ActionColumn: ActionColumnRedux.ActionColumnReducer,
   AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
   Alert: AlertRedux.AlertReducer,
   BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
@@ -2789,6 +2791,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
             //Create all free text columns before we load the layout
             middlewareAPI.getState().FreeTextColumn.FreeTextColumns.forEach(ftc => {
               blotter.addFreeTextColumnToGrid(ftc);
+            });
+
+            //Create all action columns before we load the layout
+            middlewareAPI.getState().ActionColumn.ActionColumns.forEach(ac => {
+              blotter.addActionColumnToGrid(ac);
             });
 
             //load the default layout if its current

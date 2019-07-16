@@ -8,7 +8,7 @@ import { IStyle } from '../Common/IStyle';
  *
  * Use Conditional Styles to set rules for how columns or rows should look visualy based on the data they contain.
  *
- * Conditional Styles uses an [Expression](https://api.adaptableblotter.com/classes/_predefinedconfig_common_expression_expression_.expression.html) (aka Queries) for evaluation.
+ * Conditional Styles uses an [Expression](../classes/_predefinedconfig_common_expression_expression_.expression.html) (aka Queries) for evaluation.
  *
  * **Further Resources**
  *
@@ -111,9 +111,15 @@ export interface ConditionalStyle extends AdaptableBlotterObject {
   ConditionalStyleScope?: 'Column' | 'Row' | 'ColumnCategory';
 
   /**
-   * When the Style should be applied.  Only rows that match the Expression will be styled.  See [Expression](https://api.adaptableblotter.com/classes/_predefinedconfig_common_expression_expression_.expression.html) for more details.
+   * When the Style should be applied.  Only rows that match the Expression will be styled.  See [Expression](../classes/_predefinedconfig_common_expression_expression_.expression.html) for more details.
    */
   Expression?: Expression;
+
+  /**
+   * The Style to apply when the rule is matched.
+   *
+   * The Style object defines fore and back colours, font size and other basic style properties.  See [Style](_predefinedconfig_common_istyle_.istyle.html) for more details.
+   */
   Style?: IStyle;
 }
 
