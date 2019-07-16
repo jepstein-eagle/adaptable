@@ -126,7 +126,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
       case 1000:
         return '1 Second';
       default:
-        return String(duration) + ' ms';
+        return String(typeof duration === 'number' ? duration : 'unknown') + ' ms';
     }
   }
 }
