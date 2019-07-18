@@ -30,6 +30,7 @@ import { ThemeState } from './RunTimeState/ThemeState';
 import { UserFilterState } from './RunTimeState/UserFilterState';
 import { ChartState } from './RunTimeState/ChartState';
 import { ActionColumnState } from './DesignTimeState/ActionColumnState';
+import { NamedFilterState } from './RunTimeState/NamedFilterState';
 
 /**
  * This is the main Predefined Config interface which users will populate if they wish to ship their Adaptable Botter instance with initial state.
@@ -399,4 +400,6 @@ export interface PredefinedConfig {
    * Supplies a collection of *UserFilter* objects which can be used to create Column Filters and in other Functions.
    */
   UserFilter?: UserFilterState;
+
+  NamedFilter?: NamedFilterState;
 }

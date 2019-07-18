@@ -74,6 +74,8 @@ import { IAuditEventApi } from './Interface/IAuditEventApi';
 import { AuditEventApi } from './AuditEventApi';
 import { IActionColumnApi } from './Interface/IActionColumnApi';
 import { ActionColumnApi } from './ActionColumnApi';
+import { NamedFilterApi } from './NamedFilterApi';
+import { INamedFilterApi } from './Interface/INamedFilterApi';
 
 export class BlotterApi implements IBlotterApi {
   public actionColumnApi: IActionColumnApi;
@@ -113,6 +115,7 @@ export class BlotterApi implements IBlotterApi {
   public themeApi: IThemeApi;
   public userInterfaceApi: IUserInterfaceApi;
   public userFilterApi: IUserFilterApi;
+  public namedFilterApi: INamedFilterApi;
 
   constructor(protected blotter: IAdaptableBlotter) {
     this.blotter = blotter;
@@ -152,6 +155,7 @@ export class BlotterApi implements IBlotterApi {
     this.themeApi = new ThemeApi(blotter);
     this.userInterfaceApi = new UserInterfaceApi(blotter);
     this.userFilterApi = new UserFilterApi(blotter);
+    this.namedFilterApi = new NamedFilterApi(blotter);
 
     this.internalApi = new InternalApi(blotter);
   }

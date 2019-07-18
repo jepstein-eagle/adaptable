@@ -20,6 +20,8 @@ import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState'
 import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import Helper from './Helper';
+import { PredefinedConfig } from '../../PredefinedConfig/PredefinedConfig';
+import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -159,6 +161,7 @@ export function checkForExpression(
     columns,
     blotter.api.userFilterApi.getAllUserFilter(),
     blotter.api.systemFilterApi.getAllSystemFilter(),
+    blotter.api.namedFilterApi.getAllNamedFilter(),
     blotter
   );
 }
@@ -177,7 +180,9 @@ export function checkForExpressionFromRecord(
     columns,
     blotter.api.userFilterApi.getAllUserFilter(),
     blotter.api.systemFilterApi.getAllSystemFilter(),
-    blotter
+    blotter.api.namedFilterApi.getAllNamedFilter(),
+    blotter,
+    record
   );
 }
 
@@ -190,7 +195,9 @@ export function IsSatisfied(
   columnBlotterList: IColumn[],
   userFilters: UserFilter[],
   systemFilters: string[],
-  blotter: IAdaptableBlotter
+  namedFilters: NamedFilter[],
+  blotter: IAdaptableBlotter,
+  record?: any
 ): boolean {
   let expressionColumnList = GetColumnListFromExpression(Expression);
   for (let columnId of expressionColumnList) {
@@ -233,6 +240,7 @@ export function IsSatisfied(
             columnBlotterList,
             userFilters,
             systemFilters,
+            namedFilters,
             blotter
           );
           if (isColumnSatisfied) {
@@ -249,6 +257,21 @@ export function IsSatisfied(
             let valueToCheck: any = getColumnValue(columnId);
             let satisfyFunction: any = FilterHelper.GetFunctionForSystemFilter(systemFilter);
             isColumnSatisfied = satisfyFunction.IsExpressionSatisfied(valueToCheck, blotter);
+            if (isColumnSatisfied) {
+              break;
+            }
+          }
+        }
+
+        // then evaluate any named filters
+        if (!isColumnSatisfied) {
+          let filteredNamedFilters: any[] = namedFilters.filter(f =>
+            columnFilters.Filters.find(u => u == f.Name)
+          );
+          for (let namedFilter of filteredNamedFilters) {
+            let valueToCheck: any = getColumnValue(columnId);
+            let satisfyFunction = namedFilter.Predicate;
+            isColumnSatisfied = satisfyFunction(record, columnId, valueToCheck);
             if (isColumnSatisfied) {
               break;
             }

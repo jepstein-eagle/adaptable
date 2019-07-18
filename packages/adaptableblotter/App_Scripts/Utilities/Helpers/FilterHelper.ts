@@ -3,6 +3,7 @@ import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { Helper } from './Helper';
 import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
+import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
 
 // String, Numeric and Date
 export const BLANKS_SYSTEM_FILTER = 'Blanks';
@@ -76,6 +77,13 @@ export function GetUserFiltersForColumn(column: IColumn, userFilters: UserFilter
     });
   }
   return appropriateUserFilters;
+}
+
+export function GetNamedFiltersForColumn(
+  column: IColumn,
+  namedFilters: NamedFilter[]
+): NamedFilter[] {
+  return namedFilters.filter(f => f.DataType === column.DataType);
 }
 
 export function ShowUserFilterForColumn(
@@ -292,6 +300,7 @@ export const FilterHelper = {
   GetUserFilters,
   GetSystemFiltersForColumn,
   GetUserFiltersForColumn,
+  GetNamedFiltersForColumn,
   ShowUserFilterForColumn,
   GetColumnIdForUserFilter,
   GetFunctionForSystemFilter,
