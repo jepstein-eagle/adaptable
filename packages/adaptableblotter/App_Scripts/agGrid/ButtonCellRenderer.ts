@@ -4,8 +4,8 @@ import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnSt
 import { ActionColumnEventArgs } from '../Api/Events/BlotterEvents';
 
 export class ButtonCellRenderer implements ICellRendererComp {
-  private eGui: any; // not sure about this at all!
-  private eventListener: any; // not sure about this at all!
+  private eGui: any;
+  private eventListener: any;
 
   // gets called once before the renderer is used
   init(params: ICellRendererParams): void {
@@ -41,15 +41,18 @@ export class ButtonCellRenderer implements ICellRendererComp {
   getGui(): HTMLElement {
     return this.eGui;
   }
-  // gets called whenever the user gets the cell to refresh
 
+  // gets called whenever the user gets the cell to refresh
   refresh(params: any): boolean {
     // return true to tell the grid we refreshed successfully
     return true;
   }
+
   // gets called when the cell is removed from the grid
   destroy(): void {
     // do cleanup, remove event listener from button
-    this.eGui.removeEventListener('click', this.eventListener);
+    if (this.eGui) {
+      this.eGui.removeEventListener('click', this.eventListener);
+    }
   }
 }

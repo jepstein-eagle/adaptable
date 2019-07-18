@@ -1,6 +1,5 @@
 import { DesignTimeState } from './DesignTimeState';
 import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
-import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { IAdaptableBlotter } from '../../types';
 
 export interface ActionColumnState extends DesignTimeState {

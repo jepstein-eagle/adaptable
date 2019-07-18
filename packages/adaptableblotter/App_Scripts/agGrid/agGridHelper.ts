@@ -49,6 +49,7 @@ import { ReminderStrategy } from '../Strategy/ReminderStrategy';
 import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { AdaptableBlotter } from './AdaptableBlotter';
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
+import { RowStyle } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 
 /**
  * AdaptableBlotter ag-Grid implementation is getting really big and unwieldy
@@ -308,6 +309,87 @@ export class agGridHelper {
       this.gridOptions.api.clearRangeSelection();
 
       this.gridOptions.api.addCellRange(cellRangeParams);
+    }
+  }
+
+  public setUpRowStyles(): void {
+    let rowStyles: RowStyle[] = this.blotter.api.userInterfaceApi.getUserInterfaceState().RowStyles;
+    if (ArrayExtensions.IsNotNullOrEmpty(rowStyles)) {
+      // First lets deal with Alls - we will get the first one and then get out
+      let allRowStyle = rowStyles.find(rs => rs.RowType == 'All');
+      if (allRowStyle) {
+        if (StringExtensions.IsNotNullOrEmpty(allRowStyle.Style.ClassName)) {
+          // we have a row style name so we can just set that for the whole grid and no need to use the function
+          console.log('setting stylename for whole grid');
+          this.gridOptions.rowClass = allRowStyle.Style.ClassName;
+        } else {
+          // no row style name so se the rowstyle - again no need to use a function
+          console.log('setting style for whole grid');
+          this.gridOptions.rowStyle = {
+            background: allRowStyle.Style.BackColor,
+            color: allRowStyle.Style.ForeColor,
+            fontWeight: allRowStyle.Style.FontWeight,
+            fontStyle: allRowStyle.Style.FontStyle,
+          };
+        }
+      } else {
+        // we dont have an all row style so now things get hard and we need to see if we have one alternating style or 2
+        let evenRowStyle = rowStyles.find(rs => rs.RowType == 'Even');
+        let oddRowStyle = rowStyles.find(rs => rs.RowType == 'Odd');
+
+        // this logic feels a bit OTT but the idea is to avoid having to create this getRowClass or getRowStyle functions when not needed.
+        let evenRowStyleName: string = evenRowStyle && evenRowStyle.Style.ClassName;
+        let oddRowStyleName: string = oddRowStyle && oddRowStyle.Style.ClassName;
+
+        let emptyEvenRowStyleName = StringExtensions.IsNullOrEmpty(evenRowStyleName);
+        let emptyOddRowStyleName = StringExtensions.IsNullOrEmpty(oddRowStyleName);
+
+        let atLeastOneNormalStyle: boolean =
+          (evenRowStyle && emptyEvenRowStyleName) || (oddRowStyle && emptyOddRowStyleName);
+
+        if (evenRowStyleName || oddRowStyleName) {
+          console.log('setting function stylename for whole grid');
+          this.gridOptions.getRowClass = function(params) {
+            if (evenRowStyleName) {
+              if (params.node.rowIndex % 2 === 0) {
+                return evenRowStyleName;
+              }
+            }
+            if (oddRowStyleName) {
+              if (params.node.rowIndex % 2 === 1) {
+                return oddRowStyleName;
+              }
+            }
+          };
+        }
+
+        if (atLeastOneNormalStyle) {
+          console.log('setting function style for whole grid');
+          this.gridOptions.getRowStyle = function(params: any) {
+            if (evenRowStyle && emptyEvenRowStyleName) {
+              if (params.node.rowIndex % 2 === 0) {
+                return {
+                  background: evenRowStyle.Style.BackColor,
+                  color: evenRowStyle.Style.ForeColor,
+                  fontWeight: evenRowStyle.Style.FontWeight,
+                  fontStyle: evenRowStyle.Style.FontStyle,
+                };
+              }
+            }
+
+            if (oddRowStyle && emptyOddRowStyleName) {
+              if (params.node.rowIndex % 2 === 1) {
+                return {
+                  background: oddRowStyle.Style.BackColor,
+                  color: oddRowStyle.Style.ForeColor,
+                  fontWeight: oddRowStyle.Style.FontWeight,
+                  fontStyle: oddRowStyle.Style.FontStyle,
+                };
+              }
+            }
+          };
+        }
+      }
     }
   }
 }

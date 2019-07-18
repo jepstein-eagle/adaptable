@@ -14,11 +14,13 @@ import {
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { ActionColumnEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 
 var adaptableblotter: IAdaptableBlotter;
 
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
+
   const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -27,7 +29,7 @@ function InitAdaptableBlotter() {
     vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
-    blotterId: 'advanced search demo',
+    blotterId: 'action column demo',
     licenceKey: examplesHelper.getEnterpriseLicenceKey(),
   };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
@@ -35,30 +37,30 @@ function InitAdaptableBlotter() {
   adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
 
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
+
+  adaptableblotter.api.eventApi
+    .onActionColumnClicked()
+    .Subscribe((sender, actionColumnEventArgs) =>
+      listenToActionColumnClicked(actionColumnEventArgs)
+    );
+}
+
+function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnEventArgs) {
+  console.log('alert fired event received');
+  console.log(actionColumnEventArgs);
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['AdvancedSearch'],
-  },
-
-  AdvancedSearch: {
-    AdvancedSearches: [
+  /*
+  ActionColumn: {
+    ActionColumns: [
       {
-        Expression: {
-          ColumnValueExpressions: [
-            {
-              ColumnDisplayValues: ['Goldman Sachs', 'JP Morgan'],
-              ColumnId: 'counterparty',
-              ColumnRawValues: ['Goldman Sachs', 'JP Morgan'],
-            },
-          ],
-        },
-        Name: 'hello',
+        ColumnId: 'Action',
+        ButtonText: 'Click me',
       },
     ],
-    CurrentAdvancedSearch: 'hello',
   },
+  */
 };
 
 export default () => {

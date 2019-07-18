@@ -14,7 +14,8 @@ import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
 const examplesHelper = new ExamplesHelper();
 
-const gridOptions: GridOptions = getGridOptionsTrade(200);
+const tradeData: any = examplesHelper.getTrades(500);
+const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
 const adaptableBlotterOptions: AdaptableBlotterOptions = {
   vendorGrid: gridOptions,

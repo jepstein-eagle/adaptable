@@ -1,4 +1,5 @@
 import { DesignTimeState } from './DesignTimeState';
+import { IStyle } from '../Common/IStyle';
 
 /**
  * The Predefined Configuration for managing the User Interface
@@ -55,6 +56,15 @@ export interface UserInterfaceState extends DesignTimeState {
    * **The column must also be marked as editable in the column schema for the Dropdown to appear.**
    */
   EditLookUpColumns?: EditLookUpColumn[];
+
+  /**
+   * An optional list of RowStyles which allow you to specifiy how the Blotter should look.
+   *
+   * You can choose to style All, Odd or Even rows (the last 2 are used for when wanting to have alternating row styles).
+   *
+   * **note if this is left empty (the default) then the row style in the Grid theme will be used**
+   */
+  RowStyles?: RowStyle[];
 }
 
 /**
@@ -75,6 +85,38 @@ export interface PermittedColumnValues {
  * However if Permitted Values have been set for that column then they will be displayed in the Dropdown instead.
  */
 export interface EditLookUpColumn {
+  /**
+   * Which Column will show the Edit Lookup
+   */
   ColumnId: string;
+
+  /**
+   * Any values to show in the Lookup.
+   *
+   * **note If this is left empty then the Blotter will first get any Permitted Values if any, and failiing that will get distinct values for the column dynamically**
+   */
   LookUpValues?: any[];
+}
+
+/**
+ * Interface that allows users to define a style for a Row.
+ *
+ * It includes the Style (which can be just a classname)
+ *
+ * And also the RowType - e.g. All Rows, or Just Odd or Even (used for when requiring an Alternate Row style)
+ */
+export interface RowStyle {
+  /**
+   * The Style to use for the Row
+   */
+  Style: IStyle;
+
+  /**
+   * Which Row should be Styled.
+   *
+   * We provide All (which styles the whole grid) and 'Odd' and 'Even' for where you require alternating row styles.
+   *
+   * **note if you have any 'All' RowTypes then 'Odd' and 'Even' RowTypes will be ignored.**
+   */
+  RowType: 'All' | 'Odd' | 'Even';
 }
