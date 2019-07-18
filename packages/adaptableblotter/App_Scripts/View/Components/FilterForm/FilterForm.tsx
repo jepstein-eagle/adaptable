@@ -171,6 +171,12 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     )
       .map(uf => uf.Name)
       .concat(
+        FilterHelper.GetNamedFiltersForColumn(
+          this.props.CurrentColumn,
+          this.props.Blotter.api.namedFilterApi.getAllNamedFilter()
+        ).map(nf => nf.Name)
+      )
+      .concat(
         FilterHelper.GetSystemFiltersForColumn(
           this.props.CurrentColumn,
           this.props.SystemFilters

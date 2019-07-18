@@ -34,6 +34,7 @@ import { IUserFilterApi } from './IUserFilterApi';
 import { IPlusMinusApi } from './IPlusMinusApi';
 import { IBulkUpdateApi } from './IBulkUpdateApi';
 import { IAuditEventApi } from './IAuditEventApi';
+import { INamedFilterApi } from './INamedFilterApi';
 
 /**
  * The Blotter API (which implements the **IBlotterAPI** interface) provides developers with run-time access to the Adaptable Blotter.
@@ -235,4 +236,6 @@ export interface IBlotterApi {
    * **It is not recommended to use this section if using the Adaptable Blotter externally**
    */
   internalApi: IInternalApi;
+
+  namedFilterApi: INamedFilterApi;
 }
