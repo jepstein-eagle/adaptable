@@ -38,6 +38,12 @@ function InitAdaptableBlotter() {
             return cellValue === 'USD';
           },
         },
+        {
+          name: 'Older than Jonny',
+          func: (_record, _columnId, cellValue) => {
+            return cellValue > 49;
+          },
+        },
       ],
     },
   };
@@ -51,9 +57,14 @@ let demoConfig: PredefinedConfig = {
   NamedFilter: {
     NamedFilters: [
       {
-        Name: 'Test Named Filter',
+        Name: '$ Trades',
         DataType: DataType.String,
         PredicateName: 'USD Currency',
+      },
+      {
+        Name: 'Ancient',
+        DataType: DataType.Number,
+        PredicateName: 'Older than Jonny',
       },
     ],
   },
@@ -64,7 +75,7 @@ let demoConfig: PredefinedConfig = {
         Filter: {
           FilterExpressions: [
             {
-              Filters: ['Test Named Filter'],
+              Filters: ['$ Trades'],
               ColumnId: 'currency',
             },
           ],
