@@ -1,6 +1,5 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
-import { IColumn } from '../../Utilities/Interface/IColumn';
 import { DataType } from '../Common/Enums';
 
 export interface NamedFilterState extends RunTimeState {
@@ -8,7 +7,7 @@ export interface NamedFilterState extends RunTimeState {
 }
 
 export interface NamedFilterPredicate {
-  (record: any, columnId: IColumn, cellValue: any): boolean;
+  (record: any, columnId: string, cellValue: any): boolean;
 }
 
 export interface NamedFilter extends AdaptableBlotterObject {

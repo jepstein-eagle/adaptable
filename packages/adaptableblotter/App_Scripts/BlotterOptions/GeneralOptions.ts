@@ -65,24 +65,8 @@ export interface GeneralOptions {
 }
 
 export interface UserFunction {
-  /**
-   * Sends the Audit Messages to an (internal) HTTP channel for you to listen to.
-   *
-   * This is the most popular option though requires you to use your internal, listening software (like the Elastic stack) to wire it up.
-   *
-   * **Default Value: false**
-   */
-  auditToHttpChannel?: boolean;
+  functionName: string;
 
-  /**
-   * Sends the Audit Message to the Console.
-   *
-   * Primarily used by developers as a useful design-time or debugging tool when building the application.
-   *
-   * But can also be used by Support when investigating user behaviour or Blotter activity.
-   *
-   * **Default Value: false**
-   */
   auditToConsole?: boolean;
 
   /**
