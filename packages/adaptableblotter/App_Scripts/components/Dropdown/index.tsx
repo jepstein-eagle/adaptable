@@ -6,6 +6,8 @@ import join from '../utils/join';
 import useProperty from '../utils/useProperty';
 import { ButtonBase } from '../../View/Components/Buttons/ButtonBase';
 
+import Arrows from './Arrows';
+
 export type DropdownOption = {
   label: string;
   value: string;
@@ -138,6 +140,8 @@ const Dropdown = (props: DropdownProps) => {
     >
       <div style={{ display: 'inline-block' }} className={`${baseClassName}__text`}>
         {selectedText}
+
+        <Arrows />
       </div>
       <select
         ref={selectRef}

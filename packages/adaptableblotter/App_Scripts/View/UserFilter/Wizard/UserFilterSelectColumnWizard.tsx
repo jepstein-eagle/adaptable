@@ -33,7 +33,9 @@ export class UserFilterSelectColumnWizard
 
     return (
       <WizardPanel header="Select a Column">
-        <HelpBlock>{'Choose which column the User Filter will apply to.'}</HelpBlock>
+        <HelpBlock marginBottom={2}>
+          {'Choose which column the User Filter will apply to.'}
+        </HelpBlock>
         <ColumnSelector
           cssClassName={cssClassName}
           SelectedColumnIds={[this.state.ColumnId]}

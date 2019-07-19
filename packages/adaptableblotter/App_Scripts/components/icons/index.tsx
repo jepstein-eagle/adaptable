@@ -27,6 +27,7 @@ import Calendar from './calendar';
 import Delete from './delete';
 import ColorDrop from './color-drop';
 import CheckCircle from './check-circle';
+import Refresh from './refresh';
 
 export default {
   'arrow-right': ArrowRight,
@@ -42,6 +43,7 @@ export default {
   list: List,
   delete: Delete,
   trash: Delete,
+  refresh: Refresh,
   error: Err,
   'fast-forward': FastForward,
   'fast-backward': FastBackward,

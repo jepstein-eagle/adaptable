@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { Helper } from '../../../Utilities/Helpers/Helper';
+
 import { SortOrder, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
-import { ListGroupProps } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
@@ -10,7 +9,7 @@ import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import ListGroup from '../../../components/List/ListGroup';
 
-export interface SingleListBoxProps extends ListGroupProps {
+export interface SingleListBoxProps {
   Values: Array<any>;
   UiSelectedValues: Array<any>;
   onSelectedChange: (SelectedValues: Array<any>) => void;

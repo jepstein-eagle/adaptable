@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Flex } from 'rebass';
 
-export default styled(Flex)({
+const FieldWrap = styled(Flex)({
   border: '1px solid var(--ab-color-inputborder)',
   borderRadius: 'var(--ab-space-1)',
   overflow: 'hidden',
@@ -14,3 +14,10 @@ export default styled(Flex)({
     outline: 'none',
   },
 });
+
+FieldWrap.defaultProps = {
+  flexDirection: 'row',
+  alignItems: 'center',
+};
+
+export default FieldWrap;

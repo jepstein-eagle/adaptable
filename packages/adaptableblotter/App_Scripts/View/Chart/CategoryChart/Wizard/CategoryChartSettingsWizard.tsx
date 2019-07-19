@@ -12,6 +12,7 @@ import WizardPanel from '../../../../components/WizardPanel';
 import { Flex, Text } from 'rebass';
 import Radio from '../../../../components/Radio';
 import Input from '../../../../components/Input';
+import ErrorBox from '../../../../components/ErrorBox';
 
 export interface CategoryChartSettingsWizardProps
   extends AdaptableWizardStepProps<CategoryChartDefinition> {
@@ -58,8 +59,10 @@ export class CategoryChartSettingsWizard
             placeholder="Enter chart name"
             onChange={e => this.onChartNameChange(e)}
           />
-          {this.state.ErrorMessage ? <HelpBlock>{this.state.ErrorMessage}</HelpBlock> : null}
         </Flex>
+        {this.state.ErrorMessage ? (
+          <ErrorBox marginTop={3}>{this.state.ErrorMessage}</ErrorBox>
+        ) : null}
         <Flex flexDirection="row" alignItems="center" marginTop={3}>
           <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
             Description:

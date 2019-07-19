@@ -6,7 +6,7 @@ import * as ReminderRedux from '../../Redux/ActionsReducers/ReminderRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { HelpBlock } from 'react-bootstrap';
+
 import { ReminderEntityRow } from './ReminderEntityRow';
 import { ReminderWizard } from './Wizard/ReminderWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';

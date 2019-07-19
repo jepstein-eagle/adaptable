@@ -9,11 +9,10 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { FreeTextColumn } from '../../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
-import Panel from '../../../components/Panel';
-import HelpBlock from '../../../components/HelpBlock';
 import { Box, Text, Flex } from 'rebass';
 import Input from '../../../components/Input';
 import WizardPanel from '../../../components/WizardPanel';
+import ErrorBox from '../../../components/ErrorBox';
 
 export interface FreeTextColumnSettingsWizardProps
   extends AdaptableWizardStepProps<FreeTextColumn> {}
@@ -54,12 +53,11 @@ export class FreeTextColumnSettingsWizard
                 placeholder="Enter a name"
                 onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
               />
-
-              {this.state.ErrorMessage ? (
-                <HelpBlock marginTop={2}>{this.state.ErrorMessage}</HelpBlock>
-              ) : null}
             </Box>
           </Flex>
+          {this.state.ErrorMessage ? (
+            <ErrorBox marginTop={2}>{this.state.ErrorMessage}</ErrorBox>
+          ) : null}
           <Flex alignItems="center" flexDirection="row" marginTop={3}>
             <Text style={{ flex: 2 }}>Default Value</Text>
             <Box style={{ flex: 8 }}>

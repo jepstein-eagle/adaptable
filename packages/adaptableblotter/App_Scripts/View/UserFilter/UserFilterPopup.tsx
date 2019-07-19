@@ -117,7 +117,6 @@ class UserFilterPopupComponent extends React.Component<
         onClick={() => this.onNew()}
         overrideTooltip="Create User Filter"
         DisplayMode="Glyph+Text"
-        size={'small'}
         AccessLevel={this.props.AccessLevel}
       />
     );

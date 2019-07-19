@@ -11,6 +11,7 @@ import WizardPanel from '../../../components/WizardPanel';
 import { Flex, Text } from 'rebass';
 import Input from '../../../components/Input';
 import HelpBlock from '../../../components/HelpBlock';
+import ErrorBox from '../../../components/ErrorBox';
 
 export interface DataSourceSettingsWizardProps extends AdaptableWizardStepProps<DataSource> {
   DataSourceNames: string[];
@@ -55,7 +56,7 @@ export class DataSourceSettingsWizard
           />
         </Flex>
 
-        {this.state.ErrorMessage ? <HelpBlock>{this.state.ErrorMessage}</HelpBlock> : null}
+        {this.state.ErrorMessage ? <ErrorBox>{this.state.ErrorMessage}</ErrorBox> : null}
 
         <Flex alignItems="center" flexDirection="row" marginTop={3}>
           <Text style={{ flex: 3 }}>Description:</Text>

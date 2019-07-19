@@ -12,6 +12,7 @@ import { Flex, Text, Box } from 'rebass';
 import Input from '../../../../components/Input';
 import Radio from '../../../../components/Radio';
 import HelpBlock from '../../../../components/HelpBlock';
+import ErrorBox from '../../../../components/ErrorBox';
 
 export interface PieChartSettingsWizardProps extends AdaptableWizardStepProps<PieChartDefinition> {
   ChartNames: string[];
@@ -56,9 +57,10 @@ export class PieChartSettingsWizard
             placeholder="Enter chart name"
             onChange={(e: any) => this.onChartNameChange(e)}
           />
-
-          {this.state.ErrorMessage ? <HelpBlock>{this.state.ErrorMessage}</HelpBlock> : null}
         </Flex>
+        {this.state.ErrorMessage ? (
+          <ErrorBox marginTop={3}>{this.state.ErrorMessage}</ErrorBox>
+        ) : null}
         <Flex flexDirection="row" alignItems="center" marginTop={3}>
           <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
             Description:

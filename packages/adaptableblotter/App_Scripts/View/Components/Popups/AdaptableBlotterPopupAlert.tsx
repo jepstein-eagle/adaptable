@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
-import { Modal, Button, Row, Col, ControlLabel } from 'react-bootstrap';
+import { Modal, Button, ControlLabel } from 'react-bootstrap';
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { UIHelper } from '../../UIHelper';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';

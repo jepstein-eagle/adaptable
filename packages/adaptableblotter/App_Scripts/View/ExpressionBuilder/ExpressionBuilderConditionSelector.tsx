@@ -4,7 +4,6 @@ import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues';
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter';
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges';
-import { HelpBlock, Tab, NavItem, Nav } from 'react-bootstrap';
 import { FilterHelper } from '../../Utilities/Helpers/FilterHelper';
 
 import SimpleButton from '../../components/SimpleButton';
@@ -21,16 +20,17 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IRawValueDisplayValuePair } from '../UIInterfaces';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
+
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { Helper } from '../../Utilities/Helpers/Helper';
+
 import { Waiting } from '../Components/FilterForm/Waiting';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
 import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
-import { Box } from 'rebass';
+import { Box, Flex } from 'rebass';
+import HelpBlock from '../../components/HelpBlock';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -339,7 +339,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         button={clearButton}
         bodyProps={{
           padding: 0,
-          paddingTop: 2,
           style: {
             display: 'flex',
             flexFlow: 'column',
@@ -371,11 +370,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<
             )}
           </div>
         ) : (
-          <div>
+          <Flex flex={1} flexDirection="column">
             {selectedColumn && (
-              <div>
+              <>
                 {this.props.Blotter.blotterOptions.queryOptions.columnValuesOnlyInQueries ? (
-                  <div>
+                  <>
                     {this.state.ShowWaitingMessage ? (
                       <Waiting WaitingMessage="Retrieving Column Values..." />
                     ) : (
@@ -388,15 +387,14 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                         }
                       />
                     )}
-                  </div>
+                  </>
                 ) : (
-                  <div>
-                    <Box marginBottom={2}>
+                  <>
+                    <Box marginBottom={2} marginTop={2}>
                       <SimpleButton
                         onClick={() => this.onTabChanged(QueryTab.ColumnValue)}
                         marginRight={2}
-                        tone="success"
-                        tone={firstSelected ? 'success' : 'neutral'}
+                        tone={(firstSelected ? 'success' : 'neutral') as ('success' | 'neutral')}
                         variant={firstSelected ? 'raised' : 'outlined'}
                       >
                         Column Values
@@ -404,81 +402,63 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                       <SimpleButton
                         onClick={() => this.onTabChanged(QueryTab.Filter)}
                         marginRight={2}
-                        tone="success"
-                        tone={secondSelected ? 'success' : 'neutral'}
+                        tone={(secondSelected ? 'success' : 'neutral') as ('success' | 'neutral')}
                         variant={secondSelected ? 'raised' : 'outlined'}
                       >
                         Filters
                       </SimpleButton>
                       <SimpleButton
-                        tone={thirdSelected ? 'success' : 'neutral'}
+                        tone={thirdSelected ? 'success' : ('neutral' as ('success' | 'neutral'))}
                         onClick={() => this.onTabChanged(QueryTab.QueryRange)}
                         variant={thirdSelected ? 'raised' : 'outlined'}
                       >
                         Ranges
                       </SimpleButton>
                     </Box>
-                    <div>
-                      <div
-                        style={{
-                          display: firstSelected ? 'block' : 'none',
-                        }}
-                      >
-                        {firstSelected && (
-                          <div>
-                            {this.state.ShowWaitingMessage ? (
-                              <Waiting WaitingMessage="Retrieving Column Values..." />
-                            ) : (
-                              <ExpressionBuilderColumnValues
-                                cssClassName={cssClassName}
-                                ColumnValues={this.state.ColumnRawValueDisplayValuePairs}
-                                SelectedValues={this.state.SelectedColumnDisplayValues}
-                                onColumnValuesChange={selectedValues =>
-                                  this.onSelectedColumnValuesChange(selectedValues)
-                                }
-                              />
-                            )}
-                          </div>
-                        )}
-                      </div>
-                      <div
-                        style={{
-                          display: secondSelected ? 'block' : 'none',
-                        }}
-                      >
-                        {secondSelected && (
-                          <ExpressionBuilderUserFilter
+
+                    {firstSelected ? (
+                      <>
+                        {this.state.ShowWaitingMessage ? (
+                          <Waiting WaitingMessage="Retrieving Column Values..." />
+                        ) : (
+                          <ExpressionBuilderColumnValues
                             cssClassName={cssClassName}
-                            AvailableSystemFilterNames={availableSystemFilterNames}
-                            AvailableUserFilterNames={availableUserFilterNames}
-                            SelectedFilterNames={this.state.SelectedFilterExpressions}
-                            onFilterNameChange={selectedValues =>
-                              this.onSelectedFiltersChanged(selectedValues)
+                            ColumnValues={this.state.ColumnRawValueDisplayValuePairs}
+                            SelectedValues={this.state.SelectedColumnDisplayValues}
+                            onColumnValuesChange={selectedValues =>
+                              this.onSelectedColumnValuesChange(selectedValues)
                             }
                           />
                         )}
-                      </div>
-                      <div
-                        style={{
-                          display: thirdSelected ? 'block' : 'none',
-                        }}
-                      >
-                        {thirdSelected && (
-                          <ExpressionBuilderRanges
-                            cssClassName={cssClassName}
-                            SelectedColumn={selectedColumn}
-                            Ranges={this.state.SelectedColumnRanges}
-                            Columns={this.props.ColumnsList}
-                            onRangesChange={ranges => this.onSelectedColumnRangesChange(ranges)}
-                          />
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                      </>
+                    ) : null}
+
+                    {secondSelected ? (
+                      <ExpressionBuilderUserFilter
+                        cssClassName={cssClassName}
+                        AvailableSystemFilterNames={availableSystemFilterNames}
+                        AvailableUserFilterNames={availableUserFilterNames}
+                        SelectedFilterNames={this.state.SelectedFilterExpressions}
+                        onFilterNameChange={selectedValues =>
+                          this.onSelectedFiltersChanged(selectedValues)
+                        }
+                      />
+                    ) : null}
+
+                    {thirdSelected ? (
+                      <ExpressionBuilderRanges
+                        cssClassName={cssClassName}
+                        SelectedColumn={selectedColumn}
+                        Ranges={this.state.SelectedColumnRanges}
+                        Columns={this.props.ColumnsList}
+                        onRangesChange={ranges => this.onSelectedColumnRangesChange(ranges)}
+                      />
+                    ) : null}
+                  </>
                 )}
-              </div>
+              </>
             )}
-          </div>
+          </Flex>
         )}
       </PanelWithButton>
     );

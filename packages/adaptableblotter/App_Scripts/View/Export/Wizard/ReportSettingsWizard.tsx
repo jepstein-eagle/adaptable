@@ -1,7 +1,6 @@
 import { Report } from '../../../PredefinedConfig/RunTimeState/ExportState';
 import * as React from 'react';
-import { FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import Panel from '../../../components/Panel';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -9,6 +8,11 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ReportRowScope } from '../../../PredefinedConfig/Common/Enums';
+import WizardPanel from '../../../components/WizardPanel';
+import HelpBlock from '../../../components/HelpBlock';
+import Input from '../../../components/Input';
+import { Flex, Text } from 'rebass';
+import ErrorBox from '../../../components/ErrorBox';
 
 export interface ReportSettingsWizardProps extends AdaptableWizardStepProps<Report> {
   Reports: Report[];
@@ -35,32 +39,22 @@ export class ReportSettingsWizard
     let cssClassName: string = this.props.cssClassName + '-settings';
 
     return (
-      <div className={cssClassName}>
-        <Panel
-          header="Enter a Name for the Report"
-          bsStyle="primary"
-          borderRadius="none"
-          bodyProps={{ style: { border: 'none' } }}
-          headerProps={{ style: { border: 'none' } }}
-        >
-          <AdaptableBlotterForm horizontal>
-            <Col xs={10}>
-              <FormGroup controlId="formInlineName" validationState={validationState}>
-                <FormControl
-                  type="text"
-                  placeholder="Enter Report Name"
-                  value={this.state.ReportName}
-                  onChange={e => this.onReportNameChanged(e)}
-                />
-                <FormControl.Feedback />
-                <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-              </FormGroup>
-            </Col>
+      <WizardPanel header="Enter a Name for the Report">
+        <Flex flexDirection="row" alignItems="center">
+          <Text marginRight={2}>Enter Report Name:</Text>
 
-            <Col xs={2}> </Col>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+          <Input
+            style={{ flex: 1 }}
+            type="text"
+            placeholder="Enter Report Name"
+            value={this.state.ReportName}
+            onChange={(e: any) => this.onReportNameChanged(e)}
+          />
+        </Flex>
+        {this.state.ErrorMessage ? (
+          <ErrorBox marginTop={3}>{this.state.ErrorMessage}</ErrorBox>
+        ) : null}
+      </WizardPanel>
     );
   }
 

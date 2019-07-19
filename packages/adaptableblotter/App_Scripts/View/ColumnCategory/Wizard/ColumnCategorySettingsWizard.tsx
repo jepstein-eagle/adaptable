@@ -13,6 +13,7 @@ import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import { Flex, Box, Text } from 'rebass';
 import Input from '../../../components/Input';
+import ErrorBox from '../../../components/ErrorBox';
 
 export interface ColumnCategorySettingsWizardProps
   extends AdaptableWizardStepProps<ColumnCategory> {
@@ -53,7 +54,7 @@ export class ColumnCategorySettingsWizard
           />
         </Flex>
         {this.state.ErrorMessage ? (
-          <HelpBlock marginTop={3}>{this.state.ErrorMessage}</HelpBlock>
+          <ErrorBox marginTop={3}>{this.state.ErrorMessage}</ErrorBox>
         ) : null}
       </WizardPanel>
     );

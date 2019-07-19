@@ -14,6 +14,8 @@
   &__text {
     padding: var(--ab-space-2);
     pointer-events: none;
+    position: relative;
+    cursor: pointer;
     
     overflow: hidden;
     text-overflow: ellipsis;
@@ -29,6 +31,6 @@
 
   select {
     position: absolute;
-    
+    cursor: pointer;
   }
 }

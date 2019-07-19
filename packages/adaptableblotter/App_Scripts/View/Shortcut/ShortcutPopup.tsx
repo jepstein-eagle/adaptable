@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
+
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { DataType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { MathOperation } from '../../PredefinedConfig/Common/Enums';
 import { ShortcutEntityRow } from './ShortcutEntityRow';
 import { ShortcutWizard } from './Wizard/ShortcutWizard';
@@ -98,11 +98,9 @@ class ShortcutPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create New Shortcut"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create New Shortcut"
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -116,9 +114,9 @@ class ShortcutPopupComponent extends React.Component<
           headerText={StrategyConstants.ShortcutStrategyName}
           className="ab_main_popup"
           button={newButton}
-          bsStyle="primary"
           glyphicon={StrategyConstants.ShortcutGlyph}
           infoBody={infoBody}
+          bodyProps={{ padding: 0 }}
         >
           {shortcuts.length > 0 ? (
             <AdaptableObjectCollection
