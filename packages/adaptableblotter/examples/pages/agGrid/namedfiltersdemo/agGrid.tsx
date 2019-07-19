@@ -28,6 +28,20 @@ function InitAdaptableBlotter() {
     'named filters demo'
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
+
+  adaptableBlotterOptions.generalOptions = {
+    userFunctions: {
+      namedFilterFunctions: [
+        {
+          name: 'USD Currency',
+          func: (_record, _columnId, cellValue) => {
+            return cellValue === 'USD';
+          },
+        },
+      ],
+    },
+  };
+
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
   adaptableblotter.applyLightTheme();
@@ -39,9 +53,7 @@ let demoConfig: PredefinedConfig = {
       {
         Name: 'Test Named Filter',
         DataType: DataType.String,
-        Predicate(_record, _columnId, cellValue) {
-          return cellValue === 'USD';
-        },
+        PredicateName: 'USD Currency',
       },
     ],
   },

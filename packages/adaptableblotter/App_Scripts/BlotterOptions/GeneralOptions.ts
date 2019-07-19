@@ -1,3 +1,6 @@
+import { NamedFilterPredicate } from '../PredefinedConfig/RunTimeState/NamedFilterState';
+import { ActionColumnTestFunction } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
+
 /**
  * General options section of Adaptable Blotter Options.
  *
@@ -62,28 +65,21 @@ export interface GeneralOptions {
    * **Default Value: false**
    */
   showAdaptableBlotterToolPanel?: boolean;
+
+  userFunctions?: UserFunctionCollection;
 }
 
-export interface UserFunction {
-  functionName: string;
+export interface UserFunctionCollection {
+  namedFilterFunctions?: NamedFilterFunction[];
+  actionColumnFunctions?: ActionColumnFunction[];
+}
 
-  auditToConsole?: boolean;
+export interface NamedFilterFunction {
+  name: string;
+  func: (record: any, columnId: string, cellValue: any) => boolean;
+}
 
-  /**
-   * Fires the Audit Message as an Audit Log (AuditLogEventArgs) event.
-   *
-   * You listen to this Event the same way that you do all other Adaptable Blotter events.
-   *
-   * **Default Value: false**
-   */
-  auditAsEvent?: boolean;
-
-  /**
-   * Fires the Audit Message as an Alert.
-   *
-   * This Alert will appear in the Alert toolbar and, optionally, also as a popup (based on the value of the *alertShowAsPopup* property).
-   *
-   * **Default Value: false**
-   */
-  auditAsAlert?: boolean;
+export interface ActionColumnFunction {
+  name: string;
+  func: () => void;
 }

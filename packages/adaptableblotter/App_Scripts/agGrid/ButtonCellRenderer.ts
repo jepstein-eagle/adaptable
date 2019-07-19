@@ -1,7 +1,13 @@
 import { ICellRendererComp, ICellRendererParams } from 'ag-grid-community';
 import AdaptableBlotter from '../Hypergrid';
-import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
+import {
+  ActionColumn,
+  ActionColumnTestFunction,
+} from '../PredefinedConfig/DesignTimeState/ActionColumnState';
 import { ActionColumnEventArgs } from '../Api/Events/BlotterEvents';
+import actioncolumndemo from '../../examples/pages/agGrid/actioncolumndemo';
+import StringExtensions from '../Utilities/Extensions/StringExtensions';
+import { ActionColumnFunction } from '../BlotterOptions/GeneralOptions';
 
 export class ButtonCellRenderer implements ICellRendererComp {
   private eGui: any;
@@ -19,6 +25,15 @@ export class ButtonCellRenderer implements ICellRendererComp {
       // create the cell
       this.eGui = document.createElement('div');
       this.eGui.style.display = 'inline-block';
+
+      if (StringExtensions.IsNotNullOrEmpty(actionCol.TestFunctionName)) {
+        let test: ActionColumnFunction = blotter.blotterOptions.generalOptions.userFunctions.actionColumnFunctions.find(
+          acf => acf.name == actionCol.TestFunctionName
+        );
+
+        let satisfyFunction = test.myFunc;
+        satisfyFunction();
+      }
 
       this.eGui.innerHTML = actionCol.render
         ? actionCol.render(params, blotter)

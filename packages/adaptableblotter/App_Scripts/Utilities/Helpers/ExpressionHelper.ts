@@ -21,7 +21,11 @@ import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeE
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import Helper from './Helper';
 import { PredefinedConfig } from '../../PredefinedConfig/PredefinedConfig';
-import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
+import {
+  NamedFilter,
+  NamedFilterPredicate,
+} from '../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { NamedFilterFunction } from '../../BlotterOptions/GeneralOptions';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -265,15 +269,24 @@ export function IsSatisfied(
 
         // then evaluate any named filters
         if (!isColumnSatisfied) {
-          let filteredNamedFilters: any[] = namedFilters.filter(f =>
+          let filteredNamedFilters: NamedFilter[] = namedFilters.filter(f =>
             columnFilters.Filters.find(u => u == f.Name)
           );
           for (let namedFilter of filteredNamedFilters) {
             let valueToCheck: any = getColumnValue(columnId);
-            let satisfyFunction = namedFilter.Predicate;
-            isColumnSatisfied = satisfyFunction(record, columnId, valueToCheck);
-            if (isColumnSatisfied) {
-              break;
+            let funcName: string = namedFilter.PredicateName;
+
+            if (StringExtensions.IsNotNullOrEmpty(funcName)) {
+              let namedFilterFunction: NamedFilterFunction = blotter.blotterOptions.generalOptions.userFunctions.namedFilterFunctions.find(
+                nff => nff.name == funcName
+              );
+              if (namedFilterFunction) {
+                let satisfyFunction = namedFilterFunction.func;
+                isColumnSatisfied = satisfyFunction(record, columnId, valueToCheck);
+                if (isColumnSatisfied) {
+                  break;
+                }
+              }
             }
           }
         }

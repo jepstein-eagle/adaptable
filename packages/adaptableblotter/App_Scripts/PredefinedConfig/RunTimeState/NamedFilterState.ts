@@ -6,14 +6,14 @@ export interface NamedFilterState extends RunTimeState {
   NamedFilters?: NamedFilter[];
 }
 
-export interface NamedFilterPredicate {
-  (record: any, columnId: string, cellValue: any): boolean;
-}
+//export interface NamedFilterPredicate {
+//  (record: any, columnId: string, cellValue: any): boolean;
+//}
 
 export interface NamedFilter extends AdaptableBlotterObject {
   Name: string;
   DataType: DataType;
-  Predicate: NamedFilterPredicate;
+  PredicateName: string;
 }
 /*
 TODO: update this doc
