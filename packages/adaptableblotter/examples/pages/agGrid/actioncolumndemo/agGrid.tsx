@@ -56,6 +56,14 @@ let demoConfig: PredefinedConfig = {
         ColumnId: 'Action',
         ButtonText: 'Click me',
       },
+      {
+        ColumnId: 'Plus',
+        ButtonText: '+',
+      },
+      {
+        ColumnId: 'Minus',
+        ButtonText: '-',
+      },
     ],
   },
 };

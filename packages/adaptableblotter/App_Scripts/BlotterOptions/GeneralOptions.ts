@@ -63,3 +63,43 @@ export interface GeneralOptions {
    */
   showAdaptableBlotterToolPanel?: boolean;
 }
+
+export interface UserFunction {
+  /**
+   * Sends the Audit Messages to an (internal) HTTP channel for you to listen to.
+   *
+   * This is the most popular option though requires you to use your internal, listening software (like the Elastic stack) to wire it up.
+   *
+   * **Default Value: false**
+   */
+  auditToHttpChannel?: boolean;
+
+  /**
+   * Sends the Audit Message to the Console.
+   *
+   * Primarily used by developers as a useful design-time or debugging tool when building the application.
+   *
+   * But can also be used by Support when investigating user behaviour or Blotter activity.
+   *
+   * **Default Value: false**
+   */
+  auditToConsole?: boolean;
+
+  /**
+   * Fires the Audit Message as an Audit Log (AuditLogEventArgs) event.
+   *
+   * You listen to this Event the same way that you do all other Adaptable Blotter events.
+   *
+   * **Default Value: false**
+   */
+  auditAsEvent?: boolean;
+
+  /**
+   * Fires the Audit Message as an Alert.
+   *
+   * This Alert will appear in the Alert toolbar and, optionally, also as a popup (based on the value of the *alertShowAsPopup* property).
+   *
+   * **Default Value: false**
+   */
+  auditAsAlert?: boolean;
+}

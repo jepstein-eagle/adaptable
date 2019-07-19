@@ -2451,7 +2451,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   // where we apply our stuff but also any ag-Grid props that we control
   private applyFinalRendering(): void {
     // Apply row styles here?  weird that it cannot find the method in Helper.
-    //  agGridHelper.setUpRowStyles();
+    this.agGridHelper.setUpRowStyles();
 
     // not sure if this is the right place here.
     // perhaps we need some onDataLoaded event??

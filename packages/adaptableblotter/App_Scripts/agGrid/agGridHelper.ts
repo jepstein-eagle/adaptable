@@ -243,8 +243,8 @@ export class agGridHelper {
 
   public safeSetColDefs(colDefs: ColDef[]) {
     // bizarrely we need this line otherwise ag-Grid mangles the ColIds (e.g. 'tradeId' becomes 'tradeId_1')
-    this.gridOptions.api.setColumnDefs([]);
-    this.gridOptions.api.setColumnDefs(colDefs);
+    this.gridOptions.api!.setColumnDefs([]);
+    this.gridOptions.api!.setColumnDefs(colDefs);
   }
 
   public createAdaptableBlotterSideBarDefs(
@@ -297,7 +297,7 @@ export class agGridHelper {
   // Might be able to change that later
   // We do this by gettng the selected cells, clearing the selection and then re-applying
   public reselectSelectedCells(): void {
-    let selectedCellRanges: CellRange[] = this.gridOptions.api.getCellRanges();
+    let selectedCellRanges: CellRange[] = this.gridOptions.api!.getCellRanges();
 
     if (ArrayExtensions.CorrectLength(selectedCellRanges, 1)) {
       let selectedCellRange: CellRange = selectedCellRanges[0];
@@ -306,9 +306,9 @@ export class agGridHelper {
         rowEndIndex: selectedCellRange.endRow.rowIndex,
         columns: selectedCellRange.columns,
       };
-      this.gridOptions.api.clearRangeSelection();
+      this.gridOptions.api!.clearRangeSelection();
 
-      this.gridOptions.api.addCellRange(cellRangeParams);
+      this.gridOptions.api!.addCellRange(cellRangeParams);
     }
   }
 

@@ -16,12 +16,6 @@ import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scrip
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { DataType } from '../../../../App_Scripts/PredefinedConfig/Common/Enums';
 
-/*
-Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
-No JSON or anything complicated
-Nor do we create the ag-Grid
-*/
-
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -33,15 +27,6 @@ function InitAdaptableBlotter() {
     gridOptions,
     'named filters demo'
   );
-
-  adaptableBlotterOptions.auditOptions = {
-    auditCellEdits: {
-      auditAsAlert: true,
-    },
-    auditTickingDataChanges: {
-      auditToConsole: true,
-    },
-  };
   adaptableBlotterOptions.predefinedConfig = demoConfig;
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
