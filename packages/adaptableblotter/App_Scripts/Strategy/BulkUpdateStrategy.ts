@@ -15,6 +15,8 @@ import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
+import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -45,7 +47,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
 
   public CheckCorrectCellSelection(): IStrategyActionReturn<boolean> {
     let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
-    if (selectedCellInfo == null || selectedCellInfo.Selection.size == 0) {
+    if (selectedCellInfo == null || ArrayExtensions.IsNullOrEmpty(selectedCellInfo.Columns)) {
       return {
         Alert: {
           Header: 'Bulk Update Error',
@@ -56,7 +58,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
       };
     }
 
-    if (selectedCellInfo.Columns.length != 1) {
+    if (ArrayExtensions.NotCorrectLength(selectedCellInfo.Columns, 1)) {
       return {
         Alert: {
           Header: 'Bulk Update Error',
@@ -82,13 +84,13 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
   }
 
   public BuildPreviewValues(bulkUpdateValue: any): IPreviewInfo {
-    let selectedCells = this.blotter.api.gridApi.getSelectedCellInfo();
+    let selectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
     let previewResults: IPreviewResult[] = [];
     let columnId: string = '';
-    if (selectedCells != null && selectedCells.Columns.length > 0) {
-      columnId = selectedCells.Columns[0].ColumnId;
-      let typedBulkUpdateValue;
-      switch (selectedCells.Columns[0].DataType) {
+    if (selectedCellInfo != null && selectedCellInfo.Columns.length > 0) {
+      columnId = selectedCellInfo.Columns[0].ColumnId;
+      let typedBulkUpdateValue: any;
+      switch (selectedCellInfo.Columns[0].DataType) {
         case DataType.Number:
           typedBulkUpdateValue = Number(bulkUpdateValue);
           break;
@@ -100,28 +102,26 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
           break;
       }
 
-      for (let pair of selectedCells.Selection) {
-        for (let selectedCell of pair[1]) {
-          let dataChangedEvent: DataChangedInfo = {
-            OldValue: selectedCell.value,
-            NewValue: typedBulkUpdateValue,
-            ColumnId: selectedCell.columnId,
-            IdentifierValue: pair[0],
-            Record: null,
-          };
+      selectedCellInfo.SelectedCells.forEach((selectedCell: ISelectedCell) => {
+        let dataChangedEvent: DataChangedInfo = {
+          OldValue: selectedCell.value,
+          NewValue: typedBulkUpdateValue,
+          ColumnId: selectedCell.columnId,
+          IdentifierValue: selectedCell.primaryKeyValue,
+          Record: null,
+        };
 
-          let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
-            dataChangedEvent
-          );
-          let previewResult: IPreviewResult = {
-            Id: pair[0],
-            InitialValue: selectedCell.value,
-            ComputedValue: typedBulkUpdateValue,
-            ValidationRules: validationRules,
-          };
-          previewResults.push(previewResult);
-        }
-      }
+        let validationRules: CellValidationRule[] = this.blotter.ValidationService.ValidateCellChanging(
+          dataChangedEvent
+        );
+        let previewResult: IPreviewResult = {
+          Id: selectedCell.primaryKeyValue,
+          InitialValue: selectedCell.value,
+          ComputedValue: typedBulkUpdateValue,
+          ValidationRules: validationRules,
+        };
+        previewResults.push(previewResult);
+      });
     }
     return {
       ColumnId: columnId,

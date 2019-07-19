@@ -2,7 +2,6 @@ import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionR
 import { ExpressionHelper } from './ExpressionHelper';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
 import { ISelectedCellInfo } from '../Interface/SelectedCell/ISelectedCellInfo';
-import { ISelectedCell } from '../Interface/SelectedCell/ISelectedCell';
 import { IColumn } from '../Interface/IColumn';
 import {
   ReportColumnScope,
@@ -13,6 +12,7 @@ import { IAdaptableBlotter } from '../Interface/IAdaptableBlotter';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import ColumnHelper from './ColumnHelper';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
+import ArrayExtensions from '../Extensions/ArrayExtensions';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -79,9 +79,9 @@ export function ConvertReportToArray(
       ReportColumns = gridColumns.filter(c => c.Visible);
       break;
     case ReportColumnScope.SelectedColumns:
-      let selectedCells: ISelectedCellInfo = blotter.api.gridApi.getSelectedCellInfo();
+      let selectedCellInfo: ISelectedCellInfo = blotter.api.gridApi.getSelectedCellInfo();
 
-      if (selectedCells.Selection.size == 0) {
+      if (ArrayExtensions.IsNullOrEmpty(selectedCellInfo.Columns)) {
         // some way of saying we cannot export anything
         return {
           ActionReturn: dataToExport,
@@ -94,11 +94,8 @@ export function ConvertReportToArray(
         };
       }
 
-      // first get column names - just look at first entry as colnames will be same for each
-      let firstRow: ISelectedCell[] = selectedCells.Selection.values().next().value;
-      for (let selectedCellInfo of firstRow) {
-        ReportColumns.push(gridColumns.find(c => c.ColumnId == selectedCellInfo.columnId));
-      }
+      // otherwise get columns
+      ReportColumns = selectedCellInfo.Columns;
       break;
     case ReportColumnScope.BespokeColumns:
       ReportColumns = Report.ColumnIds.map(c => gridColumns.find(col => col.ColumnId == c));
@@ -144,42 +141,8 @@ export function ConvertReportToArray(
       break;
 
     case ReportRowScope.SelectedRows:
-      let selectedCells: ISelectedCellInfo = blotter.api.gridApi.getSelectedCellInfo();
-      let colNames: string[] = ReportColumns.map(c => c.FriendlyName);
-      for (var keyValuePair of selectedCells.Selection) {
-        let values: any[] = [];
-        if (keyValuePair[1].length != colNames.length) {
-          return {
-            ActionReturn: [],
-            Alert: {
-              Header: 'Report Error',
-              Msg: 'Selected cells report should have the same set of columns',
-              MessageType: MessageType.Error,
-              ShowAsPopup: true,
-            },
-          };
-        }
-        for (var cvPair of keyValuePair[1]) {
-          if (
-            !colNames.find(
-              x => x == ReportColumns.find(c => c.ColumnId == cvPair.columnId).FriendlyName
-            )
-          ) {
-            return {
-              ActionReturn: [],
-              Alert: {
-                Header: 'Report Error',
-                Msg: 'Selected cells report should have the same set of columns',
-                MessageType: MessageType.Error,
-                ShowAsPopup: true,
-              },
-            };
-          }
-          //we want the displayValue now
-          values.push(blotter.getDisplayValue(keyValuePair[0], cvPair.columnId));
-        }
-        dataToExport.push(values);
-      }
+      // we used to have funcitonality here but it doesnt make sense and i dont think we offer this
+      // and if we do then we need to do redo it propertly.
       break;
   }
   return { ActionReturn: dataToExport };

@@ -1779,7 +1779,7 @@ var functionAppliedLogMiddleware = (adaptableBlotter: IAdaptableBlotter): any =>
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.PlusMinusStrategyId,
               action: action.type,
-              info: 'KeyPressed:' + actionTyped.KeyEventString,
+              info: 'KeyPressed:',
               data: actionTyped.CellInfos,
             };
 
@@ -2278,11 +2278,12 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
            *******************/
 
           case PlusMinusRedux.PLUS_MINUS_APPLY: {
+            // This is for the very rare use case that a Plus Minus breaks validation and the user wants to continue
             let plusMinusStrategy = <IPlusMinusStrategy>(
               blotter.strategies.get(StrategyConstants.PlusMinusStrategyId)
             );
             let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action;
-            plusMinusStrategy.ApplyPlusMinus(actionTyped.KeyEventString, actionTyped.CellInfos);
+            plusMinusStrategy.setPlusMinusValues(actionTyped.CellInfos);
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
             return next(action);
           }

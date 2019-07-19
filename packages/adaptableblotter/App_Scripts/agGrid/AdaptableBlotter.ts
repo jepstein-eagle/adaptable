@@ -722,15 +722,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   // this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
   public setSelectedCells(): void {
-    const selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
-
-    const selected: CellRange[] = this.gridOptions.api.getCellRanges();
+    const selected: CellRange[] = this.gridOptions.api!.getCellRanges();
     const columns: IColumn[] = [];
+    const selectedCells: ISelectedCell[] = [];
+
     if (selected) {
       // we iterate for each ranges
       selected.forEach((rangeSelection, index) => {
-        const y1 = Math.min(rangeSelection.startRow.rowIndex, rangeSelection.endRow.rowIndex);
-        const y2 = Math.max(rangeSelection.startRow.rowIndex, rangeSelection.endRow.rowIndex);
+        const y1 = Math.min(rangeSelection.startRow!.rowIndex, rangeSelection.endRow!.rowIndex);
+        const y2 = Math.max(rangeSelection.startRow!.rowIndex, rangeSelection.endRow!.rowIndex);
         for (const column of rangeSelection.columns) {
           if (column != null) {
             const colId: string = column.getColId();
@@ -743,27 +743,27 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             }
 
             for (let rowIndex = y1; rowIndex <= y2; rowIndex++) {
-              const rowNode = this.gridOptions.api.getModel().getRow(rowIndex);
+              const rowNode = this.gridOptions.api!.getModel().getRow(rowIndex);
               // if the selected cells are from a group cell we don't return it
               // that's a design choice as this is used only when editing and you cant edit those cells
               if (rowNode && !rowNode.group) {
                 const primaryKey = this.getPrimaryKeyValueFromRecord(rowNode);
-                const value = this.gridOptions.api.getValue(column, rowNode);
-                let valueArray: ISelectedCell[] = selectionMap.get(primaryKey);
-                if (valueArray == undefined) {
-                  valueArray = [];
-                  selectionMap.set(primaryKey, valueArray);
-                }
-                const selectedCellInfo: ISelectedCell = { columnId: colId, value };
-                valueArray.push(selectedCellInfo);
+                const value = this.gridOptions.api!.getValue(column, rowNode);
+
+                const selectedCell: ISelectedCell = {
+                  columnId: colId,
+                  value: value,
+                  primaryKeyValue: primaryKey,
+                };
+                selectedCells.push(selectedCell);
               }
             }
           }
         }
       });
     }
-    const selectedCells: ISelectedCellInfo = { Columns: columns, Selection: selectionMap };
-    this.dispatchAction(GridRedux.GridSetSelectedCells(selectedCells));
+    const selectedCellInfo: ISelectedCellInfo = { Columns: columns, SelectedCells: selectedCells };
+    this.dispatchAction(GridRedux.GridSetSelectedCells(selectedCellInfo));
 
     // this._onSelectedCellsChanged.Dispatch(this, this);
     this.emit(CELLS_SELECTED_EVENT);

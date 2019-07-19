@@ -17,6 +17,7 @@ export interface AlertFiredEventArgs {
 
 export interface ActionColumnEventArgs {
   actionColumn: ActionColumn;
+  primaryKeyValue: any;
   rowData: any;
 }
 

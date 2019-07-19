@@ -537,10 +537,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
   //this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
   public setSelectedCells(): void {
-    let selectionMap: Map<string, ISelectedCell[]> = new Map<string, ISelectedCell[]>();
     let selected: Array<any> = this.hyperGrid.selectionModel.getSelections();
     let columns: IColumn[] = [];
-
+    let selectedCells: ISelectedCell[] = [];
     for (let rectangle of selected) {
       //we don't use firstSelectedCell and lastSelectedCell as they keep the order of the click. i.e. firstcell can be below lastcell....
       for (
@@ -562,22 +561,13 @@ export class AdaptableBlotter implements IAdaptableBlotter {
           let row = this.hyperGrid.behavior.dataModel.dataSource.getRow(rowIndex);
           let primaryKey = this.getPrimaryKeyValueFromRecord(row);
           let value = this.valOrFunc(row, column);
-          //this line is pretty much doing the same....just keeping it for the record
-          //maybe we could get it directly from the row..... dunno wht's best
-          // let value = column.getValue(rowIndex)
-          let valueArray: ISelectedCell[] = selectionMap.get(primaryKey);
-          if (valueArray == undefined) {
-            valueArray = [];
-            selectionMap.set(primaryKey, valueArray);
-          }
-          let selectedCellInfo: ISelectedCell = { columnId: column.name, value: value };
-          valueArray.push(selectedCellInfo);
+          selectedCells.push({ columnId: column.name, value: value, primaryKeyValue: primaryKey });
         }
       }
     }
-    let selectedCells: ISelectedCellInfo = { Columns: columns, Selection: selectionMap };
+    let selectedCellInfo: ISelectedCellInfo = { Columns: columns, SelectedCells: selectedCells };
     this.adaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(
-      GridRedux.GridSetSelectedCells(selectedCells)
+      GridRedux.GridSetSelectedCells(selectedCellInfo)
     );
     this.emitter.emit(CELLS_SELECTED_EVENT);
   }

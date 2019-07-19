@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
-import 'ag-grid-community/dist/styles/ag-theme-blue.css';
 import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import '../../../../App_Scripts/base.scss';
 import '../../../../App_Scripts/themes/light.scss';
@@ -51,7 +50,6 @@ function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnEventArg
 }
 
 let demoConfig: PredefinedConfig = {
-  /*
   ActionColumn: {
     ActionColumns: [
       {
@@ -60,7 +58,6 @@ let demoConfig: PredefinedConfig = {
       },
     ],
   },
-  */
 };
 
 export default () => {

@@ -9,6 +9,7 @@ import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell
 import { DataType, CellSummaryOptionalOperation } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
+import { IColumn } from '../Utilities/Interface/IColumn';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -26,30 +27,26 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
   public CreateCellSummary(selectedCellInfo: ISelectedCellInfo): ICellSummmary {
     let selectedCellSummary: ICellSummmary;
 
-    if (selectedCellInfo && selectedCellInfo.Selection.size > 0) {
+    if (selectedCellInfo && ArrayExtensions.IsNotNullOrEmpty(selectedCellInfo.Columns)) {
       let numericValues: number[] = [];
       let allValues: any[] = [];
-      let numericColumns: number[] = [];
+      let numericColumns: string[] = [];
 
-      selectedCellInfo.Columns.map((c, index) => {
+      selectedCellInfo.Columns.map(c => {
         if (c.DataType == DataType.Number) {
-          numericColumns.push(index);
+          numericColumns.push(c.ColumnId);
         }
       });
 
-      selectedCellInfo.Selection.forEach(selectedCells => {
-        let i: number;
-        for (i = 0; i < selectedCells.length; i++) {
-          let selectedCell: ISelectedCell = selectedCells[i];
-          let value = selectedCell.value;
-          allValues.push(value);
+      selectedCellInfo.SelectedCells.forEach((selectedCell: ISelectedCell) => {
+        let value = selectedCell.value;
+        allValues.push(value);
 
-          if (numericColumns.indexOf(i) != -1) {
-            let valueAsNumber = Number(value);
-            // possible that its not a number despite it being a numeric column
-            if (!isNaN(Number(valueAsNumber))) {
-              numericValues.push(valueAsNumber);
-            }
+        if (ArrayExtensions.ContainsItem(numericColumns, selectedCell.columnId)) {
+          let valueAsNumber = Number(value);
+          // possible that its not a number despite it being a numeric column
+          if (!isNaN(Number(valueAsNumber))) {
+            numericValues.push(valueAsNumber);
           }
         }
       });
@@ -117,7 +114,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
     return distinctCount == 1 ? allValues[0] : '';
   }
 
-  private calculateVwap(numericValues: number[], numericColumns: number[]): any {
+  private calculateVwap(numericValues: number[], numericColumns: string[]): any {
     if (
       ArrayExtensions.NotContainsItem(
         this.blotter.api.cellSummaryApi.getCellSummaryState().OptionalSummaryOperations,

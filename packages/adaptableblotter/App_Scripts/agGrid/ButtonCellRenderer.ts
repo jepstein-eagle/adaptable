@@ -30,6 +30,7 @@ export class ButtonCellRenderer implements ICellRendererComp {
       this.eventListener = function() {
         let eventArgs: ActionColumnEventArgs = {
           actionColumn: actionCol as ActionColumn,
+          primaryKeyValue: blotter.getPrimaryKeyValueFromRecord(params.node),
           rowData: params.data,
         };
         blotter.api.eventApi._onActionColumnClicked.Dispatch(blotter, eventArgs);

@@ -11,7 +11,7 @@ import { IEvent } from '../../Utilities/Interface/IEvent';
 
 export interface IEventApi {
   /**
-   * The Adaptable Blotter publishes 4 events that users can subscribe to as required.
+   * The Adaptable Blotter publishes 5 events that users can subscribe to as required.
    */
 
   _onSearchChanged: EventDispatcher<IAdaptableBlotter, SearchChangedEventArgs>;
@@ -54,5 +54,12 @@ export interface IEventApi {
    */
   onAlertFired(): IEvent<IAdaptableBlotter, AlertFiredEventArgs>;
 
+  /**
+   * Event fired whenever the Button in an Action Column is clicked.
+   *
+   * The EventArgs contain the column that has been clicked and the rowData for that row.
+   *
+   * @returns IEvent<IAdaptableBlotter, ActionColumnEventArgs>
+   */
   onActionColumnClicked(): IEvent<IAdaptableBlotter, ActionColumnEventArgs>;
 }

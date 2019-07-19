@@ -11,7 +11,6 @@ export const PLUS_MINUS_RULE_DELETE = 'PLUS_MINUS_RULE_DELETE';
 
 export interface PlusMinusApplyAction extends Redux.Action {
   CellInfos: ICellInfo[];
-  KeyEventString: string;
 }
 
 export interface PlusMinusRuleAction extends Redux.Action {
@@ -24,13 +23,9 @@ export interface PlusMinusRuleEditAction extends PlusMinusRuleAction {}
 
 export interface PlusMinusRuleDeleteAction extends PlusMinusRuleAction {}
 
-export const PlusMinusApply = (
-  CellInfos: ICellInfo[],
-  KeyEventString: string
-): PlusMinusApplyAction => ({
+export const PlusMinusApply = (CellInfos: ICellInfo[]): PlusMinusApplyAction => ({
   type: PLUS_MINUS_APPLY,
   CellInfos,
-  KeyEventString,
 });
 
 export const PlusMinusRuleAdd = (plusMinusRule: PlusMinusRule): PlusMinusRuleAddAction => ({
