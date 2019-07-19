@@ -89,4 +89,7 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
     serverSearchOption: 'None',
     showAdaptableBlotterToolPanel: false,
   },
+  advancedOptions: {
+    userFunctions: {},
+  },
 };

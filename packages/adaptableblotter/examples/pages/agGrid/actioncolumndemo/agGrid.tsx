@@ -30,7 +30,7 @@ function InitAdaptableBlotter() {
     userName: 'demo user',
     blotterId: 'action column demo',
     licenceKey: examplesHelper.getEnterpriseLicenceKey(),
-    generalOptions: {
+    advancedOptions: {
       userFunctions: {
         actionColumnFunctions: [
           {

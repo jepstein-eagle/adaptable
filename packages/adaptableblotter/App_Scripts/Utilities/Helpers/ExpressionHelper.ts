@@ -19,13 +19,8 @@ import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
-import Helper from './Helper';
-import { PredefinedConfig } from '../../PredefinedConfig/PredefinedConfig';
-import {
-  NamedFilter,
-  NamedFilterPredicate,
-} from '../../PredefinedConfig/RunTimeState/NamedFilterState';
-import { NamedFilterFunction } from '../../BlotterOptions/GeneralOptions';
+import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { NamedFilterFunction } from '../../BlotterOptions/AdvancedOptions';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -277,14 +272,20 @@ export function IsSatisfied(
             let funcName: string = namedFilter.PredicateName;
 
             if (StringExtensions.IsNotNullOrEmpty(funcName)) {
-              let namedFilterFunction: NamedFilterFunction = blotter.blotterOptions.generalOptions.userFunctions.namedFilterFunctions.find(
-                nff => nff.name == funcName
-              );
-              if (namedFilterFunction) {
-                let satisfyFunction = namedFilterFunction.func;
-                isColumnSatisfied = satisfyFunction(record, columnId, valueToCheck);
-                if (isColumnSatisfied) {
-                  break;
+              if (
+                ArrayExtensions.IsNotNullOrEmpty(
+                  blotter.blotterOptions.advancedOptions.userFunctions.namedFilterFunctions
+                )
+              ) {
+                let namedFilterFunction: NamedFilterFunction = blotter.blotterOptions.advancedOptions.userFunctions.namedFilterFunctions.find(
+                  nff => nff.name == funcName
+                );
+                if (namedFilterFunction) {
+                  let satisfyFunction = namedFilterFunction.func;
+                  isColumnSatisfied = satisfyFunction(record, columnId, valueToCheck);
+                  if (isColumnSatisfied) {
+                    break;
+                  }
                 }
               }
             }

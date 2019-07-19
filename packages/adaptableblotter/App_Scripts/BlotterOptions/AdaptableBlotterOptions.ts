@@ -8,6 +8,7 @@ import { GeneralOptions } from './GeneralOptions';
 import { ChartOptions } from './ChartOptions';
 import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
 import { iPushPullConfig } from './iPushPullConfig';
+import { AdvancedOptions } from './AdvancedOptions';
 
 /**
  * AdaptableBlotterOptions is the class injected into the Adaptable Blotter at startup.
@@ -168,6 +169,8 @@ export interface AdaptableBlotterOptions {
    * Includes options for managing Server Searching, themes and how to manage Primary Keys.
    */
   generalOptions?: GeneralOptions;
+
+  advancedOptions?: AdvancedOptions;
 
   /**
    * Configuration settings for iPushPull users.

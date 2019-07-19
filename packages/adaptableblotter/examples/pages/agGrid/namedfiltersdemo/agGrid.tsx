@@ -29,7 +29,7 @@ function InitAdaptableBlotter() {
   );
   adaptableBlotterOptions.predefinedConfig = demoConfig;
 
-  adaptableBlotterOptions.generalOptions = {
+  adaptableBlotterOptions.advancedOptions = {
     userFunctions: {
       namedFilterFunctions: [
         {

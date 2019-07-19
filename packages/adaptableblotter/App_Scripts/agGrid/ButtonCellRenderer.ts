@@ -1,13 +1,11 @@
 import { ICellRendererComp, ICellRendererParams } from 'ag-grid-community';
 import AdaptableBlotter from '../Hypergrid';
-import {
-  ActionColumn,
-  ActionColumnTestFunction,
-} from '../PredefinedConfig/DesignTimeState/ActionColumnState';
-import { ActionColumnEventArgs } from '../Api/Events/BlotterEvents';
-import actioncolumndemo from '../../examples/pages/agGrid/actioncolumndemo';
+
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
+import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
-import { ActionColumnFunction } from '../BlotterOptions/GeneralOptions';
+import { ActionColumnFunction } from '../BlotterOptions/AdvancedOptions';
+import { ActionColumnEventArgs } from '../Api/Events/BlotterEvents';
 
 export class ButtonCellRenderer implements ICellRendererComp {
   private eGui: any;
@@ -27,12 +25,18 @@ export class ButtonCellRenderer implements ICellRendererComp {
       this.eGui.style.display = 'inline-block';
 
       if (StringExtensions.IsNotNullOrEmpty(actionCol.TestFunctionName)) {
-        let test: ActionColumnFunction = blotter.blotterOptions.generalOptions.userFunctions.actionColumnFunctions.find(
-          acf => acf.name == actionCol.TestFunctionName
-        );
+        if (
+          ArrayExtensions.IsNotNullOrEmpty(
+            blotter.blotterOptions.advancedOptions.userFunctions.actionColumnFunctions
+          )
+        ) {
+          let test: ActionColumnFunction = blotter.blotterOptions.advancedOptions.userFunctions.actionColumnFunctions.find(
+            acf => acf.name == actionCol.TestFunctionName
+          );
 
-        let satisfyFunction = test.myFunc;
-        satisfyFunction();
+          let satisfyFunction = test.func;
+          satisfyFunction();
+        }
       }
 
       this.eGui.innerHTML = actionCol.render
