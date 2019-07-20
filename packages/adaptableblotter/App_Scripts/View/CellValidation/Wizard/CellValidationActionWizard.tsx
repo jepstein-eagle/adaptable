@@ -13,6 +13,7 @@ import { Flex, Box } from 'rebass';
 import WizardPanel from '../../../components/WizardPanel';
 import Radio from '../../../components/Radio';
 import { SyntheticEvent } from 'react';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface CellValidationActionWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -35,7 +36,7 @@ export class CellValidationActionWizard
 
     return (
       <WizardPanel header="Action When Validation Fails">
-        <Box color="textgray">
+        <HelpBlock>
           <p>Choose what should happen to an edit when cell validation fails.</p>
           <p>
             <i>Prevent cell edit</i> ensures that no edits which fail validation will occur.
@@ -44,9 +45,9 @@ export class CellValidationActionWizard
             <i>Show a warning</i> gives you the option to allow the edit after providing a reason
             (which will be audited).
           </p>
-        </Box>
+        </HelpBlock>
 
-        <Flex marginTop={3} flexDirection="row">
+        <Flex marginTop={3} flexDirection="row" alignItems="center" marginLeft={2}>
           <Radio
             value={ActionMode.StopEdit}
             marginRight={3}
@@ -63,7 +64,7 @@ export class CellValidationActionWizard
             ]}
           />
         </Flex>
-        <Flex marginTop={3} flexDirection="row">
+        <Flex marginTop={3} flexDirection="row" alignItems="center" marginLeft={2}>
           <Radio
             marginRight={3}
             value={ActionMode.WarnUser}

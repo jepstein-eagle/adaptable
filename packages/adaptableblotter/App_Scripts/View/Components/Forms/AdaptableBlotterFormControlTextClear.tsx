@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import FieldWrap from '../../../components/FieldWrap';
 import SimpleButton from '../../../components/SimpleButton';
 import Input, { InputProps } from '../../../components/Input';
@@ -9,7 +8,7 @@ import Input, { InputProps } from '../../../components/Input';
 export type AdaptableBlotterFormControlTextClearProps = {
   OnTextChange: (textValue: string) => void;
   autoFocus?: boolean;
-  cssClassName: string;
+  cssClassName?: string;
 } & InputProps;
 
 export class AdaptableBlotterFormControlTextClear extends React.Component<
@@ -17,14 +16,15 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<
   {}
 > {
   render() {
-    let cssClassName: string = this.props.cssClassName + StyleConstants.TEXT_ENTRY_FORM;
-
     return (
       <FieldWrap
-        style={{ marginLeft: 2, marginRight: 2 /* in order for focus feedback to be visible */ }}
+        style={{
+          background: 'var(--ab-color-white)',
+          overflow: 'visible',
+          width: '100%',
+        }}
       >
         <Input
-          className={cssClassName}
           autoFocus={this.props.autoFocus}
           style={this.props.style}
           type="text"
@@ -34,11 +34,23 @@ export class AdaptableBlotterFormControlTextClear extends React.Component<
         />
 
         <SimpleButton
-          className={cssClassName}
-          onClick={() => this.props.OnTextChange('')}
           variant="text"
           icon="clear"
+          tone="none"
           tooltip="Clear"
+          px={0}
+          py={0}
+          marginRight={1}
+          onClick={(event: React.SyntheticEvent) => {
+            this.props.OnTextChange('');
+            const { target } = event;
+            const input = (target as any).previousSibling;
+            requestAnimationFrame(() => {
+              if (input && input.focus) {
+                input.focus();
+              }
+            });
+          }}
           disabled={StringExtensions.IsNullOrEmpty(this.props.value.toString())}
         />
       </FieldWrap>

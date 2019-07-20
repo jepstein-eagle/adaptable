@@ -13,6 +13,7 @@ import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
 import { Flex, Box } from 'rebass';
 import ErrorBox from '../../../components/ErrorBox';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface AdvancedSearchSettingsWizardProps
   extends AdaptableWizardStepProps<AdvancedSearch> {
@@ -42,24 +43,22 @@ export class AdvancedSearchSettingsWizard
       : 'error';
 
     return (
-      <Flex className={cssClassName} flex={1} flexDirection="column">
-        <Panel header="Advanced Search Settings" border="none" borderRadius="none">
-          <Flex alignItems="center" flexDirection="row">
-            <Box>Search Name:</Box>
-            <Input
-              marginLeft={2}
-              value={this.state.AdvancedSearchName}
-              type="string"
-              placeholder="Enter search name"
-              style={{ flex: 1 }}
-              onChange={(e: any) => this.onAdvancedSearchNameChange(e)}
-            />
-          </Flex>
-          {this.state.ErrorMessage ? (
-            <ErrorBox marginTop={2}>{this.state.ErrorMessage}</ErrorBox>
-          ) : null}
-        </Panel>
-      </Flex>
+      <WizardPanel header="Advanced Search Settings">
+        <Flex alignItems="center" flexDirection="row">
+          <Box>Search Name:</Box>
+          <Input
+            marginLeft={2}
+            value={this.state.AdvancedSearchName}
+            type="string"
+            placeholder="Enter search name"
+            style={{ flex: 1 }}
+            onChange={(e: any) => this.onAdvancedSearchNameChange(e)}
+          />
+        </Flex>
+        {this.state.ErrorMessage ? (
+          <ErrorBox marginTop={2}>{this.state.ErrorMessage}</ErrorBox>
+        ) : null}
+      </WizardPanel>
     );
   }
 

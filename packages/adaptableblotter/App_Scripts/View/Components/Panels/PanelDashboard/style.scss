@@ -1,4 +1,8 @@
 :root {
-  --ab-cmp-dashboardpanel-body-background: #f9f9f9;
-  --ab-cmp-dashboardpanel-header-background: #e2e2e2;
+  --ab-cmp-dashboardpanel_body__background: #f9f9f9;
+  --ab-cmp-dashboardpanel_header__background: #e2e2e2;
+  --ab-cmp-dashboardpanel_header__color: var(--ab-color-darkgray);
+  --ab-cmp-dashboardpanel_header__fill: currentColor;
+  --ab-cmp-dashboardpanel__fill: var(--ab-color-darkgray);
+  --ab-cmp-dashboardpanel__color: currentColor;
 }

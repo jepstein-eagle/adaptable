@@ -1,6 +1,8 @@
 import React, { ReactNode, useState, SyntheticEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { Box } from 'rebass';
+import { Box, BoxProps } from 'rebass';
+
+import { Overwrite } from '../../Utilities/types';
 
 const checked = keyframes`
   100% {
@@ -53,6 +55,9 @@ type TypeProps = {
   gapDistance?: number;
   childrenPosition?: 'start' | 'end';
 };
+
+export interface CheckBoxProps extends TypeProps, Omit<BoxProps, keyof TypeProps> {}
+
 const CheckBox = ({
   children,
   checked,
@@ -63,7 +68,7 @@ const CheckBox = ({
   childrenPosition = 'end',
   as = 'label',
   ...props
-}: HTMLElement & TypeProps) => {
+}: CheckBoxProps) => {
   const [stateChecked, setStateChecked] = useState<boolean>(false);
 
   const computedChecked = checked !== undefined ? checked : stateChecked;

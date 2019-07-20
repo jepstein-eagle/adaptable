@@ -1,6 +1,6 @@
 import React, { ReactNode, useState, SyntheticEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { Box } from 'rebass';
+import { Box, BoxProps } from 'rebass';
 
 const checked = keyframes`
   100% {
@@ -36,11 +36,14 @@ type TypeProps = {
   as?: any;
   name?: string;
   value?: any;
-  onChange?: (checked: boolean, event?: SyntheticEvent) => void;
+  onChange?: (checked: boolean, event?: SyntheticEvent | any) => void;
   children?: ReactNode | JSX.Element;
   gapDistance?: number;
   childrenPosition?: 'start' | 'end';
 };
+
+export interface RadioProps extends TypeProps, Omit<BoxProps, keyof TypeProps> {}
+
 const Radio = ({
   children,
   checked,
@@ -51,7 +54,7 @@ const Radio = ({
   childrenPosition = 'end',
   as = 'label',
   ...props
-}: HTMLElement & TypeProps) => {
+}: RadioProps) => {
   const [stateChecked, setStateChecked] = useState<boolean>(false);
 
   const computedChecked = checked !== undefined ? checked : stateChecked;

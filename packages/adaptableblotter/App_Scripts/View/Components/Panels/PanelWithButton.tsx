@@ -21,7 +21,7 @@ export interface PanelWithButtonProps extends PanelProps {
   buttonStyle?: string;
   borderRadius?: string;
   infoBody?: any[];
-  cssClassName: string;
+  cssClassName?: string;
 }
 
 //We cannot destructure this.props using the react way in typescript which is a real pain as you
@@ -29,7 +29,9 @@ export interface PanelWithButtonProps extends PanelProps {
 //let { buttonContent, ...other } = this.props
 export class PanelWithButton extends React.Component<PanelWithButtonProps & TypePanelProps, {}> {
   render() {
-    let cssClassName = this.props.cssClassName + StyleConstants.ITEMS_PANEL;
+    let cssClassName = this.props.cssClassName
+      ? this.props.cssClassName + StyleConstants.ITEMS_PANEL
+      : '';
     let { buttonContent } = this.props;
     let className = this.props.className;
 

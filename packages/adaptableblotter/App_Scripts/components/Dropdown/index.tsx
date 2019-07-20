@@ -13,31 +13,30 @@ export type DropdownOption = {
   value: string;
 };
 
-export type DropdownProps = React.HTMLProps<HTMLElement> &
-  BoxProps & {
-    bsSize?: string;
-    bsStyle?: string;
+export type DropdownProps = Omit<BoxProps, 'onChange'> & {
+  bsSize?: string;
+  bsStyle?: string;
 
-    autoFocus?: boolean;
-    expanded?: boolean;
-    disabled?: boolean;
-    multiple?: boolean;
-    allowSearch?: boolean;
-    emptyText?: ReactNode;
-    placeholder?: ReactNode;
-    clearButtonProps?: any;
+  autoFocus?: boolean;
+  expanded?: boolean;
+  disabled?: boolean;
+  multiple?: boolean;
+  allowSearch?: boolean;
+  emptyText?: ReactNode;
+  placeholder?: ReactNode;
+  clearButtonProps?: any;
 
-    renderLabel?: (label?: string, option?: DropdownOption) => ReactNode;
+  renderLabel?: (label?: string, option?: DropdownOption) => ReactNode;
 
-    name?: string;
-    options: (DropdownOption | string)[];
-    defaultExpanded?: boolean;
-    showClearButton?: boolean;
-    onChange?: (value: any, e?: React.SyntheticEvent, option?: DropdownOption) => void;
-    onCollapse?: () => void | Function;
-    onExpand?: () => void | Function;
-    onSelect?: () => void | Function;
-  };
+  name?: string;
+  options: (DropdownOption | string)[];
+  defaultExpanded?: boolean;
+  showClearButton?: boolean;
+  onChange?: (value: any, e?: React.SyntheticEvent, option?: DropdownOption) => void;
+  onCollapse?: () => void | Function;
+  onExpand?: () => void | Function;
+  onSelect?: () => void | Function;
+};
 
 const baseClassName = 'ab-Dropdown';
 

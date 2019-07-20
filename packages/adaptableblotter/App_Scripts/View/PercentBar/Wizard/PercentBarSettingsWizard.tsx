@@ -1,27 +1,18 @@
 import * as React from 'react';
-import {
-  FormGroup,
-  FormControl,
-  Col,
-  Panel,
-  ControlLabel,
-  Row,
-  Checkbox,
-  Radio,
-} from 'react-bootstrap';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType, SelectionMode } from '../../../PredefinedConfig/Common/Enums';
+
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColorPicker } from '../../ColorPicker';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import WizardPanel from '../../../components/WizardPanel';
+import Checkbox from '../../../components/CheckBox';
+import { Flex, Text, Box } from 'rebass';
 
 export interface PercentBarSettingsWizardProps extends AdaptableWizardStepProps<PercentBar> {
   ColorPalette: Array<string>;
@@ -48,63 +39,55 @@ export class PercentBarSettingsWizard
     let cssClassName: string = this.props.cssClassName + '-s';
 
     return (
-      <div className={cssClassName}>
-        <Panel header={'Select Style'} bsStyle="primary">
-          <AdaptableBlotterForm>
-            <FormGroup controlId="formPositiveColour">
-              <Row>
-                <Col xs={3}>
-                  <ControlLabel>Positive Colour:</ControlLabel>
-                </Col>
-                <Col xs={3}>
-                  <ColorPicker
-                    ColorPalette={this.props.ColorPalette}
-                    value={this.state.PositiveColor}
-                    onChange={x => this.onPositiveColorSelectChanged(x)}
-                  />
-                </Col>
-              </Row>
-            </FormGroup>
+      <WizardPanel header={'Select Style'}>
+        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+            Positive Colour:
+          </Text>
+          <Flex flex={3}>
+            <ColorPicker
+              ColorPalette={this.props.ColorPalette}
+              value={this.state.PositiveColor}
+              onChange={x => this.onPositiveColorSelectChanged(x)}
+            />
+          </Flex>
+        </Flex>
 
-            <FormGroup controlId="formNegativeColour">
-              <Row>
-                <Col xs={3}>
-                  <ControlLabel>Negative Colour:</ControlLabel>
-                </Col>
-                <Col xs={3}>
-                  <ColorPicker
-                    ColorPalette={this.props.ColorPalette}
-                    value={this.state.NegativeColor}
-                    onChange={x => this.onNegativeColorSelectChanged(x)}
-                  />
-                </Col>
-              </Row>
-            </FormGroup>
+        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+            Negative Colour:
+          </Text>
 
-            <FormGroup controlId="formShowValue">
-              <Row>
-                <Col xs={3}>
-                  <ControlLabel>Show Cell Value:</ControlLabel>
-                </Col>
-                <Col xs={1}>
-                  <Checkbox
-                    style={{ margin: '0px' }}
-                    onChange={e => this.onShowValueChanged(e)}
-                    checked={this.state.ShowValue}
-                  />
-                </Col>
-                <Col xs={1}>
-                  <AdaptablePopover
-                    cssClassName={cssClassName}
-                    headerText={'Percent Bar: Show Value'}
-                    bodyText={['Whether to show additionally the value of the cell in the bar.']}
-                  />
-                </Col>
-              </Row>
-            </FormGroup>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+          <Flex flex={3}>
+            <ColorPicker
+              ColorPalette={this.props.ColorPalette}
+              value={this.state.NegativeColor}
+              onChange={x => this.onNegativeColorSelectChanged(x)}
+            />
+          </Flex>
+        </Flex>
+
+        <Flex flexDirection="row" alignItems="center" marginTop={3}>
+          <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+            Show Cell Value:
+          </Text>
+
+          <Flex flex={3} alignItems="center" flexDirection="row">
+            <Checkbox
+              marginLeft={2}
+              marginRight={2}
+              onChange={(checked: boolean) => this.onShowValueChanged(checked)}
+              checked={this.state.ShowValue}
+            />
+
+            <AdaptablePopover
+              cssClassName={cssClassName}
+              headerText={'Percent Bar: Show Value'}
+              bodyText={['Whether to show additionally the value of the cell in the bar.']}
+            />
+          </Flex>
+        </Flex>
+      </WizardPanel>
     );
   }
 
@@ -122,9 +105,8 @@ export class PercentBarSettingsWizard
     );
   }
 
-  private onShowValueChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.setState({ ShowValue: e.checked } as PercentBarSettingsWizardState, () =>
+  private onShowValueChanged(checked: boolean) {
+    this.setState({ ShowValue: checked } as PercentBarSettingsWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }

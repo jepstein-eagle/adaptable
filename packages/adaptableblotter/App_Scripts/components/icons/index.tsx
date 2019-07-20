@@ -16,6 +16,7 @@ import ViewColumns from './view-columns';
 import Home from './home';
 import Justify from './justify';
 import Err from './error';
+import Build from './build';
 import Warning from './warning';
 import ConditionalStyle from './conditional-style';
 import Dashboard from './dashboard';
@@ -42,6 +43,7 @@ export default {
   'conditional-style': ConditionalStyle,
   list: List,
   delete: Delete,
+  build: Build,
   trash: Delete,
   refresh: Refresh,
   error: Err,

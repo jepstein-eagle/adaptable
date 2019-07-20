@@ -151,12 +151,10 @@ export class ExpressionBuilderRanges extends React.Component<
     });
 
     return (
-      <div className={cssClassName}>
-        <Panel className="ab_no-padding-anywhere-panel ab_small-padding-panel-header">
-          {addButton}
-          {rangesElement}
-        </Panel>
-      </div>
+      <Panel style={{ flex: 1 }} bodyScroll>
+        {addButton}
+        {rangesElement}
+      </Panel>
     );
   }
 

@@ -11,7 +11,7 @@ import renderItem from './renderItem';
 import DropdownButtonItem from './DropdownButtonItem';
 
 const ICON = (
-  <svg style={{ fill: 'currentColor' }} width="20" height="20" viewBox="0 0 24 24">
+  <svg width="20" height="20" viewBox="0 0 24 24">
     <path d="M7 10l5 5 5-5H7z" />
   </svg>
 );

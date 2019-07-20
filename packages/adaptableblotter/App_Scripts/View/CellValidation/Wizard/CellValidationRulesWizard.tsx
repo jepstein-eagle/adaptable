@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Radio, FormGroup, FormControl, Col } from 'react-bootstrap';
+import { FormGroup, FormControl, Col } from 'react-bootstrap';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
@@ -17,9 +17,13 @@ import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterFor
 import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
-import { Box } from 'rebass';
+import { Box, Flex } from 'rebass';
 import Dropdown from '../../../components/Dropdown';
 import Panel from '../../../components/Panel';
+import WizardPanel from '../../../components/WizardPanel';
+import HelpBlock from '../../../components/HelpBlock';
+import Radio from '../../../components/Radio';
+import Input from '../../../components/Input';
 
 export interface CellValidationRulesWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -75,60 +79,53 @@ export class CellValidationRulesWizard
     let cssClassName: string = this.props.cssClassName + '-rules';
 
     return (
-      <WizardPanel
-        header={validationRuleHeader}
-        bsStyle="primary"
-        border="none"
-        borderRadius="none"
-      >
-        <AdaptableBlotterForm>
-          <Box color="textgray">
-            <p>{helpText}</p>
-          </Box>
-          <Box className="ab_large_margin">
-            <Radio
-              inline
-              value="None"
-              checked={this.state.Operator == LeafExpressionOperator.None}
-              onChange={e => this.onDisallowEditChanged(e)}
-            >
-              Disallow ALL edits
-            </Radio>{' '}
-            <AdaptablePopover
-              cssClassName={cssClassName}
-              headerText={'Validation Rule: No Edits Allowed'}
-              bodyText={['Any edit is invalid - effectively makes the column read-only.']}
-            />
-          </Box>
-          <Box className="ab_large_margin">
-            <Radio
-              inline
-              value="others"
-              checked={this.state.Operator != LeafExpressionOperator.None}
-              onChange={e => this.onDisallowEditChanged(e)}
-            >
-              Disallow edits where the new cell value matches rule:
-            </Radio>{' '}
-            <AdaptablePopover
-              cssClassName={cssClassName}
-              headerText={'Validation Rule: Custom'}
-              bodyText={['Disallow edits that match the rule defined in the dropdown below.']}
-            />
-          </Box>
-        </AdaptableBlotterForm>
+      <WizardPanel header={validationRuleHeader}>
+        <HelpBlock>
+          <p>{helpText}</p>
+        </HelpBlock>
+        <Flex flexDirection="row" alignItems="center" marginTop={3} marginLeft={2}>
+          <Radio
+            marginRight={2}
+            value="None"
+            checked={this.state.Operator == LeafExpressionOperator.None}
+            onChange={(_, e: any) => this.onDisallowEditChanged(e)}
+          >
+            Disallow ALL edits
+          </Radio>{' '}
+          <AdaptablePopover
+            cssClassName={cssClassName}
+            headerText={'Validation Rule: No Edits Allowed'}
+            bodyText={['Any edit is invalid - effectively makes the column read-only.']}
+          />
+        </Flex>
+        <Flex flexDirection="row" alignItems="center" marginTop={3} marginLeft={2}>
+          <Radio
+            marginRight={2}
+            value="others"
+            checked={this.state.Operator != LeafExpressionOperator.None}
+            onChange={(_, e: any) => this.onDisallowEditChanged(e)}
+          >
+            Disallow edits where the new cell value matches rule:
+          </Radio>{' '}
+          <AdaptablePopover
+            cssClassName={cssClassName}
+            headerText={'Validation Rule: Custom'}
+            bodyText={['Disallow edits that match the rule defined in the dropdown below.']}
+          />
+        </Flex>
 
         {/* if not None operator then show operator dropdown */}
-        <FormGroup className="ab_large_margin">
-          <Col xs={1} />
-          <Col xs={6}>
+        <Flex flexDirection="row" alignItems="center" marginTop={3} marginLeft={2}>
+          <Flex flex={6} marginRight={3}>
             <Dropdown
+              style={{ maxWidth: 'inherit', width: '100%' }}
               options={operatorOptions}
               disabled={this.checkOperator(LeafExpressionOperator.None)}
               placeholder="select"
               value={this.state.Operator ? this.state.Operator.toString() : ''}
               onChange={(x: any) => this.onOperatorChanged(x)}
             />
-          </Col>
+          </Flex>
 
           {/* if  numeric then show a numeric control */}
           {!this.checkOperator(LeafExpressionOperator.None) &&
@@ -140,22 +137,24 @@ export class CellValidationRulesWizard
               this.props.Data.ColumnId,
               this.props.Columns
             ) == DataType.Number && (
-              <Col xs={5}>
-                <FormControl
+              <Flex flex={5}>
+                <Input
                   value={this.state.Operand1}
                   type="number"
                   placeholder="Enter Number"
-                  onChange={x => this.onOperand1ValueChanged(x)}
+                  style={{ width: '100%' }}
+                  onChange={(x: any) => this.onOperand1ValueChanged(x)}
                 />
                 {this.isBetweenOperator() && (
-                  <FormControl
+                  <Input
                     value={this.state.Operand2}
+                    style={{ width: '100%' }}
                     type="number"
                     placeholder="Enter Number"
-                    onChange={x => this.onOperand2ValueChanged(x)}
+                    onChange={(x: any) => this.onOperand2ValueChanged(x)}
                   />
                 )}
-              </Col>
+              </Flex>
             )}
 
           {/* if  date then show a date control */}
@@ -165,22 +164,25 @@ export class CellValidationRulesWizard
               this.props.Data.ColumnId,
               this.props.Columns
             ) == DataType.Date && (
-              <Col xs={5}>
-                <FormControl
+              <Flex flex={5}>
+                <Input
                   type="date"
+                  style={{ width: '100%' }}
                   placeholder="Enter Date"
                   value={this.state.Operand1}
-                  onChange={x => this.onOperand1ValueChanged(x)}
+                  onChange={(x: any) => this.onOperand1ValueChanged(x)}
                 />
                 {this.isBetweenOperator() && (
-                  <FormControl
+                  <Input
                     value={this.state.Operand2}
+                    marginLeft={2}
                     type="date"
+                    style={{ width: '100%' }}
                     placeholder="Enter Date"
-                    onChange={x => this.onOperand2ValueChanged(x)}
+                    onChange={(x: any) => this.onOperand2ValueChanged(x)}
                   />
                 )}
-              </Col>
+              </Flex>
             )}
 
           {/* if string then show a text control  */}
@@ -192,16 +194,17 @@ export class CellValidationRulesWizard
               this.props.Data.ColumnId,
               this.props.Columns
             ) == DataType.String && (
-              <Col xs={5}>
-                <FormControl
+              <Flex flex={5}>
+                <Input
                   value={this.state.Operand1}
                   type="string"
+                  style={{ width: '100%' }}
                   placeholder="Enter a Value"
-                  onChange={x => this.onOperand1ValueChanged(x)}
+                  onChange={(x: any) => this.onOperand1ValueChanged(x)}
                 />
-              </Col>
+              </Flex>
             )}
-        </FormGroup>
+        </Flex>
       </WizardPanel>
     );
   }

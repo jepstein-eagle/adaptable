@@ -1,3 +1,10 @@
 .ab-DashboardPanel {
-  
+  .ab-SimpleButton.ab-SimpleButton {
+    color: inherit;
+    fill: inherit;
+  }
+
+  .glyphicon.glyphicon {
+    color: var(--ab-cmp-dashboardpanel__fill);
+  }
 }

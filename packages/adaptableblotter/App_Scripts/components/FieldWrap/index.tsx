@@ -6,12 +6,15 @@ const FieldWrap = styled(Flex)({
   borderRadius: 'var(--ab-space-1)',
   overflow: 'hidden',
   '&:focus-within': {
-    outline: 'var(--ab-focus__outline)',
+    boxShadow: 'var(--ab-focus__box-shadow)',
   },
   '& input, & select, & > *': {
     border: 'none',
     flex: 1,
-    outline: 'none',
+  },
+  '& input, & select': {
+    outline: 'none !important',
+    boxShadow: 'none !important',
   },
 });
 

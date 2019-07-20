@@ -5,8 +5,6 @@
   }
 }
 .ab-SimpleButton.ab-SimpleButton {
-
-
   vertical-align: middle;
   & > * {
     z-index: 1;
@@ -54,6 +52,7 @@
 
   &--variant-outlined,
   &--variant-text {
+    transition: opacity 0.2s;
     &:before {
       content: '';
       opacity: 0;
@@ -62,7 +61,7 @@
     &:hover:not(.ab-SimpleButton--disabled) {
       cursor: pointer;
       &:before {
-        opacity: 0.2;
+        opacity: 0.15;
         background-color: currentColor;
       }
     }
@@ -98,8 +97,14 @@
         opacity: 1;
 
         &:hover {
-          opacity: 0.9;
+          // opacity: 0.9;
         }
+      }
+    }
+    &.ab-SimpleButton--tone-none {
+      background: transparent;
+      &:not(.ab-SimpleButton--disabled) {
+        opacity: 1;
       }
     }
     &.ab-SimpleButton--tone-neutral {
@@ -108,7 +113,7 @@
         opacity: 1;
 
         &:hover {
-          opacity: 0.9;
+          // opacity: 0.9;
         }
       }
     }
@@ -118,7 +123,7 @@
         opacity: 1;
 
         &:hover {
-          opacity: 0.9;
+          // opacity: 0.9;
         }
       }
     }

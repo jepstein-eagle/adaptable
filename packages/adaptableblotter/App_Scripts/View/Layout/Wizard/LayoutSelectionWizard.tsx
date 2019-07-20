@@ -50,7 +50,7 @@ export class LayoutSelectionWizard
             value="Existing"
             marginRight={2}
             checked={this.state.LayoutSource == LayoutSource.Existing}
-            onChange={(_, e) => this.onScopeSelectChanged(e)}
+            onChange={(_: boolean, e: any) => this.onScopeSelectChanged(e)}
           >
             Copy current Grid setup
           </Radio>{' '}

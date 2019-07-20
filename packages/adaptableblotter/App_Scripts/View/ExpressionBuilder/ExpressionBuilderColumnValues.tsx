@@ -8,7 +8,7 @@ export interface ExpressionBuilderColumnValuesProps
   SelectedValues: Array<any>;
   ColumnValues: Array<any>;
   onColumnValuesChange: (SelectedValues: Array<any>) => void;
-  cssClassName: string;
+  cssClassName?: string;
 }
 
 export class ExpressionBuilderColumnValues extends React.Component<
@@ -16,32 +16,19 @@ export class ExpressionBuilderColumnValues extends React.Component<
   {}
 > {
   render() {
-    let cssClassName: string = this.props.cssClassName + '__querycolumnvalues';
     return (
-      <div className={cssClassName}>
-        <Panel
-          className="ab_no-padding-anywhere-panel ab_small-padding-panel-header"
-          style={divStyle}
-          bodyProps={{
-            padding: 0,
-            style: { border: 'none' },
-          }}
-        >
-          <SingleListBox
-            Values={this.props.ColumnValues}
-            cssClassName={cssClassName}
-            UiSelectedValues={this.props.SelectedValues}
-            DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-            ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-            SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
-            onSelectedChange={list => this.props.onColumnValuesChange(list)}
-            SelectionMode={SelectionMode.Multi}
-            style={{
-              maxHeight: '50vh',
-            }}
-          />
-        </Panel>
-      </div>
+      <SingleListBox
+        Values={this.props.ColumnValues}
+        UiSelectedValues={this.props.SelectedValues}
+        DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+        ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+        SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
+        onSelectedChange={list => this.props.onColumnValuesChange(list)}
+        SelectionMode={SelectionMode.Multi}
+        listStyle={{
+          maxHeight: '50vh',
+        }}
+      />
     );
   }
 }

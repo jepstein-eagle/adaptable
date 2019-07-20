@@ -9,9 +9,10 @@ import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState'
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ColorPicker } from '../ColorPicker';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
-import { FormControl } from 'react-bootstrap';
+
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { EntityRowItem } from '../Components/EntityRowItem';
+import Input from '../../components/Input';
 
 export interface PercentBarEntityRowProps
   extends SharedEntityExpressionRowProps<PercentBarEntityRow> {
@@ -38,11 +39,10 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
       <EntityRowItem
         Content={
           StringExtensions.IsNullOrEmpty(PercentBar.MinValueColumnId) ? (
-            <FormControl
-              bsSize={'small'}
+            <Input
               type={'number'}
               placeholder="Min Value"
-              onChange={e => this.onMinimumValueChanged(e)}
+              onChange={(e: any) => this.onMinimumValueChanged(e)}
               value={PercentBar.MinValue}
             />
           ) : (

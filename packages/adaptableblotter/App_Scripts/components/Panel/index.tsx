@@ -56,7 +56,10 @@ const Body = ({
   return (
     <Box
       {...bodyProps}
-      className={join(`${baseClassName}__body`, `${baseClassName}__body--scroll-${bodyScroll}`)}
+      className={join(
+        `${baseClassName}__body`,
+        bodyScroll ? `${baseClassName}__body--scroll-${bodyScroll}` : null
+      )}
     >
       {children}
     </Box>

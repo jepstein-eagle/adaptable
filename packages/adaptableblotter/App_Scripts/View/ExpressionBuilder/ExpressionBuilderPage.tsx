@@ -72,7 +72,6 @@ export class ExpressionBuilderPage
 
     return (
       <PanelWithButton
-        cssClassName={cssClassName}
         headerText="Query Builder"
         button={newButton}
         bodyProps={{

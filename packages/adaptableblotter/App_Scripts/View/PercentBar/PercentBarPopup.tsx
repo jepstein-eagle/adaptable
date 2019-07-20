@@ -126,11 +126,9 @@ class PercentBarPopupComponent extends React.Component<
     });
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create Percent Bar "
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Percent Bar "
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -139,11 +137,12 @@ class PercentBarPopupComponent extends React.Component<
       <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.PercentBarStrategyName}
-          bsStyle="primary"
+          style={{ height: '100%' }}
           cssClassName={cssClassName}
           button={newButton}
           glyphicon={StrategyConstants.PercentBarGlyph}
           infoBody={infoBody}
+          bodyProps={{ padding: 0 }}
         >
           {PercentBarItems.length > 0 ? (
             <AdaptableObjectCollection

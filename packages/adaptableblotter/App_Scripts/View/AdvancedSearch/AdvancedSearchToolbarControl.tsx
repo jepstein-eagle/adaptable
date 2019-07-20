@@ -15,11 +15,14 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { SortOrder, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
-import { InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
+import { InputGroup, MenuItem } from 'react-bootstrap';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
+import DropdownButton from '../../components/DropdownButton';
+import { Flex } from 'rebass';
+import Dropdown from '../../components/Dropdown';
 
 interface AdvancedSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
@@ -38,7 +41,6 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
 > {
   render() {
     const selectSearchString: string = 'Select a Search';
-    let cssClassName: string = this.props.cssClassName + '__advancedsearch';
 
     let savedSearch: AdvancedSearch = this.props.AdvancedSearches.find(
       s => s.Name == this.props.CurrentAdvancedSearchName
@@ -55,70 +57,35 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
     );
 
     let availableSearches: any[] = sortedAdvancedSearches
-      .filter(s => s.Name != this.props.CurrentAdvancedSearchName)
+      // .filter(s => s.Name != this.props.CurrentAdvancedSearchName)
       .map((search, index) => {
-        return (
-          <MenuItem
-            key={index}
-            eventKey={index}
-            onClick={() => this.onSelectedSearchChanged(search.Name)}
-          >
-            {search.Name}
-          </MenuItem>
-        );
+        return {
+          label: search.Name,
+          value: search.Name,
+        };
       });
     let content = (
-      <span>
-        <InputGroup>
-          <DropdownButton
+      <Flex flexDirection="row" alignItems="stretch">
+        <Flex flexDirection="row" alignItems="stretch">
+          <Dropdown
             disabled={availableSearches.length == 0}
-            style={{ minWidth: '120px' }}
-            className={cssClassName}
-            bsSize={this.props.DashboardSize}
-            bsStyle={'default'}
-            title={currentSearchName}
-            id="advancedSearch"
-            componentClass={InputGroup.Button}
-          >
-            {availableSearches}
-          </DropdownButton>
-          {currentSearchName != selectSearchString && (
-            <InputGroup.Button>
-              <ButtonClear
-                bsStyle={'default'}
-                cssClassName={cssClassName}
-                onClick={() => this.onSelectedSearchChanged('')}
-                size={this.props.DashboardSize}
-                overrideTooltip="Clear Search"
-                overrideDisableButton={currentSearchName == selectSearchString}
-                DisplayMode="Glyph"
-                AccessLevel={this.props.AccessLevel}
-                showDefaultStyle={this.props.UseSingleColourForButtons}
-              />
-            </InputGroup.Button>
-          )}
-        </InputGroup>
+            style={{ minWidth: 200 }}
+            options={availableSearches}
+            value={currentSearchName}
+            onChange={searchName => this.onSelectedSearchChanged(searchName)}
+            marginRight={2}
+          ></Dropdown>
 
-        <span
-          className={
-            this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
-          }
-        >
           <ButtonEdit
-            style={{ marginLeft: '5px' }}
             onClick={() => this.props.onEditAdvancedSearch()}
-            cssClassName={cssClassName}
-            size={this.props.DashboardSize}
-            overrideTooltip="Edit Current Advanced Search"
-            overrideDisableButton={currentSearchName == selectSearchString}
-            DisplayMode="Glyph"
+            marginRight={2}
+            tooltip="Edit Current Advanced Search"
+            disabled={currentSearchName == selectSearchString}
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
           />
           <ButtonNew
             variant="text"
-            style={{ marginLeft: '2px' }}
-            cssClassName={cssClassName}
+            marginRight={2}
             onClick={() => this.props.onNewAdvancedSearch()}
             size={this.props.DashboardSize}
             tooltip="Create New Advanced Search"
@@ -128,8 +95,6 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
           />
 
           <ButtonDelete
-            style={{ marginLeft: '2px' }}
-            cssClassName={cssClassName}
             size={this.props.DashboardSize}
             overrideTooltip="Delete Advanced Search"
             overrideDisableButton={currentSearchName == selectSearchString}
@@ -142,13 +107,12 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
             AccessLevel={this.props.AccessLevel}
             showDefaultStyle={this.props.UseSingleColourForButtons}
           />
-        </span>
-      </span>
+        </Flex>
+      </Flex>
     );
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
         useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={StrategyConstants.AdvancedSearchStrategyName}
         glyphicon={StrategyConstants.AdvancedSearchGlyph}

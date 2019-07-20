@@ -12,14 +12,15 @@ import {
   CellSummaryOptionalOperation,
 } from '../../PredefinedConfig/Common/Enums';
 
+import HelpBlock from '../../components/HelpBlock';
+
 interface CellSummaryDetailsProps extends React.ClassAttributes<CellSummaryDetails> {
   CellSummary: ICellSummmary;
-  cssClassName: string;
 }
 
 export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps, {}> {
   render() {
-    let cssClassName: string = this.props.cssClassName + '__CellSummary';
+    let cssClassName: string = '';
     let colItems: IColItem[] = [{ Content: 'Operation', Size: 4 }, { Content: 'Value', Size: 8 }];
 
     let rowElements: any[] = [];
@@ -93,7 +94,9 @@ export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps,
         {this.props.CellSummary != null ? (
           <div className={cssClassName + StyleConstants.ITEMS_TABLE_BODY}>{rowElements}</div>
         ) : (
-          <Text>No cells are selected - please select some cells.</Text>
+          <HelpBlock>
+            <p>No cells are selected - please select some cells.</p>
+          </HelpBlock>
         )}
       </div>
     );

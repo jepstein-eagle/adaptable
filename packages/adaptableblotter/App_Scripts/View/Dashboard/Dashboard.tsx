@@ -1,7 +1,6 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
-import { Nav } from 'react-bootstrap';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { DashboardState } from '../../PredefinedConfig/RunTimeState/DashboardState';
 
@@ -77,12 +76,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             UseSingleColourForButtons: this.props.DashboardState.UseSingleColourForButtons,
           });
           return (
-            <Nav
-              key={control}
-              style={{ marginRight: '5px', marginTop: '3px', marginBottom: '3px' }}
-            >
+            <Box key={control} my={1} marginRight={1}>
               {dashboardElememt}
-            </Nav>
+            </Box>
           );
         } else {
           LoggingHelper.LogAdaptableBlotterError('Cannot find Dashboard Control for ' + control);
@@ -94,13 +90,13 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
       StrategyConstants.HomeStrategyId
     );
     let homeToolbarElement = (
-      <Nav key={'home'} style={{ marginRight: '5px', marginTop: '3px', marginBottom: '3px' }}>
+      <Box key={'home'} my={1} marginRight={1}>
         {React.createElement(homeToolbar, {
           cssClassName: cssClassName,
           Blotter: this.props.Blotter,
           UseSingleColourForButtons: this.props.DashboardState.UseSingleColourForButtons,
         })}
-      </Nav>
+      </Box>
     );
 
     return (

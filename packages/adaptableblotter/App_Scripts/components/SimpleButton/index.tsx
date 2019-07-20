@@ -9,14 +9,16 @@ import icons from '../icons';
 import { ReactComponentLike } from 'prop-types';
 import Tooltip from '../Tooltip';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { IconProps } from '../icons/DefaultIcon';
 
 export const baseClassName = 'ab-SimpleButton';
 
 export type SimpleButtonProps = HTMLProps<HTMLElement> & {
   tooltip?: string;
   variant?: 'text' | 'outlined' | 'raised' | 'unelevated';
-  tone?: 'success' | 'error' | 'neutral';
+  tone?: 'success' | 'error' | 'neutral' | 'none';
   icon?: ReactNode;
+  iconSize?: number;
   iconPosition?: 'start' | 'end';
   disabled?: boolean;
   bsStyle?: any;
@@ -30,6 +32,7 @@ const SimpleButton = (props: SimpleButtonProps) => {
     variant = 'outlined',
     tone = 'neutral',
     iconPosition = 'start',
+    iconSize,
     className,
     icon,
     tooltip,
@@ -38,7 +41,11 @@ const SimpleButton = (props: SimpleButtonProps) => {
 
   if (typeof icon === 'string' && icons[icon]) {
     const IconCmp = icons[icon] as ReactComponentLike;
-    icon = <IconCmp />;
+    const iconProps: IconProps = {};
+    if (iconSize) {
+      iconProps.size = iconSize;
+    }
+    icon = <IconCmp {...iconProps} />;
   }
 
   if (icon) {
@@ -99,4 +106,8 @@ const SimpleButton = (props: SimpleButtonProps) => {
   return btn;
 };
 
+SimpleButton.defaultProps = {
+  px: 2,
+  py: 1,
+};
 export default SimpleButton;

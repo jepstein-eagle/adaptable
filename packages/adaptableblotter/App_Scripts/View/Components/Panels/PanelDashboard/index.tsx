@@ -1,21 +1,13 @@
 import * as React from 'react';
-import {
-  PanelProps,
-  // Panel,
-  Glyphicon,
-  Button,
-  Label,
-  OverlayTrigger,
-  Tooltip,
-} from 'react-bootstrap';
-import { AdaptableBlotterForm } from '../../Forms/AdaptableBlotterForm';
-import Panel from '../../../../components/Panel';
+import { Glyphicon } from 'react-bootstrap';
+import Panel, { PanelProps } from '../../../../components/Panel';
 import * as StyleConstants from '../../../../Utilities/Constants/StyleConstants';
 import { ButtonClose } from '../../Buttons/ButtonClose';
 import { ButtonConfigure } from '../../Buttons/ButtonConfigure';
 import { ButtonMinimise } from '../../Buttons/ButtonMinimise';
-import { FontSize } from '../../../../PredefinedConfig/Common/Enums';
+
 import { Flex } from 'rebass';
+import join from '../../../../components/utils/join';
 
 export interface PanelDashboardProps extends PanelProps {
   headerText: string;
@@ -49,7 +41,19 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     cssClassName: '',
   };
   render() {
-    let cssClassName = this.props.cssClassName + StyleConstants.DASHBOARD_PANEL;
+    const {
+      useDefaultPanelStyle,
+      onMinimise,
+      glyphicon,
+      showGlyphIcon,
+      headerText,
+      showMinimiseButton,
+      showConfigureButton,
+      showCloseButton,
+      onClose,
+      onConfigure,
+      ...props
+    } = this.props;
 
     let panelStyle = this.props.useDefaultPanelStyle
       ? StyleConstants.DEFAULT_BSSTYLE
@@ -57,85 +61,65 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
 
     let header = (
       <>
-        {this.props.showMinimiseButton ? (
-          <ButtonMinimise
-            className={cssClassName}
-            onClick={() => this.props.onMinimise()}
-            marginRight={2}
-          />
+        {showMinimiseButton ? (
+          <ButtonMinimise onClick={() => onMinimise()} marginRight={2} />
         ) : null}
-        {this.props.showGlyphIcon ? (
-          <Glyphicon style={{ fontSize: 'small' }} glyph={this.props.glyphicon} />
+        {showGlyphIcon ? (
+          <Glyphicon
+            style={{ fontSize: 'small', color: 'var(--ab-cmp-dashboardpanel_header__fill)' }}
+            glyph={glyphicon}
+          />
         ) : null}
 
-        <Flex flex={1} alignItems="center">
-          {this.props.headerText}
+        <Flex flex={1} alignItems="center" marginLeft={showGlyphIcon || showMinimiseButton ? 2 : 0}>
+          {headerText}
         </Flex>
-        {this.props.showConfigureButton ? (
+        {showConfigureButton ? (
           <ButtonConfigure
-            cssClassName={cssClassName}
-            overrideTooltip={'Configure ' + this.props.headerText}
-            size="xs"
-            bsStyle={panelStyle}
-            DisplayMode={'Glyph'}
-            style={{
-              paddingTop: 0,
-              paddingBottom: 0,
-              float: 'right',
-              marginLeft: '0px',
-              marginRight: '0px',
-              border: '0px',
-              background: 'none',
-              borderRadius: '0px',
-              boxShadow: 'none',
-            }}
-            onClick={() => this.props.onConfigure()}
+            marginLeft={3}
+            tooltip={'Configure ' + headerText}
+            onClick={() => onConfigure()}
           />
         ) : null}
-        {this.props.showCloseButton ? (
+        {showCloseButton ? (
           <ButtonClose
-            cssClassName={cssClassName}
-            overrideTooltip={'Close ' + this.props.headerText}
-            size="xs"
-            bsStyle={panelStyle}
-            DisplayMode={'Glyph'}
-            style={{
-              paddingTop: 0,
-              paddingBottom: 0,
-              float: 'right',
-              marginLeft: '0px',
-              marginRight: '0px',
-              border: '0px',
-              background: 'none',
-              borderRadius: '0px',
-              boxShadow: 'none',
-            }}
-            onClick={() => this.props.onClose()}
+            marginLeft={showConfigureButton ? 0 : 3}
+            tooltip={'Close ' + headerText}
+            onClick={() => onClose()}
           />
         ) : null}
       </>
     );
     return (
-      <div className={cssClassName}>
-        <Panel
-          className="ab_small-padding-panel ab-DashboardPanel"
-          header={header}
-          headerProps={{
-            style: {
-              background: 'var(--ab-cmp-dashboardpanel-header-background)',
-            },
-          }}
-          border="none"
-          bodyProps={{
-            style: {
-              background: 'var(--ab-cmp-dashboardpanel-body-background)',
-            },
-          }}
-          style={this.props.style}
-        >
-          <AdaptableBlotterForm inline>{this.props.children}</AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <Panel
+        border="none"
+        {...props}
+        className={join('ab-DashboardPanel', props.className)}
+        header={header}
+        style={{
+          color: 'var(--ab-cmp-dashboardpanel__color)',
+          fill: 'var(--ab-cmp-dashboardpanel__fill)',
+          ...props.style,
+        }}
+        headerProps={{
+          ...props.headerProps,
+          style: {
+            ...(props.headerProps ? props.headerProps.style : null),
+            background: 'var(--ab-cmp-dashboardpanel_header__background)',
+            color: 'var(--ab-cmp-dashboardpanel_header__color)',
+            fill: 'var(--ab-cmp-dashboardpanel_header__fill)',
+          },
+        }}
+        bodyProps={{
+          ...props.bodyProps,
+          style: {
+            ...(props.bodyProps ? props.bodyProps.style : null),
+            background: 'var(--ab-cmp-dashboardpanel_body__background)',
+            display: 'flex',
+            alignItems: 'center',
+          },
+        }}
+      />
     );
   }
 }

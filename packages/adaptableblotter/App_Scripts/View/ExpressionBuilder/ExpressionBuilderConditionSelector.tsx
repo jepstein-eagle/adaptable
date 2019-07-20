@@ -337,6 +337,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         headerText={panelHeader}
         variant="default"
         button={clearButton}
+        bodyScroll={false}
         bodyProps={{
           padding: 0,
           style: {
@@ -353,9 +354,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn ? (
           <div style={{ marginLeft: 2, marginRight: 2 }}>
             {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn ? (
-              <HelpBlock>{firstTimeText}</HelpBlock>
+              <HelpBlock marginBottom={2} marginTop={2}>
+                {firstTimeText}
+              </HelpBlock>
             ) : (
-              <HelpBlock>{secondTimeText}</HelpBlock>
+              <HelpBlock marginBottom={2} marginTop={2}>
+                {secondTimeText}
+              </HelpBlock>
             )}
             {this.state.ShowWaitingMessage ? (
               <Waiting WaitingMessage="Retrieving Column Values..." />

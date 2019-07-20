@@ -48,17 +48,12 @@ export class ExpressionBuilderUserFilter extends React.Component<
     });
 
     return (
-      <div className={cssClassName}>
-        <Panel
-          className="ab_no-padding-anywhere-panel ab_small-padding-panel-header"
-          style={divStyle}
-        >
-          <ListGroup>
-            {systemFilterNames}
-            {userFilterNames}
-          </ListGroup>
-        </Panel>
-      </div>
+      <Panel style={{ flex: 1 }} bodyScroll>
+        <ListGroup>
+          {systemFilterNames}
+          {userFilterNames}
+        </ListGroup>
+      </Panel>
     );
   }
 
@@ -77,7 +72,3 @@ export class ExpressionBuilderUserFilter extends React.Component<
     this.props.onFilterNameChange(newArray);
   }
 }
-
-let divStyle: React.CSSProperties = {
-  overflowY: 'auto',
-};

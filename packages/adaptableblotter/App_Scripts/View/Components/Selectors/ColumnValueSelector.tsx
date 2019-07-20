@@ -3,16 +3,14 @@ import { Helper } from '../../../Utilities/Helpers/Helper';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import {
-  SortOrder,
-  SelectionMode,
-  DistinctCriteriaPairValue,
-  DataType,
-} from '../../../PredefinedConfig/Common/Enums';
+import { SortOrder, DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
+import Dropdown from '../../../components/Dropdown';
+import FieldWrap from '../../../components/FieldWrap';
+import DropdownButton from '../../../components/DropdownButton';
+import Input from '../../../components/Input';
 
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
   SelectedColumn: IColumn;
@@ -21,9 +19,25 @@ export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSel
   Blotter: IAdaptableBlotter;
   AllowNew?: boolean; // defaults to true if not provided
   bsSize?: 'large' | 'lg' | 'small' | 'sm';
-  cssClassName: string;
+  cssClassName?: string;
+  style?: React.CSSProperties;
 }
-export class ColumnValueSelector extends React.Component<ColumnValueSelectorProps, {}> {
+
+enum NEW_OR_EXISTING {
+  existing = 'Existing value',
+  new = 'New value',
+}
+export class ColumnValueSelector extends React.Component<
+  ColumnValueSelectorProps,
+  { newOrExisting: NEW_OR_EXISTING }
+> {
+  constructor(props: ColumnValueSelectorProps) {
+    super(props);
+
+    this.state = {
+      newOrExisting: NEW_OR_EXISTING.existing,
+    };
+  }
   componentWillReceiveProps(nextProps: ColumnValueSelectorProps, nextContext: any) {
     if (
       StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue) &&
@@ -36,13 +50,12 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
     }
   }
   render() {
-    let cssClassName: string = this.props.cssClassName + StyleConstants.COLUMN_VALUE_SELECTOR;
     let sortedColumnValues: IRawValueDisplayValuePair[] = [];
-    let selectedValue: string = '';
+
     let placeholderText = 'Select column value';
     let allowNew = this.props.AllowNew != null ? this.props.AllowNew : true;
     if (allowNew) {
-      placeholderText += ' or enter free text';
+      // placeholderText += ' or enter free text';
     }
 
     if (
@@ -57,12 +70,12 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
       );
 
       if (StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)) {
-        selectedValue = '';
+        // selectedValue = '';
       } else {
         let existingPair: IRawValueDisplayValuePair = columnDisplayValuePairs.find(
           cdv => cdv.RawValue == this.props.SelectedColumnValue
         );
-        selectedValue = existingPair ? existingPair.DisplayValue : this.props.SelectedColumnValue;
+        // selectedValue = existingPair ? existingPair.DisplayValue : this.props.SelectedColumnValue;
       }
       sortedColumnValues = ArrayExtensions.sortArrayWithProperty(
         SortOrder.Ascending,
@@ -71,24 +84,63 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
       );
     }
 
-    return (
-      <Typeahead
-        ref="typeahead"
-        bsSize={'sm'}
-        emptyLabel={''}
+    const dd = (
+      <Dropdown
+        style={{ maxWidth: 'inherit' }}
         placeholder={placeholderText}
-        labelKey={'DisplayValue'}
-        multiple={false}
-        selected={[selectedValue as any]}
-        onChange={selected => {
-          this.onColumnChange(selected);
+        showClearButton={false}
+        value={this.props.SelectedColumnValue}
+        onChange={(selected: any) => {
+          this.onColumnChange([{ RawValue: selected }]);
         }}
-        options={sortedColumnValues}
+        options={sortedColumnValues.map(v => {
+          return {
+            label: v.DisplayValue,
+            value: v.RawValue,
+          };
+        })}
         disabled={this.props.disabled}
-        allowNew={allowNew}
-        newSelectionPrefix={'new value: '}
-        filterBy={['DisplayValue']}
       />
+    );
+    const input = (
+      <Input
+        type="text"
+        autoFocus
+        onChange={(e: React.SyntheticEvent) => {
+          this.onColumnChange([{ customOption: true, DisplayValue: (e.target as any).value }]);
+        }}
+      />
+    );
+    return (
+      <FieldWrap style={{ ...this.props.style, overflow: 'visible' }}>
+        {this.state.newOrExisting === NEW_OR_EXISTING.existing ? dd : input}
+        <DropdownButton
+          variant="raised"
+          tone="neutral"
+          items={[
+            {
+              label: NEW_OR_EXISTING.existing,
+              onClick: () => {
+                this.setState({
+                  newOrExisting: NEW_OR_EXISTING.existing,
+                });
+                this.onColumnChange([]);
+              },
+            },
+            {
+              label: NEW_OR_EXISTING.new,
+              onClick: () => {
+                this.setState({
+                  newOrExisting: NEW_OR_EXISTING.new,
+                });
+                this.onColumnChange([]);
+              },
+            },
+          ]}
+        >
+          {this.state.newOrExisting}
+        </DropdownButton>
+      </FieldWrap>
     );
   }
 
@@ -111,9 +163,3 @@ export class ColumnValueSelector extends React.Component<ColumnValueSelectorProp
     }
   }
 }
-
-let smallFormControlStyle: React.CSSProperties = {
-  fontSize: 'xsmall',
-  height: '22px',
-  width: '70px',
-};

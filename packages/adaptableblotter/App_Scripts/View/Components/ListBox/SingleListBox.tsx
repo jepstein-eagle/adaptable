@@ -8,6 +8,7 @@ import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import ListGroup from '../../../components/List/ListGroup';
+import { Flex } from 'rebass';
 
 export interface SingleListBoxProps {
   Values: Array<any>;
@@ -18,7 +19,9 @@ export interface SingleListBoxProps {
   ValueMember?: string;
   SortMember?: string;
   SelectionMode: SelectionMode;
-  cssClassName: string;
+  cssClassName?: string;
+  style?: React.CSSProperties;
+  listStyle?: React.CSSProperties;
 }
 
 export interface SingleListBoxState extends React.ClassAttributes<SingleListBox> {
@@ -58,7 +61,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
   }
   render() {
     let cssClassName: string =
-      this.props.cssClassName + StyleConstants.SINGLE_LIST_BOX + ` ${baseClassName}`;
+      (this.props.cssClassName || '') + StyleConstants.SINGLE_LIST_BOX + ` ${baseClassName}`;
     let itemsElements = this.state.Values.map(x => {
       let isActive: boolean;
       if (this.props.ValueMember) {
@@ -99,12 +102,12 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex flex={1} flexDirection="column" style={{ width: '100%' }}>
         {header}
-        <ListGroup marginTop={2} style={{ overflow: 'auto', ...this.props.style }}>
+        <ListGroup marginTop={2} style={{ overflow: 'auto', flex: 1, ...this.props.listStyle }}>
           {itemsElements}
         </ListGroup>
-      </div>
+      </Flex>
     );
   }
 

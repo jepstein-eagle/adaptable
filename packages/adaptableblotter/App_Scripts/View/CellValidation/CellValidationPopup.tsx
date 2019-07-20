@@ -127,6 +127,7 @@ class CellValidationPopupComponent extends React.Component<
         button={newButton}
         glyphicon={StrategyConstants.CellValidationGlyph}
         infoBody={infoBody}
+        bodyProps={{ padding: 0 }}
       >
         {CellValidationItems.length > 0 ? (
           <AdaptableObjectCollection

@@ -1,15 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import {
-  ControlLabel,
-  FormGroup,
-  Col,
-  Row,
-  Panel,
-  HelpBlock,
-  Checkbox,
-  FormControl,
-} from 'react-bootstrap';
+
 import { SelectionMode } from '../../PredefinedConfig/Common/Enums';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -43,7 +34,13 @@ import {
   OthersCategoryType,
 } from '../../PredefinedConfig/Common/ChartEnums';
 import { PieChartUIHelper } from '../Chart/PieChart/PieChartUIHelper';
-import { Flex } from 'rebass';
+import { Flex, Box, Text } from 'rebass';
+import ErrorBox from '../../components/ErrorBox';
+import HelpBlock from '../../components/HelpBlock';
+import Input from '../../components/Input';
+import Checkbox from '../../components/CheckBox';
+import Panel from '../../components/Panel';
+import Dropdown from '../../components/Dropdown';
 
 interface PieChartPopupProps extends StrategyViewPopupProps<PieChartPopupComponent> {}
 
@@ -107,36 +104,33 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     }
   }
 
-  getOptionsForLabelsPosition(): JSX.Element[] {
+  getOptionsForLabelsPosition(): { label: string; value: string }[] {
     let optionElements = EnumExtensions.getNames(PieChartLabelPosition).map(v => {
-      return (
-        <option key={v} value={v}>
-          {v as PieChartLabelPosition}
-        </option>
-      );
+      return {
+        value: v,
+        label: v,
+      };
     });
     return optionElements;
   }
 
   public SliceValueOptions: string[] = ['Value', 'Ratio'];
   public SliceLabelOptions: string[] = ['Value', 'ValueAndName', 'Ratio', 'RatioAndName', 'Name'];
-  getOptionsForSliceLabelsMapping(): JSX.Element[] {
+  getOptionsForSliceLabelsMapping(): { value: string; label: string }[] {
     let optionElements = this.SliceLabelOptions.map(v => {
-      return (
-        <option key={v} value={v}>
-          {v}
-        </option>
-      );
+      return {
+        value: v,
+        label: v,
+      };
     });
     return optionElements;
   }
-  getOptionsForSliceValuesMapping(): JSX.Element[] {
+  getOptionsForSliceValuesMapping(): { value: string; label: string }[] {
     let optionElements = this.SliceValueOptions.map(v => {
-      return (
-        <option key={v} value={v}>
-          {v}
-        </option>
-      );
+      return {
+        value: v,
+        label: v,
+      };
     });
     return optionElements;
   }
@@ -147,13 +141,12 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     'Name Descending',
     'Name Ascending',
   ];
-  getOptionsForSliceSortOrders(): JSX.Element[] {
+  getOptionsForSliceSortOrders(): { value: string; label: string }[] {
     let optionElements = this.SliceSorByOptions.map(v => {
-      return (
-        <option key={v} value={v}>
-          {v}
-        </option>
-      );
+      return {
+        value: v,
+        label: v,
+      };
     });
     return optionElements;
   }
@@ -227,40 +220,35 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
     let settingsBlock = (
       <Panel
-        bsSize={'xs'}
-        bsStyle={DEFAULT_BSSTYLE}
         header={'Settings'}
+        bodyScroll
         style={{
-          overflowY: 'auto',
-          overflowX: 'hidden',
-          height: '520px',
-          padding: '0px',
-          margin: '0px',
-          marginTop: '0px',
-          marginRight: '0px',
-          fontSize: 'small',
+          borderTop: 0,
+          borderRight: 0,
+          borderBottom: 0,
+          height: '100%',
+          width: '100%',
+        }}
+        bodyProps={{
+          padding: 0,
         }}
       >
-        <Row
-          style={{
-            marginLeft: '0px',
-            marginRight: '0px',
-            marginBottom: '0px',
-            marginTop: '0px',
-            padding: '0px',
-          }}
+        <Flex
+          as={HelpBlock}
+          flexDirection="column"
+          justifyContent="center"
+          padding={2}
+          style={{ width: '100%' }}
         >
-          <HelpBlock style={{ fontSize: 'small', margin: '0px' }}>
-            <Checkbox
-              style={{ fontSize: 'small', marginBottom: '0px', marginTop: '0px' }}
-              onChange={e => this.onShowDoughnutChanged(e)}
-              checked={this.state.ShowAsDoughnut}
-            >
-              Doughnut View
-            </Checkbox>
-          </HelpBlock>
+          <Checkbox
+            marginLeft={2}
+            onChange={(checked: boolean) => this.onShowDoughnutChanged(checked)}
+            checked={this.state.ShowAsDoughnut}
+          >
+            Doughnut View
+          </Checkbox>
 
-          <HelpBlock style={{ fontSize: 'small' }}>
+          <Box marginTop={2}>
             Others Threshold{' '}
             <AdaptablePopover
               cssClassName={cssClassName}
@@ -269,9 +257,10 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                 'Items with value less than or equal to the Threshold will be assigned to the “Others” category.  Choose whether this will be interpreted as a percentage or as a value.',
               ]}
             />
-          </HelpBlock>
-          <FormControl
-            bsSize={'small'}
+          </Box>
+
+          <Input
+            marginTop={2}
             type="number"
             min="0"
             step="1"
@@ -280,48 +269,39 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
             value={this.state.OthersCategoryThreshold}
           />
 
-          <HelpBlock style={{ fontSize: 'small' }}>
-            <Checkbox
-              style={{ fontSize: 'small', marginBottom: '0px', marginTop: '0px' }}
-              onChange={e => this.onThresholdAsPercentChanged(e)}
-              checked={this.state.OthersCategoryType == OthersCategoryType.Percent}
-            >
-              Others Threshold %
-            </Checkbox>
-          </HelpBlock>
+          <Checkbox
+            marginTop={3}
+            marginLeft={2}
+            onChange={checked => this.onThresholdAsPercentChanged(checked)}
+            checked={this.state.OthersCategoryType == OthersCategoryType.Percent}
+          >
+            Others Threshold %
+          </Checkbox>
 
-          <HelpBlock style={{ fontSize: 'small' }}>Labels Position: </HelpBlock>
-          <FormControl
-            bsSize={'small'}
-            componentClass="select"
+          <Text marginTop={3}>Labels Position: </Text>
+          <Dropdown
             placeholder="select"
             value={this.state.SliceLabelsPosition}
-            onChange={x => this.onSliceLabelsPositionChanged(x)}
-          >
-            {this.getOptionsForLabelsPosition()}
-          </FormControl>
+            onChange={(v: any) => this.onSliceLabelsPositionChanged(v)}
+            options={this.getOptionsForLabelsPosition()}
+          ></Dropdown>
 
-          <HelpBlock style={{ fontSize: 'small' }}>Labels Content: </HelpBlock>
-          <FormControl
-            bsSize={'small'}
-            componentClass="select"
+          <Text marginTop={3}>Labels Content: </Text>
+          <Dropdown
             placeholder="select"
             value={this.state.SliceLabelsMapping}
-            onChange={x => this.onSliceLabelsMappingChanged(x)}
-          >
-            {this.getOptionsForSliceLabelsMapping()}
-          </FormControl>
+            onChange={(x: any) => this.onSliceLabelsMappingChanged(x)}
+            options={this.getOptionsForSliceLabelsMapping()}
+          ></Dropdown>
 
-          <HelpBlock style={{ fontSize: 'small' }}>Slices Sort By: </HelpBlock>
-          <FormControl
-            bsSize={'small'}
-            componentClass="select"
+          <Text marginTop={3}>Slices Sort By: </Text>
+          <Dropdown
             placeholder="select"
             value={this.state.SliceSortOption}
-            onChange={x => this.onSliceSortByColumnChanged(x)}
-          >
-            {this.getOptionsForSliceSortOrders()}
-          </FormControl>
+            onChange={(x: any) => this.onSliceSortByColumnChanged(x)}
+            options={this.getOptionsForSliceSortOrders()}
+            marginBottom={3}
+          ></Dropdown>
 
           {/* this is not really needed unless we add calculation of
                  some new numeric columns in ChartService */}
@@ -333,18 +313,16 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                   {this.getOptionsForSliceValuesMapping()}
                 </FormControl> */}
 
-          <HelpBlock style={{ fontSize: 'small' }}> </HelpBlock>
-        </Row>
-
-        {this.state.ShowAsDoughnut ? (
-          <div className="doughnutLegend">
-            <IgrItemLegend ref={this.onDoughnutLegendRef} />
-          </div>
-        ) : (
-          <div className="pieChartLegend">
-            <IgrItemLegend ref={this.onPieChartLegendRef} />
-          </div>
-        )}
+          {this.state.ShowAsDoughnut ? (
+            <Box className="doughnutLegend">
+              <IgrItemLegend ref={this.onDoughnutLegendRef} />
+            </Box>
+          ) : (
+            <Box className="pieChartLegend">
+              <IgrItemLegend ref={this.onPieChartLegendRef} />
+            </Box>
+          )}
+        </Flex>
       </Panel>
     );
 
@@ -355,44 +333,38 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
           header={StrategyConstants.PieChartStrategyName}
           glyphicon={StrategyConstants.PieChartGlyph}
           infoBody={infoBody}
-          bsStyle="primary"
+          variant="primary"
+          style={{ height: '100%' }}
+          bodyProps={{ style: { display: 'flex' } }}
         >
-          <div>
-            <Row>
-              <Col xs={8}>
-                <AdaptableBlotterForm key="DataGroupColumnSelector" horizontal>
-                  <FormGroup controlId="pieChartSettings" style={{ marginBottom: '10px' }}>
-                    <Row>
-                      <Col xs={1}> </Col>
-                      <Col xs={4}>
-                        {' '}
-                        <ControlLabel> Selected Column</ControlLabel>
-                      </Col>
-                      <Col xs={7}>
-                        <ColumnSelector
-                          cssClassName={cssClassName}
-                          SelectedColumnIds={[this.state.PieChartDefinition.PrimaryColumnId]}
-                          SelectionMode={SelectionMode.Single}
-                          ColumnList={this.props.Columns}
-                          onColumnChange={columns => this.onDataGroupColumnChanged(columns)}
-                        />
-                      </Col>
-                    </Row>
-                  </FormGroup>
-                </AdaptableBlotterForm>
-                {this.hasValidDataSelection() && (
-                  <div>
-                    {this.state.ErrorMessage == null ? (
-                      <span>{chartBlock}</span>
-                    ) : (
-                      <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-                    )}
-                  </div>
-                )}
-              </Col>
-              <Col xs={4}>{this.hasValidDataSelection() && <div>{settingsBlock}</div>}</Col>
-            </Row>
-          </div>
+          <Flex flexDirection="row" alignItems="start" flex={1}>
+            <Flex flex={8} flexDirection="column">
+              <Flex alignItems="center" flexDirection="row" padding={2}>
+                <Text marginRight={2}>Selected Column</Text>
+
+                <ColumnSelector
+                  style={{ flex: 1 }}
+                  cssClassName={cssClassName}
+                  SelectedColumnIds={[this.state.PieChartDefinition.PrimaryColumnId]}
+                  SelectionMode={SelectionMode.Single}
+                  ColumnList={this.props.Columns}
+                  onColumnChange={columns => this.onDataGroupColumnChanged(columns)}
+                />
+              </Flex>
+              {this.hasValidDataSelection() ? (
+                <>
+                  {this.state.ErrorMessage == null ? (
+                    <span>{chartBlock}</span>
+                  ) : (
+                    <ErrorBox>{this.state.ErrorMessage}</ErrorBox>
+                  )}
+                </>
+              ) : null}
+            </Flex>
+            <Flex flex={4} style={{ overflow: 'auto', height: '100%' }}>
+              {this.hasValidDataSelection() ? settingsBlock : null}
+            </Flex>
+          </Flex>
         </PanelWithImage>
       </Flex>
     );
@@ -472,26 +444,23 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     this.setState({ OthersCategoryThreshold: e.target.value } as PieChartPopupState);
   };
 
-  private onShowDoughnutChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.setState({ ShowAsDoughnut: e.checked } as PieChartPopupState);
+  private onShowDoughnutChanged(checked: boolean) {
+    this.setState({ ShowAsDoughnut: checked } as PieChartPopupState);
   }
 
-  private onThresholdAsPercentChanged(event: React.FormEvent<any>) {
+  private onThresholdAsPercentChanged(checked: boolean) {
     let e = event.target as HTMLInputElement;
-    let othersCategoryType: OthersCategoryType = e.checked
+    let othersCategoryType: OthersCategoryType = checked
       ? OthersCategoryType.Percent
       : OthersCategoryType.Number;
     this.setState({ OthersCategoryType: othersCategoryType } as PieChartPopupState);
   }
 
-  onSliceLabelsPositionChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.setState({ SliceLabelsPosition: e.value } as PieChartPopupState);
+  onSliceLabelsPositionChanged(value: string) {
+    this.setState({ SliceLabelsPosition: value } as PieChartPopupState);
   }
-  onSliceLabelsMappingChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    let labelMapping = e.value;
+  onSliceLabelsMappingChanged(value: string) {
+    let labelMapping = value;
     let legendMapping = labelMapping.includes('Ratio') ? 'RatioAndName' : 'ValueAndName';
     this.setState({
       SliceLabelsMapping: labelMapping,
@@ -504,9 +473,8 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
     this.setState({ SliceValuesMapping: e.value } as PieChartPopupState);
   }
 
-  onSliceSortByColumnChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    let sliceSortOption: SliceSortOption = e.value as SliceSortOption;
+  onSliceSortByColumnChanged(value: string) {
+    let sliceSortOption: SliceSortOption = value as SliceSortOption;
     let oldData = this.state.DataSource;
     let newData: PieChartDataItem[] = PieChartUIHelper.sortDataSource(sliceSortOption, oldData);
 

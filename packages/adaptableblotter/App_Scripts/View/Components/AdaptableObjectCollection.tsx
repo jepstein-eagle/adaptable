@@ -1,7 +1,7 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
 import { PanelWithRow } from './Panels/PanelWithRow';
-import { ListGroup } from 'react-bootstrap';
+
 import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 
@@ -13,6 +13,7 @@ export interface AdaptableObjectCollectionProps
   reducedPanel?: boolean;
   allowOverflow?: boolean;
   cssClassName: string;
+  style?: React.CSSProperties;
   bsSize?: string;
 }
 
@@ -21,7 +22,10 @@ export class AdaptableObjectCollection extends React.Component<AdaptableObjectCo
     const allowOverflow: any = this.props.allowOverflow ? 'visible' : 'auto';
 
     return (
-      <div className={this.props.cssClassName + StyleConstants.ITEMS_TABLE}>
+      <div
+        className={this.props.cssClassName + StyleConstants.ITEMS_TABLE}
+        style={{ ...this.props.style }}
+      >
         <PanelWithRow
           cssClassName={this.props.cssClassName}
           border="none"
