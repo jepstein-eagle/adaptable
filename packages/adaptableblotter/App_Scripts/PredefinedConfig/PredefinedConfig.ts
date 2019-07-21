@@ -233,7 +233,7 @@ export interface PredefinedConfig {
    *
    * **This section can only be populated at Design Time and is never updated or amended by the User at Run Time.**
    */
-  Entitlement?: EntitlementsState;
+  Entitlements?: EntitlementsState;
 
   /**
    * State that manages UI elements in the Adaptable Blotter e.g. which colours to put in the default palette.

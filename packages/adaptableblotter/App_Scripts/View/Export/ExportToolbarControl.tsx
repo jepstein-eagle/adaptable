@@ -92,7 +92,6 @@ class ExportToolbarControlComponent extends React.Component<
 
     let csvMenuItem = (
       <MenuItem
-        disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
         onClick={() => this.props.onApplyExport(currentReport, ExportDestination.CSV)}
         key={'csv'}
       >
@@ -101,7 +100,6 @@ class ExportToolbarControlComponent extends React.Component<
     );
     let clipboardMenuItem = (
       <MenuItem
-        disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
         onClick={() => this.props.onApplyExport(currentReport, ExportDestination.Clipboard)}
         key={'clipboard'}
       >
@@ -117,7 +115,6 @@ class ExportToolbarControlComponent extends React.Component<
     ) {
       openfinExcelMenuItem = (
         <MenuItem
-          disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
           onClick={() => this.props.onReportStopLive(currentReport, ExportDestination.OpenfinExcel)}
           key={'OpenfinExcel'}
         >
@@ -128,7 +125,6 @@ class ExportToolbarControlComponent extends React.Component<
     } else {
       openfinExcelMenuItem = (
         <MenuItem
-          disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
           onClick={() => this.props.onApplyExport(currentReport, ExportDestination.OpenfinExcel)}
           key={'OpenfinExcel'}
         >
@@ -146,7 +142,6 @@ class ExportToolbarControlComponent extends React.Component<
     ) {
       iPushPullExcelMenuItem = (
         <MenuItem
-          disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
           onClick={() => this.props.onReportStopLive(currentReport, ExportDestination.iPushPull)}
           key={'IPPExcel'}
         >
@@ -157,7 +152,6 @@ class ExportToolbarControlComponent extends React.Component<
     } else {
       iPushPullExcelMenuItem = (
         <MenuItem
-          disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
           onClick={() => this.props.onApplyExport(currentReport, ExportDestination.iPushPull)}
           key={'IPPExcel'}
         >
@@ -169,7 +163,6 @@ class ExportToolbarControlComponent extends React.Component<
 
     let glue42MenuItem = (
       <MenuItem
-        disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
         onClick={() => this.props.onApplyExport(currentReport, ExportDestination.Glue42)}
         key={'Glue42'}
       >
@@ -228,28 +221,27 @@ class ExportToolbarControlComponent extends React.Component<
           )}
         </InputGroup>
 
+        <DropdownButton
+          style={{ marginLeft: '5px' }}
+          bsSize={this.props.DashboardSize}
+          bsStyle={exportDropdownStyle}
+          title={exportGlyph}
+          id="exportDropdown"
+          disabled={currentReportId == selectReportString}
+        >
+          {csvMenuItem}
+          {clipboardMenuItem}
+          {OpenfinHelper.isRunningInOpenfin() &&
+            OpenfinHelper.isExcelOpenfinLoaded() &&
+            openfinExcelMenuItem}
+          {iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem}
+          {Glue42Helper.isRunningGlue42() && glue42MenuItem}
+        </DropdownButton>
         <span
           className={
             this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
           }
         >
-          <DropdownButton
-            style={{ marginLeft: '5px' }}
-            bsSize={this.props.DashboardSize}
-            bsStyle={exportDropdownStyle}
-            title={exportGlyph}
-            id="exportDropdown"
-            disabled={currentReportId == selectReportString}
-          >
-            {csvMenuItem}
-            {clipboardMenuItem}
-            {OpenfinHelper.isRunningInOpenfin() &&
-              OpenfinHelper.isExcelOpenfinLoaded() &&
-              openfinExcelMenuItem}
-            {iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem}
-            {Glue42Helper.isRunningGlue42() && glue42MenuItem}
-          </DropdownButton>
-
           <ButtonEdit
             style={{ marginLeft: '2px' }}
             onClick={() => this.props.onEditReport()}

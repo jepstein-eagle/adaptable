@@ -14,6 +14,7 @@ import {
 } from '../../../../App_Scripts/types';
 import { GridOptions } from 'ag-grid-community';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { ActionColumnEventArgs } from '../../../../App_Scripts/Api/Events/BlotterEvents';
 
 var adaptableblotter: IAdaptableBlotter;
 
@@ -38,6 +39,11 @@ function InitAdaptableBlotter() {
   adaptableblotter.api.eventApi
     .onSearchChanged()
     .Subscribe((sender, searchChangedArgs) => listenToSearchChange(searchChangedArgs));
+  adaptableblotter.api.eventApi
+    .onActionColumnClicked()
+    .Subscribe((sender, actionColumnEventArgs) =>
+      listenToActionColumnClicked(actionColumnEventArgs)
+    );
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
 }
 
@@ -54,6 +60,11 @@ function listenToSearchChange(searchChangedArgs: SearchChangedEventArgs) {
 function listenToAlertFired(alertFiredArgs: AlertFiredEventArgs) {
   console.log('alert fired event received');
   console.log(alertFiredArgs.alert);
+}
+
+function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnEventArgs) {
+  console.log('alert fired event received');
+  console.log(actionColumnEventArgs);
 }
 
 export default () => {

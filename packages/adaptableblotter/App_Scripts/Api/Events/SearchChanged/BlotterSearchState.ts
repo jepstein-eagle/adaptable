@@ -7,7 +7,7 @@ import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilte
  */
 export interface BlotterSearchState {
   /**
-   * Current Static Data Source (if any selected)
+   * Current Data Source (if any selected)
    */
   dataSource: DataSource;
   /**
@@ -15,7 +15,7 @@ export interface BlotterSearchState {
    */
   advancedSearch: AdvancedSearch;
   /**
-   * Current live Quick Search text. (Value can be null)
+   * Current live Quick Search text. (Value can be null / empty)
    */
   quickSearch: string;
   /**

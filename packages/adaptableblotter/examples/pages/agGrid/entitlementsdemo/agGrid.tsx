@@ -17,12 +17,6 @@ import AdaptableBlotter from '../../../../App_Scripts/agGrid';
 import { AdaptableBlotterOptions, PredefinedConfig } from '../../../../App_Scripts/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-/*
-Basic demo that just tests that we can create an agGrid and an Adaptable Blotter working together
-No JSON or anything complicated
-Nor do we create the ag-Grid
-*/
-
 LicenseManager.setLicenseKey(process.env.ENTERPRISE_LICENSE!);
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
@@ -31,7 +25,7 @@ function InitAdaptableBlotter() {
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
-    'basic demo'
+    'entitlements demo'
   );
 
   adaptableBlotterOptions.predefinedConfig = demoConfig;
@@ -40,7 +34,24 @@ function InitAdaptableBlotter() {
   adaptableblotter.applyLightTheme();
 }
 
-let demoConfig: PredefinedConfig = {};
+let demoConfig: PredefinedConfig = {
+  Entitlements: {
+    FunctionEntitlements: [
+      {
+        FunctionName: 'ColumnCategory',
+        AccessLevel: 'Hidden',
+      },
+      {
+        FunctionName: 'AdvancedSearch',
+        AccessLevel: 'Hidden',
+      },
+      {
+        FunctionName: 'Export',
+        AccessLevel: 'ReadOnly',
+      },
+    ],
+  },
+};
 
 export default () => {
   useEffect(() => {
