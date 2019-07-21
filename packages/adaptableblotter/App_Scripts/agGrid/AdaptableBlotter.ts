@@ -2052,6 +2052,10 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // but you can also clsoe the menu from filter and clicking outside the menu....
       const colId: string = params.column.getColId();
 
+      // not quite sure we why do it this way
+      // we clear the column menu
+      // set all the items
+      // then read them 5 lines below !....
       this.dispatchAction(MenuRedux.ClearColumntMenu());
       const column: IColumn = ColumnHelper.getColumnFromId(colId, this.api.gridApi.getColumns());
       if (column != null) {
@@ -2092,6 +2096,26 @@ export class AdaptableBlotter implements IAdaptableBlotter {
 
             });
 */
+
+    const originalgetContextMenuItems = this.gridOptions.getContextMenuItems;
+    this.gridOptions.getContextMenuItems = (params: GetContextMenuItemsParams) => {
+      // this is the agGrid Context Menu that we might want to listen to...
+
+      let colMenuItems: (string | MenuItemDef)[];
+      // if there was an initial implementation we init the list of menu items with this one, otherwise we take default items
+      // this allows us to ensure that devs can still create their own agGrid context menu without losing ours
+      if (originalgetContextMenuItems) {
+        const originalContexttems = originalgetContextMenuItems(params);
+        colMenuItems = originalContexttems.slice(0);
+      } else {
+        colMenuItems = params.defaultItems.slice(0);
+      }
+      colMenuItems.push('separator');
+
+      // this is where we will add extra itesm...
+
+      return colMenuItems;
+    };
   }
 
   public addPercentBar(pcr: PercentBar): void {
@@ -2466,9 +2490,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private applyFinalRendering(): void {
     // Apply row styles here?  weird that it cannot find the method in Helper.
     this.agGridHelper.setUpRowStyles();
-
-    // Create a context menu - needs work but we can do some cool things here
-    this.agGridHelper.buildContextMenu();
 
     // not sure if this is the right place here.
     // perhaps we need some onDataLoaded event??

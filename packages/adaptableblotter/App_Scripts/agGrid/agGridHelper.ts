@@ -388,8 +388,4 @@ export class agGridHelper {
       }
     }
   }
-
-  public buildContextMenu(): void {
-    // dtodo
-  }
 }
