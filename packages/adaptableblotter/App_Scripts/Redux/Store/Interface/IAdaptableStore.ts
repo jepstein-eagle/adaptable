@@ -36,6 +36,7 @@ import { EntitlementsState } from '../../../PredefinedConfig/DesignTimeState/Ent
 import { UserInterfaceState } from '../../../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { SystemFilterState } from '../../../PredefinedConfig/DesignTimeState/SystemFilterState';
 import { ActionColumnState } from '../../../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { NamedFilterState } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
 
 export interface AdaptableBlotterState {
   [s: string]: ConfigState;
@@ -71,6 +72,7 @@ export interface AdaptableBlotterState {
   FreeTextColumn: FreeTextColumnState;
   Layout: LayoutState;
   ColumnCategory: ColumnCategoryState;
+  NamedFilter: NamedFilterState;
   PercentBar: PercentBarState;
   PlusMinus: PlusMinusState;
   QuickSearch: QuickSearchState;

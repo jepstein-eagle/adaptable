@@ -13,6 +13,7 @@ import { createUuid } from '../../PredefinedConfig/Uuid';
 import ColumnHelper from './ColumnHelper';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
+import { GridCell } from '../Interface/SelectedCell/GridCell';
 
 export const ALL_DATA_REPORT = 'All Data';
 export const VISIBLE_DATA_REPORT = 'Visible Data';
@@ -141,8 +142,54 @@ export function ConvertReportToArray(
       break;
 
     case ReportRowScope.SelectedRows:
-      // we used to have funcitonality here but it doesnt make sense and i dont think we offer this
-      // and if we do then we need to do redo it propertly.
+      let selectedCellInfo: ISelectedCellInfo = blotter.api.gridApi.getSelectedCellInfo();
+      console.log(selectedCellInfo);
+
+      let colNames: string[] = ReportColumns.map(c => c.FriendlyName);
+      // im ging to assume for now that the selection is ALWAYS rectangular
+      // if that is wrong then we need to revist...
+      let values: any[] = [];
+      selectedCellInfo.GridCells.forEach(gc => {
+        //   values.push(blotter.getDisplayValue(gc.primaryKeyValue, gc.columnId));
+      });
+      console.log(values);
+      /*   
+      for (var keyValuePair of selectedCells.Selection) {
+        let values: any[] = [];
+        if (keyValuePair[1].length != colNames.length) {
+          return {
+            ActionReturn: [],
+            Alert: {
+              Header: 'Report Error',
+              Msg: 'Selected cells report should have the same set of columns',
+              MessageType: MessageType.Error,
+              ShowAsPopup: true,
+            },
+          };
+        }
+        for (var cvPair of keyValuePair[1]) {
+          if (
+            !colNames.find(
+              x => x == ReportColumns.find(c => c.ColumnId == cvPair.columnId).FriendlyName
+            )
+          ) {
+            return {
+              ActionReturn: [],
+              Alert: {
+                Header: 'Report Error',
+                Msg: 'Selected cells report should have the same set of columns',
+                MessageType: MessageType.Error,
+                ShowAsPopup: true,
+              },
+            };
+          }
+          //we want the displayValue now
+          values.push(blotter.getDisplayValue(keyValuePair[0], cvPair.columnId));
+        }
+       
+      }
+      */
+      dataToExport.push(values);
       break;
   }
   return { ActionReturn: dataToExport };

@@ -1,8 +1,8 @@
-import { RunTimeState } from './RunTimeState';
 import { AdaptableBlotterObject } from '../AdaptableBlotterObject';
 import { DataType } from '../Common/Enums';
+import { DesignTimeState } from '../DesignTimeState/DesignTimeState';
 
-export interface NamedFilterState extends RunTimeState {
+export interface NamedFilterState extends DesignTimeState {
   NamedFilters?: NamedFilter[];
 }
 

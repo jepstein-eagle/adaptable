@@ -723,6 +723,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   // this method will returns selected cells only if selection mode is cells or multiple cells. If the selection mode is row it will returns nothing
   public setSelectedCells(): void {
     const selected: CellRange[] = this.gridOptions.api!.getCellRanges();
+    //  const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
+    //  const rows: any[] = this.gridOptions.api!.getSelectedRows();
+
     const columns: IColumn[] = [];
     const selectedCells: GridCell[] = [];
 

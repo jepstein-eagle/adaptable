@@ -34,6 +34,7 @@ import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux';
 import * as ActionColumnRedux from '../ActionsReducers/ActionColumnRedux';
 import * as FreeTextColumnRedux from '../ActionsReducers/FreeTextColumnRedux';
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux';
+import * as NamedFilterRedux from '../ActionsReducers/NamedFilterRedux';
 import * as ColumnCategoryRedux from '../ActionsReducers/ColumnCategoryRedux';
 import * as DashboardRedux from '../ActionsReducers/DashboardRedux';
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux';
@@ -152,6 +153,7 @@ const rootReducer: Redux.Reducer<AdaptableBlotterState> = Redux.combineReducers<
   FormatColumn: FormatColumnRedux.FormatColumnReducer,
   FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
   Layout: LayoutRedux.LayoutReducer,
+  NamedFilter: NamedFilterRedux.NamedFilterReducer,
   PercentBar: PercentBarRedux.PercentBarReducer,
   PlusMinus: PlusMinusRedux.PlusMinusReducer,
   QuickSearch: QuickSearchRedux.QuickSearchReducer,

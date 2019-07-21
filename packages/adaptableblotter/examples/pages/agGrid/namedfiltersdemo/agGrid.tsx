@@ -39,9 +39,24 @@ function InitAdaptableBlotter() {
           },
         },
         {
-          name: 'Older than Jonny',
+          name: 'Big Notional',
           func: (_record, _columnId, cellValue) => {
-            return cellValue > 49;
+            let currency: string = _record.data.currency;
+            if (currency === 'USD') {
+              return cellValue > 100;
+            } else if (currency === 'EUR') {
+              return cellValue > 50;
+            } else {
+              return cellValue > 25;
+            }
+          },
+        },
+        {
+          name: 'Business Year',
+          func: (_record, _columnId, cellValue) => {
+            let dateToTest = cellValue as Date;
+            let startBusinesssYear = new Date('2019-04-05');
+            return dateToTest > startBusinesssYear;
           },
         },
       ],
@@ -62,9 +77,14 @@ let demoConfig: PredefinedConfig = {
         PredicateName: 'USD Currency',
       },
       {
-        Name: 'Ancient',
+        Name: 'High',
         DataType: DataType.Number,
-        PredicateName: 'Older than Jonny',
+        PredicateName: 'Big Notional',
+      },
+      {
+        Name: 'Biz Year',
+        DataType: DataType.Date,
+        PredicateName: 'Business Year',
       },
     ],
   },

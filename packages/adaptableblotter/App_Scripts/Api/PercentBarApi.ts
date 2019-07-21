@@ -9,7 +9,7 @@ export class PercentBarApi extends ApiBase implements IPercentBarApi {
   }
 
   public getAllPercentBar(): PercentBar[] {
-    return this.getBlotterState().PercentBar.PercentBars;
+    return this.getPercentBarState().PercentBars;
   }
 
   public getPercentBarByColumn(columnId: string): PercentBar {

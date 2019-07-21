@@ -223,12 +223,12 @@ export function IsSatisfied(
 
     // Check for filter expressions if column fails
     if (!isColumnSatisfied && ArrayExtensions.IsNotNullOrEmpty(Expression.FilterExpressions)) {
-      let columnFilters = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
-      if (columnFilters) {
+      let filtersForColumn = Expression.FilterExpressions.find(x => x.ColumnId == columnId);
+      if (filtersForColumn) {
         // first evaluate any user filters
         let filteredUserFilters: UserFilter[] = FilterHelper.GetUserFilters(
           userFilters,
-          columnFilters.Filters
+          filtersForColumn.Filters
         );
         for (let userFilter of filteredUserFilters) {
           isColumnSatisfied = IsSatisfied(
@@ -250,7 +250,7 @@ export function IsSatisfied(
         // then evaluate any system filters
         if (!isColumnSatisfied) {
           let filteredSystemFilters: string[] = systemFilters.filter(
-            f => columnFilters.Filters.find(u => u == f) != null
+            f => filtersForColumn.Filters.find(u => u == f) != null
           );
           for (let systemFilter of filteredSystemFilters) {
             let valueToCheck: any = getColumnValue(columnId);
@@ -265,7 +265,7 @@ export function IsSatisfied(
         // then evaluate any named filters
         if (!isColumnSatisfied) {
           let filteredNamedFilters: NamedFilter[] = namedFilters.filter(f =>
-            columnFilters.Filters.find(u => u == f.Name)
+            filtersForColumn.Filters.find(u => u == f.Name)
           );
           for (let namedFilter of filteredNamedFilters) {
             let valueToCheck: any = getColumnValue(columnId);
