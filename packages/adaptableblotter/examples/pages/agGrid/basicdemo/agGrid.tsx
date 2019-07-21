@@ -56,66 +56,7 @@ function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnEventArg
   console.log(actionColumnEventArgs);
 }
 
-let demoConfig: PredefinedConfig = {
-  UserInterface: {
-    RowStyles: [
-      /*
-      {
-        Style: {
-          ForeColor: 'yellow',
-          BackColor: 'purple',
-          FontWeight: 'Bold',
-          // ClassName: 'allRowStyle',
-        },
-        RowType: 'All',
-      },
-      */
-      {
-        Style: {
-          ForeColor: 'yellow',
-          BackColor: 'orange',
-          FontWeight: 'Bold',
-          //    ClassName: 'evenRowStyle',
-        },
-        RowType: 'Even',
-      },
-      {
-        Style: {
-          ForeColor: 'cyan',
-          BackColor: 'brown',
-          FontStyle: 'Italic',
-          ClassName: 'oddRowStyle',
-        },
-        RowType: 'Odd',
-      },
-    ],
-  },
-
-  ActionColumn: {
-    ActionColumns: [
-      {
-        ColumnId: 'Hello',
-        ButtonText: 'Edit',
-      },
-    ],
-  },
-
-  ColumnFilter: {
-    ColumnFilters: [
-      {
-        Filter: {
-          ColumnValueExpressions: [
-            {
-              ColumnDisplayValues: ['EUR', 'GBP'],
-              ColumnId: 'currency',
-            },
-          ],
-        },
-        ColumnId: 'currency',
-      },
-    ],
-  },
-};
+let demoConfig: PredefinedConfig = {};
 
 export default () => {
   useEffect(() => {

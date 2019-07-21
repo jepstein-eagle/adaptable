@@ -5,6 +5,26 @@ import { IAdaptableBlotter } from '../types';
  *
  * Will contain properties required for more advanced scenarios.
  *
+ * ```ts
+ * advancedOptions = {
+ * userFunctions: {
+ *   namedFilterFunctions: [
+ *   {
+ *     name: 'USD Currency',
+ *     func: (_record, _columnId, cellValue) => {
+ *        return cellValue === 'USD';
+ *     },
+ *   },
+ *   {
+ *     name: 'Over 100',
+ *     func: (_record, _columnId, cellValue) => {
+ *       return cellValue > 100;
+ *     },
+ *   },
+ * ],
+ * },
+ *};
+ * ```
  */
 export interface AdvancedOptions {
   /**

@@ -53,7 +53,7 @@ export interface FilterOptions {
    *
    * **Default Value: Always**
    */
-  filterActionOnUserDataChange?: IFilterActionOnDataChange;
+  filterActionOnUserDataChange?: FilterActionOnDataChange;
   /**
    * Whether to to re-apply Adaptable Blotter filtering whenever data updates or ticks in the background (ie. not result of user action)
    *
@@ -63,7 +63,7 @@ export interface FilterOptions {
    *
    * **Default Value: Never**
    */
-  filterActionOnExternalDataChange?: IFilterActionOnDataChange;
+  filterActionOnExternalDataChange?: FilterActionOnDataChange;
 }
 
 /**
@@ -73,7 +73,7 @@ export interface FilterOptions {
  *
  * If the 'runFilter' value is 'Throttle' then the 'throttleDelay' property should be additionally set.
  */
-export interface IFilterActionOnDataChange {
+export interface FilterActionOnDataChange {
   /**
    * When to re-apply Filters
    */
