@@ -90,6 +90,9 @@ export const DefaultAdaptableBlotterOptions: AdaptableBlotterOptions = {
     showAdaptableBlotterToolPanel: false,
   },
   advancedOptions: {
-    userFunctions: {},
+    userFunctions: {
+      namedFilterFunctions: [],
+      actionColumnFunctions: [],
+    },
   },
 };

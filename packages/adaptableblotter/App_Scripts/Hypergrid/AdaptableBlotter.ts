@@ -53,7 +53,7 @@ import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
 import * as _ from 'lodash';
 import { CellSummaryStrategy } from '../Strategy/CellSummaryStrategy';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
+import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
 import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
@@ -539,7 +539,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public setSelectedCells(): void {
     let selected: Array<any> = this.hyperGrid.selectionModel.getSelections();
     let columns: IColumn[] = [];
-    let selectedCells: ISelectedCell[] = [];
+    let selectedCells: GridCell[] = [];
     for (let rectangle of selected) {
       //we don't use firstSelectedCell and lastSelectedCell as they keep the order of the click. i.e. firstcell can be below lastcell....
       for (
@@ -565,7 +565,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
       }
     }
-    let selectedCellInfo: ISelectedCellInfo = { Columns: columns, SelectedCells: selectedCells };
+    let selectedCellInfo: ISelectedCellInfo = { Columns: columns, GridCells: selectedCells };
     this.adaptableBlotterStore.TheStore.dispatch<GridRedux.GridSetSelectedCellsAction>(
       GridRedux.GridSetSelectedCells(selectedCellInfo)
     );

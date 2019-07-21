@@ -19,7 +19,7 @@ import { ICellInfo } from '../Utilities/Interface/ICellInfo';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
+import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -106,7 +106,7 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     let previewResults: IPreviewResult[] = [];
     let columnId: string = selectedCellInfo.Columns[0].ColumnId;
 
-    selectedCellInfo.SelectedCells.forEach((selectedCell: ISelectedCell) => {
+    selectedCellInfo.GridCells.forEach((selectedCell: GridCell) => {
       let newValue: number;
       switch (smartEditOperation) {
         case MathOperation.Add:

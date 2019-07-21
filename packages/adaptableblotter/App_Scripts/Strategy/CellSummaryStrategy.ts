@@ -5,7 +5,7 @@ import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { ICellSummaryStrategy } from './Interface/ICellSummaryStrategy';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { ICellSummmary } from '../Utilities/Interface/SelectedCell/ICellSummmary';
-import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
+import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
 import { DataType, CellSummaryOptionalOperation } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
@@ -38,7 +38,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
         }
       });
 
-      selectedCellInfo.SelectedCells.forEach((selectedCell: ISelectedCell) => {
+      selectedCellInfo.GridCells.forEach((selectedCell: GridCell) => {
         let value = selectedCell.value;
         allValues.push(value);
 

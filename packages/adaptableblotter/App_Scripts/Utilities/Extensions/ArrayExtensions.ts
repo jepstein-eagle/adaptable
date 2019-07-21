@@ -13,7 +13,7 @@ export function NotCorrectLength(arrayToCheck: any[], requiredLength: number): b
 }
 
 export function AddItem(array: any[], itemToAdd: any): void {
-  if (this.NotContainsItem(array, itemToAdd)) {
+  if (ArrayExtensions.NotContainsItem(array, itemToAdd)) {
     array.push(itemToAdd);
   }
 }
@@ -33,11 +33,11 @@ export function RetrieveDistinct(array: any[]): any[] {
   return Array.from(new Set(array.map(item => item)));
 }
 
-export function IsNull(arrayToCheck: any[]): boolean {
+export function IsNull(arrayToCheck: any[] | undefined | null): boolean {
   return arrayToCheck == null || arrayToCheck == undefined;
 }
 
-export function IsNotNull(arrayToCheck: any[]): boolean {
+export function IsNotNull(arrayToCheck: any[] | undefined | null): boolean {
   return !ArrayExtensions.IsNull(arrayToCheck);
 }
 
@@ -53,7 +53,7 @@ export function IsNullOrEmpty(arrayToCheck: any[]): boolean {
   return ArrayExtensions.IsNull(arrayToCheck) || ArrayExtensions.IsEmpty(arrayToCheck);
 }
 
-export function IsNotNullOrEmpty(arrayToCheck: any[]): boolean {
+export function IsNotNullOrEmpty(arrayToCheck: any[] | undefined | null): boolean {
   return ArrayExtensions.IsNotNull(arrayToCheck) && ArrayExtensions.IsNotEmpty(arrayToCheck);
 }
 

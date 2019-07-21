@@ -1,6 +1,6 @@
 import { IColumn } from '../IColumn';
-import { ISelectedCell } from './ISelectedCell';
+import { GridCell } from './GridCell';
 export interface ISelectedCellInfo {
   Columns: IColumn[];
-  SelectedCells: ISelectedCell[];
+  GridCells: GridCell[];
 }

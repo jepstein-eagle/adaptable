@@ -16,7 +16,7 @@ import { BULK_UPDATE_APPLY } from '../Redux/ActionsReducers/BulkUpdateRedux';
 import StringExtensions from '../Utilities/Extensions/StringExtensions';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
+import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -102,7 +102,7 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
           break;
       }
 
-      selectedCellInfo.SelectedCells.forEach((selectedCell: ISelectedCell) => {
+      selectedCellInfo.GridCells.forEach((selectedCell: GridCell) => {
         let dataChangedEvent: DataChangedInfo = {
           OldValue: selectedCell.value,
           NewValue: typedBulkUpdateValue,

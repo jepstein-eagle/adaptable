@@ -320,11 +320,9 @@ export class agGridHelper {
       if (allRowStyle) {
         if (StringExtensions.IsNotNullOrEmpty(allRowStyle.Style.ClassName)) {
           // we have a row style name so we can just set that for the whole grid and no need to use the function
-          console.log('setting stylename for whole grid');
           this.gridOptions.rowClass = allRowStyle.Style.ClassName;
         } else {
           // no row style name so se the rowstyle - again no need to use a function
-          console.log('setting style for whole grid');
           this.gridOptions.rowStyle = {
             background: allRowStyle.Style.BackColor,
             color: allRowStyle.Style.ForeColor,
@@ -348,7 +346,6 @@ export class agGridHelper {
           (evenRowStyle && emptyEvenRowStyleName) || (oddRowStyle && emptyOddRowStyleName);
 
         if (evenRowStyleName || oddRowStyleName) {
-          console.log('setting function stylename for whole grid');
           this.gridOptions.getRowClass = function(params) {
             if (evenRowStyleName) {
               if (params.node.rowIndex % 2 === 0) {
@@ -364,7 +361,6 @@ export class agGridHelper {
         }
 
         if (atLeastOneNormalStyle) {
-          console.log('setting function style for whole grid');
           this.gridOptions.getRowStyle = function(params: any) {
             if (evenRowStyle && emptyEvenRowStyleName) {
               if (params.node.rowIndex % 2 === 0) {

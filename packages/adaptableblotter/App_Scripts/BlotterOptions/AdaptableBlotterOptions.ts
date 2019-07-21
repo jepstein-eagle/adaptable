@@ -162,7 +162,7 @@ export interface AdaptableBlotterOptions {
   chartOptions?: ChartOptions;
 
   /**
-   * General options to manage the Adaptable Blotter
+   * General options to manage the Adaptable Blotter.
    *
    * Essentially those options that didn't fit into of the specific categories.
    *
@@ -170,12 +170,19 @@ export interface AdaptableBlotterOptions {
    */
   generalOptions?: GeneralOptions;
 
+  /**
+   * A set of advanced options for the Adaptable Blotter.
+   *
+   * The properties in this section are used for more advanced scenarios.
+   *
+   * Currently it contains properties for managing fumctions with developers provide (that cannot be stored in the 'normal' way with JSON).
+   */
   advancedOptions?: AdvancedOptions;
 
   /**
    * Configuration settings for iPushPull users.
    *
-   * Required if using iPushPull to display / send live report data
+   * Required if using iPushPull to display / send live report data.
    *
    * **NOTE: a valid iPushPull licence is required to access this functionality**
    */

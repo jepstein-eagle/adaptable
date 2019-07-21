@@ -1,6 +1,3 @@
-import { NamedFilterPredicate } from '../PredefinedConfig/RunTimeState/NamedFilterState';
-import { ActionColumnTestFunction } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
-
 /**
  * General options section of Adaptable Blotter Options.
  *

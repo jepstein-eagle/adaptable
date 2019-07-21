@@ -1,4 +1,4 @@
-export interface ISelectedCell {
+export interface GridCell {
   columnId: string;
   value: any;
   primaryKeyValue: any;

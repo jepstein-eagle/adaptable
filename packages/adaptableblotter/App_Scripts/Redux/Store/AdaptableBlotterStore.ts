@@ -2279,11 +2279,11 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
 
           case PlusMinusRedux.PLUS_MINUS_APPLY: {
             // This is for the very rare use case that a Plus Minus breaks validation and the user wants to continue
-            let plusMinusStrategy = <IPlusMinusStrategy>(
-              blotter.strategies.get(StrategyConstants.PlusMinusStrategyId)
-            );
+            // in which case we just need to apply the values to the Grid
             let actionTyped = <PlusMinusRedux.PlusMinusApplyAction>action;
-            plusMinusStrategy.setPlusMinusValues(actionTyped.CellInfos);
+            if (ArrayExtensions.IsNotNullOrEmpty(actionTyped.CellInfos)) {
+              blotter.setValueBatch(actionTyped.CellInfos);
+            }
             middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
             return next(action);
           }

@@ -86,7 +86,7 @@ import { IColumn } from '../Utilities/Interface/IColumn';
 import { IBlotterApi } from '../Api/Interface/IBlotterApi';
 import { AdaptableBlotterOptions } from '../BlotterOptions/AdaptableBlotterOptions';
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
-import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
+import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
 import { iPushPullHelper } from '../Utilities/Helpers/iPushPullHelper';
@@ -724,7 +724,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   public setSelectedCells(): void {
     const selected: CellRange[] = this.gridOptions.api!.getCellRanges();
     const columns: IColumn[] = [];
-    const selectedCells: ISelectedCell[] = [];
+    const selectedCells: GridCell[] = [];
 
     if (selected) {
       // we iterate for each ranges
@@ -750,7 +750,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
                 const primaryKey = this.getPrimaryKeyValueFromRecord(rowNode);
                 const value = this.gridOptions.api!.getValue(column, rowNode);
 
-                const selectedCell: ISelectedCell = {
+                const selectedCell: GridCell = {
                   columnId: colId,
                   value: value,
                   primaryKeyValue: primaryKey,
@@ -762,7 +762,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
       });
     }
-    const selectedCellInfo: ISelectedCellInfo = { Columns: columns, SelectedCells: selectedCells };
+    const selectedCellInfo: ISelectedCellInfo = { Columns: columns, GridCells: selectedCells };
     this.dispatchAction(GridRedux.GridSetSelectedCells(selectedCellInfo));
 
     // this._onSelectedCellsChanged.Dispatch(this, this);

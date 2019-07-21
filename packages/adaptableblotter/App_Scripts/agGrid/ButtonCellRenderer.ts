@@ -24,26 +24,28 @@ export class ButtonCellRenderer implements ICellRendererComp {
       this.eGui = document.createElement('div');
       this.eGui.style.display = 'inline-block';
 
-      if (StringExtensions.IsNotNullOrEmpty(actionCol.TestFunctionName)) {
+      let renderFunc: ActionColumnFunction | undefined;
+      if (StringExtensions.IsNotNullOrEmpty(actionCol.RenderFunctionName)) {
         if (
           ArrayExtensions.IsNotNullOrEmpty(
-            blotter.blotterOptions.advancedOptions.userFunctions.actionColumnFunctions
+            blotter.blotterOptions.advancedOptions!.userFunctions!.actionColumnFunctions!
           )
         ) {
-          let test: ActionColumnFunction = blotter.blotterOptions.advancedOptions.userFunctions.actionColumnFunctions.find(
-            acf => acf.name == actionCol.TestFunctionName
+          renderFunc = blotter.blotterOptions.advancedOptions!.userFunctions!.actionColumnFunctions!.find(
+            acf => acf.name == actionCol!.RenderFunctionName
           );
-
-          let satisfyFunction = test.func;
-          satisfyFunction();
         }
       }
 
-      this.eGui.innerHTML = actionCol.render
-        ? actionCol.render(params, blotter)
-        : '<span class="my-css-class"><button class="btn-simple">' +
+      if (renderFunc) {
+        let satisfyFunction = renderFunc.func;
+        this.eGui.innerHTML = satisfyFunction(params, blotter);
+      } else {
+        this.eGui.innerHTML =
+          '<span class="my-css-class"><button class="btn-simple">' +
           actionCol.ButtonText +
           '</button></span>';
+      }
 
       // add event listener to button
       this.eventListener = function() {

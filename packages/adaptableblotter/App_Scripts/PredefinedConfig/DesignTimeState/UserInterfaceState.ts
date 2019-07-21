@@ -73,7 +73,14 @@ export interface UserInterfaceState extends DesignTimeState {
  * The values listed are those that will be shown in any Dropdown, in the filter for the Column and when using that Column in a Query.
  */
 export interface PermittedColumnValues {
+  /**
+   * Which Column has the Permitted Values
+   */
   ColumnId: string;
+
+  /**
+   * The Permitted Values that will be shown in the Column Filter and when building a Query.
+   */
   PermittedValues: any[];
 }
 

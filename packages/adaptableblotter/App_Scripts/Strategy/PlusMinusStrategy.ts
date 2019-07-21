@@ -1,4 +1,4 @@
-import { PlusMinusState, PlusMinusRule } from '../PredefinedConfig/RunTimeState/PlusMinusState';
+import { PlusMinusRule } from '../PredefinedConfig/RunTimeState/PlusMinusState';
 import { IPlusMinusStrategy } from './Interface/IPlusMinusStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as Redux from 'redux';
@@ -20,7 +20,7 @@ import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper'
 import { ISelectedCellInfo } from '../Utilities/Interface/SelectedCell/ISelectedCellInfo';
 import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidationState';
 import { KEY_DOWN_EVENT } from '../Utilities/Constants/GeneralConstants';
-import { ISelectedCell } from '../Utilities/Interface/SelectedCell/ISelectedCell';
+import { GridCell } from '../Utilities/Interface/SelectedCell/GridCell';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(blotter: IAdaptableBlotter) {
@@ -66,9 +66,9 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         }
         let selectedCellInfo: ISelectedCellInfo = this.blotter.api.gridApi.getSelectedCellInfo();
 
-        let isPlusMinusApplicable: boolean = this.canApplyPlusMinus(
+        let isPlusMinusApplicable: boolean = this.applyPlusMinus(
           plusMinusRules,
-          selectedCellInfo.SelectedCells,
+          selectedCellInfo.GridCells,
           side
         );
         if (isPlusMinusApplicable) {
@@ -78,9 +78,9 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     }
   }
 
-  public canApplyPlusMinus(
+  public applyPlusMinus(
     plusMinusRules: PlusMinusRule[],
-    cellsToUpdate: ISelectedCell[],
+    cellsToUpdate: GridCell[],
     side: number
   ): boolean {
     let shouldApplyPlusMinus = false;
@@ -90,7 +90,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     let failedWarningEdits: CellValidationRule[] = [];
     let warningValues: ICellInfo[] = [];
 
-    cellsToUpdate.forEach((selectedCell: ISelectedCell) => {
+    cellsToUpdate.forEach((selectedCell: GridCell) => {
       let rulesForColumn: PlusMinusRule[] = plusMinusRules.filter(
         pmr => pmr.ColumnId == selectedCell.columnId
       );
@@ -174,7 +174,9 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     if (failedWarningEdits.length > 0) {
       this.ShowWarningMessages(failedWarningEdits, warningValues, successfulValues);
     } else {
-      this.setPlusMinusValues(successfulValues);
+      if (ArrayExtensions.IsNotNullOrEmpty(successfulValues)) {
+        this.blotter.setValueBatch(successfulValues);
+      }
     }
 
     return shouldApplyPlusMinus;
@@ -227,12 +229,6 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
         warningMessage
       );
       this.blotter.api.internalApi.showPopupConfirmation(confirmation);
-    }
-  }
-
-  public setPlusMinusValues(updatedCellValues: ICellInfo[]): void {
-    if (ArrayExtensions.IsNotNullOrEmpty(updatedCellValues)) {
-      this.blotter.setValueBatch(updatedCellValues);
     }
   }
 }
