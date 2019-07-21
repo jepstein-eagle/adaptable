@@ -18,9 +18,9 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     );
   }
 
-  public addContextMenuItem(column: IColumn): void {
-    if (this.canCreateContextMenuItem(column, this.blotter, 'columnfilter')) {
-      this.createContextMenuItemShowPopup(
+  public addColumnMenuItem(column: IColumn): void {
+    if (this.canCreateColumnMenuItem(column, this.blotter, 'columnfilter')) {
+      this.createColumnMenuItemShowPopup(
         'Create User Filter',
         ScreenPopups.UserFilterPopup,
         StrategyConstants.UserFilterGlyph,

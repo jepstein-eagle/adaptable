@@ -2806,8 +2806,8 @@ var adaptableBlotterMiddleware = (blotter: IAdaptableBlotter): any =>
               middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
             }
 
-            // create the menu
-            blotter.createMenu();
+            // create the main menu (in the home toolbar)
+            blotter.createMainMenu();
 
             return returnAction;
           }
@@ -2871,10 +2871,10 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.GRID_QUICK_FILTER_BAR_SHOW,
     GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
 
-    MenuRedux.SET_MENUITEMS,
-    MenuRedux.BUILD_COLUMN_CONTEXT_MENU,
-    MenuRedux.ADD_ITEM_COLUMN_CONTEXT_MENU,
-    MenuRedux.CLEAR_COLUMN_CONTEXT_MENU,
+    MenuRedux.SET_MAIN_MENUITEMS,
+    MenuRedux.BUILD_COLUMN_MENU,
+    MenuRedux.ADD_ITEM_COLUMN_MENU,
+    MenuRedux.CLEAR_COLUMN_MENU,
 
     PopupRedux.POPUP_SHOW_SCREEN,
     PopupRedux.POPUP_HIDE_SCREEN,

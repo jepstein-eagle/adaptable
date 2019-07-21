@@ -19,9 +19,9 @@ export class CellValidationStrategy extends AdaptableStrategyBase
     );
   }
 
-  public addContextMenuItem(column: IColumn): void {
-    if (this.canCreateContextMenuItem(column, this.blotter)) {
-      this.createContextMenuItemShowPopup(
+  public addColumnMenuItem(column: IColumn): void {
+    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+      this.createColumnMenuItemShowPopup(
         'Create Cell Validation Rule',
         ScreenPopups.CellValidationPopup,
         StrategyConstants.CellValidationGlyph,

@@ -1,4 +1,4 @@
-import { IMenuItem } from '../../Utilities/Interface/IMenu';
+import { AdaptableBlotterMenuItem } from '../../Utilities/Interface/AdaptableBlotterMenu';
 import { IColumn } from '../../Utilities/Interface/IColumn';
 import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
 
@@ -18,10 +18,10 @@ import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/Entitlement
 
 export interface IStrategy {
   Id: string;
-  getPopupMenuItem(): IMenuItem;
+  getPopupMenuItem(): AdaptableBlotterMenuItem;
   getStrategyEntitlement(): IEntitlement;
   initializeWithRedux(): void;
-  addContextMenuItem(column: IColumn): void;
+  addColumnMenuItem(column: IColumn): void;
 }
 
 /**

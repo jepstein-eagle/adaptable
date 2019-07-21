@@ -19,14 +19,14 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
     );
   }
 
-  public addContextMenuItem(column: IColumn): void {
-    if (this.canCreateContextMenuItem(column, this.blotter)) {
+  public addColumnMenuItem(column: IColumn): void {
+    if (this.canCreateColumnMenuItem(column, this.blotter)) {
       if (
         this.blotter.api.freeTextColumnApi
           .getAllFreeTextColumn()
           .find(ftc => ftc.ColumnId == column.ColumnId)
       ) {
-        this.createContextMenuItemShowPopup(
+        this.createColumnMenuItemShowPopup(
           'Edit ' + StrategyConstants.FreeTextColumnStrategyName,
           ScreenPopups.FreeTextColumnPopup,
           StrategyConstants.FreeTextColumnGlyph,

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PanelProps, Panel, Row, Col, Radio } from 'react-bootstrap';
-import { ContextMenuTab } from '../../../PredefinedConfig/Common/Enums';
+import { ColumnMenuTab } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
@@ -13,8 +13,8 @@ export interface FilterFormPanelProps extends PanelProps {
 
   cssClassName: string;
 
-  ContextMenuTab: ContextMenuTab;
-  ContextMenuChanged: (e: any) => void;
+  ColumnMenuTab: ColumnMenuTab;
+  ColumnMenuTabChanged: (e: any) => void;
 
   IsAlwaysFilter: boolean;
 
@@ -48,7 +48,7 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
                   <Radio
                     inline
                     value="Menu"
-                    checked={this.props.ContextMenuTab == ContextMenuTab.Menu}
+                    checked={this.props.ColumnMenuTab == ColumnMenuTab.Menu}
                     onChange={e => this.onSelectMenu()}
                   >
                     Menu
@@ -61,7 +61,7 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
                   <Radio
                     inline
                     value="Filter"
-                    checked={this.props.ContextMenuTab == ContextMenuTab.Filter}
+                    checked={this.props.ColumnMenuTab == ColumnMenuTab.Filter}
                     onChange={e => this.onSelectFilter()}
                   >
                     Filter
@@ -73,12 +73,12 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
 
           <Col xs={2}>
             {this.props.clearFilterButton &&
-              this.props.ContextMenuTab == ContextMenuTab.Filter &&
+              this.props.ColumnMenuTab == ColumnMenuTab.Filter &&
               React.cloneElement(this.props.clearFilterButton, { style: { float: 'right' } })}
           </Col>
           <Col xs={2}>
             {this.props.saveButton &&
-              this.props.ContextMenuTab == ContextMenuTab.Filter &&
+              this.props.ColumnMenuTab == ColumnMenuTab.Filter &&
               React.cloneElement(this.props.saveButton, { style: { float: 'right' } })}
           </Col>
           {this.props.showCloseButton && (
@@ -105,10 +105,10 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
   }
 
   onSelectMenu(): any {
-    this.props.ContextMenuChanged(ContextMenuTab.Menu);
+    this.props.ColumnMenuTabChanged(ColumnMenuTab.Menu);
   }
 
   onSelectFilter(): any {
-    this.props.ContextMenuChanged(ContextMenuTab.Filter);
+    this.props.ColumnMenuTabChanged(ColumnMenuTab.Filter);
   }
 }

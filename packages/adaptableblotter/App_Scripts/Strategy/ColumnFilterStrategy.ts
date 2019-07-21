@@ -19,13 +19,13 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     );
   }
 
-  public addContextMenuItem(column: IColumn): void {
-    if (this.canCreateContextMenuItem(column, this.blotter, 'columnfilter')) {
+  public addColumnMenuItem(column: IColumn): void {
+    if (this.canCreateColumnMenuItem(column, this.blotter, 'columnfilter')) {
       let existingColumnFilter = this.blotter.api.columnFilterApi
         .getAllColumnFilter()
         .find(x => x.ColumnId == column.ColumnId);
       if (existingColumnFilter) {
-        this.createContextMenuItemReduxAction(
+        this.createColumnMenuItemReduxAction(
           'Clear Column Filter',
           StrategyConstants.ColumnFilterGlyph,
           ColumnFilterRedux.ColumnFilterClear(existingColumnFilter)

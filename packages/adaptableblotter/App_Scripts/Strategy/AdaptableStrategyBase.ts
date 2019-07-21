@@ -5,7 +5,7 @@ import { DataType } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { IColumn } from '../Utilities/Interface/IColumn';
 import { MenuItemShowPopup, MenuItemDoReduxAction } from '../Utilities/MenuItem';
-import { IMenuItem } from '../Utilities/Interface/IMenu';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 import { IEntitlement } from '../PredefinedConfig/DesignTimeState/EntitlementsState';
 
 /**
@@ -23,7 +23,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     this.blotter.adaptableBlotterStore.TheStore.subscribe(() => this.InitState());
   }
 
-  public popupMenuItem: IMenuItem;
+  public popupMenuItem: AdaptableBlotterMenuItem;
 
   protected InitState(): void {
     /**
@@ -36,7 +36,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
      */
   }
 
-  public getPopupMenuItem(): IMenuItem {
+  public getPopupMenuItem(): AdaptableBlotterMenuItem {
     if (!this.hasPopupMenu()) {
       return null;
     }
@@ -55,7 +55,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     // base class implementation which is empty
   }
 
-  public addContextMenuItem(column: IColumn): void {
+  public addColumnMenuItem(column: IColumn): void {
     // base class implementation which is empty
   }
 
@@ -103,8 +103,8 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     this.popupMenuItem = menuItemShowPopup;
   }
 
-  // direct actions called by the context menu - invisible if strategy is hidden or readonly
-  createContextMenuItemReduxAction(Label: string, GlyphIcon: string, Action: Action): any {
+  // direct actions called by the column menu - invisible if strategy is hidden or readonly
+  createColumnMenuItemReduxAction(Label: string, GlyphIcon: string, Action: Action): any {
     if (this.isVisibleStrategy() && !this.isReadOnlyStrategy()) {
       let menuItemShowPopup: MenuItemDoReduxAction = new MenuItemDoReduxAction(
         Label,
@@ -113,12 +113,12 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         GlyphIcon,
         true
       );
-      this.addContextMenuItemToStore(menuItemShowPopup);
+      this.addMenuItemToStore(menuItemShowPopup);
     }
   }
 
-  // popups called by the context menu - invisible if strategy is hidden or readonly
-  createContextMenuItemShowPopup(
+  // popups called by the column menu - invisible if strategy is hidden or readonly
+  createColumnMenuItemShowPopup(
     Label: string,
     ComponentName: string,
     GlyphIcon: string,
@@ -133,15 +133,15 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         true,
         PopupParams
       );
-      this.addContextMenuItemToStore(menuItemShowPopup);
+      this.addMenuItemToStore(menuItemShowPopup);
     }
   }
 
-  private addContextMenuItemToStore(menuItem: IMenuItem): void {
-    this.blotter.api.internalApi.addColumnContextMenuItem(menuItem);
+  private addMenuItemToStore(menuItem: AdaptableBlotterMenuItem): void {
+    this.blotter.api.internalApi.addColumnMenuItem(menuItem);
   }
 
-  canCreateContextMenuItem(
+  canCreateColumnMenuItem(
     column: IColumn,
     blotter: IAdaptableBlotter,
     functionType: string = ''

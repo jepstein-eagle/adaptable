@@ -21,8 +21,8 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     );
   }
 
-  public addContextMenuItem(column: IColumn): void {
-    if (this.canCreateContextMenuItem(column, this.blotter, 'numeric')) {
+  public addColumnMenuItem(column: IColumn): void {
+    if (this.canCreateColumnMenuItem(column, this.blotter, 'numeric')) {
       let percentBarExists: boolean = ArrayExtensions.ContainsItem(
         this.PercentBarState.PercentBars.map(f => f.ColumnId),
         column.ColumnId
@@ -30,7 +30,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
       let label = percentBarExists ? 'Edit ' : 'Create ';
       let popupParam = percentBarExists ? 'Edit|' : 'New|';
 
-      this.createContextMenuItemShowPopup(
+      this.createColumnMenuItemShowPopup(
         label + StrategyConstants.PercentBarStrategyName,
         ScreenPopups.PercentBarPopup,
         StrategyConstants.PercentBarGlyph,

@@ -214,6 +214,7 @@ export function CreateEmptyPercentBar(): PercentBar {
     PositiveColor: DEFAULT_DARK_GREEN_COLOR,
     NegativeColor: DEFAULT_DARK_RED_COLOR,
     ShowValue: false,
+    ShowToolTip: true,
     MaxValueColumnId: undefined,
     MinValueColumnId: undefined,
   };

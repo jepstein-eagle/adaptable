@@ -904,7 +904,7 @@ export class ExamplesHelper {
       field: 'tradeId',
       editable: true,
       type: 'abColDefNumber',
-      sortable: false,
+      sortable: true,
       filter: true,
       resizable: true,
       //   headerCheckboxSelection: true,
@@ -918,6 +918,7 @@ export class ExamplesHelper {
       sortable: true,
       enableRowGroup: true,
       type: 'abColDefString',
+      //  tooltipField: 'country',
       //  cellEditor: 'agLargeTextCellEditor',
     });
     schema.push({
@@ -974,6 +975,8 @@ export class ExamplesHelper {
       sortable: true,
       type: 'abColDefString',
       resizable: true,
+      tooltipComponent: 'percentBarTooltip',
+      //  tooltipField: 'counterparty',
       //   cellEditor: 'agSelectCellEditor',
       //  cellEditorParams: {
       //    values: ['English', 'Spanish', 'French', 'Portuguese', '(other)'],
@@ -986,6 +989,9 @@ export class ExamplesHelper {
       filter: true,
       editable: true,
       type: 'abColDefNumber',
+      sortable: true,
+      //  tooltipField: 'changeOnYear',
+      //  tooltipComponent: 'percentBarTooltip',
     });
 
     schema.push({

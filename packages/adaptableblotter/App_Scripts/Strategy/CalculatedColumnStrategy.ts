@@ -19,14 +19,14 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
     );
   }
 
-  public addContextMenuItem(column: IColumn): void {
-    if (this.canCreateContextMenuItem(column, this.blotter)) {
+  public addColumnMenuItem(column: IColumn): void {
+    if (this.canCreateColumnMenuItem(column, this.blotter)) {
       if (
         this.blotter.api.calculatedColumnApi
           .getAllCalculatedColumn()
           .find(cc => cc.ColumnId == column.ColumnId)
       ) {
-        this.createContextMenuItemShowPopup(
+        this.createColumnMenuItemShowPopup(
           'Edit ' + StrategyConstants.CalculatedColumnStrategyName,
           ScreenPopups.CalculatedColumnPopup,
           StrategyConstants.CalculatedColumnGlyph,

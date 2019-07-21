@@ -96,7 +96,7 @@ export interface IAdaptableBlotter {
   emit(eventName: string, data?: any): Promise<any>;
 
   // General
-  createMenu(): void;
+  createMainMenu(): void;
   setGridData(dataSource: any): void;
   reloadGrid(): void;
   redraw(): void;

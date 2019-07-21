@@ -1,5 +1,4 @@
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
-import { IMenuItem } from '../../Utilities/Interface/IMenu';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import { SystemState } from '../../PredefinedConfig/InternalState/SystemState';
@@ -7,6 +6,7 @@ import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import { Calendar } from '../../PredefinedConfig/RunTimeState/CalendarState';
 import { ChartData } from '../../PredefinedConfig/RunTimeState/ChartState';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
+import { AdaptableBlotterMenuItem } from '../../Utilities/Interface/AdaptableBlotterMenu';
 
 export interface IInternalApi {
   // System Redux
@@ -23,8 +23,8 @@ export interface IInternalApi {
   getLiveReports(): ILiveReport[];
 
   // Menu Redux
-  clearColumnContextMenu(): void;
-  addColumnContextMenuItem(menuItem: IMenuItem): void;
+  clearColumnMenu(): void;
+  addColumnMenuItem(menuItem: AdaptableBlotterMenuItem): void;
 
   // Popup Redux
   showPopupConfirmation(confirmation: IUIConfirmation): void;

@@ -39,10 +39,10 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     );
   }
 
-  public addContextMenuItem(column: IColumn): void {
-    if (this.canCreateContextMenuItem(column, this.blotter)) {
+  public addColumnMenuItem(column: IColumn): void {
+    if (this.canCreateColumnMenuItem(column, this.blotter)) {
       if (column && column.DataType == DataType.Number) {
-        this.createContextMenuItemShowPopup(
+        this.createColumnMenuItemShowPopup(
           'Create Plus/Minus Rule',
           ScreenPopups.PlusMinusPopup,
           StrategyConstants.PlusMinusGlyph,

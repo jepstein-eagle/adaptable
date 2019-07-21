@@ -15,7 +15,7 @@ import {
   SortOrder,
   DistinctCriteriaPairValue,
   LeafExpressionOperator,
-  ContextMenuTab,
+  ColumnMenuTab,
   AccessLevel,
 } from '../../../PredefinedConfig/Common/Enums';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
@@ -38,8 +38,8 @@ import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotte
 import { FilterFormPanel } from '../Panels/FilterFormPanel';
 import { ButtonSave } from '../Buttons/ButtonSave';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
-import { IMenuItem } from '../../../Utilities/Interface/IMenu';
 import { IUIPrompt } from '../../../Utilities/Interface/IMessage';
+import { AdaptableBlotterMenuItem } from '../../../Utilities/Interface/AdaptableBlotterMenu';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: IColumn;
@@ -48,21 +48,21 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   UserFilters: UserFilter[];
   SystemFilters: string[];
   ColumnFilters: ColumnFilter[];
-  ContextMenuItems: IMenuItem[];
+  MenuItems: AdaptableBlotterMenuItem[];
   EmbedColumnMenu: boolean;
   ShowCloseButton: boolean;
   onClearColumnFilter: (columnfilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
   onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
   onEditColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
   onHideFilterForm: () => GridRedux.FilterFormHideAction;
-  onContextMenuItemClick: (action: Redux.Action) => Redux.Action;
+  onMenuItemClick: (action: Redux.Action) => Redux.Action;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
 }
 
 export interface FilterFormState {
   ColumnValuePairs: Array<IRawValueDisplayValuePair>;
   ShowWaitingMessage: boolean;
-  SelectedTab: ContextMenuTab;
+  SelectedTab: ColumnMenuTab;
   DistinctCriteriaPairValue: DistinctCriteriaPairValue;
 }
 
@@ -73,7 +73,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     this.state = {
       ColumnValuePairs: [],
       ShowWaitingMessage: false,
-      SelectedTab: ContextMenuTab.Filter,
+      SelectedTab: ColumnMenuTab.Filter,
       DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
     };
   }
@@ -279,8 +279,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             cssClassName={cssClassName}
             style={panelStyle}
             className="ab_no-padding-except-top-panel ab_small-padding-panel"
-            ContextMenuTab={this.state.SelectedTab}
-            ContextMenuChanged={e => this.onSelectTab(e)}
+            ColumnMenuTab={this.state.SelectedTab}
+            ColumnMenuTabChanged={e => this.onSelectTab(e)}
             IsAlwaysFilter={this.props.EmbedColumnMenu}
             bsStyle="default"
             clearFilterButton={clearFilterButton}
@@ -288,10 +288,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             closeButton={closeButton}
             showCloseButton={this.props.ShowCloseButton}
           >
-            {this.state.SelectedTab == ContextMenuTab.Menu ? (
+            {this.state.SelectedTab == ColumnMenuTab.Menu ? (
               <ListBoxMenu
-                ContextMenuItems={this.props.ContextMenuItems}
-                onContextMenuItemClick={action => this.onContextMenuItemClick(action)}
+                MenuItems={this.props.MenuItems}
+                onMenuItemClick={action => this.onMenuItemClick(action)}
               />
             ) : (
               <div>
@@ -484,8 +484,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     this.props.onHideFilterForm();
   }
 
-  onContextMenuItemClick(action: Redux.Action): any {
-    this.props.onContextMenuItemClick(action);
+  onMenuItemClick(action: Redux.Action): any {
+    this.props.onMenuItemClick(action);
     this.props.onHideFilterForm();
   }
 }
@@ -498,14 +498,14 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
     UserFilters: state.UserFilter.UserFilters,
     SystemFilters: state.SystemFilter.SystemFilters,
-    ContextMenuItems: state.Menu.ContextMenu.Items,
+    ColumnMenuItems: state.Menu.ColumnMenu.MenuItems,
     ShowCloseButton: ownProps.ShowCloseButton,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<AdaptableBlotterState>) {
   return {
-    onContextMenuItemClick: (action: Redux.Action) => dispatch(action),
+    onMenuItemClick: (action: Redux.Action) => dispatch(action),
     onClearColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
     onAddColumnFilter: (columnFilter: ColumnFilter) =>

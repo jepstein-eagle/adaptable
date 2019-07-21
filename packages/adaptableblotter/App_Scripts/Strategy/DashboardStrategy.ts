@@ -19,16 +19,16 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
     );
   }
 
-  public addContextMenuItem(): void {
+  public addColumnMenuItem(): void {
     // for now just show / hide = lets worry about minimise later..
     if (this.blotter.api.dashboardApi.GetState().DashboardVisibility == Visibility.Hidden) {
-      this.createContextMenuItemReduxAction(
+      this.createColumnMenuItemReduxAction(
         'Show Dashboard',
         StrategyConstants.DashboardGlyph,
         DashboardRedux.DashboardSetVisibility(Visibility.Visible)
       );
     } else {
-      this.createContextMenuItemReduxAction(
+      this.createColumnMenuItemReduxAction(
         'Hide Dashboard',
         StrategyConstants.DashboardGlyph,
         DashboardRedux.DashboardSetVisibility(Visibility.Hidden)

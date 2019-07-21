@@ -85,7 +85,6 @@ import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy';
 import { ConditionalStyleStrategyHypergrid } from './Strategy/ConditionalStyleStrategyHypergrid';
 import { FlashingCellsStrategyHypergrid } from './Strategy/FlashingCellsStrategyHypergrid';
 import { FormatColumnStrategyHypergrid } from './Strategy/FormatColumnStrategyHypergrid';
-import { IMenuItem } from '../Utilities/Interface/IMenu';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
@@ -116,6 +115,7 @@ import { CellValidationRule } from '../PredefinedConfig/RunTimeState/CellValidat
 import { PercentBar } from '../PredefinedConfig/RunTimeState/PercentBarState';
 import { PermittedColumnValues } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -458,16 +458,16 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     return this.emitter.emit(eventName, data);
   };
 
-  public createMenu() {
-    let menuItems: IMenuItem[] = [];
+  public createMainMenu() {
+    let menuItems: AdaptableBlotterMenuItem[] = [];
     this.strategies.forEach(x => {
       let menuItem = x.getPopupMenuItem();
       if (menuItem != null) {
         menuItems.push(menuItem);
       }
     });
-    this.adaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMenuItemsAction>(
-      MenuRedux.SetMenuItems(menuItems)
+    this.adaptableBlotterStore.TheStore.dispatch<MenuRedux.SetMainMenuItemsAction>(
+      MenuRedux.SetMainMenuItems(menuItems)
     );
   }
 
@@ -1264,7 +1264,6 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   destroy() {
     ReactDOM.unmountComponentAtNode(this.abContainerElement);
     ReactDOM.unmountComponentAtNode(this.filterContainer);
-    //   ReactDOM.unmountComponentAtNode(this.contextMenuContainer);
   }
 
   private valOrFunc(dataRow: any, column: any) {
@@ -1376,17 +1375,15 @@ export class AdaptableBlotter implements IAdaptableBlotter {
             e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY + 'px';
           this.filterContainer.style.left =
             e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX + 'px';
-          // we know get the context menu here as well as they both go in there
-          // this.adaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.detail.primitiveEvent.column.name));
 
           let colId: string = e.detail.primitiveEvent.column.name;
-          //   this.adaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(params.column.getColId()));
-          this.adaptableBlotterStore.TheStore.dispatch(MenuRedux.ClearColumnContextMenu());
+
+          this.adaptableBlotterStore.TheStore.dispatch(MenuRedux.ClearColumntMenu());
 
           let column: IColumn = ColumnHelper.getColumnFromId(colId, this.getState().Grid.Columns);
           if (column != null) {
             this.strategies.forEach(s => {
-              s.addContextMenuItem(column);
+              s.addColumnMenuItem(column);
             });
           }
 
@@ -1395,11 +1392,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         e.preventDefault();
       }
     });
-    //   this.hyperGrid.addEventListener("fin-context-menu", (e: any) => {
-    //        if (e.detail.primitiveEvent.isHeaderCell) {
-    //             this.adaptableBlotterStore.TheStore.dispatch(MenuRedux.BuildColumnContextMenu(e.detail.primitiveEvent.column.name, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientX, e.detail.primitiveEvent.primitiveEvent.detail.primitiveEvent.clientY));
-    //         }
-    //     });
+
     this.hyperGrid.addEventListener('fin-before-cell-edit', (event: any) => {
       // cell edit is about to happen so create datachanging and datahanged objects
       // these are to use to check for free text column, validation and audit log

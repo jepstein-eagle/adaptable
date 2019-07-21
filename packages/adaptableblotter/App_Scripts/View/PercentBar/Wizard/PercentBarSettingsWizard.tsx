@@ -30,6 +30,7 @@ export interface PercentBarSettingsWizardState {
   PositiveColor: string;
   NegativeColor: string;
   ShowValue: boolean;
+  ShowTooltip: boolean;
 }
 
 export class PercentBarSettingsWizard
@@ -41,6 +42,7 @@ export class PercentBarSettingsWizard
       PositiveColor: this.props.Data.PositiveColor,
       NegativeColor: this.props.Data.NegativeColor,
       ShowValue: this.props.Data.ShowValue,
+      ShowTooltip: this.props.Data.ShowToolTip,
     };
   }
 
@@ -102,6 +104,30 @@ export class PercentBarSettingsWizard
                 </Col>
               </Row>
             </FormGroup>
+
+            <FormGroup controlId="formShowToolTip">
+              <Row>
+                <Col xs={3}>
+                  <ControlLabel>Show Tooltip:</ControlLabel>
+                </Col>
+                <Col xs={1}>
+                  <Checkbox
+                    style={{ margin: '0px' }}
+                    onChange={e => this.onShowTooltipChanged(e)}
+                    checked={this.state.ShowTooltip}
+                  />
+                </Col>
+                <Col xs={1}>
+                  <AdaptablePopover
+                    cssClassName={cssClassName}
+                    headerText={'Percent Bar: Show Tooltip'}
+                    bodyText={[
+                      'Whether to display a tooltip that shows the value of the cell when you hover in the Column.',
+                    ]}
+                  />
+                </Col>
+              </Row>
+            </FormGroup>
           </AdaptableBlotterForm>
         </Panel>
       </div>
@@ -129,6 +155,13 @@ export class PercentBarSettingsWizard
     );
   }
 
+  private onShowTooltipChanged(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    this.setState({ ShowTooltip: e.checked } as PercentBarSettingsWizardState, () =>
+      this.props.UpdateGoBackState()
+    );
+  }
+
   public canNext(): boolean {
     if (
       StringExtensions.IsNullOrEmpty(this.state.PositiveColor) ||
@@ -146,6 +179,7 @@ export class PercentBarSettingsWizard
     this.props.Data.PositiveColor = this.state.PositiveColor;
     this.props.Data.NegativeColor = this.state.NegativeColor;
     this.props.Data.ShowValue = this.state.ShowValue;
+    this.props.Data.ShowToolTip = this.state.ShowTooltip;
   }
 
   public Back(): void {

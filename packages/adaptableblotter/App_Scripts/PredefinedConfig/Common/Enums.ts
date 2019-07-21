@@ -213,7 +213,7 @@ export enum QueryTab {
   QueryRange = 'QueryRange',
 }
 
-export enum ContextMenuTab {
+export enum ColumnMenuTab {
   Menu = 'Menu',
   Filter = 'Filter',
 }

@@ -10,9 +10,14 @@ export interface PercentBar extends AdaptableBlotterObject {
   MaxValue?: number;
   PositiveColor: string;
   NegativeColor: string;
-  ShowValue: boolean;
+  ShowValue?: boolean;
   MaxValueColumnId?: string;
   MinValueColumnId?: string;
+
+  /**
+   * Whether to display a tooltip that will appear when you hover over the column showing the cell's numeric value.
+   */
+  ShowToolTip?: boolean;
 }
 
 /*

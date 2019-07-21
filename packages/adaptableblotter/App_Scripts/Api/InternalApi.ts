@@ -4,7 +4,7 @@ import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { ApiBase } from './ApiBase';
 import { IInternalApi } from './Interface/IInternalApi';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
-import { IMenuItem } from '../Utilities/Interface/IMenu';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { ILiveReport } from '../Utilities/Interface/Reports/ILiveReport';
 import { Report } from '../PredefinedConfig/RunTimeState/ExportState';
@@ -48,12 +48,12 @@ export class InternalApi extends ApiBase implements IInternalApi {
   }
 
   // Menu Redux Actions
-  public clearColumnContextMenu(): void {
-    this.dispatchAction(MenuRedux.ClearColumnContextMenu());
+  public clearColumnMenu(): void {
+    this.dispatchAction(MenuRedux.ClearColumntMenu());
   }
 
-  public addColumnContextMenuItem(menuItem: IMenuItem): void {
-    this.dispatchAction(MenuRedux.AddItemColumnContextMenu(menuItem));
+  public addColumnMenuItem(menuItem: AdaptableBlotterMenuItem): void {
+    this.dispatchAction(MenuRedux.AddItemColumntMenu(menuItem));
   }
 
   // Popup Redux Actions

@@ -118,7 +118,6 @@ import {
   KEY_DOWN_EVENT,
 } from '../Utilities/Constants/GeneralConstants';
 import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
-import { IMenuItem } from '../Utilities/Interface/IMenu';
 import { IEvent } from '../Utilities/Interface/IEvent';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../Utilities/Helpers/CellValidationHelper';
@@ -149,6 +148,8 @@ import {
 } from '../PredefinedConfig/DesignTimeState/UserInterfaceState';
 import { createUuid, TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/DesignTimeState/ActionColumnState';
+import { PercentBarTooltip } from './PercentBarTooltip';
+import { AdaptableBlotterMenuItem } from '../Utilities/Interface/AdaptableBlotterMenu';
 
 // do I need this in both places??
 type RuntimeConfig = {
@@ -661,8 +662,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     this.setCellClassRules(cellClassRules, col.ColumnId, 'QuickSearch');
   }
 
-  public createMenu() {
-    const menuItems: IMenuItem[] = [];
+  public createMainMenu() {
+    const menuItems: AdaptableBlotterMenuItem[] = [];
     this.strategies.forEach(x => {
       const menuItem = x.getPopupMenuItem();
       if (menuItem != null && menuItem != undefined) {
@@ -671,7 +672,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         }
       }
     });
-    this.dispatchAction(MenuRedux.SetMenuItems(menuItems));
+    this.dispatchAction(MenuRedux.SetMainMenuItems(menuItems));
   }
 
   public getPrimaryKeyValueFromRecord(record: RowNode): any {
@@ -2051,11 +2052,11 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // but you can also clsoe the menu from filter and clicking outside the menu....
       const colId: string = params.column.getColId();
 
-      this.dispatchAction(MenuRedux.ClearColumnContextMenu());
+      this.dispatchAction(MenuRedux.ClearColumntMenu());
       const column: IColumn = ColumnHelper.getColumnFromId(colId, this.api.gridApi.getColumns());
       if (column != null) {
         this.strategies.forEach(s => {
-          s.addContextMenuItem(column);
+          s.addColumnMenuItem(column);
         });
       }
 
@@ -2069,7 +2070,8 @@ export class AdaptableBlotter implements IAdaptableBlotter {
         colMenuItems = params.defaultItems.slice(0);
       }
       colMenuItems.push('separator');
-      this.getState().Menu.ContextMenu.Items.forEach(x => {
+
+      this.getState().Menu.ColumnMenu.MenuItems.forEach((x: AdaptableBlotterMenuItem) => {
         const glyph = this.abContainerElement.ownerDocument.createElement('span');
         glyph.className = `glyphicon glyphicon-${x.GlyphIcon}`;
         colMenuItems.push({
@@ -2105,9 +2107,18 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
       const coldDef: ColDef = vendorGridColumn.getColDef();
       coldDef.cellRenderer = cellRendererFunc;
+
       // change the style from number-cell temporarily?
       if (coldDef.cellClass == 'number-cell') {
         coldDef.cellClass = 'number-cell-changed';
+      }
+
+      if (pcr.ShowToolTip != null && pcr.ShowToolTip == true) {
+        coldDef.tooltipField = 'changeOnYear';
+        // for now NOT using this PercentBarTooltip but we can add it later and will be powwerful.
+        //  coldDef.tooltipComponent = PercentBarTooltip;
+      } else {
+        coldDef.tooltipField = '';
       }
     }
   }
@@ -2455,6 +2466,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
   private applyFinalRendering(): void {
     // Apply row styles here?  weird that it cannot find the method in Helper.
     this.agGridHelper.setUpRowStyles();
+
+    // Create a context menu - needs work but we can do some cool things here
+    this.agGridHelper.buildContextMenu();
 
     // not sure if this is the right place here.
     // perhaps we need some onDataLoaded event??

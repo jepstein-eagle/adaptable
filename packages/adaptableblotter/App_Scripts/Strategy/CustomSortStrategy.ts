@@ -27,12 +27,12 @@ export class CustomSortStrategy extends AdaptableStrategyBase {
     );
   }
 
-  public addContextMenuItem(column: IColumn): void {
-    if (this.canCreateContextMenuItem(column, this.blotter, 'sort')) {
+  public addColumnMenuItem(column: IColumn): void {
+    if (this.canCreateColumnMenuItem(column, this.blotter, 'sort')) {
       let customSort = this.CustomSorts.find(x => x.ColumnId == column.ColumnId);
       let label = customSort ? 'Edit ' : 'Create ';
       let popupParam = customSort ? 'Edit|' : 'New|';
-      this.createContextMenuItemShowPopup(
+      this.createColumnMenuItemShowPopup(
         label + StrategyConstants.CustomSortStrategyName,
         ScreenPopups.CustomSortPopup,
         StrategyConstants.CustomSortGlyph,

@@ -1,6 +1,10 @@
-import { IMenuItem, IContextMenu } from '../../Utilities/Interface/IMenu';
 import { InternalState } from './InternalState';
+import {
+  AdaptableBlotterMenuItem,
+  AdaptableBlotterMenu,
+} from '../../Utilities/Interface/AdaptableBlotterMenu';
+
 export interface MenuState extends InternalState {
-  MenuItems: IMenuItem[];
-  ContextMenu: IContextMenu;
+  MainMenuItems: AdaptableBlotterMenuItem[];
+  ColumnMenu: AdaptableBlotterMenu;
 }

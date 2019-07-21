@@ -1,59 +1,54 @@
 import * as Redux from 'redux';
 import { MenuState } from '../../PredefinedConfig/InternalState/MenuState';
-import { IMenuItem } from '../../Utilities/Interface/IMenu';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
+import { AdaptableBlotterMenuItem } from '../../Utilities/Interface/AdaptableBlotterMenu';
 
-export const SET_MENUITEMS = 'SET_MENUITEMS';
-export const BUILD_COLUMN_CONTEXT_MENU = 'BUILD_COLUMN_CONTEXT_MENU';
-export const ADD_ITEM_COLUMN_CONTEXT_MENU = 'ADD_ITEM_COLUMN_CONTEXT_MENU';
-export const CLEAR_COLUMN_CONTEXT_MENU = 'CLEAR_COLUMN_CONTEXT_MENU';
+export const SET_MAIN_MENUITEMS = 'SET_MAIN_MENUITEMS';
+export const BUILD_COLUMN_MENU = 'BUILD_COLUMN_MENU';
+export const ADD_ITEM_COLUMN_MENU = 'ADD_ITEM_COLUMN_MENU';
+export const CLEAR_COLUMN_MENU = 'CLEAR_COLUMN_MENU';
 
-export interface SetMenuItemsAction extends Redux.Action {
-  MenuItems: IMenuItem[];
+export interface SetMainMenuItemsAction extends Redux.Action {
+  MenuItems: AdaptableBlotterMenuItem[];
 }
 
-export interface BuildColumnContextMenuAction extends Redux.Action {
+export interface BuildColumnMenuAction extends Redux.Action {
   ColumnId: string;
 }
 
-//export interface ShowColumnContextMenuAction extends Redux.Action {
-//}
-
-export interface AddItemColumnContextMenuAction extends Redux.Action {
-  Item: IMenuItem;
+export interface AddItemColumnMenuAction extends Redux.Action {
+  Item: AdaptableBlotterMenuItem;
 }
 
-export interface ClearColumnContextMenuAction extends Redux.Action {}
+export interface ClearColumnMenuAction extends Redux.Action {}
 
 //we do not use Redux.ActionCreator as we want to be typed safe for the arguments..... Redux.ActionCreator doesnt really make any sense to me as a consequence!!!!
-export const SetMenuItems = (MenuItems: IMenuItem[]): SetMenuItemsAction => ({
-  type: SET_MENUITEMS,
+export const SetMainMenuItems = (
+  MenuItems: AdaptableBlotterMenuItem[]
+): SetMainMenuItemsAction => ({
+  type: SET_MAIN_MENUITEMS,
   MenuItems,
 });
 
-export const BuildColumnContextMenu = (ColumnId: string): BuildColumnContextMenuAction => ({
-  type: BUILD_COLUMN_CONTEXT_MENU,
+export const BuildColumnMenu = (ColumnId: string): BuildColumnMenuAction => ({
+  type: BUILD_COLUMN_MENU,
   ColumnId,
 });
 
-//export const ShowColumnContextMenu = (): ShowColumnContextMenuAction => ({
-//   type: SHOW_COLUMN_CONTEXT_MENU
-//})
-
-export const AddItemColumnContextMenu = (Item: IMenuItem): AddItemColumnContextMenuAction => ({
-  type: ADD_ITEM_COLUMN_CONTEXT_MENU,
+export const AddItemColumntMenu = (Item: AdaptableBlotterMenuItem): AddItemColumnMenuAction => ({
+  type: ADD_ITEM_COLUMN_MENU,
   Item,
 });
 
-export const ClearColumnContextMenu = (): ClearColumnContextMenuAction => ({
-  type: CLEAR_COLUMN_CONTEXT_MENU,
+export const ClearColumntMenu = (): ClearColumnMenuAction => ({
+  type: CLEAR_COLUMN_MENU,
 });
 
 const initialMenuState: MenuState = {
-  MenuItems: EMPTY_ARRAY,
-  ContextMenu: {
+  MainMenuItems: EMPTY_ARRAY,
+  ColumnMenu: {
     ColumnId: null,
-    Items: EMPTY_ARRAY,
+    MenuItems: EMPTY_ARRAY,
   },
 };
 
@@ -62,41 +57,42 @@ export const MenuReducer: Redux.Reducer<MenuState> = (
   action: Redux.Action
 ): MenuState => {
   switch (action.type) {
-    case SET_MENUITEMS: {
+    case SET_MAIN_MENUITEMS: {
       //TODO: we need to merge with the existing set of menuitems instead of replacing it.
       //it will be important we we ever allow show/hide on menus
-      let actionTyped = <SetMenuItemsAction>action;
-      let menuItems = actionTyped.MenuItems.sort((a: IMenuItem, b: IMenuItem) =>
-        a.Label < b.Label ? -1 : a.Label > b.Label ? 1 : 0
+      let actionTyped = <SetMainMenuItemsAction>action;
+      let menuItems = actionTyped.MenuItems.sort(
+        (a: AdaptableBlotterMenuItem, b: AdaptableBlotterMenuItem) =>
+          a.Label < b.Label ? -1 : a.Label > b.Label ? 1 : 0
       );
 
-      return Object.assign({}, state, { MenuItems: menuItems });
+      return Object.assign({}, state, { MainMenuItems: menuItems });
     }
-    case BUILD_COLUMN_CONTEXT_MENU: {
-      let actionTyped = <BuildColumnContextMenuAction>action;
+    case BUILD_COLUMN_MENU: {
+      let actionTyped = <BuildColumnMenuAction>action;
       return Object.assign({}, state, {
-        ContextMenu: {
+        ColumnMenu: {
           ColumnId: actionTyped.ColumnId,
-          Items: [],
+          MenuItems: [],
         },
       });
     }
-    case CLEAR_COLUMN_CONTEXT_MENU: {
+    case CLEAR_COLUMN_MENU: {
       return Object.assign({}, state, {
-        ContextMenu: {
+        ColumnMenu: {
           ColumnId: '',
-          Items: [],
+          MenuItems: [],
         },
       });
     }
-    case ADD_ITEM_COLUMN_CONTEXT_MENU: {
-      let actionTyped = <AddItemColumnContextMenuAction>action;
+    case ADD_ITEM_COLUMN_MENU: {
+      let actionTyped = <AddItemColumnMenuAction>action;
       return Object.assign({}, state, {
-        ContextMenu: {
-          ColumnId: state.ContextMenu.ColumnId,
-          Items: []
-            .concat(state.ContextMenu.Items, actionTyped.Item)
-            .sort((a: IMenuItem, b: IMenuItem) =>
+        ColumnMenu: {
+          ColumnId: state.ColumnMenu.ColumnId,
+          MenuItems: []
+            .concat(state.ColumnMenu.MenuItems, actionTyped.Item)
+            .sort((a: AdaptableBlotterMenuItem, b: AdaptableBlotterMenuItem) =>
               a.Label < b.Label ? -1 : a.Label > b.Label ? 1 : 0
             ),
         },

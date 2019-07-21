@@ -65,6 +65,7 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
       { Key: 'Positive Colour', Value: <StyleVisualItem Style={positiveStyle} /> },
       { Key: 'Negative Colour', Value: <StyleVisualItem Style={negativeStyle} /> },
       { Key: 'Show Cell Value', Value: this.props.Data.ShowValue ? 'Yes' : 'No' },
+      { Key: 'Show Tooltip', Value: this.props.Data.ShowToolTip ? 'Yes' : 'No' },
     ];
 
     let summaryPage = (

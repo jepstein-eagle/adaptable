@@ -1,8 +1,8 @@
 import * as Redux from 'redux';
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
-import { IMenuItem } from './Interface/IMenu';
+import { AdaptableBlotterMenuItem } from './Interface/AdaptableBlotterMenu';
 
-export class MenuItemDoReduxAction implements IMenuItem {
+export class MenuItemDoReduxAction implements AdaptableBlotterMenuItem {
   constructor(
     label: string,
     strategyId: string,
@@ -24,7 +24,7 @@ export class MenuItemDoReduxAction implements IMenuItem {
   public GlyphIcon: string;
 }
 
-export class MenuItemShowPopup implements IMenuItem {
+export class MenuItemShowPopup implements AdaptableBlotterMenuItem {
   constructor(
     label: string,
     strategyId: string,

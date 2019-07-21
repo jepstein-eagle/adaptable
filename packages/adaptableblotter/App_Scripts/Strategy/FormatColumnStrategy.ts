@@ -20,8 +20,8 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
     );
   }
 
-  public addContextMenuItem(column: IColumn): void {
-    if (this.canCreateContextMenuItem(column, this.blotter)) {
+  public addColumnMenuItem(column: IColumn): void {
+    if (this.canCreateColumnMenuItem(column, this.blotter)) {
       let formatExists: boolean = ArrayExtensions.ContainsItem(
         this.blotter.api.formatColumnApi.getAllFormatColumn().map(f => f.ColumnId),
         column.ColumnId
@@ -29,7 +29,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
       let label = formatExists ? 'Edit ' : 'Create ';
       let popupParam = formatExists ? 'Edit|' : 'New|';
 
-      this.createContextMenuItemShowPopup(
+      this.createColumnMenuItemShowPopup(
         label + StrategyConstants.FormatColumnStrategyName,
         ScreenPopups.FormatColumnPopup,
         StrategyConstants.FormatColumnGlyph,

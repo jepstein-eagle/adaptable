@@ -32,8 +32,8 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
     );
   }
 
-  public addContextMenuItem(column: IColumn): void {
-    if (this.canCreateContextMenuItem(column, this.blotter)) {
+  public addColumnMenuItem(column: IColumn): void {
+    if (this.canCreateColumnMenuItem(column, this.blotter)) {
       if (column.DataType == DataType.Number) {
         if (
           this.blotter.api.calculatedColumnApi
@@ -44,7 +44,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
             .getAllFlashingCell()
             .find(x => x.ColumnId == column.ColumnId);
           if (flashingCell && flashingCell.IsLive) {
-            this.createContextMenuItemReduxAction(
+            this.createColumnMenuItemReduxAction(
               'Turn Flashing Cell Off',
               StrategyConstants.FlashingCellGlyph,
               FlashingCellsRedux.FlashingCellSelect(flashingCell)
@@ -59,7 +59,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
                 flashingCellState.DefaultDuration
               );
             }
-            this.createContextMenuItemReduxAction(
+            this.createColumnMenuItemReduxAction(
               'Turn Flashing Cell On',
               StrategyConstants.FlashingCellGlyph,
               FlashingCellsRedux.FlashingCellSelect(flashingCell)

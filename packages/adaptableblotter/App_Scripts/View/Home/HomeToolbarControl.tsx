@@ -33,9 +33,9 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
-import { IMenuItem } from '../../Utilities/Interface/IMenu';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { UIHelper } from '../UIHelper';
+import { AdaptableBlotterMenuItem } from '../../Utilities/Interface/AdaptableBlotterMenu';
 
 interface HomeToolbarComponentProps
   extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
@@ -89,12 +89,12 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
     let strategyKeys: string[] = [...this.props.Blotter.strategies.keys()];
-    let allowedMenuItems = this.props.MenuState.MenuItems.filter(
+    let allowedMenuItems = this.props.MenuState.MainMenuItems.filter(
       x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
     );
 
     // function menu items
-    let menuItems = allowedMenuItems.map((menuItem: IMenuItem) => {
+    let menuItems = allowedMenuItems.map((menuItem: AdaptableBlotterMenuItem) => {
       return (
         <MenuItem
           disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
@@ -250,7 +250,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     let shortcuts: any;
     if (shortcutsArray) {
       shortcuts = shortcutsArray.map(x => {
-        let menuItem = this.props.MenuState.MenuItems.find(y => y.IsVisible && y.StrategyId == x);
+        let menuItem = this.props.MenuState.MainMenuItems.find(
+          y => y.IsVisible && y.StrategyId == x
+        );
         if (menuItem) {
           return (
             <OverlayTrigger
@@ -308,7 +310,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     );
   }
 
-  onClick(menuItem: IMenuItem) {
+  onClick(menuItem: AdaptableBlotterMenuItem) {
     this.props.onClick(menuItem.Action);
   }
 

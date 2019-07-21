@@ -18,9 +18,9 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
     );
   }
 
-  public addContextMenuItem(column: IColumn): void {
-    if (this.canCreateContextMenuItem(column, this.blotter)) {
-      this.createContextMenuItemShowPopup(
+  public addColumnMenuItem(column: IColumn): void {
+    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+      this.createColumnMenuItemShowPopup(
         'See as Pie Chart',
         ScreenPopups.PieChartPopup,
         StrategyConstants.PieChartGlyph,

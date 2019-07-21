@@ -20,18 +20,18 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
     });
   }
 
-  public addContextMenuItem(column: IColumn): void {
-    if (this.canCreateContextMenuItem(column, this.blotter)) {
-      this.createContextMenuItemReduxAction(
+  public addColumnMenuItem(column: IColumn): void {
+    if (this.canCreateColumnMenuItem(column, this.blotter)) {
+      this.createColumnMenuItemReduxAction(
         'Hide Column',
         StrategyConstants.ColumnChooserGlyph,
         GridRedux.GridHideColumn(column.ColumnId)
       );
     }
 
-    if (this.canCreateContextMenuItem(column, this.blotter, 'quickfilter')) {
+    if (this.canCreateColumnMenuItem(column, this.blotter, 'quickfilter')) {
       let isFilterActive: boolean = this.blotter.api.gridApi.getGridState().IsQuickFilterActive;
-      this.createContextMenuItemReduxAction(
+      this.createColumnMenuItemReduxAction(
         isFilterActive ? 'Hide Quick Filter Bar' : 'Show Quick Filter Bar',
         isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH,
         isFilterActive ? GridRedux.QuickFilterBarHide() : GridRedux.QuickFilterBarShow()
@@ -39,8 +39,8 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
     }
 
     if (this.blotter.isSelectable()) {
-      if (this.canCreateContextMenuItem(column, this.blotter)) {
-        this.createContextMenuItemReduxAction(
+      if (this.canCreateColumnMenuItem(column, this.blotter)) {
+        this.createColumnMenuItemReduxAction(
           'Select Column',
           'compressed',
           GridRedux.GridSelectColumn(column.ColumnId)

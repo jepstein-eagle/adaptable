@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-export interface IMenuItem {
+export interface AdaptableBlotterMenuItem {
   Label: string;
   StrategyId: string;
   Action: Action;
@@ -8,7 +8,7 @@ export interface IMenuItem {
   GlyphIcon: string;
 }
 
-export interface IContextMenu {
+export interface AdaptableBlotterMenu {
   ColumnId: string;
-  Items: IMenuItem[];
+  MenuItems: AdaptableBlotterMenuItem[];
 }
