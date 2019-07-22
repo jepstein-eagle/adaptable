@@ -96,6 +96,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
             ConfigEntities={this.props.FreeTextColumns}
             UserFilters={this.props.UserFilters}
             SystemFilters={this.props.SystemFilters}
+            NamedFilters={this.props.NamedFilters}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

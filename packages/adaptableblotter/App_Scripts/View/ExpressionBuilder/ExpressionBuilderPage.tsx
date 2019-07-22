@@ -83,6 +83,7 @@ export class ExpressionBuilderPage
                 QueryBuildStatus={queryBuildStatus}
                 UserFilters={this.props.UserFilters}
                 SystemFilters={this.props.SystemFilters}
+                NamedFilters={this.props.NamedFilters}
                 Expression={this.state.Expression}
                 ExpressionMode={
                   this.props.ExpressionMode != null

@@ -28,6 +28,7 @@ export class AdvancedSearchWizard extends React.Component<
                 <AdvancedSearchExpressionWizard
                   UserFilters={this.props.UserFilters}
                   SystemFilters={this.props.SystemFilters}
+                  NamedFilters={this.props.NamedFilters}
                   cssClassName={this.props.cssClassName}
                 />
               ),

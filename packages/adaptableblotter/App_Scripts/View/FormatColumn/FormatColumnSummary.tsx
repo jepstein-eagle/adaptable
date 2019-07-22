@@ -102,6 +102,7 @@ export class FormatColumnSummaryComponent extends React.Component<
             ConfigEntities={this.props.FormatColumns}
             UserFilters={this.props.UserFilters}
             SystemFilters={this.props.SystemFilters}
+            NamedFilters={this.props.NamedFilters}
             ColorPalette={this.props.ColorPalette}
             StyleClassNames={this.props.StyleClassNames}
             WizardStartIndex={this.state.WizardStartIndex}

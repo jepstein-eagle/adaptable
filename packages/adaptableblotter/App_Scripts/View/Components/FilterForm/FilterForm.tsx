@@ -40,6 +40,7 @@ import { ButtonSave } from '../Buttons/ButtonSave';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IUIPrompt } from '../../../Utilities/Interface/IMessage';
 import { AdaptableBlotterMenuItem } from '../../../Utilities/Interface/AdaptableBlotterMenu';
+import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: IColumn;
@@ -47,6 +48,7 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   Columns: IColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
+  NamedFilters: NamedFilter[];
   ColumnFilters: ColumnFilter[];
   MenuItems: AdaptableBlotterMenuItem[];
   EmbedColumnMenu: boolean;
@@ -173,7 +175,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       .concat(
         FilterHelper.GetNamedFiltersForColumn(
           this.props.CurrentColumn,
-          this.props.Blotter.api.namedFilterApi.getAllNamedFilter()
+          this.props.NamedFilters
         ).map(nf => nf.Name)
       )
       .concat(
@@ -498,6 +500,7 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
     UserFilters: state.UserFilter.UserFilters,
     SystemFilters: state.SystemFilter.SystemFilters,
+    NamedFilters: state.NamedFilter.NamedFilters,
     ColumnMenuItems: state.Menu.ColumnMenu.MenuItems,
     ShowCloseButton: ownProps.ShowCloseButton,
   };

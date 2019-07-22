@@ -20,6 +20,7 @@ import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
+import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: IColumn;
@@ -27,6 +28,7 @@ interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormCom
   Columns: IColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
+  NamedFilters: NamedFilter[];
   ColumnFilters: ColumnFilter[];
   onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
   onEditColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;

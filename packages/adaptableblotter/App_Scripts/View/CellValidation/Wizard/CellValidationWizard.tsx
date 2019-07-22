@@ -50,6 +50,7 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
                 <CellValidationExpressionWizard
                   UserFilters={this.props.UserFilters}
                   SystemFilters={this.props.SystemFilters}
+                  NamedFilters={this.props.NamedFilters}
                 />
               ),
             },

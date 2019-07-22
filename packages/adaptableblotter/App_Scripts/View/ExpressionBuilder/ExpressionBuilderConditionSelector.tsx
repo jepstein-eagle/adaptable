@@ -28,6 +28,7 @@ import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState'
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
 import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
+import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -38,6 +39,7 @@ export interface ExpressionBuilderConditionSelectorProps
   onSelectedColumnChange: (ColumnId: string, Tab: QueryTab) => void;
   UserFilters: UserFilter[];
   SystemFilters: string[];
+  NamedFilters: NamedFilter[];
   SelectedColumnId: string;
   SelectedTab: QueryTab;
   QueryBuildStatus: QueryBuildStatus;
@@ -276,6 +278,14 @@ export class ExpressionBuilderConditionSelector extends React.Component<
       return uf.Name;
     });
 
+    // then named filters
+    let availableNamedFilterNames: string[] = FilterHelper.GetNamedFiltersForColumn(
+      selectedColumn,
+      this.props.NamedFilters
+    ).map(uf => {
+      return uf.Name;
+    });
+
     // get the help descriptions
     let firstTimeText: string = 'Start creating the query by selecting a column below.';
     let secondTimeText: string = 'Select another column for the query.';
@@ -404,6 +414,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                               cssClassName={cssClassName}
                               AvailableSystemFilterNames={availableSystemFilterNames}
                               AvailableUserFilterNames={availableUserFilterNames}
+                              AvailableNamedFilterNames={availableNamedFilterNames}
                               SelectedFilterNames={this.state.SelectedFilterExpressions}
                               onFilterNameChange={selectedValues =>
                                 this.onSelectedFiltersChanged(selectedValues)

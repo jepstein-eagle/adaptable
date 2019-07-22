@@ -137,6 +137,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
               Columns={this.props.Columns}
               UserFilters={this.props.UserFilters}
               SystemFilters={this.props.SystemFilters}
+              NamedFilters={this.props.NamedFilters}
               ColumnSorts={this.props.ColumnSorts}
               Blotter={this.props.Blotter}
               WizardStartIndex={this.state.WizardStartIndex}

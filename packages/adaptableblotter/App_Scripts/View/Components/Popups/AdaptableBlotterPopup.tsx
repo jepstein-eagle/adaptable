@@ -54,6 +54,8 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
           .UserFilters,
         SystemFilters: this.props.Blotter.adaptableBlotterStore.TheStore.getState().SystemFilter
           .SystemFilters,
+        NamedFilters: this.props.Blotter.adaptableBlotterStore.TheStore.getState().NamedFilter
+          .NamedFilters,
         ColumnFilters: this.props.Blotter.adaptableBlotterStore.TheStore.getState().ColumnFilter
           .ColumnFilters,
         ModalContainer: modalContainer,

@@ -51,6 +51,7 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
                   Columns={this.props.Columns}
                   UserFilters={this.props.UserFilters}
                   SystemFilters={this.props.SystemFilters}
+                  NamedFilters={this.props.NamedFilters}
                   Blotter={this.props.Blotter}
                 />
               ),

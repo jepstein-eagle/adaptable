@@ -104,6 +104,7 @@ export class PercentBarSummaryComponent extends React.Component<
             ConfigEntities={this.props.PercentBars}
             UserFilters={this.props.UserFilters}
             SystemFilters={this.props.SystemFilters}
+            NamedFilters={this.props.NamedFilters}
             ColorPalette={this.props.ColorPalette}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}

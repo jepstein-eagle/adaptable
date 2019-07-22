@@ -155,6 +155,7 @@ class PlusMinusPopupComponent extends React.Component<
               Columns={this.props.Columns}
               UserFilters={this.props.UserFilters}
               SystemFilters={this.props.SystemFilters}
+              NamedFilters={this.props.NamedFilters}
               WizardStartIndex={this.state.WizardStartIndex}
               SelectedColumnId={null}
               Blotter={this.props.Blotter}

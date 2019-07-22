@@ -152,6 +152,7 @@ class CellValidationPopupComponent extends React.Component<
               Columns={this.props.Columns}
               UserFilters={this.props.UserFilters}
               SystemFilters={this.props.SystemFilters}
+              NamedFilters={this.props.NamedFilters}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

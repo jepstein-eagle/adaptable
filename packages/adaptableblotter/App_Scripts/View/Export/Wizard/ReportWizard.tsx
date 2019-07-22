@@ -47,6 +47,7 @@ export class ReportWizard extends React.Component<
                 <ReportExpressionWizard
                   UserFilters={this.props.UserFilters}
                   SystemFilters={this.props.SystemFilters}
+                  NamedFilters={this.props.NamedFilters}
                 />
               ),
             },

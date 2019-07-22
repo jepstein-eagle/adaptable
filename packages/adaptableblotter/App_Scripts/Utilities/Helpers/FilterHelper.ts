@@ -83,6 +83,7 @@ export function GetNamedFiltersForColumn(
   column: IColumn,
   namedFilters: NamedFilter[]
 ): NamedFilter[] {
+  if (!column) return [];
   return namedFilters.filter(f => {
     if (f.Scope.DataType && f.Scope.DataType !== column.DataType) {
       return false;

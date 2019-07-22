@@ -112,6 +112,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
             SystemFilters={this.props.SystemFilters}
+            NamedFilters={this.props.NamedFilters}
             ColorPalette={this.props.ColorPalette}
             StyleClassNames={this.props.StyleClassNames}
             ColumnCategories={this.props.ColumnCategories}

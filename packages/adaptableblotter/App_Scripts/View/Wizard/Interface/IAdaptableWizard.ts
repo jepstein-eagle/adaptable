@@ -2,6 +2,7 @@ import { IColumn } from '../../../Utilities/Interface/IColumn';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import { AdaptableBlotterObject } from '../../../PredefinedConfig/AdaptableBlotterObject';
+import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
 
 export interface AdaptableWizardStep {
   canNext(): boolean;
@@ -24,6 +25,7 @@ export interface AdaptableWizardStepProps<T> {
 export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
   UserFilters: UserFilter[];
   SystemFilters: string[];
+  NamedFilters: NamedFilter[];
 }
 
 // props for a wizard that wraps a config entity that contans an Expression
@@ -32,6 +34,7 @@ export interface AdaptableBlotterObjectExpressionAdaptableWizardProps<View>
   Columns: Array<IColumn>;
   UserFilters: UserFilter[];
   SystemFilters: string[];
+  NamedFilters: NamedFilter[];
   Blotter: IAdaptableBlotter;
 }
 
