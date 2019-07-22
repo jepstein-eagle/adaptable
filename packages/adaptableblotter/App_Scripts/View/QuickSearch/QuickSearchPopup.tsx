@@ -26,6 +26,7 @@ import WizardPanel from '../../components/WizardPanel';
 import Dropdown from '../../components/Dropdown';
 import Checkbox from '../../components/CheckBox';
 import { Text, Flex } from 'rebass';
+import Panel from '../../components/Panel';
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
   QuickSearchText: string;
@@ -145,8 +146,13 @@ class QuickSearchPopupComponent extends React.Component<
         header={StrategyConstants.QuickSearchStrategyName}
         glyphicon={StrategyConstants.QuickSearchGlyph}
         infoBody={infoBody}
+        bodyProps={{ padding: 2 }}
       >
-        <WizardPanel header={'Search For'} marginTop={3} style={{ height: 'auto' }}>
+        <Flex flexDirection="row" alignItems="center" px={2} marginBottom={2}>
+          <Text style={{ flex: 2, whiteSpace: 'nowrap' }} textAlign="end" marginRight={2}>
+            Search For:
+          </Text>
+
           <AdaptableBlotterFormControlTextClear
             cssClassName={cssClassName}
             type="text"
@@ -154,9 +160,14 @@ class QuickSearchPopupComponent extends React.Component<
             value={this.state.EditedQuickSearchText}
             OnTextChange={x => this.handleQuickSearchTextChange(x)}
           />
-        </WizardPanel>
+        </Flex>
 
-        <WizardPanel header="Quick Search Options" style={{ height: 'auto' }}>
+        <Panel
+          header="Quick Search Options"
+          style={{ height: 'auto' }}
+          variant="default"
+          borderRadius="none"
+        >
           <Flex flexDirection="row" alignItems="center">
             <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
               Behaviour:
@@ -164,6 +175,7 @@ class QuickSearchPopupComponent extends React.Component<
             <Flex flex={7} alignItems="center" flexDirection="row">
               <Dropdown
                 placeholder="select"
+                style={{ width: '100%', maxWidth: 'none' }}
                 value={this.props.DisplayAction.toString()}
                 onChange={(x: any) => this.onDisplayTypeChange(x)}
                 options={DisplayActions}
@@ -230,7 +242,7 @@ class QuickSearchPopupComponent extends React.Component<
               )}
             </Flex>
           </Flex>
-        </WizardPanel>
+        </Panel>
       </PanelWithImage>
     );
   }

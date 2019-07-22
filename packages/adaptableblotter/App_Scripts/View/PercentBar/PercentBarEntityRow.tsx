@@ -40,6 +40,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
           StringExtensions.IsNullOrEmpty(PercentBar.MinValueColumnId) ? (
             <Input
               type={'number'}
+              style={{ width: '100%' }}
               placeholder="Min Value"
               onChange={(e: any) => this.onMinimumValueChanged(e)}
               value={PercentBar.MinValue}
@@ -61,6 +62,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
           StringExtensions.IsNullOrEmpty(PercentBar.MaxValueColumnId) ? (
             <Input
               type={'number'}
+              style={{ width: '100%' }}
               placeholder="Max Value"
               onChange={(e: React.SyntheticEvent) => this.onMaximumValueChanged(e)}
               value={PercentBar.MaxValue}
@@ -80,6 +82,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
       <EntityRowItem
         Content={
           <ColorPicker
+            style={{ width: '100%' }}
             ColorPalette={this.props.ColorPalette}
             value={PercentBar.PositiveColor}
             onChange={x => this.onPositiveColorChanged(x)}
@@ -91,6 +94,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
       <EntityRowItem
         Content={
           <ColorPicker
+            style={{ width: '100%' }}
             ColorPalette={this.props.ColorPalette}
             value={PercentBar.NegativeColor}
             onChange={x => this.onNegativeColorChanged(x)}
