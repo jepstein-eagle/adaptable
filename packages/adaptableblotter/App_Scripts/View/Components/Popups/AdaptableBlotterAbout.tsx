@@ -9,7 +9,6 @@ import { AdaptableBlotterOptions } from '../../../BlotterOptions/AdaptableBlotte
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ColumnFilterHelper } from '../../../Utilities/Helpers/ColumnFilterHelper';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
-import { Modal, Button, Row, Col, Radio } from 'react-bootstrap';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../../UIHelper';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
@@ -20,10 +19,14 @@ import { AdaptablePopover } from '../../AdaptablePopover';
 // this will be correctly configured at build time to contain the correct version
 
 import version from '../../../../version';
+import Dialog from '../../../components/Dialog';
+import { Flex } from 'rebass';
+import SimpleButton from '../../../components/SimpleButton';
+import Radio from '../../../components/Radio';
 
 interface AdaptableBlotterAboutProps extends React.ClassAttributes<AdaptableBlotterAbout> {
   AdaptableBlotter: IAdaptableBlotter;
-  onClose?: Function;
+  onClose?: () => void;
   showAbout: boolean;
 }
 
@@ -281,182 +284,178 @@ export class AdaptableBlotterAbout extends React.Component<
         });
 
     return (
-      <Modal
-        show={this.props.showAbout}
-        onHide={this.props.onClose}
+      <Dialog
+        isOpen={this.props.showAbout}
+        onDismiss={this.props.onClose}
         className={this.state.cssClassName + StyleConstants.BASE}
-        container={modalContainer}
+        style={{ minWidth: '35vw' }}
+        showCloseButton={false}
       >
-        <div className={this.state.cssClassName + StyleConstants.MODAL_BASE}>
-          <Modal.Body className={this.state.cssClassName + StyleConstants.MODAL_BODY}>
-            <div className={this.state.cssClassName}>
-              <PanelWithImage
-                cssClassName={this.state.cssClassName}
-                header={'About'}
-                bsStyle="primary"
-                glyphicon={'info-sign'}
+        <Flex flexDirection="column" style={{ height: '100%' }}>
+          <PanelWithImage
+            cssClassName={this.state.cssClassName}
+            header={'About'}
+            variant="primary"
+            glyphicon={'info-sign'}
+            style={{ flex: 1 }}
+          >
+            <Flex marginBottom={2} padding={3}>
+              <Radio
+                marginRight={3}
+                value="GridProperties"
+                checked={this.state.ShowGridProperties == true}
+                onChange={(_, e: any) => this.onShowGridPropertiesChanged(e)}
               >
-                <Row style={{ marginBottom: '10px' }}>
-                  <Col xs={12}>
-                    <Radio
-                      inline
-                      value="GridProperties"
-                      checked={this.state.ShowGridProperties == true}
-                      onChange={e => this.onShowGridPropertiesChanged(e)}
-                    >
-                      Grid Properties
-                    </Radio>
-                    <Radio
-                      inline
-                      value="BlotterOptions"
-                      checked={this.state.ShowGridProperties == false}
-                      onChange={e => this.onShowGridPropertiesChanged(e)}
-                    >
-                      Blotter Options
-                    </Radio>
-                  </Col>
-                </Row>
+                Grid Properties
+              </Radio>
+              <Radio
+                value="BlotterOptions"
+                checked={this.state.ShowGridProperties == false}
+                onChange={(_, e: any) => this.onShowGridPropertiesChanged(e)}
+              >
+                Blotter Options
+              </Radio>
+            </Flex>
 
-                {this.state.ShowGridProperties ? (
-                  <div>
+            {this.state.ShowGridProperties ? (
+              <div>
+                <AdaptableObjectCollection
+                  cssClassName={this.state.cssClassName}
+                  colItems={gridPropertiesColItems}
+                  items={gridProperties}
+                />
+              </div>
+            ) : (
+              <div>
+                <PanelWithButton
+                  variant="default"
+                  headerText={'Base Options'}
+                  cssClassName={this.state.cssClassName}
+                  button={showBaseOptionsButton}
+                >
+                  {this.state.IsBaseOptionsMinimised == false && (
                     <AdaptableObjectCollection
                       cssClassName={this.state.cssClassName}
-                      colItems={gridPropertiesColItems}
-                      items={gridProperties}
+                      colItems={blotterOptionsColItems}
+                      items={baseBlotterOptions}
                     />
-                  </div>
-                ) : (
-                  <div>
-                    <PanelWithButton
-                      bsSize={'xs'}
-                      headerText={'Base Options'}
-                      cssClassName={this.state.cssClassName}
-                      button={showBaseOptionsButton}
-                    >
-                      {this.state.IsBaseOptionsMinimised == false && (
-                        <AdaptableObjectCollection
-                          cssClassName={this.state.cssClassName}
-                          colItems={blotterOptionsColItems}
-                          items={baseBlotterOptions}
-                        />
-                      )}
-                    </PanelWithButton>
+                  )}
+                </PanelWithButton>
 
-                    <PanelWithButton
-                      bsSize={'xs'}
-                      headerText={'Container Options'}
+                <PanelWithButton
+                  variant="default"
+                  headerText={'Container Options'}
+                  cssClassName={this.state.cssClassName}
+                  button={showContainerOptionsButton}
+                >
+                  {this.state.IsContainerOptionsMinimised == false && (
+                    <AdaptableObjectCollection
                       cssClassName={this.state.cssClassName}
-                      button={showContainerOptionsButton}
-                    >
-                      {this.state.IsContainerOptionsMinimised == false && (
-                        <AdaptableObjectCollection
-                          cssClassName={this.state.cssClassName}
-                          colItems={blotterOptionsColItems}
-                          items={containerBlotterOptions}
-                        />
-                      )}
-                    </PanelWithButton>
-                    <PanelWithButton
-                      bsSize={'xs'}
-                      headerText={'Audit Options'}
+                      colItems={blotterOptionsColItems}
+                      items={containerBlotterOptions}
+                    />
+                  )}
+                </PanelWithButton>
+                <PanelWithButton
+                  variant="default"
+                  headerText={'Audit Options'}
+                  cssClassName={this.state.cssClassName}
+                  button={showAuditOptionsButton}
+                >
+                  {this.state.IsAuditOptionsMinimised == false && (
+                    <AdaptableObjectCollection
                       cssClassName={this.state.cssClassName}
-                      button={showAuditOptionsButton}
-                    >
-                      {this.state.IsAuditOptionsMinimised == false && (
-                        <AdaptableObjectCollection
-                          cssClassName={this.state.cssClassName}
-                          colItems={blotterOptionsColItems}
-                          items={auditBlotterOptions}
-                        />
-                      )}
-                    </PanelWithButton>
-                    <PanelWithButton
-                      bsSize={'xs'}
-                      headerText={'Config Server Options'}
+                      colItems={blotterOptionsColItems}
+                      items={auditBlotterOptions}
+                    />
+                  )}
+                </PanelWithButton>
+                <PanelWithButton
+                  variant="default"
+                  headerText={'Config Server Options'}
+                  cssClassName={this.state.cssClassName}
+                  button={showConfigServerOptionsButton}
+                >
+                  {this.state.IsConfigServerOptionsMinimised == false && (
+                    <AdaptableObjectCollection
                       cssClassName={this.state.cssClassName}
-                      button={showConfigServerOptionsButton}
-                    >
-                      {this.state.IsConfigServerOptionsMinimised == false && (
-                        <AdaptableObjectCollection
-                          cssClassName={this.state.cssClassName}
-                          colItems={blotterOptionsColItems}
-                          items={configServerBlotterOptions}
-                        />
-                      )}
-                    </PanelWithButton>
-                    <PanelWithButton
-                      bsSize={'xs'}
-                      headerText={'Query Options'}
+                      colItems={blotterOptionsColItems}
+                      items={configServerBlotterOptions}
+                    />
+                  )}
+                </PanelWithButton>
+                <PanelWithButton
+                  variant="default"
+                  headerText={'Query Options'}
+                  cssClassName={this.state.cssClassName}
+                  button={showQueryOptionsButton}
+                >
+                  {this.state.IsQueryOptionsMinimised == false && (
+                    <AdaptableObjectCollection
                       cssClassName={this.state.cssClassName}
-                      button={showQueryOptionsButton}
-                    >
-                      {this.state.IsQueryOptionsMinimised == false && (
-                        <AdaptableObjectCollection
-                          cssClassName={this.state.cssClassName}
-                          colItems={blotterOptionsColItems}
-                          items={queryBlotterOptions}
-                        />
-                      )}
-                    </PanelWithButton>
-                    <PanelWithButton
-                      bsSize={'xs'}
-                      headerText={'Layout Options'}
+                      colItems={blotterOptionsColItems}
+                      items={queryBlotterOptions}
+                    />
+                  )}
+                </PanelWithButton>
+                <PanelWithButton
+                  variant="default"
+                  headerText={'Layout Options'}
+                  cssClassName={this.state.cssClassName}
+                  button={showLayoutOptionsButton}
+                >
+                  {this.state.IsLayoutOptionsMinimised == false && (
+                    <AdaptableObjectCollection
                       cssClassName={this.state.cssClassName}
-                      button={showLayoutOptionsButton}
-                    >
-                      {this.state.IsLayoutOptionsMinimised == false && (
-                        <AdaptableObjectCollection
-                          cssClassName={this.state.cssClassName}
-                          colItems={blotterOptionsColItems}
-                          items={layoutBlotterOptions}
-                        />
-                      )}
-                    </PanelWithButton>
-                    <PanelWithButton
-                      bsSize={'xs'}
-                      headerText={'Filter Options'}
+                      colItems={blotterOptionsColItems}
+                      items={layoutBlotterOptions}
+                    />
+                  )}
+                </PanelWithButton>
+                <PanelWithButton
+                  variant="default"
+                  headerText={'Filter Options'}
+                  cssClassName={this.state.cssClassName}
+                  button={showFilterOptionsButton}
+                >
+                  {this.state.IsFilterOptionsMinimised == false && (
+                    <AdaptableObjectCollection
                       cssClassName={this.state.cssClassName}
-                      button={showFilterOptionsButton}
-                    >
-                      {this.state.IsFilterOptionsMinimised == false && (
-                        <AdaptableObjectCollection
-                          cssClassName={this.state.cssClassName}
-                          colItems={blotterOptionsColItems}
-                          items={filterBlotterOptions}
-                        />
-                      )}
-                    </PanelWithButton>
-                    <PanelWithButton
-                      bsSize={'xs'}
-                      headerText={'General Options'}
+                      colItems={blotterOptionsColItems}
+                      items={filterBlotterOptions}
+                    />
+                  )}
+                </PanelWithButton>
+                <PanelWithButton
+                  variant="default"
+                  headerText={'General Options'}
+                  cssClassName={this.state.cssClassName}
+                  button={showGeneralOptionsButton}
+                >
+                  {this.state.IsGeneralOptionsMinimised == false && (
+                    <AdaptableObjectCollection
                       cssClassName={this.state.cssClassName}
-                      button={showGeneralOptionsButton}
-                    >
-                      {this.state.IsGeneralOptionsMinimised == false && (
-                        <AdaptableObjectCollection
-                          cssClassName={this.state.cssClassName}
-                          colItems={blotterOptionsColItems}
-                          items={generalBlotterOptions}
-                        />
-                      )}
-                    </PanelWithButton>
-                  </div>
-                )}
-              </PanelWithImage>
-            </div>
-          </Modal.Body>
-          <Modal.Footer className={this.state.cssClassName + StyleConstants.MODAL_FOOTER}>
-            <Button
+                      colItems={blotterOptionsColItems}
+                      items={generalBlotterOptions}
+                    />
+                  )}
+                </PanelWithButton>
+              </div>
+            )}
+          </PanelWithImage>
+
+          <Flex alignItems="center" flexDirection="row" padding={2} backgroundColor="lightgray">
+            <SimpleButton
               className={
                 this.state.cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON
               }
               onClick={() => this.props.onClose()}
             >
               Close
-            </Button>
-          </Modal.Footer>
-        </div>
-      </Modal>
+            </SimpleButton>
+          </Flex>
+        </Flex>
+      </Dialog>
     );
   }
 
@@ -851,13 +850,8 @@ export class AdaptableBlotterAbout extends React.Component<
   createMaximiseButton(optionType: string, onClickFunction: any): any {
     return (
       <ButtonMaximise
-        cssClassName={this.state.cssClassName}
         onClick={() => onClickFunction()}
-        bsStyle={StyleConstants.DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Show ' + optionType + ' Options'}
+        tooltip={'Show ' + optionType + ' Options'}
       />
     );
   }
@@ -865,13 +859,8 @@ export class AdaptableBlotterAbout extends React.Component<
   createMinimiseButton(optionType: string, onClickFunction: any): any {
     return (
       <ButtonMinimise
-        cssClassName={this.state.cssClassName}
         onClick={() => onClickFunction()}
-        bsStyle={StyleConstants.DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Hide ' + optionType + ' Options'}
+        tooltip={'Hide ' + optionType + ' Options'}
       />
     );
   }

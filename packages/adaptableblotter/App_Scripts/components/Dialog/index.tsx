@@ -10,18 +10,19 @@ import { ModalProps, default as Modal } from '../Modal';
 import useIsOpen from './useIsOpen';
 import useAutoFocus from '../utils/useAutoFocus';
 
-export type DialogProps = BoxProps &
-  React.HTMLProps<HTMLElement> & {
-    modal?: boolean;
-    autoFocus?: boolean;
-    fixed?: boolean;
-    modalProps?: ModalProps;
-    isOpen?: boolean;
-    defaultIsOpen?: boolean;
-    showCloseButton?: boolean;
-    onDismiss?: () => void | Function;
-    dismissOnClickOutside?: () => void | Function;
-  };
+type TypeProps = {
+  modal?: boolean;
+  autoFocus?: boolean;
+  fixed?: boolean;
+  modalProps?: ModalProps;
+  isOpen?: boolean;
+  defaultIsOpen?: boolean;
+  showCloseButton?: boolean;
+  onDismiss?: () => void;
+  dismissOnClickOutside?: boolean;
+};
+
+export interface DialogProps extends BoxProps, TypeProps {}
 
 const baseClassName = 'ab-Dialog';
 
