@@ -17,6 +17,8 @@ export type ExpandedProps = {
   onToggle?: (expanded: boolean) => void;
 };
 
+const OFFSET = 30;
+
 export default (props: ExpandedProps, positionerRef: MutableRefObject<HTMLDivElement>) => {
   const positionInfoRef = useRef<PositionInfo>({
     maxHeight: '50vh',
@@ -63,6 +65,7 @@ export default (props: ExpandedProps, positionerRef: MutableRefObject<HTMLDivEle
         side,
       };
     }
+    positionInfoRef.current.maxHeight -= OFFSET;
   };
 
   const [expanded, doSetExpanded] = useProperty(props, 'expanded', false, {
@@ -85,6 +88,9 @@ export default (props: ExpandedProps, positionerRef: MutableRefObject<HTMLDivEle
   });
 
   const setExpanded = (newExpanded: boolean) => {
+    // if (!newExpanded) {
+    //   return;
+    // }
     if (!expanded && newExpanded) {
       updatePosition();
     }

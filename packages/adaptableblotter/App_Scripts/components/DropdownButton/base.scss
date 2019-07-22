@@ -23,4 +23,7 @@
   background: var(--ab-cmp-dropdownbutton-list-item-hover__background);
   color: var(--ab-cmp-dropdownbutton-list-item-hover__color);
   fill: currentColor;
+  .glyphicon.glyphicon {
+    color: inherit;
+  }
 }
