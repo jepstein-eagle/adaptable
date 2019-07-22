@@ -1,23 +1,17 @@
 import * as React from 'react';
-import { ButtonBase, ButtonProps } from './ButtonBase';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
 
-export class ButtonSave extends React.Component<ButtonProps, {}> {
+export class ButtonSave extends React.Component<SimpleButtonProps, {}> {
   render() {
     return (
-      <ButtonBase
-        ToolTipAndText="Save"
-        bsStyle="primary"
-        bsSize={this.props.size}
-        glyph="floppy-save"
-        onClick={() => this.props.onClick()}
-        overrideDisableButton={this.props.overrideDisableButton}
-        overrideTooltip={this.props.overrideTooltip}
-        style={this.props.style}
-        DisplayMode={this.props.DisplayMode}
-        overrideText={this.props.overrideText}
-        cssClassName={this.props.cssClassName + StyleConstants.SAVE_BUTTON}
-        showDefaultStyle={this.props.showDefaultStyle}
+      <SimpleButton
+        px={2}
+        py={1}
+        iconSize={20}
+        icon="save"
+        tooltip="Save"
+        variant="text"
+        {...this.props}
       />
     );
   }

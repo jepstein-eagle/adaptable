@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Label, OverlayTrigger, Glyphicon, Popover, Button } from 'react-bootstrap';
+import { Label, OverlayTrigger, Glyphicon, Popover } from 'react-bootstrap';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { MessageType } from '../PredefinedConfig/Common/Enums';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';

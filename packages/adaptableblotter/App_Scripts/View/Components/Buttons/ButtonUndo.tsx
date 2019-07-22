@@ -1,24 +1,17 @@
 import * as React from 'react';
-import { ButtonBase, ButtonProps } from './ButtonBase';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
 
-export class ButtonUndo extends React.Component<ButtonProps, {}> {
+export class ButtonUndo extends React.Component<SimpleButtonProps, {}> {
   render() {
     return (
-      <ButtonBase
-        ToolTipAndText="Undo"
-        bsStyle="success"
-        bsSize={this.props.size}
-        glyph="share-alt"
-        onClick={this.props.onClick}
-        overrideDisableButton={this.props.overrideDisableButton}
-        overrideTooltip={this.props.overrideTooltip}
-        style={this.props.style}
-        DisplayMode={this.props.DisplayMode}
-        overrideText={this.props.overrideText}
-        transformGlyph={true}
-        cssClassName={this.props.cssClassName + StyleConstants.UNDO_BUTTON}
-        showDefaultStyle={this.props.showDefaultStyle}
+      <SimpleButton
+        px={2}
+        py={1}
+        iconSize={20}
+        tooltip="Undo"
+        icon={'addo'}
+        variant="text"
+        {...this.props}
       />
     );
   }

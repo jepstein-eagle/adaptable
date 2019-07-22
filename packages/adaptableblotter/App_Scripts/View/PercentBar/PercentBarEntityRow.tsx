@@ -8,7 +8,6 @@ import { IColItem } from '../UIInterfaces';
 import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ColorPicker } from '../ColorPicker';
-import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { EntityRowItem } from '../Components/EntityRowItem';
@@ -60,11 +59,10 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
       <EntityRowItem
         Content={
           StringExtensions.IsNullOrEmpty(PercentBar.MaxValueColumnId) ? (
-            <FormControl
-              bsSize={'small'}
+            <Input
               type={'number'}
               placeholder="Max Value"
-              onChange={e => this.onMaximumValueChanged(e)}
+              onChange={(e: React.SyntheticEvent) => this.onMaximumValueChanged(e)}
               value={PercentBar.MaxValue}
             />
           ) : (

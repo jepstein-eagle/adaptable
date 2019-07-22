@@ -243,40 +243,25 @@ class ExportToolbarControlComponent extends React.Component<
           }
         >
           <ButtonEdit
-            style={{ marginLeft: '2px' }}
             onClick={() => this.props.onEditReport()}
-            cssClassName={cssClassName}
-            size={this.props.DashboardSize}
-            overrideTooltip="Edit Report"
-            overrideDisableButton={savedReport == null || ReportHelper.IsSystemReport(savedReport)}
-            DisplayMode="Glyph"
+            tooltip="Edit Report"
+            disabled={savedReport == null || ReportHelper.IsSystemReport(savedReport)}
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
           />
 
           <ButtonNew
-            style={{ marginLeft: '2px' }}
-            cssClassName={cssClassName}
             onClick={() => this.props.onNewReport()}
-            size={this.props.DashboardSize}
-            overrideTooltip="Create New Report"
-            DisplayMode="Glyph"
+            tooltip="Create New Report"
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
           />
 
           <ButtonDelete
-            style={{ marginLeft: '2px' }}
-            cssClassName={cssClassName}
-            size={this.props.DashboardSize}
-            overrideTooltip="Delete Report"
-            overrideDisableButton={savedReport == null || ReportHelper.IsSystemReport(savedReport)}
-            DisplayMode="Glyph"
+            tooltip="Delete Report"
+            disabled={savedReport == null || ReportHelper.IsSystemReport(savedReport)}
             ConfirmAction={ExportRedux.ReportDelete(savedReport)}
             ConfirmationMsg={deleteMessage}
             ConfirmationTitle={'Delete Report'}
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
           />
         </span>
       </span>

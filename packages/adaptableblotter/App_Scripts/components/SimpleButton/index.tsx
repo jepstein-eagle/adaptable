@@ -13,7 +13,7 @@ import { IconProps } from '../icons/DefaultIcon';
 
 export const baseClassName = 'ab-SimpleButton';
 
-export type SimpleButtonProps = HTMLProps<HTMLElement> & {
+export interface SimpleButtonProps extends ButtonProps {
   tooltip?: string;
   variant?: 'text' | 'outlined' | 'raised' | 'unelevated';
   tone?: 'success' | 'error' | 'neutral' | 'none';
@@ -23,7 +23,7 @@ export type SimpleButtonProps = HTMLProps<HTMLElement> & {
   disabled?: boolean;
   bsStyle?: any;
   AccessLevel?: AccessLevel;
-} & ButtonProps;
+}
 
 const SimpleButton = (props: SimpleButtonProps) => {
   let {
@@ -36,6 +36,7 @@ const SimpleButton = (props: SimpleButtonProps) => {
     className,
     icon,
     tooltip,
+    AccessLevel: accessLevel,
     ...buttonProps
   } = props;
 
@@ -83,6 +84,14 @@ const SimpleButton = (props: SimpleButtonProps) => {
         onKeyDown(e as any);
       }
     };
+  }
+
+  if (accessLevel === AccessLevel.Hidden) {
+    return null;
+  }
+
+  if (accessLevel === AccessLevel.ReadOnly) {
+    disabled = true;
   }
 
   const btn = (

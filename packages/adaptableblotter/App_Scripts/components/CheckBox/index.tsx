@@ -2,8 +2,6 @@ import React, { ReactNode, useState, SyntheticEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Box, BoxProps } from 'rebass';
 
-import { Overwrite } from '../../Utilities/types';
-
 const checked = keyframes`
   100% {
     stroke-dashoffset: 0;

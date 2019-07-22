@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as CustomSortRedux from '../../Redux/ActionsReducers/CustomSortRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';

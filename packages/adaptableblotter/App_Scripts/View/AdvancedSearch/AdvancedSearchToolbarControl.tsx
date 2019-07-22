@@ -7,7 +7,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { Helper } from '../../Utilities/Helpers/Helper';
+
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
@@ -15,12 +15,10 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { SortOrder, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
-import { InputGroup, MenuItem } from 'react-bootstrap';
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
-import DropdownButton from '../../components/DropdownButton';
+
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 

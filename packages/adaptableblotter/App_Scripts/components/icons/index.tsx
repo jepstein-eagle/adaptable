@@ -29,6 +29,7 @@ import Delete from './delete';
 import ColorDrop from './color-drop';
 import CheckCircle from './check-circle';
 import Refresh from './refresh';
+import Save from './save';
 
 export default {
   'arrow-right': ArrowRight,
@@ -44,6 +45,7 @@ export default {
   list: List,
   delete: Delete,
   build: Build,
+  save: Save,
   trash: Delete,
   refresh: Refresh,
   error: Err,

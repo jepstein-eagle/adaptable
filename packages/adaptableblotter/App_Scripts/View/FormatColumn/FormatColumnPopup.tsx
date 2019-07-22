@@ -99,11 +99,8 @@ class FormatColumnPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create Format Column"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Format Column"
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -114,10 +111,9 @@ class FormatColumnPopupComponent extends React.Component<
           cssClassName={cssClassName}
           headerText={StrategyConstants.FormatColumnStrategyName}
           button={newButton}
-          bsStyle="primary"
-          className="ab_main_popup"
           glyphicon={StrategyConstants.FormatColumnGlyph}
           infoBody={infoBody}
+          bodyProps={{ padding: 0 }}
         >
           {this.props.FormatColumns.length == 0 ? (
             <EmptyContent>Click 'New' to create a new column format.</EmptyContent>

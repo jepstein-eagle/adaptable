@@ -38,6 +38,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
         Content={
           <Input
             value={plusMinusRule.NudgeValue.toString()}
+            style={{ width: '100%' }}
             type="number"
             placeholder="Enter a Number"
             onChange={(e: any) => this.props.onColumnDefaultNudgeValueChange(plusMinusRule, e)}

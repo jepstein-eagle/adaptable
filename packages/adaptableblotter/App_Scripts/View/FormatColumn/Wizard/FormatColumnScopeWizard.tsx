@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, Panel } from 'react-bootstrap';
+
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
@@ -9,6 +9,7 @@ import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { FormatColumn } from '../../../PredefinedConfig/RunTimeState/FormatColumnState';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface FormatColumnScopeWizardProps extends AdaptableWizardStepProps<FormatColumn> {}
 
@@ -30,19 +31,15 @@ export class FormatColumnScopeWizard
     let cssClassName: string = this.props.cssClassName + '-scope';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Choose a column to format" bsStyle="primary">
-          <Col xs={12} className="ab_medium_margin">
-            <ColumnSelector
-              cssClassName={cssClassName}
-              SelectedColumnIds={[this.state.ColumnId]}
-              ColumnList={this.props.Columns}
-              onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-              SelectionMode={SelectionMode.Single}
-            />
-          </Col>
-        </Panel>
-      </div>
+      <WizardPanel header="Choose a column to format">
+        <ColumnSelector
+          cssClassName={cssClassName}
+          SelectedColumnIds={[this.state.ColumnId]}
+          ColumnList={this.props.Columns}
+          onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+          SelectionMode={SelectionMode.Single}
+        />
+      </WizardPanel>
     );
   }
 
