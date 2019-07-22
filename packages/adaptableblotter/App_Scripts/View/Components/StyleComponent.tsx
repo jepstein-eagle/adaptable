@@ -91,13 +91,12 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
             ></Dropdown>
           </div>
         ) : (
-          <Flex>
+          <Flex flexDirection="column">
             <Flex flex={1}>
               <Panel header="Cell Colours" bodyProps={{ padding: 0 }}>
                 <Flex flexDirection="column" margin={1}>
                   <Flex flexDirection="row" alignItems="center">
                     <Checkbox
-                      inline
                       value="existing"
                       marginLeft={1}
                       marginRight={3}
@@ -144,7 +143,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
               </Panel>
             </Flex>
 
-            <Flex flex={1} marginLeft={2}>
+            <Flex flex={1} marginTop={2}>
               <Panel header="Font Properties" style={{ width: '100%' }}>
                 <Flex flexDirection="column">
                   <Checkbox
