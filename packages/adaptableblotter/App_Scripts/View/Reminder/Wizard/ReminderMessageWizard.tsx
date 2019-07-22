@@ -6,7 +6,6 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { Reminder } from '../../../PredefinedConfig/RunTimeState/ReminderState';
 import { EnumExtensions } from '../../../Utilities/Extensions/EnumExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
@@ -16,19 +15,19 @@ import WizardPanel from '../../../components/WizardPanel';
 import Input from '../../../components/Input';
 import Checkbox from '../../../components/CheckBox';
 
-export interface ReminderAlertWizardProps extends AdaptableWizardStepProps<Reminder> {}
+export interface ReminderMessageWizardProps extends AdaptableWizardStepProps<Reminder> {}
 
-export interface ReminderAlertWizardState {
+export interface ReminderMessageWizardState {
   Header: string;
   Msg: string;
   MessageType: MessageType;
   ShowAsPopup: boolean;
 }
 
-export class ReminderAlertWizard
-  extends React.Component<ReminderAlertWizardProps, ReminderAlertWizardState>
+export class ReminderMessageWizard
+  extends React.Component<ReminderMessageWizardProps, ReminderMessageWizardState>
   implements AdaptableWizardStep {
-  constructor(props: ReminderAlertWizardProps) {
+  constructor(props: ReminderMessageWizardProps) {
     super(props);
     this.state = {
       Header: this.props.Data.Alert.Header,
@@ -50,7 +49,7 @@ export class ReminderAlertWizard
 
     return (
       <div className={cssClassName} style={{ height: '100%' }}>
-        <WizardPanel header="Alert Settings">
+        <WizardPanel header="Message Settings">
           <Flex flexDirection="column">
             <Flex marginTop={2} alignItems="center">
               <Text style={{ flex: 3 }}>Header:</Text>
@@ -114,26 +113,26 @@ export class ReminderAlertWizard
 
   private onHeaderChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.setState({ Header: e.value } as ReminderAlertWizardState, () =>
+    this.setState({ Header: e.value } as ReminderMessageWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
   private onMessageChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.setState({ Msg: e.value } as ReminderAlertWizardState, () =>
+    this.setState({ Msg: e.value } as ReminderMessageWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
   private onMessageTypeChanged(value: any) {
-    this.setState({ MessageType: value } as ReminderAlertWizardState, () =>
+    this.setState({ MessageType: value } as ReminderMessageWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
   private onShowAsPopupChanged(checked: boolean) {
-    this.setState({ ShowAsPopup: checked } as ReminderAlertWizardState, () =>
+    this.setState({ ShowAsPopup: checked } as ReminderMessageWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }

@@ -38,12 +38,7 @@ export class LayoutSelectionWizard
 
     return (
       <WizardPanel header="Select Source for Layout">
-        <HelpBlock>
-          <p>
-            Choose whether to create a new layout using the Grid's current columns and sort order.
-          </p>
-          <p>Alternatively, choose to build a new layout from scratch.</p>
-        </HelpBlock>
+        <HelpBlock>Create a new layout using the Grid's current columns and sort order.</HelpBlock>
 
         <Flex alignItems="center" marginLeft={2} marginTop={2}>
           <Radio
@@ -62,6 +57,11 @@ export class LayoutSelectionWizard
             ]}
           />
         </Flex>
+
+        <HelpBlock>
+          Build a new layout from scratch, choosing the columns (and sort order).
+        </HelpBlock>
+
         <Flex alignItems="center" marginLeft={2} marginTop={2}>
           <Radio
             value="New"

@@ -31,15 +31,13 @@ export class ShortcutTypeWizard
   render() {
     return (
       <WizardPanel header="Select Where Shortcut is Applied">
-        <HelpBlock marginBottom={2}>
-          <p>
-            Numeric column shortuts perform a mathematical operation on the current contents of the
-            cell.
-          </p>
-          <p>Date shortcuts replace the cell contents with a new Date value.</p>
-        </HelpBlock>
-
         <Flex flexDirection="column" padding={2}>
+          <HelpBlock marginBottom={2}>
+            <p>
+              Numeric column shortuts perform a mathematical operation based on the{' '}
+              <b>current contents</b> of the cell.
+            </p>
+          </HelpBlock>
           <Radio
             marginBottom={2}
             value="Number"
@@ -48,6 +46,13 @@ export class ShortcutTypeWizard
           >
             Numeric Columns
           </Radio>
+
+          <HelpBlock marginBottom={2}>
+            <p>
+              Date shortcuts <b>replace the cell contents</b> with a new Date value.
+            </p>
+          </HelpBlock>
+
           <Radio
             marginBottom={2}
             value="Date"

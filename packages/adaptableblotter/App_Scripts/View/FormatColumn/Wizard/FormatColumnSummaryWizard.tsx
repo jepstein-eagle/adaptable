@@ -24,7 +24,7 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
 
     let keyValuePairs: IKeyValuePair[] = [
       {
-        Key: 'Scope',
+        Key: 'Column',
         Value: ColumnHelper.getFriendlyNameFromColumnId(
           this.props.Data.ColumnId,
           this.props.Columns

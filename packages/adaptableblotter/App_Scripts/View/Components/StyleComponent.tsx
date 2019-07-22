@@ -88,12 +88,16 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                 },
                 ...optionClassNames,
               ]}
-            ></Dropdown>
+            />
           </div>
         ) : (
           <Flex flexDirection="column">
             <Flex flex={1}>
               <Panel header="Cell Colours" bodyProps={{ padding: 0 }}>
+                <HelpBlock marginTop={2}>
+                  Set the colour by ticking a checkbox and selecting a colour from the dropdown;
+                  leave unchecked to use colours from the cell's existing style.
+                </HelpBlock>
                 <Flex flexDirection="column" margin={1}>
                   <Flex flexDirection="row" alignItems="center">
                     <Checkbox
@@ -135,11 +139,6 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     )}
                   </Flex>
                 </Flex>
-
-                <HelpBlock marginTop={2}>
-                  Set the colour by ticking a checkbox and selecting a colour from the dropdown;
-                  leave unchecked to use colours from the cell's existing style.
-                </HelpBlock>
               </Panel>
             </Flex>
 
@@ -183,7 +182,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                           value={this.state.myStyle.FontSize.toString()}
                           onChange={(value: any) => this.onFontSizeChange(value)}
                           options={optionFontSizes}
-                        ></Dropdown>{' '}
+                        />{' '}
                         <AdaptablePopover
                           cssClassName={cssClassName}
                           headerText={'Conditional Style: Font Size'}
