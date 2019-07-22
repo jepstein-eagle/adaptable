@@ -83,7 +83,15 @@ export function GetNamedFiltersForColumn(
   column: IColumn,
   namedFilters: NamedFilter[]
 ): NamedFilter[] {
-  return namedFilters.filter(f => f.DataType === column.DataType);
+  return namedFilters.filter(f => {
+    if (f.Scope.DataType && f.Scope.DataType !== column.DataType) {
+      return false;
+    }
+    if (f.Scope.ColumnIds && f.Scope.ColumnIds.indexOf(column.ColumnId) === -1) {
+      return false;
+    }
+    return true;
+  });
 }
 
 export function ShowUserFilterForColumn(
