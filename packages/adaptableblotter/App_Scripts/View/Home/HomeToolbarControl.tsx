@@ -196,9 +196,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     let functionsDropdown = (
       <DropdownButton
         variant="text"
-        bsStyle={'default'}
         className={cssDropdownClassName}
-        bsSize={this.props.DashboardSize}
         items={menuItems}
         tooltip="Functions"
         key={'dropdown-functions'}

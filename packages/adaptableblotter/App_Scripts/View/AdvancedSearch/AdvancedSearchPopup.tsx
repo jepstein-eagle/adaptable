@@ -136,7 +136,6 @@ class AdvancedSearchPopupComponent extends React.Component<
           button={newSearchButton}
           bodyProps={{ padding: 0 }}
           glyphicon={StrategyConstants.AdvancedSearchGlyph}
-          className="ab_main_popup"
         >
           {advancedSearchRows.length > 0 && (
             <AdaptableObjectCollection

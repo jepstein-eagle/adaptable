@@ -232,45 +232,28 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
     let closeButton = (
       <ButtonClose
-        cssClassName={cssClassName}
         onClick={() => this.onCloseForm()}
-        bsStyle={'default'}
-        size={'xsmall'}
-        DisplayMode="Glyph"
-        hideToolTip={true}
+        tooltip={null}
         AccessLevel={AccessLevel.Full}
       />
     );
 
     let clearFilterButton = (
       <ButtonClear
-        cssClassName={this.props.cssClassName + ' pull-right '}
         onClick={() => this.onClearFilter()}
-        bsStyle={'default'}
-        style={{ margin: '5px' }}
-        size={'xsmall'}
-        overrideDisableButton={isEmptyFilter}
-        overrideText={'Clear'}
-        DisplayMode="Text"
-        hideToolTip={true}
+        disabled={isEmptyFilter}
+        tooltip={null}
         AccessLevel={AccessLevel.Full}
-      />
+      ></ButtonClear>
     );
 
     let saveButton = (
       <ButtonSave
-        cssClassName={this.props.cssClassName + ' pull-right '}
         onClick={() => this.onSaveFilter()}
-        bsStyle={'default'}
-        style={{ margin: '5px' }}
-        size={'xsmall'}
-        overrideDisableButton={isEmptyFilter || hasUserFilter}
-        overrideText={'Save as User Filter'}
-        DisplayMode="Glyph"
-        hideToolTip={true}
-        overrideTooltip={'Save as User Filter'}
+        disabled={isEmptyFilter || hasUserFilter}
+        tooltip={'Save as User Filter'}
         AccessLevel={AccessLevel.Full}
-      />
+      ></ButtonSave>
     );
 
     return (

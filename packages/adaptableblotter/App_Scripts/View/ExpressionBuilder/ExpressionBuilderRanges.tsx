@@ -119,9 +119,10 @@ export class ExpressionBuilderRanges extends React.Component<
           </Flex>
 
           {range.Operator == LeafExpressionOperator.Between && (
-            <Flex flexDirection="row">
+            <Flex flexDirection="row" marginTop={1}>
               <DropdownButton
                 columns={['label']}
+                marginRight={1}
                 style={rangeOperatorStyle}
                 variant="raised"
                 items={rangeMenuItemsOperand2}
@@ -260,9 +261,4 @@ let operandStyle = {
   flex: 1,
 };
 
-let rangeOperatorStyle = {
-  width: '100px',
-  marginLeft: '10px',
-  marginRight: '0px',
-  marginTop: '0px',
-};
+let rangeOperatorStyle = {};

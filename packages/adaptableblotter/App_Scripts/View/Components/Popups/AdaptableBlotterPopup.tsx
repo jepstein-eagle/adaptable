@@ -82,7 +82,13 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
         <Flex
           flexDirection="column"
           className={cssClassName + StyleConstants.MODAL_BASE}
-          style={{ height: '100%', maxHeight: '90vh' }}
+          style={{
+            height: '100%',
+            maxHeight: '90vh',
+
+            width: '70vw',
+            maxWidth: 800,
+          }}
         >
           <Flex
             flexDirection="column"
@@ -90,7 +96,7 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
             padding={0}
             flex={1}
           >
-            <Flex className="ab_main_popup" flexDirection="column" flex={1}>
+            <Flex flexDirection="column" flex={1}>
               <Flex
                 flexDirection="column"
                 flex={1}

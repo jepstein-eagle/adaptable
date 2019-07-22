@@ -22,6 +22,7 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
       return (
         <Text
           key={colItem.Content || index}
+          fontWeight="bold"
           fontSize={1}
           paddingLeft={1}
           paddingRight={1}

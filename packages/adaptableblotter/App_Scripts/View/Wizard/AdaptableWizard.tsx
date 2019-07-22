@@ -96,7 +96,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
       >
         <Flex
           flexDirection="column"
-          style={{ height: '100%' }}
+          style={{ height: '100%', width: '70vw', maxWidth: 800, maxHeight: '80vh' }}
           className={cssClassName + StyleConstants.WIZARD_BASE}
         >
           <Box
@@ -112,9 +112,13 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               onStepButtonClicked={s => this.onStepButtonClicked(s)}
             />
           </Box>
-          <Box style={{ flex: 1 }} className={cssClassName + StyleConstants.WIZARD_BODY}>
-            <div className="ab_main_wizard">{this.state.ActiveState}</div>
-          </Box>
+          <Flex
+            style={{ flex: 1 }}
+            flexDirection="column"
+            className={cssClassName + StyleConstants.WIZARD_BODY}
+          >
+            {this.state.ActiveState}
+          </Flex>
           <Flex flexDirection="row" padding={2} backgroundColor="lightgray">
             <SimpleButton
               tone="neutral"

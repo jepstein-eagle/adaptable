@@ -10,7 +10,7 @@ import { Flex, Box } from 'rebass';
 
 export interface PanelWithInfoProps extends PanelProps {
   infoBody: any[];
-  cssClassName: string;
+  cssClassName?: string;
 }
 
 export class PanelWithInfo extends React.Component<PanelWithInfoProps, {}> {
@@ -25,9 +25,8 @@ export class PanelWithInfo extends React.Component<PanelWithInfoProps, {}> {
         {this.props.header}
 
         <Box marginLeft={2}>
-          {' '}
           <AdaptablePopover
-            cssClassName={this.props.cssClassName}
+            cssClassName={this.props.cssClassName || ''}
             headerText=""
             bodyText={this.props.infoBody}
           />
