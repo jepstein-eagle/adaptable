@@ -1,16 +1,14 @@
 ﻿import * as React from 'react';
-import { connect } from 'react-redux';
+import { connect, ReactNode } from 'react-redux';
 import * as Redux from 'redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import {
   Glyphicon,
-  MenuItem,
   OverlayTrigger,
   Tooltip,
-  Checkbox,
-  DropdownButton,
+  // DropdownButton,
 } from 'react-bootstrap';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
@@ -36,6 +34,12 @@ import { ISystemStatus } from '../../Utilities/Interface/ISystemStatus';
 import { IAdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { UIHelper } from '../UIHelper';
 import { AdaptableBlotterMenuItem } from '../../Utilities/Interface/AdaptableBlotterMenu';
+import Checkbox from '../../components/CheckBox';
+import SimpleButton from '../../components/SimpleButton';
+import DropdownButton from '../../components/DropdownButton';
+import { Flex } from 'rebass';
+
+const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
 interface HomeToolbarComponentProps
   extends ToolbarStrategyViewPopupProps<HomeToolbarControlComponent> {
@@ -62,30 +66,9 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     let cssClassName: string = this.props.cssClassName + '__home';
     let cssDropdownClassName: string = this.props.cssClassName + '__home__dropdown';
 
-    const functionsGlyph: any = (
-      <OverlayTrigger
-        key={'functionsOverlay'}
-        overlay={<Tooltip id="functionsTooltipButton"> {'Functions'}</Tooltip>}
-      >
-        <Glyphicon glyph={'home'} />
-      </OverlayTrigger>
-    );
-    const colsGlyph: any = (
-      <OverlayTrigger
-        key={'colsOverlay'}
-        overlay={<Tooltip id="colsTooltipButton"> {'Columns'}</Tooltip>}
-      >
-        <Glyphicon glyph={'list'} />
-      </OverlayTrigger>
-    );
-    const toolbarsGlyph: any = (
-      <OverlayTrigger
-        key={'toolbarsOverlay'}
-        overlay={<Tooltip id="toolbarsTooltipButton"> {'Toolbars'}</Tooltip>}
-      >
-        <Glyphicon glyph={'align-justify'} />
-      </OverlayTrigger>
-    );
+    const functionsGlyph: any = <Glyphicon glyph={'home'} />;
+    const colsGlyph: any = <Glyphicon glyph={'list'} />;
+    const toolbarsGlyph: any = <Glyphicon glyph={'align-justify'} />;
 
     // List strategies that are allowed - i.e. are offered by the Blotter instance and are not Hidden Entitlement
     let strategyKeys: string[] = [...this.props.Blotter.strategies.keys()];
@@ -94,40 +77,47 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     );
 
     // function menu items
-    let menuItems = allowedMenuItems.map((menuItem: AdaptableBlotterMenuItem) => {
-      return (
-        <MenuItem
-          disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-          key={menuItem.Label}
-          onClick={() => this.onClick(menuItem)}
-        >
-          <Glyphicon glyph={menuItem.GlyphIcon} /> {menuItem.Label}
-        </MenuItem>
-      );
+    let menuItems = allowedMenuItems.map(menuItem => {
+      return {
+        disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+        onClick: () => this.onClick(menuItem),
+        icon: <Glyphicon glyph={menuItem.GlyphIcon} />,
+        label: menuItem.Label,
+      };
     });
 
     // column items
-    let colItems: any = [];
-    colItems.push(
-      <div key="colTitle">
-        {' '}
-        &nbsp;&nbsp;<b>{'Columns'}</b>
-      </div>
-    );
-    this.props.Columns.forEach((col: IColumn, index) => {
-      colItems.push(
-        <div className="ab_home_toolbar_column_list" key={index}>
-          <Checkbox
-            value={col.ColumnId}
-            key={col.ColumnId}
-            checked={col.Visible}
-            onChange={e => this.onSetColumnVisibility(e)}
-          >
+    let colItems: any = [
+      {
+        clickable: false,
+        label: (
+          <div key="colTitle">
             {' '}
-            {col.FriendlyName}
-          </Checkbox>
-        </div>
-      );
+            &nbsp;&nbsp;<b>{'Columns'}</b>
+          </div>
+        ),
+      },
+    ];
+    this.props.Columns.forEach((col: IColumn, index) => {
+      colItems.push({
+        id: col.ColumnId,
+        onClick: (e: React.SyntheticEvent) => {
+          this.onSetColumnVisibility(col.ColumnId);
+        },
+        label: (
+          <div className="ab_home_toolbar_column_list">
+            <Checkbox
+              as="div"
+              value={col.ColumnId}
+              key={col.ColumnId}
+              checked={col.Visible}
+              onMouseDown={preventDefault}
+            >
+              {col.FriendlyName}
+            </Checkbox>
+          </div>
+        ),
+      });
     });
 
     // toolbar items
@@ -135,12 +125,15 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     let allowedMenuNames: string[] = allowedMenuItems.map(vm => {
       return vm.StrategyId;
     });
-    toolbarItems.push(
-      <div key="toolbarTitle">
-        {' '}
-        &nbsp;&nbsp;<b>{'Toolbars'}</b>
-      </div>
-    );
+    toolbarItems.push({
+      clickable: false,
+      label: (
+        <div key="toolbarTitle">
+          {' '}
+          &nbsp;&nbsp;<b>{'Toolbars'}</b>
+        </div>
+      ),
+    });
     this.props.DashboardState.AvailableToolbars.forEach((toolbar: string, index) => {
       if (ArrayExtensions.ContainsItem(allowedMenuNames, toolbar)) {
         let isVisible: boolean = ArrayExtensions.ContainsItem(
@@ -148,100 +141,101 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           toolbar
         );
         let functionName = StrategyConstants.getNameForStrategyId(toolbar);
-        toolbarItems.push(
-          <div className="ab_home_toolbar_column_list" key={index}>
-            <Checkbox
-              value={toolbar}
-              key={toolbar}
-              checked={isVisible}
-              onChange={e => this.onSetToolbarVisibility(e)}
-            >
-              {' '}
-              {functionName}
-            </Checkbox>
-          </div>
-        );
+        toolbarItems.push({
+          id: toolbar,
+          onClick: (e: React.SyntheticEvent) => {
+            this.onSetToolbarVisibility(toolbar, !isVisible);
+          },
+          label: (
+            <div className="ab_home_toolbar_column_list" key={index}>
+              <Checkbox
+                as="div"
+                value={toolbar}
+                key={toolbar}
+                checked={isVisible}
+                onMouseDown={preventDefault}
+              >
+                {functionName}
+              </Checkbox>
+            </div>
+          ),
+        });
       }
     });
 
     // status button
     let statusButton = (
-      <OverlayTrigger
+      <SimpleButton
+        variant="text"
         key={'systemstatus'}
-        overlay={<Tooltip id="tooltipButton"> {'System Status'}</Tooltip>}
-      >
-        <ButtonDashboard
-          glyph={UIHelper.getGlyphForSystemStatusButton(this.props.SystemStatus
-            .StatusColour as StatusColour)}
-          cssClassName={cssClassName}
-          bsStyle={UIHelper.getStyleForSystemStatusButton(this.props.SystemStatus
-            .StatusColour as StatusColour)}
-          DisplayMode={'Glyph'}
-          bsSize={this.props.DashboardSize}
-          ToolTipAndText={'Status: ' + this.props.SystemStatus.StatusColour}
-          overrideDisableButton={false}
-          onClick={() => this.onClickStatus()}
-          AccessLevel={AccessLevel.Full}
-        />
-      </OverlayTrigger>
+        icon={UIHelper.getGlyphForSystemStatusButton(this.props.SystemStatus
+          .StatusColour as StatusColour)}
+        className={cssClassName}
+        style={UIHelper.getStyleForSystemStatusButton(this.props.SystemStatus
+          .StatusColour as StatusColour)}
+        tooltip={'Status: ' + this.props.SystemStatus.StatusColour}
+        disabled={false}
+        onClick={() => this.onClickStatus()}
+        AccessLevel={AccessLevel.Full}
+      />
     );
 
     // about button
     let aboutButton = (
-      <OverlayTrigger key={'about'} overlay={<Tooltip id="tooltipButton"> {'About'}</Tooltip>}>
-        <ButtonDashboard
-          glyph={'info-sign'}
-          cssClassName={cssClassName}
-          bsStyle={'default'}
-          DisplayMode={'Glyph'}
-          bsSize={this.props.DashboardSize}
-          ToolTipAndText={'About'}
-          overrideDisableButton={false}
-          onClick={() => this.onClickAbout()}
-          AccessLevel={AccessLevel.Full}
-        />
-      </OverlayTrigger>
+      <SimpleButton
+        tooltip="About"
+        icon={'info'}
+        className={cssClassName}
+        variant="text"
+        onClick={() => this.onClickAbout()}
+        AccessLevel={AccessLevel.Full}
+      />
     );
 
     // functions dropdown
     let functionsDropdown = (
       <DropdownButton
+        variant="text"
         bsStyle={'default'}
         className={cssDropdownClassName}
         bsSize={this.props.DashboardSize}
-        title={functionsGlyph}
+        items={menuItems}
+        tooltip="Functions"
         key={'dropdown-functions'}
         id={'dropdown-functions'}
       >
-        {menuItems}
+        {functionsGlyph}
       </DropdownButton>
     );
 
     // columns dropdown
     let columnsDropDown = (
       <DropdownButton
-        bsStyle={'default'}
+        variant="text"
+        collapseOnItemClick={false}
         className={cssDropdownClassName}
-        bsSize={this.props.DashboardSize}
-        title={colsGlyph}
+        items={colItems}
         key={'dropdown-cols'}
         id={'dropdown-cols'}
+        tooltip="Columns"
       >
-        {colItems}
+        {colsGlyph}
       </DropdownButton>
     );
 
     // toolbars dropdown
     let toolbarsDropDown = (
       <DropdownButton
-        bsStyle={'default'}
+        variant="text"
+        collapseOnItemClick={false}
         className={cssDropdownClassName}
-        bsSize={this.props.DashboardSize}
-        title={toolbarsGlyph}
         key={'dropdown-toolbars'}
         id={'dropdown-toolbars'}
+        columns={['label']}
+        items={toolbarItems}
+        tooltip="Toolbars"
       >
-        {toolbarItems}
+        {toolbarsGlyph}
       </DropdownButton>
     );
 
@@ -254,19 +248,18 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           y => y.IsVisible && y.StrategyId == x
         );
         if (menuItem) {
+          console.log(menuItem.GlyphIcon);
           return (
             <OverlayTrigger
               key={x}
               overlay={<Tooltip id="tooltipButton"> {menuItem.Label}</Tooltip>}
             >
-              <ButtonDashboard
-                glyph={menuItem.GlyphIcon}
-                cssClassName={cssClassName}
-                bsStyle={'default'}
-                DisplayMode={'Glyph'}
-                bsSize={this.props.DashboardSize}
-                ToolTipAndText={menuItem.Label}
-                overrideDisableButton={this.props.AccessLevel == AccessLevel.ReadOnly}
+              <SimpleButton
+                icon={menuItem.GlyphIcon}
+                className={cssClassName}
+                variant="text"
+                tooltip={menuItem.Label}
+                disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
                 onClick={() => this.onClick(menuItem)}
                 AccessLevel={AccessLevel.Full}
               />
@@ -286,7 +279,7 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
+        className={cssClassName}
         useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         showCloseButton={false}
         showMinimiseButton={true}
@@ -297,15 +290,17 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
         onClose={() => this.props.onClose(StrategyConstants.HomeStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
-        {this.props.DashboardState.ShowFunctionsDropdown && functionsDropdown}
-        {this.props.DashboardState.ShowSystemStatusButton && statusButton}
-        {this.props.DashboardState.ShowAboutButton && aboutButton}
+        <Flex flexDirection="row">
+          {this.props.DashboardState.ShowFunctionsDropdown && functionsDropdown}
+          {this.props.DashboardState.ShowSystemStatusButton && statusButton}
+          {this.props.DashboardState.ShowAboutButton && aboutButton}
 
-        {shortcuts}
+          {shortcuts}
 
-        {this.props.DashboardState.ShowColumnsDropdown && columnsDropDown}
+          {this.props.DashboardState.ShowColumnsDropdown && columnsDropDown}
 
-        {this.props.DashboardState.ShowToolbarsDropdown && toolbarsDropDown}
+          {this.props.DashboardState.ShowToolbarsDropdown && toolbarsDropDown}
+        </Flex>
       </PanelDashboard>
     );
   }
@@ -361,24 +356,22 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
     this.props.onShowAbout();
   }
 
-  onSetColumnVisibility(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    let changedColumnn: IColumn = ColumnHelper.getColumnFromId(e.value, this.props.Columns);
+  onSetColumnVisibility(name: string) {
+    let changedColumn: IColumn = ColumnHelper.getColumnFromId(name, this.props.Columns);
 
     let columns: IColumn[] = [].concat(this.props.Columns);
-    changedColumnn = Object.assign({}, changedColumnn, {
-      Visible: !changedColumnn.Visible,
+    changedColumn = Object.assign({}, changedColumn, {
+      Visible: !changedColumn.Visible,
     });
-    let index = columns.findIndex(x => x.ColumnId == e.value);
-    columns[index] = changedColumnn;
+    let index = columns.findIndex(x => x.ColumnId == name);
+    columns[index] = changedColumn;
     this.props.onNewColumnListOrder(columns.filter(c => c.Visible));
   }
 
-  onSetToolbarVisibility(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    let strategy: string = this.props.DashboardState.AvailableToolbars.find(at => at == e.value);
-    let visibleToolbars: string[] = [].concat(this.props.DashboardState.VisibleToolbars);
-    if (e.checked) {
+  onSetToolbarVisibility(name: string, checked: boolean) {
+    const strategy: string = this.props.DashboardState.AvailableToolbars.find(at => at == name);
+    const visibleToolbars: string[] = [].concat(this.props.DashboardState.VisibleToolbars);
+    if (checked) {
       visibleToolbars.push(strategy);
     } else {
       let index: number = visibleToolbars.findIndex(vt => vt == strategy);

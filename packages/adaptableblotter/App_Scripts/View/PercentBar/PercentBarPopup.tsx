@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -25,6 +24,9 @@ import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterO
 import { PercentBar } from '../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
+
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {
   PercentBars: PercentBar[];
@@ -124,24 +126,23 @@ class PercentBarPopupComponent extends React.Component<
     });
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create Percent Bar "
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Percent Bar "
         AccessLevel={this.props.AccessLevel}
       />
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.PercentBarStrategyName}
-          bsStyle="primary"
+          style={{ height: '100%' }}
           cssClassName={cssClassName}
           button={newButton}
           glyphicon={StrategyConstants.PercentBarGlyph}
           infoBody={infoBody}
+          bodyProps={{ padding: 0 }}
         >
           {PercentBarItems.length > 0 ? (
             <AdaptableObjectCollection
@@ -150,13 +151,13 @@ class PercentBarPopupComponent extends React.Component<
               items={PercentBarItems}
             />
           ) : (
-            <div>
-              <HelpBlock>Click 'New' to start creating Percent Bars.</HelpBlock>
-              <HelpBlock>
+            <EmptyContent>
+              <p>Click 'New' to start creating Percent Bars.</p>
+              <p>
                 Visualise numeric columns as a bar (positive, negative or both) in order better to
                 see their contents.
-              </HelpBlock>
-            </div>
+              </p>
+            </EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -177,7 +178,7 @@ class PercentBarPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

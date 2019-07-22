@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FormControl } from 'react-bootstrap';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
@@ -9,6 +8,7 @@ import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ColumnSort } from '../../PredefinedConfig/RunTimeState/LayoutState';
+import Dropdown from '../../components/Dropdown';
 
 export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {
   ColumnSort: ColumnSort;
@@ -22,11 +22,10 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     let sortOrders = EnumExtensions.getNames(SortOrder).map(enumName => {
-      return (
-        <option key={enumName} value={enumName}>
-          {enumName}
-        </option>
-      );
+      return {
+        value: enumName,
+        label: enumName,
+      };
     });
 
     colItems[0].Content = (
@@ -40,14 +39,12 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
     );
 
     colItems[1].Content = (
-      <FormControl
-        componentClass="select"
+      <Dropdown
         placeholder="select"
         value={this.props.ColumnSort.SortOrder}
         onChange={(x: any) => this.onSortOrderChanged(x)}
-      >
-        {sortOrders}
-      </FormControl>
+        options={sortOrders}
+      ></Dropdown>
     );
 
     let deleteButton = (
@@ -61,7 +58,6 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
         ConfirmationMsg={''}
         ConfirmationTitle={''}
         onClickAction={() => this.props.onDeleteColumnSort()}
-        size="small"
         AccessLevel={AccessLevel.Full} // only here if in wizard...
       />
     );
@@ -77,8 +73,7 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
     this.props.onColumnSortColumnChanged(column);
   }
 
-  private onSortOrderChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.props.onColumnSortOrderChanged(e.value as SortOrder);
+  private onSortOrderChanged(value: any) {
+    this.props.onColumnSortOrderChanged(value as SortOrder);
   }
 }

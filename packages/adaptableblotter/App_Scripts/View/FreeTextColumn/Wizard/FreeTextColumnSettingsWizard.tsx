@@ -1,14 +1,18 @@
 import * as React from 'react';
-import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { FreeTextColumn } from '../../../PredefinedConfig/RunTimeState/FreeTextColumnState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
+
+import { Box, Text, Flex } from 'rebass';
+import Input from '../../../components/Input';
+import WizardPanel from '../../../components/WizardPanel';
+import ErrorBox from '../../../components/ErrorBox';
 
 export interface FreeTextColumnSettingsWizardProps
   extends AdaptableWizardStepProps<FreeTextColumn> {}
@@ -36,48 +40,37 @@ export class FreeTextColumnSettingsWizard
       ? null
       : 'error';
     return (
-      <div className={cssClassName}>
-        <Panel header="FreeText Column Settings" bsStyle="primary">
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="formInlineName">
-              <Col xs={3}>
-                <ControlLabel>Column Name</ControlLabel>
-              </Col>
-              <Col xs={8}>
-                <FormGroup controlId="formInlineName" validationState={validationState}>
-                  <FormControl
-                    value={this.state.ColumnId}
-                    type="text"
-                    placeholder="Enter a name"
-                    onChange={e => this.handleColumnNameChange(e)}
-                  />
-                  <FormControl.Feedback />
-                  <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-                </FormGroup>
-              </Col>
-              <Col xs={1}> </Col>
-            </FormGroup>
+      <div className={cssClassName} style={{ height: '100%' }}>
+        <WizardPanel header="FreeText Column Settings">
+          <Flex alignItems="center" flexDirection="row">
+            <Text style={{ flex: 2 }}>Column Name</Text>
 
-            <FormGroup controlId="formInlineDefaultValue">
-              <Col xs={3}>
-                <ControlLabel>Default Value</ControlLabel>
-              </Col>
-              <Col xs={8}>
-                <FormGroup controlId="formInlineName" validationState={null}>
-                  <FormControl
-                    value={this.state.DefaultValue}
-                    type="text"
-                    placeholder="Default Column Value (not required)"
-                    onChange={e => this.handleDefaultValueChange(e)}
-                  />
-                  <FormControl.Feedback />
-                  <HelpBlock>{''}</HelpBlock>
-                </FormGroup>
-              </Col>
-              <Col xs={1}> </Col>
-            </FormGroup>
-          </AdaptableBlotterForm>
-        </Panel>
+            <Box style={{ flex: 8 }}>
+              <Input
+                value={this.state.ColumnId}
+                style={{ width: '100%', maxWidth: 500 }}
+                type="text"
+                placeholder="Enter a name"
+                onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
+              />
+            </Box>
+          </Flex>
+          {this.state.ErrorMessage ? (
+            <ErrorBox marginTop={2}>{this.state.ErrorMessage}</ErrorBox>
+          ) : null}
+          <Flex alignItems="center" flexDirection="row" marginTop={3}>
+            <Text style={{ flex: 2 }}>Default Value</Text>
+            <Box style={{ flex: 8 }}>
+              <Input
+                value={this.state.DefaultValue}
+                style={{ width: '100%', maxWidth: 500 }}
+                type="text"
+                placeholder="Default Column Value (not required)"
+                onChange={(e: React.SyntheticEvent) => this.handleDefaultValueChange(e)}
+              />
+            </Box>
+          </Flex>
+        </WizardPanel>
       </div>
     );
   }

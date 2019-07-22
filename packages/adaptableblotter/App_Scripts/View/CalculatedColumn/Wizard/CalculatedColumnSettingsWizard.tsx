@@ -1,15 +1,17 @@
 import * as React from 'react';
-import { Panel, FormGroup, Col, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
 import { CalculatedColumn } from '../../../PredefinedConfig/RunTimeState/CalculatedColumnState';
+import { Flex, Box, Text } from 'rebass';
+import Input from '../../../components/Input';
+import HelpBlock from '../../../components/HelpBlock';
+import Panel from '../../../components/Panel';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface CalculatedColumnSettingsWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {}
@@ -26,36 +28,28 @@ export class CalculatedColumnSettingsWizard
     this.state = { ColumnId: this.props.Data.ColumnId, ErrorMessage: null };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-settings';
-
     let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)
       ? null
       : 'error';
     return (
-      <div className={cssClassName}>
-        <Panel header="Calculated Column Settings" bsStyle={PRIMARY_BSSTYLE}>
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="formInlineName">
-              <Col xs={3}>
-                <ControlLabel>Column Name</ControlLabel>
-              </Col>
-              <Col xs={8}>
-                <FormGroup controlId="formInlineName" validationState={validationState}>
-                  <FormControl
-                    value={this.state.ColumnId}
-                    type="text"
-                    placeholder="Enter a name"
-                    onChange={e => this.handleColumnNameChange(e)}
-                  />
-                  <FormControl.Feedback />
-                  <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-                </FormGroup>
-              </Col>
-              <Col xs={1}> </Col>
-            </FormGroup>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Calculated Column Settings">
+        <Flex flexDirection="row" alignItems="center">
+          <Text>Column Name</Text>
+
+          <Box style={{ flex: 1 }} marginLeft={2} marginRight={2}>
+            <Input
+              style={{ width: '100%' }}
+              value={this.state.ColumnId}
+              autoFocus
+              type="text"
+              placeholder="Enter a name"
+              onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
+            />
+
+            {validationState ? <HelpBlock>{this.state.ErrorMessage}</HelpBlock> : null}
+          </Box>
+        </Flex>
+      </WizardPanel>
     );
   }
 

@@ -6,7 +6,7 @@ import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalS
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { HelpBlock } from 'react-bootstrap';
+
 import { ConditionalStyleScope } from '../../PredefinedConfig/Common/Enums';
 import { ConditionalStyleEntityRow } from './ConditionalStyleEntityRow';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard';
@@ -27,6 +27,8 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 import { ConditionalStyle } from '../../PredefinedConfig/RunTimeState/ConditionalStyleState';
+import { Flex } from 'rebass';
+import EmptyContent from '../../components/EmptyContent';
 
 interface ConditionalStylePopupProps
   extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
@@ -105,30 +107,29 @@ class ConditionalStylePopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create Conditional Style"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create Conditional Style"
         AccessLevel={this.props.AccessLevel}
       />
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.ConditionalStyleStrategyName}
           button={newButton}
           bsStyle={StyleConstants.PRIMARY_BSSTYLE}
+          bodyProps={{ padding: 0 }}
           cssClassName={cssClassName}
           glyphicon={StrategyConstants.ConditionalStyleGlyph}
           infoBody={infoBody}
         >
           {this.props.ConditionalStyles.length == 0 ? (
-            <HelpBlock>
+            <EmptyContent>
               Click 'New' to create a new conditional style to be applied at row or column level
               when a rule set by you is met.
-            </HelpBlock>
+            </EmptyContent>
           ) : (
             <AdaptableObjectCollection
               cssClassName={cssClassName}
@@ -159,7 +160,7 @@ class ConditionalStylePopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

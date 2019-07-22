@@ -584,7 +584,7 @@ export function GetColumnListFromExpression(expression: Expression): Array<strin
   if (ArrayExtensions.IsNotNullOrEmpty(expression.RangeExpressions)) {
     returnColumnList.push(...expression.RangeExpressions.map(x => x.ColumnId));
   }
-  return returnColumnList;
+  return [...new Set(returnColumnList)];
 }
 
 export function IsNullOrEmptyExpression(expression: Expression): boolean {

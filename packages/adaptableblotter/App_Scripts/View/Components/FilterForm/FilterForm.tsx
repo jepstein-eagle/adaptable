@@ -33,13 +33,14 @@ import { ButtonClear } from '../Buttons/ButtonClear';
 import { Waiting } from './Waiting';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ListBoxMenu } from './ListBoxMenu';
-import { HelpBlock } from 'react-bootstrap';
+
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { FilterFormPanel } from '../Panels/FilterFormPanel';
 import { ButtonSave } from '../Buttons/ButtonSave';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IUIPrompt } from '../../../Utilities/Interface/IMessage';
 import { AdaptableBlotterMenuItem } from '../../../Utilities/Interface/AdaptableBlotterMenu';
+import HelpBlock from '../../../components/HelpBlock';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: IColumn;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Panel, HelpBlock } from 'react-bootstrap';
+
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
@@ -10,6 +10,8 @@ import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import WizardPanel from '../../../components/WizardPanel';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface UserFilterSelectColumnWizardProps extends AdaptableWizardStepProps<UserFilter> {}
 export interface UserFilterSelectColumnWizardState {
@@ -30,18 +32,18 @@ export class UserFilterSelectColumnWizard
     let cssClassName: string = this.props.cssClassName + '-column';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Select a Column" bsStyle="primary">
-          <HelpBlock>{'Choose which column the User Filter will apply to.'}</HelpBlock>
-          <ColumnSelector
-            cssClassName={cssClassName}
-            SelectedColumnIds={[this.state.ColumnId]}
-            ColumnList={this.props.Columns}
-            onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-            SelectionMode={SelectionMode.Single}
-          />
-        </Panel>
-      </div>
+      <WizardPanel header="Select a Column">
+        <HelpBlock marginBottom={2}>
+          {'Choose which column the User Filter will apply to.'}
+        </HelpBlock>
+        <ColumnSelector
+          cssClassName={cssClassName}
+          SelectedColumnIds={[this.state.ColumnId]}
+          ColumnList={this.props.Columns}
+          onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+          SelectionMode={SelectionMode.Single}
+        />
+      </WizardPanel>
     );
   }
 

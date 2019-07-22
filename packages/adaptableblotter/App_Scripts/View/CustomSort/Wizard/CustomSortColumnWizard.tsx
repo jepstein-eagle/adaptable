@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Panel } from 'react-bootstrap';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -10,6 +9,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { CustomSort } from '../../../PredefinedConfig/RunTimeState/CustomSortState';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface CustomSortColumnWizardProps extends AdaptableWizardStepProps<CustomSort> {
   SortedColumns: IColumn[];
@@ -30,17 +30,15 @@ export class CustomSortColumnWizard
     let cssClassName: string = this.props.cssClassName + '-column';
     let sortableCols = ColumnHelper.getSortableColumns(this.props.Columns);
     return (
-      <div className={cssClassName}>
-        <Panel header="Select a Column" bsStyle="primary">
-          <ColumnSelector
-            cssClassName={cssClassName}
-            SelectedColumnIds={[this.state.SelectedColumnId]}
-            ColumnList={sortableCols}
-            onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-            SelectionMode={SelectionMode.Single}
-          />
-        </Panel>
-      </div>
+      <WizardPanel header="Select a Column" variant="primary">
+        <ColumnSelector
+          cssClassName={cssClassName}
+          SelectedColumnIds={[this.state.SelectedColumnId]}
+          ColumnList={sortableCols}
+          onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+          SelectionMode={SelectionMode.Single}
+        />
+      </WizardPanel>
     );
   }
 

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as FormatColumnRedux from '../../Redux/ActionsReducers/FormatColumnRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { HelpBlock } from 'react-bootstrap';
 import { FormatColumnEntityRow } from './FormatColumnEntityRow';
 import { FormatColumnWizard } from './Wizard/FormatColumnWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -24,6 +23,8 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../UIHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { FormatColumn } from '../../PredefinedConfig/RunTimeState/FormatColumnState';
+import { Flex } from 'rebass';
+import EmptyContent from '../../components/EmptyContent';
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {
   FormatColumns: Array<FormatColumn>;
@@ -108,7 +109,7 @@ class FormatColumnPopupComponent extends React.Component<
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.FormatColumnStrategyName}
@@ -119,7 +120,7 @@ class FormatColumnPopupComponent extends React.Component<
           infoBody={infoBody}
         >
           {this.props.FormatColumns.length == 0 ? (
-            <HelpBlock>Click 'New' to create a new column format.</HelpBlock>
+            <EmptyContent>Click 'New' to create a new column format.</EmptyContent>
           ) : (
             <AdaptableObjectCollection
               cssClassName={cssClassName}
@@ -147,7 +148,7 @@ class FormatColumnPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
-import { Modal, Button, Row, Col, ControlLabel } from 'react-bootstrap';
+import { Modal, Button, ControlLabel } from 'react-bootstrap';
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { UIHelper } from '../../UIHelper';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
+import { Flex } from 'rebass';
 
 /**
  * The most simple of the alert type popups - just shows a message with a close button.  No user action required.
@@ -24,13 +25,12 @@ export class AdaptableBlotterPopupAlert extends React.Component<
   {}
 > {
   render() {
-    let headerContainsMessage: boolean = this.props.Header.indexOf(this.props.MessageType) != -1;
+    const messageType = this.props.MessageType || MessageType.Error;
+    let headerContainsMessage: boolean = this.props.Header.indexOf(messageType) != -1;
 
-    let style: string = UIHelper.getStyleNameByMessageType(this.props.MessageType);
-    let header: string = headerContainsMessage
-      ? this.props.Header
-      : this.props.MessageType.toUpperCase();
-    let glyph: string = UIHelper.getGlyphByMessageType(this.props.MessageType);
+    let style: string = UIHelper.getStyleNameByMessageType(messageType);
+    let header: string = headerContainsMessage ? this.props.Header : messageType.toUpperCase();
+    let glyph: string = UIHelper.getGlyphByMessageType(messageType);
 
     let modalContainer: HTMLElement = UIHelper.getModalContainer(
       this.props.AdaptableBlotter.blotterOptions,
@@ -57,6 +57,7 @@ export class AdaptableBlotterPopupAlert extends React.Component<
                     bsStyle={style}
                     glyphicon={glyph}
                     bsSize={'small'}
+                    bodyProps={{ padding: 2 }}
                   >
                     <div>
                       {headerContainsMessage == false && (
@@ -65,24 +66,17 @@ export class AdaptableBlotterPopupAlert extends React.Component<
                         </div>
                       )}
                       <div style={{ display: 'flex', alignItems: 'center' }}>{this.props.Msg}</div>
-                      <div style={{ marginTop: '20px' }}>
-                        <Row>
-                          <Col xs={4} />
-                          <Col xs={7}>
-                            <Button
-                              bsStyle={style}
-                              className={
-                                cssClassName +
-                                StyleConstants.MODAL_FOOTER +
-                                StyleConstants.CLOSE_BUTTON
-                              }
-                              onClick={() => this.props.onClose()}
-                            >
-                              OK
-                            </Button>
-                          </Col>
-                        </Row>
-                      </div>
+                      <Flex flexDirection="row" marginTop={2} alignItems="center">
+                        <Button
+                          bsStyle={style}
+                          className={
+                            cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON
+                          }
+                          onClick={() => this.props.onClose()}
+                        >
+                          OK
+                        </Button>
+                      </Flex>
                     </div>
                   </PanelWithImage>
                 </div>

@@ -1,63 +1,59 @@
 import * as React from 'react';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import {
-  FormControl,
-  FormControlProps,
-  ButtonGroup,
-  Glyphicon,
-  Sizes,
-  InputGroup,
-  DropdownButton,
-} from 'react-bootstrap';
-import { ButtonClear } from '../Buttons/ButtonClear';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 
-export interface AdaptableBlotterFormControlTextClearProps extends FormControlProps {
+import FieldWrap from '../../../components/FieldWrap';
+import SimpleButton from '../../../components/SimpleButton';
+import Input, { InputProps } from '../../../components/Input';
+
+export type AdaptableBlotterFormControlTextClearProps = {
   OnTextChange: (textValue: string) => void;
   autoFocus?: boolean;
-  cssClassName: string;
-}
+  cssClassName?: string;
+} & InputProps;
 
 export class AdaptableBlotterFormControlTextClear extends React.Component<
   AdaptableBlotterFormControlTextClearProps,
   {}
 > {
   render() {
-    let size: any = this.props.bsSize ? this.props.bsSize : 'sm';
-    let cssClassName: string = this.props.cssClassName + StyleConstants.TEXT_ENTRY_FORM;
-    let style: any = size == 'xs' || size == 'xsmall' ? smallFormControlStyle : this.props.style;
-
     return (
-      <InputGroup>
-        <FormControl
-          className={cssClassName}
+      <FieldWrap
+        style={{
+          background: 'var(--ab-color-white)',
+          overflow: 'visible',
+          width: '100%',
+        }}
+      >
+        <Input
           autoFocus={this.props.autoFocus}
-          bsSize={size}
-          style={style}
+          style={this.props.style}
           type="text"
           placeholder={this.props.placeholder}
           value={this.props.value}
-          onChange={x => this.props.OnTextChange((x.target as HTMLInputElement).value)}
+          onChange={(x: any) => this.props.OnTextChange((x.target as HTMLInputElement).value)}
         />
 
-        <InputGroup.Button>
-          <ButtonClear
-            bsStyle={'default'}
-            cssClassName={cssClassName}
-            onClick={() => this.props.OnTextChange('')}
-            size={size}
-            overrideTooltip="Clear"
-            overrideDisableButton={StringExtensions.IsNullOrEmpty(this.props.value.toString())}
-            DisplayMode="Glyph"
-          />
-        </InputGroup.Button>
-      </InputGroup>
+        <SimpleButton
+          variant="text"
+          icon="clear"
+          tone="none"
+          tooltip="Clear"
+          px={0}
+          py={0}
+          marginRight={1}
+          onClick={(event: React.SyntheticEvent) => {
+            this.props.OnTextChange('');
+            const { target } = event;
+            const input = (target as any).previousSibling;
+            requestAnimationFrame(() => {
+              if (input && input.focus) {
+                input.focus();
+              }
+            });
+          }}
+          disabled={StringExtensions.IsNullOrEmpty(this.props.value.toString())}
+        />
+      </FieldWrap>
     );
   }
 }
-
-let smallFormControlStyle: React.CSSProperties = {
-  fontSize: 'xsmall',
-  height: '22px',
-  width: '150px',
-};

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
+import { Flex } from 'rebass';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
@@ -27,6 +27,8 @@ import { PRIMARY_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
 import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
+import EmptyContent from '../../components/EmptyContent';
+import SimpleButton from '../../components/SimpleButton';
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
   AdvancedSearches: AdvancedSearch[];
@@ -112,24 +114,27 @@ class AdvancedSearchPopupComponent extends React.Component<
     );
 
     let newSearchButton = (
-      <ButtonNew
-        cssClassName={cssClassName}
+      <SimpleButton
         onClick={() => this.onNew()}
-        overrideTooltip="Create New Advanced Search"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create New Advanced Search"
+        icon="plus"
+        tone="success"
+        variant="raised"
         AccessLevel={this.props.AccessLevel}
-      />
+      >
+        ADD
+      </SimpleButton>
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           bsStyle={PRIMARY_BSSTYLE}
           headerText={StrategyConstants.AdvancedSearchStrategyName}
           infoBody={infoBody}
           button={newSearchButton}
+          bodyProps={{ padding: 0 }}
           glyphicon={StrategyConstants.AdvancedSearchGlyph}
           className="ab_main_popup"
         >
@@ -142,10 +147,10 @@ class AdvancedSearchPopupComponent extends React.Component<
           )}
 
           {advancedSearchRows.length == 0 && (
-            <div>
-              <HelpBlock>{noExistingObjectText}</HelpBlock>
-              <HelpBlock>{startWizardText}</HelpBlock>
-            </div>
+            <EmptyContent>
+              <p>{noExistingObjectText}</p>
+              <p>{startWizardText}</p>
+            </EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -165,7 +170,7 @@ class AdvancedSearchPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

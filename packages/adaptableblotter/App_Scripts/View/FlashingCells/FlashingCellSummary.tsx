@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as Redux from 'redux';
-import { Button } from 'react-bootstrap';
 import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryProps';
 import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
@@ -15,6 +14,7 @@ import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { FlashingCell } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { FlashingCellState } from '../../PredefinedConfig/RunTimeState/FlashingCellState';
+import SimpleButton from '../../components/SimpleButton';
 
 export interface FlashingCellSummaryProps
   extends StrategySummaryProps<FlashingCellSummaryComponent> {
@@ -35,21 +35,21 @@ export class FlashingCellSummaryComponent extends React.Component<
 
     let message: string = isFlashingCellColumn ? 'Flashing on' : 'Flashing off';
     let showFlashingButton = isFlashingCellColumn ? (
-      <Button
+      <SimpleButton
         onClick={() => this.onFlashingSelectedChanged(flashingCell)}
-        bsStyle="default"
-        bsSize="small"
+        variant="raised"
+        tone="neutral"
       >
         Turn Off
-      </Button>
+      </SimpleButton>
     ) : (
-      <Button
+      <SimpleButton
         onClick={() => this.onFlashingSelectedChanged(flashingCell)}
-        bsStyle="default"
-        bsSize="small"
+        variant="raised"
+        tone="neutral"
       >
         Turn On
-      </Button>
+      </SimpleButton>
     );
 
     let colItems: IColItem[] = [];

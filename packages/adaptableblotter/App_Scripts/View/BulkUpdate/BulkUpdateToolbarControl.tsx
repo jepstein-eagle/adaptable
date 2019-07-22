@@ -122,7 +122,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<
             <InputGroup.Button>{activeButton}</InputGroup.Button>
 
             <ColumnValueSelector
-              style={{ width: '120px', height: '10px' }}
               cssClassName={cssClassName}
               disabled={!this.props.IsValidSelection}
               bsSize={'small'}
@@ -139,7 +138,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<
                 cssClassName={cssClassName}
                 style={{ marginLeft: '3px' }}
                 onClick={() => this.onApplyClick()}
-                size={this.props.DashboardSize}
                 glyph={'ok'}
                 bsStyle={UIHelper.getStyleNameByStatusColour(statusColour)}
                 overrideTooltip="Apply Bulk Update"

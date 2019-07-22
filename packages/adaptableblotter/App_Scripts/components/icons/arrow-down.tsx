@@ -1,0 +1,7 @@
+import * as React from 'react';
+import DefaultIcon from './DefaultIcon';
+export default (props: any) => (
+  <DefaultIcon {...props}>
+    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+  </DefaultIcon>
+);

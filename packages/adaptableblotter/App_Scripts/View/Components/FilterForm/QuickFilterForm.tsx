@@ -7,7 +7,7 @@ import { Provider, connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../../Redux/Store/Interface/IAdaptableStore';
 import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilterContext';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
-import { FormControl } from 'react-bootstrap';
+
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
 import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
@@ -20,6 +20,7 @@ import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IKeyValuePair } from '../../../Utilities/Interface/IKeyValuePair';
 import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression/QueryRange';
+import Input from '../../../components/Input';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: IColumn;
@@ -118,7 +119,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
       <span>
         {this.props.CurrentColumn.Filterable &&
           this.props.CurrentColumn.DataType != DataType.Boolean && (
-            <FormControl
+            <Input
               style={{
                 padding: '1px',
                 marginTop: '1px',
@@ -129,7 +130,6 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
               }}
               className={cssClassName}
               autoFocus={false}
-              bsSize={'small'}
               type={controlType}
               placeholder={this.state.placeholder}
               value={this.state.quickFilterFormText}

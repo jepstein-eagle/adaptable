@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import {
   EditableConfigEntityState,
   WizardStatus,
@@ -143,9 +144,7 @@ export function getChartContainer(
       }
     } else {
       LoggingHelper.LogAdaptableBlotterError(
-        "Chart div called '" +
-          blotterOptions.containerOptions.chartContainer +
-          "' not found: so creating standard div"
+        `Chart div called '${blotterOptions.containerOptions.chartContainer}' not found: so creating standard div`
       );
       chartContainer = document.getElementById('ad');
     }
@@ -229,29 +228,47 @@ export function getStyleNameByMessageType(messageType: MessageType): string {
   }
 }
 
-export function getStyleForSystemStatusButton(statusColour: StatusColour): string {
+export function getStyleForSystemStatusButton(statusColour: StatusColour): CSSProperties {
+  let result;
+
   switch (statusColour) {
     case StatusColour.Blue:
-      return INFO_BSSTYLE;
+      result = {
+        fill: 'var(--ab-color-accent)',
+      };
+      break;
     case StatusColour.Green:
-      return SUCCESS_BSSTYLE;
+      result = {
+        fill: 'var(--ab-color-green)',
+      };
+      break;
     case StatusColour.Amber:
-      return WARNING_BSSTYLE;
+      result = {
+        fill: 'var(--ab-color-warn)',
+      };
+      break;
     case StatusColour.Red:
-      return DANGER_BSSTYLE;
+      result = {
+        fill: 'var(--ab-color-error)',
+      };
+      break;
   }
+  if (result) {
+    result.color = result.fill;
+  }
+  return result;
 }
 
 export function getGlyphForSystemStatusButton(statusColour: StatusColour): string {
   switch (statusColour) {
     case StatusColour.Blue:
-      return 'info-sign';
+      return 'info';
     case StatusColour.Green:
-      return 'ok-sign';
+      return 'check';
     case StatusColour.Amber:
-      return 'warning-sign';
+      return 'warning';
     case StatusColour.Red:
-      return 'exclamation-sign';
+      return 'error';
   }
 }
 
@@ -278,25 +295,21 @@ export function GetScheduleDescription(schedule: Schedule): string {
         dateString = 'Weekdays';
       }
     } else {
-      let names: string[] = schedule.DaysOfWeek.sort().map(d => {
-        return DayOfWeek[d];
-      });
+      const names: string[] = schedule.DaysOfWeek.sort().map(d => DayOfWeek[d]);
       dateString = ArrayExtensions.createCommaSeparatedString(names);
     }
   } else {
     dateString = new Date(schedule.OneOffDate).toDateString();
   }
-  return (
-    dateString + ' at ' + addLeadingZero(schedule.Hour) + ':' + addLeadingZero(schedule.Minute)
-  );
+  return `${dateString} at ${addLeadingZero(schedule.Hour)}:${addLeadingZero(schedule.Minute)}`;
 }
 
 function addLeadingZero(item: number): string {
+  item = item || 0;
   if (item < 10) {
-    return '0' + item.toString();
-  } else {
-    return item.toString();
+    return `0${item && item.toString ? item.toString() : item}`;
   }
+  return item.toString();
 }
 
 export const UIHelper = {

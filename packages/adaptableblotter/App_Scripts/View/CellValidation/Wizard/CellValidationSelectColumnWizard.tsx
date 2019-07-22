@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Panel } from 'react-bootstrap';
+
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
@@ -9,6 +9,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { CellValidationRule } from '../../../PredefinedConfig/RunTimeState/CellValidationState';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface CellValidationSelectColumnWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -33,17 +34,15 @@ export class CellValidationSelectColumnWizard
     let cssClassName: string = this.props.cssClassName + '-selectcolumn';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Select a Column" bsStyle="primary">
-          <ColumnSelector
-            cssClassName={cssClassName}
-            SelectedColumnIds={[this.state.ColumnId]}
-            ColumnList={this.props.Columns}
-            onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-            SelectionMode={SelectionMode.Single}
-          />
-        </Panel>
-      </div>
+      <WizardPanel header="Select a Column" borderRadius={'none'} border="none" bsStyle="primary">
+        <ColumnSelector
+          cssClassName={cssClassName}
+          SelectedColumnIds={[this.state.ColumnId]}
+          ColumnList={this.props.Columns}
+          onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+          SelectionMode={SelectionMode.Single}
+        />
+      </WizardPanel>
     );
   }
 

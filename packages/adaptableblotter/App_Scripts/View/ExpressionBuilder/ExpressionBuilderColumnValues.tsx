@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SingleListBox } from '../Components/ListBox/SingleListBox';
-import { Panel } from 'react-bootstrap';
+import Panel from '../../components/Panel';
 import { DistinctCriteriaPairValue, SelectionMode } from '../../PredefinedConfig/Common/Enums';
 
 export interface ExpressionBuilderColumnValuesProps
@@ -8,7 +8,7 @@ export interface ExpressionBuilderColumnValuesProps
   SelectedValues: Array<any>;
   ColumnValues: Array<any>;
   onColumnValuesChange: (SelectedValues: Array<any>) => void;
-  cssClassName: string;
+  cssClassName?: string;
 }
 
 export class ExpressionBuilderColumnValues extends React.Component<
@@ -16,30 +16,24 @@ export class ExpressionBuilderColumnValues extends React.Component<
   {}
 > {
   render() {
-    let cssClassName: string = this.props.cssClassName + '__querycolumnvalues';
     return (
-      <div className={cssClassName}>
-        <Panel
-          className="ab_no-padding-anywhere-panel ab_small-padding-panel-header"
-          style={divStyle}
-        >
-          <SingleListBox
-            Values={this.props.ColumnValues}
-            cssClassName={cssClassName}
-            UiSelectedValues={this.props.SelectedValues}
-            DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-            ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-            SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
-            onSelectedChange={list => this.props.onColumnValuesChange(list)}
-            SelectionMode={SelectionMode.Multi}
-          />
-        </Panel>
-      </div>
+      <SingleListBox
+        Values={this.props.ColumnValues}
+        UiSelectedValues={this.props.SelectedValues}
+        DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+        ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
+        SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
+        onSelectedChange={list => this.props.onColumnValuesChange(list)}
+        SelectionMode={SelectionMode.Multi}
+        listStyle={{
+          maxHeight: '50vh',
+        }}
+      />
     );
   }
 }
 
 let divStyle: React.CSSProperties = {
   overflowY: 'auto',
-  height: '350px',
+  // height: '350px',
 };

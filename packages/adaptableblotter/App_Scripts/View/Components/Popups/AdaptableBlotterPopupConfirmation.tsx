@@ -1,11 +1,14 @@
 import * as React from 'react';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import { UIHelper } from '../../UIHelper';
-import { Modal, ControlLabel, FormControl, Row, Col, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { MessageType } from '../../../PredefinedConfig/Common/Enums';
+import { Flex, Box, Text } from 'rebass';
+import SimpleButton from '../../../components/SimpleButton';
+import Input from '../../../components/Input';
 
 /**
  * Used when giving the user 2 choices with the option of adding text also
@@ -67,16 +70,16 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
                     header={header}
                     bsStyle={style}
                     glyphicon={glyph}
-                    bsSize={'small'}
+                    variant="primary"
                   >
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center' }}>
                         {this.props.Msg.split('\n').map(function(item, index) {
                           return (
-                            <ControlLabel key={index}>
+                            <Text key={index} margin={2}>
                               {item}
                               <br />
-                            </ControlLabel>
+                            </Text>
                           );
                         })}
                       </div>
@@ -84,32 +87,35 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
                         <div style={{ marginTop: '20px' }}>
                           <span>Please enter a comment to confirm</span>
                           <br />
-                          <FormControl
-                            style={{ marginTop: '20px' }}
+                          <Input
+                            marginTop={2}
                             value={this.state.PromptText}
                             type="string"
                             placeholder="Enter text"
-                            onChange={e => this.changeContent(e)}
+                            onChange={(e: React.SyntheticEvent) => this.changeContent(e)}
                           />
                         </div>
                       )}
-                      <div style={{ marginTop: '20px' }}>
-                        <Row>
-                          <Button
-                            style={{ float: 'left', marginLeft: '15px' }}
+                      <Box marginTop={3}>
+                        <Flex padding={2}>
+                          <SimpleButton
                             bsStyle={StyleConstants.PRIMARY_BSSTYLE}
+                            tone="error"
                             className={
                               cssClassName +
                               StyleConstants.MODAL_FOOTER +
                               StyleConstants.CONFIRM_BUTTON
                             }
+                            variant="raised"
                             disabled={!this.canConfirm()}
                             onClick={() => this.onConfirmmForm()}
                           >
                             {this.props.ConfirmButtonText}
-                          </Button>
-                          <Button
-                            style={{ float: 'right', marginRight: '15px' }}
+                          </SimpleButton>
+                          <div style={{ flex: 1 }} />
+                          <SimpleButton
+                            tone="neutral"
+                            variant="raised"
                             bsStyle={StyleConstants.DEFAULT_BSSTYLE}
                             className={
                               cssClassName +
@@ -119,9 +125,9 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
                             onClick={() => this.onCancelForm()}
                           >
                             {this.props.CancelButtonText}
-                          </Button>
-                        </Row>
-                      </div>
+                          </SimpleButton>
+                        </Flex>
+                      </Box>
                     </div>
                   </PanelWithImage>
                 </div>

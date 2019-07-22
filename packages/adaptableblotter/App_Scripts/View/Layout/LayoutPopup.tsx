@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
@@ -27,6 +26,9 @@ import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { Layout } from '../../PredefinedConfig/RunTimeState/LayoutState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
+import SimpleButton from '../../components/SimpleButton';
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
   Layouts: Layout[];
@@ -97,26 +99,27 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     );
 
     let newSearchButton = (
-      <ButtonNew
-        cssClassName={cssClassName}
+      <SimpleButton
         onClick={() => this.onNew()}
-        overrideTooltip="Create New Advanced Search"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create New Layout"
+        icon="plus"
+        tone="success"
+        variant="raised"
         AccessLevel={this.props.AccessLevel}
-      />
+      >
+        ADD
+      </SimpleButton>
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
-          bsStyle="primary"
           headerText={StrategyConstants.LayoutStrategyName}
           infoBody={infoBody}
           button={newSearchButton}
           glyphicon={StrategyConstants.LayoutGlyph}
-          className="ab_main_popup"
+          bodyProps={{ padding: 0 }}
         >
           {LayoutRows.length > 0 ? (
             <AdaptableObjectCollection
@@ -125,7 +128,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
               items={LayoutRows}
             />
           ) : (
-            <HelpBlock>Click 'New' to start creating layouts.</HelpBlock>
+            <EmptyContent>Click 'New' to start creating layouts.</EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -146,7 +149,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

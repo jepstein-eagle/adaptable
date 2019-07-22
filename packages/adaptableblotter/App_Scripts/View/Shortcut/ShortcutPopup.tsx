@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
+
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as ShortcutRedux from '../../Redux/ActionsReducers/ShortcutRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { DataType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { MathOperation } from '../../PredefinedConfig/Common/Enums';
 import { ShortcutEntityRow } from './ShortcutEntityRow';
 import { ShortcutWizard } from './Wizard/ShortcutWizard';
@@ -24,6 +24,8 @@ import { UIHelper } from '../UIHelper';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import Helper from '../../Utilities/Helpers/Helper';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 import { Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 
@@ -96,11 +98,9 @@ class ShortcutPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create New Shortcut"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create New Shortcut"
         AccessLevel={this.props.AccessLevel}
       />
     );
@@ -108,15 +108,15 @@ class ShortcutPopupComponent extends React.Component<
     let shortcut: Shortcut = this.state.EditedAdaptableBlotterObject as Shortcut;
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.ShortcutStrategyName}
           className="ab_main_popup"
           button={newButton}
-          bsStyle="primary"
           glyphicon={StrategyConstants.ShortcutGlyph}
           infoBody={infoBody}
+          bodyProps={{ padding: 0 }}
         >
           {shortcuts.length > 0 ? (
             <AdaptableObjectCollection
@@ -125,7 +125,7 @@ class ShortcutPopupComponent extends React.Component<
               items={shortcuts}
             />
           ) : (
-            <HelpBlock>Click 'New' to add a new Shortcut.</HelpBlock>
+            <EmptyContent>Click 'New' to add a new Shortcut.</EmptyContent>
           )}
 
           {this.state.EditedAdaptableBlotterObject != null && (
@@ -181,7 +181,7 @@ class ShortcutPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

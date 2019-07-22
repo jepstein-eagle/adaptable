@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { ListGroupItem, ListGroup, Panel } from 'react-bootstrap';
+
+import Panel from '../../components/Panel';
+import ListGroupItem from '../../components/List/ListGroupItem';
+import ListGroup from '../../components/List/ListGroup';
 
 // this just takes a list of filter names - doesnt care if they are system or user
 export interface ExpressionBuilderUserFilterProps
@@ -23,9 +26,8 @@ export class ExpressionBuilderUserFilter extends React.Component<
         return (
           <ListGroupItem
             key={index}
-            bsSize={'xsmall'}
             onClick={() => this.onClickColum(sf)}
-            active={this.props.SelectedFilterNames.find(f => f == sf)}
+            active={!!this.props.SelectedFilterNames.find(f => f == sf)}
           >
             {sf}
           </ListGroupItem>
@@ -37,9 +39,8 @@ export class ExpressionBuilderUserFilter extends React.Component<
       return (
         <ListGroupItem
           key={index}
-          bsSize={'xsmall'}
           onClick={() => this.onClickColum(uf)}
-          active={this.props.SelectedFilterNames.find(f => f == uf)}
+          active={!!this.props.SelectedFilterNames.find(f => f == uf)}
         >
           <i>{uf}</i>
         </ListGroupItem>
@@ -47,17 +48,12 @@ export class ExpressionBuilderUserFilter extends React.Component<
     });
 
     return (
-      <div className={cssClassName}>
-        <Panel
-          className="ab_no-padding-anywhere-panel ab_small-padding-panel-header"
-          style={divStyle}
-        >
-          <ListGroup>
-            {systemFilterNames}
-            {userFilterNames}
-          </ListGroup>
-        </Panel>
-      </div>
+      <Panel style={{ flex: 1 }} bodyScroll>
+        <ListGroup>
+          {systemFilterNames}
+          {userFilterNames}
+        </ListGroup>
+      </Panel>
     );
   }
 
@@ -76,8 +72,3 @@ export class ExpressionBuilderUserFilter extends React.Component<
     this.props.onFilterNameChange(newArray);
   }
 }
-
-let divStyle: React.CSSProperties = {
-  overflowY: 'auto',
-  height: '350px',
-};

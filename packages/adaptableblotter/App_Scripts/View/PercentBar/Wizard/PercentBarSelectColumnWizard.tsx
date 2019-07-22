@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Panel } from 'react-bootstrap';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
 import {
   AdaptableWizardStep,
@@ -10,6 +9,7 @@ import { SelectionMode, DistinctCriteriaPairValue } from '../../../PredefinedCon
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { PercentBar } from '../../../PredefinedConfig/RunTimeState/PercentBarState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 export interface PercentBarSelectColumnWizardState {
@@ -34,17 +34,15 @@ export class PercentBarSelectColumnWizard
     let cssClassName: string = this.props.cssClassName + '-selectcolumn';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Select a Column" bsStyle="primary">
-          <ColumnSelector
-            cssClassName={cssClassName}
-            SelectedColumnIds={[this.state.ColumnId]}
-            ColumnList={ColumnHelper.getNumericColumns(this.props.Columns)}
-            onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-            SelectionMode={SelectionMode.Single}
-          />
-        </Panel>
-      </div>
+      <WizardPanel header="Select a Column">
+        <ColumnSelector
+          cssClassName={cssClassName}
+          SelectedColumnIds={[this.state.ColumnId]}
+          ColumnList={ColumnHelper.getNumericColumns(this.props.Columns)}
+          onColumnChange={columns => this.onColumnSelectedChanged(columns)}
+          SelectionMode={SelectionMode.Single}
+        />
+      </WizardPanel>
     );
   }
 

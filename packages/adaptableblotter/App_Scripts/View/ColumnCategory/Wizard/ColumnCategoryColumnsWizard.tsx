@@ -67,24 +67,21 @@ export class ColumnCategoryColumnsWizard
     let cssClassName: string = this.props.cssClassName + '-values';
 
     return (
-      <div className={cssClassName}>
-        <PanelWithInfo
+      <PanelWithInfo
+        cssClassName={cssClassName}
+        header={'Columns in Column Category: ' + this.props.Data.ColumnCategoryId}
+        infoBody={infoBody}
+      >
+        <DualListBoxEditor
+          AvailableValues={this.state.AvailableColumns}
           cssClassName={cssClassName}
-          header={'Columns in Column Category: ' + this.props.Data.ColumnCategoryId}
-          bsStyle="primary"
-          infoBody={infoBody}
-        >
-          <DualListBoxEditor
-            AvailableValues={this.state.AvailableColumns}
-            cssClassName={cssClassName}
-            SelectedValues={this.state.SelectedColumns}
-            HeaderAvailable="Available Columns"
-            HeaderSelected="Selected Columns"
-            onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
-            DisplaySize={DisplaySize.Small}
-          />
-        </PanelWithInfo>
-      </div>
+          SelectedValues={this.state.SelectedColumns}
+          HeaderAvailable="Available Columns"
+          HeaderSelected="Selected Columns"
+          onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
+          DisplaySize={DisplaySize.Small}
+        />
+      </PanelWithInfo>
     );
   }
 

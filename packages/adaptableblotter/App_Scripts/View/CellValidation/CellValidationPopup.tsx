@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { HelpBlock } from 'react-bootstrap';
+
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { IColumn } from '../../Utilities/Interface/IColumn';
@@ -28,6 +28,9 @@ import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelp
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { CellValidationRule } from '../../PredefinedConfig/RunTimeState/CellValidationState';
+import SimpleButton from '../../components/SimpleButton';
+import { Flex } from 'rebass';
+import EmptyContent from '../../components/EmptyContent';
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
   CellValidations: CellValidationRule[];
@@ -104,62 +107,63 @@ class CellValidationPopupComponent extends React.Component<
       );
     });
     let newButton = (
-      <ButtonNew
-        cssClassName={cssClassName}
+      <SimpleButton
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create Cell Validation Rule"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tone="success"
+        tooltip="Create Cell Validation Rule"
+        icon="plus"
+        variant="raised"
         AccessLevel={this.props.AccessLevel}
-      />
+      >
+        NEW
+      </SimpleButton>
     );
 
     return (
-      <div className={cssClassName}>
-        <PanelWithButton
-          headerText={StrategyConstants.CellValidationStrategyName}
-          bsStyle="primary"
-          cssClassName={cssClassName}
-          button={newButton}
-          glyphicon={StrategyConstants.CellValidationGlyph}
-          infoBody={infoBody}
-        >
-          {CellValidationItems.length > 0 ? (
-            <AdaptableObjectCollection
-              cssClassName={cssClassName}
-              colItems={colItems}
-              items={CellValidationItems}
-            />
-          ) : (
-            <div>
-              <HelpBlock>Click 'New' to start creating rules for valid cell edits.</HelpBlock>
-              <HelpBlock>
-                Edits that fail validation can be either prevented altogether or allowed (after
-                over-riding a warning and providing a reason).
-              </HelpBlock>
-            </div>
-          )}
+      <PanelWithButton
+        headerText={StrategyConstants.CellValidationStrategyName}
+        cssClassName={cssClassName}
+        button={newButton}
+        glyphicon={StrategyConstants.CellValidationGlyph}
+        infoBody={infoBody}
+        bodyProps={{ padding: 0 }}
+      >
+        {CellValidationItems.length > 0 ? (
+          <AdaptableObjectCollection
+            cssClassName={cssClassName}
+            colItems={colItems}
+            items={CellValidationItems}
+          />
+        ) : (
+          <EmptyContent>
+            <p>Click 'New' to start creating rules for valid cell edits.</p>
+            <p>
+              Edits that fail validation can be either prevented altogether or allowed (after
+              over-riding a warning and providing a reason).
+            </p>
+          </EmptyContent>
+        )}
 
-          {this.state.EditedAdaptableBlotterObject != null && (
-            <CellValidationWizard
-              cssClassName={cssWizardClassName}
-              EditedAdaptableBlotterObject={
-                this.state.EditedAdaptableBlotterObject as CellValidationRule
-              }
-              ConfigEntities={null}
-              Blotter={this.props.Blotter}
-              ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              WizardStartIndex={this.state.WizardStartIndex}
-              onCloseWizard={() => this.onCloseWizard()}
-              onFinishWizard={() => this.onFinishWizard()}
-              canFinishWizard={() => this.canFinishWizard()}
-            />
-          )}
-        </PanelWithButton>
-      </div>
+        {this.state.EditedAdaptableBlotterObject != null && (
+          <CellValidationWizard
+            cssClassName={cssWizardClassName}
+            EditedAdaptableBlotterObject={
+              this.state.EditedAdaptableBlotterObject as CellValidationRule
+            }
+            ConfigEntities={null}
+            Blotter={this.props.Blotter}
+            ModalContainer={this.props.ModalContainer}
+            Columns={this.props.Columns}
+            UserFilters={this.props.UserFilters}
+            SystemFilters={this.props.SystemFilters}
+            WizardStartIndex={this.state.WizardStartIndex}
+            onCloseWizard={() => this.onCloseWizard()}
+            onFinishWizard={() => this.onFinishWizard()}
+            canFinishWizard={() => this.canFinishWizard()}
+          />
+        )}
+      </PanelWithButton>
     );
   }
 

@@ -31,8 +31,9 @@ export class ConditionalStyleStyleWizard
 
     let canUseClassName = true; // get from somewhere...
     return (
-      <div className={cssClassName}>
+      <div className={cssClassName} style={{ height: '100%' }}>
         <StyleComponent
+          style={{ height: '100%' }}
           cssClassName={cssClassName}
           ColorPalette={this.props.ColorPalette}
           StyleClassNames={this.props.StyleClassNames}

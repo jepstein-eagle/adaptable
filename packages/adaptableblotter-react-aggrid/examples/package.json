@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p 8082",
+    "dev": "node --max-old-space-size=4096 ./node_modules/.bin/next -p 8083",
     "build": "next build",
     "start": "next start",
     "test-browser-w": "jest --config=jest.config.js --watch"

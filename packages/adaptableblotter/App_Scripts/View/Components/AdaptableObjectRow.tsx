@@ -1,43 +1,62 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { Col, Row } from 'react-bootstrap';
 import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { Flex, Text, Box } from 'rebass';
+import styled from 'styled-components';
 
 export interface AdaptableObjectRowProps extends React.ClassAttributes<AdaptableObjectRow> {
   colItems: IColItem[];
   cssClassName: string;
   fontSize?: string;
+  onClick?: (e: React.SyntheticEvent) => void;
+  style?: React.CSSProperties;
 }
+
+const Row = styled.div`
+  background: var(--ab-cmp-listgroupitem__background);
+  color: var(--ab-cmp-listgroupitem__color);
+  border-radius: var(--ab-cmp-listgroupitem__border-radius);
+
+  &:nth-child(2n + 1) {
+    background: var(--ab-cmp-listgroupitem--odd__background);
+    color: var(--ab-cmp-listgroupitem--odd__color);
+  }
+`;
 
 export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps, {}> {
   render(): any {
     let cssClassName = this.props.cssClassName + StyleConstants.LIST_GROUP_ITEM;
-    let fontSize = this.props.fontSize ? this.props.fontSize : 'small';
+
     let colItems = this.props.colItems.map((colItem: IColItem, index: number) => {
       return (
-        <Col key={index} xs={colItem.Size}>
-          <span style={{ fontSize: fontSize }}>{colItem.Content}</span>
-        </Col>
+        <Text
+          key={index}
+          fontSize={1}
+          style={{ flex: colItem.Size }}
+          paddingLeft={1}
+          paddingRight={1}
+        >
+          {colItem.Content}
+        </Text>
       );
     });
 
     return (
-      <div className={cssClassName}>
-        <li style={{ padding: '5px' }} className="list-group-item">
-          <Row
+      <Row className={cssClassName} onClick={this.props.onClick} style={this.props.style}>
+        <Box padding={2} className="list-group-item">
+          <Flex
+            alignItems="center"
+            padding={0}
+            margin={0}
             style={{
-              display: 'flex',
-              alignItems: 'center',
               overflowY: 'visible',
-              padding: '0px',
-              margin: '0px',
             }}
           >
             {colItems}
-          </Row>
-        </li>
-      </div>
+          </Flex>
+        </Box>
+      </Row>
     );
   }
 }

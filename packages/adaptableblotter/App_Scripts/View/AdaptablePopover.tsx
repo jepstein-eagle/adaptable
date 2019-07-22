@@ -20,7 +20,7 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
   headerText: string;
   bodyText: any[];
   MessageType?: MessageType;
-  cssClassName: string;
+  cssClassName?: string;
   triggerAction?: string;
   useButton?: boolean;
   tooltipText?: string;
@@ -31,7 +31,7 @@ export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePo
 
 export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}> {
   render() {
-    let cssClassName = this.props.cssClassName + StyleConstants.INFO_BUTTON;
+    let cssClassName = (this.props.cssClassName || '') + StyleConstants.INFO_BUTTON;
 
     let messageType: MessageType =
       this.props.MessageType != null ? this.props.MessageType : MessageType.Info;

@@ -1,14 +1,16 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { FormControl, ControlLabel, Col, FormGroup } from 'react-bootstrap';
+
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as ThemeRedux from '../../Redux/ActionsReducers/ThemeRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
+
 import { UserTheme } from '../../PredefinedConfig/RunTimeState/ThemeState';
+import { Flex, Box, Text } from 'rebass';
+import Dropdown from '../../components/Dropdown';
 
 interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
   SystemThemes: Array<string>;
@@ -40,14 +42,13 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
     });
 
     let optionThemes = availableThemes.map(x => {
-      return (
-        <option value={x} key={x}>
-          {x}
-        </option>
-      );
+      return {
+        value: x,
+        label: x,
+      };
     });
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.ThemeStrategyName}
@@ -55,31 +56,25 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
           glyphicon={StrategyConstants.ThemeGlyph}
           infoBody={infoBody}
         >
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="themepicker">
-              <Col xs={2}>
-                <ControlLabel>Current</ControlLabel>
-              </Col>
-              <Col xs={7}>
-                <FormControl
-                  componentClass="select"
-                  placeholder="select"
-                  value={this.props.CurrentTheme}
-                  onChange={x => this.onChangeTheme(x)}
-                >
-                  {optionThemes}
-                </FormControl>
-              </Col>
-            </FormGroup>
-          </AdaptableBlotterForm>
+          <Flex padding={2} alignItems="center" flexDirection="row">
+            <Text marginRight={3}>Current: </Text>
+
+            <Box>
+              <Dropdown
+                placeholder="select"
+                value={this.props.CurrentTheme}
+                onChange={(value: any) => this.onChangeTheme(value)}
+                options={optionThemes}
+              />
+            </Box>
+          </Flex>
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 
-  onChangeTheme(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.props.SelectTheme(e.value);
+  onChangeTheme(value: string) {
+    this.props.SelectTheme(value);
   }
 }
 function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {

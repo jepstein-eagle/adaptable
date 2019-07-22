@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { PanelProps, Panel, Row, Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { MessageType } from '../../../PredefinedConfig/Common/Enums';
+
 import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
-import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+
+import { PanelProps } from '../../../components/Panel';
+import WizardPanel from '../../../components/WizardPanel';
+import { Flex, Box } from 'rebass';
 
 export interface PanelWithInfoProps extends PanelProps {
   infoBody: any[];
@@ -18,32 +21,23 @@ export class PanelWithInfo extends React.Component<PanelWithInfoProps, {}> {
     }
 
     let headerRow = (
-      <AdaptableBlotterForm inline>
-        <Row style={{ display: 'flex', alignItems: 'center' }}>
-          <Col xs={12}>
-            {this.props.header}
-            <span>
-              {' '}
-              <AdaptablePopover
-                cssClassName={this.props.cssClassName}
-                headerText=""
-                bodyText={this.props.infoBody}
-              />
-            </span>
-          </Col>
-        </Row>
-      </AdaptableBlotterForm>
+      <Flex flexDirection="row">
+        {this.props.header}
+
+        <Box marginLeft={2}>
+          {' '}
+          <AdaptablePopover
+            cssClassName={this.props.cssClassName}
+            headerText=""
+            bodyText={this.props.infoBody}
+          />
+        </Box>
+      </Flex>
     );
     return (
-      <Panel
-        header={headerRow}
-        className={className}
-        style={this.props.style}
-        bsSize={this.props.bsSize}
-        bsStyle={this.props.bsStyle}
-      >
+      <WizardPanel header={headerRow} className={className} bodyScroll style={this.props.style}>
         {this.props.children}
-      </Panel>
+      </WizardPanel>
     );
   }
 }

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as FreeTextColumnRedux from '../../Redux/ActionsReducers/FreeTextColumnRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { HelpBlock } from 'react-bootstrap';
 import { FreeTextColumnEntityRow } from './FreeTextColumnEntityRow';
 import { FreeTextColumnWizard } from './Wizard/FreeTextColumnWizard';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -23,6 +22,8 @@ import { IColItem } from '../UIInterfaces';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { AdaptableBlotterObject } from '../../PredefinedConfig/AdaptableBlotterObject';
 import { FreeTextColumn } from '../../PredefinedConfig/RunTimeState/FreeTextColumnState';
+import EmptyContent from '../../components/EmptyContent';
+import { Flex } from 'rebass';
 
 interface FreeTextColumnPopupProps extends StrategyViewPopupProps<FreeTextColumnPopupComponent> {
   FreeTextColumns: Array<FreeTextColumn>;
@@ -97,28 +98,27 @@ class FreeTextColumnPopupComponent extends React.Component<
 
     let newButton = (
       <ButtonNew
-        cssClassName={cssClassName}
+        className={cssClassName}
         onClick={() => this.onNew()}
-        overrideTooltip="Create FreeText Column"
-        DisplayMode="Glyph+Text"
-        size={'small'}
+        tooltip="Create FreeText Column"
         AccessLevel={this.props.AccessLevel}
       />
     );
 
     return (
-      <div className={cssClassName}>
+      <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           cssClassName={cssClassName}
           headerText={StrategyConstants.FreeTextColumnStrategyName}
           button={newButton}
+          bodyProps={{ padding: 0 }}
           bsStyle="primary"
           className="ab_main_popup"
           glyphicon={StrategyConstants.FreeTextColumnGlyph}
           infoBody={infoBody}
         >
           {this.props.FreeTextColumns.length == 0 ? (
-            <HelpBlock>Click 'New' to create a new column FreeText.</HelpBlock>
+            <EmptyContent>Click 'New' to create a new column FreeText.</EmptyContent>
           ) : (
             <AdaptableObjectCollection
               cssClassName={cssClassName}
@@ -146,7 +146,7 @@ class FreeTextColumnPopupComponent extends React.Component<
             />
           )}
         </PanelWithButton>
-      </div>
+      </Flex>
     );
   }
 

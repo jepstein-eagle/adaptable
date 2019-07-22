@@ -1,8 +1,8 @@
-import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { Action } from 'redux';
+import { IAdaptableBlotter } from '../Utilities/Interface/IAdaptableBlotter';
 import { AdaptableBlotterState } from '../Redux/Store/Interface/IAdaptableStore';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
-import { HelpBlock } from 'react-bootstrap';
+
 import Helper from '../Utilities/Helpers/Helper';
 
 // Base class for the API - provides checking dispatching methods
@@ -25,7 +25,7 @@ export abstract class ApiBase {
    */
   public checkItemExists(item: any, name: string, type: string): boolean {
     if (Helper.objectNotExists(item)) {
-      LoggingHelper.LogAdaptableBlotterError('No ' + type + ' found with the name: ' + name);
+      LoggingHelper.LogAdaptableBlotterError(`No ${type} found with the name: ${name}`);
       return false;
     }
     return true;

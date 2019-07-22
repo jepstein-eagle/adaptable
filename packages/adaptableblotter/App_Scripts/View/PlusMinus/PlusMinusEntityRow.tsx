@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormControl } from 'react-bootstrap';
+
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { IColumn } from '../../Utilities/Interface/IColumn';
@@ -12,6 +12,7 @@ import { IColItem } from '../UIInterfaces';
 import { PlusMinusRule } from '../../PredefinedConfig/RunTimeState/PlusMinusState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
+import Input from '../../components/Input';
 
 export interface PlusMinusEntityRowProps
   extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
@@ -35,12 +36,11 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
     colItems[1].Content = (
       <EntityRowItem
         Content={
-          <FormControl
+          <Input
             value={plusMinusRule.NudgeValue.toString()}
-            bsSize={'small'}
             type="number"
             placeholder="Enter a Number"
-            onChange={e => this.props.onColumnDefaultNudgeValueChange(plusMinusRule, e)}
+            onChange={(e: any) => this.props.onColumnDefaultNudgeValueChange(plusMinusRule, e)}
           />
         }
       />

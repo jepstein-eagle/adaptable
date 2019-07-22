@@ -1,14 +1,11 @@
 import * as React from 'react';
-import { Typeahead } from 'react-bootstrap-typeahead';
+
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode, SortOrder } from '../../../PredefinedConfig/Common/Enums';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { Helper } from '../../../Utilities/Helpers/Helper';
-import { Sizes, InputGroup } from 'react-bootstrap';
-import { CSSProperties } from 'react';
 import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
-import { ButtonClear } from '../Buttons/ButtonClear';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
+import Dropdown from '../../../components/Dropdown';
 
 export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
   ColumnList: IColumn[];
@@ -34,7 +31,11 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
       StringExtensions.IsNotNullOrEmpty(x)
     );
 
-    if (propsSelectedColumnIds.length == 0 && nextPropsSelectedColumnIds.length == 0) {
+    if (
+      propsSelectedColumnIds.length == 0 &&
+      nextPropsSelectedColumnIds.length == 0 &&
+      this.refs.typeahead
+    ) {
       (this.refs.typeahead as any).getInstance().clear();
     }
   }
@@ -65,47 +66,70 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
       this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
     return (
-      <div className={cssClassName}>
-        <InputGroup>
-          <Typeahead
-            ref={'typeahead'}
-            emptyLabel={'No Column'}
-            placeholder={placeHolder}
-            labelKey={'FriendlyName'}
-            filterBy={['FriendlyName', 'ColumnId']}
-            multiple={this.props.SelectionMode == SelectionMode.Multi}
-            selected={selectedColums}
-            onChange={selected => {
+      <div className={cssClassName} style={{ flex: 1 }}>
+        <Dropdown
+          style={{ maxWidth: 'none' }}
+          placeholder={placeHolder}
+          multiple={this.props.SelectionMode == SelectionMode.Multi}
+          options={sortedColumns.map(c => {
+            return {
+              value: c.ColumnId,
+              label: c.FriendlyName,
+            };
+          })}
+          disabled={this.props.disabled}
+          value={selectedColumnIds[0] || null}
+          onChange={(value: any) => {
+            const selected = sortedColumns.filter(c => c.ColumnId === value);
+            if (!selected.length) {
+              this.onClearButton();
+            } else {
               this.onColumnChange(selected, isEmptySelectedColumnIds);
-            }}
-            options={sortedColumns}
-            disabled={this.props.disabled}
-          />
-          <InputGroup.Button>
-            <ButtonClear
-              bsStyle={'default'}
-              cssClassName={cssClassName}
-              onClick={() => this.onClearButton()}
-              overrideTooltip="Clear Column"
-              DisplayMode="Glyph"
-            />
-          </InputGroup.Button>
-        </InputGroup>
+            }
+          }}
+        />
+
+        {/*
+        <Typeahead
+          ref={'typeahead'}
+          emptyLabel={'No Column'}
+          placeholder={placeHolder}
+          labelKey={'FriendlyName'}
+          filterBy={['FriendlyName', 'ColumnId']}
+          multiple={this.props.SelectionMode == SelectionMode.Multi}
+          selected={selectedColums}
+          onChange={selected => {
+            this.onColumnChange(selected, isEmptySelectedColumnIds);
+          }}
+          options={sortedColumns}
+          disabled={this.props.disabled}
+        />*/}
+        {/*
+        <SimpleButton
+          className={cssClassName}
+          onClick={() => this.onClearButton()}
+          tooltip="Clear Column"
+          icon="clear"
+          variant="text"
+          py={0}
+          px={0}
+/>*/}
       </div>
     );
   }
 
   onClearButton() {
     this.props.onColumnChange([]);
-    // if (this._typeahead != null) {
-    (this.refs.typeahead as any).getInstance().clear();
-    //  }
+    if (this.refs.typeahead) {
+      (this.refs.typeahead as any).getInstance().clear();
+    }
   }
 
   onColumnChange(selected: IColumn[], isEmptySelection: boolean) {
     if (selected.length == 0 && isEmptySelection) {
       return; // must be a nicer way but we want to avoid ridiculous amounts of prop calls
     }
+
     this.props.onColumnChange(selected);
   }
 }

@@ -3,7 +3,6 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { HelpBlock } from 'react-bootstrap';
 import { ControlLabel, Button, FormControl, FormGroup, Glyphicon } from 'react-bootstrap';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
@@ -11,6 +10,7 @@ import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import HelpBlock from '../../components/HelpBlock';
 
 interface IPushPullLoginProps extends StrategyViewPopupProps<IPushPullLoginComponent> {
   onLogin: (login: string, password: string) => ExportRedux.IPPLoginAction;

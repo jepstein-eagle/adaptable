@@ -1,15 +1,6 @@
 import { Reminder } from '../../../PredefinedConfig/RunTimeState/ReminderState';
 import * as React from 'react';
-import {
-  Panel,
-  FormControl,
-  Checkbox,
-  FormGroup,
-  Radio,
-  Col,
-  ControlLabel,
-  Row,
-} from 'react-bootstrap';
+import { Panel, FormControl, FormGroup, Col, ControlLabel, Row } from 'react-bootstrap';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -17,6 +8,13 @@ import {
 import { DayOfWeek, StateChangedTrigger } from '../../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { Schedule } from '../../../PredefinedConfig/Common/Schedule';
+import WizardPanel from '../../../components/WizardPanel';
+import { Flex, Text, Box } from 'rebass';
+import Dropdown from '../../../components/Dropdown';
+import Radio from '../../../components/Radio';
+import Checkbox from '../../../components/CheckBox';
+import Input from '../../../components/Input';
+import { SyntheticEvent } from 'react';
 
 export interface ReminderScheduleWizardProps extends AdaptableWizardStepProps<Reminder> {}
 
@@ -50,188 +48,155 @@ export class ReminderScheduleWizard
     let hours: any[] = [];
     let i: number;
     for (i = 0; i < 24; i++) {
-      hours.push(
-        <option key={i} value={i}>
-          {i}
-        </option>
-      );
+      hours.push({
+        label: i,
+        value: i,
+      });
     }
 
     let minutes: any[] = [];
     let j: number;
     for (j = 0; j < 60; j++) {
-      minutes.push(
-        <option key={j} value={j}>
-          {j}
-        </option>
-      );
+      minutes.push({
+        label: j,
+        value: j,
+      });
     }
 
     return (
       <div className={cssClassName}>
-        <Panel header="Schedule Reminder" bsStyle="primary">
-          <FormGroup controlId="frmHour">
-            <Row>
-              <Col xs={3}>
-                <ControlLabel>Hour</ControlLabel>
-              </Col>
-              <Col xs={6}>
-                <FormControl
-                  componentClass="select"
-                  placeholder="select"
-                  value={this.state.Hour}
-                  onChange={x => this.onHourChanged(x)}
-                >
-                  {hours}
-                </FormControl>
-              </Col>
-            </Row>
-          </FormGroup>
-          <FormGroup controlId="frmMinute">
-            <Row>
-              <Col xs={3}>
-                <ControlLabel>Minute:</ControlLabel>
-              </Col>
-              <Col xs={6}>
-                <FormControl
-                  componentClass="select"
-                  placeholder="select"
-                  value={this.state.Minute}
-                  onChange={x => this.onMinuteChanged(x)}
-                >
-                  {minutes}
-                </FormControl>
-              </Col>
-            </Row>
-          </FormGroup>
-          <FormGroup controlId="formInlineDateType">
-            <Row>
-              <Col xs={3}>
-                <ControlLabel>Date:</ControlLabel>
-              </Col>
-              <Col xs={6}>
-                <Radio
-                  inline
-                  value="recurring"
-                  checked={this.state.IsRecurringDate == true}
-                  onChange={e => this.onRecurringDateChanged(e)}
-                >
-                  Recurring Days
-                </Radio>
-                <Radio
-                  inline
-                  value="oneoff"
-                  checked={this.state.IsRecurringDate == false}
-                  onChange={e => this.onRecurringDateChanged(e)}
-                >
-                  One Off Date
-                </Radio>
-              </Col>
-            </Row>
-          </FormGroup>
+        <WizardPanel header="Schedule Reminder">
+          <Flex alignItems="center" flexDirection="row">
+            <Text style={{ flex: 1 }}>Hour</Text>
+
+            <Box style={{ flex: 6 }}>
+              <Dropdown
+                placeholder="select"
+                value={this.state.Hour}
+                onChange={(value: any) => this.onHourChanged(value)}
+                options={hours}
+              ></Dropdown>
+            </Box>
+          </Flex>
+
+          <Flex alignItems="center" flexDirection="row" marginTop={2}>
+            <Text style={{ flex: 1 }}>Minute:</Text>
+
+            <Box style={{ flex: 6 }}>
+              <Dropdown
+                placeholder="select"
+                value={this.state.Minute}
+                onChange={(value: any) => this.onMinuteChanged(value)}
+                options={minutes}
+              ></Dropdown>
+            </Box>
+          </Flex>
+
+          <Flex alignItems="center" flexDirection="row" marginTop={2} marginBottom={2}>
+            <Text style={{ flex: 1 }}>Date:</Text>
+
+            <Box style={{ flex: 6 }}>
+              <Radio
+                marginRight={3}
+                value="recurring"
+                checked={this.state.IsRecurringDate == true}
+                onChange={(checked: boolean) => this.onRecurringDateChanged(checked)}
+              >
+                Recurring Days
+              </Radio>
+              <Radio
+                value="oneoff"
+                checked={this.state.IsRecurringDate == false}
+                onChange={(checked: boolean) => this.onRecurringDateChanged(!checked)}
+              >
+                One Off Date
+              </Radio>
+            </Box>
+          </Flex>
 
           {this.state.IsRecurringDate ? (
-            <Row>
-              <Col xs={3} />
-              <Col xs={6}>
-                <Panel>
-                  <Checkbox
-                    className={cssClassName + '__checkbox'}
-                    inline
-                    value={DayOfWeek.Monday}
-                    checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Monday)}
-                    onChange={e => this.onDayChecked(e)}
-                  >
-                    Monday
-                  </Checkbox>
-                  <br />
-                  <Checkbox
-                    className={cssClassName + '__checkbox'}
-                    inline
-                    value={DayOfWeek.Tuesday}
-                    checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Tuesday)}
-                    onChange={e => this.onDayChecked(e)}
-                  >
-                    Tuesday
-                  </Checkbox>
-                  <br />
-                  <Checkbox
-                    className={cssClassName + '__checkbox'}
-                    inline
-                    value={DayOfWeek.Wednesday}
-                    checked={ArrayExtensions.ContainsItem(
-                      this.state.DaysOfWeek,
-                      DayOfWeek.Wednesday
-                    )}
-                    onChange={e => this.onDayChecked(e)}
-                  >
-                    Wednesday
-                  </Checkbox>
-                  <br />
-                  <Checkbox
-                    className={cssClassName + '__checkbox'}
-                    inline
-                    value={DayOfWeek.Thursday}
-                    checked={ArrayExtensions.ContainsItem(
-                      this.state.DaysOfWeek,
-                      DayOfWeek.Thursday
-                    )}
-                    onChange={e => this.onDayChecked(e)}
-                  >
-                    Thursday
-                  </Checkbox>
-                  <br />
-                  <Checkbox
-                    className={cssClassName + '__checkbox'}
-                    inline
-                    value={DayOfWeek.Friday}
-                    checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Friday)}
-                    onChange={e => this.onDayChecked(e)}
-                  >
-                    Friday
-                  </Checkbox>
-                  <br />
-                  <Checkbox
-                    className={cssClassName + '__checkbox'}
-                    inline
-                    value={DayOfWeek.Saturday}
-                    checked={ArrayExtensions.ContainsItem(
-                      this.state.DaysOfWeek,
-                      DayOfWeek.Saturday
-                    )}
-                    onChange={e => this.onDayChecked(e)}
-                  >
-                    Saturday
-                  </Checkbox>
-                  <br />
-                  <Checkbox
-                    className={cssClassName + '__checkbox'}
-                    inline
-                    value={DayOfWeek.Sunday}
-                    checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Sunday)}
-                    onChange={e => this.onDayChecked(e)}
-                  >
-                    Sunday
-                  </Checkbox>
-                </Panel>
-              </Col>
-            </Row>
+            <Flex>
+              <div style={{ flex: 1 }} />
+              <Flex padding={2} style={{ flex: 6 }} flexDirection="column">
+                <Checkbox
+                  className={cssClassName + '__checkbox'}
+                  value={DayOfWeek.Monday}
+                  checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Monday)}
+                  onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
+                >
+                  Monday
+                </Checkbox>
+
+                <Checkbox
+                  className={cssClassName + '__checkbox'}
+                  value={DayOfWeek.Tuesday}
+                  checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Tuesday)}
+                  onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
+                >
+                  Tuesday
+                </Checkbox>
+
+                <Checkbox
+                  className={cssClassName + '__checkbox'}
+                  value={DayOfWeek.Wednesday}
+                  checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Wednesday)}
+                  onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
+                >
+                  Wednesday
+                </Checkbox>
+
+                <Checkbox
+                  className={cssClassName + '__checkbox'}
+                  value={DayOfWeek.Thursday}
+                  checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Thursday)}
+                  onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
+                >
+                  Thursday
+                </Checkbox>
+
+                <Checkbox
+                  className={cssClassName + '__checkbox'}
+                  value={DayOfWeek.Friday}
+                  checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Friday)}
+                  onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
+                >
+                  Friday
+                </Checkbox>
+
+                <Checkbox
+                  className={cssClassName + '__checkbox'}
+                  value={DayOfWeek.Saturday}
+                  checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Saturday)}
+                  onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
+                >
+                  Saturday
+                </Checkbox>
+
+                <Checkbox
+                  className={cssClassName + '__checkbox'}
+                  value={DayOfWeek.Sunday}
+                  checked={ArrayExtensions.ContainsItem(this.state.DaysOfWeek, DayOfWeek.Sunday)}
+                  onChange={(checked: boolean, e: SyntheticEvent) => this.onDayChecked(e)}
+                >
+                  Sunday
+                </Checkbox>
+              </Flex>
+            </Flex>
           ) : (
-            <FormGroup controlId="frmOneOffDate">
-              <Row>
-                <Col xs={3} />
-                <Col xs={6}>
-                  <FormControl
-                    type="date"
-                    placeholder="Date"
-                    onChange={x => this.onOneOffDateChanged(x)}
-                    value={this.state.OneOffDate}
-                  />
-                </Col>
-              </Row>
-            </FormGroup>
+            <Flex>
+              <div style={{ flex: 1 }} />
+              <Box style={{ flex: 6 }}>
+                <Input
+                  style={{ maxWidth: 400 }}
+                  type="date"
+                  placeholder="Date"
+                  onChange={(x: SyntheticEvent) => this.onOneOffDateChanged(x)}
+                  value={this.state.OneOffDate}
+                />
+              </Box>
+            </Flex>
           )}
-        </Panel>
+        </WizardPanel>
       </div>
     );
   }
@@ -258,24 +223,20 @@ export class ReminderScheduleWizard
     );
   };
 
-  private onRecurringDateChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-
-    this.setState({ IsRecurringDate: e.value == 'recurring' } as ReminderScheduleWizardState, () =>
+  private onRecurringDateChanged(checked: boolean) {
+    this.setState({ IsRecurringDate: checked } as ReminderScheduleWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
-  private onHourChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.setState({ Hour: Number(e.value) } as ReminderScheduleWizardState, () =>
+  private onHourChanged(value: any) {
+    this.setState({ Hour: Number(value) } as ReminderScheduleWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
-  private onMinuteChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.setState({ Minute: Number(e.value) } as ReminderScheduleWizardState, () =>
+  private onMinuteChanged(value: any) {
+    this.setState({ Minute: Number(value) } as ReminderScheduleWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }

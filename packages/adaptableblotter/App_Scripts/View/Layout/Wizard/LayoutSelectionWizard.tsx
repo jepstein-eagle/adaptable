@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { Panel, Radio, Col, HelpBlock } from 'react-bootstrap';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { IColumn } from '../../../Utilities/Interface/IColumn';
-import { SelectionMode, LayoutSource, MessageType } from '../../../PredefinedConfig/Common/Enums';
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
+import { LayoutSource } from '../../../PredefinedConfig/Common/Enums';
+
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { Layout, ColumnSort } from '../../../PredefinedConfig/RunTimeState/LayoutState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
+
+import WizardPanel from '../../../components/WizardPanel';
+import HelpBlock from '../../../components/HelpBlock';
+import { Flex } from 'rebass';
+import Radio from '../../../components/Radio';
 
 export interface LayoutSelectionWizardProps extends AdaptableWizardStepProps<Layout> {
   Layouts: Array<Layout>;
@@ -36,55 +37,49 @@ export class LayoutSelectionWizard
     let cssClassName: string = this.props.cssClassName + '-selection';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Select Source for Layout" bsStyle="primary">
-          <AdaptableBlotterForm inline>
-            <Col xs={12}>
-              <HelpBlock>
-                Choose whether to create a new layout using the Grid's current columns and sort
-                order.
-              </HelpBlock>
-            </Col>
-            <Col xs={12}>
-              <HelpBlock>Alternatively, choose to build a new layout from scratch.</HelpBlock>
-            </Col>
-            <Col xs={12} className="ab_large_margin">
-              <Radio
-                inline
-                value="Existing"
-                checked={this.state.LayoutSource == LayoutSource.Existing}
-                onChange={e => this.onScopeSelectChanged(e)}
-              >
-                Copy current Grid setup
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Layout:  Current Grid'}
-                bodyText={[
-                  'The new layout will contain the current column order and sort order in the grid.',
-                ]}
-              />
-            </Col>
-            <Col xs={12} className="ab_large_margin">
-              <Radio
-                inline
-                value="New"
-                checked={this.state.LayoutSource == LayoutSource.New}
-                onChange={e => this.onScopeSelectChanged(e)}
-              >
-                Create a new Layout
-              </Radio>{' '}
-              <AdaptablePopover
-                cssClassName={cssClassName}
-                headerText={'Layout: New'}
-                bodyText={[
-                  'Build the layout yourself by selecting columns and sort order (in following steps).',
-                ]}
-              />
-            </Col>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Select Source for Layout">
+        <HelpBlock>
+          <p>
+            Choose whether to create a new layout using the Grid's current columns and sort order.
+          </p>
+          <p>Alternatively, choose to build a new layout from scratch.</p>
+        </HelpBlock>
+
+        <Flex alignItems="center" marginLeft={2} marginTop={2}>
+          <Radio
+            value="Existing"
+            marginRight={2}
+            checked={this.state.LayoutSource == LayoutSource.Existing}
+            onChange={(_: boolean, e: any) => this.onScopeSelectChanged(e)}
+          >
+            Copy current Grid setup
+          </Radio>{' '}
+          <AdaptablePopover
+            cssClassName={cssClassName}
+            headerText={'Layout:  Current Grid'}
+            bodyText={[
+              'The new layout will contain the current column order and sort order in the grid.',
+            ]}
+          />
+        </Flex>
+        <Flex alignItems="center" marginLeft={2} marginTop={2}>
+          <Radio
+            value="New"
+            marginRight={2}
+            checked={this.state.LayoutSource == LayoutSource.New}
+            onChange={(_, e) => this.onScopeSelectChanged(e)}
+          >
+            Create a new Layout
+          </Radio>{' '}
+          <AdaptablePopover
+            cssClassName={cssClassName}
+            headerText={'Layout: New'}
+            bodyText={[
+              'Build the layout yourself by selecting columns and sort order (in following steps).',
+            ]}
+          />
+        </Flex>
+      </WizardPanel>
     );
   }
 

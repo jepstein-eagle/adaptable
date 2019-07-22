@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { FormControl, FormGroup, Button, Checkbox, Col, Row, HelpBlock } from 'react-bootstrap';
+
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
@@ -23,6 +23,11 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { CellValidationHelper } from '../../Utilities/Helpers/CellValidationHelper';
+import CheckBox from '../../components/CheckBox';
+import { Box, Flex } from 'rebass';
+import Input from '../../components/Input';
+import SimpleButton from '../../components/SimpleButton';
+import HelpBlock from '../../components/HelpBlock';
 
 interface BulkUpdatePopupProps extends StrategyViewPopupProps<BulkUpdatePopupComponent> {
   BulkUpdateValue: string;
@@ -106,158 +111,143 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
       />
     ) : null;
 
+    if (!col) {
+      return null;
+    }
     return (
-      <div className={cssClassName}>
-        {col && (
-          <div>
-            <PanelWithImage
-              cssClassName={cssClassName}
-              header={StrategyConstants.BulkUpdateStrategyName}
-              bsStyle="primary"
-              glyphicon={StrategyConstants.BulkUpdateGlyph}
-              infoBody={infoBody}
-            >
-              <AdaptableBlotterForm
-                onSubmit={() =>
-                  this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning
-                    ? this.onConfirmWarningCellValidation()
-                    : this.onApplyBulkUpdate()
-                }
+      <PanelWithImage
+        cssClassName={cssClassName}
+        header={StrategyConstants.BulkUpdateStrategyName}
+        glyphicon={StrategyConstants.BulkUpdateGlyph}
+        infoBody={infoBody}
+        variant="primary"
+        bodyProps={{ padding: 2 }}
+        style={{ height: '100%' }}
+      >
+        {col.DataType == DataType.Date ? (
+          <>
+            <HelpBlock marginTop={2} marginBottom={2}>
+              Enter a date value. Alternatively, tick the checkbox and select from an existing
+              column value.
+            </HelpBlock>
+
+            <Box>
+              <CheckBox
+                marginLeft={2}
+                className="ab_medium_margin"
+                onChange={(checked: boolean) => this.onUseColumnValuesSelectorChanged(checked)}
+                checked={this.state.useSelector}
               >
-                <FormGroup controlId="formInlineKey">
-                  {col.DataType == DataType.Date ? (
-                    <div>
-                      <Col xs={12}>
-                        <HelpBlock>
-                          Enter a date value. Alternatively, tick the checkbox and select from an
-                          existing column value.
-                        </HelpBlock>
-                      </Col>
-                      <Row>
-                        <Col xs={12}>
-                          <Checkbox
-                            className="ab_medium_margin"
-                            onChange={e => this.onUseColumnValuesSelectorChanged(e)}
-                            checked={this.state.useSelector}
-                          >
-                            {' '}
-                            Select from existing column values
-                          </Checkbox>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xs={9}>
-                          {this.state.useSelector ? (
-                            <ColumnValueSelector
-                              cssClassName={cssClassName}
-                              SelectedColumnValue={this.props.BulkUpdateValue}
-                              SelectedColumn={col}
-                              Blotter={this.props.Blotter}
-                              onColumnValueChange={columns =>
-                                this.onColumnValueSelectedChanged(columns)
-                              }
-                              AllowNew={false}
-                            />
-                          ) : (
-                            <FormControl
-                              value={String(this.props.BulkUpdateValue)}
-                              type={UIHelper.getDescriptionForDataType(col.DataType)}
-                              placeholder={UIHelper.getPlaceHolderforDataType(col.DataType)}
-                              onChange={e => this.onBulkUpdateValueChange(e)}
-                            />
-                          )}
-                        </Col>
-                        <Col xs={3}>
-                          <Button
-                            bsStyle={this.getButtonStyle()}
-                            disabled={
-                              StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) ||
-                              this.props.PreviewInfo.PreviewValidationSummary
-                                .HasOnlyValidationPrevent
-                            }
-                            onClick={() => {
-                              this.onApplyClick();
-                            }}
-                          >
-                            Apply to Grid
-                          </Button>
-                        </Col>
-                      </Row>
-                    </div>
-                  ) : (
-                    <div>
-                      <Col xs={12}>
-                        <HelpBlock>
-                          Select an existing column value from the dropdown, or enter a new value
-                        </HelpBlock>
-                      </Col>{' '}
-                      <Row>
-                        <Col xs={8}>
-                          <ColumnValueSelector
-                            cssClassName={cssClassName}
-                            SelectedColumnValue={this.props.BulkUpdateValue}
-                            SelectedColumn={col}
-                            Blotter={this.props.Blotter}
-                            onColumnValueChange={columns =>
-                              this.onColumnValueSelectedChanged(columns)
-                            }
-                          />
-                        </Col>
-                        <Col xs={4}>
-                          <Button
-                            bsStyle={this.getButtonStyle()}
-                            disabled={
-                              StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) ||
-                              this.props.PreviewInfo.PreviewValidationSummary
-                                .HasOnlyValidationPrevent ||
-                              hasDataTypeError
-                            }
-                            onClick={() => {
-                              this.onApplyClick();
-                            }}
-                          >
-                            Apply to Grid
-                          </Button>{' '}
-                          {hasDataTypeError && (
-                            <AdaptablePopover
-                              cssClassName={cssClassName}
-                              headerText={'Update Error'}
-                              bodyText={[dataTypeErrorMessage]}
-                              MessageType={MessageType.Error}
-                            />
-                          )}
-                          {StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
-                            this.props.PreviewInfo.PreviewValidationSummary
-                              .HasValidationWarning && (
-                              <AdaptablePopover
-                                cssClassName={cssClassName}
-                                headerText={'Validation Error'}
-                                bodyText={[globalValidationMessage]}
-                                MessageType={MessageType.Warning}
-                              />
-                            )}
-                          {StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
-                            !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning &&
-                            this.props.PreviewInfo.PreviewValidationSummary
-                              .HasValidationPrevent && (
-                              <AdaptablePopover
-                                cssClassName={cssClassName}
-                                headerText={'Validation Error'}
-                                bodyText={[globalValidationMessage]}
-                                MessageType={MessageType.Error}
-                              />
-                            )}
-                        </Col>
-                      </Row>
-                    </div>
-                  )}
-                </FormGroup>
-              </AdaptableBlotterForm>
-            </PanelWithImage>
-            {previewPanel}
-          </div>
+                {' '}
+                Select from existing column values
+              </CheckBox>
+            </Box>
+
+            <Flex padding={2} flexDirection="row" alignItems="center">
+              <Flex alignItems="center" flexDirection="row" flex={1} marginRight={2}>
+                {this.state.useSelector ? (
+                  <ColumnValueSelector
+                    cssClassName={cssClassName}
+                    SelectedColumnValue={this.props.BulkUpdateValue}
+                    SelectedColumn={col}
+                    Blotter={this.props.Blotter}
+                    onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
+                    AllowNew={false}
+                    style={{ width: '100%', maxWidth: 'inherit' }}
+                  />
+                ) : (
+                  <Input
+                    style={{ width: '100%' }}
+                    value={String(this.props.BulkUpdateValue)}
+                    type={UIHelper.getDescriptionForDataType(col.DataType)}
+                    placeholder={UIHelper.getPlaceHolderforDataType(col.DataType)}
+                    onChange={(e: React.SyntheticEvent) => this.onBulkUpdateValueChange(e)}
+                  />
+                )}
+              </Flex>
+
+              <SimpleButton
+                bsStyle={this.getButtonStyle()}
+                disabled={
+                  StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) ||
+                  this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent
+                }
+                onClick={() => {
+                  this.onApplyClick();
+                }}
+                variant="raised"
+                tone="success"
+              >
+                Apply to Grid
+              </SimpleButton>
+            </Flex>
+          </>
+        ) : (
+          <>
+            <HelpBlock marginTop={2} marginBottom={2}>
+              Select an existing column value from the dropdown, or enter a new value
+            </HelpBlock>
+
+            <Flex marginTop={2} flexDirection="row" alignItems="center">
+              <Flex alignItems="center" flexDirection="row" flex={1} marginRight={2}>
+                <ColumnValueSelector
+                  cssClassName={cssClassName}
+                  SelectedColumnValue={this.props.BulkUpdateValue}
+                  SelectedColumn={col}
+                  Blotter={this.props.Blotter}
+                  onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
+                  style={{ width: '100%', maxWidth: 'inherit' }}
+                />
+              </Flex>
+              <SimpleButton
+                bsStyle={this.getButtonStyle()}
+                disabled={
+                  StringExtensions.IsNullOrEmpty(this.props.BulkUpdateValue) ||
+                  this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent ||
+                  hasDataTypeError
+                }
+                variant="raised"
+                tone="success"
+                marginRight={2}
+                onClick={() => {
+                  this.onApplyClick();
+                }}
+              >
+                Apply to Grid
+              </SimpleButton>{' '}
+              {hasDataTypeError && (
+                <AdaptablePopover
+                  cssClassName={cssClassName}
+                  headerText={'Update Error'}
+                  bodyText={[dataTypeErrorMessage]}
+                  MessageType={MessageType.Error}
+                />
+              )}
+              {StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
+                this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && (
+                  <AdaptablePopover
+                    cssClassName={cssClassName}
+                    headerText={'Validation Error'}
+                    bodyText={[globalValidationMessage]}
+                    MessageType={MessageType.Warning}
+                  />
+                )}
+              {StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue) &&
+                !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning &&
+                this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent && (
+                  <AdaptablePopover
+                    cssClassName={cssClassName}
+                    headerText={'Validation Error'}
+                    bodyText={[globalValidationMessage]}
+                    MessageType={MessageType.Error}
+                  />
+                )}
+            </Flex>
+          </>
         )}
-      </div>
+
+        {previewPanel}
+      </PanelWithImage>
     );
   }
 
@@ -265,9 +255,8 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
     this.props.onBulkUpdateValueChange(selectedColumnValue);
   }
 
-  private onUseColumnValuesSelectorChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.setState({ useSelector: e.checked } as BulkUpdatePopupState);
+  private onUseColumnValuesSelectorChanged(checked: boolean) {
+    this.setState({ useSelector: checked } as BulkUpdatePopupState);
     this.props.onBulkUpdateValueChange('');
   }
 

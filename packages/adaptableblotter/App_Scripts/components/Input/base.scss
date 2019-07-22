@@ -1,0 +1,10 @@
+.ab-Input {
+  padding: var(--ab-cmp-input__padding);
+  border-radius: var(--ab-cmp-input__border-radius);
+  border: var(--ab-cmp-input__border);
+
+  &:focus {
+    box-shadow: var(--ab-focus__box-shadow);
+    outline: var(--ab-focus__outline);
+  }
+}

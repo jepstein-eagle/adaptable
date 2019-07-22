@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
@@ -8,6 +8,11 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterState';
+import ErrorBox from '../../../components/ErrorBox';
+import WizardPanel from '../../../components/WizardPanel';
+import { Flex, Text } from 'rebass';
+import Input from '../../../components/Input';
+import HelpBlock from '../../../components/HelpBlock';
 
 export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<UserFilter> {
   UserFilters: UserFilter[];
@@ -34,37 +39,30 @@ export class UserFilterSettingsWizard
     let cssClassName: string = this.props.cssClassName + '-settings';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Filter Settings" bsStyle="primary">
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="filterName">
-              <Col xs={12}>
-                <HelpBlock>
-                  {
-                    'Select a name for the User Filter - this is the name that will appear in Query Builder and Column Filter dropdowns.'
-                  }
-                </HelpBlock>
-              </Col>
-              <Col xs={2} componentClass={ControlLabel}>
-                Filter Name:{' '}
-              </Col>
-              <Col xs={8}>
-                <FormGroup controlId="formInlineName" validationState={validationState}>
-                  <FormControl
-                    value={this.state.FilterName}
-                    type="string"
-                    placeholder="Enter filter name"
-                    onChange={e => this.onFilterNameChange(e)}
-                  />
-                  <FormControl.Feedback />
-                  <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-                </FormGroup>
-              </Col>
-            </FormGroup>
-            <Col xs={2}> </Col>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Filter Settings" bsStyle="primary">
+        <HelpBlock marginBottom={2}>
+          Select a name for the User Filter - this is the name that will appear in Query Builder and
+          Column Filter dropdowns.
+        </HelpBlock>
+
+        <Flex flexDirection="row" alignItems="center">
+          <Text textAlign="end" marginRight={2}>
+            Filter Name:
+          </Text>
+
+          <Input
+            style={{ flex: 1 }}
+            value={this.state.FilterName}
+            type="string"
+            placeholder="Enter filter name"
+            onChange={(e: any) => this.onFilterNameChange(e)}
+          />
+        </Flex>
+
+        {this.state.ErrorMessage ? (
+          <ErrorBox marginTop={3}>{this.state.ErrorMessage}</ErrorBox>
+        ) : null}
+      </WizardPanel>
     );
   }
 

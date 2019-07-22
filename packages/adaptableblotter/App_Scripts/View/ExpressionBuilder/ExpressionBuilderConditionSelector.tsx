@@ -4,8 +4,9 @@ import { IColumn } from '../../Utilities/Interface/IColumn';
 import { ExpressionBuilderColumnValues } from './ExpressionBuilderColumnValues';
 import { ExpressionBuilderUserFilter } from './ExpressionBuilderUserFilter';
 import { ExpressionBuilderRanges } from './ExpressionBuilderRanges';
-import { HelpBlock, Tab, NavItem, Nav } from 'react-bootstrap';
 import { FilterHelper } from '../../Utilities/Helpers/FilterHelper';
+
+import SimpleButton from '../../components/SimpleButton';
 import {
   DataType,
   ExpressionMode,
@@ -19,15 +20,17 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { IRawValueDisplayValuePair } from '../UIInterfaces';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { Expression } from '../../PredefinedConfig/Common/Expression/Expression';
-import { ButtonClear } from '../Components/Buttons/ButtonClear';
+
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { Helper } from '../../Utilities/Helpers/Helper';
+
 import { Waiting } from '../Components/FilterForm/Waiting';
 import { IAdaptableBlotter } from '../../Utilities/Interface/IAdaptableBlotter';
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { QueryRange } from '../../PredefinedConfig/Common/Expression/QueryRange';
 import { FilterExpression } from '../../PredefinedConfig/Common/Expression/FilterExpression';
 import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
+import { Box, Flex } from 'rebass';
+import HelpBlock from '../../components/HelpBlock';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -63,16 +66,31 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 > {
   constructor(props: ExpressionBuilderConditionSelectorProps) {
     super(props);
-    this.state = this.buildState(this.props);
+    // this.state = this.buildState(this.props);
   }
 
-  componentWillReceiveProps(nextProps: ExpressionBuilderConditionSelectorProps, nextContext: any) {
-    this.setState(this.buildState(nextProps));
-    this.buildColumnValuesState();
+  // componentWillReceiveProps(nextProps: ExpressionBuilderConditionSelectorProps, nextContext: any) {
+  //   this.setState(this.buildState(nextProps));
+  //   this.buildColumnValuesState();
+  // }
+
+  static getDerivedStateFromProps(
+    props: ExpressionBuilderConditionSelectorProps,
+    state: ExpressionBuilderConditionSelectorState
+  ) {
+    state = {
+      ...state,
+      ...ExpressionBuilderConditionSelector.buildState(props, state),
+    };
+    return {
+      ...state,
+      ...ExpressionBuilderConditionSelector.buildColumnValuesState(props, state),
+    };
   }
 
-  private buildState(
-    theProps: ExpressionBuilderConditionSelectorProps
+  private static buildState(
+    theProps: ExpressionBuilderConditionSelectorProps,
+    state: ExpressionBuilderConditionSelectorState
   ): ExpressionBuilderConditionSelectorState {
     if (StringExtensions.IsNullOrEmpty(theProps.SelectedColumnId)) {
       return {
@@ -82,12 +100,12 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         AllFilterExpresions: [],
         SelectedFilterExpressions: [],
         SelectedColumnRanges: [],
-        QueryBuildStatus: this.props.QueryBuildStatus,
+        QueryBuildStatus: theProps.QueryBuildStatus,
         ShowWaitingMessage: false,
-        SelectedTab: this.props.SelectedTab,
+        SelectedTab: theProps.SelectedTab,
       };
     } else {
-      if (this.state == null && this.props.ExpressionMode == ExpressionMode.SingleColumn) {
+      if (state == null && theProps.ExpressionMode == ExpressionMode.SingleColumn) {
         // no state so we have come in with a column and nothing else
         return {
           SelectedColumnId: theProps.SelectedColumnId,
@@ -126,19 +144,19 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         if (filterExpression) {
           filterExpression.Filters.forEach((fe: string) => {
             // if its a userfilter add it to that list
-            let userFilter: UserFilter = this.props.UserFilters.find(uf => uf.Name == fe);
+            let userFilter: UserFilter = theProps.UserFilters.find(uf => uf.Name == fe);
             if (userFilter) {
               selectedColumnFilterExpressions.push(fe);
             }
             // if it is a system filter add it ot that list
-            let selectedSystemFilter: string = this.props.SystemFilters.find(sf => sf == fe);
+            let selectedSystemFilter: string = theProps.SystemFilters.find(sf => sf == fe);
             if (selectedSystemFilter) {
               selectedColumnFilterExpressions.push(fe);
             }
           });
         }
-        let availableFilterExpressions: string[] = this.props.UserFilters.map(f => f.Name).concat(
-          ...this.props.SystemFilters.map(sf => sf)
+        let availableFilterExpressions: string[] = theProps.UserFilters.map(f => f.Name).concat(
+          ...theProps.SystemFilters.map(sf => sf)
         );
 
         // get ranges
@@ -151,89 +169,93 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         selectedColumnRanges = range ? range.Ranges : [];
 
         return {
-          SelectedColumnId: this.state.SelectedColumnId,
-          ColumnRawValueDisplayValuePairs: this.state.ColumnRawValueDisplayValuePairs, // we fill this later...
+          SelectedColumnId: state.SelectedColumnId,
+          ColumnRawValueDisplayValuePairs: state.ColumnRawValueDisplayValuePairs, // we fill this later...
           SelectedColumnDisplayValues: selectedColumnDisplayValues,
           AllFilterExpresions: availableFilterExpressions,
           SelectedFilterExpressions: selectedColumnFilterExpressions,
           SelectedColumnRanges: selectedColumnRanges,
-          QueryBuildStatus: this.props.QueryBuildStatus,
+          QueryBuildStatus: theProps.QueryBuildStatus,
           ShowWaitingMessage: false,
-          SelectedTab:
-            this.props.SelectedTab == null ? QueryTab.ColumnValue : this.props.SelectedTab,
+          SelectedTab: theProps.SelectedTab == null ? QueryTab.ColumnValue : theProps.SelectedTab,
         };
       }
     }
   }
 
-  private buildColumnValuesState(): void {
+  private static buildColumnValuesState(
+    props: ExpressionBuilderConditionSelectorProps,
+    state: ExpressionBuilderConditionSelectorState
+  ): any {
     let shouldGetColumnValues: boolean = false;
-    if (this.props.SelectedColumnId != this.state.SelectedColumnId) {
+    if (props.SelectedColumnId != state.SelectedColumnId) {
       shouldGetColumnValues = true;
     } else if (
-      ArrayExtensions.IsNullOrEmpty(this.state.ColumnRawValueDisplayValuePairs) &&
-      StringExtensions.IsNotNullOrEmpty(this.props.SelectedColumnId)
+      ArrayExtensions.IsNullOrEmpty(state.ColumnRawValueDisplayValuePairs) &&
+      StringExtensions.IsNotNullOrEmpty(props.SelectedColumnId)
     ) {
       shouldGetColumnValues = true;
     }
 
+    let newState = {};
+
     if (shouldGetColumnValues) {
       let columnValuePairs: IRawValueDisplayValuePair[] = [];
-      if (this.props.Blotter.blotterOptions.queryOptions.getColumnValues != null) {
-        this.setState({ ShowWaitingMessage: true });
-        this.props.Blotter.blotterOptions.queryOptions
-          .getColumnValues(this.props.SelectedColumnId)
-          .then(
-            result => {
-              if (result == null) {
-                // if nothing returned then default to normal
-                columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
-                  this.props.SelectedColumnId,
-                  DistinctCriteriaPairValue.DisplayValue,
-                  false
+      if (props.Blotter.blotterOptions.queryOptions.getColumnValues != null) {
+        newState = { ShowWaitingMessage: true };
+        props.Blotter.blotterOptions.queryOptions.getColumnValues(props.SelectedColumnId).then(
+          result => {
+            if (result == null) {
+              // if nothing returned then default to normal
+              columnValuePairs = props.Blotter.getColumnValueDisplayValuePairDistinctList(
+                props.SelectedColumnId,
+                DistinctCriteriaPairValue.DisplayValue,
+                false
+              );
+              columnValuePairs = ArrayExtensions.sortArrayWithProperty(
+                SortOrder.Ascending,
+                columnValuePairs,
+                DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
+              );
+              newState = {
+                ...newState,
+                ColumnRawValueDisplayValuePairs: columnValuePairs,
+                ShowWaitingMessage: false,
+                SelectedColumnId: props.SelectedColumnId,
+              };
+            } else {
+              // get the distinct items and make sure within max items that can be displayed
+              let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
+                0,
+                props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed
+              );
+              distinctItems.forEach(di => {
+                let displayValue = props.Blotter.getDisplayValueFromRawValue(
+                  props.SelectedColumnId,
+                  di
                 );
-                columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-                  SortOrder.Ascending,
-                  columnValuePairs,
-                  DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
-                );
-                this.setState({
-                  ColumnRawValueDisplayValuePairs: columnValuePairs,
-                  ShowWaitingMessage: false,
-                  SelectedColumnId: this.props.SelectedColumnId,
-                });
-              } else {
-                // get the distinct items and make sure within max items that can be displayed
-                let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
-                  0,
-                  this.props.Blotter.blotterOptions.queryOptions.maxColumnValueItemsDisplayed
-                );
-                distinctItems.forEach(di => {
-                  let displayValue = this.props.Blotter.getDisplayValueFromRawValue(
-                    this.props.SelectedColumnId,
-                    di
-                  );
-                  columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
-                });
-                this.setState({
-                  ColumnRawValueDisplayValuePairs: columnValuePairs,
-                  ShowWaitingMessage: false,
-                  SelectedColumnId: this.props.SelectedColumnId,
-                });
-                // set the UIPermittedValues for this column to what has been sent
-                this.props.Blotter.api.userInterfaceApi.setColumnPermittedValues(
-                  this.props.SelectedColumnId,
-                  distinctItems
-                );
-              }
-            },
-            function() {
-              //    this.setState({ name: error });
+                columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
+              });
+              newState = {
+                ...newState,
+                ColumnRawValueDisplayValuePairs: columnValuePairs,
+                ShowWaitingMessage: false,
+                SelectedColumnId: props.SelectedColumnId,
+              };
+              // set the UIPermittedValues for this column to what has been sent
+              props.Blotter.api.userInterfaceApi.setColumnPermittedValues(
+                props.SelectedColumnId,
+                distinctItems
+              );
             }
-          );
+          },
+          function() {
+            //    this.setState({ name: error });
+          }
+        );
       } else {
-        columnValuePairs = this.props.Blotter.getColumnValueDisplayValuePairDistinctList(
-          this.props.SelectedColumnId,
+        columnValuePairs = props.Blotter.getColumnValueDisplayValuePairDistinctList(
+          props.SelectedColumnId,
           DistinctCriteriaPairValue.DisplayValue,
           false
         );
@@ -242,13 +264,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<
           columnValuePairs,
           DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
         );
-        this.setState({
+        newState = {
+          ...newState,
           ColumnRawValueDisplayValuePairs: columnValuePairs,
           ShowWaitingMessage: false,
-          SelectedColumnId: this.props.SelectedColumnId,
-        });
+          SelectedColumnId: props.SelectedColumnId,
+        };
       }
     }
+    return newState;
   }
 
   render() {
@@ -286,38 +310,57 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         : 'Column: ' + selectedColumnFriendlyName;
 
     let clearButton = (
-      <ButtonClear
-        cssClassName={this.props.cssClassName + ' pull-right '}
+      <SimpleButton
+        className={this.props.cssClassName + ' pull-right '}
         onClick={() => this.onSelectedColumnChanged()}
-        bsStyle={'default'}
-        style={{ margin: '5px' }}
-        size={'xsmall'}
-        overrideDisableButton={
+        disabled={
           this.props.ExpressionMode == ExpressionMode.SingleColumn ||
           this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn ||
           this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn
         }
-        overrideText={'Clear'}
-        overrideTooltip="Clear"
-        DisplayMode="Text"
-      />
+        tooltip="Clear"
+        variant="text"
+      >
+        Clear
+      </SimpleButton>
     );
 
+    const firstSelected =
+      selectedColumn &&
+      selectedColumn.DataType != DataType.Boolean &&
+      this.state.SelectedTab == QueryTab.ColumnValue;
+    const secondSelected = this.state.SelectedTab == QueryTab.Filter;
+    const thirdSelected = this.state.SelectedTab == QueryTab.QueryRange;
     return (
       <PanelWithButton
         cssClassName={cssClassName}
         headerText={panelHeader}
-        bsStyle="info"
-        style={{ height: '447px' }}
+        variant="default"
         button={clearButton}
+        bodyScroll={false}
+        bodyProps={{
+          padding: 0,
+          style: {
+            display: 'flex',
+            flexFlow: 'column',
+          },
+        }}
+        style={{
+          flex: '1 0 0%',
+          marginRight: 'var(--ab-space-2)',
+        }}
       >
         {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn ||
         this.state.QueryBuildStatus == QueryBuildStatus.SelectFurtherColumn ? (
-          <div>
+          <div style={{ marginLeft: 2, marginRight: 2 }}>
             {this.state.QueryBuildStatus == QueryBuildStatus.SelectFirstColumn ? (
-              <HelpBlock>{firstTimeText}</HelpBlock>
+              <HelpBlock marginBottom={2} marginTop={2}>
+                {firstTimeText}
+              </HelpBlock>
             ) : (
-              <HelpBlock>{secondTimeText}</HelpBlock>
+              <HelpBlock marginBottom={2} marginTop={2}>
+                {secondTimeText}
+              </HelpBlock>
             )}
             {this.state.ShowWaitingMessage ? (
               <Waiting WaitingMessage="Retrieving Column Values..." />
@@ -332,11 +375,11 @@ export class ExpressionBuilderConditionSelector extends React.Component<
             )}
           </div>
         ) : (
-          <div>
+          <Flex flex={1} flexDirection="column">
             {selectedColumn && (
-              <div>
+              <>
                 {this.props.Blotter.blotterOptions.queryOptions.columnValuesOnlyInQueries ? (
-                  <div>
+                  <>
                     {this.state.ShowWaitingMessage ? (
                       <Waiting WaitingMessage="Retrieving Column Values..." />
                     ) : (
@@ -349,86 +392,78 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                         }
                       />
                     )}
-                  </div>
+                  </>
                 ) : (
-                  <Tab.Container
-                    id="left-tabs-example"
-                    defaultActiveKey={this.state.SelectedTab}
-                    activeKey={this.state.SelectedTab}
-                    onSelect={() => this.onSelectTab()}
-                  >
-                    <div>
-                      <Nav bsStyle="pills">
-                        <NavItem
-                          eventKey={QueryTab.ColumnValue}
-                          onClick={() => this.onTabChanged(QueryTab.ColumnValue)}
-                        >
-                          Column Values
-                        </NavItem>
-                        <NavItem
-                          eventKey={QueryTab.Filter}
-                          onSelect={() => this.onTabChanged(QueryTab.Filter)}
-                        >
-                          Filters
-                        </NavItem>
-                        <NavItem
-                          eventKey={QueryTab.QueryRange}
-                          onClick={() => this.onTabChanged(QueryTab.QueryRange)}
-                        >
-                          Ranges
-                        </NavItem>
-                      </Nav>
-                      <Tab.Content animation>
-                        <Tab.Pane eventKey={QueryTab.ColumnValue}>
-                          {selectedColumn.DataType != DataType.Boolean &&
-                            this.state.SelectedTab == QueryTab.ColumnValue && (
-                              <div>
-                                {this.state.ShowWaitingMessage ? (
-                                  <Waiting WaitingMessage="Retrieving Column Values..." />
-                                ) : (
-                                  <ExpressionBuilderColumnValues
-                                    cssClassName={cssClassName}
-                                    ColumnValues={this.state.ColumnRawValueDisplayValuePairs}
-                                    SelectedValues={this.state.SelectedColumnDisplayValues}
-                                    onColumnValuesChange={selectedValues =>
-                                      this.onSelectedColumnValuesChange(selectedValues)
-                                    }
-                                  />
-                                )}
-                              </div>
-                            )}
-                        </Tab.Pane>
-                        <Tab.Pane eventKey={QueryTab.Filter}>
-                          {this.state.SelectedTab == QueryTab.Filter && (
-                            <ExpressionBuilderUserFilter
-                              cssClassName={cssClassName}
-                              AvailableSystemFilterNames={availableSystemFilterNames}
-                              AvailableUserFilterNames={availableUserFilterNames}
-                              SelectedFilterNames={this.state.SelectedFilterExpressions}
-                              onFilterNameChange={selectedValues =>
-                                this.onSelectedFiltersChanged(selectedValues)
-                              }
-                            />
-                          )}
-                        </Tab.Pane>
-                        <Tab.Pane eventKey={QueryTab.QueryRange}>
-                          {this.state.SelectedTab == QueryTab.QueryRange && (
-                            <ExpressionBuilderRanges
-                              cssClassName={cssClassName}
-                              SelectedColumn={selectedColumn}
-                              Ranges={this.state.SelectedColumnRanges}
-                              Columns={this.props.ColumnsList}
-                              onRangesChange={ranges => this.onSelectedColumnRangesChange(ranges)}
-                            />
-                          )}
-                        </Tab.Pane>
-                      </Tab.Content>
-                    </div>
-                  </Tab.Container>
+                  <>
+                    <Box marginBottom={2} marginTop={2}>
+                      <SimpleButton
+                        onClick={() => this.onTabChanged(QueryTab.ColumnValue)}
+                        marginRight={2}
+                        tone={(firstSelected ? 'success' : 'neutral') as ('success' | 'neutral')}
+                        variant={firstSelected ? 'raised' : 'outlined'}
+                      >
+                        Column Values
+                      </SimpleButton>
+                      <SimpleButton
+                        onClick={() => this.onTabChanged(QueryTab.Filter)}
+                        marginRight={2}
+                        tone={(secondSelected ? 'success' : 'neutral') as ('success' | 'neutral')}
+                        variant={secondSelected ? 'raised' : 'outlined'}
+                      >
+                        Filters
+                      </SimpleButton>
+                      <SimpleButton
+                        tone={thirdSelected ? 'success' : ('neutral' as ('success' | 'neutral'))}
+                        onClick={() => this.onTabChanged(QueryTab.QueryRange)}
+                        variant={thirdSelected ? 'raised' : 'outlined'}
+                      >
+                        Ranges
+                      </SimpleButton>
+                    </Box>
+
+                    {firstSelected ? (
+                      <>
+                        {this.state.ShowWaitingMessage ? (
+                          <Waiting WaitingMessage="Retrieving Column Values..." />
+                        ) : (
+                          <ExpressionBuilderColumnValues
+                            cssClassName={cssClassName}
+                            ColumnValues={this.state.ColumnRawValueDisplayValuePairs}
+                            SelectedValues={this.state.SelectedColumnDisplayValues}
+                            onColumnValuesChange={selectedValues =>
+                              this.onSelectedColumnValuesChange(selectedValues)
+                            }
+                          />
+                        )}
+                      </>
+                    ) : null}
+
+                    {secondSelected ? (
+                      <ExpressionBuilderUserFilter
+                        cssClassName={cssClassName}
+                        AvailableSystemFilterNames={availableSystemFilterNames}
+                        AvailableUserFilterNames={availableUserFilterNames}
+                        SelectedFilterNames={this.state.SelectedFilterExpressions}
+                        onFilterNameChange={selectedValues =>
+                          this.onSelectedFiltersChanged(selectedValues)
+                        }
+                      />
+                    ) : null}
+
+                    {thirdSelected ? (
+                      <ExpressionBuilderRanges
+                        cssClassName={cssClassName}
+                        SelectedColumn={selectedColumn}
+                        Ranges={this.state.SelectedColumnRanges}
+                        Columns={this.props.ColumnsList}
+                        onRangesChange={ranges => this.onSelectedColumnRangesChange(ranges)}
+                      />
+                    ) : null}
+                  </>
                 )}
-              </div>
+              </>
             )}
-          </div>
+          </Flex>
         )}
       </PanelWithButton>
     );

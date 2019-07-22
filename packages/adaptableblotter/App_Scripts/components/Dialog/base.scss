@@ -1,0 +1,37 @@
+.ab-Dialog {
+  position: relative;
+  background: var(--ab-cmp-dialog__background);
+  border-radius: var(--ab-cmp-dialog__border-radius);
+  min-height: var(--ab-cmp-dialog__min-height);
+  
+  &__close-button {
+    position: absolute;
+    right: 0.7rem;
+    top: 0;
+    font-size: var(--ab-font-size-3);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ab-cmp-dialog-close-button__color);
+    text-shadow: 0 1px 0 #fff;
+    cursor: pointer;
+  }
+
+  &-fixed-wrapper {
+    position: fixed;
+    margin: auto;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &--modal {
+
+  }
+
+  &--not-modal {
+    
+  }
+}

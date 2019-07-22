@@ -1,14 +1,19 @@
 import * as React from 'react';
-import { ControlLabel, FormGroup, FormControl, Col, Panel, HelpBlock } from 'react-bootstrap';
+
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
+import Panel from '../../../components/Panel';
+import Input from '../../../components/Input';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from '../../Components/Forms/AdaptableBlotterForm';
+
 import { AdvancedSearch } from '../../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { PRIMARY_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
+
+import { Flex, Box } from 'rebass';
+import ErrorBox from '../../../components/ErrorBox';
+import WizardPanel from '../../../components/WizardPanel';
 
 export interface AdvancedSearchSettingsWizardProps
   extends AdaptableWizardStepProps<AdvancedSearch> {
@@ -38,30 +43,22 @@ export class AdvancedSearchSettingsWizard
       : 'error';
 
     return (
-      <div className={cssClassName}>
-        <Panel header="Advanced Search Settings" bsStyle={PRIMARY_BSSTYLE}>
-          <AdaptableBlotterForm horizontal>
-            <FormGroup controlId="searchName">
-              <Col xs={3} componentClass={ControlLabel}>
-                Search Name:{' '}
-              </Col>
-              <Col xs={8}>
-                <FormGroup controlId="formInlineName" validationState={validationState}>
-                  <FormControl
-                    value={this.state.AdvancedSearchName}
-                    type="string"
-                    placeholder="Enter search name"
-                    onChange={e => this.onAdvancedSearchNameChange(e)}
-                  />
-                  <FormControl.Feedback />
-                  <HelpBlock>{this.state.ErrorMessage}</HelpBlock>
-                </FormGroup>
-              </Col>
-            </FormGroup>
-            <Col xs={1}> </Col>
-          </AdaptableBlotterForm>
-        </Panel>
-      </div>
+      <WizardPanel header="Advanced Search Settings">
+        <Flex alignItems="center" flexDirection="row">
+          <Box>Search Name:</Box>
+          <Input
+            marginLeft={2}
+            value={this.state.AdvancedSearchName}
+            type="string"
+            placeholder="Enter search name"
+            style={{ flex: 1 }}
+            onChange={(e: any) => this.onAdvancedSearchNameChange(e)}
+          />
+        </Flex>
+        {this.state.ErrorMessage ? (
+          <ErrorBox marginTop={2}>{this.state.ErrorMessage}</ErrorBox>
+        ) : null}
+      </WizardPanel>
     );
   }
 
