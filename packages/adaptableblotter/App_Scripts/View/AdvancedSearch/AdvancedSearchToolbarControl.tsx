@@ -70,6 +70,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
             style={{ minWidth: 200 }}
             options={availableSearches}
             value={currentSearchName}
+            placeholder="Select Advanced Search"
             onChange={searchName => this.onSelectedSearchChanged(searchName)}
             marginRight={2}
           ></Dropdown>
