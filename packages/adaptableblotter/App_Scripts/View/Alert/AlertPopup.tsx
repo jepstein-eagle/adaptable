@@ -104,6 +104,11 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
       />
     );
 
+    let startWizardText =
+      this.props.AccessLevel == AccessLevel.ReadOnly
+        ? 'You have no Alert Definitions.'
+        : "Click 'New' to start creating Alert Definitions.  An alert will be triggered whenever an edit - or external data change - matches the condition in the Alert Definition.";
+
     return (
       <PanelWithButton
         bodyProps={{ padding: 0 }}
@@ -120,18 +125,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
             items={alertEntities}
           />
         ) : (
-          <EmptyContent>
-            <p>You have no Alert Definitions.</p>
-            {this.props.AccessLevel != AccessLevel.ReadOnly && (
-              <div>
-                <p>Click 'New' to start creating alert definitions.</p>
-                <p>
-                  An alert will be triggered whenever an edit - or external data change - matches
-                  the condition in the alert definition.
-                </p>
-              </div>
-            )}
-          </EmptyContent>
+          <EmptyContent>{startWizardText}</EmptyContent>
         )}
 
         {this.state.WizardStatus != WizardStatus.None && (

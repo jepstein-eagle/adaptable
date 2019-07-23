@@ -62,7 +62,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         {this.props.showEdit && (
           <ButtonEdit
             onClick={() => this.props.editClick()}
-            cssClassName={this.props.cssClassName}
+            // cssClassName={this.props.cssClassName}
             style={{
               marginLeft: '0px',
               marginTop: '2px',
@@ -71,16 +71,16 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               color: 'var(--ab-color-accent)',
               background: 'var(--ab-color-accentlight)',
             }}
-            overrideDisableButton={this.props.overrideDisableEdit}
-            overrideTooltip={this.props.overrideTooltipEdit}
-            DisplayMode="Glyph"
-            size={this.props.editSize}
+            disabled={this.props.overrideDisableEdit}
+            tooltip={this.props.overrideTooltipEdit}
+            //  DisplayMode="Glyph"
+            //  size={this.props.editSize}
             AccessLevel={this.props.AccessLevel}
           />
         )}
         {this.props.showDelete && (
           <ButtonDelete
-            cssClassName={this.props.cssClassName}
+            //  cssClassName={this.props.cssClassName}
             style={{
               marginLeft: '1px',
               marginTop: '2px',
@@ -89,13 +89,13 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               color: 'var(--ab-color-error)',
               background: 'var(--ab-color-errorlight)',
             }}
-            overrideDisableButton={this.props.overrideDisableDelete}
-            overrideTooltip={this.props.overrideTooltipDelete}
-            DisplayMode="Glyph"
+            disabled={this.props.overrideDisableDelete}
+            tooltip={this.props.overrideTooltipDelete}
+            //   DisplayMode="Glyph"
             ConfirmAction={this.props.ConfirmDeleteAction}
             ConfirmationMsg={'Are you sure you want to delete this ' + this.props.EntityType + '?'}
             ConfirmationTitle={'Delete ' + this.props.EntityType}
-            size={this.props.deleteSize}
+            //   size={this.props.deleteSize}
             AccessLevel={this.props.AccessLevel}
           />
         )}

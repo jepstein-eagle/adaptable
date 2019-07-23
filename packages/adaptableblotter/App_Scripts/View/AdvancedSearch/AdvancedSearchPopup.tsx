@@ -79,10 +79,9 @@ class AdvancedSearchPopupComponent extends React.Component<
       'Created searches are available in the Advanced Search Toolbar dropdown in the Dashboard.',
     ];
 
-    let noExistingObjectText = 'You have no Advanced Searches.';
     let startWizardText =
       this.props.AccessLevel == AccessLevel.ReadOnly
-        ? ''
+        ? 'You have no Advanced Searches.'
         : " Click 'New' to start the Advanced Search Wizard to create a new Advanced Search.";
 
     let colItems: IColItem[] = [
@@ -114,16 +113,12 @@ class AdvancedSearchPopupComponent extends React.Component<
     );
 
     let newSearchButton = (
-      <SimpleButton
+      <ButtonNew
+        className={cssClassName}
         onClick={() => this.onNew()}
-        tooltip="Create New Advanced Search"
-        icon="plus"
-        tone="success"
-        variant="raised"
+        tooltip="Create Conditional Style"
         AccessLevel={this.props.AccessLevel}
-      >
-        ADD
-      </SimpleButton>
+      />
     );
 
     return (
@@ -147,7 +142,6 @@ class AdvancedSearchPopupComponent extends React.Component<
 
           {advancedSearchRows.length == 0 && (
             <EmptyContent>
-              <p>{noExistingObjectText}</p>
               <p>{startWizardText}</p>
             </EmptyContent>
           )}

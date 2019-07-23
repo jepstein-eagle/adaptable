@@ -61,6 +61,8 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
 
     // let hasLive = this.props.LiveReports.find(x => x.Report == report.Name && x.ExportDestination == ExportDestination.iPushPull) != null
     let isSystemReport: boolean = ReportHelper.IsSystemReport(report);
+    console.log(report);
+    console.log(isSystemReport);
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
