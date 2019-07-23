@@ -17,11 +17,12 @@ This uses the agGrid setDataValue method which DOES call cell value changed
 function InitAdaptableBlotter() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
-  const tradeData: any = examplesHelper.getTrades(500);
+  const tradeData: any = examplesHelper.getTrades(20);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   // turn on mimicing ticking data
   tickingDataHelper.startTickingDataagGridSetDataValue(gridOptions);
+  // tickingDataHelper.startTickingDataagGridSetData(gridOptions);
 
   const adaptableBlotterOptions: AdaptableBlotterOptions = examplesHelper.createAdaptableBlotterOptionsTrade(
     gridOptions,
@@ -29,14 +30,20 @@ function InitAdaptableBlotter() {
   );
   adaptableBlotterOptions.predefinedConfig = flashingJson;
 
+  adaptableBlotterOptions.filterOptions = {
+    //   filterActionOnExternalDataChange: {
+    //    RunFilter: 'Always',
+    //  },
+  };
+
   adaptableBlotterOptions.auditOptions = {
     auditCellEdits: {
-      auditAsAlert: true,
-      auditToConsole: true,
+      //   auditAsAlert: true,
+      //   auditToConsole: true,
     },
     auditFunctionEvents: {
-      auditAsAlert: true,
-      auditToConsole: true,
+      //   auditAsAlert: true,
+      //    auditToConsole: true,
     },
     auditUserStateChanges: {
       // auditAsAlert: true,

@@ -76,7 +76,7 @@ export interface AlertState extends RunTimeState {
   /**
    * How many alerts to hold in the State at any one time.  If you reacch this limit then we remove the oldest alert each time a new one is triggered.
    *
-   * **Default Value**:  5
+   * **Default Value**:  20
    *
    */
   MaxAlertsInStore?: number;
