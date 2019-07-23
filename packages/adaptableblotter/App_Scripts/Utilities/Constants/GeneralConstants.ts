@@ -37,7 +37,7 @@ Try to put all our Redux / State defaults here and ONLY reference from here - av
 Please!!!
 */
 // Alert
-export const ALERT_DEFAULT_MAX_ALERTS_IN_STORE: number = 5;
+export const ALERT_DEFAULT_MAX_ALERTS_IN_STORE: number = 20;
 // Calendar
 export const CALENDAR_DEFAULT_CURRENT_CALENDER: string = 'United States';
 // Charts

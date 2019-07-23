@@ -61,15 +61,13 @@ export class AlertRulesWizard
 
     let alertHeader: string = 'Alert for Column: ' + columnFriendlyName;
 
-    let helpText: string =
-      'Choose whether to show alerts for all changes to this column, or only when the change matches a rule (to be set by you).';
-
     return (
       <WizardPanel header={alertHeader}>
         <AdaptableBlotterForm>
-          <HelpBlock>{helpText}</HelpBlock>
-
           <Box>
+            <HelpBlock>
+              {'Show alerts for any data change to the' + columnFriendlyName + ' column.'}
+            </HelpBlock>
             <Radio
               value="None"
               name="alert"
@@ -78,12 +76,13 @@ export class AlertRulesWizard
             >
               Show Alert for ALL changes
             </Radio>{' '}
-            <AdaptablePopover
-              headerText={'Alert: All Changes'}
-              bodyText={['An alert will fire for any change.']}
-            />
           </Box>
           <Box>
+            <HelpBlock>
+              {
+                'Only show an Alert when the change to the column matches a rule (to be set by you).'
+              }
+            </HelpBlock>
             <Radio
               value="others"
               name="alert"
@@ -92,13 +91,8 @@ export class AlertRulesWizard
             >
               Show Alert when new cell value matches rule:
             </Radio>{' '}
-            <AdaptablePopover
-              headerText={'Alert: Custom'}
-              bodyText={['Only show alerts that match the rule defined in the dropdown below.']}
-            />
           </Box>
         </AdaptableBlotterForm>
-
         {/* if not None operator then show operator dropdown */}
         <Flex flexDirection="column">
           {this.state.Operator != LeafExpressionOperator.None ? (

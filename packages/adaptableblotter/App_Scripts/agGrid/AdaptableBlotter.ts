@@ -31,6 +31,7 @@ import {
 import {
   GetMainMenuItemsParams,
   MenuItemDef,
+  GetContextMenuItemsParams,
 } from 'ag-grid-community/dist/lib/entities/gridOptions';
 import { Action } from 'redux';
 import { AdaptableBlotterApp } from '../View/AdaptableBlotterView';
@@ -1749,6 +1750,9 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       // I still wonder if we can do this nicer by using :   this.gridOptions.api.getEditingCells();
       // must be a good reason why we don't use it
 
+      console.log('cell editing started triggered');
+      console.log(params);
+
       const editor = (<any>this.gridOptions.api).rowRenderer.rowCompsByIndex[params.node.rowIndex]
         .cellComps[params.column.getColId()].cellEditor;
 
@@ -1859,16 +1863,34 @@ export class AdaptableBlotter implements IAdaptableBlotter {
     //  });
     //  vendorGrid.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
     // });
-    this.gridOptions.api.addEventListener(Events.EVENT_MODEL_UPDATED, () => {
+    this.gridOptions.api.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
       // not sure about this - doing it to make sure that we set the columns properly at least once!
+
       this.checkColumnsDataTypeSet();
     });
 
+    this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_UPDATED, (params: any) => {
+      console.log('row data updated triggered');
+      console.log(params);
+    });
+
+    this.gridOptions.api.addEventListener(Events.EVENT_ROW_VALUE_CHANGED, (params: any) => {
+      console.log('row value changed triggered');
+      console.log(params);
+    });
+
+    this.gridOptions.api.addEventListener(Events.EVENT_ROW_DATA_CHANGED, (params: any) => {
+      console.log('row data changed triggered');
+      console.log(params);
+    });
     // this handles ticking data
     // except it doesnt handle when data has been added to ag-Grid using updateRowData  ouch !!!
     this.gridOptions.api.addEventListener(
       Events.EVENT_CELL_VALUE_CHANGED,
       (params: NewValueParams) => {
+        console.log('cell value changed triggered');
+        console.log(params);
+
         // this gets called as soon as opening editor so make sure the values are different before starting any work...
         if (params.newValue != params.oldValue) {
           const identifierValue = this.getPrimaryKeyValueFromRecord(params.node);

@@ -107,7 +107,6 @@ export class ConditionalStyleScopeWizard
             <Box className="ab_large_margin">
               <Radio
                 className={cssClassName + '__radiobutton'}
-                inline
                 value="ColumnCategory"
                 checked={this.state.ConditionalStyleScope == ConditionalStyleScope.ColumnCategory}
                 onChange={(checked: boolean, e: React.SyntheticEvent) =>
@@ -139,7 +138,7 @@ export class ConditionalStyleScopeWizard
                     },
                     ...optionColumnCategorys,
                   ]}
-                ></Dropdown>
+                />
               </Box>
             )}
         </WizardPanel>

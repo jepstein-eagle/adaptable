@@ -33,10 +33,8 @@ export class ShortcutTypeWizard
       <WizardPanel header="Select Where Shortcut is Applied">
         <Flex flexDirection="column" padding={2}>
           <HelpBlock marginBottom={2}>
-            <p>
-              Numeric column shortuts perform a mathematical operation based on the{' '}
-              <b>current contents</b> of the cell.
-            </p>
+            Numeric column shortuts perform a mathematical operation based on the{' '}
+            <b>current contents</b> of the cell.
           </HelpBlock>
           <Radio
             marginBottom={2}
