@@ -42,7 +42,6 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
   }
 
   render() {
-    let style: string = UIHelper.getStyleNameByMessageType(this.props.MessageType);
     let header: string = this.props.Header;
     let glyph: string = UIHelper.getGlyphByMessageType(this.props.MessageType);
 
@@ -70,17 +69,18 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
                 })}
               </div>
               {this.props.ShowInputBox && (
-                <div style={{ marginTop: '20px' }}>
-                  <span>Please enter a comment to confirm</span>
-                  <br />
+                <Box padding={2}>
+                  <p>Please enter a comment to confirm</p>
+
                   <Input
                     marginTop={2}
+                    width={'100%'}
                     value={this.state.PromptText}
                     type="string"
                     placeholder="Enter text"
                     onChange={(e: React.SyntheticEvent) => this.changeContent(e)}
                   />
-                </div>
+                </Box>
               )}
               <Box marginTop={3}>
                 <Flex padding={2}>

@@ -1,8 +1,5 @@
 import * as React from 'react';
-import { Row, Col } from 'react-bootstrap';
 import { AdaptablePopover } from '../../AdaptablePopover';
-
-import { AdaptableBlotterForm } from '../Forms/AdaptableBlotterForm';
 
 import { PanelProps } from '../../../components/Panel';
 import WizardPanel from '../../../components/WizardPanel';

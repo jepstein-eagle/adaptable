@@ -35,10 +35,12 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
 
     let headerRow = (
       <AdaptableBlotterForm style={{ flex: 1 }}>
-        <Flex>
-          <Box>
+        <Flex alignItems="center">
+          <Flex alignItems="center">
             {IconCmp ? <IconCmp /> : <Glyphicon glyph={this.props.glyphicon} />}
+            <Box marginRight={2} />
             {this.props.header}
+            <Box marginRight={3} />
             {this.props.infoBody != null && (
               <AdaptablePopover
                 cssClassName={cssClassName}
@@ -46,7 +48,7 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
                 bodyText={this.props.infoBody}
               />
             )}
-          </Box>
+          </Flex>
           <Box flex={1} />
           {this.props.button && React.cloneElement(this.props.button)}
         </Flex>

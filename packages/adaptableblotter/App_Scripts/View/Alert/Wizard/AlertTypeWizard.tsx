@@ -34,8 +34,8 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
     let cssClassName: string = this.props.cssClassName + '-scope';
 
     return (
-      <div className={cssClassName}>
-        <WizardPanel header="Select The Type of the Alert" border="none">
+      <>
+        <WizardPanel header="Select The Type of the Alert" border="none" style={{ height: 'auto' }}>
           <Box className="ab_large_margin">
             <Radio
               className={cssClassName + '__radiobutton'}
@@ -101,7 +101,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
             />
           </Box>
         </WizardPanel>
-        <WizardPanel header="Alert Details" border="none">
+        <WizardPanel header="Alert Details" border="none" style={{ height: 'auto' }}>
           <Box className="ab_large_margin">
             <Checkbox
               className={cssClassName + '__checkbox'}
@@ -117,7 +117,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
             />
           </Box>
         </WizardPanel>
-      </div>
+      </>
     );
   }
 

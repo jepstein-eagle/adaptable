@@ -115,18 +115,18 @@ export class CellValidationRulesWizard
         </Flex>
 
         {/* if not None operator then show operator dropdown */}
-        <Flex flexDirection="row" alignItems="center" marginTop={3} marginLeft={2}>
-          <Flex flex={6} marginRight={3}>
+        <Flex flexDirection="column" marginTop={3} marginLeft={2} marginRight={2}>
+          {this.state.Operator != LeafExpressionOperator.None ? (
             <Dropdown
               style={{ maxWidth: 'inherit', width: '100%' }}
+              marginBottom={2}
               options={operatorOptions}
               disabled={this.checkOperator(LeafExpressionOperator.None)}
               placeholder="select"
               value={this.state.Operator ? this.state.Operator.toString() : ''}
               onChange={(x: any) => this.onOperatorChanged(x)}
             />
-          </Flex>
-
+          ) : null}
           {/* if  numeric then show a numeric control */}
           {!this.checkOperator(LeafExpressionOperator.None) &&
             !this.checkOperator(LeafExpressionOperator.Unknown) &&
@@ -137,18 +137,19 @@ export class CellValidationRulesWizard
               this.props.Data.ColumnId,
               this.props.Columns
             ) == DataType.Number && (
-              <Flex flex={5}>
+              <Flex flex={5} alignItems="center">
                 <Input
                   value={this.state.Operand1}
                   type="number"
                   placeholder="Enter Number"
-                  style={{ width: '100%' }}
+                  style={{ flex: 1 }}
                   onChange={(x: any) => this.onOperand1ValueChanged(x)}
                 />
                 {this.isBetweenOperator() && (
                   <Input
+                    marginLeft={2}
                     value={this.state.Operand2}
-                    style={{ width: '100%' }}
+                    style={{ flex: 1 }}
                     type="number"
                     placeholder="Enter Number"
                     onChange={(x: any) => this.onOperand2ValueChanged(x)}
@@ -156,7 +157,6 @@ export class CellValidationRulesWizard
                 )}
               </Flex>
             )}
-
           {/* if  date then show a date control */}
           {!this.checkOperator(LeafExpressionOperator.None) &&
             !this.checkOperator(LeafExpressionOperator.Unknown) &&
@@ -164,7 +164,7 @@ export class CellValidationRulesWizard
               this.props.Data.ColumnId,
               this.props.Columns
             ) == DataType.Date && (
-              <Flex flex={5}>
+              <Flex flex={5} alignItems="center">
                 <Input
                   type="date"
                   style={{ width: '100%' }}
@@ -184,7 +184,6 @@ export class CellValidationRulesWizard
                 )}
               </Flex>
             )}
-
           {/* if string then show a text control  */}
           {!this.checkOperator(LeafExpressionOperator.None) &&
             !this.checkOperator(LeafExpressionOperator.Unknown) &&
@@ -194,7 +193,7 @@ export class CellValidationRulesWizard
               this.props.Data.ColumnId,
               this.props.Columns
             ) == DataType.String && (
-              <Flex flex={5}>
+              <Flex flex={5} alignItems="center">
                 <Input
                   value={this.state.Operand1}
                   type="string"

@@ -131,13 +131,11 @@ export class ListBoxFilterForm extends React.Component<
 
     let textClear = (
       <AdaptableBlotterFormControlTextClear
-        cssClassName={this.props.cssClassName}
         autoFocus={true}
         style={searchFilterStyle}
         type="text"
         placeholder="Search Filters"
         value={this.state.FilterValue}
-        bsSize={'small'}
         OnTextChange={x => this.onUpdateFilterSearch(x)}
       />
     );

@@ -100,18 +100,19 @@ export class AlertRulesWizard
         </AdaptableBlotterForm>
 
         {/* if not None operator then show operator dropdown */}
-        <Flex className="ab_large_margin" flexDirection="row">
-          <Box marginRight={2} style={{ flex: 1, width: '50%' }}>
-            <Dropdown
-              disabled={this.checkOperator(LeafExpressionOperator.None)}
-              placeholder="select"
-              value={this.state.Operator.toString()}
-              onChange={(operator: any) => this.onOperatorChanged(operator)}
-              options={operatorTypes}
-              style={{ maxWidth: 'inherit' }}
-            ></Dropdown>
-          </Box>
-
+        <Flex flexDirection="column">
+          {this.state.Operator != LeafExpressionOperator.None ? (
+            <Box marginBottom={2} style={{ flex: 1, width: '100%' }}>
+              <Dropdown
+                disabled={this.checkOperator(LeafExpressionOperator.None)}
+                placeholder="select"
+                value={this.state.Operator.toString()}
+                onChange={(operator: any) => this.onOperatorChanged(operator)}
+                options={operatorTypes}
+                style={{ maxWidth: 'inherit' }}
+              ></Dropdown>
+            </Box>
+          ) : null}
           <Flex flexDirection="row" flex={1}>
             {/* if  numeric then show a numeric control */}
             {!this.checkOperator(LeafExpressionOperator.None) &&
