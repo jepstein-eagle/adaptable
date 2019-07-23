@@ -16,7 +16,7 @@ import {
   CellSummaryOperation,
   CellSummaryOptionalOperation,
 } from '../../PredefinedConfig/Common/Enums';
-import { DropdownButton, MenuItem, InputGroup, ControlLabel } from 'react-bootstrap';
+
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
@@ -24,6 +24,8 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { CellSummaryPopover } from './CellSummaryPopover';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { CELLS_SELECTED_EVENT } from '../../Utilities/Constants/GeneralConstants';
+import DropdownButton from '../../components/DropdownButton';
+import { Flex, Text } from 'rebass';
 
 interface CellSummaryToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<CellSummaryToolbarControlComponent> {
@@ -64,84 +66,71 @@ class CellSummaryToolbarControlComponent extends React.Component<
 
     let operationMenuItems = EnumExtensions.getNames(CellSummaryOperation).map(
       (summaryOperation: CellSummaryOperation, index) => {
-        return (
-          <MenuItem
-            key={index}
-            eventKey="index"
-            onClick={() => this.props.onCellSummaryOperationChange(summaryOperation)}
-          >
-            {summaryOperation as CellSummaryOperation}
-          </MenuItem>
-        );
+        return {
+          label: summaryOperation as CellSummaryOperation,
+          onClick: () => this.props.onCellSummaryOperationChange(summaryOperation),
+        };
       }
     );
 
-    let operationOptionalMenuItems = EnumExtensions.getNames(CellSummaryOptionalOperation).map(
-      (summaryOperation: CellSummaryOptionalOperation, index) => {
+    let operationOptionalMenuItems = EnumExtensions.getNames(CellSummaryOptionalOperation)
+      .map((summaryOperation: CellSummaryOptionalOperation, index) => {
         if (ArrayExtensions.ContainsItem(this.props.OptionalSummaryOperations, summaryOperation)) {
-          return (
-            <MenuItem
-              key={index}
-              eventKey="index"
-              onClick={() => this.props.onCellSummaryOperationChange(summaryOperation)}
-            >
-              {summaryOperation as CellSummaryOptionalOperation}
-            </MenuItem>
-          );
+          return {
+            onClick: () => this.props.onCellSummaryOperationChange(summaryOperation),
+            label: summaryOperation as CellSummaryOptionalOperation,
+          };
         }
-      }
-    );
+      })
+      .filter(x => !!x);
     let cellSummaryPopover = (
       <CellSummaryPopover cssClassName={cssClassName} CellSummary={this.props.CellSummary} />
     );
 
     let content = (
-      <span>
-        <div
-          className={
-            this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
-          }
+      <Flex
+        flexDirection="row"
+        alignItems="center"
+        width="100%"
+        className={
+          this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
+        }
+      >
+        <DropdownButton
+          style={{
+            color: 'var(--ab-cmp-dashboardpanel_header__color)',
+            borderColor: 'currentColor',
+          }}
+          marginRight={2}
+          columns={['label']}
+          items={[...operationMenuItems, ...operationOptionalMenuItems]}
         >
-          <InputGroup>
-            <DropdownButton
-              style={{ marginRight: '3px', width: '75px' }}
-              title={this.props.CellSummaryOperation}
-              id="CellSummary_Operation"
-              bsSize={this.props.DashboardSize}
-              componentClass={InputGroup.Button}
-            >
-              {operationMenuItems}
-              {operationOptionalMenuItems}
-            </DropdownButton>
-            {this.props.CellSummary != null && (
-              <span>
-                <ControlLabel style={{ marginLeft: '3px' }}>
-                  {this.getOperationValue()}{' '}
-                </ControlLabel>{' '}
-                {this.props.CellSummary != null && this.props.CellSummary.Count > 0 && (
-                  <AdaptablePopover
-                    showDefaultStyle={this.props.UseSingleColourForButtons}
-                    size={this.props.DashboardSize}
-                    cssClassName={cssClassName}
-                    headerText="Cell Summary"
-                    bodyText={[cellSummaryPopover]}
-                    tooltipText={'Show Cell Summary'}
-                    useButton={true}
-                    triggerAction={'click'}
-                    popoverMinWidth={300}
-                  />
-                )}
-              </span>
+          {this.props.CellSummaryOperation}
+        </DropdownButton>
+        {this.props.CellSummary != null && (
+          <>
+            <Flex flex={1} marginRight={2} justifyContent="center">
+              {this.getOperationValue()}
+            </Flex>
+            {this.props.CellSummary != null && this.props.CellSummary.Count > 0 && (
+              <AdaptablePopover
+                showDefaultStyle={this.props.UseSingleColourForButtons}
+                size={this.props.DashboardSize}
+                cssClassName={cssClassName}
+                bodyText={[cellSummaryPopover]}
+                tooltipText={'Show Cell Summary'}
+                useButton={true}
+                triggerAction={'click'}
+                popoverMinWidth={300}
+              />
             )}
-          </InputGroup>
-        </div>
-      </span>
+          </>
+        )}
+      </Flex>
     );
 
     return (
       <PanelDashboard
-        cssClassName={cssClassName}
-        useDefaultPanelStyle={this.props.UseSingleColourForButtons}
         headerText={StrategyConstants.CellSummaryStrategyName}
         glyphicon={StrategyConstants.CellSummaryGlyph}
         onClose={() => this.props.onClose(StrategyConstants.CellSummaryStrategyId)}

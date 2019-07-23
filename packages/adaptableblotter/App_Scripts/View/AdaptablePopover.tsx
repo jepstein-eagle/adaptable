@@ -20,7 +20,7 @@ Very basic - for now! - info box that allows us to show Error where required.
 */
 
 export interface AdaptablePopoverProps extends React.ClassAttributes<AdaptablePopover> {
-  headerText: string;
+  headerText?: string;
   bodyText: any[];
   MessageType?: MessageType;
   cssClassName?: string;

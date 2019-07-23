@@ -16,6 +16,7 @@ import ViewColumns from './view-columns';
 import Home from './home';
 import Justify from './justify';
 import Err from './error';
+import Export from './export';
 import Build from './build';
 import Warning from './warning';
 import ConditionalStyle from './conditional-style';
@@ -72,4 +73,5 @@ export default {
   info: Info,
   'info-sign': Info,
   add: Plus,
+  export: Export,
 } as { [key: string]: ReactNode };

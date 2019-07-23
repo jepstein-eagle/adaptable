@@ -11,14 +11,6 @@ export interface CellSummaryPopoverProps extends React.ClassAttributes<CellSumma
 
 export class CellSummaryPopover extends React.Component<CellSummaryPopoverProps, {}> {
   render(): any {
-    let cssClassName: string = this.props.cssClassName + StyleConstants.CELL_SUMMARY;
-
-    return (
-      <div className={cssClassName}>
-        <Panel header={''} bsStyle="info" className="ab_preview_panel">
-          <CellSummaryDetails cssClassName={cssClassName} CellSummary={this.props.CellSummary} />
-        </Panel>
-      </div>
-    );
+    return <CellSummaryDetails CellSummary={this.props.CellSummary} />;
   }
 }

@@ -30,35 +30,24 @@ export class AdaptableBlotterPopupAlert extends React.Component<
     const messageType = this.props.MessageType || MessageType.Error;
     let headerContainsMessage: boolean = this.props.Header.indexOf(messageType) != -1;
 
-    let style: string = UIHelper.getStyleNameByMessageType(messageType);
     const headerColor = UIHelper.getColorByMessageType(messageType);
     let header: string = headerContainsMessage ? this.props.Header : messageType.toUpperCase();
     let glyph: string = UIHelper.getGlyphByMessageType(messageType);
-
-    let modalContainer: HTMLElement = UIHelper.getModalContainer(
-      this.props.AdaptableBlotter.blotterOptions,
-      document
-    );
-    let cssClassName: string = StyleConstants.POPUP_ALERT;
 
     return (
       this.props.ShowPopup && (
         <Dialog
           isOpen={this.props.ShowPopup}
           onDismiss={this.props.onClose}
-          className={cssClassName}
           style={{
             minHeight: 'auto',
             minWidth: '20vw',
           }}
         >
           <PanelWithImage
-            cssClassName={cssClassName}
             header={header}
             headerColor={headerColor}
-            bsStyle={style}
             glyphicon={glyph}
-            bsSize={'small'}
             bodyProps={{ padding: 2 }}
           >
             <div>

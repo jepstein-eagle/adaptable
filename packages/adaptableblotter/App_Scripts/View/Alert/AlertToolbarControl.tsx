@@ -77,11 +77,11 @@ class AlertToolbarControlComponent extends React.Component<
 
     let content = (
       <Flex alignItems="stretch">
-        <Input style={formControlStyle} value={collapsedText} disabled={true} />
+        <Input style={formControlStyle} value={collapsedText} disabled={true} marginRight={2} />
         {this.state.ShowMessage && (
           <Flex
             style={{ borderRadius: 'var(--ab__border-radius)' }}
-            mx={2}
+            marginRight={2}
             padding={2}
             color="white"
             backgroundColor="darkgray"

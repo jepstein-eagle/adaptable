@@ -1,14 +1,7 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import {
-  DropdownButton,
-  MenuItem,
-  OverlayTrigger,
-  Tooltip,
-  Glyphicon,
-  InputGroup,
-} from 'react-bootstrap';
+
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
@@ -33,9 +26,17 @@ import { ILiveReport } from '../../Utilities/Interface/Reports/ILiveReport';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Report } from '../../PredefinedConfig/RunTimeState/ExportState';
 import { ReportHelper } from '../../Utilities/Helpers/ReportHelper';
-import { PRIMARY_BSSTYLE, DEFAULT_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
+
 import { Glue42Helper } from '../../Utilities/Helpers/Glue42Helper';
 import { ExportDestination, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { Flex } from 'rebass';
+
+import Dropdown from '../../components/Dropdown';
+import DropdownButton from '../../components/DropdownButton';
+import icons from '../../components/icons';
+import { ReactComponentLike } from 'prop-types';
+
+const ExportIcon = icons.export as ReactComponentLike;
 
 interface ExportToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ExportToolbarControlComponent> {
@@ -75,62 +76,38 @@ class ExportToolbarControlComponent extends React.Component<
       ? selectReportString
       : this.props.CurrentReport;
 
-    let availableReports: any[] = allReports
-      .filter(s => s.Name != this.props.CurrentReport)
-      .map((report, index) => {
-        return (
-          <MenuItem
-            key={index}
-            eventKey={index}
-            onClick={() => this.onSelectedReportChanged(report.Name)}
-          >
-            {report.Name}
-          </MenuItem>
-        );
-      });
+    let availableReports: any[] = allReports.map((report, index) => {
+      return {
+        label: report.Name,
+        value: report.Name,
+      };
+    });
 
-    let csvMenuItem = (
-      <MenuItem
-        onClick={() => this.props.onApplyExport(currentReport, ExportDestination.CSV)}
-        key={'csv'}
-      >
-        {'CSV'}
-      </MenuItem>
-    );
-    let clipboardMenuItem = (
-      <MenuItem
-        onClick={() => this.props.onApplyExport(currentReport, ExportDestination.Clipboard)}
-        key={'clipboard'}
-      >
-        {' '}
-        {'Clipboard'}
-      </MenuItem>
-    );
+    let csvMenuItem = {
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.CSV),
+      label: 'CSV',
+    };
+    let clipboardMenuItem = {
+      label: 'Clipboard',
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.Clipboard),
+    };
+
     let openfinExcelMenuItem;
     if (
       this.props.LiveReports.find(
         x => x.Report == currentReport && x.ExportDestination == ExportDestination.OpenfinExcel
       )
     ) {
-      openfinExcelMenuItem = (
-        <MenuItem
-          onClick={() => this.props.onReportStopLive(currentReport, ExportDestination.OpenfinExcel)}
-          key={'OpenfinExcel'}
-        >
-          {' '}
-          {'Stop Live Openfin Excel'}
-        </MenuItem>
-      );
+      openfinExcelMenuItem = {
+        onClick: () => this.props.onReportStopLive(currentReport, ExportDestination.OpenfinExcel),
+        label: 'Stop Live Openfin Excel',
+      };
     } else {
-      openfinExcelMenuItem = (
-        <MenuItem
-          onClick={() => this.props.onApplyExport(currentReport, ExportDestination.OpenfinExcel)}
-          key={'OpenfinExcel'}
-        >
-          {' '}
-          {'Start Live Openfin Excel'}
-        </MenuItem>
-      );
+      openfinExcelMenuItem = {
+        onClick: () => this.props.onApplyExport(currentReport, ExportDestination.OpenfinExcel),
+
+        label: 'Start Live Openfin Excel',
+      };
     }
 
     let iPushPullExcelMenuItem;
@@ -139,107 +116,63 @@ class ExportToolbarControlComponent extends React.Component<
         x => x.Report == currentReport && x.ExportDestination == ExportDestination.iPushPull
       )
     ) {
-      iPushPullExcelMenuItem = (
-        <MenuItem
-          onClick={() => this.props.onReportStopLive(currentReport, ExportDestination.iPushPull)}
-          key={'IPPExcel'}
-        >
-          {' '}
-          {'Stop Sync with iPushPull'}
-        </MenuItem>
-      );
+      iPushPullExcelMenuItem = {
+        onClick: () => this.props.onReportStopLive(currentReport, ExportDestination.iPushPull),
+        label: 'Stop Sync with iPushPull',
+      };
     } else {
-      iPushPullExcelMenuItem = (
-        <MenuItem
-          onClick={() => this.props.onApplyExport(currentReport, ExportDestination.iPushPull)}
-          key={'IPPExcel'}
-        >
-          {' '}
-          {'Start Sync with iPushPull'}
-        </MenuItem>
-      );
+      iPushPullExcelMenuItem = {
+        onClick: () => this.props.onApplyExport(currentReport, ExportDestination.iPushPull),
+        label: 'Start Sync with iPushPull',
+      };
     }
 
-    let glue42MenuItem = (
-      <MenuItem
-        onClick={() => this.props.onApplyExport(currentReport, ExportDestination.Glue42)}
-        key={'Glue42'}
-      >
-        {' '}
-        {'Export to Excel (via Glue42)'}
-      </MenuItem>
-    );
+    let glue42MenuItem = {
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.Glue42),
+      label: 'Export to Excel (via Glue42)',
+    };
 
     let deleteMessage: string = "Are you sure you want to delete '";
     if (savedReport != null) {
       deleteMessage = deleteMessage + savedReport.Name + '?';
     }
 
-    let exportDropdownStyle: string = this.props.UseSingleColourForButtons
-      ? DEFAULT_BSSTYLE
-      : PRIMARY_BSSTYLE;
-
-    const exportGlyph: any = (
-      <OverlayTrigger
-        key={'exportOverlay'}
-        overlay={<Tooltip id="tooltipButton"> {'Export'}</Tooltip>}
-      >
-        <Glyphicon glyph={StrategyConstants.ExportGlyph} />
-      </OverlayTrigger>
-    );
+    const exportItems = [
+      csvMenuItem,
+      clipboardMenuItem,
+      ,
+      OpenfinHelper.isRunningInOpenfin() &&
+        OpenfinHelper.isExcelOpenfinLoaded() &&
+        openfinExcelMenuItem,
+      iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem,
+      Glue42Helper.isRunningGlue42() && glue42MenuItem,
+    ].filter(x => !!x);
 
     let content = (
-      <span>
-        <InputGroup>
-          <DropdownButton
-            disabled={allReports.length == 0}
-            style={{ minWidth: '120px' }}
-            className={cssClassName}
-            bsSize={this.props.DashboardSize}
-            bsStyle={'default'}
-            title={currentReportId}
-            id="report"
-          >
-            {availableReports}
-          </DropdownButton>
-
-          {currentReportId != selectReportString && (
-            <InputGroup.Button>
-              <ButtonClear
-                bsStyle={'default'}
-                cssClassName={cssClassName}
-                onClick={() => this.onSelectedReportChanged('')}
-                size={this.props.DashboardSize}
-                overrideTooltip="Clear Report"
-                overrideDisableButton={currentReportId == selectReportString}
-                DisplayMode="Glyph"
-                AccessLevel={this.props.AccessLevel}
-                showDefaultStyle={this.props.UseSingleColourForButtons}
-              />
-            </InputGroup.Button>
-          )}
-        </InputGroup>
+      <Flex alignItems="stretch">
+        <Dropdown
+          disabled={allReports.length == 0}
+          style={{ minWidth: 200 }}
+          options={availableReports}
+          placeholder="Select Report"
+          onChange={(reportName: string) => this.onSelectedReportChanged(reportName)}
+          value={currentReport ? currentReport.Name : null}
+          showClearButton
+        ></Dropdown>
 
         <DropdownButton
-          style={{ marginLeft: '5px' }}
-          bsSize={this.props.DashboardSize}
-          bsStyle={exportDropdownStyle}
-          title={exportGlyph}
-          id="exportDropdown"
+          mx={2}
+          variant="text"
           disabled={currentReportId == selectReportString}
+          items={exportItems}
         >
-          {csvMenuItem}
-          {clipboardMenuItem}
-          {OpenfinHelper.isRunningInOpenfin() &&
-            OpenfinHelper.isExcelOpenfinLoaded() &&
-            openfinExcelMenuItem}
-          {iPushPullHelper.isIPushPullLoaded() && iPushPullExcelMenuItem}
-          {Glue42Helper.isRunningGlue42() && glue42MenuItem}
+          <ExportIcon />
         </DropdownButton>
-        <span
+        <Flex
           className={
             this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
           }
+          alignItems="stretch"
         >
           <ButtonEdit
             onClick={() => this.props.onEditReport()}
@@ -249,6 +182,8 @@ class ExportToolbarControlComponent extends React.Component<
           />
 
           <ButtonNew
+            variant="text"
+            children={null}
             onClick={() => this.props.onNewReport()}
             tooltip="Create New Report"
             AccessLevel={this.props.AccessLevel}
@@ -262,8 +197,8 @@ class ExportToolbarControlComponent extends React.Component<
             ConfirmationTitle={'Delete Report'}
             AccessLevel={this.props.AccessLevel}
           />
-        </span>
-      </span>
+        </Flex>
+      </Flex>
     );
 
     return (

@@ -6,13 +6,13 @@ import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
 
-import { Text } from 'rebass';
 import {
   CellSummaryOperation,
   CellSummaryOptionalOperation,
 } from '../../PredefinedConfig/Common/Enums';
 
 import HelpBlock from '../../components/HelpBlock';
+import EmptyContent from '../../components/EmptyContent';
 
 interface CellSummaryDetailsProps extends React.ClassAttributes<CellSummaryDetails> {
   CellSummary: ICellSummmary;
@@ -94,9 +94,9 @@ export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps,
         {this.props.CellSummary != null ? (
           <div className={cssClassName + StyleConstants.ITEMS_TABLE_BODY}>{rowElements}</div>
         ) : (
-          <HelpBlock>
+          <EmptyContent>
             <p>No cells are selected - please select some cells.</p>
-          </HelpBlock>
+          </EmptyContent>
         )}
       </div>
     );
