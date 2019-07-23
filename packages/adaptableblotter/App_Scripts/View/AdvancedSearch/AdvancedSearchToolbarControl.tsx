@@ -14,8 +14,8 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { SortOrder, AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
+import { SortOrder } from '../../PredefinedConfig/Common/Enums';
+
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { AdvancedSearch } from '../../PredefinedConfig/RunTimeState/AdvancedSearchState';
 
@@ -76,34 +76,27 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
 
           <ButtonEdit
             onClick={() => this.props.onEditAdvancedSearch()}
-            marginRight={2}
             tooltip="Edit Current Advanced Search"
             disabled={currentSearchName == selectSearchString}
             AccessLevel={this.props.AccessLevel}
           />
           <ButtonNew
             variant="text"
-            marginRight={2}
             onClick={() => this.props.onNewAdvancedSearch()}
-            size={this.props.DashboardSize}
             tooltip="Create New Advanced Search"
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
             children={null}
           />
 
           <ButtonDelete
-            size={this.props.DashboardSize}
-            overrideTooltip="Delete Advanced Search"
-            overrideDisableButton={currentSearchName == selectSearchString}
-            DisplayMode="Glyph"
+            tooltip="Delete Advanced Search"
+            disabled={currentSearchName == selectSearchString}
             ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
             ConfirmationMsg={
               "Are you sure you want to delete '" + !savedSearch ? '' : savedSearch.Name + "'?"
             }
             ConfirmationTitle={'Delete Advanced Search'}
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
           />
         </Flex>
       </Flex>

@@ -127,5 +127,25 @@
         }
       }
     }
+    &.ab-SimpleButton--tone-warning {
+      background: var(--ab-color-warn);
+      &:not(.ab-SimpleButton--disabled) {
+        opacity: 1;
+
+        &:hover {
+          // opacity: 0.9;
+        }
+      }
+    }
+    &.ab-SimpleButton--tone-info {
+      background: var(--ab-color-info);
+      &:not(.ab-SimpleButton--disabled) {
+        opacity: 1;
+
+        &:hover {
+          // opacity: 0.9;
+        }
+      }
+    }
   }
 }

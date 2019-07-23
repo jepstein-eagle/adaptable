@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, BoxProps } from 'rebass';
+import { Box, BoxProps, Flex, FlexProps } from 'rebass';
 import { ReactNode, HTMLProps } from 'react';
 import join from '../utils/join';
 
@@ -7,7 +7,7 @@ export const baseClassName = 'ab-Panel';
 
 export type PanelProps = HTMLProps<HTMLElement> & {
   header?: ReactNode | string;
-  headerProps?: BoxProps;
+  headerProps?: FlexProps;
   bodyProps?: BoxProps;
   bsStyle?: string;
   variant?: 'default' | 'primary';
@@ -21,7 +21,7 @@ const Header = ({
   children,
   variant = 'default',
   ...headerProps
-}: { variant?: 'default' | 'primary'; children?: ReactNode } & BoxProps) => {
+}: { variant?: 'default' | 'primary'; children?: ReactNode } & FlexProps) => {
   if (!children) {
     return null;
   }
@@ -29,14 +29,16 @@ const Header = ({
   const style: { [key: string]: any } = {};
 
   return (
-    <Box
+    <Flex
+      flexDirection="row"
+      alignItems="center"
       fontSize={2}
       {...headerProps}
       style={{ ...style, ...headerProps.style }}
       className={join(`${baseClassName}__header`, `${baseClassName}__header--variant-${variant}`)}
     >
       {children}
-    </Box>
+    </Flex>
   );
 };
 

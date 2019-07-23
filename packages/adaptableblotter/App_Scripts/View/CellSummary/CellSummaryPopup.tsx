@@ -7,7 +7,6 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableBlotterState } from '../../Redux/Store/Interface/IAdaptableStore';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ICellSummmary } from '../../Utilities/Interface/SelectedCell/ICellSummmary';
 import { CellSummaryDetails } from './CellSummaryDetails';
 
@@ -32,7 +31,6 @@ class CellSummaryPopupComponent extends React.Component<
     return (
       <PanelWithButton
         headerText={StrategyConstants.CellSummaryStrategyName}
-        variant="primary"
         glyphicon={StrategyConstants.CellSummaryGlyph}
         infoBody={infoBody}
         border="none"

@@ -66,7 +66,11 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
         ) : null}
         {showGlyphIcon ? (
           <Glyphicon
-            style={{ fontSize: 'small', color: 'var(--ab-cmp-dashboardpanel_header__fill)' }}
+            style={{
+              alignSelf: 'center',
+              fontSize: 'small',
+              color: 'var(--ab-cmp-dashboardpanel_header__fill)',
+            }}
             glyph={glyphicon}
           />
         ) : null}
@@ -76,6 +80,7 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
         </Flex>
         {showConfigureButton ? (
           <ButtonConfigure
+            iconSize={16}
             marginLeft={3}
             tooltip={'Configure ' + headerText}
             onClick={() => onConfigure()}
@@ -103,6 +108,7 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
         }}
         headerProps={{
           ...props.headerProps,
+          alignItems: 'stretch',
           style: {
             padding: 'var(--ab-cmp-dashboardpanel_header__padding)',
             background: 'var(--ab-cmp-dashboardpanel_header__background)',

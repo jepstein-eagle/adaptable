@@ -20,6 +20,7 @@ import Build from './build';
 import Warning from './warning';
 import ConditionalStyle from './conditional-style';
 import Dashboard from './dashboard';
+import Undo from './undo';
 import FastForward from './fast-forward';
 import FastBackward from './fast-backward';
 import SortAsc from './sort-asc';
@@ -43,6 +44,7 @@ export default {
   'view-columns': ViewColumns,
   'conditional-style': ConditionalStyle,
   list: List,
+  undo: Undo,
   delete: Delete,
   build: Build,
   save: Save,

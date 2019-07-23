@@ -83,7 +83,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             UseSingleColourForButtons: this.props.DashboardState.UseSingleColourForButtons,
           });
           return (
-            <Box key={control} my={1} marginRight={1}>
+            <Box key={control} my={1} marginRight={1} className="ab-Dashboard__container">
               {dashboardElememt}
             </Box>
           );
@@ -97,7 +97,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
       StrategyConstants.HomeStrategyId
     );
     let homeToolbarElement = (
-      <Box key={'home'} my={1} marginRight={1}>
+      <Box key={'home'} my={1} marginRight={1} className="ab-Dashboard__container">
         {React.createElement(homeToolbar, {
           cssClassName: cssClassName,
           Blotter: this.props.Blotter,
@@ -137,7 +137,11 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
                   </Button>
                 </OverlayTrigger>
               </ButtonToolbar>*/
-              <Flex className="ab-Dashboard" style={{ zoom: this.props.DashboardState.Zoom }}>
+              <Flex
+                className="ab-Dashboard"
+                alignItems="stretch"
+                style={{ zoom: this.props.DashboardState.Zoom }}
+              >
                 {homeToolbarElement}
                 {visibleDashboardElements}
               </Flex>

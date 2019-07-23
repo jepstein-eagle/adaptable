@@ -19,6 +19,7 @@ export interface PanelWithImageProps extends PanelProps {
   borderRadius?: string;
   bodyProps?: BoxProps;
   theme: any;
+  headerColor?: string;
   button?: React.ReactElement<any>;
 }
 
@@ -32,11 +33,17 @@ class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
       : '';
 
     const IconCmp = icons[this.props.icon || this.props.glyphicon] as ReactComponentLike;
+    const headerStyle: any = {};
+
+    if (this.props.headerColor) {
+      headerStyle.color = this.props.headerColor;
+      headerStyle.fill = this.props.headerColor;
+    }
 
     let headerRow = (
       <AdaptableBlotterForm style={{ flex: 1 }}>
         <Flex alignItems="center">
-          <Flex alignItems="center">
+          <Flex alignItems="center" style={headerStyle}>
             {IconCmp ? <IconCmp /> : <Glyphicon glyph={this.props.glyphicon} />}
             <Box marginRight={2} />
             {this.props.header}

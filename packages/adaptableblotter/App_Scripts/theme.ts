@@ -16,6 +16,8 @@ export default {
     lightgray: 'var(--ab-color-lightgray)',
     textgray: 'var(--ab-color-textgray)',
     darkgray: 'var(--ab-color-darkgray)',
+    warn: 'var(--ab-color-warn)',
+    info: 'var(--ab-color-info)',
     error: 'var(--ab-color-error)',
     errorlight: 'var(--ab-color-errorlight)',
     gray: 'var(--ab-color-gray)',

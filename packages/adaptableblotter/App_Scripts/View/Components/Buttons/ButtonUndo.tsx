@@ -9,7 +9,7 @@ export class ButtonUndo extends React.Component<SimpleButtonProps, {}> {
         py={1}
         iconSize={20}
         tooltip="Undo"
-        icon={'addo'}
+        icon={'undo'}
         variant="text"
         {...this.props}
       />

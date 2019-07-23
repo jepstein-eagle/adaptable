@@ -228,6 +228,19 @@ export function getStyleNameByMessageType(messageType: MessageType): string {
   }
 }
 
+export function getColorByMessageType(messageType: MessageType): string {
+  switch (messageType) {
+    case MessageType.Error:
+      return 'var(--ab-color-error)';
+    case MessageType.Warning:
+      return 'var(--ab-color-warn)';
+    case MessageType.Success:
+      return 'var(--ab-color-success)';
+    case MessageType.Info:
+      return 'var(--ab-color-info)';
+  }
+}
+
 export function getStyleForSystemStatusButton(statusColour: StatusColour): CSSProperties {
   let result;
 
@@ -330,5 +343,6 @@ export const UIHelper = {
   getStyleForSystemStatusButton,
   getGlyphForSystemStatusButton,
   GetScheduleDescription,
+  getColorByMessageType,
 };
 export default UIHelper;

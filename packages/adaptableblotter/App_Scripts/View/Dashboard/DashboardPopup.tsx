@@ -164,7 +164,6 @@ class DashboardPopupComponent extends React.Component<
         <PanelWithButton
           cssClassName={cssClassName}
           headerText="Dashboard Configuration"
-          variant="primary"
           bodyProps={{ padding: 0, style: { display: 'flex', flexDirection: 'column' } }}
           glyphicon={StrategyConstants.DashboardGlyph}
         >

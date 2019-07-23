@@ -5,7 +5,9 @@ import { Modal, Button, ControlLabel } from 'react-bootstrap';
 import { PanelWithImage } from '../Panels/PanelWithImage';
 import { UIHelper } from '../../UIHelper';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
-import { Flex } from 'rebass';
+import { Flex, Text, Box } from 'rebass';
+import Dialog from '../../../components/Dialog';
+import SimpleButton from '../../../components/SimpleButton';
 
 /**
  * The most simple of the alert type popups - just shows a message with a close button.  No user action required.
@@ -13,7 +15,7 @@ import { Flex } from 'rebass';
 export interface AdaptableBlotterPopupAlertProps
   extends React.ClassAttributes<AdaptableBlotterPopupAlert> {
   ShowPopup: boolean;
-  onClose: Function;
+  onClose: () => void;
   Msg: string;
   Header: string;
   MessageType: MessageType;
@@ -29,6 +31,7 @@ export class AdaptableBlotterPopupAlert extends React.Component<
     let headerContainsMessage: boolean = this.props.Header.indexOf(messageType) != -1;
 
     let style: string = UIHelper.getStyleNameByMessageType(messageType);
+    const headerColor = UIHelper.getColorByMessageType(messageType);
     let header: string = headerContainsMessage ? this.props.Header : messageType.toUpperCase();
     let glyph: string = UIHelper.getGlyphByMessageType(messageType);
 
@@ -40,50 +43,45 @@ export class AdaptableBlotterPopupAlert extends React.Component<
 
     return (
       this.props.ShowPopup && (
-        <div className={StyleConstants.POPUP_ALERT}>
-          <Modal
-            show={this.props.ShowPopup}
-            onHide={this.props.onClose}
-            className={cssClassName}
-            container={modalContainer}
+        <Dialog
+          isOpen={this.props.ShowPopup}
+          onDismiss={this.props.onClose}
+          className={cssClassName}
+          style={{
+            minHeight: 'auto',
+            minWidth: '20vw',
+          }}
+        >
+          <PanelWithImage
+            cssClassName={cssClassName}
+            header={header}
+            headerColor={headerColor}
+            bsStyle={style}
+            glyphicon={glyph}
             bsSize={'small'}
+            bodyProps={{ padding: 2 }}
           >
-            <div className={cssClassName + StyleConstants.MODAL_BASE}>
-              <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
-                <div className={cssClassName}>
-                  <PanelWithImage
-                    cssClassName={cssClassName}
-                    header={header}
-                    bsStyle={style}
-                    glyphicon={glyph}
-                    bsSize={'small'}
-                    bodyProps={{ padding: 2 }}
-                  >
-                    <div>
-                      {headerContainsMessage == false && (
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <ControlLabel>{this.props.Header}</ControlLabel>
-                        </div>
-                      )}
-                      <div style={{ display: 'flex', alignItems: 'center' }}>{this.props.Msg}</div>
-                      <Flex flexDirection="row" marginTop={2} alignItems="center">
-                        <Button
-                          bsStyle={style}
-                          className={
-                            cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON
-                          }
-                          onClick={() => this.props.onClose()}
-                        >
-                          OK
-                        </Button>
-                      </Flex>
-                    </div>
-                  </PanelWithImage>
+            <div>
+              {headerContainsMessage == false && (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Text my={2}>{this.props.Header}</Text>
                 </div>
-              </Modal.Body>
+              )}
+              <Flex alignItems="center" my={2}>
+                {this.props.Msg}
+              </Flex>
+              <Flex flexDirection="row" marginTop={2} alignItems="center" padding={2}>
+                <SimpleButton
+                  variant="raised"
+                  tone={messageType.toLowerCase() as any}
+                  onClick={() => this.props.onClose()}
+                >
+                  OK
+                </SimpleButton>
+              </Flex>
             </div>
-          </Modal>
-        </div>
+          </PanelWithImage>
+        </Dialog>
       )
     );
   }

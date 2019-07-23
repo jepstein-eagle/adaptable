@@ -27,9 +27,11 @@
   --ab-color-error: #a94442;
   --ab-color-errorlight: #ffd3d2;
   --ab-color-warn: #eb9316;
+  --ab-color-info: #17a2b8;
   --ab-color-green: #419641;
   --ab-color-blue: #07c;
   --ab-color-accent: #07c;
+  --ab-color-success: var(--ab-color-blue);
   --ab-color-accentlight: #dbf0ff;
   --ab-color-almost-white: #f5f5f5;
   --ab-color-white: white;
@@ -38,13 +40,6 @@
   --ab-focus__outline: none;
 }
 
-.ab_main_popup.ab_main_popup {
-  // height: 60vh;
-}
-.ab_main_wizard.ab_main_wizard {
-  // height: 100%;
-  min-height: 60vh;
-}
 .ab-style__list-group-item:nth-child(2n+1) {
   background: var(--ab-color-gray);
 }
@@ -68,3 +63,7 @@
 @import './View/Components/AdaptableObjectCollection/base.scss';
 @import './View/Dashboard/base.scss';
 
+
+.popover-content {
+  padding: 1px;
+}

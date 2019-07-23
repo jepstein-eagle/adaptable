@@ -124,7 +124,6 @@ class PlusMinusPopupComponent extends React.Component<
       <Flex className={cssClassName} flex={1} flexDirection="column">
         <PanelWithButton
           headerText={StrategyConstants.PlusMinusStrategyName}
-          variant="primary"
           bodyProps={{ padding: 0 }}
           cssClassName={cssClassName}
           button={newButton}

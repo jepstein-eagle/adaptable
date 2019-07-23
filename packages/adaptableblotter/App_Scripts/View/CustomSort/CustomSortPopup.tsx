@@ -119,7 +119,6 @@ class CustomSortPopupComponent extends React.Component<
           headerText={StrategyConstants.CustomSortStrategyName}
           infoBody={infoBody}
           button={newButton}
-          variant="primary"
           bodyProps={{ padding: 0 }}
           glyphicon={StrategyConstants.CustomSortGlyph}
         >

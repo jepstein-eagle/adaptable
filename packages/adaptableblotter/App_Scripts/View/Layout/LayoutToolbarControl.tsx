@@ -62,11 +62,8 @@ class LayoutToolbarControlComponent extends React.Component<
         <Dropdown
           disabled={availableLayouts.length == 0}
           style={{ minWidth: 120 }}
-          className={cssClassName}
-          bsSize={this.props.DashboardSize}
-          bsStyle={'default'}
+          marginRight={2}
           value={layoutEntity ? layoutEntity.Name : null}
-          id="layout"
           options={availableLayoutOptions}
           onChange={(layoutName: any) => {
             if (layoutName) {
@@ -78,9 +75,8 @@ class LayoutToolbarControlComponent extends React.Component<
           }}
           clearButtonProps={{
             tooltip: 'Clear layout',
-            overrideDisableButton: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT,
+            disabled: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT,
             AccessLevel: this.props.AccessLevel,
-            showDefaultStyle: this.props.UseSingleColourForButtons,
           }}
           showClearButton={this.props.CurrentLayout !== GeneralConstants.DEFAULT_LAYOUT}
         />
@@ -99,6 +95,9 @@ class LayoutToolbarControlComponent extends React.Component<
           />
 
           <ButtonNew
+            children={null}
+            tone="none"
+            variant="text"
             onClick={() => this.props.onNewLayout()}
             tooltip="Create a new Layout"
             AccessLevel={this.props.AccessLevel}
