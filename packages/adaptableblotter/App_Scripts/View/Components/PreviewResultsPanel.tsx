@@ -90,7 +90,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
     );
 
     return (
-      <div className={cssClassName} style={{ ...this.props.style, flex: 1, overflow: 'auto' }}>
+      <div className={cssClassName} style={{ flex: 1, overflow: 'auto', ...this.props.style }}>
         {this.props.ShowPanel && (
           <WizardPanel header={previewHeader} bodyScroll>
             <Table style={{ width: '100%' }}>

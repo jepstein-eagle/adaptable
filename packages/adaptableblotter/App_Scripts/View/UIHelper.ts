@@ -247,12 +247,12 @@ export function getStyleForSystemStatusButton(statusColour: StatusColour): CSSPr
   switch (statusColour) {
     case StatusColour.Blue:
       result = {
-        fill: 'var(--ab-color-accent)',
+        fill: 'var(--ab-color-info)',
       };
       break;
     case StatusColour.Green:
       result = {
-        fill: 'var(--ab-color-green)',
+        fill: 'var(--ab-color-success)',
       };
       break;
     case StatusColour.Amber:

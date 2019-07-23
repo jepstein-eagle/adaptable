@@ -85,7 +85,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
     let previewPanel = showPanel ? (
       <PreviewResultsPanel
-        style={{ flex: '1 1 100%' }}
+        style={{ flex: '1 1 100%', overflow: 'initial' }}
         cssClassName={cssClassName}
         UpdateValue={this.props.SmartEditValue}
         PreviewInfo={this.props.PreviewInfo}
@@ -109,74 +109,72 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
       });
 
     return (
-      <>
-        <PanelWithImage
-          cssClassName={cssClassName}
-          variant="primary"
-          header={StrategyConstants.SmartEditStrategyName}
-          glyphicon={StrategyConstants.SmartEditGlyph}
-          infoBody={infoBody}
-          bodyScroll={false}
-          onKeyDown={(e: SyntheticEvent) => {
-            if ((e as any).key === 'Enter') {
-              this.submit();
+      <PanelWithImage
+        cssClassName={cssClassName}
+        variant="primary"
+        header={StrategyConstants.SmartEditStrategyName}
+        glyphicon={StrategyConstants.SmartEditGlyph}
+        infoBody={infoBody}
+        bodyScroll={true}
+        onKeyDown={(e: SyntheticEvent) => {
+          if ((e as any).key === 'Enter') {
+            this.submit();
+          }
+        }}
+      >
+        <Flex flexDirection="row" padding={2}>
+          <DropdownButton
+            items={operationMenuItems}
+            columns={['label']}
+            onMouseDown={preventDefault}
+          >
+            {MathOperation[this.props.MathOperation]}
+          </DropdownButton>
+          <Input
+            value={this.props.SmartEditValue.toString()}
+            marginLeft={2}
+            marginRight={2}
+            type="number"
+            placeholder="Enter a Number"
+            onChange={(e: React.SyntheticEvent) => this.onSmartEditValueChange(e)}
+          />
+          <SimpleButton
+            tone={this.getButtonStyle() as 'neutral' | 'error' | 'success'}
+            variant="raised"
+            disabled={
+              StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) ||
+              (this.props.PreviewInfo &&
+                this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
             }
-          }}
-        >
-          <Flex flexDirection="row" padding={2}>
-            <DropdownButton
-              items={operationMenuItems}
-              columns={['label']}
-              onMouseDown={preventDefault}
-            >
-              {MathOperation[this.props.MathOperation]}
-            </DropdownButton>
-            <Input
-              value={this.props.SmartEditValue.toString()}
-              marginLeft={2}
-              marginRight={2}
-              type="number"
-              placeholder="Enter a Number"
-              onChange={(e: React.SyntheticEvent) => this.onSmartEditValueChange(e)}
-            />
-            <SimpleButton
-              tone={this.getButtonStyle() as 'neutral' | 'error' | 'success'}
-              variant="raised"
-              disabled={
-                StringExtensions.IsNullOrEmpty(this.props.SmartEditValue) ||
-                (this.props.PreviewInfo &&
-                  this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
-              }
-              onClick={() => {
-                this.submit();
-              }}
-              marginRight={2}
-            >
-              Apply to Grid
-            </SimpleButton>{' '}
-            {this.props.PreviewInfo &&
-              this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && (
-                <AdaptablePopover
-                  cssClassName={cssClassName}
-                  headerText={'Validation Error'}
-                  bodyText={[globalValidationMessage]}
-                  MessageType={MessageType.Warning}
-                />
-              )}
-            {this.props.PreviewInfo &&
-              !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning &&
-              this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent && (
-                <AdaptablePopover
-                  cssClassName={cssClassName}
-                  headerText={'Validation Error'}
-                  bodyText={[globalValidationMessage]}
-                  MessageType={MessageType.Error}
-                />
-              )}
-          </Flex>
-        </PanelWithImage>
+            onClick={() => {
+              this.submit();
+            }}
+            marginRight={2}
+          >
+            Apply to Grid
+          </SimpleButton>{' '}
+          {this.props.PreviewInfo &&
+            this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning && (
+              <AdaptablePopover
+                cssClassName={cssClassName}
+                headerText={'Validation Error'}
+                bodyText={[globalValidationMessage]}
+                MessageType={MessageType.Warning}
+              />
+            )}
+          {this.props.PreviewInfo &&
+            !this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning &&
+            this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent && (
+              <AdaptablePopover
+                cssClassName={cssClassName}
+                headerText={'Validation Error'}
+                bodyText={[globalValidationMessage]}
+                MessageType={MessageType.Error}
+              />
+            )}
+        </Flex>
         {previewPanel}
-      </>
+      </PanelWithImage>
     );
   }
 
