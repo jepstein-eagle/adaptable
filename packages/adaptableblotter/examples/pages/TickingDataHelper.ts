@@ -92,7 +92,7 @@ export class TickingDataHelper {
       rowData != null
     ) {
       setInterval(() => {
-        let tradeId = 5; //this.generateRandomInt(0, 25);
+        let tradeId = this.generateRandomInt(0, 25);
         let trade: ITrade = rowData[tradeId];
         let randomInt = this.generateRandomInt(1, 2);
         let numberToAdd: number = randomInt == 1 ? -0.5 : 0.5;
