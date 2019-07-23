@@ -48,7 +48,7 @@ export class CalculatedColumnExpressionWizard
           style={{ width: '100%' }}
         ></Textarea>
 
-        {validationState ? <ErrorBox>{this.props.GetErrorMessage()}</ErrorBox> : null}
+        {validationState ? <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox> : null}
       </WizardPanel>
     );
   }

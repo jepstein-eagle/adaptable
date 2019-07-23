@@ -10,7 +10,8 @@ import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import WizardPanel from '../../../components/WizardPanel';
 import { Flex, Text } from 'rebass';
 import Input from '../../../components/Input';
-import HelpBlock from '../../../components/HelpBlock';
+
+import ErrorBox from '../../../components/ErrorBox';
 
 export interface LayoutSettingsWizardProps extends AdaptableWizardStepProps<Layout> {
   Layouts: Layout[];
@@ -49,8 +50,10 @@ export class LayoutSettingsWizard
             placeholder="Enter layout name"
             onChange={(e: any) => this.onLayoutNameChange(e)}
           />
-          {this.state.ErrorMessage ? <HelpBlock>{this.state.ErrorMessage}</HelpBlock> : null}
         </Flex>
+        {this.state.ErrorMessage ? (
+          <ErrorBox marginTop={2}>{this.state.ErrorMessage}</ErrorBox>
+        ) : null}
       </WizardPanel>
     );
   }

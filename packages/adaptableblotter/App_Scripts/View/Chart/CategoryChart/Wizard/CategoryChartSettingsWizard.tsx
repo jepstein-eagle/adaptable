@@ -4,7 +4,6 @@ import {
   AdaptableWizardStep,
 } from '../../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../../Utilities/Extensions/StringExtensions';
-import { AdaptableBlotterForm } from '../../../Components/Forms/AdaptableBlotterForm';
 import { ArrayExtensions } from '../../../../Utilities/Extensions/ArrayExtensions';
 import { ExpressionHelper } from '../../../../Utilities/Helpers/ExpressionHelper';
 import { CategoryChartDefinition } from '../../../../PredefinedConfig/RunTimeState/ChartState';
@@ -39,12 +38,6 @@ export class CategoryChartSettingsWizard
     };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-settings';
-
-    let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)
-      ? null
-      : 'error';
-
     return (
       <WizardPanel header="Chart Definition Settings">
         <Flex flexDirection="row" alignItems="center">
@@ -57,7 +50,7 @@ export class CategoryChartSettingsWizard
             value={this.state.Name}
             type="string"
             placeholder="Enter chart name"
-            onChange={e => this.onChartNameChange(e)}
+            onChange={(e: React.SyntheticEvent) => this.onChartNameChange(e)}
           />
         </Flex>
         {this.state.ErrorMessage ? (
