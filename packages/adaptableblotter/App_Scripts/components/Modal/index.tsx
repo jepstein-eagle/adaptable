@@ -24,32 +24,37 @@ const ensurePortalElement = () => {
   document.body.appendChild(portalElement);
 };
 
-export type ModalProps = React.HTMLProps<HTMLElement> &
-  FlexProps & {
-    isOpen?: boolean;
-    baseZIndex?: number;
-    backdropZIndexOffset?: number;
-  };
+export interface ModalProps extends FlexProps {
+  isOpen?: boolean;
+  baseZIndex?: number;
+  backdropZIndexOffset?: number;
+  onBringToFront?: () => void;
+}
 
 let globalCounter = 0;
 
 const Modal = (props: ModalProps) => {
   ensurePortalElement();
 
-  const { className, style, children, isOpen, ...boxProps } = props;
+  const { className, style, children, isOpen, onBringToFront, ...boxProps } = props;
 
-  const timestamp = isOpen ? Date.now() : 0;
   const uuid: string = useMemo(() => createUuid(), []);
 
-  const openTimestamp = useMemo(() => (isOpen ? globalCounter++ : 0), [isOpen]);
+  const counter = useMemo(() => globalCounter++, [isOpen]);
+  const openTimestamp = counter;
 
   const backdropZIndexOffset = props.backdropZIndexOffset || 1;
-  const zIndex = (props.baseZIndex || 1000) + globalCounter;
+  const zIndex = (props.baseZIndex || 1000) + counter;
 
   return createPortal(
     isOpen ? (
       <>
-        <Backdrop timestamp={openTimestamp} uuid={uuid} zIndex={zIndex - backdropZIndexOffset} />
+        <Backdrop
+          timestamp={openTimestamp}
+          uuid={uuid}
+          zIndex={zIndex - backdropZIndexOffset}
+          onBringToFront={onBringToFront}
+        />
         <RemoveScroll>
           <Flex
             alignItems="center"

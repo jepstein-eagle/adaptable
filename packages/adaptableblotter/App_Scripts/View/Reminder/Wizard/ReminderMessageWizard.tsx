@@ -52,10 +52,12 @@ export class ReminderMessageWizard
         <WizardPanel header="Message Settings">
           <Flex flexDirection="column">
             <Flex marginTop={2} alignItems="center">
-              <Text style={{ flex: 3 }}>Header:</Text>
+              <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+                Header:
+              </Text>
 
               <Input
-                style={{ flex: 8, maxWidth: 500 }}
+                style={{ flex: 7 }}
                 value={this.state.Header}
                 type="string"
                 placeholder="Enter Reminder Header (optional)"
@@ -63,22 +65,26 @@ export class ReminderMessageWizard
               />
             </Flex>
             <Flex marginTop={2} alignItems="center">
-              <Text style={{ flex: 3 }}>Message:</Text>
+              <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+                Message:
+              </Text>
 
               <Input
                 value={this.state.Msg}
-                style={{ flex: 8, maxWidth: 500 }}
+                style={{ flex: 7 }}
                 type="string"
                 placeholder="Enter Reminder Message"
                 onChange={(e: React.SyntheticEvent) => this.onMessageChanged(e)}
               />
             </Flex>
             <Flex marginTop={2} alignItems="center">
-              <Text style={{ flex: 3 }}>Message Type:</Text>
+              <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+                Message Type:
+              </Text>
 
-              <Box style={{ flex: 8 }}>
+              <Box style={{ flex: 7 }}>
                 <Dropdown
-                  style={{ maxWidth: 500 }}
+                  style={{ maxWidth: '100%' }}
                   placeholder="select"
                   value={this.state.MessageType}
                   onChange={(value: any) => this.onMessageTypeChanged(value)}
@@ -89,9 +95,10 @@ export class ReminderMessageWizard
               </Box>
             </Flex>
             <Flex marginTop={2}>
-              <div style={{ flex: 3 }} />
-              <Box style={{ flex: 8 }}>
+              <div style={{ flex: 2 }} />
+              <Box style={{ flex: 7 }}>
                 <Checkbox
+                  marginLeft={2}
                   className={cssClassName + '__checkbox'}
                   checked={this.state.ShowAsPopup == true}
                   onChange={(checked: boolean) => this.onShowAsPopupChanged(checked)}

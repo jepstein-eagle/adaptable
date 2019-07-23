@@ -1,8 +1,8 @@
+import * as Redux from 'redux';
 import {
   ColumnFilterState,
   ColumnFilter,
 } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
-import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 
@@ -67,7 +67,7 @@ export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (
 
     case COLUMN_FILTER_EDIT: {
       const actionColumnFilter: ColumnFilter = (action as ColumnFilterAction).columnFilter;
-      let filtersToSave = state.ColumnFilters.map(abObject =>
+      const filtersToSave = state.ColumnFilters.map(abObject =>
         abObject.Uuid === actionColumnFilter.Uuid ? actionColumnFilter : abObject
       );
       return {
@@ -83,10 +83,14 @@ export const ColumnFilterReducer: Redux.Reducer<ColumnFilterState> = (
     }
 
     case COLUMN_FILTER_CLEAR: {
-      let actionTypedDelete = <ColumnFilterClearAction>action;
+      const actionTypedDelete = <ColumnFilterClearAction>action;
       columnFilters = [].concat(state.ColumnFilters);
-      let index = columnFilters.findIndex(i => i.Uuid == actionTypedDelete.columnFilter.Uuid);
-      columnFilters.splice(index, 1);
+      const index = actionTypedDelete.columnFilter
+        ? columnFilters.findIndex(i => i.Uuid == actionTypedDelete.columnFilter.Uuid)
+        : -1;
+      if (index != -1) {
+        columnFilters.splice(index, 1);
+      }
       return Object.assign({}, state, { ColumnFilters: columnFilters });
     }
 

@@ -1,9 +1,10 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { PanelWithRow } from './Panels/PanelWithRow';
+import { PanelWithRow } from '../Panels/PanelWithRow';
 
-import { IColItem } from '../UIInterfaces';
-import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
+import { IColItem } from '../../UIInterfaces';
+import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
+import join from '../../../components/utils/join';
 
 export interface AdaptableObjectCollectionProps
   extends React.ClassAttributes<AdaptableObjectCollection> {
@@ -23,7 +24,10 @@ export class AdaptableObjectCollection extends React.Component<AdaptableObjectCo
 
     return (
       <div
-        className={this.props.cssClassName + StyleConstants.ITEMS_TABLE}
+        className={join(
+          this.props.cssClassName + StyleConstants.ITEMS_TABLE,
+          'ab-ObjectCollection'
+        )}
         style={{ ...this.props.style }}
       >
         <PanelWithRow
@@ -32,7 +36,10 @@ export class AdaptableObjectCollection extends React.Component<AdaptableObjectCo
           colItems={this.props.colItems}
         />
         <div
-          className={this.props.cssClassName + StyleConstants.ITEMS_TABLE_BODY}
+          className={join(
+            this.props.cssClassName + StyleConstants.ITEMS_TABLE_BODY,
+            'ab-ObjectCollection__list'
+          )}
           style={{ overflowY: allowOverflow, boxShadow: 'none' }}
         >
           {this.props.items}

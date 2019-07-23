@@ -8,7 +8,12 @@ export type TypeBackdropHandle = {
   setBackdropOrder: (visible: boolean, zIndex: number) => void;
 };
 
-const Backdrop = (props: { zIndex: number; uuid: string; timestamp: number }) => {
+const Backdrop = (props: {
+  zIndex: number;
+  uuid: string;
+  timestamp: number;
+  onBringToFront?: () => void;
+}) => {
   const { uuid, timestamp } = props;
   const [backdropVisible, setBackdropVisible] = React.useState(false);
   const [zIndex, setZIndex] = useState<number>(-1);
@@ -21,6 +26,9 @@ const Backdrop = (props: { zIndex: number; uuid: string; timestamp: number }) =>
         unstable_batchedUpdates(() => {
           setBackdropVisible(visible);
           setZIndex(zIndex);
+          if (visible && props.onBringToFront) {
+            props.onBringToFront();
+          }
         });
       },
     });

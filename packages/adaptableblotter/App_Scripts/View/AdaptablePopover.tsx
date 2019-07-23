@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { Label, OverlayTrigger, Glyphicon, Popover } from 'react-bootstrap';
+import { OverlayTrigger, Glyphicon, Popover } from 'react-bootstrap';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { MessageType } from '../PredefinedConfig/Common/Enums';
 import * as StyleConstants from '../Utilities/Constants/StyleConstants';
-import { ButtonApply } from './Components/Buttons/ButtonApply';
+
 import { ButtonInfo } from './Components/Buttons/ButtonInfo';
 import { UIHelper } from './UIHelper';
+import icons from '../components/icons';
+
+import { ReactComponentLike } from 'prop-types';
 
 /*
 Very basic - for now! - info box that allows us to show Error where required.
@@ -57,8 +60,11 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
       </Popover>
     );
 
+    const icon = UIHelper.getGlyphByMessageType(messageType);
+    const IconCmp = icons[icon] as ReactComponentLike;
     return (
       <span className={cssClassName}>
+        {icons.check}
         <OverlayTrigger
           rootClose
           trigger={triggerAction}
@@ -66,24 +72,11 @@ export class AdaptablePopover extends React.Component<AdaptablePopoverProps, {}>
           overlay={popoverClickRootClose}
         >
           {useButton ? (
-            <ButtonInfo
-              cssClassName={cssClassName}
-              onClick={() => null}
-              size={size}
-              glyph={UIHelper.getGlyphByMessageType(messageType)}
-              bsStyle={UIHelper.getStyleNameByMessageType(messageType)}
-              DisplayMode="Glyph"
-              tooltipText={this.props.tooltipText}
-              showDefaultStyle={this.props.showDefaultStyle}
-            />
+            <ButtonInfo onClick={() => null} glyph={icon} tooltip={this.props.tooltipText} />
           ) : (
-            <Label
-              bsSize="large"
-              bsStyle={UIHelper.getStyleNameByMessageType(messageType)}
-              className="ab_medium_padding"
-            >
-              <Glyphicon glyph={UIHelper.getGlyphByMessageType(messageType)} />
-            </Label>
+            <div style={{ cursor: 'pointer', display: 'inline-block' }}>
+              {IconCmp ? <IconCmp /> : <Glyphicon glyph={icon} />}
+            </div>
           )}
         </OverlayTrigger>
       </span>

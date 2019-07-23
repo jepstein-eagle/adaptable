@@ -58,7 +58,7 @@ export class LayoutSelectionWizard
           />
         </Flex>
 
-        <HelpBlock>
+        <HelpBlock marginTop={4}>
           Build a new layout from scratch, choosing the columns (and sort order).
         </HelpBlock>
 

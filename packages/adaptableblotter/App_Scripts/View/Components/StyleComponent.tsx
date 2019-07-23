@@ -109,7 +109,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     >
                       Set Back Colour
                     </Checkbox>
-                    <div style={{ flex: 1 }} />
+
                     {this.state.myStyle.BackColor != null && (
                       <ColorPicker
                         ColorPalette={this.props.ColorPalette}
@@ -129,7 +129,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     >
                       Set Fore Colour
                     </Checkbox>
-                    <div style={{ flex: 1 }} />
+
                     {this.state.myStyle.ForeColor != null && (
                       <ColorPicker
                         ColorPalette={this.props.ColorPalette}

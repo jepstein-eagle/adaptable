@@ -4,6 +4,7 @@ import usePrevious from './usePrevious';
 const useAutoFocus = (
   props: {
     autoFocus?: boolean;
+    isOpen?: boolean;
     previous?: ({ autoFocus }: { autoFocus: boolean }) => boolean;
     shouldFocus?: ({ autoFocus }: { autoFocus: boolean }) => boolean;
   },
@@ -26,7 +27,7 @@ const useAutoFocus = (
     ) {
       focusElementRef.current.focus();
     }
-  }, []);
+  }, [autoFocus, prevAutoFocus, props.isOpen]);
 };
 
 export default useAutoFocus;

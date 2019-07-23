@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { useRef, useEffect } from 'react';
 import join from '../utils/join';
+import contains from '../utils/contains';
 
 import captureTabNavigation from '@rb/capture-tab-navigation';
 
@@ -30,7 +31,7 @@ const Dialog = (props: DialogProps) => {
   let {
     modal,
     fixed,
-    autoFocus,
+    autoFocus = true,
     className,
     children,
     modalProps,
@@ -41,9 +42,11 @@ const Dialog = (props: DialogProps) => {
   modal = props.modal === undefined ? true : props.modal;
   fixed = props.fixed === undefined ? true : props.fixed;
 
+  const [isOpen, setIsOpen] = useIsOpen(props);
   const boxRef = useRef<HTMLElement>(null);
   useAutoFocus(
     {
+      isOpen,
       autoFocus: props.autoFocus,
       previous: ({ autoFocus }) => autoFocus && isOpen,
       shouldFocus: ({ autoFocus }) => autoFocus && isOpen,
@@ -52,8 +55,6 @@ const Dialog = (props: DialogProps) => {
   );
 
   const showCloseButton = props.showCloseButton === undefined ? true : props.showCloseButton;
-
-  const [isOpen, setIsOpen] = useIsOpen(props);
 
   const onKeyDown = (e: any) => {
     if (e.key === 'Escape') {
@@ -148,7 +149,19 @@ const Dialog = (props: DialogProps) => {
   );
 
   return modal ? (
-    <Modal {...modalProps} isOpen={isOpen}>
+    <Modal
+      {...modalProps}
+      isOpen={isOpen}
+      onBringToFront={() => {
+        if (
+          boxRef.current &&
+          boxRef.current.focus &&
+          (!document.activeElement || !contains(boxRef.current, document.activeElement!))
+        ) {
+          boxRef.current.focus();
+        }
+      }}
+    >
       {box}
     </Modal>
   ) : (

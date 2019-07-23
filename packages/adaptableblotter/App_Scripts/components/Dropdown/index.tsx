@@ -7,6 +7,7 @@ import useProperty from '../utils/useProperty';
 import { ButtonBase } from '../../View/Components/Buttons/ButtonBase';
 
 import Arrows from './Arrows';
+import SimpleButton from '../SimpleButton';
 
 export type DropdownOption = {
   label: string;
@@ -110,11 +111,22 @@ const Dropdown = (props: DropdownProps) => {
   }
 
   const renderClearButton = () => (
-    <ButtonBase
-      glyph="remove"
+    <SimpleButton
+      variant="text"
+      icon="clear"
+      tone="none"
+      tooltip="Clear"
+      iconSize={20}
+      px={0}
+      py={0}
+      marginRight={1}
       {...clearButtonProps}
-      style={{ zIndex: 10, ...(clearButtonProps ? clearButtonProps.style : null) }}
-      onClick={e => {
+      style={{
+        zIndex: 10,
+        color: 'inherit',
+        ...(clearButtonProps ? clearButtonProps.style : null),
+      }}
+      onClick={(e: React.SyntheticEvent) => {
         e.preventDefault();
         onChange(null, e);
       }}

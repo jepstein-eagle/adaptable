@@ -8,10 +8,14 @@ import * as StyleConstants from '../../../Utilities/Constants/StyleConstants';
 import NewPanel, { PanelProps } from '../../../components/Panel';
 import { Box, Flex, BoxProps } from 'rebass';
 
+import icons from '../../../components/icons';
+import { ReactComponentLike } from 'prop-types';
+
 export interface PanelWithImageProps extends PanelProps {
   glyphicon?: string;
+  icon?: string;
   infoBody?: any[];
-  cssClassName: string;
+  cssClassName?: string;
   borderRadius?: string;
   bodyProps?: BoxProps;
   theme: any;
@@ -23,26 +27,24 @@ export interface PanelWithImageProps extends PanelProps {
 //let { buttonContent, ...other } = this.props
 class PanelWithImageCmp extends React.Component<PanelWithImageProps, {}> {
   render() {
-    let cssClassName = this.props.cssClassName + StyleConstants.PANEL_WITH_IMAGE;
+    let cssClassName = this.props.cssClassName
+      ? this.props.cssClassName + StyleConstants.PANEL_WITH_IMAGE
+      : '';
+
+    const IconCmp = icons[this.props.icon || this.props.glyphicon] as ReactComponentLike;
 
     let headerRow = (
-      <AdaptableBlotterForm inline style={{ flex: 1 }}>
+      <AdaptableBlotterForm style={{ flex: 1 }}>
         <Flex>
           <Box>
-            {<Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />}
-            {this.props.header}{' '}
+            {IconCmp ? <IconCmp /> : <Glyphicon glyph={this.props.glyphicon} />}
+            {this.props.header}
             {this.props.infoBody != null && (
-              <span>
-                <label> </label>
-                <span>
-                  {' '}
-                  <AdaptablePopover
-                    cssClassName={cssClassName}
-                    headerText=""
-                    bodyText={this.props.infoBody}
-                  />
-                </span>
-              </span>
+              <AdaptablePopover
+                cssClassName={cssClassName}
+                headerText=""
+                bodyText={this.props.infoBody}
+              />
             )}
           </Box>
           <Box flex={1} />

@@ -8,6 +8,8 @@ import useTheme from '../../../components/utils/useTheme';
 import SimpleButton from '../../../components/SimpleButton';
 import Panel, { PanelProps as TypePanelProps } from '../../../components/Panel';
 import { Flex, Box, BoxProps } from 'rebass';
+import icons from '../../../components/icons';
+import { ReactComponentLike } from 'prop-types';
 
 export interface PanelWithButtonProps extends PanelProps {
   //use either button content + buttonClick OR button
@@ -35,6 +37,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Type
     let { buttonContent } = this.props;
     let className = this.props.className;
 
+    const IconCmp = icons[this.props.glyphicon] as ReactComponentLike;
     let header = (
       <AdaptableBlotterForm
         inline
@@ -45,9 +48,12 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Type
       >
         <Flex alignItems="center">
           <Box>
-            {this.props.glyphicon != null && (
-              <Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />
-            )}
+            {this.props.glyphicon != null &&
+              (IconCmp ? (
+                <IconCmp />
+              ) : (
+                <Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />
+              ))}
             {this.props.headerText}{' '}
             {this.props.infoBody != null && (
               <span>

@@ -205,13 +205,13 @@ export function getStyleNameByStatusColour(statusColour: StatusColour): string {
 export function getGlyphByMessageType(messageType: MessageType): string {
   switch (messageType) {
     case MessageType.Info:
-      return 'info-sign';
+      return 'info';
     case MessageType.Success:
-      return 'ok-sign';
+      return 'check';
     case MessageType.Warning:
-      return 'warning-sign';
+      return 'warning';
     case MessageType.Error:
-      return 'exclamation-sign';
+      return 'error';
   }
 }
 

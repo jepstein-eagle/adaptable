@@ -34,7 +34,12 @@ export class ListBoxFilterSortComponent extends React.Component<
           onChange={(e: any) => this.handleChangeFilterValue(e)}
           style={{ width: 0 }}
         />
-        <SimpleButton onClick={() => this.clearFilter()} icon="trash" variant="text"></SimpleButton>
+        <SimpleButton
+          disabled={!this.props.FilterValue}
+          onClick={() => this.clearFilter()}
+          icon="clear"
+          variant="text"
+        ></SimpleButton>
 
         {this.props.SortOrder == SortOrder.Ascending ? (
           <SimpleButton
