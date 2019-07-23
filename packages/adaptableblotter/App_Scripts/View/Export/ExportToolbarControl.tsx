@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import {
   DropdownButton,
   MenuItem,
-  SplitButton,
   OverlayTrigger,
   Tooltip,
   Glyphicon,

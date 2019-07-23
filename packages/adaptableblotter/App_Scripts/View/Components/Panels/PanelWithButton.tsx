@@ -47,28 +47,24 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Type
         }}
       >
         <Flex alignItems="center">
-          <Box>
+          <Flex alignItems="center">
             {this.props.glyphicon != null &&
               (IconCmp ? (
                 <IconCmp />
               ) : (
                 <Glyphicon glyph={this.props.glyphicon} className="ab_large_right_margin_style" />
               ))}
-            {this.props.headerText}{' '}
+            <Box marginRight={2} />
+            {this.props.headerText}
+            <Box marginRight={3} />
             {this.props.infoBody != null && (
-              <span>
-                <label> </label>
-                <span>
-                  {' '}
-                  <AdaptablePopover
-                    cssClassName={this.props.cssClassName}
-                    headerText=""
-                    bodyText={this.props.infoBody}
-                  />
-                </span>
-              </span>
+              <AdaptablePopover
+                cssClassName={this.props.cssClassName}
+                headerText=""
+                bodyText={this.props.infoBody}
+              />
             )}
-          </Box>
+          </Flex>
           <Box style={{ flex: 1 }} />
 
           {buttonContent ? (

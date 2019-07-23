@@ -1675,9 +1675,7 @@ export class AdaptableBlotter implements IAdaptableBlotter {
       }
       if (this.abContainerElement == null) {
         LoggingHelper.LogAdaptableBlotterError(
-          `There is no Div called ${
-            this.blotterOptions.containerOptions.adaptableBlotterContainer
-          } so cannot render the Adaptable Blotter`
+          `There is no Div called ${this.blotterOptions.containerOptions.adaptableBlotterContainer} so cannot render the Adaptable Blotter`
         );
         return;
       }
