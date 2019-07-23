@@ -61,7 +61,7 @@ class ShortcutPopupComponent extends React.Component<
 
     let colItems: IColItem[] = [
       { Content: 'Columns', Size: 2 },
-      { Content: 'Key', Size: 1 },
+      { Content: 'Key', Size: 2 },
       { Content: 'Operation', Size: 3 },
       { Content: 'Value', Size: 4 },
       { Content: '', Size: 2 },

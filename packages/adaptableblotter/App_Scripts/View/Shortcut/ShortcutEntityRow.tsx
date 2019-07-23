@@ -1,15 +1,16 @@
 import * as React from 'react';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { FormGroup, FormControl } from 'react-bootstrap';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { MathOperation } from '../../PredefinedConfig/Common/Enums';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { AdaptableBlotterForm } from '../Components/Forms/AdaptableBlotterForm';
+
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { Shortcut } from '../../PredefinedConfig/RunTimeState/ShortcutState';
+import Dropdown from '../../components/Dropdown';
+import Input from '../../components/Input';
 
 export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEntityRow> {
   onChangeKey: (shortcut: Shortcut, NewShortcutKey: string) => void;
@@ -31,24 +32,18 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
     colItems[1].Content = (
       <EntityRowItem
         Content={
-          <AdaptableBlotterForm inline key={shortcut.ShortcutKey}>
-            <FormGroup controlId={shortcut.ShortcutKey}>
-              <FormControl
-                bsSize={'small'}
-                componentClass="select"
-                value={shortcut.ShortcutKey}
-                onChange={x => this.onKeySelectChange(x)}
-              >
-                {this.props.AvailableKeys.map(x => {
-                  return (
-                    <option value={x} key={x}>
-                      {x}
-                    </option>
-                  );
-                })}
-              </FormControl>
-            </FormGroup>
-          </AdaptableBlotterForm>
+          <Dropdown
+            style={{ minWidth: 'auto', width: '100%' }}
+            showClearButton={false}
+            options={this.props.AvailableKeys.map(x => {
+              return {
+                value: x,
+                label: x,
+              };
+            })}
+            value={shortcut.ShortcutKey}
+            onChange={(x: any) => this.onKeySelectChange(x)}
+          ></Dropdown>
         }
       />
     );
@@ -59,20 +54,14 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
           shortcut.ColumnType == DataType.Date ? (
             'Replace Cell'
           ) : (
-            <FormControl
-              componentClass="select"
-              bsSize={'small'}
+            <Dropdown
+              style={{ minWidth: 'auto', width: '100%' }}
               value={shortcut.ShortcutOperation}
               onChange={x => this.onActionChange(x)}
-            >
-              {this.props.AvailableActions.map((shortcutOperation: MathOperation) => {
-                return (
-                  <option key={MathOperation[shortcutOperation]} value={shortcutOperation}>
-                    {MathOperation[shortcutOperation]}
-                  </option>
-                );
+              options={this.props.AvailableActions.map((shortcutOperation: MathOperation) => {
+                return { value: shortcutOperation, label: MathOperation[shortcutOperation] };
               })}
-            </FormControl>
+            ></Dropdown>
           )
         }
       />
@@ -84,11 +73,11 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
           shortcut.IsDynamic ? (
             shortcut.ShortcutResult
           ) : (
-            <FormControl
-              bsSize={'small'}
+            <Input
+              width="100%"
               type={shortcut.ColumnType == DataType.Date ? 'date' : 'number'}
               placeholder="Shortcut Result"
-              onChange={e => this.onResultChange(e)}
+              onChange={(e: React.SyntheticEvent) => this.onResultChange(e)}
               value={shortcut.ShortcutResult}
             />
           )
@@ -114,16 +103,14 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
     this.props.onChangeResult(this.props.AdaptableBlotterObject as Shortcut, e.value);
   }
 
-  onKeySelectChange(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.props.onChangeKey(this.props.AdaptableBlotterObject as Shortcut, e.value);
+  onKeySelectChange(value: any) {
+    this.props.onChangeKey(this.props.AdaptableBlotterObject as Shortcut, value);
   }
 
-  onActionChange(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  onActionChange(value: MathOperation) {
     this.props.onChangeOperation(
       this.props.AdaptableBlotterObject as Shortcut,
-      e.value as MathOperation
+      value as MathOperation
     );
   }
 }

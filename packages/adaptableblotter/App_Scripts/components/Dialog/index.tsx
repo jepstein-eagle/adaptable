@@ -58,6 +58,10 @@ const Dialog = (props: DialogProps) => {
 
   const onKeyDown = (e: any) => {
     if (e.key === 'Escape') {
+      if (e.nativeEvent.anotherModalClosed) {
+        return;
+      }
+      e.nativeEvent.anotherModalClosed = true;
       const activeElement = document.activeElement;
 
       const ignoreTags: { [key: string]: number } = {

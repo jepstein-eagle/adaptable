@@ -10,12 +10,14 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
+
 import { DataSource } from '../../PredefinedConfig/RunTimeState/DataSourceState';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { DataSourceParamsPopover } from './DataSourceParamsPopover';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { ButtonApply } from '../Components/Buttons/ButtonApply';
+import Dropdown from '../../components/Dropdown';
+import { Flex } from 'rebass';
 
 interface DataSourceToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<DataSourceToolbarControlComponent> {
@@ -54,19 +56,16 @@ class DataSourceToolbarControlComponent extends React.Component<
     // this will be a method that will check params...
     let canApplyDataSource: boolean = this.canApplyDataSource();
 
-    let availableDataSources: any[] = this.props.DataSources.filter(
-      s => s.Name != currentDataSourceName
-    ).map((dataSource, index) => {
-      return (
-        <MenuItem
-          key={index}
-          eventKey={index}
-          onClick={() => this.onSelectedDataSourceChanged(dataSource.Name)}
-        >
-          {dataSource.Name}
-        </MenuItem>
-      );
-    });
+    let availableDataSources: any[] = this.props.DataSources
+      // .filter(
+      //   s => s.Name != currentDataSourceName
+      // )
+      .map((dataSource, index) => {
+        return {
+          value: dataSource.Name,
+          label: dataSource.Name,
+        };
+      });
 
     let dataSourceParamsPopover =
       this.state.CurrentDataSource == null ? null : (
@@ -77,37 +76,24 @@ class DataSourceToolbarControlComponent extends React.Component<
       );
 
     let content = (
-      <span>
-        <InputGroup>
-          <DropdownButton
-            disabled={availableDataSources.length == 0}
-            style={{ minWidth: '140px' }}
-            className={cssClassName}
-            bsSize={this.props.DashboardSize}
-            bsStyle={'default'}
-            title={currentDataSourceName}
-            id="DataSource"
-            componentClass={InputGroup.Button}
-          >
-            {availableDataSources}
-          </DropdownButton>
+      <Flex alignItems="stretch">
+        <Dropdown
+          disabled={availableDataSources.length == 0}
+          style={{ minWidth: 200 }}
+          value={currentDataSourceName}
+          options={availableDataSources}
+          onChange={(dataSourceName: string) => this.onSelectedDataSourceChanged(dataSourceName)}
+          showClearButton={false}
+        ></Dropdown>
 
-          <InputGroup.Button>
-            <ButtonApply
-              cssClassName={cssClassName}
-              style={{ marginLeft: '3px' }}
-              onClick={() => this.onApplyClick()}
-              size={this.props.DashboardSize}
-              glyph={'ok'}
-              bsStyle={'default'}
-              overrideTooltip="Get Data Source"
-              overrideDisableButton={!canApplyDataSource}
-              DisplayMode="Glyph"
-              AccessLevel={this.props.AccessLevel}
-              showDefaultStyle={this.props.UseSingleColourForButtons}
-            />
-          </InputGroup.Button>
-        </InputGroup>
+        <ButtonApply
+          marginLeft={2}
+          onClick={() => this.onApplyClick()}
+          tooltip="Get Data Source"
+          disabled={!canApplyDataSource}
+          AccessLevel={this.props.AccessLevel}
+        />
+        {/*
         {this.state.CurrentDataSource != null && !canApplyDataSource && (
           <AdaptablePopover
             showDefaultStyle={this.props.UseSingleColourForButtons}
@@ -120,8 +106,8 @@ class DataSourceToolbarControlComponent extends React.Component<
             triggerAction={'click'}
             popoverMinWidth={300}
           />
-        )}
-      </span>
+        )}*/}
+      </Flex>
     );
 
     return (

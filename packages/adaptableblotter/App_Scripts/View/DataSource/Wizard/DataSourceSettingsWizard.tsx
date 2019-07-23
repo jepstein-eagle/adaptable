@@ -43,9 +43,11 @@ export class DataSourceSettingsWizard
     let cssClassName: string = this.props.cssClassName + '-settings';
 
     return (
-      <WizardPanel header="DataSource Definition Settings" bsStyle="primary">
+      <WizardPanel header="DataSource Definition Settings">
         <Flex alignItems="center" flexDirection="row">
-          <Text style={{ flex: 3 }}>Name:</Text>
+          <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+            Name:
+          </Text>
 
           <Input
             style={{ flex: 7 }}
@@ -56,10 +58,14 @@ export class DataSourceSettingsWizard
           />
         </Flex>
 
-        {this.state.ErrorMessage ? <ErrorBox>{this.state.ErrorMessage}</ErrorBox> : null}
+        {this.state.ErrorMessage ? (
+          <ErrorBox marginTop={3}>{this.state.ErrorMessage}</ErrorBox>
+        ) : null}
 
-        <Flex alignItems="center" flexDirection="row" marginTop={3}>
-          <Text style={{ flex: 3 }}>Description:</Text>
+        <Flex alignItems="center" flexDirection="row" marginTop={2}>
+          <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
+            Description:
+          </Text>
 
           <Input
             style={{ flex: 7 }}
