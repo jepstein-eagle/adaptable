@@ -8,19 +8,12 @@ import * as ChartRedux from '../../Redux/ActionsReducers/ChartRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
+
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import {
-  InputGroup,
-  DropdownButton,
-  MenuItem,
-  OverlayTrigger,
-  Tooltip,
-  Glyphicon,
-} from 'react-bootstrap';
+
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ChartDefinition } from '../../PredefinedConfig/RunTimeState/ChartState';
@@ -29,6 +22,13 @@ import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { DEFAULT_BSSTYLE, INFO_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
+import icons from '../../components/icons';
+import { ReactComponentLike } from 'prop-types';
+import { Flex } from 'rebass';
+import Dropdown from '../../components/Dropdown';
+import DropdownButton from '../../components/DropdownButton';
+
+const AddIcon = icons.add as ReactComponentLike;
 
 interface ChartToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ChartToolbarControlComponent> {
@@ -58,138 +58,79 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
     );
 
     let availablechartDefinitions: any[] = sortedChartDefinitions
-      .filter(s => s.Name != currentChartDefinitionName)
-      .map((chartDefinition, index) => {
-        return (
-          <MenuItem
-            key={index}
-            eventKey={index}
-            onClick={() => this.onSelectedChartDefinitionChanged(chartDefinition.Name)}
-          >
-            {chartDefinition.Name}
-          </MenuItem>
-        );
+      // .filter(s => s.Name != currentChartDefinitionName)
+      .map(chartDefinition => {
+        return {
+          label: chartDefinition.Name,
+          value: chartDefinition.Name,
+        };
       });
 
-    const plusGlyph: any = (
-      <OverlayTrigger
-        key={'exportOverlay'}
-        overlay={<Tooltip id="tooltipButton"> {'Create New Chart Definition'}</Tooltip>}
-      >
-        <Glyphicon glyph={'plus'} />
-      </OverlayTrigger>
-    );
-
-    let categoryChartMenuItem = (
-      <MenuItem
-        disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-        onClick={() => this.props.onNewChartDefinition('New | CategoryChart')}
-        key={'categoryChart'}
-      >
-        {'Category Chart'}
-      </MenuItem>
-    );
-    let pieChartMenuItem = (
-      <MenuItem
-        disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
-        onClick={() => this.props.onNewChartDefinition('New | PieChart')}
-        key={'pieChart'}
-      >
-        {'Pie Chart'}
-      </MenuItem>
-    );
-
-    let dropdownStyle: string = this.props.UseSingleColourForButtons
-      ? DEFAULT_BSSTYLE
-      : INFO_BSSTYLE;
+    let categoryChartMenuItem = {
+      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      onClick: () => this.props.onNewChartDefinition('New | CategoryChart'),
+      label: 'Category Chart',
+    };
+    let pieChartMenuItem = {
+      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      onClick: () => this.props.onNewChartDefinition('New | PieChart'),
+      label: 'Pie Chart',
+    };
 
     let content = (
-      <span>
-        <InputGroup>
-          <DropdownButton
-            disabled={availablechartDefinitions.length == 0}
-            style={{ minWidth: '120px' }}
-            className={cssClassName}
-            bsSize={this.props.DashboardSize}
-            bsStyle={'default'}
-            title={currentChartDefinitionName}
-            id="Chart"
-            componentClass={InputGroup.Button}
-          >
-            {availablechartDefinitions}
-          </DropdownButton>
-          {currentChartDefinitionName != selectChartString && (
-            <InputGroup.Button>
-              <ButtonClear
-                bsStyle={'default'}
-                cssClassName={cssClassName}
-                onClick={() => this.onSelectedChartDefinitionChanged('')}
-                size={this.props.DashboardSize}
-                overrideTooltip="Clear Chart"
-                overrideDisableButton={currentChartDefinitionName == selectChartString}
-                DisplayMode="Glyph"
-                AccessLevel={this.props.AccessLevel}
-              />
-            </InputGroup.Button>
-          )}
-        </InputGroup>
+      <Flex alignItems="stretch">
+        <Dropdown
+          disabled={availablechartDefinitions.length == 0}
+          style={{ minWidth: 200 }}
+          placeholder="Select Chart"
+          value={this.props.CurrentChartDefinition ? this.props.CurrentChartDefinition.Name : null}
+          options={availablechartDefinitions}
+          onChange={(chartDefinitionName: string) =>
+            this.onSelectedChartDefinitionChanged(chartDefinitionName)
+          }
+          showClearButton
+        ></Dropdown>
 
-        <span
+        <Flex
+          alignItems="stretch"
           className={
             this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
           }
         >
           <ButtonShowChart
-            style={{ marginLeft: '2px' }}
-            cssClassName={cssClassName}
             onClick={() => this.onShowChart()}
-            size={this.props.DashboardSize}
-            overrideTooltip="Show Chart"
-            overrideDisableButton={currentChartDefinitionName == selectChartString}
-            DisplayMode="Glyph"
+            tooltip="Show Chart"
+            disabled={currentChartDefinitionName == selectChartString}
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
           />
           <DropdownButton
-            style={{ marginLeft: '5px' }}
-            bsSize={this.props.DashboardSize}
-            bsStyle={dropdownStyle}
-            title={plusGlyph}
-            id="chartDropdown"
+            columns={['label']}
+            mx={2}
+            variant="text"
+            items={[categoryChartMenuItem, pieChartMenuItem]}
           >
-            {categoryChartMenuItem}
-            {pieChartMenuItem}
+            <AddIcon />
           </DropdownButton>
 
           <ButtonEdit
-            style={{ marginLeft: '2px' }}
-            cssClassName={cssClassName}
             onClick={() => this.props.onEditChartDefinition('Edit | CategoryChart')}
-            size={this.props.DashboardSize}
-            overrideTooltip="Edit Chart Definition"
-            overrideDisableButton={currentChartDefinitionName == selectChartString}
-            DisplayMode="Glyph"
+            tooltip="Edit Chart Definition"
+            disabled={currentChartDefinitionName == selectChartString}
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
           />
 
           <ButtonDelete
-            style={{ marginLeft: '2px' }}
-            cssClassName={cssClassName}
-            size={this.props.DashboardSize}
-            overrideTooltip="Delete Chart"
-            overrideDisableButton={currentChartDefinitionName == selectChartString}
-            DisplayMode="Glyph"
+            tooltip="Delete Chart"
+            disabled={currentChartDefinitionName == selectChartString}
             ConfirmAction={ChartRedux.ChartDefinitionDelete(this.props.CurrentChartDefinition)}
             ConfirmationMsg={
               "Are you sure you want to delete '" + currentChartDefinitionName + "'?"
             }
             ConfirmationTitle={'Delete Chart'}
             AccessLevel={this.props.AccessLevel}
-            showDefaultStyle={this.props.UseSingleColourForButtons}
           />
-        </span>
-      </span>
+        </Flex>
+      </Flex>
     );
 
     return (

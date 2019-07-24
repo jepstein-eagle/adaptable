@@ -9,7 +9,7 @@ import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotte
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import Dropdown from '../../../components/Dropdown';
 import FieldWrap from '../../../components/FieldWrap';
-import DropdownButton from '../../../components/DropdownButton';
+import DropdownButton, { DropdownButtonProps } from '../../../components/DropdownButton';
 import Input from '../../../components/Input';
 
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
@@ -21,6 +21,9 @@ export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSel
   bsSize?: 'large' | 'lg' | 'small' | 'sm';
   cssClassName?: string;
   style?: React.CSSProperties;
+  newLabel?: string;
+  existingLabel?: string;
+  dropdownButtonProps?: DropdownButtonProps;
 }
 
 enum NEW_OR_EXISTING {
@@ -31,6 +34,10 @@ export class ColumnValueSelector extends React.Component<
   ColumnValueSelectorProps,
   { newOrExisting: NEW_OR_EXISTING }
 > {
+  static defaultProps = {
+    newLabel: 'New value',
+    existingLabel: 'Existing value',
+  };
   constructor(props: ColumnValueSelectorProps) {
     super(props);
 
@@ -52,7 +59,7 @@ export class ColumnValueSelector extends React.Component<
   render() {
     let sortedColumnValues: IRawValueDisplayValuePair[] = [];
 
-    let placeholderText = 'Select column value';
+    let placeholderText = 'Select value';
     let allowNew = this.props.AllowNew != null ? this.props.AllowNew : true;
     if (allowNew) {
       // placeholderText += ' or enter free text';
@@ -84,9 +91,10 @@ export class ColumnValueSelector extends React.Component<
       );
     }
 
+    const fieldWidth = 150;
     const dd = (
       <Dropdown
-        style={{ maxWidth: 'inherit' }}
+        style={{ maxWidth: 'inherit', width: fieldWidth }}
         placeholder={placeholderText}
         showClearButton={false}
         value={this.props.SelectedColumnValue}
@@ -102,10 +110,12 @@ export class ColumnValueSelector extends React.Component<
         disabled={this.props.disabled}
       />
     );
+
     const input = (
       <Input
         type="text"
         autoFocus
+        style={{ width: fieldWidth }}
         onChange={(e: React.SyntheticEvent) => {
           this.onColumnChange([{ customOption: true, DisplayValue: (e.target as any).value }]);
         }}
@@ -117,6 +127,12 @@ export class ColumnValueSelector extends React.Component<
         <DropdownButton
           variant="raised"
           tone="neutral"
+          columns={['label']}
+          style={{
+            color: 'var(--ab-color-white)',
+            background: 'var(--ab-cmp-dashboardpanel__fill)',
+          }}
+          marginRight={1}
           items={[
             {
               label: NEW_OR_EXISTING.existing,
@@ -137,8 +153,11 @@ export class ColumnValueSelector extends React.Component<
               },
             },
           ]}
+          {...this.props.dropdownButtonProps}
         >
-          {this.state.newOrExisting}
+          {this.state.newOrExisting === NEW_OR_EXISTING.existing
+            ? this.props.existingLabel
+            : this.props.newLabel}
         </DropdownButton>
       </FieldWrap>
     );

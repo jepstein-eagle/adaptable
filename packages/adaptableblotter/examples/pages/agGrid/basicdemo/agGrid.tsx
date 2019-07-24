@@ -35,6 +35,10 @@ function InitAdaptableBlotter() {
   );
 
   adaptableBlotterOptions.predefinedConfig = demoConfig;
+  adaptableBlotterOptions.chartOptions = {
+    showModal: false,
+    displayOnStartUp: true,
+  };
   const adaptableblotter = new AdaptableBlotter(adaptableBlotterOptions);
   examplesHelper.autoSizeDefaultLayoutColumns(adaptableblotter, gridOptions);
   adaptableblotter.applyLightTheme();

@@ -1,0 +1,18 @@
+.ab-FieldWrap {
+  border: 1px solid var(--ab-color-inputborder);
+  border-radius: var(--ab__border-radius);
+  background: var(--ab-cmp-field-wrap__background);
+  overflow: hidden;
+
+  &:focus-within {
+    box-Shadow: var(--ab-focus__box-shadow);
+  }
+  & input, & select, & > * {
+    border: none;
+    flex: 1;
+  }
+  & input, & select, & .ab-Dropdown {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}

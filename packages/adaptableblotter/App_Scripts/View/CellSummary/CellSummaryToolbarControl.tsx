@@ -97,10 +97,6 @@ class CellSummaryToolbarControlComponent extends React.Component<
         }
       >
         <DropdownButton
-          style={{
-            color: 'var(--ab-cmp-dashboardpanel_header__color)',
-            borderColor: 'currentColor',
-          }}
           marginRight={2}
           columns={['label']}
           items={[...operationMenuItems, ...operationOptionalMenuItems]}

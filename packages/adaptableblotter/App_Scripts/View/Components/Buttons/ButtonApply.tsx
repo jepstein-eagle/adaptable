@@ -12,8 +12,8 @@ export class ButtonApply extends React.Component<ApplyButtonProps, {}> {
         tooltip="Apply"
         iconSize={20}
         icon="check"
-        {...this.props}
         variant="text"
+        {...this.props}
       />
     );
   }

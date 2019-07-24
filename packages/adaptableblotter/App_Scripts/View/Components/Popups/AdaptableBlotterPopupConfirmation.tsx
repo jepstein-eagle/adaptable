@@ -52,9 +52,7 @@ export class AdaptableBlotterPopupConfirmation extends React.Component<
           isOpen={this.props.ShowPopup}
           onDismiss={this.props.onCancel}
           showCloseButton={false}
-          style={{
-            minHeight: 'auto',
-          }}
+          style={{ minHeight: 'auto', maxWidth: '50%' }}
         >
           <PanelWithImage header={header} icon={glyph} variant="primary">
             <div>

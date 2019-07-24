@@ -19,12 +19,12 @@ import { Flex } from 'rebass';
 
 export interface IAdaptableBlotterPopupProps extends React.ClassAttributes<AdaptableBlotterPopup> {
   showModal: boolean;
-  ComponentName: string;
+  ComponentName?: string;
   ComponentStrategy: string;
   onHide?: () => void | Function;
   Blotter: IAdaptableBlotter;
   PopupParams: string;
-  onClearPopupParams: () => PopupRedux.PopupClearParamAction;
+  onClearPopupParams?: () => PopupRedux.PopupClearParamAction;
 }
 
 export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopupProps, {}> {
@@ -47,7 +47,8 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
       //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
       let commonProps: StrategyViewPopupProps<this> = {
         PopupParams: this.props.PopupParams,
-        onClearPopupParams: () => this.props.onClearPopupParams(),
+        onClearPopupParams: () =>
+          this.props.onClearPopupParams ? this.props.onClearPopupParams() : null,
         TeamSharingActivated: BlotterHelper.isConfigServerEnabled(
           this.props.Blotter.blotterOptions
         ),
@@ -83,7 +84,6 @@ export class AdaptableBlotterPopup extends React.Component<IAdaptableBlotterPopu
       >
         <Flex
           flexDirection="column"
-          className={cssClassName + StyleConstants.MODAL_BASE}
           style={{
             height: '100%',
             maxHeight: '90vh',

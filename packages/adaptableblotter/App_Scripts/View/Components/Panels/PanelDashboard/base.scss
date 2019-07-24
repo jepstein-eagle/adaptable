@@ -1,7 +1,9 @@
 .ab-DashboardPanel {
+  .ab-CheckBox:not(.ab-dd-checkbox),
   .ab-SimpleButton.ab-SimpleButton {
-    color: inherit;
-    fill: inherit;
+    fill: currentColor;
+    color: var(--ab-cmp-dashboardpanel_header__color);
+    border-color: currentColor;
   }
 
   .glyphicon.glyphicon {

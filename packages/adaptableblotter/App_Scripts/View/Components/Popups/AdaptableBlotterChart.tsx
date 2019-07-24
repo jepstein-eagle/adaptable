@@ -1,7 +1,7 @@
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Modal, Button } from 'react-bootstrap';
+
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import { UIHelper } from '../../UIHelper';
@@ -10,6 +10,9 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import * as ScreenPopups from '../../../Utilities/Constants/ScreenPopups';
 import { ChartDisplayPopupPropsBase } from '../SharedProps/ChartDisplayPopupPropsBase';
 import { StrategyHelper } from '../../../Utilities/Helpers/StrategyHelper';
+import Dialog from '../../../components/Dialog';
+import { AdaptableBlotterPopup } from './AdaptableBlotterPopup';
+import { PopupClearParamAction } from '../../../Redux/ActionsReducers/PopupRedux';
 
 /*
 The Chart popup or Div.
@@ -23,7 +26,7 @@ TODO:  put the stuff n state if we redraw every time?
 
 export interface IAdaptableBlotterChartProps extends React.ClassAttributes<AdaptableBlotterChart> {
   showChart: boolean;
-  onClose?: Function;
+  onClose?: () => void;
   AdaptableBlotter: IAdaptableBlotter;
   showModal: boolean;
 }
@@ -78,50 +81,26 @@ export class AdaptableBlotterChart extends React.Component<
       AccessLevel: this.state.accessLevel,
     };
 
-    let bodyElement: any = AdaptableViewFactory[ScreenPopups.ChartDisplayPopup];
+    let ChartCmp: any = AdaptableViewFactory[ScreenPopups.ChartDisplayPopup];
 
-    var body: any = React.createElement(bodyElement, commonProps);
+    const body = <ChartCmp {...commonProps} />;
+    // var body: any = React.createElement(bodyElement, commonProps);
 
-    return (
-      <span>
-        {this.props.showModal ? (
-          <Modal
-            show={this.props.showChart}
-            onHide={this.props.onClose}
-            className={cssClassName + StyleConstants.BASE}
-            container={this.state.chartContainer}
-          >
-            <div className={cssClassName + StyleConstants.MODAL_BASE}>
-              <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
-                <div className="ab_main_chart">{body}</div>
-              </Modal.Body>
-              <Modal.Footer className={cssClassName + StyleConstants.MODAL_FOOTER}>
-                <Button
-                  className={
-                    cssClassName + StyleConstants.MODAL_FOOTER + StyleConstants.CLOSE_BUTTON
-                  }
-                  onClick={() => this.props.onClose()}
-                >
-                  Close
-                </Button>
-              </Modal.Footer>
-            </div>
-          </Modal>
-        ) : (
-          <span>
-            {this.state.isValidUserChartContainer ? (
-              ReactDOM.createPortal(
-                <div id="ad" style={{ marginLeft: '25px', marginBottom: '25px' }}>
-                  {body}
-                </div>,
-                this.state.chartContainer
-              )
-            ) : (
-              <div style={{ marginLeft: '25px', marginBottom: '25px' }}>{body}</div>
-            )}
-          </span>
-        )}
-      </span>
+    return this.props.showModal ? (
+      <AdaptableBlotterPopup
+        Blotter={this.props.AdaptableBlotter}
+        onHide={this.props.onClose}
+        showModal
+        PopupParams=""
+        ComponentName={ScreenPopups.ChartDisplayPopup}
+        ComponentStrategy={StrategyConstants.ChartStrategyId}
+      >
+        {body}
+      </AdaptableBlotterPopup>
+    ) : this.state.isValidUserChartContainer ? (
+      ReactDOM.createPortal(body, this.state.chartContainer)
+    ) : (
+      body
     );
   }
 }

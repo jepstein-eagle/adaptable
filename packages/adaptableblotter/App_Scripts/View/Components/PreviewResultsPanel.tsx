@@ -21,13 +21,15 @@ export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewR
   SelectedColumn: IColumn;
   ShowPanel: boolean;
   style?: React.CSSProperties;
-  cssClassName: string;
+  cssClassName?: string;
   ShowHeader: boolean;
 }
 
 export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProps, {}> {
   render(): any {
-    let cssClassName: string = this.props.cssClassName + StyleConstants.PREVIEW_RESULTS;
+    let cssClassName: string = this.props.cssClassName
+      ? this.props.cssClassName + StyleConstants.PREVIEW_RESULTS
+      : '';
     let previewHeader: string =
       this.props.ShowHeader && this.props.PreviewInfo != null
         ? 'Preview Results: ' +

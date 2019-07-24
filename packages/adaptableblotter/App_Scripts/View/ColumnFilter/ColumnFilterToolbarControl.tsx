@@ -17,15 +17,16 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { AccessLevel, DashboardSize } from '../../PredefinedConfig/Common/Enums';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ColumnFilter } from '../../PredefinedConfig/RunTimeState/ColumnFilterState';
-import { Label } from 'react-bootstrap';
+
 import { ActiveFiltersPanel } from './ActiveFiltersPanel';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 import { SUCCESS_BSSTYLE, DEFAULT_BSSTYLE } from '../../Utilities/Constants/StyleConstants';
-import { ButtonHide } from '../Components/Buttons/ButtonHide';
-import { ButtonShow } from '../Components/Buttons/ButtonShow';
+
 import { UserFilter } from '../../PredefinedConfig/RunTimeState/UserFilterState';
 import { IEntitlement } from '../../PredefinedConfig/DesignTimeState/EntitlementsState';
+import { Flex, Text } from 'rebass';
+import CheckBox from '../../components/CheckBox';
 
 interface ColumnFilterToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
@@ -67,72 +68,45 @@ class ColumnFilterToolbarControlComponent extends React.Component<
     );
 
     let content = (
-      <span>
-        <div
-          className={
-            this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
-          }
+      <Flex
+        alignItems="stretch"
+        className={
+          this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : ''
+        }
+      >
+        {/*<Text mx={1}>{collapsedText}</Text>*/}
+        {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) && (
+          <>
+            <AdaptablePopover
+              showDefaultStyle={this.props.UseSingleColourForButtons}
+              size={this.props.DashboardSize}
+              cssClassName={cssClassName}
+              headerText=""
+              bodyText={[activeFiltersPanel]}
+              tooltipText={'Show Filter Details'}
+              useButton={true}
+              triggerAction={'click'}
+              popoverMinWidth={400}
+            />
+            <ButtonClear
+              marginLeft={1}
+              onClick={() => this.onClearFilters()}
+              tooltip="Clear Column Filters"
+              disabled={this.props.ColumnFilters.length == 0}
+              AccessLevel={this.props.AccessLevel}
+            />
+          </>
+        )}
+        <CheckBox
+          marginLeft={3}
+          checked={this.props.IsQuickFilterActive}
+          onChange={(checked: boolean) => {
+            checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
+          }}
         >
-          <Label bsSize={'large'} bsStyle={this.getStyleForLabel()}>
-            {collapsedText}
-          </Label>{' '}
-          {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) && (
-            <span>
-              <AdaptablePopover
-                showDefaultStyle={this.props.UseSingleColourForButtons}
-                size={this.props.DashboardSize}
-                cssClassName={cssClassName}
-                headerText=""
-                bodyText={[activeFiltersPanel]}
-                tooltipText={'Show Filter Details'}
-                useButton={true}
-                triggerAction={'click'}
-                popoverMinWidth={400}
-              />{' '}
-              <ButtonClear
-                onClick={() => this.onClearFilters()}
-                bsStyle={'primary'}
-                cssClassName={cssClassName}
-                size={this.props.DashboardSize}
-                overrideTooltip="Clear Column Filters"
-                DisplayMode="Text"
-                overrideDisableButton={this.props.ColumnFilters.length == 0}
-                AccessLevel={this.props.AccessLevel}
-                showDefaultStyle={this.props.UseSingleColourForButtons}
-              />
-            </span>
-          )}
-          {this.props.IsQuickFilterActive ? (
-            <ButtonHide
-              style={{ marginLeft: '2px' }}
-              cssClassName={cssClassName}
-              onClick={() => this.props.onHideQuickFilterBar()}
-              size={this.props.DashboardSize}
-              overrideTooltip="Hide Quick Filter"
-              DisplayMode="Glyph"
-              AccessLevel={this.props.AccessLevel}
-              overrideDisableButton={
-                !this.props.Blotter.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter
-              }
-              showDefaultStyle={this.props.UseSingleColourForButtons}
-            />
-          ) : (
-            <ButtonShow
-              style={{ marginLeft: '2px' }}
-              cssClassName={cssClassName}
-              onClick={() => this.props.onShowQuickFilterBar()}
-              size={this.props.DashboardSize}
-              overrideTooltip="Show Quick Filter"
-              DisplayMode="Glyph"
-              AccessLevel={this.props.AccessLevel}
-              overrideDisableButton={
-                !this.props.Blotter.blotterOptions.filterOptions.useAdaptableBlotterQuickFilter
-              }
-              showDefaultStyle={this.props.UseSingleColourForButtons}
-            />
-          )}
-        </div>
-      </span>
+          Quick Filter
+        </CheckBox>
+      </Flex>
     );
 
     return (

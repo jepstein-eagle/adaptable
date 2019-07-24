@@ -27,6 +27,7 @@ export type DropdownButtonProps = BoxProps &
     idProperty?: string;
     listItemClassName?: string;
     listStyle?: React.CSSProperties;
+    listMinWidth?: number;
     listItemStyle?:
       | React.CSSProperties
       | ((item: DropdownButtonItem, index: number) => React.CSSProperties);
@@ -48,6 +49,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
     isItemDisabled,
     items,
     children,
+    listMinWidth = 250,
     listStyle,
     listItemStyle,
     listItemClassName,
@@ -127,7 +129,8 @@ const DropdownButton = (props: DropdownButtonProps) => {
   const { where, side, maxHeight: maxListHeight, maxWidth: maxListWidth } = positionInfo;
 
   listStyle = {
-    minWidth: typeof maxListWidth === 'number' ? Math.min(250, maxListWidth) : 250,
+    minWidth:
+      typeof maxListWidth === 'number' ? Math.min(listMinWidth, maxListWidth) : listMinWidth,
     maxHeight: maxListHeight,
     maxWidth: maxListWidth,
 

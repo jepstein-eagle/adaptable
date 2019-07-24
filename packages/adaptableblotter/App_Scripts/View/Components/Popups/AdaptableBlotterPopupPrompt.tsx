@@ -4,13 +4,18 @@ import { Modal, ControlLabel, Row, Col, Button, FormControl } from 'react-bootst
 import { UIHelper } from '../../UIHelper';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import Dialog from '../../../components/Dialog';
+import { Flex, Text, Box } from 'rebass';
+import SimpleButton from '../../../components/SimpleButton';
+import Input from '../../../components/Input';
+import { SyntheticEvent } from 'react';
 
 export interface AdaptableBlotterPopupPromptProps
   extends React.ClassAttributes<AdaptableBlotterPopupPrompt> {
   ShowPopup: boolean;
   Header: string;
   Msg: string;
-  onClose: Function;
+  onClose: () => void;
   onConfirm: Function;
   AdaptableBlotter: IAdaptableBlotter;
 }
@@ -37,79 +42,59 @@ export class AdaptableBlotterPopupPrompt extends React.Component<
 
     return (
       this.props.ShowPopup && (
-        <div className={StyleConstants.POPUP_PROMPT}>
-          <Modal
-            show={this.props.ShowPopup}
-            onHide={this.props.onClose}
-            className={cssClassName}
-            container={modalContainer}
-            bsSize={'small'}
-          >
-            <div className={cssClassName + StyleConstants.MODAL_BASE}>
-              <Modal.Body className={cssClassName + StyleConstants.MODAL_BODY}>
-                <div className={cssClassName}>
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <ControlLabel>{this.props.Header}</ControlLabel>
-                    </div>
-                    {StringExtensions.IsNotNullOrEmpty(this.props.Msg) && (
-                      <div style={{ display: 'flex', alignItems: 'center' }}>
-                        {this.props.Msg.split('\n').map(function(item, index) {
-                          return (
-                            <span key={index}>
-                              {item}
-                              <br />
-                            </span>
-                          );
-                        })}
-                      </div>
-                    )}
-                    <div style={{ marginTop: '20px' }}>
-                      <FormControl
-                        value={this.state.PromptText}
-                        type="string"
-                        placeholder="Enter text"
-                        onChange={e => this.changeContent(e)}
-                      />
-                    </div>
-                    <div style={{ marginTop: '20px' }}>
-                      <Row>
-                        <Col xs={4}>
-                          <Button
-                            bsStyle={StyleConstants.PRIMARY_BSSTYLE}
-                            className={
-                              cssClassName +
-                              StyleConstants.MODAL_FOOTER +
-                              StyleConstants.CONFIRM_BUTTON
-                            }
-                            disabled={StringExtensions.IsNullOrEmpty(this.state.PromptText)}
-                            onClick={() => this.onConfirmmForm()}
-                          >
-                            OK
-                          </Button>
-                        </Col>
-                        <Col xs={4} />
-                        <Col xs={4}>
-                          <Button
-                            bsStyle={StyleConstants.DEFAULT_BSSTYLE}
-                            className={
-                              cssClassName +
-                              StyleConstants.MODAL_FOOTER +
-                              StyleConstants.CANCEL_BUTTON
-                            }
-                            onClick={() => this.onCloseForm()}
-                          >
-                            Cancel
-                          </Button>
-                        </Col>
-                      </Row>
-                    </div>
-                  </div>
-                </div>
-              </Modal.Body>
-            </div>
-          </Modal>
-        </div>
+        <Dialog
+          modal
+          isOpen={this.props.ShowPopup}
+          onDismiss={this.props.onClose}
+          className={cssClassName}
+          showCloseButton={false}
+          style={{ minHeight: 'auto', maxWidth: '50%' }}
+        >
+          <Flex flexDirection="column">
+            <Box marginTop={3} mx={2}>
+              {this.props.Header}
+            </Box>
+            {StringExtensions.IsNotNullOrEmpty(this.props.Msg) && (
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                {this.props.Msg.split('\n').map(function(item, index) {
+                  return (
+                    <span key={index}>
+                      {item}
+                      <br />
+                    </span>
+                  );
+                })}
+              </div>
+            )}
+
+            <Input
+              autoFocus
+              marginTop={3}
+              mx={3}
+              value={this.state.PromptText}
+              type="string"
+              placeholder="Enter text"
+              onChange={(e: SyntheticEvent) => this.changeContent(e)}
+            />
+
+            <Box marginTop={3}>
+              <Flex padding={2}>
+                <SimpleButton
+                  tone="success"
+                  variant="raised"
+                  disabled={StringExtensions.IsNullOrEmpty(this.state.PromptText)}
+                  onClick={() => this.onConfirmmForm()}
+                >
+                  OK
+                </SimpleButton>
+                <div style={{ flex: 1 }} />
+                <SimpleButton tone="neutral" variant="raised" onClick={() => this.onCloseForm()}>
+                  Cancel
+                </SimpleButton>
+              </Flex>
+            </Box>
+          </Flex>
+        </Dialog>
       )
     );
   }

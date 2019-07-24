@@ -77,7 +77,7 @@ export class AlertRulesWizard
               Show Alert for ALL changes
             </Radio>{' '}
           </Box>
-          <Box>
+          <Box marginTop={4}>
             <HelpBlock>
               {
                 'Only show an Alert when the change to the column matches a rule (to be set by you).'

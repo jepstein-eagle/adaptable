@@ -122,15 +122,13 @@ export function setDefaultChartDisplayPopupState(): CategoryChartComponentState 
   return defaultState;
 }
 
-export function getChartTypeOptions(): JSX.Element[] {
-  let optionChartTypes = EnumExtensions.getNames(CategoryChartType).map(enumName => {
-    return (
-      <option key={enumName} value={enumName}>
-        {enumName as CategoryChartType}
-      </option>
-    );
+export function getChartTypeOptions(): { label: CategoryChartType; value: CategoryChartType }[] {
+  return EnumExtensions.getNames(CategoryChartType).map(enumName => {
+    return {
+      label: enumName as CategoryChartType,
+      value: enumName as CategoryChartType,
+    };
   });
-  return optionChartTypes;
 }
 
 export function getToolTipOptions(): JSX.Element[] {
@@ -166,16 +164,14 @@ export function getAlignmentOptions(): JSX.Element[] {
   return optionAligments;
 }
 
-export function getMarkerTypeOptions(): JSX.Element[] {
-  let options = EnumExtensions.getNames(MarkerType).map(enumName => {
+export function getMarkerTypeOptions(): { label: string; value: string }[] {
+  return EnumExtensions.getNames(MarkerType).map(enumName => {
     let name = enumName.toString();
-    return (
-      <option key={name} value={name}>
-        {name}
-      </option>
-    );
+    return {
+      label: name,
+      value: name,
+    };
   });
-  return options;
 }
 
 export function getMarkerFromProps(chartProps: CategoryChartProperties): string {
@@ -189,16 +185,11 @@ export function getMarkerFromProps(chartProps: CategoryChartProperties): string 
   }
 }
 
-export function getYAxisLabelsLocations(): JSX.Element[] {
-  let options = [
-    <option key="Left" value={AxisLabelsLocation.OutsideLeft}>
-      Left
-    </option>,
-    <option key="Right" value={AxisLabelsLocation.OutsideRight}>
-      Right
-    </option>,
+export function getYAxisLabelsLocations(): { label: string; value: string }[] {
+  return [
+    { value: AxisLabelsLocation.OutsideLeft, label: 'Left' },
+    { value: AxisLabelsLocation.OutsideRight, label: 'Right' },
   ];
-  return options;
 }
 
 export function getXAxisLabelsLocations(): JSX.Element[] {
@@ -224,15 +215,13 @@ export function getAxisAngleOptions(): JSX.Element[] {
   return options;
 }
 
-export function getAxisLabelScales(): JSX.Element[] {
-  let options = EnumExtensions.getNames(AxisScale).map(enumName => {
-    return (
-      <option key={enumName} value={enumName}>
-        {enumName as AxisScale}
-      </option>
-    );
+export function getAxisLabelScales(): { label: AxisScale; value: AxisScale }[] {
+  return EnumExtensions.getNames(AxisScale).map((enumName: AxisScale) => {
+    return {
+      value: enumName,
+      label: enumName,
+    };
   });
-  return options;
 }
 
 export function getCalloutTypeOptions(): JSX.Element[] {

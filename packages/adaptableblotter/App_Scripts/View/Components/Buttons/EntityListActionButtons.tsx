@@ -56,13 +56,13 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
       <Flex
         className={this.props.cssClassName + StyleConstants.BUTTON_TOOLBAR}
         justifyContent="center"
-        style={{ margin: '0px', padding: '0px', cursor: 'auto' }}
+        margin={0}
+        padding={0}
         onClick={stopPropagation}
       >
         {this.props.showEdit && (
           <ButtonEdit
             onClick={() => this.props.editClick()}
-            // cssClassName={this.props.cssClassName}
             style={{
               marginLeft: '0px',
               marginTop: '2px',
@@ -73,14 +73,11 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
             }}
             disabled={this.props.overrideDisableEdit}
             tooltip={this.props.overrideTooltipEdit}
-            //  DisplayMode="Glyph"
-            //  size={this.props.editSize}
             AccessLevel={this.props.AccessLevel}
           />
         )}
         {this.props.showDelete && (
           <ButtonDelete
-            //  cssClassName={this.props.cssClassName}
             style={{
               marginLeft: '1px',
               marginTop: '2px',
@@ -91,11 +88,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
             }}
             disabled={this.props.overrideDisableDelete}
             tooltip={this.props.overrideTooltipDelete}
-            //   DisplayMode="Glyph"
             ConfirmAction={this.props.ConfirmDeleteAction}
             ConfirmationMsg={'Are you sure you want to delete this ' + this.props.EntityType + '?'}
             ConfirmationTitle={'Delete ' + this.props.EntityType}
-            //   size={this.props.deleteSize}
             AccessLevel={this.props.AccessLevel}
           />
         )}

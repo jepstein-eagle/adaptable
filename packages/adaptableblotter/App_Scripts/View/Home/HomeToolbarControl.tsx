@@ -108,6 +108,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           <div className="ab_home_toolbar_column_list">
             <Checkbox
               as="div"
+              className="ab-dd-checkbox"
+              my={0}
               value={col.ColumnId}
               key={col.ColumnId}
               checked={col.Visible}
@@ -149,6 +151,8 @@ class HomeToolbarControlComponent extends React.Component<HomeToolbarComponentPr
           label: (
             <div className="ab_home_toolbar_column_list" key={index}>
               <Checkbox
+                className="ab-dd-checkbox"
+                my={0}
                 as="div"
                 value={toolbar}
                 key={toolbar}

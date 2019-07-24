@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ChartDisplayPopupPropsBase } from '../../Components/SharedProps/ChartDisplayPopupPropsBase';
 import { ButtonClose } from '../../Components/Buttons/ButtonClose';
 import { DEFAULT_BSSTYLE, INFO_BSSTYLE } from '../../../Utilities/Constants/StyleConstants';
-import { Row, Col, FormControl, Checkbox, Table, HelpBlock } from 'react-bootstrap';
+import { Row, Col, FormControl, HelpBlock, Table } from 'react-bootstrap';
 import { ButtonMinimise } from '../../Components/Buttons/ButtonMinimise';
 import { ButtonMaximise } from '../../Components/Buttons/ButtonMaximise';
 // ig chart imports
@@ -35,6 +35,11 @@ import {
 import { CategoryChartUIHelper } from './CategoryChartUIHelper';
 import { CategoryChartComponentState } from './CategoryChartComponentState';
 import { IColumn } from '../../../Utilities/Interface/IColumn';
+import { Flex, Text } from 'rebass';
+import Dropdown from '../../../components/Dropdown';
+import Input from '../../../components/Input';
+
+import Checkbox from '../../../components/CheckBox';
 
 /*
 This is really only going to be for Category Charts.
@@ -84,151 +89,96 @@ export class CategoryChartComponent extends React.Component<
 
     let showGeneralPropertiesButton = this.state.IsGeneralMinimised ? (
       <ButtonMaximise
-        cssClassName={cssClassName}
         onClick={() => this.onShowGeneralProperties()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Show GeneralProperties'}
+        tooltip={'Show GeneralProperties'}
+        variant="text"
       />
     ) : (
       <ButtonMinimise
-        cssClassName={cssClassName}
-        style={{ marginBottom: '10px' }}
         onClick={() => this.onHidePropertiesGroup()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Hide General Properties'}
+        tooltip={'Hide General Properties'}
+        variant="text"
       />
     );
 
     let showYAxisPropertiesButton = this.state.IsYAxisMinimised ? (
       <ButtonMaximise
-        cssClassName={cssClassName}
         onClick={() => this.onShowYAxisProperties()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Show YAxis Properties'}
+        tooltip={'Show YAxis Properties'}
+        variant="text"
       />
     ) : (
       <ButtonMinimise
-        cssClassName={cssClassName}
-        style={{ marginBottom: '10px' }}
         onClick={() => this.onHidePropertiesGroup()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Hide YAxis Properties'}
+        tooltip={'Hide YAxis Properties'}
       />
     );
 
     let showXAxisPropertiesButton = this.state.IsXAxisMinimised ? (
       <ButtonMaximise
-        cssClassName={cssClassName}
         onClick={() => this.onShowXAxisProperties()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Show XAxis Properties'}
+        tooltip={'Show XAxis Properties'}
+        variant="text"
       />
     ) : (
       <ButtonMinimise
-        cssClassName={cssClassName}
         onClick={() => this.onHidePropertiesGroup()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Hide XAxis Properties'}
+        tooltip={'Hide XAxis Properties'}
+        variant="text"
       />
     );
 
     let showHighlightsPropertiesButton = this.state.IsHighlightsMinimised ? (
       <ButtonMaximise
-        cssClassName={cssClassName}
         onClick={() => this.onShowHighlightsProperties()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Show Highlights Properties'}
+        variant="text"
+        tooltip={'Show Highlights Properties'}
       />
     ) : (
       <ButtonMinimise
-        cssClassName={cssClassName}
         onClick={() => this.onHidePropertiesGroup()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Hide Highlights Properties'}
+        variant="text"
+        tooltip={'Hide Highlights Properties'}
       />
     );
 
     let showMiscPropertiesButton = this.state.IsMiscMinimised ? (
       <ButtonMaximise
-        cssClassName={cssClassName}
         onClick={() => this.onShowMiscProperties()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Show Misc Properties'}
+        tooltip={'Show Misc Properties'}
+        variant="text"
       />
     ) : (
       <ButtonMinimise
-        cssClassName={cssClassName}
         onClick={() => this.onHidePropertiesGroup()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Hide XAxis Properties'}
+        variant="text"
+        tooltip={'Hide XAxis Properties'}
       />
     );
 
     let closeChartSettingsButton = (
       <ButtonClose
-        cssClassName={cssClassName}
         onClick={() => this.onHideChartSettings()}
-        bsStyle={DEFAULT_BSSTYLE}
-        size={'xs'}
-        DisplayMode="Glyph"
-        hideToolTip={false}
-        overrideTooltip={'Close Chart Settings'}
+        variant="text"
+        tooltip={'Close Chart Settings'}
       />
     );
 
     let openChartSettingsButton = (
       <ButtonGeneral
-        cssClassName={cssClassName}
-        style={{ marginRight: '20px' }}
+        marginRight={3}
         onClick={() => this.onShowChartSettings()}
-        bsStyle={INFO_BSSTYLE}
-        size={'small'}
-        DisplayMode="Text"
-        hideToolTip={true}
-        overrideText={'Show Chart Settings'}
-      />
+        variant="text"
+        tooltip={null}
+      >
+        Show Chart Settings
+      </ButtonGeneral>
     );
 
     let setDefaultsButton = (
-      <ButtonGeneral
-        cssClassName={cssClassName}
-        onClick={() => this.onSetPropertyDefaults()}
-        bsStyle={DEFAULT_BSSTYLE}
-        DisplayMode="Text"
-        size={'small'}
-        hideToolTip={true}
-        overrideText={'Reset Defaults'}
-      />
+      <ButtonGeneral variant="text" onClick={() => this.onSetPropertyDefaults()} tooltip={null}>
+        Reset Defaults
+      </ButtonGeneral>
     );
 
     let chartElement = (
@@ -347,246 +297,218 @@ export class CategoryChartComponent extends React.Component<
                   <tbody>
                     <tr>
                       <td>{this.props.ChartData.Data != null && chartElement}</td>
-                      <td style={{ width: '350px', marginRight: '15px' }}>
+                      <td style={{ width: 350, marginRight: 'var(--ab-space-3' }}>
                         <PanelWithTwoButtons
-                          bsSize={'xs'}
-                          bsStyle={INFO_BSSTYLE}
                           headerText={'Chart Settings'}
-                          cssClassName={cssClassName}
                           firstButton={closeChartSettingsButton}
                           secondButton={setDefaultsButton}
                         >
                           <PanelWithButton
-                            glyphicon={'wrench'}
-                            bsSize={'xs'}
+                            glyphicon={'settings'}
                             headerText={'General'}
-                            cssClassName={cssClassName}
                             button={showGeneralPropertiesButton}
-                            style={{ marginTop: '2px' }}
                           >
                             {this.state.IsGeneralMinimised == false && (
-                              <div>
-                                <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                  <Row>
-                                    <Col xs={6}>
-                                      <HelpBlock>Chart Type</HelpBlock>
-                                    </Col>
-                                    <Col xs={6}>
-                                      <FormControl
-                                        bsSize={'small'}
-                                        componentClass="select"
-                                        placeholder="select"
-                                        value={this.state.ChartProperties.CategoryChartType}
-                                        onChange={x => this.onChartTypeChange(x)}
-                                      >
-                                        {CategoryChartUIHelper.getChartTypeOptions()}
-                                      </FormControl>
-                                    </Col>
-                                  </Row>
-                                </AdaptableBlotterForm>
-                                <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                  <Row>
-                                    <Col xs={6}>
-                                      <HelpBlock>Marker Type</HelpBlock>
-                                    </Col>
-                                    <Col xs={6}>
-                                      <FormControl
-                                        bsSize={'small'}
-                                        componentClass="select"
-                                        placeholder="select"
-                                        value={this.state.ChartProperties.MarkerType}
-                                        onChange={x => this.onMarkerTypeChange(x)}
-                                      >
-                                        {CategoryChartUIHelper.getMarkerTypeOptions()}
-                                      </FormControl>
-                                    </Col>
-                                  </Row>
-                                </AdaptableBlotterForm>
+                              <Flex flexDirection="column">
+                                <Flex flexDirection="row" alignItems="center" marginBottom={2}>
+                                  <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+                                    Chart Type
+                                  </Text>
+
+                                  <Flex flexDirection="row" alignItems="center" flex={7}>
+                                    <Dropdown
+                                      style={{ maxWidth: 'inherit', width: '100%' }}
+                                      placeholder="Select type"
+                                      value={this.state.ChartProperties.CategoryChartType}
+                                      onChange={x => this.onChartTypeChange(x)}
+                                      options={CategoryChartUIHelper.getChartTypeOptions()}
+                                    />
+                                  </Flex>
+                                </Flex>
+
+                                <Flex flexDirection="row" alignItems="center">
+                                  <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+                                    Marker Type
+                                  </Text>
+
+                                  <Flex flexDirection="row" alignItems="center" flex={7}>
+                                    <Dropdown
+                                      style={{ maxWidth: 'inherit', width: '100%' }}
+                                      placeholder="Select type"
+                                      value={this.state.ChartProperties.MarkerType}
+                                      onChange={x => this.onMarkerTypeChange(x)}
+                                      options={CategoryChartUIHelper.getMarkerTypeOptions()}
+                                    />
+                                  </Flex>
+                                </Flex>
 
                                 {this.state.ChartProperties.CategoryChartType ==
                                   CategoryChartType.Column && (
                                   <div>
-                                    <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                      <Row>
-                                        <Col xs={6}>
-                                          <HelpBlock>Column Gap</HelpBlock>
-                                        </Col>
-                                        <Col xs={6}>
-                                          <FormControl
-                                            value={this.state.ChartProperties.XAxisGap}
-                                            bsSize={'small'}
-                                            type="number"
-                                            min="0"
-                                            step="0.1"
-                                            max="1"
-                                            placeholder="Enter"
-                                            onChange={e => this.onXAxisGapChanged(e)}
-                                          />
-                                        </Col>
-                                      </Row>
-                                    </AdaptableBlotterForm>
+                                    <Flex flexDirection="row" alignItems="center" marginTop={2}>
+                                      <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+                                        Column Gap
+                                      </Text>
 
-                                    <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                      <Row>
-                                        <Col xs={6}>
-                                          <HelpBlock>Column Overlap</HelpBlock>
-                                        </Col>
-                                        <Col xs={6}>
-                                          <FormControl
-                                            value={this.state.ChartProperties.XAxisOverlap}
-                                            bsSize={'small'}
-                                            type="number"
-                                            min="0"
-                                            step="0.1"
-                                            max="1"
-                                            placeholder="Enter"
-                                            onChange={e => this.onXAxisOverlapChanged(e)}
-                                          />
-                                        </Col>
-                                      </Row>
-                                    </AdaptableBlotterForm>
+                                      <Flex flexDirection="row" alignItems="center" flex={7}>
+                                        <Input
+                                          value={this.state.ChartProperties.XAxisGap}
+                                          width="100%"
+                                          type="number"
+                                          min="0"
+                                          step="0.1"
+                                          max="1"
+                                          placeholder="Enter"
+                                          onChange={(e: React.SyntheticEvent) =>
+                                            this.onXAxisGapChanged(e)
+                                          }
+                                        />
+                                      </Flex>
+                                    </Flex>
+
+                                    <Flex flexDirection="row" alignItems="center" marginTop={2}>
+                                      <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+                                        Column Overlap
+                                      </Text>
+
+                                      <Flex flexDirection="row" alignItems="center" flex={7}>
+                                        <Input
+                                          width="100%"
+                                          value={this.state.ChartProperties.XAxisOverlap}
+                                          type="number"
+                                          min="0"
+                                          step="0.1"
+                                          max="1"
+                                          placeholder="Enter"
+                                          onChange={(e: React.SyntheticEvent) =>
+                                            this.onXAxisOverlapChanged(e)
+                                          }
+                                        />
+                                      </Flex>
+                                    </Flex>
                                   </div>
                                 )}
-                              </div>
+                              </Flex>
                             )}
                           </PanelWithButton>
 
                           <PanelWithButton
                             glyphicon={'resize-vertical'}
-                            bsSize={'xs'}
                             headerText={'Y (Vertical) Axis'}
-                            cssClassName={cssClassName}
                             button={showYAxisPropertiesButton}
-                            style={{ marginTop: '2px' }}
+                            style={{ marginTop: 'var(--ab-space-2)' }}
                           >
                             {this.state.IsYAxisMinimised == false && (
                               <div>
-                                <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                  <Row>
-                                    <Col xs={12}>
-                                      {/* TODO move this Checkbox next to showYAxisPropertiesButton since it applies to all Y-Axis properties  */}
-                                      <HelpBlock>
-                                        <Checkbox
-                                          onChange={e => this.onYAxisVisibilityOptionChanged(e)}
-                                          checked={
-                                            this.state.ChartProperties.YAxisLabelVisibility ==
-                                            LabelVisibility.Visible
-                                          }
-                                        >
-                                          Axis Visible
-                                        </Checkbox>
-                                      </HelpBlock>
-                                    </Col>
-                                  </Row>
-                                </AdaptableBlotterForm>
+                                <Checkbox
+                                  onChange={(checked: boolean) =>
+                                    this.onYAxisVisibilityOptionChanged(checked)
+                                  }
+                                  checked={
+                                    this.state.ChartProperties.YAxisLabelVisibility ==
+                                    LabelVisibility.Visible
+                                  }
+                                >
+                                  Axis Visible
+                                </Checkbox>
 
                                 {this.state.ChartProperties.YAxisLabelVisibility ==
                                   LabelVisibility.Visible && (
                                   <div>
-                                    <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                      <Row>
-                                        <Col xs={12}>
-                                          <HelpBlock>
-                                            <Checkbox
-                                              onChange={e => this.onYAxisInvertedChanged(e)}
-                                              checked={this.state.ChartProperties.YAxisInverted}
-                                            >
-                                              Axis Inverted
-                                            </Checkbox>
-                                          </HelpBlock>
-                                        </Col>
-                                      </Row>
-                                    </AdaptableBlotterForm>
-                                    <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                      <Row>
-                                        <Col xs={6}>
-                                          <HelpBlock>Axis Location</HelpBlock>
-                                        </Col>
-                                        <Col xs={6}>
-                                          <FormControl
-                                            bsSize={'small'}
-                                            componentClass="select"
-                                            placeholder="select"
-                                            value={this.state.ChartProperties.YAxisLabelLocation}
-                                            onChange={x => this.onYAxisLabelLocationChange(x)}
-                                          >
-                                            {CategoryChartUIHelper.getYAxisLabelsLocations()}
-                                          </FormControl>
-                                        </Col>
-                                      </Row>
-                                    </AdaptableBlotterForm>
-                                    <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                      <Row>
-                                        <Col xs={6}>
-                                          <HelpBlock>Labels Scale</HelpBlock>
-                                        </Col>
-                                        <Col xs={6}>
-                                          <FormControl
-                                            bsSize={'small'}
-                                            componentClass="select"
-                                            placeholder="select"
-                                            value={this.state.ChartProperties.YAxisLabelScale}
-                                            onChange={x => this.onYAxisLabelScaleChanged(x)}
-                                          >
-                                            {CategoryChartUIHelper.getAxisLabelScales()}
-                                          </FormControl>
-                                        </Col>
-                                      </Row>
-                                    </AdaptableBlotterForm>
-                                    <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                      <HelpBlock>
-                                        <Row>
-                                          <Col xs={6}>
-                                            <Checkbox
-                                              onChange={e =>
-                                                this.onSetYAxisMinValueOptionChanged(e)
-                                              }
-                                              checked={this.state.SetYAxisMinimumValue}
-                                            >
-                                              Labels Min
-                                            </Checkbox>
-                                          </Col>
-                                          <Col xs={6}>
-                                            {this.state.SetYAxisMinimumValue && (
-                                              <FormControl
-                                                bsSize={'small'}
-                                                type="number"
-                                                placeholder={'Input'}
-                                                onChange={this.onYAxisMinValueChanged}
-                                                value={this.state.ChartProperties.YAxisMinimumValue}
-                                              />
-                                            )}
-                                          </Col>
-                                        </Row>
-                                      </HelpBlock>
-                                    </AdaptableBlotterForm>
-                                    <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
-                                      <HelpBlock>
-                                        <Row>
-                                          <Col xs={6}>
-                                            <Checkbox
-                                              onChange={e =>
-                                                this.onSetYAxisMaxValueOptionChanged(e)
-                                              }
-                                              checked={this.state.SetYAxisMaximumValue}
-                                            >
-                                              Labels Max
-                                            </Checkbox>
-                                          </Col>
-                                          <Col xs={6}>
-                                            {this.state.SetYAxisMaximumValue && (
-                                              <FormControl
-                                                bsSize={'small'}
-                                                type="number"
-                                                placeholder={'Input'}
-                                                onChange={this.onYAxisMaxValueChanged}
-                                                value={this.state.ChartProperties.YAxisMaximumValue}
-                                              />
-                                            )}
-                                          </Col>
-                                        </Row>
-                                      </HelpBlock>
-                                    </AdaptableBlotterForm>
+                                    <Checkbox
+                                      marginTop={2}
+                                      onChange={(checked: boolean) =>
+                                        this.onYAxisInvertedChanged(checked)
+                                      }
+                                      checked={this.state.ChartProperties.YAxisInverted}
+                                    >
+                                      Axis Inverted
+                                    </Checkbox>
+
+                                    <Flex flexDirection="row" alignItems="center" marginTop={2}>
+                                      <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+                                        Axis Location
+                                      </Text>
+
+                                      <Flex flexDirection="row" alignItems="center" flex={7}>
+                                        <Dropdown
+                                          style={{ maxWidth: 'inherit', width: '100%' }}
+                                          placeholder="Select"
+                                          value={this.state.ChartProperties.YAxisLabelLocation}
+                                          onChange={(x: string) =>
+                                            this.onYAxisLabelLocationChange(x)
+                                          }
+                                          options={CategoryChartUIHelper.getYAxisLabelsLocations()}
+                                        />
+                                      </Flex>
+                                    </Flex>
+
+                                    <Flex flexDirection="row" alignItems="center" marginTop={2}>
+                                      <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+                                        Labels Scale
+                                      </Text>
+
+                                      <Flex flexDirection="row" alignItems="center" flex={7}>
+                                        <Dropdown
+                                          style={{ maxWidth: 'inherit', width: '100%' }}
+                                          placeholder="Select"
+                                          value={this.state.ChartProperties.YAxisLabelScale}
+                                          onChange={x => this.onYAxisLabelScaleChanged(x)}
+                                          options={CategoryChartUIHelper.getAxisLabelScales()}
+                                        />
+                                      </Flex>
+                                    </Flex>
+
+                                    <Flex flexDirection="row" alignItems="center" marginTop={2}>
+                                      <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+                                        <Checkbox
+                                          onChange={(checked: boolean) =>
+                                            this.onSetYAxisMinValueOptionChanged(checked)
+                                          }
+                                          checked={this.state.SetYAxisMinimumValue}
+                                        >
+                                          Labels Min
+                                        </Checkbox>
+                                      </Text>
+
+                                      <Flex flexDirection="row" alignItems="center" flex={7}>
+                                        {this.state.SetYAxisMinimumValue && (
+                                          <Input
+                                            type="number"
+                                            placeholder={'Input'}
+                                            width="100%"
+                                            onChange={this.onYAxisMinValueChanged}
+                                            value={this.state.ChartProperties.YAxisMinimumValue}
+                                          />
+                                        )}
+                                      </Flex>
+                                    </Flex>
+
+                                    <Flex flexDirection="row" alignItems="center" marginTop={2}>
+                                      <Text style={{ flex: 3 }} textAlign="end" marginRight={2}>
+                                        <Checkbox
+                                          onChange={(checked: boolean) =>
+                                            this.onSetYAxisMaxValueOptionChanged(checked)
+                                          }
+                                          checked={this.state.SetYAxisMinimumValue}
+                                        >
+                                          Labels Max
+                                        </Checkbox>
+                                      </Text>
+
+                                      <Flex flexDirection="row" alignItems="center" flex={7}>
+                                        {this.state.SetYAxisMinimumValue && (
+                                          <Input
+                                            type="number"
+                                            placeholder={'Input'}
+                                            width="100%"
+                                            onChange={this.onYAxisMaxValueChanged}
+                                            value={this.state.ChartProperties.YAxisMaximumValue}
+                                          />
+                                        )}
+                                      </Flex>
+                                    </Flex>
+
                                     <AdaptableBlotterForm horizontal style={{ marginTop: '0px' }}>
                                       <HelpBlock>
                                         <Row>
@@ -1297,24 +1219,21 @@ export class CategoryChartComponent extends React.Component<
     this.setState({ IsChartSettingsVisible: false } as CategoryChartComponentState);
   }
 
-  onChartTypeChange(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  onChartTypeChange(value: CategoryChartType) {
     let chartProperties: CategoryChartProperties = this.state.ChartProperties;
-    chartProperties.CategoryChartType = e.value as CategoryChartType;
+    chartProperties.CategoryChartType = value as CategoryChartType;
     this.updateChartProperties(chartProperties);
   }
 
-  onMarkerTypeChange(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  onMarkerTypeChange(value: string) {
     let chartProperties: CategoryChartProperties = this.state.ChartProperties;
-    chartProperties.MarkerType = e.value;
+    chartProperties.MarkerType = value;
     this.updateChartProperties(chartProperties);
   }
 
-  onYAxisLabelLocationChange(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  onYAxisLabelLocationChange(value: string) {
     let chartProperties: CategoryChartProperties = this.state.ChartProperties;
-    let selected = e.value.toString();
+    let selected = value;
     if (selected.indexOf('Left') > 0) {
       chartProperties.YAxisLabelLocation = AxisLabelsLocation.OutsideLeft;
     } else {
@@ -1451,39 +1370,35 @@ export class CategoryChartComponent extends React.Component<
     this.updateChartProperties(chartProperties);
   }
 
-  private onYAxisInvertedChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  private onYAxisInvertedChanged(checked: boolean) {
     let chartProperties: CategoryChartProperties = this.state.ChartProperties;
-    chartProperties.YAxisInverted = e.checked;
+    chartProperties.YAxisInverted = checked;
     this.updateChartProperties(chartProperties);
   }
-  private onXAxisInvertedChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
+  private onXAxisInvertedChanged(checked: boolean) {
     let chartProperties: CategoryChartProperties = this.state.ChartProperties;
-    chartProperties.XAxisInverted = e.checked;
+    chartProperties.XAxisInverted = checked;
     this.updateChartProperties(chartProperties);
   }
 
-  private onSetYAxisMinValueOptionChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    if (e.checked) {
+  private onSetYAxisMinValueOptionChanged(checked: boolean) {
+    if (checked) {
       this.setState({ SetYAxisMinimumValue: true } as CategoryChartComponentState);
     } else {
       // set YAxisMinValue to undefined
-      this.setState({ SetYAxisMinimumValue: e.checked } as CategoryChartComponentState);
+      this.setState({ SetYAxisMinimumValue: checked } as CategoryChartComponentState);
       let chartProperties: CategoryChartProperties = this.state.ChartProperties;
       chartProperties.YAxisMinimumValue = undefined;
       this.updateChartProperties(chartProperties);
     }
   }
 
-  private onSetYAxisMaxValueOptionChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    if (e.checked) {
+  private onSetYAxisMaxValueOptionChanged(checked: boolean) {
+    if (checked) {
       this.setState({ SetYAxisMaximumValue: true } as CategoryChartComponentState);
     } else {
       // set YAxisMaxValue to undefined
-      this.setState({ SetYAxisMaximumValue: e.checked } as CategoryChartComponentState);
+      this.setState({ SetYAxisMaximumValue: checked } as CategoryChartComponentState);
       let chartProperties: CategoryChartProperties = this.state.ChartProperties;
       chartProperties.YAxisMaximumValue = undefined;
       this.updateChartProperties(chartProperties);
@@ -1622,10 +1537,10 @@ export class CategoryChartComponent extends React.Component<
     this.updateChartProperties(chartProperties);
   }
 
-  private onYAxisVisibilityOptionChanged(event: React.FormEvent<any>) {
+  private onYAxisVisibilityOptionChanged(checked: boolean) {
     let e = event.target as HTMLInputElement;
     let chartProperties: CategoryChartProperties = this.state.ChartProperties;
-    chartProperties.YAxisLabelVisibility = e.checked
+    chartProperties.YAxisLabelVisibility = checked
       ? LabelVisibility.Visible
       : LabelVisibility.Collapsed;
     this.updateChartProperties(chartProperties);
@@ -1679,9 +1594,8 @@ export class CategoryChartComponent extends React.Component<
     this.updateChartProperties(chartProperties);
   }
 
-  private onYAxisLabelScaleChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    let scale = e.value as AxisScale;
+  private onYAxisLabelScaleChanged(value: AxisScale) {
+    let scale = value as AxisScale;
     let chartProperties: CategoryChartProperties = this.state.ChartProperties;
     // chartProperties.YAxisIsLogarithmic = scale == AxisScale.Log;
     chartProperties.YAxisLabelScale = scale;

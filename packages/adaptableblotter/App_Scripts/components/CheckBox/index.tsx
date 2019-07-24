@@ -1,6 +1,7 @@
 import React, { ReactNode, useState, SyntheticEvent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Box, BoxProps } from 'rebass';
+import join from '../utils/join';
 
 const checked = keyframes`
   100% {
@@ -95,6 +96,7 @@ const CheckBox = ({
     <Box
       my={2}
       {...props}
+      className={join('ab-CheckBox', props.className)}
       style={{
         display: 'inline-flex',
         flexFlow: 'row',

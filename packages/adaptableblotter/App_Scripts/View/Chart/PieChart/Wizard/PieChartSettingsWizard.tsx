@@ -11,7 +11,7 @@ import WizardPanel from '../../../../components/WizardPanel';
 import { Flex, Text, Box } from 'rebass';
 import Input from '../../../../components/Input';
 import Radio from '../../../../components/Radio';
-import HelpBlock from '../../../../components/HelpBlock';
+
 import ErrorBox from '../../../../components/ErrorBox';
 
 export interface PieChartSettingsWizardProps extends AdaptableWizardStepProps<PieChartDefinition> {
@@ -38,12 +38,6 @@ export class PieChartSettingsWizard
     };
   }
   render(): any {
-    let cssClassName: string = this.props.cssClassName + '-settings';
-
-    let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(this.state.ErrorMessage)
-      ? null
-      : 'error';
-
     return (
       <WizardPanel header="Chart Definition Settings">
         <Flex flexDirection="row" alignItems="center">

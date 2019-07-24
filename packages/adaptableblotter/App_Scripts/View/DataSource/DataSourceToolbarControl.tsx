@@ -80,6 +80,7 @@ class DataSourceToolbarControlComponent extends React.Component<
         <Dropdown
           disabled={availableDataSources.length == 0}
           style={{ minWidth: 200 }}
+          placeholder="Select Data Source"
           value={currentDataSourceName}
           options={availableDataSources}
           onChange={(dataSourceName: string) => this.onSelectedDataSourceChanged(dataSourceName)}

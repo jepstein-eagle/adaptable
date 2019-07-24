@@ -73,84 +73,77 @@ class ChartDisplayPopupComponent extends React.Component<
 
     let closeButton = this.props.ShowModal ? null : (
       <ButtonClose
-        cssClassName={cssClassName}
+        style={{ color: 'var(--ab-color-white)' }}
         onClick={() => this.props.onClose()}
-        bsStyle={PRIMARY_BSSTYLE}
-        DisplayMode="Glyph"
-        hideToolTip={true}
+        tooltip={null}
+        tone="none"
       />
     );
 
     let editButton =
       this.props.ChartVisibility == ChartVisibility.Minimised ? null : (
         <ButtonEdit
-          cssClassName={cssClassName}
-          style={{ marginRight: '5px' }}
+          style={{ color: 'var(--ab-color-white)' }}
           onClick={() => this.onEditChart()}
-          bsStyle={PRIMARY_BSSTYLE}
-          DisplayMode="Glyph+Text"
-          overrideText="Edit Chart"
-          hideToolTip={true}
+          tooltip={null}
         />
       );
 
     let minmaxButton = this.props.ShowModal ? null : this.props.ChartVisibility ==
       ChartVisibility.Minimised ? (
       <ButtonMaximise
-        cssClassName={cssClassName}
+        style={{ color: 'var(--ab-color-white)' }}
         onClick={() => this.onChartMaximised()}
-        bsStyle={PRIMARY_BSSTYLE}
-        DisplayMode="Glyph"
-        hideToolTip={true}
+        tooltip={null}
       />
     ) : (
-      <ButtonMinimise className={cssClassName} onClick={() => this.onChartMinimised()} />
+      <ButtonMinimise
+        style={{ color: 'var(--ab-color-white)' }}
+        onClick={() => this.onChartMinimised()}
+      />
     );
 
     return (
-      <span className={cssClassName}>
-        <PanelWithImageThreeButtons
-          cssClassName={cssClassName}
-          header={StrategyConstants.ChartStrategyName}
-          bsStyle={PRIMARY_BSSTYLE}
-          style={{ marginRight: '30px' }}
-          glyphicon={StrategyConstants.ChartGlyph}
-          secondButton={closeButton}
-          firstButton={editButton}
-          thirdButton={minmaxButton}
-        >
-          {this.props.ChartVisibility == ChartVisibility.Maximised &&
-            this.props.ChartData != null &&
-            this.props.CurrentChartDefinition != null && (
-              <div>
-                {currentChartType == ChartType.CategoryChart ? (
-                  <CategoryChartComponent
-                    CurrentChartDefinition={
-                      this.props.CurrentChartDefinition as CategoryChartDefinition
-                    }
-                    ChartData={this.props.ChartData}
-                    ColorPalette={this.props.ColorPalette}
-                    Columns={this.props.Columns}
-                    cssClassName={this.props.cssClassName}
-                    onUpdateChartProperties={(chartUuid, chartProperties) =>
-                      this.props.onUpdateChartProperties(chartUuid, chartProperties)
-                    }
-                  />
-                ) : (
-                  <PieChartComponent
-                    CurrentChartDefinition={this.props.CurrentChartDefinition as PieChartDefinition}
-                    ChartData={this.props.ChartData}
-                    //   ColorPalette={this.props.ColorPalette}
-                    //   Columns={this.props.Columns}
-                    cssClassName={this.props.cssClassName}
-                    onUpdateChartProperties={(chartUuid, chartProperties) =>
-                      this.props.onUpdateChartProperties(chartUuid, chartProperties)
-                    }
-                  />
-                )}
-              </div>
-            )}
-        </PanelWithImageThreeButtons>
+      <PanelWithImageThreeButtons
+        header={StrategyConstants.ChartStrategyName}
+        firstButton={editButton}
+        secondButton={minmaxButton}
+        thirdButton={closeButton}
+        bodyProps={{
+          padding: this.props.ChartVisibility == ChartVisibility.Minimised ? 0 : 2,
+        }}
+      >
+        {this.props.ChartVisibility == ChartVisibility.Maximised &&
+          this.props.ChartData != null &&
+          this.props.CurrentChartDefinition != null && (
+            <div>
+              {currentChartType == ChartType.CategoryChart ? (
+                <CategoryChartComponent
+                  CurrentChartDefinition={
+                    this.props.CurrentChartDefinition as CategoryChartDefinition
+                  }
+                  ChartData={this.props.ChartData}
+                  ColorPalette={this.props.ColorPalette}
+                  Columns={this.props.Columns}
+                  cssClassName={this.props.cssClassName}
+                  onUpdateChartProperties={(chartUuid, chartProperties) =>
+                    this.props.onUpdateChartProperties(chartUuid, chartProperties)
+                  }
+                />
+              ) : (
+                <PieChartComponent
+                  CurrentChartDefinition={this.props.CurrentChartDefinition as PieChartDefinition}
+                  ChartData={this.props.ChartData}
+                  //   ColorPalette={this.props.ColorPalette}
+                  //   Columns={this.props.Columns}
+                  cssClassName={this.props.cssClassName}
+                  onUpdateChartProperties={(chartUuid, chartProperties) =>
+                    this.props.onUpdateChartProperties(chartUuid, chartProperties)
+                  }
+                />
+              )}
+            </div>
+          )}
 
         {this.state.EditedChartDefinition && (
           <div>
@@ -191,7 +184,7 @@ class ChartDisplayPopupComponent extends React.Component<
             )}
           </div>
         )}
-      </span>
+      </PanelWithImageThreeButtons>
     );
   }
 

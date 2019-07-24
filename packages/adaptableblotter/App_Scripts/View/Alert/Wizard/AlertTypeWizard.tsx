@@ -36,25 +36,18 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
     return (
       <>
         <WizardPanel header="Select The Type of the Alert" border="none" style={{ height: 'auto' }}>
-          <Box className="ab_large_margin">
+          <Box>
             <Radio
-              className={cssClassName + '__radiobutton'}
               value="Info"
               name="type"
               checked={this.state.MessageType == MessageType.Info}
               onChange={(x: any, e: React.SyntheticEvent) => this.onMessageTypeSelectChanged(e)}
             >
               Info
-            </Radio>{' '}
-            <AdaptablePopover
-              cssClassName={cssClassName}
-              headerText={'Alert Type: Info'}
-              bodyText={['Sends the alert as a message.']}
-            />
+            </Radio>
           </Box>
-          <Box className="ab_large_margin">
+          <Box>
             <Radio
-              className={cssClassName + '__radiobutton'}
               value="Success"
               name="type"
               checked={this.state.MessageType == MessageType.Success}
@@ -62,15 +55,9 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
             >
               Success
             </Radio>{' '}
-            <AdaptablePopover
-              cssClassName={cssClassName}
-              headerText={'Alert Type: Success'}
-              bodyText={['Sends the alert as a sucess message.']}
-            />
           </Box>
-          <Box className="ab_large_margin">
+          <Box>
             <Radio
-              className={cssClassName + '__radiobutton'}
               name="type"
               value="Warning"
               checked={this.state.MessageType == MessageType.Warning}
@@ -78,44 +65,26 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
             >
               Warning
             </Radio>{' '}
-            <AdaptablePopover
-              cssClassName={cssClassName}
-              headerText={'Alert Type: Warning'}
-              bodyText={['Sends the alert as a warning.']}
-            />
           </Box>
-          <Box className="ab_large_margin">
+          <Box>
             <Radio
-              className={cssClassName + '__radiobutton'}
               value="Error"
               name="type"
               checked={this.state.MessageType == MessageType.Error}
               onChange={(x: any, e: React.SyntheticEvent) => this.onMessageTypeSelectChanged(e)}
             >
               Error
-            </Radio>{' '}
-            <AdaptablePopover
-              cssClassName={cssClassName}
-              headerText={'Alert Type: Error'}
-              bodyText={['Sends the alert as an error.']}
-            />
+            </Radio>
           </Box>
         </WizardPanel>
         <WizardPanel header="Alert Details" border="none" style={{ height: 'auto' }}>
-          <Box className="ab_large_margin">
-            <Checkbox
-              className={cssClassName + '__checkbox'}
-              checked={this.state.ShowAsPopup == true}
-              onChange={this.onShowAsPopupChanged}
-            >
-              Show as Popup
-            </Checkbox>{' '}
-            <AdaptablePopover
-              cssClassName={cssClassName}
-              headerText={'Alert Details'}
-              bodyText={['A popup is displayed when the Alert is triggered.']}
-            />
-          </Box>
+          <Checkbox
+            className={cssClassName + '__checkbox'}
+            checked={this.state.ShowAsPopup == true}
+            onChange={this.onShowAsPopupChanged}
+          >
+            Show as Popup
+          </Checkbox>
         </WizardPanel>
       </>
     );

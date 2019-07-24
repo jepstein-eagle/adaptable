@@ -32,6 +32,7 @@ import ColorDrop from './color-drop';
 import CheckCircle from './check-circle';
 import Refresh from './refresh';
 import Save from './save';
+import BarChart from './bar-chart';
 
 export default {
   'arrow-right': ArrowRight,
@@ -40,6 +41,7 @@ export default {
   'arrow-down': ArrowDown,
   'triangle-down': TriangleDown,
   'arrow-left': ArrowLeft,
+  'bar-chart': BarChart,
   'color-drop': ColorDrop,
   'check-circle': CheckCircle,
   'view-columns': ViewColumns,
