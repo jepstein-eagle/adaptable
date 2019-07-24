@@ -908,7 +908,7 @@ export class ExamplesHelper {
       filter: true,
       resizable: true,
       //   headerCheckboxSelection: true,
-      checkboxSelection: true,
+      //  checkboxSelection: true,
     });
     schema.push({
       headerName: 'Country',
