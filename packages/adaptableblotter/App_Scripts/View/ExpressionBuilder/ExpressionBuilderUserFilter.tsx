@@ -9,6 +9,7 @@ export interface ExpressionBuilderUserFilterProps
   extends React.ClassAttributes<ExpressionBuilderUserFilter> {
   AvailableSystemFilterNames: Array<string>;
   AvailableUserFilterNames: Array<string>;
+  AvailableNamedFilterNames: Array<string>;
   SelectedFilterNames: Array<string>;
   onFilterNameChange: (selectedFilterNames: Array<string>) => void;
   cssClassName: string;
@@ -27,7 +28,7 @@ export class ExpressionBuilderUserFilter extends React.Component<
           <ListGroupItem
             key={index}
             onClick={() => this.onClickColum(sf)}
-            active={!!this.props.SelectedFilterNames.find(f => f == sf)}
+            active={this.props.SelectedFilterNames.some(f => f == sf)}
           >
             {sf}
           </ListGroupItem>
@@ -40,7 +41,19 @@ export class ExpressionBuilderUserFilter extends React.Component<
         <ListGroupItem
           key={index}
           onClick={() => this.onClickColum(uf)}
-          active={!!this.props.SelectedFilterNames.find(f => f == uf)}
+          active={this.props.SelectedFilterNames.some(f => f == uf)}
+        >
+          <i>{uf}</i>
+        </ListGroupItem>
+      );
+    });
+
+    var namedFilterNames = this.props.AvailableNamedFilterNames.map((uf: string, index: number) => {
+      return (
+        <ListGroupItem
+          key={index}
+          onClick={() => this.onClickColum(uf)}
+          active={this.props.SelectedFilterNames.some(f => f == uf)}
         >
           <i>{uf}</i>
         </ListGroupItem>
@@ -52,6 +65,7 @@ export class ExpressionBuilderUserFilter extends React.Component<
         <ListGroup>
           {systemFilterNames}
           {userFilterNames}
+          {namedFilterNames}
         </ListGroup>
       </Panel>
     );

@@ -73,17 +73,24 @@ let demoConfig: PredefinedConfig = {
     NamedFilters: [
       {
         Name: '$ Trades',
-        DataType: DataType.String,
+        Scope: {
+          DataType: DataType.String,
+          ColumnIds: ['currency'],
+        },
         PredicateName: 'USD Currency',
       },
       {
         Name: 'High',
-        DataType: DataType.Number,
+        Scope: {
+          DataType: DataType.Number,
+        },
         PredicateName: 'Big Notional',
       },
       {
         Name: 'Biz Year',
-        DataType: DataType.Date,
+        Scope: {
+          DataType: DataType.Date,
+        },
         PredicateName: 'Business Year',
       },
     ],
@@ -100,6 +107,14 @@ let demoConfig: PredefinedConfig = {
             },
           ],
         },
+      },
+    ],
+  },
+  ColumnCategory: {
+    ColumnCategories: [
+      {
+        ColumnCategoryId: 'MyCategory',
+        ColumnIds: ['currency', 'country'],
       },
     ],
   },

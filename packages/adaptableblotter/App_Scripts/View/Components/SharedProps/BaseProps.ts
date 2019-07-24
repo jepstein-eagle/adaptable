@@ -4,6 +4,8 @@ import { UserFilter } from '../../../PredefinedConfig/RunTimeState/UserFilterSta
 import { ColumnFilter } from '../../../PredefinedConfig/RunTimeState/ColumnFilterState';
 import { IAdaptableBlotter } from '../../../Utilities/Interface/IAdaptableBlotter';
 import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
+import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 export interface BaseProps<View> extends React.ClassAttributes<View> {
   cssClassName: string;
@@ -12,6 +14,8 @@ export interface BaseProps<View> extends React.ClassAttributes<View> {
   Columns: IColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
+  NamedFilters: NamedFilter[];
+  ColumnCategories: ColumnCategory[];
   ColumnFilters: ColumnFilter[];
   ModalContainer: HTMLElement;
   ColorPalette: string[];
