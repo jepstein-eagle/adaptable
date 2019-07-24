@@ -99,6 +99,8 @@ export class PlusMinusSummaryComponent extends React.Component<
             SelectedColumnId={this.props.SummarisedColumn.ColumnId}
             UserFilters={this.props.UserFilters}
             SystemFilters={this.props.SystemFilters}
+            NamedFilters={this.props.NamedFilters}
+            ColumnCategories={this.props.ColumnCategories}
             Blotter={this.props.Blotter}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}

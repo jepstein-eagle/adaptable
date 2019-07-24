@@ -31,6 +31,9 @@ import { FilterExpression } from '../../PredefinedConfig/Common/Expression/Filte
 import { RangeExpression } from '../../PredefinedConfig/Common/Expression/RangeExpression';
 import { Box, Flex } from 'rebass';
 import HelpBlock from '../../components/HelpBlock';
+import { NamedFilter } from '../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { ColumnCategory } from '../../PredefinedConfig/RunTimeState/ColumnCategoryState';
+import { Tab, Nav, NavItem } from 'react-bootstrap';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -41,6 +44,8 @@ export interface ExpressionBuilderConditionSelectorProps
   onSelectedColumnChange: (ColumnId: string, Tab: QueryTab) => void;
   UserFilters: UserFilter[];
   SystemFilters: string[];
+  NamedFilters: NamedFilter[];
+  ColumnCategories: ColumnCategory[];
   SelectedColumnId: string;
   SelectedTab: QueryTab;
   QueryBuildStatus: QueryBuildStatus;
@@ -300,6 +305,15 @@ export class ExpressionBuilderConditionSelector extends React.Component<
       return uf.Name;
     });
 
+    // then named filters
+    let availableNamedFilterNames: string[] = FilterHelper.GetNamedFiltersForColumn(
+      selectedColumn,
+      this.props.NamedFilters,
+      this.props.ColumnCategories
+    ).map(uf => {
+      return uf.Name;
+    });
+
     // get the help descriptions
     let firstTimeText: string = 'Start creating the query by selecting a column below.';
     let secondTimeText: string = 'Select another column for the query.';
@@ -443,6 +457,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                         cssClassName={cssClassName}
                         AvailableSystemFilterNames={availableSystemFilterNames}
                         AvailableUserFilterNames={availableUserFilterNames}
+                        AvailableNamedFilterNames={availableNamedFilterNames}
                         SelectedFilterNames={this.state.SelectedFilterExpressions}
                         onFilterNameChange={selectedValues =>
                           this.onSelectedFiltersChanged(selectedValues)

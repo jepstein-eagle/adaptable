@@ -162,6 +162,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 SystemFilters={this.props.SystemFilters}
+                NamedFilters={this.props.NamedFilters}
+                ColumnCategories={this.props.ColumnCategories}
                 Blotter={this.props.Blotter}
                 WizardStartIndex={this.state.WizardStartIndex}
                 onCloseWizard={() => this.onCloseWizard()}
@@ -177,6 +179,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 Columns={this.props.Columns}
                 UserFilters={this.props.UserFilters}
                 SystemFilters={this.props.SystemFilters}
+                NamedFilters={this.props.NamedFilters}
+                ColumnCategories={this.props.ColumnCategories}
                 Blotter={this.props.Blotter}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}

@@ -41,6 +41,8 @@ import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IUIPrompt } from '../../../Utilities/Interface/IMessage';
 import { AdaptableBlotterMenuItem } from '../../../Utilities/Interface/AdaptableBlotterMenu';
 import HelpBlock from '../../../components/HelpBlock';
+import { NamedFilter } from '../../../PredefinedConfig/RunTimeState/NamedFilterState';
+import { ColumnCategory } from '../../../PredefinedConfig/RunTimeState/ColumnCategoryState';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: IColumn;
@@ -48,6 +50,8 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   Columns: IColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
+  NamedFilters: NamedFilter[];
+  ColumnCategories: ColumnCategory[];
   ColumnFilters: ColumnFilter[];
   MenuItems: AdaptableBlotterMenuItem[];
   EmbedColumnMenu: boolean;
@@ -174,7 +178,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       .concat(
         FilterHelper.GetNamedFiltersForColumn(
           this.props.CurrentColumn,
-          this.props.Blotter.api.namedFilterApi.getAllNamedFilter()
+          this.props.NamedFilters,
+          this.props.ColumnCategories
         ).map(nf => nf.Name)
       )
       .concat(
@@ -183,6 +188,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
           this.props.SystemFilters
         ).map(sf => sf)
       ); //.filter(u => FilterHelper.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
+
     let appropriateFilterItems: IRawValueDisplayValuePair[] = appropriateFilters.map(uf => {
       return { RawValue: uf, DisplayValue: uf };
     });
@@ -481,7 +487,9 @@ function mapStateToProps(state: AdaptableBlotterState, ownProps: any) {
     Columns: state.Grid.Columns,
     ColumnFilters: state.ColumnFilter.ColumnFilters,
     UserFilters: state.UserFilter.UserFilters,
+    ColumnCategories: state.ColumnCategory.ColumnCategories,
     SystemFilters: state.SystemFilter.SystemFilters,
+    NamedFilters: state.NamedFilter.NamedFilters,
     ColumnMenuItems: state.Menu.ColumnMenu.MenuItems,
     ShowCloseButton: ownProps.ShowCloseButton,
   };

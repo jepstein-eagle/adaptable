@@ -77,6 +77,8 @@ export class CalculatedColumnSummaryComponent extends React.Component<
             ModalContainer={this.props.ModalContainer}
             UserFilters={this.props.UserFilters}
             SystemFilters={this.props.SystemFilters}
+            NamedFilters={this.props.NamedFilters}
+            ColumnCategories={this.props.ColumnCategories}
             GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
             IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
             Blotter={this.props.Blotter}

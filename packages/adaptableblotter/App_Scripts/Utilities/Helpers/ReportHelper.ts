@@ -142,56 +142,24 @@ export function ConvertReportToArray(
       break;
 
     case ReportRowScope.SelectedRows:
-      let selectedCellInfo: ISelectedCellInfo = blotter.api.gridApi.getSelectedCellInfo();
-      console.log(selectedCellInfo);
+      const selectedCellInfo: ISelectedCellInfo = blotter.api.gridApi.getSelectedCellInfo();
 
-      let colNames: string[] = ReportColumns.map(c => c.FriendlyName);
-      // im ging to assume for now that the selection is ALWAYS rectangular
-      // if that is wrong then we need to revist...
-      let values: any[] = [];
-      selectedCellInfo.GridCells.forEach(gc => {
-        //   values.push(blotter.getDisplayValue(gc.primaryKeyValue, gc.columnId));
-      });
-      console.log(values);
-      /*   
-      for (var keyValuePair of selectedCells.Selection) {
-        let values: any[] = [];
-        if (keyValuePair[1].length != colNames.length) {
-          return {
-            ActionReturn: [],
-            Alert: {
-              Header: 'Report Error',
-              Msg: 'Selected cells report should have the same set of columns',
-              MessageType: MessageType.Error,
-              ShowAsPopup: true,
-            },
-          };
+      const { Columns, GridCells } = selectedCellInfo;
+      const colCount = Columns.length;
+      const rowCount = GridCells.length / colCount;
+
+      for (let i = 0; i < rowCount; i++) {
+        const newRow: any[] = [];
+        for (let j = 0; j < colCount; j++) {
+          const index = i + j * rowCount;
+          newRow.push(String(GridCells[index].value));
         }
-        for (var cvPair of keyValuePair[1]) {
-          if (
-            !colNames.find(
-              x => x == ReportColumns.find(c => c.ColumnId == cvPair.columnId).FriendlyName
-            )
-          ) {
-            return {
-              ActionReturn: [],
-              Alert: {
-                Header: 'Report Error',
-                Msg: 'Selected cells report should have the same set of columns',
-                MessageType: MessageType.Error,
-                ShowAsPopup: true,
-              },
-            };
-          }
-          //we want the displayValue now
-          values.push(blotter.getDisplayValue(keyValuePair[0], cvPair.columnId));
-        }
-       
+        dataToExport.push(newRow);
       }
-      */
-      dataToExport.push(values);
+
       break;
   }
+
   return { ActionReturn: dataToExport };
 }
 

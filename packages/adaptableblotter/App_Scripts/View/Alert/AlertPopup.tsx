@@ -138,6 +138,8 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
             SystemFilters={this.props.SystemFilters}
+            NamedFilters={this.props.NamedFilters}
+            ColumnCategories={this.props.ColumnCategories}
             Blotter={this.props.Blotter}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}

@@ -136,6 +136,8 @@ class FreeTextColumnPopupComponent extends React.Component<
               ModalContainer={this.props.ModalContainer}
               UserFilters={this.props.UserFilters}
               SystemFilters={this.props.SystemFilters}
+              NamedFilters={this.props.NamedFilters}
+              ColumnCategories={this.props.ColumnCategories}
               Columns={this.props.Columns}
               Blotter={this.props.Blotter}
               ConfigEntities={this.props.FreeTextColumns}
