@@ -283,19 +283,20 @@ export class ListBoxFilterForm extends React.Component<
           )
         : 'Select a column';
 
-      let availableColumns: any = this.props.Columns.filter(() => this.props.CurrentColumn).map(
-        (column, index) => {
-          return (
-            <MenuItem
-              key={index}
-              eventKey={index}
-              onClick={() => this.onColumnOperand1SelectedChanged(column)}
-            >
-              {column.FriendlyName}
-            </MenuItem>
-          );
-        }
-      );
+      let availableColumns: any = this.props.Columns.filter(
+        (c: IColumn) =>
+          c != this.props.CurrentColumn && c.DataType == this.props.CurrentColumn.DataType
+      ).map((column, index) => {
+        return (
+          <MenuItem
+            key={index}
+            eventKey={index}
+            onClick={() => this.onColumnOperand1SelectedChanged(column)}
+          >
+            {column.FriendlyName}
+          </MenuItem>
+        );
+      });
 
       return (
         <DropdownButton
